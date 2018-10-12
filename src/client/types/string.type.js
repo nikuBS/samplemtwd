@@ -206,7 +206,9 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   ACCOUNT: '계좌이체',
   CARD: '체크/신용카드',
   OK_CASHBAG: 'OK캐쉬백',
-  T_POINT: 'T포인트'
+  T_POINT: 'T포인트',
+  PAYMENT: '납부',
+  GO_PAYMENT_HISTORY: '납부내역 보기'
 };
 
 Tw.ALERT_MSG_COMMON = {
@@ -267,6 +269,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
 };
 
 Tw.ALERT_MSG_PRODUCT = {
+  ALERT_3_A1 : { TITLE : '알림', MSG : '선택하신 상품 가입을 취소하시겠습니까?', BUTTON : '계속하기' },
   ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
   ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' }
 };

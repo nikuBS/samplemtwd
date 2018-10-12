@@ -9,19 +9,13 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD } from '../../../types/api-command.type';
-import { UNIT, VOICE_UNIT } from '../../../types/bff.type';
-import { DATA_UNIT } from '../../../types/string.type';
+import { UNIT, VOICE_UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
   'relatetags': API_CMD.BFF_10_0003,
   'series': API_CMD.BFF_10_0005,
   'recommands': API_CMD.BFF_10_0006
-};
-
-const ctgCdAction = {
-  F01100: 'plans',
-  F01200: 'additions'
 };
 
 class ProductDetail extends TwViewController {
@@ -39,7 +33,7 @@ class ProductDetail extends TwViewController {
   private _getApi (key: string, currentProdId?: any): Observable<any> {
     let params = {};
     if (key === 'basic') {
-      params = { pageType: this._prodId === currentProdId ? 'SP' : 'P' };
+      params = { prodExpsTypCd: this._prodId === currentProdId ? 'SP' : 'P' };
     }
 
     return this.apiService.request(productApiCmd[key], params, {}, this._prodId);
@@ -49,7 +43,6 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _getRedis (): Observable<any> {
-    this.logger.info(this, '[REDIS] ProductLedger:' + this._prodId);
     return this.redisService.getData('ProductLedger:' + this._prodId);
   }
 
@@ -87,17 +80,17 @@ class ProductDetail extends TwViewController {
 
   /**
    * @param prodRedisInfo
-   * @param smryVslYn
    * @private
    */
-  private _convertRedisInfo (prodRedisInfo, smryVslYn): any {
+  private _convertRedisInfo (prodRedisInfo): any {
     if (FormatHelper.isEmpty(prodRedisInfo)) {
       return {};
     }
 
     return Object.assign(prodRedisInfo, {
-      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(smryVslYn, prodRedisInfo.summary)),
-      summaryCase: this._getSummaryCase(prodRedisInfo.summary)
+      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(prodRedisInfo.summary)),
+      summaryCase: this._getSummaryCase(prodRedisInfo.summary),
+      contents: this._convertContents(prodRedisInfo.contents)
     });
   }
 
@@ -118,20 +111,45 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @param smryVslYn
    * @param summaryInfo
    * @private
    */
-  private _parseSummaryInfo (smryVslYn, summaryInfo): any {
-    if (smryVslYn === 'Y') {
-      return {};
-    }
-
+  private _parseSummaryInfo (summaryInfo): any {
     return {
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
       basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
       basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
     };
+  }
+
+  /**
+   * @param contentsInfo
+   * @private
+   */
+  private _convertContents (contentsInfo): any {
+    const contentsResult: any = {
+      LE: [],
+      LA: null,
+      REP: null
+    };
+
+    contentsInfo.forEach((item) => {
+      if (item.ledStylCd === 'REP' || item.ledStylCd === 'LA') {
+        contentsResult[item.ledStylCd] = item.ledDtlHtmlCtt;
+        return true;
+      }
+
+      if (FormatHelper.isEmpty(contentsResult[item.ledStylCd])) {
+        return true;
+      }
+
+      contentsResult[item.ledStylCd].push({
+        briefTitNm: item.briefTitNm,
+        ledDtlHtmlCtt: item.ledDtlHtmlCtt
+      });
+    });
+
+    return contentsResult;
   }
 
   /**
@@ -197,8 +215,7 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _getIndexListActionName (ctgCd): any {
-    return 'plans';
-    // return ctgCdAction[ctgCd];
+    return PROD_CTG_CD_CODE[ctgCd];
   }
 
   /**
@@ -245,7 +262,7 @@ class ProductDetail extends TwViewController {
         });
       }
 
-      if (basicInfo.prodStCd === 'G1000') {
+      if (basicInfo.result.prodStCd === 'G1000') {
         return this.error.render(res, {
           title: '상품 상세 정보',
           svcInfo: svcInfo
@@ -259,13 +276,13 @@ class ProductDetail extends TwViewController {
       res.render('product.detail.html', {
         prodId: this._prodId,
         basicInfo: this._convertBasicInfo(basicInfo.result),
-        prodRedisInfo: this._convertRedisInfo(prodRedisInfo, basicInfo.smryVslYn),
+        prodRedisInfo: this._convertRedisInfo(prodRedisInfo),
         relateTags: relateTagsInfo.result,
         series: this._convertSeriesInfo(seriesInfo.result),
         recommends: recommendsInfo.result,
         svcInfo: svcInfo,
         indexListActionName: this._getIndexListActionName(basicInfo.result.ctgCd),
-        filterIds: this._getFilterIds(basicInfo.prodFilterFlagList).join(',')
+        filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(',')
       });
     });
   }

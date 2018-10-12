@@ -460,13 +460,13 @@ export const API_CMD = {
   BFF_10_0005: { path: '/core-product/v1/ledger/args-0/series', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0006: { path: '/core-product/v1/ledger/args-0/recommends', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0008: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/preinfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0008: { path: '/v1/products/fee-plans/args-0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0009: {
-    path: '/core-product/v1/mobiles/fee-plans/args-0/joins/over-chargings',
-    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+    path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings-req',
+    method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0010: {
-    path: '/core-product/v1/mobiles/fee-plans/args-0/joins/installment-agreements',
+    path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0015: {
@@ -573,6 +573,10 @@ export const API_ADD_SVC_ERROR = {
 export const API_T_FAMILY_ERROR = {
   BLN0010: 'BLN0010', // T가족모아 가입 가능한 요금제이나 미가입
   BLN0011: 'BLN0011'  // 	T가족모아 가입 불가능한 요금제
+};
+
+export const API_TAX_REPRINT_ERROR = {
+  BIL0018: 'BIL0018' // 사업자 번호를 조회할 수 없습니다.
 };
 
 

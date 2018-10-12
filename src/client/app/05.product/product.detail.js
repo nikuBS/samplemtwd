@@ -28,13 +28,15 @@ Tw.ProductDetail.prototype = {
   _cachedElement: function() {
     this.$btnList = this.$container.find('.fe-btn_list');
     this.$btnJoin = this.$container.find('.fe-btn_join');
+    this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
     this.$btnRecommendRateListMore = this.$container.find('.fe-btn_recommended_rate_list_more');
   },
 
   _bindEvent: function() {
     this.$btnList.on('click', 'button', $.proxy(this._goBtnLink, this));
-    this.$btnJoin.on('click', $.proxy(this._goJoin, this));
+    this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
+    this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
   },
 
@@ -74,19 +76,19 @@ Tw.ProductDetail.prototype = {
       .done($.proxy(this._procAdvanceCheck, this, btnLink));
   },
 
-  _goJoin: function() {
+  _goJoinTerminate: function(joinTermCd) {
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
-      joinTermCd: '01'
+      joinTermCd: joinTermCd
     }, null, this._prodId)
-      .done($.proxy(this._goJoinResult, this));
+      .done($.proxy(this._goJoinTerminateResult, this, joinTermCd));
   },
 
-  _goJoinResult: function(resp) {
+  _goJoinTerminateResult: function(joinTermCd, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._historyService.goLoad('/product/join/' + this._prodId);
+    this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
   _openSettingPop: function() {
@@ -119,10 +121,15 @@ Tw.ProductDetail.prototype = {
   _loadRecommendedrateList: function() {
     this._ctgCd = 'F01100'; // @todo dummy data remove
 
+    if (Tw.FormatHelper.isEmpty(this._filterIds) || Tw.FormatHelper.isEmpty(this._ctgCd)) {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0031, {
       idxCtgCd: this._ctgCd,
       searchFltIds: this._filterIds,
-      searchCount: 5
+      searchCount: 3,
+      ignoreProdId: this._prodId
     }).done($.proxy(this._appendRecommendList, this));
   },
 
@@ -131,7 +138,7 @@ Tw.ProductDetail.prototype = {
       return;
     }
 
-    if (resp.result.productCount > 5) {
+    if (resp.result.productCount > 3) {
       this.$btnRecommendRateListMore.show();
     }
 
@@ -150,7 +157,7 @@ Tw.ProductDetail.prototype = {
   },
 
   _goRecommendRateMoreList: function() {
-    this._historyService.goLoad('/product/' + this._listAction + '?idxCtgCd=' + this._ctgCd + '&searchLastProdId=' + this._prodId);
+    this._historyService.goLoad('/product/' + this._listAction + '?filters=' + this._filterIds);
   }
 
 };

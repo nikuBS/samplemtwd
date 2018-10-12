@@ -12,76 +12,76 @@
     "extnSchdPt": "1000",
     "datas": [
       {
-        "opDt": "20180512",
-        "opTm": "0910",
-        "chgTyp": "적립",
-        "dtlCtt": "관리조정",
-        "chgPt": "+9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20180512",
+        "op_tm": "0910",
+        "chg_typ": "적립",
+        "dtl_ctt": "관리조정",
+        "chg_pt": "+9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20180513",
-        "opTm": "0910",
-        "chgTyp": "소멸",
-        "dtlCtt": "2018.04 유효기간 만료",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20180513",
+        "op_tm": "0910",
+        "chg_typ": "소멸",
+        "dtl_ctt": "2018.04 유효기간 만료",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20180513",
-        "opTm": "0915",
-        "chgTyp": "사용",
-        "dtlCtt": "2018.04 사용분 완납",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20180513",
+        "op_tm": "0915",
+        "chg_typ": "사용",
+        "dtl_ctt": "2018.04 사용분 완납",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20170513",
-        "opTm": "0915",
-        "chgTyp": "사용",
-        "dtlCtt": "2018.04 사용분 완납",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20170513",
+        "op_tm": "0915",
+        "chg_typ": "사용",
+        "dtl_ctt": "2018.04 사용분 완납",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20170513",
-        "opTm": "0915",
-        "chgTyp": "사용",
-        "dtlCtt": "2018.04 사용분 완납",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20170513",
+        "op_tm": "0915",
+        "chg_typ": "사용",
+        "dtl_ctt": "2018.04 사용분 완납",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20170512",
-        "opTm": "0915",
-        "chgTyp": "사용",
-        "dtlCtt": "2018.04 사용분 완납",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20170512",
+        "op_tm": "0915",
+        "chg_typ": "사용",
+        "dtl_ctt": "2018.04 사용분 완납",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20170511",
-        "opTm": "0915",
-        "chgTyp": "사용",
-        "dtlCtt": "2018.04 사용분 완납",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20170511",
+        "op_tm": "0915",
+        "chg_typ": "사용",
+        "dtl_ctt": "2018.04 사용분 완납",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       },
       {
-        "opDt": "20160511",
-        "opTm": "0915",
-        "chgTyp": "사용",
-        "dtlCtt": "2018.04 사용분 완납",
-        "chgPt": "-9,000점",
-        "opOrgNm": "",
-        "opIdNm": ""
+        "op_dt": "20160511",
+        "op_tm": "0915",
+        "chg_typ": "사용",
+        "dtl_ctt": "2018.04 사용분 완납",
+        "chg_pt": "-9,000점",
+        "op_org_nm": "",
+        "op_id_nm": ""
       }
     ]
   }

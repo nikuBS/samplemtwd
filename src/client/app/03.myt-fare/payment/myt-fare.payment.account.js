@@ -45,7 +45,6 @@ Tw.MyTFarePaymentAccount.prototype = {
     this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
-    this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
@@ -111,15 +110,19 @@ Tw.MyTFarePaymentAccount.prototype = {
     }
   },
   _openCheckPay: function ($layer) {
+    this._setData($layer);
+    this._paymentCommon.getListData($layer);
+
+    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+  },
+  _setData: function ($layer) {
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
     $layer.find('.fe-payment-option-number').text(data.accountNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    $layer.find('.fe-payment-refund').attr('id', data.refundCd)
+    $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
       .text(data.refundNm + ' ' + data.refundNum);
-
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _getData: function () {
     var isAccountAuto = this.$accountInputBox.hasClass('checked');
@@ -149,7 +152,27 @@ Tw.MyTFarePaymentAccount.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-
+      this._popupService.open({
+        'hbs': 'complete',
+        'link_class': 'fe-payment-history',
+        'link_text': Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY,
+        'text': Tw.MYT_FARE_PAYMENT_NAME.PAYMENT
+      },
+        $.proxy(this._onComplete, this),
+        $.proxy(this._goPaymentHistory, this),
+        'complete'
+      );
+    }
+  },
+  _onComplete: function ($layer) {
+    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this));
+  },
+  _setIsLink: function () {
+    this._isLink = true;
+  },
+  _goPaymentHistory: function () {
+    if (this._isLink) {
+      this._historyService.goLoad('/myt/fare/history/payment');
     }
   },
   _isValid: function () {
@@ -173,10 +196,10 @@ Tw.MyTFarePaymentAccount.prototype = {
   _makeRequestData: function () {
     var reqData = {
       payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
-      payovrBankNum: $.trim(this.$refundNumber.val()),
-      payovrCustNm: $.trim(this.$container.find('.fe-name').val()),
-      bankOrCardCode: this.$selectBank.attr('id'),
-      bankOrCardAccn: $.trim(this.$accountNumber.val()),
+      payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
+      payovrCustNm: this.$container.find('.fe-name').val(),
+      bankOrCardCode: this.$container.find('.fe-auto-account-bank').attr('data-code'),
+      bankOrCardAccn: this.$container.find('.fe-auto-account-number').text(),
       unpaidBillList: this._paymentCommon.getBillList()
     };
     return reqData;

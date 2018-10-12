@@ -10,6 +10,7 @@ Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._hashService = Tw.Hash;
 
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
@@ -22,6 +23,7 @@ Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
 
 Tw.MyTFareBillGuideIndividual.prototype = {
   _init: function () {
+
     this._cachedElement();
     this._bindEvent();
     this._hbRegisterHelper();
@@ -30,6 +32,23 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       this._getChildBillInfo();
     }
     this._getUseBillsInfo();
+
+    this._hashService.initHashNav($.proxy(this._onHashChange, this));
+
+  },
+  _onHashChange: function (hash) {
+    Tw.Logger.info('[hash]', hash);
+
+    if ( !hash.raw ) { return; }
+
+    switch ( hash.raw ) {
+      case 'conditionChange_P' :
+        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        this.$conditionChangeBtn.trigger('click');
+        break;
+      default :
+
+    }
 
   },
   _hbRegisterHelper: function () {
@@ -43,6 +62,8 @@ Tw.MyTFareBillGuideIndividual.prototype = {
 
     this.$hbDetailListArea = $('[data-target="hbDetailListArea"]');
     this.$hbChildListArea = $('[data-target="hbChildListArea"]');
+
+    this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
   },
   _bindEvent: function () {

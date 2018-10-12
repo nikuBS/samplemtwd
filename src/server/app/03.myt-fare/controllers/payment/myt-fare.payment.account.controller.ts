@@ -12,7 +12,6 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
-import UnpaidList from '../../../../mock/server/payment/payment.realtime.unpaid.list.mock';
 
 class MyTFarePaymentAccount extends TwViewController {
   constructor() {
@@ -42,8 +41,7 @@ class MyTFarePaymentAccount extends TwViewController {
   }
 
   private getUnpaidList(): Observable<any> {
-    // return this.apiService.request(API_CMD.BFF_07_0021, {});
-    return Observable.of(UnpaidList);
+    return this.apiService.request(API_CMD.BFF_07_0021, {});
   }
 
   private getAutoInfo(): Observable<any> {

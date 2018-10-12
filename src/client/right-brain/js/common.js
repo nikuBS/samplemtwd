@@ -475,9 +475,9 @@ skt_landing.action = {
         });
         _this.scroll_chk();
         if(createdTarget.hasClass('popup-page')){
-          skt_landing.widgets.widget_init('.popup-page');
+          skt_landing.widgets.widget_init('.popup-page:last');
         }else{
-          skt_landing.widgets.widget_init('.popup');
+          skt_landing.widgets.widget_init('.popup:last');
         }
         if(popup_info.layer){
           var win_h = skt_landing.util.win_info.get_winH(),

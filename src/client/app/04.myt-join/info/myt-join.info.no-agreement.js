@@ -10,7 +10,6 @@ Tw.MyTJoinInfoNoAgreement = function (rootEl) {
   this._moreViewSvc = new Tw.MoreViewComponent();
   this._dateHelper = Tw.DateHelper;
   this._init();
-
 };
 
 Tw.MyTJoinInfoNoAgreement.prototype = {
@@ -41,23 +40,16 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   },
 
   _makeParam : function () {
-    var sdate = this._dateHelper.getCurrentShortDate(new Date());
-    var edate = this._periodDate(sdate, -3, 'years');
-
-    var _startYear = this._dateHelper.getShortDateWithFormat(sdate, 'YYYY','YYYYMMDD'),
-      _startMonth = this._dateHelper.getShortDateWithFormat(sdate, 'MM','YYYYMMDD'),
-      _startDay = this._dateHelper.getShortDateWithFormat(sdate, 'DD','YYYYMMDD'),
-      _endYear = this._dateHelper.getShortDateWithFormat(edate, 'YYYY','YYYYMMDD'),
-      _endMonth = this._dateHelper.getShortDateWithFormat(edate, 'MM','YYYYMMDD'),
-      _endDay = this._dateHelper.getShortDateWithFormat(edate, 'DD','YYYYMMDD');
+    var edate = this._dateHelper.getCurrentShortDate(new Date());
+    var sdate = this._periodDate(edate, -3, 'years');
 
     return {
-      startYear : _startYear,
-      startMonth : _startMonth,
-      startDay : _startDay,
-      endYear : _endYear,
-      endMonth : _endMonth,
-      endDay : _endDay
+      startYear : this._dateForamt2(sdate, 'YYYY'),
+      startMonth : this._dateForamt2(sdate, 'MM'),
+      startDay : this._dateForamt2(sdate, 'DD'),
+      endYear : this._dateForamt2(edate, 'YYYY'),
+      endMonth : this._dateForamt2(edate, 'MM'),
+      endDay : this._dateForamt2(edate, 'DD')
     };
   },
 
@@ -77,14 +69,20 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   },
 
   _dateForamt : function (date) {
-    return Tw.DateHelper.getShortDateWithFormat(date, 'YYYY.MM.DD','YYYYMMDD');
+    return this._dateForamt2(date, 'YYYY.MM.DD');
+  },
+
+  _dateForamt2 : function (date, format) {
+    if (!Tw.DateHelper.isValid(date)) {
+      return '';
+    }
+    return Tw.DateHelper.getShortDateWithFormat(date, format,'YYYYMMDD');
   },
 
   _periodDate : function (date, amount, unit) {
     var format = 'YYYYMMDD';
-    var currentFormat = 'YYYYMMDD';
 
-    return Tw.DateHelper.getShortDateWithFormatAddByUnit(date,amount,unit,format,currentFormat);
+    return Tw.DateHelper.getShortDateWithFormatAddByUnit(date,amount,unit,format,format);
   },
 
   _parseDate : function (date) {
@@ -103,7 +101,9 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   _setData : function (resp) {
     this.$usablePoint.text(resp.usablePt);
-    this.$removeDate.text(resp.extnSchdDt);
+    if (resp.extnSchdDt !== '') {
+      this.$removeDate.text(resp.extnSchdDt).parent().removeClass('none');
+    }
     this.$removePoint.text(resp.extnSchdPt);
     this.$totalCount.text(resp.datas.length);
     this.$totalSave.text(resp.totAccumPt);
@@ -112,13 +112,10 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   },
 
   _onSuccess : function (resp) {
-    Tw.Logger.info('>> _onSuccess', resp);
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       this._onFail(resp);
       return;
     }
-
-    // TODO : 데이터 없을 때 처리 하기..
 
     this._parseData(resp.result);
     this._setData(resp.result);
@@ -146,7 +143,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     // "전체" 가 아닐 경우만 해당 타입의 리스트만 뽑는다.
     if (_type !== '0') {
       _list = _.filter(_list, function (o) {
-        return o.chgTyp === Tw.JOIN_INFO_NO_AGREEMENT.CHANGE_TYPE[_type];
+        return o.chg_typ === Tw.JOIN_INFO_NO_AGREEMENT.CHANGE_TYPE[_type];
       });
     }
 
@@ -155,8 +152,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
     // 더보기 설정
     this._moreViewSvc.init({
-      cnt : 4,
-      list : _.sortBy(_list, 'opDt').reverse(),
+      list : _.sortBy(_list, 'op_dt').reverse(),
       callBack : $.proxy(this._render,this),
       isOnMoreView : true
     });
@@ -167,26 +163,25 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     var _this = this;
     // 년도별로 그룹바이
     var yearGroup = _.groupBy(resp.list, function(o){
-      return o.opDt.substring(0, 4);
+      return o.op_dt.substring(0, 4);
     });
 
     //
     var data = _.map(yearGroup, function(o, k){
       var dateGroup = _.groupBy(o, function(objectOfYearGroup){
-        return objectOfYearGroup.opDt.substring(4);
+        return objectOfYearGroup.op_dt.substring(4);
       });
 
       var _data = _.map(dateGroup,function(objectOfDateGroup, k1){
         var sortData = _.sortBy(objectOfDateGroup, function(o1){
-          var _text = o1.dtlCtt.substring(0,7);
-          // o1.hasDtlCttDate = false;
+          var _text = o1.dtl_ctt.substring(0,7);
           if ( _this._dateHelper.isValid(_text) ) {
             o1.hasDtlCttDate = true;
             o1.dtlCttDate = _text;
-            o1.dtlCtt = o1.dtlCtt.substring(_text.length);
+            o1.dtl_ctt = o1.dtl_ctt.substring(_text.length);
           }
 
-          return [o1.opDt, o1.opTm];
+          return [o1.op_dt, o1.op_tm];
         });
 
         return {
@@ -255,7 +250,6 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
     // 선택한 유형으로 리스트업
     this._search();
-
     this._popupService.close();
   },
 
@@ -266,7 +260,6 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   // API Fail
   _onFail: function (err) {
-    Tw.Logger.info('>> _onFail', JSON.stringify(err));
     Tw.Error(err.code,err.msg).pop();
   }
 };

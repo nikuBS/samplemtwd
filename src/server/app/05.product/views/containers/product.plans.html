@@ -46,11 +46,15 @@
                     <div class="num">
                         <button class="bt-select fe-select-filter" title="조건 선택" aria-haspopup="true">
                             <% const filters = plans.searchOption.searchFltIds; %>
-                            <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
-                                <% if (i > 0) { %>, <% } %>
-                                #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
+                            <% if (filters) { %>
+                                <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
+                                    <% if (i > 0) { %>, <% } %>
+                                    #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
+                                <% } %>
+                                <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
+                            <% } else { %>
+                                #<span class="vbl tx-bold">전체 요금제</span>
                             <% } %>
-                            <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
                         </button>
                     </div>
                 </div>

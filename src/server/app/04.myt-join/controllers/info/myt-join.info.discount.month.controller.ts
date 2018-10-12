@@ -20,7 +20,7 @@ const VIEW = {
 const MAX_ITEM_LENGTH_PER_PAGE = 20;
 
 class MyTJoinInfoDiscountMonth extends TwViewController {
-  private _svcAgrmtCdId: any; // 약정할인 ID
+  private _svcAgrmtDcId: any; // 약정할인 ID
   private _svcAgrmtDcCd: any; // 약정할인 코드
 
   constructor() {
@@ -28,8 +28,8 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this._svcAgrmtCdId = req.query._svcAgrmtCdId;
-    this._svcAgrmtDcCd = req.query._svcAgrmtDcCd;
+    this._svcAgrmtDcId = req.query.svcAgrmtDcId;
+    this._svcAgrmtDcCd = req.query.svcAgrmtDcCd;
 
     Observable.combineLatest(
       this.reqDiscountInfosMonth()
@@ -50,7 +50,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
       const data = this.getFormattedData(discountInfosMonth);
 
       res.render(VIEW.DEFAULT, {
-        svcAgrmtCdId: this._svcAgrmtCdId,
+        svcAgrmtDcId: this._svcAgrmtDcId,
         svcAgrmtDcCd: this._svcAgrmtDcCd,
         data,
         svcInfo
@@ -67,7 +67,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
 
   private reqDiscountInfosMonth(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0076, {
-      svcAgrmtCdId: this._svcAgrmtCdId,
+      svcAgrmtCdId: this._svcAgrmtDcId,
       svcAgrmtDcCd: this._svcAgrmtDcCd
     });
 

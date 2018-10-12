@@ -9,6 +9,10 @@ Tw.MyTFarePaymentCommon = function (rootEl) {
   this.$unpaidList = this.$container.find('.fe-unpaid-list');
   this.$appendTarget = this.$container.find('.fe-selected-line');
 
+  this._billList = [];
+  this._moreCnt = 0;
+  this._standardCnt = 3;
+
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
 
@@ -108,21 +112,71 @@ Tw.MyTFarePaymentCommon.prototype = {
       this._amount -= $target.find('.fe-money').data('value');
     }
   },
+  _setMoreBtnEvent: function ($layer, selectedCnt) {
+    var $moreBtn = $layer.find('.fe-more');
+    this._moreCnt = selectedCnt - this._standardCnt;
+
+    $moreBtn.removeClass('none');
+    $moreBtn.find('.fe-more-cnt').text(' (' + (this._moreCnt) + ')');
+    $moreBtn.on('click', $.proxy(this._onClickMore, this, $layer, selectedCnt));
+  },
+  _onClickMore: function ($layer, selectedCnt, event) {
+    var firstInvisibleCnt = selectedCnt - this._moreCnt;
+    for (var i = firstInvisibleCnt; i < firstInvisibleCnt + this._standardCnt; i++) {
+      $layer.find('#fe-' + i).removeClass('none');
+    }
+
+    var $target = $(event.currentTarget);
+    if (this._moreCnt <= this._standardCnt) {
+      $target.addClass('none');
+    } else {
+      this._moreCnt = this._moreCnt - this._standardCnt;
+      $target.find('.fe-more-cnt').text(' (' + (this._moreCnt) + ')');
+    }
+  },
+  _setList: function ($target, $layer, index) {
+    var originNode = $layer.find('.fe-origin');
+    var cloneNode = originNode.clone();
+
+    if (index < this._standardCnt) {
+      cloneNode.removeClass('none');
+    }
+    cloneNode.removeClass('fe-origin');
+    cloneNode.attr('id', 'fe-' + index);
+
+    cloneNode.find('.fe-svc-info').text($target.find('.fe-svc-info').text());
+    cloneNode.find('.fe-money').text($target.find('.fe-money').text().replace(Tw.CURRENCY_UNIT.WON, ''));
+    cloneNode.find('.fe-inv-dt').text($target.find('.fe-inv-dt').text());
+
+    $layer.find('.fe-selected-line').append(cloneNode);
+  },
+  _setBillList: function ($target) {
+    var billObj = {
+      invDt: $target.find('.fe-inv-dt').attr('data-value'),
+      billSvcMgmtNum: $target.attr('data-svc-mgmt-num'),
+      billAcntNum: $target.attr('data-bill-acnt-num'),
+      payAmt: $target.find('.fe-money').attr('data-value')
+    };
+    this._billList.push(billObj);
+  },
+  getBillList: function () {
+    return this._billList;
+  },
   getAmount: function () {
     return this._amount;
   },
-  getBillList: function () {
-    var billList = [];
-    this.$appendTarget.find('li').not('.fe-origin').each(function () {
-      var $this = $(this);
-      var obj = {
-        invDt: $this.find('.fe-date').data('value').toString(),
-        billSvcMgmtNum: $this.attr('data-svc-mgmt-num'),
-        billAcntNum: $this.attr('data-bill-acnt-num'),
-        payAmt: $this.find('.fe-fee').text().replace(',', '')
-      };
-      billList.push(obj);
-    });
-    return billList;
+  getListData: function ($layer) {
+    var selectedCnt = this._selectedLine.length;
+    if (selectedCnt > this._standardCnt) {
+      this._setMoreBtnEvent($layer, selectedCnt);
+    }
+
+    this._billList = [];
+    for (var i in this._selectedLine) {
+      var $target = this.$unpaidList.find('#' + this._selectedLine[i]);
+
+      this._setList($target, $layer, i);
+      this._setBillList($target);
+    }
   }
 };

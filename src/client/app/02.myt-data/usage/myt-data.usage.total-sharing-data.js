@@ -266,7 +266,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._historyService.goLoad('/myt/data/gift');
     }
     else {
-
+      this._historyService.goLoad('/myt/data/recharge/history?filter=data-gifts');
     }
   },
 
