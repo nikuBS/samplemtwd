@@ -3295,3 +3295,40 @@ a.ui-button:active,
   background: url(/img/ico/ico-group.png) no-repeat -1.875rem -42.5rem;
   background-size: 3.125rem auto;
   vertical-align: bottom; }
+
+/* 공통 버튼[버튼에 직접 스타일 입힘] 흰색 라운드 박스 */
+.bt-white1 {
+  display: inline-block;
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #fff;
+  color: #3583e3;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 2.5rem; }
+  .bt-white1.selected {
+    background: #f44333; }
+  .bt-white1:disabled {
+    color: #fff;
+    background: #d1d1d1; }
+
+.bt-white2 {
+  display: inline-block;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid #fff;
+  border-radius: 1.25rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: none;
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 2.5rem; }
+  .bt-white2.selected {
+    background: #f44333; }
+  .bt-white2:disabled {
+    color: #fff;
+    background: #d1d1d1; }
