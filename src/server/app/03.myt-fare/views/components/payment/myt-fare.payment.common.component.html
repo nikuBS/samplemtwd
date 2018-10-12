@@ -20,7 +20,7 @@
     </h3>
     <% } %>
 
-    <li id="<%= i %>" class="none fe-line checkbox type01-big <% if (unpaidList.defaultIndex === i) { %> checked fe-origin <% } %>"
+    <li id="<%= i %>" class="none fe-line checkbox type01-big <% if (unpaidList.defaultIndex === i) { %> checked <% } %>"
         data-svc-mgmt-num="<%= unpaidList[i].svcMgmtNum %>"
         data-bill-acnt-num="<%= unpaidList[i].billAcntNum %>"
         role="checkbox"
