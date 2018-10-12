@@ -25,14 +25,14 @@
             <div class="cont-box">
                 <div class="phonefilter-wrap">
                     <div class="widget">
-                        <div class="widget-box radio">
+                        <div class="widget-box check">
                             <div class="filtertype-wrap">
-                                <ul class="select-list division-five" role="radiogroup">
+                                <ul class="select-list division-five" role="roup">
                                     {{#each data.deviceFilters}}
-                                    <li class="radiobox" role="radio">
-                                        <input type="radio" name="radio_device" value="" title="{{name}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{id}}"/><!-- 체크상태일 경우 checked="checked" -->
-                                        <p class="radio-txt">
-                                            <i class="ico type-{{icon}}"></i><span class="text">{{name}}</span>
+                                    <li class="checkbox" role="checkbox">
+                                        <input type="checkbox" name="checkbox" title="{{name}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{id}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                        <p class="text-wrap">
+                                            <i class="ico type-{{icon}}"></i><span class="text">{{{name}}}</span>
                                         </p>
                                     </li>
                                     {{/each}}
@@ -47,13 +47,13 @@
                 <div class="productfilter-type">
                     <!-- .widget -->
                     <div class="widget">
-                        <div class="widget-box radio">
+                        <div class="widget-box check">
                             <div class="productfilter">
-                                <ul class="select-list" role="radiogroup">
+                                <ul class="select-list" role="group">
                                     {{#each subFilters}}
-                                    <li class="radiobox" role="radio">
-                                        <input type="radio" name="radio_{{../prodFltId}}" title="{{prodFltNm}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{prodFltId}}"/><!-- 체크상태일 경우 checked="checked" -->
-                                        <span class="radio-txt">
+                                    <li class="checkbox" role="checkbox">
+                                        <input type="checkbox" name="checkbox" title="{{prodFltNm}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{prodFltId}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                        <span class="text">
                                             {{prodFltNm}}
                                         </span>
                                     </li>
@@ -72,7 +72,7 @@
             <!-- 추천태그 -->
             <div class="cont-box gaps-style02">
                 <h3 class="suggest-tag-title">추천태그</h3>
-                <ul class="suggest-tag-list openlist-wrap" role="radiogroup">
+                <ul class="suggest-tag-list openlist-wrap">
                     {{#each data.tags}}
                     <li><button type="button" class="link" data-tag-id={{tagId}}>{{prodTagNm}}</button></li>
                     {{/each}}
