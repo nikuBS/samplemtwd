@@ -19,45 +19,46 @@ class MyTDataFamily extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const page = req.params.page;
-    let responseData = {
+    let responseData: any = {
       svcInfo: svcInfo,
       isApp: BrowserHelper.isApp(req)
     };
 
-    switch ( page ) {
+    switch (page) {
       case 'complete':
         res.render('family/myt-data.family.complete.html', responseData);
         break;
       case 'setting':
-        responseData = Object.assign(
-          responseData,
-          { immediatelyInfo: this.getImmediatelyInfo() },
-          { monthlyInfo: this.getMonthlyInfo() }
-        );
+        responseData = {
+          ...responseData,
+          immediatelyInfo: this.getImmediatelyInfo(),
+          monthlyInfo: this.getMonthlyInfo()
+        };
 
         res.render('family/myt-data.family.setting.html', responseData);
         break;
       default:
-        responseData = Object.assign(
-          {},
-          responseData,
-          { familyInfo: this.getRemainDataInfo() }
-        );
+        responseData = {
+          ...responseData,
+          familyInfo: this.getRemainDataInfo()
+        };
 
         res.render('family/myt-data.family.main.html', responseData);
     }
   }
 
   private getRemainDataInfo() {
-    let result = Object.assign({}, BFF_06_0044_familyInfo.result);
+    const result = BFF_06_0044_familyInfo.result;
 
-    result = Object.assign(result, {
+    const representation = result.mbrList.find(member => member.repYn === 'Y');
+
+    return {
+      ...result,
       total: this.convertTFamilyDataSet(result.total),
       used: this.convertTFamilyDataSet(result.used),
-      remained: this.convertTFamilyDataSet(result.remained)
-    });
-
-    return result;
+      remained: this.convertTFamilyDataSet(result.remained),
+      representation: representation ? representation.svcMgmtNum : ''
+    };
   }
 
   private getImmediatelyInfo() {
