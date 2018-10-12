@@ -25,11 +25,8 @@ Tw.ProductList.prototype = {
   DEFAULT_ORDER: 'recommand',
   ORDER: {
     recommand: 0,
-    lowprice: 1,
-    highprice: 2
-  },
-  DEFAULT_PARAMS: {
-    idxCtgCd: this.CODE,
+    highprice: 1,
+    lowprice: 2
   },
 
   init: function() {
@@ -51,13 +48,12 @@ Tw.ProductList.prototype = {
   },
  
   _handleLoadMore: function() {
-    $.ajax('http://localhost:3000/mock/product.' + this.TYPE + '.json').done($.proxy(this._handleSuccessLoadingData, this));
-    // this._apiService.request(Tw.API_CMD.BFF_10_0031, params).done($.proxy(this._handleSuccessLoadingData, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessLoadingData, this));
   },
 
   _handleSuccessLoadingData: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      // server error
+      Tw.Error(resp.code, resp.msg).pop();
       return;
     }
 
@@ -89,8 +85,8 @@ Tw.ProductList.prototype = {
   },
 
   _openOrderPopup: function () {
-    var list = Tw.PRODUCT_PLANS_ORDER.slice();
-    list[this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER]].option = 'checked';
+    var list = Tw.PRODUCT_PLANS_ORDER.slice(), searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
+    list[searchType] = { value: list[searchType].value, option:  'checked'};
 
     this._popupService.open(
       {
@@ -112,11 +108,11 @@ Tw.ProductList.prototype = {
     var $list = $target.parent();
     var orderType = this._getOrderType($list.find('li').index($target));
 
-    if (this._params.searchType === orderType) {
+    if (this._params.searchOrder === orderType) {
       return;
     }
 
-    this._params.searchType = orderType;
+    this._params.searchOrder = orderType;
     delete this._params.searchLastProdId;
     delete this._leftCount;
     this.$container.find('.fe-select-order').text($target.find('span').text());
@@ -138,8 +134,7 @@ Tw.ProductList.prototype = {
 
   _handleClickChangeFilters: function () {
     if (!this._filters) {
-      // this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.PLAN_CODE }).done($.proxy(this._openSelectFiltersPopup, this));
-      $.ajax('http://localhost:3000/mock/product.plans.filters.json').done($.proxy(this._handleLoadFilters, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this));
     } else {
       this._openSelectFiltersPopup();
     }
@@ -147,7 +142,7 @@ Tw.ProductList.prototype = {
 
   _handleLoadFilters: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      // server error
+      Tw.Error(resp.code, resp.msg).pop();
       return;
     }
 
@@ -235,26 +230,28 @@ Tw.ProductList.prototype = {
       return input.getAttribute('data-filter-id');
     }).join(',');
 
+
+    
     
     if (this._params.searchFltIds === searchFltIds) {
       this._popupService.close();
       return;
     }
-
-    _params = this.CLEAR_PARAMS;
+    
+    this._params = { idxCtgCd: this.CODE };
+    this._params.searchFltIds = searchFltIds;
     this.$list.empty();
 
-    $.ajax('http://localhost:3000/mock/product.' + this.TYPE + '.json').done($.proxy(this._handleLoadDataWithNewFilters, this));
-    // this._apiService.request(Tw.API_CMD.BFF_10_0031, params).done($.proxy(this._handleSuccessLoadingData, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this));
   },
 
   _handleLoadDataWithNewFilters: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      // server error
+      Tw.Error(resp.code, resp.msg).pop();
       return;
     }
 
-    if (resp.result.productCount === 0) {
+    if (resp.result.products.length === 0) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
     } else {

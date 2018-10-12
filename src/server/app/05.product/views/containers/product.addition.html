@@ -26,21 +26,25 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- 사용중인 상품 -->
-                <div class="cont-box gaps-style01">
-                   <div class="submain-myfeeproducts-wrap">
-                        <!-- <a href="#" class="submain-myfeeproducts">
-                            <h3 class="title">사용중인 상품</h3>
-                            <p class="text">band 데이터 퍼펙트S</p>
-                        </a> -->
-                       <a href="/myt/join/product/additions" class="submain-myfeeproducts">
-                           <h3 class="title">사용중인 상품</h3>
-                           <p class="text"><span class="tx-bold"><%= productData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= productData.myAdditions.addProdCnt %>건</p>
-                       </a>
-                   </div>
-                </div>
+                <% if (svcInfo && productData.myAdditions) { %>
+                    <div class="cont-box gaps-style01">
+                       <div class="submain-myfeeproducts-wrap">
+                            <!-- <a href="#" class="submain-myfeeproducts">
+                                <h3 class="title">사용중인 상품</h3>
+                                <p class="text">band 데이터 퍼펙트S</p>
+                            </a> -->
+                           <a href="/myt/join/product/additions" class="submain-myfeeproducts">
+                               <h3 class="title">사용중인 상품</h3>
+                               <p class="text"><span class="tx-bold"><%= productData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= productData.myAdditions.addProdCnt %>건</p>
+                           </a>
+                       </div>
+                    </div>
+                <% } %>
                 <!--//사용중인 상품 -->
 
                 <!-- 스와이프 -->
+                <% const banners = productData.banners; %>
+                <% if (banners && banners.length > 0) { %>
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner dot-btm slide-pagingtype">
                         <!-- .widget -->
@@ -48,8 +52,8 @@
                             <div class="widget-box slider1">
                                 <div class="slider-box">
                                     <ul class="slider">
-                                        <% for (let i = 0; i < productData.banners.length; i++) { %>
-                                            <% const banner = productData.banners[i]; %>
+                                        <% for (let i = 0; i < banners.length; i++) { %>
+                                            <% const banner = banners[i]; %>
                                             <li>
                                                 <% if (banner.bnnrTypCd === 'H') { %>
                                                     <button>
@@ -69,6 +73,7 @@
                         <!--// .widget -->
                     </div>
                 </div>
+                <% } %>
                 <!-- //스와이프 -->
 
                 <!--상품 퀵메뉴-->
@@ -115,6 +120,8 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- SKT의 대표 부가상품 -->
+                <% const bestAdditions = productData.bestAdditions.prodList; %>
+                <% if (bestAdditions && bestAdditions.length > 0) { %>
                 <div class="cont-box">
                     <div class="plan-title">
                          <h3 class="tit"><%= productData.bestAdditions.expsTitNm %></h3>
@@ -122,7 +129,6 @@
                     </div>
 
                     <ul class="recommendedrate-list">
-                        <% const bestAdditions = productData.bestAdditions.prodList; %>
                         <% const bestLen = Math.min(bestAdditions.length, 7); %>
                         <% for (let i = 0; i < bestLen; i++) { %>
                             <% const addition = bestAdditions[i]; %>
@@ -148,9 +154,12 @@
                         <% } %>
                     </ul>
                 </div>
+                <% } %>
                 <!-- //SKT의 대표 부가상품 -->
 
                 <!-- 스와이프 -->
+                <% const additionBanners = productData.additionBanners; %>
+                <% if (additionBanners && productData.additionBanners.length > 0) { %>
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner dot-btm slide-pagingtype">
                         <!-- .widget -->
@@ -158,8 +167,8 @@
                             <div class="widget-box slider1">
                                 <div class="slider-box">
                                     <ul class="slider">
-                                        <% for (let i = 0; i < productData.additionBanners.length; i++) { %>
-                                            <% const banner = productData.additionBanners[i]; %>
+                                        <% for (let i = 0; i < additionBanners.length; i++) { %>
+                                            <% const banner = additionBanners[i]; %>
                                             <li>
                                                 <a class="linkclick" href="<%= banner.twdViewUrl %>">
                                                     <img src="<%= banner.imgUrl %>" alt="<%= banner.imgAltVal %>">
@@ -174,16 +183,18 @@
                         <!--// .widget -->
                     </div>
                 </div>
+                <% } %>
                 <!-- //스와이프 -->
 
                 <!-- 부가상품 추천 -->
+                <% const recommendedAdditions = productData.recommendedAdditions.prodList; %>
+                <% if (recommendedAdditions && recommendedAdditions.length > 0) { %>
                 <div class="cont-box">
                     <div class="plan-title">
                         <h3 class="tit"><span class="tx-normal"><%= productData.recommendedAdditions.expsTitNm %></span></h3>
                     </div>
 
                     <ul class="recommendedrate-list">
-                        <% const recommendedAdditions = productData.recommendedAdditions.prodList; %>
                         <% const recommendLen = Math.min(recommendedAdditions.length, 5); %>
                         <% for (let i = 0; i < recommendLen; i++) { %>
                             <% const addition = recommendedAdditions[i]; %>
@@ -210,17 +221,19 @@
                         <% } %>
                     </ul>
                 </div>
+                <% } %>
                 <!-- //부가상품 추천 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- 추천태그 -->
+                <% const recommendedTags = productData.recommendedTags.tagList %>
+                <% if (recommendedTags) {%>
                 <div class="cont-box nogaps-btm widget">
                     <h3 class="suggest-tag-title">#<%= productData.recommendedTags.expsTitNm %></h3>
                     <div class="widget-box toggle02">
                         <div class="suggest-tag-list">
                             <ul>
-                            <% const recommendedTags = productData.recommendedTags.tagList %>
                             <% for (let i = 0; i < recommendedTags.length; i++) { %>
                                 <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
                                 <li><a href="/product/additions?tag=<%= recommendedTags[i].tagId %>" class="link">#<%= recommendedTags[i].tagNm %></a></li>
@@ -234,6 +247,7 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
                 <!--//추천태그 -->
 
                 <!-- 다른상품 더보기 -->
