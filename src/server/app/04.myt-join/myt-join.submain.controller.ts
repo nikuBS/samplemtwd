@@ -52,19 +52,17 @@ class MyTJoinSubmainController extends TwViewController {
     Observable.combineLatest(
       this._getMyInfo(),
       this._getMyHistory(),
-      this._getMyFeeProduct(),
       this._getAddtionalProduct(),
       this._getContractPlanPoint(),
       this._getInstallmentInfo(),
       this._getPausedState()
-    ).subscribe(([myif, myhs, myfp, myap, mycpp, myinsp, myps]) => {
-      // 가입정보 또는 가입요금상품이 없는 경우에는 에러페이지 이동
-      const info = myif.info || myfp.info;
-      if ( info ) {
+    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps]) => {
+      // 가입정보가 없는 경우에는 에러페이지 이동
+      if ( myif.info ) {
         res.render('error.server-error.html', {
           title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
-          code: info.code,
-          msg: info.msg,
+          code: myif.info.code,
+          msg: myif.info.msg,
           svcInfo: svcInfo
         });
         return false;
@@ -81,7 +79,6 @@ class MyTJoinSubmainController extends TwViewController {
           break;
       }
       data.myHistory = myhs; // 개통/변경 이력
-      data.myFeeProduct = myfp; // 나의가입요금상품
       data.myAddProduct = myap; // 나의 부가,결합상품
       data.myContractPlan = mycpp; // 무약정플랜
       data.myInstallement = myinsp; // 약정,할부 정보
@@ -170,25 +167,6 @@ class MyTJoinSubmainController extends TwViewController {
     return this.apiService.request(API_CMD.BFF_05_0068, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
-      } else {
-        // error
-        return {
-          info: resp
-        };
-      }
-    });
-  }
-
-  // 나의 가입 요금상품
-  _getMyFeeProduct() {
-    return this.apiService.request(API_CMD.BFF_05_0136, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        // 가입한 기본요금제 확인
-        if ( resp.result.feePlanProd ) {
-          return resp.result.feePlanProd;
-        } else {
-          return null;
-        }
       } else {
         // error
         return {
