@@ -10,27 +10,34 @@ Tw.MyTDataRechargeHistory = function (rootEl, histories) {
   this._histories = histories;
   this._popupService = Tw.Popup;
 
-  this._init();
-  this._bindEvent();
   this._cachedElement();
+  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTDataRechargeHistory.prototype = {
   DEFAULT_LIST_COUNT: 20,
+  CURRENT_YEAR: String(new Date().getFullYear()),
   _init: function () {
-    this._displayedYear = this.$container.find('li.year-tx').last().data('year').toString();
-    this._days = Object.keys(this._histories.data).reverse();
+    this._displayedYear = String(this.$container.find('li.year-tx').last().data('year') || this.CURRENT_YEAR);
     this._displayCount = this._histories.displayCount;
     this._dayIdx = this._histories.dayIdx;
     this._itemIdx = this._histories.itemIdx;
-    this._selectedIdx = 0;
-  
+    this._selectedIdx = this.$days.data('filter-index') || 0;
+    
     this._displayData = {
       0: {
         data: this._histories.data,
         count: this._histories.count
       }
     }
+
+    if (this._selectedIdx > 0 && !this.$moreBtn.hasClass('none')) {
+      this._setDisplayedData(this._selectedIdx);
+      this._days = Object.keys(this._displayData[this._selectedIdx].data).reverse();
+    } else {
+      this._days = Object.keys(this._histories.data).reverse();
+    } 
       
     this._itemsTmpl = Handlebars.compile($('#fe-tmpl-charge-items').html());
     this._dayTmpl = Handlebars.compile($('#fe-tmpl-charge-day').html());
@@ -57,6 +64,7 @@ Tw.MyTDataRechargeHistory.prototype = {
 
     if (this._itemIdx > 0) {
       if ((items.length - this._itemIdx) > this.DEFAULT_LIST_COUNT) {
+        
         items = selectedData[key].slice(this._itemIdx, this.DEFAULT_LIST_COUNT);
         this._itemIdx = items.length;
       } else {
@@ -129,30 +137,35 @@ Tw.MyTDataRechargeHistory.prototype = {
     this._popupService.close();
   },
 
+  _setDisplayedData: function (selectedIdx) {
+    var nData = { data: {}, count: 0 }, items = [];
+    for (var date in this._histories.data) {
+      items = this._histories.data[date].filter($.proxy(this._filterData, this));
+      
+      if (items.length > 0) {
+        nData.data[date] = items,
+        nData.count += items.length;
+      }
+    }
+
+    this._displayData[selectedIdx] = nData;
+  },
+
   _handleLoadFilteredData: function (selectedIdx) {
     if (selectedIdx === this._selectedIdx) {
       return;
     }
     
-    var nData = { data: {}, count: 0 }, items = [];
+    this._displayedYear = this.CURRENT_YEAR;
     this._selectedIdx = selectedIdx;
     this._displayCount = 0;
     this._dayIdx = 0;
 
     if (!this._displayData[selectedIdx]) {
-      for (var date in this._histories.data) {
-        items = this._histories.data[date].filter($.proxy(this._filterData, this));
-        
-        if (items.length > 0) {
-          nData.data[date] = items,
-          nData.count += items.length;
-        }
-      }
+      this._setDisplayedData(selectedIdx);
+    } 
 
-      this._displayData[selectedIdx] = nData;
-    } else {
-      nData = this._displayData[selectedIdx];
-    }
+    var nData = this._displayData[selectedIdx];
 
     this.$days.empty();
 

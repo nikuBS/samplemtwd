@@ -24,20 +24,21 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                <% const list = chargeData.display || chargeData.all; %>
                 <div class="cont-box nogaps noborder">
                     <div class="sub-top-box0">
-                      <button class="bt-dropdown big wd-auto" title="데이터 용량" aria-haspopup="true">전체<span class="ico"></span></button>
-                      <p class="total-num-tx">총<strong><%= chargeData.count %></strong>건</p>
+                      <button class="bt-dropdown big wd-auto" title="데이터 용량" aria-haspopup="true"><%= list.typeName %><span class="ico"></span></button>
+                      <p class="total-num-tx">총<strong><%= list.count %></strong>건</p>
                     </div>
                 </div>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder">
                     <div class="list-comp-history">
-                        <ul class="comp-box">
+                        <ul class="comp-box" data-filter-index="<%= chargeData.filterIdx %>">
                             <% let displayCount = 0, dIdx = 0, iIdx, displayedYear = (new Date()).getFullYear().toString(); %>
-                            <% const keys = Object.keys(chargeData.data).reverse(), DEFAULT_LIST_COUNT = 20; %>
+                            <% const keys = Object.keys(list.data).reverse(), DEFAULT_LIST_COUNT = 20; %>
                             <% for (;dIdx < keys.length; dIdx++) { %>
-                                <% const key = keys[dIdx], items = chargeData.data[key], itemYear = key.substring(0, 4); %>
+                                <% const key = keys[dIdx], items = list.data[key], itemYear = key.substring(0, 4); %>
                                 <% if (itemYear !== displayedYear) { %>
                                     <li class="year-tx" data-year="<%= itemYear %>"><%= itemYear %></li>
                                 <% displayedYear = itemYear;
@@ -80,9 +81,8 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-                <% if (chargeData.count > DEFAULT_LIST_COUNT) { %>
-                  <div class="bt-more"><button>더보기 (<%= chargeData.count - displayCount %>)</button></div>  
-                <% } %>
+                <% const leftCount = list.count - displayCount; %>
+                <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기 (<%= leftCount %>)</button></div>  
             </div>
         </div>
         <!--// #contents -->
@@ -91,7 +91,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify({ ...chargeData, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
+    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify({ ...chargeData.all, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
