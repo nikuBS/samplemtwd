@@ -54,9 +54,9 @@ Tw.MainHome.prototype = {
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
     console.log('layerType : ', layerType);
-    // if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       this._lineRegisterLayer.openRegisterLinePopup(layerType);
-    // }
+    }
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
@@ -155,7 +155,6 @@ Tw.MainHome.prototype = {
       .fail($.proxy(this._failMicroPayData, this));
   },
   _successMicroPayData: function (element, resp) {
-    console.log('micro', resp);
     var result = {
       showMicro: false
     };
@@ -172,7 +171,7 @@ Tw.MainHome.prototype = {
 
   },
   _parseMicroData: function (microData) {
-    if(microData.histories.length > 0) {
+    if(microData.payHistoryCnt > 0) {
       return {
         showMicro: true,
         invEndDt: Tw.DateHelper.getShortDateNoDot(microData.toDt),
