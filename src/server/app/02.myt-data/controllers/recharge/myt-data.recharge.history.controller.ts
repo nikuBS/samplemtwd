@@ -12,14 +12,6 @@ import { MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT, MYT_DATA_CHARGE_TYPES as
 
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import {
-  DATA_GIFTS,
-  LIMIT_CHARGES,
-  TING_CHARGES,
-  TING_GIFTS,
-  REFILL_USAGES,
-  REFILL_GIFTS
-} from '../../../../mock/server/myt-data.recharge.history.mock';
 
 enum RechargeTypes {
   DATA_GIFT = 1,
@@ -64,325 +56,323 @@ export default class MyTDataRechargeHistory extends TwViewController {
   private toDt: string = DateHelper.getShortDate(new Date());
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // Observable.combineLatest(
-    const histories = [
+    Observable.combineLatest(
       this.getDataGifts(),
       this.getLimitCharges(),
       this.getTingCharges(),
       this.getTingGifts(),
       this.getRefillUsages(),
       this.getRefillGifts()
-    ];
-    // ).subscribe(histories => {
-    const chargeData: { all: IChargeData; display?: IChargeData, filterIdx?: number } = {
-      all: this.mergeCharges(histories)
-    };
-    let filterIdx = -1;
+    ).subscribe(histories => {
+      const chargeData: { all: IChargeData; display?: IChargeData; filterIdx?: number } = {
+        all: this.mergeCharges(histories)
+      };
+      let filterIdx = -1;
 
-    switch (req.query.filter) {
-      case 'data-gifts':
-        filterIdx = 0;
-        break;
-      case 'limit-charges':
-        filterIdx = 1;
-        break;
-      case 'ting-charges':
-        filterIdx = 2;
-        break;
-      case 'ting-gifts':
-        filterIdx = 3;
-        break;
-      case 'refill-usages':
-        filterIdx = 4;
-        break;
-      case 'refill-gifts':
-        filterIdx = 5;
-        break;
-    }
-
-    if (filterIdx >= 0) {
-      const display = histories[filterIdx];
-      if (display) {
-        chargeData.display = display;
-      }
-      chargeData.filterIdx = filterIdx + 1;
-    }
-
-    res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData });
-    // });
-  }
-
-  private getDataGifts = (): IChargeData | null => {
-    // return this.apiService.request(API_CMD.BFF_06_0018, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
-    const resp = DATA_GIFTS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    const data = resp.result.reduce((nData, item) => {
-      const key = item.opDt;
-      const amount = Number(item.dataQty);
-
-      if (!nData[key]) {
-        nData[key] = [];
-      }
-
-      nData[key].push({
-        type: RechargeTypes.DATA_GIFT,
-        typeName: TypeNames.DATA_GIFT,
-        date: DateHelper.getShortDateNoYear(key),
-        badge: {
-          icon: BadgeTypes.GIFT,
-          text: ChargeTypeNames.GIFT
-        },
-        right:
-          amount > 1000
-            ? {
-                amount: (amount / 1000).toFixed(1),
-                unit: UNIT.GB,
-                color: item.type === '1' ? 'red' : 'blue'
-              }
-            : {
-                amount: amount,
-                unit: UNIT.MB,
-                color: item.type === '1' ? 'red' : 'blue'
-              },
-        bottom: item.giftType === 'GC' ? [item.svcNum, ChargeTypeNames.FIXED] : [item.svcNum]
-      });
-
-      return nData;
-    }, {});
-
-    return {
-      data,
-      count: resp.result.length,
-      typeName: TypeNames.DATA_GIFT
-    };
-    // });
-  }
-
-  private getLimitCharges = (): IChargeData | null => {
-    // return this.apiService
-    //   .request(API_CMD.BFF_06_0042, { fromDt: this.fromDt, toDt: this.toDt, type: 1 })
-    //   .map((resp: { code: string; result: any }) => {
-    const resp = LIMIT_CHARGES;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    const data = resp.result.reduce((nData, item) => {
-      const key = item.opDt;
-
-      if (!nData[key]) {
-        nData[key] = [];
-      }
-
-      nData[key].push({
-        type: RechargeTypes.LIMIT_CHARGE,
-        typeName: TypeNames.LIMIT_CHARGE,
-        date: DateHelper.getShortDateNoYear(key),
-        refundable: item.opTypCd === '1' && this.toDt === key,
-        badge: {
-          icon: BadgeTypes.CHARGE,
-          text: ChargeTypeNames.CHARGE
-        },
-        right: {
-          amount: FormatHelper.addComma(item.amt),
-          unit: UNIT.WON,
-          color: 'blue'
-        },
-        bottom: [item.opOrgNm]
-      });
-
-      return nData;
-    }, {});
-
-    return {
-      data,
-      count: resp.result.length,
-      typeName: TypeNames.LIMIT_CHARGE
-    };
-    // });
-  }
-
-  private getTingCharges = (): IChargeData | null => {
-    // return this.apiService.request(API_CMD.BFF_06_0032, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
-    const resp = TING_CHARGES;
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    const data = resp.result.reduce((nData, item) => {
-      const key = item.opDt;
-
-      if (!nData[key]) {
-        nData[key] = [];
-      }
-
-      nData[key].push({
-        type: RechargeTypes.TING_CHARGE,
-        typeName: TypeNames.TING_CHARGE,
-        date: DateHelper.getShortDateNoYear(key),
-        right: {
-          amount: FormatHelper.addComma(item.amt),
-          unit: UNIT.WON,
-          color: item.opTypCd === '2' || item.opTypCd === '4' ? 'gray' : 'blue'
-        },
-        badge: {
-          icon: BadgeTypes.CHARGE,
-          text: ChargeTypeNames.CHARGE
-        },
-        refundable: item.refundableYn === 'Y',
-        bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
-      });
-
-      return nData;
-    }, {});
-
-    return {
-      data,
-      count: resp.result.length,
-      typeName: TypeNames.TING_CHARGE
-    };
-    // });
-  }
-
-  private getTingGifts = (): IChargeData | null => {
-    // return this.apiService.request(API_CMD.BFF_06_0026, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
-    const resp = TING_GIFTS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    const data = resp.result.reduce((nData, item) => {
-      const key = item.opDt;
-
-      if (!nData[key]) {
-        nData[key] = [];
-      }
-
-      nData[key].push({
-        type: RechargeTypes.TING_GIFT,
-        typeName: TypeNames.TING_GIFT,
-        date: DateHelper.getShortDateNoYear(key),
-        right: {
-          amount: FormatHelper.addComma(item.amt),
-          unit: UNIT.WON,
-          color: item.opTypCd === '1' ? 'red' : 'blue'
-        },
-        badge: {
-          icon: BadgeTypes.GIFT,
-          text: ChargeTypeNames.GIFT
-        },
-        bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
-      });
-
-      return nData;
-    }, {});
-
-    return {
-      data,
-      count: resp.result.length,
-      typeName: TypeNames.TING_GIFT
-    };
-    // });
-  }
-
-  private getRefillUsages = (): IChargeData | null => {
-    // return this.apiService.request(API_CMD.BFF_06_0002, {}).map((resp: { code: string; result: any }) => {
-    const resp = REFILL_USAGES;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    const data = resp.result.reduce((nData, item) => {
-      const key = item.copnUseDt;
-
-      if (!nData[key]) {
-        nData[key] = [];
-      }
-
-      let subIdx = 0;
-
-      switch (item.copnDtlClCd) {
-        case 'AAA21': // 망내음성 20%
-        case 'AAA22': // 망외음성 20%
-          subIdx = 5;
+      switch (req.query.filter) {
+        case 'data-gifts':
+          filterIdx = 0;
           break;
-        case 'AAA10': // 데이터 100%
-        case 'AAA30': // 데이터 무제한
-          subIdx = 4;
+        case 'limit-charges':
+          filterIdx = 1;
           break;
-        case 'AAA20': // 음성 20%
-        case 'AAA40': // 음성 무제한
-          subIdx = 3;
+        case 'ting-charges':
+          filterIdx = 2;
+          break;
+        case 'ting-gifts':
+          filterIdx = 3;
+          break;
+        case 'refill-usages':
+          filterIdx = 4;
+          break;
+        case 'refill-gifts':
+          filterIdx = 5;
           break;
       }
 
-      nData[key].push({
-        type: RechargeTypes.REFILL_USAGE,
-        typeName: TypeNames.REFILL_USAGE,
-        date: DateHelper.getShortDateNoYear(key),
-        badge: {
-          icon: BadgeTypes.CHARGE,
-          text: ChargeTypeNames.CHARGE
-        },
-        right: {
-          type: item.copnDtlClNm.substring(0, subIdx),
-          amount: item.copnDtlClNm.substring(subIdx),
-          color: 'blue'
+      if (filterIdx >= 0) {
+        const display = histories[filterIdx];
+        if (display) {
+          chargeData.display = display;
         }
-      });
-
-      return nData;
-    }, {});
-
-    return {
-      data,
-      count: resp.result.length,
-      typeName: TypeNames.REFILL_USAGE
-    };
-    // });
-  }
-
-  private getRefillGifts = (): IChargeData | null => {
-    // return this.apiService.request(API_CMD.BFF_06_0003, { type: 0 }).map((resp: { code: string; result: any }) => {
-    const resp = REFILL_GIFTS;
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    const data = resp.result.reduce((nData, item) => {
-      const key = item.copnOpDt;
-
-      if (!nData[key]) {
-        nData[key] = [];
+        chargeData.filterIdx = filterIdx + 1;
       }
 
-      nData[key].push({
-        type: RechargeTypes.REFILL_GIFT,
-        typeName: TypeNames.REFILL_GIFT,
-        date: DateHelper.getShortDateNoYear(key),
-        badge: {
-          icon: BadgeTypes.GIFT,
-          text: ChargeTypeNames.GIFT
-        },
-        bottom: [item.svcNum]
+      res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData });
+    });
+  }
+
+  private getDataGifts = () => {
+    return this.apiService.request(API_CMD.BFF_06_0018, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
+      // const resp = DATA_GIFTS;
+
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
+
+      const data = resp.result.reduce((nData, item) => {
+        const key = item.opDt;
+        const amount = Number(item.dataQty);
+
+        if (!nData[key]) {
+          nData[key] = [];
+        }
+
+        nData[key].push({
+          type: RechargeTypes.DATA_GIFT,
+          typeName: TypeNames.DATA_GIFT,
+          date: DateHelper.getShortDateNoYear(key),
+          badge: {
+            icon: BadgeTypes.GIFT,
+            text: ChargeTypeNames.GIFT
+          },
+          right:
+            amount > 1000
+              ? {
+                  amount: (amount / 1000).toFixed(1),
+                  unit: UNIT.GB,
+                  color: item.type === '1' ? 'red' : 'blue'
+                }
+              : {
+                  amount: amount,
+                  unit: UNIT.MB,
+                  color: item.type === '1' ? 'red' : 'blue'
+                },
+          bottom: item.giftType === 'GC' ? [item.svcNum, ChargeTypeNames.FIXED] : [item.svcNum]
+        });
+
+        return nData;
+      }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.DATA_GIFT
+      };
+    });
+  }
+
+  private getLimitCharges = () => {
+    return this.apiService
+      .request(API_CMD.BFF_06_0042, { fromDt: this.fromDt, toDt: this.toDt, type: 1 })
+      .map((resp: { code: string; result: any }) => {
+        // const resp = LIMIT_CHARGES;
+
+        if (resp.code !== API_CODE.CODE_00) {
+          return null;
+        }
+
+        const data = resp.result.reduce((nData, item) => {
+          const key = item.opDt;
+
+          if (!nData[key]) {
+            nData[key] = [];
+          }
+
+          nData[key].push({
+            type: RechargeTypes.LIMIT_CHARGE,
+            typeName: TypeNames.LIMIT_CHARGE,
+            date: DateHelper.getShortDateNoYear(key),
+            refundable: item.opTypCd === '1' && this.toDt === key,
+            badge: {
+              icon: BadgeTypes.CHARGE,
+              text: ChargeTypeNames.CHARGE
+            },
+            right: {
+              amount: FormatHelper.addComma(item.amt),
+              unit: UNIT.WON,
+              color: 'blue'
+            },
+            bottom: [item.opOrgNm]
+          });
+
+          return nData;
+        }, {});
+
+        return {
+          data,
+          count: resp.result.length,
+          typeName: TypeNames.LIMIT_CHARGE
+        };
       });
+  }
 
-      return nData;
-    }, {});
+  private getTingCharges = () => {
+    return this.apiService.request(API_CMD.BFF_06_0032, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
+      // const resp = TING_CHARGES;
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
 
-    return {
-      data,
-      count: resp.result.length,
-      typeName: TypeNames.REFILL_GIFT
-    };
-    // });
+      const data = resp.result.reduce((nData, item) => {
+        const key = item.opDt;
+
+        if (!nData[key]) {
+          nData[key] = [];
+        }
+
+        nData[key].push({
+          type: RechargeTypes.TING_CHARGE,
+          typeName: TypeNames.TING_CHARGE,
+          date: DateHelper.getShortDateNoYear(key),
+          right: {
+            amount: FormatHelper.addComma(item.amt),
+            unit: UNIT.WON,
+            color: item.opTypCd === '2' || item.opTypCd === '4' ? 'gray' : 'blue'
+          },
+          badge: {
+            icon: BadgeTypes.CHARGE,
+            text: ChargeTypeNames.CHARGE
+          },
+          refundable: item.refundableYn === 'Y',
+          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
+        });
+
+        return nData;
+      }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.TING_CHARGE
+      };
+    });
+  }
+
+  private getTingGifts = () => {
+    return this.apiService.request(API_CMD.BFF_06_0026, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
+      // const resp = TING_GIFTS;
+
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
+
+      const data = resp.result.reduce((nData, item) => {
+        const key = item.opDt;
+
+        if (!nData[key]) {
+          nData[key] = [];
+        }
+
+        nData[key].push({
+          type: RechargeTypes.TING_GIFT,
+          typeName: TypeNames.TING_GIFT,
+          date: DateHelper.getShortDateNoYear(key),
+          right: {
+            amount: FormatHelper.addComma(item.amt),
+            unit: UNIT.WON,
+            color: item.opTypCd === '1' ? 'red' : 'blue'
+          },
+          badge: {
+            icon: BadgeTypes.GIFT,
+            text: ChargeTypeNames.GIFT
+          },
+          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
+        });
+
+        return nData;
+      }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.TING_GIFT
+      };
+    });
+  }
+
+  private getRefillUsages = () => {
+    return this.apiService.request(API_CMD.BFF_06_0002, {}).map((resp: { code: string; result: any }) => {
+      // const resp = REFILL_USAGES;
+
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
+
+      const data = resp.result.reduce((nData, item) => {
+        const key = item.copnUseDt;
+
+        if (!nData[key]) {
+          nData[key] = [];
+        }
+
+        let subIdx = 0;
+
+        switch (item.copnDtlClCd) {
+          case 'AAA21': // 망내음성 20%
+          case 'AAA22': // 망외음성 20%
+            subIdx = 5;
+            break;
+          case 'AAA10': // 데이터 100%
+          case 'AAA30': // 데이터 무제한
+            subIdx = 4;
+            break;
+          case 'AAA20': // 음성 20%
+          case 'AAA40': // 음성 무제한
+            subIdx = 3;
+            break;
+        }
+
+        nData[key].push({
+          type: RechargeTypes.REFILL_USAGE,
+          typeName: TypeNames.REFILL_USAGE,
+          date: DateHelper.getShortDateNoYear(key),
+          badge: {
+            icon: BadgeTypes.CHARGE,
+            text: ChargeTypeNames.CHARGE
+          },
+          right: {
+            type: item.copnDtlClNm.substring(0, subIdx),
+            amount: item.copnDtlClNm.substring(subIdx),
+            color: 'blue'
+          }
+        });
+
+        return nData;
+      }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.REFILL_USAGE
+      };
+    });
+  }
+
+  private getRefillGifts = () => {
+    return this.apiService.request(API_CMD.BFF_06_0003, { type: 0 }).map((resp: { code: string; result: any }) => {
+      // const resp = REFILL_GIFTS;
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
+
+      const data = resp.result.reduce((nData, item) => {
+        const key = item.copnOpDt;
+
+        if (!nData[key]) {
+          nData[key] = [];
+        }
+
+        nData[key].push({
+          type: RechargeTypes.REFILL_GIFT,
+          typeName: TypeNames.REFILL_GIFT,
+          date: DateHelper.getShortDateNoYear(key),
+          badge: {
+            icon: BadgeTypes.GIFT,
+            text: ChargeTypeNames.GIFT
+          },
+          bottom: [item.svcNum]
+        });
+
+        return nData;
+      }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.REFILL_GIFT
+      };
+    });
   }
 
   private mergeCharges = (histories: Array<IChargeData | null>): IChargeData => {
