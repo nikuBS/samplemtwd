@@ -575,4 +575,8 @@ export const API_T_FAMILY_ERROR = {
   BLN0011: 'BLN0011'  // 	T가족모아 가입 불가능한 요금제
 };
 
+export const API_TAX_REPRINT_ERROR = {
+  BIL0018: 'BIL0018' // 사업자 번호를 조회할 수 없습니다.
+};
+
 
