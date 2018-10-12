@@ -297,3 +297,13 @@ Tw.PRODUCT_LIST_DEVICE_FILTERS = [
   }
 ];
 
+Tw.RESELL_TERMS = {
+  title: '재판매 이용약관',
+  data: [{
+    'list':[
+      {'value': '초고속인터넷 이용약관', 'option': 'fe-action' },
+      {'value': '인터넷전화 이용약관', 'option': 'fe-action' },
+      {'value': '시내전화 이용약관', 'option': 'fe-action' }
+    ]
+  }]
+};
