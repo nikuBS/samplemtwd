@@ -1,0 +1,109 @@
+<div class="container">
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="myinfo-wrap">
+      <div class="myinfo-cont">
+        <div class="title">
+          <span class="blind">상품명</span>
+          <span class="title-l"><%= feePlan.feePlanProd.prodNm %></span>
+        </div>
+      </div>
+      <div class="info-detail mt40">
+        <div class="tb-type">
+          <ul>
+          <!-- @todo TBD; API 미작업 -->
+          <% if ( svcInfo.svcAttrCd === 'S1' ) { %>
+            <li>
+              <dl>
+                <dt>속도</dt>
+                <dd>500 Mbps</dd>
+              </dl>
+            </li>
+          <% } %>
+          <% if ( svcInfo.svcAttrCd === 'S2' ) { %>
+            <li>
+              <dl>
+                <dt>채널</dt>
+                <dd>214개 이상</dd>
+              </dl>
+            </li>
+          <% } %>
+          <!-- // -->
+          </ul>
+        </div>
+        <div class="price-wrap mt20">
+          <span class="tx-sub"><span class="tx-bold vbl">월정액</span> 부가세포함</span>
+          <span class="tx-price">
+            <span class="price"><%= feePlan.feePlanProd.basFeeAmt %></span>
+            <span class="unit">원</span>
+          </span>
+          <span class="tx-extra">3년 약정시+초고속 결합시</span><!-- @todo TBD; API 미작업 -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <% if ( false ) { // @todo API 명세에 옵션 요금제 미작업 %>
+  <div class="ti-caption-gray">
+    <h3 class="tit">옵션요금제</h3>
+  </div>
+
+  <!-- .cont-box -->
+  <div class="cont-box nogaps-hoz">
+    <div class="history-list type2">
+      <ul>
+        <li>
+          <div class="li-elem">
+            <button class="bt-detail">
+              <div class="title-box">
+                <span class="tit">선택약정 할인 제도</span>
+                <span class="sub-tit">가입일 2018.8.15</span>
+              </div>
+            </button>
+            <button class="bt-link-tx underline">가입내역 조회</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+
+  <% if (feePlan.dcBenefits.length > 0) { %>
+  <div class="ti-caption-gray">
+    <h3 class="tit">무료 할인 혜택</h3>
+  </div>
+
+  <!-- .cont-box -->
+  <div class="cont-box nogaps-hoz">
+    <ul class="nocharge-list">
+      <% for (var i in feePlan.dcBenefits) { %>
+      <li>
+        <dl>
+          <dt>
+            <strong class="tit"><%= feePlan.dcBenefits[i].dcOferNm %></strong>
+            <div class="sub-info">
+              <% if ( feePlan.dcBenefits[i].penText ) { %><span><%= feePlan.dcBenefits[i].penText %></span><% } %>
+              <% if ( feePlan.dcBenefits[i].dcObjInvItmTypNm ) { %><span><%= feePlan.dcBenefits[i].dcObjInvItmTypNm %> 대상</span><% } %>
+            </div>
+          </dt>
+          <dd>
+            <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
+            <span class="str"><%= feePlan.dcBenefits[i].dcVal %></span><%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %>
+            <% } %>
+          </dd>
+        </dl>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+
+  <!-- TBD -->
+  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;">
+  <!--// TBD -->
+</div>

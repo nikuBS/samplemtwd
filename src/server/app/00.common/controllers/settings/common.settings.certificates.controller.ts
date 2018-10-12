@@ -6,7 +6,6 @@
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import BrowserHelper from '../../../../utils/browser.helper';
 
 export default class CommonSettingsCertificates extends TwViewController {
 

@@ -6,9 +6,8 @@
 
 Tw.MyTFarePaymentCommon = function (rootEl) {
   this.$container = rootEl;
-  this.$originNode = this.$container.find('.fe-origin');
+  this.$unpaidList = this.$container.find('.fe-unpaid-list');
   this.$appendTarget = this.$container.find('.fe-selected-line');
-  this.$layer = this.$container.find('#select-line');
 
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
@@ -18,63 +17,96 @@ Tw.MyTFarePaymentCommon = function (rootEl) {
 
 Tw.MyTFarePaymentCommon.prototype = {
   _init: function () {
-    this._historyService.init('hash');
-    this._initAmount();
-    this._initNode();
+    this._initVariables();
+    this._setInitArray();
     this._bindEvent();
   },
-  _initAmount: function () {
+  _initVariables: function () {
+    this._selectedLine = [];
     this._amount = this.$container.find('.fe-amount').data('value');
+    this._isClicked = false;
   },
-  _initNode: function () {
-    var $target = this.$layer.find('.checked');
-    this._cloneNode($target);
+  _setInitArray: function () {
+    var $targetId = this.$unpaidList.find('.fe-line.checked').attr('id');
+    this._selectedLine.push($targetId);
   },
   _bindEvent: function () {
-    this.$container.on('click', '.fe-select-line', $.proxy(this._openSelectLine, this));
-    this.$layer.on('change', '.fe-layer-select', $.proxy(this._onCheck, this));
-    this.$layer.on('click', '.fe-layer-done', $.proxy(this._onClickDoneBtn, this));
+    this.$container.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
   },
-  _openSelectLine: function () {
-    this._historyService.goHash('#select-line');
+  _selectLine: function () {
+    this._popupService.open({
+        'hbs': 'MF_01_01_02'
+      },
+      $.proxy(this._openSelectLine, this),
+      $.proxy(this._afterClose, this),
+      'select-line'
+    );
   },
-  _onCheck: function (event) {
-    var $target = $(event.currentTarget);
+  _openSelectLine: function ($layer) {
+    this.$layer = $layer;
+    this._bindLayerEvent();
+  },
+  _bindLayerEvent: function () {
+    this.$unpaidList.find('.fe-line').each($.proxy(this._setEachData, this));
+    this.$layer.on('click', '.fe-select', $.proxy(this._onClickDoneBtn, this));
+  },
+  _setEachData: function (idx, target) {
+    var $target = $(target).clone();
+    $target.removeClass('none');
 
-    if ($target.hasClass('checked')) {
-      this._cloneNode($target);
-      this._amount += $target.find('.fe-layer-amount').data('value');
+    var $id = $target.attr('id');
+    var isChecked = false;
 
-    } else {
-      this.$appendTarget.find('#clone' + $target.attr('id')).remove();
-      this._amount -= $target.find('.fe-layer-amount').data('value');
+    for (var i in this._selectedLine) {
+      if (this._selectedLine[i] === $id) {
+        isChecked = true;
+      }
     }
-  },
-  _cloneNode: function ($target) {
-    var $clone = this.$originNode.clone();
-    $clone.removeClass('fe-origin none');
-    $clone.attr({
-      'id': 'clone' + $target.attr('id'),
-      'data-bill-acnt-num': $target.attr('data-bill-acnt-num'),
-      'data-svc-mgmt-num': $target.attr('data-svc-mgmt-num')
-    });
 
-    $clone.find('.fe-svc-info').text($target.find('.fe-layer-svc-info').text());
-    $clone.find('.fe-date').attr('data-value', $target.find('.fe-layer-inv-dt').data('value'))
-      .text($target.find('.fe-layer-inv-dt').text());
-    $clone.find('.fe-fee').text($target.find('.fe-layer-amount span').text());
-    $clone.appendTo(this.$appendTarget);
+    if (isChecked) {
+      $target.addClass('checked');
+      $target.attr('aria-checked', 'true');
+      $target.find('input').attr('checked', 'checked');
+    } else {
+      $target.removeClass('checked');
+      $target.attr('aria-checked', 'false');
+      $target.find('input').removeAttr('checked');
+    }
+    $target.on('change', $.proxy(this._onCheck, this));
+    $target.appendTo(this.$layer.find('.fe-line-list'));
   },
   _onClickDoneBtn: function () {
     if (this._amount === 0) {
       this._popupService.openAlert('select line');
     } else {
+      this._isClicked = true;
+      this._popupService.close();
+    }
+  },
+  _afterClose: function () {
+    if (this._isClicked) {
       this._setAmount();
-      this._historyService.goBack();
     }
   },
   _setAmount: function () {
     this.$container.find('.fe-amount').text(Tw.FormatHelper.addComma(this._amount.toString()));
+  },
+  _onCheck: function (event) {
+    var $target = $(event.currentTarget);
+    var $id = $target.attr('id');
+
+    if ($target.hasClass('checked')) {
+      this._selectedLine.push($id);
+      this._amount += $target.find('.fe-money').data('value');
+
+    } else {
+      for (var i in this._selectedLine) {
+        if (this._selectedLine[i] === $id) {
+          this._selectedLine.splice(i, 1);
+        }
+      }
+      this._amount -= $target.find('.fe-money').data('value');
+    }
   },
   getAmount: function () {
     return this._amount;

@@ -1,0 +1,40 @@
+<!--
+* FileName: myt-join.info.no-agreement.component.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.10.08
+-->
+<script id="tmplList" type="text/x-handlebars-template">
+    {{#if data.hasYear}}
+    <div class="ti-caption-gray">
+        <h3 class="tit year">{{data.year}}</h3>
+    </div>
+    {{/if}}
+
+    <div class="cont-box nogaps">
+        <div class="history-list">
+            <ul>
+            {{#each data.list}}
+                <li>
+                    <span class="tx-date">{{formatDate date}}</span>
+                    {{#each subList}}
+                    <div class="no-link">
+                        <div class="li-elem">
+                            <div class="title-box">
+                                <span class="tit">포인트 {{chgTyp}}</span>
+                                <span class="sub-tit">
+                                    {{#if hasDtlCttDate}}
+                                        <span>{{dtlCttDate}}</span>
+                                    {{/if}}
+                                    <span>{{dtlCtt}}</span>
+                                </span>
+                            </div>
+                            <div class="price"><span class="tx-price">{{removeKorean chgPt}}</span><span class="unit">점</span></div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>

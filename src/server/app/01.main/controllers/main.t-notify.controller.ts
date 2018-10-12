@@ -59,7 +59,7 @@ class MainTNotify extends TwViewController {
     const result = products.map((product) => {
       return {
         name: product.prodNm,
-        type: product.prodCd === PROD_CODE_E.DEFAULT ? T_NOTIFY_TYPE.PROD : PROD_CODE_E.ADD ? T_NOTIFY_TYPE.ADD : T_NOTIFY_TYPE.OPTION,
+        type: product.prodCd === PROD_CODE_E.DEFAULT ? T_NOTIFY_TYPE.PROD : T_NOTIFY_TYPE.ADD,
         scrbTermCd: product.scrbTermCd,
         showDate: DateHelper.getKoreanDateWithDay(product.rgstDt),
         showTime: DateHelper.getKoreanTime(product.rgstDt + product.rgstTm),

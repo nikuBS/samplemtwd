@@ -27,11 +27,11 @@
                         <% if (isLogin) { %>
                         <li>
                             <div class="link-long">
-                                <button>위치정보 이용동의 설정
+                                <a href="/common/settings/location">위치정보 이용동의 설정
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
@@ -66,19 +66,19 @@
                             </div>
                         </li>
                         <% if (isApp && isLogin) { %>
-                        <li>
+                        <li id="fe-bio">
                             <div class="link-long">
-                                <button>생체인증 설정
+                                <a id="fe-bio-link" href="">생체인증 설정
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <% } %>
                         <li>
                             <div class="link-long">
-                                <a href="/common/settings/terms">이용약관
+                                <a href="/common/settings/terms#sk">이용약관
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>

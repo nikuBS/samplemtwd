@@ -174,6 +174,34 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  JOIN_INFO_NO_AGREEMENT : {
+    title : '포인트 사용 유형',
+    data : [
+      {
+        'list': [
+          {'option': 'condition', 'attr': 'id="0"', value: '전체'},
+          {'option': 'condition', 'attr': 'id="1"', value: '포인트 사용'},
+          {'option': 'condition', 'attr': 'id="2"', value: '포인트 적립'},
+          {'option': 'condition', 'attr': 'id="3"', value: '포인트 소멸'}
+        ]
+      }
+    ]
+  },
+  FARE_PAYMENT_LIMIT: [
+    {
+      'list': [
+        {'option': 'limit', 'attr': 'id="500000"', value: '50만원'},
+        {'option': 'limit', 'attr': 'id="300000"', value: '30만원'},
+        {'option': 'limit', 'attr': 'id="200000"', value: '20만원'},
+        {'option': 'limit', 'attr': 'id="150000"', value: '15만원'},
+        {'option': 'limit', 'attr': 'id="120000"', value: '12만원'},
+        {'option': 'limit', 'attr': 'id="60000"', value: '6만원'},
+        {'option': 'limit', 'attr': 'id="50000"', value: '5만원'},
+        {'option': 'limit', 'attr': 'id="30000"', value: '3만원'},
+        {'option': 'limit', 'attr': 'id="10000"', value: '1만원'}
+      ]
+    }
+  ],
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
@@ -218,7 +246,16 @@ Tw.MYT_TPL = {
       '<span class="info-sub">{{svcNum}}</span></div></div><div class="lineinfo-data">' +
       '<span class="info-title">{{amt}} 원</span><span class="ico"></span></div>' +
       '</button></li>'
-  }
+  },
+  JOIN_SUBMAIN: {
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
+      '<div class="lineinfo-user d-table"><div class="ico2"><i></i></div>' +
+      '<div class="cont"><span class="info-title">{{nickNm}}' +
+      '</span><span class="info-sub">{{svcNum}}</span></div>' +
+      '</div><div class="lineinfo-data"><span class="ico"></span></div></button></li>'
+  },
+  MORE_BTN: '<div class="bt-more"><button>더보기</button></div>'
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
@@ -229,3 +266,44 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   {'value':'팅 요금 선물'},
   {'value':'데이터 음성 리필'}
 ];
+
+Tw.PRODUCT_PLANS_ORDER = [
+  {'value':'추천순'},
+  {'value':'높은 가격순'},
+  {'value':'낮은 가격순'}
+];
+
+Tw.PRODUCT_LIST_DEVICE_FILTERS = [
+  {
+    id: 'F01121',
+    name: 'LTE',
+    icon: 'lte'
+  }, {
+    id: 'F01122',
+    name: '3G',
+    icon: '3g'
+  }, {
+    id: 'F01123',
+    name: '일반폰',
+    icon: 'feature'
+  }, {
+    id: 'F01124',
+    name: '태블릿/<br>2nd Device',
+    icon: 'device'
+  }, {
+    id: 'F01125',
+    name: '선불폰',
+    icon: 'prepayment'
+  }
+];
+
+Tw.RESELL_TERMS = {
+  title: '재판매 이용약관',
+  data: [{
+    'list':[
+      {'value': '초고속인터넷 이용약관', 'option': 'fe-action' },
+      {'value': '인터넷전화 이용약관', 'option': 'fe-action' },
+      {'value': '시내전화 이용약관', 'option': 'fe-action' }
+    ]
+  }]
+};

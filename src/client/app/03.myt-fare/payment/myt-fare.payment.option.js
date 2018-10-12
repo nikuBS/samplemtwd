@@ -91,6 +91,12 @@ Tw.MyTFarePaymentOption.prototype = {
     this._popupService.openAlert(err.msg, err.code);
   },
   _changeAddress: function () {
+    this._popupService.open({
+      'hbs':'MF_05_02_02'
+    }, $.proxy(this._openChangeAddress, this));
+  },
+  _openChangeAddress: function () {
+
   },
   _isBackOrReload: function () {
     if (window.performance) {

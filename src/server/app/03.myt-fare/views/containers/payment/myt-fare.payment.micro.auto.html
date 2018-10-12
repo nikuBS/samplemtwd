@@ -5,7 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -15,103 +15,113 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-payment-micro-auto" class="wrap step">
-        <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html',
-        { title: '자동 선결제', svcInfo: svcInfo, option:{ back: 'step' } }); %>
-        <!--// #header -->
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
-                    <div class="form-data-tit-wrap">
-                        <strong class="tit">금액정보</strong>
-                        <button aria-haspopup="true" class="info-view-ic fe-amount-info">금액정보 정보보기</button>
+    <div id="myt-fare-payment-micro-auto" class="wrap">
+        <div class="popup-page tw-popup fixed-bottom h60">
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>자동 선결제</h1>
                     </div>
-                    <ul class="form-data-list">
-                        <li class="type2">
-                            <label class="tit">기준 금액</label>
-                            <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
-                                <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
-                            </button>
-                        </li>
-                        <li class="type2">
-                            <label class="tit">선결제 금액</label>
-                            <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
-                                <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
-                            </button>
-                        </li>
-                        <li class="mt20">
-                            <label class="tit" for="flab02">카드주명</label>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="flab02" type="text" value="<%= svcInfo.mbrNm %>" readonly />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab07">생년월일</label>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="flab07" class="fe-card-birth required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="예시)891124" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab04">카드번호</label>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="flab04" class="fe-card-number required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab05">유효기간</label>
-                            <div class="input-wrap-half">
-                                <span class="inputbox">
-                                    <span class="input">
-                                        <input id="flab05" class="fe-card-y required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               placeholder="YYYY" title="유효 년" maxlength="4">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
-                                <span class="inputbox">
-                                    <span class="input">
-                                        <input class="fe-card-m required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               placeholder="MM" title="유효 월" maxlength="2">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab06">비밀번호</label>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="flab06" class="fe-card-pw required-input-field" type="password" placeholder="앞 2자리" maxlength="2" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </li>
-                    </ul>
                 </div>
-                <!--// .cont-box -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button class="fe-pay" disabled="disabled">납부하기</button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
-                    </li>
-                </ul>
             </div>
+            <!--// #header -->
+            <!-- #contents -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-top">
+                        <div class="form-data-tit-wrap">
+                            <strong class="tit">금액정보</strong>
+                            <button aria-haspopup="true" class="info-view-ic fe-amount-info">금액정보 정보보기</button>
+                        </div>
+                        <ul class="form-data-list">
+                            <li class="type2">
+                                <label class="tit">기준 금액</label>
+                                <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
+                                    <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
+                                </button>
+                            </li>
+                            <li class="type2">
+                                <label class="tit">선결제 금액</label>
+                                <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
+                                    <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
+                                </button>
+                            </li>
+                            <li class="mt20">
+                                <label class="tit" for="flab02">카드주명</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab02" type="text" value="<%= svcInfo.mbrNm %>" readonly />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab07">생년월일</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab07" class="fe-card-birth required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="예시)891124" />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab04">카드번호</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab04" class="fe-card-number required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab05">유효기간</label>
+                                <div class="input-wrap-half">
+                                    <span class="inputbox">
+                                        <span class="input">
+                                            <input id="flab05" class="fe-card-y required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                   placeholder="YYYY" title="유효 년" maxlength="4">
+                                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                    <span class="inputbox">
+                                        <span class="input">
+                                            <input class="fe-card-m required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                   placeholder="MM" title="유효 월" maxlength="2">
+                                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab06">비밀번호</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab06" class="fe-card-pw required-input-field" type="password" placeholder="앞 2자리" maxlength="2" />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button class="fe-pay" disabled="disabled">납부하기</button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// #contents -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step fe-common-back">취소</button>
+            <!--// .popup-closeBtn -->
         </div>
-        <!--// #contents -->
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

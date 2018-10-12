@@ -1,0 +1,55 @@
+<%#
+* FileName: myt-join.submain.more-info.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.10.05
+%>
+
+<% if (data.type === 2) { %>
+    <% if (data.myInfo) { %>
+    <li>
+        <span class="title">서비스 약정</span>
+        <span class="tx-cont">
+            <%= data.myInfo.svcAgrmtMth %>(<%= data.myInfo.svcPrdStaDt %> ~ <%= data.myInfo.svcPrdEndDt %>)
+        </span>
+    </li>
+    <li>
+        <span class="title">세트 구분</span>
+        <span class="tx-cont">세트(유선상품 <%= data.myInfo.wireProdCnt %>개)</span>
+    </li>
+    <li>
+        <span class="title">세트 약정</span>
+        <span class="tx-cont">약정만료<br/>
+            (<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
+        </span>
+    </li>
+    <li>
+        <span class="title">설치장소</span>
+        <span class="tx-cont"><%= data.myInfo.address %></span>
+    </li>
+    <% } %>
+<% } else { %>
+    <% if (data.myHistory) { %>
+    <li>
+        <span class="title">개통 일자</span>
+        <span class="tx-cont"><%= data.hsDate %></span>
+    </li>
+    <% } %>
+    <!-- PPS 인 경우에는 가입비에 대한 정보가 없으므로 비노출 -->
+    <% if (data.myInfo) { %>
+    <li>
+        <span class="title">가입비 (<%= data.myInfo.apprAmt %>원)</span>
+        <span class="tx-cont"><%= data.myInfo.invBamt %>원 미청구</span>
+    </li>
+    <% } %>
+    <li>
+        <span class="title">고객보호 비밀번호</span>
+        <!-- 최초설정이 안된상태에서는 해당 화면을 볼수 없으므로 변경만 사용 -->
+        <span class="tx-cont">사용중
+            <button class="bt-link-tx underline" data-id="change-pwd">
+                비밀번호 변경
+            </button>
+        </span>
+    </li>
+<% } %>
+
+

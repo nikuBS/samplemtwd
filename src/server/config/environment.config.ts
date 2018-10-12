@@ -11,13 +11,18 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://m.tworld.co.kr:3000',
-    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SIGNGATE: {
+      host: '61.250.20.204',
+      port: 9014
+    }
   },
   development: {
-    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://bff-spring',
+    BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
-      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev.svc.cluster.local',
+      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc',
       port: 6379,
       db: 15
     },
@@ -25,13 +30,18 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://icp-dev.tworld.co.kr',
-    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SIGNGATE: {
+      host: '61.250.20.204',
+      port: 9014
+    }
   },
   staging: {
-    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://bff-spring',
+    BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg.svc.cluster.local',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc',
       port: 6379,
       db: 15
     },
@@ -39,7 +49,11 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://icp-stg.tworld.co.kr',
-    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SIGNGATE: {
+      host: '61.250.20.204',
+      port: 9014
+    }
   },
   production: {
     BFF_SERVER: '',
@@ -49,7 +63,11 @@ const environment = {
     TID_SERVER: '',
     TEST_SERVER: '',
     DOMAIN: '',
-    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SIGNGATE: {
+      host: 'relay.signgate.com',
+      port: 443
+    }
   }
 };
 

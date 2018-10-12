@@ -61,7 +61,7 @@ const PRODUCT_PLAN_GROUPS = {
         prodGrpNm: 'T플랜', //상품그룹명
         prodGrpDesc: 'DATA 맘껏쓰고 나눠쓰는 T플랜', //상품그룹설명
         prodGrpIconImgUrl: '', //그룹상품 아이콘 이미지 FULL URL
-        prodGrpFlagImgUrl: '', //그룹상품 FLAG 이미지 FULL URL
+        prodGrpFlagImgUrl: '/img/product/bg_products_badge.png', //그룹상품 FLAG 이미지 FULL URL
         prodList: [
           //상품목록
           {
@@ -139,7 +139,7 @@ const PRODUCT_RECOMMENDED_PLANS = {
   }
 };
 
-const PRODUCT_MY_ADDITIONAL = {
+const PRODUCT_MY_ADDITIONS = {
   code: '00',
   msg: '',
   result: {
@@ -348,7 +348,7 @@ export {
   PRODUCT_RECOMMENDED_PLANS,
   PRODUCT_RECOMMENDED_TAGS,
   PRODUCT_SEARCH_FILTERS,
-  PRODUCT_MY_ADDITIONAL,
+  PRODUCT_MY_ADDITIONS,
   PRODUCT_BEST_ADDITIONS,
   PRODUCT_RECOMMENDED_ADDITIONS,
   PRODUCT_ADDITIONAL_BANNERS

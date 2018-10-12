@@ -6,6 +6,11 @@ Tw.DATA_UNIT = {
   PB: 'PB'
 };
 
+Tw.CURRENCY_UNIT = {
+  WON: '원',
+  TEN_THOUSAND: '만원'
+};
+
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
@@ -29,12 +34,14 @@ Tw.POPUP_TITLE = {
   SELECT_PAYMENT_TYPE: '납부 유형',
   // SELECT_CARD_TYPE: '일시불',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
-  SELECT_CHARGE_TYPE: '충전/선물 유형'
+  SELECT_CHARGE_TYPE: '충전/선물 유형',
+  SELECT_ORDER: '정렬 기준을 선택해주세요'
 };
 
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
-  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.'
+  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
+  CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공'
 };
 
 Tw.CHART_TYPE = {
@@ -131,6 +138,12 @@ Tw.NON_PAYMENT = {
   }
 };
 
+Tw.MYT_DATA_TOTAL_SHARING_DATA = {
+  USED_DATA_PREFIX: '총 ',
+  USED_DATA_SUFFIX: ' 사용',
+  JOIN_T_FAMILY_SHARING: 'T가족모아 가입하기'
+};
+
 Tw.MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 MM월'
@@ -180,6 +193,22 @@ Tw.MYT_FARE_BILL_SET = {
   }
 };
 
+Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
+  PASSWORD: '비밀번호',
+  CONFIRM_PASSWORD: '비밀번호 확인',
+  CHANGE_PASSWORD: '변경할 비밀번호',
+  CONFIRM_CHANGE_PASSWORD: '변경할 비밀번호 확인',
+  BTN_NEW: '설정하기',
+  BTN_CHANGE: '변경하기'
+};
+
+Tw.MYT_FARE_PAYMENT_NAME = {
+  ACCOUNT: '계좌이체',
+  CARD: '체크/신용카드',
+  OK_CASHBAG: 'OK캐쉬백',
+  T_POINT: 'T포인트'
+};
+
 Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
@@ -190,7 +219,10 @@ Tw.ALERT_MSG_HOME = {
 
 Tw.ALERT_MSG_MYT_DATA = {
   UNSUBSCRIBE_MONTHLY_GIFT: '선택하신 자동 선물 내역을 삭제하시겠습니까?',
-  RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.'
+  RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
+  JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
+  JOIN_ONLY_CUSTOMER_CENTER_C: '고객센터를 통하여 신청하시면' + '<br />' + '그룹 구성을 동의 할 수 있는 SMS를 ' + '<br />' + '가족 구성원에게 보내드립니다.',
+  CALL_CUSTOMER_CENTER: '고객센터 전화하기'
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
@@ -198,10 +230,19 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
   COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.',
+  COMPLETE_CHANGE_LIMIT: '한도변경이 완료되었습니다.',
+  COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
+  NOT_ALLOWED_CHANGE_LIMIT: '한도 변경이 불가능합니다',
+  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후' + '<br/>' + '한도변경이 가능합니다.',
+  GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
+    BIL0030_C: 'SK텔레콤이 제공하는 통신과금서비스를 <br/> 이용하기 위한 사전 동의 무료 부가 서비스입니다.',
     BIL0033: '휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다.',
-    BIL0034: '법인실사용자 소액결제 부가서비스 가입 후 사용 가능합니다.'
+    BIL0033_C: '차단 해제를 원하시는 고객님은 <br/> 고객센터 [국번없이1599-0590]로 <br/> 문의해 주세요.',
+    BIL0034: '법인실사용자 소액결제 부가서비스 가입 후 사용 가능합니다.',
+    BIL0034_C: '가까운 지점/대리점에 방문하셔서 <br/> 가입가능 합니다.<br/>(신청자 본인 신분증 지참)',
+    MORE: '더 알아보기'
   },
   MICRO: '소액결제',
   CONTENTS: '콘텐츠이용료',
@@ -217,6 +258,8 @@ Tw.ALERT_MSG_MYT_FARE = {
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
+  ALERT_2_A39 : { TITLE : '알림' , MSG : '요금제 변경 알림 서비스가 신청 되었습니다.' },
+  ALERT_2_A40 : { TITLE : '알림' , MSG : '요금제 변경 가능일 알림이 해지 되었습니다.' },
   ALERT_2_A61 : { TITLE : '알림' , MSG : '비밀번호를 확인해주세요.' },
   ALERT_2_A62 : { TITLE : '알림' , MSG : '고객보호 비밀번호가 변경되었습니다.' },
   ALERT_2_A63 : { TITLE : '알림' , MSG : '비밀번호가 일치하지 않습니다.' },
@@ -224,7 +267,8 @@ Tw.ALERT_MSG_MYT_JOIN = {
 };
 
 Tw.ALERT_MSG_PRODUCT = {
-
+  ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
+  ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {
@@ -286,6 +330,7 @@ Tw.INFO = {
 Tw.URL_PATH = {
   OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/' + '' +
   'MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
+  SET_PASSWORD: 'http://www.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00003909',
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
@@ -325,4 +370,21 @@ Tw.SETTINGS_MENU = {
 Tw.PRODUCT_ADDITIONS_TERMINATE = {
   CONFIRM_POPUP: '해지 시 유의사항을 모두 확인 하였으며, 선택하신 상품을 해지 하시겠습니까?',
   CONFIRM_BUTTON: '해지하기'
+};
+
+Tw.NTV_FIDO_REGISTER_TXT = {
+  FINGER_ON: '등록된 지문이 있습니다.',
+  FINGER_OFF: '등록된 지문이 없습니다.',
+  FACE_ON: '등록된 Face ID가 있습니다.',
+  FACE_OFF: '등록된 Face ID가 없습니다.'
+};
+
+Tw.JOIN_INFO_NO_AGREEMENT = {
+  CHANGE_TYPE : {
+    '1' : '사용',
+    '2' : '적립',
+    '3' : '소멸'
+  },
+  NO_USE : '포인트 사용 내역이 없습니다.',
+  NO_DATA : '검색된 포인트 사용 내역이 없습니다.'
 };

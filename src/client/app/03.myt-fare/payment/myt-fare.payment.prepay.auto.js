@@ -136,7 +136,7 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
       var firstAmt = 10000;
       var strdAmt = $amount / firstAmt;
 
-      for (var i = 1; i <= strdAmt; i++) {
+      for (var i = strdAmt; i >= 1; i--) {
         var obj = {
           'option': 'amount',
           'attr': 'id="' + i * firstAmt + '"',

@@ -11,7 +11,8 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
+import UnpaidList from '../../../../mock/server/payment/payment.realtime.unpaid.list.mock';
 
 class MyTFarePaymentAccount extends TwViewController {
   constructor() {
@@ -41,15 +42,12 @@ class MyTFarePaymentAccount extends TwViewController {
   }
 
   private getUnpaidList(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0021, {}).map((res) => {
-      return res;
-    });
+    // return this.apiService.request(API_CMD.BFF_07_0021, {});
+    return Observable.of(UnpaidList);
   }
 
   private getAutoInfo(): Observable<any> {
-      return this.apiService.request(API_CMD.BFF_07_0022, {}).map((res) => {
-        return res;
-      });
+    return this.apiService.request(API_CMD.BFF_07_0022, {});
   }
 
   private parseData(result: any, svcInfo: any): any {
@@ -57,18 +55,20 @@ class MyTFarePaymentAccount extends TwViewController {
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
       list.invDt = '';
+      list.defaultIndex = 0;
+
       list.map((data, index) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
-        data.svcName = SVC_ATTR_NAME['M1'];
+        data.svcName = SVC_CD[data.svcCd];
+
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
           list.defaultIndex = index;
         }
       });
     }
-    list.code = API_CODE.CODE_00;
     return list;
   }
 
@@ -88,12 +88,16 @@ class MyTFarePaymentAccount extends TwViewController {
   private parseInfo(autoInfo: any): any {
     if (autoInfo.code === API_CODE.CODE_00) {
       const result = autoInfo.result;
-      autoInfo.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK;
-      autoInfo.bankName = autoInfo.isAuto ? result.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, '') : null;
-    } else {
-      autoInfo.isAuto = false;
+
+      result.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK;
+      if (result.isAuto) {
+        result.bankName = result.autoPayBank.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, '');
+        result.bankNum = result.autoPayBank.bankCardNum;
+        result.bankCode = result.autoPayBank.bankCardCoCd;
+      }
+      return result;
     }
-    return autoInfo;
+    return null;
   }
 
 }

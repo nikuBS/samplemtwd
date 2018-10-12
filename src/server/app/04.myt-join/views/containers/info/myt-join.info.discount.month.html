@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '월별 상세 할인 내역', svcInfo: svcInfo, option: { line: true } }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '월별 상세 할인 내역', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="fe-myt-join-info-discount-month" class="container-wrap">
@@ -35,18 +35,16 @@
                             <div style="position: relative;">
                                 <span class="tx-date">{{ showInvoDt }}</span>
                                 <span class="tx-count">{{ invCnt }}회차</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">할인 금액</span>
-                                            <span class="sub-tit">할인 반환금 산정률</span>
-                                        </div>
-                                        <div class="price">
-                                            <span class="tx-price">{{ showPenEstDcAmt }}</span><span class="unit">원</span>
-                                            <span class="tx-cal">{{ perEstRt }}%</span>
-                                        </div>
+                                <div class="li-elem">
+                                    <div class="title-box">
+                                        <span class="tit">할인 금액</span>
+                                        <span class="sub-tit">할인 반환금 산정률</span>
                                     </div>
-                                </button>
+                                    <div class="price">
+                                        <span class="tx-price">{{ showPenEstDcAmt }}</span><span class="unit">원</span>
+                                        <span class="tx-cal">{{ perEstRt }}%</span>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </script>
@@ -61,18 +59,16 @@
                             <div style="position: relative;">
                                 <span class="tx-date"><%= data.agrmts[i].showInvoDt %></span>
                                 <span class="tx-count"><%= data.agrmts[i].invCnt %>회차</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">할인 금액</span>
-                                            <span class="sub-tit">할인 반환금 산정률</span>
-                                        </div>
-                                        <div class="price">
-                                            <span class="tx-price"><%= data.agrmts[i].showPenEstDcAmt %></span><span class="unit">원</span>
-                                            <span class="tx-cal"><%= data.agrmts[i].perEstRt %>%</span>
-                                        </div>
+                                <div class="li-elem">
+                                    <div class="title-box">
+                                        <span class="tit">할인 금액</span>
+                                        <span class="sub-tit">할인 반환금 산정률</span>
                                     </div>
-                                </button>
+                                    <div class="price">
+                                        <span class="tx-price"><%= data.agrmts[i].showPenEstDcAmt %></span><span class="unit">원</span>
+                                        <span class="tx-cal"><%= data.agrmts[i].perEstRt %>%</span>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                         <% } %>
@@ -95,7 +91,10 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinInfoDiscountMonth($('#fe-myt-join-info-discount-month'))
+    new Tw.MyTJoinInfoDiscountMonth($('#fe-myt-join-info-discount-month'), {
+      svcAgrmtCdId: '<%= svcAgrmtCdId %>',
+      svcAgrmtDcCd: '<%= svcAgrmtDcCd %>'
+    })
   });
 </script>
 <% include ../../components/end.component.html %>

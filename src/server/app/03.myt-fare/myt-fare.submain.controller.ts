@@ -11,8 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { API_CMD, API_CODE, API_ADD_SVC_ERROR } from '../../types/api-command.type';
+import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 
-class MytFareSubmainController extends TwViewController {
+class MyTFareSubmainController extends TwViewController {
   constructor() {
     super();
   }
@@ -56,63 +57,72 @@ class MytFareSubmainController extends TwViewController {
       this._getContentPrepay()
     ).subscribe(([claim, nonpayment, paymentInfo, totalPayment,
                    taxInvoice, contribution, microPay, contentPay]) => {
-      // 소액결제
-      if ( microPay ) {
-        data.microPay = microPay;
-        // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
-          data.isMicroPrepay = true;
+      if ( claim.info ) {
+        res.render('error.server-error.html', {
+          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+          code: claim.info.code,
+          msg: claim.info.msg,
+          svcInfo: svcInfo
+        });
+      } else {
+        // 소액결제
+        if ( microPay ) {
+          data.microPay = microPay;
+          // 휴대폰이면서 미성년자가 아닌경우
+          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+            data.isMicroPrepay = true;
+          }
         }
-      }
-      // 콘텐츠
-      if ( contentPay ) {
-        data.contentPay = contentPay;
-        // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
-          data.isContentPrepay = true;
+        // 콘텐츠
+        if ( contentPay ) {
+          data.contentPay = contentPay;
+          // 휴대폰이면서 미성년자가 아닌경우
+          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+            data.isContentPrepay = true;
+          }
         }
-      }
-      // 청구요금
-      if ( claim ) {
-        data.claim = claim;
-        data.claimMonth = DateHelper.getShortKoreanMonth(claim.invDt);
-        // 사용요금
-        const usedAmt = parseInt(claim.useAmtTot, 10);
-        data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
-        // 할인요금
-        const disAmt = Math.abs(claim.deduckTotInvAmt);
-        data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
-        // Total
-        data.claimPay = FormatHelper.addComma((usedAmt - disAmt).toString());
-      }
-      // 미납내역
-      if ( nonpayment ) {
-        data.nonpayment = nonpayment;
-        data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
-      }
-      // 납부/청구 정보
-      if ( paymentInfo ) {
-        data.paymentInfo = paymentInfo;
-        // 자동납부인 경우
-        if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-          // 은행자동납부, 카드자동납부, 은행지로자동납부
-          data.isNotAutoPayment = false;
+        // 청구요금
+        if ( claim ) {
+          data.claim = claim;
+          data.claimMonth = DateHelper.getShortKoreanMonth(claim.invDt);
+          // 사용요금
+          const usedAmt = parseInt(claim.useAmtTot, 10);
+          data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
+          // 할인요금
+          const disAmt = Math.abs(claim.deduckTotInvAmt);
+          data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
+          // Total
+          data.claimPay = FormatHelper.addComma((usedAmt - disAmt).toString());
         }
-      }
-      // 최근납부내역
-      if ( totalPayment ) {
-        data.totalPayment = totalPayment.paymentRecord;
-      }
-      // 세금계산서
-      if ( taxInvoice ) {
-        data.taxInvoice = taxInvoice;
-      }
-      // 기부금/후원금
-      if ( contribution ) {
-        data.contribution = contribution;
-      }
+        // 미납내역
+        if ( nonpayment ) {
+          data.nonpayment = nonpayment;
+          data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
+        }
+        // 납부/청구 정보
+        if ( paymentInfo ) {
+          data.paymentInfo = paymentInfo;
+          // 자동납부인 경우
+          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+            // 은행자동납부, 카드자동납부, 은행지로자동납부
+            data.isNotAutoPayment = false;
+          }
+        }
+        // 최근납부내역
+        if ( totalPayment ) {
+          data.totalPayment = totalPayment.paymentRecord;
+        }
+        // 세금계산서
+        if ( taxInvoice ) {
+          data.taxInvoice = taxInvoice;
+        }
+        // 기부금/후원금
+        if ( contribution ) {
+          data.contribution = contribution;
+        }
 
-      res.render('myt-fare.submain.html', { data });
+        res.render('myt-fare.submain.html', { data });
+      }
     });
   }
 
@@ -131,41 +141,50 @@ class MytFareSubmainController extends TwViewController {
       this._getMicroPrepay(),
       this._getContentPrepay()
     ).subscribe(([usage, paymentInfo, microPay, contentPay]) => {
-      // 사용요금
-      if ( usage ) {
-        data.usage = usage;
-        data.useMonth = DateHelper.getShortKoreanMonth(usage.invDt);
+      if ( usage.info ) {
+        res.render('error.server-error.html', {
+          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+          code: usage.info.code,
+          msg: usage.info.msg,
+          svcInfo: svcInfo
+        });
+      } else {
         // 사용요금
-        const usedAmt = parseInt(usage.useAmtTot, 10);
-        data.useAmtTot = FormatHelper.addComma(usedAmt.toString());
-      }
-      // 납부/청구 정보
-      if ( paymentInfo ) {
-        data.paymentInfo = paymentInfo;
-        // 자동납부인 경우
-        if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-          // 은행자동납부, 카드자동납부, 은행지로자동납부
-          data.isNotAutoPayment = false;
+        if ( usage ) {
+          data.usage = usage;
+          data.useMonth = DateHelper.getShortKoreanMonth(usage.invDt);
+          // 사용요금
+          const usedAmt = parseInt(usage.useAmtTot, 10);
+          data.useAmtTot = FormatHelper.addComma(usedAmt.toString());
         }
-      }
-      // 소액결제
-      if ( microPay ) {
-        data.microPay = microPay;
-        // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
-          data.isMicroPrepay = true;
+        // 납부/청구 정보
+        if ( paymentInfo ) {
+          data.paymentInfo = paymentInfo;
+          // 자동납부인 경우
+          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+            // 은행자동납부, 카드자동납부, 은행지로자동납부
+            data.isNotAutoPayment = false;
+          }
         }
-      }
-      // 콘텐츠
-      if ( contentPay ) {
-        data.contentPay = contentPay;
-        // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
-          data.isContentPrepay = true;
+        // 소액결제
+        if ( microPay ) {
+          data.microPay = microPay;
+          // 휴대폰이면서 미성년자가 아닌경우
+          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+            data.isMicroPrepay = true;
+          }
         }
-      }
+        // 콘텐츠
+        if ( contentPay ) {
+          data.contentPay = contentPay;
+          // 휴대폰이면서 미성년자가 아닌경우
+          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+            data.isContentPrepay = true;
+          }
+        }
 
-      res.render('myt-fare.submain.html', { data });
+        res.render('myt-fare.submain.html', { data });
+      }
     });
   }
 
@@ -193,8 +212,9 @@ class MytFareSubmainController extends TwViewController {
         }
         return resp.result;
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
@@ -208,8 +228,9 @@ class MytFareSubmainController extends TwViewController {
         }
         return resp.result;
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
@@ -219,8 +240,9 @@ class MytFareSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
@@ -233,8 +255,9 @@ class MytFareSubmainController extends TwViewController {
         }
         return resp.result;
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
@@ -244,8 +267,9 @@ class MytFareSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
 
@@ -259,8 +283,9 @@ class MytFareSubmainController extends TwViewController {
         }
         return resp.result;
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
@@ -280,8 +305,9 @@ class MytFareSubmainController extends TwViewController {
       } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
         return { code: API_ADD_SVC_ERROR.BIL0034 };
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
@@ -301,11 +327,12 @@ class MytFareSubmainController extends TwViewController {
       } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
         return { code: API_ADD_SVC_ERROR.BIL0034 };
       } else {
-        // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
 }
 
-export default MytFareSubmainController;
+export default MyTFareSubmainController;

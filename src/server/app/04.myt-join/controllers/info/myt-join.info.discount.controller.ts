@@ -13,8 +13,9 @@ import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
-import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.old.type';
+import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 import * as _ from 'underscore';
+import contractTerminal_BFF_05_0063 from '../../../../mock/server/contractTerminal.BFF_05_0063.mock';
 
 class MytJoinInfoDiscount extends TwViewController {
   constructor() {
@@ -47,7 +48,8 @@ class MytJoinInfoDiscount extends TwViewController {
 
     // this._typeInit();
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
+    // const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
+    const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
     Promise.all([p1]).then(function(resArr) {
 
@@ -139,6 +141,7 @@ class MytJoinInfoDiscount extends TwViewController {
     const rsvPenTAgree = thisMain._resDataInfo.rsvPenTAgree;
     const sucesAgreeList = thisMain._resDataInfo.sucesAgreeList;
     this.logger.info(this, '[ _.size(tAgree) ]', _.size(tAgree));
+    console.dir(tAgree);
     this.logger.info(this, '[ _.size(tInstallment) ]', _.size(tInstallment));
     this.logger.info(this, '[ _.size(rsvPenTAgree) ]', _.size(rsvPenTAgree));
     this.logger.info(this, '[ _.size(sucesAgreeList) ]', _.size(sucesAgreeList));
@@ -149,48 +152,93 @@ class MytJoinInfoDiscount extends TwViewController {
     // -------------------------------------------------------------[1. 요금약정할인 정보]
     /*
     * 상품코드 분류(priceList.prodId)
-    * 요금약정할인24 (730) : NA00003677 | fee_type_A
-    * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B
+    * 요금약정할인24 (730) : NA00003677 | fee_type_A | 상세할인 내역보기
+    * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B | 상세할인 내역보기
     * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C
     * 와이브로약정할인 : wibro 객체로 구분 | fee_type_D
-    * 해당분류에 포함되지않는 경우 | fee_noType // 와이브로 약정
+    * 선택약정할인제도 : NA00004430 | fee_type_E | 상세할인 내역보기
+    * 해당분류에 포함되지않는 경우 | fee_noType
     */
 
     if ( _.size(priceList) > 0 ) {
       for ( let i = 0; i < priceList.length; i++ ) {
 
-        if ( priceList[i].prodId === 'NA00003677' ) {
-          priceList[i].typeStr = 'fee_type_A';
-          priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
-        } else if ( priceList[i].prodId === 'NA00003681' ) {
-          priceList[i].typeStr = 'fee_type_B';
-          priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
-        } else {
-          priceList[i].typeStr = 'fee_noType';
-          priceList[i].titNm = priceList[i].disProdNm;
+        switch ( priceList[i].prodId ) {
+
+          case 'NA00003677':
+            priceList[i].typeStr = 'fee_type_A';
+            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
+            break;
+          case 'NA00003681':
+            priceList[i].typeStr = 'fee_type_B';
+            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
+            break;
+          case 'NA00004430':
+            priceList[i].typeStr = 'fee_type_E';
+            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_E.TIT_NM;
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
+            break;
+          default:
+            priceList[i].typeStr = 'fee_noType';
+            priceList[i].titNm = priceList[i].disProdNm; // 할인 상품명
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
         }
 
         priceList[i].salePay = FormatHelper.addComma(priceList[i].agrmtDcAmt);
-        thisMain._proDate(priceList[i], priceList[i].agrmtDcStaDt, priceList[i].agrmtDcEndDt);
+        thisMain._proDate(
+          priceList[i],
+          priceList[i].agrmtDcStaDt,
+          priceList[i].agrmtDcEndDt);
         thisMain._commDataInfo.feeInfo.push(priceList[i]);
       }
     }
     // 태블릿약정(구태블릿약정)
     if ( _.size(tablet) > 0 ) {
-      tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM;
+      tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM; // 태블릿약정(구태블릿약정)
       tablet.typeStr = 'fee_type_C';
+      tablet.svcAgrmtDcObj = {
+        svcAgrmtDcId : tablet.svcAgrmtDcId || '',
+        svcAgrmtDcCd : tablet.svcAgrmtDcCd || ''
+      };
       tablet.salePay = FormatHelper.addComma(tablet.agrmtDcAmt);
       tablet.agrmtDayCntNum = FormatHelper.addComma(tablet.agrmtDayCnt);
       tablet.aGrmtPenAmtNum = FormatHelper.addComma(tablet.aGrmtPenAmt);
-      thisMain._proDate(tablet, tablet.agrmtDcStaDt, tablet.agrmtDcEndDt);
+      thisMain._proDateUseDt(
+        tablet,
+        tablet.agrmtDcStaDt,
+        tablet.agrmtDcEndDt,
+        tablet.agrmtDayCnt);
+
       thisMain._commDataInfo.feeInfo.push(tablet);
     }
     // 와이브로약정할인
     if ( _.size(wibro) > 0 ) {
-      wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_NOTYPE.TIT_NM; // 와이브로 약정
+      wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM; // 와이브로 약정
       wibro.typeStr = 'fee_type_D';
+      wibro.svcAgrmtDcObj = {
+        svcAgrmtDcId : wibro.svcAgrmtDcId || '',
+        svcAgrmtDcCd : wibro.svcAgrmtDcCd || ''
+      };
       wibro.salePay = FormatHelper.addComma(wibro.agrmtDcAmt);
-      thisMain._proDate(wibro, wibro.agrmtDcStaDt, wibro.agrmtDcEndDt);
+      thisMain._proDateUseDt(
+        wibro,
+        wibro.agrmtDcStaDt,
+        wibro.agrmtDcEndDt,
+        wibro.agrmtDayCnt );
       thisMain._commDataInfo.feeInfo.push(wibro);
     }
     this.logger.info(this, '[ 1. this._commDataInfo.feeInfo ]');
@@ -207,27 +255,38 @@ class MytJoinInfoDiscount extends TwViewController {
       *  가입/약정위약금2 : rsvPenTAgree 객체로 구분 | join_type_D
       *  해당분류에 포함되지않는 경우 | join_noType
        */
-      if ( tAgree.agrmtDivision === 'TAgree' ) {
-        tAgree.typeStr = 'join_type_A';
-        tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_A.TITNM;
-        tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_A.AGREE_NM;
-      } else if ( tAgree.agrmtDivision === 'TSupportAgree' ) {
-        tAgree.typeStr = 'join_type_B';
-        tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_B.TITNM;
-        tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_B.AGREE_NM;
-      } else {
-        tAgree.typeStr = 'join_noType';
-        tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_NOTYPE.TITNM;
-        tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_NOTYPE.AGREE_NM;
+
+      switch ( tAgree.agrmtDivision ) {
+
+        case 'TAgree':
+          tAgree.typeStr = 'join_type_A';
+          tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_A.TITNM; // 가입/T기본약정
+          tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_A.AGREE_NM;
+          break;
+        case 'TSupportAgree':
+          tAgree.typeStr = 'join_type_B';
+          tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_B.TITNM; // 가입/T지원금약정
+          tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_B.AGREE_NM;
+          break;
+        default:
+          tAgree.typeStr = 'join_noType';
+          tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_NOTYPE.TITNM;
+          tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_NOTYPE.AGREE_NM;
       }
 
       tAgree.agreeTotMonth = tAgree.agrmtMthCnt; // 약정 전체 개월수
       tAgree.agreePay = FormatHelper.addComma(tAgree.dcAmt); // 약정 금액
       tAgree.penalty = FormatHelper.addComma(tAgree.penAmt); // 위약금
-      thisMain._proDate(tAgree, tAgree.staDt, tAgree.agrmtTermDt);
+      thisMain._proDateRemDt(
+        tAgree,
+        tAgree.staDt,
+        tAgree.agrmtTermDt,
+        tAgree.rmnDayCnt );
+
       thisMain._commDataInfo.terminalInfo.push(tAgree);
     }
-    if ( _.size(tInstallment) > 0 ) {
+
+    if ( _.size(tInstallment) > 0 ) { // T약정 할부지원
       tInstallment.typeStr = 'join_type_C';
       tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
       tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
@@ -239,7 +298,8 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain._proDate(tInstallment, tInstallment.tInstallmentOpDt, tInstallmentEndDt);
       thisMain._commDataInfo.terminalInfo.push(tInstallment);
     }
-    if ( _.size(rsvPenTAgree) > 0 ) {
+
+    if ( _.size(rsvPenTAgree) > 0 ) { // 약정 위약금2
       rsvPenTAgree.typeStr = 'join_type_D';
       rsvPenTAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.TITNM;
       rsvPenTAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.AGREE_NM;
@@ -247,47 +307,63 @@ class MytJoinInfoDiscount extends TwViewController {
       rsvPenTAgree.agreeTotMonth = rsvPenTAgree.rtenAgrmtMthCnt; // 약정 전체 개월수
       rsvPenTAgree.agreePay = FormatHelper.addComma(rsvPenTAgree.rtenPenStrdAmt); // 약정 금액
       rsvPenTAgree.penalty = FormatHelper.addComma(rsvPenTAgree.rsvPenAmt); // 위약금
-      thisMain._proDate(rsvPenTAgree, rsvPenTAgree.astamtOpDt, rsvPenTAgree.rtenAgrmtEndDt);
+
+      thisMain._proDateRemDt(
+        rsvPenTAgree,
+        rsvPenTAgree.astamtOpDt,
+        rsvPenTAgree.rtenAgrmtEndDt,
+        rsvPenTAgree.remDayCnt );
+
       thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
     }
-    if ( _.size(sucesAgreeList) > 0 ) {
+    if ( _.size(sucesAgreeList) > 0 ) { // 단말기 승계 정보
 
       for ( let i = 0; i < sucesAgreeList.length; i++ ) {
         /*
         * T 기본약정 분류(sucesAgreeList.bfEqpDcClCd)
-        * 승계/T할부지원 : '1' | suc_type_A
+        * 승계/T약정 할부지원 : '1' | suc_type_A
         * 승계/T기본약정 : '2' | suc_type_B
         * 승계/약정위약금2 : '3' | suc_type_C
         * 승계/T지원금약정 : '7' | suc_type_D
         * 해당분류에 포함되지않는 경우 | suc_noType
          */
-        if ( sucesAgreeList[i].bfEqpDcClCd === '1' ) {
-          sucesAgreeList[i].typeStr = 'suc_type_A';
-          sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_A.TITNM + sucesAgreeList[i].bfEqpDcClNm;
-          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
-        } else if ( sucesAgreeList[i].bfEqpDcClCd === '2' ) {
-          sucesAgreeList[i].typeStr = 'suc_type_B';
-          sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_B.TITNM + sucesAgreeList[i].bfEqpDcClNm;
-          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
-        } else if ( sucesAgreeList[i].bfEqpDcClCd === '3' ) {
-          sucesAgreeList[i].typeStr = 'suc_type_C';
-          sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_C.TITNM + sucesAgreeList[i].bfEqpDcClNm;
-          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
-        } else if ( sucesAgreeList[i].bfEqpDcClCd === '7' ) {
-          sucesAgreeList[i].typeStr = 'suc_type_D';
-          sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_D.TITNM + sucesAgreeList[i].bfEqpDcClNm;
-          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
-        } else {
-          sucesAgreeList[i].typeStr = 'suc_noType';
-          sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_NOTYPE.TITNM;
-          sucesAgreeList[i].agreeNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_NOTYPE.AGREE_NM;
+        switch ( sucesAgreeList[i].bfEqpDcClCd ) {
+
+          case '1':
+            sucesAgreeList[i].typeStr = 'suc_type_A';
+            sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_A.TITNM + sucesAgreeList[i].bfEqpDcClNm;
+            sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+            break;
+
+          case '2':
+            sucesAgreeList[i].typeStr = 'suc_type_B';
+            sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_B.TITNM + sucesAgreeList[i].bfEqpDcClNm;
+            sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+            break;
+
+          case '3':
+            sucesAgreeList[i].typeStr = 'suc_type_C';
+            sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_C.TITNM + sucesAgreeList[i].bfEqpDcClNm;
+            sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+            break;
+
+          case '7':
+            sucesAgreeList[i].typeStr = 'suc_type_D';
+            sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_D.TITNM + sucesAgreeList[i].bfEqpDcClNm;
+            sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+            break;
+
+          default:
+            sucesAgreeList[i].typeStr = 'suc_noType';
+            sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_NOTYPE.TITNM;
+            sucesAgreeList[i].agreeNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_NOTYPE.AGREE_NM;
         }
 
         sucesAgreeList[i].agreeTotMonth = sucesAgreeList[i].agrmtMthCnt; // 약정 전체 개월수
         sucesAgreeList[i].agreePay = FormatHelper.addComma(sucesAgreeList[i].agrmtDcAmt); // 약정 금액
         sucesAgreeList[i].penalty = FormatHelper.addComma(sucesAgreeList[i].sucesPenAmt); // 위약금
 
-        thisMain._proDateSuc(sucesAgreeList[i],
+        thisMain._proDateRemDt(sucesAgreeList[i],
           sucesAgreeList[i].sucesAgrmtStaDt,
           sucesAgreeList[i].sucesAgrmtEndDt,
           sucesAgreeList[i].sucesRemDayCnt);
@@ -307,7 +383,11 @@ class MytJoinInfoDiscount extends TwViewController {
         installmentList[i].agreeClaimPay = FormatHelper.addComma(installmentList[i].invBamt); // 잔여할부청구금액
 
         const installmentListEndDt = moment(installmentList[i].allotStaDt).add(installmentList[i].allotMthCnt, 'months').format('YYYYMMDD');
-        thisMain._proDate(installmentList[i], installmentList[i].allotStaDt, installmentListEndDt);
+
+        thisMain._proDateRemMt(
+          installmentList[i],
+          installmentList[i].allotStaDt, installmentListEndDt );
+
         thisMain._commDataInfo.repaymentInfo.push(installmentList[i]);
       }
     }
@@ -321,32 +401,80 @@ class MytJoinInfoDiscount extends TwViewController {
   private _proDate(dataObj: any, start: string, end: string) {
     const startDt = start;
     const endDt = end;
+    const useDt = moment().format('YYYYMMDD'); // 진행날짜
+
     this.logger.info(this, '[ _proDate ]', startDt, endDt);
+
     dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
     dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
-    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
-    // dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(moment().format('YYYYMMDD'), 'day');
-    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
+
+    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
+    dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
+    dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
+
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
     dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
-    dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
+
   }
 
   /*
-  * _proDateSuc
+  * _proDateUseDt
+  * useDt : 사용일수
+   */
+  private _proDateUseDt(dataObj: any, start: string, end: string, use: string) {
+    const startDt = start;
+    const endDt = end;
+    const useDt = moment(startDt, 'YYYYMMDD').add(use, 'day').format('YYYYMMDD'); // 진행날짜
+
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+
+    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
+    dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
+    dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여 일수
+    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month') + 1;
+
+  }
+
+  /*
+  * _proDateRemDt
   * remnant : 잔여일수
    */
-  private _proDateSuc(dataObj: any, start: string, end: string, remnant: string) {
+  private _proDateRemDt(dataObj: any, start: string, end: string, remnant: string) {
     const startDt = start;
     const endDt = end;
     const remnantDt = moment(endDt, 'YYYYMMDD').subtract(remnant, 'day').format('YYYYMMDD'); // 진행날짜
+
     dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
     dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
-    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
-    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day');
-    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
-    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
+
+    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
+    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day'); // 진행 일수
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
+
+    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month') + 1;
+
+  }
+
+  /*
+  * _proDateRemMt
+  * remnant : 잔여 개월수
+   */
+  private _proDateRemMt( dataObj: any, start: string, end: string ) {
+    const startDt = start;
+    const endDt = end;
+
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+
+    dataObj.totMt = dataObj.allotMthCnt; // 전체 개월
+    dataObj.curMt = dataObj.allotMthCnt - dataObj.invRmn; // 진행 개월
+    dataObj.remMt = dataObj.invRmn; // 잔여 개월
+
+    dataObj.perMt = Math.floor((dataObj.curMt / dataObj.totMt) * 100); // 퍼센트
+
   }
 
   // -------------------------------------------------------------[프로미스 생성]

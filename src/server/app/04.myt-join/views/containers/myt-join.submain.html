@@ -25,20 +25,23 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div class="container" data-id="submain-container">
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="myinfo-wrap">
                     <div class="myinfo-cont">
                         <div class="subtitle">
-                            <span class="name"><span class="blind">디바이스 펜네임</span>갤럭시 S9</span>
+                            <span class="name"><span class="blind">디바이스 펜네임</span><%= data.svcInfo.eqpMdlNm %></span>
                             <button class="nickname-ico"><span class="blind">닉네임 등록 페이지 이동</span></button>
                         </div>
                         <div class="title">
-                            <span><span class="blind">가입자명</span>홍*동</span>
-                            <span><span class="blind">회선정보</span>010-12**45**</span>
+                            <span><span class="blind">가입자명</span><%= data.svcInfo.mbrNm %></span>
+                            <span><span class="blind">회선정보</span><%= data.svcInfo.svcNum %></span>
                         </div>
-                        <span class="subtitle2"><span class="blind">현재 가입되어 있는 상품 정보</span>뉴 T끼리 맞춤형(100분+6GB)</span>
+                        <span class="subtitle2">
+                            <span class="blind">현재 가입되어 있는 상품 정보</span>
+                            <%= data.myFeeProduct.prodNm %>
+                        </span>
                     </div>
                     <div class="ico-wrap">
                         <span class="ico-ill-type1"></span>
@@ -52,18 +55,7 @@
                                 <div class="toggler">
                                     <div class="basic-list">
                                         <ul>
-                                            <li>
-                                                <span class="title">개통 일자</span>
-                                                <span class="tx-cont">2018.05.23</span>
-                                            </li>
-                                            <li>
-                                                <span class="title">가입비 (30,000원)</span>
-                                                <span class="tx-cont">20,000원 미청구</span>
-                                            </li>
-                                            <li>
-                                                <span class="title">고객보호 비밀번호</span>
-                                                <span class="tx-cont">사용중 <button class="bt-link-tx underline">비밀번호 변경</a></button></span>
-                                            </li>
+                                            <%- include('../components/submain/myt-join.submain.more-info.html', data) %>
                                         </ul>
                                     </div>
                                 </div>
@@ -74,174 +66,42 @@
                 </div>
                 <ul class="bt-slice mt36">
                     <li class="bt-white2">
-                        <button>나의 요금제</button>
+                        <button data-id="my-plan">나의 요금제</button>
                     </li>
                 </ul>
             </div>
             <!--// .cont-box -->
+            <%- include('../components/submain/myt-join.submain.prod-info.html', data) %>
+            <% if (data.type === 0) { %>
+                <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
+                    <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
+                <% } %>
+            <% } else if (data.type === 2) { %>
+                <%- include('../components/submain/myt-join.submain.wire-more-info.html', data) %>
+            <% } %>
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="link-long-list">
-                    <li>
-                        <div class="link-long">
-                            <button>나의 부가 상품
-                                <span class="tx-sub">
-                                        <span class="normal">유료 2개 / 무료 15개</span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>결합상품
-                                <span class="tx-sub">
-                                        <span class="normal">2개</span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>약정·할부 정보
-                                <span class="tx-sub">
-                                        <span class="normal">T지원금 약정 / 6개월</span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>무약정 플랜
-                                <span class="tx-sub">
-                                        <span class="normal">7,500P / 36건</span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="link-long-list">
-                    <li>
-                        <div class="link-long">
-                            <button>일시 정지/해제<span class="ico"></span></button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="link-long-list div-half">
-                    <li>
-                        <div class="link-long">
-                            <button>기기 변경<span class="ico"></span></button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>번호 변경<span class="ico"></span></button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>분실신고 해제<span class="ico"></span></button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>임대폰 신청<span class="ico"></span></button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <p class="list-comp-title">임대폰 신청 내역<button class="ico"></button></p>
-                <ul class="list-comp-lineinfo type4 no-bt">
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">G Flex2 (SHW-M240S)</span>
-                            <span class="info-sub">010-12**-56** </span>
-                        </div>
-                        <div class="lineinfo-data">
-                            <span class="info-title"><span class="num">처리중</span></span>
-                            <span class="info-sub">2018.07.12</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">G Flex2 (SHW-M240S)</span>
-                            <span class="info-sub">010-12**-56** </span>
-                        </div>
-                        <div class="lineinfo-data">
-                            <span class="info-title"><span class="num">예약취소</span></span>
-                            <span class="info-sub">2018.07.12</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <p class="list-comp-title">나의 다른 회선 정보</p>
-                <ul class="list-comp-lineinfo">
-                    <li>
-                        <button>
-                            <div class="lineinfo-user d-table">
-                                <div class="ico2"><i></i></div>
-                                <div class="cont"><span class="ico"></span>
-                                    <span class="info-title">갤럭시 노트9</span>
-                                    <span class="info-sub">010-46**-10**</span>
-                                </div>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
-                    <li>
-                        <button>
-                            <div class="lineinfo-user d-table">
-                                <div class="ico2"><i></i></div>
-                                <div class="cont"><span class="ico"></span>
-                                    <span class="info-title">우리집 인터넷</span>
-                                    <span class="info-sub">301호 ************</span>
-                                </div>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
-                </ul>
-                <div class="bt-more">
-                    <button>더보기</button>
+            <% if (data.type !== 1) { %>
+                <% if (data.otherLines.length > 0) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps" data-id="other-lines">
+                    <p class="list-comp-title">나의 다른 회선 정보</p>
+                    <ul class="list-comp-lineinfo">
+                        <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
+                        <% for (var i=0; i < length; i++) { %>
+                        <%- include('../components/submain/myt-join.submain.other-line.html', { data: data.otherLines[i] }); %>
+                        <% } %>
+                    </ul>
+                    <% if (length === 20) { %>
+                    <!-- 다른 회선이 총 20개 이상인 경우 -->
+                    <div class="bt-more">
+                        <button>더보기</button>
+                    </div>
+                    <% } %>
                 </div>
-            </div>
-            <!--// .cont-box -->
+                <!-- .cont-box -->
+                <% } %>
+            <% } %>
 
             <div class="cont-box nogaps noborder">
                 <ul class="link-long-list nobg">
@@ -287,11 +147,10 @@
     // client 작업 중
     var data = '<%- JSON.stringify(data) %>';
     $(document).ready(function () {
-      new Tw.MyTFareSubMain({
+      new Tw.MyTJoinSubMain({
         $element: $('[data-id=submain-container]'),
         data: JSON.parse(data)
       });
     });
-
 </script>
 <% include ../components/end.component.html %>

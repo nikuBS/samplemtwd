@@ -28,8 +28,8 @@
                             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul role="tablist">
-                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">SK텔레콤 이용약관</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">T world 웹회원 이용약관</a></li>
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a id="fe-tworld-sk" class="fe-replace-history" href="#sk">SK텔레콤 이용약관</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a id="fe-tworld-tab" class="fe-replace-history" href="#tworld">T world 웹회원 이용약관</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-contents">
@@ -40,29 +40,29 @@
                                                 <ul class="link-long-list">
                                                     <li>
                                                         <div class="link-long">
-                                                            <button>이동전화 이용약관
+                                                            <a href="/common/settings/terms?id=1">이동전화 이용약관
                                                                 <span class="tx-sub">
                                                                     <span class="ico"></span>
                                                                 </span>
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="link-long">
-                                                            <button>WCDMA 이용약관
+                                                            <a href="/common/settings/terms?id=2">WCDMA 이용약관
                                                                 <span class="tx-sub">
                                                                     <span class="ico"></span>
                                                                 </span>
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="link-long">
-                                                            <button>재판매 이용약관
+                                                            <a href="/common/settings/terms?id=3">재판매 이용약관
                                                                 <span class="tx-sub">
                                                                     <span class="ico"></span>
                                                                 </span>
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -111,7 +111,7 @@
                                                         </div>
                                                     </li>
                                                 </ul>
-                                                <div class="bt-more">
+                                                <div class="bt-more none">
                                                     <button>더보기</button>
                                                 </div>
                                             </div>
@@ -150,7 +150,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    // new Tw.CommonSettingsTerms($('.wrap'));
+    new Tw.CommonSettingsTerms($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>

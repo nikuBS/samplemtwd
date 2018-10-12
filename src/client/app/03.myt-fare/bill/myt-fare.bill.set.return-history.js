@@ -14,8 +14,8 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this._initVariables();
     this._bindEvent();
 
-    // this._reqReturnHistory();
-    this._reqMock();
+    this._reqReturnHistory();
+    // this._reqMock();
   },
   _initVariables: function () {
     this.returnHistory = this.$container.find('#fe-return-history');

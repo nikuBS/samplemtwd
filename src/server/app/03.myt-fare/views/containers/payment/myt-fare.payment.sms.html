@@ -5,7 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -15,69 +15,81 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-payment-sms" class="wrap step blank-type1">
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div id="main" class="container">
-                <!-- #header -->
-                <%- include('../../../../../common/views/components/header.component.html',
-                { title: '입금전용계좌 SMS 신청', svcInfo: svcInfo, option:{ back: 'step' } }); %>
-                <!--// #header -->
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <% include ../../components/payment/myt-fare.payment.common.component.html %>
-                </div>
-                <!--// .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <!-- .cont-box -->
-                <% if (virtualBankList !== []) { %>
-                <div class="cont-box noborder">
-                    <div class="user-info-form">
-                        <div class="info-form-box">
-                            <p class="form-label" id="aria-exp-label1">SMS 받는번호</p>
-                            <span class="inputbox">
-                                <span class="input">
-                                  <input type="text" placeholder="핸드폰 번호" title="input" value="<%= svcInfo.svcNum %>" aria-labelledby="aria-exp-label1" readonly>
-                                  <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="info-form-box">
-                            <p class="form-label" id="aria-exp-label2">입금하실 계좌번호</p>
-                            <button id="<%= virtualBankList[0].bankCd %>" class="bt-dropdown big fe-account-selector" title="은행 계좌번호" aria-haspopup="true">
-                                <%= virtualBankList[0].sBankNm + ' ' + virtualBankList[0].sVirtualBankNum %><span class="ico"></span>
-                            </button>
-                            <ul class="fe-account-list none">
-                                <% for (var i = 0; i < virtualBankList.length; i++) { %>
-                                <li id="<%= virtualBankList[i].bankCd %>"><%= virtualBankList[i].sBankNm %> <%= virtualBankList[i].sVirtualBankNum %></li>
-                                <% } %>
-                            </ul>
-                        </div>
+    <div id="myt-fare-payment-sms" class="wrap">
+        <div id="main" class="popup-page tw-popup fixed-bottom h60">
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>입금전용계좌 SMS 신청</h1>
                     </div>
                 </div>
-                <!--// .cont-box -->
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button class="fe-pay">SMS 보내기</button>
-                    </li>
-                </ul>
-                <% } %>
             </div>
-            <div id="select-line" style="display:none;">
-                <% include ../../components/payment/myt-fare.payment.select.line.component.html %>
+            <!--// #header -->
+            <!-- #contents -->
+            <div id="contents" class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <% include ../../components/payment/myt-fare.payment.common.component.html %>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <% if (virtualBankList !== []) { %>
+                    <div class="cont-box noborder">
+                        <div class="user-info-form">
+                            <div class="info-form-box">
+                                <p class="form-label" id="aria-exp-label1">SMS 받는번호</p>
+                                <span class="inputbox">
+                                    <span class="input">
+                                      <input type="text" placeholder="핸드폰 번호" title="input" value="<%= svcInfo.svcNum %>" aria-labelledby="aria-exp-label1" readonly>
+                                      <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="info-form-box">
+                                <p class="form-label" id="aria-exp-label2">입금하실 계좌번호</p>
+                                <button id="<%= virtualBankList[0].bankCd %>" class="bt-dropdown big fe-account-selector" title="은행 계좌번호" aria-haspopup="true">
+                                    <%= virtualBankList[0].sBankNm + ' ' + virtualBankList[0].sVirtualBankNum %><span class="ico"></span>
+                                </button>
+                                <ul class="fe-account-list none">
+                                    <% for (var i = 0; i < virtualBankList.length; i++) { %>
+                                    <li id="<%= virtualBankList[i].bankCd %>"><%= virtualBankList[i].sBankNm %> <%= virtualBankList[i].sVirtualBankNum %></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button class="fe-pay">SMS 보내기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } %>
+                </div>
             </div>
-            <div id="complete-sms" style="display:none;">
-                <% include ../../components/payment/myt-fare.payment.complete.component.html %>
-            </div>
+            <!--// #contents -->
+            <!-- .popup-cloeBtn -->
+            <button class="prev-step fe-common-back">취소</button>
+            <!--// .popup-closeBtn -->
         </div>
-        <!--// #contents -->
+        <div id="select-line" style="display:none;">
+            <% include ../../components/payment/myt-fare.payment.select.line.component.html %>
+        </div>
+        <div id="complete-sms" style="display:none;">
+            <% include ../../components/payment/myt-fare.payment.complete.component.html %>
+        </div>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentSms($('.wrap'));
+    new Tw.MyTFarePaymentSms($('#myt-fare-payment-sms'));
   });
 </script>
 <% include ../../components/end.component.html %>

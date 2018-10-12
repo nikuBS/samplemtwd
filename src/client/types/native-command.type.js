@@ -21,13 +21,19 @@ Tw.NTV_CMD = {
   MANAGE_CERT: 'manageCert',
   GO_CERT: 'goCert',
   AUTH_CERT: 'authCert',
+  FIDO_CHECK: 'fidoCheck',
+  FIDO_REGISTER: 'fidoRegister',
+  FIDO_AUTH: 'fidoAuth',
+  FIDO_DEREGISTER: 'fidoDeregister',
+  FIDO_TYPE: 'fidoType',
   SERVER_SESSION: 'serverSession',
   EXIT: 'exit',
   LOG: 'log'
 };
 
 Tw.NTV_CODE = {
-  CODE_00: 0,    // success
+  CODE_00: 0,    // success (FIDO_TYPE: fingerprint)
+  CODE_01: 1,    // (FIDO_TUYPE: face)
   CODE_ERROR: -1
 };
 

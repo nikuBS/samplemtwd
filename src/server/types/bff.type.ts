@@ -111,7 +111,9 @@ export enum MYT_FARE_PAYMENT_NAME {
 
 export enum MYT_FARE_MICRO_NAME {
   NC = '신청',
-  AC = '변경'
+  AC = '변경',
+  LC = '잠김',
+  IC = '초기화'
 }
 
 export enum MYT_FARE_BILL_CO_TYPE {
@@ -128,6 +130,12 @@ export enum MYT_FARE_PREPAY_NAME {
 export enum MYT_FARE_PREPAY_AUTO_CHARGE_CODE {
   USE = 'U',
   UNUSE = 'D'
+}
+
+export enum MYT_FARE_HISTORY_MICRO_TYPE_NAME {
+  '01' = '일반결제',
+  '02' = '묶음결제',
+  '03' = '자동결제'
 }
 
 export enum HOME_SMART_CARD {

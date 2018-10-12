@@ -11,6 +11,7 @@ Tw.MainHome = function (rootEl, smartCard) {
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  this._lineRegisterLayer = new Tw.LineRegisterComponent();
 
   this._smartCardOrder = JSON.parse(smartCard);
 
@@ -20,6 +21,7 @@ Tw.MainHome = function (rootEl, smartCard) {
 
   this._cachedElement();
   this._bindEvent();
+  this._openLineResisterPopup();
 
   this._initScroll();
 };
@@ -34,19 +36,27 @@ Tw.MainHome.prototype = {
     GFT0013: 'GFT0013'    // 기
   },
 
-
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
-    this.$elBarcode.JsBarcode(this.$elBarcode.data('cardnum'));
+    var cardNum = this.$elBarcode.data('cardnum');
+    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
+      this.$elBarcode.JsBarcode(cardNum);
+    }
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
   },
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
 
   },
-  _onClickBarcode: function () {
+  _openLineResisterPopup: function () {
+    var layerType = this.$container.data('layertype');
+    console.log('layerType : ', layerType);
+    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+      this._lineRegisterLayer.openRegisterLinePopup(layerType);
+    }
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
@@ -67,14 +77,37 @@ Tw.MainHome.prototype = {
     ]).done($.proxy(this._successBillData, this, element))
       .fail($.proxy(this._failBillData, this));
   },
-  _successBillData: function (element, resp1, resp2) {
-    console.log('bill', resp1, resp2);
+  _successBillData: function (element, charge, used) {
+    var result = {
+      showBill: false
+    };
+    if ( charge.code === Tw.API_CODE.CODE_00 && used.code === Tw.API_CODE.CODE_00 &&
+      charge.result.colClCd !== Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+      result = this._parseBillData({ charge: charge.result, used: used.result });
+    }
     var $billTemp = $('#fe-smart-bill');
     var tplBillCard = Handlebars.compile($billTemp.html());
-    element.html(tplBillCard({}));
+    element.html(tplBillCard(result));
   },
   _failBillData: function () {
 
+  },
+  _parseBillData: function (billData) {
+    var repSvc = billData.charge.repSvcYn === 'Y';
+    var totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
+    return {
+      showBill: true,
+      chargeAmtTot: Tw.FormatHelper.addComma(billData.charge.useAmtTot),
+      usedAmtTot: Tw.FormatHelper.addComma(billData.used.useAmtTot),
+      deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt),
+      invEndDt: Tw.DateHelper.getShortDateNoDot(billData.charge.invDt),
+      invStartDt: Tw.DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
+      invMonth: Tw.DateHelper.getCurrentMonth(billData.charge.invDt),
+      type1: totSvc && repSvc,
+      type2: !totSvc,
+      type3: totSvc && !repSvc
+
+    };
   },
   _getContentData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_05_0064, {})
@@ -99,7 +132,7 @@ Tw.MainHome.prototype = {
         showContents: true,
         invEndDt: Tw.DateHelper.getShortDateNoDot(contents.toDt),
         invStartDt: Tw.DateHelper.getShortDateNoDot(contents.fromDt),
-        invMonth: Tw.DateHelper.getShortKoreanMonth(contents.fromdate),
+        invMonth: Tw.DateHelper.getCurrentMonth(contents.fromDt),
         usedAmtTot: Tw.FormatHelper.addComma(contents.invDtTotalAmtCharge),
         detailList: _.map(contents.useConAmtDetailList, $.proxy(function (detail, index) {
           return {
@@ -116,23 +149,49 @@ Tw.MainHome.prototype = {
     };
   },
   _getMicroPayData: function (element) {
+    // $.ajax('/mock/home.micro-pay.json')
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
       .done($.proxy(this._successMicroPayData, this, element))
       .fail($.proxy(this._failMicroPayData, this));
   },
   _successMicroPayData: function (element, resp) {
-    console.log('micro', resp);
+    var result = {
+      showMicro: false
+    };
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var $microTemp = $('#fe-smart-micro-pay');
-      var tplMicroCard = Handlebars.compile($microTemp.html());
-      element.html(tplMicroCard(this._parseMicroData(resp.result)));
+      result = this._parseMicroData(resp.result);
+    } else {
+
     }
+    var $microTemp = $('#fe-smart-micro-pay');
+    var tplMicroCard = Handlebars.compile($microTemp.html());
+    element.html(tplMicroCard(result));
   },
   _failMicroPayData: function () {
 
   },
-  _parseMicroData: function () {
-    return {};
+  _parseMicroData: function (microData) {
+    if(microData.payHistoryCnt > 0) {
+      return {
+        showMicro: true,
+        invEndDt: Tw.DateHelper.getShortDateNoDot(microData.toDt),
+        invStartDt: Tw.DateHelper.getShortDateNoDot(microData.fromDt),
+        invMonth: Tw.DateHelper.getCurrentMonth(microData.fromDt),
+        usedAmtTot: Tw.FormatHelper.addComma(microData.totalSumPrice),
+        detailList: _.map(microData.histories, $.proxy(function (detail, index) {
+          return {
+            showDetail: index < 3,
+            charge: Tw.FormatHelper.addComma(detail.sumPrice),
+            name: detail.serviceNm,
+            payTime: Tw.DateHelper.getFullDateAndTime(detail.useDt),
+            payMethod: Tw.MYT_FARE_HISTORY_MICRO_METHOD[detail.payMethod]
+          };
+        }, this))
+      };
+    }
+    return {
+      showMicro: false
+    };
   },
   _getGiftData: function (element, index) {
     // skt_landing.action.loading.on({ ta: '.fe-smart-' + index, co: 'grey', size: true });
@@ -203,7 +262,7 @@ Tw.MainHome.prototype = {
   _getRechargeData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
       .done($.proxy(this._successRechargeData, this, element))
-      .fail($.proxy(this._failRrchargeData, this));
+      .fail($.proxy(this._failRechargeData, this));
 
   },
   _successRechargeData: function (element, resp) {
@@ -218,11 +277,12 @@ Tw.MainHome.prototype = {
     }
 
   },
-  _failRrchargeData: function () {
+  _failRechargeData: function () {
 
   },
-  _onClickBtRecharge: function () {
-    // TODO: 충전하기 레이어
+  _onClickBtRecharge: function ($event) {
+    $event.stopPropagation();
+    new Tw.ImmediatelyRechargeLayer(this.$container);
   },
 
   _elementScrolled: function (element) {

@@ -8,6 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
+import { MYT_FARE_HOTBILL_TITLE } from '../../../../types/title.type';
 import { Observable } from 'rxjs/Observable';
 import { mergeMap, delay } from 'rxjs/operators';
 import 'rxjs/add/observable/from';
@@ -31,7 +32,6 @@ class MyTFareBillHotbill extends TwViewController {
     } else {
       const svcs = this._getServiceInfo(svcInfo);
       if ( !_.isEmpty(svcs) ) {
-        const bills: any[] = [];
         Observable.from(svcs)
           .pipe(
             mergeMap(svc => this._requestHotbillInfo(svc))
@@ -43,7 +43,11 @@ class MyTFareBillHotbill extends TwViewController {
             }
           },
           err => {
-            console.log(err);
+            return this.error.render(res, {
+              title: MYT_FARE_HOTBILL_TITLE.MAIN,
+              msg: err.message,
+              svcInfo: svcInfo
+            });
           },
           () => {
             res.render('bill/myt-fare.bill.hotbill.html', {
@@ -122,7 +126,7 @@ class MyTFareBillHotbill extends TwViewController {
         } else if ( !resp.result.hotBillInfo[0] || !resp.result.hotBillInfo[0].record1 ) {
           // 2번째 시도에도 fail이면 error 처리
           if ( isRetry ) {
-            throw Error('The bill request is not completed.');
+            throw Error(MYT_FARE_HOTBILL_TITLE.ERROR.BIL0063);
           }
 
           // catch block 에서 retry 시도

@@ -50,7 +50,6 @@ class MainHome extends TwViewController {
         ).subscribe(([usageData, membershipData, notice]) => {
           homeData.usageData = usageData;
           homeData.membershipData = membershipData;
-          console.log(notice);
           res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
         });
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
@@ -126,7 +125,6 @@ class MainHome extends TwViewController {
   private getNotice(): Observable<any> {
     return this.redisService.getData(REDIS_APP_VERSION)
       .map((result) => {
-        console.log('result', result);
         if ( !FormatHelper.isEmpty((result)) ) {
           return result.notice;
         }
@@ -183,14 +181,20 @@ class MainHome extends TwViewController {
   private parseBillData(billData): any {
     if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) &&
       billData.charge.coClCd !== MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+      const repSvc = billData.charge.repSvcYn === 'Y';
+      const totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
       return {
-        coClCd: billData.charge.coClCd,
-        chargeAmtTot: billData.charge.useAmtTot,
-        usedAmtTot: billData.used.useAmtTot,
-        deduckTot: billData.charge.deduckTotInvAmt,
+        chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot),
+        usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot),
+        deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),
+        repSvc: billData.charge.repSvcYn === 'Y',
+        totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
         invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt),
         invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
-        invMonth: DateHelper.getShortKoreanMonth(billData.charge.invDt)
+        invMonth: DateHelper.getCurrentMonth(billData.charge.invDt),
+        type1: totSvc && repSvc,
+        type2: !totSvc,
+        type3: totSvc && !repSvc
       };
     }
     return null;

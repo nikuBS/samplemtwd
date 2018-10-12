@@ -63,6 +63,10 @@ Tw.API_CMD = {
   BFF_03_0016: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
   BFF_03_0020: { path: '/core-auth/v1/passwords-check', method: Tw.API_METHOD.GET },
+  BFF_03_0021: { path: '/core-auth/v1/tworld-term-agreements', method: Tw.API_METHOD.GET },
+  BFF_03_0022: { path: '/core-auth/v1/tworld-term-agreements', method: Tw.API_METHOD.PUT },
+  BFF_03_0023: { path: '/core-auth/v1/t-noti-term-agreements', method: Tw.API_METHOD.GET },
+  BFF_03_0024: { path: '/core-auth/v1/t-noti-term-agreements', method: Tw.API_METHOD.PUT },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
@@ -99,7 +103,8 @@ Tw.API_CMD = {
   BFF_05_0060: { path: '/core-modification/v1/no-contract-plan-points', method: Tw.API_METHOD.GET },
   BFF_05_0062: { path: '/core-modification/v1/wire-network-notification', method: Tw.API_METHOD.POST },
   BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: Tw.API_METHOD.GET },
-  BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: Tw.API_METHOD.GET },
+  BFF_05_0066: { path: '/core-bill/v1/useContents/getUseContentsLimit', method: Tw.API_METHOD.GET },
+  BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: Tw.API_METHOD.POST },
   BFF_05_0067U: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimit', method: Tw.API_METHOD.POST },
   BFF_05_0067D: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
@@ -108,7 +113,8 @@ Tw.API_CMD = {
   BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: Tw.API_METHOD.GET },
   BFF_05_0078: { path: '/core-balance/v1/band-data-sharings', method: Tw.API_METHOD.GET },
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-request', method: Tw.API_METHOD.POST },
-  BFF_05_0080: { path: '/core-bill/v1/microPay-request', method: Tw.API_METHOD.GET },
+  BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.GET },
+  BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
   BFF_05_0081U: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
   BFF_05_0081D: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
@@ -136,7 +142,7 @@ Tw.API_CMD = {
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
   BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.GET },
-  BFF_05_0155: { path: '/my-t/myinfo/discount-infos', method: Tw.API_METHOD.GET },
+  BFF_05_0155: { path: '/core-modification/v1/myinfo/discount-info', method: Tw.API_METHOD.GET },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: Tw.API_METHOD.GET },
 
   // RECHARGE
@@ -183,7 +189,7 @@ Tw.API_CMD = {
   BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.GET },
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
-  BFF_06_0044: { path: '/core-recharge/v1/share-pots/donation-used', method: Tw.API_METHOD.GET },
+  BFF_06_0044: { path: '/core-balance/v1/tfamily-sharings', method: Tw.API_METHOD.GET },
   BFF_06_0045: { path: '/core-recharge/v1/share-pots/donation', method: Tw.API_METHOD.GET },
   BFF_06_0046: { path: '/core-recharge/v1/share-pots/donation', method: Tw.API_METHOD.POST },
   BFF_06_0047: { path: '/core-recharge/v1/share-pots/auto-donation', method: Tw.API_METHOD.GET },

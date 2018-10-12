@@ -10,6 +10,7 @@ Tw.CertificationSelect = function () {
   this._certPassword = new Tw.CertificationPassword();
   this._certSmsPw = new Tw.CertificationSmsPassword();
   this._certPublic = new Tw.CertificationPublic();
+  this._certFinance = new Tw.CertificationFinance();
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -140,7 +141,8 @@ Tw.CertificationSelect.prototype = {
         this._certSmsPw.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-        this._openCertBrowser('/auth/cert/finance/identification?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+        // this._openCertBrowser('/auth/cert/finance/identification?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+        this._certFinance.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
         break;
       default:
         this._popupService.openAlert('Not Supported');

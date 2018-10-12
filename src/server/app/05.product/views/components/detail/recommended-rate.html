@@ -1,0 +1,36 @@
+<script type="text/template" id="tpl_recommended_rate_item">
+  {{#list}}
+  <li class="type01">
+    <a href="/product/detail/{{prodId}}" class="product-infolink">
+      <div class="img-box"><img class="lte" src="{{rgstImg}}" alt="{{prodNm}}"></div>
+      <div class="products-titleinfo">
+        <h5 class="title">{{prodNm}}</h5>
+        {{#if isNumberBasFee}}
+        <p class="info">월<span class="money">{{basFeeAmt}}</span>원</p>
+        {{else}}
+        <p class="info"><span class="money">{{basFeeAmt}}</span></p>
+        {{/if}}
+      </div>
+      <div class="taglist-wrap">
+        {{#filters}}
+        <span class="tag-text" data-filter_id="{{prodFltId}}">#{{prodFltNm}}</span>
+        {{/filters}}
+      </div>
+      <dl class="products-additionalinfo">
+        {{#if basOfrDataQtyCtt}}
+        <dt>데이터</dt>
+        <dd><span class="point">{{basOfrDataQtyCtt}}</span></dd>
+        {{/if}}
+        {{#if basOfrVcallTmsCtt}}
+        <dt>음성</dt>
+        <dd>{{basOfrVcallTmsCtt}}</dd>
+        {{/if}}
+        {{#if basOfrCharCntCtt}}
+        <dt>문자</dt>
+        <dd>{{basOfrCharCntCtt}}</dd>
+        {{/if}}
+      </dl>
+    </a>
+  </li>
+  {{/list}}
+</script>

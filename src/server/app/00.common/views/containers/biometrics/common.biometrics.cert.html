@@ -16,109 +16,123 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: target + ' 등록/재등록', svcInfo: svcInfo, { step: true } }); %>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box step">
-                        <h3 class="step-ti"><em>STEP 02</em>본인확인</h3>
-                        <ul class="step-list">
-                            <li>1<span class="blind">약관동의</span></li>
-                            <li class="on">2<span class="blind">본인확인</span></li>
-                            <li>3<span class="blind">지문등록</span></li>
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>지문 등록/재등록</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box step">
+                            <h3 class="step-ti"><em>STEP 02</em>본인확인</h3>
+                            <ul class="step-list">
+                                <li>1<span class="blind">약관동의</span></li>
+                                <li class="on">2<span class="blind">본인확인</span></li>
+                                <li>3<span class="blind">지문등록</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //.widget -->
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="box-certifi-list">
+                        <ul class="certifi-sel-list">
+                            <li>
+                                <button>
+                                        <span class="list-cell">
+                                            <span class="ico-certifi-list type1" aria-hidden="false"></span>
+                                        </span>
+                                    <span class="list-cell">
+                                            <span class="list-ti">SK텔레콤 SMS 인증</span>
+                                            <span class="list-tx">고객님 명의의 SK텔레콤 휴대폰 번호로 SMS 인증합니다.</span>
+                                        </span>
+                                    <span class="ico"></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                        <span class="list-cell">
+                                            <span class="ico-certifi-list type2" aria-hidden="false"></span>
+                                        </span>
+                                    <span class="list-cell">
+                                            <span class="list-ti">KT SMS 인증</span>
+                                            <span class="list-tx">고객님 명의의 KT 휴대폰 번호로  SMS 인증합니다.</span>
+                                        </span>
+                                    <span class="ico"></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                        <span class="list-cell">
+                                            <span class="ico-certifi-list type3" aria-hidden="false"></span>
+                                        </span>
+                                    <span class="list-cell">
+                                            <span class="list-ti">LG U+ 인증</span>
+                                            <span class="list-tx">고객님 명의의 LG U+ 휴대폰 번호로 SMS 인증합니다.</span>
+                                        </span>
+                                    <span class="ico"></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                        <span class="list-cell">
+                                            <span class="ico-certifi-list type4" aria-hidden="false"></span>
+                                        </span>
+                                    <span class="list-cell">
+                                            <span class="list-ti">아이핀 인증</span>
+                                            <span class="list-tx">고객님 명의의 아이핀으로 인증합니다.</span>
+                                        </span>
+                                    <span class="ico"></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                        <span class="list-cell">
+                                            <span class="ico-certifi-list type5" aria-hidden="false"></span>
+                                        </span>
+                                    <span class="list-cell">
+                                            <span class="list-ti">공인인증서 인증</span>
+                                            <span class="list-tx">고객님 명의의 범용/금융거래용 공인인증서로 인증합니다.</span>
+                                        </span>
+                                    <span class="ico"></span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <!-- //.widget -->
-            </div>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="box-certifi-list">
-                    <ul class="certifi-sel-list">
-                        <li>
-                            <button>
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type1" aria-hidden="false"></span>
-                                    </span>
-                                <span class="list-cell">
-                                        <span class="list-ti">SK텔레콤 SMS 인증</span>
-                                        <span class="list-tx">고객님 명의의 SK텔레콤 휴대폰 번호로 SMS 인증합니다.</span>
-                                    </span>
-                                <span class="ico"></span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type2" aria-hidden="false"></span>
-                                    </span>
-                                <span class="list-cell">
-                                        <span class="list-ti">KT SMS 인증</span>
-                                        <span class="list-tx">고객님 명의의 KT 휴대폰 번호로  SMS 인증합니다.</span>
-                                    </span>
-                                <span class="ico"></span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type3" aria-hidden="false"></span>
-                                    </span>
-                                <span class="list-cell">
-                                        <span class="list-ti">LG U+ 인증</span>
-                                        <span class="list-tx">고객님 명의의 LG U+ 휴대폰 번호로 SMS 인증합니다.</span>
-                                    </span>
-                                <span class="ico"></span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type4" aria-hidden="false"></span>
-                                    </span>
-                                <span class="list-cell">
-                                        <span class="list-ti">아이핀 인증</span>
-                                        <span class="list-tx">고객님 명의의 아이핀으로 인증합니다.</span>
-                                    </span>
-                                <span class="ico"></span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type5" aria-hidden="false"></span>
-                                    </span>
-                                <span class="list-cell">
-                                        <span class="list-ti">공인인증서 인증</span>
-                                        <span class="list-tx">고객님 명의의 범용/금융거래용 공인인증서로 인증합니다.</span>
-                                    </span>
-                                <span class="ico"></span>
-                            </button>
+                <!--// .cont-box -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>이전</button>
                         </li>
                     </ul>
                 </div>
             </div>
-            <!--// .cont-box -->
-            <div class="bt-slice full">
-                <li class="bt-red1">
-                    <button>이전</button>
-                </li>
-            </div>
         </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
     </div>
-    <!--// #contents -->
+    <!-- // .popup hbs -->
 </div>
-</body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

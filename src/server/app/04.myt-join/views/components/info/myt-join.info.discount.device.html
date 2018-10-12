@@ -1,0 +1,65 @@
+<%#
+* FileName: myt-join.info.discount.device.html
+* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* Date: 2018.10.10
+* info : 단말기 분할상환 정보
+%>
+<!-- IPHONE6S_64G -->
+<div class="cont-box">
+
+    <div class="contract-dc-wrap">
+        <div class="dc-tit-wrap">
+            <h4 class="dc-tit"><%=commDataInfo.repaymentInfo[i].titNm %></h4>
+        </div>
+
+        <div class="contract-dc-list type2"><!-- 하단 분할상환 시작일에만 라인이 있는 경우 type2 클래스 추가 -->
+            <ul>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">총 분할상환 청구금액</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type3"><span class="str"><%=commDataInfo.repaymentInfo[i].totSubsidy %></span>원</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">잔여 분할상환 청구 금액</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type4"><span class="str"><%=commDataInfo.repaymentInfo[i].agreeClaimPay %></span>원</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">분할상환 시작일</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%=commDataInfo.repaymentInfo[i].startDt %></span>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+            <div class="amountdata-num">
+                <div class="date-info">
+                    <p class="data-title">잔여<span class="blind">(잔여개월)</span></p>
+                    <p class="data-state"><span class="str"><%=commDataInfo.repaymentInfo[i].remMt %></span>개월</p>
+                </div>
+                <div class="date-info">
+                    <p class="data-title">전체<span class="blind">(전체개월)</span></p>
+                    <p class="data-state"><span class="str"><%=commDataInfo.repaymentInfo[i].totMt %></span>개월</p>
+                </div>
+            </div>
+            <div class="bar-chart-hoz">
+                <span class="data-bar red" style="width:<%=commDataInfo.repaymentInfo[i].perMt %>%"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--// IPHONE6S_64G -->

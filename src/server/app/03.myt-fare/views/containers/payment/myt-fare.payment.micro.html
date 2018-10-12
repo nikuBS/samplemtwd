@@ -5,7 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -15,10 +15,10 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-payment-micro" class="wrap step">
+    <div id="myt-fare-payment-micro" class="wrap">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html',
-        { title: '소액결제', svcInfo: svcInfo, option:{ line: true} }); %>
+        { title: '소액결제', svcInfo: svcInfo, option:{ line: true } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -35,10 +35,10 @@
 
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
-                            <button>이용내역</button>
+                            <button class="fe-history">이용내역</button>
                         </li>
                         <li class="bt-white2">
-                            <button>한도변경</button>
+                            <button class="fe-change-limit">한도변경</button>
                         </li>
                     </ul>
                 </div>
@@ -108,20 +108,21 @@
                             <dl>
                                 <dt>결제 비밀번호<button aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
                                 <dd>
-                                    <span class="val"><%= passwordText %></span>
-                                    <button>결제 비밀번호 설정 화면 이동</button>
+                                    <span class="val"><%= passwordInfo.text %></span>
+                                    <button class="fe-set-password" data-cpin="<%= passwordInfo.result.cpinStCd %>"
+                                            data-code="<%= passwordInfo.code %>"
+                                            data-msg="<%= passwordInfo.msg %>">결제 비밀번호 설정 화면 이동</button>
                                 </dd>
                             </dl>
                         </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
-
                 <hr class="cont-sp type1" aria-hidden="true"/>
-
             </div>
         </div>
         <!--// #contents -->
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

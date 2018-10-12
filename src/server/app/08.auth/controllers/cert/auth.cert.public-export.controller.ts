@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import EnvHelper from '../../../../utils/env.helper';
 
 class AuthCertPublicExport extends TwViewController {
   constructor() {
@@ -13,7 +14,11 @@ class AuthCertPublicExport extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('cert/auth.cert.public-export.html');
+    const signgateInfo = EnvHelper.getEnvironment('SIGNGATE');
+    res.render('cert/auth.cert.public-export.html', {
+      signgate_host: signgateInfo.host,
+      signgate_port: signgateInfo.port
+    });
   }
 }
 

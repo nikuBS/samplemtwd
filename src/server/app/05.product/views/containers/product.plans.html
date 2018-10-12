@@ -32,7 +32,7 @@
                             <h3 class="title">사용중인 상품</h3>
                             <p class="text">band 데이터 퍼펙트S</p>
                         </a> -->
-                        <a href="/product/detail/<%= svcInfo.prodId %>" class="submain-myfeeproducts">
+                        <a href="/myt/join/product/fee-plan" class="submain-myfeeproducts">
                             <h3 class="title">사용중인 상품</h3>
                             <p class="text"><%= svcInfo.prodNm %></p>
                         </a>
@@ -42,13 +42,13 @@
                 <!--//사용중인 상품 -->
 
                 <div class="ti-caption-gray">
-                    <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
+                    <button class="bt-select fe-select-order" title="정렬 선택" aria-haspopup="true">추천순</button>
                     <div class="num">
-                        <button class="bt-select" title="조건 선택" aria-haspopup="true">
+                        <button class="bt-select fe-select-filter" title="조건 선택" aria-haspopup="true">
                             <% const filters = plans.searchOption.searchFltIds; %>
                             <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
                                 <% if (i > 0) { %>, <% } %>
-                                #<span class="vbl tx-bold"><%= filters[i]%></span> <!-- TODO: name 값으로 수정 필요 -->
+                                #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
                             <% } %>
                             <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
                         </button>
@@ -88,13 +88,13 @@
                             </li>
                         <% } %>
                     </ul>
-                    <% if (plans.productCount > products.length) { %>
+
+                    <% const leftCount = plans.productCount - products.length; %>
                     <div class="bt-more gap-style">
-                        <button data-last-plan="<%= products[products.length - 1].prodId %>">
-                            더보기(<%= plans.productCount - products.length %>)
+                        <button class="<%= leftCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                            더보기(<%= leftCount %>)
                         </button>
                     </div>
-                    <% } %>
                 </div>
                 <!-- //이런 요금제는 어떠세요? -->
 
@@ -150,7 +150,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-      new Tw.ProductPlans($('.wrap'), <%- JSON.stringify(params) %>);
+      new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01100', type: 'plans' });
   });
 </script>
 <% include ../components/product.plans.component.html %>

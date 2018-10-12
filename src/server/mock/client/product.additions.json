@@ -1,0 +1,76 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "productCount": 10,
+    "hasNext": false,
+    "products": [
+      {
+        "prodId": "NA00005696",
+        "prodNm": "척척할인",
+        "prodSmryDesc": "매월 제휴사 상품 일정금액 이상 소비시 통신비 할인",
+        "prodIconImgUrl": "/img/dummy/img_sample01.png",
+        "basFeeInfo": "43175",
+        "prodFltList": [
+          {
+            "prodFltId": "F01121",
+            "prodFltNm": "LTE"
+          }
+        ]
+      },
+      {
+        "prodId": "NA00005696",
+        "prodNm": "척척할인",
+        "prodSmryDesc": "매월 제휴사 상품 일정금액 이상 소비시 통신비 할인",
+        "prodIconImgUrl": "/img/dummy/img_sample01.png",
+        "basFeeInfo": "상세참조",
+        "prodFltList": [
+          {
+            "prodFltId": "F01121",
+            "prodFltNm": "LTE"
+          }
+        ]
+      },
+      {
+        "prodId": "NA00005696",
+        "prodNm": "척척할인",
+        "prodSmryDesc": "매월 제휴사 상품 일정금액 이상 소비시 통신비 할인",
+        "prodIconImgUrl": "/img/dummy/img_sample01.png",
+        "basFeeInfo": "43175",
+        "prodFltList": [
+          {
+            "prodFltId": "F01121",
+            "prodFltNm": "LTE"
+          }
+        ]
+      },
+      {
+        "prodId": "NA00005696",
+        "prodNm": "척척할인",
+        "prodSmryDesc": "매월 제휴사 상품 일정금액 이상 소비시 통신비 할인",
+        "prodIconImgUrl": "/img/dummy/img_sample01.png",
+        "basFeeInfo": "43175",
+        "prodFltList": [
+          {
+            "prodFltId": "F01121",
+            "prodFltNm": "LTE"
+          }
+        ]
+      },
+      {
+        "prodId": "NA00005696",
+        "prodNm": "척척할인",
+        "prodSmryDesc": "매월 제휴사 상품 일정금액 이상 소비시 통신비 할인",
+        "prodIconImgUrl": "/img/dummy/img_sample01.png",
+        "basFeeInfo": "43175",
+        "prodFltList": [
+          {
+            "prodFltId": "F01121",
+            "prodFltNm": "LTE"
+          }
+        ]
+      }
+    ],
+    "searchOption": { "searchOrder": "recommand", "searchCount": 20 }
+  }
+}

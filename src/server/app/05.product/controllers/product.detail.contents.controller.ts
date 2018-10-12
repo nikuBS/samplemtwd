@@ -7,32 +7,12 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
-import { API_CMD } from '../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 
 class ProductDetailContents extends TwViewController {
   constructor() {
     super();
-  }
-
-  /**
-   * @param contentsVslCd
-   * @param contentsInfo
-   * @param contentsByRedis
-   * @private
-   */
-  private _parseContents (contentsVslCd, contentsInfo, contentsByRedis): any {
-    let result = contentsInfo.result;
-
-    if (contentsVslCd === 'A') {
-      result = { visual: contentsByRedis.contents };
-    }
-
-    if (contentsVslCd === 'E') {
-      result = Object.assign(contentsInfo.result, { visual: contentsByRedis.contents });
-    }
-
-    return result;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
@@ -47,12 +27,31 @@ class ProductDetailContents extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0001, {}, {}, prodId),
-      this.apiService.request(API_CMD.BFF_10_0004, {}, {}, prodId),
-      this.redisService.getData('ProductLedgerContents:' + prodId)
-    ).subscribe(([ basicInfo, contentsInfo, contentsByRedis ]) => {
+      this.redisService.getData('ProductLedger:' + prodId)
+    ).subscribe(([ basicInfo, prodRedisInfo ]) => {
+      if (basicInfo.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
+          code: basicInfo.code,
+          msg: basicInfo.msg,
+          svcInfo: svcInfo,
+          title: '상품 상세보기'
+        });
+      }
+
+      if (['F1000', 'E1000'].indexOf(basicInfo.result.prodStCd) === -1) {
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          title: '상품 전체보기'
+        });
+      }
+
+      if (FormatHelper.isEmpty(prodRedisInfo)) {
+        return this.error.render(res, { svcInfo: svcInfo });
+      }
+
       res.render('product.detail.contents.html', {
         svcInfo: svcInfo,
-        contents: this._parseContents(basicInfo.contentsVslCd, contentsInfo, contentsByRedis)
+        contentsInfo: prodRedisInfo.contents
       });
     });
   }

@@ -39,6 +39,14 @@ class MyTJoinProductFeePlan extends TwViewController {
     return null;
   }
 
+  private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
+    return optionAndDiscountProgramList.map((item) => {
+      return Object.assign(item, {
+        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+      });
+    });
+  }
+
   /**
    * @param data
    * @param isWire
@@ -66,7 +74,8 @@ class MyTJoinProductFeePlan extends TwViewController {
       feePlanProd: Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
         basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
-            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110'],
+            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt),
+        isBasFeeTxtUnit: !isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)),
         basOfrVcallTmsTxt: (data.result.feePlanProd.basOfrVcallTmsTxt !== '0' + VOICE_UNIT.MIN) ? data.result.feePlanProd.basOfrVcallTmsTxt : null,
         basOfrLtrAmtTxt: (data.result.feePlanProd.basOfrLtrAmtTxt !== '0' + UNIT['310']) ? data.result.feePlanProd.basOfrLtrAmtTxt : null
       }),
@@ -79,7 +88,9 @@ class MyTJoinProductFeePlan extends TwViewController {
                 });
               })
             }) : []
-      }
+      },
+      optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...data.result.disProdList,
+        ...data.result.optProdList, ...data.result.comProdList])
     });
   }
 
@@ -107,7 +118,8 @@ class MyTJoinProductFeePlan extends TwViewController {
           svcInfo: svcInfo,
           svcCdName: SVC_CDNAME,
           feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
-          feePlan: this._convertFeePlan(feePlanInfo, apiInfo.isWire)
+          feePlan: this._convertFeePlan(feePlanInfo, apiInfo.isWire),
+          isFeeAlarm: ['cellphone', 'pps'].indexOf(SVC_CDNAME[svcInfo.svcAttrCd]) !== -1
         });
     });
   }
