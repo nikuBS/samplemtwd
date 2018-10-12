@@ -174,6 +174,19 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  JOIN_INFO_NO_AGREEMENT : {
+    title : '포인트 사용 유형',
+    data : [
+      {
+        'list': [
+          {'option': 'condition', 'attr': 'id="0"', value: '전체'},
+          {'option': 'condition', 'attr': 'id="1"', value: '포인트 사용'},
+          {'option': 'condition', 'attr': 'id="2"', value: '포인트 적립'},
+          {'option': 'condition', 'attr': 'id="3"', value: '포인트 소멸'}
+        ]
+      }
+    ]
+  },
   FARE_PAYMENT_LIMIT: [
     {
       'list': [
@@ -264,23 +277,23 @@ Tw.PRODUCT_LIST_DEVICE_FILTERS = [
   {
     id: 'F01121',
     name: 'LTE',
-    icon: 'lte',
+    icon: 'lte'
   }, {
     id: 'F01122',
     name: '3G',
-    icon: '3g',
+    icon: '3g'
   }, {
     id: 'F01123',
     name: '일반폰',
-    icon: 'feature',
+    icon: 'feature'
   }, {
     id: 'F01124',
     name: '태블릿/<br>2nd Device',
-    icon: 'device',
+    icon: 'device'
   }, {
     id: 'F01125',
     name: '선불폰',
-    icon: 'prepayment',
+    icon: 'prepayment'
   }
-]
+];
 
