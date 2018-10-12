@@ -58,58 +58,59 @@ class MyTJoinSubmainController extends TwViewController {
       this._getInstallmentInfo(),
       this._getPausedState()
     ).subscribe(([myif, myhs, myfp, myap, mycpp, myinsp, myps]) => {
-      if ( !myif.info ) {
-        data.type = this.type;
-        data.isPwdSt = this.isPwdSt;
-        // 가입정보
-        switch ( this.type ) {
-          case 0:
-            data.myInfo = myif;
-            break;
-          case 2:
-            data.myInfo = this._convertWireInfo(myif);
-            break;
-        }
-        data.myHistory = myhs; // 개통/변경 이력
-        data.myFeeProduct = myfp; // 나의가입요금상품
-        data.myAddProduct = myap; // 나의 부가,결합상품
-        data.myContractPlan = mycpp; // 무약정플랜
-        data.myInstallement = myinsp; // 약정,할부 정보
-        data.myPausedState = myps; // 일시정지
-
-        // 개통일자
-        if (data.myHistory && data.myHistory.length > 0) {
-          data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
-        }
-        // 부가, 결합상품 노출여부
-        if (data.myAddProduct && Object.keys(data.myAddProduct).length > 0) {
-          data.isAddProduct = true;
-        }
-        // 약정할부 노출여부
-        if ( data.myInstallement && data.myInstallement.disProdNm ) {
-          data.isInstallement = true;
-        }
-        // 무약정플랜 노출여부
-        if ( data.myContractPlan && data.myContractPlan.muPointYn === 'Y' ) {
-          data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
-          data.myContractPlan.count = data.myContractPlan.muPointCnt;
-          data.isContractPlan = true;
-        }
-        // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
-        if ( data.myPausedState.svcStCd === 'SP' ) {
-          data.myPausedState.sDate = DateHelper.getShortDateNoDot(data.myPausedState.fromDt);
-          data.myPausedState.eDate = DateHelper.getShortDateNoDot(data.myPausedState.toDt);
-        }
-        res.render('myt-join.submain.html', { data });
-      } else {
+      // 가입정보 또는 가입요금상품이 없는 경우에는 에러페이지 이동
+      const info = myif.info || myfp.info;
+      if ( info ) {
         res.render('error.server-error.html', {
           title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
-          code: myif.info.code,
-          msg: myif.info.msg,
+          code: info.code,
+          msg: info.msg,
           svcInfo: svcInfo
         });
+        return false;
       }
+      data.type = this.type;
+      data.isPwdSt = this.isPwdSt;
+      // 가입정보
+      switch ( this.type ) {
+        case 0:
+          data.myInfo = myif;
+          break;
+        case 2:
+          data.myInfo = this._convertWireInfo(myif);
+          break;
+      }
+      data.myHistory = myhs; // 개통/변경 이력
+      data.myFeeProduct = myfp; // 나의가입요금상품
+      data.myAddProduct = myap; // 나의 부가,결합상품
+      data.myContractPlan = mycpp; // 무약정플랜
+      data.myInstallement = myinsp; // 약정,할부 정보
+      data.myPausedState = myps; // 일시정지
 
+      // 개통일자
+      if ( data.myHistory && data.myHistory.length > 0 ) {
+        data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+      }
+      // 부가, 결합상품 노출여부
+      if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
+        data.isAddProduct = true;
+      }
+      // 약정할부 노출여부
+      if ( data.myInstallement && data.myInstallement.disProdNm ) {
+        data.isInstallement = true;
+      }
+      // 무약정플랜 노출여부
+      if ( data.myContractPlan && data.myContractPlan.muPointYn === 'Y' ) {
+        data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
+        data.myContractPlan.count = data.myContractPlan.muPointCnt;
+        data.isContractPlan = true;
+      }
+      // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
+      if ( data.myPausedState.svcStCd === 'SP' ) {
+        data.myPausedState.sDate = DateHelper.getShortDateNoDot(data.myPausedState.fromDt);
+        data.myPausedState.eDate = DateHelper.getShortDateNoDot(data.myPausedState.toDt);
+      }
+      res.render('myt-join.submain.html', { data });
     });
   }
 
@@ -208,9 +209,7 @@ class MyTJoinSubmainController extends TwViewController {
         }
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -222,9 +221,7 @@ class MyTJoinSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -236,9 +233,7 @@ class MyTJoinSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -250,9 +245,7 @@ class MyTJoinSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -264,9 +257,7 @@ class MyTJoinSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }

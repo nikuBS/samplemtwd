@@ -10,7 +10,7 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { API_CMD, API_CODE, API_ADD_SVC_ERROR } from '../../types/api-command.type';
+import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 
 class MyTFareSubmainController extends TwViewController {
@@ -27,7 +27,7 @@ class MyTFareSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    if ( req && req.query && req.query.type === 'UF') {
+    if ( req && req.query && req.query.type === 'UF' ) {
       // 사용요금
       data.type = req.query.type;
       this._requestUsageFee(req, res, data, svcInfo);
@@ -228,9 +228,7 @@ class MyTFareSubmainController extends TwViewController {
         }
         return resp.result;
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -240,9 +238,7 @@ class MyTFareSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -255,9 +251,7 @@ class MyTFareSubmainController extends TwViewController {
         }
         return resp.result;
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -265,11 +259,15 @@ class MyTFareSubmainController extends TwViewController {
   _getTaxInvoice() {
     return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        if ( resp.result.taxReprintList.length === 0 ) {
+          return null;
+        }
         return resp.result;
+      } else if ( resp.code === API_TAX_REPRINT_ERROR.BIL0018 ) {
+        // 사업자 번호를 조회할 수 없는 상황
+        return null;
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
 
@@ -278,14 +276,12 @@ class MyTFareSubmainController extends TwViewController {
   _getContribution() {
     return this.apiService.request(API_CMD.BFF_07_0038, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-       if ( resp.result.totalCount === 0 ) {
+        if ( resp.result.totalCount === 0 ) {
           return null;
         }
         return resp.result;
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -305,9 +301,7 @@ class MyTFareSubmainController extends TwViewController {
       } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
         return { code: API_ADD_SVC_ERROR.BIL0034 };
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
@@ -327,9 +321,7 @@ class MyTFareSubmainController extends TwViewController {
       } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
         return { code: API_ADD_SVC_ERROR.BIL0034 };
       } else {
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }

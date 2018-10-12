@@ -439,7 +439,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 최근납부내역 이동
   _onClickedPaymentDetail: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/history');
+    this._historyService.goLoad('/myt/fare/history/payment');
   },
 
   // 다른회선조회
@@ -464,7 +464,7 @@ Tw.MyTFareSubMain.prototype = {
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
     // SB 상 납부내역상세로 진입하도록 정의되어있음
-    this._historyService.goLoad('/myt/fare/history');
+    this._historyService.goLoad('/myt/fare/history/payment');
   },
 
   // 기부금/후원금
