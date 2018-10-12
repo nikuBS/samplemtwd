@@ -8,54 +8,70 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { PRODUCT_MY_ADDITIONS } from '../../../mock/server/product.submain.mock';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { PRODUCT_ADDITIONS } from '../../../mock/server/product.list.mock';
 import FormatHelper from '../../../utils/format.helper';
+import { Observable } from 'rxjs/Observable';
 
 export default class ProductAdditions extends TwViewController {
   private ADDITION_CODE = 'F01200';
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
-    const additionData = {
-      myAdditions: this.getMyAdditions(),
-      additions: this.getAddtions()
-    };
-
     const params = {
-      searchFltIds: req.query.filters,
-      searchTag: req.query.tag
+      idxCtgCd: this.ADDITION_CODE,
+      ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
+      ...(req.query.tag ? { searchTag: req.query.tag } : {})
     };
 
-    res.render('product.additions.html', { svcInfo, additionData, params });
+    if (svcInfo) {
+      Observable.combineLatest(this.getMyAdditions(), this.getAddtions(params)).subscribe(([myAdditions, additions]) => {
+        const error = {
+          code: myAdditions.code || additions.code,
+          msg: myAdditions.msg || additions.msg
+        };
+
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
+
+        res.render('product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params });
+      });
+    } else {
+      this.getAddtions(params).subscribe(additions => {
+        res.render('product.additions.html', { svcInfo, additionData: { additions }, params });
+      });
+    }
   }
 
   private getMyAdditions = () => {
-    // this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {});
-
-    const resp = PRODUCT_MY_ADDITIONS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result.addProductJoinsInfo;
-  };
-
-  private getAddtions = () => {
-    // this.apiService.request(API_CMD.BFF_10_0031, { idxCtgCd: this.ADDITION_CODE }).map(resp => {});
-    const resp = PRODUCT_ADDITIONS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return {
-      ...resp.result,
-      products: resp.result.products.map(addition => {
+    return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
-          ...addition,
-          basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+          code: resp.code,
+          msg: resp.msg
         };
-      })
-    };
-  };
+      }
+
+      return resp.result.addProductJoinsInfo;
+    });
+  }
+
+  private getAddtions = params => {
+    return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
+
+      return {
+        ...resp.result,
+        products: resp.result.products.map(addition => {
+          return {
+            ...addition,
+            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+          };
+        })
+      };
+    });
+  }
 }

@@ -54,57 +54,70 @@ const PRODUCT_PLAN_GROUPS = {
   code: '00',
   msg: 'success',
   result: {
-    expsTitNm: 'SKT의 대표 요금제', //상품그룹타이틀명
+    expsTitNm: 'SKT의 대표 요금제',
     grpProdList: [
       {
-        prodGrpId: 'G000000002', //상품그룹ID
-        prodGrpNm: 'T플랜', //상품그룹명
-        prodGrpDesc: 'DATA 맘껏쓰고 나눠쓰는 T플랜', //상품그룹설명
-        prodGrpIconImgUrl: '', //그룹상품 아이콘 이미지 FULL URL
-        prodGrpFlagImgUrl: '/img/product/bg_products_badge.png', //그룹상품 FLAG 이미지 FULL URL
+        prodGrpId: 'T000000005',
+        prodGrpNm: 'band 데이터',
+        prodGrpDesc: '그룹테스트',
+        prodGrpIconImgUrl: '',
+        prodGrpFlagImgUrl: '',
         prodList: [
-          //상품목록
           {
-            prodId: 'NA00005955', //상품ID
-            prodNm: '스몰', //상품명
-            basFeeInfo: '33000', //이용요금(월정액)
-            basOfrVcallTmsCtt: '집전화·이동전화 무제한', //기본제공 음성통화시간
-            basOfrCharCntCtt: '기본제공', //기본제공 문자건수
-            basOfrDataQtyCtt: '12GB' //기본제공 데이터량
+            prodId: 'NA00004769',
+            prodNm: 'band 데이터 세이브',
+            basFeeInfo: '39600',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '1.2GB'
           },
           {
-            prodId: 'NA00005955', //상품ID
-            prodNm: '스몰', //상품명
-            basFeeInfo: '33000', //이용요금(월정액)
-            basOfrVcallTmsCtt: '집전화·이동전화 무제한', //기본제공 음성통화시간
-            basOfrCharCntCtt: '기본제공', //기본제공 문자건수
-            basOfrDataQtyCtt: '12GB' //기본제공 데이터량
-          }
-        ]
-      },
-      {
-        prodGrpId: 'G000000002', //상품그룹ID
-        prodGrpNm: 'T플랜', //상품그룹명
-        prodGrpDesc: 'DATA 맘껏쓰고 나눠쓰는 T플랜', //상품그룹설명
-        prodGrpIconImgUrl: '', //그룹상품 아이콘 이미지 FULL URL
-        prodGrpFlagImgUrl: '', //그룹상품 FLAG 이미지 FULL URL
-        prodList: [
-          //상품목록
-          {
-            prodId: 'NA00005955', //상품ID
-            prodNm: '스몰', //상품명
-            basFeeInfo: '33000', //이용요금(월정액)
-            basOfrVcallTmsCtt: '집전화·이동전화 무제한', //기본제공 음성통화시간
-            basOfrCharCntCtt: '기본제공', //기본제공 문자건수
-            basOfrDataQtyCtt: '12GB' //기본제공 데이터량
+            prodId: 'NA00004770',
+            prodNm: 'band 데이터 1.2G',
+            basFeeInfo: '46200',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '2.2GB'
           },
           {
-            prodId: 'NA00005955', //상품ID
-            prodNm: '스몰', //상품명
-            basFeeInfo: '33000', //이용요금(월정액)
-            basOfrVcallTmsCtt: '집전화·이동전화 무제한', //기본제공 음성통화시간
-            basOfrCharCntCtt: '기본제공', //기본제공 문자건수
-            basOfrDataQtyCtt: '12GB' //기본제공 데이터량
+            prodId: 'NA00004771',
+            prodNm: 'band 데이터 2.2G',
+            basFeeInfo: '51700',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '3.5GB'
+          },
+          {
+            prodId: 'NA00005134',
+            prodNm: 'band 데이터 퍼펙트S',
+            basFeeInfo: '75900',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '16.0GB'
+          },
+          {
+            prodId: 'NA00004773',
+            prodNm: 'band 데이터 6.5G',
+            basFeeInfo: '65890',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '11.0GB'
+          },
+          {
+            prodId: 'NA00004775',
+            prodNm: 'band 데이터 퍼펙트',
+            basFeeInfo: '무료',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '11.0GB'
+          },
+          {
+            prodId: 'NA00004772',
+            prodNm: 'band 데이터 3.5G',
+            basFeeInfo: '56100',
+            basOfrVcallTmsCtt: '집전화·이동전화 무제한',
+            basOfrCharCntCtt: '기본제공',
+            basOfrDataQtyCtt: '6.5GB'
           }
         ]
       }
@@ -204,40 +217,27 @@ const PRODUCT_RECOMMENDED_TAGS = {
   code: '00',
   msg: 'success',
   result: {
-    expsTitNm: '추천태그', //추천태그타이틀명
+    expsTitNm: '모바일 요금제 태그',
     tagList: [
-      //태그목록
       {
-        tagId: '1', //태그ID
-        tagNm: 'LTE' //태그명
+        tagId: 'TAG0000001',
+        tagNm: '태그1'
       },
       {
-        tagId: '2', //태그ID
-        tagNm: '3G' //태그명
+        tagId: 'TAG0000002',
+        tagNm: '태그2'
       },
       {
-        tagId: '3', //태그ID
-        tagNm: '여행갈 때 좋은 요금제' //태그명
+        tagId: 'TAG0000003',
+        tagNm: '태그3'
       },
       {
-        tagId: '4', //태그ID
-        tagNm: '커플요금제' //태그명
+        tagId: 'TAG0000004',
+        tagNm: '태그4'
       },
       {
-        tagId: '5', //태그ID
-        tagNm: '선불폰' //태그명
-      },
-      {
-        tagId: '6', //태그ID
-        tagNm: '효도요금제' //태그명
-      },
-      {
-        tagId: '7', //태그ID
-        tagNm: '자녀를 위한 요금제' //태그명
-      },
-      {
-        tagId: '8', //태그ID
-        tagNm: '소확행' //태그명
+        tagId: 'TAG0000005',
+        tagNm: '태그5'
       }
     ]
   }
@@ -249,6 +249,17 @@ const PRODUCT_ADDITIONAL_BANNERS = {
   result: {
     bnnrList: [
       //배너 목록
+      {
+        bnnrId: '7',
+        bnnrNm: '데이터 부가서비스',
+        imgUrl: 'http://mcdn.tworld.co.kr20181004\\1\\08\\71\\73\\35\\Koala.jpg',
+        imgAltVal: 'aa',
+        anchTagInfo: 'bb',
+        linkTypCd: 'S',
+        linkTypNm: '일반콘텐츠',
+        twdViewUrl: '',
+        oferStcCd: ''
+      },
       {
         bnnrId: '1', //배너ID
         bnnrNm: '모일수록 줄어드는 데이터 걱정!', //배너명

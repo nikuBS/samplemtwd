@@ -119,8 +119,11 @@
                                                 <h5 class="title">
                                                     <%= product.prodNm %>
                                                 </h5>
-                                                <p class="info">월<span class="money">
-                                                        <%= product.basFeeInfo %></span>원</p>
+                                                <% if (/^[0-9,]+$/.test(product.basFeeInfo)) { %>
+                                                    <p class="info">월<span class="money"><%= product.basFeeInfo %></span>원</p>
+                                                <% } else { %>
+                                                    <p class="info"><span class="money"><%= product.basFeeInfo %></span></p>
+                                                <% } %>
                                             </div>
                                             <dl class="products-additionalinfo">
                                                 <dt>데이터</dt>
@@ -150,7 +153,7 @@
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <!-- 내 요금제와 비슷한 요금제 -->
-                <% if (svcInfo && productData.myFilters) { %>
+                <% if (svcInfo && productData.myFilters.list) { %>
                 <div class="cont-box">
                     <% const filters = productData.myFilters.list %>
                     <div class="similarmyplan-wrap">
@@ -190,8 +193,11 @@
                                     <h5 class="title">
                                         <%= plan.prodNm %>
                                     </h5>
-                                    <p class="info">월<span class="money">
-                                            <%= plan.basFeeInfo %></span>원</p>
+                                    <% if (/^[0-9,]+$/.test(plan.basFeeInfo)) { %>
+                                        <p class="info">월<span class="money"><%= plan.basFeeInfo %></span>원</p>
+                                    <% } else { %>
+                                        <p class="info"><span class="money"><%= plan.basFeeInfo %></span></p>
+                                    <% } %>
                                 </div>
                                 <div class="taglist-wrap">
                                     <% for (let j = 0; j < plan.prodFltList.length; j++) { %>

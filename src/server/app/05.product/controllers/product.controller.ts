@@ -6,15 +6,10 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CODE } from '../../../types/api-command.type';
-import {
-  PRODUCT_PROMOTION_BANNERS,
-  PRODUCT_PLAN_GROUPS,
-  PRODUCT_MY_FILTERS,
-  PRODUCT_RECOMMENDED_PLANS,
-  PRODUCT_RECOMMENDED_TAGS
-} from '../../../mock/server/product.submain.mock';
+import { API_CODE, API_CMD } from '../../../types/api-command.type';
+import { PRODUCT_MY_FILTERS, PRODUCT_RECOMMENDED_PLANS, PRODUCT_RECOMMENDED_TAGS } from '../../../mock/server/product.submain.mock';
 import FormatHelper from '../../../utils/format.helper';
+import { Observable } from 'rxjs/Observable';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -24,90 +19,116 @@ export default class Product extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    const productData = {
-      banners: this.getPromotionBanners(),
-      groups: this.getProductGroups(),
-      myFilters: this.getMyFilters(),
-      recommendedPlans: this.getRecommendedPlans(),
-      recommendedTags: this.getRecommendedTags()
-    };
+    Observable.combineLatest(this.getPromotionBanners(), this.getProductGroups(), this.getRecommendedPlans(), this.getRecommendedTags()).subscribe(
+      ([banners, groups, recommendedPlans, recommendedTags]) => {
+        const error = {
+          code: banners.code || groups.code || recommendedPlans.code || recommendedTags.code,
+          msg: banners.msg || groups.msg || recommendedPlans.msg || recommendedTags.msg
+        };
 
-    res.render('product.html', { svcInfo, productData });
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
+
+        const productData = {
+          banners,
+          groups,
+          myFilters: this.getMyFilters(),
+          recommendedPlans,
+          recommendedTags
+        };
+
+        res.render('product.html', { svcInfo, productData });
+      }
+    );
   }
 
   private getPromotionBanners = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.PLAN_CODE }).map(resp => {});
-    const resp = PRODUCT_PROMOTION_BANNERS;
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
+    return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+      // const resp = PRODUCT_PROMOTION_BANNERS;
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    return resp.result;
+      return resp.result;
+    });
   }
 
   private getProductGroups = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {});
-    const resp = PRODUCT_PLAN_GROUPS;
+    return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+      // const resp = PRODUCT_PLAN_GROUPS;
 
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return {
-      ...resp.result,
-      grpProdList: resp.result.grpProdList.map(group => {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
-          ...group,
-          prodList: group.prodList.map(plan => {
-            return {
-              ...plan,
-              basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
-            };
-          })
+          code: resp.code,
+          msg: resp.msg
         };
-      })
-    };
+      }
+
+      return {
+        ...resp.result,
+        grpProdList: resp.result.grpProdList.map(group => {
+          return {
+            ...group,
+            prodList: group.prodList.map(plan => {
+              return {
+                ...plan,
+                basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+              };
+            })
+          };
+        })
+      };
+    });
   }
 
   private getMyFilters = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: this.PLAN_CODE }).map(resp => {});
-    const resp = PRODUCT_MY_FILTERS;
+    return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result;
+      return resp.result;
+    });
   }
 
   private getRecommendedPlans = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {});
-    const resp = PRODUCT_RECOMMENDED_PLANS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return {
-      ...resp.result,
-      prodList: resp.result.prodList.map(plan => {
+    return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
-          ...plan,
-          basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+          code: resp.code,
+          msg: resp.msg
         };
-      })
-    };
+      }
+
+      return {
+        ...resp.result,
+        prodList: resp.result.prodList.map(plan => {
+          return {
+            ...plan,
+            basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+          };
+        })
+      };
+    });
   }
 
   private getRecommendedTags = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {});
+    return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    const resp = PRODUCT_RECOMMENDED_TAGS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result;
+      return resp.result;
+    });
   }
 }

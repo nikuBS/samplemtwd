@@ -17,114 +17,131 @@ import {
   PRODUCT_RECOMMENDED_TAGS
 } from '../../../mock/server/product.submain.mock';
 import FormatHelper from '../../../utils/format.helper';
+import { Observable } from 'rxjs/Observable';
 
 export default class ProductAddition extends TwViewController {
   private ADDITION_CODE = 'F01200';
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
-    const productData = {
-      myAdditions: this.getMyAdditions(),
-      banners: this.getPromotionBanners(),
-      bestAdditions: this.getBestAdditions(),
-      additionBanners: this.getAdditionBanners(),
-      recommendedAdditions: this.getRecommendedAdditions(),
-      recommendedTags: this.getRecommendedTags()
-    };
+    Observable.combineLatest(
+      this.getMyAdditions(),
+      this.getPromotionBanners(),
+      this.getAdditionBanners(),
+      this.getRecommendedAdditions(),
+      this.getRecommendedTags()
+    ).subscribe(([myAdditions, banners, additionBanners, recommendedAdditions, recommendedTags]) => {
+      const error = {
+        code: myAdditions.code || banners.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
+        msg: myAdditions.msg || banners.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
+      };
 
-    res.render('product.addition.html', { svcInfo, productData });
+      if (error.code) {
+        return this.error.render(res, { ...error, svcInfo });
+      }
+
+      const productData = {
+        myAdditions,
+        banners,
+        bestAdditions: this.getBestAdditions(),
+        additionBanners,
+        recommendedAdditions,
+        recommendedTags
+      };
+      res.render('product.addition.html', { svcInfo, productData });
+    });
   }
 
   private getMyAdditions = () => {
-    // this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {});
+    return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    const resp = PRODUCT_MY_ADDITIONS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result.addProductJoinsInfo;
+      return resp.result.addProductJoinsInfo;
+    });
   }
 
   private getPromotionBanners = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
-    const resp = PRODUCT_PROMOTION_BANNERS;
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
+    return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    return resp.result;
-  }
-
-  private getMyFilters = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
-    const resp = PRODUCT_MY_FILTERS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result;
+      return resp.result;
+    });
   }
 
   private getBestAdditions = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
-    const resp = PRODUCT_BEST_ADDITIONS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return {
-      ...resp.result,
-      prodList: resp.result.prodList.map(addition => {
+    return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
-          ...addition,
-          basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+          code: resp.code,
+          msg: resp.msg
         };
-      })
-    };
+      }
+
+      return {
+        ...resp.result,
+        prodList: (resp.result.prodList || []).map(addition => {
+          return {
+            ...addition,
+            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+          };
+        })
+      };
+    });
   }
 
   private getAdditionBanners = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
-    const resp = PRODUCT_ADDITIONAL_BANNERS;
+    return this.apiService.request(API_CMD.BFF_10_0030, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result.bnnrList;
+      return resp.result.bnnrList;
+    });
   }
 
   private getRecommendedAdditions = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
-    const resp = PRODUCT_RECOMMENDED_ADDITIONS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return {
-      ...resp.result,
-      prodList: resp.result.prodList.map(addition => {
+    return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
-          ...addition,
-          basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+          code: resp.code,
+          msg: resp.msg
         };
-      })
-    };
+      }
+
+      return {
+        ...resp.result,
+        prodList: (resp.result.prodList || []).map(addition => {
+          return {
+            ...addition,
+            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+          };
+        })
+      };
+    });
   }
 
   private getRecommendedTags = () => {
-    // return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
+    return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
 
-    const resp = PRODUCT_RECOMMENDED_TAGS;
-
-    if (resp.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
-    return resp.result;
+      return resp.result;
+    });
   }
 }

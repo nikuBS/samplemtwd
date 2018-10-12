@@ -2,7 +2,7 @@ const PRODUCT_PLANS = {
   code: '00',
   msg: 'success',
   result: {
-    productCount: 28,
+    productCount: 8,
     hasNext: false,
     products: [
       {
@@ -10,14 +10,28 @@ const PRODUCT_PLANS = {
         prodNm: '1231',
         rgstImg: 'http://mcdn.tworld.co.kr/uploads/poc/36258/5063/132DC85D172B47BFB2DF0824202FDB28.jpg',
         basFeeAmt: '상세참조',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }, { prodFltId: 'F01122', prodFltNm: '3G' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          },
+          {
+            prodFltId: 'F01122',
+            prodFltNm: '3G'
+          }
+        ]
       },
       {
         prodId: 'TW00000009',
         prodNm: '1231',
         rgstImg: 'http://mcdn.tworld.co.kr/uploads/poc/13093/50845/F944B3CC76E5459EA16DA57B3D331988.png',
         basFeeAmt: '0',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          }
+        ]
       },
       {
         prodId: 'NA00005959',
@@ -27,7 +41,12 @@ const PRODUCT_PLANS = {
         basOfrVcallTmsCtt: '집전화·이동전화 무제한',
         basOfrCharCntCtt: '기본제공',
         basFeeAmt: '100000',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          }
+        ]
       },
       {
         prodId: 'NA00005958',
@@ -37,7 +56,12 @@ const PRODUCT_PLANS = {
         basOfrVcallTmsCtt: '집전화·이동전화 무제한',
         basOfrCharCntCtt: '기본제공',
         basFeeAmt: '무료',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          }
+        ]
       },
       {
         prodId: 'NA00005957',
@@ -47,7 +71,12 @@ const PRODUCT_PLANS = {
         basOfrVcallTmsCtt: '집전화·이동전화 무제한',
         basOfrCharCntCtt: '기본제공',
         basFeeAmt: '무료',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          }
+        ]
       },
       {
         prodId: 'NA00005956',
@@ -57,7 +86,12 @@ const PRODUCT_PLANS = {
         basOfrVcallTmsCtt: '집전화·이동전화 무제한',
         basOfrCharCntCtt: '기본제공',
         basFeeAmt: '무료',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          }
+        ]
       },
       {
         prodId: 'NA00005955',
@@ -67,7 +101,12 @@ const PRODUCT_PLANS = {
         basOfrVcallTmsCtt: '집전화·이동전화 무제한',
         basOfrCharCntCtt: '기본제공',
         basFeeAmt: '무료',
-        filters: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }]
+        filters: [
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          }
+        ]
       },
       {
         prodId: 'NA00004775',
@@ -78,13 +117,25 @@ const PRODUCT_PLANS = {
         basOfrCharCntCtt: '기본제공',
         basFeeAmt: '무료',
         filters: [
-          { prodFltId: 'F01121', prodFltNm: 'LTE' },
-          { prodFltId: 'F01134', prodFltNm: '8GB~무제한' },
-          { prodFltId: 'F01143', prodFltNm: '6만원대~' }
+          {
+            prodFltId: 'F01121',
+            prodFltNm: 'LTE'
+          },
+          {
+            prodFltId: 'F01134',
+            prodFltNm: '8GB~무제한'
+          },
+          {
+            prodFltId: 'F01143',
+            prodFltNm: '6만원대~'
+          }
         ]
       }
     ],
-    searchOption: { searchFltIds: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }], searchOrder: 'recommand', searchCount: 20 }
+    searchOption: {
+      searchOrder: 'recommand',
+      searchCount: 20
+    }
   }
 };
 
