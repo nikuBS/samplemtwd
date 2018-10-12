@@ -7,15 +7,6 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import {
-  PRODUCT_MY_ADDITIONS,
-  PRODUCT_PROMOTION_BANNERS,
-  PRODUCT_MY_FILTERS,
-  PRODUCT_BEST_ADDITIONS,
-  PRODUCT_RECOMMENDED_ADDITIONS,
-  PRODUCT_ADDITIONAL_BANNERS,
-  PRODUCT_RECOMMENDED_TAGS
-} from '../../../mock/server/product.submain.mock';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,13 +17,14 @@ export default class ProductAddition extends TwViewController {
     Observable.combineLatest(
       this.getMyAdditions(),
       this.getPromotionBanners(),
+      this.getBestAdditions(),
       this.getAdditionBanners(),
       this.getRecommendedAdditions(),
       this.getRecommendedTags()
-    ).subscribe(([myAdditions, banners, additionBanners, recommendedAdditions, recommendedTags]) => {
+    ).subscribe(([myAdditions, banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
       const error = {
-        code: myAdditions.code || banners.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
-        msg: myAdditions.msg || banners.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
+        code: myAdditions.code || banners.code || bestAdditions.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
+        msg: myAdditions.msg || banners.msg || bestAdditions.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
       };
 
       if (error.code) {
@@ -42,7 +34,7 @@ export default class ProductAddition extends TwViewController {
       const productData = {
         myAdditions,
         banners,
-        bestAdditions: this.getBestAdditions(),
+        bestAdditions,
         additionBanners,
         recommendedAdditions,
         recommendedTags
@@ -60,7 +52,7 @@ export default class ProductAddition extends TwViewController {
         };
       }
 
-      return resp.result.addProductJoinsInfo;
+      return resp.result;
     });
   }
 
