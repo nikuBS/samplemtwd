@@ -2917,6 +2917,11 @@
       border-top: none; }
   .history-list ul li:first-of-type {
     border-top: none; }
+  .history-list ul li.year-tx {
+    font-size: 0.875rem;
+    color: #666;
+    padding: 0.4375rem 1rem 0.375rem 1rem;
+    background-color: #f5f5f5; }
 
 .history-list.type1 ul li .tx-date {
   top: 1.5625rem; }
@@ -11160,6 +11165,9 @@ a.bt-link-tx.underline.small {
     top: 50%;
     right: 0;
     margin-top: -0.125rem; }
+  .option-box .bt-dropdown.tx-bold {
+    color: #000;
+    font-weight: 700; }
 
 .option-box :not(.textarea-type) .input {
   display: inline-block;
@@ -11193,6 +11201,11 @@ a.bt-link-tx.underline.small {
   .option-box .textarea-type textarea::-webkit-input-placeholder {
     color: #b2b2b2;
     font-weight: 300; }
+
+.option-box .textarea-type .byte {
+  color: #666; }
+  .option-box .textarea-type .byte .byte-current {
+    color: #000; }
 
 .webtoon-box {
   padding: 1.25rem 1rem; }
@@ -11250,7 +11263,7 @@ a.bt-link-tx.underline.small {
       padding: 1.5625rem 1.5625rem 1.5625rem 0;
       text-align: left; }
       .prevention-list li button:after {
-        content: '';
+        content: '상세보기';
         position: absolute;
         top: 1.5625rem;
         right: 0;
@@ -11259,7 +11272,9 @@ a.bt-link-tx.underline.small {
         background-image: url(/img/ico/ico-group.png);
         background-repeat: no-repeat;
         background-size: 3.125rem auto;
-        background-position: -1.5625rem -21.875rem; }
+        background-position: -1.5625rem -21.875rem;
+        overflow: hidden;
+        color: transparent; }
       .prevention-list li button .list-tit {
         display: block;
         font-size: 0.875rem;
@@ -11287,7 +11302,7 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem;
       text-align: left; }
       .service-list li button:after {
-        content: '';
+        content: '상세보기';
         position: absolute;
         top: 1.25rem;
         right: 0;
@@ -11296,7 +11311,9 @@ a.bt-link-tx.underline.small {
         background-image: url(/img/ico/ico-group.png);
         background-repeat: no-repeat;
         background-size: 3.125rem auto;
-        background-position: 0 -17.1875rem; }
+        background-position: 0 -17.1875rem;
+        overflow: hidden;
+        color: transparent; }
       .service-list li button:before {
         content: '';
         position: absolute;
@@ -11386,7 +11403,7 @@ a.bt-link-tx.underline.small {
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
       .guide-list li button:after {
-        content: '';
+        content: '상세보기';
         position: absolute;
         top: 0.9375rem;
         right: 0;
@@ -11395,7 +11412,9 @@ a.bt-link-tx.underline.small {
         background-image: url(/img/ico/ico-group.png);
         background-repeat: no-repeat;
         background-size: 3.125rem auto;
-        background-position: 0 -17.1875rem; }
+        background-position: 0 -17.1875rem;
+        overflow: hidden;
+        color: transparent; }
       .guide-list li button:before {
         content: '';
         position: absolute;
@@ -11431,7 +11450,7 @@ a.bt-link-tx.underline.small {
           font-size: 0.875rem;
           line-height: 2.0625rem; }
           .howto-list-wrap .howto-list-box ul li button:after {
-            content: '';
+            content: '상세보기';
             position: absolute;
             top: 50%;
             right: 0;
@@ -11441,7 +11460,9 @@ a.bt-link-tx.underline.small {
             background-image: url(/img/ico/ico-group.png);
             background-repeat: no-repeat;
             background-size: 3.125rem auto;
-            background-position: 0 -17.1875rem; }
+            background-position: 0 -17.1875rem;
+            overflow: hidden;
+            color: transparent; }
     .howto-list-wrap .howto-list-box:nth-child(even) {
       background-color: #ebf5fe; }
       .howto-list-wrap .howto-list-box:nth-child(even) strong {
@@ -11496,7 +11517,9 @@ a.bt-link-tx.underline.small {
       margin: 0;
       width: 0.8125rem;
       height: 0.375rem;
-      background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -22.5rem;
+      background-image: url(/img/ico/ico-group.png);
+      background-repeat: no-repeat;
+      background-position: -1.9375rem -22.5rem;
       background-size: 3.125rem;
       overflow: hidden;
       color: transparent; }
@@ -11545,6 +11568,146 @@ a.bt-link-tx.underline.small {
     color: #666;
     font-size: 0.75rem;
     line-height: 1.125rem; }
+
+.email-consult-list {
+  padding: 0 1rem; }
+  .email-consult-list > li button {
+    position: relative;
+    width: 100%;
+    padding: 1.4375rem 1.5625rem 1.4375rem 0;
+    border-top: 1px solid #e1e1e1;
+    text-align: left; }
+    .email-consult-list > li button:after {
+      content: '상세보기';
+      position: absolute;
+      top: 1.25rem;
+      right: 0;
+      width: 1.5625rem;
+      height: 1.5625rem;
+      background-image: url(/img/ico/ico-group.png);
+      background-repeat: no-repeat;
+      background-size: 3.125rem auto;
+      background-position: 0 -17.1875rem;
+      overflow: hidden;
+      color: transparent; }
+    .email-consult-list > li button .tit {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.1875rem; }
+    .email-consult-list > li button .date {
+      display: inline-block;
+      color: #666;
+      font-size: 0.8125rem;
+      vertical-align: middle; }
+    .email-consult-list > li button .date-state {
+      display: block; }
+    .email-consult-list > li button .state {
+      position: relative;
+      display: inline-block;
+      margin-left: 0.3125rem;
+      padding-left: 0.6875rem;
+      font-size: 0.8125rem;
+      vertical-align: middle; }
+      .email-consult-list > li button .state:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 0.0625rem;
+        height: 0.5625rem;
+        margin-top: -0.25rem;
+        background: #e1e1e1; }
+  .email-consult-list > li:first-child button {
+    border-top: none; }
+  .email-consult-list > li ul li {
+    margin-bottom: 1.25rem; }
+    .email-consult-list > li ul li button {
+      position: relative;
+      border-top: none;
+      padding: 0 1.5625rem 0 2.75rem; }
+      .email-consult-list > li ul li button:after {
+        top: -0.125rem; }
+      .email-consult-list > li ul li button .again {
+        position: absolute;
+        top: 0.125rem;
+        left: 0;
+        width: 2.25rem;
+        height: 0.9375rem;
+        background: #666;
+        border-radius: 0.125rem;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.625rem;
+        text-align: center; }
+
+.details-top .tit {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.3125rem; }
+
+.details-top .date {
+  display: inline-block;
+  color: #666;
+  font-size: 0.8125rem;
+  vertical-align: middle; }
+
+.details-top .date-state {
+  display: block; }
+
+.details-top .state {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.3125rem;
+  padding-left: 0.6875rem;
+  font-size: 0.8125rem;
+  vertical-align: middle; }
+  .details-top .state:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.0625rem;
+    height: 0.5625rem;
+    margin-top: -0.25rem;
+    background: #e1e1e1; }
+
+.details-btm .details-info {
+  padding: 0.8125rem 0; }
+  .details-btm .details-info li {
+    display: table;
+    width: 100%;
+    padding: 0.25rem 0;
+    line-height: 1.3125rem;
+    table-layout: fixed; }
+    .details-btm .details-info li strong {
+      display: table-cell;
+      color: #666;
+      font-size: 0.875rem;
+      font-weight: 400;
+      vertical-align: top; }
+    .details-btm .details-info li em {
+      display: table-cell;
+      color: #666;
+      font-size: 0.9375rem;
+      text-align: right;
+      vertical-align: top; }
+    .details-btm .details-info li:first-child strong {
+      color: #000; }
+    .details-btm .details-info li:first-child em {
+      color: #000;
+      font-size: 0.9375rem;
+      font-weight: 700; }
+    .details-btm .details-info li:nth-child(2) {
+      margin-top: 0.625rem; }
+
+.details-btm .details-cont {
+  padding: 0.9375rem 0;
+  border-top: 1px solid #e1e1e1;
+  color: #666;
+  font-size: 0.875rem;
+  line-height: 1.3125rem; }
 
 /* 권은별 */
 .test {
