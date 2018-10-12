@@ -1,0 +1,40 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <h1 class="complete-title">
+                <img src="/img/dummy/dmy-complete.jpg" alt=""/>
+                <span><strong>{{text}}</strong> 완료</span>
+            </h1>
+            <div class="complete-btn-box pt56">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <button class="{{link_class}}">{{link_text}}</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="tw-popup-closeBtn">닫기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
