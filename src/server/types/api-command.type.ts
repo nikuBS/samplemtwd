@@ -486,8 +486,8 @@ export const API_CMD = {
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0017: {
-    path: '/core-product/v1/mobiles/additions/args-0/preinfos',
-    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+    path: '/v1/products/additions/args-0/join-term-infos',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false
   },
   BFF_10_0018: { path: '/core-product/v1/mobiles/additions-set/args-0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0019: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets/lines', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },

@@ -18,7 +18,7 @@
 
   <div class="product-select-wrap">
     <span class="data-tit">회선설정</span>
-    <span class="data-number">010-12**-24**</span>
+    <span class="data-number"><%= svcInfo.svcNum %></span>
   </div>
 
   <!-- .cont-box -->
@@ -28,11 +28,11 @@
       <div class="form-box">
         <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
             <span class="input">
-                <input type="number" placeholder="숫자만 입력" value="010-12**-24**" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
-                <button class="cancel"><span class="blind">삭제</span></button>
+                <input type="number" placeholder="숫자만 입력" value="<%= svcInfo.svcNum %>" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+                <button class="cancel fe-btn_del_line"><span class="blind">삭제</span></button>
             </span>
             <span class="bt-box">
-                <button type="button">주소록</button>
+                <button class="fe-btn_address_book" type="button">주소록</button>
             </span>
         </span>
         <span id="aria-phone-tx1" class="input-comment">데이터 함께쓰기를 설정하실 동일 명의의 휴대폰번호를 입력하시고, 설정 가능 여부를 확인해 주세요.</span>
@@ -40,7 +40,7 @@
     </div>
     <ul class="bt-slice style1">
       <li class="bt-gray1">
-        <button disabled="disabled">추가하기</button>
+        <button disabled="disabled" class="fe-btn_add_num">추가하기</button>
       </li>
     </ul>
   </div>
@@ -61,7 +61,7 @@
               <span class="stext gray">010-12**-24**</span>
             </p>
             <div class="list-btn">
-              <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
+              <div class="bt-alone"><button class="fe-btn_del_line bt-line-gray1">삭제</button></div>
             </div>
           </li>
           <li class="list-box">
@@ -71,7 +71,7 @@
               <span class="stext gray">010-12**-24**</span>
             </p>
             <div class="list-btn">
-              <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
+              <div class="bt-alone"><button class="fe-btn_del_line bt-line-gray1">삭제</button></div>
             </div>
           </li>
         </ul>

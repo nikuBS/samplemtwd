@@ -21,7 +21,7 @@
 								<span class="sub-disc01">
 									<span class="elem">가입할 부가서비스</span>
 								</span>
-        <span class="tit-tx"><span class="blind">가입할 상품정보</span>안심옵션 프리미엄</span>
+        <span class="tit-tx"><span class="blind">가입할 상품정보</span><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></span>
         <% if ( joinTermInfo.preinfo.reqProdInfo.isNumberBasFeeInfo ) { %>
         <span class="sub-disc03"><span class="tx-bold vbl"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %>원</span> 부가세포함</span>
         <% } else { %>

@@ -39,16 +39,24 @@ Tw.ProductSetting.prototype = {
         this._resultPage = '/myt/join/product/fee-plans';
         this._currentOptionProdId = this.$container.find('#current_prod_id').val();
         this._updateApiCode = this.$container.find('#update_api_code').val();
-        this.$container.find('input[value="' + this._currentOptionProdId + '"]').trigger('click');
+
+        if (!Tw.FormatHelper.isEmpty(this._currentOptionProdId)) {
+          this.$container.find('input[value="' + this._currentOptionProdId + '"]').trigger('click');
+        }
         break;
     }
   },
 
   _bindEventByDisplayCase: function() {
     switch(this._displayId) {
-      case 'MP_02_02_03_01':
+      case 'MP_02_02_03_14':
+        this.$container.on('change', '.widget-box.radio input[type="radio"]', $.proxy(this._enableZeroPlanSetupButton, this));
         break;
     }
+  },
+
+  _enableZeroPlanSetupButton: function() {
+    this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
   },
 
   _cachedElement: function() {

@@ -16,7 +16,7 @@
 
   <div class="product-select-wrap">
     <span class="data-tit">공유회선 설정</span>
-    <span class="data-number">010-12**-24**</span>
+    <span class="data-number"><%= svcInfo.svcNum %></span>
   </div>
 
   <!-- .cont-box -->
@@ -26,24 +26,25 @@
       <div class="form-box">
         <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
             <span class="input">
-                <input type="number" placeholder="010-12**-24**" value="010-12**-24**" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
-                <button class="cancel"><span class="blind">삭제</span></button>
+                <input type="number" placeholder="<%= svcInfo.svcNum %>" value="<%= svcInfo.svcNum %>" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+                <button class="fe-btn_del_line cancel"><span class="blind">삭제</span></button>
             </span>
             <span class="bt-box">
-                <button type="button">주소록</button>
+                <button type="button" class="fe-btn_address_book">주소록</button>
             </span>
         </span>
-        <span id="aria-phone-tx1" class="input-comment"><span class="tx-bold vbl">TTAB 18(공유)</span> 의 모회선으로 설정하실 동일 명의의 <br />   이동전화번호를 입력하시고, 설정 가능 여부를 확인해주세요</span>
+        <span id="aria-phone-tx1" class="input-comment"><span class="tx-bold vbl"><%= prodNm %></span> 의 모회선으로 설정하실 동일 명의의 <br />   이동전화번호를 입력하시고, 설정 가능 여부를 확인해주세요</span>
       </div>
     </div>
     <ul class="bt-slice style1">
       <li class="bt-blue1">
-        <button>추가하기</button>
+        <button class="btn_add_num">추가하기</button>
       </li>
     </ul>
   </div>
   <!--// .cont-box -->
 
+  <% if ( settingInfo && settingInfo.combinationLineList.length > 0 ) { %>
   <hr class="cont-sp type1" aria-hidden="true"/>
 
   <!-- .cont-box -->
@@ -52,21 +53,24 @@
       <h3 class="tit type1">공유 신청된 회선</h3>
       <div class="list-comp-thumnail">
         <ul class="comp-box">
+          <% for( var i in settingInfo.combinationLineList) { %>
           <li class="list-box">
-            <div class="list-ico"><span class="ico type5">박</span></div>
+            <div class="list-ico"><span class="ico type5"><%= settingInfo.custNmMask.substr(0, 1) %></span></div>
             <p class="list-text">
-              <span class="mtext">박*주</span>
-              <span class="stext gray">010-12**-24**</span>
+              <span class="mtext"><%= settingInfo.custNmMask %></span>
+              <span class="stext gray"><%= settingInfo.combinationLineList[i].svcNumMask %></span>
             </p>
             <div class="list-btn">
-              <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
+              <div class="bt-alone"><button class="fe-btn_del_line bt-line-gray1">삭제</button></div>
             </div>
           </li>
+          <% } %>
         </ul>
       </div>
     </div>
   </div>
   <!--// .cont-box -->
+  <% } %>
 
   <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -74,7 +78,7 @@
   <div class="bt-fixed-area">
     <ul class="bt-slice full">
       <li class="bt-red1">
-        <button>설정완료</button>
+        <button class="fe-btn_setup_ok">설정완료</button>
       </li>
     </ul>
   </div>
