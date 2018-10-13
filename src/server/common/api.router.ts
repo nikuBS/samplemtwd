@@ -62,6 +62,41 @@ class ApiRouter {
     this.router.get('/version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/notice', this.getNotice.bind(this));
+    this.router.get('/certTest', (req, res, next) => {
+      res.json({
+        code: API_CODE.CODE_03,
+        result: {
+          url: req.baseUrl + req.path,
+          svcInfo: this.loginService.getSvcInfo(),
+          urlMeta: {
+            'menuNm': 'xxx',
+            'menuId': '1575',
+            'menuUrl': '',
+            'auth': {
+              'grades': 'A,Y,R,D,E,O,P,W,I,T,U',
+              'guidUrl': '/guide-url',
+              'accessTypes': 'T,S',
+              'cert': {
+                'prodProcType': '',
+                'maskAuthYn': 'N',
+                'opAuthYn': 'Y',
+                'methods': 'B',
+                'grpId': 'GRP001',
+                'jobCd': 'NFM_MTW_SAFESMS_INFO',
+                'smsAfterAuth': 'N'
+              }
+            },
+            'block': {
+              'time': {
+                'from': '20180803000000',
+                'to': '20180804000059'
+              },
+              'url': '/service-block',
+            }
+          }
+        }
+      });
+    });
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {

@@ -84,25 +84,24 @@ Tw.CertificationSelect.prototype = {
       data: {
         cntClass: methodCnt === 1 ? 'one' : methodCnt === 2 ? 'two' : 'three',
         skSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1,
-        // skMotp: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP) !== -1,
-        skMotp: true,
-        // otherSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
-        otherSms: true,
-        // save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
-        save: true,
-        // ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
-        ipin: true,
-        // email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
-        email: true,
-        // bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
-        bio: true,
-        // password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
-        password: true,
-        // publicCert: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
-        publicCert: true,
+        skMotp: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP) !== -1,
+        // skMotp: true,
+        otherSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
+        // otherSms: true,
+        save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
+        // save: true,
+        ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
+        // ipin: true,
+        email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
+        // email: true,
+        bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
+        // bio: true,
+        password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
+        // password: true,
+        publicCert: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
         // publicCert: true,
-        // smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1,
-        smsPassword: true
+        smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1,
+        // smsPassword: true
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
@@ -141,7 +140,6 @@ Tw.CertificationSelect.prototype = {
         this._certSmsPw.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-        // this._openCertBrowser('/auth/cert/finance/identification?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
         this._certFinance.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
         break;
       default:
