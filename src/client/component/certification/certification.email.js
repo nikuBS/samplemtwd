@@ -44,7 +44,7 @@ Tw.CertificationEmail.prototype = {
     this._callback = callback;
 
     this._popupService.open({
-      hbs: 'CO_02_01_L01',
+      hbs: 'CO_02_01_03',
       layer: true
     }, $.proxy(this._onOpenEmailPopup, this), $.proxy(this._onCloseEmailPopup, this));
   },
