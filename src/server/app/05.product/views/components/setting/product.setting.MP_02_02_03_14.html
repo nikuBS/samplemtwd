@@ -1,0 +1,81 @@
+<%#
+* FileName: product.setting.MP_02_02_03_14.html
+* Author: JiHun Yang (jihun202@sk.com)
+* Date: 2018.10.13
+%>
+<% if ( settingInfo ) { %>
+<input type="hidden" id="current_prod_id" value="<%= settingInfo.useOptionProdId %>">
+<input type="hidden" id="update_api_code" value="<%= updateApiCode %>">
+<% } %>
+<div class="container fe-join_setup" data-id="MP_02_02_03_14">
+  <% if ( settingInfo ) { %>
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="product-tit-wrap">
+      <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+      <span class="tit-big">0플랜 라지</span>
+    </div>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+  <div class="product-select-wrap">
+    <span class="data-tit">0플랜 옵션 선택</span>
+  </div>
+
+  <!-- .cont-box -->
+  <div class="cont-box nogaps">
+    <div class="list-comp-input product_0plan_wrap">
+      <div class="widget">
+        <div class="widget-box radio">
+          <ul class="select-list" role="group">
+            <li class="radiobox type01-big" role="radio" aria-checked="false">
+              <input type="radio" name="radio" value="NA00006164" title="데이터 프리 동영상" aria-labelledby="aria-comp-radio1">
+              <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                <p class="layout-text">
+                  <span class="mtext">0플랜_VIP</span>
+                  <span class="stext">전월 유지조건에 따라 VIP멤버십 혜택 제공</span>
+                </p>
+              </div>
+            </li>
+            <li class="radiobox type01-big" role="radio" aria-checked="false">
+              <input type="radio" name="radio" value="NA00006165" title="안심옵션" aria-labelledby="aria-comp-radio2">
+              <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                <span class="ico ico-movie"></span>
+                <p class="layout-text">
+                  <span class="mtext">뮤직메이트 무제한</span>
+                  <span class="stext">뮤직메이트 무제한 스트리밍 이용</span>
+                </p>
+              </div>
+            </li>
+            <li class="radiobox type01-big" role="radio" aria-checked="false">
+              <input type="radio" name="radio" value="NA00006166" title="기본 데이터 추가" aria-labelledby="aria-comp-radio3">
+              <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                <span class="ico ico-watch"></span>
+                <p class="layout-text">
+                  <span class="mtext">oksusu 포인트</span>
+                  <span class="stext">oksusu 월 12,000 포인트 제공</span>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <p class="payment-detail-btm-info pb20"> 3개의 옵션 중 1가지를 선택 할 수 있으며, 변경일 기준으로 30일 이내에 다른 옵션으로 변경이 불가합니다.</p>
+
+  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top; margin-bottom: 3.75rem">
+  <div class="bt-fixed-area">
+    <ul class="bt-slice full">
+      <li class="bt-gray1">
+        <% if ( settingInfo ) { %>
+        <button class="fe-btn_setup_ok">변경완료</button>
+        <% } else { %>
+        <button class="fe-btn_setup_ok" disabled="disabled">설정완료</button>
+        <% } %>
+      </li>
+    </ul>
+  </div>
+</div>

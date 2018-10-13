@@ -316,6 +316,12 @@ Tw.PRODUCT_CTG_NM = {
   ADDITIONS: '부가서비스'
 };
 
+Tw.PRODUCT_TYPE_NM = {
+  JOIN: '가입',
+  SETTING: '변경',
+  TERMINATE: '해지'
+};
+
 Tw.INFO = {
   MYT : {
     TDATA_SHARE: {

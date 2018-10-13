@@ -27,10 +27,6 @@ class ProductSetting extends TwViewController {
     NA00004196: ['NA00004047']
   };
 
-  private _planProdList = {
-    NA00005959: 'BFF_10_0013'
-  };
-
   /**
    * @private
    */
@@ -129,17 +125,6 @@ class ProductSetting extends TwViewController {
     return PROD_CTG_CD_CODE[ctgCd];
   }
 
-  /**
-   * @private
-   */
-  private _getApiCode(): Observable<any> {
-    if (!FormatHelper.isEmpty(this._planProdList[this._prodId])) {
-      return Observable.of({ apiCode: this._planProdList[this._prodId] });
-    }
-
-    return this.redisService.getData(this._prodId + 'SL');
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     this._prodId = req.params.prodId || '';
 
@@ -156,6 +141,15 @@ class ProductSetting extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_10_0001, {}, {}, this._prodId)
       .subscribe((basicInfo) => {
+        if (basicInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            code: basicInfo.code,
+            msg: basicInfo.msg,
+            svcInfo: svcInfo,
+            title: '상품 설정'
+          });
+        }
+
         this._displayId = this._getDisplayId();
         this._displayGroup = this._getDisplayGroup(basicInfo.result.ctgCd);
 
@@ -166,8 +160,11 @@ class ProductSetting extends TwViewController {
           });
         }
 
-        this._getApiCode().subscribe((ApiInfo) => {
-          if (FormatHelper.isEmpty(ApiInfo)) {
+        Observable.combineLatest(
+          this.redisService.getData('ProductChangeApi:' + this._prodId + 'SL'),
+          this.redisService.getData('ProductChangeApi:' + this._prodId + 'SS'),
+        ).subscribe(([selectApiInfo, updateApiInfo]) => {
+          if (FormatHelper.isEmpty(selectApiInfo) || FormatHelper.isEmpty(updateApiInfo)) {
             this.logger.info(this, '[EMPTY API INFO] API CODE IS EMPTY');
             return this.error.render(res, {
               title: '상품 설정',
@@ -175,7 +172,7 @@ class ProductSetting extends TwViewController {
             });
           }
 
-          this.apiService.request(API_CMD[ApiInfo.apiCode], {}, {}, this._prodId)
+          this.apiService.request(API_CMD[selectApiInfo.bffApiCode], {}, {}, this._prodId)
             .subscribe((settingInfo) => {
               if (settingInfo.code !== API_CODE.CODE_00) {
                 return this.error.render(res, {
@@ -191,7 +188,8 @@ class ProductSetting extends TwViewController {
                 prodId: this._prodId,
                 displayId: this._displayId,
                 displayGroup: this._displayGroup,
-                settingInfo: this._parseSettingInfo(settingInfo.result)
+                settingInfo: this._parseSettingInfo(settingInfo.result),
+                updateApiCode: updateApiInfo.bffApiCode
               });
             });
           });

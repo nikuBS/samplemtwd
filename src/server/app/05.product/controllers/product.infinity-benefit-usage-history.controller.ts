@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { PRODUCT_INFINITY_BENEFIT, PRODUCT_INFINITY_BENEFIT_PROD_NM } from '../../../types/string.type';
+import { PRODUCT_INFINITY_BENEFIT, PRODUCT_INFINITY_BENEFIT_NM, PRODUCT_INFINITY_BENEFIT_PROD_NM } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 
 class ProductInfinityBenefitUsageHistory extends TwViewController {
@@ -28,15 +28,19 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
 
   /**
    * @param result
+   * @param printProdId
    * @private
    */
-  private _parseBenefitList(result): any {
+  private _parseBenefitList(result, printProdId): any {
     const resultList: any = {};
 
-    switch (result.beforeTDiyGrCd) {
+    this._listCase = 'A';
+    this._listTotal = 0;
+
+    switch (printProdId) {
       case 'NA00006114':
       case 'NA00006115':
-        result[this._prodIdList[result.beforeTDiyGrCd]].forEach((item, index) => {
+        result[this._prodIdList[printProdId]].forEach((item, index) => {
           if (FormatHelper.isEmpty(item.issueDt)) {
             return true;
           }
@@ -61,7 +65,7 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
       case 'NA00006116':
       case 'NA00006117':
         this._listCase = 'B';
-        result[this._prodIdList[result.beforeTDiyGrCd]].forEach((item, index) => {
+        result[this._prodIdList[printProdId]].forEach((item, index) => {
           if (FormatHelper.isEmpty(item.benfStaDt)) {
             return true;
           }
@@ -76,8 +80,8 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
 
           this._listTotal++;
           resultList[benfStaDtKey].list.push(Object.assign(item, {
-            prodNm: result.beforeTDiyGrCd === 'NA00006116' ? item.watchDcNm : item.primProdNm,
-            prodLabel: PRODUCT_INFINITY_BENEFIT_PROD_NM[result.beforeTDiyGrCd],
+            prodNm: printProdId === 'NA00006116' ? item.watchDcNm : item.primProdNm,
+            prodLabel: PRODUCT_INFINITY_BENEFIT_PROD_NM[printProdId],
             benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YY.MM.DD'),
             benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YY.MM.DD'),
             multipleClass: index > 0 ? 'multiple' : ''
@@ -103,23 +107,16 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
           });
         }
 
-        // @todo 카테고리를 바꿔도 API 에서 현재 인피니티 혜택으로 줘서 ...
-        if (!FormatHelper.isEmpty(tDiyGrCd) && (tDiyGrCd !== data.result.beforeTDiyGrCd)) {
-          return this.error.render(res, {
-            title: '혜택 이용내역',
-            svcInfo: svcInfo
-          });
-        }
-
-        const grToken = data.result.beforeTDiyGrNm.split('_');
+        const printProdId = FormatHelper.isEmpty(tDiyGrCd) ? data.result.beforeTDiyGrCd : tDiyGrCd;
+        const grToken = PRODUCT_INFINITY_BENEFIT_NM[printProdId].split('_');
 
         res.render('product.infinity-benefit-usage-history.html', {
           svcInfo: svcInfo,
           beforeTDiyGrNm: grToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
-          beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[data.result.beforeTDiyGrCd],
-          beforeTDiyGrCd: data.result.beforeTDiyGrCd,
-          benefitList: this._parseBenefitList(data.result),
+          beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[printProdId],
+          beforeTDiyGrCd: printProdId,
+          benefitList: this._parseBenefitList(data.result, printProdId),
           listCase: this._listCase,
           listTotal: this._listTotal
         });

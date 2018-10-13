@@ -1,0 +1,205 @@
+<div class="container fe-join_confirm" style="display: none"
+     data-prod_nm="<%= joinTermInfo.preinfo.reqProdInfo.prodNm %>">
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="user-info">
+      <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
+      <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
+      <div class="in-info">
+        <span class="number type1"><span class="blind">회선번호</span><%= joinTermInfo.preinfo.svcNumMask %></span>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="charge-guide-wrap">
+      <div class="charge-cont">
+								<span class="sub-disc01">
+									<span class="elem">가입할 부가서비스</span>
+								</span>
+        <span class="tit-tx"><span class="blind">가입할 상품정보</span>안심옵션 프리미엄</span>
+        <% if ( joinTermInfo.preinfo.reqProdInfo.isNumberBasFeeInfo ) { %>
+        <span class="sub-disc03"><span class="tx-bold vbl"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %>원</span> 부가세포함</span>
+        <% } else { %>
+        <span class="sub-disc03"><span class="tx-bold vbl"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %></span></span>
+        <% } %>
+      </div>
+      <div class="cont-noti pt36">
+        <span class="type3"><%= joinTermInfo.preinfo.reqProdInfo.prodSmryDesc %></span>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <% if ( displayId ) { %>
+  <hr class="cont-sp type1" aria-hidden="true">
+
+  <!-- .cont-box -->
+  <div class="cont-box nogaps-hoz">
+    <ul class="link-list">
+      <li>
+        <dl>
+          <dt>설정 정보</dt>
+          <dd>
+            <span class="val fe-confirm_setting_info"></span>
+            <button type="button" class="fe-btn_back_to_setup">정보입력 팝업 열기</button>
+          </dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+
+  <!-- .cont-box -->
+  <div class="cont-box nogaps-top">
+    <div class="info-list">
+      <ul>
+        <li>
+          <div class="tit-area">
+            <span class="tit">자동 가입</span>
+            <span class="sub-tit">서비스 및 혜택</span>
+          </div>
+          <div class="cont-area">
+            <% for ( var i in joinTermInfo.preinfo.autoJoinList ) { %>
+            <dl>
+              <dt><%= joinTermInfo.preinfo.autoJoinList[i].svcProdNm %></dt>
+              <% for ( var j in joinTermInfo.preinfo.autoJoinList[i].svcProdList ) { %>
+              <dd><%= joinTermInfo.preinfo.autoJoinList[i].svcProdList[j] %></dd>
+              <% } %>
+            </dl>
+            <% } %>
+          </div>
+        </li>
+
+        <li>
+          <div class="tit-area">
+            <span class="tit">자동 해지</span>
+            <span class="sub-tit">서비스 및 혜택</span>
+          </div>
+          <div class="cont-area">
+            <% for ( var i in joinTermInfo.preinfo.autoTermList ) { %>
+            <dl>
+              <dt><%= joinTermInfo.preinfo.autoTermList[i].svcProdNm %></dt>
+              <% for ( var j in joinTermInfo.preinfo.autoTermList[i].svcProdList ) { %>
+              <dd><%= joinTermInfo.preinfo.autoTermList[i].svcProdList[j] %></dd>
+              <% } %>
+            </dl>
+            <% } %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <% if ( joinTermInfo.stipulationInfo.existData ) { %>
+  <div class="ti-caption-gray">
+    <h3 class="tit">꼭 확인해 주세요</h3>
+  </div>
+  <!-- .cont-box -->
+  <div class="cont-box nogaps fe-agree_wrap">
+    <div class="agree-chk-wrap fe-agree-chk">
+      <div class="list-comp-input-agree">
+        <div class="widget">
+          <div class="widget-box check">
+            <ul class="select-list" role="group">
+              <li>
+                <div class="checkbox type01 all fe-checkbox_style" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                  <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox1">
+                    <p class="layout-text all-chk">
+                      <span class="mtext">모두동의</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <% if ( joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeYn === 'Y' ) { %>
+              <li>
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox2">
+                    <p class="layout-text">
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeHtmlCtt %></div>
+                    </p>
+                  </div>
+                </div>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+              </li>
+              <% } %>
+              <% if ( joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgAgreeYn === 'Y' ) { %>
+              <li>
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox3">
+                    <p class="layout-text">
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt %></div>
+                    </p>
+                  </div>
+                </div>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+              </li>
+              <% } %>
+              <% if ( joinTermInfo.stipulationInfo.psnlInfoOfrAgreeYn === 'Y' ) { %>
+              <li>
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox4"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox4">
+                    <p class="layout-text">
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.psnlInfoOfrCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoOfrHtmlCtt %></div>
+                    </p>
+                  </div>
+                </div>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+              </li>
+              <% } %>
+              <% if ( joinTermInfo.stipulationInfo.adInfoOfrAgreeYn === 'Y' ) { %>
+              <li>
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox5"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox5">
+                    <p class="layout-text">
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.adInfoOfrAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.adInfoOfrCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt %></div>
+                    </p>
+                  </div>
+                </div>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+              </li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+
+  <!-- TBD -->
+  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
+  <!--// TBD -->
+
+  <div class="bt-fixed-area">
+    <ul class="bt-slice full">
+      <li class="bt-red1">
+        <button class="fe-btn_join" disabled="">가입하기</button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -232,7 +232,7 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoinReq: function() {
-    switch (this.displayGroup) {
+    switch (this._displayGroup) {
       case 'plans':
         this._apiService.request(Tw.API_CMD.BFF_10_0012, {
           asgnNumList: this._data.asgnNumList,
@@ -262,13 +262,14 @@ Tw.ProductJoin.prototype = {
       return Tw.Error(resp.code, resp.msg).page();
     }
 
-    var isProdMoney = this.$prodMoney.length > 0;
+    var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0);
 
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
       data: Object.assign(this._successData, {
         prodId: this._prodId,
         prodNm: this.$joinConfirmLayer.data('prod_nm'),
+        typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })
@@ -276,7 +277,7 @@ Tw.ProductJoin.prototype = {
   },
 
   _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_join_success_close', $.proxy(this._goProductDetail, this));
+    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._goProductDetail, this));
   },
 
   _goProductDetail: function() {

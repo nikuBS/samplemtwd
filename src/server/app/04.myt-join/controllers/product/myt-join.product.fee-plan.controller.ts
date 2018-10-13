@@ -110,7 +110,9 @@ class MyTJoinProductFeePlan extends TwViewController {
         if ( feePlanInfo.code !== API_CODE.CODE_00 ) {
           return this.error.render(res, Object.assign(defaultOptions, {
             code: feePlanInfo.code,
-            msg: feePlanInfo.msg
+            msg: feePlanInfo.msg,
+            title: '나의 요금제',
+            svcInfo: svcInfo
           }));
         }
 

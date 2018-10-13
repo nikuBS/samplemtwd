@@ -111,6 +111,13 @@ export enum PRODUCT_INFINITY_BENEFIT {
   NA00006117 = '인피니티 클럽 이용료 100%할인'
 }
 
+export enum PRODUCT_INFINITY_BENEFIT_NM {
+  NA00006114 = '인피니티_여행',
+  NA00006115 = '인피니티_영화',
+  NA00006116 = '인피니티_스마트워치',
+  NA00006117 = '인피니티_클럽'
+}
+
 export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
   NA00006116 = '지원요금제명',
   NA00006117 = '대상'

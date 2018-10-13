@@ -90,9 +90,6 @@ Tw.ProductDetail.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    console.log(resp);
-    return;
-
     this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
@@ -133,8 +130,6 @@ Tw.ProductDetail.prototype = {
   },
 
   _loadRecommendedrateList: function() {
-    this._ctgCd = 'F01100'; // @todo dummy data remove
-
     if (Tw.FormatHelper.isEmpty(this._filterIds) || Tw.FormatHelper.isEmpty(this._ctgCd)) {
       return;
     }

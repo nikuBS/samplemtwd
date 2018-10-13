@@ -5,8 +5,10 @@
 %>
 <% if ( settingInfo ) { %>
 <input type="hidden" id="current_prod_id" value="<%= settingInfo.beforeTDiyGrCd %>">
+<input type="hidden" id="update_api_code" value="<%= updateApiCode %>">
 <% } %>
 <div class="container fe-join_setup" data-id="MP_02_02_03_01">
+  <% if ( settingInfo ) { %>
   <!-- .cont-box -->
   <div class="cont-box">
     <div class="product-tit-wrap">
@@ -15,6 +17,7 @@
     </div>
   </div>
   <!--// .cont-box -->
+  <% } %>
 
   <div class="product-select-wrap">
     <span class="data-tit">인피니티 상품 혜택</span>

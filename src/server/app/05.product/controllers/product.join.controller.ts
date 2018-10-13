@@ -19,6 +19,7 @@ class ProductJoin extends TwViewController {
 
   private _prodId;
   private _displayId;
+  private _ignoreProdId = ['MP_02_02_03_14'];
 
   /**
    * @private
@@ -35,6 +36,19 @@ class ProductJoin extends TwViewController {
 
     if (!FormatHelper.isEmpty(displayId)) {
       this._displayId = displayId;
+    } else {
+      this._displayId = null;
+    }
+
+    this._setIgnoreJoinDisplayId();
+  }
+
+  /**
+   * @private
+   */
+  private _setIgnoreJoinDisplayId(): any {
+    if (this._ignoreProdId.indexOf(this._displayId) !== -1) {
+      this._displayId = null;
     }
   }
 
@@ -52,7 +66,7 @@ class ProductJoin extends TwViewController {
    */
   private _convertPlansJoinTermInfo(joinTermInfo): any {
     return Object.assign(joinTermInfo, {
-      preinfo: this._convertPreInfo(joinTermInfo.preinfo),
+      preinfo: this._convertPlanPreInfo(joinTermInfo.preinfo),
       installmentAgreement: this._convertInstallmentAgreement(joinTermInfo.installmentAgreement),
       stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
     });
@@ -125,7 +139,7 @@ class ProductJoin extends TwViewController {
    * @param preInfo
    * @private
    */
-  private _convertPreInfo(preInfo): any {
+  private _convertPlanPreInfo(preInfo): any {
     const isNumberFrBasFeeInfo = !isNaN(parseInt(preInfo.frProdInfo.basFeeInfo, 10));
     const isNumberToBasFeeInfo = !isNaN(parseInt(preInfo.toProdInfo.basFeeInfo, 10));
 
@@ -164,19 +178,37 @@ class ProductJoin extends TwViewController {
     return autoListConvertResult;
   }
 
-  private _convertProdRedisInfo(prodRedisInfo): any {
-    const isNumberBasFeeInfo = !isNaN(parseInt(prodRedisInfo, 10));
-
-    return Object.assign(prodRedisInfo, {
-      summary: {
-        isNumberBasFeeInfo: isNumberBasFeeInfo,
-        basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(prodRedisInfo.summary.basFeeInfo) : prodRedisInfo.summary.basFeeInfo
-      }
+  /**
+   * @param joinTermInfo
+   * @private
+   */
+  private _convertAdditionsJoinTermInfo(joinTermInfo): any {
+    return Object.assign(joinTermInfo, {
+      preinfo: this._convertAdditionsPreInfo(joinTermInfo.preinfo),
+      stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
     });
   }
 
+  /**
+   * @param preInfo
+   * @private
+   */
+  private _convertAdditionsPreInfo(preInfo): any {
+    const isNumberBasFeeInfo = !isNaN(parseInt(preInfo.reqProdInfo.basFeeInfo, 10));
+
+    return Object.assign(preInfo, {
+      reqProdInfo: Object.assign(preInfo.reqProdInfo, {
+        isNumberBasFeeInfo: isNumberBasFeeInfo,
+        basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
+      }),
+      autoJoinList: this._convertAutoJoinTermList(preInfo.autoJoinList),
+      autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
+    });
+  }
+
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    this._prodId = req.params.prodId;
+    this._prodId = req.params.prodId || '';
     this._setDisplayId();
     this.logger.info(this, '[DISPLAY ID] ', this._displayId);
 
@@ -225,29 +257,33 @@ class ProductJoin extends TwViewController {
               displayId: this._displayId,
               displayGroup: displayGroup,
               ctgCd: basicInfo.result.ctgCd,
-              isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00
+              isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00,
+              settingInfo: null
             });
           });
         }
 
         // 모바일 부가서비스
         if (displayGroup === 'additions') {
-          this.redisService.getData('ProductChangeApi:' + this._prodId + 'JN')
-            .subscribe(( callApiInfo ) => {
-              if (FormatHelper.isEmpty(callApiInfo)) {
+          this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, this._prodId)
+            .subscribe((joinTermInfo) => {
+              if (joinTermInfo.code !== API_CODE.CODE_00) {
                 return this.error.render(res, {
+                  code: joinTermInfo.code,
+                  msg: joinTermInfo.msg,
                   svcInfo: svcInfo,
                   title: '가입'
                 });
               }
 
               res.render('product.join.html', {
+                joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result),
                 svcInfo: svcInfo,
                 prodId: this._prodId,
                 displayId: this._displayId,
                 displayGroup: displayGroup,
-                basicInfo: basicInfo,
-                ctgCd: basicInfo.result.ctgCd
+                ctgCd: basicInfo.result.ctgCd,
+                settingInfo: null
               });
             });
         }
