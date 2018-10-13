@@ -20,8 +20,8 @@ Tw.ProductDetail.prototype = {
   _init: function() {
     this._prodId = this.$container.data('prod_id');
     this._ctgCd = this.$container.data('ctg_cd');
+    this._ctgKey = this.$container.data('ctg_key');
     this._filterIds = this.$container.data('filter_ids');
-    this._listAction = this.$container.data('list_action');
     this._loadRecommendedrateList();
   },
 
@@ -31,6 +31,7 @@ Tw.ProductDetail.prototype = {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
     this.$btnRecommendRateListMore = this.$container.find('.fe-btn_recommended_rate_list_more');
+    this.$btnRecommendProd = this.$container.find('.fe-btn_recommend_prod');
   },
 
   _bindEvent: function() {
@@ -38,6 +39,7 @@ Tw.ProductDetail.prototype = {
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
+    this.$btnRecommendProd.on('click', $.proxy(this._goRecommendProd, this));
   },
 
   _getJoinTermCd: function(typcd) {
@@ -88,6 +90,9 @@ Tw.ProductDetail.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    console.log(resp);
+    return;
+
     this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
@@ -116,6 +121,15 @@ Tw.ProductDetail.prototype = {
     }
 
     this._historyService.goLoad(btnLink);
+  },
+
+  _goRecommendProd: function(e) {
+    var prodId = $(e.currentTarget).data('prod_id');
+    if (Tw.FormatHelper.isEmpty(prodId)) {
+      return;
+    }
+
+    this._historyService.goLoad('/product/detail/' + prodId);
   },
 
   _loadRecommendedrateList: function() {
@@ -157,7 +171,7 @@ Tw.ProductDetail.prototype = {
   },
 
   _goRecommendRateMoreList: function() {
-    this._historyService.goLoad('/product/' + this._listAction + '?filters=' + this._filterIds);
+    this._historyService.goLoad('/product/' + this._ctgKey + '?filters=' + this._filterIds);
   }
 
 };

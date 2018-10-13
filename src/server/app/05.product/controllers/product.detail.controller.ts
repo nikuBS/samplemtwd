@@ -9,7 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD } from '../../../types/api-command.type';
-import { UNIT, VOICE_UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { PRODUCT_CTG_NAME } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -116,6 +117,7 @@ class ProductDetail extends TwViewController {
    */
   private _parseSummaryInfo (summaryInfo): any {
     return {
+      basOfrDataQtyCtt: this._praseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
       basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
       basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
@@ -153,15 +155,31 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param basOfrDataQtyCtt
+   * @private
+   */
+  private _praseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
+    if (basOfrDataQtyCtt === '-') {
+      return '';
+    }
+
+    return basOfrDataQtyCtt;
+  }
+
+  /**
    * @param basOfrVcallTmsCtt
    * @private
    */
   private _parseBasOfrVcallTmsCtt (basOfrVcallTmsCtt): any {
+    if (basOfrVcallTmsCtt === '-') {
+      return '';
+    }
+
     if (isNaN(parseInt(basOfrVcallTmsCtt, 10))) {
       return basOfrVcallTmsCtt;
     }
 
-    return FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN;
+    return FormatHelper.addComma(basOfrVcallTmsCtt);
   }
 
   /**
@@ -169,11 +187,15 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parseBasOfrCharCntCtt (basOfrCharCntCtt): any {
+    if (basOfrCharCntCtt === '-') {
+      return '';
+    }
+
     if (isNaN(parseInt(basOfrCharCntCtt, 10))) {
       return basOfrCharCntCtt;
     }
 
-    return FormatHelper.addComma(basOfrCharCntCtt) + UNIT['310'];
+    return FormatHelper.addComma(basOfrCharCntCtt);
   }
 
   /**
@@ -214,7 +236,7 @@ class ProductDetail extends TwViewController {
    * @param ctgCd
    * @private
    */
-  private _getIndexListActionName (ctgCd): any {
+  private _getCtgKey (ctgCd): any {
     return PROD_CTG_CD_CODE[ctgCd];
   }
 
@@ -228,7 +250,7 @@ class ProductDetail extends TwViewController {
     }
 
     return filtersList.map((item) => {
-      return item.filterFlagId;
+      return item.prodFltId;
     });
   }
 
@@ -281,7 +303,7 @@ class ProductDetail extends TwViewController {
         series: this._convertSeriesInfo(seriesInfo.result),
         recommends: recommendsInfo.result,
         svcInfo: svcInfo,
-        indexListActionName: this._getIndexListActionName(basicInfo.result.ctgCd),
+        ctgKey: this._getCtgKey(basicInfo.result.ctgCd),
         filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(',')
       });
     });

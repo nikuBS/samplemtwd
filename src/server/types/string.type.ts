@@ -111,6 +111,11 @@ export enum PRODUCT_INFINITY_BENEFIT {
   NA00006117 = '인피니티 클럽 이용료 100%할인'
 }
 
+export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
+  NA00006116 = '지원요금제명',
+  NA00006117 = '대상'
+}
+
 export const MYT_FARE_BILL_REISSUE_TYPE = {
   P: 'T world',
   H: 'Bill Letter',
@@ -131,6 +136,11 @@ export const MYT_INFO_DISCOUNT_MONTH = {
 
 export enum PRODUCT_TYPE {
   FEE_INFO_ETC = '상세참조'
+}
+
+export enum PRODUCT_CTG_NAME {
+  F01100 = '요금제',
+  F01200 = '부가서비스'
 }
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {

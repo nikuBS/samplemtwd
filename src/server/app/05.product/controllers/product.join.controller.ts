@@ -43,7 +43,6 @@ class ProductJoin extends TwViewController {
    * @private
    */
   private _getDisplayGroup(ctgCd): any {
-    console.log(ctgCd);
     return PROD_CTG_CD_CODE[ctgCd];
   }
 
@@ -54,10 +53,15 @@ class ProductJoin extends TwViewController {
   private _convertPlansJoinTermInfo(joinTermInfo): any {
     return Object.assign(joinTermInfo, {
       preinfo: this._convertPreInfo(joinTermInfo.preinfo),
-      installmentAgreement: this._convertInstallmentAgreement(joinTermInfo.installmentAgreement)
+      installmentAgreement: this._convertInstallmentAgreement(joinTermInfo.installmentAgreement),
+      stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
     });
   }
 
+  /**
+   * @param installmentAgreement
+   * @private
+   */
   private _convertInstallmentAgreement(installmentAgreement): any {
     const isNumberPenAmt = !isNaN(parseInt(installmentAgreement.penAmt, 10)),
       isNumberFrDcAmt = !isNaN(parseInt(installmentAgreement.frDcAmt, 10)),
@@ -78,8 +82,43 @@ class ProductJoin extends TwViewController {
     });
   }
 
+  /**
+   * @param days
+   * @private
+   */
   private _calcAgrmtMonth(days): any {
     return days / 30.4;
+  }
+
+  /**
+   * @param stipulationInfo
+   * @private
+   */
+  private _convertStipulationInfo(stipulationInfo): any {
+    if (!stipulationInfo.existData) {
+      return {};
+    }
+
+    return Object.assign(stipulationInfo, {
+      stipulation: Object.assign(stipulationInfo.stipulation, {
+        scrbStplAgreeCttSummary: stipulationInfo.stipulation.scrbStplAgreeYn === 'Y' ?
+          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.scrbStplAgreeHtmlCtt) : '',
+        psnlInfoCnsgCttSummary: stipulationInfo.stipulation.psnlInfoCnsgAgreeYn === 'Y' ?
+          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
+        psnlInfoOfrCttSummary: stipulationInfo.stipulation.psnlInfoOfrAgreeYn === 'Y' ?
+            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoOfrHtmlCtt) : '',
+        adInfoOfrCttSummary: stipulationInfo.stipulation.adInfoOfrAgreeYn === 'Y' ?
+            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : ''
+      })
+    });
+  }
+
+  /**
+   * @param html
+   * @private
+   */
+  private _getStripTagsAndSubStrTxt(html): any {
+    return html.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   }
 
   /**
@@ -155,6 +194,8 @@ class ProductJoin extends TwViewController {
         }
 
         const displayGroup = this._getDisplayGroup(basicInfo.result.ctgCd);
+        this.logger.info(this, '[DISPLAY GROUP] ' + displayGroup);
+
         if (FormatHelper.isEmpty(displayGroup)) {
           return this.error.render(res, {
             svcInfo: svcInfo,
@@ -183,7 +224,8 @@ class ProductJoin extends TwViewController {
               prodId: this._prodId,
               displayId: this._displayId,
               displayGroup: displayGroup,
-              ctgCd: basicInfo.result.ctgCd
+              ctgCd: basicInfo.result.ctgCd,
+              isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00
             });
           });
         }

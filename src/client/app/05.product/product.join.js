@@ -8,6 +8,8 @@ Tw.ProductJoin = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
+  this._apiService = Tw.Api;
+  this._template = Handlebars.compile($('#fe-templ-plans-overpay').html());
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -31,19 +33,32 @@ Tw.ProductJoin.prototype = {
 
     this._prodId = this.$container.data('prod_id');
     this._displayGroup = this.$container.data('display_group');
-    this._ctgCd = this.$container.data('ctg_cd');
+
+    if (this.$agreeWrap.length < 1) {
+      this.$btnJoin.removeAttr('disabled').prop('disabled', false);
+    }
+
+    if (this._displayGroup === 'plans') {
+      this._getOverpay();
+    }
   },
 
   _cachedElement: function() {
     this.$joinSetup = this.$container.find('.fe-join_setup');
     this.$joinConfirmLayer = this.$container.find('.fe-join_confirm');
     this.$confirmSettingInfo = this.$container.find('.fe-confirm_setting_info');
+    this.$agreeWrap = this.$container.find('.fe-agree_wrap');
+    this.$overpayGuide = this.$container.find('.fe-overpay_guide');
+    this.$overpayWrap = this.$container.find('.fe-overpay_wrap');
+    this.$overpayResult = this.$container.find('.fe-overpay_result');
+    this.$prodMoney = this.$container.find('.fe-prod_money');
 
     this.$btnJoinSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$btnBackToSetup = this.$container.find('.fe-btn_back_to_setup');
     this.$btnComparePlans = this.$container.find('.fe-btn_compare_plans');
     this.$btnJoinCancel = this.$container.find('.fe-btn_join_cancel');
     this.$btnJoin = this.$container.find('.fe-btn_join');
+    this.$btnAgreeShow = this.$container.find('.fe-btn_agree_view');
 
     this.$checkboxAgreeAll = this.$container.find('.fe-checkbox_agree_all');
     this.$checkboxAgreeItem = this.$container.find('.fe-checkbox_agree_item');
@@ -56,7 +71,8 @@ Tw.ProductJoin.prototype = {
     this.$btnBackToSetup.on('click', $.proxy(this._showSetupLayer, this));
     this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
     this.$btnJoinCancel.on('click', $.proxy(this._joinCancel, this));
-    this.$btnJoin.on('click', $.proxy(this._procJoin, this));
+    this.$btnJoin.on('click', $.proxy(this._openJoinConfirm, this));
+    this.$btnAgreeShow.on('click', $.proxy(this._openAgreePop, this));
 
     this.$checkboxAgreeAll.on('change', $.proxy(this._agreeAllToggle, this));
     this.$checkboxAgreeItem.on('change', $.proxy(this._agreeItemToggle, this));
@@ -96,7 +112,7 @@ Tw.ProductJoin.prototype = {
     this._popupService.open({
       hbs: 'MP_02_02_01',
       data: {}
-    });
+    }, null, null, 'compare_plans');
   },
 
   _joinCancel: function() {
@@ -140,12 +156,56 @@ Tw.ProductJoin.prototype = {
     this._enableBtnJoin();
   },
 
+  _openAgreePop: function(e) {
+    var $parent = $(e.currentTarget).parent();
+    this._popupService.open({
+      hbs: 'PFT_01_03_L01',
+      data: {
+        title: $parent.find('.mtext').text(),
+        html: $parent.find('.fe-agree_full_html').text()
+      }
+    }, null, null, 'agree_pop');
+  },
+
   _enableBtnJoin: function() {
     if (this.$container.find('.fe-checkbox_agree_need:not(:checked)').length > 0) {
       this.$btnJoin.attr('disabled', 'disabled').prop('disabled', true);
     } else {
       this.$btnJoin.removeAttr('disabled').prop('disabled', false);
     }
+  },
+
+  _getOverpay: function() {
+    this._apiService.request(Tw.API_CMD.BFF_10_0010)
+      .done($.proxy(this._setOverpay, this));
+  },
+
+  _setOverpay: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      this.$overpayGuide.show();
+      return;
+    }
+
+    var isDataOvrAmt = parseFloat(resp.result.dataOvrAmt) > 0,
+      isVoiceOvrAmt = parseFloat(resp.result.voiceOvrAmt) > 0,
+      isSmsOvrAmt = parseFloat(resp.result.smsOvrAmt) > 0;
+
+    if (!isDataOvrAmt && !isVoiceOvrAmt && !isSmsOvrAmt) {
+      return;
+    }
+
+    this.$overpayResult.html(this._template(Object.assign(resp.result, {
+      isDataOvrAmt: isDataOvrAmt,
+      isVoiceOvrAmt: isVoiceOvrAmt,
+      isSmsOvrAmt: isSmsOvrAmt
+    })));
+
+    this.$overpayWrap.show();
+  },
+
+  _openJoinConfirm: function() {
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, null, $.proxy(this._procJoin, this));
   },
 
   _procJoin: function() {
@@ -178,15 +238,49 @@ Tw.ProductJoin.prototype = {
           asgnNumList: this._data.asgnNumList,
           optProdId: this._data.tplanProdId,
           svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id')
-        }, {}, this._prodId).done($.proxy(this._procJoinPlanRes, this));
+        }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+
+        this._successData = {
+          prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
+          mytPage: 'fee-plan'
+        };
+        break;
+      case 'additions':
+        this._apiService.request(this.$joinConfirmLayer.data('join_bff'), {
+        }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+
+        this._successData = {
+          prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+          mytPage: 'additions'
+        };
         break;
     }
   },
 
-  _procJoinPlanRes: function(resp) {
+  _procJoinRes: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+      return Tw.Error(resp.code, resp.msg).page();
     }
+
+    var isProdMoney = this.$prodMoney.length > 0;
+
+    this._popupService.open({
+      hbs: 'DC_05_01_end_01_product',
+      data: Object.assign(this._successData, {
+        prodId: this._prodId,
+        prodNm: this.$joinConfirmLayer.data('prod_nm'),
+        isBasFeeInfo: isProdMoney,
+        basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
+      })
+    }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
+  },
+
+  _bindJoinResPopup: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_join_success_close', $.proxy(this._goProductDetail, this));
+  },
+
+  _goProductDetail: function() {
+    this._historyService.goLoad('/product/detail/' + this._prodId);
   }
 
 };

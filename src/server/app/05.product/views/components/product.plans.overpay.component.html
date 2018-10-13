@@ -1,0 +1,52 @@
+<%#
+* FileName: product.plans.overpay.component.html
+* Author: JiHun Yang (jihun202@sk.com)
+* Date: 2018.10.12
+%>
+
+<script id="fe-templ-plans-overpay" type="text/x-handlebars-template">
+  <div class="charge-guide-wrap">
+    <div class="charge-cont">
+      <span class="sub-disc01">
+        <span class="elem">기본 제공량 초과 청구 금액</span>
+      </span>
+      <span class="tit"><span class="charge-txt">{{ovrTotAmt}}</span>원</span>
+      <span class="sub-disc04">(익월 청구 예정금액)</span>
+    </div>
+    <div class="basic-list top-line">
+      <span class="blind">변경 요금제 데이터/ 음성/ 문자 정보 노출</span>
+      <ul>
+        {{#if isDataOvrAmt}}
+        <li>
+          <span class="title tx-black3">데이터</span>
+          <span class="tx-cont">
+            <span class="data-info"><span class="tx-bold vbl">{{dataIfAmt}}Mbyte 사용</span> / {{dataBasAmt}}Mbyte 제공</span>
+            <span class="price">{{dataOvrAmt}}원</span>
+          </span>
+        </li>
+        {{/if}}
+        {{#if isVoiceOvrAmt}}
+        <li>
+          <span class="title tx-black3">음성통화</span>
+          <span class="tx-cont">
+            <span class="data-info"><span class="tx-bold vbl">{{voiceIfAmt}}분 사용</span> / {{voiceBasAmt}}분 제공</span>
+            <span class="price">{{voiceOvrAmt}}원</span>
+          </span>
+        </li>
+        {{/if}}
+        {{#if isSmsOvrAmt}}
+        <li>
+          <span class="title tx-black3">문자</span>
+          <span class="tx-cont">
+            <span class="data-info"><span class="tx-bold vbl">{{smsIfAmt}}통 사용</span> / {{smsBasAmt}}통</span>
+            <span class="price">{{smsOvrAmt}}원</span>
+          </span>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+    <div class="cont-noti pt26">
+      <span class="type1">월 중 요금제 변경 시 실제 이용기간을 기준으로 일할 계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.</span>
+    </div>
+  </div>
+</script>

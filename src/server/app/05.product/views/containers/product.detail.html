@@ -19,7 +19,7 @@
   <%- include('../../../common/views/components/header.component.html', { title: '상품상세', svcInfo, option: { line: true } }); %>
   <!--// #header -->
   <!-- #contents -->
-  <div class="wrap" data-prod_id="<%= prodId %>" data-ctg_cd="<%= basicInfo.ctgCd %>" data-list_action="<%= indexListActionName %>" data-filter_ids="<%= filterIds %>">
+  <div class="wrap" data-prod_id="<%= prodId %>" data-ctg_cd="<%= basicInfo.ctgCd %>" data-ctg_key="<%= ctgKey %>" data-filter_ids="<%= filterIds %>">
     <!-- #contents -->
     <div id="contents" class="container-wrap">
       <h2 class="blind">내용</h2>
@@ -39,15 +39,17 @@
             <% if (basicInfo.prodFilterFlagList) { %>
             <div class="productdetails-taglist">
               <% for (var i in basicInfo.prodFilterFlagList) { %>
-              <a href="/product/<%= indexListActionName %>?filters=<%= basicInfo.prodFilterFlagList[i].filterFlagId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].filterFlagNm %></a>
+              <a href="/product/<%= ctgKey %>?filters=<%= basicInfo.prodFilterFlagList[i].prodFltId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].prodFltNm %></a>
               <% } %>
             </div>
             <% } %>
-            <% if ( prodRedisInfo.summaryCase === '2' ) { %>
-            <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
-            <% } %>
-            <% if ( prodRedisInfo.summaryCase === '3' ) { %>
-            <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
+            <% if ( basicInfo.prodStCd === 'E1000' ) { %>
+              <% if ( prodRedisInfo.summaryCase === '2' ) { %>
+              <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
+              <% } %>
+              <% if ( prodRedisInfo.summaryCase === '3' ) { %>
+              <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
+              <% } %>
             <% } %>
           </div>
           <div class="productdetails-ledgercase">
@@ -63,7 +65,7 @@
               가입제한 상품
             </div>
             <% } else { %>
-              <% if ( true || basicInfo.prodScrbYn === 'Y' && svcInfo.prodId !== prodId ) { %>
+              <% if ( basicInfo.prodScrbYn === 'Y' && svcInfo.prodId !== prodId ) { %>
               <div class="btn">
                 <button type="button" class="bt-white1 fe-btn_join">가입</button>
               </div>
@@ -105,11 +107,39 @@
         <!-- //가입상담  -->
         <% } %>
 
+        <% if ( ctgKey === 'plans' && (svcInfo.prodId !== prodId) ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
+        <div class="offer-save-wrap">
+          <p>이 요금제로 바꾸면 월 <span class="str">8,000</span> 원 절약됩니다.</p>
+          <a href="/product/find-my-best-plans" class="btn">요금제 상세보기</a>
+        </div>
+        <% } %>
+
+        <% if (svcInfo.prodId === prodId) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 기가입상품  -->
+        <div class="joinconsulting-wrap">
+          <p class="text">이용중인 상품 입니다.</p>
+          <div class="btn">
+            <div class="bt-alone"><a href="/product/setting/<%= prodId %>" class="bt-line-blue1">설정</a></div>
+          </div>
+        </div>
+        <!-- //기가입상품  -->
+        <% } %>
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <% if ( ctgKey === 'plans' ) { %>
         <!-- // @todo CBT 시연을 위한 dummy 통 이미지 -->
         <div class="product-visualization"><img src="/img/dummy/dmy-mp-02-02.png" alt="" style="width:100%;" /></div>
         <!-- // dummy -->
+        <% } else { %>
+        <!-- // @todo CBT 시연을 위한 dummy 통 이미지 -->
+        <div class="product-visualization"><img src="/img/dummy/dmy-mv-01-02.png" alt="" style="width:100%;" /></div>
+        <!-- // dummy -->
+        <% } %>
 
         <% if ( prodRedisInfo.contents.LA ) { %>
         <div class="product-visualization"><%- prodRedisInfo.contents.LA %></div>
@@ -202,7 +232,7 @@
             </div>
             <div class="recommendedratetaglist-wrap">
               <% for (var i in basicInfo.prodFilterFlagList) { %>
-              <a href="/product/<%= indexListActionName %>?filters=<%= basicInfo.prodFilterFlagList[i].filterFlagId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].filterFlagNm %></a>
+              <a href="/product/<%= ctgKey %>?filters=<%= basicInfo.prodFilterFlagList[i].prodFltId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].prodFltNm %></a>
               <% } %>
             </div>
             <ul class="recommendedrate-list"></ul>
@@ -224,7 +254,7 @@
                   <% for ( var i in recommends.recommendProdList ) { %>
                   <li>
                     <div>
-                      <a href="/product/detail/<%= recommends.recommendProdList[i].prodId %>" class="bg1"> <!-- 보라색 -->
+                      <button class="bg1 fe-btn_recommend_prod" data-prod_id="<%= recommends.recommendProdList[i].prodId %>"> <!-- 보라색 -->
                         <span class="located top">
                           <span class="txt-tit"><%= recommends.recommendProdList[i].prodNm %></span>
                         <!-- @todo TBD --><span class="txt-type">부가상품</span><!-- // -->
@@ -233,7 +263,7 @@
                           <span class="txt-detail"><%= recommends.recommendProdList[i].prodSmryDesc %></span>
                         </span>
                         <span class="ico"></span>
-                      </a>
+                      </button>
                     </div>
                   </li>
                   <% } %>
@@ -260,10 +290,10 @@
                   <% for ( var i in recommends.recommendAppList ) { %>
                   <li>
                     <div>
-                      <a href="/product/detail/<%= recommends.recommendAppList[i].prodId %>">
+                      <button class="fe-btn_recommend_prod" data-prod_id="<%= recommends.recommendAppList[i].prodId %>">
                         <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
                         <span><%= recommends.recommendAppList[i].prodNm %></span>
-                      </a>
+                      </button>
                     </div>
                   </li>
                   <% } %>
@@ -283,7 +313,7 @@
           <h3 class="suggest-tag-title">추천태그</h3>
           <ul class="suggest-tag-list openlist-wrap">
             <% for (var i in relateTags) { %>
-            <li><a href="/product/<%= indexListActionName %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+            <li><a href="/product/<%= ctgKey %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
             <% } %>
           </ul>
         </div>
@@ -304,7 +334,7 @@
   </div>
 </body>
 <% include ../components/javascript.component.html %>
-<% include ../components/detail/recommended-rate.html %>
+<% include ../components/detail/product.detail.recommended-rate.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductDetail($('.wrap'));

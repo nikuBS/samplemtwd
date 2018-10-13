@@ -1,0 +1,25 @@
+<div class="popup-page nobg tw-popup fixed-btn">
+  <!-- .container-wrap -->
+  <div class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+      <h1 class="complete-title">
+        <img src="/img/dummy/dmy-complete.jpg" alt=""/>
+        <p class="complete-tx0">{{data.prodNm}}{{#if data.isBasFeeInfo}}({{data.basFeeInfo}}){{/if}}로</p>
+        <span><strong>{{data.prodCtgNm}} 가입 완료</strong></span>
+      </h1>
+      <div class="complete-btn-box pt56">
+        <ul class="bt-slice">
+          <li class="bt-blue1">
+            <a href="/myt/join/product/{{data.mytPage}}">나의 가입정보 확인하기 &gt;</a>
+          </li>
+        </ul>
+      </div>
+      <ul class="bt-slice full">
+        <li class="bt-red1">
+          <button class="fe-btn_join_success_close">닫기</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

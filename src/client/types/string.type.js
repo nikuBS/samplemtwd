@@ -270,8 +270,9 @@ Tw.ALERT_MSG_MYT_JOIN = {
 
 Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A1 : { TITLE : '알림', MSG : '선택하신 상품 가입을 취소하시겠습니까?', BUTTON : '계속하기' },
-  ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
-  ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' }
+  ALERT_3_A2 : { TITLE : '가입 시 유의사항을 모두 확인 하였으며,\n선택하신  상품으로 가입하시겠습니까?', MSG : '사용중인 요금제는 자동 해지되며, 1개월동안 다른 상품으로 가입하실 수 없습니다.', BUTTON: '가입하기' },
+  ALERT_3_A16: { TITLE: '알림', MSG : '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
+  ALERT_3_A18: { TITLE: '알림', MSG : '검색 결과가 없습니다' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {
@@ -308,6 +309,11 @@ Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
 Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
   BLOCK: '차단 신청이 완료되었습니다.',
   REVOCATION: '해제 신청이 완료되었습니다.'
+};
+
+Tw.PRODUCT_CTG_NM = {
+  PLANS: '요금제',
+  ADDITIONS: '부가서비스'
 };
 
 Tw.INFO = {

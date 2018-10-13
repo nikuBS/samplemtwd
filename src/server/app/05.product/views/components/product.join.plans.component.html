@@ -1,4 +1,6 @@
-<div class="container fe-join_confirm" style="display: none" data-svc_prod_grp_id="<%= joinTermInfo.preinfo.svcProdGrpId %>">
+<div class="container fe-join_confirm" style="display: none"
+ data-svc_prod_grp_id="<%= joinTermInfo.preinfo.svcProdGrpId %>"
+ data-prod_nm="<%= joinTermInfo.preinfo.toProdInfo.prodNm %>">
   <!-- .cont-box -->
   <div class="cont-box">
     <div class="user-info">
@@ -34,7 +36,7 @@
         <span class="tit-tx"><span class="blind">변경 요금제명</span><%= joinTermInfo.preinfo.toProdInfo.prodNm %></span>
         <span class="sub-disc03">
           <% if ( joinTermInfo.preinfo.toProdInfo.isNumberToBasFeeInfo ) { %>
-          <span class="tx-bold vbl">월 <%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %>원</span> 부가세포함
+          <span class="tx-bold vbl fe-prod_money">월 <%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %>원</span> 부가세포함
           <% } else { %>
           <span class="tx-bold vbl"><%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %></span>
           <% } %>
@@ -151,57 +153,39 @@
   </div>
   <!--// .cont-box -->
 
-  <div class="ti-caption-gray">
-    <h3 class="tit">초과 사용량 정산 안내</h3>
+  <div class="fe-overpay_wrap" style="display: none">
+    <div class="ti-caption-gray">
+      <h3 class="tit">초과 사용량 정산 안내</h3>
+    </div>
+    <!-- .cont-box -->
+    <div class="cont-box fe-overpay_result"></div>
+    <!--// .cont-box -->
   </div>
-  <!-- .cont-box -->
-  <div class="cont-box">
-    <div class="charge-guide-wrap">
-      <div class="charge-cont">
-								<span class="sub-disc01">
-									<span class="elem">기본 제공량 초과 청구 금액</span>
-								</span>
-        <span class="tit"><span class="charge-txt">15,000</span>원</span>
-        <span class="sub-disc04">(익월 청구 예정금액)</span>
-      </div>
-      <div class="basic-list top-line">
-        <span class="blind">변경 요금제 데이터/ 음성/ 문자 정보 노출</span>
-        <ul>
-          <li>
-            <span class="title tx-black3">데이터</span>
-            <span class="tx-cont">
-											<span class="data-info"><span class="tx-bold vbl">7.0GB 사용</span> / 6GB 제공</span>
-											<span class="price">10,000원</span>
-										</span>
-          </li>
-          <li>
-            <span class="title tx-black3">음성통화</span>
-            <span class="tx-cont">
-											<span class="data-info"><span class="tx-bold vbl">355분 사용</span> / 300분 제공</span>
-											<span class="price">4,400원</span>
-										</span>
-          </li>
-          <li>
-            <span class="title tx-black3">문자</span>
-            <span class="tx-cont">
-											<span class="data-info"><span class="tx-bold vbl">130통 사용</span> / 100통</span>
-											<span class="price">600원</span>
-										</span>
-          </li>
-        </ul>
-      </div>
-      <div class="cont-noti pt26">
-        <span class="type1">월 중 요금제 변경 시 실제 이용기간을 기준으로 일할 계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.</span>
+
+  <div class="fe-overpay_guide" style="display: none">
+    <div class="ti-caption-gray">
+      <h3 class="tit">초과 사용량 정산 안내</h3>
+    </div>
+    <!-- .cont-box -->
+    <div class="cont-box">
+      <p>요금제의 기본제공 음성/문자/데이터 혜택은 월 중 요금제 변경 시 실제 이용기간을 기준으로 일할계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.</p>
+      <div class="cont-noti pt20">
+        <span class="type2">(초과 과금 예시)<br>
+        band 데이터 1.2G 사용 고객이 총 900MB의 데이터 사용 후 16일에 요금제 변경 시(30일 기준)<br>
+        - 변경 전 사용일 (1~15일) 기준 일할 제공량 : 약 600MB (= 1.2GB X 15일/30일)<br>
+        - 초과사용량 : 300MB (= 사용량 900MB - 일할 제공량 600MB)<br>
+        → 초과 사용한 데이터(약 300MB)에 대해 종량 요율(22.528원/MB)로 과금 (단, 최대 19,800원)</span>
       </div>
     </div>
+    <!--// .cont-box -->
   </div>
-  <!--// .cont-box -->
 
+  <% if ( joinTermInfo.stipulationInfo.existData ) { %>
   <div class="ti-caption-gray">
     <h3 class="tit">꼭 확인해 주세요</h3>
   </div>
   <!-- .cont-box -->
-  <div class="cont-box nogaps">
+  <div class="cont-box nogaps fe-agree_wrap">
     <div class="agree-chk-wrap fe-agree-chk">
       <div class="list-comp-input-agree">
         <div class="widget">
@@ -263,7 +247,7 @@
                       <span class="stext mt20">
                         고객님의 약정잔여기간(약정기간-사용기간)을 고려하여, 보조금 차액 정산 부과액 또는 환급액이 결정됩니다.
                         <% if ( joinTermInfo.installmentAgreement.premTermMsg ) { %>
-                        <br><%= joinTermInfo.installmentAgreement.premTermMsg %>
+                        <br><%- joinTermInfo.installmentAgreement.premTermMsg %>
                         <% } %>
                       </span>
                     </div>
@@ -271,31 +255,66 @@
                 </div>
               </li>
               <% } %>
-              <% if ( joinTermInfo.stipulation.scrbStplAgreeYn === 'Y' ) { %>
+              <% if ( joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeYn === 'Y' ) { %>
               <li>
                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                   <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
-                  <div class="comp-list-layout" id="aria-comp-checkbox2113">
+                  <div class="comp-list-layout" id="aria-comp-checkbox2">
                     <p class="layout-text">
-                      <span class="mtext"><%= joinTermInfo.stipulation.scrbStplAgreeTitNm %></span>
-                      <span class="stext-ellipsis"><%= joinTermInfo.stipulation.scrbStpl</span>
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeCttSummary %></span>
+                      <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeHtmlCtt %></div>
                     </p>
                   </div>
                 </div>
-                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
               </li>
+              <% } %>
+              <% if ( joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgAgreeYn === 'Y' ) { %>
               <li>
-                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="개인정보 수집/이용 위탁동의 (필수)" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
-                  <div class="comp-list-layout" id="aria-comp-checkbox212">
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox3">
                     <p class="layout-text">
-                      <span class="mtext">개인정보 수집/이용 위탁동의 (필수)</span>
-                      <span class="stext-ellipsis"></span>
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt %></div>
                     </p>
                   </div>
                 </div>
-                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
               </li>
+              <% } %>
+              <% if ( joinTermInfo.stipulationInfo.psnlInfoOfrAgreeYn === 'Y' ) { %>
+              <li>
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox4"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox4">
+                    <p class="layout-text">
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.psnlInfoOfrCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoOfrHtmlCtt %></div>
+                    </p>
+                  </div>
+                </div>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+              </li>
+              <% } %>
+              <% if ( joinTermInfo.stipulationInfo.adInfoOfrAgreeYn === 'Y' ) { %>
+              <li>
+                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                  <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox5"><!-- 체크상태일 경우 checked="false" -->
+                  <div class="comp-list-layout" id="aria-comp-checkbox5">
+                    <p class="layout-text">
+                      <span class="mtext"><%= joinTermInfo.stipulationInfo.adInfoOfrAgreeTitNm %></span>
+                      <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.adInfoOfrCttSummary %></span>
+                    <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt %></div>
+                    </p>
+                  </div>
+                </div>
+                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+              </li>
+              <% } %>
             </ul>
           </div>
         </div>
@@ -303,6 +322,7 @@
     </div>
   </div>
   <!--// .cont-box -->
+  <% } %>
 
   <hr class="cont-sp type1" aria-hidden="true">
 
@@ -316,3 +336,4 @@
     </li>
   </ul>
 </div>
+<%- include('../components/product.plans.overpay.component.html'); %>
