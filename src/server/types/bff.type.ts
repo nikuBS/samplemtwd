@@ -183,7 +183,7 @@ export const HOME_SEGMENT = [
 export const HOME_SEGMENT_ORDER = {
   default: ['H02', 'H06', 'H07', 'H10', 'H11'],
   refill: ['H11', 'H10', 'H02', 'H07', 'H06'],
-  gift: ['H10', 'H11', 'H02', 'H07', '06'],
+  gift: ['H10', 'H11', 'H02', 'H07', 'H06'],
   inquiry: ['H02', 'H11', 'H10', 'H07', 'H06'],
   payment: ['H02', 'H07', 'H11', 'H10', 'H06'],
   membership: ['H11', 'H10', 'H02', 'H07', 'H06']
