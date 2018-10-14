@@ -7,9 +7,10 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { API_CMD } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
+import {PROD_CTG_CD_CODE} from '../../../types/bff.type';
 
 class ProductTerminate extends TwViewController {
   constructor() {
@@ -88,6 +89,14 @@ class ProductTerminate extends TwViewController {
   }
 
   /**
+   * @param ctgCd
+   * @private
+   */
+  private _getDisplayGroup(ctgCd): any {
+    return PROD_CTG_CD_CODE[ctgCd];
+  }
+
+  /**
    * @param autoList
    * @private
    */
@@ -118,14 +127,18 @@ class ProductTerminate extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0001, {}, {}, this._prodId),
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, this._prodId),
       this.redisService.getData('ProductChangeApi:' + this._prodId + 'TM')
-    ).subscribe(([ joinTermInfo, terminateRedisInfo ]) => {
-      if (joinTermInfo.code !== API_CODE.CODE_00) {
+    ).subscribe(([ basicInfo, joinTermInfo, terminateRedisInfo ]) => {
+      const apiError = this.error.apiError([basicInfo, joinTermInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
-          code: joinTermInfo.code,
-          msg: joinTermInfo.msg,
-          svcInfo: svcInfo
+          code: apiError.code,
+          msg: apiError.msg,
+          svcInfo: svcInfo,
+          title: '해지'
         });
       }
 
@@ -134,7 +147,8 @@ class ProductTerminate extends TwViewController {
         svcInfo: svcInfo,
         joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result),
         terminateApiCode: FormatHelper.isEmpty(terminateRedisInfo) ? '' : terminateRedisInfo.bffApiCode,
-        displayId: this._getDisplayId()
+        displayId: this._getDisplayId(),
+        displayGroup: this._getDisplayGroup(basicInfo.result.ctgCd)
       });
     });
   }

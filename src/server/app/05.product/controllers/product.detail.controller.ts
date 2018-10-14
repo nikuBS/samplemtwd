@@ -296,6 +296,15 @@ class ProductDetail extends TwViewController {
 
     this._getApi('basic', svcInfo.prodId)
       .subscribe((basicInfo) => {
+        if (basicInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            title: '상품 상세 정보',
+            code: basicInfo.code,
+            msg: basicInfo.msg,
+            svcInfo: svcInfo
+          });
+        }
+
         if (basicInfo.result.prodStCd === 'G1000') {
           return this.error.render(res, {
             title: '상품 상세 정보',

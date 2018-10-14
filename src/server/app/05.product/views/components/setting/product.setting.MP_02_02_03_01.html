@@ -5,15 +5,14 @@
 %>
 <% if ( settingInfo ) { %>
 <input type="hidden" id="current_prod_id" value="<%= settingInfo.beforeTDiyGrCd %>">
-<input type="hidden" id="update_api_code" value="<%= updateApiCode %>">
 <% } %>
 <div class="container fe-join_setup" data-id="MP_02_02_03_01">
-  <% if ( settingInfo ) { %>
+  <% if ( !settingInfo ) { %>
   <!-- .cont-box -->
   <div class="cont-box">
     <div class="product-tit-wrap">
       <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
-      <span class="tit-big">DATA 인피니티</span>
+      <span class="tit-big"><%= prodNm %></span>
     </div>
   </div>
   <!--// .cont-box -->
@@ -25,7 +24,7 @@
 
   <!-- .cont-box -->
   <div class="cont-box nogaps-hoz">
-    <div class="list-comp-input production-benefit-wrap">
+    <div class="list-comp-input fe-product_radio_wrap">
       <div class="widget">
         <div class="widget-box radio">
           <ul class="select-list" role="group">
@@ -83,7 +82,7 @@
   <ul class="bt-slice full">
     <li class="bt-red1">
       <% if ( settingInfo ) { %>
-      <button class="fe-btn_setup_ok">변경완료</button>
+      <button class="fe-btn_setup_ok" disabled="disabled">변경완료</button>
       <% } else { %>
       <button class="fe-btn_setup_ok" disabled="disabled">설정완료</button>
       <% } %>

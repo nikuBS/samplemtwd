@@ -508,6 +508,8 @@ export const API_CMD = {
   BFF_10_0035: { path: '/core-product/v1/mobiles/additions/args-0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0036: { path: '/core-product/v1/mobiles/additions/args-0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0038: { path: '/core-product/v1/mobiles/additions/args-0/vas-terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_9001: { path: '/v1/products/args-0/auth/args-1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

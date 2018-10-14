@@ -6,11 +6,12 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
+import { PRODUCT_SETTING, PRODUCT_JOIN } from '../../../mock/server/product.display-ids.mock';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PROD_CTG_CD_CODE, UNIT } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import BrowserHelper from '../../../utils/browser.helper';
 
 class ProductJoin extends TwViewController {
   constructor() {
@@ -27,12 +28,21 @@ class ProductJoin extends TwViewController {
   private _setDisplayId(): any {
     let displayId: any = null;
 
-    Object.keys(PRODUCT_SETTING).forEach((key) => {
-      if (PRODUCT_SETTING[key].indexOf(this._prodId) !== -1) {
+    Object.keys(PRODUCT_JOIN).forEach((key) => {
+      if (PRODUCT_JOIN[key].indexOf(this._prodId) !== -1) {
         displayId = key;
         return false;
       }
     });
+
+    if (FormatHelper.isEmpty(displayId)) {
+      Object.keys(PRODUCT_SETTING).forEach((key) => {
+        if (PRODUCT_SETTING[key].indexOf(this._prodId) !== -1) {
+          displayId = key;
+          return false;
+        }
+      });
+    }
 
     if (!FormatHelper.isEmpty(displayId)) {
       this._displayId = displayId;
@@ -254,10 +264,12 @@ class ProductJoin extends TwViewController {
               joinTermInfo: this._convertPlansJoinTermInfo(joinTermInfo.result),
               svcInfo: svcInfo,
               prodId: this._prodId,
+              prodNm: joinTermInfo.preinfo.toProdInfo.prodNm,
               displayId: this._displayId,
               displayGroup: displayGroup,
               ctgCd: basicInfo.result.ctgCd,
               isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00,
+              isApp: BrowserHelper.isApp(req),
               settingInfo: null
             });
           });
@@ -280,9 +292,11 @@ class ProductJoin extends TwViewController {
                 joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result),
                 svcInfo: svcInfo,
                 prodId: this._prodId,
+                prodNm: joinTermInfo.result.preinfo.reqProdInfo.prodNm,
                 displayId: this._displayId,
                 displayGroup: displayGroup,
                 ctgCd: basicInfo.result.ctgCd,
+                isApp: BrowserHelper.isApp(req),
                 settingInfo: null
               });
             });

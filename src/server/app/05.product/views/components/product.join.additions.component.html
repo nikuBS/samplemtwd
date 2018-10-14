@@ -18,43 +18,48 @@
   <div class="cont-box">
     <div class="charge-guide-wrap">
       <div class="charge-cont">
-								<span class="sub-disc01">
-									<span class="elem">가입할 부가서비스</span>
-								</span>
+        <span class="sub-disc01">
+          <span class="elem">가입할 부가서비스</span>
+        </span>
         <span class="tit-tx"><span class="blind">가입할 상품정보</span><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></span>
         <% if ( joinTermInfo.preinfo.reqProdInfo.isNumberBasFeeInfo ) { %>
-        <span class="sub-disc03"><span class="tx-bold vbl"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %>원</span> 부가세포함</span>
+        <span class="sub-disc03"><span class="tx-bold vbl fe-prod_money"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %>원</span> 부가세포함</span>
         <% } else { %>
         <span class="sub-disc03"><span class="tx-bold vbl"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %></span></span>
         <% } %>
       </div>
+      <% if ( joinTermInfo.preinfo.reqProdInfo.prodSmryDesc ) { %>
       <div class="cont-noti pt36">
         <span class="type3"><%= joinTermInfo.preinfo.reqProdInfo.prodSmryDesc %></span>
       </div>
+      <% } %>
     </div>
   </div>
   <!--// .cont-box -->
 
   <% if ( displayId ) { %>
-  <hr class="cont-sp type1" aria-hidden="true">
+  <div class="fe-confirm_setting_info_wrap">
+    <hr class="cont-sp type1" aria-hidden="true">
 
-  <!-- .cont-box -->
-  <div class="cont-box nogaps-hoz">
-    <ul class="link-list">
-      <li>
-        <dl>
-          <dt>설정 정보</dt>
-          <dd>
-            <span class="val fe-confirm_setting_info"></span>
-            <button type="button" class="fe-btn_back_to_setup">정보입력 팝업 열기</button>
-          </dd>
-        </dl>
-      </li>
-    </ul>
+    <!-- .cont-box -->
+    <div class="cont-box nogaps-hoz">
+      <ul class="link-list">
+        <li>
+          <dl>
+            <dt>설정 정보</dt>
+            <dd>
+              <span class="val fe-confirm_setting_info"></span>
+              <button type="button" class="fe-btn_back_to_setup">정보입력 팝업 열기</button>
+            </dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+    <!--// .cont-box -->
   </div>
-  <!--// .cont-box -->
   <% } %>
 
+  <% if (joinTermInfo.preinfo.autoJoinList.length > 0 || joinTermInfo.preinfo.autoTermList.length > 0) { %>
   <hr class="cont-sp type1" aria-hidden="true"/>
 
   <!-- .cont-box -->
@@ -98,6 +103,7 @@
     </div>
   </div>
   <!--// .cont-box -->
+  <% } %>
 
   <% if ( joinTermInfo.stipulationInfo.existData ) { %>
   <div class="ti-caption-gray">

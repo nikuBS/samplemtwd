@@ -9,8 +9,9 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { PROD_CTG_CD_CODE, PROD_TTAB_BASIC_DATA_PLUS } from '../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
+import BrowserHelper from '../../../utils/browser.helper';
 
 class ProductSetting extends TwViewController {
   constructor() {
@@ -85,6 +86,9 @@ class ProductSetting extends TwViewController {
       case 'MP_02_02_03_09':
         break;
       case 'MP_02_02_03_10':
+        settingInfo = Object.assign(settingInfo, {
+          basicDataPlus: PROD_TTAB_BASIC_DATA_PLUS[this._prodId]
+        });
         break;
       case 'MP_02_02_03_11':
         break;
@@ -105,6 +109,9 @@ class ProductSetting extends TwViewController {
       case 'MV_01_02_02_06':
         break;
       case 'MV_02_02_01':
+        settingInfo = Object.assign(settingInfo, {
+          combinationLineList: this._convertSvcNumMask(settingInfo.combinationLineList)
+        });
         break;
       case 'MV_02_02_02':
         break;
@@ -115,6 +122,19 @@ class ProductSetting extends TwViewController {
     }
 
     return settingInfo;
+  }
+
+  /**
+   * @todo remove svcNumMask 가 API 에서 안내려와서 임시로 처리함.
+   * @param combinationLineList
+   * @private
+   */
+  private _convertSvcNumMask(combinationLineList): any {
+    return combinationLineList.map((item) => {
+      return Object.assign(item, {
+        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNum.substr(0, 7) + '****')
+      });
+    });
   }
 
   /**
@@ -152,6 +172,7 @@ class ProductSetting extends TwViewController {
 
         this._displayId = this._getDisplayId();
         this._displayGroup = this._getDisplayGroup(basicInfo.result.ctgCd);
+        this.logger.info(this, '[DISPLAY ID] ' + this._displayId);
 
         if (FormatHelper.isEmpty(this._displayId)) {
           return this.error.render(res, {
@@ -161,18 +182,41 @@ class ProductSetting extends TwViewController {
         }
 
         Observable.combineLatest(
+          this.redisService.getData('ProductLedger:' + this._prodId),
           this.redisService.getData('ProductChangeApi:' + this._prodId + 'SL'),
           this.redisService.getData('ProductChangeApi:' + this._prodId + 'SS'),
-        ).subscribe(([selectApiInfo, updateApiInfo]) => {
-          if (FormatHelper.isEmpty(selectApiInfo) || FormatHelper.isEmpty(updateApiInfo)) {
-            this.logger.info(this, '[EMPTY API INFO] API CODE IS EMPTY');
+          this.apiService.request(API_CMD.BFF_10_9001, {}, {}, this._prodId, 'TM')
+        ).subscribe(([prodRedisInfo, selectApiInfo, updateApiInfo, settingAuthApiInfo]) => {
+
+          // @todo BFF_10_9001 API 배포 이후 활성화
+          // if (settingAuthApiInfo.code !== API_CODE.CODE_00) {
+          //   return this.error.render(res, {
+          //     code: settingAuthApiInfo.code,
+          //     msg: settingAuthApiInfo.msg,
+          //     svcInfo: svcInfo,
+          //     title: '상품 설정'
+          //   });
+          // }
+
+          let bffApiCode: any = null;
+          if (!FormatHelper.isEmpty(selectApiInfo)) {
+            bffApiCode = selectApiInfo.bffApiCode;
+          }
+
+          // @todo dummy data
+          if (this._prodId === 'NA00004778') {
+            bffApiCode = 'BFF_10_0021';
+          }
+
+          if (FormatHelper.isEmpty(bffApiCode)) {
             return this.error.render(res, {
-              title: '상품 설정',
-              svcInfo: svcInfo
+              svcInfo: svcInfo,
+              title: '상품 설정'
             });
           }
 
-          this.apiService.request(API_CMD[selectApiInfo.bffApiCode], {}, {}, this._prodId)
+          this.logger.info(this, '[PRODUCT_SETTING_API_CODE] : ' + bffApiCode);
+          this.apiService.request(API_CMD[bffApiCode], {}, {}, this._prodId)
             .subscribe((settingInfo) => {
               if (settingInfo.code !== API_CODE.CODE_00) {
                 return this.error.render(res, {
@@ -185,11 +229,13 @@ class ProductSetting extends TwViewController {
 
               res.render('product.setting.html', {
                 svcInfo: svcInfo,
+                prodNm: FormatHelper.isEmpty(prodRedisInfo) ? '' : prodRedisInfo.summary.prodNm,
                 prodId: this._prodId,
                 displayId: this._displayId,
                 displayGroup: this._displayGroup,
                 settingInfo: this._parseSettingInfo(settingInfo.result),
-                updateApiCode: updateApiInfo.bffApiCode
+                updateApiCode: FormatHelper.isEmpty(updateApiInfo) ? '' : updateApiInfo.bffApiCode,
+                isApp: BrowserHelper.isApp(req)
               });
             });
           });
