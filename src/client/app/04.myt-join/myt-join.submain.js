@@ -13,27 +13,12 @@ Tw.MyTJoinSubMain = function (params) {
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this.data = params.data;
-  this.loadingView(true);
   this._rendered();
   this._bindEvent();
   this._initialize();
 };
 
 Tw.MyTJoinSubMain.prototype = {
-
-  loadingView: function (value) {
-    if ( value ) {
-      skt_landing.action.loading.on({
-        ta: '.wrap', co: 'grey', size: true
-      });
-    }
-    else {
-      skt_landing.action.loading.off({
-        ta: '.wrap'
-      });
-    }
-  },
-
   _rendered: function () {
     this.$myPlan = this.$container.find('[data-id=my-plan]');
     this.$ptPwd = this.$container.find('[data-id=change-pwd]');
@@ -128,7 +113,6 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   _initialize: function () {
-    this.loadingView(false);
   },
   // 나의요금제
   _onMovedMyPlan: function() {

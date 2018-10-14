@@ -21,7 +21,7 @@
                         <dt>남은 데이터</dt>
                         <dd>
                             <% if(usageData.data) { %>
-                            <div class="remaining-amount"><span class="num ff-tg-black"><%= usageData.data.showRemained.data %></span><span class="dingbat <%= usageData.data.showRemained.unit %>-trans"><span class="blind"><%= usageData.data.showRemained.unit %></span></span></div>
+                            <div class="remaining-amount"><span class="num ff-tg-black"><%= usageData.data.showRemained.data %></span><span class="dingbat <%= (usageData.data.showRemained.unit).toLowerCase() %>-trans"><span class="blind"><%= usageData.data.showRemained.unit %></span></span></div>
                             <div class="graph-area-type4">
                                             <span class="graph-bar1" style="width:<%= homeData.usageData.data.remainedRatio %>%;">
                                                 <span class="bar"></span>

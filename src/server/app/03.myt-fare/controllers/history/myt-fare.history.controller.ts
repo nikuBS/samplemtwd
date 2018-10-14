@@ -9,14 +9,15 @@ import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {Observable} from 'rxjs/Observable';
+// import {Observable} from 'rxjs/Observable';
 
 // import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
 // import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
-import {MYT_STRING_KOR_TERM, MYT_FARE_HISTORY_MICRO_TYPE} from '../../../../types/string.type';
+import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
+import {MYT_FARE_HISTORY_MICRO_TYPE} from '../../../../types/bff.type';
 
 
-import MyTFareHistoryPaymentMock from '../../../../mock/server/myt.fare.history.micro-payment';
+// import MyTFareHistoryPaymentMock from '../../../../mock/server/myt.fare.history.micro-payment';
 
 // import MyTFareHistoryContentsMock from '../../../../mock/server/myt.fare.history.contents';
 
@@ -36,8 +37,8 @@ interface History {
 
 class MyTFareMicroHistory extends TwViewController {
 
-  termSelectValue = 6;
-  histData = <any>{};
+  termSelectValue = 12;
+  histData;
   selectedYear;
   selectedMonth;
 
@@ -46,6 +47,11 @@ class MyTFareMicroHistory extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+
+    this.histData = {};
+    this.selectedYear = null;
+    this.selectedMonth = null;
+
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -96,30 +102,18 @@ class MyTFareMicroHistory extends TwViewController {
     };
 
     const reformCallback = (data: any): any => {
+      if (data.histories !== undefined) {
+        data.histories.map((o) => {
+          o.paymentType = MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod];
+          o.useDtFormed = DateHelper.getShortDateWithFormat(o.useDt, 'YYYY.MM.DD hh:mm:ss');
+          o.sumPriceFormed = FormatHelper.addComma(o.sumPrice);
 
-      data.histories.map((o) => {
-        switch (o.payMethod) {
-          case '01':
-            o.paymentType = MYT_FARE_HISTORY_MICRO_TYPE.NORMAL;
-            break;
-          case '02':
-            o.paymentType = MYT_FARE_HISTORY_MICRO_TYPE.PACK;
-            break;
-          case '03':
-            o.paymentType = MYT_FARE_HISTORY_MICRO_TYPE.AUTO;
-            break;
-          default:
-            break;
-        }
-        o.useDtFormed = DateHelper.getShortDateWithFormat(o.useDt, 'YYYY.MM.DD hh:mm:ss');
-        o.sumPriceFormed = FormatHelper.addComma(o.sumPrice);
+          const year: string = o.useDt.slice(0, 4);
+          const month: string = DateHelper.getShortDateWithFormat(year + o.useDt.slice(5, 7), 'M', 'YYYYMM');
 
-        const year: string = o.useDt.slice(0, 4);
-        const month: string = DateHelper.getShortDateWithFormat(year + o.useDt.slice(5, 7), 'M', 'YYYYMM');
-
-        this.setYearMonthData(o, year, month);
-      });
-      return this.histData;
+          this.setYearMonthData(o, year, month);
+        });
+      }
     };
 
     this.getHistoryDataAndRender(API_CMD.BFF_05_0079, 'history/myt-fare.micro.history.html', params, res, svcInfo,
@@ -137,16 +131,17 @@ class MyTFareMicroHistory extends TwViewController {
     };
 
     const reformCallback = (data: any): any => {
-      data.useConAmtDetailList.map((o) => {
-        o.useDtFormed = DateHelper.getShortDateWithFormat(o.payTime, 'YYYY.MM.DD hh:mm:ss');
-        o.sumPriceFormed = FormatHelper.addComma(o.useCharge);
+      if (data.histories !== undefined) {
+        data.useConAmtDetailList.map((o) => {
+          o.useDtFormed = DateHelper.getShortDateWithFormat(o.payTime, 'YYYY.MM.DD hh:mm:ss');
+          o.sumPriceFormed = FormatHelper.addComma(o.useCharge);
 
-        const year: string = o.payTime.slice(0, 4);
-        const month: string = DateHelper.getShortDateWithFormat(year + o.payTime.slice(4, 6), 'M', 'YYYYMM');
+          const year: string = o.payTime.slice(0, 4);
+          const month: string = DateHelper.getShortDateWithFormat(year + o.payTime.slice(4, 6), 'M', 'YYYYMM');
 
-        this.setYearMonthData(o, year, month);
-      });
-      return this.histData;
+          this.setYearMonthData(o, year, month);
+        });
+      }
     };
 
     this.getHistoryDataAndRender(API_CMD.BFF_05_0064, 'history/myt-fare.contents.history.html', params, res, svcInfo,
@@ -156,12 +151,18 @@ class MyTFareMicroHistory extends TwViewController {
   renderMicroBlockHistory(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resData) => {
-      resData.result.cpHistories.map((o) => {
-        this.logger.info(this, DateHelper.getCurrentShortDate(new Date()), DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYYMMDD'));
 
-        o.requestDate = DateHelper.getShortDateWithFormat(o.useDt, 'YYYY.M.D');
-        o.applyDate = DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYY.M.D');
-      });
+      if (parseInt(resData.result.payHistoryCnt, 10) !== 0) {
+        resData.result.cpHistories.map((o) => {
+          this.logger.info(this, DateHelper.getCurrentShortDate(new Date()), DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYYMMDD'));
+          o.requestDate = DateHelper.getShortDateWithFormat(o.useDt, 'YYYY.M.D');
+          o.applyDate = DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYY.M.D');
+        });
+      } else {
+        resData.result.cpHistories = [];
+      }
+
+
       // const renderData = {
       //   cpName: resData.result.cpNm,
       //   pgName: resData.result.pgNm,
@@ -216,15 +217,29 @@ class MyTFareMicroHistory extends TwViewController {
 
   private getHistoryDataAndRender(API_Name: any, viewFileName: string, paramObj: any,
                                   res: Response, svcInfo: any, reformCallback: any, mockData?: any) {
+
     this.apiService.request(API_Name, paramObj).subscribe((resData) => {
-      const currentMonthKor = DateHelper.getShortDateWithFormat(new Date(), 'M' + MYT_STRING_KOR_TERM.month);
 
-      const data = mockData ? mockData.result : resData.result;
+      // this.logger.info(this, resData.code !== API_CODE.CODE_00);
 
-      res.render(viewFileName, {
-        svcInfo: svcInfo, currentMonth: currentMonthKor,
-        data: {termSelectValue: this.termSelectValue}, historyData: JSON.stringify(reformCallback(data))
-      });
+      if (resData.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
+          code: resData.code,
+          msg: resData.msg,
+          svcInfo: svcInfo
+        });
+      } else {
+        const currentMonthKor = DateHelper.getShortDateWithFormat(new Date(), 'M' + MYT_STRING_KOR_TERM.month);
+
+        const data = mockData ? mockData.result : resData.result;
+
+        reformCallback(data);
+
+        res.render(viewFileName, {
+          svcInfo: svcInfo, currentMonth: currentMonthKor,
+          data: {termSelectValue: this.termSelectValue}, historyData: JSON.stringify(this.histData)
+        });
+      }
     });
 
   }

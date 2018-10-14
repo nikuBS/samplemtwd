@@ -183,7 +183,7 @@ export const HOME_SEGMENT = [
 export const HOME_SEGMENT_ORDER = {
   default: ['H02', 'H06', 'H07', 'H10', 'H11'],
   refill: ['H11', 'H10', 'H02', 'H07', 'H06'],
-  gift: ['H10', 'H11', 'H02', 'H07', '06'],
+  gift: ['H10', 'H11', 'H02', 'H07', 'H06'],
   inquiry: ['H02', 'H11', 'H10', 'H07', 'H06'],
   payment: ['H02', 'H07', 'H11', 'H10', 'H06'],
   membership: ['H11', 'H10', 'H02', 'H07', 'H06']
@@ -222,4 +222,45 @@ export enum PROD_SCRB_E {
 export enum PROD_CTG_CD_CODE {
   F01100 = 'plans',
   F01200 = 'additions'
+}
+
+export enum PROD_TTAB_BASIC_DATA_PLUS {
+  NA00005069 = '600MB',
+  NA00005058 = '600MB',
+  NA00005070 = '1GB',
+  NA00005060 = '1GB',
+  NA00005071 = '2GB',
+  NA00005059 = '2GB'
+}
+
+export const MYT_FARE_HISTORY_MICRO_TYPE = {
+  '01': '일반결제',
+  '02': '묶음결제',
+  '03': '자동결제'
+};
+
+export const MYT_PAYMENT_HISTORY_REFUND_TYPE = {
+  ING: '처리중',
+  COMPLETE: '송금완료',
+  ERROR: '송금오류'
+};
+
+export const MYT_PAYMENT_HISTORY_AUTO_UNITED_TYPE = {
+  S: '청구금액',
+  R: '인출요청금액',
+  D: '인출금액'
+};
+
+export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
+  '02': '신용카드',
+  '10': 'OK캐쉬백 포인트',
+  '11': 'T포인트',
+  '40': '페이톡 계좌이체',
+  '41': '계좌이체'
+}
+
+export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
+  '0': '당월',
+  '1': '미납',
+  '9': '당월+미납'
 }

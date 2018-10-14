@@ -35,13 +35,15 @@ Tw.POPUP_TITLE = {
   // SELECT_CARD_TYPE: '일시불',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형',
-  SELECT_ORDER: '정렬 기준을 선택해주세요'
+  SELECT_ORDER: '정렬 기준을 선택해주세요',
+  CONFIRM_SHARE: '데이터를 공유 하시겠습니까?'
 };
 
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
   REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
-  CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공'
+  CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
+  REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.'
 };
 
 Tw.CHART_TYPE = {
@@ -224,8 +226,14 @@ Tw.ALERT_MSG_MYT_DATA = {
   RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_C: '고객센터를 통하여 신청하시면' + '<br />' + '그룹 구성을 동의 할 수 있는 SMS를 ' + '<br />' + '가족 구성원에게 보내드립니다.',
-  CALL_CUSTOMER_CENTER: '고객센터 전화하기'
+  CALL_CUSTOMER_CENTER: '고객센터 전화하기',
+  CONFIRM_SHARE: '공유된 데이터는 취소하실 수 없습니다.'
 };
+
+Tw.VALIDATE_MSG_MYT_DATA = { 
+  V16: '공유 가능 데이터를 초과했습니다.',
+  V17: '가족에게 공유할 데이터를 입력해주세요.'
+}
 
 Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_NEW: '신청이 완료되었습니다.',
@@ -270,8 +278,17 @@ Tw.ALERT_MSG_MYT_JOIN = {
 
 Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A1 : { TITLE : '알림', MSG : '선택하신 상품 가입을 취소하시겠습니까?', BUTTON : '계속하기' },
-  ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
-  ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' }
+  ALERT_3_A2 : { TITLE : '가입 시 유의사항을 모두 확인 하였으며,\n선택하신  상품으로 가입하시겠습니까?', MSG : '사용중인 요금제는 자동 해지되며, 1개월동안 다른 상품으로 가입하실 수 없습니다.', BUTTON: '가입하기' },
+  ALERT_3_A4 : { TITLE : '해지 시 유의사항을 모두 확인 하였으며,\n선택하신  상품을 해지하시겠습니까?', MSG : '', BUTTON: '해지하기' },
+  ALERT_3_A5 : { TITLE : '선택한 회선을 해지하시겠습니까?', MSG: '해지하시면, 해당 회선은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
+  ALERT_3_A7 : { TITLE : '알림', MSG : '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.' },
+  ALERT_3_A8 : { TITLE : '알림', MSG : '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.' },
+  ALERT_3_A9 : { TITLE : '알림', MSG : '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.' },
+  ALERT_3_A10 : { TITLE : '알림', MSG: '1회선만 결합된 경우, 회선 해지가 불가합니다.' },
+  ALERT_3_A16: { TITLE: '알림', MSG : '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
+  ALERT_3_A18: { TITLE: '알림', MSG : '검색 결과가 없습니다' },
+  ALERT_FRONT_DUPLICATE: { TITLE : '알림', MSG : '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.' },
+  ALERT_FRONT_VALIDATE_NUM: { TITLE : '알림', MSG : '올바른 회선 번호를 입력해주세요.' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {
@@ -308,6 +325,28 @@ Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
 Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
   BLOCK: '차단 신청이 완료되었습니다.',
   REVOCATION: '해제 신청이 완료되었습니다.'
+};
+
+Tw.PRODUCT_CTG_NM = {
+  PLANS: '요금제',
+  ADDITIONS: '부가서비스'
+};
+
+Tw.PRODUCT_TYPE_NM = {
+  JOIN: '가입',
+  SETTING: '변경',
+  TERMINATE: '해지'
+};
+
+Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
+  LINE: '회선',
+  MV_02_02_01: '결합회선',
+  MP_02_02_03_05: '결합회선',
+  MP_02_02_03_11: '공유회선'
+};
+
+Tw.MYT_FARE_HISTORY_PAYMENT = {
+  CANCEL_AUTO_WITHDRAWAL: '자동납부 통합 인출해지 신청 되었습니다.'
 };
 
 Tw.INFO = {
@@ -370,11 +409,6 @@ Tw.SETTINGS_MENU = {
   LATEST: '최신'
 };
 
-Tw.PRODUCT_ADDITIONS_TERMINATE = {
-  CONFIRM_POPUP: '해지 시 유의사항을 모두 확인 하였으며, 선택하신 상품을 해지 하시겠습니까?',
-  CONFIRM_BUTTON: '해지하기'
-};
-
 Tw.NTV_FIDO_REGISTER_TXT = {
   FINGER_ON: '등록된 지문이 있습니다.',
   FINGER_OFF: '등록된 지문이 없습니다.',
@@ -391,3 +425,32 @@ Tw.JOIN_INFO_NO_AGREEMENT = {
   NO_USE : '포인트 사용 내역이 없습니다.',
   NO_DATA : '검색된 포인트 사용 내역이 없습니다.'
 };
+
+Tw.MYT_DATA_FAMILY_TOAST = {
+  SUCCESS_CHANGE: '변경되었습니다.'
+}
+
+Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
+  TITLE: '데이터를 공유 하시겠습니까?',
+  CONTENTS: '공유된 데이터는 취소하실 수 없습니다.',
+  BTN_NAME: '공유하기'
+}
+
+Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
+  TITLE: '매월 자동으로 데이터를 공유 하시겠습니까?',
+  CONTENTS: '다음달부터 자동 공유되며, 이번 달 안으로 변경이 가능합니다.',
+  BTN_NAME: '변경하기'
+}
+
+Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
+  TITLE: '자동공유를 그만 하시겠습니까?',
+  CONTENTS: '다음달부터 자동 공유가 해지되며, 이번 달 안으로 변경이 가능합니다.',
+  BTN_NAME: '그만하기'
+}
+
+Tw.MYT_PAYMENT_HISTORY_HASH = {
+  OVERPAY_REFUND: 'overpay-refund',
+  AUTO_WITHDRAWAL: 'auto-withdrawal',
+  BILL_RESEND_BY_FAX: 'by-fax',
+  BILL_RESEND_BY_EMAIL: 'by-email'
+}

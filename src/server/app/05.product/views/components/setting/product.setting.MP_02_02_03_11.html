@@ -1,0 +1,59 @@
+<%#
+* FileName: product.setting.MP_02_02_03_11.html
+* Author: JiHun Yang (jihun202@sk.com)
+* Date: 2018.10.13
+%>
+<div class="container fe-join_setup" data-id="MP_02_02_03_11">
+  <% if ( !settingInfo ) { %>
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="product-tit-wrap">
+      <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+      <span class="tit-big"><%= prodNm %></span>
+    </div>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+
+  <div class="product-select-wrap">
+    <span class="data-tit">공유회선 설정</span>
+    <span class="data-number"><%= svcInfo.svcNum %></span>
+  </div>
+
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="input-number-wrap">
+      <h3 class="tit">공유 회선 번호</h3>
+      <div class="form-box">
+        <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+          <span class="input">
+            <input type="number" class="fe-num_input" placeholder="<%= svcInfo.svcNum %>" value="<%= svcInfo.svcNum %>" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+            <button class="fe-btn_clear_num cancel"><span class="blind">삭제</span></button>
+          </span>
+          <% if (isApp) { %>
+          <span class="bt-box">
+            <button type="button" class="fe-btn_address_book">주소록</button>
+          </span>
+          <% } %>
+        </span>
+        <span id="aria-phone-tx1" class="input-comment"><span class="tx-bold vbl"><%= prodNm %></span> 의 모회선으로 설정하실 동일 명의의 <br />   이동전화번호를 입력하시고, 설정 가능 여부를 확인해주세요</span>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+
+  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top; margin-bottom: 3.75rem">
+  <div class="bt-fixed-area">
+    <ul class="bt-slice full">
+      <li class="bt-red1">
+        <% if ( settingInfo ) { %>
+        <button class="fe-btn_setup_ok" disabled="disabled">변경완료</button>
+        <% } else { %>
+        <button class="fe-btn_setup_ok" disabled="disabled">설정완료</button>
+        <% } %>
+      </li>
+    </ul>
+  </div>
+</div>

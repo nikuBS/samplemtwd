@@ -133,7 +133,8 @@
                         <% for (let i = 0; i < bestLen; i++) { %>
                             <% const addition = bestAdditions[i]; %>
                             <li class="type01">
-                                <a type="button" class="product-infolink" href="/product/detail/<%= addition.prodId %>">
+                                <a class="product-infolink" href="/product/detail/<%= addition.prodId %>">
+                                    <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="명칭"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
                                         <p class="info">
@@ -143,11 +144,13 @@
                                                 <span class="money"><%= addition.basFeeInfo %></span></p>
                                             <% } %>
                                     </div>
+                                    <% if (addition.prodFltList) { %>
                                     <div class="taglist-wrap">
                                         <% for (let j = 0; j < addition.prodFltList.length; j++) { %>
                                             <span class="tag-text">#<%= addition.prodFltList[j].prodFltNm %></span>
                                         <% } %>
                                     </div>
+                                    <% } %>
                                     <p class="products-detailinfo"><%= addition.prodSmryDesc %></p>
                                   </a>
                             </li>
@@ -200,6 +203,7 @@
                             <% const addition = recommendedAdditions[i]; %>
                             <li class="type01">
                                 <a class="product-infolink" href="/product/detail/<%= addition.prodId %>">
+                                    <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="명칭"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
                                         <p class="info">

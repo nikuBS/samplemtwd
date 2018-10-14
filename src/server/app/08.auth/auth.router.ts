@@ -6,6 +6,9 @@ import AuthLine from './controllers/line/auth.line.controller';
 import AuthLineEdit from './controllers/line/auth.line.edit.controller';
 import AuthLineCopRegister from './controllers/line/auth.line.cop-register.controller';
 import AuthLineEmptyRegister from './controllers/line/auth.line.empty-register.controller';
+import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
+import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
+import AuthCertComplete from './controllers/cert/auth.cert.complete.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -14,6 +17,9 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/cert/motp', controller: new AuthCertMotp() });
     this.controllers.push({ url: '/cert/motp/fail', controller: new AuthCertMotpFail() });
     this.controllers.push({ url: '/cert/public/export', controller: new AuthCertPublicExport() });
+    this.controllers.push({ url: '/cert/nice', controller: new AuthCertNice() });
+    this.controllers.push({ url: '/cert/ipin', controller: new AuthCertIpin() });
+    this.controllers.push({ url: '/cert/complete', controller: new AuthCertComplete() });
     // line
     this.controllers.push({ url: '/line', controller: new AuthLine() });
     this.controllers.push({ url: '/line/edit', controller: new AuthLineEdit() });

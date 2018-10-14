@@ -8,8 +8,9 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD } from '../../../types/api-command.type';
-import { UNIT, VOICE_UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { PRODUCT_CTG_NAME } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -27,13 +28,17 @@ class ProductDetail extends TwViewController {
 
   /**
    * @param key
-   * @param currentProdId
+   * @param optionKey
    * @private
    */
-  private _getApi (key: string, currentProdId?: any): Observable<any> {
+  private _getApi (key: string, optionKey?: any): Observable<any> {
     let params = {};
     if (key === 'basic') {
-      params = { prodExpsTypCd: this._prodId === currentProdId ? 'SP' : 'P' };
+      params = { prodExpsTypCd: this._prodId === optionKey ? 'SP' : 'P' };
+    }
+
+    if (key === 'series' && optionKey !== 'F01100') {
+      return Observable.of({ code: API_CODE.CODE_00, result: null });
     }
 
     return this.apiService.request(productApiCmd[key], params, {}, this._prodId);
@@ -90,7 +95,8 @@ class ProductDetail extends TwViewController {
     return Object.assign(prodRedisInfo, {
       summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(prodRedisInfo.summary)),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
-      contents: this._convertContents(prodRedisInfo.contents)
+      contents: this._convertContents(prodRedisInfo.contents),
+      banner: this._convertBanners(prodRedisInfo.banner)
     });
   }
 
@@ -116,6 +122,7 @@ class ProductDetail extends TwViewController {
    */
   private _parseSummaryInfo (summaryInfo): any {
     return {
+      basOfrDataQtyCtt: this._praseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
       basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
       basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
@@ -153,15 +160,48 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param bannerInfo
+   * @private
+   */
+  private _convertBanners (bannerInfo): any {
+    const bannerResult: any = {};
+    if (FormatHelper.isEmpty(bannerInfo)) {
+      return bannerResult;
+    }
+
+    bannerInfo.forEach((item) => {
+      bannerResult[item.bnnrLocCd] = item;
+    });
+
+    return bannerResult;
+  }
+
+  /**
+   * @param basOfrDataQtyCtt
+   * @private
+   */
+  private _praseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
+    if (basOfrDataQtyCtt === '-' || basOfrDataQtyCtt === '0') {
+      return '';
+    }
+
+    return basOfrDataQtyCtt;
+  }
+
+  /**
    * @param basOfrVcallTmsCtt
    * @private
    */
   private _parseBasOfrVcallTmsCtt (basOfrVcallTmsCtt): any {
+    if (basOfrVcallTmsCtt === '-' || basOfrVcallTmsCtt === '0') {
+      return '';
+    }
+
     if (isNaN(parseInt(basOfrVcallTmsCtt, 10))) {
       return basOfrVcallTmsCtt;
     }
 
-    return FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN;
+    return FormatHelper.addComma(basOfrVcallTmsCtt);
   }
 
   /**
@@ -169,11 +209,15 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parseBasOfrCharCntCtt (basOfrCharCntCtt): any {
+    if (basOfrCharCntCtt === '-' || basOfrCharCntCtt === '0') {
+      return '';
+    }
+
     if (isNaN(parseInt(basOfrCharCntCtt, 10))) {
       return basOfrCharCntCtt;
     }
 
-    return FormatHelper.addComma(basOfrCharCntCtt) + UNIT['310'];
+    return FormatHelper.addComma(basOfrCharCntCtt);
   }
 
   /**
@@ -181,6 +225,10 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parsingSummaryBasFeeInfo (basFeeInfo): any {
+    if (basFeeInfo === '0') {
+      return null;
+    }
+
     if (isNaN(parseInt(basFeeInfo, 10))) {
       return {
         basFee: basFeeInfo,
@@ -199,6 +247,10 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _convertSeriesInfo (seriesInfo): any {
+    if (FormatHelper.isEmpty(seriesInfo)) {
+      return null;
+    }
+
     return Object.assign(seriesInfo, {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
         const isBasFeeInfo = isNaN(parseInt(item.basFeeInfo, 10));
@@ -214,7 +266,7 @@ class ProductDetail extends TwViewController {
    * @param ctgCd
    * @private
    */
-  private _getIndexListActionName (ctgCd): any {
+  private _getCtgKey (ctgCd): any {
     return PROD_CTG_CD_CODE[ctgCd];
   }
 
@@ -228,7 +280,7 @@ class ProductDetail extends TwViewController {
     }
 
     return filtersList.map((item) => {
-      return item.filterFlagId;
+      return item.prodFltId;
     });
   }
 
@@ -242,49 +294,65 @@ class ProductDetail extends TwViewController {
       });
     }
 
-    Observable.combineLatest(
-      this._getApi('basic', svcInfo.prodId),
-      this._getApi('relatetags'),
-      this._getApi('series'),
-      this._getApi('recommands'),
-      this._getRedis()
-    ).subscribe(([
-      basicInfo, relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo
-    ]) => {
-      const apiError = this.error.apiError([ basicInfo, relateTagsInfo, seriesInfo, recommendsInfo ]);
+    this._getApi('basic', svcInfo.prodId)
+      .subscribe((basicInfo) => {
+        if (basicInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            title: '상품 상세 정보',
+            code: basicInfo.code,
+            msg: basicInfo.msg,
+            svcInfo: svcInfo
+          });
+        }
 
-      if (!FormatHelper.isEmpty(apiError)) {
-        return this.error.render(res, {
-          title: '상품 상세 정보',
-          svcInfo: svcInfo,
-          msg: apiError.msg,
-          code: apiError.code
+        if (basicInfo.result.prodStCd === 'G1000') {
+          return this.error.render(res, {
+            title: '상품 상세 정보',
+            svcInfo: svcInfo
+          });
+        }
+
+        Observable.combineLatest(
+          this._getApi('relatetags'),
+          this._getApi('series', basicInfo.result.ctgCd),
+          this._getApi('recommands'),
+          this._getRedis()
+        ).subscribe(([
+          relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo
+        ]) => {
+          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
+
+          if (!FormatHelper.isEmpty(apiError)) {
+            return this.error.render(res, {
+              title: '상품 상세 정보',
+              svcInfo: svcInfo,
+              msg: apiError.msg,
+              code: apiError.code
+            });
+          }
+
+          if (FormatHelper.isEmpty(prodRedisInfo)) {
+            return this.error.render(res, {
+              title: '상품 상세 정보',
+              svcInfo: svcInfo
+            });
+          }
+
+          res.render('product.detail.html', {
+            prodId: this._prodId,
+            basicInfo: this._convertBasicInfo(basicInfo.result),
+            prodRedisInfo: this._convertRedisInfo(prodRedisInfo),
+            relateTags: relateTagsInfo.result,
+            series: this._convertSeriesInfo(seriesInfo.result),
+            recommends: recommendsInfo.result,
+            svcInfo: svcInfo,
+            ctgKey: this._getCtgKey(basicInfo.result.ctgCd),
+            ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
+            filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
+            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple'  // @todo body class
+          });
         });
-      }
-
-      if (basicInfo.result.prodStCd === 'G1000') {
-        return this.error.render(res, {
-          title: '상품 상세 정보',
-          svcInfo: svcInfo
-        });
-      }
-
-      if (FormatHelper.isEmpty(prodRedisInfo)) {
-        return this.error.render(res, { svcInfo: svcInfo });
-      }
-
-      res.render('product.detail.html', {
-        prodId: this._prodId,
-        basicInfo: this._convertBasicInfo(basicInfo.result),
-        prodRedisInfo: this._convertRedisInfo(prodRedisInfo),
-        relateTags: relateTagsInfo.result,
-        series: this._convertSeriesInfo(seriesInfo.result),
-        recommends: recommendsInfo.result,
-        svcInfo: svcInfo,
-        indexListActionName: this._getIndexListActionName(basicInfo.result.ctgCd),
-        filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(',')
       });
-    });
   }
 }
 

@@ -41,7 +41,9 @@ interface ICharge {
 }
 
 interface IChargeData {
-  [key: string]: ICharge[];
+  data: { [key: string]: ICharge[] };
+  count: number;
+  typeName: TypeNames;
 }
 
 enum BadgeTypes {
@@ -62,17 +64,53 @@ export default class MyTDataRechargeHistory extends TwViewController {
       this.getRefillUsages(),
       this.getRefillGifts()
     ).subscribe(histories => {
-      res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData: this.mergeCharges(histories) });
+      const chargeData: { all: IChargeData; display?: IChargeData; filterIdx?: number } = {
+        all: this.mergeCharges(histories)
+      };
+      let filterIdx = -1;
+
+      switch (req.query.filter) {
+        case 'data-gifts':
+          filterIdx = 0;
+          break;
+        case 'limit-charges':
+          filterIdx = 1;
+          break;
+        case 'ting-charges':
+          filterIdx = 2;
+          break;
+        case 'ting-gifts':
+          filterIdx = 3;
+          break;
+        case 'refill-usages':
+          filterIdx = 4;
+          break;
+        case 'refill-gifts':
+          filterIdx = 5;
+          break;
+      }
+
+      if (filterIdx >= 0) {
+        const display = histories[filterIdx];
+        if (display) {
+          chargeData.display = display;
+        }
+        chargeData.filterIdx = filterIdx + 1;
+      }
+
+      res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData });
     });
   }
 
-  private getDataGifts = (): Observable<IChargeData | null> => {
+  private getDataGifts = () => {
     return this.apiService.request(API_CMD.BFF_06_0018, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
+      // const resp = DATA_GIFTS;
+
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
-      return resp.result.reduce((nData: IChargeData, item) => {
+      const data = resp.result.reduce((nData, item) => {
         const key = item.opDt;
         const amount = Number(item.dataQty);
 
@@ -105,18 +143,26 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
         return nData;
       }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.DATA_GIFT
+      };
     });
   }
 
-  private getLimitCharges = (): Observable<IChargeData | null> => {
+  private getLimitCharges = () => {
     return this.apiService
       .request(API_CMD.BFF_06_0042, { fromDt: this.fromDt, toDt: this.toDt, type: 1 })
       .map((resp: { code: string; result: any }) => {
+        // const resp = LIMIT_CHARGES;
+
         if (resp.code !== API_CODE.CODE_00) {
           return null;
         }
 
-        return resp.result.reduce((nData: IChargeData, item) => {
+        const data = resp.result.reduce((nData, item) => {
           const key = item.opDt;
 
           if (!nData[key]) {
@@ -142,16 +188,23 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
           return nData;
         }, {});
+
+        return {
+          data,
+          count: resp.result.length,
+          typeName: TypeNames.LIMIT_CHARGE
+        };
       });
   }
 
-  private getTingCharges = (): Observable<IChargeData | null> => {
+  private getTingCharges = () => {
     return this.apiService.request(API_CMD.BFF_06_0032, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
+      // const resp = TING_CHARGES;
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
-      return resp.result.reduce((nData: IChargeData, item) => {
+      const data = resp.result.reduce((nData, item) => {
         const key = item.opDt;
 
         if (!nData[key]) {
@@ -177,16 +230,24 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
         return nData;
       }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.TING_CHARGE
+      };
     });
   }
 
-  private getTingGifts = (): Observable<IChargeData | null> => {
+  private getTingGifts = () => {
     return this.apiService.request(API_CMD.BFF_06_0026, { fromDt: this.fromDt, toDt: this.toDt }).map((resp: { code: string; result: any }) => {
+      // const resp = TING_GIFTS;
+
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
-      return resp.result.reduce((nData: IChargeData, item) => {
+      const data = resp.result.reduce((nData, item) => {
         const key = item.opDt;
 
         if (!nData[key]) {
@@ -211,16 +272,24 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
         return nData;
       }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.TING_GIFT
+      };
     });
   }
 
-  private getRefillUsages = (): Observable<IChargeData | null> => {
+  private getRefillUsages = () => {
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map((resp: { code: string; result: any }) => {
+      // const resp = REFILL_USAGES;
+
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
-      return resp.result.reduce((nData: IChargeData, item) => {
+      const data = resp.result.reduce((nData, item) => {
         const key = item.copnUseDt;
 
         if (!nData[key]) {
@@ -261,16 +330,23 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
         return nData;
       }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.REFILL_USAGE
+      };
     });
   }
 
-  private getRefillGifts = (): Observable<IChargeData | null> => {
+  private getRefillGifts = () => {
     return this.apiService.request(API_CMD.BFF_06_0003, { type: 0 }).map((resp: { code: string; result: any }) => {
+      // const resp = REFILL_GIFTS;
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
-      return resp.result.reduce((nData: IChargeData, item) => {
+      const data = resp.result.reduce((nData, item) => {
         const key = item.copnOpDt;
 
         if (!nData[key]) {
@@ -290,26 +366,32 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
         return nData;
       }, {});
+
+      return {
+        data,
+        count: resp.result.length,
+        typeName: TypeNames.REFILL_GIFT
+      };
     });
   }
 
-  private mergeCharges = (histories: Array<IChargeData | null>): { data: IChargeData; count: number } => {
+  private mergeCharges = (histories: Array<IChargeData | null>): IChargeData => {
     return histories.reduce(
-      (nData, item) => {
+      (nData: IChargeData, item) => {
         if (item) {
-          for (const key of Object.keys(item)) {
+          for (const key of Object.keys(item.data)) {
             if (!nData.data[key]) {
               nData.data[key] = [];
             }
 
-            nData.data[key] = nData.data[key].concat(item[key]);
-            nData.count += item[key].length;
+            nData.data[key] = nData.data[key].concat(item.data[key]);
+            nData.count += item.data[key].length;
           }
         }
 
         return nData;
       },
-      { data: {}, count: 0 }
+      { data: {}, count: 0, typeName: TypeNames.ALL }
     );
   }
 }

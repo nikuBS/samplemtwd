@@ -36,13 +36,13 @@ export const MYT_DATA_USAGE = {
     DD3DO: '라지',
     DD3DG: '미디엄',
     DD3D8: '스몰',
-    DD4D1: '라지',
+    DD4D1: '라지'
   },
   T_O_PLAN_SHARE_DATA: {
     DD3CX: '인피니티',
     DD3CV: '패밀리',
     DD3CU: '라지',
-    DD4D5: '라지',
+    DD4D5: '라지'
   }
 };
 
@@ -61,7 +61,11 @@ export const MYT_FARE_BILL_GUIDE = {
 };
 
 export enum MYT_FARE_PAYMENT_NAME {
-  BANK = '은행'
+  BANK = '은행',
+  BANK2 = '뱅크',
+  BANK3 = 'bank',
+  CARD = '카드',
+  CARD2 = 'card'
 }
 
 export const MYT_FEEPLAN_BENEFIT = {
@@ -93,7 +97,8 @@ export enum MYT_DATA_CHARGE_TYPE_NAMES {
   TING_CHARGE = '팅 쿠키즈 안심요금',
   TING_GIFT = '팅 요금 선물',
   REFILL_USAGE = '리필 쿠폰 사용',
-  REFILL_GIFT = '리필 쿠폰 선물'
+  REFILL_GIFT = '리필 쿠폰 선물',
+  ALL = '전체'
 }
 
 export enum MYT_DATA_CHARGE_TYPES {
@@ -110,18 +115,30 @@ export enum PRODUCT_INFINITY_BENEFIT {
   NA00006117 = '인피니티 클럽 이용료 100%할인'
 }
 
+export enum PRODUCT_INFINITY_BENEFIT_NM {
+  NA00006114 = '인피니티_여행',
+  NA00006115 = '인피니티_영화',
+  NA00006116 = '인피니티_스마트워치',
+  NA00006117 = '인피니티_클럽'
+}
+
+export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
+  NA00006116 = '지원요금제명',
+  NA00006117 = '대상'
+}
+
 export const MYT_FARE_BILL_REISSUE_TYPE = {
-  'P' : 'T world',
-  'H' : 'Bill Letter',
-  'B' : '문자',
-  '2' : '이메일',
-  'I' : 'Bill Letter+이메일',
-  'A' : '문자+이메일',
-  '1' : '우편',
-  'Q' : 'Bill Letter+문자',
+  P: 'T world',
+  H: 'Bill Letter',
+  B: '문자',
+  '2': '이메일',
+  I: 'Bill Letter+이메일',
+  A: '문자+이메일',
+  '1': '우편',
+  Q: 'Bill Letter+문자',
   // 유선
-  'J' : 'Bill Letter',
-  'K' : 'Bill Letter+이메일'
+  J: 'Bill Letter',
+  K: 'Bill Letter+이메일'
 };
 
 export const MYT_INFO_DISCOUNT_MONTH = {
@@ -132,13 +149,21 @@ export enum PRODUCT_TYPE {
   FEE_INFO_ETC = '상세참조'
 }
 
+export enum PRODUCT_CTG_NAME {
+  F01100 = '요금제',
+  F01200 = '부가서비스'
+}
+
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   direct: '즉시 납부',
   auto: '자동 납부',
   autoAll: '자동 납부 통합 인출',
   microPrepay: '소액결제 선결제',
-  contentPrepay: '콘텐츠 이용료 선결제'
+  contentPrepay: '콘텐츠 이용료 선결제',
+  PAY_KOR_TITLE: '납부',
+  CANCEL_KOR_TITLE: '취소',
+  AUTO_KOR_TITLE: '자동'
 };
 
 export const MYT_STRING_KOR_TERM = {
@@ -153,7 +178,7 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
   AUTO: '자동결제'
 };
 
-export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
+export const MYT_JOIN_CONTRACT_TERMINAL = {
   FEE_TYPE_A: {
     TIT_NM: '요금약정할인24 (730일)'
   },
@@ -214,3 +239,14 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
   }
 };
 
+export const MYT_PAYMENT_DETAIL_TITLE = {
+  DI: '납부 상세 내역',
+  TPOINT: 'T포인트 납부 상세 내역',
+  OCB: 'OK캐쉬백 납부 상세 내역',
+  BANK: '계좌이체 납부 상세 내역',
+  CARD: '신용카드 납부 상세 내역',
+  AT: '자동납부 상세 내역',
+  AU: '자동납부 상세 내역',
+  MP: '소액 결제 선결제 상세 내역',
+  CP: '콘텐츠 이용료 선결제 상세 내역'
+}

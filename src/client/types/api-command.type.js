@@ -189,12 +189,12 @@ Tw.API_CMD = {
   BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.GET },
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
-  BFF_06_0044: { path: '/core-balance/v1/tfamily-sharings', method: Tw.API_METHOD.GET },
-  BFF_06_0045: { path: '/core-recharge/v1/share-pots/donation', method: Tw.API_METHOD.GET },
-  BFF_06_0046: { path: '/core-recharge/v1/share-pots/donation', method: Tw.API_METHOD.POST },
-  BFF_06_0047: { path: '/core-recharge/v1/share-pots/auto-donation', method: Tw.API_METHOD.GET },
-  BFF_06_0050: { path: '/core-recharge/v1/share-pots/auto-donation', method: Tw.API_METHOD.POST },
-  BFF_06_0051: { path: '/core-recharge/v1/share-pots/donation-limited', method: Tw.API_METHOD.GET },
+  BFF_06_0045: { path: '/core-recharge/v1/tfamily-shareable-data', method: Tw.API_METHOD.GET },
+  BFF_06_0046: { path: '/core-recharge/v1/tfamily-sharings', method: Tw.API_METHOD.POST },
+  BFF_06_0048: { path: '/core-recharge/v1/regular-tfamily-sharings', method: Tw.API_METHOD.POST },
+  BFF_06_0049: { path: '/core-recharge/v1/regular-tfamily-sharings', method: Tw.API_METHOD.DELETE },
+  BFF_06_0050: { path: '/core-recharge/v1/tfamily-sharing-limitations', method: Tw.API_METHOD.POST },
+  BFF_06_0051: { path: '/core-recharge/v1/tfamily-sharing-limitations', method: Tw.API_METHOD.DELETE },
   BFF_06_0052: { path: '/core-recharge/v1/share-pots/limit-setup', method: Tw.API_METHOD.GET },
   BFF_06_0053: { path: '/core-recharge/v1/share-pots/limit-setup', method: Tw.API_METHOD.POST },
 
@@ -237,6 +237,7 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
+  BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.POST },
   BFF_07_0071: { path: '/core-bill/v1/microPrepay/microPrepay-hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: Tw.API_METHOD.POST },
@@ -297,11 +298,24 @@ Tw.API_CMD = {
 
   // PRODUCT
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0010: { path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/v1/products/fee-plans/args-0/joins', method: Tw.API_METHOD.PUT },
+  BFF_10_0013: { path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-sets', method: Tw.API_METHOD.GET },
+  BFF_10_0014: { path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-sets', method: Tw.API_METHOD.PUT },
   BFF_10_0015: { path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits', method: Tw.API_METHOD.GET },
+  BFF_10_0018: { path: '/core-product/v1/mobiles/additions-set/args-0/joins', method: Tw.API_METHOD.POST },
+  BFF_10_0019: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets/lines', method: Tw.API_METHOD.DELETE },
+  BFF_10_0020: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets/lines', method: Tw.API_METHOD.POST },
+  BFF_10_0021: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets', method: Tw.API_METHOD.GET },
   BFF_10_0022: { path: '/core-product/v1/mobiles/additions-sets/args-0', method: Tw.API_METHOD.DELETE },
   BFF_10_0031: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
   BFF_10_0032: { path: '/core-product/v1/submain/filters', method: Tw.API_METHOD.GET },
+  BFF_10_0034: { path: '/core-product/v1/mobiles/fee-plans/young-plan-sets', method: Tw.API_METHOD.GET },
+  BFF_10_0035: { path: '/core-product/v1/mobiles/additions/args-0/joins', method: Tw.API_METHOD.POST },
+  BFF_10_0036: { path: '/core-product/v1/mobiles/additions/args-0', method: Tw.API_METHOD.DELETE },
+  BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: Tw.API_METHOD.GET },
+  BFF_10_0038: { path: '/core-product/v1/mobiles/additions/args-0/vas-terms', method: Tw.API_METHOD.GET },
+  BFF_10_9001: { path: '/v1/products/args-0/auth/args-1', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -337,7 +351,9 @@ Tw.NODE_CMD = {
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
   GET_VERSION: { path: '/version', method: Tw.API_METHOD.GET },
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
-  GET_NOTICE: { path: '/notice', method: Tw.API_METHOD.GET }
+  GET_NOTICE: { path: '/notice', method: Tw.API_METHOD.GET },
+
+  CERT_TEST: { path: '/certTest', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

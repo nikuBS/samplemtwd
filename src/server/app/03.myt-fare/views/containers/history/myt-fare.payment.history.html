@@ -23,41 +23,46 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-
+                <% if(data.refundPaymentCount) { %>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
                     <div class="plan-history-wrap">
                         <div class="plan-title type2">
-                            <div class="tit-note">휴대폰 요금 <span class="tx-bold vbl"><em id="fe-refund-count-total"></em>건</span>이 과납 되었습니다.</div>
-                            <div class="bt-alone"><button class="bt-bg-blue1">환불 받기</button></div>
+                            <div class="tit-note">휴대폰 요금 <span class="tx-bold vbl"><em id="fe-refund-count-total"><%=data.overPaymentCount%></em>건</span>이 과납 되었습니다.</div>
+                            <div class="bt-alone"><button class="bt-bg-blue1" id="fe-refund-add-account">환불 받기</button></div>
                         </div>
                         <div class="plan-data-wrap">
-                            <span class="plan-result">환불 받을 총 금액<br /><span class="tx-bold vbl"><em id="fe-refund-total"></em> 원</span> 입니다.</span>
+                            <span class="plan-result">환불 받을 총 금액<br /><span class="tx-bold vbl"><em id="fe-refund-total"><%=data.refundTotalAmount%></em> 원</span> 입니다.</span>
                         </div>
                     </div>
                 </div>
                 <!--// .cont-box -->
+                <% } %>
 
                 <div class="data-select-wrap">
                     <span class="inline">
                         <button class="bt-dropdown big" title="납부내역" aria-haspopup="true" id="fe-type-trigger"><%=currentString%><span class="ico"></span></button>
                     </span>
-                    <span class="count">총 <em id="fe-payment-count-total"></em> 건</span>
+                    <span class="count">총 <em id="fe-payment-count-total"><%=data.listData.mergedListData.length%></em> 건</span>
                 </div>
 
 
-                <div id="list-wrapper">
+                <div id="fe-list-wrapper">
 
                 </div>
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!--<hr class="cont-sp type1" aria-hidden="true"/>-->
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="all-menu-setting">
-                        <ul class="setting-list">
-                            <li><a id="fe-go-refund-quit">자동납부 통합 인출 해지<span class="ico"></span></a></li>
-                            <li><a id="fe-go-refund-list">환불 처리 내역<span class="ico"></span></a></li>
+                        <ul class="link-long-list">
+                            <% if(data.isAutoWithdrawalUse) { %>
+                            <li><div class="link-long"><button id="fe-go-refund-quit">자동납부 통합 인출 해지<span class="tx-sub"><span class="ico"></span></span></button></div></li>
+                            <% } %>
+                            <% if(data.listData.refundRecordList.length) { %>
+                            <li><div class="link-long"><button id="fe-go-refund-list">환불 처리 내역<span class="tx-sub"><span class="ico"></span></span></button></div></li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>
@@ -72,26 +77,54 @@
         new Tw.MyTFarePaymentHistory($(document), '<%- JSON.stringify(data) %>');
       });
     </script>
+    <script id="fe-template-items" type="text/x-handlebars-template">
+        {{#each items}}
+        <button data-list-id="{{listId}}">
+            <div class="li-elem">
+                <div class="title-box">
+                    <span class="tit">{{listTitle}}</span>
+                    <span class="sub-tit">
+                        {{#if dataSubInfo2}}
+                        <span>{{dataSubInfo}}</span><span>{{dataSubInfo2}}</span>
+                        {{else}}
+                        {{dataSubInfo}}
+                        {{/if}}
+                    </span>
+                </div>
+                <div class="price"><span class="tx-price">{{dataAmt}}</span><span class="unit">원</span></div>
+            </div>
+        </button>
+        {{/each}}
+    </script>
+    <script id="fe-template-day" type="text/x-handlebars-template">
+        {{#each records}}
+        {{#if yearHeader}}
+        {{>year year=yearHeader}}
+        {{/if}}
+        <li>
+            <span class="tx-date">{{date}}</span>
+            {{>chargeItems items=items}}
+        </li>
+        {{/each}}
+    </script>
+    <script id="fe-template-year" type="text/x-handlebars-template">
+        <li class="year-tx" data-year="{{year}}">{{year}}</li>
+    </script>
     <script id="list-template-wrapper" type="text/x-handlebars-template">
         <!-- .cont-box -->
-        <div class="cont-box nogaps noborder">
-            <div class="list-comp-history">
-                <ul class="comp-box">
-                {{> list}}
+        <div class="cont-box nogaps">
+            <div class="history-list">
+                <ul class="fe-list-inner">
+                    {{>list records=records}}
                 </ul>
             </div>
         </div>
         <!--// .cont-box -->
         {{#if initialMoreData}}
         <div class="bt-more">
-            <button>더보기<span>(<em>{{restCount}}</em>)</span></button>
+            <button>더보기<span>({{restCount}})</span></button>
         </div>
         {{/if}}
-    </script>
-    <script id="list-default" type="text/x-handlebars-template">
-        {{#each listElement}}
-        <li class="list-box"></li>
-        {{/each}}
     </script>
     <script id="list-empty" type="text/x-handlebars-template">
         <div class="no-data">

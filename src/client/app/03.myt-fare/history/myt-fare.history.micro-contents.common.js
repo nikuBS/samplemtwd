@@ -87,10 +87,10 @@ Tw.MyTFareHistoryMicroContents.prototype = {
   _setMicroPaymentContentsData: function (res) {
     this.historyData = JSON.parse(res);
 
-    this.currentMonthData = this.historyData[this.dateInfo.year][this.dateInfo.month] || [];
+    this.currentMonthData = (this.historyData[this.dateInfo.year] && this.historyData[this.dateInfo.year][this.dateInfo.month]) ?
+        this.historyData[this.dateInfo.year][this.dateInfo.month] : [];
 
     this._setCurrentMonthDataIndex();
-
     this._renderMicroPayContentsList();
   },
 
@@ -113,7 +113,9 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this._popupService.close();
     this.$microPayMonthSelector.text($(e.target).text());
 
-    this.currentMonthData = this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth] || [];
+    this.currentMonthData = (this.historyData[this.dateInfo.currentYear] && this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth]) ?
+        this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth] : [];
+
     this._setCurrentMonthDataIndex();
 
     this._renderMicroPayContentsList();
@@ -178,7 +180,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this.$detailInfo.charge.text(this.detailData.sumPriceFormed);
     this.$detailInfo.date.text(this.detailData.useDtFormed);
 
-    if (parentPath === 'micro-payment'){
+    if (parentPath === 'micro'){
       this.$detailInfo.btnAutoPaymentBlock.hide();
       this.$detailInfo.linkMoveBlockList.hide();
       this.$detailInfo.paymentBlockState.hide();

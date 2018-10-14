@@ -16,5 +16,5 @@ export enum FIDO_TYPE {
   FACE = 'face'
 }
 
-export const REDIS_URL_META = 'NodeUrlMeta:';
+export const REDIS_URL_META = 'UrlMetaNode:';
 export const REDIS_APP_VERSION = 'AppVersion:appLoad';

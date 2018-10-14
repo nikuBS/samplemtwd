@@ -71,7 +71,7 @@ class MyTJoinProductFeePlan extends TwViewController {
     }
 
     return Object.assign(data.result, {
-      feePlanProd: Object.assign(data.result.feePlanProd, {
+      feePlanProd: FormatHelper.isEmpty(data.result.feePlanProd) ? null : Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
         basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
             : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt),
@@ -79,16 +79,6 @@ class MyTJoinProductFeePlan extends TwViewController {
         basOfrVcallTmsTxt: (data.result.feePlanProd.basOfrVcallTmsTxt !== '0' + VOICE_UNIT.MIN) ? data.result.feePlanProd.basOfrVcallTmsTxt : null,
         basOfrLtrAmtTxt: (data.result.feePlanProd.basOfrLtrAmtTxt !== '0' + UNIT['310']) ? data.result.feePlanProd.basOfrLtrAmtTxt : null
       }),
-      tClassProd: {
-        tClassProdList: data.result.tClassProd && data.result.tClassProd.tClassProdList
-            ? Object.assign(data.result.tClassProd.tClassProdList, {
-              tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
-                return Object.assign(item, {
-                  scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
-                });
-              })
-            }) : []
-      },
       optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...data.result.disProdList,
         ...data.result.optProdList, ...data.result.comProdList])
     });
@@ -110,7 +100,9 @@ class MyTJoinProductFeePlan extends TwViewController {
         if ( feePlanInfo.code !== API_CODE.CODE_00 ) {
           return this.error.render(res, Object.assign(defaultOptions, {
             code: feePlanInfo.code,
-            msg: feePlanInfo.msg
+            msg: feePlanInfo.msg,
+            title: '나의 요금제',
+            svcInfo: svcInfo
           }));
         }
 
