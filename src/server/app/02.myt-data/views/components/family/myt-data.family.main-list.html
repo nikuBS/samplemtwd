@@ -6,32 +6,42 @@
         <div class="widget-box accordion2">
             <div class="acco-style data-famliy-group-list">
                 <ul class="acco-box">
+                    <% const isRepresentation = familyInfo.representation === svcInfo.svcMgmtNum; %>
                     <% familyInfo.mbrList.map( (member) => { %>
                     <!-- 한도설정 CASE1 -->
-                    <li class="acco-list"><!-- on , off -->
+                    <li class="acco-list">
+                        <!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="false">
                                 <div class="list-wrap">
                                     <div class="list-ico">
-                                        <span class="ico-round"><%=member.custNm.split('')[0]%></span>
+                                        <span class="ico-round">
+                                            <%=member.custNm.slice(0,1)%></span>
                                     </div>
                                     <div class="list-info">
                                         <div>
-                                            <em class="me"><%=member.custNm%></em>
+                                            <em class="me">
+                                                <%=member.custNm%></em>
                                             <% if( member.repYn === 'Y' ) { %>
                                             <span class="badge badge-fam-members2"></span><!-- 뱃지-가족대표 -->
                                             <% } %>
+                                            <% if( svcInfo.svcMgmtNum === member.svcMgmtNum ) { %>
+                                            <span class="badge badge-me2"></span><!-- 나 -->
+                                            <% } %>
                                         </div>
-                                        <div class="num"><%=member.svcNum%></div>
+                                        <div class="num">
+                                            <%=member.svcNum%>
+                                        </div>
                                     </div>
-                                    <% if( member.limitedYn === 'N' ) { %>
+                                    <% if ( member.limitedYn === 'N' ) { %>
                                     <div class="list-data">
                                         <span class="vol">무제한</span><br>
                                         <span class="state">(Data 인피니티)</span>
                                     </div>
                                     <% } else { %>
                                     <div class="list-data">
-                                        <span class="vol"><%=member.limitation%></span> MB<br>
+                                        <span class="vol">
+                                            <%=member.used%></span> MB<br>
                                         <span class="state">이용</span>
                                     </div>
                                     <% } %>
@@ -43,65 +53,73 @@
                         </div>
                         <div class="acco-content">
                             <div class="data-info-list toggle-inner-list">
+                                <% if ( isRepresentation ) { %>
+                                <% const hasLimit = member.limitedYn === "Y"; %>
                                 <ul>
-                                    <li>
-                                        <dl>
-                                            <dt>요금제</dt>
-                                            <dd><%=member.prodNm%></dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl>
-                                            <dt>가족에게 공유한 데이터 </dt>
-                                            <dd>10 GB</dd>
-                                        </dl>
-                                    </li>
-                                    <% if ( member.repYn === 'Y' ) { %>
+                                    <li><dl><dt>요금제</dt><dd><%= member.prodNm %></dd></dl></li>
+                                    <li><dl><dt>가족에게 공유한 데이터 </dt><dd><%= member.shared %> GB</dd></dl></li>
                                     <li>
                                         <dl class="set-limit-data">
                                             <dt>T가족모아 데이터 이용한도</dt>
+                                            <!-- 2018-10-05 수정 -->
                                             <dd>
-                                                <!-- .widget -->
-                                                <div class="widget mt12">
-                                                    <div class="widget-box radio">
-                                                        <div class="radiobox-line">
-                                                            <ul class="" role="radiogroup">
-                                                                <li class="">
-                                                                    <div class="custom-radio-wrap checked" role="radio"><!-- 체크상태일 경우 class="checked" 추가 -->
-                                                                        <div class="custom-radio" role="radio">
-                                                                            <input type="radio" name="radio" value="" title="자유사용" checked=""><!-- 체크상태일 경우 -->
-                                                                            <label class="custom-radio-label">자유사용</label>
-                                                                        </div>
-                                                                    </div>
+                                                <div class="check-account-radio mt12">
+                                                    <div class="widget">
+                                                        <div class="widget-box radio">
+                                                            <ul class="select-list" role="radiogroup">
+                                                                <li class="radiobox <%= !hasLimit ? 'checked' : '' %>" role="radio" aria-checked="<%= !hasLimit %>" data-init-value="<%= !hasLimit %>">
+                                                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                    <input type="radio" name="radio_<%= member.svcMgmtNum %>" title="" <%= !hasLimit ? 'checked' : '' %>><!-- 체크상태일 경우 checked="checked" -->
+                                                                    <span class="check-title">자유사용</span>
                                                                 </li>
-                                                                <li class="">
-                                                                    <div class="custom-radio-wrap" role="radio">
-                                                                        <div class="custom-radio" role="radio">
-                                                                            <input type="radio" name="radio" value="" title="한도설정" disabled=""><!-- 비활성화상태일 경우 -->
-                                                                            <label class="custom-radio-label">한도설정</label>
+                                                                <li class="radiobox <%= hasLimit ? 'checked' : '' %>" role="radio" aria-checked="<%= hasLimit %>" data-init-value="<%= member.limitation %>">
+                                                                    <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                    <input type="radio" name="radio_<%= member.svcMgmtNum %>" title="" <%= hasLimit ? 'checked' : '' %>><!-- 체크상태일 경우 checked="false" -->
+                                                                    <span class="check-title">한도설정</span>
+                                                                    <div class="account-info self">
+                                                                        <div class="set-limit-data-input">
+                                                                            <div class="inputbox bt-add">
+                                                                                <span class="input">
+                                                                                    <input type="number" placeholder="숫자만 입력"
+                                                                                        title="<%= member.limitation %>" aria-labelledby="aria-exp-label1"
+                                                                                        aria-describedby="aria-exp-desc1" value="<%= member.limitation %>">
+                                                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                                                </span>
+                                                                                <span class="txt-area">GB</span>
+                                                                            </div>
                                                                         </div>
+                                                                        <p class="set-limit-data-info">
+                                                                            정해주신 한도 안에서 T가족모아 데이터를 <br />
+                                                                            이용할 수 있습니다. <br />
+                                                                            0GB로 입력하시면 T가족모아를 이용할 수 없습니다.
+                                                                        </p>
                                                                     </div>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--// .widget -->
                                             </dd>
+                                            <!--// 2018-10-05 수정 -->
                                         </dl>
                                     </li>
+                                </ul>
+                                <div class="toggle-inner-btn" data-member="<%= member.svcMgmtNum %>">
+                                    <button disabled>변경완료</button>
+                                </div>
+                                <% } else { %>
+                                <ul>
+                                    <li><dl><dt>요금제</dt><dd><%=member.prodNm%></dd></dl></li>
+                                    <% if ( member.shrblYn === "Y" ) { %>
+                                    <li><dl><dt>가족에게 공유한 데이터 </dt><dd><%= member.shared %> GB</dd></dl></li>
                                     <% } %>
                                 </ul>
-                                <% if ( member.repYn === 'Y' ) { %>
-                                <div class="toggle-inner-btn">
-                                    <button disabled="">변경완료</button>
-                                </div>
                                 <% } %>
                             </div>
                         </div>
                     </li>
-                    <!--// 한도설정 CASE1 -->
-                    <% }) %>
+                <!--// 한도설정 CASE1 -->
+                <% }) %>
                 </ul>
             </div>
         </div>
