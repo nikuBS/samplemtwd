@@ -332,7 +332,9 @@ Tw.PRODUCT_TYPE_NM = {
 
 Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   LINE: '회선',
-  MV_02_02_01: '결합회선'
+  MV_02_02_01: '결합회선',
+  MP_02_02_03_05: '결합회선',
+  MP_02_02_03_11: '공유회선'
 };
 
 Tw.INFO = {

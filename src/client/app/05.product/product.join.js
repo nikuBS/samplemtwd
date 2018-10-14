@@ -175,7 +175,9 @@ Tw.ProductJoin.prototype = {
         confirmSettingInfo = this.$joinSetup.find('.widget-box.radio input[type="radio"]:checked').attr('title');
         break;
       case 'MV_02_02_01':
-        confirmSettingInfo = Tw.PRODUCT_JOIN_SETTING_AREA_CASE.MV_02_02_01 + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE;
+      case 'MP_02_02_03_05':
+      case 'MP_02_02_03_11':
+        confirmSettingInfo = Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this.$joinSetup.data('id')] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE;
         break;
     }
 
