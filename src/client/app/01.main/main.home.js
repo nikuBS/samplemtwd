@@ -120,13 +120,18 @@ Tw.MainHome.prototype = {
       .fail($.proxy(this._failContentData, this));
   },
   _successContentData: function (element, resp) {
+    var result = {
+      showContents: false,
+      invMonth: Tw.DateHelper.getCurrentMonth()
+    };
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var $contentsTemp = $('#fe-smart-contents');
-      var tplContentsCard = Handlebars.compile($contentsTemp.html());
-      element.html(tplContentsCard(this._parseContentsData(resp.result)));
+      result = this._parseContentsData(resp.result);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      // Tw.Error(resp.code, resp.msg).pop();
     }
+    var $contentsTemp = $('#fe-smart-contents');
+    var tplContentsCard = Handlebars.compile($contentsTemp.html());
+    element.html(tplContentsCard(result));
   },
   _failContentData: function () {
 
@@ -150,7 +155,8 @@ Tw.MainHome.prototype = {
       };
     }
     return {
-      showContents: false
+      showContents: false,
+      invMonth: Tw.DateHelper.getCurrentMonth()
     };
   },
   _getMicroPayData: function (element) {
@@ -161,12 +167,13 @@ Tw.MainHome.prototype = {
   },
   _successMicroPayData: function (element, resp) {
     var result = {
-      showMicro: false
+      showMicro: false,
+      invMonth: Tw.DateHelper.getCurrentMonth()
     };
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       result = this._parseMicroData(resp.result);
     } else {
-
+      // Tw.Error(resp.code, resp.msg).pop();
     }
     var $microTemp = $('#fe-smart-micro-pay');
     var tplMicroCard = Handlebars.compile($microTemp.html());
@@ -195,7 +202,8 @@ Tw.MainHome.prototype = {
       };
     }
     return {
-      showMicro: false
+      showMicro: false,
+      invMonth: Tw.DateHelper.getCurrentMonth()
     };
   },
   _getGiftData: function (element, index) {
