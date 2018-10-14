@@ -147,6 +147,9 @@ class ProductSetting extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     this._prodId = req.params.prodId || '';
+    this._displayId = null;
+    this._displayGroup = null;
+    this._redirectProdId = null;
 
     if (FormatHelper.isEmpty(this._prodId)) {
       return this.error.render(res, {

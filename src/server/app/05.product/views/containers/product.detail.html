@@ -130,14 +130,14 @@
         </div>
         <% } %>
 
-        <% if (svcInfo.prodId === prodId) { %>
+        <% if (svcInfo.prodId === prodId || basicInfo.prodSetYn === 'Y') { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- 기가입상품  -->
         <div class="joinconsulting-wrap">
           <p class="text">이용중인 상품 입니다.</p>
           <div class="btn">
-            <div class="bt-alone"><a href="/product/setting/<%= prodId %>" class="bt-line-blue1">설정</a></div>
+            <div class="bt-alone"><button class="fe-btn_setting bt-line-blue1">설정</button></div>
           </div>
         </div>
         <!-- //기가입상품  -->

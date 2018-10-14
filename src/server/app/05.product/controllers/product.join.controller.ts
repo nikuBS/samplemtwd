@@ -219,6 +219,8 @@ class ProductJoin extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     this._prodId = req.params.prodId || '';
+    this._displayId = null;
+
     this._setDisplayId();
     this.logger.info(this, '[DISPLAY ID] ', this._displayId);
 

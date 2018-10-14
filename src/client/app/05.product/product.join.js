@@ -103,9 +103,8 @@ Tw.ProductJoin.prototype = {
         this.$container.on('change', '.widget-box.radio input[type="radio"]', $.proxy(this._setTplanData, this));
         break;
       case 'MP_02_02_03_11':  // Ttab 요금제 가입
-        break;
-      case 'MV_02_02_01':
       case 'MP_02_02_03_05':  // 데이터 함께쓰기
+      case 'MV_02_02_01': // 내폰끼리 결합
         this.$btnAddNum.on('click', $.proxy(this._addNum, this));
         this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
         this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
@@ -345,7 +344,6 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoin: function() {
-    // @todo 인증 필요한 경우 처리
     var auth = false;
     if ( auth ) {
       return this._procAUth();
