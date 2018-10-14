@@ -223,3 +223,12 @@ export enum PROD_CTG_CD_CODE {
   F01100 = 'plans',
   F01200 = 'additions'
 }
+
+export enum PROD_TTAB_BASIC_DATA_PLUS {
+  NA00005069 = '600MB',
+  NA00005058 = '600MB',
+  NA00005070 = '1GB',
+  NA00005060 = '1GB',
+  NA00005071 = '2GB',
+  NA00005059 = '2GB'
+}

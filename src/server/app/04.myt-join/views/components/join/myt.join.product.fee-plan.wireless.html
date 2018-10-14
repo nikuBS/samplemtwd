@@ -11,6 +11,7 @@
         <span class="subtitle3"><img src="<%= feePlan.feePlanProd.prodFltImgPath %>" alt="LTE"></span>
         <% } %>
       </div>
+      <% if ( feePlan.feePlanProd.basDataTxt || feePlan.feePlanProd.basOfrVcallTmsTxt || feePlan.feePlanProd.basOfrLtrAmtTxt ) { %>
       <div class="info-detail mt40">
         <div class="tb-type">
           <ul>
@@ -40,6 +41,8 @@
             <% } %>
           </ul>
         </div>
+        <% } %>
+        <% if ( feePlan.feePlanProd.basFeeTxt ) { %>
         <div class="price-wrap mt20">
           <span class="tx-sub"><span class="tx-bold vbl">월정액</span> 부가세포함</span>
           <span class="tx-price">
@@ -49,6 +52,7 @@
             <% } %>
           </span>
         </div>
+        <% } %>
       </div>
     </div>
     <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
@@ -94,13 +98,13 @@
             <a href="/product/detail/<%= feePlan.optionAndDiscountProgramList[i].prodId %>" class="bt-detail">
               <div class="title-box">
                 <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
-                <span class="sub-tit"><span>가입</span><span><%= feePlan.optionAndDiscountProgramList.scrbDt %></span></span>
+                <span class="sub-tit"><span>가입</span><span><%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span></span>
               </div>
             </a>
             <% } else { %>
             <div class="title-box">
               <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
-              <span class="sub-tit"><span>가입</span><span><%= feePlan.optionAndDiscountProgramList.scrbDt %></span></span>
+              <span class="sub-tit"><span>가입</span><span><%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span></span>
             </div>
             <% } %>
             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>

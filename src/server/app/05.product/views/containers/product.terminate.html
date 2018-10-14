@@ -14,9 +14,9 @@
   </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-prod_nm="<%= joinTermInfo.preinfo.reqProdInfo.prodNm %>">
   <div class="popup-page nobg tw-popup no-btn">
-    <%- include('../../../common/views/components/header.component.html', { title: '상품 상세보기', svcInfo, option: { line: false } }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '해지', svcInfo, option: { line: false } }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
       <h2 class="blind">내용</h2>
@@ -27,7 +27,7 @@
             <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
             <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
             <div class="in-info">
-              <span class="number type1"><span class="blind">회선번호</span>010-73**-06**</span>
+              <span class="number type1"><span class="blind">회선번호</span><%= joinTermInfo.preinfo.svcNumMask %></span>
             </div>
           </div>
         </div>
@@ -40,53 +40,75 @@
           <div class="charge-guide-wrap">
             <div class="charge-cont">
 								<span class="sub-disc01">
-									<span class="elem">가입할 부가서비스</span>
+									<span class="elem">해지할 부가서비스</span>
 								</span>
-              <span class="tit-tx"><span class="blind">가입할 상품정보</span>안심옵션 프리미엄</span>
-              <span class="sub-disc03"><span class="tx-bold vbl">8,800원</span> 부가세포함</span>
+              <span class="tit-tx"><span class="blind">해지할 상품정보</span><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></span>
+              <% if ( joinTermInfo.preinfo.reqProdInfo.isNumberBasFeeInfo && joinTermInfo.preinfo.reqProdInfo.basFeeInfo > 0 ) { %>
+              <span class="sub-disc03"><span class="tx-bold vbl fe-prod_money"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %>원</span> 부가세포함</span>
+              <% } %>
+              <% if ( !joinTermInfo.preinfo.reqProdInfo.isNumberBasFeeInfo ) { %>
+              <span class="sub-disc03"><span class="tx-bold vbl"><%= joinTermInfo.preinfo.reqProdInfo.basFeeInfo %></span></span>
+              <% } %>
             </div>
+            <% if ( joinTermInfo.preinfo.reqProdInfo.prodSmryDesc ) { %>
             <div class="cont-noti pt36">
-              <span class="type3">데이터 기본제공량 소진 후 매일 50MB 추가 및<br />안심옵션 혜택 제공</span>
+              <span class="type3"><%= joinTermInfo.preinfo.reqProdInfo.prodSmryDesc %></span>
             </div>
+            <% } %>
           </div>
         </div>
         <!--// .cont-box -->
 
+        <% if ( joinTermInfo.preinfo.autoJoinList.length > 0 || joinTermInfo.preinfo.autoTermList.length > 0 ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- .cont-box -->
-        <div class="cont-box nogaps-hoz">
+        <div class="cont-box nogaps-top">
           <div class="info-list">
             <ul>
+              <% if (joinTermInfo.preinfo.autoJoinList.length > 0) { %>
               <li>
                 <div class="tit-area">
                   <span class="tit">자동 가입</span>
-                  <span class="sub-tit">서비스</span>
+                  <span class="sub-tit">서비스 및 혜택</span>
                 </div>
                 <div class="cont-area">
+                  <% for ( var i in joinTermInfo.preinfo.autoJoinList ) { %>
                   <dl>
-                    <dt>부가서비스</dt>
-                    <dd>T RING플러스(무료)</dd>
+                    <dt><%= joinTermInfo.preinfo.autoJoinList[i].svcProdNm %></dt>
+                    <% for ( var j in joinTermInfo.preinfo.autoJoinList[i].svcProdList ) { %>
+                    <dd><%= joinTermInfo.preinfo.autoJoinList[i].svcProdList[j] %></dd>
+                    <% } %>
                   </dl>
+                  <% } %>
                 </div>
               </li>
+              <% } %>
+              <% if ( joinTermInfo.preinfo.autoTermList.length > 0 ) { %>
               <li>
                 <div class="tit-area">
                   <span class="tit">자동 해지</span>
-                  <span class="sub-tit">서비스</span>
+                  <span class="sub-tit">서비스 및 혜택</span>
                 </div>
                 <div class="cont-area">
+                  <% for ( var i in joinTermInfo.preinfo.autoTermList ) { %>
                   <dl>
-                    <dt>부가서비스</dt>
-                    <dd>T RING플러스(무료)</dd>
+                    <dt><%= joinTermInfo.preinfo.autoTermList[i].svcProdNm %></dt>
+                    <% for ( var j in joinTermInfo.preinfo.autoTermList[i].svcProdList ) { %>
+                    <dd><%= joinTermInfo.preinfo.autoTermList[i].svcProdList[j] %></dd>
+                    <% } %>
                   </dl>
+                  <% } %>
                 </div>
               </li>
+              <% } %>
             </ul>
           </div>
         </div>
         <!--// .cont-box -->
+        <% } %>
 
+        <% if ( false ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <div class="cont-box">
@@ -107,20 +129,22 @@
             </ul>
           </div>
         </div>
+        <% } %>
 
+        <% if ( joinTermInfo.stipulationInfo.existData ) { %>
         <div class="ti-caption-gray">
           <h3 class="tit">꼭 확인해 주세요</h3>
         </div>
         <!-- .cont-box -->
-        <div class="cont-box nogaps">
-          <div class="agree-chk-wrap">
+        <div class="cont-box nogaps fe-agree_wrap">
+          <div class="agree-chk-wrap fe-agree-chk">
             <div class="list-comp-input-agree">
               <div class="widget">
                 <div class="widget-box check">
                   <ul class="select-list" role="group">
                     <li>
-                      <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                        <input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                      <div class="checkbox type01 all fe-checkbox_style" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                        <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
                         <div class="comp-list-layout" id="aria-comp-checkbox1">
                           <p class="layout-text all-chk">
                             <span class="mtext">모두동의</span>
@@ -128,68 +152,21 @@
                         </div>
                       </div>
                     </li>
+                    <% if ( joinTermInfo.stipulationInfo.stipulation.termStplAgreeYn === 'Y' ) { %>
                     <li>
-                      <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                        <input type="checkbox" name="checkbox" value="" title="요금할인 해지 동의 (필수)" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                        <div class="comp-list-layout" id="aria-comp-checkbox2">
-                          <div class="layout-text">
-                            <span class="mtext">요금할인 해지 동의 (필수)</span>
-                            <div class="basic-list">
-                              <ul>
-                                <li>
-                                  <div class="inner-top">
-                                    <span class="title">위약금</span>
-                                    <span class="tx-cont"><span class="tx-bold vbl">15,000</span>원</span>
-                                  </div>
-                                  <div class="inner-row top-line">
-                                    <ul>
-                                      <li>
-                                        <span class="title">SKT 가입일(기간)</span>
-                                        <span class="tx-cont">2007.09.11~2011.12.30<br />(52개월)</span>
-                                      </li>
-                                      <li>
-                                        <span class="title">할인 유형</span>
-                                        <span class="tx-cont">일반형</span>
-                                      </li>
-                                      <li>
-                                        <span class="title">약정개월</span>
-                                        <span class="tx-cont">12개월</span>
-                                      </li>
-                                      <li>
-                                        <span class="title">약정기간</span>
-                                        <span class="tx-cont">2011.12.30~2012.12.31</span>
-                                      </li>
-                                      <li>
-                                        <span class="title">이용개월</span>
-                                        <span class="tx-cont">4개월</span>
-                                      </li>
-                                      <li>
-                                        <span class="title">할인금액 합계</span>
-                                        <span class="tx-cont">2,500원</span>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                            <span class="stext mt20">본인은 위약금과 관련된 내용을 확인하였으며, 우량고객 요금할인 해지를 요청합니다.</span>
-                          </div>
-                        </div>
-                      </div>
-                      <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                    </li>
-                    <li>
-                      <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                        <input type="checkbox" name="checkbox" value="" title="서비스 해지동의 (필수)" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                      <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                        <input type="checkbox" class="fe-checkbox_agree_item fe-checkbox_agree_need" name="checkbox" value="" title="서비스 이용약관 및 개인정보 수집 동의(필수)" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                         <div class="comp-list-layout" id="aria-comp-checkbox2">
                           <p class="layout-text">
-                            <span class="mtext">서비스 해지동의 (필수)</span>
-                            <span class="stext-ellipsis">서비스 해지에 들어가는 약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.서비스 해지에 들어가는 약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.</span>
+                            <span class="mtext"><%= joinTermInfo.stipulationInfo.stipulation.termStplAgreeTitNm %></span>
+                            <span class="stext-ellipsis"><%= joinTermInfo.stipulationInfo.stipulation.termStplAgreeCttSummary %></span>
+                          <div style="display: none" class="fe-agree_full_html"><%= joinTermInfo.stipulationInfo.stipulation.termStplAgreeHtmlCtt %></div>
                           </p>
                         </div>
                       </div>
-                      <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                      <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
                     </li>
+                    <% } %>
                   </ul>
                 </div>
               </div>
@@ -197,6 +174,7 @@
           </div>
         </div>
         <!--// .cont-box -->
+        <% } %>
 
         <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -206,7 +184,7 @@
         <div class="bt-fixed-area">
           <ul class="bt-slice full">
             <li class="bt-red1">
-              <button disabled>해지하기 </button>
+              <button class="fe-btn_terminate" disabled>해지하기</button>
             </li>
           </ul>
         </div>
@@ -221,7 +199,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductTerminate($('.wrap'));
+    new Tw.ProductTerminate($('.wrap'), '<%= prodId %>', '<%= terminateApiCode %>', '<%= displayId %>', '<%= displayGroup %>');
   });
 </script>
 <% include ../components/end.component.html %>

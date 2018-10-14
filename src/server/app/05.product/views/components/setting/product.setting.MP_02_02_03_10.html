@@ -1,0 +1,82 @@
+<%#
+* FileName: product.setting.MP_02_02_03_10.html
+* Author: JiHun Yang (jihun202@sk.com)
+* Date: 2018.10.13
+%>
+<% if ( settingInfo ) { %>
+<input type="hidden" id="current_prod_id" value="<%= settingInfo.useOptionProdId %>">
+<% } %>
+<div class="container fe-join_setup" data-id="MP_02_02_03_10">
+  <% if ( !settingInfo ) { %>
+  <!-- .cont-box -->
+  <div class="cont-box">
+    <div class="product-tit-wrap">
+      <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+      <span class="tit-big"><%= prodNm %></span>
+    </div>
+  </div>
+  <!--// .cont-box -->
+  <% } %>
+
+  <div class="product-select-wrap">
+    <span class="data-tit">옵션 선택</span>
+  </div>
+
+  <!-- .cont-box -->
+  <div class="cont-box nogaps">
+    <div class="list-comp-input fe-product_radio_wrap">
+      <div class="widget">
+        <div class="widget-box radio">
+          <ul class="select-list" role="group">
+            <li class="radiobox type01-big" role="radio" aria-checked="false">
+              <input type="radio" name="radio" value="NA00005061" title="데이터 프리 동영상" aria-labelledby="aria-comp-radio1">
+              <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                <p class="layout-text">
+                  <span class="mtext">데이터 프리 동영상</span>
+                  <span class="stext">콘텐츠 전용 데이터(oksusu) 일 2GB 제공 후 속도 제어</span>
+                </p>
+              </div>
+            </li>
+            <% if (['NA00005058', 'NA00005059', 'NA00005060'].indexOf(prodId) === -1) { %>
+            <li class="radiobox type01-big" role="radio" aria-checked="false">
+              <input type="radio" name="radio" value="NA00005131" title="안심옵션" aria-labelledby="aria-comp-radio2">
+              <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                <span class="ico ico-movie"></span>
+                <p class="layout-text">
+                  <span class="mtext">안심옵션</span>
+                  <span class="stext">기본제공 데이터를 다 써도 초과 요금 걱정 없이 데이터 이용 가능 (400kbps 속도제어)</span>
+                </p>
+              </div>
+            </li>
+            <% } %>
+            <li class="radiobox type01-big" role="radio" aria-checked="false">
+              <input type="radio" name="radio" value="NA00005084" title="기본 데이터 추가" aria-labelledby="aria-comp-radio3">
+              <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                <span class="ico ico-watch"></span>
+                <p class="layout-text">
+                  <span class="mtext">기본 데이터 추가</span>
+                  <span class="stext">기본 제공 데이터 추가 제공 (+<%= settingInfo.basicDataPlus %>)</span>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--// .cont-box -->
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top; margin-bottom: 3.75rem">
+  <div class="bt-fixed-area">
+    <ul class="bt-slice full">
+      <li class="bt-red1">
+        <% if ( settingInfo ) { %>
+        <button class="fe-btn_setup_ok" disabled="disabled">변경완료</button>
+        <% } else { %>
+        <button class="fe-btn_setup_ok" disabled="disabled">설정완료</button>
+        <% } %>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -469,18 +469,31 @@ export const API_CMD = {
     path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0012: {
+    path: '/v1/products/fee-plans/args-0/joins',
+    method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true
+  },
   BFF_10_0013: {
     path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-sets',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0014: {
+    path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-sets',
+    method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0015: {
     path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0017: {
-    path: '/core-product/v1/mobiles/additions/args-0/preinfos',
-    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+    path: '/v1/products/additions/args-0/join-term-infos',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false
   },
+  BFF_10_0018: { path: '/core-product/v1/mobiles/additions-set/args-0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0019: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets/lines', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0020: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets/lines', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0021: { path: '/core-product/v1/mobiles/additions-sets/args-0/sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0022: { path: '/core-product/v1/mobiles/additions-sets/args-0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_10_0024: { path: '/core-product/v1/submain/banners', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0025: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0026: { path: '/core-product/v1/submain/grpprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -490,6 +503,13 @@ export const API_CMD = {
   BFF_10_0030: { path: '/core-product/v1/submain/popraddbnnr', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0031: { path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0032: { path: '/core-product/v1/submain/filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0033: { path: '/core-product/v1/submain/filters/args-0/sub-lists', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0034: { path: '/core-product/v1/mobiles/fee-plans/young-plan-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0035: { path: '/core-product/v1/mobiles/additions/args-0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0036: { path: '/core-product/v1/mobiles/additions/args-0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0038: { path: '/core-product/v1/mobiles/additions/args-0/vas-terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_9001: { path: '/v1/products/args-0/auth/args-1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

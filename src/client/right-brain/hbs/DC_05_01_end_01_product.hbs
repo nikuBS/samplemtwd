@@ -6,9 +6,14 @@
       <h1 class="complete-title">
         <img src="/img/dummy/dmy-complete.jpg" alt=""/>
         <p class="complete-tx0">{{data.prodNm}}{{#if data.isBasFeeInfo}}({{data.basFeeInfo}}){{/if}}로</p>
-        <span><strong>{{data.prodCtgNm}} 가입 완료</strong></span>
+        <span><strong>{{data.prodCtgNm}} {{data.typeNm}} 완료</strong></span>
       </h1>
       <div class="complete-btn-box pt56">
+        {{#if data.isZeroPlanSetup}}
+          <li class="bt-blue1">
+            <a href="/product/setting/NA00006157">0플랜 옵션 선택하러 가기 &gt;</a>
+          </li>
+        {{/if}}
         <ul class="bt-slice">
           <li class="bt-blue1">
             <a href="/myt/join/product/{{data.mytPage}}">나의 가입정보 확인하기 &gt;</a>
@@ -17,7 +22,7 @@
       </div>
       <ul class="bt-slice full">
         <li class="bt-red1">
-          <button class="fe-btn_join_success_close">닫기</button>
+          <button class="fe-btn_success_close">닫기</button>
         </li>
       </ul>
     </div>

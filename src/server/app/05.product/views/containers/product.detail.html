@@ -5,7 +5,7 @@
 %>
 
 <% include ../components/start.component.html %>
-<body class="bg-blue">
+<body class="<%= bodyClass %>">
   <!-- #skip_navigation -->
   <div id="skipNav" class="skip_navi">
     <ul>
@@ -51,6 +51,9 @@
               <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
               <% } %>
             <% } %>
+            <% if ( basicInfo.ctgCd === 'F01200' ) { %>
+            <p class="productdetails-text03">서비스 제공 : SK테크엑스(주)</p>
+            <% } %>
           </div>
           <div class="productdetails-ledgercase">
             <% if ( prodRedisInfo.summary.basFeeInfo ) { %>
@@ -65,6 +68,7 @@
               가입제한 상품
             </div>
             <% } else { %>
+            <% console.log(basicInfo.prodScrbYn + '/' + svcInfo.prodId + '/' + prodId); %>
               <% if ( basicInfo.prodScrbYn === 'Y' && svcInfo.prodId !== prodId ) { %>
               <div class="btn">
                 <button type="button" class="bt-white1 fe-btn_join">가입</button>
@@ -94,6 +98,16 @@
         </div>
         <!-- //상품타이틀 -->
 
+        <!-- 상단 배너 -->
+        <% if ( prodRedisInfo.banner.T ) { %>
+          <% if ( prodRedisInfo.banner.T.imgFilePathNm ) { %>
+          <img src="<%= prodRedisInfo.banner.T.imgFilePathNm %>">
+          <% } else { %>
+          <%- prodRedisInfo.banner.T.bnnrDtlHtmlCtt %>
+          <% } %>
+        <% } %>
+        <!-- //상단 배너 -->
+
         <% if ( false ) { // @todo 인터넷, 전화, TV, 결합상품 에서만 노출, 카테고리 코드 미확정 및 CBT 범위(모바일) 미해당이므로 주석 처리 %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -116,14 +130,14 @@
         </div>
         <% } %>
 
-        <% if (svcInfo.prodId === prodId) { %>
+        <% if (svcInfo.prodId === prodId || basicInfo.prodSetYn === 'Y') { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- 기가입상품  -->
         <div class="joinconsulting-wrap">
           <p class="text">이용중인 상품 입니다.</p>
           <div class="btn">
-            <div class="bt-alone"><a href="/product/setting/<%= prodId %>" class="bt-line-blue1">설정</a></div>
+            <div class="bt-alone"><button class="fe-btn_setting bt-line-blue1">설정</button></div>
           </div>
         </div>
         <!-- //기가입상품  -->
@@ -170,6 +184,16 @@
         </div>
         <!-- //팝업 띄우는 링크 -->
         <% } %>
+
+        <!-- 중단 배너 -->
+        <% if ( prodRedisInfo.banner.C ) { %>
+          <% if ( prodRedisInfo.banner.C.imgFilePathNm ) { %>
+          <img src="<%= prodRedisInfo.banner.C.imgFilePathNm %>">
+          <% } else { %>
+          <%- prodRedisInfo.banner.C.bnnrDtlHtmlCtt %>
+          <% } %>
+        <% } %>
+        <!-- //중단 배너 -->
 
         <% if ( series ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
@@ -224,10 +248,10 @@
         <div class="fe-recommended_rate_list" style="display: none">
           <hr class="cont-sp type1" aria-hidden="true"/>
 
-          <!-- 유사한 요금제 찾기-->
+          <!-- 유사한 요금제/부가서비스 찾기-->
           <div class="cont-box">
             <div class="recommendedrate-wrap">
-              <h3 class="title">유사한 요금제 찾기</h3>
+              <h3 class="title">유사한 <%= ctgName %> 찾기</h3>
               <div class="more"><button class="link fe-btn_recommended_rate_list_more" style="display: none">더보기</button></div>
             </div>
             <div class="recommendedratetaglist-wrap">
@@ -237,7 +261,7 @@
             </div>
             <ul class="recommendedrate-list"></ul>
           </div>
-          <!-- //유사한 요금제 찾기 -->
+          <!-- //유사한 요금제/부가서비스 찾기 -->
         </div>
 
         <% if ( recommends.recommendProdList && recommends.recommendProdList.length > 0 ) { %>
@@ -305,6 +329,16 @@
         </div>
         <!-- // 함께하면 더욱 스마트한 앱서비스 -->
         <% } %>
+
+        <!-- 하단 배너 -->
+        <% if ( prodRedisInfo.banner.B ) { %>
+          <% if ( prodRedisInfo.banner.B.imgFilePathNm ) { %>
+          <img src="<%= prodRedisInfo.banner.B.imgFilePathNm %>">
+          <% } else { %>
+          <%- prodRedisInfo.banner.B.bnnrDtlHtmlCtt %>
+          <% } %>
+        <% } %>
+        <!-- //하단 배너 -->
 
         <% if ( relateTags && relateTags.length > 0 ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
