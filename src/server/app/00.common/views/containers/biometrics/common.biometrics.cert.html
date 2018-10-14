@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="commonBiometricsCert" class="wrap">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
@@ -54,7 +54,7 @@
                     <div class="box-certifi-list">
                         <ul class="certifi-sel-list">
                             <li>
-                                <button>
+                                <button id="fe-bt-sk">
                                         <span class="list-cell">
                                             <span class="ico-certifi-list type1" aria-hidden="false"></span>
                                         </span>
@@ -66,7 +66,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button>
+                                <button id="fe-bt-kt">
                                         <span class="list-cell">
                                             <span class="ico-certifi-list type2" aria-hidden="false"></span>
                                         </span>
@@ -78,7 +78,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button>
+                                <button id="fe-bt-lg">
                                         <span class="list-cell">
                                             <span class="ico-certifi-list type3" aria-hidden="false"></span>
                                         </span>
@@ -90,7 +90,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button>
+                                <button id="fe-bt-ipin">
                                         <span class="list-cell">
                                             <span class="ico-certifi-list type4" aria-hidden="false"></span>
                                         </span>
@@ -102,7 +102,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button>
+                                <button id="fe-bt-public">
                                         <span class="list-cell">
                                             <span class="ico-certifi-list type5" aria-hidden="false"></span>
                                         </span>
@@ -120,7 +120,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button>이전</button>
+                            <button id="fe-bt-next">다음</button>
                         </li>
                     </ul>
                 </div>
@@ -136,6 +136,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.CommonBiometricsCert($('#commonBiometricsCert'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

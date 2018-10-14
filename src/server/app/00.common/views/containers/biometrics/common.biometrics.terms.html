@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="commonBiometricsTerms" class="wrap">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
@@ -57,7 +57,7 @@
                                 <ul class="select-list" role="group">
                                     <li>
                                         <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input id="fe-check-all" type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext">TBD, TBD, TBD, TBD, TBD, TBD, TBD에 모두 동의합니다.</span>
@@ -67,7 +67,7 @@
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="값2" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                                            <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값2" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext">TBD(필수)</span>
@@ -77,7 +77,7 @@
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="checkbox" name="checkbox" value="" title="값3" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값3" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext">TBD(필수)</span>
@@ -87,7 +87,7 @@
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="checkbox" name="checkbox" value="" title="값4" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값4" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox4" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext">TBD(필수)</span>
@@ -105,7 +105,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button disabled>다음</button>
+                            <button id="fe-bt-confirm" disabled>다음</button>
                         </li>
                     </ul>
                 </div>
@@ -122,6 +122,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.CommonBiometricsTerms($('#commonBiometricsTerms'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>
