@@ -40,7 +40,11 @@ class MyTFareBillHistory extends TwViewController {
         this.apiService.request(API_CMD.BFF_07_0017, {}).subscribe((resp) => {
 
           if (resp.code !== API_CODE.CODE_00) {
-            return null;
+            return this.error.render(res, {
+              code: resp.code,
+              msg: resp.msg,
+              svcInfo: svcInfo
+            });
           }
 
           res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, data: {
@@ -53,7 +57,11 @@ class MyTFareBillHistory extends TwViewController {
         this.apiService.request(API_CMD.BFF_07_0004, {}).subscribe((resp) => {
 
           if (resp.code !== API_CODE.CODE_00) {
-            return null;
+            return this.error.render(res, {
+              code: resp.code,
+              msg: resp.msg,
+              svcInfo: svcInfo
+            });
           }
 
           resp.result.map((o) => {

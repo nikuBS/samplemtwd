@@ -9,7 +9,7 @@ import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {Observable} from 'rxjs/Observable';
+// import {Observable} from 'rxjs/Observable';
 
 // import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
 // import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
@@ -17,7 +17,7 @@ import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
 import {MYT_FARE_HISTORY_MICRO_TYPE} from '../../../../types/bff.type';
 
 
-import MyTFareHistoryPaymentMock from '../../../../mock/server/myt.fare.history.micro-payment';
+// import MyTFareHistoryPaymentMock from '../../../../mock/server/myt.fare.history.micro-payment';
 
 // import MyTFareHistoryContentsMock from '../../../../mock/server/myt.fare.history.contents';
 
@@ -52,7 +52,6 @@ class MyTFareMicroHistory extends TwViewController {
     this.selectedYear = null;
     this.selectedMonth = null;
 
-    // this.logger.info(this, '------------------------- render --------', this.histData, '------------>>>');
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -220,16 +219,27 @@ class MyTFareMicroHistory extends TwViewController {
                                   res: Response, svcInfo: any, reformCallback: any, mockData?: any) {
 
     this.apiService.request(API_Name, paramObj).subscribe((resData) => {
-      const currentMonthKor = DateHelper.getShortDateWithFormat(new Date(), 'M' + MYT_STRING_KOR_TERM.month);
 
-      const data = mockData ? mockData.result : resData.result;
+      // this.logger.info(this, resData.code !== API_CODE.CODE_00);
 
-      reformCallback(data);
+      if (resData.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
+          code: resData.code,
+          msg: resData.msg,
+          svcInfo: svcInfo
+        });
+      } else {
+        const currentMonthKor = DateHelper.getShortDateWithFormat(new Date(), 'M' + MYT_STRING_KOR_TERM.month);
 
-      res.render(viewFileName, {
-        svcInfo: svcInfo, currentMonth: currentMonthKor,
-        data: {termSelectValue: this.termSelectValue}, historyData: JSON.stringify(this.histData)
-      });
+        const data = mockData ? mockData.result : resData.result;
+
+        reformCallback(data);
+
+        res.render(viewFileName, {
+          svcInfo: svcInfo, currentMonth: currentMonthKor,
+          data: {termSelectValue: this.termSelectValue}, historyData: JSON.stringify(this.histData)
+        });
+      }
     });
 
   }
