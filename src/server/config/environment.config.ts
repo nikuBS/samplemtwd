@@ -1,5 +1,6 @@
 const environment = {
   local: {
+    // BFF_SERVER: 'http://61.250.19.37:31010',
     BFF_SERVER: 'http://211.188.180.73:31020',
     CDN: '',
     REDIS: {

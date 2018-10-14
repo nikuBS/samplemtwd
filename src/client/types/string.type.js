@@ -42,7 +42,8 @@ Tw.POPUP_TITLE = {
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
   REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
-  CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공'
+  CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
+  REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.'
 };
 
 Tw.CHART_TYPE = {
@@ -344,6 +345,10 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MP_02_02_03_11: '공유회선'
 };
 
+Tw.MYT_FARE_HISTORY_PAYMENT = {
+  CANCEL_AUTO_WITHDRAWAL: '자동납부 통합 인출해지 신청 되었습니다.'
+};
+
 Tw.INFO = {
   MYT : {
     TDATA_SHARE: {
@@ -441,4 +446,11 @@ Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
   TITLE: '자동공유를 그만 하시겠습니까?',
   CONTENTS: '다음달부터 자동 공유가 해지되며, 이번 달 안으로 변경이 가능합니다.',
   BTN_NAME: '그만하기'
+}
+
+Tw.MYT_PAYMENT_HISTORY_HASH = {
+  OVERPAY_REFUND: 'overpay-refund',
+  AUTO_WITHDRAWAL: 'auto-withdrawal',
+  BILL_RESEND_BY_FAX: 'by-fax',
+  BILL_RESEND_BY_EMAIL: 'by-email'
 }

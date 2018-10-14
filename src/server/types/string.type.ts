@@ -61,7 +61,11 @@ export const MYT_FARE_BILL_GUIDE = {
 };
 
 export enum MYT_FARE_PAYMENT_NAME {
-  BANK = '은행'
+  BANK = '은행',
+  BANK2 = '뱅크',
+  BANK3 = 'bank',
+  CARD = '카드',
+  CARD2 = 'card'
 }
 
 export const MYT_FEEPLAN_BENEFIT = {
@@ -156,7 +160,10 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   auto: '자동 납부',
   autoAll: '자동 납부 통합 인출',
   microPrepay: '소액결제 선결제',
-  contentPrepay: '콘텐츠 이용료 선결제'
+  contentPrepay: '콘텐츠 이용료 선결제',
+  PAY_KOR_TITLE: '납부',
+  CANCEL_KOR_TITLE: '취소',
+  AUTO_KOR_TITLE: '자동'
 };
 
 export const MYT_STRING_KOR_TERM = {
@@ -172,7 +179,6 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
 };
 
 export const MYT_JOIN_CONTRACT_TERMINAL = {
-  // 약정할인 및 단말분할상환정보
   FEE_TYPE_A: {
     TIT_NM: '요금약정할인24 (730일)'
   },
@@ -232,3 +238,15 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
     AGREE_NM: '정보없음'
   }
 };
+
+export const MYT_PAYMENT_DETAIL_TITLE = {
+  DI: '납부 상세 내역',
+  TPOINT: 'T포인트 납부 상세 내역',
+  OCB: 'OK캐쉬백 납부 상세 내역',
+  BANK: '계좌이체 납부 상세 내역',
+  CARD: '신용카드 납부 상세 내역',
+  AT: '자동납부 상세 내역',
+  AU: '자동납부 상세 내역',
+  MP: '소액 결제 선결제 상세 내역',
+  CP: '콘텐츠 이용료 선결제 상세 내역'
+}

@@ -27,6 +27,7 @@ import MyTFarePaymentContentsAutoInfo from './controllers/payment/myt-fare.payme
 import MyTFarePaymentContentsAutoChange from './controllers/payment/myt-fare.payment.contents.auto.change.controller';
 import MyTFareHistory from './controllers/history/myt-fare.history.controller';
 import MyTFarePaymentHistory from './controllers/history/myt-fare.payment.history.controller';
+import MyTFarePaymentHistoryDetail from './controllers/history/myt-fare.payment.history.detail.controller';
 import MyTFareBillHistory from './controllers/history/myt-fare.bill-history.controller';
 import MyTFareOverpayRefund from './controllers/history/myt-fare.overpay-refund.controller';
 
@@ -73,9 +74,18 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/history/payment/auto-all', controller: new MyTFarePaymentHistory() });
     this.controllers.push({ url: '/history/payment/micro-prepay', controller: new MyTFarePaymentHistory() });
     this.controllers.push({ url: '/history/payment/content-prepay', controller: new MyTFarePaymentHistory() });
+    this.controllers.push({ url: '/history/payment/detail', controller: new MyTFarePaymentHistoryDetail() });
+    this.controllers.push({ url: '/history/payment/all/detail', controller: new MyTFarePaymentHistoryDetail() });
+    this.controllers.push({ url: '/history/payment/direct/detail', controller: new MyTFarePaymentHistoryDetail() });
+    this.controllers.push({ url: '/history/payment/auto/detail', controller: new MyTFarePaymentHistoryDetail() });
+    this.controllers.push({ url: '/history/payment/auto-all/detail', controller: new MyTFarePaymentHistoryDetail() });
+    this.controllers.push({ url: '/history/payment/micro-prepay/detail', controller: new MyTFarePaymentHistoryDetail() });
+    this.controllers.push({ url: '/history/payment/content-prepay/detail', controller: new MyTFarePaymentHistoryDetail() });
     this.controllers.push({ url: '/history/bill/tax', controller: new MyTFareBillHistory() });
     this.controllers.push({ url: '/history/bill/cash', controller: new MyTFareBillHistory() });
     this.controllers.push({ url: '/history/overpay-refund', controller: new MyTFareOverpayRefund() });
+    this.controllers.push({ url: '/history/overpay-refund/detail', controller: new MyTFareOverpayRefund() });
+    this.controllers.push({ url: '/history/overpay-refund/add-account', controller: new MyTFareOverpayRefund() });
   }
 }
 
