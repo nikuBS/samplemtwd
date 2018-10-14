@@ -330,6 +330,7 @@ export const API_CMD = {
   BFF_07_0064: { path: '/core-bill/v1/autopay/db-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0070: { path: '/core-bill/v1/payment/auto-integrated-payment/account', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0071: {
     path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
     method: API_METHOD.GET,
@@ -402,6 +403,10 @@ export const API_CMD = {
     bypass: false
   },
   BFF_07_0087: { path: '/core-bill/v1/ocb-point-pay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0089: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0090: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0091: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0092: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
