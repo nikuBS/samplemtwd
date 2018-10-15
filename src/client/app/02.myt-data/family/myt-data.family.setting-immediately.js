@@ -33,7 +33,7 @@ Tw.MyTDataFamilySettingImmediately.prototype = {
     this.$submitBtn.on('click', $.proxy(this._confirmSubmit, this));
   },
 
-_addShareData: function (e) {
+  _addShareData: function (e) {
     var value = $(e.target).data('value');
 
     if (value === 'all') {
@@ -41,6 +41,11 @@ _addShareData: function (e) {
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + value);
     }
+
+    if (!this.$error.hasClass('none')) {
+      this.$error.addClass('none');
+    }
+
     this.$submitBtn.attr('disabled', false);
   }, 
 

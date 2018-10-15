@@ -42,6 +42,11 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + value);
     }
+    
+    if (!this.$error.hasClass('none')) {
+      this.$error.addClass('none');
+    }
+
     this.$submitBtn.attr('disabled', false);
   }, 
 
