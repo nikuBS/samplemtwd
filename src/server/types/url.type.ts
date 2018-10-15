@@ -45,6 +45,7 @@ export const URL = {
   '/myt/bill/guide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
   '/myt/join/info/no-agreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
+  '/myt/join/info/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
