@@ -61,7 +61,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   _reqTFamilySharing: function () {
     this._apiService.requestArray([
-      { command: Tw.API_CMD.BFF_01_0005 },
+      { command: Tw.NODE_CMD.GET_SVC_INFO },
       { command: Tw.API_CMD.BFF_06_0044 }
     ]).done($.proxy(this._onDoneTFamilySharing, this))
       .fail($.proxy(this._onFailReq, this));
