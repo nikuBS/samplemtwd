@@ -178,8 +178,8 @@ Tw.MyTFarePaymentAccount.prototype = {
       payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
       payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
       payovrCustNm: this.$container.find('.fe-name').val(),
-      bankOrCardCode: this.$container.find('.fe-auto-account-bank').attr('data-code'),
-      bankOrCardAccn: this.$container.find('.fe-auto-account-number').text(),
+      bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
+      bankOrCardAccn: this.$container.find('.fe-payment-option-number').text(),
       unpaidBillList: this._paymentCommon.getBillList()
     };
     return reqData;
