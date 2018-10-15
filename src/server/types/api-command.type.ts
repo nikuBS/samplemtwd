@@ -262,7 +262,7 @@ export const API_CMD = {
   BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0044: { path: '/core-balance/v1/tfamily-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_06_0044: { path: '/core-balance/v1/tfamily-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0045: { path: '/core-recharge/v1/tfamily-shareable-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0046: { path: '/core-recharge/v1/tfamily-sharings', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0047: { path: '/core-recharge/v1/regular-tfamily-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
