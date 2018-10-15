@@ -41,6 +41,8 @@
                 <!--//사용중인 상품 -->
 
                 <!-- 스와이프 -->
+                <% const banners = productData.banners; %>
+                <% if (banners) { %>
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner dot-btm slide-pagingtype">
                         <!-- .widget -->
@@ -48,8 +50,8 @@
                             <div class="widget-box slider1">
                                 <div class="slider-box">
                                     <ul class="slider">
-                                        <% for (let i = 0; i < productData.banners.length; i++) { %>
-                                        <% const banner = productData.banners[i]; %>
+                                        <% for (let i = 0; i < banners.length; i++) { %>
+                                        <% const banner = banners[i]; %>
                                         <li>
                                             <% if (banner.bnnrTypCd === 'H') { %>
                                             <button>
@@ -69,6 +71,7 @@
                         <!--// .widget -->
                     </div>
                 </div>
+                <% } %>
                 <!-- //스와이프 -->
 
                 <!-- 내게 맞는 요금제 찾기 -->
@@ -88,6 +91,8 @@
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <!-- 대표 요금제 보기 -->
+                <% const groups = productData.groups.grpProdList; %>
+                <% if (groups) { %> 
                 <div class="cont-box nogaps-btm widget">
                     <div class="plan-title">
                         <h3 class="tit">
@@ -100,8 +105,8 @@
                     <div class="widget-box toggle01">
                         <ul class="representcharge-list">
                             <% const GROUP_MAX_COUNT = 7;%>
-                            <% for (let i = 0; i < Math.min(productData.groups.grpProdList.length, GROUP_MAX_COUNT); i++) { %>
-                            <% const group = productData.groups.grpProdList[i]; %>
+                            <% for (let i = 0; i < Math.min(groups.length, GROUP_MAX_COUNT); i++) { %>
+                            <% const group = groups[i]; %>
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info type01">
                                     <h4 class="title">
@@ -146,6 +151,7 @@
                             </li>
                             <% } %>
                         </ul>
+                        <% } %>
                     </div>
                 </div>
                 <!-- //대표 요금제 보기 -->
@@ -153,9 +159,9 @@
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <!-- 내 요금제와 비슷한 요금제 -->
-                <% if (svcInfo && productData.myFilters.list) { %>
+                <% const filters = productData.myFilters.list %>
+                <% if (svcInfo && filters) { %>
                 <div class="cont-box">
-                    <% const filters = productData.myFilters.list %>
                     <div class="similarmyplan-wrap">
                             <h3 class="title">내 요금제와 비슷한 요금제</h3>
                             <div class="more-wrap">
@@ -175,7 +181,8 @@
 
 
                 <!-- 이런 요금제는 어떠세요? -->
-                <% if (productData.recommendedPlans && productData.recommendedPlans.prodList.length > 0) { %>
+                <% const recommendedPlans = productData.recommendedPlans.prodList; %>
+                <% if (recommendedPlans && recommendedPlans.length > 0) { %>
                 <div class="cont-box">
                     <div class="recommendedrate-wrap">
                         <h3 class="title">
@@ -184,7 +191,6 @@
                     </div>
                     <ul class="recommendedrate-list">
                         <% const PLANS_MAX_COUNT = 5; %>
-                        <% const recommendedPlans = productData.recommendedPlans.prodList; %>
                         <% for (let i = 0; i < Math.min(recommendedPlans.length, PLANS_MAX_COUNT); i++) { %>
                         <% const plan = recommendedPlans[i]; %>
                         <li class="type01">
@@ -229,6 +235,8 @@
 
 
                 <!-- 추천태그 -->
+                <% const recommendedTags = productData.recommendedTags.tagList %>
+                <% if (recommendedTags) { %>
                 <div class="cont-box nogaps-btm widget">
                     <h3 class="suggest-tag-title">#
                         <%= productData.recommendedTags.expsTitNm %>
@@ -236,7 +244,6 @@
                     <div class="widget-box toggle02">
                         <div class="suggest-tag-list">
                             <ul>
-                            <% const recommendedTags = productData.recommendedTags.tagList %>
                             <% for (let i = 0; i < recommendedTags.length; i++) { %>
                             <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
                             <li><a class="link" href="/product/plans?tag=<%= recommendedTags[i].tagId %>">#
@@ -251,6 +258,7 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
                 <!--//추천태그 -->
 
                 <!-- 다른상품 더보기 -->

@@ -78,6 +78,10 @@ export default class ProductAddition extends TwViewController {
         };
       }
 
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
       return {
         ...resp.result,
         prodList: (resp.result.prodList || []).map(addition => {
@@ -99,6 +103,10 @@ export default class ProductAddition extends TwViewController {
         };
       }
 
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
       return resp.result.bnnrList;
     });
   }
@@ -110,6 +118,10 @@ export default class ProductAddition extends TwViewController {
           code: resp.code,
           msg: resp.msg
         };
+      }
+
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
       }
 
       return {

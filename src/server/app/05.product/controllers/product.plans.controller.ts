@@ -43,6 +43,10 @@ export default class ProductPlans extends TwViewController {
         };
       }
 
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
       return {
         ...resp.result,
         products: resp.result.products.map(plan => {
