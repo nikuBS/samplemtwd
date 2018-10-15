@@ -70,7 +70,8 @@ Tw.MyTFarePaymentSms.prototype = {
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._popupService.open({
-          'hbs': 'complete-sms'
+          'hbs': 'complete-sms',
+          'svcNum': res.result.svcNum
         },
         $.proxy(this._onComplete, this),
         $.proxy(this._goSubmain, this),
