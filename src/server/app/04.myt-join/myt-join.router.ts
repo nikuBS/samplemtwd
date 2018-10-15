@@ -9,7 +9,10 @@ import MyTJoinProtectChange from './controllers/protect/myt-join.protect.change.
 import MytJoinInfoDiscount from './controllers/info/myt-join.info.discount.controller';
 import MyTJoinInfoDiscountMonth from './controllers/info/myt-join.info.discount.month.controller';
 import MyTJoinJoinInfoNoAgreement from './controllers/info/myt-join.info.no-agreement.controller';
-import MytJoinWireFreeCallCheck from './controllers/wire/myt-join.wire.freeCallCheck.controller';
+import MyTJoinWireFreeCallCheck from './controllers/wire/myt-join.wire.freeCallCheck.controller';
+import MyTJoinWireModifyAddress from './controllers/wire/myt-join.wire.modify.address.controller';
+import MyTJoinWireModifyProduct from './controllers/wire/myt-join.wire.modify.product.controller';
+import MyTJoinWireSetWireCancelService from './controllers/wire/myt-join.wire.set.wire-cancel-service.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -25,10 +28,10 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/info/discount/month', controller: new MyTJoinInfoDiscountMonth() });
     this.controllers.push({ url: '/info/no-agreement', controller: new MyTJoinJoinInfoNoAgreement() });
 
-    this.controllers.push({ url: '/myt/join/wire/freeCallCheck', controller: new MytJoinWireFreeCallCheck() });
-    this.controllers.push({ url: '/myt/join/wire/modify/address', controller: new MyTJoinJoinInfoNoAgreement() });
-    this.controllers.push({ url: '/myt/join/wire/modify/product', controller: new MyTJoinJoinInfoNoAgreement() });
-    this.controllers.push({ url: '/myt/join/wire/set/wire-cancel-service', controller: new MyTJoinJoinInfoNoAgreement() });
+    this.controllers.push({ url: '/wire/freeCallCheck', controller: new MyTJoinWireFreeCallCheck() });
+    this.controllers.push({ url: '/wire/modify/address', controller: new MyTJoinWireModifyAddress() });
+    this.controllers.push({ url: '/wire/modify/product', controller: new MyTJoinWireModifyProduct() });
+    this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: new MyTJoinWireSetWireCancelService() });
   }
 }
 

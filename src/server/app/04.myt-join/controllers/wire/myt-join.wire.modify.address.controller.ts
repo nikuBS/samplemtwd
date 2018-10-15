@@ -15,7 +15,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 
-class MytJoinWireFreeCallCheck extends TwViewController {
+class MyTJoinWireModifyAddress extends TwViewController {
   constructor() {
     super();
   }
@@ -129,4 +129,4 @@ class MytJoinWireFreeCallCheck extends TwViewController {
 
 }
 
-export default MytJoinWireFreeCallCheck;
+export default MyTJoinWireModifyAddress;
