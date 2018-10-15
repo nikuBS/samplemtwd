@@ -68,9 +68,17 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   },
 
   _handleSubmit: function () {
-    var today = new Date();
-    this._goToComplete('?date=' + today.getFullYear() + ',' + (today.getMonth() + 1));
-    this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
+    this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: this.$amountInput.val() }).done($.proxy(this._handleSuccessSubmit, this));
+  },
+
+  _handleSuccessSubmit: function (resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+      this._popupService.close();
+    } else {
+      var today = new Date();
+      this._goToComplete('?date=' + today.getFullYear() + ',' + (today.getMonth() + 1));
+    }
   },
 
   _goToComplete: function (query) {
@@ -83,6 +91,15 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   }, 
 
   _deleteMonthlyData: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0049, {}).done($.proxy(this._goToComplete, this, '?delete=true'));
+    this._apiService.request(Tw.API_CMD.BFF_06_0049, {}).done($.proxy(this._handleSuccessDelete, this));
+  },
+
+  _handleSuccessDelete: function () {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+      this._popupService.close();
+    } else {
+      this._goToComplete('?delete=true');
+    }
   }
 };
