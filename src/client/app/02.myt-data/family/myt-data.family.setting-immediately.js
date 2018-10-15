@@ -69,11 +69,18 @@ _addShareData: function (e) {
   _handleSubmit: function () {
     var auto = this.$container.find('ul.select-list input').attr('checked') === 'checked', value = this.$amountInput.val();
     if (auto) {
-      this._goToComplete('?monthly=true');
-      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
+      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, '?monthly=true'));
     } else {
-      this._goToComplete();
-      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: this.$amountInput.val() }).done($.proxy(this._goToComplete, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this));
+    }
+  },
+
+  _handleSuccessSubmit: function (query, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+      this._popupService.close();
+    } else {
+      this._goToComplete(query);
     }
   },
 

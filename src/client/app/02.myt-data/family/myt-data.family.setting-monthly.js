@@ -68,16 +68,19 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   },
 
   _handleSubmit: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: this.$amountInput.val() }).done($.proxy(this._handleSuccessSubmit, this));
+    var today = new Date();
+    var query = '?date=' + today.getFullYear() + ',' + (today.getMonth() + 1);
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: this.$amountInput.val() })
+      .done($.proxy(this._handleSuccessSubmit, this, query));
   },
 
-  _handleSuccessSubmit: function (resp) {
+  _handleSuccessSubmit: function (query, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
       this._popupService.close();
-    } else {
-      var today = new Date();
-      this._goToComplete('?date=' + today.getFullYear() + ',' + (today.getMonth() + 1));
+    } else {      
+      this._goToComplete(query);
     }
   },
 
@@ -91,15 +94,6 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   }, 
 
   _deleteMonthlyData: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0049, {}).done($.proxy(this._handleSuccessDelete, this));
-  },
-
-  _handleSuccessDelete: function () {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      Tw.Error(resp.code, resp.msg).pop();
-      this._popupService.close();
-    } else {
-      this._goToComplete('?delete=true');
-    }
+    this._apiService.request(Tw.API_CMD.BFF_06_0049, {}).done($.proxy(this._handleSuccessSubmit, this, '?delete=true'));
   }
 };

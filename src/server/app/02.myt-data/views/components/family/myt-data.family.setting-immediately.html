@@ -4,7 +4,7 @@
 * Date: 2018.10.04
 %>
 
-<% if (immediatelyInfo.tFmlyShrblQty >= 1) { %>
+<% if (Number(immediatelyInfo.tFmlyShrblQty) >= 1) { %>
 <!-- 2018-09-18 추가 -->
 <div class="ti-caption-gray">
 	<!-- 2018-09-19 클래스명 변경 -->
@@ -63,7 +63,7 @@
     <!-- 2018-09-18 추가 -->
     <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
         <h4 class="tit">바로 공유 가능 데이터</h4>
-        <p class="num"><em>30</em> GB</p>
+        <p class="num"><em><%= immediatelyInfo.tFmlyShrblQty || 0 %></em> GB</p>
     </div>
     <!--// 2018-09-18 추가 -->
     <div class="cont-box nogaps-top">
