@@ -60,10 +60,11 @@
               </div>
 
               <!-- 이런 요금제는 어떠세요? -->
+              <% const additions = additionData.additions.products; %>
+              <% if (additions) { %>
               <div class="cont-box nogaps-hoz">
                   <ul class="recommendedrate-list">
                       <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
-                      <% const additions = additionData.additions.products; %>
                       <% for (let i = 0; i < additions.length; i++) { %>
                           <% const addition = additions[i]; %>
                           <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->  
@@ -72,14 +73,14 @@
                                   <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="명칭"></div>
                                   <div class="products-titleinfo">
                                       <h5 class="title"><%= addition.prodNm %></h5>
-                                      <% if (/^[0-9,]+$/.test(addition.basFeeInfo)) { %>
-                                          <p class="info">월<span class="money"><%= addition.basFeeInfo %></span>원</p>
+                                      <% if (/^[0-9,]+$/.test(addition.basFeeAmt)) { %>
+                                          <p class="info">월<span class="money"><%= addition.basFeeAmt %></span>원</p>
                                       <% } else { %>  
-                                          <p class="info"><span class="money"><%= addition.basFeeInfo %></span></p>
+                                          <p class="info"><span class="money"><%= addition.basFeeAmt %></span></p>
                                       <% } %>
                                   </div>
                                   <div class="taglist-wrap">
-                                      <% for (let j = 0; j < addition.prodFltList.length; j++) { %>
+                                      <% for (let j = 0; j < addition.prodFltList && addition.prodFltList.length; j++) { %>
                                           <span class="tag-text">#<%= addition.prodFltList[j].prodFltNm %></span>
                                       <% } %>
                                   </div>
@@ -97,6 +98,7 @@
                   </div>
                   <% } %>
               </div>
+              <% } %>
               <!-- //이런 요금제는 어떠세요? -->
               <hr class="cont-sp type1" aria-hidden="true"/>
               <!-- cont-box -->

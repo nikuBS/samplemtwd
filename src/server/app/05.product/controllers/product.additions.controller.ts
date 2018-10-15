@@ -63,12 +63,16 @@ export default class ProductAdditions extends TwViewController {
         };
       }
 
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
       return {
         ...resp.result,
         products: resp.result.products.map(addition => {
           return {
             ...addition,
-            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+            basFeeAmt: FormatHelper.getFeeContents(addition.basFeeAmt)
           };
         })
       };
