@@ -10,6 +10,7 @@ import MytJoinInfoDiscount from './controllers/info/myt-join.info.discount.contr
 import MyTJoinInfoDiscountMonth from './controllers/info/myt-join.info.discount.month.controller';
 import MyTJoinInfoNoAgreement from './controllers/info/myt-join.info.no-agreement.controller';
 import MyTJoinInfoContract from './controllers/info/myt-join.info.contract.controller';
+import MytJoinWireFreeCallCheck from './controllers/wire/myt-join.wire.freeCallCheck.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -25,6 +26,11 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/info/discount/month', controller: new MyTJoinInfoDiscountMonth() });
     this.controllers.push({ url: '/info/no-agreement', controller: new MyTJoinInfoNoAgreement() });
     this.controllers.push({ url: '/info/contract', controller: new MyTJoinInfoContract() });
+
+    this.controllers.push({ url: '/myt/join/wire/freeCallCheck', controller: new MytJoinWireFreeCallCheck() });
+    this.controllers.push({ url: '/myt/join/wire/modify/address', controller: new MyTJoinJoinInfoNoAgreement() });
+    this.controllers.push({ url: '/myt/join/wire/modify/product', controller: new MyTJoinJoinInfoNoAgreement() });
+    this.controllers.push({ url: '/myt/join/wire/set/wire-cancel-service', controller: new MyTJoinJoinInfoNoAgreement() });
   }
 }
 
