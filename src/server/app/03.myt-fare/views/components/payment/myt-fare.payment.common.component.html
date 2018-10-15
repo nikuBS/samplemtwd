@@ -10,7 +10,7 @@
     <h3 class="tit">
         <span class="pay-name fe-svc-name"><%= unpaidList[i].svcName %></span>
         <span class="pay-line fe-svc-num"><%= unpaidList[i].svcNum %>
-            <% if (svcInfo.totalSvcCnt > 1) { %>
+            <% if (unpaidList.cnt > 1) { %>
             <span class="fe-multi-line"> 외 <span class="fe-line-cnt"><%= unpaidList.cnt - 1 %></span>개 회선</span>
             <% } %>
         </span>

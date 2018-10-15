@@ -8,7 +8,8 @@ Tw.DATA_UNIT = {
 
 Tw.CURRENCY_UNIT = {
   WON: '원',
-  TEN_THOUSAND: '만원'
+  TEN_THOUSAND: '만원',
+  POINT: '점'
 };
 
 Tw.BUTTON_LABEL = {

@@ -178,5 +178,36 @@ Tw.MyTFarePaymentCommon.prototype = {
       this._setList($target, $layer, i);
       this._setBillList($target);
     }
+  },
+  afterPaySuccess: function () {
+    this._popupService.open({
+        'hbs': 'complete',
+        'link_class': 'fe-payment-history',
+        'link_text': Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY,
+        'text': Tw.MYT_FARE_PAYMENT_NAME.PAYMENT
+      },
+      $.proxy(this._onComplete, this),
+      $.proxy(this._goLink, this),
+      'complete'
+    );
+  },
+  _onComplete: function ($layer) {
+    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this, 'history'));
+    $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this, 'close'));
+  },
+  _setIsLink: function (type) {
+    if (type === 'history') {
+      this._isHistory = true;
+    } else {
+      this._isSubmain = true;
+    }
+  },
+  _goLink: function () {
+    if (this._isHistory) {
+      this._historyService.goLoad('/myt/fare/history/payment');
+    }
+    if (this._isSubmain) {
+      this._historyService.goLoad('/myt/fare');
+    }
   }
 };
