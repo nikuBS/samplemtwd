@@ -189,6 +189,7 @@ Tw.API_CMD = {
   BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.GET },
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
+  BFF_06_0044: { path: '/core-balance/v1/tfamily-sharings', method: Tw.API_METHOD.GET },
   BFF_06_0045: { path: '/core-recharge/v1/tfamily-shareable-data', method: Tw.API_METHOD.GET },
   BFF_06_0046: { path: '/core-recharge/v1/tfamily-sharings', method: Tw.API_METHOD.POST },
   BFF_06_0048: { path: '/core-recharge/v1/regular-tfamily-sharings', method: Tw.API_METHOD.POST },
