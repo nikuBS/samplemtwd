@@ -43,18 +43,33 @@ Tw.MainHome.prototype = {
 
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
-    var cardNum = this.$elBarcode.data('cardnum');
-    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      this.$elBarcode.JsBarcode(cardNum);
-    }
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
+    this._makeBarcode();
   },
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
 
+  },
+  _makeBarcode: function () {
+    var cardNum = this.$elBarcode.data('cardnum');
+    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
+      this.$elBarcode.JsBarcode(cardNum);
+    }
+  },
+  _onClickBarcode: function () {
+    var cardNum = this.$elBarcode.data('cardnum');
+    var usedAmount = Tw.FormatHelper.addComma(this.$elBarcode.data('usedamount'));
+    this._popupService.open({
+      hbs: 'TH1_05',
+      layer: true,
+      data: {
+        cardNum: cardNum,
+        usedAmount: usedAmount
+      }
+    });
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
