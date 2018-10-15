@@ -51,8 +51,8 @@
               <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
               <% } %>
             <% } %>
-            <% if ( basicInfo.ctgCd === 'F01200' ) { %>
-            <p class="productdetails-text03">서비스 제공 : SK테크엑스(주)</p>
+            <% if ( basicInfo.ctgCd === 'F01200' && basicInfo.svcOfrCoNm ) { %>
+            <p class="productdetails-text03">서비스 제공 : <%= basicInfo.svcOfrCoNm %></p>
             <% } %>
           </div>
           <div class="productdetails-ledgercase">
@@ -68,7 +68,6 @@
               가입제한 상품
             </div>
             <% } else { %>
-            <% console.log(basicInfo.prodScrbYn + '/' + svcInfo.prodId + '/' + prodId); %>
               <% if ( basicInfo.prodScrbYn === 'Y' && svcInfo.prodId !== prodId ) { %>
               <div class="btn">
                 <button type="button" class="bt-white1 fe-btn_join">가입</button>
@@ -315,7 +314,9 @@
                   <li>
                     <div>
                       <button class="fe-btn_recommend_prod" data-prod_id="<%= recommends.recommendAppList[i].prodId %>">
+                        <% if ( recommends.recommendAppList[i].appImg ) { %>
                         <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
+                        <% } %>
                         <span><%= recommends.recommendAppList[i].prodNm %></span>
                       </button>
                     </div>

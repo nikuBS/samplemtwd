@@ -177,7 +177,8 @@ Tw.ProductJoin.prototype = {
       case 'MV_02_02_01':
       case 'MP_02_02_03_05':
       case 'MP_02_02_03_11':
-        confirmSettingInfo = Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this.$joinSetup.data('id')] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE;
+        confirmSettingInfo = Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this.$joinSetup.data('id')] + ' ' + this._data.addList.length +
+          Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE;
         break;
     }
 
