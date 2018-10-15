@@ -211,7 +211,12 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   OK_CASHBAG: 'OK캐쉬백',
   T_POINT: 'T포인트',
   PAYMENT: '납부',
-  GO_PAYMENT_HISTORY: '납부내역 보기'
+  GO_PAYMENT_HISTORY: '납부내역 보기',
+  PREPAY: '선결제',
+  GO_PREPAY_HISTORY: '선결제내역 보기',
+  REQUEST: '신청',
+  CHANGE: '변경',
+  GO_CHANGE_HISTORY: '변경내역 보기'
 };
 
 Tw.ALERT_MSG_COMMON = {

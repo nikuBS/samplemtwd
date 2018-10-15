@@ -36,6 +36,8 @@ Tw.MyTFarePaymentAccount.prototype = {
     this.$payBtn = this.$container.find('.fe-check-pay');
 
     this._isPaySuccess = false;
+    this._historyUrl = '/myt/fare/history/payment';
+    this._mainUrl = '/myt/fare';
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
@@ -152,7 +154,8 @@ Tw.MyTFarePaymentAccount.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._paymentCommon.afterPaySuccess();
+      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl,
+        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PAYMENT);
     }
   },
   _isValid: function () {

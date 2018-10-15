@@ -31,8 +31,8 @@ Tw.MyTFarePaymentPoint.prototype = {
 
     this._pointCardNumber = null;
     this._isPaySuccess = false;
-
-    this.$container.find('.refund-pament-account').hide();
+    this._historyUrl = '/myt/fare/history/payment';
+    this._mainUrl = '/myt/fare';
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
@@ -153,7 +153,8 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._paymentCommon.afterPaySuccess();
+      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl,
+        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PAYMENT);
     }
   },
   _isValid: function () {
@@ -189,7 +190,8 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._paymentCommon.afterPaySuccess('sms');
+      this._isPaySuccess = true;
+      this._popupService.close();
     } else {
       this._payFail(res);
     }
