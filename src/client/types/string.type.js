@@ -230,7 +230,10 @@ Tw.ALERT_MSG_MYT_DATA = {
   JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_C: '고객센터를 통하여 신청하시면' + '<br />' + '그룹 구성을 동의 할 수 있는 SMS를 ' + '<br />' + '가족 구성원에게 보내드립니다.',
   CALL_CUSTOMER_CENTER: '고객센터 전화하기',
-  CONFIRM_SHARE: '공유된 데이터는 취소하실 수 없습니다.'
+  CONFIRM_SHARE: '공유된 데이터는 취소하실 수 없습니다.',
+  A5: '변경 정보가 없습니다.',
+  A6: '사용 가능 공유 데이터량 보다 한도가 높게 설정되었습니다. 확인 후 다시 시도해주세요.',
+  A7: '{reason}로 실패하였습니다. 잠시 후 다시 시도해주세요.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = { 
