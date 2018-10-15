@@ -55,18 +55,21 @@ Tw.MyTFareBillGuideRoaming.prototype = {
   },
   //--------------------------------------------------------------------------[API]
   _getRoamingInfo: function (param) {
-    var thisMain = this;
-    // return this._apiService.request(Tw.API_CMD.BFF_05_0044, param).done($.proxy(this._getRoamingInfoInit, this));
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.roaming.BFF_05_0044.json')
-      .done(function (resp) {
-        Tw.Logger.info(resp);
-        thisMain._getRoamingInfoInit(resp, param);
-      })
-      .fail(function (err) {
-        Tw.Logger.info(err);
-      });
+
+    return this._apiService.request(Tw.API_CMD.BFF_05_0044, param).done($.proxy(this._getRoamingInfoInit, this, param));
+
+    // var thisMain = this;
+    // $.ajax('http://localhost:3000/mock/myt.bill.billguide.roaming.BFF_05_0044.json')
+    //   .done(function (resp) {
+    //     Tw.Logger.info(resp);
+    //     thisMain._getRoamingInfoInit(param, resp);
+    //   })
+    //   .fail(function (err) {
+    //     Tw.Logger.info(err);
+    //   });
   },
-  _getRoamingInfoInit: function (res, param) {
+  _getRoamingInfoInit: function (param, res) {
+    // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var dataArr = res.result.roamingList;
@@ -77,6 +80,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       });
 
       Tw.Logger.info('[totalNum]', totalNum);
+      Tw.Logger.info('[param]', param);
 
       var resData = {
         startDt: moment(param.startDt).format('YYYY.MM.DD'),

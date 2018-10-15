@@ -57,6 +57,8 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   //--------------------------------------------------------------------------[API]
   _getCallGiftInfo: function (param) {
     return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
+
+
   },
   _getCallGiftInfoInit: function (res) {
 

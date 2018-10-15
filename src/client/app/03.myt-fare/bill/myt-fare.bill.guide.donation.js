@@ -115,18 +115,21 @@ Tw.MyTFareBillGuideDonation.prototype = {
   },
   //--------------------------------------------------------------------------[API]
   _getDonationInfo: function (param) {
-    var thisMain = this;
-    // return this._apiService.request(Tw.API_CMD.BFF_05_0044, param).done($.proxy(this._getRoamingInfoInit, this));
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.donation.BFF_05_0038.json')
-      .done(function (resp) {
-        Tw.Logger.info(resp);
-        thisMain._getDonationInfoInit(resp, param);
-      })
-      .fail(function (err) {
-        Tw.Logger.info(err);
-      });
+
+    return this._apiService.request(Tw.API_CMD.BFF_05_0038, param).done($.proxy(this._getDonationInfoInit, this, param));
+
+    // var thisMain = this;
+    // $.ajax('http://localhost:3000/mock/myt.bill.billguide.donation.BFF_05_0038.json')
+    //   .done(function (resp) {
+    //     Tw.Logger.info(resp);
+    //     thisMain._getDonationInfoInit(param, resp);
+    //   })
+    //   .fail(function (err) {
+    //     Tw.Logger.info(err);
+    //   });
   },
-  _getDonationInfoInit: function (res, param) {
+  _getDonationInfoInit: function ( param, res ) {
+    // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var dataArr = res.result.donationList;
