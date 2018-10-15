@@ -253,9 +253,16 @@ class ProductDetail extends TwViewController {
 
     return Object.assign(seriesInfo, {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        const isBasFeeInfo = isNaN(parseInt(item.basFeeInfo, 10));
+        const isBasFeeInfo = isNaN(parseInt(item.basFeeInfo, 10)),
+          isBasOfrDataQtyCtt = ['0', '-'].indexOf(item.basOfrDataQtyCtt) === -1,
+          isBasOfrVcallTmsCtt = ['0', '-'].indexOf(item.basOfrVcallTmsCtt) === -1,
+          isBasOfrCharCntCtt = ['0', '-'].indexOf(item.basOfrCharCntCtt) === -1;
+
         return Object.assign(item, {
           basFeeInfo: isBasFeeInfo ? item.basFeeInfo : FormatHelper.addComma(item.basFeeInfo),
+          basOfrDataQtyCtt: isBasOfrDataQtyCtt ? item.basOfrDataQtyCtt : null,
+          basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? item.basOfrVcallTmsCtt : null,
+          basOfrCharCntCtt: isBasOfrCharCntCtt ? item.basOfrCharCntCtt : null,
           isNumberBasFeeInfo: !isBasFeeInfo
         });
       })

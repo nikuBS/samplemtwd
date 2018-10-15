@@ -225,9 +225,16 @@ Tw.ProductDetail.prototype = {
     this.$recommendRateList.find('.recommendedrate-list')
       .html(this._template({
         list: resp.result.products.map(function(item) {
-          var isBasFeeAmt = isNaN(parseInt(item.basFeeAmt, 10));
+          var isBasFeeAmt = isNaN(parseInt(item.basFeeAmt, 10)),
+            isBasOfrDataQtyCtt = ['0', '-'].indexOf(item.basOfrDataQtyCtt) === -1,
+            isBasOfrVcallTmsCtt = ['0', '-'].indexOf(item.basOfrVcallTmsCtt) === -1,
+            isBasOfrCharCntCtt = ['0', '-'].indexOf(item.basOfrCharCntCtt) === -1;
+
           return Object.assign(item, {
             basFeeAmt: isBasFeeAmt ? item.basFeeAmt : Tw.FormatHelper.addComma(item.basFeeAmt),
+            basOfrDataQtyCtt: isBasOfrDataQtyCtt ? item.basOfrDataQtyCtt : null,
+            basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? item.basOfrVcallTmsCtt : null,
+            basOfrCharCntCtt: isBasOfrCharCntCtt ? item.basOfrCharCntCtt : null,
             isNumberBasFee: !isBasFeeAmt
           });
         })
