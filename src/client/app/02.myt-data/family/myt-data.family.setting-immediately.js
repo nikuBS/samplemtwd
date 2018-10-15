@@ -71,7 +71,7 @@ _addShareData: function (e) {
     if (auto) {
       this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, '?monthly=true'));
     } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, ''));
     }
   },
 
