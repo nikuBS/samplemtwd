@@ -251,7 +251,7 @@ Tw.MainHome.prototype = {
     } else if ( sender.code === this.GIFT_ERROR_CODE.GFT0002 ) {
       result.blockProduct = true;
     } else {
-      Tw.Error(sender.code, sender.msg).pop();
+      // Tw.Error(sender.code, sender.msg).pop();
     }
   },
   _parseRemainData: function (remain, result) {
@@ -286,7 +286,7 @@ Tw.MainHome.prototype = {
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
       $('.fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      // Tw.Error(resp.code, resp.msg).pop();
     }
 
   },
