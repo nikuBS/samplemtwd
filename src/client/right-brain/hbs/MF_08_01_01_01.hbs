@@ -21,19 +21,19 @@
                             <li>
                                 <dl class="show-data">
                                     <dt>발행일자</dt>
-                                    <dd class="tx-bold"><span class="number">2018.05.23</span></dd>
+                                    <dd class="tx-bold"><span class="number">{{taxBillIsueDt}}</span></dd>
                                 </dl>
                             </li>
                             <li>
                                 <dl class="show-data">
                                     <dt>고객/사업자명</dt>
-                                    <dd class="tx-bold">라이트브레인</dd>
+                                    <dd class="tx-bold">{{ctzBizName}}</dd>
                                 </dl>
                             </li>
                             <li>
                                 <dl class="show-data">
                                     <dt>사업자 번호</dt>
-                                    <dd class="tx-bold"><span class="number">456456456456</span></dd>
+                                    <dd class="tx-bold"><span class="number">{{ctzBizNum}}</span></dd>
                                 </dl>
                             </li>
                             <li>
@@ -43,15 +43,15 @@
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>공급가액</dt>
-                                    <dd><span class="number">20,000</span>원</dd>
+                                    <dd><span class="number">{{splyPrc}}</span>원</dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>부가세액</dt>
-                                    <dd><span class="number">2,000</span>원</dd>
+                                    <dd><span class="number">{{vatAmt}}</span>원</dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>합계금액</dt>
-                                    <dd><span class="number">22,000</span>원</dd>
+                                    <dd><span class="number">{{totAmt}}</span>원</dd>
                                 </dl>
                             </li>
                         </ul>
@@ -78,7 +78,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button>전송하기</button>
+                        <button disabled="disabled">전송하기</button>
                     </li>
                 </ul>
             </div>

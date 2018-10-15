@@ -46,7 +46,9 @@ Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
   REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
   CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
-  REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.'
+  REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
+  RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
+  RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.'
 };
 
 Tw.CHART_TYPE = {

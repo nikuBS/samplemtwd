@@ -22,122 +22,11 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <% if(data.data.length) { %>
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <!-- 2018-09-20 마크업 변경 -->
-                    <div class="history-list">
-                        <ul>
-                            <li>
-                                <span class="tx-date">04.23</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">신청 금액</span>
-                                            <span class="sub-tit">처리중</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                            </li>
-                            <li>
-                                <span class="tx-date">03.23</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">대리점 납부</span>
-                                            <span class="sub-tit">송금 완료</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">과납 대체</span>
-                                            <span class="sub-tit">송금 완료</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                            </li>
-                            <li>
-                                <span class="tx-date">02.23</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">T월드 납부</span>
-                                            <span class="sub-tit">처리중</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                            </li>
-                            <li>
-                                <span class="tx-date">01.23</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">신청금액</span>
-                                            <span class="sub-tit">처리중</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--// 2018-09-20 마크업 변경 -->
-                </div>
-                <!--// .cont-box -->
 
-                <div class="data-select-wrap">
-                    <span class="data-tit">2017</span>
+                <div id="fe-refund-history-wrapper">
+
                 </div>
 
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <!-- 2018-09-20 마크업 변경 -->
-                    <div class="history-list">
-                        <ul>
-                            <li>
-                                <span class="tx-date">12.23</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">T월드 납부</span>
-                                            <span class="sub-tit">처리중</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                            </li>
-                            <li>
-                                <span class="tx-date">11.23</span>
-                                <button>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">신청금액</span>
-                                            <span class="sub-tit">처리중</span>
-                                        </div>
-                                        <div class="price"><span class="tx-price">27,000</span><span class="unit">원</span></div>
-                                    </div>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--// 2018-09-20 마크업 변경 -->
-                </div>
-                <!--// .cont-box -->
-
-                <div class="bt-more round">
-                    <button>더보기</button>
-                </div>
-                <% } else { %>
-                <div class="no-data">
-                    <span>이용 내역이 없습니다.</span>
-                </div>
-                <% } %>
             </div>
         </div>
         <!--// #contents -->
@@ -150,6 +39,54 @@
       $(document).ready(function () {
         new Tw.MyTFareOverpayRefund($(document), '<%- JSON.stringify(data.data)%>');
       });
+    </script>
+    <script id="fe-template-list-items" type="text/x-handlebars-template">
+        {{#each items}}
+        <button data-list-id="{{listId}}">
+            <div class="li-elem">
+                <div class="title-box">
+                    <span class="tit">{{rfndBankNm}}</span>
+                    <span class="sub-tit">{{dataStatus}}</span>
+                </div>
+                <div class="price"><span class="tx-price">{{dataAmt}}</span><span class="unit">원</span></div>
+            </div>
+        </button>
+        {{/each}}
+    </script>
+    <script id="fe-template-list-day" type="text/x-handlebars-template">
+        {{#each records}}
+        {{#if yearHeader}}
+        {{>year year=yearHeader}}
+        {{/if}}
+        <li>
+            <span class="tx-date">{{date}}</span>
+            {{>chargeItems items=items}}
+        </li>
+        {{/each}}
+    </script>
+    <script id="fe-template-list-year" type="text/x-handlebars-template">
+        <li class="year-tx" data-year="{{year}}">{{year}}</li>
+    </script>
+    <script id="list-template-list-wrapper" type="text/x-handlebars-template">
+        <!-- .cont-box -->
+        <div class="cont-box nogaps">
+            <div class="history-list">
+                <ul class="fe-list-inner">
+                    {{>list records=records}}
+                </ul>
+            </div>
+        </div>
+        <!--// .cont-box -->
+        {{#if initialMoreData}}
+        <div class="bt-more">
+            <button>더보기<span>({{restCount}})</span></button>
+        </div>
+        {{/if}}
+    </script>
+    <script id="list-empty" type="text/x-handlebars-template">
+        <div class="no-data">
+            <span>내역이 없습니다.</span>
+        </div>
     </script>
 </body>
 <% include ../../components/end.component.html %>
