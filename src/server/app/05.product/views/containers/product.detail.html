@@ -68,12 +68,12 @@
               가입제한 상품
             </div>
             <% } else { %>
-              <% if ( basicInfo.prodScrbYn === 'Y' && svcInfo.prodId !== prodId ) { %>
+              <% if ( basicInfo.prodScrbYn === 'Y' && (ctgKey === 'plans' && svcInfo.prodId !== prodId || ctgKey === 'additions' && !isAdditionsJoined) ) { %>
               <div class="btn">
                 <button type="button" class="bt-white1 fe-btn_join">가입</button>
               </div>
               <% } %>
-              <% if ( basicInfo.prodTermYn === 'Y' ) { %>
+              <% if ( basicInfo.prodTermYn === 'Y' && (ctgKey === 'plans' && svcInfo.prodId === prodId || ctgKey === 'additions' && isAdditionsJoined) ) { %>
               <div class="btn">
                 <button type="button" class="bt-white2 fe-btn_terminate">해지</button>
               </div>
@@ -129,7 +129,7 @@
         </div>
         <% } %>
 
-        <% if (svcInfo.prodId === prodId || basicInfo.prodSetYn === 'Y') { %>
+        <% if ( ctgKey === 'plans' && svcInfo.prodId === prodId || ctgKey === 'additions' && isAdditionsJoined ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- 기가입상품  -->

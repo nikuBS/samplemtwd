@@ -16,7 +16,8 @@ const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
   'relatetags': API_CMD.BFF_10_0003,
   'series': API_CMD.BFF_10_0005,
-  'recommands': API_CMD.BFF_10_0006
+  'recommands': API_CMD.BFF_10_0006,
+  'additions': API_CMD.BFF_05_0040
 };
 
 class ProductDetail extends TwViewController {
@@ -244,6 +245,18 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param additionsUseInfo
+   * @private
+   */
+  private _isAdditionsJoined (additionsUseInfo): boolean {
+    if (additionsUseInfo.code !== API_CODE.CODE_00) {
+      return false;
+    }
+
+    return additionsUseInfo.result.isAdditionUse === 'Y';
+  }
+
+  /**
    * @param seriesInfo
    * @private
    */
@@ -328,9 +341,10 @@ class ProductDetail extends TwViewController {
           this._getApi('relatetags'),
           this._getApi('series', basicInfo.result.ctgCd),
           this._getApi('recommands'),
+          this._getApi('additions'),
           this._getRedis()
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo
+          relateTagsInfo, seriesInfo, recommendsInfo, additionsInfo, prodRedisInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
@@ -360,6 +374,7 @@ class ProductDetail extends TwViewController {
             svcInfo: svcInfo,
             ctgKey: this._getCtgKey(basicInfo.result.ctgCd),
             ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
+            isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
             filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
             bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple'  // @todo body class
           });
