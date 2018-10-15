@@ -266,7 +266,7 @@ class ProductJoin extends TwViewController {
               joinTermInfo: this._convertPlansJoinTermInfo(joinTermInfo.result),
               svcInfo: svcInfo,
               prodId: this._prodId,
-              prodNm: joinTermInfo.preinfo.toProdInfo.prodNm,
+              prodNm: joinTermInfo.result.preinfo.toProdInfo.prodNm,
               displayId: this._displayId,
               displayGroup: displayGroup,
               ctgCd: basicInfo.result.ctgCd,
