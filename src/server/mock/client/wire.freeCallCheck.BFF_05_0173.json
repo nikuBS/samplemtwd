@@ -1,0 +1,32 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result":
+  {
+    "reqDate": "20181009",
+    "penaltyInfo":
+    [
+      {
+        "penStrdNm": "서비스정기계약할인반환금",
+        "brchAmt": "29173"
+      },
+      {
+        "penStrdNm": "세트약정 할인반환금",
+        "brchAmt": "14393"
+      },            {
+      "penStrdNm": "본사 사은품 할인반환금(비과세)",
+      "brchAmt": "9041"
+    },
+      {
+        "penStrdNm": "임대단말 할인반환금",
+        "brchAmt": "36467"
+      }
+    ],
+    "chargeInfo":
+    {
+      "hbAmt": "233870",
+      "colAmt": "10890",
+      "totAmt": "244760"
+    }
+  }
+}
