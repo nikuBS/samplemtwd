@@ -1,0 +1,28 @@
+<%#
+* FileName: myt-join.wire.gifts.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.10.08
+%>
+
+<% include ../components/start.component.html %>
+<p>
+    사은품 조회
+
+    'hasSKTWire': 'Y',    // SK브로드밴드 가입여부(N:미가입)
+    'resultValue': 'Y',   // 사은품여부(N:미존재)
+    'nextPage': '2',
+    'totalCnt': '1',
+    'giftProvideList': [
+    {
+    'giftNm': 'SK상품권 13만원',
+    'giftOpStCd': '03',
+    'giftOpStNm': '배송완료',
+    'dlvCompDt': '20130404',
+    'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+    'pdlvBasAddr': '인천 동***********'
+    }
+    ]
+
+</p>
+<% include ../components/javascript.component.html %>
+<% include ../components/end.component.html %>
