@@ -445,6 +445,9 @@ Tw.ProductJoin.prototype = {
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })
     }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
+
+    // @todo SvcInfo Refresh
+    this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
   _bindJoinResPopup: function($popupContainer) {
