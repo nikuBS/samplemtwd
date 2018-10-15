@@ -314,6 +314,7 @@
 
             <!-- .cont-box 멤버십 바코드 -->
             <% if (svcType.login && svcType.mobile) { %>
+            <% if (homeData.membershipData) { %>
             <div class="cont-box">
                 <div class="th-home-cpupon">
                     <dl class="coupon-header">
@@ -330,7 +331,15 @@
                     </div>
                 </div>
             </div>
+            <% } else { %>
+            <div class="cont-box">
+                <div class="th-home-benefits">
+                    <p class="tx-benefits">아직 멤버십 카드가 없으신가요?<br /><em class="tx-bold">T멤버십을 신청</em>하고 <em class="tx-bold">SKT의 혜택</em>을<br />이용해보세요.</p>
+                    <span class="ico-benefits"></span>
+                </div>
+            </div>
             <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
             <% } %>
             <!--// .cont-box -->
 
