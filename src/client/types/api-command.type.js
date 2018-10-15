@@ -16,7 +16,6 @@ Tw.API_CMD = {
 
   // COMMON
   BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
-  BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
   BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
   BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
   BFF_01_0008: { path: '/core-modification/v1/address/street-names', method: Tw.API_METHOD.GET },
@@ -344,6 +343,7 @@ Tw.NODE_CMD = {
   LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   CHANGE_SVC_PASSWORD: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
+  UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
   SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST },

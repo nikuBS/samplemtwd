@@ -183,7 +183,7 @@ Tw.MainHome.prototype = {
 
   },
   _parseMicroData: function (microData) {
-    if(microData.payHistoryCnt > 0) {
+    if ( microData.payHistoryCnt > 0 ) {
       return {
         showMicro: true,
         invEndDt: Tw.DateHelper.getShortDateNoDot(microData.toDt),

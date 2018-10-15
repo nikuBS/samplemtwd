@@ -53,6 +53,7 @@ class ApiRouter {
     this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
     this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
+    this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.post('/cert', this.setCert.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
@@ -353,7 +354,15 @@ class ApiRouter {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeLine(params).subscribe((resp) => {
-      console.log('response');
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    });
+  }
+
+  public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.updateSvcInfo().subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);
