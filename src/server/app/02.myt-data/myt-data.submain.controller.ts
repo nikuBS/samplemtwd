@@ -68,6 +68,7 @@ class MytDataSubmainController extends TwViewController {
         // 휴대폰, T-pocketFi, T-Login  경우 노출
         data.isBenefit = true;
       }
+
       if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {
         // T끼리 데이터선물버튼 영역
         data.present = true;
