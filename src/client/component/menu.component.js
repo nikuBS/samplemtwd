@@ -11,7 +11,7 @@ Tw.MenuComponent = function () {
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
 
-  this._bindEvent();
+  // this._bindEvent();
   this._bindLogin();
   Tw.Logger.info('[MainMenu] init complete');
 };
