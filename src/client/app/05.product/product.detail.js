@@ -230,11 +230,15 @@ Tw.ProductDetail.prototype = {
             isBasOfrVcallTmsCtt = ['0', '-'].indexOf(item.basOfrVcallTmsCtt) === -1,
             isBasOfrCharCntCtt = ['0', '-'].indexOf(item.basOfrCharCntCtt) === -1;
 
+          var used = Tw.FormatHelper.convDataFormat(item.basOfrDataQtyCtt, Tw.DATA_UNIT.MB);
+
           return Object.assign(item, {
             basFeeAmt: isBasFeeAmt ? item.basFeeAmt : Tw.FormatHelper.addComma(item.basFeeAmt),
-            basOfrDataQtyCtt: isBasOfrDataQtyCtt ? item.basOfrDataQtyCtt : null,
-            basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? item.basOfrVcallTmsCtt : null,
-            basOfrCharCntCtt: isBasOfrCharCntCtt ? item.basOfrCharCntCtt : null,
+            basOfrDataQtyCtt: isBasOfrDataQtyCtt ? (isNaN(parseInt(used.data, 10)) ? item.basOfrDataQtyCtt : used.data + used.unit) : null,
+            basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? (isNaN(parseInt(item.basOfrVcallTmsCtt, 10)) ?
+              item.basOfrVcallTmsCtt : item.basOfrVcallTmsCtt + Tw.VOICE_UNIT.MIN) : null,
+            basOfrCharCntCtt: isBasOfrCharCntCtt ? (isNaN(parseInt(item.basOfrCharCntCtt, 10)) ?
+              item.basOfrCharCntCtt : item.basOfrCharCntCtt + Tw.SMS_UNIT) : null,
             isNumberBasFee: !isBasFeeAmt
           });
         })

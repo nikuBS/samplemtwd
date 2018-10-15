@@ -6,6 +6,8 @@ Tw.DATA_UNIT = {
   PB: 'PB'
 };
 
+Tw.SMS_UNIT = '건';
+
 Tw.CURRENCY_UNIT = {
   WON: '원',
   TEN_THOUSAND: '만원',
