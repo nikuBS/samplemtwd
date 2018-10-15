@@ -32,7 +32,7 @@ class MyTFareBillHistory extends TwViewController {
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
     };
 
-    this.logger.info(this, query.current, '----', svcInfo);
+    // this.logger.info(this, query.current, '----', svcInfo);
 
     if (query.current === 'tax' || query.current === 'cash') {
 
@@ -67,6 +67,7 @@ class MyTFareBillHistory extends TwViewController {
           resp.result.map((o) => {
             o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
             o.dataAmt = FormatHelper.addComma(o.opAmt);
+            o.sortDt = o.opDt;
             o.dataPhoneNumber = FormatHelper.conTelFormatWithDash(o.svcNum);
           });
 
