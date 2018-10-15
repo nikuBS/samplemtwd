@@ -64,7 +64,11 @@ Tw.MyTDataFamilyMain.prototype = {
     }
   },
 
-  _successChangeLimitation: function () {
-    this._popupService.toast(Tw.MYT_DATA_FAMILY_TOAST.SUCCESS_CHANGE);
+  _successChangeLimitation: function (resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+    } else {
+      this._popupService.toast(Tw.MYT_DATA_FAMILY_TOAST.SUCCESS_CHANGE);
+    }
   }
 };

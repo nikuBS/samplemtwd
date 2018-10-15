@@ -96,7 +96,8 @@ class MyTDataFamily extends TwViewController {
   }
 
   private getImmediatelyInfo() {
-    return this.apiService.request(API_CMD.BFF_06_0045, {}).map(resp => {
+    return this.apiService.request(API_CMD.BFF_06_0045, { reqCnt: 0 }).map(resp => {
+      console.log('!!', resp);
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -109,7 +110,7 @@ class MyTDataFamily extends TwViewController {
   }
 
   private getMonthlyInfo() {
-    return this.apiService.request(API_CMD.BFF_06_0045, {}).map(resp => {
+    return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
