@@ -106,6 +106,13 @@ class MyTJoinProductFeePlan extends TwViewController {
           }));
         }
 
+        if ( FormatHelper.isEmpty(feePlanInfo.result.feePlanProd) ) {
+          return this.error.render(res, {
+            svcInfo: svcInfo,
+            title: '나의 요금제'
+          });
+        }
+
         res.render('product/myt-join.product.fee-plan.html', {
           svcInfo: svcInfo,
           svcCdName: SVC_CDNAME,

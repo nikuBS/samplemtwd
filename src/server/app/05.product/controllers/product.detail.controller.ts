@@ -9,8 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
-import { PRODUCT_CTG_NAME } from '../../../types/string.type';
+import { UNIT, VOICE_UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import {DATA_UNIT, PRODUCT_CTG_NAME} from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -185,7 +185,8 @@ class ProductDetail extends TwViewController {
       return '';
     }
 
-    return basOfrDataQtyCtt;
+    const used = FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.MB);
+    return !isNaN(used.data) ? used.data + used.unit : basOfrDataQtyCtt;
   }
 
   /**
@@ -201,7 +202,7 @@ class ProductDetail extends TwViewController {
       return basOfrVcallTmsCtt;
     }
 
-    return FormatHelper.addComma(basOfrVcallTmsCtt);
+    return FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN;
   }
 
   /**
@@ -217,7 +218,7 @@ class ProductDetail extends TwViewController {
       return basOfrCharCntCtt;
     }
 
-    return FormatHelper.addComma(basOfrCharCntCtt);
+    return FormatHelper.addComma(basOfrCharCntCtt) + UNIT['310'];
   }
 
   /**
@@ -258,11 +259,15 @@ class ProductDetail extends TwViewController {
           isBasOfrVcallTmsCtt = ['0', '-'].indexOf(item.basOfrVcallTmsCtt) === -1,
           isBasOfrCharCntCtt = ['0', '-'].indexOf(item.basOfrCharCntCtt) === -1;
 
+        const used = FormatHelper.convDataFormat(item.basOfrDataQtyCtt, DATA_UNIT.MB);
+
         return Object.assign(item, {
           basFeeInfo: isBasFeeInfo ? item.basFeeInfo : FormatHelper.addComma(item.basFeeInfo),
-          basOfrDataQtyCtt: isBasOfrDataQtyCtt ? item.basOfrDataQtyCtt : null,
-          basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? item.basOfrVcallTmsCtt : null,
-          basOfrCharCntCtt: isBasOfrCharCntCtt ? item.basOfrCharCntCtt : null,
+          basOfrDataQtyCtt: isBasOfrDataQtyCtt ? (isNaN(parseInt(used.data, 10)) ? item.basOfrDataQtyCtt : used.data + used.unit) : null,
+          basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? (isNaN(parseInt(item.basOfrVcallTmsCtt, 10)) ?
+              item.basOfrVcallTmsCtt : item.basOfrVcallTmsCtt + VOICE_UNIT.MIN) : null,
+          basOfrCharCntCtt: isBasOfrCharCntCtt ? (isNaN(parseInt(item.basOfrCharCntCtt, 10)) ?
+              item.basOfrCharCntCtt : item.basOfrCharCntCtt + UNIT['310']) : null,
           isNumberBasFeeInfo: !isBasFeeInfo
         });
       })

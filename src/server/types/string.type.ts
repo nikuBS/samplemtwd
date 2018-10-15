@@ -26,7 +26,8 @@ export const MYT_FARE_BILL_TYPE = {
 export enum UNIT {
   WON = '원',
   GB = 'GB',
-  MB = 'MB'
+  MB = 'MB',
+  SMS = '건'
 }
 
 export const MYT_DATA_USAGE = {
