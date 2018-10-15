@@ -13,6 +13,8 @@ Tw.MyTFarePaymentPrepayAuto = function (rootEl, title, type) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
+  this._paymentCommon = new Tw.MyTFarePaymentCommon(rootEl);
+
   this._init();
 };
 
@@ -37,6 +39,9 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
     this.$changeMoneyInfo = this.$container.find('.fe-change-money-info');
     this.$changeCardInfo = this.$container.find('.fe-change-card-info');
     this.$changeType = 'A';
+
+    this._historyUrl = '/myt/fare/payment/' + this.$title + '/auto/info';
+    this._mainUrl = '/myt/fare/payment/' + this.$title;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
@@ -262,13 +267,24 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
     return apiName;
   },
   _paySuccess: function (res) {
+    var linkName = null;
+    var textName = null;
+
+    if (this.$type === 'auto') {
+      this._historyUrl = null;
+      textName = Tw.MYT_FARE_PAYMENT_NAME.REQUEST;
+    } else {
+      linkName = Tw.MYT_FARE_PAYMENT_NAME.GO_CHANGE_HISTORY;
+      textName = Tw.MYT_FARE_PAYMENT_NAME.CHANGE;
+    }
+
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._popupService.openAlert('complete');
+      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl, linkName, textName);
     } else {
       this._payFail(res);
     }
   },
   _payFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   }
 };

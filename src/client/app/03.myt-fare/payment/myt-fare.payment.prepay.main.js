@@ -48,7 +48,10 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
   _prepay: function () {
     this._popupService.open({
       'hbs': 'MF_06_03'
-    }, $.proxy(this._goPrepay, this));
+    },
+      $.proxy(this._goPrepay, this),
+      null,
+      'pay');
   },
   _goPrepay: function ($layer) {
     new Tw.MyTFarePaymentPrepayPay($layer, this.$title, this._maxAmount, this._name);

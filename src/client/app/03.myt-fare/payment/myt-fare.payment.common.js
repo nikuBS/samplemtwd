@@ -179,15 +179,15 @@ Tw.MyTFarePaymentCommon.prototype = {
       this._setBillList($target);
     }
   },
-  afterPaySuccess: function () {
+  afterPaySuccess: function (historyUrl, mainUrl, linkText, text) {
     this._popupService.open({
         'hbs': 'complete',
         'link_class': 'fe-payment-history',
-        'link_text': Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY,
-        'text': Tw.MYT_FARE_PAYMENT_NAME.PAYMENT
+        'link_text': linkText,
+        'text': text
       },
       $.proxy(this._onComplete, this),
-      $.proxy(this._goLink, this),
+      $.proxy(this._goLink, this, historyUrl, mainUrl),
       'complete'
     );
   },
@@ -201,13 +201,14 @@ Tw.MyTFarePaymentCommon.prototype = {
     } else {
       this._isSubmain = true;
     }
+    this._popupService.close();
   },
-  _goLink: function () {
+  _goLink: function (historyUrl, mainUrl) {
     if (this._isHistory) {
-      this._historyService.goLoad('/myt/fare/history/payment');
+      this._historyService.goLoad(historyUrl);
     }
     if (this._isSubmain) {
-      this._historyService.goLoad('/myt/fare');
+      this._historyService.goLoad(mainUrl);
     }
   }
 };

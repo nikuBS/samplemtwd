@@ -45,7 +45,7 @@ class MyTFarePaymentMicro extends TwViewController {
           return this.getRemainLimit('Done', '1')
             .switchMap((next) => {
               if (next.code === API_CODE.CODE_00) {
-                return next;
+                return Observable.of(next);
               } else {
                 return Observable.timer(3000)
                   .switchMap(() => {

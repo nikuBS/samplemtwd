@@ -16,6 +16,7 @@
                 <img src="/img/dummy/dmy-complete.jpg" alt=""/>
                 <span><strong>{{text}}</strong> 완료</span>
             </h1>
+            {{#if link_text}}
             <div class="complete-btn-box pt56">
                 <ul class="bt-slice">
                     <li class="bt-blue1">
@@ -23,6 +24,7 @@
                     </li>
                 </ul>
             </div>
+            {{/if}}
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
@@ -33,8 +35,5 @@
         </div>
     </div>
     <!--// .container-wrap -->
-    <!-- .popup-closeBtn -->
-    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
-    <!--// .popup-closeBtn -->
 </div>
 <!--// .popup hbs -->
