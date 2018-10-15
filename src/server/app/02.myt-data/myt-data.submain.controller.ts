@@ -57,17 +57,18 @@ class MytDataSubmainController extends TwViewController {
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
-      if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /* 기본 DATA 제공량이 없는 경우*/ ) {
+      // SP9 즉시충전버튼 무조건 노출로 변경
+      /*if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /!* 기본 DATA 제공량이 없는 경우*!/ ) {
         // 비노출 조건 T-pocketFi or T-Login 인 경우와 기본제공량이 없는경우
         // 즉시충전버튼 영역
         data.immCharge = false;
-      }
+      }*/
       if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
         // 데이터혜택/활용하기 영역
         // 휴대폰, T-pocketFi, T-Login  경우 노출
         data.isBenefit = true;
       }
-      if ( present && (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y') ) {
+      if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {
         // T끼리 데이터선물버튼 영역
         data.present = true;
       }
