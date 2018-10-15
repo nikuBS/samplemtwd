@@ -259,6 +259,8 @@ Tw.MyTFareBillGuidePps.prototype = {
       startMM: this.selDateObj.startDt,
       endMM: this.selDateObj.endDt
     }).done($.proxy(this._getHistoriesInfoInit, this));
+
+
   },
   _getHistoriesInfoInit: function (res) {
 
