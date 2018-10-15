@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 
-class MyTJoinJoinInfoNoAgreement extends TwViewController {
+class MyTJoinInfoNoAgreement extends TwViewController {
 
   constructor() {
     super();
@@ -17,4 +17,4 @@ class MyTJoinJoinInfoNoAgreement extends TwViewController {
   }
 }
 
-export default MyTJoinJoinInfoNoAgreement;
+export default MyTJoinInfoNoAgreement;
