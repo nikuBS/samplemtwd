@@ -10,18 +10,10 @@ Tw.MyTDataFamilyMain = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
-  this._cachedElement();
   this._bindEvent();
-  this._init();
 };
 
 Tw.MyTDataFamilyMain.prototype = {
-  _init: function () {
-  },
-
-  _cachedElement: function () {
-  },
-
   _bindEvent: function () {
     this.$container.on('click', 'ul.select-list > li', $.proxy(this._handleChangeLimitType, this));
     this.$container.on('keyup', 'span.input > input', $.proxy(this._handleChangeLimitation, this));
@@ -34,7 +26,7 @@ Tw.MyTDataFamilyMain.prototype = {
     var $input = $target.find('span.input input');
     
     if ($input) {
-      $btn.attr('disabled', Number($input.val()) === $target.data('init-value'))
+      $btn.attr('disabled', Number($input.val()) === $target.data('init-value'));
     } else {
       $btn.attr('disabled', !!$target.data('init-value'));
     }
@@ -56,11 +48,11 @@ Tw.MyTDataFamilyMain.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_06_0050, {
         mbrSvcMgmtNum: member,
         dataQty: limitation
-      }).done($.proxy(this._successChangeLimitation, this))
+      }).done($.proxy(this._successChangeLimitation, this));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {
         mbrSvcMgmtNum: member
-      }).done($.proxy(this._successChangeLimitation, this))
+      }).done($.proxy(this._successChangeLimitation, this));
     }
   },
 

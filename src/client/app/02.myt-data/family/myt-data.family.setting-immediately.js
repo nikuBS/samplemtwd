@@ -23,11 +23,12 @@ Tw.MyTDataFamilySettingImmediately.prototype = {
   _cachedElement: function () {
     this.$amountInput = this.$container.find('span.input input');
     this.$submitBtn = this.$container.find('.bt-red1 button');
+    this.$error = this.$container.find('#aria-exp-desc3');
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.bt-bg-blue1', $.proxy(this._addShareData, this));
-    this.$container.on('focusout', 'span.input input', $.proxy(this._validateShareAmount, this))
+    this.$container.on('focusout', 'span.input input', $.proxy(this._validateShareAmount, this));
     this.$amountInput.on('keyup', $.proxy(this._handleChangeAmount, this));
     this.$submitBtn.on('click', $.proxy(this._confirmSubmit, this));
   },
@@ -45,10 +46,16 @@ _addShareData: function (e) {
 
   _validateShareAmount: function () {
     if (!this.$amountInput.val()) {
-      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V17
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
+      this.$error.removeClass('none');
     } else if (Number(this.$amountInput.val()) > this._shareAmount) {
-      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V16
-    }    
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
+      this.$error.removeClass('none');
+    } else {
+      if (!this.$error.hasClass('none')) {
+        this.$error.addClass('none');
+      }
+    } 
   },
 
   _handleChangeAmount: function (e) {
