@@ -13,7 +13,6 @@ Tw.MyTFarePaymentPoint = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._historyService.init('hash');
   this._init();
 };
 
@@ -21,6 +20,7 @@ Tw.MyTFarePaymentPoint.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
+    this._checkIsPopup();
   },
   _initVariables: function () {
     this.$pointSelector = this.$container.find('.fe-select-point');
@@ -28,7 +28,9 @@ Tw.MyTFarePaymentPoint.prototype = {
     this.$pointPw = this.$container.find('.fe-point-pw');
     this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
     this.$pointBox = this.$container.find('.fe-point-box');
+
     this._pointCardNumber = null;
+    this._isPaySuccess = false;
 
     this.$container.find('.refund-pament-account').hide();
   },
@@ -39,12 +41,19 @@ Tw.MyTFarePaymentPoint.prototype = {
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
-    this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
+  },
+  _checkIsPopup: function () {
+    var isCheck = this._historyService.getHash().match('check');
+
+    if (isCheck && this._historyService.isReload()) {
+      this._historyService.replace();
+      this._checkPay();
+    }
   },
   _openGetPoint: function () {
     this._popupService.open({
       'hbs':'MF_01_03_01'
-    }, $.proxy(this._setPoint, this));
+    }, $.proxy(this._setPoint, this), null, 'get-point');
   },
   _setPoint: function ($layer) {
     $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
@@ -78,7 +87,7 @@ Tw.MyTFarePaymentPoint.prototype = {
     }
   },
   _getFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _setPointInfo: function (result) {
     this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));
@@ -94,10 +103,10 @@ Tw.MyTFarePaymentPoint.prototype = {
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.SELECT_POINT,
-      data:Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT_POINT,
+      data: Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
@@ -118,8 +127,33 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _checkPay: function () {
     if (this._isValid()) {
-      this._historyService.goHash('#check');
-      this._setData();
+      this._popupService.open({
+          'hbs': 'MF_01_01_01',
+          'title': Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG,
+          'unit': Tw.CURRENCY_UNIT.POINT
+        },
+        $.proxy(this._openCheckPay, this),
+        $.proxy(this._afterPaySuccess, this),
+        'check'
+      );
+    }
+  },
+  _openCheckPay: function ($layer) {
+    this._setData($layer);
+    this._paymentCommon.getListData($layer);
+
+    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+  },
+  _setData: function ($layer) {
+    $layer.find('.fe-check-title').text(this.$pointSelector.text());
+    $layer.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code')).text(this._pointCardNumber);
+    $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this.$point.val().toString()));
+
+    $layer.find('.refund-pament-account').hide();
+  },
+  _afterPaySuccess: function () {
+    if (this._isPaySuccess) {
+      this._paymentCommon.afterPaySuccess();
     }
   },
   _isValid: function () {
@@ -135,11 +169,6 @@ Tw.MyTFarePaymentPoint.prototype = {
       this._validation.checkIsMore(this.$point.val(), 1000, Tw.MSG_PAYMENT.REALTIME_A08) &&
       this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06) &&
       this._validation.checkEmpty(this.$pointPw.val(), Tw.MSG_PAYMENT.AUTO_A04));
-  },
-  _setData: function () {
-    this.$container.find('.fe-check-title').text(this.$pointSelector.text());
-    this.$container.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code')).text(this._pointCardNumber);
-    this.$container.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this.$point.val().toString()));
   },
   _pay: function () {
     var reqData = this._makeRequestData();
@@ -160,13 +189,12 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.setHistory();
-      this._historyService.goHash('#complete');
+      this._paymentCommon.afterPaySuccess('sms');
     } else {
       this._payFail(res);
     }
   },
   _payFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   }
 };

@@ -1,4 +1,3 @@
-<!-- .popup hbs -->
 <div class="popup-page tw-popup tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
     <!-- #header -->
     <div class="header-wrap">
@@ -14,14 +13,12 @@
         <div class="container">
             <h1 class="complete-title">
                 <img src="/img/dummy/dmy-complete.jpg" alt=""/>
-                <span><strong>{{text}}</strong> 완료</span>
+                <span><strong>SMS<br/>전송</strong> 완료</span>
             </h1>
-            <div class="complete-btn-box pt56">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <button class="{{link_class}}">{{link_text}}</button>
-                    </li>
-                </ul>
+            <div class="complete-info">
+                <dl>
+                    <dt>전송된 입금전용계좌로 입금하시면<br/>즉시 수납이 반영됩니다.</dt>
+                </dl>
             </div>
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
@@ -37,4 +34,3 @@
     <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
     <!--// .popup-closeBtn -->
 </div>
-<!--// .popup hbs -->

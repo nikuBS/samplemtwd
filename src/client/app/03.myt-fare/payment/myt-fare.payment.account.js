@@ -152,27 +152,7 @@ Tw.MyTFarePaymentAccount.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._popupService.open({
-        'hbs': 'complete',
-        'link_class': 'fe-payment-history',
-        'link_text': Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY,
-        'text': Tw.MYT_FARE_PAYMENT_NAME.PAYMENT
-      },
-        $.proxy(this._onComplete, this),
-        $.proxy(this._goPaymentHistory, this),
-        'complete'
-      );
-    }
-  },
-  _onComplete: function ($layer) {
-    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this));
-  },
-  _setIsLink: function () {
-    this._isLink = true;
-  },
-  _goPaymentHistory: function () {
-    if (this._isLink) {
-      this._historyService.goLoad('/myt/fare/history/payment');
+      this._paymentCommon.afterPaySuccess();
     }
   },
   _isValid: function () {
@@ -212,7 +192,7 @@ Tw.MyTFarePaymentAccount.prototype = {
       this._payFail(res);
     }
   },
-  _payFail: function (res) {
-    Tw.Error(res.code, res.msg).pop();
+  _payFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   }
 };
