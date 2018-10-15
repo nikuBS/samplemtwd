@@ -132,9 +132,27 @@ class ProductJoin extends TwViewController {
         psnlInfoOfrCttSummary: stipulationInfo.stipulation.psnlInfoOfrAgreeYn === 'Y' ?
             this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoOfrHtmlCtt) : '',
         adInfoOfrCttSummary: stipulationInfo.stipulation.adInfoOfrAgreeYn === 'Y' ?
-            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : ''
+            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
+        existsCount: this._getStipulationYnCnt([stipulationInfo.stipulation.scrbStplAgreeYn, stipulationInfo.stipulation.psnlInfoCnsgAgreeYn,
+          stipulationInfo.stipulation.psnlInfoOfrAgreeYn, stipulationInfo.stipulation.adInfoOfrAgreeYn])
       })
     });
+  }
+
+  /**
+   * @param yNarray
+   * @private
+   */
+  private _getStipulationYnCnt(yNarray): any {
+    let count = 0;
+
+    yNarray.forEach((flag) => {
+      if (flag === 'Y') {
+        count++;
+      }
+    });
+
+    return count;
   }
 
   /**
