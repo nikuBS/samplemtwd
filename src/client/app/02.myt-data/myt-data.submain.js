@@ -42,7 +42,7 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
-      this.$dataUsefulBtn = this.$container.find('[data-id=useful]');
+      this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     }
     if ( this.data.pattern ) {
       this.$patternChart = this.$container.find('[data-id=pattern_chart]');
@@ -76,7 +76,7 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
-      this.$dataUsefulBtn.on('click', $.proxy(this._onDataUsefulDetail, this));
+      this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
     }
 
     if ( this.data.breakdownList ) {
@@ -192,11 +192,13 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
+    // 혜택 할인 페이지로 이동
     this._popupService.openAlert('TBD');
   },
 
-  // 데이터활용하기
-  _onDataUsefulDetail: function () {
+  // 데이터 조르기
+  _onDataPesterDetail: function () {
+    //  2_A17 Alert 호출
     this._popupService.openAlert('TBD');
   },
 
