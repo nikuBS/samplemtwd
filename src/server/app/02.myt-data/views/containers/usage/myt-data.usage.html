@@ -24,7 +24,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="plan-title">
-                    <h3 class="tit"><%= svcInfo.prodNm %></h3>
+                    <h3 class="tit"><%= svcInfo && svcInfo.prodNm %></h3>
                     <div class="bt-alone"><a href="/myt/join/product-service" class="bt-bg-blue1">나의 요금제</a></div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'data', typeStr: '데이터', items: usageData.data }); %>
             <% } %>
 
-            <% if (svcInfo.svcAttrCd === 'M1') { %>
+            <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
             <div>
 
                 <% if (balanceAddOns && balanceAddOns.sharingService.tdataSharing === 'Y') { %>
@@ -273,7 +273,7 @@
             <% } %>
 
 
-            <% if (svcInfo.svcAttrCd === 'M2' && ppsInfo) { %>
+            <% if (svcInfo && svcInfo.svcAttrCd === 'M2' && ppsInfo) { %>
             <!-- 유효기간 -->
             <div class="data-type">
                 <h4 class="tit">유효기간</h4>
