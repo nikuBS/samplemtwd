@@ -5,6 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import DateHelper from '../../../../utils/date.helper';
 
 class MyTJoinSuspend extends TwViewController {
   constructor() {
@@ -12,10 +13,15 @@ class MyTJoinSuspend extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any) {
+    const from = DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    const to = DateHelper.getShortDateWithFormatAddByUnit(from, 3, 'months', 'YYYY-MM-DD');
+
     res.render('suspend/myt-join.suspend.html', {
       svcInfo: svcInfo,
       lines: [],
-      billAvailable: false
+      billAvailable: false,
+      period: { from, to },
+      suspended: false
     });
   }
 }
