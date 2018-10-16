@@ -44,22 +44,22 @@
                         <% } else { %>
                         <ul class="list-comp-lineinfo">
                             <% additions.map(addition => { %>
-                            <li class="add-con" data-isFree ="<%= addition.basFeeTxt === "무료" %>">
+                            <li class="<%= addition.btnList.length > 0 ? 'add-con' : '' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === "무료" %>">
                                 <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
                                 <button>
                                     <div class="lineinfo-user">
-                                        <span class="info-title">
-                                            <%= addition.prodNm %></span>
-                                        <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>
-
+                                        <span class="info-title"><%= addition.prodNm %></span>
+                                        <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>    
                                     </div>
                                     <div class="lineinfo-data">
+                                        <a href="/product/detail/<%= addition.prodId %>">
                                         <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
                                         <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                         <% } else { %>
-                                            <span class="info-title num"><%= addition.basFeeTxt %></span>
+                                            <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
                                         <span class="ico"></span>
+                                        </a>
                                     </div>
                                 </button>
                                 <% if (addition.btnList.length > 0) { %>
@@ -85,6 +85,7 @@
         </div>
         <!--// #contents -->
     </div>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
