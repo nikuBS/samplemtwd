@@ -26,7 +26,7 @@ class MyTJoinProductAdditions extends TwViewController {
           });
         }
 
-        const additions = this.convertMobileAdditions(resp.result.addProdList);
+        const additions = this.convertMobileAdditions(FormatHelper.isEmpty(resp.result) ? [] : resp.result.addProdList);
         res.render('product/myt-join.product.additions.mobile.html', { svcInfo, additions });
       });
     } else {
