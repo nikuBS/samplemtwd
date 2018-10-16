@@ -3,8 +3,8 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
 %>
-<% include ../components/start.component.html %>
-<body>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -16,15 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>신청내역</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true"><span class="tx-default">인터넷</span><span class="ico"></span></button>
-        </div>
-    </div>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '신청내역', svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -34,15 +26,15 @@
             <div class="cont-box">
                 <div class="myinfo-wrap">
                     <div class="myinfo-cont">
-                        <h3 class="title-m"><span class="blind">사용중인 상품명</span>T_스마트 광랜(다이렉트)</h3>
-                        <span class="subtitle2 pt10"><span class="blind">설치된 설치 장소</span>서울시 도봉구*****************</span>
+                        <h3 class="title-m"><span class="blind">사용중인 상품명</span><%= data.TTTTTTTTitle %>T_스마트 광랜(다이렉트)</h3>
+                        <span class="subtitle2 pt10"><span class="blind">설치된 설치 장소</span><%= data.LLLLLLLLocation %>서울시 도봉구*****************</span>
                     </div>
                 </div>
                 <ul class="bt-slice item-two mt20">
-                    <li class="bt-white2">
+                    <li class="bt-white2" id="btnGifts">
                         <button>사은품 조회</button>
                     </li>
-                    <li class="bt-white2">
+                    <li class="bt-white2" id="btnDiscRefund">
                         <button>할인 반환금 조회</button>
                     </li>
                 </ul>
@@ -54,33 +46,33 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="link-long-list">
-                    <li>
+                    <li id="btnHist">
                         <div class="link-long">
                             <button>가입 변경 신청 현황
                                 <span class="tx-sub">
-                                        <span class="normal">4개 신청</span>
-                                        <span class="ico"></span>
-                                    </span>
+                                    <span class="normal"><%= data.CCCCCCCCCCChangeCnt %>4개 신청</span>
+                                    <span class="ico"></span>
+                                </span>
                             </button>
                         </div>
                     </li>
-                    <li>
+                    <li id="btnAs">
                         <div class="link-long">
                             <button>장애 A/S 신청 현황
                                 <span class="tx-sub">
-                                        <span class="normal">2건</span>
-                                        <span class="ico"></span>
-                                    </span>
+                                    <span class="normal"><%= data.AAAAAAAAAAAAAAsCnt %>2건</span>
+                                    <span class="ico"></span>
+                                </span>
                             </button>
                         </div>
                     </li>
-                    <li>
+                    <li id="btnNetphone">
                         <div class="link-long">
                             <button>인터넷 전화번호이동<br />신청 현황
                                 <span class="tx-sub">
-                                        <span class="normal">처리중</span>
-                                        <span class="ico"></span>
-                                    </span>
+                                    <span class="normal"><%= data.NNNNNNNNetphonechangeStatus %>처리중</span>
+                                    <span class="ico"></span>
+                                </span>
                             </button>
                         </div>
                     </li>
@@ -92,6 +84,9 @@
     </div>
     <!--// #contents -->
 </div>
-</body>
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWire($('#wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

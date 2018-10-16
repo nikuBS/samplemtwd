@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { SVC_ATTR } from '../../../../types/bff.old.type';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import DateHelper from '../../../../utils/date.helper';
 
 
 class MyTJoinWireASDetail extends TwViewController {
@@ -17,14 +18,19 @@ class MyTJoinWireASDetail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log('============ call BFF_05_0157 ==============');
-    // const trblNum = req.params['troubleNum'];
-    const trblNum = '1';
-    if ( !trblNum ) {
-      // TODO throw error
+
+    const troubleNum = req.query.troubleNum;
+    const troubleDt = req.query.troubleDt;
+    const svcNm = req.query.svcNm;
+    const troubleDetail = req.query.troubleDetail;
+
+    if ( !troubleNum ) {
+      console.log(' troubleNum is not defined');
+      this.error.render( res );
       return;
     }
-    this.apiService.request(API_CMD.BFF_05_0157, { troubleNum : trblNum })
+
+    this.apiService.request(API_CMD.BFF_05_0157, { troubleNum : troubleNum })
       .subscribe((resp) => {
         const resp1 = {
             'code': '00',
@@ -39,15 +45,21 @@ class MyTJoinWireASDetail extends TwViewController {
               'mvotCoFnshOpertrId': '행복기사사번',
               'mvotCoFnshOpertrNm': '행복기사명',
               'opertrPhonNum': '행복기사전화번호',
-              'operSchdDtm': '방문예정일시'
+              'operSchdDtm': '201810200506'
             }
           };
 
         if ( resp1.code === API_CODE.CODE_00 ) {
-          console.log('============ result ==============');
-          const option = { svcInfo: svcInfo, data: resp1.result};
+          const data = resp1.result;
+          data['troubleNum'] = troubleNum;
+          data['troubleDt'] = DateHelper.getShortDateNoDot(troubleDt);
+          data['svcNm'] = svcNm;
+          data['troubleDetail'] = troubleDetail;
+          data['operSchdDtm'] = DateHelper.getFullDateAndTime(data['operSchdDtm']);
 
-          res.render('wire/myt-join.wire.as.html', option);
+          const option = { svcInfo: svcInfo, data: data};
+
+          res.render('wire/myt-join.wire.as.detail.html', option);
         }
       });
   }

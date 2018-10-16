@@ -3,22 +3,76 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
 %>
-
-<% include ../components/start.component.html %>
-<p>
-    장애 A/S 신청 현황 상세
-
-    'custNm': '고객명',
-    'cntcNum': '연락전화번호',
-    'addrNm': '설치주소',
-    'mvotOperCoId': '출동작업업체ID',
-    'mvotOperCoNm': '출동작업업체명',
-    'coPhonNum': '출동작업업체전화번호',
-    'mvotCoFnshOpertrId': '행복기사사번',
-    'mvotCoFnshOpertrNm': '행복기사명',
-    'opertrPhonNum': '행복기사전화번호',
-    'operSchdDtm': '방문예정일시'
-
-</p>
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '장애 A/S 상세 내역', svcInfo: svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box noborder nogaps bgnone">
+                <div class="myfare-result-wrap type2">
+                    <div class="myfare-list">
+                        <ul>
+                            <li>
+                                <dl class="show-data">
+                                    <dt><%= data.troubleDetail %></dt>
+                                    <dd class="tx-bold">진행상태1<%= data.XXXXXXXstatus %></dd>
+                                </dl>
+                            </li>
+                            <li class="pt20">
+                                <dl class="show-data detail">
+                                    <dt>신청일</dt>
+                                    <dd><span class="number"><%= data.troubleDt %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>고객명</dt>
+                                    <dd><%= data.custNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>진행상태</dt>
+                                    <dd>진행상태2<%= data.XXXXXXXstatus %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>연락처</dt>
+                                    <dd><span class="number"><%= data.cntcNum %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>방문 예정 일시</dt>
+                                    <dd><span class="number"><%= data.operSchdDtm %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>설치장소</dt>
+                                    <dd><%= data.addrNm %></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bt-h-type1 mt40">
+                        <ul class="bt-slice">
+                            <li class="bt-white1" id="btnCancel">
+                                <button>신청 취소</button>
+                            </li>
+                            <li class="bt-white1" id="btnAlarmReq">
+                                <button>망작업 안내 SMS 알림신청</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireASDetail($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

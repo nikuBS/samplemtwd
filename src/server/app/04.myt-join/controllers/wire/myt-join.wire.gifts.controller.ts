@@ -29,12 +29,60 @@ class MyTJoinWireGifts extends TwViewController {
               'hasSKTWire': 'Y',    // SK브로드밴드 가입여부(N:미가입)
               'resultValue': 'Y',   // 사은품여부(N:미존재)
               'nextPage': '2',
-              'totalCnt': '1',
+              'totalCnt': '12',
               'giftProvideList': [
                 {
-                  'giftNm': 'SK상품권 13만원',
+                  'giftNm': 'SK상품권 1만원',
+                  'giftOpStCd': '01',
+                  'giftOpStNm': '배송 접수',
+                  'dlvCompDt': '20130404',
+                  'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+                  'pdlvBasAddr': '인천 동***********'
+                },
+                {
+                  'giftNm': 'SK상품권 2만원',
+                  'giftOpStCd': '02',
+                  'giftOpStNm': '배송 요청',
+                  'dlvCompDt': '20130404',
+                  'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+                  'pdlvBasAddr': '인천 동***********'
+                },
+                {
+                  'giftNm': 'SK상품권 3만원',
                   'giftOpStCd': '03',
                   'giftOpStNm': '배송완료',
+                  'dlvCompDt': '20130404',
+                  'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+                  'pdlvBasAddr': '인천 동***********'
+                },
+                {
+                  'giftNm': 'SK상품권 4만원',
+                  'giftOpStCd': '04',
+                  'giftOpStNm': '반품 접수',
+                  'dlvCompDt': '20130404',
+                  'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+                  'pdlvBasAddr': '인천 동***********'
+                },
+                {
+                  'giftNm': 'SK상품권 5만원',
+                  'giftOpStCd': '05',
+                  'giftOpStNm': '반품 요청',
+                  'dlvCompDt': '20130404',
+                  'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+                  'pdlvBasAddr': '인천 동***********'
+                },
+                {
+                  'giftNm': 'SK상품권 6만원',
+                  'giftOpStCd': '06',
+                  'giftOpStNm': '반품 완료',
+                  'dlvCompDt': '20130404',
+                  'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
+                  'pdlvBasAddr': '인천 동***********'
+                },
+                {
+                  'giftNm': 'SK상품권 7만원',
+                  'giftOpStCd': '07',
+                  'giftOpStNm': '재배송 접수',
                   'dlvCompDt': '20130404',
                   'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
                   'pdlvBasAddr': '인천 동***********'
@@ -46,7 +94,6 @@ class MyTJoinWireGifts extends TwViewController {
         if ( resp1.code === API_CODE.CODE_00 ) {
           console.log('============ result ==============');
           const option = { svcInfo: svcInfo, data: resp1.result};
-
           res.render('wire/myt-join.wire.gifts.html', option);
         }
       });

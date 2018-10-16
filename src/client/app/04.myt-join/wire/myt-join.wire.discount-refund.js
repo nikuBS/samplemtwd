@@ -1,14 +1,14 @@
 /**
- * FileName: myt-join.wire.as.js
+ * FileName: myt-join.wire.discount-refund.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
  */
-Tw.MyTJoinWireDiscountRefund = function (rootEl, options) {
+
+Tw.MyTJoinWireDiscountRefund = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._options = options;
 
   this._bindEvent();
   this._registerHelper();
@@ -20,13 +20,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _bindEvent: function () {
-  },
-
-  /**
-   * ui reset
-   * @private
-   */
-  _resetUI: function() {
+    $('button').click($.proxy(this._requestData, this))
   },
 
   /**
@@ -34,7 +28,50 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _registerHelper: function () {
+    Handlebars.registerHelper('shortDateNoDot', Tw.DateHelper.getShortDateNoDot);
+    Handlebars.registerHelper('curreny', Tw.FormatHelper.addComma);
+  },
+
+  /**
+   * 할인 반환금 조회
+   * @private
+   */
+  _requestData: function() {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
+      .done(function (resp) {
+
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+          Tw.Error(resp.code, resp.msg).pop();
+          skt_landing.action.loading.off({ ta: '.container' });
+          return;
+        }
+
+        var data = resp.result;
+
+        var listTmpl = Handlebars.compile($('#list-tmplt').html());
+        var totTmpl = Handlebars.compile($('#tot-tmplt').html());
+
+        if( data.chargeInfo ) {
+          $('#tot-div').html(totTmpl(data.chargeInfo));
+        }
+        if( data.penaltyInfo ) {
+          var list = data.penaltyInfo;
+
+          var html = '';
+          for ( var i = 0; i < list.length ; i++ ) {
+            html += listTmpl( list[i] );
+          }
+
+          $('#refund-list').html(html);
+        }
+        skt_landing.action.loading.off({ ta: '.container' });
+      })
+      .fail(function (err) {
+        Tw.Error(err.status, err.statusText);
+        skt_landing.action.loading.off({ ta: '.container' });
+      });
+
   }
-
-
 };

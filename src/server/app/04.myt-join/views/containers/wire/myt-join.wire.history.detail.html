@@ -3,10 +3,8 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
 %>
-
-<% include ../components/start.component.html %>
-<!-- //신규가입 상세내역 case1 -->
-<body>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -18,19 +16,15 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>신규가입 상세 내역</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span>
-        </div>
-    </div>
+    <%- include('../../../../../common/views/components/header.component.html', { title: title, svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+
+            <% if ( data.atype === '167' ) { %>
+            <!-- 신규가입 상세내역 -->
             <!-- .cont-box -->
             <div class="cont-box noborder nogaps bgnone">
                 <div class="myfare-result-wrap type2">
@@ -39,27 +33,266 @@
                             <li>
                                 <dl class="show-data">
                                     <dt>신규가입</dt>
-                                    <dd class="tx-bold">접수중</dd>
+                                    <dd class="tx-bold">접수중XXX</dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>접수일</dt>
-                                    <dd><span class="number">2018.05.23</span></dd>
+                                    <dd><span class="number"><%= data.dt %></span></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>고객명</dt>
-                                    <dd>홍길동</dd>
+                                    <dd><%= data.custNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>희망일시<br />(개통 예정일)</dt>
-                                    <dd><span class="number">2018.05.23</span></dd>
+                                    <dd><span class="number"><%= data.svcPrefrDtm %></span></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>신청 서비스</dt>
-                                    <dd>인터넷 T마트 광랜</dd>
+                                    <dd><%= data.svcNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>설치 장소</dt>
-                                    <dd>41078 서울시 *****</dd>
+                                    <dd><%= data.addr %></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <% if ( data.wireRegistOss && data.wireRegistOss.happyOperNm ) { %>
+                    <div class="engineer-list" style="display: none;">
+                        <ul>
+                            <li>
+                                <div class="img-area"><img src="/img/etc/engineer-noimg1.jpg" alt="<%= data.wireRegistOss.happyCoordiId %> 행복기사사진"/></div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">행복기사</span>
+                                            <span class="tx-cont"><%= data.wireRegistOss.happyOperNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">소속</span>
+                                            <span class="tx-cont"><%= data.wireRegistOss.happyOperCoNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">연락처</span>
+                                            <span class="tx-cont"><%= data.wireRegistOss.happyOperPhonNum %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!--<li>
+                                <div class="img-area"><img src="/img/etc/engineer-noimg2.jpg" alt="행복기사사진"/></div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">행복기사</span>
+                                            <span class="tx-cont">홍길동</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">연락처</span>
+                                            <span class="tx-cont">010-1234-5678</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            -->
+                        </ul>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <!--// 신규가입 상세내역 -->
+            <% } %>
+
+
+
+            <% if ( data.atype === '162' ) { %>
+            <!-- 설치 장소 변경 상세내역 -->
+            <!-- .cont-box -->
+            <div class="cont-box noborder nogaps bgnone">
+                <div class="myfare-result-wrap type2">
+                    <div class="myfare-list">
+                        <ul>
+                            <li>
+                                <dl class="show-data">
+                                    <dt>설치 장소 변경</dt>
+                                    <dd class="tx-bold">접수중XXX</dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>접수일</dt>
+                                    <dd><span class="number"><%= data.dt %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>고객명</dt>
+                                    <dd><%= data.reqrNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>희망일시</dt>
+                                    <dd><span class="number"><%= data.setPrefrDt %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>신청 서비스</dt>
+                                    <dd><%= data.svcNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>설치 장소</dt>
+                                    <dd></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>변경 장소</dt>
+                                    <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>관리 고객센터</dt>
+                                    <dd>홍길동 (02-1234-5678) XXXXXX</dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>설치 장소<br />(변경후)</dt>
+                                    <dd>41078 서울시 ******* XXXXXX</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="engineer-list">
+                        <ul>
+                            <li>
+                                <div class="img-area"><img src="/img/etc/engineer-noimg1.jpg" alt="행복기사사진"/></div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">행복기사</span>
+                                            <span class="tx-cont">홍길동 XXXXXXX</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">소속</span>
+                                            <span class="tx-cont">SK텔레콤 XXXXXXX</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">연락처</span>
+                                            <span class="tx-cont">010-1234-5678 XXXXXXX</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <!--// 설치 장소 변경 상세내역 -->
+            <% } %>
+
+
+
+            <% if ( data.atype === '168' ) { %>
+            <!-- 가입상품 변경 상세내역 -->
+            <!-- .cont-box -->
+            <div class="cont-box noborder nogaps bgnone">
+                <div class="myfare-result-wrap type2">
+                    <div class="myfare-list">
+                        <ul>
+                            <li>
+                                <dl class="show-data">
+                                    <dt>가입 상품 변경</dt>
+                                    <dd class="tx-bold"><%= data.stNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>접수일</dt>
+                                    <dd><span class="number"><%= data.dt %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>고객명</dt>
+                                    <dd><%= data.custNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>희망일시</dt>
+                                    <dd><span class="number"><%= data.svcPrefrDtm %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>신청 서비스</dt>
+                                    <dd><%= data.svcNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>설치 장소</dt>
+                                    <dd><%= data.addr %></dd>
+                                </dl>
+                                <% if ( data.ossOut && data.ossOut.operCoNm ) { %>
+                                <dl class="show-data detail">
+                                    <dt>관리 고객센터</dt>
+                                    <dd><%= data.ossOut.operCoNm %> <%= data.ossOut.operCoPhonNum %></dd>
+                                </dl>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                    <% if ( data.ossOut && data.ossOut.happyOperNm ) { %>
+                    <div class="engineer-list">
+                        <ul>
+                            <li>
+                                <div class="img-area"><img src="/img/etc/engineer-noimg1.jpg" alt="<%= data.ossOut.happyOperId %> 행복기사사진"/></div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">행복기사</span>
+                                            <span class="tx-cont"><%= data.ossOut.happyOperNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">소속</span>
+                                            <span class="tx-cont"><%= data.ossOut.happyOperCoNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">연락처</span>
+                                            <span class="tx-cont"><%= data.ossOut.happyOperPhonNum %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <!--// 가입상품 변경 상세내역 -->
+            <% } %>
+
+
+            <% if ( data.atype === '143' ) { %>
+            <!-- 약정기간변경 상세내역 -->
+            <!-- .cont-box -->
+            <div class="cont-box noborder nogaps bgnone">
+                <div class="myfare-result-wrap type2">
+                    <div class="myfare-list">
+                        <ul>
+                            <li>
+                                <dl class="show-data">
+                                    <dt>약정기간 변경</dt>
+                                    <dd class="tx-bold"><%= data.stNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>접수일</dt>
+                                    <dd><span class="number"><%= data.dt %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>변경 전 약정기간</dt>
+                                    <dd><%= data.beforeTerm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>변경 후 약정기간</dt>
+                                    <dd><%= data.afterTerm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>일반전화</dt>
+                                    <dd><span class="number"><%= data.normalNum %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>휴대폰</dt>
+                                    <dd><span class="number"><%= data.phoneNum %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>서비스명</dt>
+                                    <dd><%= data.svcNm %></dd>
                                 </dl>
                             </li>
                         </ul>
@@ -67,11 +300,60 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <!--// 약정기간변경 상세내역 -->
+            <% } %>
+
+            <% if ( data.atype === '153' ) { %>
+            <!-- 요금상품변경 상세내역 -->
+            <!-- .cont-box -->
+            <div class="cont-box noborder nogaps bgnone">
+                <div class="myfare-result-wrap type2">
+                    <div class="myfare-list">
+                        <ul>
+                            <li>
+                                <dl class="show-data">
+                                    <dt>가입 상품 변경</dt>
+                                    <dd class="tx-bold"><%= data.stNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>접수일</dt>
+                                    <dd><span class="number"><%= data.dt %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>상품</dt>
+                                    <dd><%= data.mediaNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>상품매체</dt>
+                                    <dd><%= data.prodNm %></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>일반전화</dt>
+                                    <dd><span class="number"><%= data.normalNum %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>휴대폰</dt>
+                                    <dd><span class="number"><%= data.phoneNum %></span></dd>
+                                </dl>
+                                <dl class="show-data detail">
+                                    <dt>서비스명</dt>
+                                    <dd><%= data.svcNm %></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <!--// 요금상품변경 상세내역 -->
+            <% } %>
         </div>
     </div>
     <!--// #contents -->
 </div>
-</body>
-
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireHistoryDetail($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>
