@@ -393,7 +393,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return prev;
     }, []);
-
+    
     return data;
   }
 
