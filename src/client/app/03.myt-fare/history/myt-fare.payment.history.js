@@ -94,7 +94,7 @@ Tw.MyTFarePaymentHistory.prototype = {
       this.listRenderPerPage = 20;
 
       this.listLastIndex = this.listRenderPerPage;
-      this.listViewMoreHide = (this.listLastIndex <= totalDataCounter);
+      this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
       this.renderableListData = this.data.listData.mergedListData.slice(0, this.listRenderPerPage);
 

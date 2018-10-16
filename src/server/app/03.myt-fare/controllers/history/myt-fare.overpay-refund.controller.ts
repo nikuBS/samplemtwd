@@ -6,17 +6,12 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
+import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+
+import {MYT_PAYMENT_HISTORY_REFUND_TYPE} from '../../../../types/bff.type';
+
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
-import {API_CMD} from '../../../../types/api-command.type';
-// import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-
-// import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
-// import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
-
-// import FormatHelper from '../../../../utils/format.helper';
-// import DateHelper from '../../../../utils/date.helper';
 
 interface Query {
   current: string;
@@ -39,27 +34,44 @@ class MyTFareOverpayRefund extends TwViewController {
     if (query.current === 'overpay-refund') {
       this.apiService.request(API_CMD.BFF_07_0030, {}).subscribe((resData) => {
 
-        // this.logger.info(this, resData.result);
+        if (resData.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            code: resData.code,
+            msg: resData.msg,
+            svcInfo: svcInfo
+          });
+        }
+
+        resData.result.refundPaymentRecord = resData.result.refundPaymentRecord.reduce((prev, cur, index) => {
+          cur.listId = index;
+          cur.dataDt = DateHelper.getShortDateWithFormat(cur.rfndReqDt, 'YYYY.MM.DD');
+          cur.listDt = cur.dataDt.slice(5);
+          cur.dataAmt = FormatHelper.addComma(cur.sumAmt);
+          cur.dataOverAmt = FormatHelper.addComma(cur.ovrPay);
+          cur.dataBondAmt = FormatHelper.addComma(cur.rfndObjAmt);
+          cur.sortDt = cur.rfndReqDt;
+          cur.dataStatus = MYT_PAYMENT_HISTORY_REFUND_TYPE[cur.rfndStat];
+
+          if (prev.length) {
+            if (prev.slice(-1)[0].sortDt.slice(0, 4) !== cur.sortDt.slice(0, 4)) {
+              cur.yearHeader = cur.sortDt.slice(0, 4);
+            }
+          }
+
+          prev.push(cur);
+
+          return prev;
+        }, []);
 
         this.renderListView(res, svcInfo, query, resData.result.refundPaymentRecord);
-      //   res.render(viewFileName, {
-      //     svcInfo: svcInfo, currentMonth: currentMonthKor,
-      //     data: {termSelectValue: this.termSelectValue}, historyData: JSON.stringify(this.histData)
-      //   });
       });
 
     } else if (query.current === 'detail') {
       this.renderDetailView(res, svcInfo, query);
     }
-
-
-
-    // this.logger.info(this, req.path.split('/').splice(-1)[0], req.path.split('/').splice(-2)[0]);
   }
 
   renderListView(res: Response, svcInfo: any, query: Query, data: any) {
-
-    // this.logger.info(this, data);
 
     res.render('history/myt-fare.overpay-refund.history.html', {svcInfo: svcInfo, data: {
       current: query.current,

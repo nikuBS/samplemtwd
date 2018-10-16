@@ -31,85 +31,47 @@
                                 <li>
                                     <dl class="show-data">
                                         <dt>신청 일자</dt>
-                                        <dd class="tx-bold"><span class="number">2018.05.23</span></dd>
+                                        <dd class="tx-bold"><span class="number" id="fe-detail-date"></span></dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl class="show-data">
                                         <dt>신청 금액</dt>
-                                        <dd class="tx-bold"><span class="number">27,000</span>원</dd>
+                                        <dd class="tx-bold"><span class="number" id="fe-detail-req-amt"></span>원</dd>
                                     </dl>
                                     <dl class="show-data detail">
                                         <dt>과납 금액</dt>
-                                        <dd><span class="number">27,000</span>원</dd>
+                                        <dd><span class="number" id="fe-detail-over-amt"></span>원</dd>
                                     </dl>
                                     <dl class="show-data detail">
                                         <dt>채권보존료</dt>
-                                        <dd><span class="number">0</span></dd>
+                                        <dd><span class="number" id="fe-detail-bond-amt"></span>원</dd>
                                     </dl>
                                     <dl class="show-data detail">
                                         <dt>합계금액</dt>
-                                        <dd><span class="number">27,000</span>원</dd>
+                                        <dd><span class="number" id="fe-detail-total"></span>원</dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl class="show-data">
                                         <dt>처리결과</dt>
-                                        <dd class="tx-bold">송금완료( <span class="number">27,000</span>원 )</dd>
+                                        <dd class="tx-bold" id="fe-detail-ing"><span class="fe-detail-status"></span></dd>
+                                        <dd class="tx-bold" id="fe-detail-etc"><span class="fe-detail-status"></span> ( <span class="number" id="fe-detail-refund-total"></span>원 )</dd>
                                     </dl>
-                                    <dl class="show-data detail">
-                                        <dt>은행</dt>
-                                        <dd>국민은행</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>계좌번호</dt>
-                                        <dd><span class="number">123************</span></dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>처리일자</dt>
-                                        <dd><span class="number">2018.05.23</span></dd>
-                                    </dl>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-
-                <!-- .cont-box -->
-                <div class="cont-box noborder nogaps bgnone">
-                    <div class="myfare-result-wrap">
-                        <div class="myfare-list">
-                            <ul>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>신청 일자</dt>
-                                        <dd class="tx-bold"><span class="number">2018.05.23</span></dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>신청 금액</dt>
-                                        <dd class="tx-bold"><span class="number">27,000</span>원</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>과납 금액</dt>
-                                        <dd><span class="number">27,000</span>원</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>채권보존료</dt>
-                                        <dd><span class="number">0</span></dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>합계금액</dt>
-                                        <dd><span class="number">27,000</span>원</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>처리결과</dt>
-                                        <dd class="tx-bold">처리중</dd>
-                                    </dl>
+                                    <div id="fe-detail-overpay-refund-result">
+                                        <dl class="show-data detail">
+                                            <dt>은행</dt>
+                                            <dd id="fe-detail-bank-name"></dd>
+                                        </dl>
+                                        <dl class="show-data detail">
+                                            <dt>계좌번호</dt>
+                                            <dd><span class="number" id="fe-detail-bank-num"></span></dd>
+                                        </dl>
+                                        <dl class="show-data detail">
+                                            <dt>처리일자</dt>
+                                            <dd><span class="number" id="fe-detail-proc-date"></span></dd>
+                                        </dl>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -125,7 +87,7 @@
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
-        new Tw.MyTFareContentsHistory($(document));
+        new Tw.MyTFareOverpayRefund($(document), '<%- JSON.stringify(data)%>');
       });
     </script>
 </body>

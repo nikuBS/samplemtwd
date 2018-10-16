@@ -151,17 +151,32 @@ class MyTFareMicroHistory extends TwViewController {
   renderMicroBlockHistory(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resData) => {
+      const currentDate = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+      // resData.result.payHistoryCnt = 1;
+      // resData.result.cpHistories = [
+      //   {
+      //     'cpCode': 'thisistest',
+      //     'belong': 'ISAS',
+      //     'cpNm': '모빌리언스테스트',
+      //     'tySvc': 'AY',
+      //     'useDt': '2018-08-02 17:12',
+      //     'idpg': 'MB',
+      //     'applyMonth': '2018-09-01',
+      //     'pgNm': '모빌리언스'
+      //   }
+      // ];
+
 
       if (parseInt(resData.result.payHistoryCnt, 10) !== 0) {
         resData.result.cpHistories.map((o) => {
-          this.logger.info(this, DateHelper.getCurrentShortDate(new Date()), DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYYMMDD'));
+          // this.logger.info(this, DateHelper.getCurrentShortDate(new Date()), DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYYMMDD'));
+          o.isBlocked = parseInt(currentDate, 10) >= parseInt(o.applyMonth.substr(0, 10).replace(/-/g, ''), 10);
           o.requestDate = DateHelper.getShortDateWithFormat(o.useDt, 'YYYY.M.D');
           o.applyDate = DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYY.M.D');
         });
       } else {
         resData.result.cpHistories = [];
       }
-
 
       // const renderData = {
       //   cpName: resData.result.cpNm,
@@ -178,7 +193,7 @@ class MyTFareMicroHistory extends TwViewController {
       gubun: 'Request',
       requestCnt: 0
     };
-    const API_CMD_NAME = (parentPath === 'micro-payment') ? API_CMD.BFF_07_0073 : API_CMD.BFF_07_0081;
+    const API_CMD_NAME = (parentPath === 'micro') ? API_CMD.BFF_07_0073 : API_CMD.BFF_07_0081;
 
     this.apiService.request(API_CMD_NAME, apiOption).subscribe(() => {
       this.logger.info(this, apiOption);
@@ -187,7 +202,7 @@ class MyTFareMicroHistory extends TwViewController {
       this.apiService.request(API_CMD_NAME, apiOption).subscribe((resData) => {
         res.render('history/myt-fare.history.monthly.html',
             {
-              svcInfo: svcInfo, isMicro: parentPath === 'micro-payment', currentMonth: DateHelper.getCurrentMonth(),
+              svcInfo: svcInfo, isMicro: parentPath === 'micro', currentMonth: DateHelper.getCurrentMonth(),
               data: this.setMonthlyData(resData.result)
             });
       });

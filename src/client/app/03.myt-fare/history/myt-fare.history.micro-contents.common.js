@@ -29,6 +29,9 @@ Tw.MyTFareHistoryMicroContents.prototype = {
       case 'detail':
         this._initDetailView();
         break;
+      case 'block':
+        this._initAutopaymentBlockHistory();
+        break;
       default:
         break;
     }
@@ -191,7 +194,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
         this.$detailInfo.paymentBlockState.text(this._getDetailBlockState(this.detailData.cpState));
         if(this.detailData.cpState === 'C0') {
           this.$detailInfo.btnAutoPaymentBlock.show();
-          this.$detailInfo.btnAutoPaymentBlock.on('click', $.proxy(this._appendAutoPaymentBlockHandler, this));
+          this.$detailInfo.btnAutoPaymentBlock.on('click', $.proxy(this._appendAutoPaymentBlockHandler, this, this._detailBlockCallback));
         } else {
           this.$detailInfo.linkMoveBlockList.show();
         }
@@ -201,14 +204,14 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     }
   },
 
-  _appendAutoPaymentBlockHandler: function() {
+  _appendAutoPaymentBlockHandler: function(callback) {
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
       idpg: this.detailData.idpg,
       tySvc: this.detailData.tySvc,
       cpCode: this.detailData.cpCode,
       state: 'C'
     })
-        .done($.proxy(this._detailBlockCallback, this))
+        .done($.proxy(callback, this))
         .fail(function(e) {
           Tw.Logger.info(e);
         });
@@ -268,10 +271,32 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     }, openCallback, closeCallback);
   },
 
+  _initAutopaymentBlockHistory: function () {
+
+  },
+
   _autoPaymentBlockToggle: function (e) {
     var wrapper = $(e.target).parents('li');
     // Tw.CommonHelper.toast('asdfkajsdflaksdjf');
-    // console.log(wrapper.data('feCpcode'), wrapper.data('feTysvc'), wrapper.data('feIdpg'));
+    console.log(wrapper.data('feCpcode'), wrapper.data('feTysvc'), wrapper.data('feIdpg'));
+    this.detailData = {
+      idpg: wrapper.data('feIdpg'),
+      tySvc: wrapper.data('feTysvc'),
+      cpCode: wrapper.data('feCpcode'),
+      state: 'C'
+    };
+    this._appendAutoPaymentBlockHandler(this._blockHistoryBlockToggleHandler);
+  },
+
+  _blockHistoryBlockToggleHandler: function (res) {
+    if (res.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(res.code, res.msg).page();
+    }
+
+    Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.REVOCATION);
+    window.setTimeout($.proxy(function() {
+      this._historyService.reload();
+    }, this), 2000);
   },
 
   _getLastPathname: function () {

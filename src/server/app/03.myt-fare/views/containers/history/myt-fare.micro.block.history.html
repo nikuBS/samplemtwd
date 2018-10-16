@@ -37,79 +37,24 @@
                                         <span class="name1"><%=data[k].cpNm%></span><br />
                                         <span class="name2"><%=data[k].pgNm%></span><span class="date"><%=data[k].requestDate%></span><br />
                                         <span class="due-date">
-                                            <%# if() { %>
-                                            <%=data[k].applyDate%> 차단 예정
-                                            <%# } else if() { %>
-                                            <%=data[k].applyDate%> 해제 예정
-                                            <%# } %>
+                                            <% if(data[k].isBlocked) { %>차단중<% } else { %><%=data[k].applyDate%>차단 예정<% } %>
                                         </span>
                                     </div>
                                     <div class="switch-wrap">
-                                            <span class="widget">
-                                                <span class="widget-box switch">
-                                                    <% if(!data[k].isBlocked) { %>
-                                                    <span class="btn-switch type1">
-                                                        <span class="switch-style" role="checkbox" aria-checked="false">
-                                                            <span class="on-tx">해제</span>
-                                                            <input type="checkbox" title="지정일부터 차단 예정" />
-                                                            <span class="off-tx">차단</span>
-                                                        </span>
+                                        <span class="widget">
+                                            <span class="widget-box switch">
+                                                <span class="btn-switch type1 on">
+                                                    <span class="switch-style" role="checkbox" aria-checked="false">
+                                                        <span class="on-tx">해제</span>
+                                                        <input type="checkbox" title="지정일부터 해제 예정" />
+                                                        <span class="off-tx">차단</span>
                                                     </span>
-                                                    <% } else { %>
-                                                    <span class="btn-switch type1 on">
-                                                        <span class="switch-style" role="checkbox" aria-checked="false">
-                                                            <span class="on-tx">해제</span>
-                                                            <input type="checkbox" title="지정일부터 해제 예정" />
-                                                            <span class="off-tx">차단</span>
-                                                        </span>
-                                                    </span>
-                                                    <% } %>
                                                 </span>
                                             </span>
+                                        </span>
                                     </div>
                                 </li>
                                 <% } %>
-                                <%#
-                                <li>
-                                    <div class="use-info-wrap">
-                                        <span class="name1">쿠팡</span><br />
-                                        <span class="name2">다날</span><span class="date">2018.5.23</span><br />
-                                        <span class="due-date">2018.6.1 해제 예정</span>
-                                    </div>
-                                    <div class="switch-wrap">
-                                            <span class="widget">
-                                                <span class="widget-box switch">
-                                                    <span class="btn-switch type1 on">
-                                                        <span class="switch-style" role="checkbox" aria-checked="false">
-                                                            <span class="on-tx">해제</span>
-                                                            <input type="checkbox" title="지정일부터 해제 예정" />
-                                                            <span class="off-tx">차단</span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="use-info-wrap">
-                                        <span class="name1">㈜벅스뮤직</span><br />
-                                        <span class="name2">다날</span><span class="date">2018.5.23</span><br />
-                                    </div>
-                                    <div class="switch-wrap">
-                                            <span class="widget">
-                                                <span class="widget-box switch">
-                                                    <span class="btn-switch type1">
-                                                        <span class="switch-style" role="checkbox" aria-checked="false">
-                                                            <span class="on-tx">해제</span>
-                                                            <input type="checkbox" title="지정일부터 차단 예정" />
-                                                            <span class="off-tx">차단</span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                    </div>
-                                </li>
-                                %>
                             </ul>
                         </div>
                     </div>
@@ -131,7 +76,7 @@
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
-        new Tw.MyTFareMicroHistory($(document));
+        new Tw.MyTFareHistoryMicroContents($(document));
       });
     </script>
 </body>
