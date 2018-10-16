@@ -20,7 +20,7 @@ class MyTJoinWire extends TwViewController {
     Observable.combineLatest(this.apiService.request(API_CMD.BFF_05_0001, {}))
       .subscribe(([resp]) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const option = { svcInfo: svcInfo };
+          const option = { svcInfo: svcInfo, data: {} };
 
           res.render('wire/myt-join.wire.html', option);
         }

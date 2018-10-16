@@ -3,8 +3,8 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
 %>
-<% include ../components/start.component.html %>
-<% include ../components/javascript.component.html %>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -18,17 +18,6 @@
 <div class="wrap">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '장애 A/S신청 현황', svcInfo: svcInfo, option: { line: true } }); %>
-    <!--
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>장애 A/S신청 현황</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true"><span class="tx-default">인터넷</span><span class="ico"></span></button>
-        </div>
-    </div>
-    -->
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -93,10 +82,9 @@
     <!--// #contents -->
 </div>
 <script>
-  var comp = null;
   $(document).ready(function () {
-    comp = new Tw.MyTJoinWireAS($('#contents'), decodeURIComponent('<%= JSON.stringify(data) %>').replace(/&#34;/g, '"'));
+    new Tw.MyTJoinWireAS($('#contents'), decodeURIComponent('<%= JSON.stringify(data) %>').replace(/&#34;/g, '"'));
   });
 </script>
 
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>
