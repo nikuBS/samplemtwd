@@ -46,6 +46,7 @@ export const URL = {
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
   '/myt/join/info/no-agreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
   '/myt/join/info/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
+  '/myt/join/info/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
