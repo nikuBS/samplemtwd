@@ -1,0 +1,290 @@
+<%#
+* FileName: myt-fare.bill.hotbill
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 9. 21.
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<div id="fe-myt-join-suspend" class="wrap step">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html',
+    { title: '일시정지/해제', svcInfo: svcInfo, option: { back: 'step' } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="charge-guide-wrap">
+                    <div class="charge-cont">
+                        <span class="sub-disc01">
+                            <span class="elem">회선번호</span>
+                        </span>
+                        <span class="tit-tgothic">010-12**-45**</span>
+                        <span class="sub-disc04">갤럭시 S9 플러스</span>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <h3>일시정지 기간</h3>
+                <div class="inputbox date-selcet">
+                    <span class="date-type"><input type="date" value="2018-09-06" title="시작날짜 선택" disabled=""/></span>
+                    <span class="bar">~</span>
+                    <span class="date-type"><input type="date" value="2018-12-04" title="마지막날짜 선택"/></span>
+                </div>
+                <div class="cont-noti mt20">
+                    <ul class="bullet-type">
+                        <li>일시정지는 1회 최대 3개월까지 신청 가능하며 3개월 경과 시 자동 해제됩니다.</li>
+                        <li>일시정지는 월 4회 정지기간은 연 최대 180일 초과가 불가합니다.</li>
+                        <li>일시정지 기간 익일에 자동으로 일시정지 해제 됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="wrap-gaps-top">
+                    <h3>일시정지 설정</h3>
+                </div>
+                <div class="list-comp-input">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul class="select-list" role="group">
+                                <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio01" value="" title="걸기/받기 모두 정지"
+                                           aria-labelledby="aria-comp-radio1" checked/>
+                                    <!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio1">
+                                        <p class="layout-text">
+                                            <span class="mtext">걸기/받기 모두 정지</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="radiobox type01" role="radio" aria-checked="false">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio01" value="" title="걸기만 정지"
+                                           aria-labelledby="aria-comp-radio2"/><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio2">
+                                        <p class="layout-text">
+                                            <span class="mtext">걸기만 정지</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="wrap-gaps-top">
+                    <h3>일시정지 종료 7일 전</h3>
+                </div>
+                <div class="list-comp-input">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul class="select-list btm-line" role="group">
+                                <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio02" value="" title="받기 가능 상태로 자동 전환"
+                                           aria-labelledby="aria-comp-radio3" checked/>
+                                    <!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio3">
+                                        <p class="layout-text">
+                                            <span class="mtext">받기 가능 상태로 자동 전환</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="radiobox type01" role="radio" aria-checked="false">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio02" value="" title="받기 불가 상태로 유지"
+                                           aria-labelledby="aria-comp-radio4"/><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio4">
+                                        <p class="layout-text">
+                                            <span class="mtext">받기 불가 상태로 유지</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap-gaps-btm mt20">
+                    <div class="cont-noti">
+                        <ul class="bullet-type">
+                            <li>단, 받기 가능한 상태로 전환된 후 이용 가능한 유료 부가서비스 예로 착신전환, 수신자부담 서비스 등은 정상과금됩니다.</li>
+                            <li>받기 불가 상태로 유지시 정지 종료 SMS는 안내하지 않습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="wrap-gaps-top">
+                    <h3>일시정지 종료일</h3>
+                </div>
+                <div class="list-comp-input">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul class="select-list btm-line" role="group">
+                                <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio03" value="" title="이메일 또는 문자로 안내"
+                                           aria-labelledby="aria-comp-radio5" checked/>
+                                    <!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio5">
+                                        <p class="layout-text">
+                                            <span class="mtext">이메일 또는 문자로 안내</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="radiobox type01" role="radio" aria-checked="false">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio03" value="" title="별도 안내 없이 자동해제"
+                                           aria-labelledby="aria-comp-radio6"/><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio6">
+                                        <p class="layout-text">
+                                            <span class="mtext">별도 안내 없이 자동해제</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap-gaps-btm mt20">
+                    <div class="cont-noti">
+                        <ul class="bullet-type star">
+                            <li>이동전화번호는 SK회선일 경우에만 발송이 가능합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="list-comp-input-agree">
+                    <div class="widget">
+                        <div class="widget-box check">
+                            <ul class="select-list" role="group">
+                                <li>
+                                    <div class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="checkbox" name="checkbox" value="" title="이메일로 안내"
+                                               aria-labelledby="aria-comp-checkbox1" checked/>
+                                        <!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                            <div class="layout-text">
+                                                <div class="form-type">
+                                                    <span class="title">이메일로 안내</span>
+                                                    <div class="input-wrap mt10">
+                                                        <span class="tit">이메일 주소</span>
+                                                        <div class="form-box">
+                                                            <span class="inputbox">
+                                                                <span class="input">
+                                                                    <input type="text"
+                                                                           placeholder="이메일 입력"
+                                                                           title="이메일 입력">
+                                                                    <button
+                                                                        class="cancel"><span
+                                                                        class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="checkbox type01 checked" role="checkbox" aria-checked="false">
+                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="checkbox" name="checkbox" value="" title="문자로 안내"
+                                               aria-labelledby="aria-comp-checkbox2" checked/>
+                                        <!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                            <div class="layout-text">
+                                                <div class="form-type">
+                                                    <span class="title">문자로 안내</span>
+                                                    <div class="input-wrap mt10">
+                                                        <span class="tit">휴대폰번호</span>
+                                                        <div class="form-box">
+                                                            <span
+                                                                class="inputbox bt-add">
+                                                                <span class="input">
+                                                                    <input type="number"
+                                                                           placeholder="숫자만 입력"
+                                                                           title="휴대폰번호 입력">
+                                                                    <button
+                                                                        class="cancel"><span
+                                                                        class="blind">삭제</span></button>
+                                                                </span>
+                                                                <span class="bt-box">
+                                                                    <button
+                                                                        type="button" class="fe-btn_native_contact">주소록</button>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
+            <!--// TBD -->
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled>신청하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<!--// #skip_navigation -->
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend'));
+  });
+</script>
+<% include ../../components/end.component.html %>
