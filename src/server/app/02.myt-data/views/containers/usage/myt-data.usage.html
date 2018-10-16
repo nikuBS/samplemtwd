@@ -30,7 +30,7 @@
             </div>
             <!--// .cont-box -->
 
-            <% if (usageData.data && usageData.data.length > 0) { %>
+            <% if (usageData && usageData.data && usageData.data.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'data', typeStr: '데이터', items: usageData.data }); %>
             <% } %>
 
@@ -260,20 +260,20 @@
 
             </div>
             <% } %>
-            <% if (usageData.voice && usageData.voice.length > 0) { %>
+            <% if (usageData && usageData.voice && usageData.voice.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'voice', typeStr: '음성/영상', items: usageData.voice }); %>
             <% } %>
 
-            <% if (usageData.sms && usageData.sms.length > 0) { %>
+            <% if (usageData && usageData.sms && usageData.sms.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'sms', typeStr: '문자', items: usageData.sms }); %>
             <% } %>
 
-            <% if (usageData.etc && usageData.etc.length > 0) { %>
+            <% if (usageData && usageData.etc && usageData.etc.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'etc', typeStr: '기타', items: usageData.etc }); %>
             <% } %>
 
 
-            <% if (svcInfo.svcAttrCd === 'M2') { %>
+            <% if (svcInfo.svcAttrCd === 'M2' && ppsInfo) { %>
             <!-- 유효기간 -->
             <div class="data-type">
                 <h4 class="tit">유효기간</h4>
@@ -307,13 +307,13 @@
 <script>
   $(document).ready(function () {
     new Tw.MyTDataUsage($('#myt-data-usage'), {
-      svcAttrCd : '<%= svcInfo.svcAttrCd %>',
-      tdataSharing : '<%= balanceAddOns.sharingService.tdataSharing %>',
-      troamingSharing : '<%= balanceAddOns.sharingService.troamingSharing %>',
-      dataTopUp : '<%= usageData.dataTopUp %>',
-      ting : '<%= usageData.ting %>',
-      dataDiscount : '<%= usageData.dataDiscount %>',
-      bandDataSharing : '<%= balanceAddOns.sharingService.bandDataSharing %>'
+      svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
+      tdataSharing : '<%= balanceAddOns && balanceAddOns.sharingService.tdataSharing %>',
+      troamingSharing : '<%= balanceAddOns && balanceAddOns.sharingService.troamingSharing %>',
+      dataTopUp : '<%= usageData && usageData.dataTopUp %>',
+      ting : '<%= usageData && usageData.ting %>',
+      dataDiscount : '<%= usageData && usageData.dataDiscount %>',
+      bandDataSharing : '<%= balanceAddOns && balanceAddOns.sharingService.bandDataSharing %>'
     });
   });
 </script>
