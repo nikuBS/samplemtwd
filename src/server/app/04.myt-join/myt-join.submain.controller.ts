@@ -103,9 +103,10 @@ class MyTJoinSubmainController extends TwViewController {
         data.isContractPlan = true;
       }
       // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
-      if ( data.myPausedState.svcStCd === 'SP' ) {
-        data.myPausedState.sDate = DateHelper.getShortDateNoDot(data.myPausedState.fromDt);
-        data.myPausedState.eDate = DateHelper.getShortDateNoDot(data.myPausedState.toDt);
+      if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
+        const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
+        data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
+        data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
       }
       res.render('myt-join.submain.html', { data });
     });
@@ -129,6 +130,15 @@ class MyTJoinSubmainController extends TwViewController {
     }
   }
 
+  isMasking(target): boolean {
+    let result = false;
+    const MASK_CODE = '*';
+    if ( target.indexOf(MASK_CODE) > -1 ) {
+      result = true;
+    }
+    return result;
+  }
+
   convertOtherLines(target, items): any {
     const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
     const list: any = [];
@@ -148,13 +158,13 @@ class MyTJoinSubmainController extends TwViewController {
   _convertWireInfo(data) {
     const result: any = {};
     // 서비스 약정
-    result.svcPrdStaDt = DateHelper.getShortDateNoDot(data.svcPrdStaDt);
-    result.svcPrdEndDt = DateHelper.getShortDateNoDot(data.svcPrdEndDt);
+    result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt : DateHelper.getShortDateNoDot(data.svcPrdStaDt);
+    result.svcPrdEndDt = this.isMasking(data.svcPrdEndDt) ? data.svcPrdEndDt : DateHelper.getShortDateNoDot(data.svcPrdEndDt);
     result.svcAgrmtMth = data.svcAgrmtMth;
     // 세트 약정
     result.setNm = data.setNm;
-    result.setPrdStaDt = DateHelper.getShortDateNoDot(data.setPrdStaDt);
-    result.setPrdEndDt = DateHelper.getShortDateNoDot(data.setPrdEndDt);
+    result.setPrdStaDt = this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt : DateHelper.getShortDateNoDot(data.setPrdStaDt);
+    result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt : DateHelper.getShortDateNoDot(data.setPrdEndDt);
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소
@@ -208,7 +218,11 @@ class MyTJoinSubmainController extends TwViewController {
   _getAddtionalProduct() {
     return this.apiService.request(API_CMD.BFF_05_0161, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( resp.result.productCntInfo ) {
+          return resp.result.productCntInfo;
+        } else {
+          return null;
+        }
       } else {
         // error
         return null;
