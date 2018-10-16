@@ -49,7 +49,9 @@
         <div class="container">
             <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
                 <h3 class="tit"><%=svcInfo.prodNm %></h3>
-                <button class="detail-view"><span class="blind">자세히보기</span></button>
+                <a class="detail-view" href="/product/detail/<%= svcInfo.prodId %>" >
+                    <span class="blind">자세히보기</span>
+                </a>
             </div>
             <!-- .cont-box -->
             <div class="cont-box">
