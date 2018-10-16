@@ -243,16 +243,21 @@ Tw.MyTFareHistoryMicroContents.prototype = {
 
   _setMonthActionSheetData: function () {
     var tempArr = [];
-
+    var yearText = ''
+    console.log(this.dateInfo, this.monthTermValue);
     for (var i = this.monthTermValue, month = this.dateInfo.month; i > 0; i--) {
+      if (month === 0) {
+        month = 12;
+        yearText = (this.dateInfo.year - 1) + Tw.PERIOD_UNIT.YEAR + ' ';
+      }
       if (month-- <= 0) {
         tempArr.push({
-          value: (this.dateInfo.year - 1) + Tw.PERIOD_UNIT.YEAR + ' ' + Math.abs(month) + Tw.PERIOD_UNIT.MONTH,
+          value: yearText + Math.abs(month) + Tw.PERIOD_UNIT.MONTH,
           attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + (this.dateInfo.year - 1) + '\'' + ' data-month=\'' + Math.abs(month) + '\''
         });
       } else {
         tempArr.push({
-          value: (month + 1) + Tw.PERIOD_UNIT.MONTH,
+          value: yearText + (month + 1) + Tw.PERIOD_UNIT.MONTH,
           attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + this.dateInfo.year + '\'' + ' data-month=\'' + (month + 1) + '\''
         });
       }
@@ -278,7 +283,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
   _autoPaymentBlockToggle: function (e) {
     var wrapper = $(e.target).parents('li');
     // Tw.CommonHelper.toast('asdfkajsdflaksdjf');
-    console.log(wrapper.data('feCpcode'), wrapper.data('feTysvc'), wrapper.data('feIdpg'));
+    // console.log(wrapper.data('feCpcode'), wrapper.data('feTysvc'), wrapper.data('feIdpg'));
     this.detailData = {
       idpg: wrapper.data('feIdpg'),
       tySvc: wrapper.data('feTysvc'),
