@@ -23,42 +23,45 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     this._cachedElement();
     this._bindEvent();
 
-    this._freeCallCheckInfo();
+
   },
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');
     this.$inputPhone = $('[data-target="inputPhone"]');
-
+    this.$lookupBtn = $('[data-target="lookupBtn"]');
   },
   _bindEvent: function () {
-    // this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
 
-    this.$container.on('keypress', '[data-target="inputPhone"]', $.proxy(this._inputPhoneKeypressEvt, this));
-    this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._inputPhoneKeyupEvt, this));
-    //onkeypress="return fn_press(event, 'numbers');" onkeydown="fn_press_han(this);"
+    this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
+    this.$container.on('click', '[data-target="lookupBtn"]', $.proxy(this._lookupBtnEvt, this));
+
   },
   //--------------------------------------------------------------------------[EVENT]
-  _inputPhoneKeypressEvt: function(event) {
-    // Tw.Logger.info('[keypress event]', event);
-    this._fn_press(event, 'numbers');
-  },
-  _inputPhoneKeyupEvt: function (event) {
-    // Tw.Logger.info('[keyup event]', event);
-    var $target = $(event.currentTarget);
-    this._fn_press_han(event, $target);
+  _lookupBtnEvt: function(event) {
+    Tw.Logger.info('[_lookupBtnEvt]', this.$inputPhone.val(), event );
+    // var $target = $(event.currentTarget);
+    var phoneNm = this._vdPhoneNm( this.$inputPhone.val() );
 
+    var param = {
+      phone: phoneNm
+    };
+    this._freeCallCheckInfo(param);
   },
   //--------------------------------------------------------------------------[API]
-  _freeCallCheckInfo: function () {
-    var thisMain = this;
-    $.ajax('http://localhost:3000/mock/wire.BFF_05_0160.json')
-      .done(function (resp) {
-        Tw.Logger.info(resp);
-        thisMain._freeCallCheckInfoInit(resp);
-      })
-      .fail(function (err) {
-        Tw.Logger.info(err);
-      });
+  _freeCallCheckInfo: function (param) {
+
+    return this._apiService.request(Tw.API_CMD.BFF_05_0160, param).done($.proxy(this._freeCallCheckInfoInit, this));
+
+    // var thisMain = this;
+    // $.ajax('http://localhost:3000/mock/wire.BFF_05_0160.json')
+    //   .done(function (resp) {
+    //     Tw.Logger.info(resp);
+    //     thisMain._freeCallCheckInfoInit(resp);
+    //   })
+    //   .fail(function (err) {
+    //     Tw.Logger.info(err);
+    //   });
+
   },
   _freeCallCheckInfoInit: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -67,8 +70,20 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   },
   //--------------------------------------------------------------------------[SVC]
 
-
+  //--------------------------------------------------------------------------[Validation]
+  _vdPhoneNm:function( $phoneNm ) {
+    Tw.Logger.info('[휴대폰 유효성 체크]', $phoneNm);
+    var phoneNm = $phoneNm;
+    Tw.ValidationHelper.checkMoreLength(phoneNm, 10, Tw.ALERT_MSG_MYT_FARE.V18);
+    phoneNm = this._noDash( phoneNm ); // 대시 삭제
+    Tw.Logger.info('[휴대폰 유효성 체크 결과]', phoneNm);
+    return phoneNm;
+  },
   //--------------------------------------------------------------------------[COM]
+  _noDash: function(str) {
+    str = String(str);
+    return str.split('-').join('');
+  },
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
@@ -93,25 +108,32 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     window.location.hash = hash;
   },
 
+  // 휴대폰 번호 입력 시 자동 하이픈 넣기
+  _onFormatHpNum : function (e) {
+    var _$this = $(e.currentTarget);
+    var data = _$this.val();
+    data = data.replace(/[^0-9]/g,'');
 
-  _fn_press: function (event, type) {
-    Tw.Logger.info('[key code]', event.which?event.which:event.keyCode);
-    if ( type === 'numbers' ) {
-      Tw.Logger.info('[numbers]');
-      if ( event.keyCode < 48 || event.keyCode > 57 ) return false;
+    var tmp = '';
+
+    if (data.length > 3 && data.length <= 6) {
+      tmp += data.substr(0, 3);
+      tmp += '-';
+      tmp += data.substr(3);
+      data = tmp;
+    } else if (data.length > 6) {
+      tmp += data.substr(0, 3);
+      tmp += '-';
+      var size = data.length < 11 ? 3 : 4;
+      tmp += data.substr(3, size);
+      tmp += '-';
+      tmp += data.substr(3+size);
+      data = tmp;
     }
-  },
-  _fn_press_han: function (event, obj) {
-    Tw.Logger.info('[_fn_press_han]', obj, obj.val());
-    //좌우 방향키, 백스페이스, 딜리트, 탭키에 대한 예외
-    if ( event.keyCode === 8 || event.keyCode === 9 || event.keyCode === 37 || event.keyCode === 39 || event.keyCode === 46 ) return;
-
-    var inputVal = obj.val();
-    var inputValReplace = inputVal.replace(/[^0-9]/g, '');
-
-    Tw.Logger.info('[inputValReplace2]', inputValReplace);
-    obj.val(inputValReplace);
+    _$this.val(data);
   }
+
+
 
 
 

@@ -250,6 +250,7 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   AU: '자동납부 상세 내역',
   MP: '소액 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
+
 };
 
 export const MYT_FARE_PAYMENT_ERROR = {
@@ -257,3 +258,16 @@ export const MYT_FARE_PAYMENT_ERROR = {
   REP_SVC_N: '대표청구번호가 아닙니다.',
   COM_CODE_B: '사업자가 브로드밴드 입니다.'
 };
+
+export const MYT_JOIN_WIRE_SVCATTRCD = {
+  M1: '휴대폰',
+  M2: '선불폰',
+  M3: 'T pocket Fi',
+  M4: 'T Login',
+  M5: 'T Wibro',
+  S1: '인터넷',
+  S2: 'IPTV',
+  S3: '집전화',
+  O1: '포인트캠'
+};
+
