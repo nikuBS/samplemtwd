@@ -72,6 +72,7 @@ class MyTJoinSubmainController extends TwViewController {
       // 가입정보
       switch ( this.type ) {
         case 0:
+        case 3:
           data.myInfo = myif;
           break;
         case 2:
@@ -91,6 +92,11 @@ class MyTJoinSubmainController extends TwViewController {
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
         data.isAddProduct = true;
+        if (this.type === 2 || this.type === 3) {
+          data.myAddProduct.addTotCnt =
+            parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
+            parseInt(data.myAddProduct.comProdCnt, 10);
+        }
       }
       // 약정할부 노출여부
       if ( data.myInstallement && data.myInstallement.disProdNm ) {
@@ -115,8 +121,6 @@ class MyTJoinSubmainController extends TwViewController {
   __setType(svcInfo) {
     switch ( svcInfo.svcAttrCd ) {
       case 'M1':
-      case 'M3':
-      case 'M4':
         this.type = 0;
         break;
       case 'M2':
@@ -126,6 +130,10 @@ class MyTJoinSubmainController extends TwViewController {
       case 'S2':
       case 'S3':
         this.type = 2;
+        break;
+      case 'M3':
+      case 'M4':
+        this.type = 3;
         break;
     }
   }
