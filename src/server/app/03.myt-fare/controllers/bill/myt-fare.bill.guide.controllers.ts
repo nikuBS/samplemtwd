@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
-import moment = require('moment');
+import moment from 'moment';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import bill_guide_BFF_05_0036 from '../../../../mock/server/bill.guide.BFF_05_0036.mock';
@@ -234,6 +234,8 @@ class MyTFareBillGuide extends TwViewController {
     */
 
     const dataInit = function () {
+      thisMain.logger.info(thisMain, '[ 데이터 초기화 > dataInit ]');
+
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -245,8 +247,10 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
+      // thisMain.conditionChangeDtListFun();
+      thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr;
 
-      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+        thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
 
       thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
@@ -553,8 +557,10 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public conditionChangeDtListFun() {
+    console.log('에러 확인 > conditionChangeDtListFun');
     const thisMain = this;
     let dtList = thisMain._billpayInfo.invDtArr.slice();
+    console.dir(dtList);
 
     dtList = dtList.map(function (item, idx, arr) {
       item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
@@ -566,8 +572,8 @@ class MyTFareBillGuide extends TwViewController {
 
   public paidAmtSvcCdListFun() {
     const thisMain = this;
-    console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
-    console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
+    // console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
+    // console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
     let paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList.slice();
     paidAmtSvcCdList = paidAmtSvcCdList.map(function (item, idx, arr) {
       item.amt = FormatHelper.addComma(item.amt);
@@ -579,8 +585,8 @@ class MyTFareBillGuide extends TwViewController {
       return item;
     });
 
-    console.log('에러 확인 2 > thisMain._billpayInfo.paidAmtSvcCdList');
-    console.dir( paidAmtSvcCdList );
+    // console.log('에러 확인 2 > thisMain._billpayInfo.paidAmtSvcCdList');
+    // console.dir( paidAmtSvcCdList );
 
     return paidAmtSvcCdList;
 
