@@ -43,9 +43,9 @@ Tw.CommonSettingsNotifications.prototype = {
     var id = e.currentTarget.id;
     var checked = !!$(e.currentTarget).attr('checked');
     var data = {};
-    if (id.includes('service')) {
+    if (id.indexOf('service') !== -1) {
       data.tNotiInfoRcvAgreeYn = checked ? 'Y' : 'N';
-    } else if (id.includes('recommend')) {
+    } else if (id.indexOf('recommend') !== -1) {
       data.tNotiMrktRcvAgreeYn = checked ? 'Y' : 'N';
     }
 
@@ -61,7 +61,7 @@ Tw.CommonSettingsNotifications.prototype = {
       .fail($.proxy(this._onFailChangingNoti, this, id)
     );
 
-    if (id.includes('service')) {
+    if (id.indexOf('service') !== -1) {
       this.$serviceSpan.removeClass('none');
     } else {
       this.$recommendSpan.removeClass('none');
@@ -69,11 +69,11 @@ Tw.CommonSettingsNotifications.prototype = {
 
     // check and show layer popup for terms
     if (checked) { // When switch changes to on from off
-      if (id.includes('service')) {
+      if (id.indexOf('service') !== -1) {
         if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn) {
           this.$container.find('#fe-service-terms').trigger('click'); // show terms layer popup
         }
-      } else if (id.includes('recommend')) {
+      } else if (id.indexOf('recommend') !== -1) {
         if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn ||
             !this._termsAgreed.twdLocUseAgreeYn) {
           this.$container.find('#fe-recommend-terms').trigger('click');
@@ -108,7 +108,7 @@ Tw.CommonSettingsNotifications.prototype = {
       }
     }, this));
 
-    if (id.includes('service')) {
+    if (id.indexOf('service') !== -1) {
       $root.find('.fe-location').addClass('none');
     }
 

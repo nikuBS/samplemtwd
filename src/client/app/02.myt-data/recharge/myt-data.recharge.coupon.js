@@ -41,7 +41,7 @@ Tw.MyTDataRechargeCoupon.prototype = {
     var no = evt.currentTarget.id;
     var name = evt.currentTarget.title.split('::')[0];
     var period = evt.currentTarget.title.split('::')[1];
-    var tab = evt.currentTarget.className.includes('refill') ? 'refill' : 'gift';
+    var tab = evt.currentTarget.className.indexOf('refill') !== -1 ? 'refill' : 'gift';
     this._historyService.goLoad(
       '/myt/data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' + name + '&period=' + period
     );
