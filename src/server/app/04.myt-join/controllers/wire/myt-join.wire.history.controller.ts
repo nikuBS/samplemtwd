@@ -35,7 +35,7 @@ class MyTJoinWireHistory extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0143, {}),
       this.apiService.request(API_CMD.BFF_05_0153, {}))
       .subscribe(([r0167newJoin, r0162chgAddr, r0168prodChg, r0143periChg, r0153prodChg]) => {
-
+/*
         r0167newJoin = {
           'code': '00',
           'msg': 'success',
@@ -171,10 +171,7 @@ class MyTJoinWireHistory extends TwViewController {
               'svcNm': '인터넷(광랜FTTH(GB))'
             }
           ]
-        };
-
-
-
+        };*/
 
         this._resultHandler(r0167newJoin, this._ATYPE_167);
         this._resultHandler(r0162chgAddr, this._ATYPE_162);
@@ -182,7 +179,6 @@ class MyTJoinWireHistory extends TwViewController {
         this._resultHandler(r0143periChg, this._ATYPE_143);
         this._resultHandler(r0153prodChg, this._ATYPE_153);
 
-        console.log('all list ==>> ', this._list);
         const option = { svcInfo: svcInfo, list: this._list };
         res.render('wire/myt-join.wire.history.html', option);
       });

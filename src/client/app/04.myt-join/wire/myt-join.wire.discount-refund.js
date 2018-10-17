@@ -10,11 +10,16 @@ Tw.MyTJoinWireDiscountRefund = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
+  this._listTmpl = Handlebars.compile($('#list-tmplt').html());
+  this._totTmpl = Handlebars.compile($('#tot-tmplt').html());
+
   this._bindEvent();
   this._registerHelper();
 };
 
 Tw.MyTJoinWireDiscountRefund.prototype = {
+
+
   /**
    * 이벤트 바인딩
    * @private
@@ -40,7 +45,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
-      .done(function (resp) {
+      .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
           Tw.Error(resp.code, resp.msg).pop();
@@ -48,26 +53,24 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
           return;
         }
 
+        $('.info-list-type1').show();
+
         var data = resp.result;
 
-        var listTmpl = Handlebars.compile($('#list-tmplt').html());
-        var totTmpl = Handlebars.compile($('#tot-tmplt').html());
-
         if( data.chargeInfo ) {
-          $('#tot-div').html(totTmpl(data.chargeInfo));
+          $('#tot-div').html(this._totTmpl(data.chargeInfo));
         }
         if( data.penaltyInfo ) {
           var list = data.penaltyInfo;
-
           var html = '';
           for ( var i = 0; i < list.length ; i++ ) {
-            html += listTmpl( list[i] );
+            html += this._listTmpl( list[i] );
           }
 
           $('#refund-list').html(html);
         }
         skt_landing.action.loading.off({ ta: '.container' });
-      })
+      }, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText);
         skt_landing.action.loading.off({ ta: '.container' });

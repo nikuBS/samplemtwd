@@ -18,7 +18,8 @@ class MyTJoinWireDiscountRefund extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    // svcMgmtNum
+    // res.render('wire/myt-join.wire.discount-refund.html', {svcInfo: svcInfo, reqDate: '20181017'});
+
     this.apiService.request(API_CMD.BFF_05_0158, {})
       .subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -26,6 +27,7 @@ class MyTJoinWireDiscountRefund extends TwViewController {
           res.render('wire/myt-join.wire.discount-refund.html', option);
         }
       });
+
   }
 }
 

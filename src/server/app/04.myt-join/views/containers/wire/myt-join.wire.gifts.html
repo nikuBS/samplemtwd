@@ -29,9 +29,9 @@
             <div class="cont-box">
                 <div class="order-state">
                     <ul>
-                        <li><span class="ico deliv-state"></span>배송 <span class="tx-bold"><%= data.XXXXXX %></span>건</li>
-                        <li><span class="ico return-state"></span>반품 <span class="tx-bold"><%= data.XXXXXX %></span>건</li>
-                        <li><span class="ico re-deliv-state"></span>재배송 <span class="tx-bold"><%= data.XXXXXX %></span>건</li>
+                        <li><span class="ico deliv-state"></span>배송 <span class="tx-bold"><%= data.deliveryCnt %></span>건</li>
+                        <li><span class="ico return-state"></span>반품 <span class="tx-bold"><%= data.returnCnt %></span>건</li>
+                        <li><span class="ico re-deliv-state"></span>재배송 <span class="tx-bold"><%= data.redeliveryCnt %></span>건</li>
                     </ul>
                 </div>
             </div>
@@ -43,26 +43,26 @@
             <div class="cont-box nogaps-hoz">
                 <div class="history-list type2">
                     <ul>
-                      <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
-                        <li>
-                            <div class="li-elem">
-                                <div class="title-box">
-                                    <span class="tit">{{ giftNm }}</span>
-                                    <span class="sub-tit">{{ pdlvBasAddr }}</span>
-                                    <span class="sub-tit">
+                        <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
+                            <li>
+                                <div class="li-elem">
+                                    <div class="title-box">
+                                        <span class="tit">{{ giftNm }}</span>
+                                        <span class="sub-tit">{{ pdlvBasAddr }}</span>
+                                        <span class="sub-tit">
                                         {{#if isComp }}
                                         <span>{{ shortDate dlvCompDt }}</span><span class="tx-black">{{ giftOpStNm }}</span>
                                         {{else}}
                                         {{ giftOpStNm }}
                                         {{/if}}
                                     </span>
+                                    </div>
+                                    {{#if hasDlvUrl }}
+                                    <div class="bt-alone" data-url="{{ dlvUrl }}"><button class="bt-bg-blue1">배송조회</button></div>
+                                    {{/if}}
                                 </div>
-                                {{#if hasDlvUrl }}
-                                <div class="bt-alone" data-url="{{ dlvUrl }}"><button class="bt-bg-blue1">배송조회</button></div>
-                                {{/if}}
-                            </div>
-                        </li>
-                      </script>
+                            </li>
+                        </script>
                     </ul>
                     <div class="bt-more gap-style" style="display: none;">
                         <button>더보기</button>

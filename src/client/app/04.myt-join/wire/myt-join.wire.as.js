@@ -197,7 +197,7 @@ Tw.MyTJoinWireAS.prototype = {
       }
     }
 
-    this._historyService.goLoad('./as/detail?troubleNum='+num+'&troubleDt='+item.troubleDt+'&svcNm='+item.svcNm+'&troubleDetail='+item.troubleDetail);
+    this._historyService.goLoad('./as/detail?troubleNum='+num+'&troubleDt='+item.troubleDt+'&svcNm='+item.svcNm+'&troubleDetail='+item.troubleDetail+'&stNm');
   }
 
 
