@@ -58,6 +58,10 @@ class MytDataSubmainController extends TwViewController {
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
+      // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
+      if ( svcInfo.svcAttrCd !== 'M2' || svcInfo.svcAttrCd !== 'M3' || svcInfo.svcAttrCd !== 'M4' ) {
+        data.otherLines = [];
+      }
       // SP9 즉시충전버튼 무조건 노출로 변경
       /*if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /!* 기본 DATA 제공량이 없는 경우*!/ ) {
         // 비노출 조건 T-pocketFi or T-Login 인 경우와 기본제공량이 없는경우
