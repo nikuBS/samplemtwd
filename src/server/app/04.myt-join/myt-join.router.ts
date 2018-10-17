@@ -8,7 +8,9 @@ import MyTJoinProductFeeAlarmTerminate from './controllers/product/myt-join.prod
 import MyTJoinProtectChange from './controllers/protect/myt-join.protect.change.controller';
 import MytJoinInfoDiscount from './controllers/info/myt-join.info.discount.controller';
 import MyTJoinInfoDiscountMonth from './controllers/info/myt-join.info.discount.month.controller';
-import MyTJoinJoinInfoNoAgreement from './controllers/info/myt-join.info.no-agreement.controller';
+import MyTJoinInfoNoAgreement from './controllers/info/myt-join.info.no-agreement.controller';
+import MyTJoinInfoContract from './controllers/info/myt-join.info.contract.controller';
+import MyTJoinInfoSms from './controllers/info/myt-join.info.sms.controller';
 import MyTJoinSuspend from './controllers/suspend/myt-join.suspend.controller';
 import MyTJoinWireFreeCallCheck from './controllers/wire/myt-join.wire.freeCallCheck.controller';
 import MyTJoinWireModifyAddress from './controllers/wire/myt-join.wire.modify.address.controller';
@@ -27,7 +29,9 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/protect/change', controller: new MyTJoinProtectChange() });
     this.controllers.push({ url: '/info/discount', controller: new MytJoinInfoDiscount() });
     this.controllers.push({ url: '/info/discount/month', controller: new MyTJoinInfoDiscountMonth() });
-    this.controllers.push({ url: '/info/no-agreement', controller: new MyTJoinJoinInfoNoAgreement() });
+    this.controllers.push({ url: '/info/no-agreement', controller: new MyTJoinInfoNoAgreement() });
+    this.controllers.push({ url: '/info/contract', controller: new MyTJoinInfoContract() });
+    this.controllers.push({ url: '/info/sms', controller: new MyTJoinInfoSms() });
     this.controllers.push({ url: '/wire/freeCallCheck', controller: new MyTJoinWireFreeCallCheck() });
     this.controllers.push({ url: '/wire/modify/address', controller: new MyTJoinWireModifyAddress() });
     this.controllers.push({ url: '/wire/modify/product', controller: new MyTJoinWireModifyProduct() });
