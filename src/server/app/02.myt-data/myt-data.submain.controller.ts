@@ -26,6 +26,7 @@ class MytDataSubmainController extends TwViewController {
       isBenefit: false,
       immCharge: true,
       present: false,
+      isPrepayment: false,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
@@ -63,10 +64,12 @@ class MytDataSubmainController extends TwViewController {
         // 즉시충전버튼 영역
         data.immCharge = false;
       }*/
-      if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
+      if ( svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
         // 데이터혜택/활용하기 영역
-        // 휴대폰, T-pocketFi, T-Login  경우 노출
+        // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
+        // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차)
+        data.isPrepayment = true;
       }
 
       if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {

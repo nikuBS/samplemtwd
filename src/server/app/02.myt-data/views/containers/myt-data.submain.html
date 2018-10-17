@@ -18,7 +18,7 @@
 <div class="wrap">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', {
-    title: '데이터/통화 관리', svcInfo: data.svcInfo }); %>
+    title: '데이터/통화 관리', svcInfo: data.svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">
@@ -58,6 +58,7 @@
             </div>
             <!-- //.cont-box -->
 
+            <% if (data.isPrepayment) { %>
             <!-- .coupon-genre-box -->
             <div class="coupon-genre-box" data-id="prepay-container">
                 <!-- .widget -->
@@ -104,6 +105,7 @@
                 <!--// .widget -->
             </div>
             <!--// .coupon-genre-box -->
+            <% } %>
             <!-- 충전/선물 내역 -->
             <% if (data.breakdownList) { %>
                 <div class="cont-box nogaps" data-id="bd-container">
