@@ -1,4 +1,3 @@
-import moment from "moment";
 
 Tw.DateHelper = (function () {
   moment.locale('ko', {
