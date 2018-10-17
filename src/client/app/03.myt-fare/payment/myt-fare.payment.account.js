@@ -62,8 +62,8 @@ Tw.MyTFarePaymentAccount.prototype = {
     }
   },
   _showAndHideAccount: function (event) {
-    var $target = $(event.currentTarget);
-    if ($target.hasClass('checked')) {
+    var $target = $(event.target);
+    if ($target.is(':checked')) {
       this.$refundBox.show();
     } else {
       this.$refundBox.hide();
