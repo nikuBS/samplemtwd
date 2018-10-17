@@ -26,6 +26,7 @@ class MytDataSubmainController extends TwViewController {
       isBenefit: false,
       immCharge: true,
       present: false,
+      isPrepayment: false,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
@@ -57,16 +58,22 @@ class MytDataSubmainController extends TwViewController {
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
+      // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
+      if ( svcInfo.svcAttrCd !== 'M2' || svcInfo.svcAttrCd !== 'M3' || svcInfo.svcAttrCd !== 'M4' ) {
+        data.otherLines = [];
+      }
       // SP9 즉시충전버튼 무조건 노출로 변경
       /*if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /!* 기본 DATA 제공량이 없는 경우*!/ ) {
         // 비노출 조건 T-pocketFi or T-Login 인 경우와 기본제공량이 없는경우
         // 즉시충전버튼 영역
         data.immCharge = false;
       }*/
-      if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
+      if ( svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
         // 데이터혜택/활용하기 영역
-        // 휴대폰, T-pocketFi, T-Login  경우 노출
+        // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
+        // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차)
+        data.isPrepayment = true;
       }
 
       if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {
