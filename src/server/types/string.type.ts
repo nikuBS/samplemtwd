@@ -250,4 +250,10 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   AU: '자동납부 상세 내역',
   MP: '소액 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
-}
+};
+
+export const MYT_FARE_PAYMENT_ERROR = {
+  DEFAULT: '청구된 요금이 없습니다.',
+  REP_SVC_N: '대표청구번호가 아닙니다.',
+  COM_CODE_B: '사업자가 브로드밴드 입니다.'
+};
