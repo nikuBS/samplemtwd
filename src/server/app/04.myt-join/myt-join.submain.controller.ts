@@ -148,13 +148,18 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
+    const MOBILE = items['M'] || [];
+    const OTHER = items['O'] || [];
+    const SPC = items['S'] || [];
     const list: any = [];
-    nOthers.filter((item) => {
-      if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-        list.push(item);
-      }
-    });
+    if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
+      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+      nOthers.filter((item) => {
+        if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          list.push(item);
+        }
+      });
+    }
     return list;
   }
 

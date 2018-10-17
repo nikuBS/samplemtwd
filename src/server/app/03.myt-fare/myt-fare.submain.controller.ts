@@ -190,13 +190,18 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
+    const MOBILE = items['M'] || [];
+    const OTHER = items['O'] || [];
+    const SPC = items['S'] || [];
     const list: any = [];
-    nOthers.filter((item) => {
-      if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-        list.push(item);
-      }
-    });
+    if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
+      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+      nOthers.filter((item) => {
+        if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          list.push(item);
+        }
+      });
+    }
     return list;
   }
 
@@ -208,7 +213,7 @@ class MyTFareSubmainController extends TwViewController {
     return this.apiService.request(API_URL, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const result = resp.result;
-        if ( result.repSvcYn === 'N') {
+        if ( result.repSvcYn === 'N' ) {
           // 대표청구번호 아님
           return {
             info: {
@@ -217,7 +222,7 @@ class MyTFareSubmainController extends TwViewController {
             }
           };
         }
-        if ( result.coClCd === 'B') {
+        if ( result.coClCd === 'B' ) {
           // 사업자 브로드밴드 경우
           return {
             info: {
