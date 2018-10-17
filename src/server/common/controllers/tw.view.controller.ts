@@ -169,7 +169,7 @@ abstract class TwViewController {
         if ( isLogin ) {
           this.render(req, res, next, svcInfo, allSvc, childInfo);
         } else {
-          if ( URL[path].login ) {
+          if ( !FormatHelper.isEmpty(URL[path]) && URL[path].login ) {
             res.send('need login');
           } else {
             this.render(req, res, next, svcInfo, allSvc, childInfo);
