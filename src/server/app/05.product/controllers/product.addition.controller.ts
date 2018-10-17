@@ -14,33 +14,61 @@ export default class ProductAddition extends TwViewController {
   private ADDITION_CODE = 'F01200';
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
-    Observable.combineLatest(
-      this.getMyAdditions(),
-      this.getPromotionBanners(),
-      this.getBestAdditions(),
-      this.getAdditionBanners(),
-      this.getRecommendedAdditions(),
-      this.getRecommendedTags()
-    ).subscribe(([myAdditions, banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
-      const error = {
-        code: myAdditions.code || banners.code || bestAdditions.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
-        msg: myAdditions.msg || banners.msg || bestAdditions.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
-      };
+    if (svcInfo) {
+      Observable.combineLatest(
+        this.getMyAdditions(),
+        this.getPromotionBanners(),
+        this.getBestAdditions(),
+        this.getAdditionBanners(),
+        this.getRecommendedAdditions(),
+        this.getRecommendedTags()
+      ).subscribe(([myAdditions, banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
+        const error = {
+          code: myAdditions.code || banners.code || bestAdditions.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
+          msg: myAdditions.msg || banners.msg || bestAdditions.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
-      }
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
 
-      const productData = {
-        myAdditions,
-        banners,
-        bestAdditions,
-        additionBanners,
-        recommendedAdditions,
-        recommendedTags
-      };
-      res.render('product.addition.html', { svcInfo, productData });
-    });
+        const productData = {
+          myAdditions,
+          banners,
+          bestAdditions,
+          additionBanners,
+          recommendedAdditions,
+          recommendedTags
+        };
+        res.render('product.addition.html', { svcInfo, productData });
+      });
+    } else {
+      Observable.combineLatest(
+        this.getPromotionBanners(),
+        this.getBestAdditions(),
+        this.getAdditionBanners(),
+        this.getRecommendedAdditions(),
+        this.getRecommendedTags()
+      ).subscribe(([banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
+        const error = {
+          code: banners.code || bestAdditions.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
+          msg: banners.msg || bestAdditions.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
+        };
+
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
+
+        const productData = {
+          banners,
+          bestAdditions,
+          additionBanners,
+          recommendedAdditions,
+          recommendedTags
+        };
+        res.render('product.addition.html', { svcInfo, productData });
+      });
+    }
   }
 
   private getMyAdditions = () => {
