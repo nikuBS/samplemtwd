@@ -12,6 +12,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
+import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 
 class MyTFareSubmainController extends TwViewController {
   constructor() {
@@ -206,9 +207,33 @@ class MyTFareSubmainController extends TwViewController {
     }
     return this.apiService.request(API_URL, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        const result = resp.result;
+        if ( result.repSvcYn === 'N') {
+          // 대표청구번호 아님
+          return {
+            info: {
+              code: '',
+              msg: MYT_FARE_PAYMENT_ERROR.REP_SVC_N
+            }
+          };
+        }
+        if ( result.coClCd === 'B') {
+          // 사업자 브로드밴드 경우
+          return {
+            info: {
+              code: '',
+              msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B
+            }
+          };
+        }
         if ( resp.result.invDt.length === 0 ) {
           // no data
-          return null;
+          return {
+            info: {
+              code: '',
+              msg: MYT_FARE_PAYMENT_ERROR.DEFAULT
+            }
+          };
         }
         return resp.result;
       } else {
