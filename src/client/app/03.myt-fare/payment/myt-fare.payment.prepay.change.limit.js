@@ -78,18 +78,25 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     this._setLimitEvent($layer);
   },
   _setLimitData: function (result, $layer) {
-    $layer.find('.fe-month').attr('id', result.microPayLimitAmt)
+    this.$monthSelector = $layer.find('.fe-month');
+    this.$daySelector = $layer.find('.fe-day');
+    this.$onceSelector = $layer.find('.fe-once');
+
+    this.$monthSelector
+      .attr({ 'id': result.microPayLimitAmt, 'origin-value': result.microPayLimitAmt })
       .text(this._getLittleAmount(result.microPayLimitAmt) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
-    $layer.find('.fe-day').attr('id', result.dayLimit)
+    this.$daySelector
+      .attr({ 'id': result.dayLimit, 'origin-value': result.dayLimit })
       .text(this._getLittleAmount(result.dayLimit) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
-    $layer.find('.fe-once').attr('id', result.onceLimit)
+    this.$onceSelector
+      .attr({ 'id': result.onceLimit, 'origin-value': result.onceLimit })
       .text(this._getLittleAmount(result.onceLimit) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
   },
   _setLimitEvent: function ($layer) {
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
-    $layer.on('click', '.fe-change', $.proxy(this._change, this, $layer));
+    $layer.on('click', '.fe-change', $.proxy(this._change, this));
   },
   _getLittleAmount: function (amount) {
     return amount / 10000;
@@ -106,13 +113,13 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
   _selectPopupCallback: function ($target, $amount, $layer) {
-    this._setLayerData($layer, $amount);
-    $layer.on('click', '.amount', $.proxy(this._setSelectedValue, this, $target));
+    // this._setLayerData($layer, $amount); 보류
+    $layer.on('click', '.limit', $.proxy(this._setSelectedValue, this, $target));
   },
   _setLayerData: function ($layer, $amount) {
     $layer.find('.limit').each(function () {
       var $this = $(this);
-      if ($this.attr('id') > $amount) {
+      if ($this.attr('origin-value') > $amount) {
         $this.hide();
       }
     });
@@ -124,9 +131,9 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
 
     this._popupService.close();
   },
-  _change: function ($layer) {
+  _change: function () {
     var apiName = this._changeLimitApiName();
-    var reqData = this._makeRequestData($layer);
+    var reqData = this._makeRequestData();
 
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._changeLimitSuccess, this))
@@ -135,19 +142,34 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
   },
   _changeLimitApiName: function () {
     var apiName = '';
+    var isUp = this._checkIsUp();
+
     if (this.$title === 'micro') {
-      apiName = Tw.API_CMD.BFF_05_0081;
+      if (isUp) {
+        apiName = Tw.API_CMD.BFF_05_0081;
+      } else {
+        apiName = Tw.API_CMD.BFF_05_0176;
+      }
     } else {
-      apiName = Tw.API_CMD.BFF_05_0067;
+      if (isUp) {
+        apiName = Tw.API_CMD.BFF_05_0067;
+      } else {
+        apiName = Tw.API_CMD.BFF_05_0177;
+      }
     }
     return apiName;
   },
-  _makeRequestData: function ($layer) {
+  _checkIsUp: function () {
+    return ((this.$monthSelector.attr('id') > this.$monthSelector.attr('origin-value')) ||
+      (this.$daySelector.attr('id') > this.$daySelector.attr('origin-value')) ||
+      (this.$onceSelector.attr('id') > this.$onceSelector.attr('origin-value')));
+  },
+  _makeRequestData: function () {
     var reqData = {};
 
-    reqData.chgMLimit = $layer.find('.fe-month').attr('id');
-    reqData.chgDLimit = $layer.find('.fe-day').attr('id');
-    reqData.chgOLimit = $layer.find('.fe-once').attr('id');
+    reqData.chgMLimit = this.$monthSelector.attr('id');
+    reqData.chgDLimit = this.$daySelector.attr('id');
+    reqData.chgOLimit = this.$onceSelector.attr('id');
 
     return reqData;
   },
@@ -159,6 +181,6 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     }
   },
   _changeLimitFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.msg, err.code).pop();
   }
 };
