@@ -15,6 +15,7 @@ Tw.MyTFareSubMain = function (params) {
   this._requestCount = -1;
   this._resTimerID = null;
   this._svcMgmtNumList = [];
+  this._chartDefaultClass = 'chart_link item';
   this.data = params.data;
   this.loadingView(true);
   this._rendered();
@@ -237,7 +238,7 @@ Tw.MyTFareSubMain.prototype = {
           var amt = parseInt(item.useAmtTot, 10);
           chart_data.da_arr.push({
             'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
-            'class': 'chart_link item' + idx,
+            'class': this._chartDefaultClass + item.invDt,
             'data': [amt] // 사용금액
           });
         }
@@ -286,7 +287,7 @@ Tw.MyTFareSubMain.prototype = {
           var absDeduck = Math.abs(parseInt(item.deduckTotInvAmt, 10));
           chart_data.da_arr.push({
             'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
-            'class': 'chart_link item' + idx,
+            'class': this._chartDefaultClass + item.invDt,
             'data': [amt], // 청구금액
             'sale': [absDeduck] // 할인금액
           });
@@ -474,9 +475,9 @@ Tw.MyTFareSubMain.prototype = {
 
   // 요금안내서 이동(chart)
   _onClickedBillReport: function (event) {
-    var $target = $(event.target);
-    var month = $target.text().replace('월', '');
-    this._historyService.goLoad('url' + month);
+    var clsName = event.target.className;
+    var month = clsName.replace(this._chartDefaultClass, '');
+    this._historyService.goLoad('/myt/fare/bill/guide?date=' + month);
   },
 
   _onErrorReceivedBillData: function (resp) {
