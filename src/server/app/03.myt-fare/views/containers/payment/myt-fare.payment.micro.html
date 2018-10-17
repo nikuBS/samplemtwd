@@ -90,10 +90,10 @@
                                     <div class="switch-wrap">
 										<span class="widget">
 											<span class="widget-box switch">
-												<span class="btn-switch type1 fe-set-use <% if (usedYn.isUsed) { %> on <% } %>">
+												<span class="btn-switch type1 <% if (usedYn.isUsed) { %> on <% } %>">
 													<span class="switch-style" role="checkbox" aria-checked="false">
 														<span class="on-tx fe-tx">사용</span>
-														<input id="<%= usedYn.rtnUseYn %>" type="checkbox" title="지정일부터 해제 예정" />
+														<input id="<%= usedYn.rtnUseYn %>" class="fe-set-use" type="checkbox" title="지정일부터 해제 예정" />
 														<span class="off-tx fe-tx">차단</span>
 													</span>
 												</span>

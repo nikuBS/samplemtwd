@@ -246,7 +246,7 @@ Tw.ALERT_MSG_MYT_DATA = {
 Tw.VALIDATE_MSG_MYT_DATA = { 
   V16: '공유 가능 데이터를 초과했습니다.',
   V17: '가족에게 공유할 데이터를 입력해주세요.'
-}
+};
 
 Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_NEW: '신청이 완료되었습니다.',
@@ -270,8 +270,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   MICRO: '소액결제',
   CONTENTS: '콘텐츠이용료',
   USABLE: '사용',
-  MSG_ALLOWED: '이 혀용되었습니다.',
-  MSG_PROHIBITED: '이 차단되었습니다.',
+  MSG_ALLOWED: '가 혀용되었습니다.',
+  MSG_PROHIBITED: '가 차단되었습니다.',
   V18 : '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
   V21 : '이메일 주소가 올바르지 않습니다.',
   V41 : '법정대리인 휴대폰번호를 입력해주세요.',
