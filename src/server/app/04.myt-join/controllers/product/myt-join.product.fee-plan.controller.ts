@@ -85,12 +85,16 @@ class MyTJoinProductFeePlan extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    const apiInfo = this._getFeePlanApiInfo(svcInfo.svcAttrCd),
-        defaultOptions = {
-          title: '나의 요금제',
-          svcInfo: svcInfo
-        };
+    const defaultOptions = {
+      title: '나의 요금제',
+      svcInfo: svcInfo
+    };
 
+    if (FormatHelper.isEmpty(svcInfo.svcAttrCd)) {
+      return this.error.render(res, defaultOptions);
+    }
+
+    const apiInfo = this._getFeePlanApiInfo(svcInfo.svcAttrCd);
     if ( FormatHelper.isEmpty(apiInfo) ) {
       return this.error.render(res, defaultOptions);
     }
