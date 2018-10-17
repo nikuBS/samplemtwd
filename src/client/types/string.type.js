@@ -281,6 +281,7 @@ Tw.ALERT_MSG_MYT_FARE = {
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
+  ALERT_2_A34 : { TITLE : '알림' , MSG : '장애 A/S 신청이 취소되었습니다.' },
   ALERT_2_A39 : { TITLE : '알림' , MSG : '요금제 변경 알림 서비스가 신청 되었습니다.' },
   ALERT_2_A40 : { TITLE : '알림' , MSG : '요금제 변경 가능일 알림이 해지 되었습니다.' },
   ALERT_2_A61 : { TITLE : '알림' , MSG : '비밀번호를 확인해주세요.' },

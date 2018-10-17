@@ -22,7 +22,7 @@
                             <li>
                                 <dl class="show-data">
                                     <dt><%= data.troubleDetail %></dt>
-                                    <dd class="tx-bold">진행상태1<%= data.XXXXXXXstatus %></dd>
+                                    <dd class="tx-bold"><%= data.stNm %></dd>
                                 </dl>
                             </li>
                             <li class="pt20">
@@ -36,7 +36,7 @@
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>진행상태</dt>
-                                    <dd>진행상태2<%= data.XXXXXXXstatus %></dd>
+                                    <dd><%= data.stNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>연락처</dt>
@@ -72,7 +72,7 @@
 </div>
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinWireASDetail($('.wrap'));
+    new Tw.MyTJoinWireASDetail($('.wrap'), '<%= data.troubleNum %>');
   });
 </script>
 <% include ../../components/end.component.html %>

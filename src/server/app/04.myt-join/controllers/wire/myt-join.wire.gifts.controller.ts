@@ -22,7 +22,7 @@ class MyTJoinWireGifts extends TwViewController {
       .subscribe((resp) => {
         // giftOpStCd 처리 상태코드
         // 처리상태 (01 배송 접수, 02 배송 요청, 03 배송완료, 04 반품 접수, 05 반품 요청, 06 반품 완료 07 재배송 접수, 08 재배송완료, 10 배송접수취소, 11 반품접수취소, 12 재배송접수취소, 30 사은품 거절)
-        const resp1 = {
+        /*resp = {
             'code': '00',
             'msg': 'success',
             'result': {
@@ -30,6 +30,9 @@ class MyTJoinWireGifts extends TwViewController {
               'resultValue': 'Y',   // 사은품여부(N:미존재)
               'nextPage': '2',
               'totalCnt': '12',
+              'deliveryCnt': '1',
+              'returnCnt': '2',
+              'redeliveryCnt': '3',
               'giftProvideList': [
                 {
                   'giftNm': 'SK상품권 1만원',
@@ -89,11 +92,11 @@ class MyTJoinWireGifts extends TwViewController {
                 }
               ]
             }
-          };
+          };*/
 
-        if ( resp1.code === API_CODE.CODE_00 ) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           console.log('============ result ==============');
-          const option = { svcInfo: svcInfo, data: resp1.result};
+          const option = { svcInfo: svcInfo, data: resp.result};
           res.render('wire/myt-join.wire.gifts.html', option);
         }
       });
