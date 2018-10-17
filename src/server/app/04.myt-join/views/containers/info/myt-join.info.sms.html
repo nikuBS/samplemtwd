@@ -40,8 +40,8 @@
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input id="fe-hp-tel" type="tel" placeholder="숫자만 입력" value="<%= data.cntcNum%>" title="SMS 수신 번호 등록" maxlength="13">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                        <input id="fe-hp-tel" data-require type="tel" placeholder="숫자만 입력" value="<%= data.cntcNum%>" title="SMS 수신 번호 등록" onkeyup="Tw.InputHelper.insertDashCellPhone(this);" maxlength="13">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>\
                                     </span>
                                 </span>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
                                     <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input id="fe-info-agree" type="checkbox" name="checkbox" value="" title="개인정보 제공 및 활용 동의"><!-- 체크상태일 경우 checked="checked" -->
+                                        <input data-require type="checkbox" name="checkbox" value="" title="개인정보 제공 및 활용 동의"><!-- 체크상태일 경우 checked="checked" -->
                                         개인정보 제공 및 활용 동의
                                     </li>
                                 </ul>
@@ -74,9 +74,12 @@
                     <ul class="bt-slice full">
                         <li class="bt-red1">
                             <%
-                                let text = data.cntcNum === '' ? '신청하기':'변경하기';
+                                let isNew = data.cntcNum === '' ? true:false;
+                                let text = isNew ? '신청하기':'변경하기';
+                                let alert = isNew ? 'ALERT_2_A65' : 'ALERT_2_A66';
+
                             %>
-                            <button id="fe-btn-submit" disabled><%=text%></button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
+                            <button id="fe-btn-submit" data-alert="<%=alert%>" disabled><%=text%></button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
                         </li>
                     </ul>
                 </div>
