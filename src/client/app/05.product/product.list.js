@@ -216,7 +216,7 @@ Tw.ProductList.prototype = {
     for (; i < selectedFilters.length; i++) {
       selectedFilters[i].setAttribute('aria-checked', false);
       selectedFilters[i].className = selectedFilters[i].className.replace('checked', '');
-      selectedFilters[i].children[0].setAttribute('checked', false);
+      $(selectedFilters[i].children[0]).removeAttr('checked');
     }
   },
 
