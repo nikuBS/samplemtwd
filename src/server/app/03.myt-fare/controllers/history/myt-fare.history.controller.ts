@@ -131,7 +131,7 @@ class MyTFareMicroHistory extends TwViewController {
     };
 
     const reformCallback = (data: any): any => {
-      if (data.histories !== undefined) {
+      if (data.useConAmtDetailList !== undefined) {
         data.useConAmtDetailList.map((o) => {
           o.useDtFormed = DateHelper.getShortDateWithFormat(o.payTime, 'YYYY.MM.DD hh:mm:ss');
           o.sumPriceFormed = FormatHelper.addComma(o.useCharge);
