@@ -52,12 +52,18 @@ Tw.InputHelper = (function () {
     return (str.length + (!b ? 0 : b.length));
   }
 
+  function insertDashCellPhone(input) {
+    var $input = $(input);
+    $input.val(Tw.StringHelper.phoneStringToDash($input.val()));
+  }
+
   return {
     inputNumberOnly: inputNumberOnly,
     validateEmail: validateEmail,
     validateNumber: validateNumber,
     inputNumKeyUp: inputNumKeyUp,
     inputNumKeyDown: inputNumKeyDown,
-    getByteCount: getByteCount
+    getByteCount: getByteCount,
+    insertDashCellPhone: insertDashCellPhone
   };
 })();
