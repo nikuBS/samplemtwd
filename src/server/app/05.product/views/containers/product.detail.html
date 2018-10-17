@@ -44,10 +44,10 @@
             </div>
             <% } %>
             <% if ( basicInfo.prodStCd === 'E1000' ) { %>
-              <% if ( prodRedisInfo.summaryCase === '2' ) { %>
+              <% if ( prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N' ) { %>
               <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
               <% } %>
-              <% if ( prodRedisInfo.summaryCase === '3' ) { %>
+              <% if ( prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
               <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
               <% } %>
             <% } %>
@@ -73,9 +73,14 @@
                 <button type="button" class="bt-white1 fe-btn_join">가입</button>
               </div>
               <% } %>
-              <% if ( basicInfo.prodTermYn === 'Y' && (ctgKey === 'plans' && svcInfo.prodId === prodId || ctgKey === 'additions' && isAdditionsJoined) ) { %>
+              <% if ( basicInfo.prodTermYn === 'Y' && (ctgKey === 'additions' && isAdditionsJoined) ) { %>
               <div class="btn">
                 <button type="button" class="bt-white2 fe-btn_terminate">해지</button>
+              </div>
+              <% } %>
+              <% if ( basicInfo.prodScrbYn === 'N' && basicInfo.prodTermYn === 'N' ) { %>
+              <div class="limit">
+                가입제한 상품
               </div>
               <% } %>
             <% } %>
@@ -96,6 +101,17 @@
           <% } %>
         </div>
         <!-- //상품타이틀 -->
+
+        <% if ( prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <div class="submain-findyourplan-wrap type01">
+          <button type="button" class="submain-findyourplan">
+            <h3 class="title">SKT만의 혜택</h3>
+            <p class="text"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
+          </button>
+        </div>
+        <% } %>
 
         <!-- 상단 배너 -->
         <% if ( prodRedisInfo.banner.T ) { %>
@@ -213,24 +229,40 @@
                     <a href="/product/detail/<%= series.seriesProdList[i].prodId %>" class="product-infolink">
                       <div class="products-titleinfo">
                         <h5 class="title"><%= series.seriesProdList[i].prodNm %></h5>
-                        <% if ( series.seriesProdList[i].isNumberBasFeeInfo ) { %>
-                        <p class="info">월<span class="money"><%= series.seriesProdList[i].basFeeInfo %></span>원</p>
+                        <% if ( series.seriesProdList[i].basFeeInfo.isNaN ) { %>
+                        <p class="info"><span class="money"><%= series.seriesProdList[i].basFeeInfo.value %></span></p>
                         <% } else { %>
-                        <p class="info"><span class="money"><%= series.seriesProdList[i].basFeeInfo %></span></p>
+                        <p class="info">월<span class="money"><%= series.seriesProdList[i].basFeeInfo.value %></span>원</p>
                         <% } %>
                       </div>
                       <dl class="products-additionalinfo">
                         <% if ( series.seriesProdList[i].basOfrDataQtyCtt ) { %>
                         <dt>데이터</dt>
-                        <dd class="point"><%= series.seriesProdList[i].basOfrDataQtyCtt %></dd>
+                          <% if (series.seriesProdList[i].basOfrDataQtyCtt.isNaN) { %>
+                          <dd>
+                            <span class="point"><%= series.seriesProdList[i].basOfrDataQtyCtt.value %></span>
+                          </dd>
+                          <% } else { %>
+                          <dd>
+                            <span class="point"><%= series.seriesProdList[i].basOfrDataQtyCtt.value.data + series.seriesProdList[i].basOfrDataQtyCtt.value.unit %></span>
+                          </dd>
+                          <% } %>
                         <% } %>
                         <% if ( series.seriesProdList[i].basOfrVcallTmsCtt ) { %>
                         <dt>음성</dt>
-                        <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt %></dd>
+                          <% if (series.seriesProdList[i].basOfrVcallTmsCtt.isNaN) { %>
+                          <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt.value %></dd>
+                          <% } else { %>
+                          <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt.value.data + series.seriesProdList[i].basOfrVcallTmsCtt.value.unit %></dd>
+                          <% } %>
                         <% } %>
                         <% if ( series.seriesProdList[i].basOfrCharCntCtt ) { %>
                         <dt>문자</dt>
-                        <dd><%= series.seriesProdList[i].basOfrCharCntCtt %></dd>
+                          <% if (series.seriesProdList[i].basOfrVcallTmsCtt.isNaN) { %>
+                          <dd><%= series.seriesProdList[i].basOfrCharCntCtt.value %></dd>
+                          <% } else { %>
+                          <dd><%= series.seriesProdList[i].basOfrCharCntCtt.value + series.seriesProdList[i].basOfrCharCntCtt.unit %></dd>
+                          <% } %>
                         <% } %>
                       </dl>
                     </a>
@@ -262,6 +294,74 @@
           </div>
           <!-- //유사한 요금제/부가서비스 찾기 -->
         </div>
+
+        <% if ( ctgKey === 'additions' ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 다른 부가상품 더보기-->
+        <div class="cont-box">
+          <h3>다른 부가상품 더보기</h3>
+          <!-- .widget -->
+          <div class="widget">
+            <div class="widget-box horizontal">
+              <div class="horizontal-slide">
+                <ul class="horizontal-list add-prod">
+                  <li>
+                    <div>
+                      <button>
+                        <span class="ico type1"></span>
+                        <span>데이터</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <button>
+                        <span class="ico type2"></span>
+                        <span>혜택/편의</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <button>
+                        <span class="ico type3"></span>
+                        <span>보안/보험</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <button>
+                        <span class="ico type4"></span>
+                        <span>통화/메세지</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <button>
+                        <span class="ico type5"></span>
+                        <span>컨텐츠이용</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <button>
+                        <span class="ico type5"></span>
+                        <span>금융/결제</span>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- .widget -->
+        </div>
+        <!-- //다른 부가상품 더보기 -->
+        <% } %>
 
         <% if ( recommends.recommendProdList && recommends.recommendProdList.length > 0 ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
