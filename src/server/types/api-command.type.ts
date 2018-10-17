@@ -205,6 +205,7 @@ export const API_CMD = {
   BFF_05_0146: { path: '/core-bill/v1/bill-address', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0147: { path: '/core-bill/v1/bill-address-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0150: { path: '/core-modification/v1/wire-troubles-cancel', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0153: { path: '/core-modification/v1/wire-products-changes', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0155: { path: '/core-modification/v1/myinfo/discount-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0156: { path: '/core-modification/v1/wire-troubles', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -224,6 +225,7 @@ export const API_CMD = {
   BFF_05_0173: { path: '/core-modification/v1/myinfo/get-wire-cancel-fee', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0175: { path: '/core-bill/v1/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0178: { path: '/core-modification/v1/wire-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
