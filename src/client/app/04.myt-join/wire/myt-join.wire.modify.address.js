@@ -35,7 +35,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   },
   _bindEvent: function () {
-    this.$container.on('click', '[data-target="select_building"]', $.proxy(this._testEvt, this));
+    this.$container.on('click', '[data-target="select_building"]', $.proxy(this.select_buildingEvt, this));
     this.$container.on('click', '[data-target="select_house"]', $.proxy(this._testEvt, this));
     this.$container.on('click', '[data-target="select_stop"]', $.proxy(this._testEvt, this));
     this.$container.on('click', '[data-target="select_install"]', $.proxy(this._testEvt, this));
@@ -47,11 +47,43 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   _testEvt: function() {
 
   },
-  //--------------------------------------------------------------------------[API]
+  select_buildingEvt: function(event) {
+    Tw.Logger.info('[건물유형클릭]', event);
+    var $target = $(event.currentTarget);
+    var hbsName = 'actionsheet_select_a_type';
+    var hashName = 'select_building';
 
+    // '단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물'
+    var data = [{
+      list: [
+        {
+          value: '단독주택',
+          option: 'class',
+          attr: 'attr'
+        }
+      ]
+    }];
+    // data[0].list = listData;
+
+    this._popupService.open({
+        hbs: hbsName,
+        layer: true,
+        data: data,
+        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0
+      },
+      $.proxy(this.select_buildingEvtOpen, this, $target),
+      $.proxy(this.select_buildingEvtClose, this, $target),
+      hashName);
+  },
 
   //--------------------------------------------------------------------------[SVC]
-
+  select_buildingEvtOpen: function() {
+    Tw.Logger.info('[팝업 open > select_buildingEvtOpen]');
+  },
+  select_buildingEvtClose: function() {
+    Tw.Logger.info('[팝업 close > select_buildingEvtClose]');
+  },
+  //--------------------------------------------------------------------------[API]
 
   //--------------------------------------------------------------------------[COM]
   _comComma: function (str) {
