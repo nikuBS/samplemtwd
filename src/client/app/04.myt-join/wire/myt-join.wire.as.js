@@ -49,7 +49,6 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _initListUi: function(initData) {
-    console.log('=== AS history _init ===');
 
     // init templates
     this._listContBox = $('#list-cont-box-tmplt').html();
@@ -66,7 +65,6 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _bindEvent: function () {
-    console.log('=== AS history _bindEvent ===');
 
     // 목록 클릭시 - 화면이동
     this.$container.on('click', '.cont-box li', $.proxy(this._showListDetail, this));
@@ -80,7 +78,6 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _registerHelper: function () {
-    console.log('=== AS history _registerHelper ===');
     Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDateNoYear);
   },
 
@@ -89,9 +86,8 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _printList: function (list) {
-    console.log('=== AS history _printList ===');
     if( !list || list.length === 0 ){
-      this._addMoreBtn();
+      this._removeMoreBtn();
       //this._showOrHideMoreBtn();
       return;
     }
@@ -130,7 +126,6 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _requestNextData: function () {
-    console.log('=== AS history _requestNextData ===');
     this._removeMoreBtn();
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
@@ -171,7 +166,6 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _addMoreBtn: function(){
-    console.log('=== AS history _showOrHideMoreBtn === isShow?? ' + (parseInt(this._listTotCnt) > this._list.length));
     if( parseInt(this._listTotCnt) > this._list.length ) {
       $('.cont-box').last().append(this._listMoreBtn);
     }
@@ -182,7 +176,6 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function () {
-    console.log('=== AS history _showOrHideMoreBtn === isShow?? ' + (parseInt(this._listTotCnt) > this._list.length));
     if( parseInt(this._listTotCnt) > this._list.length ) {
       $('.bt-more').show();
     } else {
@@ -196,7 +189,15 @@ Tw.MyTJoinWireAS.prototype = {
    */
   _showListDetail: function(event) {
     var num = event.currentTarget.getAttribute('data-no');
-    this._historyService.goLoad('./as/detail?no='+num);
+    var item = null;
+    for(var i = 0; i < this._list.length; i++){
+      if(this._list[i].troubleNum === num.toString()){
+        item = this._list[i];
+        break;
+      }
+    }
+
+    this._historyService.goLoad('./as/detail?troubleNum='+num+'&troubleDt='+item.troubleDt+'&svcNm='+item.svcNm+'&troubleDetail='+item.troubleDetail);
   }
 
 

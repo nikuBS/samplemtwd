@@ -16,6 +16,14 @@ import MyTJoinWireFreeCallCheck from './controllers/wire/myt-join.wire.freeCallC
 import MyTJoinWireModifyAddress from './controllers/wire/myt-join.wire.modify.address.controller';
 import MyTJoinWireModifyProduct from './controllers/wire/myt-join.wire.modify.product.controller';
 import MyTJoinWireSetWireCancelService from './controllers/wire/myt-join.wire.set.wire-cancel-service.controller';
+import MyTJoinWire from './controllers/wire/myt-join.wire.controller';
+import MyTJoinWireAS from './controllers/wire/myt-join.wire.as.controller';
+import MyTJoinWireASDetail from './controllers/wire/myt-join.wire.as.detail.controller';
+import MyTJoinWireDiscountRefund from './controllers/wire/myt-join.wire.discount-refund.controller';
+import MyTJoinWireGifts from './controllers/wire/myt-join.wire.gifts.controller';
+import MyTJoinWireHistory from './controllers/wire/myt-join.wire.history.controller';
+import MyTJoinWireHistoryDetail from './controllers/wire/myt-join.wire.history.detail.controller';
+import MyTJoinWireInetPhoneNumChange from './controllers/wire/myt-join.wire.netphone.change.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -32,6 +40,14 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/info/no-agreement', controller: new MyTJoinInfoNoAgreement() });
     this.controllers.push({ url: '/info/contract', controller: new MyTJoinInfoContract() });
     this.controllers.push({ url: '/info/sms', controller: new MyTJoinInfoSms() });
+    this.controllers.push({ url: '/wire', controller: new MyTJoinWire() });
+    this.controllers.push({ url: '/wire/as', controller: new MyTJoinWireAS() });
+    this.controllers.push({ url: '/wire/as/detail', controller: new MyTJoinWireASDetail() });
+    this.controllers.push({ url: '/wire/discount-refund', controller: new MyTJoinWireDiscountRefund() });
+    this.controllers.push({ url: '/wire/gifts', controller: new MyTJoinWireGifts() });
+    this.controllers.push({ url: '/wire/history', controller: new MyTJoinWireHistory() });
+    this.controllers.push({ url: '/wire/detail', controller: new MyTJoinWireHistoryDetail() });
+    this.controllers.push({ url: '/wire/inetphone-num/change', controller: new MyTJoinWireInetPhoneNumChange() });
     this.controllers.push({ url: '/wire/freeCallCheck', controller: new MyTJoinWireFreeCallCheck() });
     this.controllers.push({ url: '/wire/modify/address', controller: new MyTJoinWireModifyAddress() });
     this.controllers.push({ url: '/wire/modify/product', controller: new MyTJoinWireModifyProduct() });

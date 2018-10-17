@@ -3,26 +3,87 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
 %>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '사은품 조회', svcInfo: svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray">
+                <span class="num">총<em><%= data.totalCnt %></em>건</span>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="order-state">
+                    <ul>
+                        <li><span class="ico deliv-state"></span>배송 <span class="tx-bold"><%= data.XXXXXX %></span>건</li>
+                        <li><span class="ico return-state"></span>반품 <span class="tx-bold"><%= data.XXXXXX %></span>건</li>
+                        <li><span class="ico re-deliv-state"></span>재배송 <span class="tx-bold"><%= data.XXXXXX %></span>건</li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
 
-<% include ../components/start.component.html %>
-<p>
-    사은품 조회
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
-    'hasSKTWire': 'Y',    // SK브로드밴드 가입여부(N:미가입)
-    'resultValue': 'Y',   // 사은품여부(N:미존재)
-    'nextPage': '2',
-    'totalCnt': '1',
-    'giftProvideList': [
-    {
-    'giftNm': 'SK상품권 13만원',
-    'giftOpStCd': '03',
-    'giftOpStNm': '배송완료',
-    'dlvCompDt': '20130404',
-    'dlvUrl': 'http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380',
-    'pdlvBasAddr': '인천 동***********'
-    }
-    ]
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="history-list type2">
+                    <ul>
+                      <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
+                        <li>
+                            <div class="li-elem">
+                                <div class="title-box">
+                                    <span class="tit">{{ giftNm }}</span>
+                                    <span class="sub-tit">{{ pdlvBasAddr }}</span>
+                                    <span class="sub-tit">
+                                        {{#if isComp }}
+                                        <span>{{ shortDate dlvCompDt }}</span><span class="tx-black">{{ giftOpStNm }}</span>
+                                        {{else}}
+                                        {{ giftOpStNm }}
+                                        {{/if}}
+                                    </span>
+                                </div>
+                                {{#if hasDlvUrl }}
+                                <div class="bt-alone" data-url="{{ dlvUrl }}"><button class="bt-bg-blue1">배송조회</button></div>
+                                {{/if}}
+                            </div>
+                        </li>
+                      </script>
+                    </ul>
+                    <div class="bt-more gap-style" style="display: none;">
+                        <button>더보기</button>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
 
-</p>
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+            <!--// TBD -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireGifts($('.wrap'), decodeURIComponent('<%= JSON.stringify(data) %>').replace(/&#34;/g, '"'));
+  });
+</script>
+<% include ../../components/end.component.html %>

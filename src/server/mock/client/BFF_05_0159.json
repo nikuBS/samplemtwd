@@ -1,0 +1,49 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "hasSKTWire":"Y",
+    "resultValue":"Y",
+    "nextPage":"2",
+    "totalCnt":"1",
+    "giftProvideList": [
+      {
+        "giftNm": "SK상품권 8만원",
+        "giftOpStCd": "08" ,
+        "giftOpStNm":"재배송 완료",
+        "dlvCompDt":"20130404",
+        "dlvUrl":"http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380",
+        "pdlvBasAddr":"인천 동***********"
+      },
+      {
+        "giftNm": "SK상품권 10만원",
+        "giftOpStCd": "10" ,
+        "giftOpStNm":"배송접수취소",
+        "dlvCompDt":"20130404",
+        "dlvUrl":"http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380",
+        "pdlvBasAddr":"인천 동***********"
+      },{
+        "giftNm": "SK상품권 11만원",
+        "giftOpStCd": "11" ,
+        "giftOpStNm":"반품접수취소",
+        "dlvCompDt":"20130404",
+        "dlvUrl":"http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380",
+        "pdlvBasAddr":"인천 동***********"
+      },{
+        "giftNm": "SK상품권 12만원",
+        "giftOpStCd": "12" ,
+        "giftOpStNm":"재배송 접수취소",
+        "dlvCompDt":"20130404",
+        "dlvUrl":"http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380",
+        "pdlvBasAddr":"인천 동***********"
+      },{
+        "giftNm": "SK상품권 30만원",
+        "giftOpStCd": "30" ,
+        "giftOpStNm":"사은품거절",
+        "dlvCompDt":"20130404",
+        "dlvUrl":"http://www.zenexpress.co.kr/delivery/kpsen.zen?fm=931130401305380",
+        "pdlvBasAddr":"인천 동***********"
+      }
+    ]
+  }
+}

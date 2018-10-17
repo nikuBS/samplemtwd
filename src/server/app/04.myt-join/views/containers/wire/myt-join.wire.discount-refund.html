@@ -3,24 +3,82 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
 %>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 
-<% include ../components/start.component.html %>
-<p>
-    할인 반환금 조회
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '할인 반환금 조회', svcInfo: svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <p class="con-txt1"><%= reqDate %> 기준<br>할인 반환금 정보 입니다.</p>
+                <ul class="bt-slice mt20">
+                    <li class="bt-blue1">
+                        <button>조회하기</button>
+                    </li>
+                </ul>
+                <div class="info-list-type1 mt30">
+                    <h3>할인 반환금 정보</h3>
+                    <div class="basic-list">
+                        <ul id="refund-list">
+                          <script id="list-tmplt" type="text/x-handlebars-template">
+                            <li>
+                                <span class="title">{{ penStrdNm }}</span>
+                                <span class="tx-cont">{{ curreny brchAmt }} 원</span>
+                            </li>
+                          </script>
+                        </ul>
+                    </div>
+                    <h3 class="mt40">사용요금 정보</h3>
+                    <div class="basic-list" id="tot-div">
+                      <script id="tot-tmplt" type="text/x-handlebars-template">
+                        <ul>
+                            <li>
+                                <span class="title">당월 사용 요금(할인 반환금 포함)</span>
+                                <span class="tx-cont">{{ curreny hbAmt }} 원</span>
+                            </li>
+                            <li>
+                                <span class="title">미납요금</span>
+                                <span class="tx-cont">{{ curreny colAmt }} 원</span>
+                            </li>
+                            <li>
+                                <span class="title">총 납부금액<br />(당월 사용요금 + 미납요금)</span>
+                                <span class="tx-cont"><span class="tx-bold">{{ curreny totAmt }}</span> 원</span>
+                            </li>
+                        </ul>
+                      </script>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
 
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
-    'reqDate': '20180927',
-    'penaltyInfo': [
-    { 'penStrdNm': '홈결합세트_인터넷 할인반환금',  // 할인반환금명
-    'brchAmt': '406'                        // 할인반환 금액
-    }
-    ],
-    'chargeInfo':
-    { 'hbAmt': '35350',  // 당월 사용 요금(할인 반환금 포함)
-    'colAmt': '0',     // 미납 요금
-    'totAmt': '35350'  // 총 납부금액(당월사용요금+미납요금)
-    }
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+            <!--// TBD -->
 
-</p>
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireDiscountRefund($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>
