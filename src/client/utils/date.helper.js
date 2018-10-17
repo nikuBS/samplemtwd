@@ -1,3 +1,5 @@
+import moment from "moment";
+
 Tw.DateHelper = (function () {
   moment.locale('ko', {
     weekdaysMin: Tw.WEEKDAYS
@@ -256,6 +258,22 @@ Tw.DateHelper = (function () {
     return moment(date).isValid();
   };
 
+  var getStartOfMonSubtractDate = function ( date, subStr, format ) {
+    return moment(this.convDateFormat(date)).subtract( subStr, 'months' ).startOf('month').format(format);
+  };
+
+  var getEndOfMonSubtractDate = function ( date, subStr, format ) {
+    return moment(this.convDateFormat(date)).subtract( subStr, 'months' ).endOf('month').format(format);
+  };
+
+  var getStartOfMonDate = function ( date, format ) {
+    return moment(this.convDateFormat(date)).startOf('month').format(format);
+  };
+
+  var getEndOfMonDate = function ( date, format ) {
+    return moment(this.convDateFormat(date)).endOf('month').format(format);
+  };
+
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
@@ -284,6 +302,10 @@ Tw.DateHelper = (function () {
     getShortKoreanDate: getShortKoreanDate,
     getShortKoreanMonth: getShortKoreanMonth,
     getKoreanDateWithDay: getKoreanDateWithDay,
-    isValid: isValid
+    isValid: isValid,
+    getStartOfMonSubtractDate: getStartOfMonSubtractDate,
+    getEndOfMonSubtractDate: getEndOfMonSubtractDate,
+    getStartOfMonDate: getStartOfMonDate,
+    getEndOfMonDate: getEndOfMonDate
   };
 })();

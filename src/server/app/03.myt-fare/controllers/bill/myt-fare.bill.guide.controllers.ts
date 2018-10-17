@@ -247,7 +247,6 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
-      // thisMain.conditionChangeDtListFun();
       thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr;
 
         thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
@@ -422,10 +421,21 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.ppsProdAmt = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
       thisMain._commDataInfo.ppsRemained = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
-      thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
+
+      // thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
+      thisMain._commDataInfo.ppsObEndDt =
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+
+      // thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
+      thisMain._commDataInfo.ppsInbEndDt =
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+
+      // thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
+      thisMain._commDataInfo.ppsNumEndDt =
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+
+      // thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
+      thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.MM.DD hh:mm');
 
       thisMain._commDataInfo.ppsStartDateVal = thisMain.getStartDateFormat('YYYYMM');
       thisMain._commDataInfo.ppsStartDateTxt = thisMain.getStartDateFormat('YYYY.MM');
@@ -511,32 +521,40 @@ class MyTFareBillGuide extends TwViewController {
     return result;
   }
 
-  public getCurDate(): any {
-    return moment().format('YYYY.MM.DD hh:mm');
-  }
+  // public getCurDate(): any {
+  //   return moment().format('YYYY.MM.DD hh:mm');
+  // }
 
   public getStartDateFormat(formatStr): any {
-    return moment().subtract('1', 'months').startOf('month').format(formatStr);
+    // return moment().subtract('1', 'months').startOf('month').format(formatStr);
+    return DateHelper.getStartOfMonSubtractDate(undefined, '1', formatStr);
   }
 
   public getEndDateFormat(formatStr): any {
-    return moment().subtract('1', 'months').endOf('month').format(formatStr);
+    // return moment().subtract('1', 'months').endOf('month').format(formatStr);
+    return DateHelper.getEndOfMonSubtractDate(undefined, '1', formatStr);
   }
 
   public getSelStaDt(date: string): any { // 월 시작일 구하기
-    return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
+    // return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
+    return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.MM.DD');
   }
 
   public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
-    return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
+    // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
+    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'MM.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
-    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    // return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    return this._commDataInfo.selClaimDt =
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
   }
 
   public getSelClaimDtM(date: string): any { // 청구 년월 구하기
-    return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
+    // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
+    return this._commDataInfo.selClaimDtM =
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
   }
 
   public intBillLineFun() {
@@ -563,7 +581,9 @@ class MyTFareBillGuide extends TwViewController {
     console.dir(dtList);
 
     dtList = dtList.map(function (item, idx, arr) {
-      item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+      // item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+      // getShortDateWithFormatAddByUnit
+      item = DateHelper.getShortDateWithFormatAddByUnit(item, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
       return item;
     });
 

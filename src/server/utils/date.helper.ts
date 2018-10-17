@@ -234,6 +234,32 @@ class DateHelper {
     const diff = moment(endDate).diff(new Date());
     return moment.duration(diff);
   }
+
+  /**
+    * @param {any} date, {string} subStr, {string} format
+    * @returns {Date}
+  */
+  static getStartOfMonSubtractDate( date: any, subStr: string, format: string ): any {
+    return moment(this.convDateFormat(date)).subtract( subStr, 'months' ).startOf('month').format(format);
+  }
+
+  static getEndOfMonSubtractDate( date: any, subStr: string, format: string ): any {
+    return moment(this.convDateFormat(date)).subtract( subStr, 'months' ).endOf('month').format(format);
+  }
+
+  /**
+   * @param {any} date, {string} format
+   * @returns {Date}
+   */
+  static getStartOfMonDate( date: any, format: string ): any {
+    return moment(this.convDateFormat(date)).startOf('month').format(format);
+  }
+
+  static getEndOfMonDate( date: any, format: string ): any {
+    return moment(this.convDateFormat(date)).endOf('month').format(format);
+  }
+
+
 }
 
 export default DateHelper;
