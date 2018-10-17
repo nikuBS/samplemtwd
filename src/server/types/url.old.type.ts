@@ -43,10 +43,10 @@ export const URL = {
   '/myt/bill/history/micro/password/set': { login: true, id: 'MY_02_03_04_01_05', title: '소액결제 비밀번호 변경' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
   '/myt/bill/history/micro/limit': { login: true, id: 'MY_02_03_04_01_06', title: '소액결제 한도 확인' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 확인
   '/myt/bill/history/micro/limit/change': { login: true, id: 'MY_02_03_04_01_01', title: '소액결제 한도 변경' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 변경
-  '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01', title: '콘텐츠 이용료 이용내역' },  // 나의 요금 > 콘텐츠 이용료 이용내역
-  '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02', title: '콘텐츠 이용 한도 확인' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
-  '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01', title: '콘텐츠 이용 한도 변경' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
-  '/myt/bill/history/contents/detail': { login: true, id: 'MY_02_03_05_01_03', title: '콘텐츠 이용료 이용내역 상세' },  // 나의 요금 > 콘텐츠 이용료 이용내역 상세
+  '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01', title: '콘텐츠 이용료 이용내역' }, // 나의 요금 > 콘텐츠 이용료 이용내역
+  '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02', title: '콘텐츠 이용 한도 확인' }, // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
+  '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01', title: '콘텐츠 이용 한도 변경' }, // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
+  '/myt/bill/history/contents/detail': { login: true, id: 'MY_02_03_05_01_03', title: '콘텐츠 이용료 이용내역 상세' }, // 나의 요금 > 콘텐츠 이용료 이용내역 상세
   '/myt/join/protect/change': { login: true, id: 'MY_01_02_08', title: '고객보호 비밀번호 설정' },
   '/myt/join/join-info': { login: true, id: 'MY_01_02', title: '가입정보' },
   '/myt/join/join-info/no-contract': { login: true, id: 'MY_01_02_10', title: '무약정 플랜 포인트 내역' },
@@ -81,7 +81,6 @@ export const URL = {
   '/myt/benefit/discount': { login: true, id: 'MY_04_01', title: '할인 혜택' },
   '/myt/benefit/discount/detail': { login: true, id: 'MY_04_01_01_01', title: '할인 혜택 상세' },
 
-
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '리필하기' }, // 리필하기
   '/recharge/refill/history': { login: true, id: 'DA_01_02_01', title: '리필내역' }, // 리필 히스토리
@@ -106,16 +105,16 @@ export const URL = {
   '/payment/realtime': { login: true, id: 'PA_02_01', title: '즉시납부' }, // 즉시납부
   '/payment/auto': { login: true, id: 'PA_03_01', title: '자동납부 신청 및 변경' }, // 자동납부 신청 및 변경
   '/payment/point': { login: true, id: 'PA_05_01', title: '포인트 요금납부' }, // 포인트 요금납부
-  '/payment/history': { login: true, id: 'PA_06_01', title: '' },  // 전체납부내역
+  '/payment/history': { login: true, id: 'PA_06_01', title: '' }, // 전체납부내역
   '/payment/history/realtime': { login: true, id: 'PA_06_02', title: '' }, // 즉시납부내역
-  '/payment/history/auto': { login: true, id: 'PA_06_03', title: '' },  // 자동납부내역
-  '/payment/history/auto/unitedwithdrawal': { login: true, id: 'PA_06_04', title: '' },  // 자동납부 통합인출 내역
-  '/payment/history/point/reserve': { login: true, id: 'PA_06_05', title: '' },  // 포인트 납부 예약 내역
+  '/payment/history/auto': { login: true, id: 'PA_06_03', title: '' }, // 자동납부내역
+  '/payment/history/auto/unitedwithdrawal': { login: true, id: 'PA_06_04', title: '' }, // 자동납부 통합인출 내역
+  '/payment/history/point/reserve': { login: true, id: 'PA_06_05', title: '' }, // 포인트 납부 예약 내역
   '/payment/history/point/auto': { login: true, id: 'PA_06_06', title: '' }, // 포인트 자동 납부 내역
-  '/payment/history/receipt/tax': { login: true, id: 'PA_06_09', title: '' },  // 세금 계산서 발행내역
+  '/payment/history/receipt/tax': { login: true, id: 'PA_06_09', title: '' }, // 세금 계산서 발행내역
   '/payment/history/receipt/cash': { login: true, id: 'PA_06_10', title: '' }, // 현금 영수증 발행내역
-  '/payment/history/excesspay': { login: true, id: 'PA_06_07', title: '' },  // 과납금액 환불 내역
-  '/payment/history/excesspay/account': { login: true, id: 'PA_06_07_01', title: '' },  // 과납금액 환불 계좌 입력
+  '/payment/history/excesspay': { login: true, id: 'PA_06_07', title: '' }, // 과납금액 환불 내역
+  '/payment/history/excesspay/account': { login: true, id: 'PA_06_07_01', title: '' }, // 과납금액 환불 계좌 입력
   '/payment/prepay/micro': { login: true, id: 'PA_08_01_01', title: '소액결제 선결제' }, // 소액결제 선결제
   '/payment/prepay/contents': { login: true, id: 'PA_07_01_01', title: '콘텐츠이용료 선결제' }, // 콘텐츠이용료 선결제
   '/payment/prepay/micro/pay': { login: true, id: 'PA_08_03_01', title: '소액결제 선결제하기' }, // 소액결제 선결제하기
@@ -131,6 +130,10 @@ export const URL = {
   // management
   // membership
   // product
+  '/product': { login: false, id: 'MP', title: '모바일 요금제' },
+  '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
+  '/product/plans': { login: false, id: 'MP_02', title: '모바일 요금제' },
+  '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
   // direct
   // customer
   '/customer': { login: false, id: 'CI_01_01', title: '고객센터 서브메인' }, // 고객센터 서브메인
@@ -141,9 +144,9 @@ export const URL = {
   '/customer/prevent-damage': { login: false, id: 'CI_07_01', title: '이용자 피해예방 센터' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03', title: '이용자 피해예방 가이드' }, // 이용자 피해예방 가이드
   '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05', title: '이용자 피해예방 가이드' }, // 이용자 피해예방 가이드 - 상세
-  '/customer/prevent-damage/latest-warning': { login: false, id: 'CI_07_07', title: '최신 이용자 피해예방 주의보' },  // 최신 이용자 피해예방 주의보
-  '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08', title: '최신 이용자 피해예방 주의보' },  // 최신 이용자 피해예방 주의보 - 상세
-  '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '유용한 부가서비스' },  // 유용한 부가서비스
+  '/customer/prevent-damage/latest-warning': { login: false, id: 'CI_07_07', title: '최신 이용자 피해예방 주의보' }, // 최신 이용자 피해예방 주의보
+  '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08', title: '최신 이용자 피해예방 주의보' }, // 최신 이용자 피해예방 주의보 - 상세
+  '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '유용한 부가서비스' }, // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10', title: '이용자 피해예방 관련 사이트' }, // 이용자 피해예방 관련 사이트
   '/customer/helpline': { login: true, id: 'CI_05_01', title: '전화상담 예약' }, // 전화상담예약
   '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '매장정보' }, // 매장 및 AS센터 > 매장정보
@@ -173,8 +176,8 @@ export const URL = {
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
   '/auth/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록
   '/auth/line/register/empty': { login: true, id: 'CO_01_05_02_02', title: '' }, // 가입된 회선 없음
-  '/auth/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' },  // 로그인 횟수 초과
-  '/auth/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' },  // 로그인 실패
+  '/auth/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' }, // 로그인 횟수 초과
+  '/auth/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' }, // 로그인 실패
   '/auth/login/dormancy': { login: false, id: 'CO_01_02_02', title: '휴면 해제' },
   '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04', title: '아이디 찾기/비밀번호 재설정' },
   '/auth/login/customer-pwd': { login: false, id: 'CO_01_02_03_01', title: '고객보호 비밀번호 서비스 로그인' },
@@ -182,9 +185,9 @@ export const URL = {
   '/auth/login/route': { login: false, id: '', title: '' },
   '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01', title: '' }, // 간편로그인 안드로이드
   '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02', title: '' }, // 간편로그인 IOS
-  '/auth/login/easy-fail': { login: false, id: 'CO_01_02_06_03', title: '' },  // 간편로그인 이용불가
-  '/auth/logout/complete': { login: false, id: 'CO_01_03_01', title: '' },  // 로그아웃 성공
-  '/auth/logout/expire': { login: false, id: 'CO_01_03_02', title: '' },  // 세션 만료
+  '/auth/login/easy-fail': { login: false, id: 'CO_01_02_06_03', title: '' }, // 간편로그인 이용불가
+  '/auth/logout/complete': { login: false, id: 'CO_01_03_01', title: '' }, // 로그아웃 성공
+  '/auth/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
   '/auth/logout/route': { login: false, id: '', title: '' },
   '/auth/member/management': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
   '/auth/signup/guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
