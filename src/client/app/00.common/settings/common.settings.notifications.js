@@ -40,12 +40,13 @@ Tw.CommonSettingsNotifications.prototype = {
       'click', '#fe-service-terms, #fe-recommend-terms', $.proxy(this._onTermsClicked, this));
   },
   _onNotiChanged: function (e) {
-    var id = e.target.id;
+    var id = e.currentTarget.id;
+    var checked = !!$(e.currentTarget).attr('checked');
     var data = {};
     if (id.includes('service')) {
-      data.tNotiInfoRcvAgreeYn = e.target.checked ? 'Y' : 'N';
+      data.tNotiInfoRcvAgreeYn = checked ? 'Y' : 'N';
     } else if (id.includes('recommend')) {
-      data.tNotiMrktRcvAgreeYn = e.target.checked ? 'Y' : 'N';
+      data.tNotiMrktRcvAgreeYn = checked ? 'Y' : 'N';
     }
 
     this._apiService.request(Tw.API_CMD.BFF_03_0024, data)
@@ -67,7 +68,7 @@ Tw.CommonSettingsNotifications.prototype = {
     }
 
     // check and show layer popup for terms
-    if (e.target.checked) { // When switch changes to on from off
+    if (checked) { // When switch changes to on from off
       if (id.includes('service')) {
         if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn) {
           this.$container.find('#fe-service-terms').trigger('click'); // show terms layer popup
