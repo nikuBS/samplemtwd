@@ -26,16 +26,27 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   },
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');
-    // this.$dateSelect= $('[data-target="dateSelect"]');
+    this.$select_building= $('[data-target="select_building"]'); // 건물 유형
+    this.$select_house= $('[data-target="select_house"]'); // 이사 날짜
+    this.$select_stop= $('[data-target="select_stop"]'); // 중단 희망 날짜
+    this.$select_install= $('[data-target="select_install"]'); // 설치 희망 날짜
+    this.$input_hp= $('[data-target="input_hp"]'); // 휴대폰 번호
+    this.$input_phone= $('[data-target="input_phone"]'); // 일반전화 (선택항목)
 
   },
   _bindEvent: function () {
-    // this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
-
+    this.$container.on('click', '[data-target="select_building"]', $.proxy(this._testEvt, this));
+    this.$container.on('click', '[data-target="select_house"]', $.proxy(this._testEvt, this));
+    this.$container.on('click', '[data-target="select_stop"]', $.proxy(this._testEvt, this));
+    this.$container.on('click', '[data-target="select_install"]', $.proxy(this._testEvt, this));
+    this.$container.on('click', '[data-target="input_hp"]', $.proxy(this._testEvt, this));
+    this.$container.on('click', '[data-target="input_phone"]', $.proxy(this._testEvt, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
+  _testEvt: function() {
 
+  },
   //--------------------------------------------------------------------------[API]
 
 

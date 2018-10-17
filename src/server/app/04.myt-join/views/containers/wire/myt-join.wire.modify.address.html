@@ -37,11 +37,11 @@
                                 <span class="name">현재 설치 장소</span>
                             </div>
                             <div class="title">
-                                <span>서울시 도봉구<br />도봉동 *******************</span>
+                                <span><%=resDataInfo.basAddr %></span>
                             </div>
                             <span class="subtitle2">
-                                    <span class="elem">홍*동</span>
-                                    <span class="elem">인터넷</span>
+                                    <span class="elem"><%=resDataInfo.wireReqrNm %></span>
+                                    <span class="elem"><%=commDataInfo.svcState %></span>
                                 </span>
                         </div>
                     </div>
@@ -54,7 +54,9 @@
                 <div class="cont-box">
                     <div class="form-type">
                         <h3 class="form-title">건물 유형</h3>
-                        <button class="bt-dropdown big" title="건물 유형 선택" aria-haspopup="true">유형 선택<span class="ico"></span></button>
+
+                        <button data-target="select_building" class="bt-dropdown big" title="건물 유형 선택" aria-haspopup="true">유형 선택<span class="ico"></span></button>
+
                         <h3 class="form-title">변경 설치 장소</h3>
                         <div class="form-box">
                             <div class="inputbox bt-add bg-white">
@@ -74,16 +76,19 @@
                             </div>
                         </div>
                         <h3 class="form-title">이사 날짜</h3>
-                        <button class="bt-dropdown big" title="이사 날짜 선택" aria-haspopup="true">선택<span class="ico"></span></button>
+                        <button data-target="select_house"class="bt-dropdown big" title="이사 날짜 선택" aria-haspopup="true">선택<span class="ico"></span></button>
+
                         <h3 class="form-title">중단 희망 날짜</h3>
-                        <button class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
+                        <button data-target="select_stop" class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
+
                         <h3 class="form-title">설치 희망 날짜</h3>
-                        <button class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
+                        <button data-target="select_install" class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
+
                         <h3 class="form-title">휴대폰 번호</h3>
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input type="number" placeholder="숫자만 입력" title="휴대폰 번호 입력"/>
+                                        <input data-target="input_hp" type="number" placeholder="숫자만 입력" title="휴대폰 번호 입력"/>
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -92,7 +97,7 @@
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input type="number" placeholder="숫자만 입력" title="일반전화 (선택항목) 입력"/>
+                                        <input data-target="input_phone" type="number" placeholder="숫자만 입력" title="일반전화 (선택항목) 입력"/>
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -128,7 +133,9 @@
   $(document).ready(function () {
     var oMyTWireInfo = new Tw.MyTJoinWireModifyAddress( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>
   } );
   });
 </script>

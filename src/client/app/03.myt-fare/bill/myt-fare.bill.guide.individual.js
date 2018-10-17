@@ -85,7 +85,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   },
   _payListBtnEvt: function () {
     Tw.Logger.info('[납부내역조회]');
-    this._goLoad('/myt/fare/history');
+    this._goLoad('/myt/fare/history/payment');
   },
   _callGiftBtnEvt: function () {
     this._goLoad('/myt/fare/bill/guide/call-gift');

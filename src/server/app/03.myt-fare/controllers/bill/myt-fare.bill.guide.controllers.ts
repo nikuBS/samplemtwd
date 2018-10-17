@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
-import moment = require('moment');
+import moment from 'moment';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import bill_guide_BFF_05_0036 from '../../../../mock/server/bill.guide.BFF_05_0036.mock';
@@ -234,6 +234,8 @@ class MyTFareBillGuide extends TwViewController {
     */
 
     const dataInit = function () {
+      thisMain.logger.info(thisMain, '[ 데이터 초기화 > dataInit ]');
+
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -245,8 +247,9 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
+      thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr;
 
-      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+        thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
 
       thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
@@ -418,10 +421,21 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.ppsProdAmt = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
       thisMain._commDataInfo.ppsRemained = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
-      thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
+
+      // thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
+      thisMain._commDataInfo.ppsObEndDt =
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+
+      // thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
+      thisMain._commDataInfo.ppsInbEndDt =
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+
+      // thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
+      thisMain._commDataInfo.ppsNumEndDt =
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+
+      // thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
+      thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.MM.DD hh:mm');
 
       thisMain._commDataInfo.ppsStartDateVal = thisMain.getStartDateFormat('YYYYMM');
       thisMain._commDataInfo.ppsStartDateTxt = thisMain.getStartDateFormat('YYYY.MM');
@@ -507,32 +521,40 @@ class MyTFareBillGuide extends TwViewController {
     return result;
   }
 
-  public getCurDate(): any {
-    return moment().format('YYYY.MM.DD hh:mm');
-  }
+  // public getCurDate(): any {
+  //   return moment().format('YYYY.MM.DD hh:mm');
+  // }
 
   public getStartDateFormat(formatStr): any {
-    return moment().subtract('1', 'months').startOf('month').format(formatStr);
+    // return moment().subtract('1', 'months').startOf('month').format(formatStr);
+    return DateHelper.getStartOfMonSubtractDate(undefined, '1', formatStr);
   }
 
   public getEndDateFormat(formatStr): any {
-    return moment().subtract('1', 'months').endOf('month').format(formatStr);
+    // return moment().subtract('1', 'months').endOf('month').format(formatStr);
+    return DateHelper.getEndOfMonSubtractDate(undefined, '1', formatStr);
   }
 
   public getSelStaDt(date: string): any { // 월 시작일 구하기
-    return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
+    // return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
+    return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.MM.DD');
   }
 
   public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
-    return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
+    // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
+    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'MM.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
-    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    // return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    return this._commDataInfo.selClaimDt =
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
   }
 
   public getSelClaimDtM(date: string): any { // 청구 년월 구하기
-    return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
+    // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
+    return this._commDataInfo.selClaimDtM =
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
   }
 
   public intBillLineFun() {
@@ -553,11 +575,15 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public conditionChangeDtListFun() {
+    console.log('에러 확인 > conditionChangeDtListFun');
     const thisMain = this;
     let dtList = thisMain._billpayInfo.invDtArr.slice();
+    console.dir(dtList);
 
     dtList = dtList.map(function (item, idx, arr) {
-      item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+      // item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+      // getShortDateWithFormatAddByUnit
+      item = DateHelper.getShortDateWithFormatAddByUnit(item, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
       return item;
     });
 
@@ -566,8 +592,8 @@ class MyTFareBillGuide extends TwViewController {
 
   public paidAmtSvcCdListFun() {
     const thisMain = this;
-    console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
-    console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
+    // console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
+    // console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
     let paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList.slice();
     paidAmtSvcCdList = paidAmtSvcCdList.map(function (item, idx, arr) {
       item.amt = FormatHelper.addComma(item.amt);
@@ -579,8 +605,8 @@ class MyTFareBillGuide extends TwViewController {
       return item;
     });
 
-    console.log('에러 확인 2 > thisMain._billpayInfo.paidAmtSvcCdList');
-    console.dir( paidAmtSvcCdList );
+    // console.log('에러 확인 2 > thisMain._billpayInfo.paidAmtSvcCdList');
+    // console.dir( paidAmtSvcCdList );
 
     return paidAmtSvcCdList;
 
