@@ -229,9 +229,6 @@ Tw.ProductList.prototype = {
     var searchFltIds = _.map($layer.find('input[checked="checked"]'), function (input) {
       return input.getAttribute('data-filter-id');
     }).join(',');
-
-
-    
     
     if (this._params.searchFltIds === searchFltIds) {
       this._popupService.close();
@@ -255,6 +252,8 @@ Tw.ProductList.prototype = {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
     } else {
+      delete this._params.searchLastProdId;
+      delete this._leftCount;
       this._popupService.close();
       this._handleSuccessLoadingData(resp);
     }
