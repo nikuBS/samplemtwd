@@ -230,19 +230,8 @@ Tw.ProductList.prototype = {
       return input.getAttribute('data-filter-id');
     }).join(',');
     
-    if (this._params.searchFltIds === searchFltIds) {
-      if (this.$list.is(':empty')) {
-        var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
-        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
-      } else {
-        this._popupService.close();
-      }
-      return;
-    }
-    
     this._params = { idxCtgCd: this.CODE };
     this._params.searchFltIds = searchFltIds;
-    this.$list.empty();
 
     this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this));
   },
@@ -259,6 +248,7 @@ Tw.ProductList.prototype = {
     } else {
       delete this._params.searchLastProdId;
       delete this._leftCount;
+      this.$list.empty();
       this._popupService.close();
       this._handleSuccessLoadingData(resp);
     }
