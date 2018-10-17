@@ -85,7 +85,7 @@ class MyTFareSubmainController extends TwViewController {
         // 청구요금
         if ( claim ) {
           data.claim = claim;
-          data.claimMonth = DateHelper.getShortKoreanMonth(claim.invDt);
+          data.claimMonth = DateHelper.getShortKoreanAfterMonth(claim.invDt);
           // 사용요금
           const usedAmt = parseInt(claim.useAmtTot, 10);
           data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
@@ -153,7 +153,7 @@ class MyTFareSubmainController extends TwViewController {
         // 사용요금
         if ( usage ) {
           data.usage = usage;
-          data.useMonth = DateHelper.getShortKoreanMonth(usage.invDt);
+          data.useMonth = DateHelper.getShortKoreanAfterMonth(usage.invDt);
           // 사용요금
           const usedAmt = parseInt(usage.useAmtTot, 10);
           data.useAmtTot = FormatHelper.addComma(usedAmt.toString());

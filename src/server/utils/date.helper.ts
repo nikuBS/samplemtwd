@@ -58,7 +58,7 @@ class DateHelper {
    */
   static getCurrentDateTime = function (format) {
     return moment().format(format || 'YYYY.MM.DD hh:mm:ss');
-  }
+  };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss or none
@@ -98,6 +98,15 @@ class DateHelper {
    */
   static getShortKoreanDate(date: any): string {
     return moment(this.convDateFormat(date)).format('YY년 MM월 DD일');
+  }
+
+  /**
+   * @input 11월
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 12월
+   */
+  static getShortKoreanAfterMonth(date: any): string {
+    return moment(this.convDateFormat(date)).add(1, 'months').format('MM월');
   }
 
   /**

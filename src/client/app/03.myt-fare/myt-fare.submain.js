@@ -237,7 +237,7 @@ Tw.MyTFareSubMain.prototype = {
           var item = arguments[idx].result;
           var amt = parseInt(item.useAmtTot, 10);
           chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
             'class': this._chartDefaultClass + item.invDt,
             'data': [amt] // 사용금액
           });
@@ -286,7 +286,7 @@ Tw.MyTFareSubMain.prototype = {
           var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
           var absDeduck = Math.abs(parseInt(item.deduckTotInvAmt, 10));
           chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
             'class': this._chartDefaultClass + item.invDt,
             'data': [amt], // 청구금액
             'sale': [absDeduck] // 할인금액
