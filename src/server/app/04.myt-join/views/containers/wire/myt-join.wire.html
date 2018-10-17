@@ -26,8 +26,8 @@
             <div class="cont-box">
                 <div class="myinfo-wrap">
                     <div class="myinfo-cont">
-                        <h3 class="title-m"><span class="blind">사용중인 상품명</span><%= data.TTTTTTTTitle %>T_스마트 광랜(다이렉트)</h3>
-                        <span class="subtitle2 pt10"><span class="blind">설치된 설치 장소</span><%= data.LLLLLLLLocation %>서울시 도봉구*****************</span>
+                        <h3 class="title-m"><span class="blind">사용중인 상품명</span><%= svcInfo.prodNm %></h3>
+                        <span class="subtitle2 pt10"><span class="blind">설치된 설치 장소</span><%= svcInfo.addr %></span>
                     </div>
                 </div>
                 <ul class="bt-slice item-two mt20">
@@ -50,7 +50,7 @@
                         <div class="link-long">
                             <button>가입 변경 신청 현황
                                 <span class="tx-sub">
-                                    <span class="normal"><%= data.CCCCCCCCCCChangeCnt %>4개 신청</span>
+                                    <span class="normal"><%= data.newAndChgCnt %>개 신청</span>
                                     <span class="ico"></span>
                                 </span>
                             </button>
@@ -60,7 +60,7 @@
                         <div class="link-long">
                             <button>장애 A/S 신청 현황
                                 <span class="tx-sub">
-                                    <span class="normal"><%= data.AAAAAAAAAAAAAAsCnt %>2건</span>
+                                    <span class="normal"><%= data.asCnt %>건</span>
                                     <span class="ico"></span>
                                 </span>
                             </button>
@@ -69,10 +69,12 @@
                     <li id="btnNetphone">
                         <div class="link-long">
                             <button>인터넷 전화번호이동<br />신청 현황
+                                <!--
                                 <span class="tx-sub">
-                                    <span class="normal"><%= data.NNNNNNNNetphonechangeStatus %>처리중</span>
+                                    <span class="normal">처리중</span>
                                     <span class="ico"></span>
                                 </span>
+                                -->
                             </button>
                         </div>
                     </li>

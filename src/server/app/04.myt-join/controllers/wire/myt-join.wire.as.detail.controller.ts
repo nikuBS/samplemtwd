@@ -26,7 +26,6 @@ class MyTJoinWireASDetail extends TwViewController {
 
     if ( !troubleNum ) {
       console.log(' troubleNum is not defined');
-      this.error.render( res );
       return;
     }
 

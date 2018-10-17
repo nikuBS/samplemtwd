@@ -17,16 +17,41 @@ class MyTJoinWire extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    Observable.combineLatest(this.apiService.request(API_CMD.BFF_05_0001, {}))
-      .subscribe(([resp]) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const option = { svcInfo: svcInfo, data: {} };
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0167, {}),
+      this.apiService.request(API_CMD.BFF_05_0162, {}),
+      this.apiService.request(API_CMD.BFF_05_0168, {}),
+      this.apiService.request(API_CMD.BFF_05_0143, {}),
+      this.apiService.request(API_CMD.BFF_05_0153, {}),
+      this.apiService.request(API_CMD.BFF_05_0156, { page: '1', size: '20' }))
+      .subscribe(([r0167newJoin, r0162chgAddr, r0168prodChg, r0143periChg, r0153prodChg, r0156as]) => {
+        let newAndChgCnt = this._getResultCnt(r0167newJoin);
+        newAndChgCnt += this._getResultCnt(r0162chgAddr);
+        newAndChgCnt += this._getResultCnt(r0168prodChg);
+        newAndChgCnt += this._getResultCnt(r0143periChg);
+        newAndChgCnt += this._getResultCnt(r0153prodChg);
 
-          res.render('wire/myt-join.wire.html', option);
-        }
-    });
+        const asCnt = this._getResultCnt(r0156as);
+        const data = { newAndChgCnt: newAndChgCnt, asCnt: asCnt };
+        const option = { svcInfo: svcInfo, data: data };
+        console.log(svcInfo);
+        res.render('wire/myt-join.wire.html', option);
+      });
 
+  }
 
+  private _getResultCnt( resp: any ): number {
+    if ( resp.code === API_CODE.CODE_00 ) {
+      if ( Array.isArray(resp.result) ) {
+        return resp.result.length;
+      } else {
+        return 1;
+      }
+    } else {
+      // log 남기기
+      return 0;
+    }
+    return 0;
   }
 }
 
