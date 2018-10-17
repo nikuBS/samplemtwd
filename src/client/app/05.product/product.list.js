@@ -231,7 +231,12 @@ Tw.ProductList.prototype = {
     }).join(',');
     
     if (this._params.searchFltIds === searchFltIds) {
-      this._popupService.close();
+      if (this.$list.is(':empty')) {
+        var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      } else {
+        this._popupService.close();
+      }
       return;
     }
     
