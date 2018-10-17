@@ -159,9 +159,15 @@
         </li>
       </ul>
     </div>
+    <% if (joinTermInfo.downgrade && joinTermInfo.downgrade.guidMsgCtt) { %>
     <div class="cont-noti pt20">
-      <span class="type2">데이터안심정액제 또는 데이터퍼펙트정액제 가입고객은 당월부터 월정액 할인혜택이 제공되지 않습니다.</span>
+      <% if (joinTermInfo.downgrade.htmlMsgYn === 'N') { %>
+      <span class="type2"><%= joinTermInfo.downgrade.guidMsgCtt %></span>
+      <% } else { %>
+      <%- joinTermInfo.downgrade.guidMsgCtt %>
+      <% } %>
     </div>
+    <% } %>
   </div>
   <!--// .cont-box -->
 

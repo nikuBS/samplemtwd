@@ -267,21 +267,13 @@ class ProductDetail extends TwViewController {
 
     return Object.assign(seriesInfo, {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        const isBasFeeInfo = isNaN(parseInt(item.basFeeInfo, 10)),
-          isBasOfrDataQtyCtt = ['0', '-'].indexOf(item.basOfrDataQtyCtt) === -1,
-          isBasOfrVcallTmsCtt = ['0', '-'].indexOf(item.basOfrVcallTmsCtt) === -1,
-          isBasOfrCharCntCtt = ['0', '-'].indexOf(item.basOfrCharCntCtt) === -1;
-
-        const used = FormatHelper.convDataFormat(item.basOfrDataQtyCtt, DATA_UNIT.MB);
+        const spec = FormatHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt);
 
         return Object.assign(item, {
-          basFeeInfo: isBasFeeInfo ? item.basFeeInfo : FormatHelper.addComma(item.basFeeInfo),
-          basOfrDataQtyCtt: isBasOfrDataQtyCtt ? (isNaN(parseInt(used.data, 10)) ? item.basOfrDataQtyCtt : used.data + used.unit) : null,
-          basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? (isNaN(parseInt(item.basOfrVcallTmsCtt, 10)) ?
-              item.basOfrVcallTmsCtt : item.basOfrVcallTmsCtt + VOICE_UNIT.MIN) : null,
-          basOfrCharCntCtt: isBasOfrCharCntCtt ? (isNaN(parseInt(item.basOfrCharCntCtt, 10)) ?
-              item.basOfrCharCntCtt : item.basOfrCharCntCtt + UNIT['310']) : null,
-          isNumberBasFeeInfo: !isBasFeeInfo
+          basFeeInfo: spec.basFeeInfo,
+          basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
+          basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
+          basOfrCharCntCtt: spec.basOfrCharCntCtt
         });
       })
     });

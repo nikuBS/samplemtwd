@@ -164,7 +164,7 @@ Tw.ProductJoin.prototype = {
   },
 
   _goBack: function() {
-    this._historyService.goBack();
+    this._popupService.close();
   },
 
   _setDataForConfirmLayer: function() {
@@ -212,7 +212,7 @@ Tw.ProductJoin.prototype = {
   _openAgreePop: function(e) {
     var $parent = $(e.currentTarget).parent();
     this._popupService.open({
-      hbs: 'PFT_01_03_L01',
+      hbs: 'FT_01_03_L01',
       data: {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').text()
@@ -441,7 +441,6 @@ Tw.ProductJoin.prototype = {
         prodId: this._prodId,
         prodNm: this.$joinConfirmLayer.data('prod_nm'),
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isZeroPlanSetup: (this._prodId === 'NA00006157'), // @todo 완료 화면 0플랜 버튼 임시 생성
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })
@@ -456,6 +455,7 @@ Tw.ProductJoin.prototype = {
   },
 
   _goProductDetail: function() {
+    this._popupService.close();
     this._historyService.goLoad('/product/detail/' + this._prodId);
   }
 
