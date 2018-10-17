@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.wire.inetphone-num.change.controller.ts
+ * FileName: myt-join.wire.netphone-num.change.controller.ts
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
  */
@@ -16,9 +16,7 @@ class MyTJoinWireInetPhoneNumChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-
-    const option = { svcInfo: svcInfo };
-    res.render('wire/myt-join.wire.inetphone-num.change.html', {});
+    res.render('wire/myt-join.wire.inetphone-num.change.html', {svcInfo: svcInfo});
   }
 }
 
