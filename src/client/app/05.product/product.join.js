@@ -155,16 +155,26 @@ Tw.ProductJoin.prototype = {
   },
 
   _joinCancel: function() {
+    if (this.$joinSetup.length > 0 && this.$joinSetup.is(':visible')) {
+      return this._historyService.goBack();
+    }
+
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinPopupEvent, this));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinPopupEvent, this), null, $.proxy(this._bindJoinPopupCloseEvent, this));
   },
 
   _bindJoinPopupEvent: function($popupContainer) {
-    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._goBack, this));
+    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._setCancelFlag, this));
   },
 
-  _goBack: function() {
-    this._popupService.close();
+  _setCancelFlag: function() {
+    this._cancelFlag = true;
+  },
+
+  _bindJoinPopupCloseEvent: function() {
+    if (this._cancelFlag) {
+      this._historyService.goBack();
+    }
   },
 
   _setDataForConfirmLayer: function() {
@@ -255,7 +265,7 @@ Tw.ProductJoin.prototype = {
       return;
     }
 
-    this.$overpayResult.html(this._template(Object.assign(resp.result, {
+    this.$overpayResult.html(this._template($.extend(resp.result, {
       isDataOvrAmt: isDataOvrAmt,
       isVoiceOvrAmt: isVoiceOvrAmt,
       isSmsOvrAmt: isSmsOvrAmt
@@ -447,13 +457,14 @@ Tw.ProductJoin.prototype = {
       return Tw.Error(resp.code, resp.msg).page();
     }
 
-    var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0);
+    var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0),
+      prodNm = this.$joinConfirmLayer.data('prod_nm') || '';
 
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
-      data: Object.assign(this._successData, {
+      data: $.extend(this._successData, {
         prodId: this._prodId,
-        prodNm: this.$joinConfirmLayer.data('prod_nm'),
+        prodNm: prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''

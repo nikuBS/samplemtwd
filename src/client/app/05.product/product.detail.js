@@ -227,7 +227,7 @@ Tw.ProductDetail.prototype = {
     this.$recommendRateList.find('.recommendedrate-list')
       .html(this._template({
         list: resp.result.products.map(function(item) {
-          return Object.assign(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
+          return $.extend(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
             item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
         })
       }));
