@@ -307,3 +307,10 @@ Tw.RESELL_TERMS = {
     ]
   }]
 };
+
+Tw.MYT_FARE_BILL_GUIDE = {
+  DETAIL_BTN: {
+    CONTENTS: '<span class="bt-detail"><button data-target="detailContentsBtn">자세히 보기</button></span>',
+    MICRO: '<span class="bt-detail"><button data-target="detailMicroBtn">자세히 보기</button></span>'
+  }
+};

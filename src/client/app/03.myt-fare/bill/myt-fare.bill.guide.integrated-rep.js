@@ -64,9 +64,25 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   },
   _hbRegisterHelper: function () {
+
     Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
     });
+
+    Handlebars.registerHelper('if_contents', function (strVal, searchName) {
+      // Tw.Logger.info('[테스트 if_contents]', searchName);
+      if ( strVal.indexOf(searchName) > -1) {
+        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.CONTENTS;
+      }
+    });
+
+    Handlebars.registerHelper('if_micro', function (strVal, searchName) {
+      // Tw.Logger.info('[테스트 if_contents]', searchName);
+      if ( strVal.indexOf(searchName) > -1) {
+        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.MICRO;
+      }
+    });
+
   },
   _cachedElement: function () {
     this.$entryTplBill = $('#fe-entryTplBill');
@@ -98,6 +114,14 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     this.$container.on('click', '[data-target="feePayBtn"]', $.proxy(this._feePayBtnEvt, this)); // 요금납부
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
+
+    this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
+      this._goLoad('/myt/fare/payment/contents');
+    }, this));
+
+    this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
+      this._goLoad('/myt/fare/payment/micro');
+    }, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
