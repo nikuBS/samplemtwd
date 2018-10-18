@@ -3841,6 +3841,18 @@
 .list-comp-input.type4 .select-list .radiobox.type01:before, .list-comp-input.type4 .select-list .shop-info .shop-txt .radiobox.type02:before, .shop-info .shop-txt .list-comp-input.type4 .select-list .radiobox.type02:before, .list-comp-input.type4 .select-list .shop-info .shop-txt .radiobox.type03:before, .shop-info .shop-txt .list-comp-input.type4 .select-list .radiobox.type03:before {
   top: 0.9375rem; }
 
+.notice-comp-infolist.type1 dt {
+  margin-bottom: 0.625rem;
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 700; }
+
+.notice-comp-infolist.type1 dd {
+  font-size: 0.75rem;
+  padding-left: 0; }
+  .notice-comp-infolist.type1 dd:before {
+    display: none; }
+
 /* 김연주 */
 .data-result {
   padding: 1.875rem 0;
@@ -10956,6 +10968,18 @@ a.bt-link-tx.underline.small {
     text-indent: -9999px;
     background: url(/img/ico/ico-group3.png) no-repeat -0.5rem -68.75rem;
     background-size: 3.125rem; }
+  .bt-top a {
+    position: absolute;
+    left: 50%;
+    top: 1.5625rem;
+    display: inline-block;
+    width: 2.3125rem;
+    height: 3.1875rem;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    text-indent: -9999px;
+    background: url(/img/ico/ico-group3.png) no-repeat -0.5rem -68.75rem;
+    background-size: 3.125rem; }
 
 .basic-select-list ul li {
   display: table;
@@ -13215,51 +13239,54 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem;
       line-height: 1.1875rem; }
 
-.card-wrap h3 {
-  padding: 1.25rem 1rem 1.25rem 1rem; }
-  .card-wrap h3.link-long {
-    padding: 0;
-    border: none; }
-    .card-wrap h3.link-long button, .card-wrap h3.link-long a {
-      font-size: 0.9375rem; }
-    .card-wrap h3.link-long .tx-sub {
-      color: #666;
-      font-size: 0.875rem;
-      font-weight: 400; }
-      .card-wrap h3.link-long .tx-sub em {
-        color: #000; }
-      .card-wrap h3.link-long .tx-sub strong {
-        font-weight: 700; }
-
-.card-wrap .card-desc {
-  margin-top: 0.625rem;
-  color: #666;
-  font-size: 0.8125rem; }
-
-.card-wrap .btn-more {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 2.875rem;
-  font-size: 0;
-  line-height: 0; }
-  .card-wrap .btn-more:before {
-    content: '';
+.card-wrap {
+  position: relative; }
+  .card-wrap .toggle {
+    padding-bottom: 2.875rem; }
+  .card-wrap h3 {
+    padding: 1.25rem 1rem 1.25rem 1rem; }
+    .card-wrap h3.link-long {
+      padding: 0;
+      border: none; }
+      .card-wrap h3.link-long button, .card-wrap h3.link-long a {
+        font-size: 0.9375rem; }
+      .card-wrap h3.link-long .tx-sub {
+        color: #666;
+        font-size: 0.875rem;
+        font-weight: 400; }
+        .card-wrap h3.link-long .tx-sub em {
+          color: #000; }
+        .card-wrap h3.link-long .tx-sub strong {
+          font-weight: 700; }
+  .card-wrap .card-desc {
+    margin-top: 0.625rem;
+    color: #666;
+    font-size: 0.8125rem; }
+  .card-wrap .btn-more {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0.8125rem;
-    height: 0.375rem;
-    margin: -0.1875rem 0 0 -0.375rem;
-    background-image: url(/img/ico/ico-group.png);
-    background-repeat: no-repeat;
-    background-position: -1.9375rem -22.5rem;
-    background-size: 3.125rem;
-    overflow: hidden;
-    color: transparent; }
-
-.card-wrap.open .btn-more:before {
-  background-position: -0.375rem -22.5rem; }
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 2.875rem;
+    font-size: 0;
+    line-height: 0; }
+    .card-wrap .btn-more:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0.8125rem;
+      height: 0.375rem;
+      margin: -0.1875rem 0 0 -0.375rem;
+      background-image: url(/img/ico/ico-group.png);
+      background-repeat: no-repeat;
+      background-position: -1.9375rem -22.5rem;
+      background-size: 3.125rem;
+      overflow: hidden;
+      color: transparent; }
+    .card-wrap .btn-more.open:before {
+      background-position: -0.375rem -22.5rem; }
 
 .benefit-banner-wrap h3 {
   padding: 1.25rem 1rem 1.875rem 1rem;
@@ -13688,6 +13715,13 @@ a.bt-link-tx.underline.small {
     top: 1.875rem;
     left: 1.875rem; }
 
+.fixed-b {
+  position: fixed;
+  left: 50%;
+  bottom: 1.875rem;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
+
 /* 권은별 */
 .acco-notice .acco-list {
   padding: 0; }
@@ -13739,23 +13773,6 @@ a.bt-link-tx.underline.small {
 .acco-notice .acco-cont .notice-txt {
   color: #000;
   font-size: 0.8125rem; }
-
-.btn-tip {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  margin: 0 0 0 0.375rem;
-  width: 0.875rem;
-  height: 0.875rem;
-  border-radius: 100%;
-  background-color: #3b98e6;
-  font-size: 0.625rem;
-  line-height: 0.875rem;
-  color: #fff;
-  font-weight: 700;
-  text-align: center; }
-  .btn-tip span {
-    vertical-align: top; }
 
 /* 전화상담예약 CS_14_01.html */
 .form-reserve-wrap.cont-box .cont-box {
@@ -13861,6 +13878,54 @@ a.bt-link-tx.underline.small {
   color: #3b98e6;
   padding: 0.9375rem 0 0.9375rem 0; }
 
+/* 회선번호 한줄일 때 BS_02_01_01_02.html */
+.user-info .in-info.oneline .number {
+  line-height: 2; }
+
+/* 약관동의 */
+.agree-chk-wrap .list-comp-input-agree .select-list .stext-bg {
+  display: block;
+  max-height: 5rem;
+  overflow: hidden;
+  margin: 1.125rem 0 0;
+  padding: 0.9375rem 1.25rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 0.75rem;
+  color: #212121;
+  background: #f5f5f5;
+  line-height: 1.0625rem; }
+
+/* 설정정보 */
+.link-list.set-info li {
+  padding: 1.3125rem 0; }
+  .link-list.set-info li dl {
+    table-layout: fixed; }
+  .link-list.set-info li dt {
+    vertical-align: top;
+    height: auto; }
+  .link-list.set-info li dd {
+    height: auto;
+    vertical-align: top;
+    padding-right: 1rem;
+    position: relative; }
+    .link-list.set-info li dd .term {
+      display: block;
+      font-size: 0.9375rem; }
+    .link-list.set-info li dd .date {
+      display: block;
+      font-size: 0.8125rem;
+      color: #666; }
+    .link-list.set-info li dd button {
+      position: absolute;
+      top: 0;
+      right: 0; }
+      .link-list.set-info li dd button:after {
+        top: 0.625rem; }
+
+.txt-red {
+  color: #e22f26; }
+
 /* 박옥미 */
 .my-benefit-info .view {
   position: relative;
@@ -13906,13 +13971,26 @@ a.bt-link-tx.underline.small {
 .phonefilter-wrap.benefit-icon {
   padding: 1.25rem 1rem;
   border-bottom: 0; }
+  .phonefilter-wrap.benefit-icon li {
+    position: relative;
+    padding: 0 0.375rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    vertical-align: top;
+    display: inline-block;
+    width: 20%; }
+    .phonefilter-wrap.benefit-icon li.radiobox.type05:before {
+      margin: 0 auto 0.9375rem; }
+    .phonefilter-wrap.benefit-icon li .text-wrap .ico:after {
+      content: '';
+      position: absolute; }
   .phonefilter-wrap.benefit-icon .stit-type {
     display: block;
     font-size: 0.9375rem;
     font-weight: 400;
     padding: 0 0 1.5625rem; }
   .phonefilter-wrap.benefit-icon .benefit1:after {
-    top: 50%;
+    top: 1.875rem;
     left: 50%;
     width: 1.4375rem;
     height: 0.625rem;
@@ -13920,7 +13998,7 @@ a.bt-link-tx.underline.small {
     background: url(/img/benefit/bg_b_filter01.png) no-repeat 0 0;
     background-size: 1.4375rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit2:after {
-    top: 50%;
+    top: 1.875rem;
     left: 50%;
     width: 1.4375rem;
     height: 0.625rem;
@@ -13928,7 +14006,7 @@ a.bt-link-tx.underline.small {
     background: url(/img/benefit/bg_b_filter02.png) no-repeat 0 0;
     background-size: 1.4375rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit3:after {
-    top: 50%;
+    top: 1.875rem;
     left: 50%;
     width: 1.4375rem;
     height: 0.625rem;
@@ -13936,7 +14014,7 @@ a.bt-link-tx.underline.small {
     background: url(/img/benefit/bg_b_filter03.png) no-repeat 0 0;
     background-size: 1.4375rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit4:after {
-    top: 50%;
+    top: 1.875rem;
     left: 50%;
     width: 1.4375rem;
     height: 0.625rem;
@@ -13944,7 +14022,7 @@ a.bt-link-tx.underline.small {
     background: url(/img/benefit/bg_b_filter04.png) no-repeat 0 0;
     background-size: 1.4375rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit5:after {
-    top: 50%;
+    top: 1.875rem;
     left: 50%;
     width: 1.4375rem;
     height: 0.625rem;
@@ -14179,7 +14257,7 @@ a.bt-link-tx.underline.small {
 .reserve-formdown li {
   float: left;
   width: 50%; }
-  .reserve-formdown li:first-chile .list {
+  .reserve-formdown li:first-child .list {
     border-left: 0 !important; }
   .reserve-formdown li .list {
     position: relative;
@@ -14465,10 +14543,9 @@ a.bt-link-tx.underline.small {
   padding: 1.25rem 0.9375rem; }
 
 .membership-cancel-wrap .card-img {
-  text-align: center; }
-  .membership-cancel-wrap .card-img img {
-    width: 100%;
-    height: auto; }
+  text-align: left; }
+  .membership-cancel-wrap .card-img .name-num {
+    padding-top: 1.25rem; }
 
 .membership-cancel-wrap .identify-txt {
   padding: 1.1875rem 0 0.875rem;

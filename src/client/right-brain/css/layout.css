@@ -942,7 +942,7 @@ body.bg-gray {
   margin: 1.25rem 0 1.875rem;
   text-align: center;
   font-size: 0; }
-  .paging a {
+  .paging a, .paging button {
     display: inline-block;
     padding: 0 0.9375rem;
     font-size: 0.9375rem;
@@ -950,7 +950,7 @@ body.bg-gray {
     font-weight: 400;
     color: #000;
     line-height: 1.625rem; }
-    .paging a.active {
+    .paging a.active, .paging button.active {
       font-weight: 700; }
   .paging .prev,
   .paging .next {
@@ -958,10 +958,12 @@ body.bg-gray {
     position: absolute;
     display: inline-block;
     content: "";
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.625rem;
+    height: 1.625rem;
     padding: 0;
     border: 1px solid #d1d1d1;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     border-radius: 0.25rem;
     text-indent: 100%;
     white-space: nowrap; }
@@ -980,8 +982,9 @@ body.bg-gray {
     .paging .next:hover:not(.disabled) {
       background-color: #d1d1d1;
       border-color: #d1d1d1; }
-    .paging .prev.disabled,
-    .paging .next.disabled {
+    .paging .prev.disabled, .paging .prev:disabled,
+    .paging .next.disabled,
+    .paging .next:disabled {
       background-color: #e5e8ee;
       border-color: #e5e8ee; }
   .paging .prev {

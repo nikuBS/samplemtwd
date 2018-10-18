@@ -237,6 +237,21 @@
         height: 1.5625rem;
         background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -21.875rem;
         background-size: 3.125rem; }
+    .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button.link, .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a.link {
+      position: relative;
+      left: 0;
+      top: auto !important;
+      right: 0;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      color: inherit;
+      -webkit-transform: translate(0, 0) !important;
+      transform: translate(0 0) !important;
+      padding: 0;
+      display: inline-block; }
+      .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button.link:after, .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a.link:after {
+        display: none; }
   .accordion .acco-style.btn-hold .acco-list .acco-box.on > .acco-tit button:after {
     background-position: 0 -21.875rem; }
   .accordion .acco-style.none-title .acco-list {
