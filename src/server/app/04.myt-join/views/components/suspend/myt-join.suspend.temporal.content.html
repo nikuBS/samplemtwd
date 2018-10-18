@@ -125,7 +125,7 @@
                     <li class="radiobox type01 checked" role="radio" aria-checked="true">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="radio03" value="" title="이메일 또는 문자로 안내"
-                               aria-labelledby="aria-comp-radio5" data-role="radio-noti" data-noti="true" checked/>
+                               aria-labelledby="aria-comp-radio5" data-role="fe-radio-noti" data-noti="true" checked/>
                         <!-- 체크상태일 경우 checked="checked" -->
                         <div class="comp-list-layout" id="aria-comp-radio5">
                             <p class="layout-text">
@@ -136,7 +136,7 @@
                     <li class="radiobox type01" role="radio" aria-checked="false">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="radio03" value="" title="별도 안내 없이 자동해제"
-                               aria-labelledby="aria-comp-radio6" data-role="radio-noti" data-noti="false"/>
+                               aria-labelledby="aria-comp-radio6" data-role="fe-radio-noti" data-noti="false"/>
                         <!-- 체크상태일 경우 checked="checked" -->
                         <div class="comp-list-layout" id="aria-comp-radio6">
                             <p class="layout-text">
@@ -203,22 +203,21 @@
                                         <div class="input-wrap mt10">
                                             <span class="tit">휴대폰번호</span>
                                             <div class="form-box">
-                                                            <span
-                                                                class="inputbox bt-add">
-                                                                <span class="input">
-                                                                    <input type="number"
-                                                                           placeholder="숫자만 입력"
-                                                                           title="휴대폰번호 입력">
-                                                                    <button
-                                                                        class="cancel"><span
-                                                                        class="blind">삭제</span></button>
-                                                                </span>
-                                                                <span class="bt-box">
-                                                                    <button
-                                                                        type="button"
-                                                                        class="fe-btn_native_contact">주소록</button>
-                                                                </span>
-                                                            </span>
+                                                <span
+                                                    class="inputbox bt-add">
+                                                    <span class="input">
+                                                        <input type="tel" placeholder="숫자만 입력" title="휴대폰번호 입력"
+                                                               data-id="fe-input-tel" maxlength="13">
+                                                        <button
+                                                            class="cancel"><span
+                                                            class="blind">삭제</span></button>
+                                                    </span>
+                                                    <span class="bt-box">
+                                                        <button
+                                                            type="button"
+                                                            class="fe-btn_native_contact">주소록</button>
+                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

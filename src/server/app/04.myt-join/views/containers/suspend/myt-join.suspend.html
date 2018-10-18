@@ -31,13 +31,13 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">일시정지</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">장기일시정지</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#temporary">일시정지</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#long-term">장기일시정지</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-id="fe-tab-temporary">
                                         <div class="cont-box" data-suspend-state=<%= suspend.status %> >
                                             <div class="charge-guide-wrap">
                                                 <div class="charge-cont">
@@ -55,7 +55,7 @@
                                         <%- include('../../components/suspend/myt-join.suspend.temporal.content.html', {period: suspend.period}); %>
                                         <% }  %>
                                     </li>
-                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">
                                         <div class="cont-box">
                                             장기일시정지
                                         </div>

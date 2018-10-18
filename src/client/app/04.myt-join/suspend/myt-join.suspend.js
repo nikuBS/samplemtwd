@@ -5,57 +5,57 @@
  */
 
 Tw.MyTJoinSuspend = function (rootEl) {
-  this._children = null;
   this.$container = rootEl;
-  this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
+  this.TYPE = {
+    TEMPORARY: 'temporary',
+    LONG_TERM: 'long-term'
+  };
   this._historyService = new Tw.HistoryService();
-  this._nativeService = Tw.Native;
   this._historyService.init();
 
+  this._temp = null;
+  this._long = null;
   this._cachedElement();
   this._bindEvent();
 };
 
 Tw.MyTJoinSuspend.prototype = {
   _cachedElement: function () {
-    this.$btnNativeContactList = this.$container.find('.fe-btn_native_contact');
-    this.$radioResetNotification = this.$container.find('[data-role="radio-noti"]');
-    this.$restoreNotiGroup = this.$container.find('[data-role="fe-restore-noti-group"]');
-    this.$checkEmailNoti = this.$container.find('[data-noti-method="email"]');
-    this.$checkSMSnoti = this.$container.find('[data-noti-method="sms"]');
+    this.$tabLinker = this.$container.find('.tab-linker a');
+    this.$tabTemp = this.$container.find('[data-id="fe-tab-temporary"]');
+    this.$tabLong = this.$container.find('[data-id="fe-tab-long-term"]');
   },
 
   _bindEvent: function () {
-    this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$radioResetNotification.on('change', $.proxy(this._onClickResetNotification, this));
-    this.$checkEmailNoti.on('change', $.proxy(this._onNotiMethodChanged, this));
-    this.$checkSMSnoti.on('change', $.proxy(this._onNotiMethodChanged, this));
+    this.$tabLinker.on('click', $.proxy(this._onTabChanged, this));
+    $(document).on('ready', $.proxy(this._setInitialTab, this));
   },
 
-  _onClickBtnAddr: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  _setInitialTab: function () {
+    var type = window.location.hash || '#' + this.TYPE.TEMPORARY;
+    this.$tabLinker.filter('[href="' + type + '"]').click();
   },
 
-  _onContact: function (response) {
-    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      var params = response.params;
-      var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
-      this.$inputImmediatelyGift.val(formatted);
-    }
+  _onTabChanged: function (e) {
+    var hash = e.target.hash;
+    window.location.hash = hash;
+    this._setActiveTab(hash);
   },
-  _onClickResetNotification: function (e) {
-    if ( e.currentTarget.getAttribute('data-noti') === 'true' ) {
-      this.$restoreNotiGroup.show();
-    } else {
-      this.$restoreNotiGroup.hide();
-    }
-  },
-  _onNotiMethodChanged: function (e) {
-    if ( e.currentTarget.checked ) {
-      $(e.currentTarget).parent().find('.comp-list-layout input,button').removeAttr('disabled');
-    } else {
-      $(e.currentTarget).parent().find('.comp-list-layout input,button').attr('disabled', 'disabled');
+
+  _setActiveTab: function (type) {
+    console.log('setActiveTab');
+    type = type.replace('#', '').toLowerCase();
+    switch ( type ) {
+      case this.TYPE.TEMPORARY:
+        if ( !this._temp ) {
+          this._temp = new Tw.MyTJoinSuspendTemporary(this.$tabTemp);
+        }
+        break;
+      case this.TYPE.LONG_TERM:
+        if ( !this._long ) {
+          this._long = new Tw.MyTJoinSuspendLongTerm(this.$tabLong);
+        }
+        break;
     }
   }
 
