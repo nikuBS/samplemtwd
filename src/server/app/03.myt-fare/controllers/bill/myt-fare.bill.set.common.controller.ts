@@ -3,7 +3,7 @@
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.09.20
  */
-import {NextFunction, Request, Response} from 'express';
+import {Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
@@ -48,11 +48,6 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     '0505' : '0505',
     '0506' : '0506'
   };
-
-  private _getTel1(tel1: string): any {
-    return this._tel1[tel1] || tel1;
-  }
-
 
   constructor() {
     super();
@@ -146,8 +141,8 @@ abstract class MyTFareBillSetCommon extends TwViewController {
       case 'P' :
         if (data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
           this.pushBillInfo(billArr, 'B');
-          break;
         }
+        break;
       // Bill Letter + 문자
       case 'Q' :
         this.pushBillInfo(billArr, 'B');
@@ -187,7 +182,7 @@ abstract class MyTFareBillSetCommon extends TwViewController {
 
   // 기타(우편) 일 때 연락처 포맷팅
   protected parseTel(data: any): void {
-    if ( data.curBillType !== '1' || FormatHelper.isEmpty(data.cntcNum1) || data.cntcNum1.length !== 12 ) {
+    if ( FormatHelper.isEmpty(data.cntcNum1) || data.cntcNum1.length !== 12 ) {
       return;
     }
 

@@ -277,7 +277,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   V41 : '법정대리인 휴대폰번호를 입력해주세요.',
   V42 : '이메일 주소를 입력해주세요.',
   V43 : '우편 주소를 입력해주세요.',
-  V44 : '휴대폰 번호가 올바르지 않습니다.'
+  V44 : '휴대폰 번호가 올바르지 않습니다.',
+  NOT_USED : '법인 실사용자 통합 청구 고객은 T world를 통해 요금안내서를 신청/변경을 하실 수 없습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -438,35 +439,34 @@ Tw.JOIN_INFO_NO_AGREEMENT = {
     '2' : '적립',
     '3' : '소멸'
   },
-  NO_USE : '포인트 사용 내역이 없습니다.',
-  NO_DATA : '검색된 포인트 사용 내역이 없습니다.'
+  NO_DATA : '무약정 플랜 포인트 적립 및 사용내역이 없습니다.'
 };
 
 Tw.MYT_DATA_FAMILY_TOAST = {
   SUCCESS_CHANGE: '변경되었습니다.'
-}
+};
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
   TITLE: '데이터를 공유 하시겠습니까?',
   CONTENTS: '공유된 데이터는 취소하실 수 없습니다.',
   BTN_NAME: '공유하기'
-}
+};
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
   TITLE: '매월 자동으로 데이터를 공유 하시겠습니까?',
   CONTENTS: '다음달부터 자동 공유되며, 이번 달 안으로 변경이 가능합니다.',
   BTN_NAME: '변경하기'
-}
+};
 
 Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
   TITLE: '자동공유를 그만 하시겠습니까?',
   CONTENTS: '다음달부터 자동 공유가 해지되며, 이번 달 안으로 변경이 가능합니다.',
   BTN_NAME: '그만하기'
-}
+};
 
 Tw.MYT_PAYMENT_HISTORY_HASH = {
   OVERPAY_REFUND: 'overpay-refund',
   AUTO_WITHDRAWAL: 'auto-withdrawal',
   BILL_RESEND_BY_FAX: 'by-fax',
   BILL_RESEND_BY_EMAIL: 'by-email'
-}
+};
