@@ -170,7 +170,14 @@
                                                         {{# each largeItem.children as |midItem midIndex|}}
                                                         <li>
                                                             <div class="inner-top">
-                                                                <span class="title">{{midItem.id}}</span>
+                                                                <span class="title">
+                                                                    {{midItem.id}}
+                                                                    {{!-- 주석 타사 --}}
+                                                                    {{#if_third_party midItem.id '콘텐츠이용료'}}
+                                                                    {{/if_third_party}}
+                                                                    {{#if_third_party midItem.id '소액결제'}}
+                                                                    {{/if_third_party}}
+                                                                </span>
                                                                 <span class="tx-cont">{{midItem.totPrice}} 원</span>
                                                             </div>
                                                             <div class="inner-row">
