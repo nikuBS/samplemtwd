@@ -52,6 +52,8 @@
                                     #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
                                 <% } %>
                                 <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
+                            <% } else if (plans.searchOption.searchProdTagNm) { %>
+                                #<span class="vbl tx-bold"><%= plans.searchOption.searchProdTagNm %></span>
                             <% } else { %>
                                 #<span class="vbl tx-bold">전체 요금제</span>
                             <% } %>
@@ -83,7 +85,7 @@
                                     </div>
                                     <dl class="products-additionalinfo">
                                         <dt>데이터</dt>
-                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %></span></dd>
+                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %> <%= /^[0-9.]+$/.test(plan.basOfrDataQtyCtt) ? 'GB' : '' %></span></dd>
                                         <dt>음성</dt>
                                         <dd><%= plan.basOfrVcallTmsCtt %></dd>
                                         <dt>문자</dt>

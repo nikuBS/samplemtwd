@@ -18,7 +18,7 @@ export default class ProductAdditions extends TwViewController {
     const params = {
       idxCtgCd: this.ADDITION_CODE,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
-      ...(req.query.tag ? { searchTag: req.query.tag } : {})
+      ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
     if (svcInfo) {
