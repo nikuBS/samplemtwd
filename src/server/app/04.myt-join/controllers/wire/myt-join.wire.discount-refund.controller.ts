@@ -5,7 +5,6 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { SVC_ATTR } from '../../../../types/bff.old.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 
@@ -25,6 +24,8 @@ class MyTJoinWireDiscountRefund extends TwViewController {
         if ( resp.code === API_CODE.CODE_00 ) {
           const option = { svcInfo: svcInfo, reqDate: DateHelper.getShortDateNoDot( resp.result.reqDate ) };
           res.render('wire/myt-join.wire.discount-refund.html', option);
+        } else {
+          this.error.render(res, resp);
         }
       });
 

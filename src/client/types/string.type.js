@@ -281,6 +281,8 @@ Tw.ALERT_MSG_MYT_FARE = {
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
+  A1: '전화번호를 정확히 입력해주십시오.',
+  ALERT_2_A34_CONF : { TITLE : '접수취소' , MSG : '장애 A/S 신청을 취소하시겠습니까?' },
   ALERT_2_A34 : { TITLE : '알림' , MSG : '장애 A/S 신청이 취소되었습니다.' },
   ALERT_2_A39 : { TITLE : '알림' , MSG : '요금제 변경 알림 서비스가 신청 되었습니다.' },
   ALERT_2_A40 : { TITLE : '알림' , MSG : '요금제 변경 가능일 알림이 해지 되었습니다.' },

@@ -16,8 +16,7 @@ class MyTJoinWireGifts extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log('============ call BFF_05_0159 ==============');
-    // requestPage
+
     this.apiService.request(API_CMD.BFF_05_0159, { requestPage: '1' })
       .subscribe((resp) => {
         // giftOpStCd 처리 상태코드
@@ -95,9 +94,10 @@ class MyTJoinWireGifts extends TwViewController {
           };*/
 
         if ( resp.code === API_CODE.CODE_00 ) {
-          console.log('============ result ==============');
           const option = { svcInfo: svcInfo, data: resp.result};
           res.render('wire/myt-join.wire.gifts.html', option);
+        } else {
+          this.error.render(res, resp);
         }
       });
   }
