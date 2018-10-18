@@ -29,10 +29,10 @@
         <div class="cont-box nogaps-hoz productdetails-bg t-logo"><!-- t-logo 클래스로  티 로고 들어갑니다. -->
           <div class="productdetails-wrap">
             <h3 class="productdetails-title">
-              <% if (prodRedisInfo.summary.prodSmryDesc) { %>
+              <% if ( ctgKey === 'plans' && prodRedisInfo.summary.prodSmryDesc ) { %>
               <span class="sub"><%= prodRedisInfo.summary.prodSmryDesc %></span>
               <% } %>
-              <% if (prodRedisInfo.summary.prodNm) { %>
+              <% if ( prodRedisInfo.summary.prodNm ) { %>
               <div class="title"><%= prodRedisInfo.summary.prodNm %></div>
               <% } %>
             </h3>
@@ -44,11 +44,14 @@
             </div>
             <% } %>
             <% if ( basicInfo.prodStCd === 'E1000' ) { %>
-              <% if ( prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N' ) { %>
+              <% if ( ctgKey === 'plans' && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
               <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
               <% } %>
-              <% if ( prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
+              <% if ( ctgKey === 'plans' && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') ) { %>
               <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
+              <% } %>
+              <% if ( ctgKey === 'additions' && prodRedisInfo.summary.prodSmryDesc ) { %>
+              <p class="productdetails-text02"><%= prodRedisInfo.summary.prodSmryDesc %></p>
               <% } %>
             <% } %>
             <% if ( basicInfo.ctgCd === 'F01200' && basicInfo.svcOfrCoNm ) { %>
@@ -59,8 +62,10 @@
             <% if ( prodRedisInfo.summary.basFeeInfo ) { %>
             <p class="price-text">
               월정액(부가세포함)<br>
-              <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.basFee %></strong>
-              <span class="unit"><%= prodRedisInfo.summary.basFeeInfo.unit %></span>
+              <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
+              <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
+              <span class="unit">원</span>
+              <% } %>
             </p>
             <% } %>
             <% if ( basicInfo.prodStCd !== 'E1000' ) { %>
@@ -89,20 +94,39 @@
           && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt || prodRedisInfo.summary.basOfrCharCntCtt) ) { %>
           <ul class="productdetails-utill">
             <% if ( prodRedisInfo.summary.basOfrDataQtyCtt ) { %>
-            <li>- 데이터 <strong class="str"><%= prodRedisInfo.summary.basOfrDataQtyCtt %></strong></li>
+            <li>- 데이터 <strong class="str">
+              <% if ( prodRedisInfo.summary.basOfrDataQtyCtt.isNaN ) { %>
+              <%= prodRedisInfo.summary.basOfrDataQtyCtt.value %>
+              <% } else { %>
+              <%= prodRedisInfo.summary.basOfrDataQtyCtt.value.data + prodRedisInfo.summary.basOfrDataQtyCtt.value.unit %>
+              <% } %>
+            </strong></li>
             <% } %>
             <% if ( prodRedisInfo.summary.basOfrVcallTmsCtt ) { %>
-            <li>- 음성 <strong class="str"><%= prodRedisInfo.summary.basOfrVcallTmsCtt %></strong></li>
+            <li>- 음성 <strong class="str">
+              <% if ( prodRedisInfo.summary.basOfrVcallTmsCtt.isNaN ) { %>
+              <%= prodRedisInfo.summary.basOfrVcallTmsCtt.value %>
+              <% } else { %>
+              <%= prodRedisInfo.summary.basOfrVcallTmsCtt.value.data + prodRedisInfo.summary.basOfrVcallTmsCtt.value.unit %>
+              <% } %>
+            </strong></li>
             <% } %>
             <% if ( prodRedisInfo.summary.basOfrCharCntCtt ) { %>
-            <li>- 문자 <strong class="str"><%= prodRedisInfo.summary.basOfrCharCntCtt %></strong></li>
+            <li>- 문자 <strong class="str">
+              <% if ( prodRedisInfo.summary.basOfrCharCntCtt.isNaN ) { %>
+              <%= prodRedisInfo.summary.basOfrCharCntCtt.value %>
+              <% } else { %>
+              <%= prodRedisInfo.summary.basOfrCharCntCtt.value + prodRedisInfo.summary.basOfrCharCntCtt.unit %>
+              <% } %>
+            </strong></li>
             <% } %>
           </ul>
           <% } %>
         </div>
         <!-- //상품타이틀 -->
 
-        <% if ( prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
+        <% if ( ctgKey === 'plans' && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y')
+        || ctgKey === 'additions' && prodRedisInfo.summary.sktProdBenfCtt ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <div class="submain-findyourplan-wrap type01">

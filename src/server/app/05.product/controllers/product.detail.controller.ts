@@ -9,8 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { UNIT, VOICE_UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
-import {DATA_UNIT, PRODUCT_CTG_NAME} from '../../../types/string.type';
+import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { PRODUCT_CTG_NAME } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -94,7 +94,8 @@ class ProductDetail extends TwViewController {
     }
 
     return Object.assign(prodRedisInfo, {
-      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(prodRedisInfo.summary)),
+      summary: Object.assign(prodRedisInfo.summary, FormatHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
+        prodRedisInfo.summary.basOfrDataQtyCtt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt)),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
       contents: this._convertContents(prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
@@ -115,19 +116,6 @@ class ProductDetail extends TwViewController {
     }
 
     return '1';
-  }
-
-  /**
-   * @param summaryInfo
-   * @private
-   */
-  private _parseSummaryInfo (summaryInfo): any {
-    return {
-      basOfrDataQtyCtt: this._praseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
-      basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
-      basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
-      basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
-    };
   }
 
   /**
@@ -178,73 +166,6 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @param basOfrDataQtyCtt
-   * @private
-   */
-  private _praseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
-    if (basOfrDataQtyCtt === '-' || basOfrDataQtyCtt === '0') {
-      return '';
-    }
-
-    const used = FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.MB);
-    return !isNaN(used.data) ? used.data + used.unit : basOfrDataQtyCtt;
-  }
-
-  /**
-   * @param basOfrVcallTmsCtt
-   * @private
-   */
-  private _parseBasOfrVcallTmsCtt (basOfrVcallTmsCtt): any {
-    if (basOfrVcallTmsCtt === '-' || basOfrVcallTmsCtt === '0') {
-      return '';
-    }
-
-    if (isNaN(parseInt(basOfrVcallTmsCtt, 10))) {
-      return basOfrVcallTmsCtt;
-    }
-
-    return FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN;
-  }
-
-  /**
-   * @param basOfrCharCntCtt
-   * @private
-   */
-  private _parseBasOfrCharCntCtt (basOfrCharCntCtt): any {
-    if (basOfrCharCntCtt === '-' || basOfrCharCntCtt === '0') {
-      return '';
-    }
-
-    if (isNaN(parseInt(basOfrCharCntCtt, 10))) {
-      return basOfrCharCntCtt;
-    }
-
-    return FormatHelper.addComma(basOfrCharCntCtt) + UNIT['310'];
-  }
-
-  /**
-   * @param basFeeInfo
-   * @private
-   */
-  private _parsingSummaryBasFeeInfo (basFeeInfo): any {
-    if (basFeeInfo === '0') {
-      return null;
-    }
-
-    if (isNaN(parseInt(basFeeInfo, 10))) {
-      return {
-        basFee: basFeeInfo,
-        unit: ''
-      };
-    }
-
-    return {
-      basFee: FormatHelper.addComma(basFeeInfo),
-      unit: UNIT['110']
-    };
-  }
-
-  /**
    * @param additionsUseInfo
    * @private
    */
@@ -267,14 +188,8 @@ class ProductDetail extends TwViewController {
 
     return Object.assign(seriesInfo, {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        const spec = FormatHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt);
-
-        return Object.assign(item, {
-          basFeeInfo: spec.basFeeInfo,
-          basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
-          basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
-          basOfrCharCntCtt: spec.basOfrCharCntCtt
-        });
+        return Object.assign(item, FormatHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
+          item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
       })
     });
   }

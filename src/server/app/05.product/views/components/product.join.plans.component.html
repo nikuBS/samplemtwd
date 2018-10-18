@@ -12,10 +12,10 @@
           <span class="elem"><span class="blind">사용요금제명</span>Band 데이터 퍼팩트</span>
           <span class="elem">
             <span class="blind">월 이용요금</span>
-            <% if ( joinTermInfo.preinfo.frProdInfo.isNumberFrBasFeeInfo ) { %>
-            월 <%= joinTermInfo.preinfo.frProdInfo.basFeeInfo %> 원
+            <% if ( joinTermInfo.preinfo.frProdInfo.basFeeInfo.isNaN ) { %>
+            <%= joinTermInfo.preinfo.frProdInfo.basFeeInfo.value %>
             <% } else { %>
-            <%= joinTermInfo.preinfo.frProdInfo.basFeeInfo %>
+            월 <%= joinTermInfo.preinfo.frProdInfo.basFeeInfo.value %> 원
             <% } %>
           </span>
         </span>
@@ -35,10 +35,10 @@
         </span>
         <span class="tit-tx"><span class="blind">변경 요금제명</span><%= joinTermInfo.preinfo.toProdInfo.prodNm %></span>
         <span class="sub-disc03">
-          <% if ( joinTermInfo.preinfo.toProdInfo.isNumberToBasFeeInfo ) { %>
-          <span class="tx-bold vbl fe-prod_money">월 <%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %>원</span> 부가세포함
+          <% if ( joinTermInfo.preinfo.toProdInfo.basFeeInfo.isNaN ) { %>
+          <span class="tx-bold vbl"><%= joinTermInfo.preinfo.toProdInfo.basFeeInfo.value %></span>
           <% } else { %>
-          <span class="tx-bold vbl"><%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %></span>
+          <span class="tx-bold vbl fe-prod_money">월 <%= joinTermInfo.preinfo.toProdInfo.basFeeInfo.value %>원</span> 부가세포함
           <% } %>
         </span>
       </div>
@@ -48,19 +48,31 @@
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrDataQtyCtt ) { %>
           <li>
             <span class="title">데이터</span>
-            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrDataQtyCtt %></span>
+            <% if ( joinTermInfo.preinfo.toProdInfo.basOfrDataQtyCtt.isNaN ) { %>
+            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrDataQtyCtt.value %></span>
+            <% } else { %>
+            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrDataQtyCtt.value.data + joinTermInfo.preinfo.toProdInfo.basOfrDataQtyCtt.value.unit %></span>
+            <% } %>
           </li>
           <% } %>
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt ) { %>
           <li>
             <span class="title">음성</span>
-            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt %></span>
+            <% if ( joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.isNaN ) { %>
+            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value %></span>
+            <% } else { %>
+            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value.data + joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value.unit %></span>
+            <% } %>
           </li>
           <% } %>
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt ) { %>
           <li>
             <span class="title">문자</span>
-            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt %></span>
+            <% if ( joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt.isNaN ) { %>
+            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt.value %></span>
+            <% } else { %>
+            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt.value + joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt.unit %></span>
+            <% } %>
           </li>
           <% } %>
         </ul>

@@ -168,18 +168,11 @@ class ProductJoin extends TwViewController {
    * @private
    */
   private _convertPlanPreInfo(preInfo): any {
-    const isNumberFrBasFeeInfo = !isNaN(parseInt(preInfo.frProdInfo.basFeeInfo, 10));
-    const isNumberToBasFeeInfo = !isNaN(parseInt(preInfo.toProdInfo.basFeeInfo, 10));
-
     return Object.assign(preInfo, {
-      frProdInfo: Object.assign(preInfo.frProdInfo, {
-        isNumberFrBasFeeInfo: isNumberFrBasFeeInfo,
-        basFeeInfo: isNumberFrBasFeeInfo ? FormatHelper.addComma(preInfo.frProdInfo.basFeeInfo) : preInfo.frProdInfo.basFeeInfo
-      }),
-      toProdInfo: Object.assign(preInfo.toProdInfo, {
-        isNumberToBasFeeInfo: isNumberToBasFeeInfo,
-        basFeeInfo: isNumberToBasFeeInfo ? FormatHelper.addComma(preInfo.toProdInfo.basFeeInfo) : preInfo.toProdInfo.basFeeInfo
-      }),
+      frProdInfo: Object.assign(preInfo.frProdInfo, FormatHelper.convProductSpecifications(preInfo.frProdInfo.basFeeInfo,
+          preInfo.frProdInfo.basOfrDataQtyCtt, preInfo.frProdInfo.basOfrVcallTmsCtt, preInfo.frProdInfo.basOfrCharCntCtt)),
+      toProdInfo: Object.assign(preInfo.toProdInfo, FormatHelper.convProductSpecifications(preInfo.toProdInfo.basFeeInfo,
+          preInfo.toProdInfo.basOfrDataQtyCtt, preInfo.toProdInfo.basOfrVcallTmsCtt, preInfo.toProdInfo.basOfrCharCntCtt)),
       autoJoinList: this._convertAutoJoinTermList(preInfo.autoJoinList),
       autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
     });
