@@ -9,8 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { UNIT, VOICE_UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
-import {DATA_UNIT, PRODUCT_CTG_NAME} from '../../../types/string.type';
+import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { PRODUCT_CTG_NAME } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,

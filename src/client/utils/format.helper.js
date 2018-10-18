@@ -102,7 +102,7 @@ Tw.FormatHelper = (function () {
 
   var convProductSpecifications = function(basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
     var isValid = function(value) {
-      return !(Tw.FormatHelper.isEmpty(value) && ['0', '-'].indexOf(value) === -1);
+      return !(Tw.FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
     };
 
     return {
