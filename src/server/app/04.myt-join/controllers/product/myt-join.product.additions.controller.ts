@@ -51,7 +51,7 @@ class MyTJoinProductAdditions extends TwViewController {
         scrbDt: DateHelper.getShortDateNoDot(addition.scrbDt)
       };
     });
-  }
+  };
 }
 
 export default MyTJoinProductAdditions;

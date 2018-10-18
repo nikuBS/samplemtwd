@@ -25,12 +25,17 @@ Tw.MyTJoinProductAdditions.prototype = {
 
   cachedElement: function() {
     this.$list = this.$container.find('ul.list-comp-lineinfo');
+    this.$empty = this.$container.find('.contents-empty');
   },
 
   _handleShowAllAdditions: function(e) {
     var $target = $(e.target);
     if (this._totalCount === 0 || $target.hasClass('on')) {
       return;
+    }
+
+    if (!this.$container.hasClass('none')) {
+      this.$container.find('.contents-empty').addClass('none');
     }
 
     $target.siblings().removeClass('on');
@@ -48,8 +53,13 @@ Tw.MyTJoinProductAdditions.prototype = {
     $target.siblings().removeClass('on');
     $target.addClass('on');
 
-    var additions = this.$list.find('[data-isFree="true"]')
+    var additions = this.$list.find('[data-isFree="true"]');
     additions.addClass('none');
+
+    if (this._totalCount === additions.length) {
+      this.$empty.removeClass('none');
+    }
+
     this.$container.find('span.counts > em').text(this._totalCount - additions.length);
   }
 }

@@ -36,12 +36,11 @@
 
                 <div class="cont-box nogaps">
                     <div class="add-prd-wrap">
-                        <% if (additions.length === 0) { %>
-                        <div class="contents-empty">
+                        <div class="contents-empty <%= additions.length > 0 ? 'none' : '' %>">
                             <span class="ico type1"></span>
                             <p class="desc">현재 사용중인 부가상품이 없습니다.</p>
                         </div>
-                        <% } else { %>
+                        <% if (additions.length > 0) { %>
                         <ul class="list-comp-lineinfo">
                             <% additions.map(addition => { %>
                             <li class="<%= addition.btnList.length > 0 ? 'add-con' : '' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === "무료" %>">
@@ -58,7 +57,7 @@
                                         <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
-                                        <span class="ico"></span>
+                                        <% if (addition.prodLinkYn === "Y") { %> <span class="ico"></span><% } %>
                                         </a>
                                     </div>
                                 </button>
