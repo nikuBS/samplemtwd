@@ -476,4 +476,8 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   AUTO_WITHDRAWAL: 'auto-withdrawal',
   BILL_RESEND_BY_FAX: 'by-fax',
   BILL_RESEND_BY_EMAIL: 'by-email'
+}
+
+Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
+  BUILDING: ['단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물']
 };

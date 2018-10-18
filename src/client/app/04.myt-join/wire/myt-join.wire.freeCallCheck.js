@@ -31,19 +31,20 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     this.$lookupBtn = $('[data-target="lookupBtn"]');
   },
   _bindEvent: function () {
-
     this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
     this.$container.on('click', '[data-target="lookupBtn"]', $.proxy(this._lookupBtnEvt, this));
-
   },
   //--------------------------------------------------------------------------[EVENT]
   _lookupBtnEvt: function(event) {
     Tw.Logger.info('[_lookupBtnEvt]', this.$inputPhone.val(), event );
     // var $target = $(event.currentTarget);
     var phoneNm = this._vdPhoneNm( this.$inputPhone.val() );
-
+    var phoneNmArr = phoneNm.split('-');
+    Tw.Logger.info('[phoneNmArr]', phoneNmArr);
     var param = {
-      phone: phoneNm
+      tel01: phoneNmArr[0],
+      tel02: phoneNmArr[1],
+      tel03: phoneNmArr[2]
     };
     this._freeCallCheckInfo(param);
   },
@@ -75,7 +76,7 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     Tw.Logger.info('[휴대폰 유효성 체크]', $phoneNm);
     var phoneNm = $phoneNm;
     Tw.ValidationHelper.checkMoreLength(phoneNm, 10, Tw.ALERT_MSG_MYT_FARE.V18);
-    phoneNm = this._noDash( phoneNm ); // 대시 삭제
+    // phoneNm = this._noDash( phoneNm ); // 대시 삭제
     Tw.Logger.info('[휴대폰 유효성 체크 결과]', phoneNm);
     return phoneNm;
   },
