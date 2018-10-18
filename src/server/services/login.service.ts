@@ -114,7 +114,6 @@ class LoginService {
 
   public setServerSession(serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      console.log('[set]', this.request, this.request.session);
       if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
         this.request.session.serverSession = serverSession;
         this.request.session.save(() => {
