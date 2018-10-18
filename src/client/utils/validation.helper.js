@@ -39,6 +39,34 @@ Tw.ValidationHelper = (function () {
     return Tw.ValidationHelper.regExpTest(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i, str);
   }
 
+  /**
+   * @param {String} : 000000
+   * @returns {Boolean}
+   */
+  function isStraightPassword(str, max) {
+    if(!max) max = 6;
+    var i, j, x, y;
+    var buff = ['0123456789'];
+    var src, src2, ptn = '';
+
+    for(i = 0; i < buff.length; i++){
+      src = buff[i]; // 0123456789
+      src2 = buff[i] + buff[i]; // 01234567890123456789
+      for(j = 0; j < src.length; j++){
+        x = src.substr(j, 1); // 0
+        y = src2.substr(j, max); // 0123
+        ptn += '[' + x + ']{' + max + ',}|'; // [0]{4,}|0123|[1]{4,}|1234|...
+        ptn += y + '|';
+      }
+    }
+    ptn = new RegExp(ptn.replace(/.$/, '')); // 맨마지막의 글자를 하나 없애고 정규식으로 만든다.
+
+    if (ptn.test(str)) {
+      return true;
+    }
+    return false;
+  }
+
   function isSeriesNum(string, maxSeries) {
     var checkSeriesNum = '0123456789';
     for (var i = 0; i <= checkSeriesNum.length - maxSeries; i++) {
@@ -178,6 +206,33 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* 연속숫자 체크하는 function */
+  function checkIsStraight(value, max, message) {
+    if (isStraightPassword($.trim(value.toString()), max)) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
+  /* 동일 값 체크하는 function */
+  function checkIsSame(value, standard, message) {
+    if ($.trim(value.toString()) === standard) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
+  /* 다른 값 체크하는 function */
+  function checkIsDifferent(value, standard, message) {
+    if ($.trim(value.toString()) !== standard) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
@@ -185,6 +240,7 @@ Tw.ValidationHelper = (function () {
     isRepresentNumber: isRepresentNumber,
     isSeriesNum: isSeriesNum,
     isEmail: isEmail,
+    isStraightPassword: isStraightPassword,
     containSpecial: containSpecial,
     containNumber: containNumber,
     checkEmpty: checkEmpty,
@@ -198,6 +254,9 @@ Tw.ValidationHelper = (function () {
     checkIsSelected: checkIsSelected,
     checkYear: checkYear,
     checkMonth: checkMonth,
-    checkMultiple: checkMultiple
+    checkMultiple: checkMultiple,
+    checkIsStraight: checkIsStraight,
+    checkIsSame: checkIsSame,
+    checkIsDifferent: checkIsDifferent
   };
 })();
