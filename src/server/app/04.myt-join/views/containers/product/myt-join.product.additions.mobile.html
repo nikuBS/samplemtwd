@@ -51,14 +51,22 @@
                                         <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>    
                                     </div>
                                     <div class="lineinfo-data">
-                                        <a href="/product/detail/<%= addition.prodId %>">
+                                        <% if (addition.prodLinkYn === "Y") { %>
+                                            <a href="/product/detail/<%= addition.prodId %>">
+                                                <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
+                                                <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                                <% } else { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+                                                <% } %>
+                                                <% if (addition.prodLinkYn === "Y") { %> <span class="ico"></span><% } %>
+                                            </a>
+                                        <% } else { %>
                                         <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
                                         <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                         <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
-                                        <% if (addition.prodLinkYn === "Y") { %> <span class="ico"></span><% } %>
-                                        </a>
+                                        <% } %>
                                     </div>
                                 </button>
                                 <% if (addition.btnList.length > 0) { %>
