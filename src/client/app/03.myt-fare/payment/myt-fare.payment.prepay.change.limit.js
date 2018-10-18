@@ -20,6 +20,10 @@ Tw.MyTFarePaymentPrepayChangeLimit = function (rootEl, title) {
 Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
   _init: function () {
     this._getLimit();
+
+    this.$monthSelector = null;
+    this.$daySelector = null;
+    this.$onceSelector = null;
   },
   _getLimit: function () {
     var apiName = this._getLimitApiName();
@@ -71,7 +75,7 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
   _changeLimit: function (result) {
     this._popupService.open({
       'hbs': 'MF_06_02'
-    }, $.proxy(this._openChangeLimit, this, result));
+    }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit');
   },
   _openChangeLimit: function (result, $layer) {
     this._setLimitData(result, $layer);
@@ -82,9 +86,16 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     this.$daySelector = $layer.find('.fe-day');
     this.$onceSelector = $layer.find('.fe-once');
 
+    var monthLimit = '';
+    if (this.$title === 'micro') {
+      monthLimit = 'microPayLimitAmt';
+    } else {
+      monthLimit = 'monLimit';
+    }
+
     this.$monthSelector
-      .attr({ 'id': result.microPayLimitAmt, 'origin-value': result.microPayLimitAmt })
-      .text(this._getLittleAmount(result.microPayLimitAmt));
+      .attr({ 'id': result[monthLimit], 'origin-value': result[monthLimit] })
+      .text(this._getLittleAmount(result[monthLimit]));
     this.$daySelector
       .attr({ 'id': result.dayLimit, 'origin-value': result.dayLimit })
       .text(this._getLittleAmount(result.dayLimit));
@@ -142,7 +153,6 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._changeLimitSuccess, this))
       .fail($.proxy(this._changeLimitFail, this));
-    this._popupService.close();
   },
   _changeLimitApiName: function () {
     var apiName = '';
@@ -179,6 +189,7 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
   },
   _changeLimitSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this._popupService.close();
       this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_LIMIT);
     } else {
       this._changeLimitFail(res);
