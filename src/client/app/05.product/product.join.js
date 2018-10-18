@@ -8,6 +8,7 @@ Tw.ProductJoin = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
+  this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._cachedElement();
   this._bindEvent();
@@ -109,7 +110,9 @@ Tw.ProductJoin.prototype = {
         this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
         this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
         this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
-        this.$inputNumber.on('keydown', $.proxy(this._detectInputNumber, this));
+        this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
+        this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
+        this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
         break;
     }
   },
@@ -325,16 +328,38 @@ Tw.ProductJoin.prototype = {
   },
 
   _detectInputNumber: function() {
+    if (this.$inputNumber.val().length > 11) {
+      this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
+    }
+
     if (this.$lineWrap.length < 1) {
       return this._toggleSetupButton(this.$inputNumber.val().length > 0);
     }
 
     this._toggleClearBtn();
+    this._toggleNumAddBtn();
+  },
+
+  _toggleNumAddBtn: function() {
+    if (this.$inputNumber.val().length > 0) {
+      this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
+    } else {
+      this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
+    }
+  },
+
+  _blurInputNumber: function() {
+    this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+  },
+
+  _focusInputNumber: function() {
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide();
+    this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
