@@ -9,6 +9,7 @@ Tw.MyTFarePaymentCommon = function (rootEl) {
 
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._historyService.init();
 
   this._init();
 };
@@ -201,22 +202,20 @@ Tw.MyTFarePaymentCommon.prototype = {
     );
   },
   _onComplete: function ($layer) {
+    this._historyService.complete();
     $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this, 'history'));
     $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this, 'close'));
   },
   _setIsLink: function (type) {
     if (type === 'history') {
       this._isHistory = true;
-    } else {
-      this._isSubmain = true;
     }
     this._popupService.close();
   },
   _goLink: function (historyUrl, mainUrl) {
     if (this._isHistory) {
       this._historyService.goLoad(historyUrl);
-    }
-    if (this._isSubmain) {
+    } else {
       this._historyService.goLoad(mainUrl);
     }
   }
