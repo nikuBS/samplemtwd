@@ -259,18 +259,18 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  {'value':'전체'},
-  {'value':'T끼리 데이터 선물'},
-  {'value':'데이터 한도 충전'},
-  {'value':'팅/쿠키즈/안심요금'},
-  {'value':'팅 요금 선물'},
-  {'value':'데이터 음성 리필'}
+  { value: '전체' },
+  { value: 'T끼리 데이터 선물' },
+  { value: '데이터 한도 충전' },
+  { value: '팅/쿠키즈/안심요금' },
+  { value: '팅 요금 선물' },
+  { value: '데이터 음성 리필' }
 ];
 
 Tw.PRODUCT_PLANS_ORDER = [
-  {'value':'추천순'},
-  {'value':'높은 가격순'},
-  {'value':'낮은 가격순'}
+  { value: '추천순' },
+  { value: '높은 가격순' },
+  { value: '낮은 가격순' }
 ];
 
 Tw.PRODUCT_LIST_DEVICE_FILTERS = [
@@ -314,3 +314,19 @@ Tw.MYT_FARE_BILL_GUIDE = {
     MICRO: '<span class="bt-detail"><button data-target="detailMicroBtn">자세히 보기</button></span>'
   }
 };
+
+Tw.HELPLINE_TYPES = [
+  { value: '일반' },
+  { value: '로밍' },
+  { value: '통화품질 상담' }
+];
+
+Tw.HELPLINE_AREAS = [
+  { value: '수도권 (서울, 경기, 인천, 강원)', 'attr': "data-area-code='1'" },
+  { value: '중부 (충남, 충북, 대전)', 'attr': "data-area-code='5'" },
+  { value: '서부 (전남, 전북, 광주, 제주)', 'attr': "data-area-code='4'" },
+  { value: '대구 (경북, 대구)', 'attr': "data-area-code='3'" },
+  { value: '부산 (경남, 울산, 부산)', 'attr': "data-area-code='2'" }
+];
+
+

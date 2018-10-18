@@ -39,7 +39,12 @@ Tw.POPUP_TITLE = {
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형',
   SELECT_ORDER: '정렬 기준을 선택해주세요',
-  CONFIRM_SHARE: '데이터를 공유 하시겠습니까?'
+  CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
+  CANCLE_HELPLINE: '예약을 취소하시겠습니까?',
+  SET_TIME: '시간설정',
+  SET_HELPLINE_TYPE: '상담유형 설정',
+  SET_HELPLINE_AREA: '지역설정',
+  ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -320,7 +325,8 @@ Tw.ALERT_MSG_BENEFIT = {
 };
 
 Tw.ALERT_MSG_CUSTOMER = {
-
+  ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
+  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?'
 };
 
 Tw.ALERT_MSG_AUTH = {
