@@ -150,6 +150,7 @@ Tw.ProductDetail.prototype = {
   },
 
   _goJoinTerminate: function(joinTermCd) {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
     }, null, this._prodId)
@@ -157,6 +158,7 @@ Tw.ProductDetail.prototype = {
   },
 
   _goJoinTerminateResult: function(joinTermCd, resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -225,22 +227,8 @@ Tw.ProductDetail.prototype = {
     this.$recommendRateList.find('.recommendedrate-list')
       .html(this._template({
         list: resp.result.products.map(function(item) {
-          var isBasFeeAmt = isNaN(parseInt(item.basFeeAmt, 10)),
-            isBasOfrDataQtyCtt = ['0', '-'].indexOf(item.basOfrDataQtyCtt) === -1,
-            isBasOfrVcallTmsCtt = ['0', '-'].indexOf(item.basOfrVcallTmsCtt) === -1,
-            isBasOfrCharCntCtt = ['0', '-'].indexOf(item.basOfrCharCntCtt) === -1;
-
-          var used = Tw.FormatHelper.convDataFormat(item.basOfrDataQtyCtt, Tw.DATA_UNIT.MB);
-
-          return Object.assign(item, {
-            basFeeAmt: isBasFeeAmt ? item.basFeeAmt : Tw.FormatHelper.addComma(item.basFeeAmt),
-            basOfrDataQtyCtt: isBasOfrDataQtyCtt ? (isNaN(parseInt(used.data, 10)) ? item.basOfrDataQtyCtt : used.data + used.unit) : null,
-            basOfrVcallTmsCtt: isBasOfrVcallTmsCtt ? (isNaN(parseInt(item.basOfrVcallTmsCtt, 10)) ?
-              item.basOfrVcallTmsCtt : item.basOfrVcallTmsCtt + Tw.VOICE_UNIT.MIN) : null,
-            basOfrCharCntCtt: isBasOfrCharCntCtt ? (isNaN(parseInt(item.basOfrCharCntCtt, 10)) ?
-              item.basOfrCharCntCtt : item.basOfrCharCntCtt + Tw.SMS_UNIT) : null,
-            isNumberBasFee: !isBasFeeAmt
-          });
+          return Object.assign(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
+            item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
         })
       }));
 

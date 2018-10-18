@@ -217,7 +217,15 @@ Tw.ProductJoin.prototype = {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').text()
       }
-    }, null, null, 'agree_pop');
+    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
+  },
+
+  _bindAgreePop: function($popupContainer) {
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closeAgreePop, this));
+  },
+
+  _closeAgreePop: function() {
+    this._popupService.close();
   },
 
   _toggleBtnJoin: function(isDisable) {
@@ -347,6 +355,8 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoin: function() {
+    this._popupService.close();
+
     var auth = false;
     if ( auth ) {
       return this._procAUth();
@@ -369,6 +379,8 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoinReq: function() {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     switch (this._displayGroup) {
       case 'plans':
         if (this.$inputNumber.length > 0) {
@@ -429,6 +441,8 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoinRes: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).page();
     }

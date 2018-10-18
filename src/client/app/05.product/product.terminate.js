@@ -122,11 +122,15 @@ Tw.ProductTerminate.prototype = {
   },
 
   _procTerminate: function() {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     this._apiService.request(Tw.API_CMD[this._terminateApiCode], {}, {}, this._prodId)
       .done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -148,6 +152,7 @@ Tw.ProductTerminate.prototype = {
 
   _bindTerminateResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._goProductDetail, this));
+
     this._procVasTerm();
   },
 

@@ -100,6 +100,56 @@ Tw.FormatHelper = (function () {
     };
   };
 
+  var convProductSpecifications = function(basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
+    var isValid = function(value) {
+      return !(Tw.FormatHelper.isEmpty(value) && ['0', '-'].indexOf(value) === -1);
+    };
+
+    return {
+      basFeeInfo: isValid(basFeeInfo) ? Tw.FormatHelper.convProductBasfeeInfo(basFeeInfo) : null,
+      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? Tw.FormatHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt) : null,
+      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? Tw.FormatHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
+      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? Tw.FormatHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
+    };
+  };
+
+  var convProductBasfeeInfo = function(basFeeInfo) {
+    var isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
+
+    return {
+      isNaN: isNaNbasFeeInfo,
+      value: isNaNbasFeeInfo ? basFeeInfo : Tw.FormatHelper.addComma(basFeeInfo)
+    };
+  };
+
+  var convProductBasOfrDataQtyCtt = function(basOfrDataQtyCtt) {
+    var isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrDataQtyCtt,
+      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : Tw.FormatHelper.convDataFormat(basOfrDataQtyCtt, Tw.DATA_UNIT.MB)
+    };
+  };
+
+  var convProductBasOfrVcallTmsCtt = function(basOfrVcallTmsCtt) {
+    var isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrVcallTmsCtt,
+      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : Tw.FormatHelper.convVoiceFormatWithUnit(isNaNbasOfrVcallTmsCtt)
+    };
+  };
+
+  var convProductBasOfrCharCntCtt = function(basOfrCharCntCtt) {
+    var isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrCharCntCtt,
+      value: basOfrCharCntCtt,
+      unit: Tw.SMS_UNIT
+    };
+  };
+
   var convDataFormat = function (data, curUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var unitIdx = _.findIndex(units, function (value) {
@@ -273,6 +323,11 @@ Tw.FormatHelper = (function () {
     isArray: isArray,
     isString: isString,
     customDataFormat: customDataFormat,
+    convProductSpecifications: convProductSpecifications,
+    convProductBasfeeInfo: convProductBasfeeInfo,
+    convProductBasOfrDataQtyCtt: convProductBasOfrDataQtyCtt,
+    convProductBasOfrVcallTmsCtt: convProductBasOfrVcallTmsCtt,
+    convProductBasOfrCharCntCtt: convProductBasOfrCharCntCtt,
     convDataFormat: convDataFormat,
     addComma: addComma,
     removeComma: removeComma,

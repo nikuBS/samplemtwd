@@ -99,6 +99,8 @@ Tw.ProductSetting.prototype = {
     var params = {},
       pathVariable = null;
 
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     switch(this._displayId) {
       case 'MP_02_02_03_01':
       case 'MP_02_02_03_10':
@@ -134,6 +136,8 @@ Tw.ProductSetting.prototype = {
   },
 
   _saveResult: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
