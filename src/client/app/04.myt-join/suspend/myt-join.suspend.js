@@ -15,7 +15,6 @@ Tw.MyTJoinSuspend = function (rootEl) {
 
   this._cachedElement();
   this._bindEvent();
-
 };
 
 Tw.MyTJoinSuspend.prototype = {
@@ -32,7 +31,6 @@ Tw.MyTJoinSuspend.prototype = {
     this.$radioResetNotification.on('change', $.proxy(this._onClickResetNotification, this));
     this.$checkEmailNoti.on('change', $.proxy(this._onNotiMethodChanged, this));
     this.$checkSMSnoti.on('change', $.proxy(this._onNotiMethodChanged, this));
-
   },
 
   _onClickBtnAddr: function () {

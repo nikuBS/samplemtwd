@@ -38,21 +38,21 @@
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                        <div class="cont-box">
+                                        <div class="cont-box" data-suspend-state=<%= suspend.status %> >
                                             <div class="charge-guide-wrap">
                                                 <div class="charge-cont">
                                                     <span class="sub-disc01">
                                                         <span class="elem">회선번호</span>
                                                     </span>
-                                                    <span class="tit-tgothic"><%= svcInfo.svcNum %></span>
-                                                    <span class="sub-disc04"><%= svcInfo.prodNm %></span>
+                                                    <span class="tit-tgothic"><%= phoneNum %></span>
+                                                    <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <% if(suspended) { %>
-                                        <%- include('../../components/suspend/myt-join.suspend.temporal.reset.html', {period}); %>
+                                        <% if(suspend.status) { %>
+                                        <%- include('../../components/suspend/myt-join.suspend.temporal.reset.html', suspend); %>
                                         <% } else { %>
-                                        <%- include('../../components/suspend/myt-join.suspend.temporal.content.html', {period}); %>
+                                        <%- include('../../components/suspend/myt-join.suspend.temporal.content.html', {period: suspend.period}); %>
                                         <% }  %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">

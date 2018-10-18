@@ -13,11 +13,11 @@
             <ul>
                 <li>
                     <span class="title">일시정지 기간</span>
-                    <span class="tx-cont">2018.09.06 ~ 2018.12.04</span>
+                    <span class="tx-cont"><%= period.from %> ~ <%= period.to %></span>
                 </li>
                 <li>
                     <span class="title">사유</span>
-                    <span class="tx-cont">고객요청</span>
+                    <span class="tx-cont"><%= reason %></span>
                 </li>
             </ul>
         </div>
@@ -34,7 +34,7 @@
 <div class="bt-fixed-area">
     <ul class="bt-slice full">
         <li class="bt-red1">
-            <button>해제하기</button>
+            <button data-id="bt-reset">해제하기</button>
         </li>
     </ul>
 </div>
