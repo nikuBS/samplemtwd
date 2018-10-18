@@ -95,6 +95,7 @@
 
                                                                 </ul>
                                                             </div>
+
                                                         </li>
                                                         {{/each}}
 
@@ -185,8 +186,20 @@
 
                                                                 </ul>
                                                             </div>
+
+                                                            {{!-- 주석 콘텐츠이용료 자세히보기 --}}
+                                                            {{#if_contents midItem.id '콘텐츠이용료'}}
+                                                            {{/if_contents}}
+
+                                                            {{!-- 주석 소액결제 자세히기 --}}
+                                                            {{#if_micro midItem.id '소액결제'}}
+                                                            {{/if_micro}}
+
+
                                                         </li>
+
                                                         {{/each}}
+
 
                                                     </ul>
                                                     <div class="noti-words">

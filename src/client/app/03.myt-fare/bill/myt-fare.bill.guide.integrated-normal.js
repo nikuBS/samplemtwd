@@ -54,6 +54,21 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
     });
+
+    Handlebars.registerHelper('if_contents', function (strVal, searchName) {
+      // Tw.Logger.info('[테스트 if_contents]', searchName);
+      if ( strVal.indexOf(searchName) > -1) {
+        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.CONTENTS;
+      }
+    });
+
+    Handlebars.registerHelper('if_micro', function (strVal, searchName) {
+      // Tw.Logger.info('[테스트 if_contents]', searchName);
+      if ( strVal.indexOf(searchName) > -1) {
+        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.MICRO;
+      }
+    });
+
   },
   _cachedElement: function () {
     this.$entryTplUseBill = $('#fe-entryTplUseBill');
@@ -70,6 +85,14 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     this.$container.on('click', '[data-target="callGiftBtn"]', $.proxy(this._callGiftBtnEvt, this)); // 콜기프트 사용요금
     this.$container.on('click', '[data-target="roamingBtn"]', $.proxy(this._roamingBtnEvt, this)); // 로밍 사용요금
     this.$container.on('click', '[data-target="donationBtn"]', $.proxy(this._donationBtnEvt, this)); // 기부금/후원금 사용요금
+
+    this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
+      this._goLoad('/myt/fare/payment/contents');
+    }, this));
+
+    this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
+      this._goLoad('/myt/fare/payment/micro');
+    }, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
