@@ -266,6 +266,12 @@ Tw.FormatHelper = (function () {
     }
   };
 
+  var lpad = function (str, length, padStr) {
+    while(str.length < length)
+      str = padStr + str;
+    return str;
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -291,6 +297,7 @@ Tw.FormatHelper = (function () {
     is6digitPassSameNumber: is6digitPassSameNumber,
     is6digitPassSolidNumber: is6digitPassSolidNumber,
     normalizeNumber: normalizeNumber,
-    removeElement: removeElement
+    removeElement: removeElement,
+    lpad: lpad
   };
 })();

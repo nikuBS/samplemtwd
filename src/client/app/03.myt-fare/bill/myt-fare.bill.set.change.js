@@ -11,6 +11,7 @@ Tw.MyTFareBillSetChange = function (rootEl, data) {
   this._history.init();
   this._data = data !== undefined ? JSON.parse( data ) : {};
   this._init();
+
 };
 
 Tw.MyTFareBillSetChange.prototype = {
@@ -339,10 +340,16 @@ Tw.MyTFareBillSetChange.prototype = {
 
   // 유효성(밸리데이션) 체크
   _checkValidation : function () {
+    var $this = this;
     var _valid = Tw.ValidationHelper;
     var _result = true;
     var _reqData = {};
     var t = this.$container.find('input');
+
+    if ( this._data.svcGr === 'R' && this._data.oneAcntSvcYn === 'N' ) {
+      Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_USED);
+      return {data : _reqData, result : false};
+    }
 
     t.each(function () {
       var _this = $(this);
@@ -376,6 +383,13 @@ Tw.MyTFareBillSetChange.prototype = {
                 Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V44);
                 return false;
               }
+
+              // 기타(우편) > 연락처 일경우 12자리로 맞춘다.
+              if ( 'cntcNum1' === _this.attr('name') ) {
+                _hpValue = $this._getHpNum(_hpValue);
+              }
+
+              _this.val(_hpValue);
               break;
 
           }
@@ -412,6 +426,14 @@ Tw.MyTFareBillSetChange.prototype = {
     });
 
     this._submit.prop('disabled', _isDisable);
+  },
+
+  // 우편안내서 > 연락처 값 변환 (12자리로 맞춰서 보내야 함)
+  // 예) 011-728-4508 -> 001107284508
+  _getHpNum : function (hpNum) {
+    var lpad = Tw.FormatHelper.lpad;
+    var _hpNums = Tw.FormatHelper.conTelFormatWithDash(hpNum).split('-');
+    return lpad(_hpNums[0], 4, '0') + lpad(_hpNums[1], 4, '0') + _hpNums[2];
   },
 
   // 변경하기 클릭 이벤트

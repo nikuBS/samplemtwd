@@ -285,6 +285,14 @@ class FormatHelper {
 
     return sValue;
   }
+
+  static lpad (str, length, padStr): string {
+
+    while (str.length < length) {
+      str = padStr + str;
+    }
+    return str;
+  }
 }
 
 export default FormatHelper;

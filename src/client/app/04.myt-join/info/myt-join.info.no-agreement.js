@@ -125,15 +125,9 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   _search : function () {
 
-    // 조회 데이터가 없거나, 포인트 사용 내역이 없는 경우는 보여주지 않는다.
-    if ( this._data.totUsedPt < 1 || this._data.datas.length < 1 ) {
-      var text = '';
-      if ( this._data.totUsedPt < 1 ) {
-        text = Tw.JOIN_INFO_NO_AGREEMENT.NO_USE;
-      } else if (this._data.datas.length < 1) {
-        text = Tw.JOIN_INFO_NO_AGREEMENT.NO_DATA;
-      }
-      this.$list.text(text);
+    // 조회 데이터가 없거나, 포인트 사용,적립 내역이 없는 경우는 보여주지 않는다.
+    if ( this._data.datas.length < 1 ) {
+      this.$list.text(Tw.JOIN_INFO_NO_AGREEMENT.NO_DATA);
       this.$totalCount.text(0);
       return;
     }
