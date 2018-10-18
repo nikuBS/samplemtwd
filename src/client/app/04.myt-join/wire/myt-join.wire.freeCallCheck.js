@@ -31,10 +31,8 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     this.$lookupBtn = $('[data-target="lookupBtn"]');
   },
   _bindEvent: function () {
-
     this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
     this.$container.on('click', '[data-target="lookupBtn"]', $.proxy(this._lookupBtnEvt, this));
-
   },
   //--------------------------------------------------------------------------[EVENT]
   _lookupBtnEvt: function(event) {
