@@ -84,13 +84,13 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
 
     this.$monthSelector
       .attr({ 'id': result.microPayLimitAmt, 'origin-value': result.microPayLimitAmt })
-      .text(this._getLittleAmount(result.microPayLimitAmt) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
+      .text(this._getLittleAmount(result.microPayLimitAmt));
     this.$daySelector
       .attr({ 'id': result.dayLimit, 'origin-value': result.dayLimit })
-      .text(this._getLittleAmount(result.dayLimit) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
+      .text(this._getLittleAmount(result.dayLimit));
     this.$onceSelector
       .attr({ 'id': result.onceLimit, 'origin-value': result.onceLimit })
-      .text(this._getLittleAmount(result.onceLimit) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
+      .text(this._getLittleAmount(result.onceLimit));
   },
   _setLimitEvent: function ($layer) {
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
@@ -99,7 +99,11 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-change', $.proxy(this._change, this));
   },
   _getLittleAmount: function (amount) {
-    return amount / 10000;
+    var defaultValue = 50;
+    if (amount > 0) {
+      defaultValue = amount / 10000;
+    }
+    return defaultValue + Tw.CURRENCY_UNIT.TEN_THOUSAND;
   },
   _selectAmount: function (event) {
     var $target = $(event.currentTarget);
