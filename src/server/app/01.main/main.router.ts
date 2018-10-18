@@ -7,10 +7,10 @@ import MainSearch from './controllers/main.search.controller';
 class MainRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/home', controller: new MainHome() });
-    this.controllers.push({ url: '/t-notify', controller: new MainTNotify() });
-    this.controllers.push({ url: '/menu', controller: new MainMenu() });
-    this.controllers.push({ url: '/search', controller: new MainSearch() });
+    this.controllers.push({ url: '/home', controller: MainHome });
+    this.controllers.push({ url: '/t-notify', controller: MainTNotify });
+    this.controllers.push({ url: '/menu', controller: MainMenu });
+    this.controllers.push({ url: '/search', controller: MainSearch });
   }
 }
 

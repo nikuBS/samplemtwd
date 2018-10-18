@@ -4,7 +4,7 @@ import Controller from '../controllers/tw.view.controller';
 
 export interface IRouterMap {
   url: string;
-  controller: Controller;
+  controller: any;
 }
 
 class AppRouter {
@@ -14,8 +14,14 @@ class AppRouter {
     this.router = express.Router();
 
     routerMaps.map((routerMap: IRouterMap) => {
-      this.router.get(routerMap.url, routerMap.controller.initPage.bind(routerMap.controller));
-      this.router.post(routerMap.url, routerMap.controller.certPage.bind(routerMap.controller));
+      this.router.get(routerMap.url, (req, res, next) => {
+        const inst = new routerMap.controller();
+        inst.initPage(req, res, next);
+      });
+      this.router.post(routerMap.url, (req, res, next) => {
+        const inst = new routerMap.controller();
+        inst.certPage(req, res, next);
+      });
     });
   }
 }

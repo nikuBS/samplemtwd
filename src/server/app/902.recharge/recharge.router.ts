@@ -22,25 +22,25 @@ import RechargeCookizHistory from './controllers/cookiz/recharge.cookiz.history.
 class RechargeRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/refill', controller: new RechargeRefill() });
-    this.controllers.push({ url: '/refill/history', controller: new RechargeRefillHistory() });
-    this.controllers.push({ url: '/refill/select', controller: new RechargeRefillSelect() });
-    this.controllers.push({ url: '/refill/complete', controller: new RechargeRefillComplete() });
-    this.controllers.push({ url: '/refill/error', controller: new RechargeRefillError() });
-    this.controllers.push({ url: '/refill/gift', controller: new RechargeRefillGift() });
-    this.controllers.push({ url: '/refill/gift-complete', controller: new RechargeRefillGiftComplete() });
-    this.controllers.push({ url: '/refill/gift-products', controller: new RechargeRefillGiftProducts() });
-    this.controllers.push({ url: '/gift', controller: new RechargeGift() });
-    this.controllers.push({ url: '/gift/process/family', controller: new RechargeGiftFamilyProcess() });
-    this.controllers.push({ url: '/gift/process/members', controller: new RechargeGiftMembersProcess() });
-    this.controllers.push({ url: '/gift/process/request', controller: new RechargeGiftRequestProcess() });
-    this.controllers.push({ url: '/gift/history', controller: new RechargeGiftHistory() });
-    this.controllers.push({ url: '/cookiz', controller: new RechargeCookiz() });
-    this.controllers.push({ url: '/cookiz/history', controller: new RechargeCookizHistory() });
-    this.controllers.push({ url: '/limit', controller: new RechargeLimit() });
-    this.controllers.push({ url: '/limit/history', controller: new RechargeLimitHistory() });
-    this.controllers.push({ url: '/ting', controller: new RechargeTing() });
-    this.controllers.push({ url: '/ting/history', controller: new RechargeTingHistory() });
+    this.controllers.push({ url: '/refill', controller: RechargeRefill });
+    this.controllers.push({ url: '/refill/history', controller: RechargeRefillHistory });
+    this.controllers.push({ url: '/refill/select', controller: RechargeRefillSelect });
+    this.controllers.push({ url: '/refill/complete', controller: RechargeRefillComplete });
+    this.controllers.push({ url: '/refill/error', controller: RechargeRefillError });
+    this.controllers.push({ url: '/refill/gift', controller: RechargeRefillGift });
+    this.controllers.push({ url: '/refill/gift-complete', controller: RechargeRefillGiftComplete });
+    this.controllers.push({ url: '/refill/gift-products', controller: RechargeRefillGiftProducts });
+    this.controllers.push({ url: '/gift', controller: RechargeGift });
+    this.controllers.push({ url: '/gift/process/family', controller: RechargeGiftFamilyProcess });
+    this.controllers.push({ url: '/gift/process/members', controller: RechargeGiftMembersProcess });
+    this.controllers.push({ url: '/gift/process/request', controller: RechargeGiftRequestProcess });
+    this.controllers.push({ url: '/gift/history', controller: RechargeGiftHistory });
+    this.controllers.push({ url: '/cookiz', controller: RechargeCookiz });
+    this.controllers.push({ url: '/cookiz/history', controller: RechargeCookizHistory });
+    this.controllers.push({ url: '/limit', controller: RechargeLimit });
+    this.controllers.push({ url: '/limit/history', controller: RechargeLimitHistory });
+    this.controllers.push({ url: '/ting', controller: RechargeTing });
+    this.controllers.push({ url: '/ting/history', controller: RechargeTingHistory });
   }
 }
 

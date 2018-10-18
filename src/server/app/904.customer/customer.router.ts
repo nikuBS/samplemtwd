@@ -31,37 +31,37 @@ import CustomerEventDetailWin from './controllers/event/customer.event.detail.wi
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/', controller: new CustomerMain() });
-    this.controllers.push({ url: '/email(/:status)?(/:category)?', controller: new CustomerEmail() });
-    this.controllers.push({ url: '/notice', controller: new CustomerNotice() });
-    this.controllers.push({ url: '/prevent-damage', controller: new CustomerPreventdamageMain() });
-    this.controllers.push({ url: '/prevent-damage/guide', controller: new CustomerPreventdamageGuide() });
-    this.controllers.push({ url: '/prevent-damage/guide/view', controller: new CustomerPreventdamageGuideview() });
-    this.controllers.push({ url: '/prevent-damage/useful-service', controller: new CustomerPreventdamageUsefulservice() });
-    this.controllers.push({ url: '/prevent-damage/relate-site', controller: new CustomerPreventdamageRelatesite() });
-    this.controllers.push({ url: '/prevent-damage/latest-warning', controller: new CustomerPreventdamageLatestwarning() });
-    this.controllers.push({ url: '/prevent-damage/latest-warning/view', controller: new CustomerPreventdamageLatestwarningview() });
-    // this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
-    this.controllers.push({ url: '/shop/detail', controller: new CustomerShopDetail() });
-    this.controllers.push({ url: '/shop/near', controller: new CustomerShopNear() });
-    this.controllers.push({ url: '/shop/repair', controller: new CustomerShopRepair() });
-    this.controllers.push({ url: '/shop/repair-detail', controller: new CustomerShopRepairDetail() });
-    this.controllers.push({ url: '/shop/repair-manufacturer', controller: new CustomerShopRepairManufacturer() });
-    this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearch() });
-    this.controllers.push({ url: '/voice/:type', controller: new CustomerVoice() });
-    this.controllers.push({ url: '/researches/result', controller: new CustomerResearchResult() });
-    this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
-    this.controllers.push({ url: '/faq', controller: new CustomerFaq() });
-    this.controllers.push({ url: '/faq/category', controller: new CustomerFaqCategory() });
-    this.controllers.push({ url: '/faq/doitlikethis', controller: new CustomerFaqDoItLikeThis() });
-    this.controllers.push({ url: '/faq/service-info', controller: new CustomerFaqInfoService() });
-    this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
-    this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: new CustomerFaqInfoSite() });
-    this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: new CustomerFaqInfoSite() });
-    this.controllers.push({ url: '/document', controller: new CustomerDocument() });
-    this.controllers.push({ url: '/event', controller: new CustomerEvent() });
-    this.controllers.push({ url: '/event/detail', controller: new CustomerEventDetail() });
-    this.controllers.push({ url: '/event/detail/win', controller: new CustomerEventDetailWin() });
+    this.controllers.push({ url: '/', controller: CustomerMain} );
+    this.controllers.push({ url: '/email(/:status)?(/:category)?', controller: CustomerEmail} );
+    this.controllers.push({ url: '/notice', controller: CustomerNotice} );
+    this.controllers.push({ url: '/prevent-damage', controller: CustomerPreventdamageMain} );
+    this.controllers.push({ url: '/prevent-damage/guide', controller: CustomerPreventdamageGuide} );
+    this.controllers.push({ url: '/prevent-damage/guide/view', controller: CustomerPreventdamageGuideview} );
+    this.controllers.push({ url: '/prevent-damage/useful-service', controller: CustomerPreventdamageUsefulservice} );
+    this.controllers.push({ url: '/prevent-damage/relate-site', controller: CustomerPreventdamageRelatesite} );
+    this.controllers.push({ url: '/prevent-damage/latest-warning', controller: CustomerPreventdamageLatestwarning} );
+    this.controllers.push({ url: '/prevent-damage/latest-warning/view', controller: CustomerPreventdamageLatestwarningview} );
+    // this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
+    this.controllers.push({ url: '/shop/detail', controller: CustomerShopDetail} );
+    this.controllers.push({ url: '/shop/near', controller: CustomerShopNear} );
+    this.controllers.push({ url: '/shop/repair', controller: CustomerShopRepair} );
+    this.controllers.push({ url: '/shop/repair-detail', controller: CustomerShopRepairDetail} );
+    this.controllers.push({ url: '/shop/repair-manufacturer', controller: CustomerShopRepairManufacturer} );
+    this.controllers.push({ url: '/shop/search', controller: CustomerShopSearch} );
+    this.controllers.push({ url: '/voice/:type', controller: CustomerVoice} );
+    this.controllers.push({ url: '/researches/result', controller: CustomerResearchResult} );
+    this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches} );
+    this.controllers.push({ url: '/faq', controller: CustomerFaq} );
+    this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory} );
+    this.controllers.push({ url: '/faq/doitlikethis', controller: CustomerFaqDoItLikeThis} );
+    this.controllers.push({ url: '/faq/service-info', controller: CustomerFaqInfoService} );
+    this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: CustomerFaqInfoService} );
+    this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: CustomerFaqInfoSite} );
+    this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: CustomerFaqInfoSite} );
+    this.controllers.push({ url: '/document', controller: CustomerDocument} );
+    this.controllers.push({ url: '/event', controller: CustomerEvent} );
+    this.controllers.push({ url: '/event/detail', controller: CustomerEventDetail} );
+    this.controllers.push({ url: '/event/detail/win', controller: CustomerEventDetailWin} );
   }
 }
 

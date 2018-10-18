@@ -29,32 +29,32 @@ import MyTJoinWireInetPhoneNumChange from './controllers/wire/myt-join.wire.netp
 class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/', controller: new MyTJoinSubmainController() });
-    this.controllers.push({ url: '/product/fee-plan', controller: new MyTJoinProductFeePlan() });
-    this.controllers.push({ url: '/product/additions', controller: new MyTJoinProductAdditions() });
-    this.controllers.push({ url: '/product/combinations', controller: new MyTJoinProductCombinations() });
-    this.controllers.push({ url: '/product/fee-alarm', controller: new MyTJoinProductFeeAlarm() });
-    this.controllers.push({ url: '/product/fee-alarm/terminate', controller: new MyTJoinProductFeeAlarmTerminate() });
-    this.controllers.push({ url: '/protect/change', controller: new MyTJoinProtectChange() });
-    this.controllers.push({ url: '/info/discount', controller: new MytJoinInfoDiscount() });
-    this.controllers.push({ url: '/info/discount/month', controller: new MyTJoinInfoDiscountMonth() });
-    this.controllers.push({ url: '/info/no-agreement', controller: new MyTJoinInfoNoAgreement() });
-    this.controllers.push({ url: '/info/contract', controller: new MyTJoinInfoContract() });
-    this.controllers.push({ url: '/info/sms', controller: new MyTJoinInfoSms() });
-    this.controllers.push({ url: '/wire', controller: new MyTJoinWire() });
-    this.controllers.push({ url: '/wire/as', controller: new MyTJoinWireAS() });
-    this.controllers.push({ url: '/wire/as/detail', controller: new MyTJoinWireASDetail() });
-    this.controllers.push({ url: '/wire/discount-refund', controller: new MyTJoinWireDiscountRefund() });
-    this.controllers.push({ url: '/wire/gifts', controller: new MyTJoinWireGifts() });
-    this.controllers.push({ url: '/wire/history', controller: new MyTJoinWireHistory() });
-    this.controllers.push({ url: '/wire/detail', controller: new MyTJoinWireHistoryDetail() });
-    this.controllers.push({ url: '/wire/inetphone-num/change', controller: new MyTJoinWireInetPhoneNumChange() });
-    this.controllers.push({ url: '/wire/freeCallCheck', controller: new MyTJoinWireFreeCallCheck() });
-    this.controllers.push({ url: '/wire/modify/address', controller: new MyTJoinWireModifyAddress() });
-    this.controllers.push({ url: '/wire/modify/product', controller: new MyTJoinWireModifyProduct() });
-    this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: new MyTJoinWireSetWireCancelService() });
-    this.controllers.push({ url: '/wire/set/pause', controller: new MyTJoinWireSetPause() });
-    this.controllers.push({ url: '/suspend', controller: new MyTJoinSuspend() });
+    this.controllers.push({ url: '/', controller: MyTJoinSubmainController} );
+    this.controllers.push({ url: '/product/fee-plan', controller: MyTJoinProductFeePlan} );
+    this.controllers.push({ url: '/product/additions', controller: MyTJoinProductAdditions} );
+    this.controllers.push({ url: '/product/combinations', controller: MyTJoinProductCombinations} );
+    this.controllers.push({ url: '/product/fee-alarm', controller: MyTJoinProductFeeAlarm} );
+    this.controllers.push({ url: '/product/fee-alarm/terminate', controller: MyTJoinProductFeeAlarmTerminate} );
+    this.controllers.push({ url: '/protect/change', controller: MyTJoinProtectChange} );
+    this.controllers.push({ url: '/info/discount', controller: MytJoinInfoDiscount} );
+    this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth} );
+    this.controllers.push({ url: '/info/no-agreement', controller: MyTJoinInfoNoAgreement} );
+    this.controllers.push({ url: '/info/contract', controller: MyTJoinInfoContract} );
+    this.controllers.push({ url: '/info/sms', controller: MyTJoinInfoSms} );
+    this.controllers.push({ url: '/wire', controller: MyTJoinWire} );
+    this.controllers.push({ url: '/wire/as', controller: MyTJoinWireAS} );
+    this.controllers.push({ url: '/wire/as/detail', controller: MyTJoinWireASDetail} );
+    this.controllers.push({ url: '/wire/discount-refund', controller: MyTJoinWireDiscountRefund} );
+    this.controllers.push({ url: '/wire/gifts', controller: MyTJoinWireGifts} );
+    this.controllers.push({ url: '/wire/history', controller: MyTJoinWireHistory} );
+    this.controllers.push({ url: '/wire/detail', controller: MyTJoinWireHistoryDetail} );
+    this.controllers.push({ url: '/wire/inetphone-num/change', controller: MyTJoinWireInetPhoneNumChange} );
+    this.controllers.push({ url: '/wire/freeCallCheck', controller: MyTJoinWireFreeCallCheck} );
+    this.controllers.push({ url: '/wire/modify/address', controller: MyTJoinWireModifyAddress} );
+    this.controllers.push({ url: '/wire/modify/product', controller: MyTJoinWireModifyProduct} );
+    this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: MyTJoinWireSetWireCancelService} );
+    this.controllers.push({ url: '/wire/set/pause', controller: MyTJoinWireSetPause} );
+    this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend} );
   }
 }
 

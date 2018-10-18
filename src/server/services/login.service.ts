@@ -11,16 +11,10 @@ class LoginService {
   private logger = new LoggerService();
 
   constructor() {
-    // this.request = req;
-    // this.response = res;
-    // if ( LoginService.instance ) {
-    //   return LoginService.instance;
-    // }
-    // LoginService.instance = this;
   }
 
   public setCurrentReq(req, res) {
-    this.logger.info(this, '[setCurrentReq]', req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
+    this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
     this.request = req;
     this.response = res;
   }
