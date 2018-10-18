@@ -4,7 +4,6 @@ import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
 import { COOKIE_KEY } from '../types/common.type';
 import { UserCertModel } from '../models/user-cert.model';
-
 class LoginService {
   static instance;
   private request;
@@ -21,7 +20,7 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
-    this.logger.info(this, '[setCurrentReq]', req.session, req.headers.referer, req.hostname);
+    this.logger.info(this, '[setCurrentReq]', req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
     this.request = req;
     this.response = res;
   }
@@ -106,7 +105,7 @@ class LoginService {
 
   public getServerSession(): string {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.serverSession) ) {
-      this.logger.debug(this, '[getServerSession]', this.request.session.serverSession);
+      this.logger.debug(this, '[getServerSession]', this.request.cookies[COOKIE_KEY.TWM], this.request.session.serverSession);
       return this.request.session.serverSession;
     }
     return '';
