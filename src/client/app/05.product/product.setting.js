@@ -108,6 +108,10 @@ Tw.ProductSetting.prototype = {
       case 'MP_02_02_03_10':
       case 'MP_02_02_03_14':
         var $planSettingChecked = this.$container.find('.fe-product_radio_wrap input:checked');
+        if (this._currentProdId === $planSettingChecked.val()) {
+          return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+        }
+
         this._successData = {
           prodNm: $planSettingChecked.attr('title'),
           prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
@@ -228,6 +232,7 @@ Tw.ProductSetting.prototype = {
   },
 
   _toggleClearBtn: function() {
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
