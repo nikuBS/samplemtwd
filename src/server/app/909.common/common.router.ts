@@ -5,7 +5,7 @@ class CommonRouter extends TwRouter {
   constructor() {
     super();
 
-    this.controllers.push({ url: '/error', controller: new CommonError() });
+    this.controllers.push({ url: '/error', controller:  CommonError } );
   }
 }
 

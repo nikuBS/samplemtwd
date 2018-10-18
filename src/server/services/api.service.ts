@@ -15,18 +15,18 @@ class ApiService {
   static instance;
   private loginService: LoginService = new LoginService();
   private logger: LoggerService = new LoggerService();
+  private req;
+  private res;
 
   constructor() {
-    // this.loginService = new LoginService(req, res);
-    // if ( ApiService.instance ) {
-    //   return ApiService.instance;
-    // }
-    //
-    // ApiService.instance = this;
   }
 
   public setCurrentReq(res, req) {
     this.loginService.setCurrentReq(res, req);
+    // TODO DELETE
+    this.logger.info(this, '[API setCurrentReq]', !!req.session);
+    this.req = req;
+    this.res = res;
   }
 
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {

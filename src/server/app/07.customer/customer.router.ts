@@ -5,9 +5,8 @@ import CustomerHelpline from './controllers/helpline/customer.helpline.controlle
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/document', controller: new CustomerDocument() });
-    this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
-    // this.controllers.push({ url: '/', controller: new HomeMain() });
+    this.controllers.push({ url: '/document', controller: CustomerDocument} );
+    this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
   }
 }
 

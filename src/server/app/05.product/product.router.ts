@@ -16,18 +16,18 @@ class ProductRouter extends TwRouter {
   constructor() {
     super();
 
-    this.controllers.push({ url: '/', controller: new Product() });
-    this.controllers.push({ url: '/addition', controller: new ProductAddition() });
-    this.controllers.push({ url: '/plans', controller: new ProductPlans() });
-    this.controllers.push({ url: '/additions', controller: new ProductAdditions() });
-    this.controllers.push({ url: '/detail/:prodId', controller: new ProductDetail() });
-    this.controllers.push({ url: '/detail/contents/:prodId', controller: new ProductDetailContents() });
-    this.controllers.push({ url: '/join/:prodId', controller: new ProductJoin() });
-    this.controllers.push({ url: '/setting/:prodId', controller: new ProductSetting() });
-    this.controllers.push({ url: '/terminate/:prodId', controller: new ProductTerminate() });
-    this.controllers.push({ url: '/current-setting/:prodId', controller: new ProductCurrentSetting() });
-    this.controllers.push({ url: '/infinity-benefit-usage-history', controller: new ProductInfinityBenefitUsageHistory() });
-    this.controllers.push({ url: '/find-my-best-plans', controller: new ProductFindMyBestPlans() });
+    this.controllers.push({ url: '/', controller: Product });
+    this.controllers.push({ url: '/addition', controller: ProductAddition });
+    this.controllers.push({ url: '/plans', controller: ProductPlans });
+    this.controllers.push({ url: '/additions', controller: ProductAdditions });
+    this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
+    this.controllers.push({ url: '/detail/contents/:prodId', controller: ProductDetailContents });
+    this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
+    this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
+    this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
+    this.controllers.push({ url: '/current-setting/:prodId', controller: ProductCurrentSetting });
+    this.controllers.push({ url: '/infinity-benefit-usage-history', controller: ProductInfinityBenefitUsageHistory });
+    this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
   }
 }
 

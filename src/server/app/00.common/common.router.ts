@@ -21,19 +21,19 @@ import CommonBiometricsRegister from './controllers/biometrics/common.biometrics
 export default class CommonRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/settings/menu', controller: new CommonSettingsMenu() });
-    this.controllers.push({ url: '/settings/notifications', controller: new CommonSettingsNotifications() });
-    this.controllers.push({ url: '/settings/privacy', controller: new CommonSettingsPrivacy() });
-    this.controllers.push({ url: '/settings/business-info', controller: new CommonSettingsBusinessInfo() });
-    this.controllers.push({ url: '/settings/certificates', controller: new CommonSettingsCertificates() });
-    this.controllers.push({ url: '/settings/terms', controller: new CommonSettingsTerms() });
-    this.controllers.push({ url: '/settings/location', controller: new CommonSettingsLocation() });
+    this.controllers.push({ url: '/settings/menu', controller: CommonSettingsMenu });
+    this.controllers.push({ url: '/settings/notifications', controller: CommonSettingsNotifications });
+    this.controllers.push({ url: '/settings/privacy', controller: CommonSettingsPrivacy });
+    this.controllers.push({ url: '/settings/business-info', controller: CommonSettingsBusinessInfo });
+    this.controllers.push({ url: '/settings/certificates', controller: CommonSettingsCertificates });
+    this.controllers.push({ url: '/settings/terms', controller: CommonSettingsTerms });
+    this.controllers.push({ url: '/settings/location', controller: CommonSettingsLocation });
 
-    this.controllers.push({ url: '/biometrics/menu', controller: new CommonBiometricsMenu() });
-    this.controllers.push({ url: '/biometrics/terms', controller: new CommonBiometricsTerms() });
-    this.controllers.push({ url: '/biometrics/cert', controller: new CommonBiometricsCert() });
-    this.controllers.push({ url: '/biometrics/register', controller: new CommonBiometricsRegister() });
+    this.controllers.push({ url: '/biometrics/menu', controller: CommonBiometricsMenu });
+    this.controllers.push({ url: '/biometrics/terms', controller: CommonBiometricsTerms });
+    this.controllers.push({ url: '/biometrics/cert', controller: CommonBiometricsCert });
+    this.controllers.push({ url: '/biometrics/register', controller: CommonBiometricsRegister });
 
-    this.controllers.push({ url: '/error', controller: new CommonError() });
+    this.controllers.push({ url: '/error', controller: CommonError });
   }
 }

@@ -38,47 +38,47 @@ class AuthRouter extends TwRouter {
   constructor() {
     super();
     // login
-    this.controllers.push({ url: '/login/exceed-fail', controller: new AuthLoginExceedFail() });
-    this.controllers.push({ url: '/login/fail', controller: new AuthLoginFail() });
-    this.controllers.push({ url: '/login/dormancy', controller: new AuthLoginDormancy() });
-    this.controllers.push({ url: '/login/find-id-pwd', controller: new AuthLoginFindIdPwd() });
-    this.controllers.push({ url: '/login/customer-pwd', controller: new AuthLoginCustomerPwd() });
-    this.controllers.push({ url: '/login/customer-pwd-fail', controller: new AuthLoginCustomerPwdFail() });
-    this.controllers.push({ url: '/login/route', controller: new AuthLoginRoute() });
-    this.controllers.push({ url: '/login/easy-aos', controller: new AuthLoginEasyAos() });
-    this.controllers.push({ url: '/login/easy-ios', controller: new AuthLoginEasyIos() });
-    this.controllers.push({ url: '/login/easy-fail', controller: new AuthLoginEasyFail() });
+    this.controllers.push({ url: '/login/exceed-fail', controller: AuthLoginExceedFail } );
+    this.controllers.push({ url: '/login/fail', controller: AuthLoginFail } );
+    this.controllers.push({ url: '/login/dormancy', controller: AuthLoginDormancy } );
+    this.controllers.push({ url: '/login/find-id-pwd', controller: AuthLoginFindIdPwd } );
+    this.controllers.push({ url: '/login/customer-pwd', controller: AuthLoginCustomerPwd } );
+    this.controllers.push({ url: '/login/customer-pwd-fail', controller: AuthLoginCustomerPwdFail } );
+    this.controllers.push({ url: '/login/route', controller: AuthLoginRoute } );
+    this.controllers.push({ url: '/login/easy-aos', controller: AuthLoginEasyAos } );
+    this.controllers.push({ url: '/login/easy-ios', controller: AuthLoginEasyIos } );
+    this.controllers.push({ url: '/login/easy-fail', controller: AuthLoginEasyFail } );
 
     // logout
-    this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
-    this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });
-    this.controllers.push({ url: '/logout/route', controller: new AuthLogoutRoute() });
+    this.controllers.push({ url: '/logout/complete', controller: AuthLogoutComplete } );
+    this.controllers.push({ url: '/logout/expire', controller: AuthLogoutExpire } );
+    this.controllers.push({ url: '/logout/route', controller: AuthLogoutRoute } );
     // member
-    this.controllers.push({ url: '/member/management', controller: new AuthMemberManagement() });
+    this.controllers.push({ url: '/member/management', controller: AuthMemberManagement } );
     // signup
-    this.controllers.push({ url: '/signup/guide', controller: new AuthSignupGuide() });
+    this.controllers.push({ url: '/signup/guide', controller: AuthSignupGuide } );
     // tid
-    this.controllers.push({ url: '/tid/login', controller: new AuthTidLogin() });
-    this.controllers.push({ url: '/tid/account', controller: new AuthTidAccountInfo() });
-    this.controllers.push({ url: '/tid/change-pw', controller: new AuthTidChangePw() });
-    this.controllers.push({ url: '/tid/find-id', controller: new AuthTidFindId() });
-    this.controllers.push({ url: '/tid/find-pw', controller: new AuthTidFindPw() });
-    this.controllers.push({ url: '/tid/logout', controller: new AuthTidLogout() });
-    this.controllers.push({ url: '/tid/signup-local', controller: new AuthTidSignUpLocal() });
-    this.controllers.push({ url: '/tid/signup-foreigner', controller: new AuthTidSignUpForeigner() });
-    this.controllers.push({ url: '/tid/guide', controller: new AuthTidGuide() });
-    this.controllers.push({ url: '/tid/route', controller: new AuthTidRoute() });
+    this.controllers.push({ url: '/tid/login', controller: AuthTidLogin } );
+    this.controllers.push({ url: '/tid/account', controller: AuthTidAccountInfo } );
+    this.controllers.push({ url: '/tid/change-pw', controller: AuthTidChangePw } );
+    this.controllers.push({ url: '/tid/find-id', controller: AuthTidFindId } );
+    this.controllers.push({ url: '/tid/find-pw', controller: AuthTidFindPw } );
+    this.controllers.push({ url: '/tid/logout', controller: AuthTidLogout } );
+    this.controllers.push({ url: '/tid/signup-local', controller: AuthTidSignUpLocal } );
+    this.controllers.push({ url: '/tid/signup-foreigner', controller: AuthTidSignUpForeigner } );
+    this.controllers.push({ url: '/tid/guide', controller: AuthTidGuide } );
+    this.controllers.push({ url: '/tid/route', controller: AuthTidRoute } );
     // withdrawal
-    this.controllers.push({ url: '/withdrawal/guide', controller: new AuthWithdrawalGuide() });
-    this.controllers.push({ url: '/withdrawal/survey', controller: new AuthWithdrawalSurvey() });
-    this.controllers.push({ url: '/withdrawal/complete', controller: new AuthWithdrawalComplete() });
+    this.controllers.push({ url: '/withdrawal/guide', controller: AuthWithdrawalGuide } );
+    this.controllers.push({ url: '/withdrawal/survey', controller: AuthWithdrawalSurvey } );
+    this.controllers.push({ url: '/withdrawal/complete', controller: AuthWithdrawalComplete } );
     // cert
-    this.controllers.push({ url: '/cert/motp', controller: new AuthCertMotp() });
-    this.controllers.push({ url: '/cert/nice', controller: new AuthCertNice() });
-    this.controllers.push({ url: '/cert/ipin', controller: new AuthCertIpin() });
-    this.controllers.push({ url: '/cert/complete', controller: new AuthCertComplete() });
-    this.controllers.push({ url: '/cert/finance/identification', controller: new AuthCertFinanceIdentification() });
-    this.controllers.push({ url: '/cert/finance/public', controller: new AuthCertFinancePublic() });
+    this.controllers.push({ url: '/cert/motp', controller: AuthCertMotp } );
+    this.controllers.push({ url: '/cert/nice', controller: AuthCertNice } );
+    this.controllers.push({ url: '/cert/ipin', controller: AuthCertIpin } );
+    this.controllers.push({ url: '/cert/complete', controller: AuthCertComplete } );
+    this.controllers.push({ url: '/cert/finance/identification', controller: AuthCertFinanceIdentification } );
+    this.controllers.push({ url: '/cert/finance/public', controller: AuthCertFinancePublic } );
   }
 }
 
