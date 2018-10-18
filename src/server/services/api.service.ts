@@ -17,11 +17,16 @@ class ApiService {
   private logger: LoggerService = new LoggerService();
 
   constructor() {
-    if ( ApiService.instance ) {
-      return ApiService.instance;
-    }
+    // this.loginService = new LoginService(req, res);
+    // if ( ApiService.instance ) {
+    //   return ApiService.instance;
+    // }
+    //
+    // ApiService.instance = this;
+  }
 
-    ApiService.instance = this;
+  public setCurrentReq(res, req) {
+    this.loginService.setCurrentReq(res, req);
   }
 
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {

@@ -94,6 +94,7 @@ abstract class TwViewController {
     const userId = req.query.userId;
     this._type = req.query.type;
 
+    this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {

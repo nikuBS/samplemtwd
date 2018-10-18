@@ -10,13 +10,12 @@ import AuthService from '../../services/auth.service';
 class BypassRouter {
   public router: Router;
 
-  private apiService;
+  private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
   private authService: AuthService = new AuthService();
 
   constructor() {
     this.router = express.Router();
-    this.apiService = new ApiService();
 
     Object.keys(API_CMD).map((key) => {
       const cmd = API_CMD[key];
@@ -56,17 +55,19 @@ class BypassRouter {
   }
 
   private checkApi(cmd: any, req: Request, res: Response, next: NextFunction) {
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
-    this.authService.getUrlMeta(req).subscribe((resp) => {
-      if ( resp['cert'] ) {
-        return res.json({
-          code: API_CODE.CODE_03,
-          result: resp
-        });
-      } else {
-        this.sendRequest(cmd, req, res, next);
-      }
-    });
+    this.sendRequest(cmd, req, res, next);
+    // this.authService.getUrlMeta(req).subscribe((resp) => {
+    //   if ( resp['cert'] ) {
+    //     return res.json({
+    //       code: API_CODE.CODE_03,
+    //       result: resp
+    //     });
+    //   } else {
+    //     this.sendRequest(cmd, req, res, next);
+    //   }
+    // });
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
