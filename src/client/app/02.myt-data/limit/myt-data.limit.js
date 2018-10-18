@@ -106,17 +106,16 @@ Tw.MyTDataLimit.prototype = {
         $input.prop('disabled', true);
         $input.parent().addClass('disabled');
       }
-
-      if ( Number($input.val()) === nLimitMount ) {
-        $input.click();
-      }
     };
 
-    var elWrapMonthly = this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
-    elWrapMonthly.not(':disabled').get(0).click();
-
-    var elWrapImmediately = this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
-    elWrapImmediately.not(':disabled').get(0).click();
+    this.$wrap_monthly_select_list.find('input').each(fnCheckedUI)
+      .on('click', $.proxy(function () {
+        this.$btn_monthly_recharge.removeAttr('disabled');
+      }, this));
+    this.$wrap_immediately_select_list.find('input').each(fnCheckedUI)
+      .on('click', $.proxy(function () {
+        this.$btn_immediately_recharge.removeAttr('disabled');
+      }, this));
   },
 
   _requestLimitRechargeImmediately: function () {
