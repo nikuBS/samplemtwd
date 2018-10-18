@@ -1,5 +1,4 @@
 import TwRouter from '../../common/route/tw.router';
-import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 import CustomerResearchResult from './controllers/researches/customer.researches.result.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
 import CustomerFaqInfoService from './controllers/faq/customer.faq.info.service.controller';
@@ -42,12 +41,12 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/prevent-damage/relate-site', controller: new CustomerPreventdamageRelatesite() });
     this.controllers.push({ url: '/prevent-damage/latest-warning', controller: new CustomerPreventdamageLatestwarning() });
     this.controllers.push({ url: '/prevent-damage/latest-warning/view', controller: new CustomerPreventdamageLatestwarningview() });
-    this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
-    this.controllers.push({ url: '/shop/detail', controller: new CustomerShopDetail });
-    this.controllers.push({ url: '/shop/near', controller: new CustomerShopNear });
-    this.controllers.push({ url: '/shop/repair', controller: new CustomerShopRepair });
-    this.controllers.push({ url: '/shop/repair-detail', controller: new CustomerShopRepairDetail });
-    this.controllers.push({ url: '/shop/repair-manufacturer', controller: new CustomerShopRepairManufacturer });
+    // this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
+    this.controllers.push({ url: '/shop/detail', controller: new CustomerShopDetail() });
+    this.controllers.push({ url: '/shop/near', controller: new CustomerShopNear() });
+    this.controllers.push({ url: '/shop/repair', controller: new CustomerShopRepair() });
+    this.controllers.push({ url: '/shop/repair-detail', controller: new CustomerShopRepairDetail() });
+    this.controllers.push({ url: '/shop/repair-manufacturer', controller: new CustomerShopRepairManufacturer() });
     this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearch() });
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoice() });
     this.controllers.push({ url: '/researches/result', controller: new CustomerResearchResult() });

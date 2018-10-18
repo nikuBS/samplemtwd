@@ -148,7 +148,7 @@ export const URL = {
   '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08', title: '최신 이용자 피해예방 주의보' }, // 최신 이용자 피해예방 주의보 - 상세
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '유용한 부가서비스' }, // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10', title: '이용자 피해예방 관련 사이트' }, // 이용자 피해예방 관련 사이트
-  '/customer/helpline': { login: true, id: 'CI_05_01', title: '전화상담 예약' }, // 전화상담예약
+  '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' }, // 전화상담예약
   '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '매장정보' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05', title: '내 위치와 가까운 매장' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
   '/customer/shop/repair': { login: false, id: 'CI_03_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지역 별 AS센터

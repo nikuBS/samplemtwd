@@ -1,0 +1,41 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup">
+  <!-- .no-btn 하단에 버튼이 없을 경우 -->
+  <!-- #header -->
+  <div class="header-wrap">
+    <div class="page-header">
+      <div class="header-ti">
+      </div>
+    </div>
+  </div>
+  <!--// #header -->
+  <!-- .container-wrap -->
+  <div class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+      <h1 class="complete-title">
+        <img src="/img/dummy/dmy-complete.jpg" alt="" />
+        <span><strong>전화상담 예약</strong> 완료</span>
+      </h1>
+      <div class="complete-info">
+        <dl><dt>예약일자</dt><dd>{{data.date}}({{data.weekday}})</dd></dl>
+        <dl><dt>예약시간</dt><dd>{{data.time}}</dd></dl>
+        <dl><dt>상담유형</dt><dd>{{data.type}}</dd></dl>
+        <dl><dt>상담지역</dt><dd>{{data.area}}</dd></dl>
+        <dl><dt>연락가능번호</dt><dd>{{data.number}}</dd></dl>
+      </div>
+      <div class="complete-btn-box pt40">
+        <ul class="bt-slice">
+          <li class="bt-blue1">
+            <a href="/main/home">홈으로</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--// .container-wrap -->
+  <!-- .popup-closeBtn -->
+  <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+  <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
