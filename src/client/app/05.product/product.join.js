@@ -156,7 +156,7 @@ Tw.ProductJoin.prototype = {
 
   _joinCancel: function() {
     if (this.$joinSetup.length > 0 && this.$joinSetup.is(':visible')) {
-      return this._historyService.goBack();
+      return this._historyService.replaceURL('/product/detail/' + this._prodId);
     }
 
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
@@ -172,9 +172,11 @@ Tw.ProductJoin.prototype = {
   },
 
   _bindJoinPopupCloseEvent: function() {
-    if (this._cancelFlag) {
-      this._historyService.goBack();
+    if (!this._cancelFlag) {
+      return;
     }
+
+    this._historyService.replaceURL('/product/detail/' + this._prodId);
   },
 
   _setDataForConfirmLayer: function() {
@@ -361,12 +363,26 @@ Tw.ProductJoin.prototype = {
 
   _openJoinConfirm: function() {
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, null, $.proxy(this._procJoin, this));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, $.proxy(this._bindJoinConfirmPopup, this), null, $.proxy(this._procJoinConfirm, this));
+  },
+
+  _bindJoinConfirmPopup: function($popupContainer) {
+    $popupContainer.find('.tw-popup-confirm>button').on('click', $.proxy(this._setConfirmFlag, this));
+  },
+
+  _setConfirmFlag: function() {
+    this._joinReqConfirm = true;
+  },
+
+  _procJoinConfirm: function() {
+    if (!this._joinReqConfirm) {
+      return;
+    }
+
+    this._procJoin();
   },
 
   _procJoin: function() {
-    this._popupService.close();
-
     var auth = false;
     if ( auth ) {
       return this._procAUth();
@@ -481,7 +497,7 @@ Tw.ProductJoin.prototype = {
 
   _goProductDetail: function() {
     this._popupService.close();
-    this._historyService.goLoad('/product/detail/' + this._prodId);
+    this._historyService.replaceURL('/product/detail/' + this._prodId);
   }
 
 };

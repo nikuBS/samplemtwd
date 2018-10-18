@@ -163,7 +163,7 @@ Tw.ProductDetail.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
+    this._historyService.replaceURL('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
   _openSettingPop: function() {
