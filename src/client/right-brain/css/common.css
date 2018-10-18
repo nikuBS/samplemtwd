@@ -553,22 +553,22 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
             box-sizing: border-box;
     font-size: 1rem; }
   .select-list.division-two li {
-    display: inline-block !important;
+    display: inline-block;
     width: 50%; }
   .select-list.division-three li {
-    display: inline-block !important;
+    display: inline-block;
     width: 33.333333%; }
   .select-list.division-four li {
-    display: inline-block !important;
+    display: inline-block;
     width: 25%; }
   .select-list.division-five li {
-    display: inline-block !important;
+    display: inline-block;
     width: 20%; }
   .select-list.division-six li {
-    display: inline-block !important;
+    display: inline-block;
     width: 16.666%; }
   .select-list.division-seven li {
-    display: inline-block !important;
+    display: inline-block;
     width: 14.285%; }
 
 input[type=text]::-ms-clear {
@@ -2324,6 +2324,13 @@ a.ui-button:active,
         font-size: 0.75rem;
         border-radius: 0.1875rem;
         letter-spacing: -0.0625rem; }
+      .bt-slice.item-free li a {
+        padding: 0.3125rem 0.4375rem;
+        height: auto;
+        line-height: 1;
+        font-size: 0.75rem;
+        border-radius: 0.1875rem;
+        letter-spacing: -0.0625rem; }
   .bt-slice > li {
     height: 2.5rem;
     vertical-align: middle;
@@ -2357,6 +2364,12 @@ a.ui-button:active,
       letter-spacing: 0;
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
+      .bt-slice > li a .num {
+        display: inline-block;
+        margin: 0 0 0 0.3125rem;
+        font-size: 0.875rem;
+        color: #666;
+        vertical-align: baseline; }
     .bt-slice > li.bt-red1 button {
       color: #fff;
       background: #e22f26; }
@@ -2374,9 +2387,11 @@ a.ui-button:active,
         background: #f44333; }
       .bt-slice > li.bt-red1 a:hover {
         background: #f44333; }
-      .bt-slice > li.bt-red1 a:disabled {
-        color: #808698;
-        background: #e5e8ee; }
+      .bt-slice > li.bt-red1 a.disabled {
+        color: #fff;
+        background: #d1d1d1;
+        pointer-events: none;
+        cursor: default; }
     .bt-slice > li.bt-blue1 button {
       color: #fff;
       background: #3b98e6; }
@@ -2430,8 +2445,8 @@ a.ui-button:active,
         color: #9e9e9e;
         background: #fff; }
     .bt-slice > li.bt-white2 a {
-      border: 1px solid #d1d1d1;
-      color: #757575;
+      border: 1px solid #9cc9f5;
+      color: #3b98e6;
       background: #fff; }
       .bt-slice > li.bt-white2 a.selected {
         background: #f5f5f5; }
@@ -2836,6 +2851,10 @@ a.ui-button:active,
   border-top: 1px solid #e2e2e2;
   overflow: hidden; }
   .bt-more button {
+    padding: 0.8125rem 0;
+    width: 100%; }
+  .bt-more a {
+    display: block;
     padding: 0.8125rem 0;
     width: 100%; }
   .bt-more span {

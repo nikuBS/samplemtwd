@@ -1,8 +1,11 @@
 <div class="popup tw-popup">
     <div class="popup-info" role="alertdialog" {{#if title}}aria-labelledby="alertHeading"{{/if}} aria-describedby="alertText">
         <div class="popup-header">
-            {{#if ico}}
-            <span class="ico {{ico}}"></span>
+            {{#if msgheader}}
+            <div class="msgheader {{msgheaderbg}}">
+                <strong>{{{msgtit}}}</strong>
+                <p>{{{msgtxt}}}</p>
+            </div>
             {{/if}}
             {{#if title}}
             <h5 class="popup-title {{title_type}}" id="alertHeading">{{{title}}}</h5>
@@ -19,18 +22,6 @@
                 {{/link_list}}
             </ul>
             {{/if}}
-            {{#if notice_list}}
-            <ul class="notice-list">
-                {{#notice_list}}
-                <li>
-                    <dl>
-                        <dt>{{{tit}}}</dt>
-                        <dd>{{{con}}}</dd>
-                    </dl>
-                </li>
-                {{/notice_list}}
-            </ul>
-            {{/if}}
         </div>
         {{#if bt}}
         <div class="btn-box">
@@ -42,15 +33,6 @@
             {{/bt}}
             </ul>
         </div>
-        {{/if}}
-        {{#if bt_b}}
-            <ul class="bt-bottom">
-                {{#bt_b}}
-                <li class="{{style_class}}">
-                   <button>{{txt}}</button>
-                </li>
-                {{/bt_b}}
-            </ul>
         {{/if}}
     </div>
     <div class="popup-blind"></div>
