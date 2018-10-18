@@ -15,7 +15,7 @@ import environment from './config/environment.config';
 const manifest = require('./config/manifest.json');
 
 // Route Modules
-import AppRouter from './common/app.router';
+import AppRouter from './common/route/app.router';
 import { default as OldMytRouter } from './app/901.myt/myt.router';
 import { default as OldRechargeRouter } from './app/902.recharge/recharge.router';
 import { default as OldPaymentRouter } from './app/903.payment/payment.router';
@@ -31,9 +31,9 @@ import ProductRouter from './app/05.product/product.router';
 import BenefitRouter from './app/06.benefit/benefit.router';
 import CustomerRouter from './app/07.customer/customer.router';
 import AuthRouter from './app/08.auth/auth.router';
-import BypassRouter from './common/bypass.router';
-import ApiRouter from './common/api.router';
-import NativeRouter from './common/native.router';
+import BypassRouter from './common/route/bypass.router';
+import ApiRouter from './common/route/api.router';
+import NativeRouter from './common/route/native.router';
 
 // Application Modules
 import RedisService from './services/redis.service';

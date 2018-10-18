@@ -1,18 +1,18 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import multer from 'multer';
-import { API_CMD, API_CODE } from '../types/api-command.type';
-import LoggerService from '../services/logger.service';
-import ApiService from '../services/api.service';
-import LoginService from '../services/login.service';
-import { COOKIE_KEY, REDIS_APP_VERSION } from '../types/common.type';
+import { API_CMD, API_CODE } from '../../types/api-command.type';
+import LoggerService from '../../services/logger.service';
+import ApiService from '../../services/api.service';
+import LoginService from '../../services/login.service';
+import { COOKIE_KEY, REDIS_APP_VERSION } from '../../types/common.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
-import AuthService from '../services/auth.service';
-import EnvHelper from '../utils/env.helper';
-import RedisService from '../services/redis.service';
-import FormatHelper from '../utils/format.helper';
+import AuthService from '../../services/auth.service';
+import EnvHelper from '../../utils/env.helper';
+import RedisService from '../../services/redis.service';
+import FormatHelper from '../../utils/format.helper';
 
 class ApiRouter {
   public router: Router;

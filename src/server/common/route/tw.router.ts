@@ -1,4 +1,4 @@
-import { IRouterMap } from '../app.router';
+import { IRouterMap } from './app.router';
 
 class TwRouter {
   private static _instance: TwRouter;
