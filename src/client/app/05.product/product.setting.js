@@ -146,7 +146,7 @@ Tw.ProductSetting.prototype = {
 
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
-      data: Object.assign(this._successData, {
+      data: $.extend(this._successData, {
         typeNm: Tw.PRODUCT_TYPE_NM.SETTING,
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''

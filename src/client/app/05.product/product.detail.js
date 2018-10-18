@@ -163,7 +163,7 @@ Tw.ProductDetail.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
+    this._historyService.replaceURL('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
   _openSettingPop: function() {
@@ -227,7 +227,7 @@ Tw.ProductDetail.prototype = {
     this.$recommendRateList.find('.recommendedrate-list')
       .html(this._template({
         list: resp.result.products.map(function(item) {
-          return Object.assign(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
+          return $.extend(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
             item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
         })
       }));
