@@ -5,7 +5,6 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { SVC_ATTR } from '../../../../types/bff.old.type';
 
 
 class MyTJoinWireHistoryDetail extends TwViewController {
@@ -27,7 +26,6 @@ class MyTJoinWireHistoryDetail extends TwViewController {
     const data = JSON.parse(req.query.data);
     const title = this.TITLE_MAP[data.atype];
     const options = {title: title, svcInfo: svcInfo, data: data};
-    console.log('options', options);
     res.render('wire/myt-join.wire.history.detail.html', options);
   }
 }

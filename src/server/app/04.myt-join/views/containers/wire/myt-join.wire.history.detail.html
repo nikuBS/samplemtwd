@@ -32,8 +32,8 @@
                         <ul>
                             <li>
                                 <dl class="show-data">
-                                    <dt>신규가입</dt>
-                                    <dd class="tx-bold">접수중XXX</dd>
+                                    <dt><%= data.apiNm %></dt>
+                                    <dd class="tx-bold"><%= data.stNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>접수일</dt>
@@ -117,7 +117,7 @@
                             <li>
                                 <dl class="show-data">
                                     <dt>설치 장소 변경</dt>
-                                    <dd class="tx-bold">접수중XXX</dd>
+                                    <dd class="tx-bold"><%= data.stNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>접수일</dt>
@@ -143,18 +143,18 @@
                                     <dt>변경 장소</dt>
                                     <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
                                 </dl>
-                                <dl class="show-data detail">
+                                <dl class="show-data detail" style="display: none;">
                                     <dt>관리 고객센터</dt>
                                     <dd>홍길동 (02-1234-5678) XXXXXX</dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>설치 장소<br />(변경후)</dt>
-                                    <dd>41078 서울시 ******* XXXXXX</dd>
+                                    <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
                                 </dl>
                             </li>
                         </ul>
                     </div>
-                    <div class="engineer-list">
+                    <div class="engineer-list" style="display: none;">
                         <ul>
                             <li>
                                 <div class="img-area"><img src="/img/etc/engineer-noimg1.jpg" alt="행복기사사진"/></div>
@@ -194,7 +194,7 @@
                         <ul>
                             <li>
                                 <dl class="show-data">
-                                    <dt>가입 상품 변경</dt>
+                                    <dt><%= data.apiNm %></dt>
                                     <dd class="tx-bold"><%= data.stNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
@@ -267,7 +267,7 @@
                         <ul>
                             <li>
                                 <dl class="show-data">
-                                    <dt>약정기간 변경</dt>
+                                    <dt><%= data.apiNm %></dt>
                                     <dd class="tx-bold"><%= data.stNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">
@@ -312,7 +312,7 @@
                         <ul>
                             <li>
                                 <dl class="show-data">
-                                    <dt>가입 상품 변경</dt>
+                                    <dt><%= data.apiNm %></dt>
                                     <dd class="tx-bold"><%= data.stNm %></dd>
                                 </dl>
                                 <dl class="show-data detail">

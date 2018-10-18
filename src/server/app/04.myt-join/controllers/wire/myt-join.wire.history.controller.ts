@@ -25,7 +25,7 @@ class MyTJoinWireHistory extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log('============ call 5 API commands ==============');
+
     this._list = [];
 
     Observable.combineLatest(
@@ -35,7 +35,14 @@ class MyTJoinWireHistory extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0143, {}),
       this.apiService.request(API_CMD.BFF_05_0153, {}))
       .subscribe(([r0167newJoin, r0162chgAddr, r0168prodChg, r0143periChg, r0153prodChg]) => {
+
 /*
+        console.log('r0167newJoin  - ', r0167newJoin);
+        console.log('r0162chgAddr  - ', r0162chgAddr);
+        console.log('r0168prodChg  - ', r0168prodChg);
+        console.log('r0143periChg  - ', r0143periChg);
+        console.log('r0153prodChg  - ', r0153prodChg);
+
         r0167newJoin = {
           'code': '00',
           'msg': 'success',
@@ -185,21 +192,34 @@ class MyTJoinWireHistory extends TwViewController {
   }
 
   private _resultHandler( resp: any, apiType: String ): boolean {
-    if ( resp.code === API_CODE.CODE_00 ) {
+    const list: any = resp.result;
 
-      const list: any = resp.result;
-      if ( !Array.isArray(list) ) {
-        console.log('r' + apiType + ' ok!! object');
+    if ( resp.code === API_CODE.CODE_00 && list ) {
+
+      if ( Array.isArray(list) ) {
+
+        for ( let i = list.length; i >= 0; i-- ) {
+          if ( !list[i] ) {
+            // 빈값 삭제
+            list.splice(i, 1);
+          } else {
+            list[i]['atype'] = apiType;
+          }
+        }
+
+      } else if ( typeof(list) === 'object' ) {
+
+        if ( Object.keys(list).length === 0 ) {
+          return false;
+        }
         list['atype'] = apiType;
       } else {
-        console.log('r' + apiType + ' ok!! size:' + list.length);
-        for ( let i = 0; i < list.length; i++ ) {
-          list[i]['atype'] = apiType;
-        }
+        return false;
       }
+
       this._list = this._list.concat(list);
+
     } else {
-      // log 남기기
       return false;
     }
     return true;

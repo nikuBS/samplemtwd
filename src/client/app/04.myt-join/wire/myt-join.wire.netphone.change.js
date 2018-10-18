@@ -23,14 +23,6 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     $('.inputbox .cancel').click($.proxy(this._onclickInputDel, this));
   },
 
-  /**
-   * 폰번호 입력시
-   * @param event
-   * @private
-   */
-  _onkeyupPhoneNum: function(event){
-
-  },
 
   /**
    * input password 키 입력시
@@ -101,6 +93,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     var phNum = $('input').val();
 
     if ( !this._isPhoneNum(phNum) ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
       return;
     }
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
@@ -114,6 +107,13 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
           return;
         }
         var code = resp.result.wnpOperStCd;
+
+        // 번호에 대한 결과를 찾을 수 없는 경우
+        if( code === 'NA' ) {
+          skt_landing.action.loading.off({ ta: '.container' });
+          this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
+          return;
+        }
 
         /* CODE
         01	접수	번호이동 접수

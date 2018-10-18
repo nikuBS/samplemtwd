@@ -31,33 +31,44 @@ Tw.MyTJoinWireASDetail.prototype = {
    * @private
    */
   _onclickAsReqCancelBtn: function() {
-    console.log('== 신청취소 == click');
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34_CONF.MSG,
+      Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34_CONF.TITLE,
+      $.proxy(function(){
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0150, { troubleNum: this._troubleNum })
-      .done($.proxy(function (resp) {
-        this._nowPageNum += 1;
+      this._popupService.close();
 
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
-          Tw.Error(resp.code, resp.msg).pop();
-          return ;
-        }
+      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
-        this._popupService.openTypeA(
-          Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34.TITLE,
-          Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34.MSG,
-          null,
-          null,
-          function(){
-            this._historyService.goBack();
-          });
+      this._apiService.request(Tw.API_CMD.BFF_05_0150, { troubleNum: this._troubleNum })
+        .done($.proxy(function (resp) {
+          this._nowPageNum += 1;
 
-        skt_landing.action.loading.off({ ta: '.container' });
-      }, this))
-      .fail(function(err){
-        Tw.Error(err.status, err.statusText).pop();
-      });
+          if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
+            Tw.Error(resp.code, resp.msg).pop();
+            skt_landing.action.loading.off({ ta: '.container' });
+            return ;
+          }
+
+          skt_landing.action.loading.off({ ta: '.container' });
+
+          this._popupService.openTypeA(
+            Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34.TITLE,
+            Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34.MSG,
+            null,
+            null,
+            $.proxy(function(){
+              this._historyService.goBack();
+            }, this)
+          );
+        }, this))
+        .fail(function(err){
+          Tw.Error(err.status, err.statusText).pop();
+          skt_landing.action.loading.off({ ta: '.container' });
+        });
+    },this));
+
 
   },
 
@@ -66,8 +77,7 @@ Tw.MyTJoinWireASDetail.prototype = {
    * @private
    */
   _onclickSmsAlarmReqBtn: function() {
-    console.log('== 망작업 안내 SMS알람신청 == click');
-    this._historyService.goLoad('#');
+    this._historyService.goLoad('/myt/join/info/sms');
   }
 };
 
