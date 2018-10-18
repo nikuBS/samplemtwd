@@ -226,7 +226,7 @@ export const API_CMD = {
   BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0175: { path: '/core-bill/v1/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0176: { path: '/core-bill/v1/microPay-requests-limitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0177: { path: '/v1/useContents/getUpdateUseContentsLimitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_05_0178: { path: '/core-modification/v1/wire-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
