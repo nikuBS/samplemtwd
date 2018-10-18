@@ -481,3 +481,14 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
 Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
   BUILDING: ['단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물']
 };
+
+Tw.MYT_JOIN_SUSPEND = {
+  CONFIRM : {
+    TITLE: '일시정지를 신청하시겠습니까?',
+    BTNAME: '신청하기',
+    MESSAGE: '선택하신 기간동안 일시정지 처리됩니다.'
+  },
+  NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
+  NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
+  NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.'
+};

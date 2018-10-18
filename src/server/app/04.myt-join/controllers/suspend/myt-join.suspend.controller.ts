@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import StringHelper from '../../../../utils/string.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MyTJoinSuspend extends TwViewController {
   constructor() {
@@ -23,7 +24,8 @@ class MyTJoinSuspend extends TwViewController {
     ).subscribe(([suspendState]) => {
       const options = {
         svcInfo,
-        phoneNum: StringHelper.phoneStringToDash(svcInfo.svcNum)
+        phoneNum: StringHelper.phoneStringToDash(svcInfo.svcNum),
+        isApp: BrowserHelper.isApp(req)
       };
 
       if ( suspendState.code === API_CODE.CODE_00 ) {

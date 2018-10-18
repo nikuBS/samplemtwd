@@ -52,7 +52,8 @@
                                         <% if(suspend.status) { %>
                                         <%- include('../../components/suspend/myt-join.suspend.temporal.reset.html', suspend); %>
                                         <% } else { %>
-                                        <%- include('../../components/suspend/myt-join.suspend.temporal.content.html', {period: suspend.period}); %>
+                                        <%- include('../../components/suspend/myt-join.suspend.temporal.content.html',
+                                        {period: suspend.period, isApp}); %>
                                         <% }  %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">

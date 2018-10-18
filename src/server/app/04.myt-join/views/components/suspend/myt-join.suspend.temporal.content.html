@@ -173,16 +173,15 @@
                                         <div class="input-wrap mt10">
                                             <span class="tit">이메일 주소</span>
                                             <div class="form-box">
-                                                            <span class="inputbox">
-                                                                <span class="input">
-                                                                    <input type="text"
-                                                                           placeholder="이메일 입력"
-                                                                           title="이메일 입력">
-                                                                    <button
-                                                                        class="cancel"><span
-                                                                        class="blind">삭제</span></button>
-                                                                </span>
-                                                            </span>
+                                                <span class="inputbox">
+                                                    <span class="input">
+                                                        <input type="text" placeholder="이메일 입력"
+                                                               data-id="fe-input-email" title="이메일 입력">
+                                                        <button
+                                                            class="cancel"><span
+                                                            class="blind">삭제</span></button>
+                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -212,11 +211,13 @@
                                                             class="cancel"><span
                                                             class="blind">삭제</span></button>
                                                     </span>
+                                                    <% if(isApp) { %>
                                                     <span class="bt-box">
                                                         <button
                                                             type="button"
                                                             class="fe-btn_native_contact">주소록</button>
                                                     </span>
+                                                    <% } %>
                                                 </span>
                                             </div>
                                         </div>
@@ -241,7 +242,7 @@
 <div class="bt-fixed-area">
     <ul class="bt-slice full">
         <li class="bt-red1">
-            <button disabled data-id="bt-suspend">신청하기</button>
+            <button disabled data-id="fe-bt-suspend">신청하기</button>
         </li>
     </ul>
 </div>
