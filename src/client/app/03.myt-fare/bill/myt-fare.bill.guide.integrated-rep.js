@@ -83,6 +83,15 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       }
     });
 
+    Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
+      // Tw.Logger.info('[테스트 if_contents]', searchName);
+      if ( strVal.indexOf(searchName) > -1) {
+        return Tw.MYT_FARE_BILL_GUIDE.THIRD_PARTY_TPL;
+      }
+    });
+
+
+
   },
   _cachedElement: function () {
     this.$entryTplBill = $('#fe-entryTplBill');
