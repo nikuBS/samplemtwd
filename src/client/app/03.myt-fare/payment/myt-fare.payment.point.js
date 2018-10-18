@@ -37,6 +37,7 @@ Tw.MyTFarePaymentPoint.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
@@ -99,6 +100,10 @@ Tw.MyTFarePaymentPoint.prototype = {
     } else {
       this.$container.find('.fe-check-pay').attr('disabled', 'disabled');
     }
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
   },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);

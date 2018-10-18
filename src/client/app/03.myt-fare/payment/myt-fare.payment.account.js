@@ -43,6 +43,7 @@ Tw.MyTFarePaymentAccount.prototype = {
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
@@ -97,6 +98,10 @@ Tw.MyTFarePaymentAccount.prototype = {
       }
     }
     return isAbled;
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
   },
   _checkPay: function () {
     if (this._isValid()) {
