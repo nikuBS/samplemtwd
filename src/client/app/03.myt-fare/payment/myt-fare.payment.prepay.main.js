@@ -15,6 +15,7 @@ Tw.MyTFarePaymentPrepayMain = function (rootEl, title) {
   this._historyService = new Tw.HistoryService(rootEl);
 
   this._initVariables();
+  this._setButtonVisibility();
   this._bindEvent();
 };
 
@@ -28,6 +29,14 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
     this._onceAmountList = [];
 
     this.$setPasswordBtn = this.$container.find('.fe-set-password');
+  },
+  _setButtonVisibility: function () {
+    if (this.$title === 'micro') {
+      if (this.$setPasswordBtn.attr('data-cpin') === undefined || this.$setPasswordBtn.attr('data-cpin') === null ||
+        this.$setPasswordBtn.attr('data-cpin') === '' || this.$setPasswordBtn.attr('data-cpin') === 'IC') {
+        this.$setPasswordBtn.after().hide();
+      }
+    }
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-history', $.proxy(this._prepayHistory, this));

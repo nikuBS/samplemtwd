@@ -278,7 +278,14 @@ Tw.ALERT_MSG_MYT_FARE = {
   V42 : '이메일 주소를 입력해주세요.',
   V43 : '우편 주소를 입력해주세요.',
   V44 : '휴대폰 번호가 올바르지 않습니다.',
-  NOT_USED : '법인 실사용자 통합 청구 고객은 T world를 통해 요금안내서를 신청/변경을 하실 수 없습니다.'
+  NOT_USED : '법인 실사용자 통합 청구 고객은 T world를 통해 요금안내서를 신청/변경을 하실 수 없습니다.',
+  NOT_STRAIGHT_NUMBER: '연속숫자 또는 동일숫자를 제외한 숫자를 입력해 주세요',
+  NOT_SAME_BIRTH: '주민번호 앞자리와 다른 숫자를 입력해 주세요',
+  CONFIRM_PASSWORD: '비밀번호를 확인해 주세요',
+  CHECK_PASSWORD_LENGTH: '비밀번호는 6자리로 입력해 주세요',
+  PASSWORD_ADDITIONAL_INFO: '부가서비스 해지 후 재가입하셔야' + '<br />' +
+    '휴대폰 결제 비밀번호 이용이 가능합니다.' + '<br />' +
+    '휴대폰 결제 비밀번호 설정 페이지로 이동하시겠습니까?'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

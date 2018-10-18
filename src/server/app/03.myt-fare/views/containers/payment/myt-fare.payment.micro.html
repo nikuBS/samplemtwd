@@ -112,7 +112,11 @@
                                     <span class="val"><%= passwordInfo.text %></span>
                                     <button class="fe-set-password" data-cpin="<%= passwordInfo.result.cpinStCd %>"
                                             data-code="<%= passwordInfo.code %>"
-                                            data-msg="<%= passwordInfo.msg %>">결제 비밀번호 설정 화면 이동</button>
+                                            data-msg="<%= passwordInfo.msg %>"
+                                            <% if (passwordInfo.result.bDay) { %> data-birth="<%= passwordInfo.result.bDay %>" <% } %>
+                                    >
+                                        결제 비밀번호 설정 화면 이동
+                                    </button>
                                 </dd>
                                 <% } %>
                             </dl>

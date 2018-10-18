@@ -18,52 +18,50 @@ Tw.MyTFarePaymentMicroSetPassword = function (rootEl, $target) {
 Tw.MyTFarePaymentMicroSetPassword.prototype = {
   _init: function ($target) {
     var code = $target.attr('data-code');
-    var msg = $target.attr('data-msg');
 
     if (code === Tw.API_CODE.CODE_00) {
       var cpinCode = $target.attr('data-cpin');
+      var birth = $target.attr('data-birth');
 
       switch (cpinCode) {
         case 'NC': {
           this.$type = 'new';
           this._popupService.open({
             'hbs': 'MF_06_06'
-          }, $.proxy(this._openPassword, this));
+          }, $.proxy(this._openPassword, this, birth), null, 'password');
           break;
         }
         case 'AC': {
           this.$type = 'change';
           this._popupService.open({
             'hbs': 'MF_06_06'
-          }, $.proxy(this._openPassword, this));
+          }, $.proxy(this._openPassword, this, birth), null, 'password');
           break;
         }
         case 'LC': {
-          this._popupService.openConfirm(msg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._goAdditionalService, this));
+          this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.PASSWORD_ADDITIONAL_INFO,
+            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._goAdditionalService, this));
           break;
         }
         case 'IC': {
-          this._popupService.openAlert(msg, code);
           break;
         }
         default:
-          this._popupService.openAlert(msg, code);
           break;
       }
-    } else {
-      this._popupService.openAlert(msg, code);
     }
   },
-  _openPassword: function ($layer) {
-    this._initVariables($layer);
+  _openPassword: function (birth, $layer) {
+    this._initVariables($layer, birth);
     this._setData();
     this._bindEvent();
   },
-  _initVariables: function ($layer) {
+  _initVariables: function ($layer, birth) {
     this.$layer = $layer;
+    this.$birth = birth;
     this.$currentPassword = $layer.find('.fe-current-password');
     this.$newPassword = $layer.find('.fe-new-password');
-    this.$changePassword = $layer.find('.fe-change-password');
+    this.$confirmPassword = $layer.find('.fe-confirm-password');
     this.$setBtn = $layer.find('.fe-set');
   },
   _setData: function () {
@@ -98,9 +96,9 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
   _checkIsAbled: function () {
     var isValid = false;
     if (this.$type === 'new') {
-      isValid = this.$newPassword.val() !== '' && this.$changePassword.val() !== '';
+      isValid = this.$newPassword.val() !== '' && this.$confirmPassword.val() !== '';
     } else {
-      isValid = this.$currentPassword.val() !== '' && this.$newPassword.val() !== '' && this.$changePassword.val() !== '';
+      isValid = this.$currentPassword.val() !== '' && this.$newPassword.val() !== '' && this.$confirmPassword.val() !== '';
     }
 
     if (isValid) {
@@ -117,8 +115,6 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
-
-      this._popupService.close();
     }
   },
   _getApiName: function () {
@@ -131,18 +127,18 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
     return apiName;
   },
   _isValid: function () {
-    if (this.$type === 'new') {
-      return (
-        this._validation.checkEmpty(this.$newPassword.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-        this._validation.checkEmpty(this.$changePassword.val(), Tw.MSG_PAYMENT.AUTO_A04)
-      );
-    } else {
-      return (
-        this._validation.checkEmpty(this.$currentPassword.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-        this._validation.checkEmpty(this.$newPassword.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-        this._validation.checkEmpty(this.$changePassword.val(), Tw.MSG_PAYMENT.AUTO_A04)
-      );
+    var isValid = (this._validation.checkLength(this.$newPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH) &&
+      this._validation.checkLength(this.$confirmPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH) &&
+      this._validation.checkIsStraight(this.$newPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.NOT_STRAIGHT_NUMBER) &&
+      this._validation.checkIsSame(this.$newPassword.val(), this.$birth, Tw.ALERT_MSG_MYT_FARE.NOT_SAME_BIRTH));
+
+    if (isValid) {
+      if (this.$type === 'change') {
+        isValid = (this._validation.checkLength(this.$currentPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH) &&
+          this._validation.checkIsDifferent(this.$newPassword.val(), this.$confirmPassword.val(), Tw.ALERT_MSG_MYT_FARE.CONFIRM_PASSWORD));
+      }
     }
+    return isValid;
   },
   _makeRequestData: function () {
     var reqData = {};
@@ -150,7 +146,7 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
     reqData.modifyPassword1 = $.trim(this.$layer.find('.fe-new-password').val());
     reqData.modifyPassword2 = $.trim(this.$layer.find('.fe-confirm-password').val());
 
-    if (this.$title === 'change') {
+    if (this.$type === 'change') {
       reqData.oldPassword = $.trim(this.$layer.find('.fe-current-password').val());
     }
     
@@ -158,6 +154,7 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this._popupService.close();
       this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_PASSWORD);
     } else {
       this._fail(res);
