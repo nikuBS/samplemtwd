@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
 import { PRODUCT_CTG_NAME } from '../../../types/string.type';
+import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -50,6 +51,22 @@ class ProductDetail extends TwViewController {
    */
   private _getRedis (): Observable<any> {
     return this.redisService.getData('ProductLedger:' + this._prodId);
+  }
+
+  /**
+   * @private
+   */
+  private _isOptionProduct(): boolean {
+    let isOption = false;
+
+    Object.keys(PRODUCT_SETTING).forEach((key) => {
+      if (PRODUCT_SETTING[key].indexOf(this._prodId) !== -1) {
+        isOption = true;
+        return false;
+      }
+    });
+
+    return isOption;
   }
 
   /**
@@ -283,7 +300,8 @@ class ProductDetail extends TwViewController {
             ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
             isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
             filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
-            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple'  // @todo body class
+            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple',  // @todo body class
+            isOption: this._isOptionProduct()
           });
         });
       });

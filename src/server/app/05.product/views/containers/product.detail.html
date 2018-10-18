@@ -83,7 +83,7 @@
                 <button type="button" class="bt-white2 fe-btn_terminate">해지</button>
               </div>
               <% } %>
-              <% if ( basicInfo.prodScrbYn === 'N' && basicInfo.prodTermYn === 'N' ) { %>
+              <% if ( basicInfo.prodScrbYn === 'N' && (ctgKey === 'plans' && svcInfo.prodId !== prodId || ctgKey === 'additions' && !isAdditionsJoined) ) { %>
               <div class="limit">
                 가입제한 상품
               </div>
@@ -175,9 +175,11 @@
         <!-- 기가입상품  -->
         <div class="joinconsulting-wrap">
           <p class="text">이용중인 상품 입니다.</p>
+          <% if ( isOption ) { %>
           <div class="btn">
             <div class="bt-alone"><button class="fe-btn_setting bt-line-blue1">설정</button></div>
           </div>
+          <% } %>
         </div>
         <!-- //기가입상품  -->
         <% } %>
