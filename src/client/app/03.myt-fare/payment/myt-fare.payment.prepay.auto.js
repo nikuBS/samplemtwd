@@ -46,6 +46,7 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-standard-amount', $.proxy(this._selectAmount, this, this._standardAmountList));
     this.$container.on('click', '.fe-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
@@ -82,7 +83,6 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
   },
   _checkIsAbled: function () {
     var isValid = false;
-    console.log('check is abled');
 
     if (this.$type === 'change') {
       switch (this.$changeType) {
@@ -111,6 +111,10 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
     } else {
       this.$container.find('.fe-pay').attr('disabled', 'disabled');
     }
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
   },
   _selectAmount: function ($list, event) {
     var $target = $(event.currentTarget);
