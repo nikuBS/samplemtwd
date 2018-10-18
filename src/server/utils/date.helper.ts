@@ -268,7 +268,14 @@ class DateHelper {
     return moment(this.convDateFormat(date)).endOf('month').format(format);
   }
 
-
+  /**
+   * Return difference by unit
+   * @param {string} endDate, {string} startDate, {any} unit
+   * @returns {Moment} : moment
+   */
+  static getDiffByUnit(endDate: string, startDate: string, unit: any): number {
+    return moment(endDate).diff(startDate, unit);
+  }
 }
 
 export default DateHelper;

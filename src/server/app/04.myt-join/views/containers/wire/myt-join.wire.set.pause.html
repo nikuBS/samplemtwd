@@ -1,0 +1,111 @@
+<%#
+* FileName: myt-join.wire.set.pause.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.10.16
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+>
+<!-- .popup hbs -->
+<div id="fe-myt-join-wire-set-pause" class="popup-page nobg tw-popup fixed-btn wrap"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '서비스 해지 신청', svcInfo: svcInfo, option: { line:false } }) %>
+    <!--// #header -->
+
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="myinfo-wrap">
+                    <div class="myinfo-cont">
+                        <div class="subtitle">
+                            <span class="name"><%= wirePauseInfo.svc_st_nm %></span>
+                        </div>
+                        <div class="title">
+                            <span><%= svcInfo.prodNm %></span>
+                        </div>
+                    </div>
+                    <% if (wirePauseInfo.svc_st_cd === 'AC') { %>
+                    <div class="form-type mt30 date-selcet" style="display: block;">
+                        <span class="form-title">정지 시작일</span>
+                        <!--<button class="bt-dropdown big fe-btn-start-date" title="정지 시작일" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>-->
+                        <div class="date-type" style="display: block;width: auto;">
+                            <input type="date" class="fe-input-start-date" min="<%= startDate.min %>" max="<%= startDate.max %>" value="<%= startDate.min %>" >
+                        </div>
+                        <span class="form-title">정지 종료일</span>
+                        <!--<button class="bt-dropdown big fe-btn-end-date" title="정지 종료일" aria-haspopup="true">선택<span class="ico"></span></button>-->
+                        <div class="date-type" style="display: block;width: auto;">
+                            <input type="date" class="fe-input-end-date">
+                        </div>
+                    </div>
+                    <div class="cont-noti mt20">
+                        <span class="type1">총 93일(3개월) 신청가능 합니다.</span>
+                    </div>
+                    <div class="data-result mt30 fe-pause-range-info" style="display: none;">
+                        <p class="tit">이용 중단 기간</p>
+                        <p class="data"><em class="fe-pause-date"></em></p>
+                        <p class="tit">(<span class="fe-pause-range"></span>)</p>
+                    </div>
+                    <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
+                    <div class="data-result mt30">
+                        <p class="tit">이용 중단 기간</p>
+                        <p class="data"><em><%= wirePauseInfo.pause_range %></em></p>
+                        <p class="tit"></p>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;">
+            <!--// TBD -->
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <% if (wirePauseInfo.svc_st_cd === 'AC') { %>
+                        <button class="fe-btn-submit" disabled>일시 정지 신청</button>
+                        <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
+                        <button class="fe-btn-submit">일시 정지 해제</button>
+                        <% } %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step fe-common-back">취소</button>
+    <!--// .popup-closeBtn -->
+</div>
+<!-- // .popup hbs -->
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    new Tw.MytJoinWireSetPause($('#fe-myt-join-wire-set-pause'), {
+      svcStCd: '<%= wirePauseInfo.svc_st_cd %>',
+      startDate: '<%= startDate.min %>'
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

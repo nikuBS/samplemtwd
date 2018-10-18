@@ -151,6 +151,8 @@ Tw.API_CMD = {
   BFF_05_0164: { path: '/core-modification/v1/wire-phone/chang-status', method: Tw.API_METHOD.GET},
   BFF_05_0165: { path: '/v1/wire/change-request', method: Tw.API_METHOD.POST },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: Tw.API_METHOD.GET },
+  BFF_05_0170: { path: '/core-modification/v1/myinfo/wire-set-pause', method: Tw.API_METHOD.POST },
+  BFF_05_0171: { path: '/core-modification/v1/myinfo/wire-remove-pause', method: Tw.API_METHOD.POST },
   BFF_05_0172: { path: '/core-modification/v1/myinfo/get-wire-cancel-info', method: Tw.API_METHOD.GET },
   BFF_05_0173: { path: '/core-modification/v1/myinfo/get-wire-cancel-fee', method: Tw.API_METHOD.GET },
   BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: Tw.API_METHOD.POST },

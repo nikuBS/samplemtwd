@@ -478,6 +478,22 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 }
 
+Tw.MYT_JOIN_WIRE_SET_PAUSE = {
+  MONTH: '개월 ',
+  DAY: '일',
+  SET: {
+    TITLE: '요청하신 기간 동안 <br />일시 정지 하시겠습니까 ?',
+    CONTENTS: '이용 중단 기간 <br />[sDate] ~ [eDate]',
+    BTNAME: '정지하기',
+    SUCCESS_TOAST: '일시 정지 되었습니다.'
+  },
+  CANCEL: {
+    TITLE: '일지 정지 해제 하시겠습니까 ?',
+    BTNAME: '해제하기',
+    SUCCESS_TOAST: '일시 정지 해제 되었습니다.'
+  }
+};
+
 Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
   BUILDING: ['단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물']
 };
