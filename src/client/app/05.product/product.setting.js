@@ -173,7 +173,7 @@ Tw.ProductSetting.prototype = {
   },
 
   _addNum: function() {
-    var number = this.$inputNumber.val();
+    var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (!Tw.ValidationHelper.isCellPhone(number)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.MSG,

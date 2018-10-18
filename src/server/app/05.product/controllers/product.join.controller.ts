@@ -229,11 +229,11 @@ class ProductJoin extends TwViewController {
 
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    this._prodId = req.params.prodId || '';
+    this._prodId = req.params.prodId;
     this._displayId = null;
 
     this._setDisplayId();
-    this.logger.info(this, '[DISPLAY ID] ', this._displayId);
+    this.logger.info(this, '[DISPLAY ID] ' + this._displayId);
 
     this.apiService.request(API_CMD.BFF_10_0001, {
       prodExpsTypCd: svcInfo.prodId !== this._prodId ? 'P' : 'SP'
