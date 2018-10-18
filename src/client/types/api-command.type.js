@@ -154,6 +154,8 @@ Tw.API_CMD = {
   BFF_05_0172: { path: '/core-modification/v1/myinfo/get-wire-cancel-info', method: Tw.API_METHOD.GET },
   BFF_05_0173: { path: '/core-modification/v1/myinfo/get-wire-cancel-fee', method: Tw.API_METHOD.GET },
   BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: Tw.API_METHOD.POST },
+  BFF_05_0176: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
+  BFF_05_0177: { path: '/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
