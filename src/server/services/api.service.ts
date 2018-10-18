@@ -101,7 +101,7 @@ class ApiService {
       this.setServerSession(resp.headers);
     }
 
-    observer.next(respData);
+    observer.next(respData, resp.headers);
     observer.complete();
   }
 

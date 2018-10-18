@@ -1,18 +1,18 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import multer from 'multer';
-import { API_CMD, API_CODE } from '../types/api-command.type';
-import LoggerService from '../services/logger.service';
-import ApiService from '../services/api.service';
-import LoginService from '../services/login.service';
-import { COOKIE_KEY, REDIS_APP_VERSION } from '../types/common.type';
+import { API_CMD, API_CODE } from '../../types/api-command.type';
+import LoggerService from '../../services/logger.service';
+import ApiService from '../../services/api.service';
+import LoginService from '../../services/login.service';
+import { COOKIE_KEY, REDIS_APP_VERSION } from '../../types/common.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
-import AuthService from '../services/auth.service';
-import EnvHelper from '../utils/env.helper';
-import RedisService from '../services/redis.service';
-import FormatHelper from '../utils/format.helper';
+import AuthService from '../../services/auth.service';
+import EnvHelper from '../../utils/env.helper';
+import RedisService from '../../services/redis.service';
+import FormatHelper from '../../utils/format.helper';
 
 class ApiRouter {
   public router: Router;
@@ -62,7 +62,7 @@ class ApiRouter {
     this.router.get('/serverSession', this.getServerSession.bind(this));
     this.router.get('/version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
-    this.router.get('/notice', this.getNotice.bind(this));
+    this.router.get('/service-notice', this.getServiceNotice.bind(this));
     this.router.get('/certTest', (req, res, next) => {
       res.json({
         code: API_CODE.CODE_03,
@@ -133,9 +133,7 @@ class ApiRouter {
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
-          result: {
-            version: null
-          }
+          result: null
         };
 
         if ( !FormatHelper.isEmpty(result) ) {
@@ -153,9 +151,7 @@ class ApiRouter {
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
-          result: {
-            version: null
-          }
+          result: null
         };
 
         if ( !FormatHelper.isEmpty(result) ) {
@@ -168,14 +164,12 @@ class ApiRouter {
       });
   }
 
-  private getNotice(req: Request, res: Response, next: NextFunction) {
+  private getServiceNotice(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
-          result: {
-            version: null
-          }
+          result: null
         };
 
         if ( !FormatHelper.isEmpty(result) ) {

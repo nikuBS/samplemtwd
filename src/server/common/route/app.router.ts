@@ -1,6 +1,6 @@
 import express from 'express';
 import { Router } from 'express';
-import Controller from './controllers/tw.view.controller';
+import Controller from '../controllers/tw.view.controller';
 
 export interface IRouterMap {
   url: string;

@@ -1,7 +1,7 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE, API_METHOD } from '../types/api-command.type';
-import ApiService from '../services/api.service';
+import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
+import ApiService from '../../services/api.service';
 
 
 class NativeRouter {
@@ -57,7 +57,8 @@ class NativeRouter {
     // };
     const headers = req.headers;
     this.apiService.request(cmd, params, headers)
-      .subscribe((data) => {
+      .subscribe((data, serverSession) => {
+        res.cookie('session', serverSession);
         return res.json(data);
       });
   }

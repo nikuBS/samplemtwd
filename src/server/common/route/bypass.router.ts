@@ -1,10 +1,10 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE, API_METHOD } from '../types/api-command.type';
-import ApiService from '../services/api.service';
-import FormatHelper from '../utils/format.helper';
-import LoginService from '../services/login.service';
-import AuthService from '../services/auth.service';
+import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
+import ApiService from '../../services/api.service';
+import FormatHelper from '../../utils/format.helper';
+import LoginService from '../../services/login.service';
+import AuthService from '../../services/auth.service';
 
 
 class BypassRouter {
