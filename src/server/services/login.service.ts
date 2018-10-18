@@ -12,10 +12,12 @@ class LoginService {
   private logger = new LoggerService();
 
   constructor() {
-    if ( LoginService.instance ) {
-      return LoginService.instance;
-    }
-    LoginService.instance = this;
+    // this.request = req;
+    // this.response = res;
+    // if ( LoginService.instance ) {
+    //   return LoginService.instance;
+    // }
+    // LoginService.instance = this;
   }
 
   public setCurrentReq(req, res) {
@@ -112,7 +114,7 @@ class LoginService {
 
   public setServerSession(serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      console.log('[set]', this.request.session);
+      console.log('[set]', this.request, this.request.session);
       if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
         this.request.session.serverSession = serverSession;
         this.request.session.save(() => {

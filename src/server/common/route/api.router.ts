@@ -220,6 +220,7 @@ class ApiRouter {
   private setCert(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.logger.info(this, '[set cert]', params);
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.authService.setCert(req, params).subscribe((resp) => {
       res.json(resp);
@@ -228,6 +229,7 @@ class ApiRouter {
 
   private getServerSession(req: Request, res: Response, next: NextFunction) {
     this.logger.info(this, '[get serverSession]');
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
@@ -237,6 +239,7 @@ class ApiRouter {
 
   private getSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.logger.info(this, '[get svcInfo]');
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
@@ -246,6 +249,7 @@ class ApiRouter {
 
   private getAllSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.logger.info(this, '[get allSvcInfo]');
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
@@ -255,6 +259,7 @@ class ApiRouter {
 
   private getChildInfo(req: Request, res: Response, next: NextFunction) {
     this.logger.info(this, '[get childInfo]');
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
@@ -265,6 +270,7 @@ class ApiRouter {
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.logger.info(this, '[chagne session]', params);
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeSession(params).subscribe((resp) => {
       res.json(resp);
@@ -275,6 +281,7 @@ class ApiRouter {
 
   private loginSvcPassword(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestLoginSvcPassword(params).subscribe((resp) => {
       res.json(resp);
@@ -285,6 +292,7 @@ class ApiRouter {
 
   private loginTid(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
       this.logger.info('[TID login]', resp);
@@ -295,6 +303,7 @@ class ApiRouter {
   }
 
   private logoutTid(req: Request, res: Response, next: NextFunction) {
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     Observable.combineLatest(
       this.apiService.request(API_CMD.LOGOUT_BFF, {}),
@@ -306,6 +315,7 @@ class ApiRouter {
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestUserLocks(params).subscribe((resp) => {
       res.json(resp);
@@ -316,6 +326,7 @@ class ApiRouter {
 
   private easyLoginAos(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestEasyLoginAos(params).subscribe((resp) => {
       res.json(resp);
@@ -326,6 +337,7 @@ class ApiRouter {
 
   private easyLoginIos(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestEasyLoginIos(params).subscribe((resp) => {
       res.json(resp);
@@ -336,6 +348,7 @@ class ApiRouter {
 
   private changeSvcPassword(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeSvcPassword(params).subscribe((resp) => {
       res.json(resp);
@@ -346,6 +359,7 @@ class ApiRouter {
 
   public changeLine(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeLine(params).subscribe((resp) => {
       res.json(resp);
@@ -355,6 +369,7 @@ class ApiRouter {
   }
 
   public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
+    this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     this.apiService.updateSvcInfo().subscribe((resp) => {
       res.json(resp);
