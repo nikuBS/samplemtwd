@@ -1,0 +1,120 @@
+<%#
+* FileName: customer.useguide.site-use-guide.html
+* Author: Lee Sanghyoung (silion@sk.com)
+* Date: 2018.10.18
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <%- include('../../../../../common/views/components/header.component.html', { title: '사이트 이용안내', svcInfo: svcInfo, line: false}); %>
+    
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">온라인 T world</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">모바일 T world</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <div role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+
+                                    <div class="cont-box">
+                                        <p class="site-informationuse-text">T world 사이트 이용 시의 어려운점을 아래 이용안내를 통해 확인해보세요.</p>
+                                        <ul class="site-informationuse-list">
+                                            <li class="amount">
+                                                <button class="link">
+                                                    <h3 class="title">기타</h3>
+                                                    <p class="text">가려진 정보 확인 방법</p>
+                                                </button>
+                                            </li>
+                                            <li class="amount">
+                                                <button class="link">
+                                                    <h3 class="title">myT</h3>
+                                                    <p class="text">소액결제 현명하게 관리하기</p>
+                                                </button>
+                                            </li>
+                                            <li class="amount">
+                                                <button class="link">
+                                                    <h3 class="title">회원</h3>
+                                                    <p class="text">개인명의 휴대폰/태블릿PC 다회선 등록하기</p>
+                                                </button>
+                                            </li>
+                                            <li class="amount">
+                                                <button class="link">
+                                                    <h3 class="title">회원</h3>
+                                                    <p class="text">T world에 등록된 법인명의 휴대폰번호 삭제방법</p>
+                                                </button>
+                                            </li>
+                                            <li class="amount">
+                                                <button class="link">
+                                                    <h3 class="title">기타</h3>
+                                                    <p class="text">모두에게 평등한 T world의 웹접근성 안내</p>
+                                                </button>
+                                            </li>
+                                            <li class="amount">
+                                                <button class="link">
+                                                    <h3 class="title">기타</h3>
+                                                    <p class="text">T world의 모든 서비스 메뉴 꼼꼼히 살펴보기!</p>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" id="tab2-tab" aria-labelledby="tab2"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    // new Tw.MyTFarePaymentBillHistory($(document), '<%#- JSON.stringify(data) %>');
+    new Tw.CustomerUseguideCommon($(document), '<%- JSON.stringify(data) %>');
+  });
+</script>
+<script id="fe-template-tax-list" type="text/x-handlebars-template">
+</script>
+<script id="fe-template-tax-items" type="text/x-handlebars-template">
+</script>
+<script id="fe-template-cash-items" type="text/x-handlebars-template">
+</script>
+<script id="fe-template-cash-day" type="text/x-handlebars-template">
+</script>
+<script id="fe-template-cash-year" type="text/x-handlebars-template">
+</script>
+<script id="list-template-cash-wrapper" type="text/x-handlebars-template">
+</script>
+<script id="list-empty" type="text/x-handlebars-template">
+</script>
+</body>
+<% include ../../components/end.component.html %>
