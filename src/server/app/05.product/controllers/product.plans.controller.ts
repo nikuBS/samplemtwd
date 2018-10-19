@@ -18,7 +18,7 @@ export default class ProductPlans extends TwViewController {
     const params = {
       idxCtgCd: this.PLAN_CODE,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
-      ...(req.query.tag ? { searchTag: req.query.tag } : {})
+      ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
     this.getPlans(params).subscribe(plans => {

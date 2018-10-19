@@ -34,6 +34,7 @@ Tw.ProductList.prototype = {
     this._params.searchLastProdId = this.$moreBtn.data('last-product');
     this._leftCount = this.$moreBtn.data('left-count');
     this._listTmpl = Handlebars.compile($('#fe-templ-' + this.TYPE).html());
+    this._filterTmpl = Handlebars.compile($('#fe-templ-filters').html());
   },
 
   bindEvent: function () {
@@ -64,6 +65,16 @@ Tw.ProductList.prototype = {
       } else if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
         item.basFeeInfo = Tw.FormatHelper.addComma(item.basFeeInfo);
         item.isMonthly = true;
+      }
+
+      if (item.basOfrDataQtyCtt) {
+        item.basOfrDataQtyCtt = Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt);
+      }
+      if (item.basOfrVcallTmsCtt) {
+        item.basOfrVcallTmsCtt = Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
+      }
+      if (item.basOfrCharCntCtt) {
+        item.basOfrCharCntCtt = Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
       }
 
       return item;
@@ -151,7 +162,7 @@ Tw.ProductList.prototype = {
   },
 
   _openSelectFiltersPopup: function () {
-    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS, $.proxy(function (filter) {
+    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS[this.CODE], $.proxy(function (filter) {
       var currentFilter = this._params.searchFltIds;
       if (currentFilter && currentFilter.indexOf(filter.id) >= 0) {
         return {
@@ -167,7 +178,7 @@ Tw.ProductList.prototype = {
 
     var filters = _.chain(this._filters.filters)
       .filter(function (filter) {
-        return filter.prodFltId !== 'F01120';
+        return filter.prodFltId !== 'F01120' && filter.prodFltId !== 'F01220';
       })
       .map($.proxy(function (filter) {
         return {
@@ -207,7 +218,7 @@ Tw.ProductList.prototype = {
   _handleOpenSelectFilterPopup: function ($layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
-    $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this));
+    $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this, $layer));
   },
 
   _handleResetFilters: function ($layer) {
@@ -220,9 +231,13 @@ Tw.ProductList.prototype = {
     }
   },
 
-  _openSelectTagPopup: function (e) {
-    var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
-    this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
+  _openSelectTagPopup: function ($layer, e) {
+    if ($layer.find('li[aria-checked="true"]').length > 0) {
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
+      this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
+    } else {
+      this._handleSelectTag(e.currentTarget);
+    }
   },
 
   _handleSelectFilters: function ($layer) {
@@ -249,6 +264,24 @@ Tw.ProductList.prototype = {
       delete this._params.searchLastProdId;
       delete this._leftCount;
       this.$list.empty();
+
+      if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
+        var filters = resp.result.searchOption.searchFltIds;
+        var $filters = this.$container.find('.fe-select-filter');
+        var data = {};
+        data.filters = _.map(filters.slice(0, 2), function (filter, index, arr) {
+          if (index === 0 && arr.length === 2) {
+            return filter.prodFltNm + ','
+          }
+          return filter.prodFltNm;
+        });
+
+        if (filters.length > 2) {
+          data.leftCount = filters.length - 2;
+        }
+        $filters.html(this._filterTmpl(data));
+      }
+
       this._popupService.close();
       this._handleSuccessLoadingData(resp);
     }
@@ -256,10 +289,9 @@ Tw.ProductList.prototype = {
 
   _handleSelectTag: function (target) {
     var selectedTag = target.getAttribute('data-tag-id');
-
-    this._popupService.close();
     
-    if (this._params.selectedTag === selectedTag) {
+    if (this._params.selectedTagId === selectedTag) {
+      this._popupService.close();
       return;
     }
 

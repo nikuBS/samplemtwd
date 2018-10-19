@@ -52,6 +52,8 @@
                                     #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
                                 <% } %>
                                 <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
+                            <% } else if (plans.searchOption.searchProdTagNm) { %>
+                                #<span class="vbl tx-bold"><%= plans.searchOption.searchProdTagNm %></span>
                             <% } else { %>
                                 #<span class="vbl tx-bold">전체 요금제</span>
                             <% } %>
@@ -76,18 +78,20 @@
                                         <p class="info"><span class="money"><%= plan.basFeeAmt %></span></p>
                                         <% } %>
                                     </div>
+                                    <% if (plan.filters) { %>
                                     <div class="taglist-wrap">
                                         <% for (let j = 0; j < plan.filters.length; j++) { %>
                                             <button class="tag-text">#<%= plan.filters[j].prodFltNm %></button>
                                         <% } %>
                                     </div>
+                                    <% } %>
                                     <dl class="products-additionalinfo">
                                         <dt>데이터</dt>
-                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %></span></dd>
+                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrDataQtyCtt) ? 'GB' : '' %></span></dd>
                                         <dt>음성</dt>
-                                        <dd><%= plan.basOfrVcallTmsCtt %></dd>
+                                        <dd><%= plan.basOfrVcallTmsCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrVcallTmsCtt) ? '분' : '' %></dd>
                                         <dt>문자</dt>
-                                        <dd><%= plan.basOfrCharCntCtt %></dd>
+                                        <dd><%= plan.basOfrCharCntCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrCharCntCtt) ? '건' : '' %></dd>
                                     </dl>
                                 </a>
                             </li>
