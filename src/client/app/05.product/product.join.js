@@ -292,7 +292,7 @@ Tw.ProductJoin.prototype = {
   },
 
   _addNum: function() {
-    var number = this.$inputNumber.val();
+    var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (this.$lineList.find('li').length > 3) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,
