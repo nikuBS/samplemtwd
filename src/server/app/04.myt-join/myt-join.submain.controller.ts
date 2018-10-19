@@ -170,6 +170,8 @@ class MyTJoinSubmainController extends TwViewController {
    */
   _convertWireInfo(data) {
     const result: any = {};
+    // 가입자명
+    result.custNm = data.wireReqrNm;
     // 서비스 약정
     result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt : DateHelper.getShortDateNoDot(data.svcPrdStaDt);
     result.svcPrdEndDt = this.isMasking(data.svcPrdEndDt) ? data.svcPrdEndDt : DateHelper.getShortDateNoDot(data.svcPrdEndDt);
