@@ -74,7 +74,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       // 선불 쿠폰 TODO: API 완료 후 적용 필요함(TBD)
       data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
-      if ( !_.isEmpty(this.immChargeData.limit) ) {
+      if ( !_.isEmpty(this.immChargeData.limit) && this.immChargeData.limit.blockYn === 'Y' ) {
         subList.push({
           'option': 'limit',
           'value': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.LIMIT
@@ -139,22 +139,29 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   // DC_04 팝업내 아이템 선택시 이동
   _onImmDetailLimit: function () {
-    this._historyService.goLoad('/myt/data/limit');
+    this._goPage('/myt/data/limit');
   },
 
   _onImmDetailEtc: function () {
-    this._historyService.goLoad('/myt/data/cookiz');
+    this._goPage('/myt/data/cookiz');
   },
 
   _onImmDetailTing: function () {
-    this._historyService.goLoad('/myt/data/ting');
+    this._goPage('/myt/data/ting');
   },
 
   _onImmDetailRefill: function () {
-    this._historyService.goLoad('/myt/data/recharge/coupon');
+    this._goPage('/myt/data/recharge/coupon');
   },
 
   _onPrepayCoupon: function () {
     this._popupService.openAlert('TBD');
+  },
+
+  _goPage: function (url) {
+    this._popupService.close();
+    setTimeout($.proxy(function () {
+      this._historyService.goLoad(url);
+    }, this), 100);
   }
 };
