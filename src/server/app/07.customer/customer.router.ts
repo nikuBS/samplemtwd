@@ -11,8 +11,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/document', controller: CustomerDocument} );
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     // this.controllers.push({ url: '/', controller: HomeMain() });
-    this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse() });
-    // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse() });
+    this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
+    // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse });
   }
 }
 

@@ -34,7 +34,7 @@ class CustomerUseguideSiteUseguide extends TwViewController {
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
     };
 
-    res.render('useguide/customer.useguide.site.html', {});
+    res.render('useguide/customer.useguide.site.html', {svcInfo: svcInfo, data: {}});
   }
 
   private getKeyWithQuery(queryString: string): any {
