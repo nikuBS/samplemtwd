@@ -70,6 +70,8 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     this.$searchType = $('[data-target="searchType"]');
 
+    this.$fingerprint = $('[data-target="fingerprint"]'); // 원하시는 기간을 선택후 조회해주세요.
+
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="startDtBtn"]', $.proxy(this._startDtBtnEvt, this));
@@ -270,6 +272,7 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   _searchBtnEvt: function () {
 
+
     var momentStart = moment(this.selDateObj.startDt, 'YYYYMM');
     var momentEnd = moment(this.selDateObj.endDt, 'YYYYMM');
 
@@ -319,6 +322,7 @@ Tw.MyTFareBillGuidePps.prototype = {
   _getHistoriesInfoInit: function (res) {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this.$fingerprint.hide();
       Tw.Logger.info('[res] ', res);
       var dataArr = res.result;
       /*
