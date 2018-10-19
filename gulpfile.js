@@ -267,6 +267,7 @@ gulp.task('css-rb', function () {
     'src/client/right-brain/css/**/layout.css',
     'src/client/right-brain/css/**/widgets.css',
     'src/client/right-brain/css/**/components.css',
+    'src/client/right-brain/css/**/m_product.css',
     '!src/client/right-brain/css/**/*.min.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/right-brain/',
