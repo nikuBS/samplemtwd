@@ -152,20 +152,6 @@ class MyTFareMicroHistory extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resData) => {
       const currentDate = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
-      // resData.result.payHistoryCnt = 1;
-      // resData.result.cpHistories = [
-      //   {
-      //     'cpCode': 'thisistest',
-      //     'belong': 'ISAS',
-      //     'cpNm': '모빌리언스테스트',
-      //     'tySvc': 'AY',
-      //     'useDt': '2018-08-02 17:12',
-      //     'idpg': 'MB',
-      //     'applyMonth': '2018-09-01',
-      //     'pgNm': '모빌리언스'
-      //   }
-      // ];
-
 
       if (parseInt(resData.result.payHistoryCnt, 10) !== 0) {
         resData.result.cpHistories.map((o) => {
@@ -178,12 +164,6 @@ class MyTFareMicroHistory extends TwViewController {
         resData.result.cpHistories = [];
       }
 
-      // const renderData = {
-      //   cpName: resData.result.cpNm,
-      //   pgName: resData.result.pgNm,
-      //   requestDate: resData.result.useDt,
-      //   applyDate: resData.result.applyMonth
-      // }
       res.render('history/myt-fare.micro.block.history.html', {svcInfo: svcInfo, data: resData.result.cpHistories});
     });
   }

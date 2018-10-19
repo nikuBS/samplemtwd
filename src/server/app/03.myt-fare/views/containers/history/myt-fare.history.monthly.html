@@ -18,9 +18,9 @@
 
     <div class="wrap">
         <% if(isMicro) { %>
-        <%- include('../../../../../common/views/components/header.component.html', { title: currentMonth + '월 소액결제 상세', svcInfo: svcInfo, line: false}); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: currentMonth + '월 소액결제 상세', svcInfo: svcInfo}); %>
         <% } else { %>
-        <%- include('../../../../../common/views/components/header.component.html', { title: currentMonth + '월 콘텐츠 이용료 상세', svcInfo: svcInfo, line: false}); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: currentMonth + '월 콘텐츠 이용료 상세', svcInfo: svcInfo}); %>
         <% } %>
 
         <!-- #contents -->

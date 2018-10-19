@@ -17,9 +17,9 @@
 
 <div class="wrap">
     <% if(data.current === 'tax') { %>
-    <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역', svcInfo: svcInfo, line: false}); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역', svcInfo: svcInfo}); %>
     <% } else { %>
-    <%- include('../../../../../common/views/components/header.component.html', { title: '현금 영수증 발급 내역', svcInfo: svcInfo, line: false}); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '현금 영수증 발급 내역', svcInfo: svcInfo}); %>
     <% } %>
 
     <% if(data.isTax) { %>
@@ -174,8 +174,11 @@
     {{/if}}
 </script>
 <script id="list-empty" type="text/x-handlebars-template">
-    <div class="no-data">
-        <span>내역이 없습니다.</span>
+    <div class="container">
+        <!-- .cont-box -->
+        <div class="no-data">
+            <span>내역이 없습니다.</span>
+        </div>
     </div>
 </script>
 </body>

@@ -139,13 +139,16 @@ class MyTFarePaymentHistory extends TwViewController {
   }
 
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp: { code: string; result: any; }) => {
+    return this.apiService.request(API_CMD.BFF_07_0017, {selType:'H'}).map((resp: { code: string; result: any; }) => {
+
+      // this.logger.info(this, '-------->', resp.result.selectMonth, resp.result.selectQuarter, resp.result.selectHalf, resp.result.taxReprintList);
 
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
       } else {
         this.paymentData.isPersonalBiz = true;
-        this.paymentData.personalBizNum = resp.result.taxReprintList ? resp.result.taxReprintList[0].ctzBizNum : '';
+        this.paymentData.personalBizNum = resp.result.taxReprintList ?
+            resp.result.taxReprintList[0] ? resp.result.taxReprintList[0].ctzBizNum : '' : '';
       }
 
       return null;
@@ -180,6 +183,8 @@ class MyTFarePaymentHistory extends TwViewController {
         this.getMicroPaymentData(),
         this.getContentsPaymentData()
     ).subscribe(histories => {
+      this.logger.info(this, '-[MyTFarePaymentHistory] -------->');
+
       this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
     });
   }
