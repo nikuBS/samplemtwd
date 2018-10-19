@@ -108,6 +108,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   // DC_O4 팝업 호출 후
   _onImmediatelyPopupOpened: function ($container) {
+    this.$popupContainer = $container;
     var items = $container.find('li');
     for ( var i = 0; i < items.length; i++ ) {
       var item = items.eq(i);
@@ -135,33 +136,36 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   // DC_04 팝업 close 이후 처리 부분 - 만약 사용될 경우가 없다면 제거예정
   _onImmediatelyPopupClosed: function () {
+    var $target = this.$popupContainer.find('[data-url]');
+    this._historyService.goLoad($target.attr('data-url'));
   },
 
   // DC_04 팝업내 아이템 선택시 이동
-  _onImmDetailLimit: function () {
-    this._goPage('/myt/data/limit');
+  _onImmDetailLimit: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/limit');
+    this._popupService.close();
   },
 
-  _onImmDetailEtc: function () {
-    this._goPage('/myt/data/cookiz');
+  _onImmDetailEtc: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/cookiz');
+    this._popupService.close();
   },
 
-  _onImmDetailTing: function () {
-    this._goPage('/myt/data/ting');
+  _onImmDetailTing: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/ting');
+    this._popupService.close();
   },
 
-  _onImmDetailRefill: function () {
-    this._goPage('/myt/data/recharge/coupon');
+  _onImmDetailRefill: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/recharge/coupon');
+    this._popupService.close();
   },
 
   _onPrepayCoupon: function () {
     this._popupService.openAlert('TBD');
-  },
-
-  _goPage: function (url) {
-    this._popupService.close();
-    setTimeout($.proxy(function () {
-      this._historyService.goLoad(url);
-    }, this), 100);
   }
 };
