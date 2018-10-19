@@ -15,13 +15,16 @@ Tw.MyTFareBillGuidePps = function (rootEl, resData) {
   this._history.init('hash');
 
   this.selDateObj = {
+    maxDt: null,
+    minDt: null,
     curDt: null, // 현재 date
     defaultDt: null, // 기준 date
     startDt: null, // start date
     endDt: null, // end date
     startRangeNum: 6,
     endRangeNum: 2,
-    selectList: null
+    selectList: null,
+    selectEndList: null
   };
 
   this.bffListData = null; //원본 리스트 데이터
@@ -149,7 +152,47 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   },
   _endDtBtnEvt: function (event) {
-    var listData = this.selDateObj.selectList;
+
+    var startDt = this.selDateObj.startDt;
+    var maxDt = this.selDateObj.maxDt;
+    var momentStart = moment(startDt, 'YYYYMM');
+    // var momentEnd = '';
+    var momentMax = moment(maxDt, 'YYYYMM');
+
+    this.selDateObj.selectEndList = [];
+
+    var pushData = '';
+    var momentTemp = '';
+
+    // 순차적으로 0, +1, +2 를 더한다.
+    for ( var i=0, len=2; i<=len; i++ ) {
+      momentTemp = momentStart.add(i, 'months');
+      var diffNum = momentMax.diff(momentTemp, 'months');
+
+      if (diffNum < 0) {break;}
+
+      Tw.Logger.info('[ momentStart]', momentStart.format('YYYYMM'));
+      Tw.Logger.info('[ momentMax]', momentMax.format('YYYYMM'));
+
+      Tw.Logger.info('[ diffNum]', diffNum);
+
+      if ( diffNum >= 0 ) {
+        Tw.Logger.info('[ start 는 max]');
+
+        pushData = {
+          value: momentTemp.format('YYYY년 MM월'),
+          option: '',
+          attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
+        };
+        this.selDateObj.selectEndList.push(pushData);
+      }
+    }
+
+    this.selDateObj.selectEndList.reverse();
+
+    Tw.Logger.info('[selDateObj] ', this.selDateObj);
+
+    var listData = this.selDateObj.selectEndList;
     this._selectDatePopEvt(event, 'end', listData);
   },
   _selectDatePopEvt: function (event, state, listData) {
@@ -159,6 +202,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       list: null
     }];
     var hashName = 'selectDatePopEvt';
+    var titleStr = Tw.MYT_FARE_BILL_GUIDE_PPS.POP_TITLE_TYPE_2;
 
     data[0].list = listData;
 
@@ -166,7 +210,7 @@ Tw.MyTFareBillGuidePps.prototype = {
         hbs: hbsName,
         layer: true,
         data: data,
-        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0
+        title: titleStr
       },
       $.proxy(this._selectDatePopEvtInit, this, $target, state),
       $.proxy(this._selectDatePopEvtClose, this, $target),
@@ -174,7 +218,7 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   },
   _selectDatePopEvtInit: function ($target, state, $layer) {
-
+    Tw.Logger.info('[_selectDatePopEvtInit > $target]', $target);
     var selectVal = $target.attr('data-value').slice(0, 6);
     /*
     * 1. 이벤트 설정
@@ -242,11 +286,21 @@ Tw.MyTFareBillGuidePps.prototype = {
       } else {
         // 검색 범위 초과
         Tw.Logger.info('[검색 범위 초과] ');
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.A59, Tw.POPUP_TITLE.NOTIFY, null,
+          $.proxy(function () {
+
+          }, this));
       }
 
     } else {
       // end 값이 큰 경우
-      Tw.Logger.info('[end 값이 큰 경우] ');
+      Tw.Logger.info('[시작일이 종료일보다 큰경우] ');
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.A60, Tw.POPUP_TITLE.NOTIFY, null,
+        $.proxy(function () {
+
+      }, this));
+
+
     }
     Tw.Logger.info('[end - start = 비교] ', diffMontsVal);
 
@@ -305,11 +359,13 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.selDateObj.defaultDt = moment().subtract('1', 'months').format('YYYYMM'); // 기준
     this.selDateObj.startDt = this.resData.commDataInfo.ppsStartDateVal; // start date
     this.selDateObj.endDt = this.resData.commDataInfo.ppsEndDateVal; // end date
+    this._getMaxMinDate(this.selDateObj.defaultDt); // 최대값, 최소값 설정
 
     /*
     * 선택 데이터 리스트
      */
     this.selDateObj.selectList = [];
+    this.selDateObj.selectEndList = [];
     for ( var i = 1, len = this.selDateObj.startRangeNum; i <= len; i++ ) {
       var val = moment().subtract(i, 'months').format('YYYY년 MM월');
       var defaultVal = moment().subtract(i, 'months').format('YYYYMM');
@@ -321,12 +377,25 @@ Tw.MyTFareBillGuidePps.prototype = {
       };
 
       this.selDateObj.selectList.push(pushData);
+      // this.selDateObj.selectEndList.push(pushData);
     }
 
     console.info('[selDateObj] ', this.selDateObj);
 
-
   },
+
+  _getMaxMinDate: function(strVal) {
+    var tempVal = strVal;
+    var maxVal = moment(tempVal, 'YYYYMM').format('YYYYMM'); // 최대 moment
+    var minVal = moment(tempVal, 'YYYYMM').subtract( 5, 'months').format('YYYYMM'); // 최소 moment
+    this.selDateObj.maxDt = maxVal;
+    this.selDateObj.minDt = minVal;
+
+    Tw.Logger.info('[tempVal] ', tempVal);
+    Tw.Logger.info('[maxVal] ', maxVal);
+    Tw.Logger.info('[minVal] ', minVal);
+  },
+
 
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
