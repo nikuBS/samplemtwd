@@ -17,13 +17,28 @@
                         <p class="info"><span class="money">{{basFeeAmt}}</span></p>
                     {{/if}}
                 </div>
+                {{#if filters}}
                 <div class="taglist-wrap">
                     {{#each filters}}
                         <span class="tag-text">#{{prodFltNm}}</span>
                     {{/each}}
                 </div>
+                {{/if}}
+                {{#if prodSmryDesc}}
                 <p class="products-detailinfo">{{prodSmryDesc}}</p>
+                {{/if}}
               </a>
         </li>
     {{/each}}
+</script>
+
+<script id="fe-templ-filters" type="text/x-handlebars-template">
+    {{#if filters}}
+        {{#each filters}}
+            #<span class="vbl tx-bold">{{this}}</span>
+        {{/each}}
+        {{#if leftCount}} 외 {{leftCount}}건 {{/if}}
+    {{else}}
+        #<span class="vbl tx-bold">전체 부가서비스</span>
+    {{/if}}
 </script>

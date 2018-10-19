@@ -322,6 +322,27 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
+  var appendDataUnit = function (data) {
+    if (/^[0-9\.]+$/.test(data)) {
+      return data + Tw.DATA_UNIT.GB;
+    }
+    return data;
+  }
+
+  var appendVoiceUnit = function (amount) {
+    if (/^[0-9\.]+$/.test(amount)) {
+      return amount + Tw.PERIOD_UNIT.MINUTES;
+    }
+    return amount;
+  }
+
+  var appendSMSUnit = function (amount) {
+    if (/^[0-9\.]+$/.test(amount)) {
+      return amount + Tw.SMS_UNIT;
+    }
+    return amount;
+  }
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -353,6 +374,9 @@ Tw.FormatHelper = (function () {
     is6digitPassSolidNumber: is6digitPassSolidNumber,
     normalizeNumber: normalizeNumber,
     removeElement: removeElement,
-    lpad: lpad
+    lpad: lpad,
+    appendDataUnit: appendDataUnit,
+    appendVoiceUnit: appendVoiceUnit,
+    appendSMSUnit: appendSMSUnit
   };
 })();
