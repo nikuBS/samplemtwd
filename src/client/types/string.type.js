@@ -453,8 +453,7 @@ Tw.JOIN_INFO_NO_AGREEMENT = {
     '1' : '사용',
     '2' : '적립',
     '3' : '소멸'
-  },
-  NO_DATA : '무약정 플랜 포인트 적립 및 사용내역이 없습니다.'
+  }
 };
 
 Tw.MYT_DATA_FAMILY_TOAST = {
