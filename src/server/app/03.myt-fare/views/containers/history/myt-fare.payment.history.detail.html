@@ -192,13 +192,16 @@
                     </ul>
                 </div>
                 <!--2018 09-21 수정: 버튼 추가 및 구조변경(.myfare-list 밖으로 뺌)-->
-                <ul class="bt-slice item-two mt20">
+                <ul class="bt-slice mt20">
+                    {{#if isPersonalBiz}}
                     <li class="bt-white1">
-                        <button>현금영수증 발행 내역</button>
+                        <a href="/myt/fare/history/bill/tax">세금계산서 발행 내역</a>
                     </li>
+                    {{else}}
                     <li class="bt-white1">
-                        <button>세금계산서 발행 내역</button>
+                        <a href="/myt/fare/history/bill/cash">현금영수증 발행 내역</a>
                     </li>
+                    {{/if}}
                 </ul>
             </div>
         </div>
@@ -276,7 +279,7 @@
                     </ul>
                 </div>
                 {{#if dataIsBank}}
-                <ul class="bt-slice item-two mt20">
+                <ul class="bt-slice mt20">
                     {{#if isPersonalBiz}}
                     <li class="bt-white1">
                         <a href="/myt/fare/history/bill/tax">세금계산서 발행 내역</a>

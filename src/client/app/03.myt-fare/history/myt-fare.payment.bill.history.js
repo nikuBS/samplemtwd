@@ -47,16 +47,16 @@ Tw.MyTFarePaymentBillHistory.prototype = {
       this.renderableListData = this.data.items.slice(0, this.listRenderPerPage);
       this.renderListData.initialMoreData = this.listViewMoreHide;
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
-
       initedListTemplate = this.$template.$listTaxWrapper(this.data);
-      this.$template.$domTaxListWrapper.append(initedListTemplate);
-
-      this.$listWrapper = this.$container.find('#fe-tax-list-wrapper');
-      this.$btnListViewMorewrapper = this.$listWrapper.find('.bt-more');
-      this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateTaxList, this));
-      this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-      this.$listWrapper.on('click', '.myfare-result-wrap button', $.proxy(this._reRequestHandler, this));
     }
+
+    this.$template.$domTaxListWrapper.append(initedListTemplate);
+
+    this.$listWrapper = this.$container.find('#fe-tax-list-wrapper');
+    this.$btnListViewMorewrapper = this.$listWrapper.find('.bt-more');
+    this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateTaxList, this));
+    this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
+    this.$listWrapper.on('click', '.myfare-result-wrap button', $.proxy(this._reRequestHandler, this));
   },
   _updateTaxList: function () {
 
