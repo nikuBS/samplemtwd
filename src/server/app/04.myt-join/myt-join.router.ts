@@ -17,6 +17,7 @@ import MyTJoinWireModifyAddress from './controllers/wire/myt-join.wire.modify.ad
 import MyTJoinWireModifyProduct from './controllers/wire/myt-join.wire.modify.product.controller';
 import MyTJoinWireSetWireCancelService from './controllers/wire/myt-join.wire.set.wire-cancel-service.controller';
 import MyTJoinWireSetPause from './controllers/wire/myt-join.wire.set.pause.controller';
+import MyTJoinWireGuideChangeOwnership from './controllers/wire/myt-join.wire.guide.change-ownership.controller';
 import MyTJoinWire from './controllers/wire/myt-join.wire.controller';
 import MyTJoinWireAS from './controllers/wire/myt-join.wire.as.controller';
 import MyTJoinWireASDetail from './controllers/wire/myt-join.wire.as.detail.controller';
@@ -54,6 +55,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/wire/modify/product', controller: MyTJoinWireModifyProduct} );
     this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: MyTJoinWireSetWireCancelService} );
     this.controllers.push({ url: '/wire/set/pause', controller: MyTJoinWireSetPause} );
+    this.controllers.push({ url: '/wire/guide/change-ownership', controller: MyTJoinWireGuideChangeOwnership} );
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend} );
   }
 }
