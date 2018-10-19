@@ -37,7 +37,7 @@ class MyTJoinWire extends TwViewController {
           asCnt = r0156as.result.totalCnt;
         }
 
-        let infoData = {
+        const infoData = {
           'svcNm': svcInfo.prodNm,
           'addr': svcInfo.addr,
           'newAndChgCnt' : newAndChgCnt,
