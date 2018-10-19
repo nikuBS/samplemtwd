@@ -8,6 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
+import StringHelper from '../../../../utils/string.helper';
 import { MYT_FARE_HOTBILL_TITLE } from '../../../../types/title.type';
 import { Observable } from 'rxjs/Observable';
 import { mergeMap, delay } from 'rxjs/operators';
@@ -30,7 +31,7 @@ class MyTFareBillHotbill extends TwViewController {
       });
     } else {
       const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
-      if ( svcs && svcs.length > 0 ) {
+      if ( !req.query.child && svcs && svcs.length > 0 ) {
         Observable.from(svcs)
           .pipe(
             mergeMap(svc => this._requestHotbillInfo(svc))
@@ -56,11 +57,17 @@ class MyTFareBillHotbill extends TwViewController {
             });
           });
       } else {
-        res.render('bill/myt-fare.bill.hotbill.html', {
+        const options = {
           svcInfo: svcInfo,
           lines: [],
           billAvailable: true
-        });
+        };
+
+        if ( req.query.child ) {
+          const child = childInfo.find(svc => svc.svcMgmtNum === req.query.child);
+          options['child'] = StringHelper.phoneStringToDash(child.svcNum);
+        }
+        res.render('bill/myt-fare.bill.hotbill.html', options);
       }
     }
   }

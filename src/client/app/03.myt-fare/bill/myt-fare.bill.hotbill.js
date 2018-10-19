@@ -11,9 +11,10 @@ Tw.MyTFareHotBill = function (rootEl) {
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
+  this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._cachedElement();
   this._bindEvent();
-  this._sendBillRequest();
+  this._sendBillRequest(this.childSvcNm);
 
   if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
     this._billInfoAvailable = true;
@@ -136,10 +137,10 @@ Tw.MyTFareHotBill.prototype = {
       this.lines = [];
       this._apiService.requestArray(APIs)
         .done($.proxy(function (children, svcs, svcInfo) {
-          if ( children.code === Tw.API_CODE.CODE_00 ) {
+          if ( children.code === Tw.API_CODE.CODE_00 && !_.isEmpty(children.result) ) {
             this.lines = _.clone(children.result);
           }
-          if ( svcs.code === Tw.API_CODE.CODE_00 ) {
+          if ( svcs.code === Tw.API_CODE.CODE_00 && !_.isEmpty(svcs.result) ) {
             var otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
               return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
             });
@@ -167,26 +168,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onClickChild: function (target) {
-    this._sendBillRequest(target);
-  },
-
-  _openChildbBill: function (child, resp) {
-    var billData = resp.result.hotBillInfo[0];
-    var fieldInfo = {
-      lcl: 'billItmLclNm',
-      scl: 'billItmSclNm',
-      name: 'billItmNm',
-      value: 'invAmt2'
-    };
-    var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
-    this._popupService.open({
-      hbs: 'MF_03_01',
-      data: {
-        svcInfo: child,
-        period: resp.result.term,
-        total: billData.totOpenBal2
-      }
-    }, $.proxy(this._renderBillGroup, this, group, true));
+    this._historyService.goLoad('/myt/fare/bill/hotbill?child=' + target.svcMgmtNum);
   },
 
   _confirmSwitchLine: function (target) {
