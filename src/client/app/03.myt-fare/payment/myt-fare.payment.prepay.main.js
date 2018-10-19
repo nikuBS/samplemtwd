@@ -39,6 +39,7 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
     }
   },
   _bindEvent: function () {
+    this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
     this.$container.on('click', '.fe-history', $.proxy(this._prepayHistory, this));
     this.$container.on('click', '.fe-change-limit', $.proxy(this._changeLimit, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
@@ -47,6 +48,9 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
     this.$container.on('click', '.fe-auto-pay-info', $.proxy(this._openAutoPayInfo, this));
     this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
     this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
+  },
+  _prepayHistoryMonth: function () {
+    this._historyService.goLoad('/myt/fare/history/' + this.$title + '/monthly');
   },
   _prepayHistory: function () {
     this._historyService.goLoad('/myt/fare/history/' + this.$title);
