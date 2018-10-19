@@ -218,7 +218,7 @@ Tw.ProductList.prototype = {
   _handleOpenSelectFilterPopup: function ($layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
-    $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this));
+    $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this, $layer));
   },
 
   _handleResetFilters: function ($layer) {
@@ -231,9 +231,13 @@ Tw.ProductList.prototype = {
     }
   },
 
-  _openSelectTagPopup: function (e) {
-    var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
-    this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
+  _openSelectTagPopup: function ($layer, e) {
+    if ($layer.find('li[aria-checked="true"]').length > 0) {
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
+      this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
+    } else {
+      this._handleSelectTag(e.currentTarget);
+    }
   },
 
   _handleSelectFilters: function ($layer) {
