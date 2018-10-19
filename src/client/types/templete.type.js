@@ -273,29 +273,45 @@ Tw.PRODUCT_PLANS_ORDER = [
   { value: '낮은 가격순' }
 ];
 
-Tw.PRODUCT_LIST_DEVICE_FILTERS = [
-  {
-    id: 'F01121',
-    name: 'LTE',
-    icon: 'lte'
-  }, {
-    id: 'F01122',
-    name: '3G',
-    icon: '3g'
-  }, {
-    id: 'F01123',
-    name: '일반폰',
-    icon: 'feature'
-  }, {
-    id: 'F01124',
-    name: '태블릿/<br>2nd Device',
-    icon: 'device'
-  }, {
-    id: 'F01125',
-    name: '선불폰',
-    icon: 'prepayment'
-  }
-];
+Tw.PRODUCT_LIST_DEVICE_FILTERS = {
+  'F01100': [
+    { 
+      id: 'F01121',
+      name: 'LTE',
+      icon: 'lte'
+    }, {
+      id: 'F01122',
+      name: '3G',
+      icon: '3g'
+    }, {
+      id: 'F01123',
+      name: '일반폰',
+      icon: 'feature'
+    }, {
+      id: 'F01124',
+      name: '태블릿/<br>2nd Device',
+      icon: 'device'
+    }, {
+      id: 'F01125',
+      name: '선불폰',
+      icon: 'prepayment'
+    }],
+  'F01200': [
+    { 
+      id: 'F01221',
+      name: '스마트폰',
+      icon: 'lte'
+    }, {
+      id: 'F01122',
+      name: '일반폰',
+      icon: 'feature'
+    }, {
+      id: 'F01123',
+      name: '태블릿/<br>2nd Device',
+      icon: 'device'
+    }
+  ]
+}
 
 Tw.RESELL_TERMS = {
   title: '재판매 이용약관',

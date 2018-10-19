@@ -162,7 +162,7 @@ Tw.ProductList.prototype = {
   },
 
   _openSelectFiltersPopup: function () {
-    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS, $.proxy(function (filter) {
+    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS[this.CODE], $.proxy(function (filter) {
       var currentFilter = this._params.searchFltIds;
       if (currentFilter && currentFilter.indexOf(filter.id) >= 0) {
         return {
@@ -178,7 +178,7 @@ Tw.ProductList.prototype = {
 
     var filters = _.chain(this._filters.filters)
       .filter(function (filter) {
-        return filter.prodFltId !== 'F01120' || filter.prodFltId !== 'F01220';
+        return filter.prodFltId !== 'F01120' && filter.prodFltId !== 'F01220';
       })
       .map($.proxy(function (filter) {
         return {
