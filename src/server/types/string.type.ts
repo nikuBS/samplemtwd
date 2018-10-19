@@ -271,6 +271,9 @@ export const MYT_JOIN_WIRE_SVCATTRCD = {
   O1: '포인트캠'
 };
 
+export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
+  TITLE: '명의 변경 신청 방법 안내',
+};
 
 export const MYT_JOIN_WIRE_SET_PAUSE = {
   TITLE: '일시 정지/해제',
