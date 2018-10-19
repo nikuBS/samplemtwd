@@ -41,6 +41,18 @@ class ApiService {
     });
   }
 
+  public nativeRequest(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
+    const apiUrl = this.getServerUri(command);
+    const options = this.getOption(command, apiUrl, params, header, args);
+    this.logger.info(this, '[API_REQ Native]', options);
+
+    return Observable.create((observer) => {
+      axios(options)
+        .then(this.apiCallbackNative.bind(this, observer, command))
+        .catch(this.handleErrorNative.bind(this, observer, command));
+    });
+  }
+
   public getServerUri(command: any): string {
     return EnvHelper.getEnvironment(command.server);
   }
@@ -106,7 +118,23 @@ class ApiService {
       this.setServerSession(resp.headers);
     }
 
-    observer.next(respData, resp.headers);
+
+    observer.next(respData);
+    observer.complete();
+  }
+
+  private apiCallbackNative(observer, command, resp) {
+    const respData = resp.data;
+    let serverSession = null;
+    this.logger.info(this, '[API RESP Native]', respData);
+
+    if ( command.server === API_SERVER.BFF ) {
+      serverSession = this.setServerSession(resp.headers);
+    }
+    console.log('api, ser', serverSession);
+
+
+    observer.next({ resp: respData, serverSession });
     observer.complete();
   }
 
@@ -126,12 +154,32 @@ class ApiService {
     observer.complete();
   }
 
-  private setServerSession(headers) {
+  private handleErrorNative(observer, command, err) {
+    let serverSession = null;
+    if ( !FormatHelper.isEmpty(err.response) ) {
+      const error = err.response.data;
+      const headers = err.response.headers;
+      this.logger.error(this, '[API ERROR]', error);
+
+      if ( command.server === API_SERVER.BFF ) {
+        serverSession = this.setServerSession(headers);
+      }
+      observer.next({ resp: error, serverSession });
+    } else {
+      observer.next({ resp: err, serverSession });
+    }
+    observer.complete();
+  }
+
+  private setServerSession(headers): any {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
-      this.logger.info(this, 'Set Session Cookie');
-      this.loginService.setServerSession(this.parseSessionCookie(headers['set-cookie'][0])).subscribe();
+      const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
+      this.logger.info(this, 'Set Session Cookie', serverSession);
+      this.loginService.setServerSession(serverSession).subscribe();
+      return serverSession;
     }
+    return null;
   }
 
   private parseSessionCookie(cookie: string): string {
@@ -147,7 +195,6 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          console.log(result);
           return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
         } else {
           throw resp;

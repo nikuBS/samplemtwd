@@ -56,10 +56,10 @@ class NativeRouter {
     //   'user-agent': req.headers['user-agent']
     // };
     const headers = req.headers;
-    this.apiService.request(cmd, params, headers)
-      .subscribe((data, serverSession) => {
-        res.cookie('session', serverSession);
-        return res.json(data);
+    this.apiService.nativeRequest(cmd, params, headers)
+      .subscribe((data) => {
+        res.cookie('session', data.serverSession);
+        return res.json(data.resp);
       });
   }
 }
