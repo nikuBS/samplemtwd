@@ -168,6 +168,12 @@ Tw.MYT_FARE_BILL_GUIDE = {
   POP_TITLE_TYPE_1: '납부 방법 선택'
 };
 
+Tw.MYT_FARE_BILL_GUIDE_PPS = {
+  POP_TITLE_TYPE_0: '조건 변경',
+  POP_TITLE_TYPE_1: '납부 방법 선택',
+  POP_TITLE_TYPE_2: '기간변경'
+};
+
 Tw.MYT_FARE_BILL_REISSUE_TYPE_CD = {
   'P' : 'P', // T world
   'H' : 'H', // Bill Letter
@@ -290,7 +296,10 @@ Tw.ALERT_MSG_MYT_FARE = {
   CHECK_PASSWORD_LENGTH: '비밀번호는 6자리로 입력해 주세요',
   PASSWORD_ADDITIONAL_INFO: '부가서비스 해지 후 재가입하셔야' + '<br />' +
     '휴대폰 결제 비밀번호 이용이 가능합니다.' + '<br />' +
-    '휴대폰 결제 비밀번호 설정 페이지로 이동하시겠습니까?'
+    '휴대폰 결제 비밀번호 설정 페이지로 이동하시겠습니까?',
+  A59: '조회 종료일 유효한 일자가 아닙니다.',
+  A60: '시작일이 종료일보다 클 수 없습니다.'
+
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

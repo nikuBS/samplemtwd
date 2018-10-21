@@ -527,7 +527,7 @@ class MyTFareBillGuide extends TwViewController {
 
   public getStartDateFormat(formatStr): any {
     // return moment().subtract('1', 'months').startOf('month').format(formatStr);
-    return DateHelper.getStartOfMonSubtractDate(undefined, '1', formatStr);
+    return DateHelper.getStartOfMonSubtractDate(undefined, '2', formatStr);
   }
 
   public getEndDateFormat(formatStr): any {
