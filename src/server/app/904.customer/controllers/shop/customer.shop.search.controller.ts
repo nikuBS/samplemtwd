@@ -62,16 +62,12 @@ class CustomerShopSearch extends TwViewController {
       switch (type) {
         case 'name':
           return API_CMD.BFF_08_0004;
-          break;
         case 'address':
           return API_CMD.BFF_08_0005;
-          break;
         case 'tube':
           return API_CMD.BFF_08_0006;
-          break;
         default:
           return API_CMD.BFF_08_0004;
-          break;
       }
     })(searchType);
     return this.apiService.request(cmd, params);
