@@ -152,12 +152,14 @@ class LoginService {
 
   public setChannel(channel: string): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.channel = channel;
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setChannel]', this.request.session);
-        observer.next(this.request.session.channel);
-        observer.complete();
-      });
+      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session)) {
+        this.request.session.channel = channel;
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setChannel]', this.request.session);
+          observer.next(this.request.session.channel);
+          observer.complete();
+        });
+      }
     });
   }
 

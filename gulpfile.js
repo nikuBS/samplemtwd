@@ -11,10 +11,7 @@ var gulp       = require('gulp'),
     extend     = require('gulp-extend'),
     shell      = require('gulp-shell'),
     clean      = require('gulp-clean'),
-    remoteSrc  = require('gulp-remote-src'),
-    jeditor    = require('gulp-json-editor'),
-    options    = require('gulp-options'),
-    file       = require('gulp-file');
+    options    = require('gulp-options');
 
 
 var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'auth'];
@@ -24,56 +21,10 @@ var dist_tmp = 'src/server/public/cdn/';
 var dist = 'dist/';
 
 var config = 'src/server/config';
-// var manifestFile = 'manifest-' + new Date().getTime() + '.json';
-var manifestFile = 'manifest.json';
-var lastManifest = '';
 var manifest = {};
-var env = options.get('env') || 'local';
-
-var cdn = {
-  local: 'http://localhost:3001/',
-  development: 'http://61.250.20.69/',
-  qa: 'http://61.250.20.69/',
-  prod: 'http://61.250.20.69/'
-};
-
-gulp.task('get-manifest-list', function () {
-  return remoteSrc('manifest-list.json', {
-    base: cdn[env]
-  })
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-      gulp.start('create-manifest-list');
-    })
-    .pipe(jeditor(function (json) {
-      lastManifest = json[json.length - 1];
-      json.push(manifest);
-      return json;
-    }))
-    .pipe(rename('test.json'))
-    .pipe(gulp.dest(dist))
-    .pipe(gulp.dest(dist_tmp));
-});
-
-gulp.task('create-manifest-list', function () {
-  var manifestList = [manifest];
-  return file('manifest-list.json', JSON.stringify(manifestList))
-    .pipe(gulp.dest(dist))
-    .pipe(gulp.dest(dist_tmp));
-});
-
-gulp.task('get-manifest', function () {
-  return remoteSrc('manifest.json', {
-    base: cdn[env]
-  })
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(jeditor(function (json) {
-      manifest = json;
-    }));
-});
-
+var version = options.get('ver');
+var manifestFile = 'manifest.' + version + '.json';
+var manifestTemp = 'manifest.json';
 
 gulp.task('pre-clean', function () {
   return gulp.src(dist)
@@ -320,8 +271,13 @@ gulp.task('resource', function () {
 gulp.task('manifest', function () {
   return gulp.src([dist + 'tmp/*.json'])
     .pipe(extend(manifestFile))
+    .pipe(gulp.dest(dist));
+});
+
+gulp.task('manifest-temp', function () {
+  return gulp.src([dist + 'tmp/*.json'])
+    .pipe(extend(manifestTemp))
     .pipe(gulp.dest(dist_tmp))
-    .pipe(gulp.dest(dist))
     .pipe(gulp.dest(config));
 });
 
@@ -362,22 +318,20 @@ gulp.task('task', ['vendor', 'js', 'rb', 'resource', 'cab']);
 gulp.task('run', ['server', 'watch']);
 
 gulp.task('default', shell.task([
-  'gulp pre-clean',
-  'gulp pre-clean-tmp',
-  'gulp task',
-  'gulp manifest',
-  'gulp post-clean',
-  'gulp run'
+  'gulp pre-clean --ver=' + version,
+  'gulp pre-clean-tmp --ver=' + version,
+  'gulp task --ver=' + version,
+  'gulp manifest --ver=' + version,
+  'gulp manifest-temp --ver=' + version,
+  'gulp post-clean --ver=' + version,
+  'gulp run --ver=' + version
 ]));
 
 gulp.task('build', shell.task([
-  'gulp pre-clean',
-  'gulp pre-clean-tmp',
-  'gulp task',
-  'gulp manifest',
-  'gulp post-clean'
+  'gulp pre-clean --ver=' + version,
+  'gulp pre-clean-tmp --ver=' + version,
+  'gulp task --ver=' + version,
+  'gulp manifest --ver=' + version,
+  'gulp manifest-temp --ver=' + version,
+  'gulp post-clean --ver=' + version
 ]));
-
-gulp.task('client-build', ['get-manifest'], function () {
-  gulp.start('js-client');
-});
