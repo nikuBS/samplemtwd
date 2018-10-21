@@ -19,7 +19,7 @@
 <div id="fe-myt-fare-hotbill" class="wrap">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
-        { title: '실시간 사용요금', svcInfo: svcInfo, option: { line: true }  }); %>
+        { title: locals.child ? '자녀실시간 사용요금' : '실시간 사용요금', svcInfo: svcInfo, option: { line: true }  }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -36,6 +36,11 @@
             <div class="cont-box pt10">
                 <div class="charge-guide-wrap">
                     <div class="charge-cont">
+                        <% if(locals.child) { %>
+                        <span class="sub-disc01">
+                            <span class="elem"><%= locals.child %><span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
+                        </span>
+                        <% } %>
                         <span class="tit"><span class="charge-txt" id="fe-total"></span>원</span>
                         <span class="sub-disc01"id="fe-period">사용기간 : </span>
                     </div>
