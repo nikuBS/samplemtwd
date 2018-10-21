@@ -13,7 +13,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   _init : function() {
     this._initVariables();
     this._bindEvent();
-
+    this._registerHelper();
     this._reqReturnHistory();
     // this._reqMock();
   },
@@ -51,6 +51,14 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     });
   },
 
+  _parseDate : function (date) {
+    return Tw.DateHelper.getShortDateWithFormat(date, 'MM.DD','MMDD');
+  },
+
+  _registerHelper : function() {
+    Handlebars.registerHelper('formatDate', this._parseDate);
+  },
+
   // 반송내역조회 호출 후 > 반송내역 리스트 더보기 세팅
   _successReturnHistory : function (res) {
     // 발행내역 없는 경우
@@ -70,6 +78,9 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this._moreViewSvc.init({
       list : res.result.returnInfoList,
       callBack : $.proxy(this._renderList,this),
+      listOption : {
+        groupDateKey : 'undlvRgstDt'
+      },
       isOnMoreView : true
     });
   },
@@ -78,7 +89,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   _renderList : function (res) {
     var source = $('#tmplMore').html();
     var template = Handlebars.compile(source);
-    var output = template({list : res.list});
+    var output = template({data : res});
     this.returnHistory.append(output);
   },
 

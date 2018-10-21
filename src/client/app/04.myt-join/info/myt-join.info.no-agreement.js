@@ -20,11 +20,11 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this._reqNoAgreement();
   },
   _initVariables: function () {
-    this._lastYear = new Date().getFullYear().toString(); // 마지막 append 년도
     this._data = {};  // 무약정 플랜 조회 데이타
     
     // elements..
     this.$list = this.$container.find('#fe-list');
+    this.$noData = this.$container.find('#fe-no-data');
     this.$btnCondition = this.$container.find('.bt-select'); // 포인트 사용유형 조회 버튼
     this.$usablePoint = this.$container.find('#fe-usable-point'); // 사용 가능한 포인트
     this.$removeDate = this.$container.find('#fe-remove-date'); // 소멸 예정 일자
@@ -124,14 +124,6 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   },
 
   _search : function () {
-
-    // 조회 데이터가 없거나, 포인트 사용,적립 내역이 없는 경우는 보여주지 않는다.
-    if ( this._data.datas.length < 1 ) {
-      this.$list.text(Tw.JOIN_INFO_NO_AGREEMENT.NO_DATA);
-      this.$totalCount.text(0);
-      return;
-    }
-
     var _list = this._data.datas;
     var _type = this.$btnCondition.attr('id');
     // "전체" 가 아닐 경우만 해당 타입의 리스트만 뽑는다.
@@ -144,65 +136,20 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this.$list.empty();
     this.$totalCount.text(_list.length);
 
+    this.$noData.addClass('none');
+    if ( _list.length < 1 ) {
+      this.$noData.removeClass('none');
+      return;
+    }
+
     // 더보기 설정
     this._moreViewSvc.init({
       list : _.sortBy(_list, 'op_dt').reverse(),
-      callBack : $.proxy(this._render,this),
+      callBack : $.proxy(this._renderList,this),
+      listOption : {
+        groupDateKey : 'op_dt'
+      },
       isOnMoreView : true
-    });
-  },
-
-  // 마크업의 리스트 구조로 변경해준다.
-  _convertData : function (resp) {
-    var _this = this;
-    // 년도별로 그룹바이
-    var yearGroup = _.groupBy(resp.list, function(o){
-      return o.op_dt.substring(0, 4);
-    });
-
-    //
-    var data = _.map(yearGroup, function(o, k){
-      var dateGroup = _.groupBy(o, function(objectOfYearGroup){
-        return objectOfYearGroup.op_dt.substring(4);
-      });
-
-      var _data = _.map(dateGroup,function(objectOfDateGroup, k1){
-        var sortData = _.sortBy(objectOfDateGroup, function(o1){
-          var _text = o1.dtl_ctt.substring(0,7);
-          if ( _this._dateHelper.isValid(_text) ) {
-            o1.hasDtlCttDate = true;
-            o1.dtlCttDate = _text;
-            o1.dtl_ctt = o1.dtl_ctt.substring(_text.length);
-          }
-
-          return [o1.op_dt, o1.op_tm];
-        });
-
-        return {
-          date : k1,
-          subList : sortData.reverse()
-        };
-      });
-
-
-      return {
-        year : k,
-        list : _.sortBy(_data,'date').reverse()
-      };
-    });
-
-    return data.reverse();
-  },
-
-  _render : function (res) {
-    var convertData = this._convertData(res);
-    var _this = this;
-    _.forEach(convertData, function (o) {
-
-      o.hasYear = _this._lastYear === o.year ? false:true;
-      _this._lastYear = o.hasYear ? o.year : _this._lastYear;
-      _this._renderList(o);
-
     });
   },
 
