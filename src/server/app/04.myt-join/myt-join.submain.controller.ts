@@ -92,7 +92,11 @@ class MyTJoinSubmainController extends TwViewController {
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
         data.isAddProduct = true;
-        if (this.type === 2 || this.type === 3) {
+        if ( this.type === 2 ) {
+          // 유선
+          data.myAddProduct.addTotCnt = data.myAddProduct.additionCount;
+        } else if ( this.type === 3 ) {
+          // T-login, T-pocketFi
           data.myAddProduct.addTotCnt =
             parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
             parseInt(data.myAddProduct.comProdCnt, 10);
@@ -170,6 +174,8 @@ class MyTJoinSubmainController extends TwViewController {
    */
   _convertWireInfo(data) {
     const result: any = {};
+    // 가입자명
+    result.custNm = data.wireReqrNm;
     // 서비스 약정
     result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt : DateHelper.getShortDateNoDot(data.svcPrdStaDt);
     result.svcPrdEndDt = this.isMasking(data.svcPrdEndDt) ? data.svcPrdEndDt : DateHelper.getShortDateNoDot(data.svcPrdEndDt);
@@ -229,10 +235,15 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입 부가,결합 상품
   _getAddtionalProduct() {
-    return this.apiService.request(API_CMD.BFF_05_0161, {}).map((resp) => {
+    const API_URL = this.type === 2 ? API_CMD.BFF_05_0179 : API_CMD.BFF_05_0161;
+    return this.apiService.request(API_URL, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( resp.result.productCntInfo ) {
+          // 무선
           return resp.result.productCntInfo;
+        } else if ( resp.result.additionCount ) {
+          // 유선
+          return resp.result;
         } else {
           return null;
         }
