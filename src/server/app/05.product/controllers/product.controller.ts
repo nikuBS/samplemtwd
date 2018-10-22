@@ -7,7 +7,6 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { PRODUCT_MY_FILTERS, PRODUCT_RECOMMENDED_PLANS, PRODUCT_RECOMMENDED_TAGS } from '../../../mock/server/product.submain.mock';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,33 +17,46 @@ export default class Product extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    Observable.combineLatest(
-      this.getPromotionBanners(),
-      this.getProductGroups(),
-      this.getRecommendedPlans(),
-      this.getMyFilters(),
-      this.getRecommendedTags()
-    ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
-      const error = {
-        code: banners.code || groups.code || recommendedPlans.code || myFilters.code || recommendedTags.code,
-        msg: banners.msg || groups.msg || recommendedPlans.msg || myFilters.msg || recommendedTags.msg
-      };
+  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _layerType: string) {
+    if (svcInfo) {
+      Observable.combineLatest(
+        this.getPromotionBanners(),
+        this.getProductGroups(),
+        this.getRecommendedPlans(),
+        this.getMyFilters(),
+        this.getRecommendedTags()
+      ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
+        const error = {
+          code: banners.code || groups.code || recommendedPlans.code || myFilters.code || recommendedTags.code,
+          msg: banners.msg || groups.msg || recommendedPlans.msg || myFilters.msg || recommendedTags.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
-      }
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
 
-      const productData = {
-        banners,
-        groups,
-        myFilters,
-        recommendedPlans,
-        recommendedTags
-      };
+        const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
 
-      res.render('product.html', { svcInfo, productData });
-    });
+        res.render('product.html', { svcInfo, productData });
+      });
+    } else {
+      Observable.combineLatest(this.getPromotionBanners(), this.getProductGroups(), this.getRecommendedPlans(), this.getRecommendedTags()).subscribe(
+        ([banners, groups, recommendedPlans, recommendedTags]) => {
+          const error = {
+            code: banners.code || groups.code || recommendedPlans.code || recommendedTags.code,
+            msg: banners.msg || groups.msg || recommendedPlans.msg || recommendedTags.msg
+          };
+
+          if (error.code) {
+            return this.error.render(res, { ...error, svcInfo });
+          }
+
+          const productData = { banners, groups, recommendedPlans, recommendedTags };
+
+          res.render('product.html', { svcInfo, productData });
+        }
+      );
+    }
   }
 
   private getPromotionBanners = () => {
