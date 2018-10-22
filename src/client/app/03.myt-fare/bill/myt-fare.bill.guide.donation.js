@@ -50,7 +50,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="dateBtn"]', $.proxy(this._dateBtnEvt, this));
-    this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
+    // this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
     this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
   },
   //--------------------------------------------------------------------------[EVENT]
@@ -68,9 +68,9 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this._getDonationInfo(param);
 
   },
-  _popupCloseBtEvt: function () {
-    this._goLoad('/myt/fare/bill/guide');
-  },
+  // _popupCloseBtEvt: function () {
+  //   this._goLoad('/myt/fare/bill/guide');
+  // },
 
   _proData: function () { //데이터 가공
     var thisMain = this;

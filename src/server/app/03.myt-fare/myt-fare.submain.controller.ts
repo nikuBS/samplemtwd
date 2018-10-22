@@ -289,9 +289,6 @@ class MyTFareSubmainController extends TwViewController {
   _getTaxInvoice() {
     return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.taxReprintList.length === 0 ) {
-          return null;
-        }
         return resp.result;
       } else if ( resp.code === API_TAX_REPRINT_ERROR.BIL0018 ) {
         // 사업자 번호를 조회할 수 없는 상황
@@ -306,9 +303,6 @@ class MyTFareSubmainController extends TwViewController {
   _getContribution() {
     return this.apiService.request(API_CMD.BFF_07_0038, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.totalCount === 0 ) {
-          return null;
-        }
         return resp.result;
       } else {
         return null;
