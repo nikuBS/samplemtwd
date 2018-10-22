@@ -72,9 +72,13 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _getPoint: function ($layer) {
     this._pointCardNumber = $.trim($layer.find('.fe-point-card-number').val());
-    this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this._pointCardNumber })
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._getFail, this));
+    var isValid = this._validation.checkMoreLength(this._pointCardNumber, 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+
+    if (isValid) {
+      this._apiService.request(Tw.API_CMD.BFF_07_0043, {'ocbCcno': this._pointCardNumber})
+        .done($.proxy(this._getSuccess, this))
+        .fail($.proxy(this._getFail, this));
+    }
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -168,13 +172,11 @@ Tw.MyTFarePaymentPoint.prototype = {
     if ( $isSelectedPoint === Tw.PAYMENT_POINT_VALUE.T_POINT ) {
       className = '.fe-t-point';
     }
-    return (this._validation.checkEmpty(this.$point.val(), Tw.MSG_PAYMENT.POINT_A07) &&
-      this._validation.checkIsAvailablePoint(this.$point.val(),
+    return (this._validation.checkIsAvailablePoint(this.$point.val(),
         parseInt(this.$pointBox.find(className).attr('id'), 10),
         Tw.MSG_PAYMENT.REALTIME_A12) &&
-      this._validation.checkIsMore(this.$point.val(), 1000, Tw.MSG_PAYMENT.REALTIME_A08) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06) &&
-      this._validation.checkEmpty(this.$pointPw.val(), Tw.MSG_PAYMENT.AUTO_A04));
+      this._validation.checkIsMore(this.$point.val(), 1000, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8) &&
+      this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06));
   },
   _pay: function () {
     var reqData = this._makeRequestData();

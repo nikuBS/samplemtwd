@@ -129,17 +129,15 @@ Tw.MyTFarePaymentAuto.prototype = {
     return isValid;
   },
   _isValidForBank: function () {
-    return (this._validation.checkIsSelected(this.$selectBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
-      this._validation.checkEmpty(this.$accountNumber.val(), Tw.MSG_PAYMENT.AUTO_A06) &&
-      this._validation.checkEmpty(this.$accountPhoneNumber.val(), Tw.MSG_PAYMENT.AUTO_A07));
+    return this._validation.checkMoreLength(this.$accountPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
   },
   _isValidForCard: function () {
-    return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A06) &&
-      this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
-      this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
-      this._validation.checkEmpty(this.$cardPhoneNumber.val(), Tw.MSG_PAYMENT.AUTO_A07) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04));
+    return (this._validation.checkMoreLength(this.$accountPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18) &&
+      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
+      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
+      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
+      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
+      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6));
   },
   _makeRequestData: function () {
     var reqData = {};
