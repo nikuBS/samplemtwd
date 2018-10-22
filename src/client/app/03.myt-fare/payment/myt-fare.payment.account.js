@@ -126,10 +126,11 @@ Tw.MyTFarePaymentAccount.prototype = {
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
-    $layer.find('.fe-payment-option-number').text(data.accountNum);
+    $layer.find('.fe-payment-option-number').attr('id', data.accountNum)
+      .text(Tw.StringHelper.masking(data.accountNum, '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
   },
   _getData: function () {
     var isAccountAuto = this.$accountInputBox.hasClass('checked');
@@ -187,7 +188,7 @@ Tw.MyTFarePaymentAccount.prototype = {
       payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
       payovrCustNm: this.$container.find('.fe-name').val(),
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
-      bankOrCardAccn: this.$container.find('.fe-payment-option-number').text(),
+      bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };
     return reqData;
