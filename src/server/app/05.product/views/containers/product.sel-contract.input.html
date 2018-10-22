@@ -27,7 +27,7 @@
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div class="container" data-id="sel-ct-container">
             <% if (data.type === 'input') { %>
             <div class="cont-box">
                 <div class="box-suggest">
@@ -42,25 +42,34 @@
                 <span class="data-tit">선택약정 할인기간 설정</span>
                 <span class="data-number"><%= data.svcInfo.svcNum %></span>
             </div>
+            <% var checked = (data.type !== 'input'); %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <!-- .list-comp-input -->
                 <div class="list-comp-input">
                     <div class="widget">
                         <div class="widget-box radio">
-                            <ul class="select-list" role="group">
+                            <ul class="select-list" role="group" data-id="radio-group">
+                                <% if (data.type === 'input') { %>
+                                <li class="radiobox type01" role="radio" aria-checked="">
+                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio" value="" title="값1"
+                                           aria-labelledby="aria-comp-radio1"/>
+                                    <!-- 체크상태일 경우 checked="checked" -->
+                                <% } else {%>
                                 <li class="radiobox type01 checked" role="radio" aria-checked="true">
                                     <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                     <input type="radio" name="radio" value="" title="값1"
                                            aria-labelledby="aria-comp-radio1" checked/>
                                     <!-- 체크상태일 경우 checked="checked" -->
+                                <% } %>
                                     <div class="comp-list-layout" id="aria-comp-radio1">
                                         <p class="layout-text">
                                             <span class="mtext">12개월</span>
                                         </p>
                                     </div>
                                 </li>
-                                <li class="radiobox type01 checked" role="radio" aria-checked="false">
+                                <li class="radiobox type01" role="radio" aria-checked="false">
                                     <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                     <input type="radio" name="radio" value="" title="값2"
                                            aria-labelledby="aria-comp-radio2"/><!-- 체크상태일 경우 checked="checked" -->
@@ -131,6 +140,10 @@
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
+    new Tw.ProductSelContractInput({
+      $element: $('[data-id=sel-ct-container]'),
+      data: JSON.parse(data)
+    });
   });
 </script>
 <% include ../components/end.component.html %>

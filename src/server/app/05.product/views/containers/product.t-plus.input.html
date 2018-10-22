@@ -26,10 +26,10 @@
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div class="container" data-id="plus-container">
             <div class="product-select-wrap border-gray">
                 <span class="data-tit">나의 가입상태</span>
-                <span class="data-number">010-12**-24**</span>
+                <span class="data-number"><%= data.svcInfo.svcNum %></span>
             </div>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -54,7 +54,7 @@
                             <dl>
                                 <dt>T끼리 Plus할인 적용 예시보기</dt>
                                 <dd>
-                                    <button>T끼리 Plus할인 적용 예시 팝업</button>
+                                    <button data-id="plus-example">T끼리 Plus할인 적용 예시 팝업</button>
                                 </dd>
                             </dl>
                         </li>
@@ -62,7 +62,7 @@
                             <dl>
                                 <dt>장기가입 할인 확인하기</dt>
                                 <dd>
-                                    <button>장기가입 할인 확인하기 팝업</button>
+                                    <button data-id="long-discount">장기가입 할인 확인하기 팝업</button>
                                 </dd>
                             </dl>
                         </li>
@@ -81,7 +81,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button>확인</button>
+                        <button data-id="btn-ok">확인</button>
                     </li>
                 </ul>
             </div>
@@ -95,6 +95,10 @@
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
+    new Tw.ProductTPlusInput({
+      $element: $('[data-id=plus-container]'),
+      data: JSON.parse(data)
+    })
   });
 </script>
 <% include ../components/end.component.html %>
