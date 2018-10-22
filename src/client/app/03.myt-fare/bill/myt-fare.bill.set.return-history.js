@@ -48,6 +48,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
       data.undlvRgstDt = Tw.DateHelper.getShortDateNoDot(data.undlvRgstDt);
       data.invDt = Tw.DateHelper.getShortDateNoDot(data.invDt);
       data.sndDt = Tw.DateHelper.getShortDateNoDot(data.sndDt);
+      data.billTyp = Tw.MYT_FARE_BILL_SET.RETURN_HISTORY.BILL_TYPE_NAME[$.trim(data.billTyp)] || data.billTyp;
     });
   },
 
