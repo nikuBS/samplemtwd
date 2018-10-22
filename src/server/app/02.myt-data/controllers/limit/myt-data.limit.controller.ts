@@ -28,8 +28,6 @@ class MyTDataLimit extends TwViewController {
         res.render('limit/myt-data.limit.complete.html', responseData);
         break;
       default:
-        console.log('*******************************************************************************************************');
-
         Observable.combineLatest(
           this.getLimitUserInfo()
         ).subscribe(([limitUserInfo]) => {
