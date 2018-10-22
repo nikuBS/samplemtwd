@@ -388,8 +388,9 @@ Tw.ProductJoin.prototype = {
   },
 
   _openJoinConfirm: function() {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, $.proxy(this._bindJoinConfirmPopup, this), null, $.proxy(this._procJoinConfirm, this));
+    var joinConfirmAlert = this._displayGroup === 'plans' ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A2 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
+    this._popupService.openModalTypeA(joinConfirmAlert.TITLE, joinConfirmAlert.MSG,
+      joinConfirmAlert.BUTTON, $.proxy(this._bindJoinConfirmPopup, this), null, $.proxy(this._procJoinConfirm, this));
   },
 
   _bindJoinConfirmPopup: function($popupContainer) {
