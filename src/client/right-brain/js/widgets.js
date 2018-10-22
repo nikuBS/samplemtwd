@@ -12,7 +12,13 @@ skt_landing.widgets = {
       widget_list['widget_' + com] = skt_landing.widgets['widget_' + com];
     });
     for (var com_name in widget_list) {
-      widget_list[com_name](widget_ta);
+      try {
+        widget_list[com_name](widget_ta);
+      }
+      catch(err) {
+        alert('error widget : talk to jsk');
+      }
+      // widget_list[com_name](widget_ta);
     }
     skt_landing.widgets.widget_deltype();
     
@@ -24,8 +30,13 @@ skt_landing.widgets = {
       component_list['component_' + com] = skt_landing.widgets['component_' + com];
     });
     for (var com_name in component_list) {
-      component_list[com_name](component_ta);
-    }  
+      try {
+        component_list[com_name](component_ta);
+      }
+      catch(err) {
+        alert('error component : talk to jsk');
+      }
+    }
   },
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
@@ -525,15 +536,16 @@ skt_landing.widgets = {
     var widget = $(ta).find('.horizontal');
     $(widget).each(function(){
       var belt = $(this).find('.horizontal-list'),
+          slide = $(this).find('.horizontal-slide'),
           items = belt.find('> li'),
           itemsW = 0;
       for(var i=0; items.length > i; ++i){
         itemsW += items.eq(i).outerWidth(true);
       }
-      if(itemsW <= skt_landing.util.win_info.get_winW()){
+      if(itemsW <= slide.width()){
         belt.css('width','100%');
-      }else if(itemsW > skt_landing.util.win_info.get_winW()){
-        belt.css('width', itemsW);
+      }else if(itemsW > slide.width()){
+        belt.css('width', itemsW + 1);
       }
     });
   },
