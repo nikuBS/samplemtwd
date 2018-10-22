@@ -11,6 +11,8 @@ var gulp       = require('gulp'),
     extend     = require('gulp-extend'),
     shell      = require('gulp-shell'),
     clean      = require('gulp-clean'),
+    remoteSrc  = require('gulp-remote-src'),
+    jeditor    = require('gulp-json-editor'),
     options    = require('gulp-options');
 
 
@@ -277,6 +279,7 @@ gulp.task('manifest', function () {
 gulp.task('manifest-temp', function () {
   return gulp.src([dist + 'tmp/*.json'])
     .pipe(extend(manifestTemp))
+    .pipe(gulp.dest(dist))
     .pipe(gulp.dest(dist_tmp))
     .pipe(gulp.dest(config));
 });
@@ -299,6 +302,19 @@ gulp.task('watch', function () {
   gulp.watch('src/client/**/*.css', ['css-vendor', 'css-rb']);
   gulp.watch('dist/**').on('change', livereload.changed);
 });
+
+gulp.task('get-manifest', function () {
+  return remoteSrc('manifest.json', {
+    base: 'http://localhost:3001/'
+  })
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(jeditor(function (json) {
+      manifest = json;
+    }));
+});
+
 
 gulp.task('js-old-app', oldAppNames.map(function (app) {
   return 'js-old' + app;
@@ -335,3 +351,7 @@ gulp.task('build', shell.task([
   'gulp manifest-temp --ver=' + version,
   'gulp post-clean --ver=' + version
 ]));
+
+gulp.task('client-build', ['get-manifest'], function () {
+  gulp.start('js-client');
+});
