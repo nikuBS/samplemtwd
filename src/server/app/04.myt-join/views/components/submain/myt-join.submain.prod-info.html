@@ -34,18 +34,20 @@
             </div>
         </li>
         <% if (data.type === 0) { %>
-        <li>
-            <div class="link-long">
-                <button data-id="com-prod">결합상품
-                    <span class="tx-sub">
-                        <span class="normal">
-                            <%= data.myAddProduct.comProdCnt %>개
-                        </span>
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
-        </li>
+            <% if (data.myAddProduct.comProdCnt > 0) { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="com-prod">결합상품
+                        <span class="tx-sub">
+                                <span class="normal">
+                                    <%= data.myAddProduct.comProdCnt %>개
+                                </span>
+                                <span class="ico"></span>
+                            </span>
+                    </button>
+                </div>
+            </li>
+            <% } %>
         <% } %>
         <% } %>
         <% if (data.type === 0) { %>
