@@ -135,10 +135,12 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     }
   },
 
-  // DC_04 팝업 close 이후 처리 부분 - 만약 사용될 경우가 없다면 제거예정
+  // DC_04 팝업 close 이후 처리 부분
   _onImmediatelyPopupClosed: function () {
     var $target = this.$popupContainer.find('[data-url]');
-    this._historyService.goLoad($target.attr('data-url'));
+    if ( $target.length > 0 ) {
+      this._historyService.goLoad($target.attr('data-url'));
+    }
   },
 
   // DC_04 팝업내 아이템 선택시 이동
