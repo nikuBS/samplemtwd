@@ -145,7 +145,7 @@ Tw.ProductTerminate.prototype = {
       return this._openTerminateResultPop();
     }
 
-    this._openVasTermPopup(resp);
+    this._openVasTermPopup(resp.result);
   },
 
   _openTerminateResultPop: function() {
@@ -176,40 +176,39 @@ Tw.ProductTerminate.prototype = {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._goProductDetail, this));
   },
 
-  _openVasTermPopup: function(resp) {
-    // @todo 가입유도팝업 어드민 resp 내용 삽입; 정책 미확정이므로 일단 하드코딩 팝업 노출;
-    this._popupService.open({
+  _openVasTermPopup: function(respResult) {
+    var popupOptions = {
       hbs:'MV_01_02_02_01',
-      'msgheader': true,
-      'msgheaderbg':'bg1',
-      'msgtit':'고객님께<br /><span>추천드려요!</span>',
-      'msgtxt':'안 받는 전화는 있어도 못 받는 전화는 없다!<br />중요한 전화를 놓치지 않도록 도와주는 콜키퍼!<br />든든한 콜키퍼에 가입해 보세요.',
-      'title': '콜키퍼란?',
-      'contents': '내가 놓친 통화의 발신번호, 시간, 스팸정보 등을 문자로 알려드리는 서비스<br />(부가세포함 월 550원)',
-      'link_list': [{
-        style_class:'fe-btn_goalkeeper',
-        txt:'콜키퍼 가입하기'
-      }],
       'bt': [{
         style_class: 'bt-blue1 fe-btn_back',
         txt: '닫기'
       }]
-    }, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openTerminateResultPop, this));
+    };
+
+    if (respResult.prodTmsgTypCd === 'H') {
+      popupOptions = $.extend(popupOptions, {
+        editor_html: respResult.prodTmsgHtmlCtt
+      });
+    }
+
+    if (respResult.prodTmsgTypCd === 'I') {
+      popupOptions = $.extend(popupOptions, {
+        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : respResult.rgstImgUrl,
+        img_src: respResult.imgFilePathNm
+      });
+    }
+
+    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
+      $.proxy(this._openTerminateResultPop, this));
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
-    $popupContainer.on('click', '.fe-btn_goalkeeper', $.proxy(this._goGoalKeeperProduct, this));
-  },
-
-  _goGoalKeeperProduct: function() {
-    this._popupService.close();
-    this._isGoalKeeperProduct = true;
   },
 
   _closeAndOpenResultPopup: function() {
-    this._popupService.close();
     this._isResultPop = true;
+    this._popupService.close();
   },
 
   _goProductDetail: function() {
