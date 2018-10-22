@@ -44,9 +44,11 @@ Tw.MyTDataLimit.prototype = {
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
         .done($.proxy(this._onSuccessBlockImmediately, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
         .done($.proxy(this._onSuccessBlockImmediately, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
     }
 
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
@@ -64,9 +66,11 @@ Tw.MyTDataLimit.prototype = {
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
         .done($.proxy(this._onSuccessBlockMonthly, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
         .done($.proxy(this._onSuccessBlockMonthly, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
     }
 
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
