@@ -32,6 +32,16 @@ Tw.MyTDataCookiz.prototype = {
     this.$btn_recharge_monthly.on('click', $.proxy(this._rechargeMonthly, this));
     this.$btn_recharge_immediately.on('click', $.proxy(this._rechargeImmediately, this));
     this.$btn_cancel_auto_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
+    this.$wrap_monthly_select_list.on('click', $.proxy(this._onSelectMonthlyAmount, this));
+    this.$wrap_immediately_select_list.on('click', $.proxy(this._onSelectImmediatelyAmount, this));
+  },
+
+  _onSelectImmediatelyAmount: function () {
+    this.$btn_recharge_immediately.prop('disabled', false);
+  },
+
+  _onSelectMonthlyAmount: function () {
+    this.$btn_recharge_monthly.prop('disabled', false);
   },
 
   _getReceiveUserInfo: function () {
@@ -54,10 +64,6 @@ Tw.MyTDataCookiz.prototype = {
       if ( Number($input.val()) > nLimitMount ) {
         $input.prop('disabled', true);
         $input.parent().addClass('disabled');
-      }
-
-      if ( Number($input.val()) === nLimitMount ) {
-        $input.click();
       }
     };
 
