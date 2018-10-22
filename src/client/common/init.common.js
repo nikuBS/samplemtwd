@@ -6,6 +6,7 @@ Tw.Init = function () {
   this._initComponent();
   this._getDeviceInfo();
   this._getEnvironment();
+  this._getSession();
 };
 
 Tw.Init.prototype = {
@@ -60,6 +61,19 @@ Tw.Init.prototype = {
   },
   _successSetDevice: function (resp) {
     console.log(resp);
+  },
+  _getSession: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
+      .done($.proxy(this._setSession, this));
+  },
+
+  _setSession: function (resp) {
+    if(resp.code === Tw.API_CODE.CODE_00) {
+      this._nativeService.sned(Tw.NTV_CMD.SESSION, {
+        serverSession: resp.result,
+        expired: 60 * 60 * 1000
+      });
+    }
   }
 };
 

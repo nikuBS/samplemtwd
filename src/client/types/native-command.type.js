@@ -27,6 +27,7 @@ Tw.NTV_CMD = {
   FIDO_DEREGISTER: 'fidoDeregister',
   FIDO_TYPE: 'fidoType',
   SERVER_SESSION: 'serverSession',
+  SESSION: 'session',
   EXIT: 'exit',
   LOG: 'log'
 };
