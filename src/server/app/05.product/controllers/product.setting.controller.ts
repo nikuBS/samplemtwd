@@ -23,9 +23,10 @@ class ProductSetting extends TwViewController {
   private _displayGroup;
   private _redirectProdId;
   private _redirectProdIdList = {
-    NA00004198: ['NA00004048', 'NA00004049'],
     NA00004188: ['NA00004046'],
-    NA00004196: ['NA00004047']
+    NA00004196: ['NA00003958', 'NA00004047'],
+    NA00004197: ['NA00003557', 'NA00003558'],
+    NA00004198: ['NA00003556', 'NA00004048', 'NA00004049']
   };
 
   /**
