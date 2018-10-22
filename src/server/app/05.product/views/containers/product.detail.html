@@ -175,9 +175,22 @@
         <!-- 기가입상품  -->
         <div class="joinconsulting-wrap">
           <p class="text">이용중인 상품 입니다.</p>
-          <% if ( isOption ) { %>
+          <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
           <div class="btn">
-            <div class="bt-alone"><button class="fe-btn_setting bt-line-blue1">설정</button></div>
+            <div class="bt-alone">
+              <button class="fe-btn_setting bt-line-blue1">
+                <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
+                설정
+                <% } else { %>
+                <%= basicInfo.linkBtnList.setting[0].linkNm %>
+                <% } %>
+              </button>
+            </div>
+            <ul class="fe-setting_btn_list" style="display: none">
+              <% for (var i in basicInfo.linkBtnList.setting) { %>
+              <li data-url="<%= basicInfo.linkBtnList.setting[i].linkUrl %>"><%= basicInfo.linkBtnList.setting[i].linkNm %></li>
+              <% } %>
+            </ul>
           </div>
           <% } %>
         </div>
@@ -197,10 +210,13 @@
         <% } %>
 
         <% if ( prodRedisInfo.contents.LA ) { %>
-        <div class="product-visualization <%= prodRedisInfo.contents.LA.vslClass %>"><%- prodRedisInfo.contents.LA.html %></div>
+        <div class="product-visualization prCont"><%- prodRedisInfo.contents.LA %></div>
         <% } %>
-        <% if ( prodRedisInfo.contents.REP ) { %>
-        <div class="product-visualization <%= prodRedisInfo.contents.LA.vslClass %>"><%- prodRedisInfo.contents.REP.html %></div>
+        <% if ( prodRedisInfo.contents.R ) { %>
+        <div class="product-visualization prCont"><%- prodRedisInfo.contents.R %></div>
+        <% } %>
+        <% if ( prodRedisInfo.contents.PLM ) { %>
+        <div class="product-visualization plm"><%- prodRedisInfo.contents.PLM %></div>
         <% } %>
 
         <hr class="cont-sp type1" aria-hidden="true"/>
