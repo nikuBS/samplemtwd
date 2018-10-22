@@ -170,7 +170,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       font-size: 0.9375rem;
       color: #000;
       font-weight: 700;
-      width: 100%; }
+      width: 100%;
+      line-height: 2.375rem; }
       .inputbox .input input[type=text]::-webkit-input-placeholder,
       .inputbox .input input[type=file]::-webkit-input-placeholder,
       .inputbox .input input[type=password]::-webkit-input-placeholder,
@@ -2322,7 +2323,6 @@ a.ui-button:active,
       .bt-slice.item-free li button {
         padding: 0.3125rem 0.4375rem;
         height: auto;
-        line-height: 1;
         font-size: 0.75rem;
         border-radius: 0.1875rem;
         letter-spacing: -0.0625rem; }
@@ -2347,7 +2347,6 @@ a.ui-button:active,
       width: 100%;
       height: 100%;
       font-size: 0.8125rem;
-      line-height: 2.5rem;
       border-radius: 1.25rem; }
       .bt-slice > li button .num {
         display: inline-block;
@@ -2520,8 +2519,6 @@ a.ui-button:active,
     padding: 0 3.4375rem; }
     .bt-slice.share li {
       height: 2.1875rem; }
-      .bt-slice.share li button {
-        line-height: 2.1875rem; }
 
 .bt-dropdown {
   position: relative;
