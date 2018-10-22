@@ -14,7 +14,6 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
-import * as _ from 'underscore';
 import contractTerminal_BFF_05_0063 from '../../../../mock/server/contractTerminal.BFF_05_0063.mock';
 
 class MytJoinInfoDiscount extends TwViewController {
@@ -132,22 +131,22 @@ class MytJoinInfoDiscount extends TwViewController {
     const priceList = thisMain._resDataInfo.priceList;
     const tablet = thisMain._resDataInfo.tablet;
     const wibro = thisMain._resDataInfo.wibro;
-    this.logger.info(this, '[ _.size(priceList) ]', _.size(priceList));
-    this.logger.info(this, '[ _.size(tablet) ]', _.size(tablet));
-    this.logger.info(this, '[ _.size(wibro) ]', _.size(wibro));
+    this.logger.info(this, '[ (priceList) ]', this.getSizeObjOrArr(priceList));
+    this.logger.info(this, '[ (tablet) ]', this.getSizeObjOrArr(tablet));
+    this.logger.info(this, '[ (wibro) ]', this.getSizeObjOrArr(wibro));
 
     const tAgree = thisMain._resDataInfo.tAgree;
     const tInstallment = thisMain._resDataInfo.tInstallment;
     const rsvPenTAgree = thisMain._resDataInfo.rsvPenTAgree;
     const sucesAgreeList = thisMain._resDataInfo.sucesAgreeList;
-    this.logger.info(this, '[ _.size(tAgree) ]', _.size(tAgree));
+    this.logger.info(this, '[ (tAgree) ]', this.getSizeObjOrArr(tAgree));
     console.dir(tAgree);
-    this.logger.info(this, '[ _.size(tInstallment) ]', _.size(tInstallment));
-    this.logger.info(this, '[ _.size(rsvPenTAgree) ]', _.size(rsvPenTAgree));
-    this.logger.info(this, '[ _.size(sucesAgreeList) ]', _.size(sucesAgreeList));
+    this.logger.info(this, '[ (tInstallment) ]', this.getSizeObjOrArr(tInstallment));
+    this.logger.info(this, '[ (rsvPenTAgree) ]', this.getSizeObjOrArr(rsvPenTAgree));
+    this.logger.info(this, '[ (sucesAgreeList) ]', this.getSizeObjOrArr(sucesAgreeList));
 
     const installmentList = thisMain._resDataInfo.installmentList;
-    this.logger.info(this, '[ _.size(installmentList) ]', _.size(installmentList));
+    this.logger.info(this, '[ (installmentList) ]', this.getSizeObjOrArr(installmentList));
 
     // -------------------------------------------------------------[1. 요금약정할인 정보]
     /*
@@ -160,7 +159,7 @@ class MytJoinInfoDiscount extends TwViewController {
     * 해당분류에 포함되지않는 경우 | fee_noType
     */
 
-    if ( _.size(priceList) > 0 ) {
+    if ( this.getSizeObjOrArr(priceList) > 0 ) {
       for ( let i = 0; i < priceList.length; i++ ) {
 
         switch ( priceList[i].prodId ) {
@@ -207,7 +206,7 @@ class MytJoinInfoDiscount extends TwViewController {
       }
     }
     // 태블릿약정(구태블릿약정)
-    if ( _.size(tablet) > 0 ) {
+    if ( this.getSizeObjOrArr(tablet) > 0 ) {
       tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM; // 태블릿약정(구태블릿약정)
       tablet.typeStr = 'fee_type_C';
       tablet.svcAgrmtDcObj = {
@@ -226,7 +225,7 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain._commDataInfo.feeInfo.push(tablet);
     }
     // 와이브로약정할인
-    if ( _.size(wibro) > 0 ) {
+    if ( this.getSizeObjOrArr(wibro) > 0 ) {
       wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM; // 와이브로 약정
       wibro.typeStr = 'fee_type_D';
       wibro.svcAgrmtDcObj = {
@@ -245,7 +244,7 @@ class MytJoinInfoDiscount extends TwViewController {
     // console.dir(this._commDataInfo.feeInfo);
 
     // -------------------------------------------------------------[2. 단말기 약정할인 정보]
-    if ( _.size(tAgree) > 0 ) {
+    if ( this.getSizeObjOrArr(tAgree) > 0 ) {
 
       /*
       *  T 기본약정 분류(tAgree.agrmtDivision)
@@ -286,7 +285,7 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain._commDataInfo.terminalInfo.push(tAgree);
     }
 
-    if ( _.size(tInstallment) > 0 ) { // T약정 할부지원
+    if ( this.getSizeObjOrArr(tInstallment) > 0 ) { // T약정 할부지원
       tInstallment.typeStr = 'join_type_C';
       tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
       tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
@@ -299,7 +298,7 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain._commDataInfo.terminalInfo.push(tInstallment);
     }
 
-    if ( _.size(rsvPenTAgree) > 0 ) { // 약정 위약금2
+    if ( this.getSizeObjOrArr(rsvPenTAgree) > 0 ) { // 약정 위약금2
       rsvPenTAgree.typeStr = 'join_type_D';
       rsvPenTAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.TITNM;
       rsvPenTAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.AGREE_NM;
@@ -316,7 +315,7 @@ class MytJoinInfoDiscount extends TwViewController {
 
       thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
     }
-    if ( _.size(sucesAgreeList) > 0 ) { // 단말기 승계 정보
+    if ( this.getSizeObjOrArr(sucesAgreeList) > 0 ) { // 단말기 승계 정보
 
       for ( let i = 0; i < sucesAgreeList.length; i++ ) {
         /*
@@ -375,7 +374,7 @@ class MytJoinInfoDiscount extends TwViewController {
     // console.dir(this._commDataInfo.terminalInfo);
 
     // -------------------------------------------------------------[3. 단말기 분할 상환 정보]
-    if ( _.size(installmentList) > 0 ) {
+    if ( this.getSizeObjOrArr(installmentList) > 0 ) {
       for ( let i = 0; i < installmentList.length; i++ ) {
         installmentList[i].titNm = installmentList[i].eqpMdlNm;
 
@@ -521,6 +520,22 @@ class MytJoinInfoDiscount extends TwViewController {
     res.render(view, data);
   }
 
+  // -------------------------------------------------------------[COM]
+  public getSizeObjOrArr(obj): any {
+
+    let tempLen;
+
+    if ( Array.isArray(obj) ) {
+      // this.logger.info(this, '[ array 입니다. ] : ', obj);
+      tempLen = obj.length;
+
+    } else if ( obj.constructor === Object ) {
+      // this.logger.info(this, '[ object 입니다. ] : ', obj);
+      tempLen = Object.keys(obj).length;
+    }
+
+    return tempLen;
+  }
 }
 
 export default MytJoinInfoDiscount;
