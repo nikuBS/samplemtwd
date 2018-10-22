@@ -520,6 +520,12 @@ Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
   BTN_NAME: '그만하기'
 };
 
+Tw.MYT_DATA_CANCEL_MONTHLY = {
+  TITLE: '매월 자동 충전을 취소하시겠습니까?',
+  CONTENTS: '취소는 다음 달부터 적용됩니다.',
+  BTN_NAME: '취소하기'
+};
+
 Tw.MYT_PAYMENT_HISTORY_HASH = {
   OVERPAY_REFUND: 'overpay-refund',
   AUTO_WITHDRAWAL: 'auto-withdrawal',

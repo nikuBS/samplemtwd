@@ -111,6 +111,17 @@ Tw.MyTDataCookiz.prototype = {
   },
 
   _cancelMonthlyRecharge: function () {
+      this._popupService.openModalTypeA(
+        Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
+        Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
+        Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
+        null,
+        $.proxy(this._cancelMonthly, this)
+      );
+  },
+
+  _cancelMonthly: function () {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0031, {})
       .done($.proxy(this._onSuccessCancelRechargeMonthly, this));
   },
