@@ -109,13 +109,12 @@ Tw.ProductSetting.prototype = {
       case 'MP_02_02_03_14':
         var $planSettingChecked = this.$container.find('.fe-product_radio_wrap input:checked');
         if (this._currentProdId === $planSettingChecked.val()) {
+          skt_landing.action.loading.off({ ta: '.container' });
           return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
         }
 
         this._successData = {
-          prodNm: $planSettingChecked.attr('title'),
-          prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-          mytPage: 'fee-plan'
+          prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING
         };
 
         if (this._displayId === 'MP_02_02_03_01') {
@@ -132,7 +131,7 @@ Tw.ProductSetting.prototype = {
         break;
       default:
         this._successData = {
-          prodNm: this.$prodNm.length > 0 ? this.$prodNm.val() : ''
+          prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING
         };
         break;
     }
@@ -153,7 +152,7 @@ Tw.ProductSetting.prototype = {
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
       data: $.extend(this._successData, {
-        typeNm: Tw.PRODUCT_TYPE_NM.SETTING,
+        typeNm: Tw.PRODUCT_TYPE_NM.CHANGE,
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })

@@ -108,13 +108,14 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
         }
 
         const printProdId = FormatHelper.isEmpty(tDiyGrCd) ? data.result.beforeTDiyGrCd : tDiyGrCd;
+        const currentGrToken = PRODUCT_INFINITY_BENEFIT_NM[data.result.beforeTDiyGrCd].split('_');
         const grToken = PRODUCT_INFINITY_BENEFIT_NM[printProdId].split('_');
 
         res.render('product.infinity-benefit-usage-history.html', {
           svcInfo: svcInfo,
-          beforeTDiyGrNm: grToken.join(' '),
+          beforeTDiyGrNm: currentGrToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
-          beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[printProdId],
+          beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[data.result.beforeTDiyGrCd],
           beforeTDiyGrCd: printProdId,
           benefitList: this._parseBenefitList(data.result, printProdId),
           listCase: this._listCase,
