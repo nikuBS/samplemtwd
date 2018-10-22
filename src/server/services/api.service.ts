@@ -131,10 +131,11 @@ class ApiService {
     if ( command.server === API_SERVER.BFF ) {
       serverSession = this.setServerSession(resp.headers);
     }
-    console.log('api, ser', serverSession);
+    // console.log('api, ser', serverSession);
+    respData.serverSession = serverSession;
 
 
-    observer.next({ resp: respData, serverSession });
+    observer.next(respData);
     observer.complete();
   }
 
@@ -164,9 +165,10 @@ class ApiService {
       if ( command.server === API_SERVER.BFF ) {
         serverSession = this.setServerSession(headers);
       }
-      observer.next({ resp: error, serverSession });
+      error.serverSession = serverSession;
+      observer.next(error);
     } else {
-      observer.next({ resp: err, serverSession });
+      observer.next(err);
     }
     observer.complete();
   }

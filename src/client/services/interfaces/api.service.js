@@ -1,5 +1,6 @@
 Tw.ApiService = function () {
   this._popupService = new Tw.PopupService();
+  this._nativeService = Tw.Native;
 };
 
 Tw.ApiService.prototype = {
@@ -13,7 +14,7 @@ Tw.ApiService.prototype = {
   },
 
   requestArray: function (requests) {
-    return $.when.apply($, _.map(requests, $.proxy(function(request) {
+    return $.when.apply($, _.map(requests, $.proxy(function (request) {
       return this.request(request.command, request.params, request.headers);
     }, this)));
   },
@@ -46,6 +47,14 @@ Tw.ApiService.prototype = {
   _checkAuth: function (command, params, resp) {
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
+
+    if ( !Tw.FormatHelper.isEmpty(resp.serverSession) ) {
+      this._nativeService.send(Tw.NTV_CMD.SESSION, {
+        serverSession: resp.serverSession,
+        expired: 60 * 60 * 1000
+      });
+      delete resp.serverSession;
+    }
 
     if ( resp.code === Tw.API_CODE.CODE_03 ) {
       this._cert = new Tw.CertificationSelect();

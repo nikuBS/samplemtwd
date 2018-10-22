@@ -2,7 +2,6 @@ Tw.NativeService = function () {
   this._bridge = null;
   this._callbackList = [];
   this._randomCode = 0;
-  this._apiService = new Tw.ApiService();
   this._popupService = new Tw.PopupService();
 
   this._init();
@@ -14,9 +13,9 @@ Tw.NativeService.prototype = {
     if ( this._bridge ) {
       var parameter = this._setParameter(command, params, callback);
       this._bridge.postMessage(parameter);
-      if ( Tw.BrowserHelper.isIos() ) {
-        this._callByIframe(Tw.IOS_URL + command + '?p=' + encodeURIComponent(JSON.stringify(parameter)));
-      }
+      // if ( Tw.BrowserHelper.isIos() ) {
+      //   this._callByIframe(Tw.IOS_URL + command + '?p=' + encodeURIComponent(JSON.stringify(parameter)));
+      // }
     }
   },
 
@@ -29,6 +28,7 @@ Tw.NativeService.prototype = {
     window.onBack = $.proxy(this._onBack, this);
     window.onInit = $.proxy(this._onInitApp, this);
     window.onEasyLogin = $.proxy(this._onEasyLogin, this);
+    window.onSessionExpired = $.proxy(this._onSessionExpired, this);
     window.requestSession = $.proxy(this._requestSession, this);
   },
 
@@ -96,16 +96,20 @@ Tw.NativeService.prototype = {
     }
   },
 
+  _onSessionExpired: function (resp) {
+    Tw.Logger.info('[onSessionExpired]', resp);
+  },
+
   _requestSession: function (randomCode) {
-    this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
-      .done($.proxy(function (resp) {
-        if ( resp.code === Tw.API_CODE.CODE_00 ) {
-          this.send(Tw.NTV_CMD.SERVER_SESSION, {
-            session: resp.result,
-            randomCode: randomCode
-          });
-        }
-      }, this));
+    // this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
+    //   .done($.proxy(function (resp) {
+    //     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    //       this.send(Tw.NTV_CMD.SERVER_SESSION, {
+    //         session: resp.result,
+    //         randomCode: randomCode
+    //       });
+    //     }
+    //   }, this));
   }
 
 };

@@ -59,7 +59,7 @@ class NativeRouter {
     this.apiService.nativeRequest(cmd, params, headers)
       .subscribe((data) => {
         res.cookie('session', data.serverSession);
-        return res.json(data.resp);
+        return res.json(data);
       });
   }
 }
