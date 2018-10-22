@@ -69,7 +69,7 @@ Tw.Init.prototype = {
 
   _setSession: function (resp) {
     if(resp.code === Tw.API_CODE.CODE_00) {
-      this._nativeService.sned(Tw.NTV_CMD.SESSION, {
+      this._nativeService.send(Tw.NTV_CMD.SESSION, {
         serverSession: resp.result,
         expired: 60 * 60 * 1000
       });

@@ -82,6 +82,7 @@ class BypassRouter {
 
     this.apiService.request(cmd, parameter, headers, ...(pathVariables))
       .subscribe((data) => {
+        data.serverSession = this.loginService.getServerSession();
         return res.json(data);
       });
   }
