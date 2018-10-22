@@ -197,10 +197,10 @@
         <% } %>
 
         <% if ( prodRedisInfo.contents.LA ) { %>
-        <div class="product-visualization"><%- prodRedisInfo.contents.LA %></div>
+        <div class="product-visualization <%= prodRedisInfo.contents.LA.vslClass %>"><%- prodRedisInfo.contents.LA.html %></div>
         <% } %>
         <% if ( prodRedisInfo.contents.REP ) { %>
-        <div class="product-visualization"><%- prodRedisInfo.contents.REP %></div>
+        <div class="product-visualization <%= prodRedisInfo.contents.LA.vslClass %>"><%- prodRedisInfo.contents.REP.html %></div>
         <% } %>
 
         <hr class="cont-sp type1" aria-hidden="true"/>
@@ -321,7 +321,7 @@
           <!-- //유사한 요금제/부가서비스 찾기 -->
         </div>
 
-        <% if ( ctgKey === 'additions' ) { %>
+        <% if ( ctgKey === 'additions' && prodFilterInfo ) { %>
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- 다른 부가상품 더보기-->
@@ -332,54 +332,16 @@
             <div class="widget-box horizontal">
               <div class="horizontal-slide">
                 <ul class="horizontal-list add-prod">
+                  <% for( var i in prodFilterInfo.filters ) { %>
                   <li>
                     <div>
-                      <button>
+                      <a href="/product/additions?filters=<%= prodFilterInfo.filters[i].prodFltId %>">
                         <span class="ico type1"></span>
-                        <span>데이터</span>
-                      </button>
+                        <span><%= prodFilterInfo.filters[i].prodFltNm %></span>
+                      </a>
                     </div>
                   </li>
-                  <li>
-                    <div>
-                      <button>
-                        <span class="ico type2"></span>
-                        <span>혜택/편의</span>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <button>
-                        <span class="ico type3"></span>
-                        <span>보안/보험</span>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <button>
-                        <span class="ico type4"></span>
-                        <span>통화/메세지</span>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <button>
-                        <span class="ico type5"></span>
-                        <span>컨텐츠이용</span>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <button>
-                        <span class="ico type5"></span>
-                        <span>금융/결제</span>
-                      </button>
-                    </div>
-                  </li>
+                  <% } %>
                 </ul>
               </div>
             </div>

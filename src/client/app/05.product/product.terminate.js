@@ -87,12 +87,20 @@ Tw.ProductTerminate.prototype = {
   _openAgreePop: function(e) {
     var $parent = $(e.currentTarget).parent();
     this._popupService.open({
-      hbs: 'PFT_01_03_L01',
+      hbs: 'FT_01_03_L01',
       data: {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').text()
       }
-    }, null, null, 'agree_pop');
+    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
+  },
+
+  _bindAgreePop: function($popupContainer) {
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closeAgreePop, this));
+  },
+
+  _closeAgreePop: function() {
+    this._popupService.close();
   },
 
   _openConfirmPopup: function() {

@@ -49,13 +49,6 @@ class ProductDetail extends TwViewController {
   /**
    * @private
    */
-  private _getRedis (): Observable<any> {
-    return this.redisService.getData('ProductLedger:' + this._prodId);
-  }
-
-  /**
-   * @private
-   */
   private _isOptionProduct(): boolean {
     let isOption = false;
 
@@ -148,7 +141,11 @@ class ProductDetail extends TwViewController {
 
     contentsInfo.forEach((item) => {
       if (item.ledStylCd === 'REP' || item.ledStylCd === 'LA') {
-        contentsResult[item.ledStylCd] = item.ledDtlHtmlCtt;
+        contentsResult[item.ledStylCd] = {
+          html: item.ledDtlHtmlCtt,
+          vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
+        };
+
         return true;
       }
 
@@ -266,9 +263,10 @@ class ProductDetail extends TwViewController {
           this._getApi('series', basicInfo.result.ctgCd),
           this._getApi('recommands'),
           this._getApi('additions'),
-          this._getRedis()
+          this.redisService.getData('ProductLedger:' + this._prodId),
+          this.redisService.getData('ProductFilter:F01230')
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, additionsInfo, prodRedisInfo
+          relateTagsInfo, seriesInfo, recommendsInfo, additionsInfo, prodRedisInfo, prodFilterInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
@@ -301,7 +299,8 @@ class ProductDetail extends TwViewController {
             isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
             filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
             bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple',  // @todo body class
-            isOption: this._isOptionProduct()
+            isOption: this._isOptionProduct(),
+            prodFilterInfo: prodFilterInfo
           });
         });
       });
