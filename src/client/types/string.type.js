@@ -208,6 +208,14 @@ Tw.MYT_FARE_BILL_SET = {
   A45 : {
     TITLE : '요금안내서 재발행을 <br/> 신청하시겠습니까?',
     CONTENTS : '선택하신 청구월에 대한 청구서가 재발행 됩니다.'
+  },
+  RETURN_HISTORY : {
+    BILL_TYPE_NAME : {
+      '모바일퀵청구서' : 'Bill Letter',
+      '문자청구서' : '문자',
+      'E-Mail' : '이메일',
+      'Paper' : '기타(우편)'
+    }
   }
 };
 
@@ -494,7 +502,7 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   AUTO_WITHDRAWAL: 'auto-withdrawal',
   BILL_RESEND_BY_FAX: 'by-fax',
   BILL_RESEND_BY_EMAIL: 'by-email'
-}
+};
 
 Tw.MYT_JOIN_WIRE_SET_PAUSE = {
   MONTH: '개월 ',
