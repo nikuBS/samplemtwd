@@ -29,6 +29,7 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     // this.$entryTpl = $('#fe-entryTpl');
     this.$inputPhone = $('[data-target="inputPhone"]');
     this.$lookupBtn = $('[data-target="lookupBtn"]');
+
   },
   _bindEvent: function () {
     this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
@@ -67,10 +68,18 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   _freeCallCheckInfoInit: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과] _freeCallCheckInfoInit', res);
+
+      // freeCallYn : "Y", noChargeYn : "Y" 중 하나라도 "N"이 나오면 해당 문구를 보여줘야한다.
+      if (res.result.freeCallYn === 'N' || res.result.noChargeYn === 'N') {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A80.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A80.TITLE);
+
+      }
     }
   },
   //--------------------------------------------------------------------------[SVC]
+  _resultTextAreaView: function() {
 
+  },
   //--------------------------------------------------------------------------[Validation]
   _vdPhoneNm:function( $phoneNm ) {
     Tw.Logger.info('[휴대폰 유효성 체크]', $phoneNm);

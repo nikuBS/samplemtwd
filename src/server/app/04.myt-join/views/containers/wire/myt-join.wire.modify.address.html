@@ -76,16 +76,26 @@
                             </div>
                         </div>
                         <h3 class="form-title">이사 날짜</h3>
-                        <button data-target="select_house"class="bt-dropdown big" title="이사 날짜 선택" aria-haspopup="true">선택<span class="ico"></span></button>
-                        <input data-target="select_house_input" type="date" name="" value="" style="">
 
-                        <h3 class="form-title">중단 희망 날짜</h3>
-                        <button data-target="select_stop" class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
-                        <input data-target="select_stop_input" type="date" name="" value="" style="">
+                        <label style="display: block; position: relative; padding: 0.3rem 0 0.9375rem;" >
+                            <button  data-target="select_house" class="bt-dropdown big" title="이사 날짜 선택" aria-haspopup="true">선택<span class="ico"></span></button>
+                            <input data-target="select_house_input" type="date" name="" value=""
+                                   style="position: absolute; display: block; width: 100%; height: 100%; top: 0px; opacity: 0; -webkit-appearance: none;">
+                        </label>
 
-                        <h3 class="form-title">설치 희망 날짜</h3>
-                        <button data-target="select_install" class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
-                        <input data-target="select_install_input" type="date" name="" value="" style="">
+                        <label style="display: block; position: relative; padding: 0.3rem 0 0.9375rem;" >
+                            <h3 class="form-title">중단 희망 날짜</h3>
+                            <button data-target="select_stop" class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
+                            <input data-target="select_stop_input" type="date" name="" value=""
+                                   style="position: absolute; display: block; width: 100%; height: 100%; top: 0px; opacity: 0; -webkit-appearance: none;">
+                        </label>
+
+                        <label style="display: block; position: relative; padding: 0.3rem 0 0.9375rem;" >
+                            <h3 class="form-title">설치 희망 날짜</h3>
+                            <button data-target="select_install" class="bt-dropdown big" title="중단 희망 날짜 선택" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>
+                            <input data-target="select_install_input" type="date" name="" value=""
+                                   style="position: absolute; display: block; width: 100%; height: 100%; top: 0px; opacity: 0; -webkit-appearance: none;">
+                        </label>
 
                         <h3 class="form-title">휴대폰 번호</h3>
                         <div class="form-box">
@@ -137,6 +147,7 @@
     var oMyTWireInfo = new Tw.MyTJoinWireModifyAddress( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
+      allSvc: <%-JSON.stringify(allSvc) %>,
       resDataInfo: <%-JSON.stringify(resDataInfo) %>,
       commDataInfo: <%-JSON.stringify(commDataInfo) %>
   } );

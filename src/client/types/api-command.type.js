@@ -146,7 +146,7 @@ Tw.API_CMD = {
   BFF_05_0156: { path: '/core-modification/v1/wire-troubles', method: Tw.API_METHOD.GET },
   BFF_05_0158: { path: '/core-modification/v1/wire/penalty-info', method: Tw.API_METHOD.GET },
   BFF_05_0159: { path: '/core-modification/v1//wireInfo/listGiftProvide', method: Tw.API_METHOD.GET },
-  BFF_05_0160: { path: '/core-modification/v1/getFreeCallCheck', method: Tw.API_METHOD.GET },
+  BFF_05_0160: { path: '/core-modification/v1/myinfo/wire-free-call-check', method: Tw.API_METHOD.GET },
   BFF_05_0163: { path: '/core-modification/v1/myinfo/chg-wire-addr', method: Tw.API_METHOD.POST },
   BFF_05_0164: { path: '/core-modification/v1/wire-phone/chang-status', method: Tw.API_METHOD.GET},
   BFF_05_0165: { path: '/v1/wire/change-request', method: Tw.API_METHOD.POST },
