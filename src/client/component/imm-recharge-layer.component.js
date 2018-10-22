@@ -48,6 +48,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         else {
           this.immChargeData.etc = null;
         }
+        // API 정상 리턴시에만 충전방법에 데이터한도요금제 항목 노출 (DV001-4362)
         if ( limit.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.limit = limit.result;
         }
@@ -74,7 +75,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       // 선불 쿠폰 TODO: API 완료 후 적용 필요함(TBD)
       data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
-      if ( !_.isEmpty(this.immChargeData.limit) && this.immChargeData.limit.blockYn === 'Y' ) {
+      if ( !_.isEmpty(this.immChargeData.limit) ) {
         subList.push({
           'option': 'limit',
           'value': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.LIMIT
