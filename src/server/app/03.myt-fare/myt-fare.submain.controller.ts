@@ -303,9 +303,6 @@ class MyTFareSubmainController extends TwViewController {
   _getContribution() {
     return this.apiService.request(API_CMD.BFF_07_0038, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.totalCount === 0 ) {
-          return null;
-        }
         return resp.result;
       } else {
         return null;
