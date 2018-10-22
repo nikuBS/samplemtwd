@@ -5,16 +5,22 @@
     <div class="container">
       <h1 class="complete-title">
         <img src="/img/dummy/dmy-complete.jpg" alt=""/>
-        <p class="complete-tx0">{{data.prodNm}}{{#if data.isBasFeeInfo}}({{data.basFeeInfo}}){{/if}}로</p>
+        {{#if data.prodNm}}
+          <p class="complete-tx0">{{data.prodNm}}{{#if data.isBasFeeInfo}}({{data.basFeeInfo}})로{{/if}}</p>
+        {{else}}
+          <p class="complete-tx0">&nbsp;</p>
+        {{/if}}
         <span><strong>{{data.prodCtgNm}} {{data.typeNm}} 완료</strong></span>
       </h1>
-      <div class="complete-btn-box pt56">
-        <ul class="bt-slice">
-          <li class="bt-blue1">
-            <a href="/myt/join/product/{{data.mytPage}}">나의 가입정보 확인하기 &gt;</a>
-          </li>
-        </ul>
-      </div>
+      {{#if data.mytPage}}
+        <div class="complete-btn-box pt56">
+          <ul class="bt-slice">
+            <li class="bt-blue1">
+              <a href="/myt/join/product/{{data.mytPage}}">나의 가입정보 확인하기 &gt;</a>
+            </li>
+          </ul>
+        </div>
+      {{/if}}
       <ul class="bt-slice full">
         <li class="bt-red1">
           <button class="fe-btn_success_close">닫기</button>
