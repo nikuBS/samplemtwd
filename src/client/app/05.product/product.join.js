@@ -497,7 +497,7 @@ Tw.ProductJoin.prototype = {
     skt_landing.action.loading.off({ ta: '.container' });
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).page();
+      return Tw.Error(resp.code, resp.msg).pop();
     }
 
     var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0),
