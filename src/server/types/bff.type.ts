@@ -256,7 +256,10 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
   '10': 'OK캐쉬백 포인트',
   '11': 'T포인트',
   '40': '페이톡 계좌이체',
-  '41': '계좌이체'
+  '41': '계좌이체',
+  'Y': '결제완료',
+  'N': '결제취소',
+  'A': '결제완료'
 }
 
 export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {

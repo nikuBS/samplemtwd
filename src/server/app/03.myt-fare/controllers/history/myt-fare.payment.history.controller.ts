@@ -327,21 +327,21 @@ class MyTFarePaymentHistory extends TwViewController {
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
+
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
+      // this.logger.info(this, '-------------------// contents payment data', resp.result);
 
       resp.result.useContentsPrepayRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'CP';
-        o.dataIsBank = this.isBankOrCard(o.dataTitle);
+        o.dataIsBank = this.isBankOrCard(o.settlWayNm);
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.contentPrepay;
         o.dataSubInfo2 = o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : null;
       });
-
-      // this.logger.info(this, 'contentsPayment : .................>> ', resp.result);
 
       return resp.result;
     });
