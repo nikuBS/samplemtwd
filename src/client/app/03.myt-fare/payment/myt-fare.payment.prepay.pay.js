@@ -43,8 +43,10 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     this._isPaySuccess = false;
   },
   _bindEvent: function () {
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
+    this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -60,6 +62,10 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
+  },
+  _resetCardInfo: function () {
+    this.$cardNumber.removeAttr('data-code');
+    this.$cardNumber.removeAttr('data-name');
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -82,7 +88,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   },
   _checkPay: function () {
     if (this._isValid()) {
-      this._getCardCode();
+      this._goCheck();
     }
   },
   _isValid: function () {
@@ -98,34 +104,40 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
       this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6));
   },
   _getCardCode: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._getFail, this));
+    if (this.$cardNumber.val() !== '') {
+      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
+        .done($.proxy(this._getSuccess, this))
+        .fail($.proxy(this._getFail, this));
+    }
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var cardCode = res.result.prchsCardCd;
       var cardName = res.result.prchsCardName;
 
-      this._goCheck(cardCode, cardName);
+      this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+
+      if (Tw.FormatHelper.isEmpty(cardCode)) {
+        this._getFail();
+      }
     } else {
       this._getFail(res);
     }
   },
-  _getFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _getFail: function () {
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
   },
-  _goCheck: function (cardCode, cardName) {
+  _goCheck: function () {
     this._popupService.open({
       'hbs': 'MF_06_03_01'
     },
-      $.proxy(this._setData, this, cardCode, cardName),
+      $.proxy(this._setData, this),
       $.proxy(this._afterPaySuccess, this),
       'check-pay'
     );
   },
   _setData: function (cardCode, cardName, $layer) {
-    $layer.find('.fe-payment-option-name').attr('id', cardCode).text(cardName);
+    $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
     $layer.find('.fe-payment-option-number').text(Tw.StringHelper.masking(this.$cardNumber.val(), '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma($.trim(this.$prepayAmount.val().toString())));
     $layer.find('.fe-mbr-name').text(this._name);
