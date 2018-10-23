@@ -70,14 +70,16 @@ class MyTJoinProductFeePlan extends TwViewController {
       });
     }
 
+    const spec = FormatHelper.convProductSpecifications(data.result.feePlanProd.basFeeTxt, data.result.feePlanProd.basDataTxt,
+      data.result.feePlanProd.basOfrVcallTmsTxt, data.result.feePlanProd.basOfrLtrAmtTxt);
+
     return Object.assign(data.result, {
       feePlanProd: FormatHelper.isEmpty(data.result.feePlanProd) ? null : Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
-        basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
-            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt),
-        isBasFeeTxtUnit: !isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)),
-        basOfrVcallTmsTxt: (data.result.feePlanProd.basOfrVcallTmsTxt !== '0' + VOICE_UNIT.MIN) ? data.result.feePlanProd.basOfrVcallTmsTxt : null,
-        basOfrLtrAmtTxt: (data.result.feePlanProd.basOfrLtrAmtTxt !== '0' + UNIT['310']) ? data.result.feePlanProd.basOfrLtrAmtTxt : null
+        basFeeInfo: spec.basFeeInfo,
+        basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
+        basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
+        basOfrCharCntCtt: spec.basOfrCharCntCtt
       }),
       optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...data.result.disProdList,
         ...data.result.optProdList, ...data.result.comProdList])
