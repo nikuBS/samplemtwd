@@ -92,14 +92,21 @@ class MyTJoinSubmainController extends TwViewController {
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
         data.isAddProduct = true;
-        if ( this.type === 2 ) {
-          // 유선
-          data.myAddProduct.addTotCnt = data.myAddProduct.additionCount;
-        } else if ( this.type === 3 ) {
-          // T-login, T-pocketFi
-          data.myAddProduct.addTotCnt =
-            parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
-            parseInt(data.myAddProduct.comProdCnt, 10);
+        switch ( this.type ) {
+          case 2:
+            // 유선
+            data.myAddProduct.addTotCnt = data.myAddProduct.additionCount;
+            break;
+          case 1:
+          case 3:
+            // T-login, T-pocketFi, PPS
+            data.myAddProduct.addTotCnt = data.myAddProduct.addProdCnt;
+            break;
+          default:
+            data.myAddProduct.addTotCnt =
+              parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
+              parseInt(data.myAddProduct.comProdCnt, 10);
+            break;
         }
       }
       // 약정할부 노출여부
@@ -125,18 +132,22 @@ class MyTJoinSubmainController extends TwViewController {
   __setType(svcInfo) {
     switch ( svcInfo.svcAttrCd ) {
       case 'M1':
+        // 모바일
         this.type = 0;
         break;
       case 'M2':
+        // PPS
         this.type = 1;
         break;
       case 'S1':
       case 'S2':
       case 'S3':
+        // 유선
         this.type = 2;
         break;
       case 'M3':
       case 'M4':
+        // T-Login, T-FocketFi
         this.type = 3;
         break;
     }
@@ -235,14 +246,26 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입 부가,결합 상품
   _getAddtionalProduct() {
-    const API_URL = this.type === 2 ? API_CMD.BFF_05_0179 : API_CMD.BFF_05_0161;
+    let API_URL = API_CMD.BFF_05_0161;
+    switch ( this.type ) {
+      case 2:
+        API_URL = API_CMD.BFF_05_0179;
+        break;
+      case 3:
+        API_URL = API_CMD.BFF_05_0166;
+        break;
+    }
     return this.apiService.request(API_URL, {}).map((resp) => {
+      // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( resp.result.productCntInfo ) {
           // 무선
           return resp.result.productCntInfo;
         } else if ( resp.result.additionCount ) {
           // 유선
+          return resp.result;
+        } else if ( resp.result.addProdCnt ) {
+          // T-PocketFi, T-Login, PPS
           return resp.result;
         } else {
           return null;
