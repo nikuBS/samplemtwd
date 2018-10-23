@@ -23,7 +23,7 @@ const environment = {
     BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
-      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc',
+      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
       db: 15
     },
@@ -42,7 +42,7 @@ const environment = {
     BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
       db: 15
     },
