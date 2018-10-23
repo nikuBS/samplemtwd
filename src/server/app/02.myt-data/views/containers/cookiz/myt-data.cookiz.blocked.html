@@ -1,0 +1,44 @@
+<%#
+* FileName: myt-data.cookiz.error.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.09.20
+%>
+
+<% include ../../components/start.component.html %>
+
+<body style="height: 100%;">
+<div class="wrap" style="height: 100%; padding: 0px;">
+    <div class="popup tw-popup">
+        <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+            <div class="popup-header">
+                <span class="ico type2"></span>
+                <h5 class="popup-title" id="alertHeading">
+                    충전 서비스가 차단되어
+                    <br>
+                    이용이 불가능합니다.
+                </h5>
+            </div>
+            <div class="popup-contents" id="alertText">
+                <div class="inner-contents">
+                    <p class="">
+                        차단 해제를 원하시는 고객님은<br>
+                        고객센터 [국번없이1599-0590]로<br>
+                        문의해 주세요.
+                    </p>
+                </div>
+            </div>
+            <div class="btn-box">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <button class="fe-common-back">닫기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="popup-blind"></div>
+    </div>
+</div>
+<% include ../../components/javascript.component.html %>
+
+</body>
+<% include ../../components/end.component.html %>
