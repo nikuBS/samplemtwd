@@ -59,31 +59,6 @@ Tw.CustomerNotice.prototype = {
   },
 
   _openCategorySelectPopup: function() {
-    // this._popupService.open({
-    //   'hbs': 'select',
-    //   'title': Tw.NOTICE.TITLE,
-    //   'close_bt': true,
-    //   'select': [
-    //     {
-    //       'options': [
-    //         {'title': 'T world', checked: (this._category === 'tworld'), value: 'tworld',
-    //           text: 'T world'},
-    //         {'title': Tw.NOTICE.DIRECTSHOP, checked: (this._category === 'directshop'),
-    //           value: 'directshop',  text: Tw.NOTICE.DIRECTSHOP },
-    //         {'title': Tw.NOTICE.MEMBERSHIP, checked: (this._category === 'membership'),
-    //           value: 'membership',  text: Tw.NOTICE.MEMBERSHIP },
-    //         {'title': Tw.NOTICE.ROAMING, checked: (this._category === 'roaming'),
-    //           value: 'roaming',  text: Tw.NOTICE.ROAMING }
-    //       ]
-    //     }
-    //   ],
-    //   'bt_num': 'one',
-    //   'type': [{
-    //     style_class: 'bt-red1 fe-btn-apply-category',
-    //     txt: Tw.BUTTON_LABEL.CONFIRM
-    //   }]
-    // }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this));
-
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
       layer: true,
