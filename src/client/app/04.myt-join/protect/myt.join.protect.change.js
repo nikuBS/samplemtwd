@@ -41,6 +41,9 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     $('#btn-check').on('click', $.proxy(this._onCheckPwdBtnClicked, this));
     // 변경 혹은 설정
     $('#btn-change').on('click', $.proxy(this._onOkClicked, this));
+    // 취소버튼
+    $('.prev-step').on('click', $.proxy(this._onclickBtnCancel, this));
+
   },
 
   /**
@@ -110,8 +113,8 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     // 숫자 외 다른 문자를 입력한 경우
     var value = event.target.value;
     if ( Tw.InputHelper.validateNumber(value) ) {
-      event.stopPropagation();
-      event.preventDefault();
+      //event.stopPropagation();
+      //event.preventDefault();
       Tw.InputHelper.inputNumberOnly(event.target);
     }
   },
@@ -244,6 +247,10 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
     Tw.Error(params.code, params.msg).pop();
     skt_landing.action.loading.off({ ta: this.$container });
+  },
+
+  _onclickBtnCancel: function(){
+    this._historyService.goLoad('/myt/join');
   }
 
 
