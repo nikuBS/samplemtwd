@@ -36,7 +36,9 @@ class MyTDataCookiz extends TwViewController {
             { subscriptions: subscriptions }
           );
 
-          if ( subscriptions ) {
+          if ( subscriptions.currentTopUpLimit === '0' ) {
+            res.render('cookiz/myt-data.cookiz.blocked.html', response);
+          } else if ( subscriptions ) {
             res.render('cookiz/myt-data.cookiz.html', response);
           } else {
             res.render('cookiz/myt-data.cookiz.error.html', response);
