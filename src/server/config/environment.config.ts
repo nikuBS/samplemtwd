@@ -25,7 +25,7 @@ const environment = {
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
-      db: 15
+      db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
@@ -44,7 +44,7 @@ const environment = {
     REDIS: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
-      db: 15
+      db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
