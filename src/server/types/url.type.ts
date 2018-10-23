@@ -78,6 +78,7 @@ export const URL = {
   // Customer
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' }, // 구비서류
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
-  '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' }
+  '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },
+  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' }
 
 };
