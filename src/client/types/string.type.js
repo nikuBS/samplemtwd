@@ -45,7 +45,8 @@ Tw.POPUP_TITLE = {
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
   ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
-  SELECT_SUBJECTS: '대상 설정'
+  SELECT_SUBJECTS: '대상 설정',
+  AGREED_PERIOD: '약정기간'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -560,6 +561,23 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
     BTNAME: '해제하기',
     SUCCESS_TOAST: '일시 정지 해제 되었습니다.'
   }
+};
+
+Tw.MYT_JOIN_WIRE_MODIFY_PERIOD = {
+  LOADING_POPUP: {
+    TITLE: '잠시만 기다려 주세요',
+    CONTENTS: '조회까지 10초에서 15초까지 걸릴 수 있습니다.'
+  },
+  ERROR_ALERT: {
+    TITLE: '사용에 불편을 드려 죄송합니다.',
+    CONTENTS: '잠시 후에 다시 조회해 <br />주시기 바랍니다.',
+    BT_NAME: '닫기'
+  },
+  ALERT: {
+    '2_A67': '스마트 다이렉트 사용고객의 경우 약정기간 변경이 불가합니다.',
+    '2_A37': '요청한 상품은 세트 상품으로 정기계약 변경 신청이 안됩니다. 자세한 문의는 전화 1600-2000(유료) 또는 080-816-2000(무료)로 확인 바랍니다.'
+  },
+  TOAST: '약정기간이 변경 신청이 완료 되었습니다.'
 };
 
 Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {

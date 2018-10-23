@@ -1,0 +1,168 @@
+<%#
+* FileName: myt-join.wire.modify.period.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.10.19
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div id="fe-myt-join-wire-modify-period" class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '약정 기간 변경', svcInfo: svcInfo, option: { line:false } }) %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div id="main">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="myinfo-wrap">
+                        <div class="myinfo-cont">
+                            <div class="subtitle">
+                                <span class="name">할인</span>
+                            </div>
+                            <div class="title">
+                                <span><%= wireAgreementsInfo.dcNm %></span>
+                            </div>
+                            <span class="subtitle2">
+                                    <span class="elem"><%= wireAgreementsInfo.custNm %></span>
+                                    <span class="elem"><%= wireAgreementsInfo.prepayCnt %></span>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="ti-caption-gray">
+                    <h3 class="tit">약정기간 변경 신청</h3>
+                </div>
+                <div class="cont-box">
+                    <div class="form-type">
+                        <h3 class="form-title">약정 기간</h3>
+                        <button class="bt-dropdown big fe-btn-select-period" title="약정 기간 선택" aria-haspopup="true">선택<span class="ico"></span></button>
+                        <div class="data-result mt10 fe-agreements-penalty-result" style="display: none;">
+                            <div class="div-half">
+                                <div class="elem">
+                                    <p class="tit">이용 중단 기간</p>
+                                    <p class="data"><em class="fe-use-mth-cnt"></em><span>개월</span></p>
+                                </div>
+                                <div class="elem">
+                                    <p class="tit">해지 위약금</p>
+                                    <p class="data"><em class="fe-term-brch-amt"></em><span>원</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="form-title">휴대폰 번호</h3>
+                        <div class="form-box">
+                                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                    <span class="input">
+                                        <input type="tel" class="fe-input-phone" placeholder="숫자만 입력" title="휴대폰 번호 입력" maxlength="13" onInput="return Tw.InputHelper.inputNumberOnly(this);" />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                        </div>
+                        <h3 class="form-title">일반전화 (선택항목)</h3>
+                        <div class="form-box">
+                                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                    <span class="input">
+                                        <input type="number" class="fe-input-tel" placeholder="숫자만 입력" title="일반전화 (선택항목) 입력" onInput="return Tw.InputHelper.inputNumberOnly(this);" />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- TBD -->
+                <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;">
+                <!--// TBD -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn-request" disabled="">신청하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="step1" style="display: none;">
+                <div class="cont-box noborder nogaps bgnone">
+                    <div class="myfare-result-wrap type2">
+                        <div class="myfare-list">
+                            <ul>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>이름</dt>
+                                        <dd class="tx-bold"><%= wireAgreementsInfo.custNm %></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>휴대폰</dt>
+                                        <dd class="tx-bold fe-label-phone"></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>일반전화</dt>
+                                        <dd class="tx-bold fe-label-tel"></dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box-suggest ml16">
+                        <div class="suggest-info">
+                            <ul class="suggest-list nodot mt0">
+                                <li>신청 완료 버튼 터치시 고객센터 상담사가 연락 드립니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn-submit">신청완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back fe-btn-prev-step">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireModifyPeriod($('#fe-myt-join-wire-modify-period'), {
+      dcNm: '<%= wireAgreementsInfo.dcNm %>',
+      beforeTerm: '<%= wireAgreementsInfo.beforeTerm %>',
+      termEndDt: '<%= wireAgreementsInfo.termEndDt %>',
+      grpProdYn: '<%= wireAgreementsInfo.grpProdYn %>',
+      smartDirectYn: '<%= wireAgreementsInfo.smartDirectYn %>',
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>
