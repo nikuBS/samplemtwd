@@ -253,15 +253,12 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   // 회선 변경 후 처리
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
+  _onChangeSessionSuccess: function () {
+    this._historyService.reload();
+    if ( Tw.BrowserHelper.isApp() ) {
       setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
+        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }, this), 500);
     }
   }
 };
