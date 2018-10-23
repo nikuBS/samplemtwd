@@ -275,6 +275,10 @@ export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
   TITLE: '명의 변경 신청 방법 안내',
 };
 
+export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
+  TITLE: '약정 기간 변경',
+};
+
 export const MYT_JOIN_WIRE_SET_PAUSE = {
   TITLE: '일시 정지/해제',
   MONTH: '개월 ',

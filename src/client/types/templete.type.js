@@ -213,6 +213,16 @@ Tw.POPUP_TPL = {
         {value: '콘텐츠 이용료 선결제'}
       ]
     }
+  ],
+  MYT_JOIN_WIRE_MODIFY_PERIOD: [
+    {
+      list: [
+        {value: '무약정', attr: 'id="0"', cnt: 0},
+        {value: '1년', attr: 'id="1"', cnt: 1},
+        {value: '2년', attr: 'id="2"', cnt: 2},
+        {value: '3년', attr: 'id="3"', cnt: 3}
+      ]
+    }
   ]
 };
 
