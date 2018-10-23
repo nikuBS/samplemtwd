@@ -68,13 +68,13 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-target="select_building"]', $.proxy(this.select_buildingEvt, this));
 
-    this.$container.on('click', '[data-target="select_house"]', $.proxy(this.select_houseEvt, this));
+    // this.$container.on('click', '[data-target="select_house"]', $.proxy(this.select_houseEvt, this));
     this.$container.on('change', '[data-target="select_house_input"]', $.proxy(this.select_house_input_changeEvt, this));
 
-    this.$container.on('click', '[data-target="select_stop"]', $.proxy(this.select_stopEvt, this));
+    // this.$container.on('click', '[data-target="select_stop"]', $.proxy(this.select_stopEvt, this));
     this.$container.on('change', '[data-target="select_stop_input"]', $.proxy(this.select_stop_input_changeEvt, this));
 
-    this.$container.on('click', '[data-target="select_install"]', $.proxy(this.select_installEvt, this));
+    // this.$container.on('click', '[data-target="select_install"]', $.proxy(this.select_installEvt, this));
     this.$container.on('change', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
@@ -110,42 +110,42 @@ Tw.MyTJoinWireModifyAddress.prototype = {
         hbs: hbsName,
         layer: true,
         data: data,
-        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0
+        title: Tw.MYT_FARE_BILL_GUIDE_PPS.POP_TITLE_TYPE_0
       },
       $.proxy(this.select_buildingEvtOpen, this, $target),
       $.proxy(this.select_buildingEvtClose, this, $target),
       hashName);
   },
 
-  select_houseEvt: function (event) {
-    var $target = $(event.currentTarget);
-    Tw.Logger.info('[이사 날짜 클릭]', event);
-    this.$select_house_input.trigger('click', {
-      abc : $target
-    });
-  },
-
-  select_stopEvt: function (event) {
-    Tw.Logger.info('[중단 희망 날짜]', event);
-    this.$select_stop_input.trigger('click');
-  },
-
-  select_installEvt: function (event) {
-    Tw.Logger.info('[설치 희망 날짜]', event);
-    this.$select_install_input.trigger('click');
-  },
-
-  input_hpEvt: function(event) {
-    Tw.Logger.info('[휴대폰 번호]', event);
-    this._onFormatHpNum(event);
-    this.addressFormData.hp = this.$input_hp.val();
-  },
-
-  input_phoneEvt: function(event) {
-    Tw.Logger.info('[일반전화 번호]', event);
-    this._onFormatHpNum(event);
-    this.addressFormData.phone = this.$input_phone.val();
-  },
+  // select_houseEvt: function (event) {
+  //   var $target = $(event.currentTarget);
+  //   Tw.Logger.info('[이사 날짜 클릭]', event);
+  //   this.$select_house_input.trigger('click', {
+  //     abc : $target
+  //   });
+  // },
+  //
+  // select_stopEvt: function (event) {
+  //   Tw.Logger.info('[중단 희망 날짜]', event);
+  //   this.$select_stop_input.trigger('click');
+  // },
+  //
+  // select_installEvt: function (event) {
+  //   Tw.Logger.info('[설치 희망 날짜]', event);
+  //   this.$select_install_input.trigger('click');
+  // },
+  //
+  // input_hpEvt: function(event) {
+  //   Tw.Logger.info('[휴대폰 번호]', event);
+  //   this._onFormatHpNum(event);
+  //   this.addressFormData.hp = this.$input_hp.val();
+  // },
+  //
+  // input_phoneEvt: function(event) {
+  //   Tw.Logger.info('[일반전화 번호]', event);
+  //   this._onFormatHpNum(event);
+  //   this.addressFormData.phone = this.$input_phone.val();
+  // },
 
 
   //--------------------------------------------------------------------------[SVC]

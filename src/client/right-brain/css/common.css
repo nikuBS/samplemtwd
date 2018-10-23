@@ -572,6 +572,12 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     display: inline-block;
     width: 14.285%; }
 
+.error-msg {
+  display: block;
+  margin: 0.375rem 0 0;
+  color: #e84f01;
+  font-size: 0.75rem; }
+
 input[type=text]::-ms-clear {
   display: none; }
 

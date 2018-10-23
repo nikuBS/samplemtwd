@@ -34,11 +34,12 @@ class MyTJoinWireModifyAddress extends TwViewController {
     pageRenderView: 'wire/myt-join.wire.modify.address.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any , layerType: string) {
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
+    this.logger.info(this, '[ allSvc ] : ', allSvc);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
     // this._typeInit();
@@ -57,6 +58,7 @@ class MyTJoinWireModifyAddress extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        allSvc: allSvc,
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo
       });

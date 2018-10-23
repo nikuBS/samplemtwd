@@ -344,7 +344,9 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A63 : { TITLE : '알림' , MSG : '비밀번호가 일치하지 않습니다.' },
   ALERT_2_A64 : { TITLE : '알림' , MSG : '고객보호 비밀번호 설정이 완료 되었습니다.' },
   ALERT_2_A65 : { TITLE : '알림' , MSG : '망 작업 SMS 알림 신청이 완료 되었습니다.' },
-  ALERT_2_A66 : { TITLE : '알림' , MSG : '망 작업 SMS 알림 수신번호가 변경 되었습니다.' }
+  ALERT_2_A66 : { TITLE : '알림' , MSG : '망 작업 SMS 알림 수신번호가 변경 되었습니다.' },
+  ALERT_2_A80 : { TITLE : '알림' , MSG : 'T_B끼리 통화 무제한에 가입하신 사용자가 아닙니다.' }
+
 };
 
 Tw.ALERT_MSG_PRODUCT = {

@@ -212,7 +212,7 @@ export const API_CMD = {
   BFF_05_0157: { path: '/core-modification/v1/wire-troubles-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0158: { path: '/core-modification/v1/wire/penalty-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0159: { path: '/core-modification/v1//wireInfo/listGiftProvide', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0160: { path: '/core-modification/v1/getFreeCallCheck', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0160: { path: '/core-modification/v1/myinfo/wire-free-call-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0162: { path: '/core-modification/v1/myinfo/chg-wire-addr-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0163: { path: '/core-modification/v1/myinfo/chg-wire-addr', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
