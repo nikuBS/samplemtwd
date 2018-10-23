@@ -25,15 +25,18 @@ Tw.MyTFareSubMain = function (params) {
 
 Tw.MyTFareSubMain.prototype = {
 
-  loadingView: function (value) {
+  loadingView: function (value, selector) {
+    if (!selector) {
+      selector = '[data-id="wrapper"]';
+    }
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: '[data-id="wrapper"]', co: 'grey', size: true
+        ta: selector, co: 'grey', size: true
       });
     }
     else {
       skt_landing.action.loading.off({
-        ta: '[data-id="wrapper"]'
+        ta: selector
       });
     }
   },
@@ -227,6 +230,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 사용요금내역조회-2
   _responseUsageFee: function () {
+    // this.loadingView(false);
     if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
@@ -274,6 +278,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 최근청구요금내역조회-2
   _responseClaimPayment: function () {
+    // this.loadingView(false);
     if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
@@ -359,6 +364,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
+    // this.loadingView(true, 'button[data-id=realtime-pay]');
     this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
   },
 
@@ -372,6 +378,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-3
   _onReceivedBillData: function (resp) {
+    // this.loadingView(false, 'button[data-id=realtime-pay]');
     if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
       if ( _.isEmpty(resp.result) ) {
         this._realTimeBillRequest();
@@ -491,15 +498,12 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   // 회선 변경 후 처리
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
+  _onChangeSessionSuccess: function () {
+    this._historyService.reload();
+    if ( Tw.BrowserHelper.isApp() ) {
       setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
+        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }, this), 500);
     }
   },
 
