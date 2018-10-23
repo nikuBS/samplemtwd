@@ -155,7 +155,8 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _setData: function ($layer) {
     $layer.find('.fe-check-title').text(this.$pointSelector.text());
-    $layer.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code')).text(this._pointCardNumber);
+    $layer.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code'))
+      .text(Tw.StringHelper.masking(this._pointCardNumber, '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this.$point.val().toString()));
 
     $layer.find('.refund-pament-account').hide();

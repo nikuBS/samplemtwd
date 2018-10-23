@@ -158,10 +158,10 @@ Tw.MyTFarePaymentCard.prototype = {
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', cardCode).text(cardName);
-    $layer.find('.fe-payment-option-number').text(data.cardNum);
+    $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(Tw.StringHelper.masking(data.cardNum, '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
   },
   _getData: function () {
     var isRefundAuto = this.$refundInputBox.hasClass('checked');
@@ -217,7 +217,7 @@ Tw.MyTFarePaymentCard.prototype = {
       payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
       payovrCustNm: this.$container.find('.fe-name').val(),
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
-      bankOrCardAccn: this.$container.find('.fe-payment-option-number').text(),
+      bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       cdexpy: $.trim(this.$cardY.val()),
       cdexpm: $.trim(this.$cardM.val()),
       instmm: this.$cardTypeSelector.attr('id').toString(),
