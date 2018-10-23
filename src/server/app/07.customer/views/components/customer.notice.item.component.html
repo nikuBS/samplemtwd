@@ -1,0 +1,20 @@
+<script type="text/template" id="tpl_notice_list_item">
+  {{#list}}
+  <li class="acco-box">
+    <div class="acco-tit {{itemClass}}">
+      <button role="button" aria-pressed="false">
+        <span class="acco-notice-tit">{{title}}</span>
+        {{#if type}}
+        <span class="acco-notice-type">{{type}}</span>
+        {{/if}}
+        <span class="acco-notice-date">{{date}}</span>
+      </button>
+    </div>
+    <div class="acco-cont">
+      <div class="notice-txt">
+        {{{content}}}
+      </div>
+    </div>
+  </li>
+  {{/list}}
+</script>

@@ -4,6 +4,7 @@ import CustomerHelpline from './controllers/helpline/customer.helpline.controlle
 
 import CustomerGuideSiteUse from './controllers/useguide/customer.useguide.site.controller';
 // import CustomerGuideSeviceUse from './controllers/useguide/customer.useguide.service.controller';
+import CustomerNotice from './controllers/customer.notice.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -13,6 +14,8 @@ class CustomerRouter extends TwRouter {
     // this.controllers.push({ url: '/', controller: HomeMain() });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
     // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse });
+
+    this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
   }
 }
 
