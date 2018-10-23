@@ -19,7 +19,7 @@ class ProductDetailContents extends TwViewController {
     const contentsResultList: any = [];
 
     contentsInfo.forEach((item) => {
-      if (item.ledStylCd !== 'LE') {
+      if (!FormatHelper.isEmpty(item.ledStylCd) && item.ledStylCd !== 'LE') {
         return true;
       }
 

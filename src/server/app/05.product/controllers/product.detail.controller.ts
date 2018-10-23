@@ -118,10 +118,9 @@ class ProductDetail extends TwViewController {
    */
   private _convertContents (contentsInfo): any {
     const contentsResult: any = {
-      LE: [],
+      LIST: [],
       LA: null,
-      REP: null,
-      PLM: null
+      REP: null
     };
 
     contentsInfo.forEach((item) => {
@@ -130,15 +129,7 @@ class ProductDetail extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(contentsResult[item.ledStylCd]) && !FormatHelper.isEmpty(contentsResult[item.ledDtlHtmlCtt])) {
-        contentsResult.PLM = item.ledDtlHtmlCtt;
-        return true;
-      }
-
-      contentsResult[item.ledStylCd].push({
-        briefTitNm: item.briefTitNm,
-        ledDtlHtmlCtt: item.ledDtlHtmlCtt
-      });
+      contentsResult.LIST.push(item);
     });
 
     return contentsResult;
