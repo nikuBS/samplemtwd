@@ -47,22 +47,6 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @private
-   */
-  private _isOptionProduct(): boolean {
-    let isOption = false;
-
-    Object.keys(PRODUCT_SETTING).forEach((key) => {
-      if (PRODUCT_SETTING[key].indexOf(this._prodId) !== -1) {
-        isOption = true;
-        return false;
-      }
-    });
-
-    return isOption;
-  }
-
-  /**
    * @param basicInfo
    * @private
    */
@@ -72,12 +56,12 @@ class ProductDetail extends TwViewController {
       termBtnList: any = [];
 
     basicInfo.linkBtnList.forEach((item) => {
-      if (item.btnTypCd === 'SC') {
+      if (item.linkTypCd === 'SC') {
         joinBtnList.push(item);
         return true;
       }
 
-      if (item.btnTypCd === 'SE') {
+      if (item.linkTypCd === 'SE') {
         settingBtnList.push(item);
         return true;
       }
@@ -136,20 +120,18 @@ class ProductDetail extends TwViewController {
     const contentsResult: any = {
       LE: [],
       LA: null,
-      REP: null
+      REP: null,
+      PLM: null
     };
 
     contentsInfo.forEach((item) => {
-      if (item.ledStylCd === 'REP' || item.ledStylCd === 'LA') {
-        contentsResult[item.ledStylCd] = {
-          html: item.ledDtlHtmlCtt,
-          vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
-        };
-
+      if (item.ledStylCd === 'R' || item.ledStylCd === 'LA') {
+        contentsResult[item.ledStylCd] = item.ledDtlHtmlCtt;
         return true;
       }
 
-      if (FormatHelper.isEmpty(contentsResult[item.ledStylCd])) {
+      if (FormatHelper.isEmpty(contentsResult[item.ledStylCd]) && !FormatHelper.isEmpty(contentsResult[item.ledDtlHtmlCtt])) {
+        contentsResult.PLM = item.ledDtlHtmlCtt;
         return true;
       }
 
@@ -298,8 +280,7 @@ class ProductDetail extends TwViewController {
             ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
             isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
             filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
-            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple',  // @todo body class
-            isOption: this._isOptionProduct(),
+            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple',
             prodFilterInfo: prodFilterInfo
           });
         });

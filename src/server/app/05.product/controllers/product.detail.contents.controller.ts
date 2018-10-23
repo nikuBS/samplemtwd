@@ -25,7 +25,8 @@ class ProductDetailContents extends TwViewController {
 
       contentsResultList.push({
         briefTitNm: item.briefTitNm,
-        ledDtlHtmlCtt: item.ledDtlHtmlCtt
+        ledDtlHtmlCtt: item.ledDtlHtmlCtt,
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
       });
     });
 
