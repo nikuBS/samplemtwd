@@ -348,3 +348,11 @@ Tw.HELPLINE_AREAS = [
 ];
 
 
+Tw.PRAISE_SUBJECTS = [
+  { value: '지점' },
+  { value: '대리점' },
+  { value: '이용안내' },
+  { value: '통화품질 기준 매니저' },
+  { value: 'AS센터' },
+  { value: '행복기사(SK브로드밴드)' }
+]
