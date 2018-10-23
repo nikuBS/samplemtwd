@@ -75,7 +75,9 @@ export const URL = {
   '/product/infinity-benefit-usage-history': { login: true, id: 'MP_02_02_03_02', title: '인피니티 혜택 이용 내역' },
   '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
 
-  // customer
+  // Customer
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' }, // 구비서류
-  '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' }
+  '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
+  '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' }
+
 };

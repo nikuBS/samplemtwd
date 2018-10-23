@@ -53,7 +53,7 @@ abstract class TwViewController {
   }
 
   public certPage(req: any, res: any, next: any): void {
-    this.logger.debug(this, '[CertPage]', req.body)
+    this.logger.debug(this, '[CertPage]', req.body);
     if ( !FormatHelper.isEmpty(req.body.enc_data) ) {
       this.confirmIpinCert(req, res, next, req.body.enc_data);
     } else if ( !FormatHelper.isEmpty(req.body.EncodeData) ) {
