@@ -17,10 +17,10 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this._init();
 
   this.addressFormData = {
-    building: '',
-    houseDt: '',
-    stopDt: '',
-    installDt: '',
+    building: '',   // 건물 유형
+    houseDt: '',    // 이사 날짜
+    stopDt: '',     // 중단 희망 날짜
+    installDt: '',  // 설치 희망 날짜
     hp: '',
     phone: ''
   };
@@ -52,14 +52,12 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   _cachedElement: function () {
 
     this.$select_building= $('[data-target="select_building"]'); // 건물 유형
-    this.$select_house= $('[data-target="select_house"]'); // 이사 날짜
-    this.$select_house_input= $('[data-target="select_house_input"]');
 
-    this.$select_stop= $('[data-target="select_stop"]'); // 중단 희망 날짜
-    this.$select_stop_input= $('[data-target="select_stop_input"]');
+    this.$select_house_input= $('[data-target="select_house_input"]'); // 이사 날짜
 
-    this.$select_install= $('[data-target="select_install"]'); // 설치 희망 날짜
-    this.$select_install_input= $('[data-target="select_install_input"]');
+    this.$select_stop_input= $('[data-target="select_stop_input"]'); // 중단 희망 날짜
+
+    this.$select_install_input= $('[data-target="select_install_input"]'); // 설치 희망 날짜
 
     this.$input_hp= $('[data-target="input_hp"]'); // 휴대폰 번호
     this.$input_phone= $('[data-target="input_phone"]'); // 일반전화 (선택항목)
@@ -68,13 +66,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-target="select_building"]', $.proxy(this.select_buildingEvt, this));
 
-    // this.$container.on('click', '[data-target="select_house"]', $.proxy(this.select_houseEvt, this));
     this.$container.on('change', '[data-target="select_house_input"]', $.proxy(this.select_house_input_changeEvt, this));
 
-    // this.$container.on('click', '[data-target="select_stop"]', $.proxy(this.select_stopEvt, this));
     this.$container.on('change', '[data-target="select_stop_input"]', $.proxy(this.select_stop_input_changeEvt, this));
 
-    // this.$container.on('click', '[data-target="select_install"]', $.proxy(this.select_installEvt, this));
     this.$container.on('change', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
@@ -117,37 +112,6 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       hashName);
   },
 
-  // select_houseEvt: function (event) {
-  //   var $target = $(event.currentTarget);
-  //   Tw.Logger.info('[이사 날짜 클릭]', event);
-  //   this.$select_house_input.trigger('click', {
-  //     abc : $target
-  //   });
-  // },
-  //
-  // select_stopEvt: function (event) {
-  //   Tw.Logger.info('[중단 희망 날짜]', event);
-  //   this.$select_stop_input.trigger('click');
-  // },
-  //
-  // select_installEvt: function (event) {
-  //   Tw.Logger.info('[설치 희망 날짜]', event);
-  //   this.$select_install_input.trigger('click');
-  // },
-  //
-  // input_hpEvt: function(event) {
-  //   Tw.Logger.info('[휴대폰 번호]', event);
-  //   this._onFormatHpNum(event);
-  //   this.addressFormData.hp = this.$input_hp.val();
-  // },
-  //
-  // input_phoneEvt: function(event) {
-  //   Tw.Logger.info('[일반전화 번호]', event);
-  //   this._onFormatHpNum(event);
-  //   this.addressFormData.phone = this.$input_phone.val();
-  // },
-
-
   //--------------------------------------------------------------------------[SVC]
   // 건물 유형
   select_buildingEvtOpen: function( $target, $layer ) {
@@ -186,7 +150,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[select_house_input_changeEvt]');
     var tempDt = this.$select_house_input.val();
     this.addressFormData.houseDt = tempDt;
-    this.$select_house.text( tempDt );
+    this.$select_house_input.val( tempDt );
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
@@ -195,29 +159,51 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[select_stop_input_changeEvt]');
     var tempDt = this.$select_stop_input.val();
     this.addressFormData.stopDt = tempDt;
-    this.$select_stop.text( tempDt );
+    this.$select_stop_input.val( tempDt );
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
   // 설치 희망 날짜
   select_install_input_changeEvt: function () {
-    Tw.Logger.info('[select_install_input_changeEvt]');
+    // Tw.Logger.info('[select_install_input_changeEvt]');
+    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 14, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_install_input.val();
-    this.addressFormData.installDt = tempDt;
-    this.$select_install.text( tempDt );
+    Tw.Logger.info('[설치희망날짜]', tempDt, curDt, endDt);
+
+    //유효성 체크
+    if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
+      Tw.Logger.info('[범위에 포함]');
+      this.addressFormData.installDt = tempDt;
+      this.$select_install_input.val( tempDt );
+    } else {
+      Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
+      this.$select_install_input.val('');
+    }
+
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
-
+  //--------------------------------------------------------------------------[Validation]
+  /*
+  * @param {string} date, {string} date, {string} date
+  * @return boolean
+   */
+  _dateChkBetween: function($search, $betweenStart, $betweenEnd) {
+    var search = $search;
+    var betweenStart = $betweenStart;
+    var betweenEnd = $betweenEnd;
+    return moment(search).isBetween(betweenStart, betweenEnd, null, '[)');
+  },
 
   //--------------------------------------------------------------------------[API]
 
   //--------------------------------------------------------------------------[COM]
-  _comComma: function (str) {
-    str = String(str);
+  _comComma: function ($str) {
+    var str = String($str);
     return Tw.FormatHelper.addComma(str);
   },
-  _comUnComma: function (str) {
-    str = String(str);
+  _comUnComma: function ($str) {
+    var str = String($str);
     // return str.replace(/[^\d]+/g, '');
     return str.replace(/,/g, '');
   },
