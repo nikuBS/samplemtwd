@@ -125,7 +125,10 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _checkValidateSendingButton: function () {
-    if ( this.$input_auto_gift.val().match(/\d+/g) ) {
+    var isValidQty = this.$wrap_auto_select_list.find('input:checked').length !== 0;
+    var isValidPhone = this.$input_auto_gift.val().length !== 0;
+
+    if ( isValidQty && isValidPhone ) {
       this.$btn_send_auto_gift.attr('disabled', false);
     } else {
       this.$btn_send_auto_gift.attr('disabled', true);

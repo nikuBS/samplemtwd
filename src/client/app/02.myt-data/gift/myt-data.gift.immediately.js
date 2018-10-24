@@ -105,6 +105,13 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _checkValidateSendingButton: function () {
-    this.$btnRequestSendingData.attr('disabled', false);
+    var isValidQty = this.$wrap_data_select_list.find('input:checked').length !== 0;
+    var isValidPhone = this.$inputImmediatelyGift.val().length !== 0;
+
+    if ( isValidQty && isValidPhone ) {
+      this.$btnRequestSendingData.attr('disabled', false);
+    } else {
+      this.$btnRequestSendingData.attr('disabled', true);
+    }
   }
 };
