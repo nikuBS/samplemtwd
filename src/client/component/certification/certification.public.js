@@ -42,17 +42,17 @@ Tw.CertificationPublic.prototype = {
     }, $.proxy(this._onPublicCert, this));
   },
   _onPublicCert: function (resp) {
-    if(resp.code === Tw.NTV_CODE.CODE_00) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._setComplete();
+    } else {
       this._callback({
-        code: Tw.API_CODE.CODE_00
+        code: Tw.API_CODE.CERT_FAIL
       }, this._deferred, this._command);
-    } else {}
-    this._callback({
-      code: Tw.API_CODE.CERT_FAIL
-    }, this._deferred, this._command);
+    }
   },
   _setAppMsg: function (result) {
-    if ( result.certMethod !== Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH ) {
+    this._certMethod = result.certMethod;
+    if ( this._certMethod !== Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH ) {
       return '';
     }
     if ( this._needAccountInfo(this._command.command.path) ) {
@@ -68,5 +68,14 @@ Tw.CertificationPublic.prototype = {
       return true;
     }
     return false;
+  },
+  _setComplete: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0026, {
+      authUrl: this._authUrl,
+      authKind: 'P'
+    }).done($.proxy(this._successComplete, this));
+  },
+  _successComplete: function (resp) {
+    this._callback(resp, this._deferred, this._command);
   }
 };
