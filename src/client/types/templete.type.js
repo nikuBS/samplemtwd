@@ -102,6 +102,14 @@ Tw.POPUP_TPL = {
               '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.'
         }
       ]
+    },
+    {
+      'type': '포인트 요금 납부',
+      'list': [
+        {'value': 'OK캐쉬백', 'option': 'fe-ok-cashbag'},
+        {'value': 'T포인트', 'option': 'fe-t-point'},
+        {'value': '레인보우 포인트', 'option': 'fe-rainbow-point'}
+      ]
     }
   ],
   IMMEDIATELY_CHARGE_DATA: {

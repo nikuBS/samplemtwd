@@ -237,6 +237,8 @@ Tw.API_CMD = {
   BFF_07_0038: { path: '/core-bill/v1/bill-pay/donation', method: Tw.API_METHOD.GET },
   BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: Tw.API_METHOD.GET },
   BFF_07_0040: { path: '/core-bill/v1/payment/auto-integrated-payment-cancle-request', method: Tw.API_METHOD.POST },
+  BFF_07_0041: { path: '/core-bill/v1/ocbcard-info-check-show', method: Tw.API_METHOD.GET },
+  BFF_07_0042: { path: '/core-bill/v1/rainbow-point-check-show', method: Tw.API_METHOD.GET },
   BFF_07_0043: { path: '/core-bill/v1/ocbcard-no-info', method: Tw.API_METHOD.GET },
   BFF_07_0045: { path: '/core-bill/v1/ocb-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0047: { path: '/core-bill/v1/ocb-point-onetime-cancel', method: Tw.API_METHOD.POST },
