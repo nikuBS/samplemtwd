@@ -19,8 +19,8 @@ const environment = {
     }
   },
   development: {
-    // BFF_SERVER: 'http://bff-spring',
-    BFF_SERVER: 'http://211.188.180.73:31309',
+    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
@@ -38,8 +38,8 @@ const environment = {
     }
   },
   staging: {
-    // BFF_SERVER: 'http://bff-spring',
-    BFF_SERVER: 'http://211.188.180.73:31309',
+    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
