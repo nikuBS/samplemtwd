@@ -71,7 +71,7 @@ Tw.CertificationPublic.prototype = {
   },
   _setComplete: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0026, {
-      authUrl: this._authUrl,
+      authUrl: this._command.command.method + '|' + this._authUrl,
       authKind: 'P'
     }).done($.proxy(this._successComplete, this));
   },
