@@ -30,6 +30,9 @@ import MyTFarePaymentHistory from './controllers/history/myt-fare.payment.histor
 import MyTFarePaymentHistoryDetail from './controllers/history/myt-fare.payment.history.detail.controller';
 import MyTFareBillHistory from './controllers/history/myt-fare.bill-history.controller';
 import MyTFareOverpayRefund from './controllers/history/myt-fare.overpay-refund.controller';
+import MyTFarePaymentCashbag from './controllers/payment/myt-fare.payment.cashbag.controller';
+import MyTFarePaymentTPoint from './controllers/payment/myt-fare.payment.tpoint.controller';
+import MyTFarePaymentRainbow from './controllers/payment/myt-fare.payment.rainbow.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -48,6 +51,9 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/payment/card', controller: MyTFarePaymentCard });
     this.controllers.push({ url: '/payment/point', controller: MyTFarePaymentPoint });
     this.controllers.push({ url: '/payment/sms', controller: MyTFarePaymentSms });
+    this.controllers.push({ url: '/payment/cashbag', controller: MyTFarePaymentCashbag });
+    this.controllers.push({ url: '/payment/tpoint', controller: MyTFarePaymentTPoint });
+    this.controllers.push({ url: '/payment/rainbow', controller: MyTFarePaymentRainbow });
     this.controllers.push({ url: '/payment/micro', controller: MyTFarePaymentMicro });
     this.controllers.push({ url: '/payment/micro/auto', controller: MyTFarePaymentMicroAuto });
     this.controllers.push({ url: '/payment/micro/auto/info', controller: MyTFarePaymentMicroAutoInfo });
