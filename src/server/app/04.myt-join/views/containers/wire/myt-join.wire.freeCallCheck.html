@@ -21,7 +21,7 @@
     <div class="popup-page tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
 
         <!-- #header -->
-        <%- include('../../../../common/views/components/header.component.html', { title: 'B끼리 무료 통화 대상자 조회', svcInfo: svcInfo, option: { line:false } }) %>
+        <%- include('../../../../common/views/components/header.component.html', { title: 'B끼리 무료 통화 대상자 조회', svcInfo: svcInfo, option: { back:'popup' } }) %>
         <!--// #header -->
 
         <!-- .container-wrap -->
@@ -59,7 +59,7 @@
         </div>
         <!-- // .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="prev-step">취소</button>
+        <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
     </div>
     <!-- // .popup hbs -->

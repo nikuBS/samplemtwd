@@ -36,6 +36,7 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     this.$container.on('click', '[data-target="lookupBtn"]', $.proxy(this._lookupBtnEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
+
   _lookupBtnEvt: function(event) {
     Tw.Logger.info('[_lookupBtnEvt]', this.$inputPhone.val(), event );
     // var $target = $(event.currentTarget);
@@ -118,29 +119,25 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     window.location.hash = hash;
   },
 
-  // 휴대폰 번호 입력 시 자동 하이픈 넣기
+  // 휴대폰/일반전화 입력 시 자동 하이픈 넣기
   _onFormatHpNum : function (e) {
     var _$this = $(e.currentTarget);
-    var data = _$this.val();
-    data = data.replace(/[^0-9]/g,'');
+    var data = this._noDash(_$this.val());
+    var returnVal;
 
-    var tmp = '';
+    //숫자,대시를 제외한 값이 들어 같을 경우
+    if ( Tw.ValidationHelper.regExpTest(/[^\d-]/g, data) ) {
+      returnVal = data.replace(/[^\d-]/g, ''); // 숫자가 아닌 문자 제거
+      Tw.Logger.info('[returnVal 1]', returnVal);
+      _$this.val(returnVal);
 
-    if (data.length > 3 && data.length <= 6) {
-      tmp += data.substr(0, 3);
-      tmp += '-';
-      tmp += data.substr(3);
-      data = tmp;
-    } else if (data.length > 6) {
-      tmp += data.substr(0, 3);
-      tmp += '-';
-      var size = data.length < 11 ? 3 : 4;
-      tmp += data.substr(3, size);
-      tmp += '-';
-      tmp += data.substr(3+size);
-      data = tmp;
+    } else {
+      var rexTypeA = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
+      returnVal = data.replace(rexTypeA, '$1-$2-$3');
+      Tw.Logger.info('[returnVal 2]', returnVal);
+      _$this.val(returnVal);
     }
-    _$this.val(data);
+
   }
 
 

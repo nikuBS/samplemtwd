@@ -16,29 +16,23 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 
   this._init();
 
-  this.addressFormData = {
-    building: '',
-    houseDt: '',
-    stopDt: '',
-    installDt: '',
-    hp: '',
-    phone: ''
-  };
 
-  this.addressFormData2 = {
-    basAddr: '',              // 기본 주소
-    bldTypNm: '',             // 건물유형명
-    cntcPrefrMblPhonNum: '',  // 연락희망이동전화번호
-    cntcPrefrPhonNum: '',     // 연락희망전화번호
-    dtlAddr: '',              // 설치장소 변경후 상세주소
-    mvDt: '',                 // 이사일자
-    occrDt: '',               // 발생일자
-    occrTm: '',               // 발생시각
-    reqrNm: '',               // 신청인명
-    reqSiteClCd: '',          // 요청사이트구분 (01:T-WORLD, 02:SKB사이버고객센터, 03:모바일 T)
-    setPrefrDt: '',           // 설치희망일자
-    stopPrefrDt: '',          // 중단희망일자
-    svcNm: ''                 // 서비스명
+  this.addressFormData = {
+    bldTypNm: '',               // 건물유형명
+
+    basAddr: '기본주소',        // 설치장소 변경후 기본 주소
+    dtlAddr: '상세주소',        // 설치장소 변경후 상세주소
+
+    mvDt: '',                   // 이사일자 (YYYYMMDD)
+    stopPrefrDt: '',            // 중단희망일자 (YYYYMMDD)
+    setPrefrDt: '',             // 설치희망일자 (YYYYMMDD)
+
+    cntcPrefrMblPhonNum: '',    // 휴대폰 번호
+    cntcPrefrPhonNum: '',       // 일반전화 번호
+
+    reqSiteClCd: '03',          // 요청사이트구분 (01:T-WORLD, 02:SKB사이버고객센터, 03:모바일 T)
+    reqrNm: this.resData.svcInfo.mbrNm  // 신청인명
+
   };
 
 };
@@ -52,36 +46,55 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   _cachedElement: function () {
 
     this.$select_building= $('[data-target="select_building"]'); // 건물 유형
-    this.$select_house= $('[data-target="select_house"]'); // 이사 날짜
-    this.$select_house_input= $('[data-target="select_house_input"]');
 
-    this.$select_stop= $('[data-target="select_stop"]'); // 중단 희망 날짜
-    this.$select_stop_input= $('[data-target="select_stop_input"]');
+    this.$select_house_input= $('[data-target="select_house_input"]'); // 이사 날짜
 
-    this.$select_install= $('[data-target="select_install"]'); // 설치 희망 날짜
-    this.$select_install_input= $('[data-target="select_install_input"]');
+    this.$select_stop_input= $('[data-target="select_stop_input"]'); // 중단 희망 날짜
+
+    this.$select_install_input= $('[data-target="select_install_input"]'); // 설치 희망 날짜
 
     this.$input_hp= $('[data-target="input_hp"]'); // 휴대폰 번호
     this.$input_phone= $('[data-target="input_phone"]'); // 일반전화 (선택항목)
+
+    this.$submitApply= $('[data-target="submitApply"]'); // 신청하기 버튼
 
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="select_building"]', $.proxy(this.select_buildingEvt, this));
 
-    // this.$container.on('click', '[data-target="select_house"]', $.proxy(this.select_houseEvt, this));
     this.$container.on('change', '[data-target="select_house_input"]', $.proxy(this.select_house_input_changeEvt, this));
 
-    // this.$container.on('click', '[data-target="select_stop"]', $.proxy(this.select_stopEvt, this));
     this.$container.on('change', '[data-target="select_stop_input"]', $.proxy(this.select_stop_input_changeEvt, this));
 
-    // this.$container.on('click', '[data-target="select_install"]', $.proxy(this.select_installEvt, this));
     this.$container.on('change', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('keyup', '[data-target="input_phone"]', $.proxy(this.input_phoneEvt, this));
 
+    this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
+
   },
   //--------------------------------------------------------------------------[EVENT]
+  $submitApplyEvt: function(event) {
+    Tw.Logger.info('[신청하기]', event);
+    var param = this.addressFormData;
+    this._chgWireAddrInfo(param);
+
+  },
+
+  input_hpEvt: function(event) {
+    var tempNum = this._onFormatHpNum(event);
+    this.addressFormData.cntcPrefrMblPhonNum = tempNum;
+    this._formValidateionChk();
+    Tw.Logger.info('[addressFormData]', this.addressFormData);
+  },
+
+  input_phoneEvt: function(event) {
+    var tempNum = this._onFormatHpNum(event);
+    this.addressFormData.cntcPrefrPhonNum = tempNum;
+    this._formValidateionChk();
+    Tw.Logger.info('[addressFormData]', this.addressFormData);
+  },
 
   select_buildingEvt: function(event) {
     Tw.Logger.info('[건물유형클릭]', event);
@@ -117,37 +130,6 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       hashName);
   },
 
-  // select_houseEvt: function (event) {
-  //   var $target = $(event.currentTarget);
-  //   Tw.Logger.info('[이사 날짜 클릭]', event);
-  //   this.$select_house_input.trigger('click', {
-  //     abc : $target
-  //   });
-  // },
-  //
-  // select_stopEvt: function (event) {
-  //   Tw.Logger.info('[중단 희망 날짜]', event);
-  //   this.$select_stop_input.trigger('click');
-  // },
-  //
-  // select_installEvt: function (event) {
-  //   Tw.Logger.info('[설치 희망 날짜]', event);
-  //   this.$select_install_input.trigger('click');
-  // },
-  //
-  // input_hpEvt: function(event) {
-  //   Tw.Logger.info('[휴대폰 번호]', event);
-  //   this._onFormatHpNum(event);
-  //   this.addressFormData.hp = this.$input_hp.val();
-  // },
-  //
-  // input_phoneEvt: function(event) {
-  //   Tw.Logger.info('[일반전화 번호]', event);
-  //   this._onFormatHpNum(event);
-  //   this.addressFormData.phone = this.$input_phone.val();
-  // },
-
-
   //--------------------------------------------------------------------------[SVC]
   // 건물 유형
   select_buildingEvtOpen: function( $target, $layer ) {
@@ -166,7 +148,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     $layer.on('click', '[data-target="selectBtn"]', $.proxy( function(event) {
       var $targetChild = $(event.currentTarget);
       var tempDataVal = $targetChild.attr('data-value');
-      this.addressFormData.building = tempDataVal;
+      this.addressFormData.bldTypNm = tempDataVal;
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
@@ -178,6 +160,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   },
   select_buildingEvtClose: function() {
     Tw.Logger.info('[팝업 close > select_buildingEvtClose]');
+    this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
@@ -185,8 +168,11 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   select_house_input_changeEvt: function () {
     Tw.Logger.info('[select_house_input_changeEvt]');
     var tempDt = this.$select_house_input.val();
-    this.addressFormData.houseDt = tempDt;
-    this.$select_house.text( tempDt );
+
+    this.$select_house_input.val( tempDt );
+    this.addressFormData.mvDt = tempDt;
+
+    this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
@@ -194,24 +180,117 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   select_stop_input_changeEvt: function () {
     Tw.Logger.info('[select_stop_input_changeEvt]');
     var tempDt = this.$select_stop_input.val();
-    this.addressFormData.stopDt = tempDt;
-    this.$select_stop.text( tempDt );
+
+    this.$select_stop_input.val( tempDt );
+    this.addressFormData.stopPrefrDt = tempDt;
+
+    this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
   // 설치 희망 날짜
   select_install_input_changeEvt: function () {
-    Tw.Logger.info('[select_install_input_changeEvt]');
+    // Tw.Logger.info('[select_install_input_changeEvt]');
+    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 14, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_install_input.val();
-    this.addressFormData.installDt = tempDt;
-    this.$select_install.text( tempDt );
+    Tw.Logger.info('[설치희망날짜]', tempDt, curDt, endDt);
+
+    //유효성 체크
+    if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
+      Tw.Logger.info('[범위에 포함]');
+      this.addressFormData.installDt = tempDt;
+      this.$select_install_input.val( tempDt );
+      this.addressFormData.setPrefrDt = tempDt;
+
+    } else {
+      Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
+      this.$select_install_input.val('');
+    }
+
+    this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
+  //--------------------------------------------------------------------------[Validation]
+  /*
+  * @param {string} date, {string} date, {string} date
+  * @return boolean
+   */
+  _dateChkBetween: function($search, $betweenStart, $betweenEnd) {
+    var search = $search;
+    var betweenStart = $betweenStart;
+    var betweenEnd = $betweenEnd;
+    return moment(search).isBetween(betweenStart, betweenEnd, null, '[)');
+  },
 
+  /*
+  * Form Validation
+   */
+  _formValidateionChk: function() {
+
+    var tempObj = this.addressFormData;
+
+    try {
+      _.map(tempObj, function( item, key ) {
+
+        Tw.Logger.info('[ addressFormData > _.map > '+ key +']', item, Tw.FormatHelper.isEmpty(item));
+
+        if ( key !== 'cntcPrefrPhonNum' ) { //일반전화가 아닐때
+          if ( Tw.FormatHelper.isEmpty(item) ) {
+            Tw.Logger.info('[값을 입력하세요.]', key);
+            throw new Error('break');
+
+          }
+        }
+
+      });
+
+    } catch(e) {
+      if(e.message === 'break'){
+        //break successful
+        Tw.Logger.info('[catch > break]', e);
+        this.$submitApply.attr('disabled', true);
+        return;
+      }
+    }
+
+    Tw.Logger.info('[유효성 체크 완료]');
+
+    this.$submitApply.attr('disabled', false);
+
+
+  },
 
   //--------------------------------------------------------------------------[API]
+  _chgWireAddrInfo: function (param) {
 
+    return this._apiService.request(Tw.API_CMD.BFF_05_0163, param).done($.proxy(this._chgWireAddrInfoInit, this));
+
+    // var thisMain = this;
+    // $.ajax('http://localhost:3000/mock/wire.BFF_05_0160.json')
+    //   .done(function (resp) {
+    //     Tw.Logger.info(resp);
+    //     thisMain._freeCallCheckInfoInit(resp);
+    //   })
+    //   .fail(function (err) {
+    //     Tw.Logger.info(err);
+    //   });
+
+  },
+  _chgWireAddrInfoInit: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      Tw.Logger.info('[결과] _chgWireAddrInfoInit', res);
+
+      // 성공시 2_A35 alert 노출
+      // 설치장소 변경 신청이 완료되었습니다. 빠른 시일 내에 신청내역 확인을 위해 상담원이 연락 드리겠습니다. 감사합니다
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE);
+    }
+  },
   //--------------------------------------------------------------------------[COM]
+  _noDash: function(str) {
+    str = String(str);
+    return str.split('-').join('');
+  },
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
@@ -235,29 +314,27 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     this._history.setHistory();
     window.location.hash = hash;
   },
-  // 휴대폰 번호 입력 시 자동 하이픈 넣기
+  // 휴대폰/일반전화 입력 시 자동 하이픈 넣기
   _onFormatHpNum : function (e) {
     var _$this = $(e.currentTarget);
-    var data = _$this.val();
-    data = data.replace(/[^0-9]/g,'');
+    var data = this._noDash(_$this.val());
+    var returnVal;
 
-    var tmp = '';
+    //숫자,대시를 제외한 값이 들어 같을 경우
+    if ( Tw.ValidationHelper.regExpTest(/[^\d-]/g, data) ) {
+      returnVal = data.replace(/[^\d-]/g, ''); // 숫자가 아닌 문자 제거
+      Tw.Logger.info('[returnVal 1]', returnVal);
+      _$this.val(returnVal);
+      return returnVal;
 
-    if (data.length > 3 && data.length <= 6) {
-      tmp += data.substr(0, 3);
-      tmp += '-';
-      tmp += data.substr(3);
-      data = tmp;
-    } else if (data.length > 6) {
-      tmp += data.substr(0, 3);
-      tmp += '-';
-      var size = data.length < 11 ? 3 : 4;
-      tmp += data.substr(3, size);
-      tmp += '-';
-      tmp += data.substr(3+size);
-      data = tmp;
+    } else {
+      var rexTypeA = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
+      returnVal = data.replace(rexTypeA, '$1-$2-$3');
+      Tw.Logger.info('[returnVal 2]', returnVal);
+      _$this.val(returnVal);
+      return returnVal;
     }
-    _$this.val(data);
+
   }
 
 };
