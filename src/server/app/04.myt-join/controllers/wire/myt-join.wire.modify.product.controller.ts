@@ -12,7 +12,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
+import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE_SVCATTRCD } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 
 class MyTJoinWireModifyProduct extends TwViewController {
@@ -27,61 +27,67 @@ class MyTJoinWireModifyProduct extends TwViewController {
 
   // 공통데이터
   private _commDataInfo: any = {
+    svcState : ''
   };
 
   private _urlTplInfo: any = {
     pageRenderView: 'wire/myt-join.wire.modify.product.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any , layerType: string) {
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
+    this.logger.info(this, '[ allSvc ] : ', allSvc);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
     // this._typeInit();
 
-    // const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0068, {}), 'p1');
     // const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
-    // Promise.all([p1]).then(function(resArr) {
-    //
-    //   thisMain._resDataInfo = resArr[0].result;
-    //
-    //   thisMain._dataInit();
-    //
-    //   thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
-    //
-    //   thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-    //     reqQuery: thisMain.reqQuery,
-    //     svcInfo: svcInfo,
-    //     commDataInfo: thisMain._commDataInfo,
-    //     resDataInfo: thisMain._resDataInfo
-    //   });
-    // }, function(err) {
-    //   thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
-    //   return thisMain.error.render(res, {
-    //     title: 'title',
-    //     code: err.code,
-    //     msg: err.msg,
-    //     svcInfo: svcInfo
-    //   });
-    // });
+    Promise.all([p1]).then(function(resArr) {
 
-    thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-      reqQuery: thisMain.reqQuery,
-      svcInfo: svcInfo,
+      thisMain._resDataInfo = resArr[0].result;
+
+      thisMain._dataInit();
+
+      thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
+
+      thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+        reqQuery: thisMain.reqQuery,
+        svcInfo: svcInfo,
+        allSvc: allSvc,
+        commDataInfo: thisMain._commDataInfo,
+        resDataInfo: thisMain._resDataInfo
+      });
+    }, function(err) {
+      thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      return thisMain.error.render(res, {
+        title: 'title',
+        code: err.code,
+        msg: err.msg,
+        svcInfo: svcInfo
+      });
     });
+
+    // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+    //   reqQuery: thisMain.reqQuery,
+    //   svcInfo: svcInfo,
+    // });
   }
 
 
   private _dataInit() {
-
+    this._commDataInfo.svcState = this._getSvcState();
   }
 
   // -------------------------------------------------------------[SVC]
-
+  public _getSvcState(): any {
+    const svcAttrCd = this._svcInfo.svcAttrCd;
+    return MYT_JOIN_WIRE_SVCATTRCD[svcAttrCd];
+  }
 
   // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
