@@ -76,10 +76,10 @@ Tw.MyTFarePaymentAutoCancel.prototype = {
   _selectAccountList: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.SELECT_ACCOUNT,
-      data:this.$bankList
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT_ACCOUNT,
+      data: this.$bankList
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
@@ -118,7 +118,8 @@ Tw.MyTFarePaymentAutoCancel.prototype = {
     var reqData = {
       acntNum: this.$infoBox.attr('data-acnt-num'),
       payerNumClCd: this.$infoBox.attr('data-payer-num-cl-cd'),
-      payMthdCd: $selectBox.find('.checked').attr('id'),
+      payMthdCd: this.$infoBox.attr('data-pay-mthd-cd'),
+      newPayMthdCd: $selectBox.find('.checked').attr('id'),
       bankCardCoCd: this.$infoBox.attr('data-bank-card-co-cd'),
       bankPrtYn: this.$infoBox.attr('data-bank-prt-yn'),
       serNum: this.$infoBox.attr('data-ser-num'),
