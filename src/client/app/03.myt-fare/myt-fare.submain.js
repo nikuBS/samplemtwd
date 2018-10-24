@@ -24,9 +24,8 @@ Tw.MyTFareSubMain = function (params) {
 };
 
 Tw.MyTFareSubMain.prototype = {
-
   loadingView: function (value, selector) {
-    if (!selector) {
+    if ( !selector ) {
       selector = '[data-id="wrapper"]';
     }
     if ( value ) {
@@ -39,6 +38,11 @@ Tw.MyTFareSubMain.prototype = {
         ta: selector
       });
     }
+  },
+
+  getLastDate: function (date) {
+    var lDate = new Date(date.slice(0, 4), date.slice(4, 6), 0).getDate().toString();
+    return date + lDate;
   },
 
   _rendered: function () {
@@ -170,6 +174,7 @@ Tw.MyTFareSubMain.prototype = {
       type: Tw.CHART_TYPE.BAR_2, //bar
       container: 'chart4', //클래스명 String
       unit: Tw.CHART_UNIT.WON, //x축 이름
+      sale: true, // 할인
       decimal: 'won', //소숫점자리
       data: data //데이터 obj
     });
@@ -209,7 +214,11 @@ Tw.MyTFareSubMain.prototype = {
 
   // 사용요금내역조회-1
   _usageFeeRequest: function () {
-    var usageDtArray = this.data.usage.invDtArr;
+    // TODO: 서버 데이터 변경되면 주석제거 예정
+    this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
+      .done($.proxy(this._responseUsageFee, this))
+      .fail($.proxy(this._errorRequest, this));
+    /*var usageDtArray = this.data.usage.invDtArr;
     if ( usageDtArray.length > 0 ) {
       var requestCommand = [];
       for ( var index = 0; index < usageDtArray.length; index++ ) {
@@ -225,13 +234,39 @@ Tw.MyTFareSubMain.prototype = {
     }
     else {
       this._responseUsageFee();
-    }
+    }*/
   },
 
   // 사용요금내역조회-2
-  _responseUsageFee: function () {
+  _responseUsageFee: function (resp) {
     // this.loadingView(false);
-    if ( arguments.length > 0 ) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+        var items = resp.result.recentUsageList;
+        var chart_data = {
+          co: '#3b98e6', //색상
+          da_arr: []
+        };
+        for ( var idx = items.length - 1; idx > -1; idx-- ) {
+          var item = items[idx];
+          // TODO: 서버데이터 변경되면 제거
+          var date = this.getLastDate(item.invDt); // item.invDt;
+          var amt = item.invAmt.replace(',', '');
+          var absDeduck = item.deduckInvAmt.replace(',', '');
+          // --------------------
+          amt = parseInt(amt, 10);
+          absDeduck = Math.abs(parseInt(absDeduck, 10));
+          chart_data.da_arr.push({
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            'class': this._chartDefaultClass + date,
+            'data': [amt], // 사용금액
+            'sale': [absDeduck] // 할인금액
+          });
+        }
+        this._initPatternChart(chart_data);
+      }
+    }
+    /*if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
         da_arr: []
@@ -250,14 +285,18 @@ Tw.MyTFareSubMain.prototype = {
       if ( chart_data.da_arr.length > 0 ) {
         this._initPatternChart(chart_data);
       }
-    }
+    }*/
     // 실시간요금
     setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
-    var claimDtArray = this.data.claim && this.data.claim.invDtArr;
+    // TODO: 서버 데이터 변경되면 주석제거 예정
+    this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
+      .done($.proxy(this._responseClaimPayment, this))
+      .fail($.proxy(this._errorRequest, this));
+    /*var claimDtArray = this.data.claim && this.data.claim.invDtArr;
     if ( claimDtArray && claimDtArray.length > 0 ) {
       var requestCommand = [];
       for ( var index = 0; index < claimDtArray.length; index++ ) {
@@ -273,13 +312,39 @@ Tw.MyTFareSubMain.prototype = {
     }
     else {
       this._responseClaimPayment();
-    }
+    }*/
   },
 
   // 최근청구요금내역조회-2
-  _responseClaimPayment: function () {
+  _responseClaimPayment: function (resp) {
     // this.loadingView(false);
-    if ( arguments.length > 0 ) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+        var items = resp.result.recentUsageList;
+        var chart_data = {
+          co: '#3b98e6', //색상
+          da_arr: []
+        };
+        for ( var idx = items.length - 1; idx > -1; idx-- ) {
+          var item = items[idx];
+          // TODO: 서버데이터 변경되면 제거
+          var date = this.getLastDate(item.invDt); // item.invDt;
+          var amt = item.invAmt.replace(',', '');
+          var absDeduck = item.deduckInvAmt.replace(',', '');
+          // --------------------
+          amt = parseInt(amt, 10);
+          absDeduck = Math.abs(parseInt(absDeduck, 10));
+          chart_data.da_arr.push({
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            'class': this._chartDefaultClass + date,
+            'data': [amt], // 사용금액
+            'sale': [absDeduck] // 할인금액
+          });
+        }
+        this._initPatternChart(chart_data);
+      }
+    }
+    /*if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
         da_arr: []
@@ -287,8 +352,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = arguments.length - 1; idx > -1; idx-- ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
-          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var amt = parseInt(item.useAmtTot, 10);
           var absDeduck = Math.abs(parseInt(item.deduckTotInvAmt, 10));
           chart_data.da_arr.push({
             'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
@@ -301,7 +365,7 @@ Tw.MyTFareSubMain.prototype = {
       if ( chart_data.da_arr.length > 0 ) {
         this._initPatternChart(chart_data);
       }
-    }
+    }*/
     setTimeout($.proxy(this._otherLineBills, this), 300);
   },
 
@@ -337,8 +401,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < arguments.length; idx++ ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
-          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var amt = parseInt(item.useAmtTot, 10);
           var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
           var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
           var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
