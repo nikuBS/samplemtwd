@@ -233,6 +233,11 @@ export const API_CMD = {
   BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_05_0178: { path: '/core-modification/v1/wire-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0179: { path: '/core-product/v1/services/wire/additions/count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0180: { path: '/core-modification/v1/num-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0182: { path: '/core-modification/v1/num-info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0183: { path: '/core-modification/v1/num-info', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0184: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0185: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
