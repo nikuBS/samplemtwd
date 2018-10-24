@@ -486,7 +486,9 @@ Tw.URL_PATH = {
   MYT_PAY_MICRO_LIMIT_CHANGE: '/myt/bill/history/micro/limit/change',
   MYT_PAY_MICRO_LIMIT_DETAIL: '/myt/bill/history/micro/limit',
   MYT_PAY_CONTENTS_LIMIT_CHANGE: '/myt/bill/history/contents/limit/change',
-  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit'
+  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit',
+  BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
+  BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
