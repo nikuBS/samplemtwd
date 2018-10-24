@@ -24,11 +24,6 @@ Tw.MainHome = function (rootEl, smartCard) {
   this._openLineResisterPopup();
 
   this._initScroll();
-
-  // this._apiService.request(Tw.NODE_CMD.CERT_TEST, {})
-  //   .done(function(resp) {
-  //     console.log(resp);
-  //   });
 };
 
 Tw.MainHome.prototype = {
