@@ -38,8 +38,8 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
       layer: true,
-      title: Tw.POPUP_TPL.JOIN_MGMT_PERIOD.title,
-      data: Tw.POPUP_TPL.JOIN_MGMT_PERIOD.data
+      title: Tw.POPUP_TPL.JOIN_INFO_MGMT_PERIOD.title,
+      data: Tw.POPUP_TPL.JOIN_INFO_MGMT_PERIOD.data
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
 
