@@ -72,6 +72,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _requestUnsubscribeAutoGift: function (serNum) {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum })
       .done($.proxy(this._onSuccessUnsubscribeAutoGift, this));
   },
