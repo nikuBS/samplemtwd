@@ -40,12 +40,12 @@ Tw.POPUP_TITLE = {
   SELECT_CHARGE_TYPE: '충전/선물 유형',
   SELECT_ORDER: '정렬 기준을 선택해주세요',
   CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
-  CANCLE_HELPLINE: '예약을 취소하시겠습니까?',
+  CANCEL_HELPLINE: '예약을 취소하시겠습니까?',
   SET_TIME: '시간설정',
   SET_HELPLINE_TYPE: '상담유형 설정',
-  SET_HELPLINE_AREA: '지역설정',
+  SET_AREA: '지역설정',
   ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
-  SELECT_SUBJECTS: '대상 설정',
+  SELECT_SUBJECT_TYPE: '대상 설정',
   AGREED_PERIOD: '약정기간'
 };
 
@@ -380,7 +380,12 @@ Tw.ALERT_MSG_BENEFIT = {};
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
-  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?'
+  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?',
+  ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬 글이<br /> 등록되었습니다.',
+  ALERT_PRAISE_CANCEL: {
+    TITLE: '작성을 취소하시겠습니까?',
+    MSG: '취소하시면 작성하신 정보가 모두 초기화됩니다.'
+  }
 };
 
 Tw.ALERT_MSG_AUTH = {
@@ -596,7 +601,19 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.'
 };
 
-Tw.CUSTOMER_PRAISE_COMPANY = '회사';
-Tw.CUSTOMER_PRAISE_OFFICE = '지점';
-
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';
+
+Tw.CUSTOMER_PRAISE_SUBJECT_TYPE = {
+  COMPANY: '회사',
+  OFFICE: '지점'
+};
+
+Tw.CUSTOMER_PRAISE_TITLE = {
+  T01: '{area} 지역 {office}의 {subject}을 칭찬합니다!',
+  T02: '{office}의 {subject}을 칭찬합니다!'
+};
+
+Tw.CUSTOMER_PRAISE_DEFAULT = {
+  TYPE: '대상 선택',
+  AREA: '지역명 선택'
+};

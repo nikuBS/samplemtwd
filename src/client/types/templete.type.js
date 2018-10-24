@@ -343,26 +343,29 @@ Tw.MYT_FARE_BILL_GUIDE = {
 
 };
 
-Tw.HELPLINE_TYPES = [
-  { value: '일반' },
-  { value: '로밍' },
-  { value: '통화품질 상담' }
+Tw.HELPLINE_TYPES = [{ value: '일반' }, { value: '로밍' }, { value: '통화품질 상담' }];
+
+Tw.CUSTOMER_HELPLINE_AREAS = [
+  { value: '수도권 (서울, 경기, 인천, 강원)', attr: "data-area-code='1'" },
+  { value: '중부 (충남, 충북, 대전)', attr: "data-area-code='5'" },
+  { value: '서부 (전남, 전북, 광주, 제주)', attr: "data-area-code='4'" },
+  { value: '대구 (경북, 대구)', attr: "data-area-code='3'" },
+  { value: '부산 (경남, 울산, 부산)', attr: "data-area-code='2'" }
 ];
 
-Tw.HELPLINE_AREAS = [
-  { value: '수도권 (서울, 경기, 인천, 강원)', 'attr': "data-area-code='1'" },
-  { value: '중부 (충남, 충북, 대전)', 'attr': "data-area-code='5'" },
-  { value: '서부 (전남, 전북, 광주, 제주)', 'attr': "data-area-code='4'" },
-  { value: '대구 (경북, 대구)', 'attr': "data-area-code='3'" },
-  { value: '부산 (경남, 울산, 부산)', 'attr': "data-area-code='2'" }
+Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
+  { value: '지점', code: 'T40' },
+  { value: '대리점', code: 'T10' },
+  { value: '이용안내', code: 'T30' },
+  { value: '통화품질 기준 매니저', code: 'T50' },
+  { value: 'AS센터', code: 'T20' },
+  { value: '행복기사(SK브로드밴드)', code: 'T60' }
 ];
 
-
-Tw.PRAISE_SUBJECTS = [
-  { value: '지점' },
-  { value: '대리점' },
-  { value: '이용안내' },
-  { value: '통화품질 기준 매니저' },
-  { value: 'AS센터' },
-  { value: '행복기사(SK브로드밴드)' }
-]
+Tw.CUSTOMER_PRAISE_AREAS = [
+  { value: '서울/인천/경기', code: 'A10' },
+  { value: '강원/충청/대전', code: 'A20' },
+  { value: '전북/전남/광주/제주', code: 'A30' },
+  { value: '부산/경남', code: 'A40' },
+  { value: '대구/경북', code: 'A50' }
+];

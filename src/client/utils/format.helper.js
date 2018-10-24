@@ -343,6 +343,12 @@ Tw.FormatHelper = (function () {
     return amount;
   }
 
+  var getTemplateString = function (template, values) {
+    return template.replace(/{\w+}/g, function(x) {
+      return values[x.slice(1, x.length - 1)];
+    });
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -377,6 +383,7 @@ Tw.FormatHelper = (function () {
     lpad: lpad,
     appendDataUnit: appendDataUnit,
     appendVoiceUnit: appendVoiceUnit,
-    appendSMSUnit: appendSMSUnit
+    appendSMSUnit: appendSMSUnit,
+    getTemplateString: getTemplateString
   };
 })();
