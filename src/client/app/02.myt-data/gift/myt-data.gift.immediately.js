@@ -31,6 +31,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   _bindEvent: function () {
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
+    this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
   },
 
@@ -38,12 +39,29 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_06_0014, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
   },
 
+  _onClickDataQty: function () {
+    this._checkValidateSendingButton();
+  },
+
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // res.result.dataRemQty
+      this._setAmountUI(Number(res.result.dataRemQty));
     } else {
-      // Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _setAmountUI: function (nLimitMount) {
+    var fnCheckedUI = function (nIndex, elInput) {
+      var $input = $(elInput);
+
+      if ( Number($input.val()) > nLimitMount ) {
+        $input.prop('disabled', true);
+        $input.parent().addClass('disabled');
+      }
+    };
+
+    this.$wrap_data_select_list.find('input').each(fnCheckedUI);
   },
 
   _onClickBtnAddr: function () {
@@ -89,11 +107,11 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this.paramData = $.extend({}, this.paramData, htParams);
 
-    this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramData));
+    // this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramData));
 
     // TODO: Implemented API TEST
-    // this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
-    //   .done($.proxy(this._onSuccessSendingData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
+      .done($.proxy(this._onSuccessSendingData, this));
   },
 
   _onSuccessSendingData: function (res) {

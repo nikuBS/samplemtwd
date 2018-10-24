@@ -36,11 +36,16 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$btn_send_auto_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$input_auto_gift.on('keyup', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
+    this.$wrap_auto_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
   },
 
   _showAddUI: function () {
     this.$btn_add_contact.hide();
     this.$btn_wrap_add_contact.show();
+  },
+
+  _onClickDataQty: function () {
+    this._checkValidateSendingButton();
   },
 
   _onKeyUpAutoGiftNumber: function () {
