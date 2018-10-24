@@ -1,10 +1,10 @@
 /**
- * FileName: customer.preventdamage.guide.js
+ * FileName: customer.protect.guide.js
  * Author: Jihun Yang (jihun202@sk.com)
- * Date: 2018.07.24
+ * Date: 2018.10.24
  */
 
-Tw.CustomerPreventdamageGuide = function(rootEl) {
+Tw.CustomerProtectGuide = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
@@ -14,7 +14,7 @@ Tw.CustomerPreventdamageGuide = function(rootEl) {
   this._bindEvent();
 };
 
-Tw.CustomerPreventdamageGuide.prototype = {
+Tw.CustomerProtectGuide.prototype = {
 
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category');
@@ -33,25 +33,15 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
   _openCategorySelectPopup: function() {
     this._popupService.open({
-      'hbs': 'select',
-      'title': Tw.PREVENTDAMAGE_GUIDE.TITLE,
-      'close_bt': true,
-      'select': [
-        {
-          'options': [
-            { 'title': Tw.PREVENTDAMAGE_GUIDE.VIDEO, checked: (this._category === 'video'),
-              value: 'video', text: Tw.PREVENTDAMAGE_GUIDE.VIDEO },
-            { 'title': Tw.PREVENTDAMAGE_GUIDE.WEBTOON, checked: (this._category === 'webtoon'),
-              value: 'webtoon', text: Tw.PREVENTDAMAGE_GUIDE.WEBTOON },
-            { 'title': Tw.PREVENTDAMAGE_GUIDE.LATEST, checked: (this._category === 'latest'),
-              value: 'latest', text: Tw.PREVENTDAMAGE_GUIDE.LATEST }
-          ]
-        }
-      ],
-      'bt_num': 'one',
-      'type': [{
-        style_class: 'bt-red1 fe-btn-apply-category',
-        txt: Tw.BUTTON_LABEL.CONFIRM
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.PROTECT_GUIDE.TITLE,
+      data: [{
+        'list': [
+          { value: Tw.PROTECT_GUIDE.VIDEO, option: (this._category === 'video') ? 'checked' : '', attr: 'data-category="video"' },
+          { value: Tw.PROTECT_GUIDE.WEBTOON, option: (this._category === 'webtoon') ? 'checked' : '', attr: 'data-category="webtoon"' },
+          { value: Tw.PROTECT_GUIDE.LATEST, option: (this._category === 'latest') ? 'checked' : '', attr: 'data-category="latest"' }
+        ]
       }]
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this));
   },
@@ -61,15 +51,15 @@ Tw.CustomerPreventdamageGuide.prototype = {
       return;
     }
 
-    this._history.goLoad('/customer/prevent-damage/guide?category=' + this._category);
+    this._history.goLoad('/customer/protect/guide/' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {
-    $layer.on('click', '.fe-btn-apply-category', $.proxy(this._applyCategory, this, $layer));
+    $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
   },
 
-  _applyCategory: function($layer) {
-    this._category = $layer.find('input[name="radio"]:checked').val();
+  _applyCategory: function(e) {
+    this._category = $(e.currentTarget).data('category');
     this._popupService.close();
   },
 
@@ -78,12 +68,12 @@ Tw.CustomerPreventdamageGuide.prototype = {
       listSize = this.$list.data('size');
 
     if (hiddenLength <= listSize) {
-      this.$list.find('li:hidden').show();
+      this.$list.find('li:hidden').removeClass('none');
       $(e.currentTarget).parent().remove();
     }
 
     if (hiddenLength > listSize) {
-      this.$list.find('li:hidden:lt(' + listSize + ')').show();
+      this.$list.find('li:hidden:lt(' + listSize + ')').removeClass('none');
       $(e.currentTarget).find('span').text('(' + hiddenLength + ')');
     }
   },

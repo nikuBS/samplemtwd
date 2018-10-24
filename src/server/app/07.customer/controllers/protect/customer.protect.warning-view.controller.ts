@@ -1,7 +1,7 @@
 /**
- * FileName: customer.preventdamage.latestwarningview.controller.ts
+ * FileName: customer.protect.warning-view.controller.ts
  * Author: 양지훈 (jihun202@sk.com)
- * Date: 2018.07.26
+ * Date: 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -10,7 +10,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class CustomerPreventdamageLatestwarningview extends TwViewController {
+class CustomerProtectWarningView extends TwViewController {
   constructor() {
     super();
   }
@@ -22,18 +22,23 @@ class CustomerPreventdamageLatestwarningview extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const lwid = req.query.lw_id || '';
-    if (FormatHelper.isEmpty(lwid)) {
-      return res.redirect('/customer/prevent-damage/latest-warning');
+    const idx = req.params.idx || '';
+    if (FormatHelper.isEmpty(idx)) {
+      return res.redirect('/customer/protect/warning');
     }
 
-    this.apiService.request(API_CMD.BFF_08_0041, {}, {}, lwid)
+    this.apiService.request(API_CMD.BFF_08_0041, {}, {}, idx)
       .subscribe((data) => {
-        if (FormatHelper.isEmpty(data) || data.code !== API_CODE.CODE_00) {
-          return res.redirect('/customer/prevent-damage/latest-warning');
+        if (data.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            title: '최신 이용자 피해예방 주의보',
+            svcInfo: svcInfo,
+            code: data.code,
+            msg: data.msg
+          });
         }
 
-        res.render('preventdamage/customer.preventdamage.latestwarningview.html', {
+        res.render('protect/customer.protect.warning-view.html', {
           svcInfo: svcInfo,
           data: this._convertData(data.result)
         });
@@ -41,4 +46,4 @@ class CustomerPreventdamageLatestwarningview extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageLatestwarningview;
+export default CustomerProtectWarningView;

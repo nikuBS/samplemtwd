@@ -1,7 +1,7 @@
 /**
- * FileName: customer.preventdamage.latestwarning.controller.ts
+ * FileName: customer.protect.warning.controller.ts
  * Author: 양지훈 (jihun202@sk.com)
- * Date: 2018.07.26
+ * Date: 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -10,7 +10,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class CustomerPreventdamageLatestwarning extends TwViewController {
+class CustomerProtectWarning extends TwViewController {
   constructor() {
     super();
   }
@@ -46,10 +46,10 @@ class CustomerPreventdamageLatestwarning extends TwViewController {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 20})
       .subscribe((data) => {
         if (FormatHelper.isEmpty(data)) {
-          return res.redirect('/customer/prevent-damage');
+          return res.redirect('/customer/protect');
         }
 
-        res.render('preventdamage/customer.preventdamage.latestwarning.html', {
+        res.render('protect/customer.protect.warning.html', {
           svcInfo: svcInfo,
           data: this._convertData(data)
         });
@@ -57,4 +57,4 @@ class CustomerPreventdamageLatestwarning extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageLatestwarning;
+export default CustomerProtectWarning;

@@ -1,20 +1,19 @@
 /**
- * FileName: customer.preventdamage.guideview.controller.ts
+ * FileName: customer.protect.guide-view.controller.ts
  * Author: 양지훈 (jihun202@sk.com)
- * Date: 2018.07.23
+ * Date: 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.type';
+import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 const categoryData = {
-  webtoon: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON,
-  latest: []  // TODO 최신 이용자 피해예방 정보 추가시 사용
+  webtoon: CUSTOMER_PROTECT_GUIDE_WEBTOON
 };
 
-class CustomerPreventdamageGuideview extends TwViewController {
+class CustomerProtectGuideView extends TwViewController {
   constructor() {
     super();
   }
@@ -27,15 +26,15 @@ class CustomerPreventdamageGuideview extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const category = req.query.category || '',
-      idx = req.query.idx || '',
-      backUrl = '/customer/prevent-damage/guide' + (FormatHelper.isEmpty(category) ? '' : '?category=' + category);
+    const category = req.params.category || '',
+      idx = req.params.idx || '',
+      backUrl = '/customer/protect/guide' + (FormatHelper.isEmpty(category) ? '' : '/' + category);
 
     if (!this._isValid(category, idx)) {
       return res.redirect(backUrl);
     }
 
-    res.render('preventdamage/customer.preventdamage.guideview.html', {
+    res.render('protect/customer.protect.guide-view.html', {
       svcInfo: svcInfo,
       category: category,
       data: categoryData[category][idx]
@@ -43,4 +42,4 @@ class CustomerPreventdamageGuideview extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageGuideview;
+export default CustomerProtectGuideView;
