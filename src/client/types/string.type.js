@@ -601,6 +601,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.'
 };
 
+<<<<<<< HEAD
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPE = {
@@ -617,3 +618,21 @@ Tw.CUSTOMER_PRAISE_DEFAULT = {
   TYPE: '대상 선택',
   AREA: '지역명 선택'
 };
+=======
+Tw.NOTICE = {
+  TITLE: '카테고리 설정',
+  DIRECTSHOP: '다이렉트샵',
+  MEMBERSHIP: '멤버십',
+  ROAMING: '로밍'
+};
+
+Tw.PROTECT_GUIDE = {
+  TITLE: '이용자 피해예방 가이드',
+  VIDEO: '동영상으로 보는 피해예방법',
+  WEBTOON: '웹툰으로 보는 피해예방법',
+  LATEST: '최신 이용자 피해예방 정보'
+};
+
+Tw.CUSTOMER_PRAISE_COMPANY = '회사';
+Tw.CUSTOMER_PRAISE_OFFICE = '지점';
+>>>>>>> [양지훈/FE개발팀] Sp #9; 이용안내

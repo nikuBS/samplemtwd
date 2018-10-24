@@ -1,4 +1,4 @@
-export const CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON = [
+export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_1_thumb.gif',
     TITLE: '스팸 관련 정보통신망 법',

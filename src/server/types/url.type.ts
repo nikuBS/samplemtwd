@@ -1,5 +1,6 @@
 export const URL = {
   '/home/postcode': { login: false, id: '00', title: '우편번호' },
+
   // Common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
   '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
@@ -76,9 +77,14 @@ export const URL = {
   '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
 
   // Customer
-  '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' }, // 구비서류
+  '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
   '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },
-  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' }
+  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
+  '/customer/protect': { login: false, id: 'CS_13_01', title: '이용자 피해예방 센터' },
+  '/customer/protect/guide': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드' },
+  '/customer/protect/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
+  '/customer/protect/additions': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
+  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' }
 
 };

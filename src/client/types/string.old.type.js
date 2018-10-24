@@ -715,20 +715,6 @@ Tw.RECHARGE_TYPE = {
   REGULAR_RECHARGE: '매월 충전'
 };
 
-Tw.NOTICE = {
-  TITLE: '카테고리 설정',
-  DIRECTSHOP: '다이렉트샵',
-  MEMBERSHIP: '멤버십',
-  ROAMING: '로밍'
-};
-
-Tw.PREVENTDAMAGE_GUIDE = {
-  TITLE: '카테고리 설정',
-  VIDEO: '동영상으로 보는 피해예방법',
-  WEBTOON: '웹툰으로 보는 피해예방법',
-  LATEST: '최신 이용자 피해예방 정보'
-};
-
 Tw.BLOCK_TYPE = {
   TOTAL: '전체',
   UNBLOCK: '차단',

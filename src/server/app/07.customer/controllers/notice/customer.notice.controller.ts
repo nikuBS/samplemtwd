@@ -1,15 +1,16 @@
 /**
  * FileName: customer.notice.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
- * Date: 2018.07.23
+ * Author: Jihun Yang (jihun202@sk.com)
+ * Date: 2018.10.19
  */
 
-import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.old.type';
-import FormatHelper from '../../../../utils/format.helper';
+import { Request, Response, NextFunction } from 'express';
+import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.type';
+import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
+import sanitizeHtml from 'sanitize-html';
 
 const categorySwitchingData = {
   tworld: {
@@ -35,6 +36,10 @@ class CustomerNotice extends TwViewController {
     super();
   }
 
+  private _fixHtml(content): any {
+    return sanitizeHtml(content);
+  }
+
   private _convertData(data): any {
     if (data.code !== API_CODE.CODE_00) {
       return {
@@ -52,7 +57,8 @@ class CustomerNotice extends TwViewController {
         return Object.assign(item, {
           date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YY.MM.DD'),
           type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
-          itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
+          itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''),
+          content: this._fixHtml(item.content)
         });
       }),
       last: data.result.last
@@ -65,25 +71,25 @@ class CustomerNotice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const category = req.query.category || 'tworld';
+    const category = req.params.category || 'tworld';
 
     if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
       return res.redirect('/customer/notice');
     }
 
     this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})
-      .subscribe((data) => {
-        if (FormatHelper.isEmpty(data)) {
-          return res.redirect('/customer');
-        }
+        .subscribe((data) => {
+          if (FormatHelper.isEmpty(data)) {
+            return res.redirect('/customer');
+          }
 
-        res.render('notice/customer.notice.html', {
-          category: category,
-          categoryLabel: categorySwitchingData[category].LABEL,
-          svcInfo: svcInfo,
-          data: this._convertData(data)
+          res.render('notice/customer.notice.html', {
+            category: category,
+            categoryLabel: categorySwitchingData[category].LABEL,
+            svcInfo: svcInfo,
+            data: this._convertData(data)
+          });
         });
-      });
   }
 }
 

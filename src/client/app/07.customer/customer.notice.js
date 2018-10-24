@@ -1,7 +1,7 @@
 /**
  * FileName: customer.notice.js
  * Author: Jihun Yang (jihun202@sk.com)
- * Date: 2018.07.16
+ * Date: 2018.10.23
  */
 
 Tw.CustomerNotice = function(rootEl) {
