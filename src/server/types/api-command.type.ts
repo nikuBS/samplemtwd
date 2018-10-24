@@ -103,6 +103,8 @@ export const API_CMD = {
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/args-0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0013: { path: '/core-recharge/v1/pps-card', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0014: { path: '/core-balance/v1/pps-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0020: { path: '/core-bill/v1/bill-pay/recent-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0021: { path: '/core-bill/v1/bill-pay/recent-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0028: { path: '/core-bill/v1/bill-reissue', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0030: { path: '/core-bill/v1/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
