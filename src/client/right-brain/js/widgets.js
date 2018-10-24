@@ -3,12 +3,11 @@ $(document).on('ready', function () {
 });
 skt_landing.widgets = {
   widget_init: function(ta){ // string : selector
-    
     /* 위젯 구간 */
     widget_list = {};
     var widget_ta = ta ? $(ta+' .widget') : $('.widget');
     widget_ta.each(function (idx) {
-      var com = $(this).find('>.widget-box').attr('class').replace(/widget-box /, '');
+      var com = $.trim($(this).find('>.widget-box').attr('class').replace(/widget-box /, ''));
       widget_list['widget_' + com] = skt_landing.widgets['widget_' + com];
     });
     for (var com_name in widget_list) {
@@ -16,9 +15,8 @@ skt_landing.widgets = {
         widget_list[com_name](widget_ta);
       }
       catch(err) {
-        alert('error widget : talk to jsk');
+        console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음 
       }
-      // widget_list[com_name](widget_ta);
     }
     skt_landing.widgets.widget_deltype();
     
@@ -26,7 +24,7 @@ skt_landing.widgets = {
     component_list = {};
     var component_ta = ta ? $(ta+' .component') : $('.component');
     component_ta.each(function (idx) {
-      var com = $(this).find('.component-box').attr('class').replace(/component-box /, '');
+      var com = $.trim($(this).find('.component-box').attr('class').replace(/component-box /, ''));
       component_list['component_' + com] = skt_landing.widgets['component_' + com];
     });
     for (var com_name in component_list) {
@@ -34,7 +32,7 @@ skt_landing.widgets = {
         component_list[com_name](component_ta);
       }
       catch(err) {
-        alert('error component : talk to jsk');
+        console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음
       }
     }
   },
@@ -297,8 +295,6 @@ skt_landing.widgets = {
   },
   widget_accordion: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.accordion') : $('.widget-box.accordion');
-
-
     $(widget).each(function(){
       var _this = $(this);
       if(_this.find('> .acco-cover > .bt-whole').length < 1){

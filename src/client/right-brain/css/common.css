@@ -2581,7 +2581,7 @@ a.ui-button:active,
     .bt-dropdown.sbig:after {
       content: "";
       position: absolute;
-      top: 0;
+      top: -0.125rem;
       right: 0.1875rem;
       display: inline-block;
       width: 1.5625rem;
