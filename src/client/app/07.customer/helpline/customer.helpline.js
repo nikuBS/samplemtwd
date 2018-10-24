@@ -4,8 +4,7 @@
  * Date: 2018.10.18
  */
 
-
-Tw.CustomerHelpline = function (rootEl, timeInfo) {
+Tw.CustomerHelpline = function(rootEl, timeInfo) {
   this.$container = rootEl;
   this._availableTimes = timeInfo.availHours;
   this._reservationDate = timeInfo.curDate;
@@ -15,18 +14,17 @@ Tw.CustomerHelpline = function (rootEl, timeInfo) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-
   this._cachedElement();
   this._bindEvent();
   this._init();
 };
 
 Tw.CustomerHelpline.prototype = {
-  _init: function () {
+  _init: function() {
     this._reservationTime = this._availableTimes[0];
   },
 
-  _bindEvent: function () {
+  _bindEvent: function() {
     this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$areaPhone.on('keyup', 'input', $.proxy(this._handleTypePhone, this));
     this.$areaPhone.on('change', 'input', $.proxy(this._validatePhone, this));
@@ -36,7 +34,7 @@ Tw.CustomerHelpline.prototype = {
     this.$btnTime.on('click', $.proxy(this._openSelectTimePopup, this));
   },
 
-  _cachedElement: function () {
+  _cachedElement: function() {
     this.$btnType = this.$container.find('.fe-type');
     this.$btnArea = this.$container.find('.fe-area');
     this.$btnTime = this.$container.find('.fe-time');
@@ -44,22 +42,22 @@ Tw.CustomerHelpline.prototype = {
     this.$btnSubmit = this.$container.find('.bt-red1 button');
   },
 
-  _openCancelPopup: function () {
+  _openCancelPopup: function() {
     this._popupService.openConfirm(Tw.MSG_CUSTOMER.HELPLINE_A01, Tw.POPUP_TITLE.CANCEL_HELPLINE, $.proxy(this._clearData, this));
   },
 
-  _clearData: function () {
+  _clearData: function() {
     delete this._reservationType;
     delete this._reservationArea;
-    
+
     this.$btnType.text(Tw.HELPLINE_TYPE.GENERAL);
     this.$btnArea.text(Tw.HELPLINE_AREA.CAPITAL);
 
-    var currentHours = (new Date()).getHours();
-    this._availableTimes = _.filter(this._availableTimes, function (time) {
+    var currentHours = new Date().getHours();
+    this._availableTimes = _.filter(this._availableTimes, function(time) {
       return Number(time) > currentHours;
     });
-    
+
     this._reservationTime = this._availableTimes[0];
     this.$btnTime.text(this._availableTimes[0] + ':00');
     this.$areaPhone.find('input').val('');
@@ -68,7 +66,7 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-  _validatePhone: function () {
+  _validatePhone: function() {
     var $errorText = this.$areaPhone.find('#aria-phone-tx1');
     var $input = this.$areaPhone.find('input');
     var errorState = this.$areaPhone.hasClass('error');
@@ -91,22 +89,25 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
-  _openSelectTypePopup: function () {
+  _openSelectTypePopup: function() {
     var data = Tw.HELPLINE_TYPES.slice();
     data[this._reservationType || 0] = { value: data[this._reservationType || 0].value, option: 'checked' };
 
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SET_HELPLINE_TYPE,
-      data:[{ list: data }]
-    }, $.proxy(this._handleOpenSelectTypePopup, this));
+    this._popupService.open(
+      {
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.POPUP_TITLE.SET_HELPLINE_TYPE,
+        data: [{ list: data }]
+      },
+      $.proxy(this._handleOpenSelectTypePopup, this)
+    );
   },
 
-  _openSelectAreaPopup: function () {
-    var data = Tw.HELPLINE_AREAS.slice();
-    var type = this._reservationType || "1";
-    data = _.map(data, function (area) {
+  _openSelectAreaPopup: function() {
+    var data = Tw.CUSTOMER_HELPLINE_AREAS.slice();
+    var type = this._reservationType || '1';
+    data = _.map(data, function(area) {
       if (area.attr.indexOf(type) >= 0) {
         return {
           value: area.value,
@@ -117,52 +118,60 @@ Tw.CustomerHelpline.prototype = {
       return area;
     });
 
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SET_HELPLINE_AREA,
-      data:[{ list: data }]
-    }, $.proxy(this._handleOpenSelectAreaPopup, this));
+    this._popupService.open(
+      {
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.POPUP_TITLE.SET_AREA,
+        data: [{ list: data }]
+      },
+      $.proxy(this._handleOpenSelectAreaPopup, this)
+    );
   },
 
-  _openSelectTimePopup: function () {
-    var currentHours = (new Date()).getHours();
+  _openSelectTimePopup: function() {
+    var currentHours = new Date().getHours();
     var time = this._reservationTime;
-    var times = _.chain(this._availableTimes).filter(function (time) {
-      return Number(time) > currentHours;
-    }).map(function (time) {
-      if (time === this._reservationTime) {
-        return {
-          option: 'checked',
-          value: time + ':00'
-        };
-      } else {
-        return { value: time + ':00' };
-      }
-    }).value();
+    var times = _.chain(this._availableTimes)
+      .filter(function(time) {
+        return Number(time) > currentHours;
+      })
+      .map(function(time) {
+        if (time === this._reservationTime) {
+          return {
+            option: 'checked',
+            value: time + ':00'
+          };
+        } else {
+          return { value: time + ':00' };
+        }
+      })
+      .value();
 
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SET_TIME,
-      data:[{ list: times }]
-    }, $.proxy(this._handleOpenSelectTimePopup, this));
+    this._popupService.open(
+      {
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.POPUP_TITLE.SET_TIME,
+        data: [{ list: times }]
+      },
+      $.proxy(this._handleOpenSelectTimePopup, this)
+    );
   },
 
-  _handleOpenSelectTypePopup: function ($layer) {
+  _handleOpenSelectTypePopup: function($layer) {
     $layer.on('click', 'li', $.proxy(this._handleSelectType, this, $layer));
   },
 
-  _handleOpenSelectAreaPopup: function ($layer) {
+  _handleOpenSelectAreaPopup: function($layer) {
     $layer.on('click', 'button', $.proxy(this._handleSelectArea, this));
   },
 
-  _handleOpenSelectTimePopup: function ($layer) {
+  _handleOpenSelectTimePopup: function($layer) {
     $layer.on('click', 'button', $.proxy(this._handlSelectTime, this));
   },
 
-
-  _handleSelectType: function ($layer, e) {
+  _handleSelectType: function($layer, e) {
     var $target = $(e.currentTarget);
     var selectedIdx = $layer.find('li').index($target);
     var selectedType = $target.find('span.info-value').text();
@@ -174,7 +183,7 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-  _handleSelectArea: function (e) {
+  _handleSelectArea: function(e) {
     var selectedArea = e.currentTarget.getAttribute('data-area-code');
 
     if (selectedArea !== this._reservationArea) {
@@ -184,10 +193,12 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-  _handlSelectTime: function (e) {
-    var selectedTime = $(e.currentTarget).find('span.info-value').text();
-    var selectedHours = selectedTime.slice(0,2);
-    
+  _handlSelectTime: function(e) {
+    var selectedTime = $(e.currentTarget)
+      .find('span.info-value')
+      .text();
+    var selectedHours = selectedTime.slice(0, 2);
+
     if (selectedHours !== this._reservationTime) {
       this._reservationTime = selectedHours;
       this.$btnTime.text(selectedTime);
@@ -196,13 +207,12 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-
-  _handleTypePhone: function (e) {
+  _handleTypePhone: function(e) {
     this._reservationPhoneNum = e.target.value;
     this._setSubmitState();
   },
 
-  _setSubmitState: function () {
+  _setSubmitState: function() {
     var disabled = this.$btnSubmit.attr('disabled');
 
     if (this._reservationPhoneNum) {
@@ -212,22 +222,22 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
-
-  _handleSubmit: function () {
+  _handleSubmit: function() {
     if (!this.isValidated) {
       this.$areaPhone.find('input').focus();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0002, {
-      reserveType: (this._reservationType || 0).toString(),
-      reserveArea: this._reservationArea || "1",
-      reserveTime: this._reservationDate.replace(/\./g, '') + this._reservationTime,
-      reserveSvcNum: this._reservationPhoneNum
-    })
+    this._apiService
+      .request(Tw.API_CMD.BFF_08_0002, {
+        reserveType: (this._reservationType || 0).toString(),
+        reserveArea: this._reservationArea || '1',
+        reserveTime: this._reservationDate.replace(/\./g, '') + this._reservationTime,
+        reserveSvcNum: this._reservationPhoneNum
+      })
       .done($.proxy(this._successSubmit, this));
   },
 
-  _successSubmit: function (resp) {    
+  _successSubmit: function(resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       if (resp.result.historiesYn === 'Y') {
         this._clearData();
@@ -254,7 +264,7 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
-  _go: function (url) {
+  _go: function(url) {
     this._historyService.goLoad(url);
   }
 };
