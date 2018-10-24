@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: bff-nodejs
-        image: mtwd.icp.skt.com:8500/mtw-prod/bff-nodejs-mobile:1.0
+        image: mtwd.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.0
         ports:
         - containerPort: 3000
         imagePullPolicy: Always
