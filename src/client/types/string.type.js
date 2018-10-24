@@ -240,6 +240,9 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   CARD: '체크/신용카드',
   OK_CASHBAG: 'OK캐쉬백',
   T_POINT: 'T포인트',
+  POINT_UNIT: '점',
+  RAINBOW_POINT: '레인보우 포인트',
+  INQUIRE: '조회하기',
   PAYMENT: '납부',
   GO_PAYMENT_HISTORY: '납부내역 보기',
   PREPAY: '선결제',
@@ -337,7 +340,10 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V41: '법정대리인 휴대폰번호를 입력해주세요.',
   ALERT_2_V42: '이메일 주소를 입력해주세요.',
   ALERT_2_V43: '우편 주소를 입력해주세요.',
-  ALERT_2_V44: '휴대폰 번호가 올바르지 않습니다.'
+  ALERT_2_V44: '휴대폰 번호가 올바르지 않습니다.',
+  ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500점 부터 가능합니다.',
+  ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000점 부터 가능합니다.',
+  ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
