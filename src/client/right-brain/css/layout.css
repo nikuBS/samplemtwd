@@ -659,7 +659,10 @@ body.bg-gray {
   padding: 3.75rem 0 0;
   /*rem(59px 0 54px)*/
   background: #fff;
-  z-index: 200; }
+  z-index: 200;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  /* android : link bug */ }
   .popup-page.nobg {
     background: #f5f5f5; }
   .popup-page.layer {
