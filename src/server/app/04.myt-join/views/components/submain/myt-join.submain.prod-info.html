@@ -13,29 +13,42 @@
         <% if (data.isAddProduct) { %>
         <li>
             <div class="link-long">
-                <button data-id="add-prod">나의 부가 상품
+                <button data-id="add-prod">
+                    <% if (data.type === 2 || data.type === 3) { %>
+                    나의 부가 서비스
+                    <% } else { %>
+                    나의 부가 상품
+                    <% } %>
                     <span class="tx-sub">
                         <span class="normal">
+                        <% if (data.type === 2 || data.type === 3) { %>
+                            <%= data.myAddProduct.addTotCnt %>개
+                        <% } else { %>
                             유료 <%= data.myAddProduct.addProdPayCnt %>개 /
                             무료 <%= data.myAddProduct.addProdPayFreeCnt %>개
+                        <% } %>
                         </span>
                         <span class="ico"></span>
                     </span>
                 </button>
             </div>
         </li>
-        <li>
-            <div class="link-long">
-                <button data-id="com-prod">결합상품
-                    <span class="tx-sub">
-                        <span class="normal">
-                            <%= data.myAddProduct.comProdCnt %>개
-                        </span>
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
-        </li>
+        <% if (data.type === 0) { %>
+            <% if (data.myAddProduct.comProdCnt > 0) { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="com-prod">결합상품
+                        <span class="tx-sub">
+                                <span class="normal">
+                                    <%= data.myAddProduct.comProdCnt %>개
+                                </span>
+                                <span class="ico"></span>
+                            </span>
+                    </button>
+                </div>
+            </li>
+            <% } %>
+        <% } %>
         <% } %>
         <% if (data.type === 0) { %>
             <% if (data.isInstallement) { %>

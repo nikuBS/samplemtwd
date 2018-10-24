@@ -35,8 +35,6 @@ Tw.MyTFarePaymentHistory.prototype = {
       this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
       this.queryParams = Tw.UrlHelper.getQueryParams();
 
-      // console.log(this.detailData, this.detailData.dataLastInvDt);
-
       this.$templateWrapper = this.$container.find('#fe-detail-wrapper');
 
       this.$template = {
@@ -76,8 +74,6 @@ Tw.MyTFarePaymentHistory.prototype = {
           break;
 
       }
-
-      // this._historyService.
     }
   },
 
@@ -94,7 +90,7 @@ Tw.MyTFarePaymentHistory.prototype = {
       this.listRenderPerPage = 20;
 
       this.listLastIndex = this.listRenderPerPage;
-      this.listViewMoreHide = (this.listLastIndex <= totalDataCounter);
+      this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
       this.renderableListData = this.data.listData.mergedListData.slice(0, this.listRenderPerPage);
 

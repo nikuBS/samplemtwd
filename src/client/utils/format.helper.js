@@ -100,6 +100,56 @@ Tw.FormatHelper = (function () {
     };
   };
 
+  var convProductSpecifications = function(basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
+    var isValid = function(value) {
+      return !(Tw.FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
+    };
+
+    return {
+      basFeeInfo: isValid(basFeeInfo) ? Tw.FormatHelper.convProductBasfeeInfo(basFeeInfo) : null,
+      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? Tw.FormatHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt) : null,
+      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? Tw.FormatHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
+      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? Tw.FormatHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
+    };
+  };
+
+  var convProductBasfeeInfo = function(basFeeInfo) {
+    var isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
+
+    return {
+      isNaN: isNaNbasFeeInfo,
+      value: isNaNbasFeeInfo ? basFeeInfo : Tw.FormatHelper.addComma(basFeeInfo)
+    };
+  };
+
+  var convProductBasOfrDataQtyCtt = function(basOfrDataQtyCtt) {
+    var isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrDataQtyCtt,
+      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : Tw.FormatHelper.convDataFormat(basOfrDataQtyCtt, Tw.DATA_UNIT.MB)
+    };
+  };
+
+  var convProductBasOfrVcallTmsCtt = function(basOfrVcallTmsCtt) {
+    var isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrVcallTmsCtt,
+      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : Tw.FormatHelper.convVoiceFormatWithUnit(isNaNbasOfrVcallTmsCtt)
+    };
+  };
+
+  var convProductBasOfrCharCntCtt = function(basOfrCharCntCtt) {
+    var isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrCharCntCtt,
+      value: basOfrCharCntCtt,
+      unit: Tw.SMS_UNIT
+    };
+  };
+
   var convDataFormat = function (data, curUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var unitIdx = _.findIndex(units, function (value) {
@@ -266,6 +316,39 @@ Tw.FormatHelper = (function () {
     }
   };
 
+  var lpad = function (str, length, padStr) {
+    while(str.length < length)
+      str = padStr + str;
+    return str;
+  };
+
+  var appendDataUnit = function (data) {
+    if (/^[0-9\.]+$/.test(data)) {
+      return data + Tw.DATA_UNIT.GB;
+    }
+    return data;
+  }
+
+  var appendVoiceUnit = function (amount) {
+    if (/^[0-9\.]+$/.test(amount)) {
+      return amount + Tw.PERIOD_UNIT.MINUTES;
+    }
+    return amount;
+  }
+
+  var appendSMSUnit = function (amount) {
+    if (/^[0-9\.]+$/.test(amount)) {
+      return amount + Tw.SMS_UNIT;
+    }
+    return amount;
+  }
+
+  var getTemplateString = function (template, values) {
+    return template.replace(/{\w+}/g, function(x) {
+      return values[x.slice(1, x.length - 1)];
+    });
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -273,6 +356,11 @@ Tw.FormatHelper = (function () {
     isArray: isArray,
     isString: isString,
     customDataFormat: customDataFormat,
+    convProductSpecifications: convProductSpecifications,
+    convProductBasfeeInfo: convProductBasfeeInfo,
+    convProductBasOfrDataQtyCtt: convProductBasOfrDataQtyCtt,
+    convProductBasOfrVcallTmsCtt: convProductBasOfrVcallTmsCtt,
+    convProductBasOfrCharCntCtt: convProductBasOfrCharCntCtt,
     convDataFormat: convDataFormat,
     addComma: addComma,
     removeComma: removeComma,
@@ -291,6 +379,11 @@ Tw.FormatHelper = (function () {
     is6digitPassSameNumber: is6digitPassSameNumber,
     is6digitPassSolidNumber: is6digitPassSolidNumber,
     normalizeNumber: normalizeNumber,
-    removeElement: removeElement
+    removeElement: removeElement,
+    lpad: lpad,
+    appendDataUnit: appendDataUnit,
+    appendVoiceUnit: appendVoiceUnit,
+    appendSMSUnit: appendSMSUnit,
+    getTemplateString: getTemplateString
   };
 })();

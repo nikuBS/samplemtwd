@@ -1,0 +1,44 @@
+﻿@charset "UTF-8";
+
+
+
+/* PLM 원장 */
+
+.plm h1 {padding-top:25px !important;color:#000 !important;font-size:32px !important;line-height:37px;}
+.plm h1 * {color:#000 !important;font-size:32px !important;}
+.plm h2 {padding-top:30px !important;color:#000 !important;font-size:15px !important;font-weight:bold !important;}
+.plm h2 * {color:#000 !important;font-size:15px !important;font-weight:bold !important;}
+.plm h2:first-child {padding-top:20px !important;font-weight:bold !important;}
+.plm h3 {padding-top:35px !important;color:#000 !important;font-size:16px !important;font-weight:bold !important;}
+.plm h3 * {color:#000 !important;font-size:16px !important;font-weight:bold !important;}
+
+
+
+.plm h4 {padding-top:10px !important;color:#000 !important;font-size:15px !important;}
+.plm h4 * {color:#000 !important;font-size:15px !important;}
+.plm h5 {padding-top:18px !important;color:#666 !important;font-size:15px !important;}
+.plm h5 * {color:#666 !important;font-size:15px !important;}
+ 
+.plm p,
+.plm div {padding-top:10px !important; color:#000 !important;font-size:15px !important;}
+.plm div *,
+.plm p * {color:#000 !important;font-size:15px !important;}
+.plm ul,
+.plm ol {padding-top:25px !important;}
+.plm ul li,
+.plm ol li {position:relative !important;padding-left:18px !important;color:#000 !important;font-size:15px !important;line-height:20px !important;}
+.plm > ul > li:after,
+.plm > ol > li:after{content:"" !important;position:absolute !important;top:9px !important;left:5px !important;width:3px !important;height:3px !important;background-color:#000 !important;border-radius:20px;}
+.plm ul li ul,
+.plm ol li ol{padding:10px 0 20px !important;}
+.plm ul li *,
+.plm ol li * {color:#000 !important;font-size:15px !important;line-height:20px !important;}
+
+.plm table {width:100% !important;margin-top:10px !important;border:0 !important;}
+.plm table th {height:auto !important;padding:13px 0;border:1px solid #e1e1e1 !important;background:#f5f5f5 !important;color:#666 !important;font-size:13px !important;text-align:center !important;vertical-align:top !important;}
+.plm table td {height:auto !important;padding:13px 0;border:1px solid #e1e1e1 !important;background:#ffffff !important;color:#000 !important;font-size:13px !important;text-align:center !important;vertical-align:top !important;}
+.plm table th * {padding:0 !important;color:#666 !important;font-size:13px !important;text-align:center !important;}
+.plm table td * {padding:0 !important;color:#000 !important;font-size:13px !important;text-align:center !important;}
+
+
+/* 시각화 원장 */

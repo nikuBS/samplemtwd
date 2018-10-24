@@ -1,0 +1,182 @@
+<%#
+* FileName: myt-join.wire.history.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.10.08
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '신청 현황', svcInfo: svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="ti-caption-gray">
+                <span class="num">총<em><%= list.length %></em>건</span>
+            </div>
+
+            <script id="list-cont-box-tmplt" type="text/x-handlebars-template">
+                <div class="cont-box nogaps">
+                    <div class="history-list">
+                        <ul></ul>
+                    </div>
+                </div>
+            </script>
+
+            <!-- 신규가입 tmpl -->
+            <script id="list-cont-item-tmplt-167" type="text/x-handlebars-template">
+                <li data-no="{{ dataNo }}">
+                    <span class="tx-date">{{ noYearDate dt }}</span>
+                    <button>
+                        <div class="li-elem">
+                            <div class="title-box">
+                                <span class="tit">{{ svcNm }}</span>
+                                <span class="sub-tit">{{ apiNm }}</span>
+                                <span class="sub-tit">인터넷 신규 계통</span>
+                            </div>
+                            <span class="text-l">접수중</span>
+                        </div>
+                    </button>
+                </li>
+            </script>
+
+
+            <!-- 설치장소 변경 tmpl -->
+            <script id="list-cont-item-tmplt-162" type="text/x-handlebars-template">
+                <li data-no="{{ dataNo }}">
+                    <span class="tx-date">{{ noYearDate dt }}</span>
+                    <button>
+                        <div class="li-elem">
+                            <div class="title-box">
+                                <span class="tit">{{ svcNm }}</span>
+                                <span class="sub-tit">설치 장소 변경(오프라인)</span>
+                                <span class="sub-tit">인터넷 설치 정보 변경</span>
+                            </div>
+                            <span class="text-l">접수중</span>
+                        </div>
+                    </button>
+                </li>
+            </script>
+
+            <!-- 가입상품 변경 tmpl -->
+            <script id="list-cont-item-tmplt-168" type="text/x-handlebars-template">
+                <li data-no="{{ dataNo }}">
+                    <span class="tx-date">{{ noYearDate dt }}</span>
+                    <button>
+                        <div class="li-elem">
+                            <div class="title-box">
+                                <span class="tit">{{ svcNm }}</span>
+                                <span class="sub-tit">가입 상품 변경</span>
+                                <!--<span class="sub-tit">인터넷 가입 상품 변경</span>-->
+                            </div>
+                            <span class="text-l">{{ stNm }}</span>
+                        </div>
+                    </button>
+                </li>
+            </script>
+
+
+            <!-- 약정기간 변경 tmpl -->
+            <script id="list-cont-item-tmplt-143" type="text/x-handlebars-template">
+                <li data-no="{{ dataNo }}">
+                    <span class="tx-date">{{ noYearDate dt }}</span>
+                    <button>
+                        <div class="li-elem">
+                            <div class="title-box">
+                                <span class="tit">{{ svcNm }}</span>
+                                <span class="sub-tit">{{ apiNm }}</span>
+                            </div>
+                            <span class="text-l">{{ stNm }}</span>
+                        </div>
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">변경 전</span>
+                                    <span class="tx-cont">{{ beforeTerm }}</span>
+                                </li>
+                                <li>
+                                    <span class="title">변경 후</span>
+                                    <span class="tx-cont tx-bold">{{ afterTerm }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </button>
+                </li>
+            </script>
+
+
+            <!-- 요금상품 변경 tmpl -->
+            <script id="list-cont-item-tmplt-153" type="text/x-handlebars-template">
+                <li data-no="{{ dataNo }}">
+                    <span class="tx-date">{{ noYearDate dt }}</span>
+                    <button>
+                        <div class="li-elem">
+                            <div class="title-box">
+                                <span class="tit">{{ svcNm }}</span>
+                                <span class="sub-tit">{{ apiNm }}</span>
+                            </div>
+                            <span class="text-l">{{ stNm }}</span>
+                        </div>
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">변경 후</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </button>
+                </li>
+            </script>
+
+
+
+            <script id="list-year-div-tmplt" type="text/x-handlebars-template">
+                <div class="data-select-wrap">
+                    <span class="data-tit">{{ year }}</span>
+                </div>
+            </script>
+
+            <!-- .cont-box -->
+            <div id="cont-boxes">
+
+            </div>
+            <!--
+            <div class="bt-more" style="display:none;">
+                <button>더보기</button>
+            </div>
+            -->
+            <script id="bt-more-tmplt" type="text/x-handlebars-template">
+                <div class="bt-more">
+                    <button>더보기</button>
+                </div>
+            </script>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+            <!--// TBD -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  var comp = null;
+  $(document).ready(function () {
+    comp = new Tw.MyTJoinWireHistory($('.wrap'), decodeURIComponent('<%= JSON.stringify(list) %>').replace(/&#34;/g, '"'));
+  });
+</script>
+<% include ../../components/end.component.html %>

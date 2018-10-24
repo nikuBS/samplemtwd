@@ -14,17 +14,17 @@ import MyTDataFamily from './controllers/family/myt-data.family.controller';
 class MytDataRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/', controller: new MyTDataSubMain() });
-    this.controllers.push({ url: '/usage', controller: new MyTDataUsage() });
-    this.controllers.push({ url: '/usage/child(/:childSvcMgmtNum)?', controller: new MyTDataUsageChild() });
-    this.controllers.push({ url: '/usage/total-sharing-data', controller: new MyTDataUsageTotalSharingData() });
-    this.controllers.push({ url: '/recharge/history', controller: new MyTDataRechargeHistory() });
-    this.controllers.push({ url: '/gift(/:page)?', controller: new MyTDataGift() });
-    this.controllers.push({ url: '/ting(/:page)?', controller: new MyTDataTing() });
-    this.controllers.push({ url: '/limit(/:page)?', controller: new MyTDataLimit() });
-    this.controllers.push({ url: '/cookiz(/:page)?', controller: new MyTDataCookiz() });
-    this.controllers.push({ url: '/family(/:page)?', controller: new MyTDataFamily() });
-    this.controllers.push({ url: '/recharge/coupon(/:page)?', controller: new MyTDataRechargeCoupon() });
+    this.controllers.push({ url: '/', controller: MyTDataSubMain });
+    this.controllers.push({ url: '/usage', controller: MyTDataUsage });
+    this.controllers.push({ url: '/usage/child(/:childSvcMgmtNum)?', controller: MyTDataUsageChild });
+    this.controllers.push({ url: '/usage/total-sharing-data', controller: MyTDataUsageTotalSharingData });
+    this.controllers.push({ url: '/recharge/history', controller: MyTDataRechargeHistory });
+    this.controllers.push({ url: '/gift(/:page)?', controller: MyTDataGift });
+    this.controllers.push({ url: '/ting(/:page)?', controller: MyTDataTing });
+    this.controllers.push({ url: '/limit(/:page)?', controller: MyTDataLimit });
+    this.controllers.push({ url: '/cookiz(/:page)?', controller: MyTDataCookiz });
+    this.controllers.push({ url: '/family(/:page)?', controller: MyTDataFamily });
+    this.controllers.push({ url: '/recharge/coupon(/:page)?', controller: MyTDataRechargeCoupon });
   }
 }
 

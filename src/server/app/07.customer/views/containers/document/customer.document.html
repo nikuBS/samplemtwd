@@ -1,0 +1,293 @@
+<%#
+* FileName: customer.document.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.10.16
+%>
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html',
+    { title: '구비서류', svcInfo: svcInfo, option:{ line: false } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <!-- .cont-box -->
+            <h2 class="blind">내용</h2>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1 required-doc"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>인터넷/전화/TV</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-value="EST_SW">
+                                        <!-- .cont-box -->
+                                        <div class="cont-box nogaps">
+                                            <!-- .accordion -->
+                                            <div class="widget">
+                                                <div class="widget-box accordion2">
+                                                    <div class="acco-style required-doc"><!-- 스타일별 클래스 추가 -->
+                                                        <ul class="acco-box">
+                                                            <li class="acco-list on" data-index="1"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed="" class="">
+                                                                        <i class="step">STEP 01</i>
+                                                                        <span class="question">어떤 서비스를 이용하려고 하시나요?</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list division-four skin01" role="radiogroup">
+                                                                                <% for (var i = 0; i < mobileCategoryList.length; i++) { %>
+                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false">
+                                                                                    <input type="radio" name="radio1" value=""
+                                                                                           id="<%= mobileCategoryList[i].ncssDocGuidClId %>"
+                                                                                           title="<%= mobileCategoryList[i].ncssDocGuidClNm %>" />
+                                                                                    <% if (mobileCategoryList[i].isLong) { %>
+                                                                                        <span class="txt"><%= mobileCategoryList[i].name1 %><br /><%= mobileCategoryList[i].name2 %></span>
+                                                                                    <% } else { %>
+                                                                                        <span class="txt"><%= mobileCategoryList[i].ncssDocGuidClNm %></span>
+                                                                                    <% } %>
+                                                                                </li>
+                                                                                <% } %>
+                                                                                <li class="radiobox type01 none fe-standard-node" role="radio" aria-checked="false">
+                                                                                    <input type="radio" name="radio2" value="" />
+                                                                                    <span class="txt"></span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="2"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed="">
+                                                                        <i class="step">STEP 02</i>
+                                                                        <span class="question">처리하실 상세 서비스를 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="3"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 03</i><br/>
+                                                                        <span class="question">처리하실 사항을 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="4"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 04</i><br/>
+                                                                        <span class="question">명의자 유형을 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="5"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 05</i><br/>
+                                                                        <span class="question">지점/대리점 방문자를 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--// .accordion -->
+                                        </div>
+                                        <!--// .cont-box -->
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-value="EST_W">
+                                        <!-- .cont-box -->
+                                        <div class="cont-box nogaps">
+                                            <!-- .accordion -->
+                                            <div class="widget">
+                                                <div class="widget-box accordion2">
+                                                    <div class="acco-style required-doc"><!-- 스타일별 클래스 추가 -->
+                                                        <ul class="acco-box">
+                                                            <li class="acco-list on" data-index="1"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 01</i><br/>
+                                                                        <span class="question">어떤 서비스를 이용하려고 하시나요?</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list division-four skin01" role="radiogroup">
+                                                                                <% for (var i = 0; i < etcCategoryList.length; i++) { %>
+                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false">
+                                                                                    <input type="radio" name="radio1" value=""
+                                                                                           id="<%= etcCategoryList[i].ncssDocGuidClId %>"
+                                                                                           title="<%= etcCategoryList[i].ncssDocGuidClNm %>" />
+                                                                                    <% if (etcCategoryList[i].isLong) { %>
+                                                                                        <span class="txt"><%= etcCategoryList[i].name1 %><br /><%= etcCategoryList[i].name2 %></span>
+                                                                                    <% } else { %>
+                                                                                        <span class="txt"><%= etcCategoryList[i].ncssDocGuidClNm %></span>
+                                                                                    <% } %>
+                                                                                </li>
+                                                                                <% } %>
+                                                                                <li class="radiobox type01 none fe-standard-node" role="radio" aria-checked="false">
+                                                                                    <input type="radio" name="radio2" value="" />
+                                                                                    <span class="txt"></span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="2"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 02</i><br/>
+                                                                        <span class="question">처리하실 상세 서비스를 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="3"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 03</i><br/>
+                                                                        <span class="question">처리하실 사항을 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="4"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 04</i><br/>
+                                                                        <span class="question">명의자 유형을 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="acco-list" data-index="5"><!-- on , off -->
+                                                                <div class="acco-title">
+                                                                    <button role="button" aria-pressed=""><i class="step">STEP 05</i><br/>
+                                                                        <span class="question">지점/대리점 방문자를 선택해주세요.</span>
+                                                                        <span class="result-txt"></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="acco-content">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list skin02" role="radiogroup"></ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--// .accordion -->
+                                        </div>
+                                        <!--// .cont-box -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!--// .cont-box -->
+            <div class="cont-box">
+                <!-- guide -->
+                <div class="customer-guide required-doc-param">
+                    <span class="ico"></span>
+                    <span class="txt">처리할 서비스를 선택하시면 업무 처리에 <strong>필요한 구비서류를 안내</strong>해드립니다.</span>
+                </div>
+                <div class="customer-guide required-doc-result"><!-- result로 결과값 출력 -->
+                    <span class="txt">고객님께서 <strong>준비하셔야 하는 구비서류</strong>입니다.</span>
+                    <div class="result">
+                        <ol class="item fe-doc-result"></ol>
+                    </div>
+                </div>
+                <!-- // guide -->
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerDocument($('.wrap'));
+  });
+</script>
+<% include ../components/end.component.html %>

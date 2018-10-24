@@ -15,13 +15,18 @@ class ApiService {
   static instance;
   private loginService: LoginService = new LoginService();
   private logger: LoggerService = new LoggerService();
+  private req;
+  private res;
 
   constructor() {
-    if ( ApiService.instance ) {
-      return ApiService.instance;
-    }
+  }
 
-    ApiService.instance = this;
+  public setCurrentReq(res, req) {
+    this.loginService.setCurrentReq(res, req);
+    // TODO DELETE
+    this.logger.info(this, '[API setCurrentReq]', !!req.session);
+    this.req = req;
+    this.res = res;
   }
 
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
@@ -33,6 +38,18 @@ class ApiService {
       axios(options)
         .then(this.apiCallback.bind(this, observer, command))
         .catch(this.handleError.bind(this, observer, command));
+    });
+  }
+
+  public nativeRequest(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
+    const apiUrl = this.getServerUri(command);
+    const options = this.getOption(command, apiUrl, params, header, args);
+    this.logger.info(this, '[API_REQ Native]', options);
+
+    return Observable.create((observer) => {
+      axios(options)
+        .then(this.apiCallbackNative.bind(this, observer, command))
+        .catch(this.handleErrorNative.bind(this, observer, command));
     });
   }
 
@@ -101,6 +118,23 @@ class ApiService {
       this.setServerSession(resp.headers);
     }
 
+
+    observer.next(respData);
+    observer.complete();
+  }
+
+  private apiCallbackNative(observer, command, resp) {
+    const respData = resp.data;
+    let serverSession = null;
+    this.logger.info(this, '[API RESP Native]', respData);
+
+    if ( command.server === API_SERVER.BFF ) {
+      serverSession = this.setServerSession(resp.headers);
+    }
+    // console.log('api, ser', serverSession);
+    respData.serverSession = serverSession;
+
+
     observer.next(respData);
     observer.complete();
   }
@@ -121,12 +155,33 @@ class ApiService {
     observer.complete();
   }
 
-  private setServerSession(headers) {
+  private handleErrorNative(observer, command, err) {
+    let serverSession = null;
+    if ( !FormatHelper.isEmpty(err.response) ) {
+      const error = err.response.data;
+      const headers = err.response.headers;
+      this.logger.error(this, '[API ERROR]', error);
+
+      if ( command.server === API_SERVER.BFF ) {
+        serverSession = this.setServerSession(headers);
+      }
+      error.serverSession = serverSession;
+      observer.next(error);
+    } else {
+      observer.next(err);
+    }
+    observer.complete();
+  }
+
+  private setServerSession(headers): any {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
-      this.logger.info(this, 'Set Session Cookie');
-      this.loginService.setServerSession(this.parseSessionCookie(headers['set-cookie'][0])).subscribe();
+      const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
+      this.logger.info(this, 'Set Session Cookie', serverSession);
+      this.loginService.setServerSession(serverSession).subscribe();
+      return serverSession;
     }
+    return null;
   }
 
   private parseSessionCookie(cookie: string): string {
@@ -142,7 +197,6 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          console.log(result);
           return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
         } else {
           throw resp;
@@ -263,6 +317,19 @@ class ApiService {
 
   public requestChangeLine(params: any): Observable<any> {
     return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0005, params);
+  }
+
+  public updateSvcInfo(): Observable<any> {
+    return this.request(API_CMD.BFF_01_0005, {})
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setSvcInfo(resp.result);
+        } else {
+          throw resp;
+        }
+      }).map(() => {
+        return { code: API_CODE.CODE_00 };
+      });
   }
 }
 

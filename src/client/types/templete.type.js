@@ -213,6 +213,16 @@ Tw.POPUP_TPL = {
         {value: '콘텐츠 이용료 선결제'}
       ]
     }
+  ],
+  MYT_JOIN_WIRE_MODIFY_PERIOD: [
+    {
+      list: [
+        {value: '무약정', attr: 'id="0"', cnt: 0},
+        {value: '1년', attr: 'id="1"', cnt: 1},
+        {value: '2년', attr: 'id="2"', cnt: 2},
+        {value: '3년', attr: 'id="3"', cnt: 3}
+      ]
+    }
   ]
 };
 
@@ -259,43 +269,59 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  {'value':'전체'},
-  {'value':'T끼리 데이터 선물'},
-  {'value':'데이터 한도 충전'},
-  {'value':'팅/쿠키즈/안심요금'},
-  {'value':'팅 요금 선물'},
-  {'value':'데이터 음성 리필'}
+  { value: '전체' },
+  { value: 'T끼리 데이터 선물' },
+  { value: '데이터 한도 충전' },
+  { value: '팅/쿠키즈/안심요금' },
+  { value: '팅 요금 선물' },
+  { value: '데이터 음성 리필' }
 ];
 
 Tw.PRODUCT_PLANS_ORDER = [
-  {'value':'추천순'},
-  {'value':'높은 가격순'},
-  {'value':'낮은 가격순'}
+  { value: '추천순' },
+  { value: '높은 가격순' },
+  { value: '낮은 가격순' }
 ];
 
-Tw.PRODUCT_LIST_DEVICE_FILTERS = [
-  {
-    id: 'F01121',
-    name: 'LTE',
-    icon: 'lte'
-  }, {
-    id: 'F01122',
-    name: '3G',
-    icon: '3g'
-  }, {
-    id: 'F01123',
-    name: '일반폰',
-    icon: 'feature'
-  }, {
-    id: 'F01124',
-    name: '태블릿/<br>2nd Device',
-    icon: 'device'
-  }, {
-    id: 'F01125',
-    name: '선불폰',
-    icon: 'prepayment'
-  }
-];
+Tw.PRODUCT_LIST_DEVICE_FILTERS = {
+  'F01100': [
+    { 
+      id: 'F01121',
+      name: 'LTE',
+      icon: 'lte'
+    }, {
+      id: 'F01122',
+      name: '3G',
+      icon: '3g'
+    }, {
+      id: 'F01123',
+      name: '일반폰',
+      icon: 'feature'
+    }, {
+      id: 'F01124',
+      name: '태블릿/<br>2nd Device',
+      icon: 'device'
+    }, {
+      id: 'F01125',
+      name: '선불폰',
+      icon: 'prepayment'
+    }],
+  'F01200': [
+    { 
+      id: 'F01221',
+      name: '스마트폰',
+      icon: 'lte'
+    }, {
+      id: 'F01122',
+      name: '일반폰',
+      icon: 'feature'
+    }, {
+      id: 'F01123',
+      name: '태블릿/<br>2nd Device',
+      icon: 'device'
+    }
+  ]
+}
 
 Tw.RESELL_TERMS = {
   title: '재판매 이용약관',
@@ -307,3 +333,39 @@ Tw.RESELL_TERMS = {
     ]
   }]
 };
+
+Tw.MYT_FARE_BILL_GUIDE = {
+  DETAIL_BTN: {
+    CONTENTS: '<span class="bt-detail"><button data-target="detailContentsBtn">자세히 보기</button></span>',
+    MICRO: '<span class="bt-detail"><button data-target="detailMicroBtn">자세히 보기</button></span>'
+  },
+  THIRD_PARTY_TPL: '<span class="badge badge-other"><span class="blind">타사</span></span>'
+
+};
+
+Tw.HELPLINE_TYPES = [{ value: '일반' }, { value: '로밍' }, { value: '통화품질 상담' }];
+
+Tw.CUSTOMER_HELPLINE_AREAS = [
+  { value: '수도권 (서울, 경기, 인천, 강원)', attr: "data-area-code='1'" },
+  { value: '중부 (충남, 충북, 대전)', attr: "data-area-code='5'" },
+  { value: '서부 (전남, 전북, 광주, 제주)', attr: "data-area-code='4'" },
+  { value: '대구 (경북, 대구)', attr: "data-area-code='3'" },
+  { value: '부산 (경남, 울산, 부산)', attr: "data-area-code='2'" }
+];
+
+Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
+  { value: '지점', code: 'T40' },
+  { value: '대리점', code: 'T10' },
+  { value: '이용안내', code: 'T30' },
+  { value: '통화품질 기준 매니저', code: 'T50' },
+  { value: 'AS센터', code: 'T20' },
+  { value: '행복기사(SK브로드밴드)', code: 'T60' }
+];
+
+Tw.CUSTOMER_PRAISE_AREAS = [
+  { value: '서울/인천/경기', code: 'A10' },
+  { value: '강원/충청/대전', code: 'A20' },
+  { value: '전북/전남/광주/제주', code: 'A30' },
+  { value: '부산/경남', code: 'A40' },
+  { value: '대구/경북', code: 'A50' }
+];

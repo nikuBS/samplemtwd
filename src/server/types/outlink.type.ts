@@ -1,4 +1,4 @@
-export const CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO = [
+export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
   {
     TEXT: '이메일을 통한 피싱주의',
     LINK: 'http://m.tv.naver.com/v/3063505'
@@ -45,7 +45,7 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO = [
   }
 ];
 
-export const CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST = [
+export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   {
     TEXT: '랜섬웨어 대응 가이드라인',
     LINK: 'https://m.blog.naver.com/kisa118/221218861926'
@@ -220,7 +220,7 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST = [
   }
 ];
 
-export const CUSTOMER_PREVENTDAMAGE_REPORT_ORG = [
+export const CUSTOMER_PROTECT_REPORT_ORG = [
   {
     TEXT: '개인정보 침해 신고센터',
     LINK: 'http://privacy.kisa.or.kr/kor/main.jsp'
@@ -243,41 +243,41 @@ export const CUSTOMER_PREVENTDAMAGE_REPORT_ORG = [
   }
 ];
 
-export const CUSTOMER_PREVENTDAMAGE_RELATE_ORG = [
+export const CUSTOMER_PROTECT_RELATE_ORG = [
   {
     TEXT: '정보통신망법',
     LINK: 'http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%A0%95%EB%B3%B4%ED%86%B5%EC%8B%A0%EB%A7%9D%EB%B2%95&x=0&y=0'
   },
   {
     TEXT: '방송통신 위원회',
-    LINK: 'http://www.kcc.go.kr/'
+    LINK: 'http://www.kcc.go.kr'
   },
   {
     TEXT: '방송통신 심의 위원회',
-    LINK: 'http://www.kocsc.or.kr/mainPage.do'
+    LINK: 'http://www.kocsc.or.kr'
   },
   {
     TEXT: '방송통신 이용자 정보 포털',
-    LINK: 'http://www.wiseuser.go.kr/'
+    LINK: 'http://www.wiseuser.go.kr'
   },
   {
     TEXT: '그린 i-Net',
-    LINK: 'http://www.greeninet.or.kr/'
+    LINK: 'http://www.greeninet.or.kr'
   },
   {
     TEXT: '문화체육관광부',
-    LINK: 'http://www.mcst.go.kr/main.jsp'
+    LINK: 'http://www.mcst.go.kr'
   },
   {
     TEXT: '경찰청 사이버안전국',
-    LINK: 'http://cyberbureau.police.go.kr/index.do'
+    LINK: 'http://cyberbureau.police.go.kr'
   },
   {
     TEXT: '국가 사이버 안전센터',
-    LINK: 'http://www.nis.go.kr/AF/1_7.do'
+    LINK: 'http://www.nis.go.kr'
   },
   {
     TEXT: '국가 인터넷 진흥원(Kisa)',
-    LINK: 'http://www.kisa.or.kr/main.jsp'
+    LINK: 'http://www.kisa.or.kr'
   }
 ];

@@ -125,7 +125,7 @@
                 <div class="cont-box">
                     <div class="plan-title">
                          <h3 class="tit"><%= productData.bestAdditions.expsTitNm %></h3>
-                         <div class="bt-alone mt4"><a href="/product/additions" class="bt-bg-blue1">전체 부가상품</a></div>
+                         <div class="bt-alone mt4"><a href="/product/additions" class="bt-bg-blue1">전체 부가서비스</a></div>
                     </div>
 
                     <ul class="recommendedrate-list">
@@ -260,7 +260,7 @@
                     <div class="moreitems-wrap">
                         <ul class="moreitems-list"> <!-- TODO: 링크 이동 추가 필요 -->
                             <li>
-                                <a class="link link-type01" href="/product" >모바일<br>요금제</button>
+                                <a class="link link-type01" href="/product" >모바일<br>요금제</a>
                                 <!-- <a href="#" class="link link-type01">모바일<br>부가상품</a> -->
                             </li>
                             <li>
@@ -311,22 +311,22 @@
                         </li>
                         <li>
                             <div class="link-long">
-                                <button>
+                                <a href="/product/detail/NA00004430">
                                     <span class="ico-thum"></span>선택약정 할인제도
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="link-long">
-                                <button>
+                                <a href="/product/detail/NA00000468">
                                     <span class="ico-thum"></span>친구찾기
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
@@ -357,6 +357,7 @@
         </div>
         <!--// #contents -->
     </div>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </body>
 <% include ../components/javascript.component.html %>
 <script>

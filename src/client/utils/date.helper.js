@@ -1,3 +1,4 @@
+
 Tw.DateHelper = (function () {
   moment.locale('ko', {
     weekdaysMin: Tw.WEEKDAYS
@@ -59,7 +60,7 @@ Tw.DateHelper = (function () {
    */
   var getYearMonth = function (date) {
     return moment(this.convDateFormat(date)).format('YYYYMM');
-  }
+  };
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
@@ -183,9 +184,9 @@ Tw.DateHelper = (function () {
    */
   var getAddDay = function (date) {
     return moment(convDateFormat(date))
-        .add(1, 'days')
-        .subtract(1, 'minutes')
-        .format('YYYY.MM.DD hh:mm');
+      .add(1, 'days')
+      .subtract(1, 'minutes')
+      .format('YYYY.MM.DD hh:mm');
   };
 
   /**
@@ -228,6 +229,15 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * @input 12월
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 11월
+   */
+  var getShortKoreanAfterMonth = function (date) {
+    return moment(convDateFormat(date)).add('1', 'months').format('MM월');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 12월
    */
@@ -241,7 +251,7 @@ Tw.DateHelper = (function () {
    */
   var getKoreanDateWithDay = function (date) {
     return moment(this.convDateFormat(date)).format('MMM Do dddd');
-  }
+  };
 
   var getDayOfWeek = function (date) {
     return moment(convDateFormat(date)).format('dd');
@@ -254,6 +264,22 @@ Tw.DateHelper = (function () {
 
   var isValid = function (date) {
     return moment(date).isValid();
+  };
+
+  var getStartOfMonSubtractDate = function (date, subStr, format) {
+    return moment(this.convDateFormat(date)).subtract(subStr, 'months').startOf('month').format(format);
+  };
+
+  var getEndOfMonSubtractDate = function (date, subStr, format) {
+    return moment(this.convDateFormat(date)).subtract(subStr, 'months').endOf('month').format(format);
+  };
+
+  var getStartOfMonDate = function (date, format) {
+    return moment(this.convDateFormat(date)).startOf('month').format(format);
+  };
+
+  var getEndOfMonDate = function (date, format) {
+    return moment(this.convDateFormat(date)).endOf('month').format(format);
   };
 
   return {
@@ -282,8 +308,13 @@ Tw.DateHelper = (function () {
     getDiffByUnit: getDiffByUnit,
     getFullKoreanDate: getFullKoreanDate,
     getShortKoreanDate: getShortKoreanDate,
+    getShortKoreanAfterMonth: getShortKoreanAfterMonth,
     getShortKoreanMonth: getShortKoreanMonth,
     getKoreanDateWithDay: getKoreanDateWithDay,
-    isValid: isValid
+    isValid: isValid,
+    getStartOfMonSubtractDate: getStartOfMonSubtractDate,
+    getEndOfMonSubtractDate: getEndOfMonSubtractDate,
+    getStartOfMonDate: getStartOfMonDate,
+    getEndOfMonDate: getEndOfMonDate
   };
 })();

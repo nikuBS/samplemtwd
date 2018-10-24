@@ -4,7 +4,7 @@
 * Date: 2018.10.04
 %>
 
-<% if (immediatelyInfo.tFmlyShrblQty >= 1) { %>
+<% if (Number(immediatelyInfo.tFmlyShrblQty) >= 1) { %>
 <!-- 2018-09-18 추가 -->
 <div class="ti-caption-gray">
 	<!-- 2018-09-19 클래스명 변경 -->
@@ -16,12 +16,15 @@
 	<!-- 2018-09-18 info-wrap 삭제 -->
 	<h4 class="tabcon-title0 pt40">가족에게 공유할 데이터</h4>
 	<div class="inp-tx-wrap">
-		<div class="inputbox bt-add">
-			<span class="input">
-				<input type="number" placeholder="숫자만 입력" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" data-share-amount="<%= immediatelyInfo.tFmlyShrblQty %>">
-				<button class="cancel"><span class="blind">삭제</span></button>
-			</span>
-			<span class="txt-area">GB</span>
+		<div class="inputbox bt-add error">
+			<div class="inner">
+				<span class="input">
+					<input type="number" placeholder="숫자만 입력" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" data-share-amount="<%= immediatelyInfo.tFmlyShrblQty %>">
+					<button class="cancel"><span class="blind">삭제</span></button>
+				</span>
+				<span class="txt-area">GB</span>
+			</div>		
+			<span id="aria-exp-desc3" class="error-txt none"></span>
 		</div>
 		<div class="bt-alone bt-num">
 			<button class="bt-bg-blue1" data-value="1">+1</button>
@@ -63,7 +66,7 @@
     <!-- 2018-09-18 추가 -->
     <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
         <h4 class="tit">바로 공유 가능 데이터</h4>
-        <p class="num"><em>30</em> GB</p>
+        <p class="num"><em><%= immediatelyInfo.tFmlyShrblQty || 0 %></em> GB</p>
     </div>
     <!--// 2018-09-18 추가 -->
     <div class="cont-box nogaps-top">

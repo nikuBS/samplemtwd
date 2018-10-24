@@ -19,13 +19,14 @@ class ProductDetailContents extends TwViewController {
     const contentsResultList: any = [];
 
     contentsInfo.forEach((item) => {
-      if (item.ledStylCd !== 'LE') {
+      if (!FormatHelper.isEmpty(item.ledStylCd) && item.ledStylCd !== 'LE') {
         return true;
       }
 
       contentsResultList.push({
         briefTitNm: item.briefTitNm,
-        ledDtlHtmlCtt: item.ledDtlHtmlCtt
+        ledDtlHtmlCtt: item.ledDtlHtmlCtt,
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
       });
     });
 

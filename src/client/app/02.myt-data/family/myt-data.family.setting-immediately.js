@@ -23,16 +23,17 @@ Tw.MyTDataFamilySettingImmediately.prototype = {
   _cachedElement: function () {
     this.$amountInput = this.$container.find('span.input input');
     this.$submitBtn = this.$container.find('.bt-red1 button');
+    this.$error = this.$container.find('#aria-exp-desc3');
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.bt-bg-blue1', $.proxy(this._addShareData, this));
-    this.$container.on('focusout', 'span.input input', $.proxy(this._validateShareAmount, this))
+    this.$container.on('focusout', 'span.input input', $.proxy(this._validateShareAmount, this));
     this.$amountInput.on('keyup', $.proxy(this._handleChangeAmount, this));
     this.$submitBtn.on('click', $.proxy(this._confirmSubmit, this));
   },
 
-_addShareData: function (e) {
+  _addShareData: function (e) {
     var value = $(e.target).data('value');
 
     if (value === 'all') {
@@ -40,15 +41,26 @@ _addShareData: function (e) {
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + value);
     }
+
+    if (!this.$error.hasClass('none')) {
+      this.$error.addClass('none');
+    }
+
     this.$submitBtn.attr('disabled', false);
   }, 
 
   _validateShareAmount: function () {
     if (!this.$amountInput.val()) {
-      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V17
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
+      this.$error.removeClass('none');
     } else if (Number(this.$amountInput.val()) > this._shareAmount) {
-      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V16
-    }    
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
+      this.$error.removeClass('none');
+    } else {
+      if (!this.$error.hasClass('none')) {
+        this.$error.addClass('none');
+      }
+    } 
   },
 
   _handleChangeAmount: function (e) {
@@ -69,11 +81,18 @@ _addShareData: function (e) {
   _handleSubmit: function () {
     var auto = this.$container.find('ul.select-list input').attr('checked') === 'checked', value = this.$amountInput.val();
     if (auto) {
-      this._goToComplete('?monthly=true');
-      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
+      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, '?monthly=true'));
     } else {
-      this._goToComplete();
-      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: this.$amountInput.val() }).done($.proxy(this._goToComplete, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, ''));
+    }
+  },
+
+  _handleSuccessSubmit: function (query, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+      this._popupService.close();
+    } else {
+      this._goToComplete(query);
     }
   },
 

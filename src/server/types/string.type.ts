@@ -26,7 +26,8 @@ export const MYT_FARE_BILL_TYPE = {
 export enum UNIT {
   WON = '원',
   GB = 'GB',
-  MB = 'MB'
+  MB = 'MB',
+  SMS = '건'
 }
 
 export const MYT_DATA_USAGE = {
@@ -249,4 +250,51 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   AU: '자동납부 상세 내역',
   MP: '소액 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
+
+};
+
+export const MYT_FARE_PAYMENT_ERROR = {
+  DEFAULT: '청구된 요금이 없습니다.',
+  REP_SVC_N: '대표청구번호가 아닙니다.',
+  COM_CODE_B: '사업자가 브로드밴드 입니다.'
+};
+
+export const MYT_JOIN_WIRE_SVCATTRCD = {
+  M1: '휴대폰',
+  M2: '선불폰',
+  M3: 'T pocket Fi',
+  M4: 'T Login',
+  M5: 'T Wibro',
+  S1: '인터넷',
+  S2: 'IPTV',
+  S3: '집전화',
+  O1: '포인트캠'
+};
+
+export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
+  TITLE: '명의 변경 신청 방법 안내',
+};
+
+export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
+  TITLE: '약정 기간 변경',
+};
+
+export const MYT_JOIN_WIRE_SET_PAUSE = {
+  TITLE: '일시 정지/해제',
+  MONTH: '개월 ',
+  DAY: '일',
+};
+
+export enum CUSTOMER_NOTICE_CATEGORY {
+  TWORLD = 'T world',
+  DIRECTSHOP = '다이렉트샵',
+  MEMBERSHIP = '멤버십',
+  ROAMING = '로밍'
 }
+
+export enum CUSTOMER_PROTECT_GUIDE {
+  VIDEO = '동영상으로 보는 피해예방법',
+  WEBTOON = '웹툰으로 보는 피해예방법',
+  LATEST = '최신 이용자 피해예방 정보'
+}
+

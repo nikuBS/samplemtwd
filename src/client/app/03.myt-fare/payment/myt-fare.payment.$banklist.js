@@ -56,11 +56,11 @@ Tw.MyTFarePaymentBankList.prototype = {
     if (res.code === '00') {
       this._setBankList(res);
     } else {
-      this._getBankListFail(res.error);
+      this._getBankListFail(res);
     }
   },
   _getBankListFail: function (err) {
-    this._popupService.openAlert(err.message, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _setBankList: function (res) {
     var bankList = res.result.payovrBankList;

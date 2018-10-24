@@ -56,3 +56,48 @@ Tw.MYT_FARE_HISTORY_MICRO_METHOD = {
 };
 
 Tw.MYT_PAYMENT_HISTORY_TYPE = ['', 'direct', 'auto', 'auto-all', 'micro-prepay', 'content-prepay'];
+
+Tw.AUTH_LOGIN_TYPE = {
+  TID: 'T',
+  EASY: 'S'
+};
+
+Tw.AUTH_CERTIFICATION_METHOD = {
+  SK_SMS: 'S',
+  OTHER_SMS: 'T',
+  SMS_PASSWORD: 'Z',
+  SMS_KEYIN: 'J',
+  PUBLIC_AUTH: 'P',
+  FINANCE_AUTH: 'B',
+  IPIN: 'I',
+  EMAIL: 'E',
+  PASSWORD: 'W',
+  BIO: 'F',
+  SAVE: 'A',
+  SK_MOTP: 'M'
+};
+
+Tw.AUTH_CERTIFICATION_NICE = {
+  KT: 'K',
+  LG: 'L',
+  SAVE: 'M'
+};
+
+Tw.AUTH_CERTIFICATION_KIND = {
+  P: 'P',
+  A: 'A',
+  O: 'O',
+  R: 'R'
+};
+
+Tw.EMAIL_CERT_CODE = {
+  ID: 'ID',
+  PWD: 'PWD',
+  UPCERT: 'UPCERT',
+  UPCERTMULTI: 'UPCERTMULTI',
+  SLEEP_USER: 'SLEEP_USER',
+  SLEEP_IUSER_ENG: 'SLEEP_USER_ENG',
+  PWD_CHG: 'PWD_CHG',
+  PWD_CHG_ENG: 'PWD_CHG_ENG',
+  SECOND_AUTH: 'SECOND_AUTH'
+};

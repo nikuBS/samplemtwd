@@ -376,7 +376,7 @@ skt_landing.action = {
           'z-index' : 1000
         })
         .attr('id', 'loading' + Math.floor(Math.random()*1000))
-        .appendTo($(ta).closest('.wrap'))
+        .appendTo($('body').find('.wrap:eq(0)'))
       $(ta).data('mate', loading_box.attr('id'))
       loading_ico.appendTo(loading_box);
       loading_ico.append(svg);
@@ -513,14 +513,14 @@ skt_landing.action = {
       var pop_h = $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-contents').height();
       if (pop_h > 290) {
         $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info').addClass('scrolling');
-        /*$('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info .popup-contents').on('scroll',function(){
+        $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info .popup-contents').on('scroll',function(){
           var scrTop = $(this).scrollTop();
           if(scrTop == 0){
             $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info').removeClass('scrolling-shadow');
           }else if(scrTop != 0 && !$('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info').hasClass('scrolling-shadow')){
             $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info').addClass('scrolling-shadow');
           }
-        });*/
+        });
       }
     },
     toast: function (popup_info) {

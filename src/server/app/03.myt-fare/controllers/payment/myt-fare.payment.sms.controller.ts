@@ -59,18 +59,20 @@ class MyTFarePaymentSms extends TwViewController {
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
       list.invDt = '';
+      list.defaultIndex = 0;
+
       list.map((data, index) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
+
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
           list.defaultIndex = index;
         }
       });
     }
-    list.code = API_CODE.CODE_00;
     return list;
   }
 

@@ -15,6 +15,7 @@ Tw.MyTFareSubMain = function (params) {
   this._requestCount = -1;
   this._resTimerID = null;
   this._svcMgmtNumList = [];
+  this._chartDefaultClass = 'chart_link item';
   this.data = params.data;
   this.loadingView(true);
   this._rendered();
@@ -23,18 +24,25 @@ Tw.MyTFareSubMain = function (params) {
 };
 
 Tw.MyTFareSubMain.prototype = {
-
-  loadingView: function (value) {
+  loadingView: function (value, selector) {
+    if ( !selector ) {
+      selector = '[data-id="wrapper"]';
+    }
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: '[data-id="wrapper"]', co: 'grey', size: true
+        ta: selector, co: 'grey', size: true
       });
     }
     else {
       skt_landing.action.loading.off({
-        ta: '[data-id="wrapper"]'
+        ta: selector
       });
     }
+  },
+
+  getLastDate: function (date) {
+    var lDate = new Date(date.slice(0, 4), date.slice(4, 6), 0).getDate().toString();
+    return date + lDate;
   },
 
   _rendered: function () {
@@ -166,6 +174,7 @@ Tw.MyTFareSubMain.prototype = {
       type: Tw.CHART_TYPE.BAR_2, //bar
       container: 'chart4', //클래스명 String
       unit: Tw.CHART_UNIT.WON, //x축 이름
+      sale: true, // 할인
       decimal: 'won', //소숫점자리
       data: data //데이터 obj
     });
@@ -205,7 +214,11 @@ Tw.MyTFareSubMain.prototype = {
 
   // 사용요금내역조회-1
   _usageFeeRequest: function () {
-    var usageDtArray = this.data.usage.invDtArr;
+    // TODO: 서버 데이터 변경되면 주석제거 예정
+    this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
+      .done($.proxy(this._responseUsageFee, this))
+      .fail($.proxy(this._errorRequest, this));
+    /*var usageDtArray = this.data.usage.invDtArr;
     if ( usageDtArray.length > 0 ) {
       var requestCommand = [];
       for ( var index = 0; index < usageDtArray.length; index++ ) {
@@ -221,12 +234,39 @@ Tw.MyTFareSubMain.prototype = {
     }
     else {
       this._responseUsageFee();
-    }
+    }*/
   },
 
   // 사용요금내역조회-2
-  _responseUsageFee: function () {
-    if ( arguments.length > 0 ) {
+  _responseUsageFee: function (resp) {
+    // this.loadingView(false);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+        var items = resp.result.recentUsageList;
+        var chart_data = {
+          co: '#3b98e6', //색상
+          da_arr: []
+        };
+        for ( var idx = items.length - 1; idx > -1; idx-- ) {
+          var item = items[idx];
+          // TODO: 서버데이터 변경되면 제거
+          var date = this.getLastDate(item.invDt); // item.invDt;
+          var amt = item.invAmt.replace(',', '');
+          var absDeduck = item.deduckInvAmt.replace(',', '');
+          // --------------------
+          amt = parseInt(amt, 10);
+          absDeduck = Math.abs(parseInt(absDeduck, 10));
+          chart_data.da_arr.push({
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            'class': this._chartDefaultClass + date,
+            'data': [amt], // 사용금액
+            'sale': [absDeduck] // 할인금액
+          });
+        }
+        this._initPatternChart(chart_data);
+      }
+    }
+    /*if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
         da_arr: []
@@ -236,8 +276,8 @@ Tw.MyTFareSubMain.prototype = {
           var item = arguments[idx].result;
           var amt = parseInt(item.useAmtTot, 10);
           chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
-            'class': 'chart_link item' + idx,
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
+            'class': this._chartDefaultClass + item.invDt,
             'data': [amt] // 사용금액
           });
         }
@@ -245,14 +285,18 @@ Tw.MyTFareSubMain.prototype = {
       if ( chart_data.da_arr.length > 0 ) {
         this._initPatternChart(chart_data);
       }
-    }
+    }*/
     // 실시간요금
     setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
-    var claimDtArray = this.data.claim && this.data.claim.invDtArr;
+    // TODO: 서버 데이터 변경되면 주석제거 예정
+    this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
+      .done($.proxy(this._responseClaimPayment, this))
+      .fail($.proxy(this._errorRequest, this));
+    /*var claimDtArray = this.data.claim && this.data.claim.invDtArr;
     if ( claimDtArray && claimDtArray.length > 0 ) {
       var requestCommand = [];
       for ( var index = 0; index < claimDtArray.length; index++ ) {
@@ -268,12 +312,39 @@ Tw.MyTFareSubMain.prototype = {
     }
     else {
       this._responseClaimPayment();
-    }
+    }*/
   },
 
   // 최근청구요금내역조회-2
-  _responseClaimPayment: function () {
-    if ( arguments.length > 0 ) {
+  _responseClaimPayment: function (resp) {
+    // this.loadingView(false);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+        var items = resp.result.recentUsageList;
+        var chart_data = {
+          co: '#3b98e6', //색상
+          da_arr: []
+        };
+        for ( var idx = items.length - 1; idx > -1; idx-- ) {
+          var item = items[idx];
+          // TODO: 서버데이터 변경되면 제거
+          var date = this.getLastDate(item.invDt); // item.invDt;
+          var amt = item.invAmt.replace(',', '');
+          var absDeduck = item.deduckInvAmt.replace(',', '');
+          // --------------------
+          amt = parseInt(amt, 10);
+          absDeduck = Math.abs(parseInt(absDeduck, 10));
+          chart_data.da_arr.push({
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            'class': this._chartDefaultClass + date,
+            'data': [amt], // 사용금액
+            'sale': [absDeduck] // 할인금액
+          });
+        }
+        this._initPatternChart(chart_data);
+      }
+    }
+    /*if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
         da_arr: []
@@ -281,12 +352,11 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = arguments.length - 1; idx > -1; idx-- ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
-          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var amt = parseInt(item.useAmtTot, 10);
           var absDeduck = Math.abs(parseInt(item.deduckTotInvAmt, 10));
           chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
-            'class': 'chart_link item' + idx,
+            'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
+            'class': this._chartDefaultClass + item.invDt,
             'data': [amt], // 청구금액
             'sale': [absDeduck] // 할인금액
           });
@@ -295,7 +365,7 @@ Tw.MyTFareSubMain.prototype = {
       if ( chart_data.da_arr.length > 0 ) {
         this._initPatternChart(chart_data);
       }
-    }
+    }*/
     setTimeout($.proxy(this._otherLineBills, this), 300);
   },
 
@@ -331,8 +401,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < arguments.length; idx++ ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
-          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var amt = parseInt(item.useAmtTot, 10);
           var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
           var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
           var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
@@ -358,6 +427,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
+    // this.loadingView(true, 'button[data-id=realtime-pay]');
     this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
   },
 
@@ -371,6 +441,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-3
   _onReceivedBillData: function (resp) {
+    // this.loadingView(false, 'button[data-id=realtime-pay]');
     if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
       if ( _.isEmpty(resp.result) ) {
         this._realTimeBillRequest();
@@ -474,9 +545,9 @@ Tw.MyTFareSubMain.prototype = {
 
   // 요금안내서 이동(chart)
   _onClickedBillReport: function (event) {
-    var $target = $(event.target);
-    var month = $target.text().replace('월', '');
-    this._historyService.goLoad('url' + month);
+    var clsName = event.target.className;
+    var month = clsName.replace(this._chartDefaultClass, '');
+    this._historyService.goLoad('/myt/fare/bill/guide?date=' + month);
   },
 
   _onErrorReceivedBillData: function (resp) {
@@ -490,15 +561,12 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   // 회선 변경 후 처리
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
+  _onChangeSessionSuccess: function () {
+    this._historyService.reload();
+    if ( Tw.BrowserHelper.isApp() ) {
       setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
+        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }, this), 500);
     }
   },
 

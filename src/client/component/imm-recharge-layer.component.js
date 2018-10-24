@@ -48,6 +48,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         else {
           this.immChargeData.etc = null;
         }
+        // API 정상 리턴시에만 충전방법에 데이터한도요금제 항목 노출 (DV001-4362)
         if ( limit.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.limit = limit.result;
         }
@@ -108,6 +109,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   // DC_O4 팝업 호출 후
   _onImmediatelyPopupOpened: function ($container) {
+    this.$popupContainer = $container;
     var items = $container.find('li');
     for ( var i = 0; i < items.length; i++ ) {
       var item = items.eq(i);
@@ -133,25 +135,37 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     }
   },
 
-  // DC_04 팝업 close 이후 처리 부분 - 만약 사용될 경우가 없다면 제거예정
+  // DC_04 팝업 close 이후 처리 부분
   _onImmediatelyPopupClosed: function () {
+    var $target = this.$popupContainer.find('[data-url]');
+    if ( $target.length > 0 ) {
+      this._historyService.goLoad($target.attr('data-url'));
+    }
   },
 
   // DC_04 팝업내 아이템 선택시 이동
-  _onImmDetailLimit: function () {
-    this._historyService.goLoad('/myt/data/limit');
+  _onImmDetailLimit: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/limit');
+    this._popupService.close();
   },
 
-  _onImmDetailEtc: function () {
-    this._historyService.goLoad('/myt/data/cookiz');
+  _onImmDetailEtc: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/cookiz');
+    this._popupService.close();
   },
 
-  _onImmDetailTing: function () {
-    this._historyService.goLoad('/myt/data/ting');
+  _onImmDetailTing: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/ting');
+    this._popupService.close();
   },
 
-  _onImmDetailRefill: function () {
-    this._historyService.goLoad('/myt/data/recharge/coupon');
+  _onImmDetailRefill: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-url', '/myt/data/recharge/coupon');
+    this._popupService.close();
   },
 
   _onPrepayCoupon: function () {

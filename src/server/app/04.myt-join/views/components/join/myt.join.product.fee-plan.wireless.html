@@ -11,43 +11,55 @@
         <span class="subtitle3"><img src="<%= feePlan.feePlanProd.prodFltImgPath %>" alt="LTE"></span>
         <% } %>
       </div>
-      <% if ( feePlan.feePlanProd.basDataTxt || feePlan.feePlanProd.basOfrVcallTmsTxt || feePlan.feePlanProd.basOfrLtrAmtTxt ) { %>
+      <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
       <div class="info-detail mt40">
         <div class="tb-type">
           <ul>
-            <% if ( feePlan.feePlanProd.basDataTxt ) { %>
+            <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
             <li>
               <dl>
                 <dt>데이터</dt>
-                <dd><%= feePlan.feePlanProd.basDataTxt %></dd>
+                <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
+                <dd><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %></dd>
+                <% } else { %>
+                <dd><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %></dd>
+                <% } %>
               </dl>
             </li>
             <% } %>
-            <% if ( feePlan.feePlanProd.basOfrVcallTmsTxt ) { %>
+            <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) { %>
             <li>
               <dl>
                 <dt>음성</dt>
-                <dd><%= feePlan.feePlanProd.basOfrVcallTmsTxt %></dd>
+                <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt.isNaN ) { %>
+                <dd><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %></dd>
+                <% } else { %>
+                <dd><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value.data + feePlan.feePlanProd.basOfrVcallTmsCtt.value.unit %></dd>
+                <% } %>
               </dl>
             </li>
             <% } %>
-            <% if ( feePlan.feePlanProd.basOfrLtrAmtTxt ) { %>
+            <% if ( feePlan.feePlanProd.basOfrCharCntCtt ) { %>
             <li>
               <dl>
                 <dt>문자</dt>
-                <dd><%= feePlan.feePlanProd.basOfrLtrAmtTxt %></dd>
+                <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
+                <dd><%= feePlan.feePlanProd.basOfrCharCntCtt.value %></dd>
+                <% } else { %>
+                <dd><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %></dd>
+                <% } %>
               </dl>
             </li>
             <% } %>
           </ul>
         </div>
         <% } %>
-        <% if ( feePlan.feePlanProd.basFeeTxt ) { %>
+        <% if ( feePlan.feePlanProd.basFeeInfo ) { %>
         <div class="price-wrap mt20">
           <span class="tx-sub"><span class="tx-bold vbl">월정액</span> 부가세포함</span>
           <span class="tx-price">
-            <span class="price"><%= feePlan.feePlanProd.basFeeTxt %></span>
-            <% if ( feePlan.feePlanProd.isBasFeeTxtUnit ) { %>
+            <span class="price"><%= feePlan.feePlanProd.basFeeInfo.value %></span>
+            <% if ( !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
             <span class="unit">원</span>
             <% } %>
           </span>
@@ -114,108 +126,6 @@
         </li>
         <% } %>
       </ul>
-    </div>
-  </div>
-  <!--// .cont-box -->
-  <% } %>
-
-  <% if ( false ) { %>
-  <div class="ti-caption-gray">
-    <h3 class="tit">나의 요금제와 유사한 요금제 </h3>
-  </div>
-  <!-- .cont-box -->
-  <div class="cont-box nogaps-hoz">
-    <ul class="recommendedrate-list">
-      <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
-      <li class="type01">
-        <button type="button" class="product-infolink">
-          <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
-          <div class="products-titleinfo">
-            <h5 class="title">스몰</h5>
-            <p class="info">월<span class="money">33,000</span>원</p>
-          </div>
-          <div class="taglist-wrap"> <!-- 디자인요소가 들어감으로 html이 들어가여 css로 1줄 이상시 말줄임이 불가능하기에 개발적인 처리가 필요합니다. -->
-            <span class="tag-text">#LTE폰</span>
-            <span class="tag-text">#8GB</span>
-            <span class="tag-text">#일반</span>
-          </div>
-          <dl class="products-additionalinfo">
-            <dt>데이터</dt>
-            <dd><span class="point">1.2GB</span></dd>
-            <dt>음성</dt>
-            <dd>집전화, 이동전화 무제한</dd>
-            <dt>문자</dt>
-            <dd>기본제공</dd>
-          </dl>
-        </button>
-      </li>
-      <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
-      <li class="type01">
-        <button type="button" class="product-infolink">
-          <div class="products-titleinfo">
-            <h5 class="title">T시그니처 Classic</h5>
-            <p class="info">월<span class="money">33,000</span>원</p>
-          </div>
-          <div class="taglist-wrap">
-            <span class="tag-text">#LTE폰</span>
-            <span class="tag-text">#8GB</span>
-            <span class="tag-text">#일반</span>
-          </div>
-          <dl class="products-additionalinfo">
-            <dt>데이터</dt>
-            <dd><span class="point">1.2GB</span></dd>
-            <dt>음성</dt>
-            <dd>집전화, 이동전화 무제한</dd>
-            <dt>문자</dt>
-            <dd>기본제공</dd>
-          </dl>
-        </button>
-      </li>
-      <li class="type02">
-        <button type="button" class="product-infolink">
-          <div class="products-titleinfo">
-            <h5 class="title">T시그니처 Master</h5>
-            <p class="info">월<span class="money">33,000</span>원</p>
-          </div>
-          <div class="taglist-wrap">
-            <span class="tag-text">#LTE폰</span>
-            <span class="tag-text">#8GB</span>
-            <span class="tag-text">#일반</span>
-          </div>
-          <dl class="products-additionalinfo">
-            <dt>데이터</dt>
-            <dd><span class="point">1.2GB</span></dd>
-            <dt>음성</dt>
-            <dd>집전화, 이동전화 무제한</dd>
-            <dt>문자</dt>
-            <dd>기본제공</dd>
-          </dl>
-        </button>
-      </li>
-      <li class="type03">
-        <button type="button" class="product-infolink">
-          <div class="products-titleinfo">
-            <h5 class="title">뉴 T끼리 맞춤형<br>(100분+6GB)</h5>
-            <p class="info">월<span class="money">33,000</span>원</p>
-          </div>
-          <div class="taglist-wrap">
-            <span class="tag-text">#LTE폰</span>
-            <span class="tag-text">#8GB</span>
-            <span class="tag-text">#일반</span>
-          </div>
-          <dl class="products-additionalinfo">
-            <dt>데이터</dt>
-            <dd><span class="point">1.2GB</span></dd>
-            <dt>음성</dt>
-            <dd>집전화, 이동전화 무제한</dd>
-            <dt>문자</dt>
-            <dd>기본제공</dd>
-          </dl>
-        </button>
-      </li>
-    </ul>
-    <div class="bt-more gap-style">
-      <button>더보기</button>
     </div>
   </div>
   <!--// .cont-box -->

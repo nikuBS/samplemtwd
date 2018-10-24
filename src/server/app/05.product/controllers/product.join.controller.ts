@@ -132,9 +132,27 @@ class ProductJoin extends TwViewController {
         psnlInfoOfrCttSummary: stipulationInfo.stipulation.psnlInfoOfrAgreeYn === 'Y' ?
             this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoOfrHtmlCtt) : '',
         adInfoOfrCttSummary: stipulationInfo.stipulation.adInfoOfrAgreeYn === 'Y' ?
-            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : ''
+            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
+        existsCount: this._getStipulationYnCnt([stipulationInfo.stipulation.scrbStplAgreeYn, stipulationInfo.stipulation.psnlInfoCnsgAgreeYn,
+          stipulationInfo.stipulation.psnlInfoOfrAgreeYn, stipulationInfo.stipulation.adInfoOfrAgreeYn])
       })
     });
+  }
+
+  /**
+   * @param yNarray
+   * @private
+   */
+  private _getStipulationYnCnt(yNarray): any {
+    let count = 0;
+
+    yNarray.forEach((flag) => {
+      if (flag === 'Y') {
+        count++;
+      }
+    });
+
+    return count;
   }
 
   /**
@@ -150,18 +168,11 @@ class ProductJoin extends TwViewController {
    * @private
    */
   private _convertPlanPreInfo(preInfo): any {
-    const isNumberFrBasFeeInfo = !isNaN(parseInt(preInfo.frProdInfo.basFeeInfo, 10));
-    const isNumberToBasFeeInfo = !isNaN(parseInt(preInfo.toProdInfo.basFeeInfo, 10));
-
     return Object.assign(preInfo, {
-      frProdInfo: Object.assign(preInfo.frProdInfo, {
-        isNumberFrBasFeeInfo: isNumberFrBasFeeInfo,
-        basFeeInfo: isNumberFrBasFeeInfo ? FormatHelper.addComma(preInfo.frProdInfo.basFeeInfo) : preInfo.frProdInfo.basFeeInfo
-      }),
-      toProdInfo: Object.assign(preInfo.toProdInfo, {
-        isNumberToBasFeeInfo: isNumberToBasFeeInfo,
-        basFeeInfo: isNumberToBasFeeInfo ? FormatHelper.addComma(preInfo.toProdInfo.basFeeInfo) : preInfo.toProdInfo.basFeeInfo
-      }),
+      frProdInfo: Object.assign(preInfo.frProdInfo, FormatHelper.convProductSpecifications(preInfo.frProdInfo.basFeeInfo,
+          preInfo.frProdInfo.basOfrDataQtyCtt, preInfo.frProdInfo.basOfrVcallTmsCtt, preInfo.frProdInfo.basOfrCharCntCtt)),
+      toProdInfo: Object.assign(preInfo.toProdInfo, FormatHelper.convProductSpecifications(preInfo.toProdInfo.basFeeInfo,
+          preInfo.toProdInfo.basOfrDataQtyCtt, preInfo.toProdInfo.basOfrVcallTmsCtt, preInfo.toProdInfo.basOfrCharCntCtt)),
       autoJoinList: this._convertAutoJoinTermList(preInfo.autoJoinList),
       autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
     });
@@ -218,11 +229,11 @@ class ProductJoin extends TwViewController {
 
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    this._prodId = req.params.prodId || '';
+    this._prodId = req.params.prodId;
     this._displayId = null;
 
     this._setDisplayId();
-    this.logger.info(this, '[DISPLAY ID] ', this._displayId);
+    this.logger.info(this, '[DISPLAY ID] ' + this._displayId);
 
     this.apiService.request(API_CMD.BFF_10_0001, {
       prodExpsTypCd: svcInfo.prodId !== this._prodId ? 'P' : 'SP'
@@ -266,7 +277,7 @@ class ProductJoin extends TwViewController {
               joinTermInfo: this._convertPlansJoinTermInfo(joinTermInfo.result),
               svcInfo: svcInfo,
               prodId: this._prodId,
-              prodNm: joinTermInfo.preinfo.toProdInfo.prodNm,
+              prodNm: joinTermInfo.result.preinfo.toProdInfo.prodNm,
               displayId: this._displayId,
               displayGroup: displayGroup,
               ctgCd: basicInfo.result.ctgCd,

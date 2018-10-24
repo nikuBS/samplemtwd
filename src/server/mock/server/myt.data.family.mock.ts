@@ -1,35 +1,50 @@
 const BFF_06_0044_familyInfo = {
   code: '00',
-  msg: '',
+  msg: 'success',
   result: {
-    total: '2048',
-    used: '400',
-    remained: '1648',
+    total: '0',
+    used: '25',
+    remained: '-25',
     adultYn: 'Y',
     mbrList: [
       {
-        svcNum: '01094**04**',
-        svcMgmtNum: '7039746413',
-        custNm: '조*희',
+        svcNum: '01062**94**',
+        svcMgmtNum: '1451646217',
+        custNm: '한*남',
         repYn: 'Y',
-        prodId: 'NA00005959',
-        prodNm: 'Data 인피니티',
+        prodId: 'NA00005958',
+        prodNm: '패밀리',
         used: '0',
-        limitedYn: 'N',
-        limitation: '',
         shrblYn: 'Y',
-        shared: '0'
+        shared: '0',
+        limitedYn: 'N',
+        limitation: ''
       },
       {
-        svcNum: '01012**34**',
-        svcMgmtNum: '7226057315',
-        custNm: '박*수',
+        svcNum: '01055**08**',
+        svcMgmtNum: '7228453341',
+        custNm: '박*심',
         repYn: 'N',
-        prodId: 'NA00005959',
-        prodNm: 'ting 요금제',
+        prodId: 'NA00005955',
+        prodNm: '스몰',
         used: '0',
-        limitedYn: 'Y',
-        limitation: '300'
+        shrblYn: 'N',
+        shared: '0',
+        limitedYn: 'N',
+        limitation: ''
+      },
+      {
+        svcNum: '01089**08**',
+        svcMgmtNum: '7246046409',
+        custNm: '한*진',
+        repYn: 'N',
+        prodId: 'NA00005627',
+        prodNm: '주말엔 팅 세이브',
+        used: '25',
+        shrblYn: 'N',
+        shared: '0',
+        limitedYn: 'N',
+        limitation: ''
       }
     ]
   }

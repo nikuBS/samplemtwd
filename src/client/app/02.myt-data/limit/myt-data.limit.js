@@ -44,9 +44,11 @@ Tw.MyTDataLimit.prototype = {
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
         .done($.proxy(this._onSuccessBlockImmediately, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
         .done($.proxy(this._onSuccessBlockImmediately, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
     }
 
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
@@ -64,9 +66,11 @@ Tw.MyTDataLimit.prototype = {
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
         .done($.proxy(this._onSuccessBlockMonthly, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
         .done($.proxy(this._onSuccessBlockMonthly, this));
+      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
     }
 
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
@@ -106,17 +110,16 @@ Tw.MyTDataLimit.prototype = {
         $input.prop('disabled', true);
         $input.parent().addClass('disabled');
       }
-
-      if ( Number($input.val()) === nLimitMount ) {
-        $input.click();
-      }
     };
 
-    var elWrapMonthly = this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
-    elWrapMonthly.not(':disabled').get(0).click();
-
-    var elWrapImmediately = this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
-    elWrapImmediately.not(':disabled').get(0).click();
+    this.$wrap_monthly_select_list.find('input').each(fnCheckedUI)
+      .on('click', $.proxy(function () {
+        this.$btn_monthly_recharge.removeAttr('disabled');
+      }, this));
+    this.$wrap_immediately_select_list.find('input').each(fnCheckedUI)
+      .on('click', $.proxy(function () {
+        this.$btn_immediately_recharge.removeAttr('disabled');
+      }, this));
   },
 
   _requestLimitRechargeImmediately: function () {
@@ -152,6 +155,17 @@ Tw.MyTDataLimit.prototype = {
   },
 
   _cancelMonthlyRecharge: function () {
+    this._popupService.openModalTypeA(
+      Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
+      Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
+      Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
+      null,
+      $.proxy(this._cancelMonthly, this)
+    );
+  },
+
+  _cancelMonthly: function () {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0037, {}).done($.proxy(this._onSuccessCancelMonthlyRecharge, this));
   },
 

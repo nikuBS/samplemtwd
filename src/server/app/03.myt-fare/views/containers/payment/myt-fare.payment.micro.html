@@ -90,10 +90,10 @@
                                     <div class="switch-wrap">
 										<span class="widget">
 											<span class="widget-box switch">
-												<span class="btn-switch type1 fe-set-use <% if (usedYn.isUsed) { %> on <% } %>">
+												<span class="btn-switch type1 <% if (usedYn.isUsed) { %> on <% } %>">
 													<span class="switch-style" role="checkbox" aria-checked="false">
 														<span class="on-tx fe-tx">사용</span>
-														<input id="<%= usedYn.rtnUseYn %>" type="checkbox" title="지정일부터 해제 예정" />
+														<input id="<%= usedYn.rtnUseYn %>" class="fe-set-use" type="checkbox" title="지정일부터 해제 예정" />
 														<span class="off-tx fe-tx">차단</span>
 													</span>
 												</span>
@@ -107,12 +107,18 @@
                         <li>
                             <dl>
                                 <dt>결제 비밀번호<button aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
+                                <% if (passwordInfo.text !== '') { %>
                                 <dd>
                                     <span class="val"><%= passwordInfo.text %></span>
                                     <button class="fe-set-password" data-cpin="<%= passwordInfo.result.cpinStCd %>"
                                             data-code="<%= passwordInfo.code %>"
-                                            data-msg="<%= passwordInfo.msg %>">결제 비밀번호 설정 화면 이동</button>
+                                            data-msg="<%= passwordInfo.msg %>"
+                                            <% if (passwordInfo.result.bDay) { %> data-birth="<%= passwordInfo.result.bDay %>" <% } %>
+                                    >
+                                        결제 비밀번호 설정 화면 이동
+                                    </button>
                                 </dd>
+                                <% } %>
                             </dl>
                         </li>
                     </ul>

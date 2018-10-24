@@ -7,7 +7,6 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { PRODUCT_MY_FILTERS, PRODUCT_RECOMMENDED_PLANS, PRODUCT_RECOMMENDED_TAGS } from '../../../mock/server/product.submain.mock';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,34 +17,50 @@ export default class Product extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    Observable.combineLatest(this.getPromotionBanners(), this.getProductGroups(), this.getRecommendedPlans(), this.getRecommendedTags()).subscribe(
-      ([banners, groups, recommendedPlans, recommendedTags]) => {
+  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _layerType: string) {
+    if (svcInfo) {
+      Observable.combineLatest(
+        this.getPromotionBanners(),
+        this.getProductGroups(),
+        this.getRecommendedPlans(),
+        this.getMyFilters(),
+        this.getRecommendedTags()
+      ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
         const error = {
-          code: banners.code || groups.code || recommendedPlans.code || recommendedTags.code,
-          msg: banners.msg || groups.msg || recommendedPlans.msg || recommendedTags.msg
+          code: banners.code || groups.code || recommendedPlans.code || myFilters.code || recommendedTags.code,
+          msg: banners.msg || groups.msg || recommendedPlans.msg || myFilters.msg || recommendedTags.msg
         };
 
         if (error.code) {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        const productData = {
-          banners,
-          groups,
-          myFilters: this.getMyFilters(),
-          recommendedPlans,
-          recommendedTags
-        };
+        const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
 
         res.render('product.html', { svcInfo, productData });
-      }
-    );
+      });
+    } else {
+      Observable.combineLatest(this.getPromotionBanners(), this.getProductGroups(), this.getRecommendedPlans(), this.getRecommendedTags()).subscribe(
+        ([banners, groups, recommendedPlans, recommendedTags]) => {
+          const error = {
+            code: banners.code || groups.code || recommendedPlans.code || recommendedTags.code,
+            msg: banners.msg || groups.msg || recommendedPlans.msg || recommendedTags.msg
+          };
+
+          if (error.code) {
+            return this.error.render(res, { ...error, svcInfo });
+          }
+
+          const productData = { banners, groups, recommendedPlans, recommendedTags };
+
+          res.render('product.html', { svcInfo, productData });
+        }
+      );
+    }
   }
 
   private getPromotionBanners = () => {
     return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.PLAN_CODE }).map(resp => {
-      // const resp = PRODUCT_PROMOTION_BANNERS;
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -59,13 +74,15 @@ export default class Product extends TwViewController {
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
-      // const resp = PRODUCT_PLAN_GROUPS;
-
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
           msg: resp.msg
         };
+      }
+
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
       }
 
       return {
@@ -105,6 +122,10 @@ export default class Product extends TwViewController {
           code: resp.code,
           msg: resp.msg
         };
+      }
+
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
       }
 
       return {

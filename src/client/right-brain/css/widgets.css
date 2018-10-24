@@ -217,17 +217,17 @@
     width: 100%;
     font-size: 0.9375rem;
     text-align: left; }
-    .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button {
+    .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button, .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a {
       position: absolute;
-      top: 50%;
+      top: 50% !important;
       right: 0;
       width: 1.875rem;
       height: 1.875rem;
       overflow: hidden;
       color: transparent;
-      -webkit-transform: translate(0, -50%);
-      -ms-transform: translate(0, -50%); }
-      transform:translate(0, -50%) .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button:after {
+      -webkit-transform: translate(0, -50%) !important;
+      transform: translate(0, -50%) !important; }
+      .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button:after, .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a:after {
         content: "";
         position: absolute;
         top: 50%;
@@ -237,6 +237,21 @@
         height: 1.5625rem;
         background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -21.875rem;
         background-size: 3.125rem; }
+    .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button.link, .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a.link {
+      position: relative;
+      left: 0;
+      top: auto !important;
+      right: 0;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      color: inherit;
+      -webkit-transform: translate(0, 0) !important;
+      transform: translate(0 0) !important;
+      padding: 0;
+      display: inline-block; }
+      .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button.link:after, .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a.link:after {
+        display: none; }
   .accordion .acco-style.btn-hold .acco-list .acco-box.on > .acco-tit button:after {
     background-position: 0 -21.875rem; }
   .accordion .acco-style.none-title .acco-list {
@@ -486,34 +501,35 @@ li.checkbox.type01 {
 .checkbox.type01 {
   position: relative;
   display: inline-block;
-  vertical-align: top; }
+  vertical-align: top;
+  padding: 1px 0; }
   .checkbox.type01.disabled .txt {
     color: #adadad !important; }
   .checkbox.type01:before {
     content: "";
     display: inline-block;
     margin-top: -0.1875rem;
-    width: 1.375rem;
-    height: 1.375rem;
+    width: 1.5rem;
+    height: 1.5rem;
     vertical-align: middle;
     background: url(/img/form/ico-checkbox-style01.png) no-repeat 0 0;
-    background-size: 1.375rem; }
+    background-size: 1.5rem; }
   .checkbox.type01.checked:before {
-    background-position: 0 -1.375rem; }
+    background-position: 0 -1.5rem; }
   .checkbox.type01.disabled:before {
-    background-position: 0 -2.75rem; }
+    background-position: 0 -3rem; }
   .checkbox.type01.checked.disabled:before {
-    background-position: 0 -4.125rem; }
+    background-position: 0 -4.5rem; }
   .checkbox.type01.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .checkbox.type01.focus:before {
     background-position: 0 0; }
   .checkbox.type01.focus.checked:before {
-    background-position: 0 -1.375rem; }
+    background-position: 0 -1.5rem; }
   .checkbox.type01.focus.disabled:before {
-    background-position: 0 -2.75rem; }
+    background-position: 0 -3rem; }
   .checkbox.type01.focus.checked.disabled:before {
-    background-position: 0 -4.125rem; }
+    background-position: 0 -4.5rem; }
   .checkbox.type01 > span {
     display: inline-block;
     font-size: 0.8125rem;
@@ -599,27 +615,27 @@ li.checkbox.type01 {
     content: "";
     display: inline-block;
     margin-top: -0.125rem;
-    width: 1.375rem;
-    height: 1.375rem;
+    width: 1.5rem;
+    height: 1.5rem;
     background: url(/img/form/ico-radio-style01.png) no-repeat 0 0;
-    background-size: 1.375rem;
+    background-size: 1.5rem auto;
     vertical-align: middle; }
   .radiobox.type01.checked:before {
-    background-position: 0 -1.375rem; }
+    background-position: 0 -1.5rem; }
   .radiobox.type01.disabled:before {
-    background-position: 0 -2.75rem; }
+    background-position: 0 -3rem; }
   .radiobox.type01.checked.disabled:before {
-    background-position: 0 -4.125rem; }
+    background-position: 0 -4.5rem; }
   .radiobox.type01.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .radiobox.type01.focus:before {
     background-position: 0 0; }
   .radiobox.type01.focus.checked:before {
-    background-position: 0 -1.375rem; }
+    background-position: 0 -1.5rem; }
   .radiobox.type01.focus.disabled:before {
-    background-position: 0 -2.75rem; }
+    background-position: 0 -3rem; }
   .radiobox.type01.focus.checked.disabled:before {
-    background-position: 0 -4.125rem; }
+    background-position: 0 -4.5rem; }
   .radiobox.type01 > span {
     display: inline-block;
     font-size: 0.8125rem;

@@ -139,13 +139,16 @@ class MyTFarePaymentHistory extends TwViewController {
   }
 
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp: { code: string; result: any; }) => {
+    return this.apiService.request(API_CMD.BFF_07_0017, {selType:'H'}).map((resp: { code: string; result: any; }) => {
+
+      // this.logger.info(this, '-------->', resp.result.selectMonth, resp.result.selectQuarter, resp.result.selectHalf, resp.result.taxReprintList);
 
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
       } else {
         this.paymentData.isPersonalBiz = true;
-        this.paymentData.personalBizNum = resp.result.taxReprintList ? resp.result.taxReprintList[0].ctzBizNum : '';
+        this.paymentData.personalBizNum = resp.result.taxReprintList ?
+            resp.result.taxReprintList[0] ? resp.result.taxReprintList[0].ctzBizNum : '' : '';
       }
 
       return null;
@@ -180,6 +183,8 @@ class MyTFarePaymentHistory extends TwViewController {
         this.getMicroPaymentData(),
         this.getContentsPaymentData()
     ).subscribe(histories => {
+      this.logger.info(this, '-[MyTFarePaymentHistory] -------->');
+
       this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
     });
   }
@@ -322,21 +327,21 @@ class MyTFarePaymentHistory extends TwViewController {
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
+
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
+      // this.logger.info(this, '-------------------// contents payment data', resp.result);
 
       resp.result.useContentsPrepayRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'CP';
-        o.dataIsBank = this.isBankOrCard(o.dataTitle);
+        o.dataIsBank = this.isBankOrCard(o.settlWayNm);
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.contentPrepay;
         o.dataSubInfo2 = o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : null;
       });
-
-      // this.logger.info(this, 'contentsPayment : .................>> ', resp.result);
 
       return resp.result;
     });
@@ -393,7 +398,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return prev;
     }, []);
-
+    
     return data;
   }
 

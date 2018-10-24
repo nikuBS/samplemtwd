@@ -1,5 +1,5 @@
 import { DATA_UNIT } from '../types/string.type';
-import { VOICE_UNIT } from '../types/bff.type';
+import { VOICE_UNIT, UNIT } from '../types/bff.type';
 
 class FormatHelper {
   static leadingZeros(number: number, length: number): string {
@@ -26,6 +26,57 @@ class FormatHelper {
   static isString(value: any): boolean {
     return typeof(value) === 'string';
   }
+
+  static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any, basOfrCharCntCtt?: any): any {
+    const isValid = (value) => {
+      return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
+    };
+
+    return {
+      basFeeInfo: isValid(basFeeInfo) ? FormatHelper.convProductBasfeeInfo(basFeeInfo) : null,
+      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? FormatHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt) : null,
+      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? FormatHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
+      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? FormatHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
+    };
+  }
+
+  static convProductBasfeeInfo(basFeeInfo): any {
+    const isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
+
+    return {
+      isNaN: isNaNbasFeeInfo,
+      value: isNaNbasFeeInfo ? basFeeInfo : FormatHelper.addComma(basFeeInfo)
+    };
+  }
+
+  static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt): any {
+    const isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrDataQtyCtt,
+      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.MB)
+    };
+  }
+
+  static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt): any {
+    const isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrVcallTmsCtt,
+      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : FormatHelper.convVoiceFormatWithUnit(isNaNbasOfrVcallTmsCtt)
+    };
+  }
+
+  static convProductBasOfrCharCntCtt(basOfrCharCntCtt): any {
+    const isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
+
+    return {
+      isNaN: isNaNbasOfrCharCntCtt,
+      value: basOfrCharCntCtt,
+      unit: UNIT['310']
+    };
+  }
+
 
   static customDataFormat(data: any, curUnit: string, targetUnit: string): any {
     const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB];
@@ -233,6 +284,14 @@ class FormatHelper {
     }
 
     return sValue;
+  }
+
+  static lpad (str, length, padStr): string {
+
+    while (str.length < length) {
+      str = padStr + str;
+    }
+    return str;
   }
 }
 

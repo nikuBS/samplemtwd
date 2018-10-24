@@ -87,12 +87,20 @@ Tw.ProductTerminate.prototype = {
   _openAgreePop: function(e) {
     var $parent = $(e.currentTarget).parent();
     this._popupService.open({
-      hbs: 'PFT_01_03_L01',
+      hbs: 'FT_01_03_L01',
       data: {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').text()
       }
-    }, null, null, 'agree_pop');
+    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
+  },
+
+  _bindAgreePop: function($popupContainer) {
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closeAgreePop, this));
+  },
+
+  _closeAgreePop: function() {
+    this._popupService.close();
   },
 
   _openConfirmPopup: function() {
@@ -122,20 +130,46 @@ Tw.ProductTerminate.prototype = {
   },
 
   _procTerminate: function() {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     this._apiService.request(Tw.API_CMD[this._terminateApiCode], {}, {}, this._prodId)
       .done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId)
+      .done($.proxy(this._isVasTerm, this));
+  },
+
+  _isVasTerm: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      this._isResultPop = true;
+      return this._openTerminateResultPop();
+    }
+
+    this._openVasTermPopup(resp.result);
+  },
+
+  _openTerminateResultPop: function() {
+    if ( this._isGoalKeeperProduct ) {
+      return this._historyService.goLoad('/product/detail/NA00004343');
+    }
+
+    if ( !this._isResultPop ) {
+      return;
     }
 
     var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0);
 
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
-      data: Object.assign(this._successData, {
+      data: $.extend(this._successData, {
         mytPage: this._displayGroup,
         prodId: this._prodId,
         prodNm: this.$container.data('prod_nm'),
@@ -143,49 +177,46 @@ Tw.ProductTerminate.prototype = {
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })
-    }, $.proxy(this._bindTerminateResPopup, this), null, 'join_success');
+    }, $.proxy(this._openResPopupEvent, this), null, 'join_success');
   },
 
-  _bindTerminateResPopup: function($popupContainer) {
+  _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._goProductDetail, this));
-    this._procVasTerm();
   },
 
-  _procVasTerm: function() {
-    // @todo 가입유도 팝업 임시 하드코딩
-    var varsTermProdId = ['NA00004350', 'NA00005638', 'NA00003202', 'NA00000291', 'NA00001890', 'NA00000290'];
+  _openVasTermPopup: function(respResult) {
+    var popupOptions = {
+      hbs:'MV_01_02_02_01',
+      'bt': [{
+        style_class: 'bt-blue1 fe-btn_back',
+        txt: '닫기'
+      }]
+    };
 
-    if (varsTermProdId.indexOf(this._prodId) !== -1) {
-      this._popupService.open({
-        'msgheader': true,
-        'msgheaderbg':'bg1',
-        'msgtit':'고객님께<br /><span>추천드려요!</span>',
-        'msgtxt':'안 받는 전화는 있어도 못 받는 전화는 없다!<br />중요한 전화를 놓치지 않도록 도와주는 콜키퍼!<br />든든한 콜키퍼에 가입해 보세요.',
-        'title': '콜키퍼란?',
-        'contents': '내가 놓친 통화의 발신번호, 시간, 스팸정보 등을 문자로 알려드리는 서비스<br />(부가세포함 월 550원)',
-        'link_list': [{
-          style_class:'fe-btn_goalkeeper',
-          txt:'콜키퍼 가입하기'
-        }],
-        'bt': [{
-          style_class: 'bt-blue1 fe-btn_back',
-          txt: '닫기'
-        }]
-      }, $.proxy(this._bindVasTermPopupEvent, this));
+    if (respResult.prodTmsgTypCd === 'H') {
+      popupOptions = $.extend(popupOptions, {
+        editor_html: respResult.prodTmsgHtmlCtt
+      });
     }
+
+    if (respResult.prodTmsgTypCd === 'I') {
+      popupOptions = $.extend(popupOptions, {
+        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : respResult.rgstImgUrl,
+        img_src: respResult.imgFilePathNm
+      });
+    }
+
+    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
+      $.proxy(this._openTerminateResultPop, this));
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_goalkeeper', $.proxy(this._goDummyGoalKeeper, this));
-    $popupContainer.on('click', '.fe-btn_back', $.proxy(this._goDummyGoalKeeperBtnBack, this));
+    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
   },
 
-  _goDummyGoalKeeper: function() {
-    this._historyService.goLoad('/product/detail/NA00004343');
-  },
-
-  _goDummyGoalKeeperBtnBack: function() {
-    this._historyService.goBack();
+  _closeAndOpenResultPopup: function() {
+    this._isResultPop = true;
+    this._popupService.close();
   },
 
   _goProductDetail: function() {

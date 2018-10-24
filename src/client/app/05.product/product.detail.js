@@ -18,13 +18,16 @@ Tw.ProductDetail = function(rootEl) {
 Tw.ProductDetail.prototype = {
 
   _settingAuthList: ['NA00000291', 'NA00000273', 'NA00002121'],  // @todo 인증API 완료 후 삭제
+  _settingBtnList: [],
 
   _init: function() {
     this._prodId = this.$container.data('prod_id');
     this._ctgCd = this.$container.data('ctg_cd');
     this._ctgKey = this.$container.data('ctg_key');
     this._filterIds = this.$container.data('filter_ids');
+
     this._loadRecommendedrateList();
+    this._setSettingBtnList();
   },
 
   _cachedElement: function() {
@@ -36,13 +39,14 @@ Tw.ProductDetail.prototype = {
     this.$btnRecommendProd = this.$container.find('.fe-btn_recommend_prod');
 
     this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
+    this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
   },
 
   _bindEvent: function() {
     this.$btnList.on('click', 'button', $.proxy(this._goBtnLink, this));
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
-    this.$btnSetting.on('click', $.proxy(this._goSetting, this));
+    this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
     this.$btnRecommendProd.on('click', $.proxy(this._goRecommendProd, this));
   },
@@ -59,12 +63,17 @@ Tw.ProductDetail.prototype = {
     return null;
   },
 
-  _goSetting: function() {
-    if (this._settingAuthList.indexOf(this._prodId) !== -1) {
-      return this._procSettingAuth();
-    }
+  _procSetting: function() {
+    // @todo CBT 범위 제외
+    // if (this._settingAuthList.indexOf(this._prodId) !== -1) {
+    //   return this._procSettingAuth();
+    // }
 
-    this._historyService.goLoad('/product/setting/' + this._prodId);
+    if (this._settingBtnList.length > 1) {
+      this._openSettingPop();
+    } else {
+      this._historyService.goLoad(this._settingBtnList[0].url);
+    }
   },
 
   _procSettingAuth: function() {
@@ -80,6 +89,19 @@ Tw.ProductDetail.prototype = {
         svcNumMask: resp.result.svcNum
       }]
     }, $.proxy(this._settingAuthPopupBindEvent, this), null, 'setting_auth_pop');
+  },
+
+  _setSettingBtnList: function() {
+    _.each(this.$settingBtnList.find('li'), $.proxy(this._pushSettingBtn, this));
+  },
+
+  _pushSettingBtn: function(btn) {
+    var $btn = $(btn);
+    this._settingBtnList.push({
+      value: $btn.text(),
+      url: $btn.data('url'),
+      attr: 'data-url="' + $btn.data('url') + '"'
+    });
   },
 
   _settingAuthPopupBindEvent: function($popupContainer) {
@@ -150,6 +172,7 @@ Tw.ProductDetail.prototype = {
   },
 
   _goJoinTerminate: function(joinTermCd) {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
     }, null, this._prodId)
@@ -157,11 +180,12 @@ Tw.ProductDetail.prototype = {
   },
 
   _goJoinTerminateResult: function(joinTermCd, resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
+    this._historyService.replaceURL('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
   _openSettingPop: function() {
@@ -170,17 +194,28 @@ Tw.ProductDetail.prototype = {
       layer: true,
       title: Tw.POPUP_TITLE.SELECT,
       data: [{
-        'list': []
+        'list': this._settingBtnList
       }]
-    }, $.proxy(this._bindPopupEvent, this), null, 'setting_pop');
+    }, $.proxy(this._bindSettingBtnListEvent, this), $.proxy(this._goSetting, this), 'setting_pop');
   },
 
-  _bindPopupEvent: function($popupContainer) {
-    $popupContainer.on('click', '[data-url]', $.proxy(this._selectSettingItem, this));
+  _bindSettingBtnListEvent: function($layer) {
+    console.log($layer.find('[data-url]'));
+    $layer.find('[data-url]').on('click', $.proxy(this._setSettingGoUrl, this));
   },
 
-  _selectSettingItem: function(e) {
-    this._historyService.goLoad($(e.currentTarget).data('url'));
+  _setSettingGoUrl: function(e) {
+    console.log('click');
+    this._settingGoUrl = $(e.currentTarget).data('url');
+    this._popupService.close();
+  },
+
+  _goSetting: function() {
+    if (Tw.FormatHelper.isEmpty(this._settingGoUrl)) {
+      return;
+    }
+
+    this._historyService.goLoad(this._settingGoUrl);
   },
 
   _procAdvanceCheck: function(btnLink, resp) {
@@ -225,11 +260,8 @@ Tw.ProductDetail.prototype = {
     this.$recommendRateList.find('.recommendedrate-list')
       .html(this._template({
         list: resp.result.products.map(function(item) {
-          var isBasFeeAmt = isNaN(parseInt(item.basFeeAmt, 10));
-          return Object.assign(item, {
-            basFeeAmt: isBasFeeAmt ? item.basFeeAmt : Tw.FormatHelper.addComma(item.basFeeAmt),
-            isNumberBasFee: !isBasFeeAmt
-          });
+          return $.extend(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
+            item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
         })
       }));
 

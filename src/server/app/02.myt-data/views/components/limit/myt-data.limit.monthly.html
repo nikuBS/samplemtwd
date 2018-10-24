@@ -18,13 +18,13 @@
         </div>
     </li>
 </ul>
-<% } %>
+<% } else { %>
 
 <div class="cont-box bgnone"
-     style="display: <%= ( limitUserInfo.regularTopUpYn !== 'Y' || limitUserInfo.dataLimitedYn === 'Y') ? 'none' : 'block' %>">
+     style="display: <%= ( limitUserInfo.dataLimitedYn === 'Y') ? 'none' : 'block' %>">
     <p class="tabcon-tx0">데이터 <strong>차단 해제 상태</strong>입니다.<br>충전없이 데이터 사용이 가능합니다.</p>
 </div>
-<div class="cont-box" style="display: <%= ( limitUserInfo.regularTopUpYn !== 'Y' || limitUserInfo.dataLimitedYn === 'Y') ? 'block' : 'none' %>">
+<div class="cont-box" style="display: <%= ( limitUserInfo.dataLimitedYn === 'Y') ? 'block' : 'none' %>">
     <p class="tabcon-title0">충전 금액</p>
     <div class="widget">
         <div class="widget-box radio">
@@ -39,7 +39,7 @@
                                                     <span>20,000</span><span class="unit">원</span>
                                                 </span>
                     </li>
-                    <li class="radiobox" role="radio" aria-checked="true">
+                    <li class="radiobox" role="radio" aria-checked="false">
                         <input type="radio" name="radio4" value="15000" title="값2">
                         <!-- 체크상태일 경우 checked="false" -->
                         <span class="radio-txt">
@@ -95,8 +95,9 @@
     <div class="bt-fixed-area">
         <ul class="bt-slice full">
             <li class="bt-red1">
-                <button class="fe-monthly_recharge">충전하기</button>
+                <button class="fe-monthly_recharge" disabled>충전하기</button>
             </li>
         </ul>
     </div>
 </div>
+<% } %>

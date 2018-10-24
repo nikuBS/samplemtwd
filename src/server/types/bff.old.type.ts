@@ -273,11 +273,3 @@ export enum AUTH_CERTIFICATION_METHOD {
   SK_MOTP = 'M'
 }
 
-export enum AUTH_CERTIFICATION_SCOPE {
-  REQUEST = 'R',
-  PAGE = 'P',
-  GROUP = 'G',
-  SESSION = 'S',
-  CHILD = 'C'
-}
-

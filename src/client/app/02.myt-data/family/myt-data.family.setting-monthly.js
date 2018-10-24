@@ -23,6 +23,7 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   _cachedElement: function () {
     this.$amountInput = this.$container.find('span.input input');
     this.$submitBtn = this.$container.find('.bt-red1 button');
+    this.$error = this.$container.find('#aria-exp-desc3');
   },
 
   _bindEvent: function () {
@@ -41,15 +42,26 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + value);
     }
+    
+    if (!this.$error.hasClass('none')) {
+      this.$error.addClass('none');
+    }
+
     this.$submitBtn.attr('disabled', false);
   }, 
 
   _validateShareAmount: function () {
     if (!this.$amountInput.val()) {
-      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V17
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
+      this.$error.removeClass('none');
     } else if (Number(this.$amountInput.val()) > this._shareAmount) {
-      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V16
-    }    
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
+      this.$error.removeClass('none');
+    } else {
+      if (!this.$error.hasClass('none')) {
+        this.$error.addClass('none');
+      }
+    } 
   },
 
   _handleChangeAmount: function (e) {
@@ -69,8 +81,19 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
 
   _handleSubmit: function () {
     var today = new Date();
-    this._goToComplete('?date=' + today.getFullYear() + ',' + (today.getMonth() + 1));
-    this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
+    var query = '?date=' + today.getFullYear() + ',' + (today.getMonth() + 1);
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: this.$amountInput.val() })
+      .done($.proxy(this._handleSuccessSubmit, this, query));
+  },
+
+  _handleSuccessSubmit: function (query, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+      this._popupService.close();
+    } else {      
+      this._goToComplete(query);
+    }
   },
 
   _goToComplete: function (query) {
@@ -79,10 +102,10 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
 
   _openDeleteMonthlyDataPopup: function () {
     var POPUP = Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY;
-    this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._deleteMonthlyData, this))
+    this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._deleteMonthlyData, this));
   }, 
 
   _deleteMonthlyData: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0049, {}).done($.proxy(this._goToComplete, this, '?delete=true'));
+    this._apiService.request(Tw.API_CMD.BFF_06_0049, {}).done($.proxy(this._handleSuccessSubmit, this, '?delete=true'));
   }
 };

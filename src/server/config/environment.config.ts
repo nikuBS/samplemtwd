@@ -1,7 +1,7 @@
 const environment = {
   local: {
-    // BFF_SERVER: 'http://61.250.19.37:31010',
-    BFF_SERVER: 'http://211.188.180.73:31020',
+    BFF_SERVER: 'http://61.250.19.37:31020',
+    // BFF_SERVER: 'http://211.188.180.73:31020',
     CDN: '',
     REDIS: {
       host: '211.188.180.73',
@@ -19,13 +19,13 @@ const environment = {
     }
   },
   development: {
-    // BFF_SERVER: 'http://bff-spring',
-    BFF_SERVER: 'http://211.188.180.73:31309',
+    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
-      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc',
+      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
-      db: 15
+      db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
@@ -38,13 +38,13 @@ const environment = {
     }
   },
   staging: {
-    // BFF_SERVER: 'http://bff-spring',
-    BFF_SERVER: 'http://211.188.180.73:31309',
+    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
-      db: 15
+      db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
@@ -57,13 +57,17 @@ const environment = {
     }
   },
   production: {
-    BFF_SERVER: '',
+    BFF_SERVER: 'http://bff-spring',
     CDN: '',
-    REDIS: {},
+    REDIS: {
+      host: 'prd-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
+      port: 6379,
+      db: 0
+    },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
-    TID_SERVER: '',
-    TEST_SERVER: '',
-    DOMAIN: '',
+    TID_SERVER: 'https://auth-stg.skt-id.co.kr',
+    TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    DOMAIN: 'http://icp-stg.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: 'relay.signgate.com',

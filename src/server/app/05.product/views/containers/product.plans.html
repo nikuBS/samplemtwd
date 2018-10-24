@@ -52,6 +52,8 @@
                                     #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
                                 <% } %>
                                 <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
+                            <% } else if (plans.searchOption.searchProdTagNm) { %>
+                                #<span class="vbl tx-bold"><%= plans.searchOption.searchProdTagNm %></span>
                             <% } else { %>
                                 #<span class="vbl tx-bold">전체 요금제</span>
                             <% } %>
@@ -60,9 +62,10 @@
                 </div>
 
                 <!-- 이런 요금제는 어떠세요? -->
+                <% const products = plans.products; %>
+                <% if (products) { %>
                 <div class="cont-box nogaps-hoz">
                     <ul class="recommendedrate-list">
-                        <% const products = plans.products; %>
                         <% for (let i = 0; i < products.length; i++) { %>
                             <% const plan = products[i]; %>
                             <li class="type01">
@@ -75,18 +78,20 @@
                                         <p class="info"><span class="money"><%= plan.basFeeAmt %></span></p>
                                         <% } %>
                                     </div>
+                                    <% if (plan.filters) { %>
                                     <div class="taglist-wrap">
                                         <% for (let j = 0; j < plan.filters.length; j++) { %>
                                             <button class="tag-text">#<%= plan.filters[j].prodFltNm %></button>
                                         <% } %>
                                     </div>
+                                    <% } %>
                                     <dl class="products-additionalinfo">
                                         <dt>데이터</dt>
-                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %></span></dd>
+                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrDataQtyCtt) ? 'GB' : '' %></span></dd>
                                         <dt>음성</dt>
-                                        <dd><%= plan.basOfrVcallTmsCtt %></dd>
+                                        <dd><%= plan.basOfrVcallTmsCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrVcallTmsCtt) ? '분' : '' %></dd>
                                         <dt>문자</dt>
-                                        <dd><%= plan.basOfrCharCntCtt %></dd>
+                                        <dd><%= plan.basOfrCharCntCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrCharCntCtt) ? '건' : '' %></dd>
                                     </dl>
                                 </a>
                             </li>
@@ -100,6 +105,7 @@
                         </button>
                     </div>
                 </div>
+                <% } %>
                 <!-- //이런 요금제는 어떠세요? -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
@@ -110,7 +116,7 @@
                     <div class="moreitems-wrap">
                         <ul class="moreitems-list">
                             <li>
-                                <a href="/product/addition" class="link link-type01">모바일<br>부가상품</a>
+                                <a href="/product/addition" class="link link-type01">부가서비스</a>
                             </li>
                             <li>
                                 <button class="link link-type02">혜택과 할인</button>
@@ -149,6 +155,7 @@
         </div>
         <!--// #contents -->
     </div>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </body>
 
 <% include ../components/javascript.component.html %>

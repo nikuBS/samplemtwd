@@ -8,6 +8,7 @@ Tw.ProductJoin = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
+  this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._cachedElement();
   this._bindEvent();
@@ -109,7 +110,9 @@ Tw.ProductJoin.prototype = {
         this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
         this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
         this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
-        this.$inputNumber.on('keydown', $.proxy(this._detectInputNumber, this));
+        this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
+        this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
+        this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
         break;
     }
   },
@@ -155,16 +158,28 @@ Tw.ProductJoin.prototype = {
   },
 
   _joinCancel: function() {
+    if (this.$joinSetup.length > 0 && this.$joinSetup.is(':visible')) {
+      return this._historyService.replaceURL('/product/detail/' + this._prodId);
+    }
+
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinPopupEvent, this));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinPopupEvent, this), null, $.proxy(this._bindJoinPopupCloseEvent, this));
   },
 
   _bindJoinPopupEvent: function($popupContainer) {
-    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._goBack, this));
+    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._setCancelFlag, this));
   },
 
-  _goBack: function() {
-    this._historyService.goBack();
+  _setCancelFlag: function() {
+    this._cancelFlag = true;
+  },
+
+  _bindJoinPopupCloseEvent: function() {
+    if (!this._cancelFlag) {
+      return;
+    }
+
+    this._historyService.replaceURL('/product/detail/' + this._prodId);
   },
 
   _setDataForConfirmLayer: function() {
@@ -177,7 +192,8 @@ Tw.ProductJoin.prototype = {
       case 'MV_02_02_01':
       case 'MP_02_02_03_05':
       case 'MP_02_02_03_11':
-        confirmSettingInfo = Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this.$joinSetup.data('id')] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE;
+        confirmSettingInfo = Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this.$joinSetup.data('id')] + ' ' + this._data.addList.length +
+          Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE;
         break;
     }
 
@@ -211,12 +227,20 @@ Tw.ProductJoin.prototype = {
   _openAgreePop: function(e) {
     var $parent = $(e.currentTarget).parent();
     this._popupService.open({
-      hbs: 'PFT_01_03_L01',
+      hbs: 'FT_01_03_L01',
       data: {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').text()
       }
-    }, null, null, 'agree_pop');
+    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
+  },
+
+  _bindAgreePop: function($popupContainer) {
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closeAgreePop, this));
+  },
+
+  _closeAgreePop: function() {
+    this._popupService.close();
   },
 
   _toggleBtnJoin: function(isDisable) {
@@ -246,7 +270,7 @@ Tw.ProductJoin.prototype = {
       return;
     }
 
-    this.$overpayResult.html(this._template(Object.assign(resp.result, {
+    this.$overpayResult.html(this._template($.extend(resp.result, {
       isDataOvrAmt: isDataOvrAmt,
       isVoiceOvrAmt: isVoiceOvrAmt,
       isSmsOvrAmt: isSmsOvrAmt
@@ -268,7 +292,7 @@ Tw.ProductJoin.prototype = {
   },
 
   _addNum: function() {
-    var number = this.$inputNumber.val();
+    var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (this.$lineList.find('li').length > 3) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,
@@ -304,16 +328,39 @@ Tw.ProductJoin.prototype = {
   },
 
   _detectInputNumber: function() {
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    if (this.$inputNumber.val().length > 11) {
+      this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
+    }
+
     if (this.$lineWrap.length < 1) {
       return this._toggleSetupButton(this.$inputNumber.val().length > 0);
     }
 
     this._toggleClearBtn();
+    this._toggleNumAddBtn();
+  },
+
+  _toggleNumAddBtn: function() {
+    if (this.$inputNumber.val().length > 0) {
+      this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
+    } else {
+      this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
+    }
+  },
+
+  _blurInputNumber: function() {
+    this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+  },
+
+  _focusInputNumber: function() {
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide();
+    this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
@@ -341,8 +388,25 @@ Tw.ProductJoin.prototype = {
   },
 
   _openJoinConfirm: function() {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, null, $.proxy(this._procJoin, this));
+    var joinConfirmAlert = this._displayGroup === 'plans' ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A2 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
+    this._popupService.openModalTypeA(joinConfirmAlert.TITLE, joinConfirmAlert.MSG,
+      joinConfirmAlert.BUTTON, $.proxy(this._bindJoinConfirmPopup, this), null, $.proxy(this._procJoinConfirm, this));
+  },
+
+  _bindJoinConfirmPopup: function($popupContainer) {
+    $popupContainer.find('.tw-popup-confirm>button').on('click', $.proxy(this._setConfirmFlag, this));
+  },
+
+  _setConfirmFlag: function() {
+    this._joinReqConfirm = true;
+  },
+
+  _procJoinConfirm: function() {
+    if (!this._joinReqConfirm) {
+      return;
+    }
+
+    this._procJoin();
   },
 
   _procJoin: function() {
@@ -368,6 +432,8 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoinReq: function() {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     switch (this._displayGroup) {
       case 'plans':
         if (this.$inputNumber.length > 0) {
@@ -428,23 +494,28 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoinRes: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).page();
+      return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0);
+    var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0),
+      prodNm = this.$joinConfirmLayer.data('prod_nm') || '';
 
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
-      data: Object.assign(this._successData, {
+      data: $.extend(this._successData, {
         prodId: this._prodId,
-        prodNm: this.$joinConfirmLayer.data('prod_nm'),
+        prodNm: prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isZeroPlanSetup: (this._prodId === 'NA00006157'), // @todo 완료 화면 0플랜 버튼 임시 생성
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })
     }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
+
+    // @todo SvcInfo Refresh
+    this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
   _bindJoinResPopup: function($popupContainer) {
@@ -452,7 +523,8 @@ Tw.ProductJoin.prototype = {
   },
 
   _goProductDetail: function() {
-    this._historyService.goLoad('/product/detail/' + this._prodId);
+    this._popupService.close();
+    this._historyService.replaceURL('/product/detail/' + this._prodId);
   }
 
 };

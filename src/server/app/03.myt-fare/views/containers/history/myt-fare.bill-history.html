@@ -17,9 +17,9 @@
 
 <div class="wrap">
     <% if(data.current === 'tax') { %>
-    <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역', svcInfo: svcInfo, line: false}); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역', svcInfo: svcInfo}); %>
     <% } else { %>
-    <%- include('../../../../../common/views/components/header.component.html', { title: '현금 영수증 발급 내역', svcInfo: svcInfo, line: false}); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '현금 영수증 발급 내역', svcInfo: svcInfo}); %>
     <% } %>
 
     <% if(data.isTax) { %>
@@ -66,7 +66,9 @@
           <div class="myt-note-wrap">
               <span class="tit">6개월간의 발행 내역만 확인 가능합니다.</span>
           </div>
+          <div class="fe-list-inner">
           {{>taxList}}
+          </div>
           {{#if initialMoreData}}
           <div class="bt-more round">
               <button>더보기</button>
@@ -77,25 +79,26 @@
   </div>
 </script>
 <script id="fe-template-tax-items" type="text/x-handlebars-template">
+    {{#each items}}
     <div class="myfare-result-wrap">
         <div class="myfare-list">
             <ul>
                 <li>
                     <dl class="show-data">
                         <dt>발행일자</dt>
-                        <dd class="tx-bold"><span class="number">2018.05.23</span></dd>
+                        <dd class="tx-bold"><span class="number">{{taxBillIsueDt}}</span></dd>
                     </dl>
                 </li>
                 <li>
                     <dl class="show-data">
                         <dt>고객/사업자명</dt>
-                        <dd class="tx-bold">라이트브레인</dd>
+                        <dd class="tx-bold">{{ctzBizName}}</dd>
                     </dl>
                 </li>
                 <li>
                     <dl class="show-data">
                         <dt>사업자 번호</dt>
-                        <dd class="tx-bold"><span class="number">456456456456</span></dd>
+                        <dd class="tx-bold"><span class="number">{{ctzBizNum}}</span></dd>
                     </dl>
                 </li>
                 <li>
@@ -105,28 +108,29 @@
                     </dl>
                     <dl class="show-data detail">
                         <dt>공급가액</dt>
-                        <dd><span class="number">20,000</span>원</dd>
+                        <dd><span class="number">{{splyPrc}}</span>원</dd>
                     </dl>
                     <dl class="show-data detail">
                         <dt>부가세액</dt>
-                        <dd><span class="number">2,000</span>원</dd>
+                        <dd><span class="number">{{vatAmt}}</span>원</dd>
                     </dl>
                     <dl class="show-data detail">
                         <dt>합계금액</dt>
-                        <dd><span class="number">22,000</span>원</dd>
+                        <dd><span class="number">{{totAmt}}</span>원</dd>
                     </dl>
                 </li>
             </ul>
         </div>
         <ul class="bt-slice item-two mt40">
             <li class="bt-white1">
-                <button>팩스 재발행하기</button>
+                <button class="fe-btn-fax" data-list-id="{{listId}}">팩스 재발행하기</button>
             </li>
             <li class="bt-white1">
-                <button>이메일 재발행 하기</button>
+                <button class="fe-btn-email" data-list-id="{{listId}}">이메일 재발행 하기</button>
             </li>
         </ul>
     </div>
+    {{/each}}
 </script>
 <script id="fe-template-cash-items" type="text/x-handlebars-template">
     {{#each items}}
@@ -170,8 +174,11 @@
     {{/if}}
 </script>
 <script id="list-empty" type="text/x-handlebars-template">
-    <div class="no-data">
-        <span>내역이 없습니다.</span>
+    <div class="container">
+        <!-- .cont-box -->
+        <div class="no-data">
+            <span>내역이 없습니다.</span>
+        </div>
     </div>
 </script>
 </body>

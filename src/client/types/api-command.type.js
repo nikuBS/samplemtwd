@@ -16,7 +16,6 @@ Tw.API_CMD = {
 
   // COMMON
   BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
-  BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
   BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
   BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
   BFF_01_0008: { path: '/core-modification/v1/address/street-names', method: Tw.API_METHOD.GET },
@@ -81,6 +80,8 @@ Tw.API_CMD = {
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0014: { path: '/core-balance/v1/pps-histories', method: Tw.API_METHOD.GET },
+  BFF_05_0020: { path: '/core-bill/v1/bill-pay/recent-bills', method: Tw.API_METHOD.GET },
+  BFF_05_0021: { path: '/core-bill/v1/bill-pay/recent-usages', method: Tw.API_METHOD.GET },
   BFF_05_0022: { path: '/core-bill/v1/hotbills', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0027: { path: '/core-bill/v1/bill-types', method: Tw.API_METHOD.PUT },
@@ -104,9 +105,7 @@ Tw.API_CMD = {
   BFF_05_0062: { path: '/core-modification/v1/wire-network-notification', method: Tw.API_METHOD.POST },
   BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/v1/useContents/getUseContentsLimit', method: Tw.API_METHOD.GET },
-  BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: Tw.API_METHOD.POST },
-  BFF_05_0067U: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimit', method: Tw.API_METHOD.POST },
-  BFF_05_0067D: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
+  BFF_05_0067: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimit', method: Tw.API_METHOD.POST },
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: Tw.API_METHOD.PUT },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.DELETE },
@@ -115,8 +114,6 @@ Tw.API_CMD = {
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-request', method: Tw.API_METHOD.POST },
   BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.GET },
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
-  BFF_05_0081U: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
-  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
   BFF_05_0085: { path: '/core-bill/v1/micropay-password-status', method: Tw.API_METHOD.GET },
@@ -141,9 +138,26 @@ Tw.API_CMD = {
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
   BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
+  BFF_05_0141: { path: '/core-modification/v1/wire-agreements-penalty', method: Tw.API_METHOD.GET },
+  BFF_05_0142: { path: '/core-modification/v1/wire-agreements', method: Tw.API_METHOD.PUT },
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.GET },
+  BFF_05_0150: { path: '/core-modification/v1/wire-troubles-cancel', method: Tw.API_METHOD.DELETE },
   BFF_05_0155: { path: '/core-modification/v1/myinfo/discount-info', method: Tw.API_METHOD.GET },
+  BFF_05_0156: { path: '/core-modification/v1/wire-troubles', method: Tw.API_METHOD.GET },
+  BFF_05_0158: { path: '/core-modification/v1/wire/penalty-info', method: Tw.API_METHOD.GET },
+  BFF_05_0159: { path: '/core-modification/v1//wireInfo/listGiftProvide', method: Tw.API_METHOD.GET },
+  BFF_05_0160: { path: '/core-modification/v1/myinfo/wire-free-call-check', method: Tw.API_METHOD.GET },
+  BFF_05_0163: { path: '/core-modification/v1/myinfo/chg-wire-addr', method: Tw.API_METHOD.POST },
+  BFF_05_0164: { path: '/core-modification/v1/wire-phone/chang-status', method: Tw.API_METHOD.GET},
+  BFF_05_0165: { path: '/v1/wire/change-request', method: Tw.API_METHOD.POST },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: Tw.API_METHOD.GET },
+  BFF_05_0170: { path: '/core-modification/v1/myinfo/wire-set-pause', method: Tw.API_METHOD.POST },
+  BFF_05_0171: { path: '/core-modification/v1/myinfo/wire-remove-pause', method: Tw.API_METHOD.POST },
+  BFF_05_0172: { path: '/core-modification/v1/myinfo/get-wire-cancel-info', method: Tw.API_METHOD.GET },
+  BFF_05_0173: { path: '/core-modification/v1/myinfo/get-wire-cancel-fee', method: Tw.API_METHOD.GET },
+  BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: Tw.API_METHOD.POST },
+  BFF_05_0176: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
+  BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -189,6 +203,7 @@ Tw.API_CMD = {
   BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.GET },
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
+  BFF_06_0044: { path: '/core-balance/v1/tfamily-sharings', method: Tw.API_METHOD.GET },
   BFF_06_0045: { path: '/core-recharge/v1/tfamily-shareable-data', method: Tw.API_METHOD.GET },
   BFF_06_0046: { path: '/core-recharge/v1/tfamily-sharings', method: Tw.API_METHOD.POST },
   BFF_06_0048: { path: '/core-recharge/v1/regular-tfamily-sharings', method: Tw.API_METHOD.POST },
@@ -288,6 +303,7 @@ Tw.API_CMD = {
   BFF_08_0054: { path: '/core-modification/v1/require-document/reqDocument', method: Tw.API_METHOD.GET },
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: Tw.API_METHOD.GET },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: Tw.API_METHOD.GET },
+  BFF_08_0058: { path: '/core-modification/v1/praise/savePraiseInfo', method: Tw.API_METHOD.POST },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
@@ -342,6 +358,7 @@ Tw.NODE_CMD = {
   LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   CHANGE_SVC_PASSWORD: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
+  UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
   SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST },
@@ -351,7 +368,7 @@ Tw.NODE_CMD = {
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
   GET_VERSION: { path: '/version', method: Tw.API_METHOD.GET },
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
-  GET_NOTICE: { path: '/notice', method: Tw.API_METHOD.GET },
+  GET_SERVICE_NOTICE: { path: '/service-notice', method: Tw.API_METHOD.GET },
 
   CERT_TEST: { path: '/certTest', method: Tw.API_METHOD.GET }
 };

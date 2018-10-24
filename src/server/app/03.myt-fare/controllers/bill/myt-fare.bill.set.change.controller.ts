@@ -43,6 +43,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
       nm : MYT_FARE_BILL_TYPE[data.query.billType]
     };
     data.lineType = this.getLinetype();
+    data.svcGr = svcInfo.svcGr;
 
     return {
       svcInfo,
@@ -89,7 +90,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
       name : '',
       value : ''
     };
-    // 이메일 안내서
+    // 기타(우편)
     if (data.query.billType === '1') {
       param.name = 'cntcNum1';
       param.value = data.cntcNum1;

@@ -131,7 +131,7 @@ class MyTFareMicroHistory extends TwViewController {
     };
 
     const reformCallback = (data: any): any => {
-      if (data.histories !== undefined) {
+      if (data.useConAmtDetailList !== undefined) {
         data.useConAmtDetailList.map((o) => {
           o.useDtFormed = DateHelper.getShortDateWithFormat(o.payTime, 'YYYY.MM.DD hh:mm:ss');
           o.sumPriceFormed = FormatHelper.addComma(o.useCharge);
@@ -151,10 +151,12 @@ class MyTFareMicroHistory extends TwViewController {
   renderMicroBlockHistory(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resData) => {
+      const currentDate = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
 
       if (parseInt(resData.result.payHistoryCnt, 10) !== 0) {
         resData.result.cpHistories.map((o) => {
-          this.logger.info(this, DateHelper.getCurrentShortDate(new Date()), DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYYMMDD'));
+          // this.logger.info(this, DateHelper.getCurrentShortDate(new Date()), DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYYMMDD'));
+          o.isBlocked = parseInt(currentDate, 10) >= parseInt(o.applyMonth.substr(0, 10).replace(/-/g, ''), 10);
           o.requestDate = DateHelper.getShortDateWithFormat(o.useDt, 'YYYY.M.D');
           o.applyDate = DateHelper.getShortDateWithFormat(o.applyMonth, 'YYYY.M.D');
         });
@@ -162,13 +164,6 @@ class MyTFareMicroHistory extends TwViewController {
         resData.result.cpHistories = [];
       }
 
-
-      // const renderData = {
-      //   cpName: resData.result.cpNm,
-      //   pgName: resData.result.pgNm,
-      //   requestDate: resData.result.useDt,
-      //   applyDate: resData.result.applyMonth
-      // }
       res.render('history/myt-fare.micro.block.history.html', {svcInfo: svcInfo, data: resData.result.cpHistories});
     });
   }
@@ -178,7 +173,7 @@ class MyTFareMicroHistory extends TwViewController {
       gubun: 'Request',
       requestCnt: 0
     };
-    const API_CMD_NAME = (parentPath === 'micro-payment') ? API_CMD.BFF_07_0073 : API_CMD.BFF_07_0081;
+    const API_CMD_NAME = (parentPath === 'micro') ? API_CMD.BFF_07_0073 : API_CMD.BFF_07_0081;
 
     this.apiService.request(API_CMD_NAME, apiOption).subscribe(() => {
       this.logger.info(this, apiOption);
@@ -187,7 +182,7 @@ class MyTFareMicroHistory extends TwViewController {
       this.apiService.request(API_CMD_NAME, apiOption).subscribe((resData) => {
         res.render('history/myt-fare.history.monthly.html',
             {
-              svcInfo: svcInfo, isMicro: parentPath === 'micro-payment', currentMonth: DateHelper.getCurrentMonth(),
+              svcInfo: svcInfo, isMicro: parentPath === 'micro', currentMonth: DateHelper.getCurrentMonth(),
               data: this.setMonthlyData(resData.result)
             });
       });

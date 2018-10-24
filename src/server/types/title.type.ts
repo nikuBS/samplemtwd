@@ -16,10 +16,13 @@ export const MYT_JOIN_SUBMAIN_TITLE = {
   MAIN: '나의 가입 정보'
 };
 
-
 export const MYT_FARE_HOTBILL_TITLE = {
   MAIN: '실시간 사용요금',
   ERROR: {
     BIL0063: '시스템이 정상적으로 작동하지 않아 서비스를 이용 하실 수 없습니다.'
   }
+};
+
+export const MYT_JOIN_SUSPEND = {
+  MAIN: '일시정지'
 };

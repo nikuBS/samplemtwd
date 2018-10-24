@@ -36,11 +36,14 @@ Tw.MyTFarePaymentAccount.prototype = {
     this.$payBtn = this.$container.find('.fe-check-pay');
 
     this._isPaySuccess = false;
+    this._historyUrl = '/myt/fare/history/payment';
+    this._mainUrl = '/myt/fare';
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
@@ -60,8 +63,8 @@ Tw.MyTFarePaymentAccount.prototype = {
     }
   },
   _showAndHideAccount: function (event) {
-    var $target = $(event.currentTarget);
-    if ($target.hasClass('checked')) {
+    var $target = $(event.target);
+    if ($target.is(':checked')) {
       this.$refundBox.show();
     } else {
       this.$refundBox.hide();
@@ -96,6 +99,10 @@ Tw.MyTFarePaymentAccount.prototype = {
     }
     return isAbled;
   },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
+  },
   _checkPay: function () {
     if (this._isValid()) {
       this._popupService.open({
@@ -119,10 +126,11 @@ Tw.MyTFarePaymentAccount.prototype = {
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
-    $layer.find('.fe-payment-option-number').text(data.accountNum);
+    $layer.find('.fe-payment-option-number').attr('id', data.accountNum)
+      .text(Tw.StringHelper.masking(data.accountNum, '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
   },
   _getData: function () {
     var isAccountAuto = this.$accountInputBox.hasClass('checked');
@@ -152,27 +160,8 @@ Tw.MyTFarePaymentAccount.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._popupService.open({
-        'hbs': 'complete',
-        'link_class': 'fe-payment-history',
-        'link_text': Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY,
-        'text': Tw.MYT_FARE_PAYMENT_NAME.PAYMENT
-      },
-        $.proxy(this._onComplete, this),
-        $.proxy(this._goPaymentHistory, this),
-        'complete'
-      );
-    }
-  },
-  _onComplete: function ($layer) {
-    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this));
-  },
-  _setIsLink: function () {
-    this._isLink = true;
-  },
-  _goPaymentHistory: function () {
-    if (this._isLink) {
-      this._historyService.goLoad('/myt/fare/history/payment');
+      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl,
+        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PAYMENT);
     }
   },
   _isValid: function () {
@@ -198,8 +187,8 @@ Tw.MyTFarePaymentAccount.prototype = {
       payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
       payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
       payovrCustNm: this.$container.find('.fe-name').val(),
-      bankOrCardCode: this.$container.find('.fe-auto-account-bank').attr('data-code'),
-      bankOrCardAccn: this.$container.find('.fe-auto-account-number').text(),
+      bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
+      bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };
     return reqData;
@@ -212,7 +201,7 @@ Tw.MyTFarePaymentAccount.prototype = {
       this._payFail(res);
     }
   },
-  _payFail: function (res) {
-    Tw.Error(res.code, res.msg).pop();
+  _payFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   }
 };

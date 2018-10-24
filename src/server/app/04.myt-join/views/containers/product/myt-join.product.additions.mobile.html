@@ -36,30 +36,37 @@
 
                 <div class="cont-box nogaps">
                     <div class="add-prd-wrap">
-                        <% if (additions.length === 0) { %>
-                        <div class="contents-empty">
+                        <div class="contents-empty <%= additions.length > 0 ? 'none' : '' %>">
                             <span class="ico type1"></span>
                             <p class="desc">현재 사용중인 부가상품이 없습니다.</p>
                         </div>
-                        <% } else { %>
+                        <% if (additions.length > 0) { %>
                         <ul class="list-comp-lineinfo">
                             <% additions.map(addition => { %>
-                            <li class="add-con" data-isFree ="<%= addition.basFeeTxt === "무료" %>">
+                            <li class="<%= addition.btnList.length > 0 ? 'add-con' : '' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === "무료" %>">
                                 <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
                                 <button>
                                     <div class="lineinfo-user">
-                                        <span class="info-title">
-                                            <%= addition.prodNm %></span>
-                                        <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>
-
+                                        <span class="info-title"><%= addition.prodNm %></span>
+                                        <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>    
                                     </div>
                                     <div class="lineinfo-data">
+                                        <% if (addition.prodLinkYn === "Y") { %>
+                                            <a href="/product/detail/<%= addition.prodId %>">
+                                                <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
+                                                <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                                <% } else { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+                                                <% } %>
+                                                <% if (addition.prodLinkYn === "Y") { %> <span class="ico"></span><% } %>
+                                            </a>
+                                        <% } else { %>
                                         <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
                                         <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                         <% } else { %>
-                                            <span class="info-title num"><%= addition.basFeeTxt %></span>
+                                            <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
-                                        <span class="ico"></span>
+                                        <% } %>
                                     </div>
                                 </button>
                                 <% if (addition.btnList.length > 0) { %>
@@ -85,6 +92,7 @@
         </div>
         <!--// #contents -->
     </div>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>

@@ -95,6 +95,7 @@
 
                                                                 </ul>
                                                             </div>
+
                                                         </li>
                                                         {{/each}}
 
@@ -169,7 +170,14 @@
                                                         {{# each largeItem.children as |midItem midIndex|}}
                                                         <li>
                                                             <div class="inner-top">
-                                                                <span class="title">{{midItem.id}}</span>
+                                                                <span class="title">
+                                                                    {{midItem.id}}
+                                                                    {{!-- 주석 타사 --}}
+                                                                    {{#if_third_party midItem.id '콘텐츠이용료'}}
+                                                                    {{/if_third_party}}
+                                                                    {{#if_third_party midItem.id '소액결제'}}
+                                                                    {{/if_third_party}}
+                                                                </span>
                                                                 <span class="tx-cont">{{midItem.totPrice}} 원</span>
                                                             </div>
                                                             <div class="inner-row">
@@ -185,8 +193,20 @@
 
                                                                 </ul>
                                                             </div>
+
+                                                            {{!-- 주석 콘텐츠이용료 자세히보기 --}}
+                                                            {{#if_contents midItem.id '콘텐츠이용료'}}
+                                                            {{/if_contents}}
+
+                                                            {{!-- 주석 소액결제 자세히기 --}}
+                                                            {{#if_micro midItem.id '소액결제'}}
+                                                            {{/if_micro}}
+
+
                                                         </li>
+
                                                         {{/each}}
+
 
                                                     </ul>
                                                     <div class="noti-words">
@@ -240,7 +260,9 @@
         <div class="container">
             <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
                 <h3 class="tit"><%= svcInfo.prodNm %></h3>
-                <button class="detail-view"><span class="blind">자세히보기</span></button>
+                <a class="detail-view" href="/product/detail/<%= svcInfo.prodId %>" >
+                    <span class="blind">자세히보기</span>
+                </a>
             </div>
             <!-- .cont-box -->
             <div class="cont-box">

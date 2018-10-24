@@ -1,0 +1,90 @@
+<%#
+* FileName: myt-join.wire.as.history.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.10.08
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '장애 A/S신청 현황', svcInfo: svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="ti-caption-gray">
+                <span class="num">총<em><%= data.totalCnt %></em>건</span>
+            </div>
+
+            <script id="list-cont-box-tmplt" type="text/x-handlebars-template">
+                <div class="cont-box nogaps">
+                    <div class="history-list">
+                        <ul></ul>
+                    </div>
+                </div>
+            </script>
+
+            <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
+                <li data-no="{{ troubleNum }}">
+                    <span class="tx-date">{{ noYearDate troubleDt }}</span>
+                    <button>
+                        <div class="li-elem item-one">
+                            <div class="title-box">
+                                <span class="tit">{{ svcNm }}</span>
+                                <span class="sub-tit ellipsis">{{ troubleDetail }}</span>
+                            </div>
+                        </div>
+                    </button>
+                </li>
+            </script>
+
+            <script id="list-year-div-tmplt" type="text/x-handlebars-template">
+                <div class="data-select-wrap">
+                    <span class="data-tit">{{ year }}</span>
+                </div>
+            </script>
+
+            <!-- .cont-box -->
+            <div id="cont-boxes">
+
+            </div>
+            <!--
+            <div class="bt-more" style="display:none;">
+                <button>더보기</button>
+            </div>
+            -->
+            <script id="bt-more-tmplt" type="text/x-handlebars-template">
+                <div class="bt-more">
+                    <button>더보기</button>
+                </div>
+            </script>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+            <!--// TBD -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireAS($('#contents'), decodeURIComponent('<%= JSON.stringify(data) %>').replace(/&#34;/g, '"'));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

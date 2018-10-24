@@ -15,7 +15,6 @@ Tw.MyTFarePaymentSms = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._historyService.init('hash');
   this._init();
 };
 
@@ -30,10 +29,10 @@ Tw.MyTFarePaymentSms.prototype = {
   _selectAccountList: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.SELECT_ACCOUNT,
-      data:this._getAccountList()
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT_ACCOUNT,
+      data: this._getAccountList()
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
@@ -70,13 +69,29 @@ Tw.MyTFarePaymentSms.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.setHistory();
-      this._historyService.goHash('#complete-sms');
+      this._popupService.open({
+          'hbs': 'complete-sms',
+          'svcNum': res.result.svcNum
+        },
+        $.proxy(this._onComplete, this),
+        $.proxy(this._goSubmain, this),
+        'complete-sms');
     } else {
       this._payFail(res);
     }
   },
   _payFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
+  },
+  _onComplete: function ($layer) {
+    $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this));
+  },
+  _setIsLink: function () {
+    this._isSubmain = true;
+  },
+  _goSubmain: function () {
+    if (this._isSubmain) {
+      this._historyService.goLoad('/myt/fare');
+    }
   }
 };

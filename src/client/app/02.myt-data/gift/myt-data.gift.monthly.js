@@ -36,11 +36,16 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$btn_send_auto_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$input_auto_gift.on('keyup', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
+    this.$wrap_auto_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
   },
 
   _showAddUI: function () {
     this.$btn_add_contact.hide();
     this.$btn_wrap_add_contact.show();
+  },
+
+  _onClickDataQty: function () {
+    this._checkValidateSendingButton();
   },
 
   _onKeyUpAutoGiftNumber: function () {
@@ -72,6 +77,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _requestUnsubscribeAutoGift: function (serNum) {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum })
       .done($.proxy(this._onSuccessUnsubscribeAutoGift, this));
   },
@@ -124,7 +130,10 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _checkValidateSendingButton: function () {
-    if ( this.$input_auto_gift.val().match(/\d+/g) ) {
+    var isValidQty = this.$wrap_auto_select_list.find('input:checked').length !== 0;
+    var isValidPhone = this.$input_auto_gift.val().length !== 0;
+
+    if ( isValidQty && isValidPhone ) {
       this.$btn_send_auto_gift.attr('disabled', false);
     } else {
       this.$btn_send_auto_gift.attr('disabled', true);

@@ -40,12 +40,13 @@ Tw.CommonSettingsNotifications.prototype = {
       'click', '#fe-service-terms, #fe-recommend-terms', $.proxy(this._onTermsClicked, this));
   },
   _onNotiChanged: function (e) {
-    var id = e.target.id;
+    var id = e.currentTarget.id;
+    var checked = !!$(e.currentTarget).attr('checked');
     var data = {};
-    if (id.includes('service')) {
-      data.tNotiInfoRcvAgreeYn = e.target.checked ? 'Y' : 'N';
-    } else if (id.includes('recommend')) {
-      data.tNotiMrktRcvAgreeYn = e.target.checked ? 'Y' : 'N';
+    if (id.indexOf('service') !== -1) {
+      data.tNotiInfoRcvAgreeYn = checked ? 'Y' : 'N';
+    } else if (id.indexOf('recommend') !== -1) {
+      data.tNotiMrktRcvAgreeYn = checked ? 'Y' : 'N';
     }
 
     this._apiService.request(Tw.API_CMD.BFF_03_0024, data)
@@ -60,19 +61,19 @@ Tw.CommonSettingsNotifications.prototype = {
       .fail($.proxy(this._onFailChangingNoti, this, id)
     );
 
-    if (id.includes('service')) {
+    if (id.indexOf('service') !== -1) {
       this.$serviceSpan.removeClass('none');
     } else {
       this.$recommendSpan.removeClass('none');
     }
 
     // check and show layer popup for terms
-    if (e.target.checked) { // When switch changes to on from off
-      if (id.includes('service')) {
+    if (checked) { // When switch changes to on from off
+      if (id.indexOf('service') !== -1) {
         if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn) {
           this.$container.find('#fe-service-terms').trigger('click'); // show terms layer popup
         }
-      } else if (id.includes('recommend')) {
+      } else if (id.indexOf('recommend') !== -1) {
         if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn ||
             !this._termsAgreed.twdLocUseAgreeYn) {
           this.$container.find('#fe-recommend-terms').trigger('click');
@@ -107,7 +108,7 @@ Tw.CommonSettingsNotifications.prototype = {
       }
     }, this));
 
-    if (id.includes('service')) {
+    if (id.indexOf('service') !== -1) {
       $root.find('.fe-location').addClass('none');
     }
 

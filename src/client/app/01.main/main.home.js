@@ -24,11 +24,6 @@ Tw.MainHome = function (rootEl, smartCard) {
   this._openLineResisterPopup();
 
   this._initScroll();
-
-  // this._apiService.request(Tw.NODE_CMD.CERT_TEST, {})
-  //   .done(function(resp) {
-  //     console.log(resp);
-  //   });
 };
 
 Tw.MainHome.prototype = {
@@ -43,18 +38,33 @@ Tw.MainHome.prototype = {
 
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
-    var cardNum = this.$elBarcode.data('cardnum');
-    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      this.$elBarcode.JsBarcode(cardNum);
-    }
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
+    this._makeBarcode();
   },
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
 
+  },
+  _makeBarcode: function () {
+    var cardNum = this.$elBarcode.data('cardnum');
+    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
+      this.$elBarcode.JsBarcode(cardNum);
+    }
+  },
+  _onClickBarcode: function () {
+    var cardNum = this.$elBarcode.data('cardnum');
+    var usedAmount = Tw.FormatHelper.addComma(this.$elBarcode.data('usedamount'));
+    this._popupService.open({
+      hbs: 'TH1_05',
+      layer: true,
+      data: {
+        cardNum: cardNum,
+        usedAmount: usedAmount
+      }
+    });
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
@@ -183,7 +193,7 @@ Tw.MainHome.prototype = {
 
   },
   _parseMicroData: function (microData) {
-    if(microData.payHistoryCnt > 0) {
+    if ( microData.payHistoryCnt > 0 ) {
       return {
         showMicro: true,
         invEndDt: Tw.DateHelper.getShortDateNoDot(microData.toDt),
@@ -251,7 +261,7 @@ Tw.MainHome.prototype = {
     } else if ( sender.code === this.GIFT_ERROR_CODE.GFT0002 ) {
       result.blockProduct = true;
     } else {
-      Tw.Error(sender.code, sender.msg).pop();
+      // Tw.Error(sender.code, sender.msg).pop();
     }
   },
   _parseRemainData: function (remain, result) {
@@ -286,7 +296,7 @@ Tw.MainHome.prototype = {
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
       $('.fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      // Tw.Error(resp.code, resp.msg).pop();
     }
 
   },

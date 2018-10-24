@@ -72,6 +72,7 @@ class MyTJoinSubmainController extends TwViewController {
       // 가입정보
       switch ( this.type ) {
         case 0:
+        case 3:
           data.myInfo = myif;
           break;
         case 2:
@@ -91,6 +92,22 @@ class MyTJoinSubmainController extends TwViewController {
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
         data.isAddProduct = true;
+        switch ( this.type ) {
+          case 2:
+            // 유선
+            data.myAddProduct.addTotCnt = data.myAddProduct.additionCount;
+            break;
+          case 1:
+          case 3:
+            // T-login, T-pocketFi, PPS
+            data.myAddProduct.addTotCnt = data.myAddProduct.addProdCnt;
+            break;
+          default:
+            data.myAddProduct.addTotCnt =
+              parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
+              parseInt(data.myAddProduct.comProdCnt, 10);
+            break;
+        }
       }
       // 약정할부 노출여부
       if ( data.myInstallement && data.myInstallement.disProdNm ) {
@@ -103,9 +120,10 @@ class MyTJoinSubmainController extends TwViewController {
         data.isContractPlan = true;
       }
       // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
-      if ( data.myPausedState.svcStCd === 'SP' ) {
-        data.myPausedState.sDate = DateHelper.getShortDateNoDot(data.myPausedState.fromDt);
-        data.myPausedState.eDate = DateHelper.getShortDateNoDot(data.myPausedState.toDt);
+      if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
+        const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
+        data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
+        data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
       }
       res.render('myt-join.submain.html', { data });
     });
@@ -114,29 +132,49 @@ class MyTJoinSubmainController extends TwViewController {
   __setType(svcInfo) {
     switch ( svcInfo.svcAttrCd ) {
       case 'M1':
-      case 'M3':
-      case 'M4':
+        // 모바일
         this.type = 0;
         break;
       case 'M2':
+        // PPS
         this.type = 1;
         break;
       case 'S1':
       case 'S2':
       case 'S3':
+        // 유선
         this.type = 2;
+        break;
+      case 'M3':
+      case 'M4':
+        // T-Login, T-FocketFi
+        this.type = 3;
         break;
     }
   }
 
+  isMasking(target): boolean {
+    let result = false;
+    const MASK_CODE = '*';
+    if ( target.indexOf(MASK_CODE) > -1 ) {
+      result = true;
+    }
+    return result;
+  }
+
   convertOtherLines(target, items): any {
-    const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
+    const MOBILE = items['M'] || [];
+    const OTHER = items['O'] || [];
+    const SPC = items['S'] || [];
     const list: any = [];
-    nOthers.filter((item) => {
-      if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-        list.push(item);
-      }
-    });
+    if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
+      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+      nOthers.filter((item) => {
+        if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          list.push(item);
+        }
+      });
+    }
     return list;
   }
 
@@ -147,14 +185,16 @@ class MyTJoinSubmainController extends TwViewController {
    */
   _convertWireInfo(data) {
     const result: any = {};
+    // 가입자명
+    result.custNm = data.wireReqrNm;
     // 서비스 약정
-    result.svcPrdStaDt = DateHelper.getShortDateNoDot(data.svcPrdStaDt);
-    result.svcPrdEndDt = DateHelper.getShortDateNoDot(data.svcPrdEndDt);
+    result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt : DateHelper.getShortDateNoDot(data.svcPrdStaDt);
+    result.svcPrdEndDt = this.isMasking(data.svcPrdEndDt) ? data.svcPrdEndDt : DateHelper.getShortDateNoDot(data.svcPrdEndDt);
     result.svcAgrmtMth = data.svcAgrmtMth;
     // 세트 약정
     result.setNm = data.setNm;
-    result.setPrdStaDt = DateHelper.getShortDateNoDot(data.setPrdStaDt);
-    result.setPrdEndDt = DateHelper.getShortDateNoDot(data.setPrdEndDt);
+    result.setPrdStaDt = this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt : DateHelper.getShortDateNoDot(data.setPrdStaDt);
+    result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt : DateHelper.getShortDateNoDot(data.setPrdEndDt);
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소
@@ -206,9 +246,30 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입 부가,결합 상품
   _getAddtionalProduct() {
-    return this.apiService.request(API_CMD.BFF_05_0161, {}).map((resp) => {
+    let API_URL = API_CMD.BFF_05_0161;
+    switch ( this.type ) {
+      case 2:
+        API_URL = API_CMD.BFF_05_0179;
+        break;
+      case 3:
+        API_URL = API_CMD.BFF_05_0166;
+        break;
+    }
+    return this.apiService.request(API_URL, {}).map((resp) => {
+      // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( resp.result.productCntInfo ) {
+          // 무선
+          return resp.result.productCntInfo;
+        } else if ( resp.result.additionCount ) {
+          // 유선
+          return resp.result;
+        } else if ( resp.result.addProdCnt ) {
+          // T-PocketFi, T-Login, PPS
+          return resp.result;
+        } else {
+          return null;
+        }
       } else {
         // error
         return null;

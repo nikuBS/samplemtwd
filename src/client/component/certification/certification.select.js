@@ -76,7 +76,6 @@ Tw.CertificationSelect.prototype = {
   },
 
   _openSelectPopup: function (loginType, methods, methodCnt) {
-    console.log('methodCnt', methods, methodCnt, loginType);
     var popupType = loginType === Tw.AUTH_LOGIN_TYPE.TID ? 'CO_02_01_01_01' : 'CO_02_01_01_02';
     this._popupService.open({
       hbs: popupType,

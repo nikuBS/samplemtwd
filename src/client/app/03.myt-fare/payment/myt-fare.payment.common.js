@@ -6,15 +6,10 @@
 
 Tw.MyTFarePaymentCommon = function (rootEl) {
   this.$container = rootEl;
-  this.$unpaidList = this.$container.find('.fe-unpaid-list');
-  this.$appendTarget = this.$container.find('.fe-selected-line');
-
-  this._billList = [];
-  this._moreCnt = 0;
-  this._standardCnt = 3;
 
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._historyService.init();
 
   this._init();
 };
@@ -26,7 +21,13 @@ Tw.MyTFarePaymentCommon.prototype = {
     this._bindEvent();
   },
   _initVariables: function () {
+    this.$unpaidList = this.$container.find('.fe-unpaid-list');
+    this.$appendTarget = this.$container.find('.fe-selected-line');
+
     this._selectedLine = [];
+    this._billList = [];
+    this._moreCnt = 0;
+    this._standardCnt = 3;
     this._amount = this.$container.find('.fe-amount').data('value');
     this._isClicked = false;
   },
@@ -48,6 +49,8 @@ Tw.MyTFarePaymentCommon.prototype = {
   },
   _openSelectLine: function ($layer) {
     this.$layer = $layer;
+    this.$selectBtn = $layer.find('.fe-select');
+
     this._bindLayerEvent();
   },
   _bindLayerEvent: function () {
@@ -96,12 +99,13 @@ Tw.MyTFarePaymentCommon.prototype = {
     this.$container.find('.fe-amount').text(Tw.FormatHelper.addComma(this._amount.toString()));
   },
   _onCheck: function (event) {
-    var $target = $(event.currentTarget);
-    var $id = $target.attr('id');
+    var $parentTarget = $(event.currentTarget);
+    var $target = $(event.target);
+    var $id = $parentTarget.attr('id');
 
-    if ($target.hasClass('checked')) {
+    if ($target.is(':checked')) {
       this._selectedLine.push($id);
-      this._amount += $target.find('.fe-money').data('value');
+      this._amount += $parentTarget.find('.fe-money').data('value');
 
     } else {
       for (var i in this._selectedLine) {
@@ -109,7 +113,13 @@ Tw.MyTFarePaymentCommon.prototype = {
           this._selectedLine.splice(i, 1);
         }
       }
-      this._amount -= $target.find('.fe-money').data('value');
+      this._amount -= $parentTarget.find('.fe-money').data('value');
+    }
+
+    if (this._selectedLine.length === 0) {
+      this.$selectBtn.attr('disabled', 'disabled');
+    } else {
+      this.$selectBtn.removeAttr('disabled');
     }
   },
   _setMoreBtnEvent: function ($layer, selectedCnt) {
@@ -177,6 +187,36 @@ Tw.MyTFarePaymentCommon.prototype = {
 
       this._setList($target, $layer, i);
       this._setBillList($target);
+    }
+  },
+  afterPaySuccess: function (historyUrl, mainUrl, linkText, text) {
+    this._popupService.open({
+        'hbs': 'complete',
+        'link_class': 'fe-payment-history',
+        'link_text': linkText,
+        'text': text
+      },
+      $.proxy(this._onComplete, this),
+      $.proxy(this._goLink, this, historyUrl, mainUrl),
+      'complete'
+    );
+  },
+  _onComplete: function ($layer) {
+    this._historyService.complete();
+    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this, 'history'));
+    $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this, 'close'));
+  },
+  _setIsLink: function (type) {
+    if (type === 'history') {
+      this._isHistory = true;
+    }
+    this._popupService.close();
+  },
+  _goLink: function (historyUrl, mainUrl) {
+    if (this._isHistory) {
+      this._historyService.goLoad(historyUrl);
+    } else {
+      this._historyService.goLoad(mainUrl);
     }
   }
 };

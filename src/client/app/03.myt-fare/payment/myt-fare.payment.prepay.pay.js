@@ -13,9 +13,9 @@ Tw.MyTFarePaymentPrepayPay = function (rootEl, title, amount, name) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
-  this._historyService = new Tw.HistoryService(rootEl);
 
-  this._historyService.init('hash');
+  this._historyService = new Tw.HistoryService(rootEl);
+  this._paymentCommon = new Tw.MyTFarePaymentCommon(rootEl);
 
   this._init();
 };
@@ -37,9 +37,16 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
+
+    this._historyUrl = '/myt/fare/history/' + this.$title;
+    this._mainUrl = '/myt/fare/payment/' + this.$title;
+    this._isPaySuccess = false;
   },
   _bindEvent: function () {
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
+    this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -51,6 +58,14 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     } else {
       this.$container.find('.fe-check-pay').attr('disabled', 'disabled');
     }
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
+  },
+  _resetCardInfo: function () {
+    this.$cardNumber.removeAttr('data-code');
+    this.$cardNumber.removeAttr('data-name');
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -73,69 +88,95 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   },
   _checkPay: function () {
     if (this._isValid()) {
-      this._getCardCode();
+      this._goCheck();
     }
   },
   _isValid: function () {
     var _prepayAmount = this.$prepayAmount.val();
     return (
-      this._validation.checkEmpty(_prepayAmount, Tw.MSG_PAYMENT.PRE_A01) &&
-      this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount, Tw.MSG_PAYMENT.PRE_A12) &&
+      this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
       this._validation.checkIsMore(_prepayAmount, 9999, Tw.MSG_PAYMENT.PRE_A11) &&
       this._validation.checkMultiple(_prepayAmount, 10000, Tw.MSG_PAYMENT.PRE_A11) &&
-      this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
-      this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
-      this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
-      this._validation.checkEmpty(this.$cardPw.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04));
+      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
+      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
+      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
+      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
+      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6));
   },
   _getCardCode: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._getFail, this));
+    if (this.$cardNumber.val() !== '') {
+      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
+        .done($.proxy(this._getSuccess, this))
+        .fail($.proxy(this._getFail, this));
+    }
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var cardCode = res.result.prchsCardCd;
       var cardName = res.result.prchsCardName;
 
-      this._goCheck(cardCode, cardName);
+      this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+
+      if (Tw.FormatHelper.isEmpty(cardCode)) {
+        this._getFail();
+      }
     } else {
-      this._getFail(res.error);
+      this._getFail(res);
     }
   },
-  _getFail: function (err) {
-    this._popupService.openAlert(err.message, err.code);
+  _getFail: function () {
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
   },
-  _goCheck: function (cardCode, cardName) {
+  _goCheck: function () {
     this._popupService.open({
       'hbs': 'MF_06_03_01'
-    }, $.proxy(this._setData, this, cardCode, cardName));
+    },
+      $.proxy(this._setData, this),
+      $.proxy(this._afterPaySuccess, this),
+      'check-pay'
+    );
   },
   _setData: function (cardCode, cardName, $layer) {
-    $layer.find('.fe-payment-option-name').attr('id', cardCode).text(cardName);
-    $layer.find('.fe-payment-option-number').text(this.$cardNumber.val());
+    $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
+    $layer.find('.fe-payment-option-number').text(Tw.StringHelper.masking(this.$cardNumber.val(), '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma($.trim(this.$prepayAmount.val().toString())));
     $layer.find('.fe-mbr-name').text(this._name);
     $layer.find('.fe-payment-type').text(this.$cardTypeSelector.text());
 
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+    $layer.on('click', '.fe-pay', $.proxy(this._pay, this, $layer));
   },
-  _pay: function () {
-    var reqData = this._makeRequestData();
-    this._apiService.request(Tw.API_CMD.BFF_07_0074, reqData)
+  _afterPaySuccess: function () {
+    if (this._isPaySuccess) {
+      this._historyService.replaceTarget('/myt/fare/payment/' + this.$title + '#pay_P');
+      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl,
+        Tw.MYT_FARE_PAYMENT_NAME.GO_PREPAY_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PREPAY);
+    }
+  },
+  _pay: function ($layer) {
+    var apiName = this._getApiName();
+    var reqData = this._makeRequestData($layer);
+
+    this._apiService.request(apiName, reqData)
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
   },
-  _makeRequestData: function () {
+  _getApiName: function () {
+    var apiName = '';
+    if (this.$title === 'micro') {
+      apiName = Tw.API_CMD.BFF_07_0074;
+    } else {
+      apiName = Tw.API_CMD.BFF_07_0082;
+    }
+    return apiName;
+  },
+  _makeRequestData: function ($layer) {
     var reqData = {
       tmthChrgPsblAmt: this._maxAmount.toString(),
       checkAuto: 'N',
       requestSum: $.trim(this.$prepayAmount.val().toString()),
-      cardNumVal: this.$container.find('.fe-payment-option-number').text(),
-      cardCorp: this.$container.find('.fe-payment-option-name').attr('id'),
-      cardNm: this.$container.find('.fe-payment-option-name').text(),
+      cardNumVal: $layer.find('.fe-payment-option-number').text(),
+      cardCorp: $layer.find('.fe-payment-option-name').attr('id'),
+      cardNm: $layer.find('.fe-payment-option-name').text(),
       cardExpyyVal: $.trim(this.$cardY.val())+ $.trim(this.$cardM.val()),
       instmm: this.$cardTypeSelector.attr('id').toString(),
       cardPwdVal: $.trim(this.$cardPw.val().toString())
@@ -144,13 +185,13 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.setHistory();
-      this._historyService.goHash('#complete');
+      this._isPaySuccess = true;
+      this._popupService.close();
     } else {
-      this._payFail(res.error);
+      this._payFail(res);
     }
   },
   _payFail: function (err) {
-    this._popupService.openAlert(err.message, err.code);
+    Tw.Error(err.code, err.msg).pop();
   }
 };

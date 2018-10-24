@@ -23,9 +23,10 @@ class ProductSetting extends TwViewController {
   private _displayGroup;
   private _redirectProdId;
   private _redirectProdIdList = {
-    NA00004198: ['NA00004048', 'NA00004049'],
     NA00004188: ['NA00004046'],
-    NA00004196: ['NA00004047']
+    NA00004196: ['NA00003958', 'NA00004047'],
+    NA00004197: ['NA00003557', 'NA00003558'],
+    NA00004198: ['NA00003556', 'NA00004048', 'NA00004049']
   };
 
   /**
@@ -125,14 +126,13 @@ class ProductSetting extends TwViewController {
   }
 
   /**
-   * @todo remove svcNumMask 가 API 에서 안내려와서 임시로 처리함.
    * @param combinationLineList
    * @private
    */
   private _convertSvcNumMask(combinationLineList): any {
     return combinationLineList.map((item) => {
       return Object.assign(item, {
-        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNum.substr(0, 7) + '****')
+        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNumMask)
       });
     });
   }
@@ -145,7 +145,7 @@ class ProductSetting extends TwViewController {
     return PROD_CTG_CD_CODE[ctgCd];
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvcInfo: any, layerType: string) {
     this._prodId = req.params.prodId || '';
     this._displayId = null;
     this._displayGroup = null;

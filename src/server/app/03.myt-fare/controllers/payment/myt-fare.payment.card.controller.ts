@@ -14,6 +14,9 @@ import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 
 class MyTFarePaymentCard extends TwViewController {
+  constructor() {
+    super();
+  }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     Observable.combineLatest(
@@ -54,18 +57,20 @@ class MyTFarePaymentCard extends TwViewController {
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
       list.invDt = '';
+      list.defaultIndex = 0;
+
       list.map((data, index) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
+
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
           list.defaultIndex = index;
         }
       });
     }
-    list.code = API_CODE.CODE_00;
     return list;
   }
 
@@ -85,12 +90,16 @@ class MyTFarePaymentCard extends TwViewController {
   private parseInfo(autoInfo: any): any {
     if (autoInfo.code === API_CODE.CODE_00) {
       const result = autoInfo.result;
-      autoInfo.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK;
-      autoInfo.bankName = autoInfo.isAuto ? result.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, '') : null;
-    } else {
-      autoInfo.isAuto = false;
+
+      result.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK;
+      if (result.isAuto) {
+        result.bankName = result.autoPayBank.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, '');
+        result.bankNum = result.autoPayBank.bankCardNum;
+        result.bankCode = result.autoPayBank.bankCardCoCd;
+      }
+      return result;
     }
-    return autoInfo;
+    return null;
   }
 
 }

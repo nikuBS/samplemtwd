@@ -8,13 +8,13 @@
   {{#list}}
   <li class="type01">
     <a href="/product/detail/{{prodId}}" class="product-infolink">
-      <div class="img-box"><img class="lte" src="{{rgstImg}}" alt="{{prodNm}}"></div>
+      <div class="img-box">{{#if rgstImg}}<img class="lte" src="{{rgstImg}}" alt="{{prodNm}}">{{/if}}</div>
       <div class="products-titleinfo">
         <h5 class="title">{{prodNm}}</h5>
-        {{#if isNumberBasFee}}
-        <p class="info">월<span class="money">{{basFeeAmt}}</span>원</p>
+        {{#if basFeeInfo.isNaN}}
+        <p class="info"><span class="money">{{basFeeInfo.value}}</span></p>
         {{else}}
-        <p class="info"><span class="money">{{basFeeAmt}}</span></p>
+        <p class="info">월<span class="money">{{basFeeInfo.value}}</span>원</p>
         {{/if}}
       </div>
       <div class="taglist-wrap">
@@ -25,15 +25,33 @@
       <dl class="products-additionalinfo">
         {{#if basOfrDataQtyCtt}}
         <dt>데이터</dt>
-        <dd><span class="point">{{basOfrDataQtyCtt}}</span></dd>
+        <dd>
+          {{#if basOfrDataQtyCtt.isNaN}}
+          <span class="point">{{basOfrDataQtyCtt.value}}</span>
+          {{else}}
+          <span class="point">{{basOfrDataQtyCtt.value.data}}{{basOfrDataQtyCtt.value.unit}}</span>
+          {{/if}}
+        </dd>
         {{/if}}
         {{#if basOfrVcallTmsCtt}}
         <dt>음성</dt>
-        <dd>{{basOfrVcallTmsCtt}}</dd>
+        <dd>
+          {{#if basOfrVcallTmsCtt.isNaN}}
+          {{basOfrVcallTmsCtt.value}}
+          {{else}}
+          {{basOfrVcallTmsCtt.value.data}}{{basOfrVcallTmsCtt.value.unit}}
+          {{/if}}
+        </dd>
         {{/if}}
         {{#if basOfrCharCntCtt}}
         <dt>문자</dt>
-        <dd>{{basOfrCharCntCtt}}</dd>
+        <dd>
+          {{#if basOfrCharCntCtt.isNaN}}
+          {{basOfrCharCntCtt.value}}
+          {{else}}
+          {{basOfrCharCntCtt.value}}{{basOfrCharCntCtt.unit}}
+          {{/if}}
+        </dd>
         {{/if}}
       </dl>
     </a>

@@ -9,14 +9,16 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { UNIT, PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
 import { PRODUCT_CTG_NAME } from '../../../types/string.type';
+import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
   'relatetags': API_CMD.BFF_10_0003,
   'series': API_CMD.BFF_10_0005,
-  'recommands': API_CMD.BFF_10_0006
+  'recommands': API_CMD.BFF_10_0006,
+  'additions': API_CMD.BFF_05_0040
 };
 
 class ProductDetail extends TwViewController {
@@ -45,13 +47,6 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @private
-   */
-  private _getRedis (): Observable<any> {
-    return this.redisService.getData('ProductLedger:' + this._prodId);
-  }
-
-  /**
    * @param basicInfo
    * @private
    */
@@ -61,12 +56,12 @@ class ProductDetail extends TwViewController {
       termBtnList: any = [];
 
     basicInfo.linkBtnList.forEach((item) => {
-      if (item.btnTypCd === 'SC') {
+      if (item.linkTypCd === 'SC') {
         joinBtnList.push(item);
         return true;
       }
 
-      if (item.btnTypCd === 'SE') {
+      if (item.linkTypCd === 'SE') {
         settingBtnList.push(item);
         return true;
       }
@@ -93,7 +88,8 @@ class ProductDetail extends TwViewController {
     }
 
     return Object.assign(prodRedisInfo, {
-      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(prodRedisInfo.summary)),
+      summary: Object.assign(prodRedisInfo.summary, FormatHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
+        prodRedisInfo.summary.basOfrDataQtyCtt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt)),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
       contents: this._convertContents(prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
@@ -117,43 +113,23 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @param summaryInfo
-   * @private
-   */
-  private _parseSummaryInfo (summaryInfo): any {
-    return {
-      basOfrDataQtyCtt: this._praseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
-      basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
-      basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
-      basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
-    };
-  }
-
-  /**
    * @param contentsInfo
    * @private
    */
   private _convertContents (contentsInfo): any {
     const contentsResult: any = {
-      LE: [],
+      LIST: [],
       LA: null,
       REP: null
     };
 
     contentsInfo.forEach((item) => {
-      if (item.ledStylCd === 'REP' || item.ledStylCd === 'LA') {
+      if (item.ledStylCd === 'R' || item.ledStylCd === 'LA') {
         contentsResult[item.ledStylCd] = item.ledDtlHtmlCtt;
         return true;
       }
 
-      if (FormatHelper.isEmpty(contentsResult[item.ledStylCd])) {
-        return true;
-      }
-
-      contentsResult[item.ledStylCd].push({
-        briefTitNm: item.briefTitNm,
-        ledDtlHtmlCtt: item.ledDtlHtmlCtt
-      });
+      contentsResult.LIST.push(item);
     });
 
     return contentsResult;
@@ -177,69 +153,15 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @param basOfrDataQtyCtt
+   * @param additionsUseInfo
    * @private
    */
-  private _praseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
-    if (basOfrDataQtyCtt === '-' || basOfrDataQtyCtt === '0') {
-      return '';
+  private _isAdditionsJoined (additionsUseInfo): boolean {
+    if (additionsUseInfo.code !== API_CODE.CODE_00) {
+      return false;
     }
 
-    return basOfrDataQtyCtt;
-  }
-
-  /**
-   * @param basOfrVcallTmsCtt
-   * @private
-   */
-  private _parseBasOfrVcallTmsCtt (basOfrVcallTmsCtt): any {
-    if (basOfrVcallTmsCtt === '-' || basOfrVcallTmsCtt === '0') {
-      return '';
-    }
-
-    if (isNaN(parseInt(basOfrVcallTmsCtt, 10))) {
-      return basOfrVcallTmsCtt;
-    }
-
-    return FormatHelper.addComma(basOfrVcallTmsCtt);
-  }
-
-  /**
-   * @param basOfrCharCntCtt
-   * @private
-   */
-  private _parseBasOfrCharCntCtt (basOfrCharCntCtt): any {
-    if (basOfrCharCntCtt === '-' || basOfrCharCntCtt === '0') {
-      return '';
-    }
-
-    if (isNaN(parseInt(basOfrCharCntCtt, 10))) {
-      return basOfrCharCntCtt;
-    }
-
-    return FormatHelper.addComma(basOfrCharCntCtt);
-  }
-
-  /**
-   * @param basFeeInfo
-   * @private
-   */
-  private _parsingSummaryBasFeeInfo (basFeeInfo): any {
-    if (basFeeInfo === '0') {
-      return null;
-    }
-
-    if (isNaN(parseInt(basFeeInfo, 10))) {
-      return {
-        basFee: basFeeInfo,
-        unit: ''
-      };
-    }
-
-    return {
-      basFee: FormatHelper.addComma(basFeeInfo),
-      unit: UNIT['110']
-    };
+    return additionsUseInfo.result.isAdditionUse === 'Y';
   }
 
   /**
@@ -253,11 +175,8 @@ class ProductDetail extends TwViewController {
 
     return Object.assign(seriesInfo, {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        const isBasFeeInfo = isNaN(parseInt(item.basFeeInfo, 10));
-        return Object.assign(item, {
-          basFeeInfo: isBasFeeInfo ? item.basFeeInfo : FormatHelper.addComma(item.basFeeInfo),
-          isNumberBasFeeInfo: !isBasFeeInfo
-        });
+        return Object.assign(item, FormatHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
+          item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
       })
     });
   }
@@ -316,9 +235,11 @@ class ProductDetail extends TwViewController {
           this._getApi('relatetags'),
           this._getApi('series', basicInfo.result.ctgCd),
           this._getApi('recommands'),
-          this._getRedis()
+          this._getApi('additions'),
+          this.redisService.getData('ProductLedger:' + this._prodId),
+          this.redisService.getData('ProductFilter:F01230')
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo
+          relateTagsInfo, seriesInfo, recommendsInfo, additionsInfo, prodRedisInfo, prodFilterInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
@@ -348,8 +269,10 @@ class ProductDetail extends TwViewController {
             svcInfo: svcInfo,
             ctgKey: this._getCtgKey(basicInfo.result.ctgCd),
             ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
+            isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
             filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
-            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple'  // @todo body class
+            bodyClass: basicInfo.result.ctgCd === 'F01100' ? 'bg-blue' : 'bg-purple',
+            prodFilterInfo: prodFilterInfo
           });
         });
       });

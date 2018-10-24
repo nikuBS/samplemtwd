@@ -32,7 +32,7 @@ class MyTFareBillHistory extends TwViewController {
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
     };
 
-    this.logger.info(this, query.current, '----', svcInfo);
+    // this.logger.info(this, query.current, '----', svcInfo);
 
     if (query.current === 'tax' || query.current === 'cash') {
 
@@ -47,10 +47,19 @@ class MyTFareBillHistory extends TwViewController {
             });
           }
 
+          resp.result.taxReprintList.map((o, i) => {
+            o.ctzBizName = svcInfo.eqpMdlNm;
+            o.listId = i;
+            o.taxBillIsueDt = DateHelper.getShortDateWithFormat(o.taxBillIsueDt, 'YYYY.MM.DD');
+            o.splyPrc = FormatHelper.addComma(o.splyPrc.toString());
+            o.vatAmt = FormatHelper.addComma(o.vatAmt.toString());
+            o.totAmt = FormatHelper.addComma(o.totAmt.toString());
+          });
+
           res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, data: {
               isTax: query.current === 'tax',
               current: query.current,
-              list: resp.result.taxReprintList
+              items: resp.result.taxReprintList
             }});
         });
       } else {
@@ -67,6 +76,7 @@ class MyTFareBillHistory extends TwViewController {
           resp.result.map((o) => {
             o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
             o.dataAmt = FormatHelper.addComma(o.opAmt);
+            o.sortDt = o.opDt;
             o.dataPhoneNumber = FormatHelper.conTelFormatWithDash(o.svcNum);
           });
 

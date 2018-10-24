@@ -18,7 +18,7 @@ export default class ProductAdditions extends TwViewController {
     const params = {
       idxCtgCd: this.ADDITION_CODE,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
-      ...(req.query.tag ? { searchTag: req.query.tag } : {})
+      ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
     if (svcInfo) {
@@ -63,12 +63,16 @@ export default class ProductAdditions extends TwViewController {
         };
       }
 
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
       return {
         ...resp.result,
         products: resp.result.products.map(addition => {
           return {
             ...addition,
-            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+            basFeeAmt: FormatHelper.getFeeContents(addition.basFeeAmt)
           };
         })
       };

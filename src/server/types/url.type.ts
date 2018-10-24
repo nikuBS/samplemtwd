@@ -1,5 +1,6 @@
 export const URL = {
   '/home/postcode': { login: false, id: '00', title: '우편번호' },
+
   // Common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
   '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
@@ -45,6 +46,8 @@ export const URL = {
   '/myt/bill/guide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
   '/myt/join/info/no-agreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
+  '/myt/join/info/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
+  '/myt/join/info/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
@@ -71,5 +74,17 @@ export const URL = {
   '/product/terminate': { login: true, id: 'MP_02_02_06', title: '상품 해지' },
   '/product/additions-terminate': { login: true, id: 'MV_01_02_03', title: '부가상품 해지' },
   '/product/infinity-benefit-usage-history': { login: true, id: 'MP_02_02_03_02', title: '인피니티 혜택 이용 내역' },
-  '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' }
+  '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
+
+  // Customer
+  '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
+  '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
+  '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },
+  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
+  '/customer/protect': { login: false, id: 'CS_13_01', title: '이용자 피해예방 센터' },
+  '/customer/protect/guide': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드' },
+  '/customer/protect/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
+  '/customer/protect/additions': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
+  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' }
+
 };

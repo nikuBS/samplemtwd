@@ -68,7 +68,9 @@ Tw.ProductSetting.prototype = {
         this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
         this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
         this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
-        this.$inputNumber.on('keydown', $.proxy(this._toggleClearBtn, this));
+        this.$inputNumber.on('keyup input', $.proxy(this._toggleClearBtn, this));
+        this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
+        this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
         break;
     }
   },
@@ -99,15 +101,20 @@ Tw.ProductSetting.prototype = {
     var params = {},
       pathVariable = null;
 
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     switch(this._displayId) {
       case 'MP_02_02_03_01':
       case 'MP_02_02_03_10':
       case 'MP_02_02_03_14':
         var $planSettingChecked = this.$container.find('.fe-product_radio_wrap input:checked');
+        if (this._currentProdId === $planSettingChecked.val()) {
+          skt_landing.action.loading.off({ ta: '.container' });
+          return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+        }
+
         this._successData = {
-          prodNm: $planSettingChecked.attr('title'),
-          prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-          mytPage: 'fee-plan'
+          prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING
         };
 
         if (this._displayId === 'MP_02_02_03_01') {
@@ -124,7 +131,7 @@ Tw.ProductSetting.prototype = {
         break;
       default:
         this._successData = {
-          prodNm: this.$prodNm.length > 0 ? this.$prodNm.val() : ''
+          prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING
         };
         break;
     }
@@ -134,6 +141,8 @@ Tw.ProductSetting.prototype = {
   },
 
   _saveResult: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -142,8 +151,8 @@ Tw.ProductSetting.prototype = {
 
     this._popupService.open({
       hbs: 'DC_05_01_end_01_product',
-      data: Object.assign(this._successData, {
-        typeNm: Tw.PRODUCT_TYPE_NM.SETTING,
+      data: $.extend(this._successData, {
+        typeNm: Tw.PRODUCT_TYPE_NM.CHANGE,
         isBasFeeInfo: isProdMoney,
         basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
       })
@@ -163,7 +172,7 @@ Tw.ProductSetting.prototype = {
   },
 
   _addNum: function() {
-    var number = this.$inputNumber.val();
+    var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (!Tw.ValidationHelper.isCellPhone(number)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.MSG,
@@ -218,14 +227,38 @@ Tw.ProductSetting.prototype = {
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide();
+    this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    if (this.$inputNumber.val().length > 11) {
+      this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
+    }
+
     if (this.$inputNumber.val().length > 0) {
       this.$btnClearNum.show();
     } else {
       this.$btnClearNum.hide();
     }
+
+    this._toggleNumAddBtn();
+  },
+
+  _toggleNumAddBtn: function() {
+    if (this.$inputNumber.val().length > 0) {
+      this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
+    } else {
+      this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
+    }
+  },
+
+  _blurInputNumber: function() {
+    this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+  },
+
+  _focusInputNumber: function() {
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
   _bindSaveResPopup: function($popupContainer) {

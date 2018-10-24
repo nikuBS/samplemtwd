@@ -17,7 +17,7 @@ Tw.MyTFarePaymentMicroSetUse = function (rootEl, $target) {
 Tw.MyTFarePaymentMicroSetUse.prototype = {
   _init: function ($target) {
     var id = $target.attr('id');
-    var tx = $target.find('.fe-tx:visible').text();
+    var tx = $target.siblings('.fe-tx:visible').text();
 
     this._apiService.request(Tw.API_CMD.BFF_05_0083, { rtnUseYn: id })
       .done($.proxy(this._changeSuccess, this, tx))
@@ -38,9 +38,9 @@ Tw.MyTFarePaymentMicroSetUse.prototype = {
     var message = Tw.ALERT_MSG_MYT_FARE.MICRO;
 
     if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
-      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED;
+      message += Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED;
     } else {
-      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_PROHIBITED;
+      message += Tw.ALERT_MSG_MYT_FARE.MSG_PROHIBITED;
     }
 
     return message;

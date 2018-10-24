@@ -9,24 +9,28 @@ Tw.CertificationPublic = function () {
   this._apiService = Tw.Api;
 
   this._authUrl = null;
-
+  this._command = null;
+  this._callback = null;
+  this._deferred = null;
 };
 
 
 Tw.CertificationPublic.prototype = {
-  open: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
+  open: function (svcInfo, authUrl, command, deferred, callback) {
     this._authUrl = authUrl;
-    this._requestAppMessage(authUrl);
-
+    this._command = command;
+    this._callback = callback;
+    this._deferred = deferred;
+    this._requestAppMessage(authUrl, command);
   },
-  _requestAppMessage: function (authUrl) {
+  _requestAppMessage: function (authUrl, command) {
     this._apiService.request(Tw.API_CMD.BFF_01_0035, {
-      authUrl: authUrl
+      authUrl: command.command.method + '|' + authUrl
     }).done($.proxy(this._successAppMessage, this));
   },
   _successAppMessage: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openPublicCert(resp.result.appMsg);
+      this._openPublicCert(this._setAppMsg(resp.result));
     } else {
       this._openPublicCert('');
     }
@@ -38,6 +42,40 @@ Tw.CertificationPublic.prototype = {
     }, $.proxy(this._onPublicCert, this));
   },
   _onPublicCert: function (resp) {
-    console.log(resp);
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._setComplete();
+    } else {
+      this._callback({
+        code: Tw.API_CODE.CERT_FAIL
+      }, this._deferred, this._command);
+    }
+  },
+  _setAppMsg: function (result) {
+    this._certMethod = result.certMethod;
+    if ( this._certMethod !== Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH ) {
+      return '';
+    }
+    if ( this._needAccountInfo(this._command.command.path) ) {
+      // TODO: deleted
+      return Tw.PUBLIC_AUTH_COP + ',' + '신한은행' + ',' + this._command.params.bankOrCardAccn + ',' + result.custName + ',' + result.birthDate;
+    }
+    return result.custName + ',' + result.birthDate;
+  },
+  _needAccountInfo: function (path) {
+    if ( path === '/core-bill/v1/bill-pay/settle-pay-bank' ||
+      path === '/bypass/core-bill/v1/bill-pay/settle-pay-card' ||
+      path === '/bypass/core-bill/v1/ocb-point-pay' ) {
+      return true;
+    }
+    return false;
+  },
+  _setComplete: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0026, {
+      authUrl: this._command.command.method + '|' + this._authUrl,
+      authKind: 'P'
+    }).done($.proxy(this._successComplete, this));
+  },
+  _successComplete: function (resp) {
+    this._callback(resp, this._deferred, this._command);
   }
 };

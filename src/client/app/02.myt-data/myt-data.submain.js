@@ -32,7 +32,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$presentBtn = this.$container.find('[data-id=present]');
     }
     // T가족모아 배너
-    if (this.data.family) {
+    if ( this.data.family ) {
       this.$familymoaBanner = this.$container.find('[data-id=family-moa]');
     }
     // TODO: 선불쿠폰 API 기능 완료 후 작업(TBD)
@@ -42,7 +42,7 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
-      this.$dataUsefulBtn = this.$container.find('[data-id=useful]');
+      this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     }
     if ( this.data.pattern ) {
       this.$patternChart = this.$container.find('[data-id=pattern_chart]');
@@ -68,7 +68,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$presentBtn.on('click', $.proxy(this._onTPresentDetail, this));
     }
     // T가족모아 배너
-    if (this.data.family) {
+    if ( this.data.family ) {
       this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
     if ( this.data.refill ) {
@@ -76,7 +76,7 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
-      this.$dataUsefulBtn.on('click', $.proxy(this._onDataUsefulDetail, this));
+      this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
     }
 
     if ( this.data.breakdownList ) {
@@ -116,44 +116,36 @@ Tw.MyTDataSubMain.prototype = {
   // chart create
   _initPatternChart: function () {
     if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
-      var unit = '', data, chart_data;
+      var unit = '', data, chart_data, idx;
       if ( this.data.pattern.data.length > 0 ) {
         unit = Tw.CHART_UNIT.GB;
         data = this.data.pattern.data;
         chart_data = {
           co: '#3b98e6',// 색상
-          da_arr: [
-            {
-              na: this.__getPatternMonth(data[2].invMth),// 각 항목 타이틀
-              data: [this.__convertData(parseInt(data[2].totalUsage, 10))]// 배열 평균값으로 전달
-            }, {
-              na: this.__getPatternMonth(data[1].invMth),
-              data: [this.__convertData(parseInt(data[1].totalUsage, 10))]
-            }, {
-              na: this.__getPatternMonth(data[0].invMth),
-              data: [this.__convertData(parseInt(data[0].totalUsage, 10))]
-            }
-          ]
+          da_arr: []
         };
+        if ( data.length > 0 ) {
+          for ( idx = data.length - 1; idx >= 0; idx-- ) {
+            chart_data.da_arr.push({
+              na: this.__getPatternMonth(data[idx].invMth),// 각 항목 타이틀
+              data: [this.__convertData(parseInt(data[idx].totalUsage, 10))]// 배열 평균값으로 전달
+            });
+          }
+        }
       }
       else if ( this.data.pattern.voice.length > 0 ) {
         unit = Tw.CHART_UNIT.TIME;
         data = this.data.pattern.voice;
         chart_data = {
           co: '#3b98e6',// 색상
-          da_arr: [
-            {
-              na: this.__getPatternMonth(data[2].invMth),// 각 항목 타이틀
-              data: [this.__secToMS(parseInt(data[2].totalUsage, 10))]// 배열 평균값으로 전달
-            }, {
-              na: this.__getPatternMonth(data[1].invMth),
-              data: [this.__secToMS(parseInt(data[1].totalUsage, 10))]
-            }, {
-              na: this.__getPatternMonth(data[0].invMth),
-              data: [this.__secToMS(parseInt(data[0].totalUsage, 10))]
-            }
-          ]
+          da_arr: []
         };
+        for ( idx = data.length - 1; idx >= 0; idx-- ) {
+          chart_data.da_arr.push({
+            na: this.__getPatternMonth(data[idx].invMth),// 각 항목 타이틀
+            data: [this.__convertData(parseInt(data[idx].totalUsage, 10))]// 배열 평균값으로 전달
+          });
+        }
       }
 
       this.$patternChart.chart({
@@ -182,21 +174,24 @@ Tw.MyTDataSubMain.prototype = {
 
   // T가족모아
   _onFamilyMoaDetail: function () {
-    if(this.data.family.possible) {
+    if ( this.data.family.possible ) {
       // TODO: 미가입 관련 상태 업데이트 후 처리
       // this._historyService.goLoad('');
-    } else {
+    }
+    else {
       this._historyService.goLoad('/myt/data/family');
     }
   },
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
+    // 혜택 할인 페이지로 이동
     this._popupService.openAlert('TBD');
   },
 
-  // 데이터활용하기
-  _onDataUsefulDetail: function () {
+  // 데이터 조르기
+  _onDataPesterDetail: function () {
+    //  2_A17 Alert 호출
     this._popupService.openAlert('TBD');
   },
 
@@ -251,15 +246,12 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   // 회선 변경 후 처리
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
+  _onChangeSessionSuccess: function () {
+    this._historyService.reload();
+    if ( Tw.BrowserHelper.isApp() ) {
       setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
+        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }, this), 500);
     }
   }
 };

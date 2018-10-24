@@ -16,11 +16,13 @@
                     <p class="info"><span class="money">{{basFeeAmt}}</span></p>
                     {{/if}}
                 </div>
+                {{#if filters}}
                 <div class="taglist-wrap">
                     {{#each filters}}
                         <button class="tag-text">#{{prodFltNm}}</button>
                     {{/each}}
                 </div>
+                {{/if}}
                 <dl class="products-additionalinfo">
                     <dt>데이터</dt>
                     <dd><span class="point">{{basOfrDataQtyCtt}}</span></dd>
@@ -32,4 +34,15 @@
             </a>
         </li>
     {{/each}}
+</script>
+
+<script id="fe-templ-filters" type="text/x-handlebars-template">
+    {{#if filters}}
+        {{#each filters}}
+            #<span class="vbl tx-bold">{{this}}</span>
+        {{/each}}
+        {{#if leftCount}} 외 {{leftCount}}건 {{/if}}
+    {{else}}
+        #<span class="vbl tx-bold">전체 요금제</span>
+    {{/if}}
 </script>

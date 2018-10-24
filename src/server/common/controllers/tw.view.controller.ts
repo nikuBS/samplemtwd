@@ -53,7 +53,7 @@ abstract class TwViewController {
   }
 
   public certPage(req: any, res: any, next: any): void {
-    this.logger.debug(this, '[CertPage]', req.body)
+    this.logger.debug(this, '[CertPage]', req.body);
     if ( !FormatHelper.isEmpty(req.body.enc_data) ) {
       this.confirmIpinCert(req, res, next, req.body.enc_data);
     } else if ( !FormatHelper.isEmpty(req.body.EncodeData) ) {
@@ -94,6 +94,7 @@ abstract class TwViewController {
     const userId = req.query.userId;
     this._type = req.query.type;
 
+    this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
@@ -164,49 +165,49 @@ abstract class TwViewController {
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
       const urlMeta = resp;
       this.logger.info(this, urlMeta);
-      if ( FormatHelper.isEmpty(urlMeta) ) {
+      // if ( FormatHelper.isEmpty(urlMeta) ) {
         // TODO do not register
         if ( isLogin ) {
           this.render(req, res, next, svcInfo, allSvc, childInfo);
         } else {
-          if ( URL[path].login ) {
+          if ( !FormatHelper.isEmpty(URL[path]) && URL[path].login ) {
             res.send('need login');
           } else {
             this.render(req, res, next, svcInfo, allSvc, childInfo);
           }
         }
-      } else {
-        if ( isLogin ) {
-          const urlAuth = urlMeta.auth.grades;
-          const svcGr = svcInfo.svcGr;
-          if ( svcInfo.totalSvcCnt === '0' ) {
-            this.errorEmptyLine(req, res, next, svcInfo);
-          } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
-            this.errorNoRegister(req, res, next, svcInfo);
-          } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-            const params = Object.assign(svcInfo, {
-              urlAuth
-            });
-            this.render(req, res, next, params, allSvc, childInfo);
-          } else if ( this._type === 'dev' ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo);
-          } else {
-            const loginType = svcInfo.loginType;
-            if ( loginType === LOGIN_TYPE.EASY ) {
-              res.redirect('/auth/login/easy-fail');
-            } else {
-              this.errorAuth(req, res, next, svcInfo);
-
-            }
-          }
-        } else {
-          if ( urlMeta.auth.loginYn === 'Y' ) {
-            res.send('need login');
-          } else {
-            this.render(req, res, next, svcInfo, allSvc, childInfo);
-          }
-        }
-      }
+      // } else {
+      //   if ( isLogin ) {
+      //     const urlAuth = urlMeta.auth.grades;
+      //     const svcGr = svcInfo.svcGr;
+      //     if ( svcInfo.totalSvcCnt === '0' ) {
+      //       this.errorEmptyLine(req, res, next, svcInfo);
+      //     } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
+      //       this.errorNoRegister(req, res, next, svcInfo);
+      //     } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+      //       const params = Object.assign(svcInfo, {
+      //         urlAuth
+      //       });
+      //       this.render(req, res, next, params, allSvc, childInfo);
+      //     } else if ( this._type === 'dev' ) {
+      //       this.render(req, res, next, svcInfo, allSvc, childInfo);
+      //     } else {
+      //       const loginType = svcInfo.loginType;
+      //       if ( loginType === LOGIN_TYPE.EASY ) {
+      //         res.redirect('/auth/login/easy-fail');
+      //       } else {
+      //         this.errorAuth(req, res, next, svcInfo);
+      //
+      //       }
+      //     }
+      //   } else {
+      //     if ( urlMeta.auth.loginYn === 'Y' ) {
+      //       res.send('need login');
+      //     } else {
+      //       this.render(req, res, next, svcInfo, allSvc, childInfo);
+      //     }
+      //   }
+      // }
 
     });
   }

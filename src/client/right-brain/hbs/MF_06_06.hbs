@@ -19,7 +19,8 @@
                         <label class="tit" for="flab01">현재 비밀번호</label>
                         <span class="inputbox">
                             <span class="input">
-                              <input id="flab01" class="fe-current-password required-input-field" type="password" /><!-- 2018-09-21 수정 -->
+                              <input id="flab01" class="fe-current-password required-input-field" type="number" style="-webkit-text-security: disc;"
+                                     inputmode="numeric" min="0" max="6" pattern="[0-9]*" /><!-- 2018-09-21 수정 -->
                               <button class="cancel"><span class="blind">삭제</span></button>
                             </span>
                         </span>
@@ -28,25 +29,26 @@
                         <label class="tit fe-new-password-title" for="flab02"></label>
                         <span class="inputbox">
                             <span class="input">
-                              <input id="flab02" class="fe-new-password required-input-field" type="password" placeholder="숫자만 6자리 입력"/><!-- 2018-09-21 수정 -->
+                              <input id="flab02" class="fe-new-password required-input-field" type="number" style="-webkit-text-security: disc;"
+                                     inputmode="numeric" min="0" max="6" pattern="[0-9]*" placeholder="숫자만 6자리 입력"/><!-- 2018-09-21 수정 -->
                               <button class="cancel"><span class="blind">삭제</span></button>
                             </span>
                         </span>
+                        <span class="payment-detail-btm-info type-star">주민번호 앞자리, 연속숫자/동일숫자는 피해주세요.</span>
                     </li>
                     <li>
                         <label class="tit fe-confirm-password-title" for="flab03"></label>
                         <span class="inputbox">
                             <span class="input">
-                              <input id="flab03" class="fe-confirm-password required-input-field" type="password" placeholder="숫자만 6자리 입력"/><!-- 2018-09-21 수정 -->
+                              <input id="flab03" class="fe-confirm-password required-input-field" type="number" style="-webkit-text-security: disc;"
+                                     inputmode="numeric" min="0" max="6" pattern="[0-9]*" placeholder="숫자만 6자리 입력"/><!-- 2018-09-21 수정 -->
                               <button class="cancel"><span class="blind">삭제</span></button>
                             </span>
                         </span>
-                        <span class="payment-detail-btm-info type-star">주민등록번호 상의 법정 생년월일을 입력해 주세요.</span>
                     </li>
                 </ul>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
