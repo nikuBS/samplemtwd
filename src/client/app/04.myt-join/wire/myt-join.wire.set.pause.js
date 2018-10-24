@@ -16,6 +16,9 @@ Tw.MytJoinWireSetPause = function (rootEl, options) {
 };
 
 Tw.MytJoinWireSetPause.prototype = {
+  _URL: {
+    MAIN: '/myt/join'
+  },
   _DATE_FORMAT: {
     INPUT: 'YYYY-MM-DD',
     LABEL: 'YYYY.MM.DD'
@@ -128,10 +131,11 @@ Tw.MytJoinWireSetPause.prototype = {
         params = {};
         break;
     }
-    Tw.Popup.openModalTypeA(title, contents, btName, undefined, $.proxy(this._reqWireSetPause, this, apiCmd, params));
+    this._popupService.openModalTypeA(title, contents, btName, undefined, $.proxy(this._reqWireSetPause, this, apiCmd, params));
   },
 
   _reqWireSetPause: function (apiCmd, params) {
+    this._popupService.close();
     this._apiService.request(apiCmd, params)
       .done($.proxy(this._reqWireSetPauseDone, this))
       .fail($.proxy(this._reqFail, this));
@@ -148,8 +152,9 @@ Tw.MytJoinWireSetPause.prototype = {
           toastMsg = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.SUCCESS_TOAST;
           break;
       }
-      Tw.CommonHelper.toast(toastMsg);
-      // TODO: 화면 이동
+      // TODO: 완료 팝업
+      // Tw.CommonHelper.toast(toastMsg);
+      // this._historyService.replaceURL(this._URL.MAIN);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
