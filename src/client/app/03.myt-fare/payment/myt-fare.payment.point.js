@@ -163,7 +163,7 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl,
+      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl,
         Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PAYMENT);
     }
   },

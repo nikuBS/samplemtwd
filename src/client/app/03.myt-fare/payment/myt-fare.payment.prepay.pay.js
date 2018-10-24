@@ -13,9 +13,7 @@ Tw.MyTFarePaymentPrepayPay = function (rootEl, title, amount, name) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
-
   this._historyService = new Tw.HistoryService(rootEl);
-  this._paymentCommon = new Tw.MyTFarePaymentCommon(rootEl);
 
   this._init();
 };
@@ -136,7 +134,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
       'check-pay'
     );
   },
-  _setData: function (cardCode, cardName, $layer) {
+  _setData: function ($layer) {
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
     $layer.find('.fe-payment-option-number').text(Tw.StringHelper.masking(this.$cardNumber.val(), '*', 8));
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma($.trim(this.$prepayAmount.val().toString())));
@@ -148,7 +146,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
       this._historyService.replaceTarget('/myt/fare/payment/' + this.$title + '#pay_P');
-      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl,
+      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl,
         Tw.MYT_FARE_PAYMENT_NAME.GO_PREPAY_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PREPAY);
     }
   },

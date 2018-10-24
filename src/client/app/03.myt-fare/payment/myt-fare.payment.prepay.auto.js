@@ -13,8 +13,6 @@ Tw.MyTFarePaymentPrepayAuto = function (rootEl, title, type) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
-  this._paymentCommon = new Tw.MyTFarePaymentCommon(rootEl);
-
   this._init();
 };
 
@@ -294,7 +292,7 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
     }
 
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._paymentCommon.afterPaySuccess(this._historyUrl, this._mainUrl, linkName, textName);
+      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl, linkName, textName);
     } else {
       this._payFail(res);
     }
