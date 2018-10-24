@@ -410,28 +410,6 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoin: function() {
-    var auth = false;
-    if ( auth ) {
-      return this._procAUth();
-    }
-
-    this._procJoinReq();
-  },
-
-  _procAUth: function() {
-    // @todo auth
-    var authResult = {
-      code: '00'
-    };
-
-    if ( authResult.code !== Tw.API_CODE.CODE_00 ) {
-      Tw.Error(authResult.code, authResult.msg).pop();
-    } else {
-      this._procJoinReq();
-    }
-  },
-
-  _procJoinReq: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     switch (this._displayGroup) {
@@ -514,7 +492,6 @@ Tw.ProductJoin.prototype = {
       })
     }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
 
-    // @todo SvcInfo Refresh
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
