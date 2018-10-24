@@ -22,10 +22,12 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _cachedElement: function () {
+    this.$remainQty = $('.fe-remain_data');
     this.$btnNativeContactList = $('.fe-btn_native_contact');
     this.$btnRequestSendingData = $('.fe-request_sending_data');
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
+    this.$wrap_auto_select_list = $('.fe-auto_select_list');
   },
 
   _bindEvent: function () {
@@ -46,6 +48,8 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._setAmountUI(Number(res.result.dataRemQty));
+      var dataQty = Tw.FormatHelper.convDataFormat(res.result.dataRemQty, 'MB');
+      this.$remainQty.text(dataQty.data + dataQty.unit);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -62,6 +66,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     };
 
     this.$wrap_data_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
   },
 
   _onClickBtnAddr: function () {
@@ -107,11 +112,11 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this.paramData = $.extend({}, this.paramData, htParams);
 
-    // this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramData));
+    this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramData));
 
     // TODO: Implemented API TEST
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
-      .done($.proxy(this._onSuccessSendingData, this));
+    // this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
+    //   .done($.proxy(this._onSuccessSendingData, this));
   },
 
   _onSuccessSendingData: function (res) {
