@@ -37,10 +37,13 @@ Tw.LineComponent.prototype = {
     var selectedMgmt = this.$btLine.data('svcmgmtnum');
     var urlAuth = this.$btLine.data('svcmgmtnum');
 
-    this.$btLine.on('click', $.proxy(this.onClickLine, this, selectedMgmt, urlAuth));
+    this.$btLine.on('click', $.proxy(this._onClickBtLine, this, selectedMgmt, urlAuth));
   },
-  onClickLine: function (selectedMgmt, urlAuth, $event) {
+  _onClickBtLine: function (selectedMgmt, urlAuth, $event) {
     $event.stopPropagation();
+    this.onClickLine(selectedMgmt, urlAuth);
+  },
+  onClickLine: function (selectedMgmt, urlAuth) {
     this._selectedMgmt = selectedMgmt;
     this._urlAuth = urlAuth;
     this._getLineList();

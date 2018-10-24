@@ -39,35 +39,35 @@ class BypassRouter {
   }
 
   private setGetApi(cmd) {
-    this.router.get(cmd.path, this.checkApi.bind(this, cmd));
+    this.router.get(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.GET));
   }
 
   private setPostApi(cmd) {
-    this.router.post(cmd.path, this.checkApi.bind(this, cmd));
+    this.router.post(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.POST));
   }
 
   private setPutApi(cmd) {
-    this.router.put(cmd.path, this.checkApi.bind(this, cmd));
+    this.router.put(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.PUT));
   }
 
   private setDeleteApi(cmd) {
-    this.router.delete(cmd.path, this.checkApi.bind(this, cmd));
+    this.router.delete(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.DELETE));
   }
 
-  private checkApi(cmd: any, req: Request, res: Response, next: NextFunction) {
+  private checkApi(cmd: any, method: API_METHOD, req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
-    this.sendRequest(cmd, req, res, next);
-    // this.authService.getUrlMeta(req).subscribe((resp) => {
-    //   if ( resp['cert'] ) {
-    //     return res.json({
-    //       code: API_CODE.CODE_03,
-    //       result: resp
-    //     });
-    //   } else {
-    //     this.sendRequest(cmd, req, res, next);
-    //   }
-    // });
+
+    this.authService.getUrlMeta(req, res, method).subscribe((resp) => {
+      if ( resp['cert'] ) {
+        return res.json({
+          code: API_CODE.CODE_03,
+          result: resp
+        });
+      } else {
+        this.sendRequest(cmd, req, res, next);
+      }
+    });
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {

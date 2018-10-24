@@ -222,7 +222,7 @@ class ApiRouter {
     this.logger.info(this, '[set cert]', params);
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
-    this.authService.setCert(req, params).subscribe((resp) => {
+    this.authService.setCert(req, res, params).subscribe((resp) => {
       res.json(resp);
     });
   }
