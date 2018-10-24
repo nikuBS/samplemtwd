@@ -352,8 +352,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = arguments.length - 1; idx > -1; idx-- ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
-          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var amt = parseInt(item.useAmtTot, 10);
           var absDeduck = Math.abs(parseInt(item.deduckTotInvAmt, 10));
           chart_data.da_arr.push({
             'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
@@ -402,8 +401,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < arguments.length; idx++ ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
-          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var amt = parseInt(item.useAmtTot, 10);
           var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
           var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
           var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
