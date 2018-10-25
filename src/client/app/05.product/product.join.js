@@ -421,7 +421,9 @@ Tw.ProductJoin.prototype = {
         this._apiService.request(Tw.API_CMD.BFF_10_0012, {
           asgnNumList: this._data.asgnNumList,
           optProdId: this._data.tplanProdId,
-          svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id')
+          svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id'),
+          prodId: this._prodId,
+          prodProcTypeCd: 'JN'
         }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
 
         this._successData = {
@@ -444,7 +446,10 @@ Tw.ProductJoin.prototype = {
   },
 
   _getAdditionsParams: function() {
-    var resultParams = {};
+    var resultParams = {
+      prodId: this._prodId,
+      prodProcTypeCd: 'JN'
+    };
 
     if (this.$joinSetup.length < 1) {
       return resultParams;
@@ -452,9 +457,9 @@ Tw.ProductJoin.prototype = {
 
     switch(this.$joinSetup.data('id')) {
       case 'MV_02_02_01':
-        resultParams = {
+        resultParams = $.extend(resultParams, {
           svcNumList: this._getSvcNumList()
-        };
+        });
         break;
     }
 

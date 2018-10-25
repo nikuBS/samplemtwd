@@ -111,8 +111,10 @@ Tw.ProductTerminate.prototype = {
   _procTerminate: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
-    this._apiService.request(Tw.API_CMD[this._terminateApiCode], {}, {}, this._prodId)
-      .done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD[this._terminateApiCode], {
+      prodId: this._prodId,
+      prodProcTypeCd: 'TM'
+    }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
