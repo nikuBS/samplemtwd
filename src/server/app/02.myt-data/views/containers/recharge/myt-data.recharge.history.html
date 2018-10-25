@@ -86,7 +86,12 @@
             </div>
         </div>
         <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
     </div>
+</body>
 <%- include ../../components/recharge/myt-data.recharge.history.list.html %>
 <% include ../../components/javascript.component.html %>
 <script>
@@ -95,4 +100,3 @@
   });
 </script>
 <% include ../../components/end.component.html %>
-</body>

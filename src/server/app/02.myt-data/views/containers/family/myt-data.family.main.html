@@ -17,7 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html',
+    <%- include('../../../common/views/components/header.component.html',
     { title: 'T가족모아 데이터', svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
@@ -77,16 +77,16 @@
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <footer id="fe-all-menu">
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
 </div>
-
+</body>
 <% include ../../components/javascript.component.html %>
-
 <script>
   $(document).ready(function () {
     var oMyTDataFamilyMain = new Tw.MyTDataFamilyMain($('.container-wrap'));
   });
 </script>
-
-</body>
 <% include ../../components/end.component.html %>
