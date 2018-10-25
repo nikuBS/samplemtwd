@@ -280,10 +280,12 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   _chgWireAddrInfoInit: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과] _chgWireAddrInfoInit', res);
-
       // 성공시 2_A35 alert 노출
       // 설치장소 변경 신청이 완료되었습니다. 빠른 시일 내에 신청내역 확인을 위해 상담원이 연락 드리겠습니다. 감사합니다
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
+        $.proxy(function(){
+        this._goLoad('/myt/join/wire/history');
+      }, this));
     }
   },
   //--------------------------------------------------------------------------[COM]
