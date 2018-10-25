@@ -144,12 +144,12 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     var threeMonth; // 3개월
     var sixMonth;   // 6개월
 
-    dayBefore = moment().subtract(1, 'months').subtract(1, 'days').format(formatStr);
-    oneWeek = moment().subtract(1, 'months').subtract(1, 'weeks').format(formatStr);
-    threeWeek = moment().subtract(1, 'months').subtract(3, 'weeks').format(formatStr);
-    oneMonth = moment().subtract(1, 'months').subtract(1, 'months').format(formatStr);
-    threeMonth = moment().subtract(1, 'months').subtract(3, 'months').format(formatStr);
-    sixMonth = moment().subtract(1, 'months').subtract(6, 'months').format(formatStr);
+    dayBefore = moment().subtract(1, 'days').format(formatStr);
+    oneWeek = moment().subtract(1, 'weeks').format(formatStr);
+    threeWeek = moment().subtract(3, 'weeks').format(formatStr);
+    oneMonth = moment().subtract(1, 'months').format(formatStr);
+    threeMonth = moment().subtract(3, 'months').format(formatStr);
+    sixMonth = moment().subtract(6, 'months').format(formatStr);
 
     dateArray[0] = dayBefore;
     dateArray[1] = oneWeek;
@@ -161,7 +161,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
 
     var startDt = dateArray[selectVal];
-    var endDt = moment().subtract(1, 'months').subtract(1, 'days').format(formatStr);
+    var endDt = moment().format(formatStr);
 
     // switch( selectVal ) {
     //   case 0:
