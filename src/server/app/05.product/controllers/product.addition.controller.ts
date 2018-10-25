@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 export default class ProductAddition extends TwViewController {
   private ADDITION_CODE = 'F01200';
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
+  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (svcInfo) {
       Observable.combineLatest(
         this.getMyAdditions(),
@@ -40,7 +40,7 @@ export default class ProductAddition extends TwViewController {
           recommendedAdditions,
           recommendedTags
         };
-        res.render('product.addition.html', { svcInfo, productData });
+        res.render('product.addition.html', { svcInfo, productData, pageInfo });
       });
     } else {
       Observable.combineLatest(
@@ -66,7 +66,7 @@ export default class ProductAddition extends TwViewController {
           recommendedAdditions,
           recommendedTags
         };
-        res.render('product.addition.html', { svcInfo, productData });
+        res.render('product.addition.html', { svcInfo, productData, pageInfo });
       });
     }
   }

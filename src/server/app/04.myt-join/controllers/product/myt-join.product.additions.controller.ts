@@ -27,7 +27,7 @@ class MyTJoinProductAdditions extends TwViewController {
         }
 
         const additions = this.convertAdditions(FormatHelper.isEmpty(resp.result) ? [] : resp.result.addProdList);
-        res.render('product/myt-join.product.additions.mobile.html', { svcInfo, additions });
+        res.render('product/myt-join.product.additions.mobile.html', { svcInfo, additions, pageInfo });
       });
     } else {
       this.apiService.request(API_CMD.BFF_05_0129, {}).subscribe(resp => {
