@@ -15,4 +15,3 @@ Tw.MaskingComponent.prototype = {
   }
 
 };
-ㅎ
