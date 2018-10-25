@@ -32,7 +32,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/shop/repair-detail', controller: CustomerShopRepairDetail} );
     this.controllers.push({ url: '/shop/repair-manufacturer', controller: CustomerShopRepairManufacturer} );
     this.controllers.push({ url: '/shop/search', controller: CustomerShopSearch} );
-    this.controllers.push({ url: '/voice/:type', controller: CustomerVoice} );
+    // this.controllers.push({ url: '/voice/:type', controller: CustomerVoice} );
     this.controllers.push({ url: '/researches/result', controller: CustomerResearchResult} );
     this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches} );
     this.controllers.push({ url: '/faq', controller: CustomerFaq} );
