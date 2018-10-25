@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 class MyTJoinMgmtNumChgAlarm extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     res.render('management/myt-join.mgmt.numchg-alarm.html', { svcInfo: svcInfo, data: { numGuidOptYn : 'Y' } });
     /*

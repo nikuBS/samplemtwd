@@ -15,14 +15,14 @@ class MyTJoinWireDiscountRefund extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     // res.render('wire/myt-join.wire.discount-refund.html', {svcInfo: svcInfo, reqDate: '20181017'});
 
     this.apiService.request(API_CMD.BFF_05_0158, {})
       .subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const option = { svcInfo: svcInfo, reqDate: DateHelper.getShortDateNoDot( resp.result.reqDate ) };
+          const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDateNoDot( resp.result.reqDate ) };
           res.render('wire/myt-join.wire.discount-refund.html', option);
         } else {
           this.error.render(res, resp);

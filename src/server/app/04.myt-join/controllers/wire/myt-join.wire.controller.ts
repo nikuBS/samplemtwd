@@ -15,7 +15,7 @@ class MyTJoinWire extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0167, {}),
@@ -46,7 +46,7 @@ class MyTJoinWire extends TwViewController {
 
         infoData['asCnt'] = asCnt;
 
-        res.render('wire/myt-join.wire.html', { svcInfo: svcInfo, data: infoData });
+        res.render('wire/myt-join.wire.html', { svcInfo: svcInfo, pageInfo: pageInfo, data: infoData });
       });
 
   }
