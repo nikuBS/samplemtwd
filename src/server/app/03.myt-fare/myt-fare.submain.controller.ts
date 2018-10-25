@@ -20,9 +20,10 @@ class MyTFareSubmainController extends TwViewController {
   }
 
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       isMicroPayment: false,
       isNotAutoPayment: true,
       // 다른 회선 항목

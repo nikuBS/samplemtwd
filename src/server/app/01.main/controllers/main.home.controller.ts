@@ -28,7 +28,7 @@ class MainHome extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const svcType = this.getSvcType(svcInfo);
     const homeData = {
       usageData: null,
@@ -50,7 +50,7 @@ class MainHome extends TwViewController {
         ).subscribe(([usageData, membershipData, notice]) => {
           homeData.usageData = usageData;
           homeData.membershipData = membershipData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
         });
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         Observable.combineLatest(
@@ -60,7 +60,7 @@ class MainHome extends TwViewController {
         ).subscribe(([billData, joinInfo, notice]) => {
           homeData.billData = billData;
           homeData.joinInfo = joinInfo;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
         });
       } else {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
@@ -71,7 +71,7 @@ class MainHome extends TwViewController {
           ).subscribe(([usageData, ppsInfo, notice]) => {
             homeData.usageData = usageData;
             homeData.ppsInfo = ppsInfo;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
           });
         } else {
           Observable.combineLatest(
@@ -79,13 +79,13 @@ class MainHome extends TwViewController {
             this.getNotice()
           ).subscribe(([usageData, notice]) => {
             homeData.usageData = usageData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
           });
         }
       }
     } else {
       this.getNotice().subscribe((notice) => {
-        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
+        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
       });
     }
   }

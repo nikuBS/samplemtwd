@@ -9,8 +9,8 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._options = options;
-  this.history = new Tw.HistoryService(this.$container);
-  this.history.init('hash');
+  this._historyService = new Tw.HistoryService(this.$container);
+  this._historyService.init('hash');
 
   this._cachedElement();
   this._bindEvent();
@@ -18,10 +18,14 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
 };
 
 Tw.MyTJoinWireModifyPeriod.prototype = {
+  _URL: {
+    MAIN: '/myt/join'
+  },
   _LOADING_POPUP_HBS: 'MS_04_06_L01',
   _MAXSIMUM_INTERVAL_CNT: 2,          // 결과조회 최대 호출 카운트
   _REQUEST_INTERVAL_TIME: 5000,       // 호출 대기 시간(5초)
   _intervalCnt: 0,
+  _periodSelectPopupOpened: false,
   _loadingPopupOpened: false,
   _agreementsPenaltyError: false,
   _periodPopupTplList: null,
@@ -104,6 +108,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.CONTENTS,
         Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.TITLE, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.BT_NAME); //에러
       this._agreementsPenaltyError = false;
+    } else {
+      if (this._periodSelectPopupOpened) {
+        this._popupService.close();
+      }
     }
   },
 
@@ -114,11 +122,16 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
-  _periodSelectPopupOpened: function ($container) {
+  _periodSelectPopupOpenCallback: function ($container) {
+    this._periodSelectPopupOpened = true;
     $container.find('li button').click($.proxy(function (event) {
       this._clickedTerm = $.trim($(event.currentTarget).text());
       this._reqAgreementsPenalty();
     }, this));
+  },
+
+  _periodSelectPopupCloseCallback: function() {
+    this._periodSelectPopupOpened = false;
   },
 
   _reqAgreementsPenalty: function () {
@@ -175,7 +188,6 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     var termBrchAmt = (selectedCnt >= beforeCnt) ? '0' : agreementsPenalty.termBrchAmt;
     this._intervalCnt = 0;
     this._hideLoadingPopup();
-    this._popupService.close();
     this._$useMthCnt.text(agreementsPenalty.useMthCnt);
     this._$termBrchAmt.text(Tw.FormatHelper.addComma(termBrchAmt));
     this._$agreementsPenaltyResult.show();
@@ -201,7 +213,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       layer: true,
       title: Tw.POPUP_TITLE.AGREED_PERIOD,
       data: Tw.POPUP_TPL.MYT_JOIN_WIRE_MODIFY_PERIOD
-    }, $.proxy(this._periodSelectPopupOpened, this));
+    }, $.proxy(this._periodSelectPopupOpenCallback, this), $.proxy(this._periodSelectPopupCloseCallback, this));
   },
 
   _onClickBtnRequest: function () {
@@ -240,7 +252,9 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   _reqAgreementsSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // 나의 가입정보 메인[MS]이동 후 토스트
-      Tw.CommonHelper.toast(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.TOAST);
+      // Tw.CommonHelper.toast(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.TOAST);
+      // this._historyService.replaceURL(this._URL.MAIN);
+      // TODO: 완료 팝업
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }

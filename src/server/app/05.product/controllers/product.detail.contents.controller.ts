@@ -33,7 +33,7 @@ class ProductDetailContents extends TwViewController {
     return contentsResultList;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId;
 
     if (FormatHelper.isEmpty(prodId)) {
@@ -69,6 +69,7 @@ class ProductDetailContents extends TwViewController {
 
       res.render('product.detail.contents.html', {
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         contentsInfo: this._convertContentInfo(prodRedisInfo.contents)
       });
     });

@@ -149,7 +149,7 @@ Tw.API_CMD = {
   BFF_05_0160: { path: '/core-modification/v1/myinfo/wire-free-call-check', method: Tw.API_METHOD.GET },
   BFF_05_0163: { path: '/core-modification/v1/myinfo/chg-wire-addr', method: Tw.API_METHOD.POST },
   BFF_05_0164: { path: '/core-modification/v1/wire-phone/chang-status', method: Tw.API_METHOD.GET},
-  BFF_05_0165: { path: '/v1/wire/change-request', method: Tw.API_METHOD.POST },
+  BFF_05_0165: { path: '/core-modification/v1/wire/change-request', method: Tw.API_METHOD.POST },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: Tw.API_METHOD.GET },
   BFF_05_0170: { path: '/core-modification/v1/myinfo/wire-set-pause', method: Tw.API_METHOD.POST },
   BFF_05_0171: { path: '/core-modification/v1/myinfo/wire-remove-pause', method: Tw.API_METHOD.POST },
@@ -158,6 +158,10 @@ Tw.API_CMD = {
   BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: Tw.API_METHOD.POST },
   BFF_05_0176: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
   BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
+  BFF_05_0182: { path: '/core-modification/v1/num-info', method: Tw.API_METHOD.POST },
+  BFF_05_0183: { path: '/core-modification/v1/num-info', method: Tw.API_METHOD.DELETE },
+  BFF_05_0184: { path: '/core-modification/v1/', method: Tw.API_METHOD.GET },
+  BFF_05_0185: { path: '/core-modification/v1/', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },

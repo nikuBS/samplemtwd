@@ -1408,6 +1408,30 @@
   color: #1e295a;
   font-weight: bold; }
 
+/* cont-layer */
+.cont-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 60px;
+  z-index: 10; }
+  .cont-layer .cont-layer-info {
+    position: relative;
+    z-index: 10;
+    background: #fff; }
+  .cont-layer .cont-layer-blind {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: .8; }
+
 /* coupon */
 .coupon-cont {
   position: relative;
@@ -4106,6 +4130,12 @@
     .ti-caption-gray .num em, .data-type .num em {
       margin-left: 0.1875rem;
       font-weight: 700; }
+  .ti-caption-gray .btn-txt, .data-type .btn-txt {
+    position: absolute;
+    right: 0.0625rem;
+    top: 0.0625rem;
+    padding: 0.8125rem 1rem;
+    color: #666; }
   .ti-caption-gray .detail-view, .data-type .detail-view {
     position: absolute;
     right: 1rem;
@@ -6799,6 +6829,21 @@ a.bt-link-tx.underline.small {
         background-position: 0 -96.875rem; }
       .main-quick-menu ul li button.benefit .ico, .main-quick-menu ul li a.benefit .ico {
         background-position: 0 -90.625rem; }
+
+.main-quick-menu.horizontal-slide ul {
+  display: block;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  padding: 1.25rem 1rem 1.4375rem; }
+  .main-quick-menu.horizontal-slide ul li {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+    display: block;
+    width: 4.5rem;
+    margin-top: 0; }
+    .main-quick-menu.horizontal-slide ul li button .ico, .main-quick-menu.horizontal-slide ul li a .ico {
+      margin-top: -0.1875rem; }
 
 .main-faq-box ul {
   display: table;
@@ -11105,6 +11150,18 @@ a.bt-link-tx.underline.small {
     text-overflow: ellipsis;
     text-align: right; }
 
+/* 공통 전체메뉴 하단 문의하기영역 */
+.mnfooter-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 -1rem;
+  padding: 1.25rem 1rem 0;
+  border-top: 1px solid #e1e1e1; }
+
 .badge.badge-fam-members2 {
   background-position: 0 -13.75rem;
   background-size: 4.6875rem;
@@ -13079,7 +13136,7 @@ a.bt-link-tx.underline.small {
         background-image: url(/img/ico/ico-group.png);
         background-repeat: no-repeat;
         background-size: 3.125rem auto;
-        background-position: -1.5625rem -21.875rem;
+        background-position: 0 -17.1875rem;
         overflow: hidden;
         color: transparent; }
       .prevention-list li .list-inner .list-tit {
@@ -14043,16 +14100,22 @@ a.bt-link-tx.underline.small {
       padding: 1.25rem 0; }
     .benefit-popularity-wrap h3.link-long button, .benefit-popularity-wrap h3.link-long a {
       font-size: 0.9375rem; }
-    .benefit-popularity-wrap h3.link-long .gps {
+    .benefit-popularity-wrap h3.link-long .bt-gps {
       display: inline-block;
       position: absolute;
       top: 0;
       right: 0;
       width: auto;
-      padding: 1.25rem 1.5rem 1.25rem 1rem;
-      background: url(/img/benefit/ico-quick-gps.png) no-repeat;
-      background-position: right center;
-      background-size: 16px 16px; }
+      padding: 1.25rem 1.5rem 1.25rem 1rem; }
+
+.bt-gps {
+  display: inline-block;
+  padding-right: 1.5rem;
+  background: url(/img/benefit/ico-quick-gps.png) no-repeat;
+  background-position: right center;
+  background-size: 16px 16px;
+  color: inherit;
+  font-size: 0.8125rem; }
 
 .benefit-popularity-box li:first-child {
   padding-left: 1rem; }
@@ -14152,13 +14215,17 @@ a.bt-link-tx.underline.small {
       text-indent: -9999px;
       background: url(/img/benefit/ico-brand-map.png) no-repeat;
       background-size: 100%; }
+  .coalition-brand-list .bt-like {
+    position: absolute;
+    right: 0;
+    top: 1.25rem; }
   .coalition-brand-list .brand-inner {
     display: block;
     padding: 0.9375rem 0;
     margin-right: 3.125rem;
     text-align: left;
-    table-layout: fixed;
-    color: inherit; }
+    color: inherit;
+    font-size: 0.8125rem; }
     .coalition-brand-list .brand-inner .logo {
       display: table-cell;
       width: 4.375rem;
@@ -14170,7 +14237,9 @@ a.bt-link-tx.underline.small {
         vertical-align: middle; }
     .coalition-brand-list .brand-inner .inner {
       display: table;
-      width: 100%; }
+      width: 100%;
+      text-align: left;
+      table-layout: fixed; }
     .coalition-brand-list .brand-inner .intro {
       display: table-cell;
       padding-left: 1.25rem;
@@ -14180,13 +14249,22 @@ a.bt-link-tx.underline.small {
       margin-bottom: 0.3125rem;
       font-size: 0.875rem;
       font-weight: 700;
-      text-align: left; }
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .coalition-brand-list .brand-inner .category {
+      display: block;
+      color: #666; }
     .coalition-brand-list .brand-inner .section {
       display: block;
       margin-top: 0.125rem;
       color: #666;
       line-height: 0.9375rem;
-      text-align: left; }
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
       .coalition-brand-list .brand-inner .section .ico-s {
         display: inline-block;
         width: 0.9375rem;
@@ -14196,6 +14274,33 @@ a.bt-link-tx.underline.small {
         font-size: 0;
         line-height: 0;
         vertical-align: middle; }
+  .coalition-brand-list.type-like .brand-inner {
+    margin-right: 5rem; }
+
+.bt-like {
+  display: inline-block;
+  height: 1.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 1.75rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.625rem;
+  vertical-align: middle; }
+  .bt-like:before {
+    content: '';
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.625rem;
+    margin-right: 0.25rem;
+    background-image: url(/img/benefit/ico-like-off.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    vertical-align: -0.0625rem; }
+  .bt-like.on:before {
+    background-image: url(/img/benefit/ico-like-on.png); }
 
 .membership-app {
   display: table;
@@ -14346,6 +14451,293 @@ a.bt-link-tx.underline.small {
   background: #fff; }
   .goods-service-box .notice-comp-infolist dl dd {
     color: #666; }
+
+.add-top-type {
+  overflow: hidden;
+  border: none; }
+  .add-top-type .type-l {
+    position: -webkit-sticky;
+    position: sticky;
+    float: left; }
+  .add-top-type .type-r {
+    float: right; }
+
+.brand-search-warap .input .bt-search {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2.5625rem;
+  height: 2.5rem;
+  background: url(/img/benefit/btn-search.png) no-repeat center;
+  background-size: 13px auto;
+  font-size: 0;
+  line-height: 0; }
+
+.brand-search-warap .input .cancel {
+  right: 2.5625rem; }
+
+.brand-top-tit {
+  position: relative;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #e1e1e1;
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.5rem; }
+  .brand-top-tit:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 4.375rem;
+    height: 4.375rem;
+    margin-top: -2.1875rem;
+    background: url(/img/benefit/ico-brand-tit.png) no-repeat center;
+    background-size: 100%; }
+
+.category-box-wrap .link-long {
+  margin: 0 1rem;
+  border-bottom: none; }
+  .category-box-wrap .link-long button, .category-box-wrap .link-long a {
+    color: inherit;
+    font-size: 0.9375rem; }
+    .category-box-wrap .link-long button .ico, .category-box-wrap .link-long a .ico {
+      background-image: url(/img/ico/ico-group.png);
+      background-repeat: no-repeat;
+      background-position: -1.5625rem -21.875rem;
+      background-size: 3.125rem; }
+
+.category-box-wrap .select-list {
+  padding: 0 1rem; }
+  .category-box-wrap .select-list li {
+    height: 5.9375rem;
+    margin-left: 1.25rem;
+    color: #666;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    vertical-align: top; }
+    .category-box-wrap .select-list li:before {
+      margin-bottom: 0.4375rem;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+    .category-box-wrap .select-list li:first-child {
+      margin: 0; }
+    .category-box-wrap .select-list li.ico-type01:before {
+      background-image: url(/img/benefit/ico-category01.png); }
+    .category-box-wrap .select-list li.ico-type02:before {
+      background-image: url(/img/benefit/ico-category02.png); }
+    .category-box-wrap .select-list li.ico-type03:before {
+      background-image: url(/img/benefit/ico-category03.png); }
+    .category-box-wrap .select-list li.ico-type04:before {
+      background-image: url(/img/benefit/ico-category04.png); }
+    .category-box-wrap .select-list li.ico-type05:before {
+      background-image: url(/img/benefit/ico-category05.png); }
+
+.cont-box .category-box-wrap {
+  margin: 0 -1rem; }
+
+.t-point {
+  color: #3b98e6; }
+
+.popularity-brand {
+  padding: 1.25rem 0 1.25rem 0; }
+  .popularity-brand h3 {
+    padding: 0 1rem; }
+    .popularity-brand h3:before {
+      content: '';
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-right: 0.625rem;
+      background: url(/img/benefit/ico-brand-coalition.png) no-repeat center;
+      background-size: 100%;
+      vertical-align: middle; }
+  .popularity-brand .slider-box .slick-prev, .popularity-brand .slider-box .slick-next {
+    display: none !important; }
+  .popularity-brand .slider-box .slick-slide {
+    padding: 0 1rem; }
+  .popularity-brand .slick-dots {
+    position: initial;
+    margin: 0.3125rem 0 0 1rem;
+    text-align: left; }
+    .popularity-brand .slick-dots li {
+      width: auto;
+      height: auto;
+      margin: 0 0.4375rem 0 0;
+      vertical-align: middle; }
+      .popularity-brand .slick-dots li span {
+        display: block;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        border-radius: 100%;
+        background: #b2b2b2;
+        font-size: 0;
+        line-height: 0;
+        cursor: pointer; }
+      .popularity-brand .slick-dots li.slick-active span {
+        margin: -0.0625rem 0 0 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        background: #3b98e6; }
+
+.brand-logo-list {
+  overflow: hidden; }
+  .brand-logo-list li {
+    float: left;
+    width: 33.3333%;
+    margin-top: 1.25rem; }
+    .brand-logo-list li:nth-child(3n+2) .bt-logo {
+      margin: 0 auto; }
+    .brand-logo-list li:nth-child(3n+3) .bt-logo {
+      float: right; }
+    .brand-logo-list li .bt-logo {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      width: 5.9375rem;
+      height: 5.4375rem;
+      border: 1px solid #e1e1e1;
+      border-radius: 0.3125rem;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      z-index: 1; }
+      .brand-logo-list li .bt-logo img {
+        width: 100%;
+        height: 100%; }
+
+.brand-benefit-wrap .logo {
+  position: relative;
+  overflow: hidden;
+  float: right;
+  width: 5.625rem;
+  height: 5.625rem;
+  margin-left: 0.625rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.3125rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  z-index: 1; }
+  .brand-benefit-wrap .logo img {
+    width: 100%;
+    height: 100%; }
+
+.brand-benefit-wrap .brand-tit {
+  display: block;
+  font-size: 18px; }
+
+.brand-benefit-wrap .bramd-txt {
+  margin-top: 0.3125rem;
+  font-size: 0.75rem;
+  line-height: 1rem; }
+
+.brand-benefit-wrap .bt-like {
+  margin-top: 0.9375rem; }
+
+.brand-benefit-wrap .stit {
+  margin-top: 1.875rem;
+  font-size: 0.9375rem; }
+
+.brand-benefit-wrap .sstit {
+  margin-top: 0.9375rem;
+  font-size: 0.8125rem;
+  font-weight: 700; }
+
+.brand-benefit-wrap .benefit-list li {
+  position: relative;
+  margin-top: 0.4375rem;
+  padding-left: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem; }
+  .brand-benefit-wrap .benefit-list li:before {
+    content: '';
+    position: absolute;
+    top: 0.625rem;
+    left: 0;
+    width: 0.1875rem;
+    height: 0.1875rem;
+    background: #666;
+    border-radius: 100%; }
+  .brand-benefit-wrap .benefit-list li p {
+    color: #666; }
+
+.brand-benefit-wrap .bt-slice {
+  margin-top: 1.25rem; }
+
+.national-brand {
+  padding: 1.25rem 0 1.25rem 0; }
+  .national-brand h3 {
+    padding: 0 1rem; }
+  .national-brand .national-brand-list {
+    margin-top: 0.9375rem; }
+  .national-brand .slider-box .slick-prev, .national-brand .slider-box .slick-next {
+    display: none !important; }
+  .national-brand .slider-box .slick-slide {
+    padding: 0 1rem; }
+  .national-brand .slick-dots {
+    position: initial;
+    margin: 0.3125rem 0 0 1.25rem;
+    text-align: left; }
+    .national-brand .slick-dots li {
+      width: auto;
+      height: auto;
+      margin: 0 0.4375rem 0 0;
+      vertical-align: middle; }
+      .national-brand .slick-dots li span {
+        display: block;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        border-radius: 100%;
+        background: #b2b2b2;
+        font-size: 0;
+        line-height: 0;
+        cursor: pointer; }
+      .national-brand .slick-dots li.slick-active span {
+        margin: -0.0625rem 0 0 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        background: #3b98e6; }
+
+.national-brand-list li {
+  padding: 0 0.3125rem;
+  border-top: 1px solid #e1e1e1; }
+  .national-brand-list li:first-child {
+    border: none; }
+  .national-brand-list li .bt {
+    display: table;
+    width: 100%;
+    height: 6.875rem;
+    color: inherit;
+    text-align: left;
+    table-layout: fixed; }
+  .national-brand-list li .img {
+    display: table-cell;
+    width: 5.625rem;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .national-brand-list li .img img {
+      width: 3.75rem;
+      height: 3.125rem;
+      vertical-align: top; }
+  .national-brand-list li .tit-txt {
+    display: table-cell;
+    vertical-align: middle; }
+    .national-brand-list li .tit-txt .tit {
+      display: block;
+      font-size: 0.875rem; }
+    .national-brand-list li .tit-txt .txt {
+      margin-top: 0.1875rem;
+      color: #666;
+      font-size: 0.8125rem;
+      overflow: hidden;
+      display: -webkit-box;
+      line-height: 1.1875rem;
+      white-space: normal;
+      word-wrap: break-word;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis; }
 
 /* 권은별 */
 .acco-notice .acco-list {
@@ -15014,6 +15406,11 @@ a.bt-link-tx.underline.small {
   margin-left: 0.4375rem;
   text-indent: -0.3125rem; }
 
+.membership-benefit .t-desc {
+  margin-top: 15px;
+  color: #666;
+  font-size: 0.75rem; }
+
 .available-cinema {
   overflow: hidden;
   padding-top: 1.25rem; }
@@ -15335,8 +15732,101 @@ a.bt-link-tx.underline.small {
         padding: 0.125rem 0 0 3.375rem; }
       .service-possibility-pdt ul li span {
         display: block;
-        font-size: 0.75rem;
         color: #666;
+        font-size: 0.75rem;
         padding: 0.125rem 0 0 3.375rem; }
+
+.map-box-wrap .map-box {
+  position: relative;
+  margin: 0 -1rem;
+  border-top: 1px solid #e1e1e1; }
+
+.map-box-wrap .franchisee-infor {
+  position: relative;
+  padding: 1.25rem 3.75rem 1.25rem 0; }
+  .map-box-wrap .franchisee-infor .franchisee-tit {
+    display: block;
+    color: inherit;
+    font-size: 0.9375rem;
+    font-weight: 700; }
+  .map-box-wrap .franchisee-infor .franchisee-address {
+    display: block;
+    margin-top: 3px;
+    color: #666;
+    font-size: 0.8125rem; }
+  .map-box-wrap .franchisee-infor .bt-link-tx {
+    margin-top: 5px;
+    font-size: 0.8125rem; }
+  .map-box-wrap .franchisee-infor .t-map {
+    position: absolute;
+    top: 1.25rem;
+    right: 0;
+    color: inherit;
+    font-size: 0.6875rem; }
+    .map-box-wrap .franchisee-infor .t-map:before {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0 auto 0.1875rem;
+      background: url(/img/benefit/ico-t-map.png) no-repeat;
+      background-size: 2.5rem auto; }
+
+.franchisee-search .franchisee-tit {
+  font-weight: 700; }
+
+.franchisee-search .search-stit {
+  margin-top: 0.25rem; }
+
+.franchisee-search .input-wrap-half {
+  margin-top: 0.9375rem; }
+
+.franchisee-search .bt-slice {
+  margin-top: 1.25rem; }
+  .franchisee-search .bt-slice .bt-blue1 button {
+    font-size: 0.875rem; }
+    .franchisee-search .bt-slice .bt-blue1 button:disabled {
+      background: #d1d1d1;
+      color: #fff; }
+
+.franchisee-search .bt-dropdown:disabled {
+  background: #d1d1d1;
+  color: #b2b2b2; }
+
+.franchisee-list {
+  margin: 0 1rem; }
+  .franchisee-list li {
+    position: relative;
+    padding: 1.25rem 3.75rem 1.25rem 0;
+    border-top: 1px solid #e1e1e1; }
+    .franchisee-list li:first-child {
+      border-top: none; }
+    .franchisee-list li .tit-addr {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.3125rem;
+      text-align: left; }
+      .franchisee-list li .tit-addr .tit {
+        display: block; }
+      .franchisee-list li .tit-addr .addr {
+        display: block; }
+    .franchisee-list li .address {
+      display: block;
+      margin-top: 0.625rem;
+      color: #666;
+      font-size: 0.8125rem; }
+    .franchisee-list li .bt-link-tx {
+      font-size: 0.8125rem; }
+    .franchisee-list li .bt-map {
+      position: absolute;
+      top: 1.25rem;
+      right: 0;
+      width: 2.625rem;
+      height: 2.375rem;
+      background: url(/img/benefit/ico-location.png) no-repeat;
+      background-size: 2.625rem auto;
+      font-size: 0;
+      line-height: 0; }
 
 /* 최은현 */

@@ -195,6 +195,27 @@ Tw.POPUP_TPL = {
       }
     ]
   },
+  JOIN_INFO_MGMT_PERIOD : {
+    title : '기간선택',
+    data : [
+      {
+        'list': [
+          {'option': 'condition', 'attr': 'data-prd="1"', value: '1개월'},
+          {'option': 'condition', 'attr': 'data-prd="2"', value: '2개월'},
+          {'option': 'condition', 'attr': 'data-prd="3"', value: '3개월'},
+          {'option': 'condition', 'attr': 'data-prd="4"', value: '4개월'},
+          {'option': 'condition', 'attr': 'data-prd="5"', value: '5개월'},
+          {'option': 'condition', 'attr': 'data-prd="6"', value: '6개월'},
+          {'option': 'condition', 'attr': 'data-prd="7"', value: '7개월'},
+          {'option': 'condition', 'attr': 'data-prd="8"', value: '8개월'},
+          {'option': 'condition', 'attr': 'data-prd="9"', value: '9개월'},
+          {'option': 'condition', 'attr': 'data-prd="10"', value: '10개월'},
+          {'option': 'condition', 'attr': 'data-prd="11"', value: '11개월'},
+          {'option': 'condition', 'attr': 'data-prd="12"', value: '12개월'}
+        ]
+      }
+    ]
+  },
   FARE_PAYMENT_LIMIT: [
     {
       'list': [

@@ -33,7 +33,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="dateBtn"]', $.proxy(this._dateBtnEvt, this));
-    this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
+    // this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _dateBtnEvt: function (e) {
@@ -50,9 +50,9 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     this._getRoamingInfo(param);
 
   },
-  _popupCloseBtEvt: function () {
-    this._goLoad('/myt/fare/bill/guide');
-  },
+  // _popupCloseBtEvt: function () {
+  //   this._goLoad('/myt/fare/bill/guide');
+  // },
   //--------------------------------------------------------------------------[API]
   _getRoamingInfo: function (param) {
 

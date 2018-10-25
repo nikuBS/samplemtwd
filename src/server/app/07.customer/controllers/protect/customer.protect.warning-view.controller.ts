@@ -21,7 +21,7 @@ class CustomerProtectWarningView extends TwViewController {
     });
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const idx = req.params.idx || '';
     if (FormatHelper.isEmpty(idx)) {
       return res.redirect('/customer/protect/warning');
@@ -40,6 +40,7 @@ class CustomerProtectWarningView extends TwViewController {
 
         res.render('protect/customer.protect.warning-view.html', {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           data: this._convertData(data.result)
         });
       });

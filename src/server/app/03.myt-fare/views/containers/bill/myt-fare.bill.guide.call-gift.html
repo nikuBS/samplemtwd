@@ -25,7 +25,7 @@
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
 
-        <%- include('../../../../common/views/components/header.component.html', { title: '콜기프트 사용요금 조회', svcInfo: svcInfo, option: { line:false } }) %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '콜기프트 사용요금 조회', svcInfo: svcInfo, option: { back: 'popup' } }) %>
 
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -70,7 +70,7 @@
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn" data-target="popupCloseBt"><span class="blind">팝업 페이지 닫기</span></button>
+        <button class="popup-closeBtn fe-common-back" data-target="popupCloseBt"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->

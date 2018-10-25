@@ -93,7 +93,7 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
     return resultList;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const tDiyGrCd = req.query.prod_id || '';
 
     this.apiService.request(API_CMD.BFF_10_0015, { tDiyGrCd: tDiyGrCd }, {}, 'NA00005959')
@@ -113,6 +113,7 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
 
         res.render('product.infinity-benefit-usage-history.html', {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           beforeTDiyGrNm: currentGrToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
           beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[data.result.beforeTDiyGrCd],

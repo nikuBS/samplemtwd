@@ -350,7 +350,8 @@ Tw.ALERT_MSG_MYT_JOIN = {
   A1: '전화번호를 정확히 입력해주십시오.',
   ALERT_2_A34_CONF: { TITLE: '접수취소', MSG: '장애 A/S 신청을 취소하시겠습니까?' },
   ALERT_2_A34: { TITLE: '알림', MSG: '장애 A/S 신청이 취소되었습니다.' },
-  ALERT_2_A35 : { TITLE : '알림' , MSG : '설치장소 변경 신청이 완료되었습니다. 빠른 시일 내에 신청내역 확인을 위해 상담원이 연락 드리겠습니다. 감사합니다' },
+  ALERT_2_A35: { TITLE: '알림', MSG: '설치장소 변경 신청이 완료되었습니다. 빠른 시일 내에 신청내역 확인을 위해 상담원이 연락 드리겠습니다. 감사합니다' },
+  ALERT_2_A36: { TITLE: '알림', MSG: '가입 서비스 변경 신청이 완료 되었습니다 빠른 시일내에 연락 드리도록 하겠습니다' },
   ALERT_2_A39: { TITLE: '알림', MSG: '요금제 변경 알림 서비스가 신청 되었습니다.' },
   ALERT_2_A40: { TITLE: '알림', MSG: '요금제 변경 가능일 알림이 해지 되었습니다.' },
   ALERT_2_A61: { TITLE: '알림', MSG: '비밀번호를 확인해주세요.' },
@@ -486,7 +487,9 @@ Tw.URL_PATH = {
   MYT_PAY_MICRO_LIMIT_CHANGE: '/myt/bill/history/micro/limit/change',
   MYT_PAY_MICRO_LIMIT_DETAIL: '/myt/bill/history/micro/limit',
   MYT_PAY_CONTENTS_LIMIT_CHANGE: '/myt/bill/history/contents/limit/change',
-  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit'
+  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit',
+  BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
+  BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
@@ -607,7 +610,6 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.'
 };
 
-<<<<<<< HEAD
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPE = {
@@ -624,7 +626,7 @@ Tw.CUSTOMER_PRAISE_DEFAULT = {
   TYPE: '대상 선택',
   AREA: '지역명 선택'
 };
-=======
+
 Tw.NOTICE = {
   TITLE: '카테고리 설정',
   DIRECTSHOP: '다이렉트샵',
@@ -641,4 +643,60 @@ Tw.PROTECT_GUIDE = {
 
 Tw.CUSTOMER_PRAISE_COMPANY = '회사';
 Tw.CUSTOMER_PRAISE_OFFICE = '지점';
->>>>>>> [양지훈/FE개발팀] Sp #9; 이용안내
+
+Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
+  SVCCTG: {
+    S1: '인터넷',
+    S2: 'IPTV',
+    S3: '집전화'
+  },
+  PRODUCTBILLLIST: [
+    {
+      id: 'S1',
+      type: ['인터넷'],
+      child: [
+        '표준요금제 광랜',
+        '표준요금제 스피드',
+        '스마트요금제 광랜',
+        '스마트요금제 스피드',
+        '오피스'
+      ]
+    },
+    {
+      id: 'S2',
+      type: ['IPTV'],
+      child: []
+    },
+    {
+      id: 'S3',
+      type: ['시내전화', '시내/외 전화', '인터넷전화'],
+      child: [
+        [
+          'B끼리 무료통화 플러스',
+          '기본요금제',
+          '베이직프리',
+          '정액형요금제',
+          '30요금제',
+          '번호이동'
+        ],
+        [
+          '패밀리할인제',
+          '실속형할인제'
+        ],
+        [
+          'WiFi 300 다이렉트',
+          'B끼리 무료통화 플러스',
+          '기본요금제',
+          '정액형요금제',
+          '실속형요금제'
+        ]
+      ]
+    }
+  ],
+  ERROR_ALERT: '선택하신 서비스는 SK브로드밴드를 통해 가입하신 서비스이므로 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주시기 바랍니다.'
+};
+
+Tw.MSG_COMMON = {
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
+  DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
+};

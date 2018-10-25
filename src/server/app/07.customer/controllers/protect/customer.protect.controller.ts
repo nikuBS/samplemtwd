@@ -27,7 +27,7 @@ class CustomerProtect extends TwViewController {
     return warningList.content;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 2})
       .subscribe((warningListInfo) => {
         const isApp = BrowserHelper.isApp(req);
@@ -42,9 +42,10 @@ class CustomerProtect extends TwViewController {
         }
 
         res.render('protect/customer.protect.html', {
+          warningList: this._convertWarningList(warningListInfo.result),
           svcInfo: svcInfo,
-          isApp: isApp,
-          warningList: this._convertWarningList(warningListInfo.result)
+          pageInfo: pageInfo,
+          isApp: isApp
         });
       });
   }

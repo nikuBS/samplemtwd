@@ -410,28 +410,6 @@ Tw.ProductJoin.prototype = {
   },
 
   _procJoin: function() {
-    var auth = false;
-    if ( auth ) {
-      return this._procAUth();
-    }
-
-    this._procJoinReq();
-  },
-
-  _procAUth: function() {
-    // @todo auth
-    var authResult = {
-      code: '00'
-    };
-
-    if ( authResult.code !== Tw.API_CODE.CODE_00 ) {
-      Tw.Error(authResult.code, authResult.msg).pop();
-    } else {
-      this._procJoinReq();
-    }
-  },
-
-  _procJoinReq: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     switch (this._displayGroup) {
@@ -443,7 +421,9 @@ Tw.ProductJoin.prototype = {
         this._apiService.request(Tw.API_CMD.BFF_10_0012, {
           asgnNumList: this._data.asgnNumList,
           optProdId: this._data.tplanProdId,
-          svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id')
+          svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id'),
+          prodId: this._prodId,
+          prodProcTypeCd: 'JN'
         }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
 
         this._successData = {
@@ -466,7 +446,10 @@ Tw.ProductJoin.prototype = {
   },
 
   _getAdditionsParams: function() {
-    var resultParams = {};
+    var resultParams = {
+      prodId: this._prodId,
+      prodProcTypeCd: 'JN'
+    };
 
     if (this.$joinSetup.length < 1) {
       return resultParams;
@@ -474,9 +457,9 @@ Tw.ProductJoin.prototype = {
 
     switch(this.$joinSetup.data('id')) {
       case 'MV_02_02_01':
-        resultParams = {
+        resultParams = $.extend(resultParams, {
           svcNumList: this._getSvcNumList()
-        };
+        });
         break;
     }
 
@@ -514,7 +497,6 @@ Tw.ProductJoin.prototype = {
       })
     }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
 
-    // @todo SvcInfo Refresh
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 

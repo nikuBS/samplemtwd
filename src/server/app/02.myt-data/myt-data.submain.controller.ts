@@ -20,9 +20,10 @@ class MytDataSubmainController extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       isBenefit: false,
       immCharge: true,
       present: false,

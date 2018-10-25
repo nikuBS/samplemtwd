@@ -86,7 +86,7 @@ class MyTJoinProductFeePlan extends TwViewController {
     });
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const defaultOptions = {
       title: '나의 요금제',
       svcInfo: svcInfo
@@ -120,6 +120,7 @@ class MyTJoinProductFeePlan extends TwViewController {
         }
 
         res.render('product/myt-join.product.fee-plan.html', {
+          pageInfo: pageInfo,
           svcInfo: svcInfo,
           svcCdName: SVC_CDNAME,
           feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',

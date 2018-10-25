@@ -14,7 +14,7 @@ import {MYT_FARE_PAYMENT_TITLE, SVC_CD} from '../../../../types/bff.type';
 
 class MyTFarePaymentPoint extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getUnpaidList(),
       this.getPoint()
@@ -23,7 +23,8 @@ class MyTFarePaymentPoint extends TwViewController {
         res.render('payment/myt-fare.payment.point.html', {
           unpaidList: this.parseData(unpaidList.result, svcInfo),
           title: MYT_FARE_PAYMENT_TITLE.OKCASHBAG,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

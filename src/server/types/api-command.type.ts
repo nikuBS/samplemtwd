@@ -217,7 +217,7 @@ export const API_CMD = {
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0162: { path: '/core-modification/v1/myinfo/chg-wire-addr-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0163: { path: '/core-modification/v1/myinfo/chg-wire-addr', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0165: { path: '/v1/wire/change-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0165: { path: '/core-modification/v1/wire/change-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0164: { path: '/core-modification/v1/wire-phone/chang-status', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0166: { path: '/core-product/v1/submain/additions/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0167: { path: '/core-modification/v1/wire-registration-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -233,6 +233,11 @@ export const API_CMD = {
   BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_05_0178: { path: '/core-modification/v1/wire-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0179: { path: '/core-product/v1/services/wire/additions/count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0180: { path: '/core-modification/v1/num-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0182: { path: '/core-modification/v1/num-info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0183: { path: '/core-modification/v1/num-info', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0184: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0185: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

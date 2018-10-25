@@ -7,8 +7,6 @@ Tw.MyTFareBillSetChange = function (rootEl, data) {
   this.$container = rootEl;
   this.popupService = Tw.Popup;
   this.$window = window;
-  this._history = new Tw.HistoryService();
-  this._history.init();
   this._data = data !== undefined ? JSON.parse( data ) : {};
   this._init();
 
@@ -460,7 +458,6 @@ Tw.MyTFareBillSetChange.prototype = {
       return;
     }
 
-    this._history.pushUrl('/myt/fare/bill/set');
     this.$window.location.href = '/myt/fare/bill/set/complete?type=1';
   },
 

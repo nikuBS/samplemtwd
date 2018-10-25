@@ -30,7 +30,7 @@ abstract class TwViewController {
     this._error = new ErrorService();
   }
 
-  abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any): void;
+  abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any): void;
 
   protected get apiService(): ApiService {
     return this._apiService;
@@ -165,49 +165,46 @@ abstract class TwViewController {
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
       const urlMeta = resp;
       this.logger.info(this, urlMeta);
-      // if ( FormatHelper.isEmpty(urlMeta) ) {
+      if ( FormatHelper.isEmpty(urlMeta) ) {
         // TODO do not register
         if ( isLogin ) {
-          this.render(req, res, next, svcInfo, allSvc, childInfo);
+          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
         } else {
           if ( !FormatHelper.isEmpty(URL[path]) && URL[path].login ) {
             res.send('need login');
           } else {
-            this.render(req, res, next, svcInfo, allSvc, childInfo);
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
         }
-      // } else {
-      //   if ( isLogin ) {
-      //     const urlAuth = urlMeta.auth.grades;
-      //     const svcGr = svcInfo.svcGr;
-      //     if ( svcInfo.totalSvcCnt === '0' ) {
-      //       this.errorEmptyLine(req, res, next, svcInfo);
-      //     } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
-      //       this.errorNoRegister(req, res, next, svcInfo);
-      //     } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-      //       const params = Object.assign(svcInfo, {
-      //         urlAuth
-      //       });
-      //       this.render(req, res, next, params, allSvc, childInfo);
-      //     } else if ( this._type === 'dev' ) {
-      //       this.render(req, res, next, svcInfo, allSvc, childInfo);
-      //     } else {
-      //       const loginType = svcInfo.loginType;
-      //       if ( loginType === LOGIN_TYPE.EASY ) {
-      //         res.redirect('/auth/login/easy-fail');
-      //       } else {
-      //         this.errorAuth(req, res, next, svcInfo);
-      //
-      //       }
-      //     }
-      //   } else {
-      //     if ( urlMeta.auth.loginYn === 'Y' ) {
-      //       res.send('need login');
-      //     } else {
-      //       this.render(req, res, next, svcInfo, allSvc, childInfo);
-      //     }
-      //   }
-      // }
+      } else {
+        if ( isLogin ) {
+          const urlAuth = urlMeta.auth.grades;
+          const svcGr = svcInfo.svcGr;
+          if ( svcInfo.totalSvcCnt === '0' ) {
+            this.errorEmptyLine(req, res, next, svcInfo);
+          } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
+            this.errorNoRegister(req, res, next, svcInfo);
+          } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          } else if ( this._type === 'dev' ) {
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          } else {
+            const loginType = svcInfo.loginType;
+            if ( loginType === LOGIN_TYPE.EASY ) {
+              res.redirect('/auth/login/easy-fail');
+            } else {
+              this.errorAuth(req, res, next, svcInfo);
+
+            }
+          }
+        } else {
+          if ( urlMeta.auth.loginYn === 'Y' ) {
+            res.send('need login');
+          } else {
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          }
+        }
+      }
 
     });
   }

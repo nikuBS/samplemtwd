@@ -5,7 +5,6 @@
 %>
 
 <% include ../../components/start.component.html %>
-
 <body class="bg-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -33,6 +32,26 @@
                         <span class="phone"></span>
                     </dd>
                 </dl>
+                <!--<dl>-->
+                    <!--<dt>잔여 데이터</dt>-->
+                    <!--<dd>31.2GB <span class="total-data">/ 42GB</span></dd>-->
+                <!--</dl>-->
+                <% if ( senderInfo.goodFamilyMemberYn === 'Y' ) { %>
+                <dl>
+                    <dt>선물하기 남은 횟수</dt>
+                    <dd>T끼리 <%=senderInfo.dataGiftCnt%>회 / 가족 무제한</dd>
+                </dl>
+                <% } else if ( senderInfo.familyMemberYn === 'Y' ) { %>
+                <dl>
+                    <dt>선물하기 남은 횟수</dt>
+                    <dd>T끼리 <%=senderInfo.dataGiftCnt%>회 / 가족 <%=senderInfo.familyDataGiftCnt%>회</dd>
+                </dl>
+                <% } else { %>
+                <dl>
+                    <dt>선물하기 남은 횟수</dt>
+                    <dd>T끼리 <%=senderInfo.dataGiftCnt%>회</dd>
+                </dl>
+                <% } %>
             </div>
             <div class="complete-btn-box pt40">
                 <ul class="bt-slice">
@@ -44,7 +63,9 @@
                     <button class="bt-link-tx fe-btn_go_sms">문자로 알리기</button>
                 </div>
             </div>
-            <button class="complete-closeBtn fe-common-back"><span class="blind">페이지 닫기</span></button>
+            <button class="complete-closeBtn fe-common-back">
+                <span class="blind">페이지 닫기</span>
+            </button>
         </div>
     </div>
     <!--// #contents -->

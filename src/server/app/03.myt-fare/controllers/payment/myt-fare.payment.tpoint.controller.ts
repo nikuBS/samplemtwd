@@ -17,7 +17,7 @@ import {PAYMENT_OPTION_TEXT} from '../../../../types/bff.old.type';
 
 class MyTFarePaymentTPoint extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getTPoint(),
       this.getAutoTPoint()
@@ -27,7 +27,8 @@ class MyTFarePaymentTPoint extends TwViewController {
           tpoint: this.parseData(tpoint.result),
           autoInfo: this.getAutoData(auto),
           title: MYT_FARE_PAYMENT_TITLE.TPOINT,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

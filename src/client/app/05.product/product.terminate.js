@@ -105,35 +105,16 @@ Tw.ProductTerminate.prototype = {
 
   _openConfirmPopup: function() {
     this._popupService.openModalTypeA(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, null, $.proxy(this._authCheck, this));
-  },
-
-  _authCheck: function() {  // @todo 인증 API 되면 그때 사용
-    this._apiService.request(Tw.API_CMD.BFF_10_9001, {}, {}, this._prodId, 'TM')
-      .done($.proxy(this._procTerminate, this));
-  },
-
-  _authCheckResult: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    if (Tw.FormatHelper.isEmpty(resp.result.prodAuthMethods)) {
-      this._procTerminate();
-    } else {
-      this._openAuthLayer();
-    }
-  },
-
-  _openAuthLayer: function() {
-    // @todo 인증 창을 열자.
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, null, $.proxy(this._procTerminate, this));
   },
 
   _procTerminate: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
-    this._apiService.request(Tw.API_CMD[this._terminateApiCode], {}, {}, this._prodId)
-      .done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD[this._terminateApiCode], {
+      prodId: this._prodId,
+      prodProcTypeCd: 'TM'
+    }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {

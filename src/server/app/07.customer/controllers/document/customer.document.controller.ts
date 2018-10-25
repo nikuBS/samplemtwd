@@ -20,7 +20,7 @@ class CustomerDocument extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     combineLatest(
       this.getMobileService(),
       this.getEtcService()
@@ -29,7 +29,8 @@ class CustomerDocument extends TwViewController {
         res.render('document/customer.document.html', {
           mobileCategoryList: this.parseData(mobile.result.ctgList),
           etcCategoryList: this.parseData(etc.result.ctgList),
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         res.render('error.server-error.html', {

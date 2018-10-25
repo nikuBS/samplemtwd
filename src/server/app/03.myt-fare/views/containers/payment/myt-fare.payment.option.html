@@ -56,6 +56,7 @@
                      data-ser-num="<%= paymentOption.serNum %>"
                      data-auth-req-ser-num="<%= paymentOption.authReqSerNum %>"
                      data-rltm-ser-num="<%= paymentOption.rltmSerNum %>"
+                     data-pay-mthd-cd="<%= paymentOption.payMthdCd %>"
                      class="ti-caption-gray fe-info">
                     <h3 class="tit">상세정보</h3>
                     <% if (!paymentOption.isAuto) { %><button class="detail-view2 fe-change-address">연락처 및 주소변경</button><% } %>
@@ -179,7 +180,10 @@
             </div>
         </div>
         <!--// #contents -->
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

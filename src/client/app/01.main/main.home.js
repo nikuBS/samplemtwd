@@ -117,7 +117,7 @@ Tw.MainHome.prototype = {
       deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt),
       invEndDt: Tw.DateHelper.getShortDateNoDot(billData.charge.invDt),
       invStartDt: Tw.DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
-      invMonth: Tw.DateHelper.getCurrentMonth(billData.charge.invDt),
+      invMonth: Tw.DateHelper.getCurrentMonth(Tw.DateHelper.AddMonth(billData.charge.invDt)),
       type1: totSvc && repSvc,
       type2: !totSvc,
       type3: totSvc && !repSvc

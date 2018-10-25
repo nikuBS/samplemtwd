@@ -25,7 +25,7 @@ class CustomerProtectGuideView extends TwViewController {
         && !FormatHelper.isEmpty(categoryData[category][idx]);
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const category = req.params.category || '',
       idx = req.params.idx || '',
       backUrl = '/customer/protect/guide' + (FormatHelper.isEmpty(category) ? '' : '/' + category);
@@ -36,6 +36,7 @@ class CustomerProtectGuideView extends TwViewController {
 
     res.render('protect/customer.protect.guide-view.html', {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       category: category,
       data: categoryData[category][idx]
     });

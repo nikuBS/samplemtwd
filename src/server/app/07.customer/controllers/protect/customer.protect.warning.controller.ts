@@ -42,7 +42,7 @@ class CustomerProtectWarning extends TwViewController {
     return count < 0 ? 0 : count;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 20})
       .subscribe((data) => {
         if (FormatHelper.isEmpty(data)) {
@@ -51,6 +51,7 @@ class CustomerProtectWarning extends TwViewController {
 
         res.render('protect/customer.protect.warning.html', {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           data: this._convertData(data)
         });
       });

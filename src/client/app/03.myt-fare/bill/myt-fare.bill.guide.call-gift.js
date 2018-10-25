@@ -33,7 +33,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
-    this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
+    // this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _monthBtnEvt: function (e) {
@@ -51,9 +51,9 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     // Tw.Logger.info('[버튼 클릭 > param]', param);
     this._getCallGiftInfo(param);
   },
-  _popupCloseBtEvt: function () {
-    this._goLoad('/myt/fare/bill/guide');
-  },
+  // _popupCloseBtEvt: function () {
+  //   this._goLoad('/myt/fare/bill/guide');
+  // },
   //--------------------------------------------------------------------------[API]
   _getCallGiftInfo: function (param) {
     return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));

@@ -50,7 +50,7 @@ class MyTJoinProductFeeAlarmTerminate extends TwViewController {
     });
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1) {
       return this.error.render(res, {
         title: '요금제 변경 가능일 알림 서비스',
@@ -77,6 +77,7 @@ class MyTJoinProductFeeAlarmTerminate extends TwViewController {
 
       res.render('product/myt-join.product.fee-alarm.terminate.html', {
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         feePlanInfo: this._convertFeePlanInfo(feePlan.result.feePlanProd),
         alarmInfo: this._convertAlarmStatusInfo(alarmStatus.result)
       });

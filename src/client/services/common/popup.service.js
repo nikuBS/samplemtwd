@@ -271,5 +271,35 @@ Tw.PopupService.prototype = {
       Tw.Logger.log('[Popup] history back');
       history.back();
     }
+  },
+  afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
+    this.open({
+        'hbs': 'complete',
+        'link_class': 'fe-payment-history',
+        'link_text': linkText,
+        'text': text,
+        'sub_text': subText
+      },
+      $.proxy(this._onComplete, this),
+      $.proxy(this._goLink, this, historyUrl, mainUrl),
+      'complete'
+    );
+  },
+  _onComplete: function ($layer) {
+    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this, 'history'));
+    $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this, 'close'));
+  },
+  _setIsLink: function (type) {
+    if (type === 'history') {
+      this._isHistory = true;
+    }
+    this.close();
+  },
+  _goLink: function (historyUrl, mainUrl) {
+    if (this._isHistory) {
+      location.href = historyUrl;
+    } else {
+      location.href = mainUrl;
+    }
   }
 };
