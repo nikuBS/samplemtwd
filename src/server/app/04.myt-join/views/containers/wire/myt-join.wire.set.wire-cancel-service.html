@@ -43,8 +43,8 @@
                                                 <div class="widget">
                                                     <div class="widget-box check">
                                                         <ul class="select-list" role="group">
-                                                            <li class="checkbox type01 checked" role="checkbox" aria-checked="true"/>
-                                                            <input type="checkbox" name="chk-confirm" value="" title="안내사항 확인" checked=""/>
+                                                            <li data-target="infoLi" class="checkbox type01" role="checkbox" aria-checked="false"/>
+                                                            <input type="checkbox" name="chk-confirm" value="" title="안내사항 확인"/>
                                                             <span class="chk-tit">안내사항 확인</span>
                                                             </li>
                                                         </ul>
@@ -84,32 +84,30 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="form-type">
-                    <h3 class="form-title">해지 신청 상품</h3>
+                    <h3 class="form-title" >해지 신청 상품</h3>
                     <!-- .list-comp-input -->
                     <div class="list-comp-input-agree gap-type">
                         <div class="widget">
                             <div class="widget-box check">
                                 <ul class="select-list btm-line" role="group">
-                                    <li>
-                                        <div class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)" aria-labelledby="aria-comp-checkbox1" checked="" /><!-- 체크상태일 경우 checked="false" -->
+
+                                    <% for(var i=0; i < resDataInfo.wireList.length; i++) { %>
+
+                                    <li data-target="productLi" >
+                                        <div data-target="checkboxDiv" class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input data-value="<%=i %>" type="checkbox" name="checkbox" value=""
+                                                   title="<%=resDataInfo.wireList[i].FEE_PROD_NM %> <%=resDataInfo.wireList[i].DTL_ADDR%>"
+                                                   aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox1">
                                                 <p class="layout-text">
-                                                    <span class="mtext">T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)</span>
+                                                    <span class="mtext"><%=resDataInfo.wireList[i].FEE_PROD_NM %> <%=resDataInfo.wireList[i].DTL_ADDR%></span>
                                                 </p>
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox2" >
-                                                <p class="layout-text">
-                                                    <span class="mtext">T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
+
+                                    <% } %>
+
                                 </ul>
                             </div>
                         </div>
@@ -228,7 +226,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button>해지 신청하기</button>
+                        <button data-target="" desabled >해지 신청하기</button>
                     </li>
                 </ul>
             </div>
@@ -247,7 +245,10 @@
   $(document).ready(function () {
     var oMyTWireInfo = new Tw.MyTJoinWireSetWireCancelService( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      allSvc: <%-JSON.stringify(allSvc) %>,
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>
   } );
   });
 </script>

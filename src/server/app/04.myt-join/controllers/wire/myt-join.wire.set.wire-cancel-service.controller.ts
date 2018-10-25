@@ -33,46 +33,48 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     pageRenderView: 'wire/myt-join.wire.set.wire-cancel-service.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, layerType: string) {
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
+    this.logger.info(this, '[ allSvc ] : ', allSvc);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
     // this._typeInit();
 
-    // const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
-    // const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0172, {}), 'p1');
 
-    // Promise.all([p1]).then(function(resArr) {
-    //
-    //   thisMain._resDataInfo = resArr[0].result;
-    //
-    //   thisMain._dataInit();
-    //
-    //   thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
-    //
-    //   thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-    //     reqQuery: thisMain.reqQuery,
-    //     svcInfo: svcInfo,
-    //     commDataInfo: thisMain._commDataInfo,
-    //     resDataInfo: thisMain._resDataInfo
-    //   });
-    // }, function(err) {
-    //   thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
-    //   return thisMain.error.render(res, {
-    //     title: 'title',
-    //     code: err.code,
-    //     msg: err.msg,
-    //     svcInfo: svcInfo
-    //   });
-    // });
+    Promise.all([p1]).then(function(resArr) {
 
-    thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-      reqQuery: thisMain.reqQuery,
-      svcInfo: svcInfo,
+      thisMain._resDataInfo = resArr[0].result;
+
+      thisMain._dataInit();
+
+      thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
+
+      thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+        reqQuery: thisMain.reqQuery,
+        svcInfo: svcInfo,
+        allSvc: allSvc,
+        commDataInfo: thisMain._commDataInfo,
+        resDataInfo: thisMain._resDataInfo
+      });
+    }, function(err) {
+      thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      return thisMain.error.render(res, {
+        title: 'title',
+        code: err.code,
+        msg: err.msg,
+        svcInfo: svcInfo
+      });
     });
+
+
+    // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+    //   reqQuery: thisMain.reqQuery,
+    //   svcInfo: svcInfo,
+    // });
   }
 
 
