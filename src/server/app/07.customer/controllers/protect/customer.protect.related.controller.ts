@@ -13,9 +13,10 @@ class CustomerProtectRelated extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     res.render('protect/customer.protect.related.html', {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       outlinkReport: CUSTOMER_PROTECT_REPORT_ORG,
       outlinkRelate: CUSTOMER_PROTECT_RELATE_ORG
     });

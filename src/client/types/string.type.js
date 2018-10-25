@@ -695,3 +695,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   ],
   ERROR_ALERT: '선택하신 서비스는 SK브로드밴드를 통해 가입하신 서비스이므로 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주시기 바랍니다.'
 };
+
+Tw.MSG_COMMON = {
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
+  DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
+};

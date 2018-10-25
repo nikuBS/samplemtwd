@@ -43,7 +43,7 @@ class CustomerProtectGuide extends TwViewController {
     });
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const category = req.params.category || 'video',
       listMaxSize = category === 'webtoon' ? 20 : 30;
 
@@ -55,6 +55,7 @@ class CustomerProtectGuide extends TwViewController {
       category: category,
       categoryLabel: guideCategory[category].LABEL,
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       list: this._convertList(guideCategory[category].LIST, listMaxSize),
       listMaxSize: listMaxSize
     });
