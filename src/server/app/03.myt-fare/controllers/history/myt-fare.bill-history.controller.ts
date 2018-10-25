@@ -25,7 +25,7 @@ class MyTFareBillHistory extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -44,6 +44,7 @@ class MyTFareBillHistory extends TwViewController {
               code: resp.code,
               msg: resp.msg,
               svcInfo: svcInfo
+              // ,pageInfo: pageInfo
             });
           }
 
@@ -70,6 +71,7 @@ class MyTFareBillHistory extends TwViewController {
               code: resp.code,
               msg: resp.msg,
               svcInfo: svcInfo
+              // ,pageInfo: pageInfo
             });
           }
 
@@ -95,7 +97,7 @@ class MyTFareBillHistory extends TwViewController {
             return prev;
           }, []);
 
-          res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, data: {
+          res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
               isTax: query.current === 'tax',
               current: query.current,
               list: resp.result

@@ -50,7 +50,7 @@ class MyTFarePaymentHistory extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -68,7 +68,7 @@ class MyTFarePaymentHistory extends TwViewController {
               this.getOverAndRefundPaymentData(query.current),
               this.getDirectPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
         case 'auto':
@@ -78,7 +78,7 @@ class MyTFarePaymentHistory extends TwViewController {
               this.getOverAndRefundPaymentData(query.current),
               this.getAutoPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
         case 'auto-all':
@@ -88,7 +88,7 @@ class MyTFarePaymentHistory extends TwViewController {
               this.getOverAndRefundPaymentData(query.current),
               this.getAutoUnitedPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
         case 'micro-prepay':
@@ -98,7 +98,7 @@ class MyTFarePaymentHistory extends TwViewController {
               this.getOverAndRefundPaymentData(query.current),
               this.getMicroPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
         case 'content-prepay':
@@ -108,7 +108,7 @@ class MyTFarePaymentHistory extends TwViewController {
               this.getOverAndRefundPaymentData(query.current),
               this.getContentsPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
         default:
@@ -122,6 +122,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
     res.render('history/myt-fare.payment.history.html', {
       svcInfo: data.svcInfo,
+      pageInfo: data.pageInfo,
       currentString: this.getKorStringWithQuery(data.query.current) || MYT_FARE_PAYMENT_HISTORY_TYPE.all,
       data: {
         isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse,
@@ -183,7 +184,7 @@ class MyTFarePaymentHistory extends TwViewController {
         this.getMicroPaymentData(),
         this.getContentsPaymentData()
     ).subscribe(histories => {
-      this.logger.info(this, '-[MyTFarePaymentHistory] -------->');
+      // this.logger.info(this, '-[MyTFarePaymentHistory] -------->');
 
       this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
     });

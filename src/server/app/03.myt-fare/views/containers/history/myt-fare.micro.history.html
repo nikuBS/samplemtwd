@@ -37,6 +37,11 @@
             </div>
 
         </div>
+
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
     </div>
 
     <% include ../../components/javascript.component.html %>
