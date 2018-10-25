@@ -21,6 +21,7 @@ class MytJoinInfoDiscount extends TwViewController {
     super();
   }
   public reqQuery: any;
+  public pageInfo: any;
   private _svcInfo: any;
 
   // 데이터
@@ -38,10 +39,11 @@ class MytJoinInfoDiscount extends TwViewController {
     pageRenderView: 'info/myt-join.info.discount.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
+    this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
@@ -61,6 +63,7 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        pageInfo: thisMain.pageInfo,
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo
       });
