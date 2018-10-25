@@ -14,6 +14,7 @@ Tw.MyTFarePaymentAccount = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._historyService.init();
 
   this._init();
 };
@@ -23,7 +24,6 @@ Tw.MyTFarePaymentAccount.prototype = {
     this._initVariables();
     this._bindEvent();
     this._checkIsAuto();
-    this._checkIsBack();
     this._checkIsPopup();
   },
   _initVariables: function () {
@@ -53,11 +53,6 @@ Tw.MyTFarePaymentAccount.prototype = {
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
       this.$payBtn.removeAttr('disabled');
-    }
-  },
-  _checkIsBack: function () {
-    if (this._historyService.isBack()) {
-      this._historyService.goBack();
     }
   },
   _checkIsPopup: function () {

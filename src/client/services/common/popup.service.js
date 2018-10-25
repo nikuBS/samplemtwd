@@ -1,5 +1,6 @@
 Tw.PopupService = function () {
   this.$document = $(document);
+  this.$window = $(window);
   this._prevHashList = [];
   this._confirmCallback = null;
   this._openCallback = null;
@@ -14,7 +15,7 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
-
+    this.$window.on('pageshow', $.proxy(this._checkIsComplete, this));
   },
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -287,7 +288,9 @@ Tw.PopupService.prototype = {
         'text': text,
         'sub_text': subText
       },
-      $.proxy(this._onComplete, this, historyUrl, mainUrl)
+      $.proxy(this._onComplete, this, historyUrl, mainUrl),
+      null,
+      'complete'
     );
   },
   _onComplete: function (historyUrl, mainUrl, $layer) {
@@ -295,7 +298,13 @@ Tw.PopupService.prototype = {
     $layer.on('click', '.fe-submain', $.proxy(this._goLink, this, mainUrl));
   },
   _goLink: function (url) {
-    this.closeAll();
     location.href = url;
+  },
+  _checkIsComplete: function (event) {
+    if (location.hash.match('complete')) {
+      if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
+        history.back();
+      }
+    }
   }
 };
