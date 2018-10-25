@@ -119,8 +119,8 @@ class ProductJoin extends TwViewController {
    * @private
    */
   private _convertStipulationInfo(stipulationInfo): any {
-    if (!stipulationInfo.existData) {
-      return {};
+    if (FormatHelper.isEmpty(stipulationInfo) || FormatHelper.isEmpty(stipulationInfo.stipulation)) {
+      return null;
     }
 
     return Object.assign(stipulationInfo, {
