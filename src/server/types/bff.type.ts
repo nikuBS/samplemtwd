@@ -176,9 +176,7 @@ export enum HOME_SMART_CARD_E {
   ADDITIONAL = 'H16'
 }
 
-export const HOME_SEGMENT = [
-  'default', 'refill', 'gift', 'inquiry', 'payment', 'membership'
-];
+export const HOME_SEGMENT = ['default', 'refill', 'gift', 'inquiry', 'payment', 'membership'];
 
 export const HOME_SEGMENT_ORDER = {
   default: ['H02', 'H06', 'H07', 'H10', 'H11'],
@@ -257,13 +255,32 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
   '11': 'T포인트',
   '40': '페이톡 계좌이체',
   '41': '계좌이체',
-  'Y': '결제완료',
-  'N': '결제취소',
-  'A': '결제완료'
-}
+  Y: '결제완료',
+  N: '결제취소',
+  A: '결제완료'
+};
 
 export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
   '0': '당월',
   '1': '미납',
   '9': '당월+미납'
-}
+};
+
+export const COMBINATION_PRODUCT = {
+  NA00005055: 'data-share', // 가족나눔데이터
+  NA00004211: 'data-share', // T가족결합(착한가족)
+  NH00000084: 'family-free',
+  TW20000008: 'family-free', // TB끼리 온가족프리
+  NH00000059: 'tb-family',
+  TW20000007: 'tb-family', // TB끼리 온가족무료
+  NH00000037: 'tb-internet',
+  NH00000039: 'tb-internet',
+  TW00000062: 'tb-internet', // T+B인터넷
+  NH00000040: 'tb-internet',
+  NH00000041: 'tb-internet',
+  TW00000063: 'tb-internet', // T+B전화/인터넷전화
+  NA00002040: 't-family',
+  TW20000010: 't-family', // T끼리 온가족할인
+  NA00004728: 'happy-plan',
+  TW20000011: 'happy-plan' // 온가족행복플랜
+};

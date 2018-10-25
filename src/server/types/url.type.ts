@@ -35,8 +35,8 @@ export const URL = {
   '/myt/fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
   '/myt/join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
-  '/myt/join/product/additions': { login: true, id: 'MS_05', title: '나의 부가상품' },
-  '/myt/join/product/combinations': { login: true, id: 'MS_05', title: '나의 결합상품' },
+  '/myt/join/product/additions': { login: true, id: 'MS_06', title: '나의 부가상품' },
+  '/myt/join/product/combinations': { login: true, id: 'MS_07', title: '나의 결합상품' },
   '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
   '/myt/join/product/fee-alarm/terminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt/join/info/discount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
@@ -86,5 +86,4 @@ export const URL = {
   '/customer/protect/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
   '/customer/protect/additions': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
   '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' }
-
 };
