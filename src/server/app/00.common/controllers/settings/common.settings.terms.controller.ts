@@ -9,7 +9,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 
 export default class CommonSettingsTerms extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
     if (req.query.id) {
       // TODO: joon map id with popup type when api is ready
 
@@ -35,11 +36,10 @@ export default class CommonSettingsTerms extends TwViewController {
           break;
       }
       res.render(`settings/common.settings.term-type-${type}.html`, {
-        svcInfo: svcInfo,
-        title: title
+        svcInfo, pageInfo, title
       });
       return;
     }
-    res.render('settings/common.settings.terms.html', { svcInfo: svcInfo });
+    res.render('settings/common.settings.terms.html', { svcInfo, pageInfo });
   }
 }

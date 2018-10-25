@@ -272,6 +272,13 @@ Tw.PopupService.prototype = {
       history.back();
     }
   },
+  closeAll: function () {
+    var hashLength = this._prevHashList.length;
+    if (hashLength > 0) {
+      this._prevHashList = [];
+      history.go(-hashLength);
+    }
+  },
   afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
     this.open({
         'hbs': 'complete',
@@ -280,26 +287,15 @@ Tw.PopupService.prototype = {
         'text': text,
         'sub_text': subText
       },
-      $.proxy(this._onComplete, this),
-      $.proxy(this._goLink, this, historyUrl, mainUrl),
-      'complete'
+      $.proxy(this._onComplete, this, historyUrl, mainUrl)
     );
   },
-  _onComplete: function ($layer) {
-    $layer.on('click', '.fe-payment-history', $.proxy(this._setIsLink, this, 'history'));
-    $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this, 'close'));
+  _onComplete: function (historyUrl, mainUrl, $layer) {
+    $layer.on('click', '.fe-payment-history', $.proxy(this._goLink, this, historyUrl));
+    $layer.on('click', '.fe-submain', $.proxy(this._goLink, this, mainUrl));
   },
-  _setIsLink: function (type) {
-    if (type === 'history') {
-      this._isHistory = true;
-    }
-    this.close();
-  },
-  _goLink: function (historyUrl, mainUrl) {
-    if (this._isHistory) {
-      location.href = historyUrl;
-    } else {
-      location.href = mainUrl;
-    }
+  _goLink: function (url) {
+    this.closeAll();
+    location.href = url;
   }
 };

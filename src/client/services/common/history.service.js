@@ -138,6 +138,14 @@ Tw.HistoryService.prototype = {
   isDone: function () {
     return Tw.UIService.getLocalStorage(this.storageName) === 'done';
   },
+  isBack: function () {
+    if (window.performance) {
+      if (performance.navigation.type === 2) {
+        return true;
+      }
+    }
+    return false;
+  },
   isReload: function () {
     if (window.performance) {
       if (performance.navigation.type === 1) {

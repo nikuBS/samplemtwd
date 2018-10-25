@@ -54,7 +54,9 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
+
     const page = req.params.page;
 
     switch (page) {
@@ -70,7 +72,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
         this.renderCouponUse(res, svcInfo, tab, couponNo, couponName, couponPeriod);
         break;
       default:
-        this.renderCouponList(res, svcInfo);
+        this.renderCouponList(res, svcInfo, pageInfo);
     }
   }
 
@@ -147,13 +149,14 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     }
   }
 
-  private renderCouponList(res: Response, svcInfo: any): void {
+  private renderCouponList(res: Response, svcInfo: any, pageInfo: any): void {
     this.getUsableCouponList().subscribe(
       (resp) => {
         if (resp.code === API_CODE.CODE_00) {
           resp.result = this.purifyCouponData(resp.result);
           res.render('recharge/myt-data.recharge.coupon.html', {
-            svcInfo: svcInfo,
+            svcInfo,
+            pageInfo,
             list: resp.result
           });
         } else {

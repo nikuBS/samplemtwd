@@ -58,4 +58,29 @@ const MYT_JOIN_ADDITONS = {
   }
 };
 
-export { MYT_JOIN_ADDITONS };
+const MYT_JOIN_WIRE_ADDITIONS = {
+  code: '00',
+  msg: 'success',
+  result: {
+    pays: [
+      { prodId: 'NI00000318', prodNm: '스마트온', basFeeAmt: 0, basFeeTxt: '상세참조', prodLinkYn: 'N', scrbDt: '20150223' },
+      { prodId: 'NI00000566', prodNm: '기가WiFi 라이트', basFeeAmt: 1650, basFeeTxt: '1650', prodLinkYn: 'N', scrbDt: '20150223' },
+      { prodId: 'NI00000566', prodNm: '기가WiFi 라이트', basFeeAmt: 0, basFeeTxt: '무료', prodLinkYn: 'N', scrbDt: '20150223' }
+    ],
+    frees: [],
+    reserveds: [],
+    joinables: [
+      {
+        prodId: 'NA00004707',
+        prodNm: 'T로밍 함께쓰기 10GB',
+        basFeeAmt: 0,
+        basFeeTxt: '무료',
+        scrbDt: '20130225',
+        prodLinkYn: 'Y',
+        payFreeYn: 'Y'
+      }
+    ]
+  }
+};
+
+export { MYT_JOIN_ADDITONS, MYT_JOIN_WIRE_ADDITIONS };

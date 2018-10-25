@@ -12,7 +12,8 @@ import FormatHelper from '../../../../utils/format.helper';
 
 export default class CommonSettingsNotifications extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.checkNotiAgreedInfo(res, svcInfo),
       this.checkTworldAgreedInfo(res, svcInfo)
@@ -23,7 +24,8 @@ export default class CommonSettingsNotifications extends TwViewController {
         }
 
         res.render('settings/common.settings.notifications.html', {
-          svcInfo: svcInfo,
+          svcInfo,
+          pageInfo,
           isServiceOn: respNoti.tnotiInfoRcvAgreeYn === 'Y' ? true : false,
           isRecommendOn: respNoti.tnotiMrktRcvAgreeYn === 'Y' ? true : false,
           isAdOn: respTworld.twdAdRcvAgreeYn === 'Y' ? true : false,

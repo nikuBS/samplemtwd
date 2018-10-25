@@ -23,6 +23,7 @@ Tw.MyTFarePaymentAccount.prototype = {
     this._initVariables();
     this._bindEvent();
     this._checkIsAuto();
+    this._checkIsBack();
     this._checkIsPopup();
   },
   _initVariables: function () {
@@ -52,6 +53,11 @@ Tw.MyTFarePaymentAccount.prototype = {
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
       this.$payBtn.removeAttr('disabled');
+    }
+  },
+  _checkIsBack: function () {
+    if (this._historyService.isBack()) {
+      this._historyService.goBack();
     }
   },
   _checkIsPopup: function () {
@@ -143,7 +149,7 @@ Tw.MyTFarePaymentAccount.prototype = {
       data.accountNum = this.$accountNumber.val();
     } else {
       data.bankCd = this.$container.find('.fe-auto-account-bank').attr('data-code');
-      data.bankNm = this.$container.find('.fe-auto-account-bank').text();
+      data.bankNm = this.$container.find('.fe-auto-account-bank').attr('data-name');
       data.accountNum = this.$container.find('.fe-auto-account-number').text();
     }
 
@@ -153,7 +159,7 @@ Tw.MyTFarePaymentAccount.prototype = {
       data.refundNum = this.$refundNumber.val();
     } else {
       data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
-      data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
+      data.refundNm = this.$container.find('.fe-auto-refund-bank').attr('data-name');
       data.refundNum = this.$container.find('.fe-auto-refund-number').text();
     }
     return data;
@@ -188,6 +194,7 @@ Tw.MyTFarePaymentAccount.prototype = {
       payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
       payovrCustNm: this.$container.find('.fe-name').val(),
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
+      bankOrCardName: this.$container.find('.fe-payment-option-name').text(),
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };

@@ -569,12 +569,12 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
     TITLE: '요청하신 기간 동안 <br />일시 정지 하시겠습니까 ?',
     CONTENTS: '이용 중단 기간 <br />[sDate] ~ [eDate]',
     BTNAME: '정지하기',
-    SUCCESS_TOAST: '일시 정지 되었습니다.'
+    COMPLETE_TEXT: '일시 정지'
   },
   CANCEL: {
     TITLE: '일지 정지 해제 하시겠습니까 ?',
     BTNAME: '해제하기',
-    SUCCESS_TOAST: '일시 정지 해제 되었습니다.'
+    COMPLETE_TEXT: '일시 정지 해제'
   }
 };
 
@@ -592,7 +592,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_PERIOD = {
     '2_A67': '스마트 다이렉트 사용고객의 경우 약정기간 변경이 불가합니다.',
     '2_A37': '요청한 상품은 세트 상품으로 정기계약 변경 신청이 안됩니다. 자세한 문의는 전화 1600-2000(유료) 또는 080-816-2000(무료)로 확인 바랍니다.'
   },
-  TOAST: '약정기간이 변경 신청이 완료 되었습니다.'
+  TOAST: '약정기간이 변경 신청이 완료 되었습니다.',
+  COMPLETE_TEXT: '약정기간 변경 신청'
 };
 
 Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
