@@ -1,6 +1,6 @@
 <%#
 * FileName: myt-fare.submain.non-payment.html
-* Author: 김인환 (skt.p132150@partner.sk.com)
+* Author: Kim InHwan (skt.p132150@partner.sk.com)
 * Date: 2018.10.01
 %>
 
@@ -80,6 +80,9 @@
         </div>
     </div>
     <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    </footer>
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
