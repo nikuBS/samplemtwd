@@ -143,18 +143,16 @@ Tw.MytJoinWireSetPause.prototype = {
 
   _reqWireSetPauseDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var toastMsg;
+      var msg;
       switch ( this._options.svcStCd ) {
         case this._SVC_ST_CD.AC:
-          toastMsg = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.SUCCESS_TOAST;
+          msg = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.COMPLETE_TEXT;
           break;
         case this._SVC_ST_CD.SP:
-          toastMsg = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.SUCCESS_TOAST;
+          msg = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.COMPLETE_TEXT;
           break;
       }
-      // TODO: 완료 팝업
-      // Tw.CommonHelper.toast(toastMsg);
-      // this._historyService.replaceURL(this._URL.MAIN);
+      Tw.Popup.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, Tw.BUTTON_LABEL.CONFIRM, msg);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
