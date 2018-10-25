@@ -11,12 +11,12 @@ import { Observable } from 'rxjs/Observable';
 
 export default class CommonSettingsLocation extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
     this.isLocationTermAgreed(res, svcInfo).subscribe(
       (isAgree) => {
         res.render('settings/common.settings.location.html', {
-          svcInfo: svcInfo ,
-          isAgree: isAgree
+          svcInfo, pageInfo, isAgree
         });
       },
       (err) => this.showError(res, svcInfo, err.code, err.msg)

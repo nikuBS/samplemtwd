@@ -9,7 +9,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 
 export default class CommonSettingsCertificates extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('settings/common.settings.certificates.html', { svcInfo: svcInfo });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
+    res.render('settings/common.settings.certificates.html', { svcInfo, pageInfo });
   }
 }

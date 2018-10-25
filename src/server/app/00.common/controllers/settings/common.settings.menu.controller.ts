@@ -11,9 +11,11 @@ import BrowserHelper from '../../../../utils/browser.helper';
 
 export default class CommonSettingsMenu extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
     res.render('settings/common.settings.menu.html', {
-      svcInfo: svcInfo,
+      svcInfo,
+      pageInfo,
       isApp: BrowserHelper.isApp(req),
       isLogin: this.isLogin(svcInfo)
     });

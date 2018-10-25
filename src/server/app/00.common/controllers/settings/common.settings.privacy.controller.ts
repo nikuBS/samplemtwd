@@ -9,7 +9,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 
 export default class CommonSettingsPrivacy extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('settings/common.settings.privacy.html', { svcInfo: svcInfo });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
+    res.render('settings/common.settings.privacy.html', { svcInfo, pageInfo });
   }
 }
