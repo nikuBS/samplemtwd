@@ -230,6 +230,7 @@ Tw.MyTFarePaymentCard.prototype = {
       payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
       payovrCustNm: this.$container.find('.fe-name').val(),
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
+      bankOrCardName: this.$container.find('.fe-payment-option-name').text(),
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       cdexpy: $.trim(this.$cardY.val()),
       cdexpm: $.trim(this.$cardM.val()),
