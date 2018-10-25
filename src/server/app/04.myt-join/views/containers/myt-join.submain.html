@@ -1,6 +1,6 @@
 <%#
 * FileName: myt-fare.submain.html
-* Author: 김인환 (skt.p132150@partner.sk.com)
+* Author: Kim InHwan (skt.p132150@partner.sk.com)
 * Date: 2018.10.05
 %>
 
@@ -140,7 +140,10 @@
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+    <footer id="fe-all-menu">
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+        <%- include('../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    </footer>
 </div>
 <% include ../components/javascript.component.html %>
 </body>

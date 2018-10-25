@@ -18,9 +18,10 @@ class MyTFarePaymentOver extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      pageInfo: pageInfo
     };
     Observable.combineLatest(
       this._getNonPayment(),

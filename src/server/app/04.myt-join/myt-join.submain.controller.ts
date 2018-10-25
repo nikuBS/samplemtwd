@@ -37,9 +37,10 @@ class MyTJoinSubmainController extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
