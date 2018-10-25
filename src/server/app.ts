@@ -73,6 +73,7 @@ class App {
     this.setNative();
     this.setGlobalVariables();
     this.setClientMap();
+    this.setErrorHandler();
   }
 
   private setApis() {
@@ -107,6 +108,11 @@ class App {
     });
   }
 
+  private setErrorHandler() {
+    this.app.use(this.handleNotFoundError);
+    this.app.use(this.handleInternalServerError);
+  }
+
   private setRoutes() {
     this.app.use('/myt', new AppRouter(OldMytRouter.instance.controllers).router);
     this.app.use('/recharge', new AppRouter(OldRechargeRouter.instance.controllers).router);
@@ -123,7 +129,6 @@ class App {
     this.app.use('/benefit', new AppRouter(BenefitRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/auth', new AppRouter(AuthRouter.instance.controllers).router);
-
   }
 
   private setViewPath() {
@@ -146,6 +151,24 @@ class App {
       path.join(__dirname, 'common/views/containers')
 
     ]);
+  }
+
+  private handleNotFoundError(req, res, next) {
+    console.log('[Error] 404 Error');
+
+    // 여기서 응답 주지 않고 넘겨주려면 next()
+    next();
+  }
+
+  private handleInternalServerError(err, req, res, next) {
+    console.log('[Error] 500 Error');
+    console.log(err);
+
+    // 여기서 응답시 already sent 오류 안남. ejs error 도 여기서 잡힘
+    // return res.redirect('/common/error');
+
+    // 여기서 응답 주지 않고 넘겨주려면 next(err)
+    next(err);
   }
 }
 
