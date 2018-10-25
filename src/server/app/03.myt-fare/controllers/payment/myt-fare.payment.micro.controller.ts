@@ -16,7 +16,7 @@ class MyTFarePaymentMicro extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getMicroRemain(),
       this.getHistory(),
@@ -28,6 +28,7 @@ class MyTFarePaymentMicro extends TwViewController {
           usedYn: this.getHistoryInfo(microHistory),
           passwordInfo: this.getPasswordInfo(passwordStatus),
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           currentMonth: this.getCurrentMonth()
         });
       } else {

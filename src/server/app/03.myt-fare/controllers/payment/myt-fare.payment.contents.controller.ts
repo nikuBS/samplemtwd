@@ -16,7 +16,7 @@ class MyTFarePaymentContents extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getContentsRemain()
     ).subscribe(([contentsRemain]) => {
@@ -24,6 +24,7 @@ class MyTFarePaymentContents extends TwViewController {
         res.render('payment/myt-fare.payment.contents.html', {
           result: this.parseData(contentsRemain.result),
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           currentMonth: this.getCurrentMonth()
         });
       } else {

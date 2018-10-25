@@ -17,13 +17,16 @@
                 <span><strong>{{text}}</strong> 완료</span>
             </h1>
             {{#if link_text}}
-            <div class="complete-btn-box pt56">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <button class="{{link_class}}">{{link_text}}</button>
-                    </li>
-                </ul>
-            </div>
+                <div class="complete-btn-box pt56">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button class="{{link_class}}">{{link_text}}</button>
+                        </li>
+                    </ul>
+                </div>
+            {{/if}}
+            {{#if sub_text}}
+                <p class="complete-tx0">{{sub_text}}</p>
             {{/if}}
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">

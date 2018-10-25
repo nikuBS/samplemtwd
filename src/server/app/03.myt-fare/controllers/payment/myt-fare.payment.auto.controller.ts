@@ -15,13 +15,14 @@ class MyTFarePaymentAuto extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getPaymentOption()
     ).subscribe(([paymentOption]) => {
       if (paymentOption.code === API_CODE.CODE_00) {
         res.render('payment/myt-fare.payment.auto.html', {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           paymentOption: this.parseData(paymentOption.result)
         });
       } else {

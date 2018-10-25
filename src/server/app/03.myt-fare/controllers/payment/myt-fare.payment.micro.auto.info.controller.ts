@@ -16,7 +16,7 @@ class MyTFarePaymentMicroAutoInfo extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getAutoCardInfo(),
       this.getAutoPrepayHistory()
@@ -25,7 +25,8 @@ class MyTFarePaymentMicroAutoInfo extends TwViewController {
         res.render('payment/myt-fare.payment.micro.auto.info.html', {
           autoCardInfo: this.parseCardInfo(autoCardInfo.result),
           autoPrepay: this.parsePrepayData(autoPrepay.result),
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         const errorResponse = autoCardInfo.code === API_CODE.CODE_00 ? autoPrepay : autoCardInfo;
