@@ -644,7 +644,11 @@ Tw.PROTECT_GUIDE = {
 
 Tw.CUSTOMER_PRAISE_COMPANY = '회사';
 Tw.CUSTOMER_PRAISE_OFFICE = '지점';
-
+Tw.CUSTOMER_VOICE = {
+  LINE_CHOICE: '회선선택',
+  EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
+  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해주세요.'
+};
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
