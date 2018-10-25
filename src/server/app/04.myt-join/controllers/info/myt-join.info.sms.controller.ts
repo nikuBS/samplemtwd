@@ -17,13 +17,13 @@ class MyTJoinInfoSms extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.mockReqSms()
-      // this.reqSms()
+      // this.mockReqSms()
+      this.reqSms()
     ).subscribe(([resp]) => {
       if ( resp.code === API_CODE.CODE_00) {
-        const data = this.getData(resp.result, svcInfo);
+        const data = this.getData(resp.result, svcInfo, pageInfo);
         res.render( 'info/myt-join.info.sms.html', data );
       } else {
         this.fail(res, resp, svcInfo);
@@ -31,17 +31,23 @@ class MyTJoinInfoSms extends TwViewController {
     });
   }
 
-  private getData(data: any, svcInfo: any): any {
+  private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.parseData(data);
 
     return {
       svcInfo,
+      pageInfo,
       data
     };
   }
 
   private parseData(data: any): void {
-    data.cntcNum = FormatHelper.conTelFormatWithDash(data.cntcNum);
+    if (  !FormatHelper.isEmpty(data.cntcNum) ) {
+      if ( data.cntcNum.length > 11 ) {
+        data.cntcNum = data.cntcNum.substring(data.cntcNum.length - 11);
+      }
+      data.cntcNum = FormatHelper.conTelFormatWithDash(data.cntcNum);
+    }
   }
 
   protected reqSms(): Observable<any> {

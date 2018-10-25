@@ -18,13 +18,13 @@ class MyTJoinInfoContract extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
       // this.mockReqContract()
       this.reqContract()
     ).subscribe(([resp]) => {
       if ( resp.code === API_CODE.CODE_00) {
-        const data = this.getData(resp.result, svcInfo);
+        const data = this.getData(resp.result, svcInfo, pageInfo);
         res.render( 'info/myt-join.info.contract.html', data );
       } else {
         this.fail(res, resp, svcInfo);
@@ -32,17 +32,22 @@ class MyTJoinInfoContract extends TwViewController {
     });
   }
 
-  private getData(data: any, svcInfo: any): any {
+  private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.parseData(data);
 
     return {
       svcInfo,
+      pageInfo,
       data
     };
   }
 
   private parseData(data: any): void {
     data.svsetPrefrDtm = DateHelper.getShortDateNoDot(data.svsetPrefrDtm);
+    // 가입유형은 "신규가입/번호이동가입" 으로 2개의 값을 주기 때문에 슬러시 뒤에 값으로 보여주도록 한다.
+    if ( data.svcChgNm.indexOf('/') > 0 ) {
+      data.svcChgNm = data.svcChgNm.split('/')[1];
+    }
   }
 
   protected reqContract(): Observable<any> {
