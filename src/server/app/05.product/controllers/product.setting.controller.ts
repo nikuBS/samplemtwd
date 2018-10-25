@@ -145,7 +145,7 @@ class ProductSetting extends TwViewController {
     return PROD_CTG_CD_CODE[ctgCd];
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._prodId = req.params.prodId || '';
     this._displayId = null;
     this._displayGroup = null;
@@ -232,6 +232,7 @@ class ProductSetting extends TwViewController {
 
               res.render('product.setting.html', {
                 svcInfo: svcInfo,
+                pageInfo: pageInfo,
                 prodNm: FormatHelper.isEmpty(prodRedisInfo) ? '' : prodRedisInfo.summary.prodNm,
                 prodId: this._prodId,
                 displayId: this._displayId,

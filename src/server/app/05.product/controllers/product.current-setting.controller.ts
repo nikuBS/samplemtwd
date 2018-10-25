@@ -57,7 +57,7 @@ class ProductCurrentSetting extends TwViewController {
     return settingInfo;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._prodId = req.params.prodId;
     this._displayId = this._getDisplayId();
 
@@ -89,6 +89,7 @@ class ProductCurrentSetting extends TwViewController {
 
             res.render('product.current-setting.html', {
               svcInfo: svcInfo,
+              pageInfo: pageInfo,
               displayId: this._displayId,
               currentSettingInfo: this._parseSettingInfo(settingInfo)
             });

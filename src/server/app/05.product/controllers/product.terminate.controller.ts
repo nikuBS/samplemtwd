@@ -117,7 +117,7 @@ class ProductTerminate extends TwViewController {
     return autoListConvertResult;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._prodId = req.params.prodId;
 
     if (FormatHelper.isEmpty(this._prodId)) {
@@ -145,6 +145,7 @@ class ProductTerminate extends TwViewController {
       res.render('product.terminate.html', {
         prodId: this._prodId,
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result),
         terminateApiCode: FormatHelper.isEmpty(terminateRedisInfo) ? '' : terminateRedisInfo.bffApiCode,
         displayId: this._getDisplayId(),
