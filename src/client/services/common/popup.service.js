@@ -272,12 +272,13 @@ Tw.PopupService.prototype = {
       history.back();
     }
   },
-  afterRequestSuccess: function (historyUrl, mainUrl, linkText, text) {
+  afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
     this.open({
         'hbs': 'complete',
         'link_class': 'fe-payment-history',
         'link_text': linkText,
-        'text': text
+        'text': text,
+        'sub_text': subText
       },
       $.proxy(this._onComplete, this),
       $.proxy(this._goLink, this, historyUrl, mainUrl),
