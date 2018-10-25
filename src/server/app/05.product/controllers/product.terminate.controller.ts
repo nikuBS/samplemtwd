@@ -26,7 +26,7 @@ class ProductTerminate extends TwViewController {
   private _convertAdditionsJoinTermInfo(joinTermInfo): any {
     return Object.assign(joinTermInfo, {
       preinfo: this._convertAdditionsPreInfo(joinTermInfo.preinfo),
-      stipulationInfo: FormatHelper.isEmpty(joinTermInfo.stipulationInfo) ? '' : this._convertStipulationInfo(joinTermInfo.stipulationInfo)
+      stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
     });
   }
 
@@ -52,8 +52,8 @@ class ProductTerminate extends TwViewController {
    * @private
    */
   private _convertStipulationInfo(stipulationInfo): any {
-    if (!stipulationInfo.existData) {
-      return {};
+    if (FormatHelper.isEmpty(stipulationInfo) || FormatHelper.isEmpty(stipulationInfo.stipulation)) {
+      return null;
     }
 
     return Object.assign(stipulationInfo, {

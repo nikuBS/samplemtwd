@@ -138,10 +138,6 @@ Tw.ProductTerminate.prototype = {
   },
 
   _openTerminateResultPop: function() {
-    if ( this._isGoalKeeperProduct ) {
-      return this._historyService.goLoad('/product/detail/NA00004343');
-    }
-
     if ( !this._isResultPop ) {
       return;
     }
