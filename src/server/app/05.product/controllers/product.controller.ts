@@ -17,7 +17,7 @@ export default class Product extends TwViewController {
     super();
   }
 
-  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _layerType: string) {
+  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (svcInfo) {
       Observable.combineLatest(
         this.getPromotionBanners(),
@@ -37,7 +37,7 @@ export default class Product extends TwViewController {
 
         const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
 
-        res.render('product.html', { svcInfo, productData });
+        res.render('product.html', { svcInfo, productData, pageInfo });
       });
     } else {
       Observable.combineLatest(this.getPromotionBanners(), this.getProductGroups(), this.getRecommendedPlans(), this.getRecommendedTags()).subscribe(
@@ -53,7 +53,7 @@ export default class Product extends TwViewController {
 
           const productData = { banners, groups, recommendedPlans, recommendedTags };
 
-          res.render('product.html', { svcInfo, productData });
+          res.render('product.html', { svcInfo, productData, pageInfo });
         }
       );
     }

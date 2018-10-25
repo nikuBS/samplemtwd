@@ -55,7 +55,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
   private fromDt: string = DateHelper.getPastYearShortDate();
   private toDt: string = DateHelper.getShortDate(new Date());
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getDataGifts(),
       this.getLimitCharges(),
@@ -98,7 +98,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
         chargeData.filterIdx = filterIdx + 1;
       }
 
-      res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData });
+      res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData, pageInfo });
     });
   }
 

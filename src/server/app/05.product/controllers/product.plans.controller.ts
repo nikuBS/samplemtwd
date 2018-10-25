@@ -14,7 +14,7 @@ import FormatHelper from '../../../utils/format.helper';
 export default class ProductPlans extends TwViewController {
   private PLAN_CODE = 'F01100';
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
       idxCtgCd: this.PLAN_CODE,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
@@ -30,7 +30,7 @@ export default class ProductPlans extends TwViewController {
         });
       }
 
-      res.render('product.plans.html', { svcInfo, plans, params });
+      res.render('product.plans.html', { svcInfo, plans, params, pageInfo });
     });
   }
 

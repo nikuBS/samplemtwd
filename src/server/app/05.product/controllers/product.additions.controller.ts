@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 export default class ProductAdditions extends TwViewController {
   private ADDITION_CODE = 'F01200';
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
       idxCtgCd: this.ADDITION_CODE,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
@@ -32,11 +32,11 @@ export default class ProductAdditions extends TwViewController {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        res.render('product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params });
+        res.render('product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
       });
     } else {
       this.getAddtions(params).subscribe(additions => {
-        res.render('product.additions.html', { svcInfo, additionData: { additions }, params });
+        res.render('product.additions.html', { svcInfo, additionData: { additions }, params, pageInfo });
       });
     }
   }
