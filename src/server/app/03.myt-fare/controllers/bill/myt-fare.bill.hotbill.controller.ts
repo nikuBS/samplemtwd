@@ -21,7 +21,7 @@ class MyTFareBillHotbill extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any ) {
     // 2일부터 조회 가능
     if ( new Date().getDate() === 1 ) {
       res.render('bill/myt-fare.bill.hotbill.html', {
