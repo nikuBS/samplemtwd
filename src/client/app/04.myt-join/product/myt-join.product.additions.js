@@ -4,7 +4,6 @@
  * Date: 2018.10.11
  */
 
-
 Tw.MyTJoinProductAdditions = function(rootEl) {
   this.$container = rootEl;
 
@@ -34,8 +33,8 @@ Tw.MyTJoinProductAdditions.prototype = {
       return;
     }
 
-    if (!this.$container.hasClass('none')) {
-      this.$container.find('.contents-empty').addClass('none');
+    if (this._totalCount > 0) {
+      this.$container.find('.fe-empty').addClass('none');
     }
 
     $target.siblings().removeClass('on');
@@ -62,4 +61,4 @@ Tw.MyTJoinProductAdditions.prototype = {
 
     this.$container.find('span.counts > em').text(this._totalCount - additions.length);
   }
-}
+};
