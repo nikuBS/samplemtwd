@@ -10,7 +10,7 @@ Tw.ApiService.prototype = {
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions)
-      .then($.proxy(this._checkAuth, this, command, params));
+      .then($.proxy(this._checkAuth, this, command, params, headers, pathVariables));
   },
 
   requestArray: function (requests) {
@@ -44,7 +44,7 @@ Tw.ApiService.prototype = {
     });
   },
 
-  _checkAuth: function (command, params, resp) {
+  _checkAuth: function (command, params, headers, pathVariables, resp) {
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
 
@@ -61,7 +61,9 @@ Tw.ApiService.prototype = {
       setTimeout($.proxy(function () {
         var requestInfo = {
           command: command,
-          params: params
+          params: params,
+          headers: headers,
+          pathVariables: pathVariables
         };
         // url, svcInfo, urlMeta, callbackFunction, deferred...
         this._cert.open(resp.result, requestInfo, deferred, $.proxy(this._completeCert, this));
@@ -86,7 +88,13 @@ Tw.ApiService.prototype = {
   },
   _successSetCert: function (requestInfo, deferred, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.request(requestInfo.command, requestInfo.params)
+      var arrParams = [];
+      arrParams.push(requestInfo.command);
+      arrParams.push(requestInfo.params);
+      arrParams.push(requestInfo.headers);
+      arrParams = arrParams.concat(requestInfo.pathVariables);
+
+      this.request.apply(this, arrParams)
         .done($.proxy(this._successRequestAfterCert, this, deferred));
     }
   },

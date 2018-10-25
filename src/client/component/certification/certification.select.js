@@ -88,7 +88,22 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _openProductCert: function () {
-    console.log('product cert');
+    this._apiService.request(Tw.API_CMD.BFF_10_9001, {}, {}, this._command.params.prodId, this._command.params.prodProcTypeCd)
+      .done($.proxy(this._successGetPublicCert, this));
+  },
+
+  _successGetPublicCert: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( Tw.FormatHelper.isEmpty(resp.result.prodAuthMethods) ) {
+        this._callback({
+          code: Tw.API_CODE.CODE_00
+        }, this._deferred, this._command);
+      } else {
+        console.log('process cert');
+      }
+    } else {
+      this._callback(resp, this._deferred, this._command);
+    }
   },
 
   _openSelectPopup: function (loginType, methods, methodCnt) {
