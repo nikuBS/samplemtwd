@@ -203,7 +203,7 @@ class ProductDetail extends TwViewController {
     });
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._prodId = req.params.prodId;
 
     if (FormatHelper.isEmpty(this._prodId)) {
@@ -260,6 +260,7 @@ class ProductDetail extends TwViewController {
           }
 
           res.render('product.detail.html', {
+            pageInfo: pageInfo,
             prodId: this._prodId,
             basicInfo: this._convertBasicInfo(basicInfo.result),
             prodRedisInfo: this._convertRedisInfo(prodRedisInfo),

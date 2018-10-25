@@ -228,7 +228,7 @@ class ProductJoin extends TwViewController {
   }
 
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._prodId = req.params.prodId;
     this._displayId = null;
 
@@ -276,6 +276,7 @@ class ProductJoin extends TwViewController {
             res.render('product.join.html', {
               joinTermInfo: this._convertPlansJoinTermInfo(joinTermInfo.result),
               svcInfo: svcInfo,
+              pageInfo: pageInfo,
               prodId: this._prodId,
               prodNm: joinTermInfo.result.preinfo.toProdInfo.prodNm,
               displayId: this._displayId,
@@ -304,6 +305,7 @@ class ProductJoin extends TwViewController {
               res.render('product.join.html', {
                 joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result),
                 svcInfo: svcInfo,
+                pageInfo: pageInfo,
                 prodId: this._prodId,
                 prodNm: joinTermInfo.result.preinfo.reqProdInfo.prodNm,
                 displayId: this._displayId,
