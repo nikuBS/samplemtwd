@@ -17,7 +17,7 @@ import {PAYMENT_OPTION_TEXT} from '../../../../types/bff.old.type';
 
 class MyTFarePaymentRainbow extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getRainbowPoint(),
       this.getAutoRainbow()
@@ -26,7 +26,8 @@ class MyTFarePaymentRainbow extends TwViewController {
         res.render('payment/myt-fare.payment.rainbow.html', {
           rainbow: this.parseData(rainbow.result),
           autoInfo: this.getAutoData(auto),
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

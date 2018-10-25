@@ -14,7 +14,7 @@ import {Observable} from 'rxjs/Observable';
 
 class MyTFarePaymentSms extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getUnpaidList(),
       this.getAccountList()
@@ -24,7 +24,8 @@ class MyTFarePaymentSms extends TwViewController {
           unpaidList: this.parseData(unpaidList.result, svcInfo),
           virtualBankList: accountList,
           title: MYT_FARE_PAYMENT_TITLE.SMS,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

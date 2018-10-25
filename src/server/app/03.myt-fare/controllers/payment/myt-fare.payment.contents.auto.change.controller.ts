@@ -14,12 +14,13 @@ class MyTFarePaymentContentsAutoChange extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.getAutoPrepayInfo().subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('payment/myt-fare.payment.contents.auto.change.html', {
           autoPrepayInfo: this.parseData(resp.result),
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

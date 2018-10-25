@@ -17,7 +17,7 @@ import {PAYMENT_OPTION_TEXT} from '../../../../types/bff.old.type';
 
 class MyTFarePaymentCashbag extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getCashbagPoint(),
       this.getAutoCashbag()
@@ -27,7 +27,8 @@ class MyTFarePaymentCashbag extends TwViewController {
           cashbag: this.parseData(cashbag.result),
           autoInfo: this.getAutoData(auto),
           title: MYT_FARE_PAYMENT_TITLE.OKCASHBAG,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

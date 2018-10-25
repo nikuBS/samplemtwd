@@ -18,7 +18,7 @@ class MyTFarePaymentCard extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getUnpaidList(),
       this.getAutoInfo()
@@ -28,7 +28,8 @@ class MyTFarePaymentCard extends TwViewController {
           unpaidList: this.parseData(unpaidList.result, svcInfo),
           autoInfo: this.parseInfo(autoInfo),
           title: MYT_FARE_PAYMENT_TITLE.CARD,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {
