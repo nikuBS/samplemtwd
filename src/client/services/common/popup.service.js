@@ -275,6 +275,7 @@ Tw.PopupService.prototype = {
   closeAll: function () {
     var hashLength = this._prevHashList.length;
     if (hashLength > 0) {
+      this._prevHashList = [];
       history.go(-hashLength);
     }
   },
