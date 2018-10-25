@@ -12,7 +12,7 @@ import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
 
 class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     this.svcInfo = svcInfo;
     Observable.combineLatest(
@@ -22,7 +22,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
       if ( resBillType.code === API_CODE.CODE_00) {
         let data = resBillType.result;
         data.query = req.query;
-        data = this.getData(data, svcInfo);
+        data = this.getData(data, svcInfo, pageInfo);
 
         res.render( 'bill/myt-fare.bill.set.change.html', data );
       } else {
@@ -31,7 +31,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     });
   }
 
-  private getData(data: any, svcInfo: any): any {
+  private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
     this.makeTogetherBill(data);
     this.parseData(data);
@@ -47,6 +47,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
     return {
       svcInfo,
+      pageInfo,
       data
     };
   }

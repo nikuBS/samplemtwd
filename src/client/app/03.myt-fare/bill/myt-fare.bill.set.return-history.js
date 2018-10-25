@@ -27,6 +27,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
 
   // 요금 안내서 반송내역 조회
   _reqReturnHistory : function () {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     Tw.Api
       .request(Tw.API_CMD.BFF_05_0039_N, {})
       .done($.proxy(this._successReturnHistory, this))
@@ -84,6 +85,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
       },
       isOnMoreView : true
     });
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
   // 반송내역 리스트 생성
@@ -96,6 +98,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
 
   // API Fail
   _onFail: function (err) {
+    skt_landing.action.loading.off({ ta: '.container' });
     Tw.Error(err.code,err.msg).pop();
   }
 };

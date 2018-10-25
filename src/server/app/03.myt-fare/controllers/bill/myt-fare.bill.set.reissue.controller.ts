@@ -36,21 +36,22 @@ class MyTFareBillSetReissue extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     if ( svcInfo.svcAttrCd.indexOf('S') !== -1 ) {
       this.isLocal = true;
     }
     this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
       // 화면 데이터 설정
-      const data = this.convertData(reissueData, svcInfo);
+      const data = this.convertData(reissueData, svcInfo, pageInfo);
       res.render('bill/myt-fare.bill.set.reissue.html', { data });
     });
   }
 
-  private convertData(response, svcInfo): any {
+  private convertData(response, svcInfo, pageInfo: any): any {
     const data: any = {
       type: '01', // 01:무선, 02:유선, 03:etc
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      pageInfo
     };
     // 서버에서 받은 데이터 설정
     if ( response.result ) {
