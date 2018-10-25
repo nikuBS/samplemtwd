@@ -34,6 +34,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
   _bindEvent: function () {
     $('input:password')
       .on('keyup', $.proxy(this._onKeyUp, this))
+      .on('keydown', $.proxy(this._onKeyDown, this))
       .on('input', $.proxy(this._onPwdInput, this));
     $('.cancel').on('click', $.proxy(this._delBtnClicked, this));
 
@@ -104,11 +105,36 @@ Tw.MyTJoinProtectPwdChange.prototype = {
   },
 
   /**
+   * android 4.1.2 input:password 버그로 인해 태그에 maxlength를 지정하지 않고 이 함수에서 체크함
+   * @param event
+   * @returns {*}
+   * @private
+   */
+  _onKeyDown: function (event){
+    if(event.target.value && event.target.value.length > 6){
+      if ( event.preventDefault ) {
+        event.preventDefault();
+      } else {
+        event.returnValue = false;
+      }
+      return false;
+    }
+    return Tw.InputHelper.inputNumKeyDown(event);
+  },
+
+  _checkPwdLeng: function(target){
+    if($(target).val() && $(target).val() > 6){
+      $(target).val($(target).val().substr(0,6));
+    }
+  },
+
+  /**
    * input password 키 입력시
    * @param event
    * @private
    */
   _onKeyUp: function (event) {
+    if(!event) return;
 
     // 숫자 외 다른 문자를 입력한 경우
     var value = event.target.value;
@@ -117,6 +143,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
       //event.preventDefault();
       Tw.InputHelper.inputNumberOnly(event.target);
     }
+    this._checkPwdLeng(event.target);
   },
 
   /**
@@ -126,6 +153,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
    * @private
    */
   _onPwdInput: function (event){
+    this._onKeyUp(event);
 
     if( location.hash === '' || location.hash === this._HASH_STEP_CHECK ){
 
