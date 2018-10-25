@@ -33,6 +33,9 @@ Tw.MyTJoinSuspend.prototype = {
 
   _setInitialTab: function () {
     var type = window.location.hash || '#' + this.TYPE.TEMPORARY;
+    if ( Object.values(this.TYPE).indexOf(type) < 0 ) {
+      type = '#' + this.TYPE.TEMPORARY;
+    }
     this.$tabLinker.filter('[href="' + type + '"]').click();
   },
 
@@ -43,7 +46,6 @@ Tw.MyTJoinSuspend.prototype = {
   },
 
   _setActiveTab: function (type) {
-    console.log('setActiveTab');
     type = type.replace('#', '').toLowerCase();
     switch ( type ) {
       case this.TYPE.TEMPORARY:
