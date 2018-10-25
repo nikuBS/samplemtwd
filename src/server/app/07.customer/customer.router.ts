@@ -13,11 +13,12 @@ import CustomerProtectAdditions from './controllers/protect/customer.protect.add
 import CustomerProtectRelated from './controllers/protect/customer.protect.related.controller';
 import CustomerProtectWarning from './controllers/protect/customer.protect.warning.controller';
 import CustomerProtectWarningView from './controllers/protect/customer.protect.warning-view.controller';
+import CustomerMain from './controllers/main/customer.main.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
-    // this.controllers.push({ url: '/', controller: HomeMain() });
+    this.controllers.push({ url: '/', controller: CustomerMain} );
     this.controllers.push({ url: '/document', controller: CustomerDocument} );
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     this.controllers.push({ url: '/praise', controller: CustomerPraise} );

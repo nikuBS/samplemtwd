@@ -23,7 +23,7 @@ import CustomerEventDetailWin from './controllers/event/customer.event.detail.wi
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/', controller: CustomerMain} );
+    // this.controllers.push({ url: '/', controller: CustomerMain} );
     this.controllers.push({ url: '/email(/:status)?(/:category)?', controller: CustomerEmail} );
     // this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     this.controllers.push({ url: '/shop/detail', controller: CustomerShopDetail} );
