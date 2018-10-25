@@ -251,10 +251,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
 
   _reqAgreementsSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // 나의 가입정보 메인[MS]이동 후 토스트
-      // Tw.CommonHelper.toast(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.TOAST);
-      // this._historyService.replaceURL(this._URL.MAIN);
-      // TODO: 완료 팝업
+      Tw.Popup.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, Tw.BUTTON_LABEL.CONFIRM, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.COMPLETE_TEXT);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
