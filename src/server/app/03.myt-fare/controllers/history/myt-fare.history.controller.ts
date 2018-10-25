@@ -46,7 +46,7 @@ class MyTFareMicroHistory extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     this.histData = {};
     this.selectedYear = null;
@@ -60,21 +60,21 @@ class MyTFareMicroHistory extends TwViewController {
 
     switch (query.current) {
       case 'monthly':
-        this.renderMonthly(req, res, next, svcInfo,
+        this.renderMonthly(req, res, next, svcInfo, pageInfo,
             req.path.split('/').splice(-1)[0] ?
                 req.path.split('/').splice(-2)[0] : req.path.split('/').splice(-3)[0]);
         break;
       case 'micro':
-        this.renderMicroHistory(req, res, next, svcInfo);
+        this.renderMicroHistory(req, res, next, svcInfo, pageInfo);
         break;
       case 'contents':
-        this.renderContentsHistory(req, res, next, svcInfo);
+        this.renderContentsHistory(req, res, next, svcInfo, pageInfo);
         break;
       case 'block':
-        this.renderMicroBlockHistory(req, res, next, svcInfo);
+        this.renderMicroBlockHistory(req, res, next, svcInfo, pageInfo);
         break;
       case 'detail':
-        this.renderMicroContentsHistoryDetail(req, res, next, svcInfo);
+        this.renderMicroContentsHistoryDetail(req, res, next, svcInfo, pageInfo);
         break;
       default:
         break;
@@ -82,15 +82,15 @@ class MyTFareMicroHistory extends TwViewController {
     // res.render('history/myt-fare.micro.history.html', {svcInfo: svcInfo});
   }
 
-  renderMicroContentsHistoryDetail(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  renderMicroContentsHistoryDetail(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     const isContents: boolean = req.path.split('/').splice(-2)[0] === 'contents';
 
     res.render('history/myt-fare.history.micro-contents.detail.html',
-        {svcInfo: svcInfo, isContents: isContents});
+        {svcInfo: svcInfo, isContents: isContents, pageInfo: pageInfo});
   }
 
-  renderMicroHistory(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  renderMicroHistory(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const startYYYYMMDD = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD').slice(0, 6) + '01';
     const endYYYYMMDD = DateHelper.getEndOfMonth(
         DateHelper.getShortDateWithFormatAddByUnit(startYYYYMMDD, this.termSelectValue * -1, 'months', 'YYYYMMDD'), 'YYYYMMDD');
@@ -116,11 +116,11 @@ class MyTFareMicroHistory extends TwViewController {
       }
     };
 
-    this.getHistoryDataAndRender(API_CMD.BFF_05_0079, 'history/myt-fare.micro.history.html', params, res, svcInfo,
+    this.getHistoryDataAndRender(API_CMD.BFF_05_0079, 'history/myt-fare.micro.history.html', params, res, svcInfo, pageInfo,
         reformCallback);
   }
 
-  renderContentsHistory(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  renderContentsHistory(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const startYYYYMMDD = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD').slice(0, 6) + '01';
     const endYYYYMMDD = DateHelper.getEndOfMonth(
         DateHelper.getShortDateWithFormatAddByUnit(startYYYYMMDD, this.termSelectValue * -1, 'months', 'YYYYMMDD'), 'YYYYMMDD');
@@ -144,11 +144,11 @@ class MyTFareMicroHistory extends TwViewController {
       }
     };
 
-    this.getHistoryDataAndRender(API_CMD.BFF_05_0064, 'history/myt-fare.contents.history.html', params, res, svcInfo,
+    this.getHistoryDataAndRender(API_CMD.BFF_05_0064, 'history/myt-fare.contents.history.html', params, res, svcInfo, pageInfo,
         reformCallback);
   }
 
-  renderMicroBlockHistory(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  renderMicroBlockHistory(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resData) => {
       const currentDate = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
@@ -164,11 +164,11 @@ class MyTFareMicroHistory extends TwViewController {
         resData.result.cpHistories = [];
       }
 
-      res.render('history/myt-fare.micro.block.history.html', {svcInfo: svcInfo, data: resData.result.cpHistories});
+      res.render('history/myt-fare.micro.block.history.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: resData.result.cpHistories});
     });
   }
 
-  renderMonthly(req: Request, res: Response, next: NextFunction, svcInfo: any, parentPath: string) {
+  renderMonthly(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any, parentPath: string) {
     const apiOption = {
       gubun: 'Request',
       requestCnt: 0
@@ -183,6 +183,7 @@ class MyTFareMicroHistory extends TwViewController {
         res.render('history/myt-fare.history.monthly.html',
             {
               svcInfo: svcInfo, isMicro: parentPath === 'micro', currentMonth: DateHelper.getCurrentMonth(),
+              pageInfo: pageInfo,
               data: this.setMonthlyData(resData.result)
             });
       });
@@ -211,7 +212,7 @@ class MyTFareMicroHistory extends TwViewController {
   }
 
   private getHistoryDataAndRender(API_Name: any, viewFileName: string, paramObj: any,
-                                  res: Response, svcInfo: any, reformCallback: any, mockData?: any) {
+                                  res: Response, svcInfo: any, pageInfo: any, reformCallback: any, mockData?: any) {
 
     this.apiService.request(API_Name, paramObj).subscribe((resData) => {
 
@@ -222,16 +223,19 @@ class MyTFareMicroHistory extends TwViewController {
           code: resData.code,
           msg: resData.msg,
           svcInfo: svcInfo
+        //  ,pageInfo: pageInfo
         });
       } else {
         const currentMonthKor = DateHelper.getShortDateWithFormat(new Date(), 'M' + MYT_STRING_KOR_TERM.month);
+
+        this.logger.info(this, resData)
 
         const data = mockData ? mockData.result : resData.result;
 
         reformCallback(data);
 
         res.render(viewFileName, {
-          svcInfo: svcInfo, currentMonth: currentMonthKor,
+          svcInfo: svcInfo, pageInfo: pageInfo, currentMonth: currentMonthKor,
           data: {termSelectValue: this.termSelectValue}, historyData: JSON.stringify(this.histData)
         });
       }
