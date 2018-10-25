@@ -60,7 +60,7 @@ const environment = {
     BFF_SERVER: 'http://bff-spring',
     CDN: '',
     REDIS: {
-      host: 'prd-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
+      host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
       port: 6379,
       db: 0
     },
