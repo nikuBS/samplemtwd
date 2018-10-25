@@ -13,9 +13,10 @@ class ProductSelContractInput extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
+      pageInfo: pageInfo
     };
     if ( req.query.type ) {
       data.type = req.query.type;
