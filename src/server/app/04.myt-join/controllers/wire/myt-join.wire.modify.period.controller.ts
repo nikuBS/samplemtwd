@@ -20,7 +20,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
       return this.error.render(res, {
         title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
@@ -40,7 +40,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
           title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
           code: apiError.code,
           msg: apiError.msg,
-          svcInfo: svcInfo
+          svcInfo
         });
       }
 
@@ -49,6 +49,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
 
       const options = {
         svcInfo: svcInfo || {},
+        pageInfo: pageInfo || {},
         wireAgreementsInfo: wireAgreementsInfo || {}
       };
 
