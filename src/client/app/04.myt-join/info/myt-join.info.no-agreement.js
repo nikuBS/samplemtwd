@@ -55,6 +55,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   // 무약정 플랜 포인트 내역 조회
   _reqNoAgreement : function () {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService
       .request(Tw.API_CMD.BFF_05_0060, this._makeParam())
       .done($.proxy(this._onSuccess, this))
@@ -121,6 +122,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this._setData(resp.result);
     this._data = resp.result;
     this._search();
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
   _search : function () {
@@ -201,6 +203,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   // API Fail
   _onFail: function (err) {
+    skt_landing.action.loading.off({ ta: '.container' });
     Tw.Error(err.code,err.msg).pop();
   }
 };
