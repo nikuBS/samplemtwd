@@ -22,6 +22,7 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
     visitCntcNum: ''
   };
 
+
   this.dataModel = {
     infoConfirmBol: false,      // 안내사항 확인
     productList: [],            // 해지신청상품 리스트
@@ -46,25 +47,152 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._memberPhoneSet();
-
+    Tw.Logger.info('[dataModel]', this.dataModel);
   },
   _cachedElement: function () {
 
     this.infoLi= $('[data-target="infoLi"]'); // 안내사항 확인
     this.productLi= $('[data-target="productLi"]'); // 해지신청상품
+    this.hpAndTelType= $('[data-target="hpAndTelType"]');
+    this.select_Termination_input= $('[data-target="select_Termination_input"]');
+    this.input_hp= $('[data-target="input_hp"]');
+    this.phoneLi= $('[data-target="phoneLi"]'); // 회원정보 등록된 연락
+    this.$submitApply= $('[data-target="submitApply"]'); // 신청하기 버튼
 
   },
   _bindEvent: function () {
-    this.infoLi.on('click', 'input[type=checkbox]', $.proxy(this.$infoLi, this));
+    this.infoLi.on('click', 'input[type=checkbox]', $.proxy(this.$infoLiEvt, this));
     this.productLi.on('click', 'input[type=checkbox]', $.proxy(this.$productLiEvt, this));
+
+    this.hpAndTelType.on('click', 'input:radio[name=radio1]', $.proxy(this.hpAndTelTypeEvt, this));
+
+    this.$container.on('change', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
+    this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
+    this.phoneLi.on('click', 'input[type=checkbox]', $.proxy(this.phoneLiEvt, this));
+
+    this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
+
 
   },
   //--------------------------------------------------------------------------[EVENT]
-  $infoLi: function(event) {
+  $submitApplyEvt: function(event) {
+    Tw.Logger.info('[신청하기]', event);
+    // var param = this.addressFormData;
+    // this._chgWireAddrInfo(param);
+
+  },
+
+  $infoLiEvt: function(event) {
     this._infoConfirm(event);
+
+    this._formValidateionChk();
+    Tw.Logger.info('[dataModel]', this.dataModel);
   },
   $productLiEvt: function(event) {
     this.dataModel.productList =  this._productChkConfirm(event); // 선택한 항목을 배열에 저장
+
+    this._formValidateionChk();
+    Tw.Logger.info('[dataModel]', this.dataModel);
+  },
+
+  // 해지 요청일
+  select_Termination_inputEvt: function () {
+    Tw.Logger.info('[해지 요청일]');
+    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var startDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var tempDt = this.select_Termination_input.val();
+    Tw.Logger.info('[해지 요청일]', tempDt, startDt, endDt);
+
+    //유효성 체크
+    if ( this._dateChkBetween(tempDt, startDt, endDt) ) {
+      Tw.Logger.info('[범위에 포함]');
+
+      this.select_Termination_input.val( tempDt );
+      this.dataModel.TerminationDtStr = tempDt;
+
+    } else {
+      Tw.Logger.info('[범위에 포함 안됨!!]', this.select_Termination_input);
+      this.select_Termination_input.val('');
+    }
+
+    this._formValidateionChk();
+    Tw.Logger.info('[dataModel]', this.dataModel);
+  },
+
+  // 연락처 입력
+  input_hpEvt: function(event) {
+    var tempNum = this._onFormatHpNum(event);
+    this.dataModel.phoenNmStr = tempNum;
+
+    this._formValidateionChk();
+    Tw.Logger.info('[dataModel]', this.dataModel);
+  },
+
+  phoneLiEvt: function(event) {
+    if ( this.dataModel.memberPhoneBol ) {
+      this.dataModel.memberPhoneBol = false;
+      return;
+    } else {
+      this.dataModel.memberPhoneBol = true;
+    }
+
+    Tw.Logger.info('[회원정보 등록된 연락처]', event);
+
+
+    if ( this.dataModel.hpAndTelTypeStr === 'hp' ) {
+      Tw.Logger.info('[휴대폰 타입]');
+
+      if ( Tw.FormatHelper.isEmpty( this.memberPhoneObj.hp ) ) { // 값이 없을 경우
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
+          $.proxy(function(){
+            // this._goLoad('/myt/join/wire/history');
+          }, this));
+      } else { // 값이 있을 경우
+        this.dataModel.phoenNmStr = this.memberPhoneObj.hp;
+        this.input_hp.val( this._phoneStrToDash( this.memberPhoneObj.hp ) );
+      }
+
+    } else if ( this.dataModel.hpAndTelTypeStr === 'tel' ) {
+      Tw.Logger.info('[일반전화 타입]');
+      if ( Tw.FormatHelper.isEmpty( this.memberPhoneObj.tel ) ) { // 값이 없을 경우
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
+          $.proxy(function(){
+            // this._goLoad('/myt/join/wire/history');
+          }, this));
+      } else { // 값이 있을 경우
+        this.dataModel.phoenNmStr = this.memberPhoneObj.tel;
+        this.input_hp.val( this._phoneStrToDash( this.memberPhoneObj.tel) );
+      }
+
+    }
+    // Tw.Logger.info('[memberPhoneObj]', this.memberPhoneObj);
+    // Tw.Logger.info('[dataModel]', this.dataModel);
+
+    this._formValidateionChk();
+    Tw.Logger.info('[dataModel]', this.dataModel);
+
+  },
+
+  /*
+  * 연락 가능한 연락 타입 체크
+  * 타입체크 값이 변경 될때 마다 초기화 될 항목이 있다.
+  * 1. 전화번호 입력 input 초기화 : this.dataModel.phoenNmStr
+  * 2. 회원정보 등록된 연락처 체크 초기화 : this.dataModel.memberPhoneBol
+   */
+  hpAndTelTypeEvt: function() {
+    var tempVal = this.hpAndTelType.find('input:radio[name=radio1]:checked').val();
+    this.dataModel.hpAndTelTypeStr = tempVal;
+
+    this.dataModel.phoenNmStr = '';
+    this.input_hp.val('');
+
+    this.phoneLi.removeClass('checked');
+    this.phoneLi.find('input[type=checkbox]').attr('checked', false);
+    this.dataModel.memberPhoneBol = false;
+
+
+    Tw.Logger.info('[연락 가능한 연락처 타입]', this.dataModel);
   },
 
   //--------------------------------------------------------------------------[SVC]
@@ -112,6 +240,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     }
 
     Tw.Logger.info('[wireList]', wireList);
+
+    return wireList;
   },
 
   /*
@@ -141,6 +271,76 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       }, this));
     }
     Tw.Logger.info('[회원정보 등록된 연락처 셋팅 완료]', this.memberPhoneObj);
+  },
+  //--------------------------------------------------------------------------[Validation]
+  /*
+  * @param {string} date, {string} date, {string} date
+  * @return boolean
+   */
+  _dateChkBetween: function($search, $betweenStart, $betweenEnd) {
+    var search = $search;
+    var betweenStart = $betweenStart;
+    var betweenEnd = $betweenEnd;
+    return moment(search).isBetween(betweenStart, betweenEnd, null, '[)');
+  },
+
+  /*
+  * Form Validation
+   */
+  _formValidateionChk: function() {
+
+    Tw.Logger.info('[유효성 체크 시작]');
+    var tempObj = this.dataModel;
+
+    try {
+      _.map(tempObj, function( item, key ) {
+
+        Tw.Logger.info('[ formData > _.map > '+ key +']', item, Tw.FormatHelper.isEmpty(item));
+
+        if ( key === 'infoConfirmBol' ) { // 안내사항 확인
+          if ( item === false ) {
+            Tw.Logger.info('[값을 입력하세요.]', key);
+            throw new Error('break');
+          }
+        }
+
+        if( key === 'productList' ) { // 해지신청상품 리스트
+          if ( item.length === 0 ) {
+            Tw.Logger.info('[값을 입력하세요.]', key);
+            throw new Error('break');
+          }
+        }
+
+        if( key === 'TerminationDtStr' ) { // 해지 요청일
+          if ( Tw.FormatHelper.isEmpty(item) ) {
+            Tw.Logger.info('[값을 입력하세요.]', key);
+            throw new Error('break');
+          }
+        }
+
+        if( key === 'phoenNmStr' ) { // 연락 가능한 연락처
+          if ( Tw.FormatHelper.isEmpty(item) ) {
+            Tw.Logger.info('[값을 입력하세요.]', key);
+            throw new Error('break');
+          }
+        }
+
+      });
+
+    } catch(e) {
+      if(e.message === 'break'){
+        //break successful
+        Tw.Logger.info('[catch > break]', e);
+        this.$submitApply.attr('disabled', true);
+      }
+      return;
+    }
+
+    Tw.Logger.info('[유효성 체크 완료]');
+
+    this.$submitApply.attr('disabled', false);
+
+
   },
 
   //--------------------------------------------------------------------------[API]

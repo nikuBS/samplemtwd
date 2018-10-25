@@ -114,7 +114,11 @@
                     </div>
                     <!--// .list-comp-input -->
                     <h3 class="form-title pt36">해지 요청일</h3>
-                    <button class="bt-dropdown big" title="해지 요청일 선택" aria-haspopup="true">2018년 09월 09일 (일요일)<span class="ico"></span></button>
+
+                    <div class="inputbox date-selcet mt0">
+                        <span class="date-type"><input data-target="select_Termination_input" type="date" value="" title="해지 요청일 선택"></span>
+                    </div>
+
                     <div class="cont-noti mt20">
                         <span class="type1">신청일 기준 2일 이후부터 최대 30일까지 신청 가능합니다.</span>
                     </div>
@@ -123,13 +127,13 @@
                     <div class="check-style">
                         <div class="widget">
                             <div class="widget-box radio">
-                                <ul class="select-list" role="radiogroup">
+                                <ul data-target="hpAndTelType" class="select-list" role="radiogroup">
                                     <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" name="radio1" value="" title="휴대폰" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                        <input type="radio" name="radio1" value="hp" title="휴대폰" checked /><!-- 체크상태일 경우 checked="checked" -->
                                         휴대폰
                                     </li>
                                     <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="" title="일반전화" /><!-- 체크상태일 경우 checked="false" -->
+                                        <input type="radio" name="radio1" value="tel" title="일반전화" /><!-- 체크상태일 경우 checked="false" -->
                                         일반전화
                                     </li>
                                 </ul>
@@ -137,18 +141,23 @@
                         </div>
                     </div>
                     <div class="form-box mt20">
-                        <div class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
-                            <span class="input">
-                                        <input type="number" placeholder="숫자만 입력" title="연락 가능한 연락처 입력"/>
+
+                        <div class="form-box">
+                                <span class="inputbox bt-add"><!-- 입력 필드 오류 시 .error 추가 -->
+                                    <span class="input">
+                                        <input data-target="input_hp" type="tel" name="" title="연락 가능한 연락처 입력" value=""
+                                               placeholder="숫자만 입력" maxlength="13" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
+                                </span>
                         </div>
+
                         <div class="widget mt20">
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01" role="checkbox" aria-checked="false"/>
-                                    <input type="checkbox" name="checkbox01" value="" title="회원정보 등록된 연락처">
-                                    회원정보 등록된 연락처
+                                    <li data-target="phoneLi" class="checkbox type01" role="checkbox" aria-checked="false"/>
+                                        <input type="checkbox" name="checkbox01" value="" title="회원정보 등록된 연락처">
+                                        회원정보 등록된 연락처
                                     </li>
                                 </ul>
                             </div>
@@ -226,7 +235,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button data-target="" disabled >해지 신청하기</button>
+                        <button data-target="submitApply" disabled >해지 신청하기</button>
                     </li>
                 </ul>
             </div>
