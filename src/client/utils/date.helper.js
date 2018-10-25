@@ -282,6 +282,16 @@ Tw.DateHelper = (function () {
     return moment(this.convDateFormat(date)).endOf('month').format(format);
   };
 
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : YYYYMMDD
+   */
+  var AddMonth = function (date) {
+    return moment(convDateFormat(date))
+      .add(1, 'month')
+      .format('YYYYMMDD');
+  };
+
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
@@ -315,6 +325,7 @@ Tw.DateHelper = (function () {
     getStartOfMonSubtractDate: getStartOfMonSubtractDate,
     getEndOfMonSubtractDate: getEndOfMonSubtractDate,
     getStartOfMonDate: getStartOfMonDate,
-    getEndOfMonDate: getEndOfMonDate
+    getEndOfMonDate: getEndOfMonDate,
+    AddMonth: AddMonth
   };
 })();
