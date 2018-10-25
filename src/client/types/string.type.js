@@ -606,9 +606,23 @@ Tw.MYT_JOIN_SUSPEND = {
     BTNAME: '신청하기',
     MESSAGE: '선택하신 기간동안 일시정지 처리됩니다.'
   },
+  CONFIRM_RESET: {
+    TITLE: '일시정지를 해제하시겠습니까?',
+    BTNAME: '해제하기',
+    MESSAGE: '일시정지가 즉시 해제됩니다.'
+  },
+  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
+  TYPE: {
+    ALL: '걸기/받기 모두 정지',
+    CALL: '걸기만 정지'
+  },
   NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
-  NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.'
+  NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
+  ALERT_EXCEED: {
+    TITLE: '신청불가',
+    MESSAGE: '월 5회 이상 신청이 불가능합니다.'
+  }
 };
 
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';

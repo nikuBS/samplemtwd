@@ -17,13 +17,14 @@ class MyTJoinSuspend extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0149, {})
     ).subscribe(([suspendState]) => {
       const options = {
         svcInfo,
+        pageInfo,
         phoneNum: StringHelper.phoneStringToDash(svcInfo.svcNum),
         isApp: BrowserHelper.isApp(req)
       };
@@ -59,4 +60,5 @@ class MyTJoinSuspend extends TwViewController {
   }
 
 }
+
 export default MyTJoinSuspend;
