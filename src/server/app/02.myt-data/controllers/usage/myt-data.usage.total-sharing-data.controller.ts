@@ -39,13 +39,21 @@ class MyTDataUsageTotalSharingData extends TwViewController {
 
       const fomattedData = this.myTDataUsage.parseUsageData(balancesResp.result, svcInfo);
       const defaultData = this.getDefaultData(fomattedData.data)[0];
-      const option = { defaultData: defaultData, svcInfo: svcInfo };
 
-      console.log('~~~~~~~~`defaultData', defaultData);
+      if (!defaultData) {
+        return this.error.render(res, {
+          title: MYT_DATA_USAGE_TOTAL_SHARING_DATA.TITLE,
+          svcInfo: svcInfo
+        });
+      }
+
+      const option = {
+        defaultData: defaultData || {},
+        svcInfo: svcInfo || {}
+      };
+
       option['balanceAddOns'] = balanceAddOnsResp.result;
-      // option['balanceAddOns'].sharingService.dataSharing = 'Y';
-      console.log('~~~~~~~~option', option);
-
+      // option['balanceAddOns'].sharingService.dataSharing = afterRequestSuccess'Y';
       res.render('usage/myt-data.usage.total-sharing-data.html', option);
 
     });
