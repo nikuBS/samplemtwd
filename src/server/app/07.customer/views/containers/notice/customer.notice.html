@@ -62,7 +62,7 @@
                   <% if (data.remain > 0) { %>
                   <!-- 더보기 버튼 -->
                   <div class="bt-more">
-                    <button type="button" class="fe-btn_more_list">더보기 <span>(<%= data.remain %>)</span></button>
+                    <button type="button" class="fe-btn_more_list">더보기<span>(<%= data.remain %>)</span></button>
                   </div>
                   <!--//더보기 버튼-->
                   <% } %>
@@ -79,6 +79,12 @@
       </div>
     </div>
     <!--// #contents -->
+    <!-- #footer -->
+    <footer id="fe-all-menu">
+      <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+      <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+    <!--// #footer -->
   </div>
 </body>
 <% include ../../components/javascript.component.html %>

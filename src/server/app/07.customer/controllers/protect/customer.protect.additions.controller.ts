@@ -12,9 +12,10 @@ class CustomerProtectAdditions extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     res.render('protect/customer.protect.additions.html', {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      pageInfo: pageInfo
     });
   }
 }

@@ -1,0 +1,15 @@
+<script type="text/template" id="tpl_warning_list_item">
+  {{#list}}
+  {{#ifCond emcyYn '===' 'Y'}}
+  <li class="important">
+  {{/ifCond}}
+  {{#ifCond emcyYn '===' 'N'}}
+  <li>
+  {{/ifCond}}
+    <a href="/customer/protect/warning/view/{{bltn2BltnId}}" class="list-inner">
+      <strong class="list-tit">{{bltnTitleNm}}</strong>
+      <em class="list-date">{{date}}</em>
+    </a>
+  </li>
+  {{/list}}
+</script>
