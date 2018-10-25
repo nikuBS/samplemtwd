@@ -4,31 +4,48 @@
         <h2 class="blind">GNB 영역</h2>
         <ul class="gnb-list">
             <li>
-                <a class="bt-gnb on fe-replace-history" href="/main/home" title="HOME으로 이동"><!-- .on : 메뉴 활성화 시 -->
+                <a class="bt-gnb on" href="/main/home" role="button" aria-pressed="true"><!-- 활성화 : .on추가, aria-pressed="true" --><!-- 접근성 수정 -->
                     <span class="ico home"></span>
-                    <span class="gnb-tx"><span class="eng">HOME</span></span>
+                    <span class="blind">홈</span>
                 </a>
             </li>
             <li>
-                <a class="bt-gnb fe-replace-history" href="/main/t-notify" title="MY T로 이동">
-                    <span class="ico myt"></span>
-                    <span class="gnb-tx"><span class="eng">T</span> 알림</span>
+                <a class="bt-gnb" href="/main/t-notify" role="button" aria-pressed="false"><!-- 비활성화 : .on제거, aria-pressed="false" --><!-- 접근성 수정 -->
+                    <span class="ico alarm"></span>
+                    <span class="blind">알림</span>
                 </a>
             </li>
             <li>
-                <a class="bt-gnb fe-replace-history" href="/main/search" title="T 채널로 이동">
-                    <span class="ico tchannel"></span>
-                    <span class="gnb-tx">검색</span>
+                <a class="bt-gnb" href="/main/search" role="button" aria-pressed="false"><!-- 비활성화 : .on제거, aria-pressed="false" --><!-- 접근성 수정 -->
+                    <span class="ico search"></span>
+                    <span class="blind">검색</span>
                 </a>
             </li>
             <li>
-                <a class="bt-gnb" href="/main/menu" title="전체 메뉴로 이동">
+                <a class="bt-gnb" href="/main/menu" role="button" aria-pressed="false"><!-- 비활성화 : .on제거, aria-pressed="false" --><!-- 접근성 수정 -->
                     <span class="ico all"></span>
-                    <span class="gnb-tx">전체 메뉴</span>
+                    <span class="blind">전체 메뉴</span>
                 </a>
             </li>
+            <!--<li>-->
+                <!--<button class="bt-gnb all-menu-bt" role="button" aria-pressed="false">&lt;!&ndash; 비활성화 : .on제거, aria-pressed="false" &ndash;&gt;&lt;!&ndash; 접근성 수정 &ndash;&gt;-->
+                    <!--<span class="ico all"></span>-->
+                    <!--<span class="blind">전체 메뉴</span>-->
+                <!--</button>-->
+            <!--</li>-->
         </ul>
     </div>
+    <% if (locals.pageInfo) { %>
+    <% if (pageInfo.auth) { %>
+    <% if (pageInfo.auth.cert) { %>
+    <% if (pageInfo.auth.cert.maskAuthYn === 'Y') { %>
+    <div class="masking">
+        <button><span id="fe-bt-masking" class="ico">가려진 정보보기</span></button>
+    </div>
+    <% } %>
+    <% } %>
+    <% } %>
+    <% } %>
     <!--// #gnb -->
     <!--<div class="all-menu" aria-hidden="true" tabindex="-1">-->
         <!--<div class="all-menu-box">-->
