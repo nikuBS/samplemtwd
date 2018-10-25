@@ -1,4 +1,4 @@
-<footer id="fe-all-menu">
+
     <!-- #gnb -->
     <div id="gnb" class="gnb-wrap on">
         <h2 class="blind">GNB 영역</h2>
@@ -35,17 +35,6 @@
             <!--</li>-->
         </ul>
     </div>
-    <% if (locals.pageInfo) { %>
-    <% if (pageInfo.auth) { %>
-    <% if (pageInfo.auth.cert) { %>
-    <% if (pageInfo.auth.cert.maskAuthYn === 'Y') { %>
-    <div class="masking">
-        <button><span id="fe-bt-masking" class="ico">가려진 정보보기</span></button>
-    </div>
-    <% } %>
-    <% } %>
-    <% } %>
-    <% } %>
     <!--// #gnb -->
     <!--<div class="all-menu" aria-hidden="true" tabindex="-1">-->
         <!--<div class="all-menu-box">-->
@@ -254,4 +243,3 @@
             <!--<button class="all-menu-prev"><span class="blind">전체메뉴로 이동</span></button>-->
         <!--</div>-->
     <!--</div>-->
-</footer>
