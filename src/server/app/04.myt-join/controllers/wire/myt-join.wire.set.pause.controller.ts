@@ -24,11 +24,11 @@ class MyTJoinWireSetPause extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
       return this.error.render(res, {
         title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
-        svcInfo: svcInfo
+        svcInfo
       });
     }
 
@@ -44,7 +44,7 @@ class MyTJoinWireSetPause extends TwViewController {
           title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
           code: apiError.code,
           msg: apiError.msg,
-          svcInfo: svcInfo
+          svcInfo
         });
       }
 
@@ -58,8 +58,9 @@ class MyTJoinWireSetPause extends TwViewController {
       };
       const options = {
         svcInfo: svcInfo || {},
+        pageInfo: pageInfo || {},
         wirePauseInfo: wirePauseInfo || {},
-        startDate: startDate || {}
+        startDate: startDate || {},
       };
 
       res.render(this._VIEW.DEFAULT, options);

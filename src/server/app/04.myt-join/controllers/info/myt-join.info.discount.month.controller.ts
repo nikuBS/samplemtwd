@@ -27,7 +27,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._svcAgrmtDcId = req.query.svcAgrmtDcId;
     this._svcAgrmtDcCd = req.query.svcAgrmtDcCd;
 
@@ -43,7 +43,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
           title: MYT_INFO_DISCOUNT_MONTH.TITLE,
           code: apiError.code,
           msg: apiError.msg,
-          svcInfo: svcInfo
+          svcInfo
         });
       }
 
@@ -53,14 +53,15 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
         svcAgrmtDcId: this._svcAgrmtDcId,
         svcAgrmtDcCd: this._svcAgrmtDcCd,
         data,
-        svcInfo
+        svcInfo,
+        pageInfo
       });
     }, (resp) => {
       return res.render(VIEW.ERROR, {
         title: MYT_INFO_DISCOUNT_MONTH.TITLE,
         code: resp.code,
         msg: resp.msg,
-        svcInfo: svcInfo
+        svcInfo
       });
     });
   }

@@ -69,7 +69,7 @@ class MyTDataUsage extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     // console.log('~~~~~~~~~~`svcInfo', svcInfo);
     // svcInfo.svcAttrCd = 'M2';
 
@@ -87,7 +87,7 @@ class MyTDataUsage extends TwViewController {
     Observable.combineLatest(reqArr).subscribe(([usageDataResp, extraDataResp]) => {
       if ( usageDataResp.code === API_CODE.CODE_00 ) {
         const fomattedData = this.parseUsageData(usageDataResp.result, svcInfo);
-        const option = { usageData: fomattedData, svcInfo: svcInfo };
+        const option = { usageData: fomattedData, svcInfo, pageInfo };
 
         if ( extraDataResp.code === API_CODE.CODE_00 ) {
           switch ( svcInfo.svcAttrCd ) {
