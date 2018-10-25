@@ -59,7 +59,9 @@
                                                     <input type="radio" name="radio1" value="" title="값1" checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                                                     <span class="check-title">자동납부계좌와 동일</span>
                                                     <span class="account-info">
-                                                        <span class="account-bank fe-auto-account-bank" data-code="<%= autoInfo.bankCode %>"><%= autoInfo.bankName %></span>
+                                                        <span class="account-bank fe-auto-account-bank" data-code="<%= autoInfo.bankCode %>" data-name="<%= autoInfo.bankFullName %>">
+                                                            <%= autoInfo.bankName %>
+                                                        </span>
                                                         <span class="account-number fe-auto-account-number"><%= autoInfo.bankNum %></span>
                                                     </span>
                                                 </li>
@@ -122,7 +124,9 @@
                                                 <input type="radio" name="radio2" value="" title="값1" checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="check-title">자동납부계좌와 동일</span>
                                                 <span class="account-info">
-                                                    <span class="account-bank fe-auto-refund-bank" data-code="<%= autoInfo.bankCode %>"><%= autoInfo.bankName %></span>
+                                                    <span class="account-bank fe-auto-refund-bank" data-code="<%= autoInfo.bankCode %>" data-name="<%= autoInfo.bankFullName %>">
+                                                        <%= autoInfo.bankName %>
+                                                    </span>
                                                     <span class="account-number fe-auto-refund-number"><%= autoInfo.bankNum %></span>
                                                 </span>
                                             </li>

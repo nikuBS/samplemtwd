@@ -92,6 +92,7 @@ class MyTFarePaymentAccount extends TwViewController {
 
       result.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK;
       if (result.isAuto) {
+        result.bankFullName = result.autoPayBank.bankCardCoNm;
         result.bankName = result.autoPayBank.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, '');
         result.bankNum = result.autoPayBank.bankCardNum;
         result.bankCode = result.autoPayBank.bankCardCoCd;
