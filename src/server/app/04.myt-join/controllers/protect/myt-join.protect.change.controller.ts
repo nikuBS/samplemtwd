@@ -32,7 +32,7 @@ class MyTJoinProtectChange extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.svcInfo = svcInfo;
     this.logger.info(this, 'UserInfo ', svcInfo);
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분하여
@@ -47,6 +47,7 @@ class MyTJoinProtectChange extends TwViewController {
       title: svcInfo.svcAttrCd ? SVC_ATTR[svcInfo.svcAttrCd] : '',
       number: svcInfo.svcNum || '',
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       isNew: this.isNew
     };
 

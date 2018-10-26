@@ -15,8 +15,8 @@ class MyTJoinWireInetPhoneNumChange extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('wire/myt-join.wire.inetphone-num.change.html', {svcInfo: svcInfo});
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    res.render('wire/myt-join.wire.inetphone-num.change.html', {svcInfo: svcInfo, pageInfo: pageInfo});
   }
 }
 

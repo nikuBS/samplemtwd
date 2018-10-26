@@ -15,7 +15,7 @@ class MyTJoinWireAS extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0156, { page: '1', size: '20' })
       .subscribe((resp) => {
@@ -70,7 +70,7 @@ class MyTJoinWireAS extends TwViewController {
 
         if ( resp.code === API_CODE.CODE_00 ) {
 
-          const option = { svcInfo: svcInfo, data: result};
+          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
 
           res.render('wire/myt-join.wire.as.html', option);
         }

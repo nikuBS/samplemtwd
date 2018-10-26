@@ -22,10 +22,10 @@ class MyTJoinWireHistoryDetail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const data = JSON.parse(req.query.data);
     const title = this.TITLE_MAP[data.atype];
-    const options = {title: title, svcInfo: svcInfo, data: data};
+    const options = {title: title, svcInfo: svcInfo, pageInfo: pageInfo, data: data};
     res.render('wire/myt-join.wire.history.detail.html', options);
   }
 }

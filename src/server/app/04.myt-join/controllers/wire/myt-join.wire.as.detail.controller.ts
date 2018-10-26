@@ -15,7 +15,7 @@ class MyTJoinWireASDetail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     const troubleNum = req.query.troubleNum;
     const troubleDt = req.query.troubleDt;
@@ -56,7 +56,7 @@ class MyTJoinWireASDetail extends TwViewController {
           data['troubleDetail'] = troubleDetail;
           data['operSchdDtm'] = DateHelper.getFullDateAndTime(data['operSchdDtm']);
 
-          const option = { svcInfo: svcInfo, data: data};
+          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: data};
 
           res.render('wire/myt-join.wire.as.detail.html', option);
         }
