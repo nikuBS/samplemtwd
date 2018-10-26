@@ -2,11 +2,11 @@ const environment = {
   local: {
     BFF_SERVER: 'http://61.250.19.37:31020',
     // BFF_SERVER: 'http://211.188.180.73:31020',
-    CDN: '',
+    CDN: 'http://localhost:3001',
     REDIS: {
-      host: '211.188.180.73',
-      port: 31200,
-      db: 15
+      host: '61.250.19.37',
+      port: 31300,
+      db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',

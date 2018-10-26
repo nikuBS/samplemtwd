@@ -180,23 +180,28 @@ abstract class TwViewController {
         if ( isLogin ) {
           const urlAuth = urlMeta.auth.grades;
           const svcGr = svcInfo.svcGr;
-          if ( svcInfo.totalSvcCnt === '0' ) {
-            this.errorEmptyLine(req, res, next, svcInfo);
-          } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
-            this.errorNoRegister(req, res, next, svcInfo);
-          } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          } else if ( this._type === 'dev' ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          } else {
-            const loginType = svcInfo.loginType;
-            if ( loginType === LOGIN_TYPE.EASY ) {
-              res.redirect('/auth/login/easy-fail');
+          if ( !FormatHelper.isEmpty(urlAuth) ) {
+            if ( svcInfo.totalSvcCnt === '0' ) {
+              this.errorEmptyLine(req, res, next, svcInfo);
+            } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
+              this.errorNoRegister(req, res, next, svcInfo);
+            } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            } else if ( this._type === 'dev' ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              this.errorAuth(req, res, next, svcInfo);
-
+              const loginType = svcInfo.loginType;
+              if ( loginType === LOGIN_TYPE.EASY ) {
+                res.redirect('/auth/login/easy-fail');
+              } else {
+                this.errorAuth(req, res, next, svcInfo);
+              }
             }
+          } else {
+            // TODO: redis urlAuth Null
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
+
         } else {
           if ( urlMeta.auth.loginYn === 'Y' ) {
             res.send('need login');
