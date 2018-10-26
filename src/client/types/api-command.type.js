@@ -378,7 +378,7 @@ Tw.NODE_CMD = {
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
   GET_SERVICE_NOTICE: { path: '/service-notice', method: Tw.API_METHOD.GET },
 
-  CERT_TEST: { path: '/certTest', method: Tw.API_METHOD.GET }
+  GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

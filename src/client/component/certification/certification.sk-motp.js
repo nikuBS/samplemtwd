@@ -105,7 +105,8 @@ Tw.CertificationSkMotp.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0020, {
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
-      authKind: this._authKind
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successMotpConfirm, this));
 
   },

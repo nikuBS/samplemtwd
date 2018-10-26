@@ -50,11 +50,15 @@ Tw.CertificationSelect.prototype = {
       // 업무인증
       this._authKind = Tw.AUTH_CERTIFICATION_KIND.P;
       this._openOpCert();
+    } else if ( this._urlMeta.auth.cert.maskAuthYn === 'Y' ) {
+      // 마스킹 인증
+      this._authKind = Tw.AUTH_CERTIFICATION_KIND.A
+      // this._openMaskingCert();
+      this._openOpCert();
     } else {
       // 잘못된 인증정보
       console.log('Wrong Cert');
     }
-
   },
   _openOpCert: function () {
     var methods = this._urlMeta.auth.cert.methods;
@@ -93,6 +97,10 @@ Tw.CertificationSelect.prototype = {
   _openProductCert: function () {
     this._apiService.request(Tw.API_CMD.BFF_10_9001, {}, {}, this._command.params.prodId, this._command.params.prodProcTypeCd)
       .done($.proxy(this._successGetPublicCert, this));
+  },
+
+  _openMaskingCert: function () {
+
   },
 
   _successGetPublicCert: function (resp) {

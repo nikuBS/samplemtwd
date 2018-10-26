@@ -115,7 +115,8 @@ Tw.CertificationEmail.prototype = {
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
       authTerm: 1000,
-      authKind: this._authKind
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successEmailConfirm, this));
   },
   _successEmailConfirm: function (resp) {

@@ -74,7 +74,8 @@ Tw.CertificationPublic.prototype = {
     // TODO: 상품인경우 prodAuthKey 추가
     this._apiService.request(Tw.API_CMD.BFF_01_0026, {
       authUrl: this._command.command.method + '|' + this._authUrl,
-      authKind: this._authKind
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successComplete, this));
   },
   _successComplete: function (resp) {
