@@ -38,6 +38,8 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
     tel: null
   };
 
+  this.cancelFeeInfo = null;
+
   this._init();
 
 };
@@ -58,27 +60,64 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.input_hp= $('[data-target="input_hp"]');
     this.phoneLi= $('[data-target="phoneLi"]'); // 회원정보 등록된 연락
     this.$submitApply= $('[data-target="submitApply"]'); // 신청하기 버튼
+    // this.$saleRepaymentInfo= $('[data-target="saleRepaymentInfo"]'); // 할인반환금 조회 버튼
+
+    this.dataLoading= $('[data-target="dataLoading"]');
+    this.outputDtArea= $('[data-target="outputDtArea"]');
+    this.outputArea= $('[data-target="outputArea"]');
+
+    this.$entryTpl = $('#fe-entryTpl');
+
 
   },
   _bindEvent: function () {
     this.infoLi.on('click', 'input[type=checkbox]', $.proxy(this.$infoLiEvt, this));
     this.productLi.on('click', 'input[type=checkbox]', $.proxy(this.$productLiEvt, this));
-
     this.hpAndTelType.on('click', 'input:radio[name=radio1]', $.proxy(this.hpAndTelTypeEvt, this));
-
     this.$container.on('change', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.phoneLi.on('click', 'input[type=checkbox]', $.proxy(this.phoneLiEvt, this));
-
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
-
+    this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
-  $submitApplyEvt: function(event) {
-    Tw.Logger.info('[신청하기]', event);
-    // var param = this.addressFormData;
-    // this._chgWireAddrInfo(param);
+  /*
+  * 할인반환금 조회
+   */
+  saleRepaymentInfoEvt: function() {
+    this._getWireCancelFee();
+  },
+
+  /*
+  * this.dataModel 을 이용해 this.formData 에 맞는 데이터로 매치한다.
+  * this.formData 완료되면 해지 신청하기 api 진행
+   */
+  $submitApplyEvt: function() {
+    Tw.Logger.info('[dataModel]', this.dataModel);
+    Tw.Logger.info('[formData]', this.formData);
+
+    var tempSvcList = [];
+    var tempAcntList = [];
+    var tempGrpList = [];
+
+    _.map( this.dataModel.productList, $.proxy( function( item ){
+      tempSvcList.push( item.SVC_MGMT_NUM );
+      tempAcntList.push( item.ACNT_NUM );
+      tempGrpList.push( item.GRP_ID );
+    }, this));
+
+    this.formData.svcMgmtNumArr = tempSvcList.join(';');
+    this.formData.acntNumArr = tempAcntList.join(';');
+    this.formData.grpIdArr = tempGrpList.join(';');
+    this.formData.termPrefrDy = this._noDash( this.dataModel.TerminationDtStr );
+    this.formData.visitCntcNum = this.dataModel.phoenNmStr;
+
+    Tw.Logger.info('[dataModel]', this.dataModel);
+    Tw.Logger.info('[formData]', this.formData);
+
+    var param = this.formData;
+    this._setWireCancel(param);
 
   },
 
@@ -272,6 +311,19 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     }
     Tw.Logger.info('[회원정보 등록된 연락처 셋팅 완료]', this.memberPhoneObj);
   },
+
+  _svcHbDetailList: function (resData, $jqTg, $hbTg) {
+    var jqTg = $jqTg; // 뿌려지는 영역
+    var hbTg = $hbTg; // 템플릿
+    var source = hbTg.html();
+    var template = Handlebars.compile(source);
+    var data = {
+      resData: resData
+    };
+    var html = template(data);
+    jqTg.append(html);
+  },
+
   //--------------------------------------------------------------------------[Validation]
   /*
   * @param {string} date, {string} date, {string} date
@@ -344,7 +396,58 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   },
 
   //--------------------------------------------------------------------------[API]
+  _getWireCancelFee: function() {
+    Tw.Logger.info('[할인반환금조회]');
+    // return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this));
+    var thisMain = this;
+    this.dataLoading.show();
 
+    $.ajax('http://localhost:3000/mock/wire.BFF_05_0173.json')
+      .done(function (resp) {
+        Tw.Logger.info(resp);
+        thisMain.dataLoading.hide();
+        thisMain._getWireCancelFeeInit(resp);
+      })
+      .fail(function (err) {
+        Tw.Logger.info(err);
+      });
+
+  },
+  _getWireCancelFeeInit: function(res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      Tw.Logger.info('[결과1] _getWireCancelFeeInit', res);
+      this.cancelFeeInfo = res.result;
+
+      _.map( this.cancelFeeInfo.penaltyInfo, $.proxy( function( item ){
+        item.brchAmt = this._comComma( item.brchAmt );
+      }, this));
+
+      this.cancelFeeInfo.chargeInfo.colAmt = this._comComma( this.cancelFeeInfo.chargeInfo.colAmt );
+      this.cancelFeeInfo.chargeInfo.hbAmt = this._comComma( this.cancelFeeInfo.chargeInfo.hbAmt );
+      this.cancelFeeInfo.chargeInfo.totAmt = this._comComma( this.cancelFeeInfo.chargeInfo.totAmt );
+
+      Tw.Logger.info('[cancelFeeInfo]', this.cancelFeeInfo);
+
+      this._svcHbDetailList(this.cancelFeeInfo, this.outputArea, this.$entryTpl);
+    }
+  },
+
+  _setWireCancel: function (param) {
+    Tw.Logger.info('[해지신청 진행]', param);
+    return this._apiService.request(Tw.API_CMD.BFF_05_0174, param).done($.proxy(this._setWireCancelInit, this));
+  },
+  _setWireCancelInit: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      Tw.Logger.info('[결과] _setWireCancelInit', res);
+
+      this.cancelFeeInfo = res.result;
+
+      // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
+      //   $.proxy(function(){
+      //     this._goLoad('/myt/join/wire/history');
+      //   }, this));
+    }
+  },
 
 
   //--------------------------------------------------------------------------[COM]

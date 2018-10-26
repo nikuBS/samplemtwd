@@ -7,6 +7,50 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 
+<script id="fe-entryTpl" type="text/x-handlebars-template">
+    {{!-- 주석 : 할인반환금 정보  --}}
+
+    <div class="info-list-type1 mt30">
+        <h3>할인 반환금 정보</h3>
+        <div class="basic-list">
+            <ul>
+                {{# each resData.penaltyInfo as |rootItem rootIndex|}}
+                <li>
+                    <span class="title">{{rootItem.penStrdNm}}</span>
+                    <span class="tx-cont">{{rootItem.brchAmt}} 원</span>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <h3 class="mt40">사용요금 정보</h3>
+        <div class="basic-list">
+            <ul>
+                <li>
+                    <span class="title">당월 사용 요금(할인 반환금 포함)</span>
+                    <span class="tx-cont">{{resData.chargeInfo.hbAmt}} 원</span>
+                </li>
+                <li>
+                    <span class="title">미납요금</span>
+                    <span class="tx-cont">{{resData.chargeInfo.colAmt}} 원</span>
+                </li>
+                <li>
+                    <span class="title">총 납부금액<br />(당월 사용요금 + 미납요금)</span>
+                    <span class="tx-cont"><span class="tx-bold">{{resData.chargeInfo.totAmt}}</span> 원</span>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+
+
+    {{!-- 주석 : 사용요금 정보  --}}
+
+</script>
+
+
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -173,56 +217,29 @@
             </div>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
-                <p class="con-txt1">2018.05.23 기준<br>할인 반환금 정보 입니다.</p>
+
+                <div data-target="outputDtArea">
+                    <!--<p class="con-txt1">2018.05.23 기준<br>할인 반환금 정보 입니다.</p>-->
+                </div>
+
                 <ul class="bt-slice mt20">
                     <li class="bt-blue1">
-                        <button>조회하기</button>
+                        <button data-target="saleRepaymentInfo" >조회하기</button>
                     </li>
                 </ul>
-                <div class="info-list-type1 mt30">
-                    <h3>할인 반환금 정보</h3>
-                    <div class="basic-list">
-                        <ul>
-                            <li>
-                                <span class="title">서비스 정기 계약 할인 반환금</span>
-                                <span class="tx-cont">127,000 원</span>
-                            </li>
-                            <li>
-                                <span class="title">기업설치비 할인 반환금</span>
-                                <span class="tx-cont">30,000 원</span>
-                            </li>
-                            <li>
-                                <span class="title">본사 사은품 할인 반환금</span>
-                                <span class="tx-cont">19,353 원</span>
-                            </li>
-                            <li>
-                                <span class="title">임대단말 할인 반환금</span>
-                                <span class="tx-cont">98,970 원</span>
-                            </li>
-                            <li>
-                                <span class="title">할인 반환금(인터넷기기 WiFi할인)</span>
-                                <span class="tx-cont">62,721 원</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <h3 class="mt40">사용요금 정보</h3>
-                    <div class="basic-list">
-                        <ul>
-                            <li>
-                                <span class="title">당월 사용 요금(할인 반환금 포함)</span>
-                                <span class="tx-cont">354,080 원</span>
-                            </li>
-                            <li>
-                                <span class="title">미납요금</span>
-                                <span class="tx-cont">0 원</span>
-                            </li>
-                            <li>
-                                <span class="title">총 납부금액<br />(당월 사용요금 + 미납요금)</span>
-                                <span class="tx-cont"><span class="tx-bold">354,080</span> 원</span>
-                            </li>
-                        </ul>
-                    </div>
+
+                <!-- 데이터 불러올때 화면 -->
+                <div data-target="dataLoading" class="contents-empty mt10" style="display: none;">
+                    <span class="ico type-loading"></span>
+                    <p class="desc-s">데이터를 불러오는 중입니다.<br />잠시만 기다려 주세요</p>
                 </div>
+
+
+                <!-- 출력된 화면 -->
+                <div data-target="outputArea">
+
+                </div>
+
             </div>
             <!--// .cont-box -->
 
