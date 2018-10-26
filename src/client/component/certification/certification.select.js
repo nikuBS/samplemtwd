@@ -17,6 +17,7 @@ Tw.CertificationSelect = function () {
 
   this._certMethod = null;
   this._niceType = null;
+  this._authKind = null;
 
   this._svcInfo = null;
   this._urlMeta = null;
@@ -43,9 +44,11 @@ Tw.CertificationSelect.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty(this._urlMeta.auth.cert.prodProcType) ) {
       // 상품인증
+      this._authKind = Tw.AUTH_CERTIFICATION_KIND.R;
       this._openProductCert();
     } else if ( this._urlMeta.auth.cert.opAuthYn === 'Y' ) {
       // 업무인증
+      this._authKind = Tw.AUTH_CERTIFICATION_KIND.P;
       this._openOpCert();
     } else {
       // 잘못된 인증정보
@@ -83,7 +86,7 @@ Tw.CertificationSelect.prototype = {
       if ( methods.indexOf(',') === -1 && methods.length > 0 ) {
         this._openCertPopup(methods);
       } else {
-        this._openSelectPopup(this._svcInfo.loginType, methods, methodCnt);
+        this._openSelectPopup(this._svcInfo.loginType, methods, methodCnt, Tw.AUTH_CERTIFICATION_KIND.P);
       }
     }
   },
@@ -142,11 +145,11 @@ Tw.CertificationSelect.prototype = {
     switch ( this._certMethod ) {
       case Tw.AUTH_CERTIFICATION_METHOD.SK_SMS:
         this._certSk.open(
-          this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
+          this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP:
         this._certSk.open(
-          this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
+          this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
         this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
@@ -155,22 +158,22 @@ Tw.CertificationSelect.prototype = {
         this._openCertBrowser('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.EMAIL:
-        this._certEmail.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+        this._certEmail.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PASSWORD:
-        this._certPassword.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+        this._certPassword.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
-        this._certPublic.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+        this._certPublic.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._popupService.openAlert('Not Supported (Bio)');
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD:
-        this._certSmsPw.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+        this._certSmsPw.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-        this._certFinance.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+        this._certFinance.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
         break;
       default:
         this._popupService.openAlert('Not Supported');
