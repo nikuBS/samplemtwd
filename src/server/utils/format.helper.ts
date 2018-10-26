@@ -27,6 +27,10 @@ class FormatHelper {
     return typeof(value) === 'string';
   }
 
+  static getValidVars(value: any, emptyValue: any = null): any {
+    return FormatHelper.isEmpty(value) ? emptyValue : value;
+  }
+
   static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any, basOfrCharCntCtt?: any): any {
     const isValid = (value) => {
       return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
