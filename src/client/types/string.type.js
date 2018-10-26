@@ -360,6 +360,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A64: { TITLE: '알림', MSG: '고객보호 비밀번호 설정이 완료 되었습니다.' },
   ALERT_2_A65: { TITLE: '알림', MSG: '망 작업 SMS 알림 신청이 완료 되었습니다.' },
   ALERT_2_A66: { TITLE: '알림', MSG: '망 작업 SMS 알림 수신번호가 변경 되었습니다.' },
+  ALERT_2_A68: { TITLE: '알림', MSG: '등록된 연락처가 없습니다.' },
   ALERT_2_A80: { TITLE: '알림', MSG: 'T_B끼리 통화 무제한에 가입하신 사용자가 아닙니다.' }
 };
 
@@ -718,4 +719,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
 Tw.MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
   DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
+};
+
+Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
+  TERMINATION_COMPLETE : '서비스 해지 신청'
 };
