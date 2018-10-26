@@ -85,5 +85,8 @@ export const URL = {
   '/customer/protect/guide': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드' },
   '/customer/protect/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
   '/customer/protect/additions': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
-  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' }
+  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' },
+
+  // Benefit
+  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' }
 };

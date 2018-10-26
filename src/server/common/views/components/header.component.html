@@ -3,13 +3,13 @@
     <div class="header">
         <% if (!locals.option) { %>
         <div class="header-ti align-l">
-            <h1><%= title %></h1>
+            <h1><%- title %></h1>
         </div>
         <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         <% } else { %>
         <% if (!option.home) { %>
         <div class="header-ti align-l">
-            <h1><%= title %></h1>
+            <h1><%- title %></h1>
         </div>
         <% } else { %>
         <div class="header-ti home">
