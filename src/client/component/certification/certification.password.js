@@ -36,7 +36,8 @@ Tw.CertificationPassword.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0027, {
       type: Tw.AUTH_CERTIFICATION_METHOD.W,
       authUrl: this._authUrl,
-      authKind: this._authKind
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successConfirmPasswordCert, this));
   },
   _successConfirmPasswordCert: function (resp) {

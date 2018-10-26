@@ -5,7 +5,7 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { COOKIE_KEY, REDIS_APP_VERSION } from '../../types/common.type';
+import { COOKIE_KEY, REDIS_APP_VERSION, REDIS_URL_META } from '../../types/common.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
@@ -63,41 +63,7 @@ class ApiRouter {
     this.router.get('/version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/service-notice', this.getServiceNotice.bind(this));
-    this.router.get('/certTest', (req, res, next) => {
-      res.json({
-        code: API_CODE.CODE_03,
-        result: {
-          url: req.baseUrl + req.path,
-          svcInfo: this.loginService.getSvcInfo(),
-          urlMeta: {
-            'menuNm': 'xxx',
-            'menuId': '1575',
-            'menuUrl': '',
-            'auth': {
-              'grades': 'A,Y,R,D,E,O,P,W,I,T,U',
-              'guidUrl': '/guide-url',
-              'accessTypes': 'T,S',
-              'cert': {
-                'prodProcType': '',
-                'maskAuthYn': 'N',
-                'opAuthYn': 'Y',
-                'methods': 'B',
-                'grpId': 'GRP001',
-                'jobCd': 'NFM_MTW_SAFESMS_INFO',
-                'smsAfterAuth': 'N'
-              }
-            },
-            'block': {
-              'time': {
-                'from': '20180803000000',
-                'to': '20180804000059'
-              },
-              'url': '/service-block',
-            }
-          }
-        }
-      });
-    });
+    this.router.get('/urlMeta', this.getUrlMeta.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -180,6 +146,19 @@ class ApiRouter {
 
         res.json(resp);
       });
+  }
+
+  private getUrlMeta(req: Request, res: Response, next: NextFunction) {
+    const url = req.query.url;
+    this.redisService.getData(REDIS_URL_META + url)
+      .subscribe((resp) => {
+        console.log(resp);
+        res.json({
+          code: API_CODE.CODE_00,
+          result: resp
+        })
+      });
+
   }
 
   private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
