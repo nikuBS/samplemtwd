@@ -399,22 +399,25 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   //--------------------------------------------------------------------------[API]
   _getWireCancelFee: function() {
     Tw.Logger.info('[할인반환금조회]');
-    // return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this));
-    var thisMain = this;
+    // var thisMain = this;
     this.dataLoading.show();
 
-    $.ajax('http://localhost:3000/mock/wire.BFF_05_0173.json')
-      .done(function (resp) {
-        Tw.Logger.info(resp);
-        thisMain.dataLoading.hide();
-        thisMain._getWireCancelFeeInit(resp);
-      })
-      .fail(function (err) {
-        Tw.Logger.info(err);
-      });
+    // $.ajax('http://localhost:3000/mock/wire.BFF_05_0173.json')
+    //   .done(function (resp) {
+    //     Tw.Logger.info(resp);
+    //     thisMain.dataLoading.hide();
+    //     thisMain._getWireCancelFeeInit(resp);
+    //   })
+    //   .fail(function (err) {
+    //     Tw.Logger.info(err);
+    //   });
+
+    return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this));
 
   },
   _getWireCancelFeeInit: function(res) {
+    this.dataLoading.hide();
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과1] _getWireCancelFeeInit', res);
       this.cancelFeeInfo = res.result;
@@ -441,6 +444,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   _setWireCancel: function (param) {
     Tw.Logger.info('[해지신청 진행]', param);
+
     return this._apiService.request(Tw.API_CMD.BFF_05_0174, param).done($.proxy(this._setWireCancelInit, this));
   },
   _setWireCancelInit: function (res) {
@@ -448,6 +452,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       Tw.Logger.info('[결과] _setWireCancelInit', res);
 
       this.cancelFeeInfo = res.result;
+
+      this._popupService.afterRequestSuccess('/myt/join/wire/set/wire-cancel-service#complete', '/myt/join', null,
+        Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE, null);
 
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
       //   $.proxy(function(){
