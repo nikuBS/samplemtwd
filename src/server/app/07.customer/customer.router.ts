@@ -15,6 +15,7 @@ import CustomerProtectWarning from './controllers/protect/customer.protect.warni
 import CustomerProtectWarningView from './controllers/protect/customer.protect.warning-view.controller';
 import CustomerMain from './controllers/main/customer.main.controller';
 import CustomerVoice from './controllers/voice/customer.voice.controller';
+import CustomerEmail from './controllers/email/customer.email.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -24,6 +25,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     this.controllers.push({ url: '/praise', controller: CustomerPraise} );
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
+    this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail} );
     // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse });
     this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice} );
     this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
