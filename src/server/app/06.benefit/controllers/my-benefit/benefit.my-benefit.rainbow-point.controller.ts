@@ -60,7 +60,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       }
 
       const rainbowPointsInfo = this._getRainbowPointsInfo(respRainbowPointsInfo);
-      const rainbowPointHistoryResult = this._getRainbowPointHistories(respRainbowPointHistories);
+      const rainbowPointHistoryResult = this._getRainbowPointHistoryResult(respRainbowPointHistories);
       const rainbowPointHistories = rainbowPointHistoryResult.history;
 
       const paging = BenefitMyBenefitRainbowPoint.getPaging(this._BASE_URL,
@@ -114,7 +114,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return rainbowPointsInfo;
   }
 
-  private _getRainbowPointHistories(resp: any): any {
+  private _getRainbowPointHistoryResult(resp: any): any {
     const rainbowPointHistoryResult = this._getResult(resp);
     rainbowPointHistoryResult.history.map((history) => {
       history.opDt = DateHelper.getShortDateNoDot(history.opDt);
