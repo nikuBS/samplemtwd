@@ -67,7 +67,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.outputArea= $('[data-target="outputArea"]');
 
     this.$entryTpl = $('#fe-entryTpl');
-
+    this.$entryTplDate = $('#fe-entryTplDate');
 
   },
   _bindEvent: function () {
@@ -315,6 +315,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg; // 뿌려지는 영역
     var hbTg = $hbTg; // 템플릿
+    jqTg.empty();
     var source = hbTg.html();
     var template = Handlebars.compile(source);
     var data = {
@@ -426,9 +427,15 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this.cancelFeeInfo.chargeInfo.hbAmt = this._comComma( this.cancelFeeInfo.chargeInfo.hbAmt );
       this.cancelFeeInfo.chargeInfo.totAmt = this._comComma( this.cancelFeeInfo.chargeInfo.totAmt );
 
-      Tw.Logger.info('[cancelFeeInfo]', this.cancelFeeInfo);
-
+      // Tw.Logger.info('[cancelFeeInfo]', this.cancelFeeInfo);
       this._svcHbDetailList(this.cancelFeeInfo, this.outputArea, this.$entryTpl);
+
+      // 날짜정보 넣기
+      var textDtObj = {
+        dtInfo : Tw.DateHelper.getShortDateNoDot(this.cancelFeeInfo.reqDate)
+      };
+      this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
+
     }
   },
 

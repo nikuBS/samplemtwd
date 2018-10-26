@@ -7,6 +7,10 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 
+<script id="fe-entryTplDate" type="text/x-handlebars-template">
+    <p class="con-txt1">{{resData.dtInfo}} 기준<br>할인 반환금 정보 입니다.</p>
+</script>
+
 <script id="fe-entryTpl" type="text/x-handlebars-template">
     {{!-- 주석 : 할인반환금 정보  --}}
 
@@ -219,7 +223,6 @@
             <div class="cont-box nogaps-btm">
 
                 <div data-target="outputDtArea">
-                    <!--<p class="con-txt1">2018.05.23 기준<br>할인 반환금 정보 입니다.</p>-->
                 </div>
 
                 <ul class="bt-slice mt20">
