@@ -21,6 +21,7 @@ Tw.CertificationSkKeyin = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._authKind = null;
   this._certResult = null;
 
   this._corpPwdAuthYn = false;
@@ -44,11 +45,12 @@ Tw.CertificationSkKeyin.prototype = {
     SMS2014: 'SMS2014',
     SMS3001: 'SMS3001'
   },
-  openKeyinPopup: function (svcInfo, authUrl, command, deferred, callback) {
+  openKeyinPopup: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+    this._authKind = authKind;
 
     this._popupService.open({
       hbs: 'CO_02_01_02_02_01',
@@ -141,7 +143,8 @@ Tw.CertificationSkKeyin.prototype = {
       receiverNum: this.$inputMdn.val(),
       jobCode: 'NFM_TWD_MBIMASK_AUTH',
       authNum: this.$inputCert.val(),
-      authUrl: this._authUrl
+      authUrl: this._authUrl,
+      authKind: this._authKind
     }).done($.proxy(this._successKeyinConfirm, this));
   },
   _successKeyinConfirm: function (resp) {
