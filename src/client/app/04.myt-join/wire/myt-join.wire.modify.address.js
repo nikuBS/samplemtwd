@@ -77,7 +77,17 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   //--------------------------------------------------------------------------[EVENT]
   $submitApplyEvt: function(event) {
     Tw.Logger.info('[신청하기]', event);
+
+    this.addressFormData.cntcPrefrMblPhonNum = this._noDash( this.addressFormData.cntcPrefrMblPhonNum );
+    this.addressFormData.mvDt = this._noDash( this.addressFormData.mvDt );
+    this.addressFormData.setPrefrDt = this._noDash( this.addressFormData.setPrefrDt );
+    this.addressFormData.stopPrefrDt = this._noDash( this.addressFormData.stopPrefrDt );
+
     var param = this.addressFormData;
+
+    Tw.Logger.info('[param]', param);
+
+
     this._chgWireAddrInfo(param);
 
   },
@@ -199,7 +209,6 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     //유효성 체크
     if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
       Tw.Logger.info('[범위에 포함]');
-      this.addressFormData.installDt = tempDt;
       this.$select_install_input.val( tempDt );
       this.addressFormData.setPrefrDt = tempDt;
 
