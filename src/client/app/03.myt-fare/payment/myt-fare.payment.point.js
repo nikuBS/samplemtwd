@@ -75,7 +75,7 @@ Tw.MyTFarePaymentPoint.prototype = {
     var isValid = this._validation.checkMoreLength(this._pointCardNumber, 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
 
     if (isValid) {
-      this._apiService.request(Tw.API_CMD.BFF_07_0043, {'ocbCcno': this._pointCardNumber})
+      this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this._pointCardNumber })
         .done($.proxy(this._getSuccess, this))
         .fail($.proxy(this._getFail, this));
     }
@@ -175,9 +175,9 @@ Tw.MyTFarePaymentPoint.prototype = {
     }
     return (this._validation.checkIsAvailablePoint(this.$point.val(),
         parseInt(this.$pointBox.find(className).attr('id'), 10),
-        Tw.MSG_PAYMENT.REALTIME_A12) &&
+        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
       this._validation.checkIsMore(this.$point.val(), 1000, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06));
+      this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT));
   },
   _pay: function () {
     var reqData = this._makeRequestData();

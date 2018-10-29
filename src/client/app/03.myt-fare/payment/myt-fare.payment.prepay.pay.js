@@ -93,8 +93,8 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     var _prepayAmount = this.$prepayAmount.val();
     return (
       this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
-      this._validation.checkIsMore(_prepayAmount, 9999, Tw.MSG_PAYMENT.PRE_A11) &&
-      this._validation.checkMultiple(_prepayAmount, 10000, Tw.MSG_PAYMENT.PRE_A11) &&
+      this._validation.checkIsMore(_prepayAmount, 9999, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
+      this._validation.checkMultiple(_prepayAmount, 10000, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
       this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
       this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
       this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
@@ -119,7 +119,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
         this._getFail();
       }
     } else {
-      this._getFail(res);
+      this._getFail();
     }
   },
   _getFail: function () {

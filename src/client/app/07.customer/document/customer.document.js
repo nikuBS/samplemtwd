@@ -120,7 +120,7 @@ Tw.CustomerDocument.prototype = {
     }
   },
   _getFail: function (err) {
-    this._popupService.openAlert(err.code + ' ' + err.msg);
+    Tw.Error(err.code, err.msg).pop();
   },
   _setNextList: function ($target, result) {
     for(var key in result) {

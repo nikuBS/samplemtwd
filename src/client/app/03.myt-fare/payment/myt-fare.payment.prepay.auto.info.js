@@ -113,7 +113,7 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
         this._setData($record);
       }
     } else {
-      this._getFail();
+      this._getFail(res);
     }
   },
   _setData: function ($record) {
@@ -146,7 +146,7 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
     this._setHiddenMoreBtn();
   },
   _getFail: function (err) {
-    this._popupService.openAlert(err.code + ' ' + err.msg);
+    Tw.Error(err.code, err.msg).pop();
   },
   _setHiddenMoreBtn: function () {
     if (this._page === this._totalPage) {

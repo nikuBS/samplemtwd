@@ -75,10 +75,10 @@ Tw.MyTFarePaymentAuto.prototype = {
     var title = this._getTitle();
 
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:title,
-      data:Tw.POPUP_TPL.FARE_PAYMENT_CARD_DATE
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: title,
+      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_DATE
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _getTitle: function () {
@@ -117,7 +117,7 @@ Tw.MyTFarePaymentAuto.prototype = {
     }
   },
   _fail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _isValid: function () {
     var isValid = false;

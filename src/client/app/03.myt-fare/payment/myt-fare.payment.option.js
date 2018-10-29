@@ -57,10 +57,10 @@ Tw.MyTFarePaymentOption.prototype = {
   },
   _changePaymentDate: function () {
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE,
-      data:Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE,
+      data: Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE
     }, $.proxy(this._selectDatePopupCallback, this));
   },
   _selectDatePopupCallback: function ($layer) {
@@ -88,7 +88,7 @@ Tw.MyTFarePaymentOption.prototype = {
     }
   },
   _changeFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _changeAddress: function () {
     this._popupService.open({
