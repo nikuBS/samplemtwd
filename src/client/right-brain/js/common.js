@@ -1,6 +1,7 @@
 $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
+  skt_landing.action.keyboard();
 });
 $(window).on('resize', function () {
 
@@ -554,6 +555,15 @@ skt_landing.action = {
       });
     }
   },
+  keyboard : function(){ /* input에 focus시 하단 fixed 영역 해제 */
+    var selector = '.popup-page textarea, .popup-page input[type=text], .popup-page input[type=date], .popup-page input[type=datetime-local], .popup-page input[type=email], .popup-page input[type=month], .popup-page input[type=number], .popup-page input[type=password], .popup-page input[type=search], .popup-page input[type=tel], .popup-page input[type=time], .popup-page input[type=url], .popup-page input[type=week]';
+    $(document).on('focus',selector, function(){
+      $(this).closest('.popup-page').addClass('focusin')
+    })
+    $(document).on('focusout',selector, function(){
+      $(this).closest('.popup-page').removeClass('focusin')
+    })
+  }
 };
 skt_landing.dev = {
   sortableInit: function(selector, options){
