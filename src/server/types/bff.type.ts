@@ -269,8 +269,8 @@ export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
 export const COMBINATION_PRODUCT = {
   NA00005055: 'data-share', // 가족나눔데이터
   NA00004211: 'data-share', // T가족결합(착한가족)
-  NH00000084: 'family-free',
-  TW20000008: 'family-free', // TB끼리 온가족프리
+  NH00000084: 'tb-free',
+  TW20000008: 'tb-free', // TB끼리 온가족프리
   NH00000059: 'tb-family',
   TW20000007: 'tb-family', // TB끼리 온가족무료
   NH00000037: 'tb-internet',
