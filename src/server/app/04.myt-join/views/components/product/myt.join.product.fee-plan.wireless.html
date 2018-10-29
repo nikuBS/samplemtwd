@@ -7,8 +7,8 @@
           <span class="blind">상품명</span>
           <span class="title-l"><%= feePlan.feePlanProd.prodNm %></span>
         </div>
-        <% if ( feePlan.feePlanProd.prodFltImgPath ) { %>
-        <span class="subtitle3"><img src="<%= feePlan.feePlanProd.prodFltImgPath %>" alt="LTE"></span>
+        <% if ( feePlan.feePlanProd.prodFltNm ) { %>
+        <span class="subtitle3">#<%= feePlan.feePlanProd.prodFltNm %></span>
         <% } %>
       </div>
       <div class="info-detail mt40">
