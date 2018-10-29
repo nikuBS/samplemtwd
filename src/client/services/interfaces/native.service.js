@@ -29,7 +29,6 @@ Tw.NativeService.prototype = {
     window.onInit = $.proxy(this._onInitApp, this);
     window.onEasyLogin = $.proxy(this._onEasyLogin, this);
     window.onSessionExpired = $.proxy(this._onSessionExpired, this);
-    window.requestSession = $.proxy(this._requestSession, this);
   },
 
   _setParameter: function (command, params, callback) {
@@ -66,7 +65,17 @@ Tw.NativeService.prototype = {
 
   _onBack: function (resp) {
     Tw.Logger.info('onBack', resp);
-    history.back();
+    if ( /\/main\/home/.test(location.href) ||
+      /\/main\/t-notify/.test(location.href) ||
+      /\/main\/search/.test(location.href) ) {
+      if(this._popupService.isPopup()) {
+        this._popupService.close();
+      } else {
+        this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.EXIT_APP, null, $.proxy(this._exitApp, this));
+      }
+    } else {
+      history.back();
+    }
   },
 
   _onNativeCallback: function (_resp) {
@@ -100,16 +109,8 @@ Tw.NativeService.prototype = {
     Tw.Logger.info('[onSessionExpired]', resp);
   },
 
-  _requestSession: function (randomCode) {
-    // this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
-    //   .done($.proxy(function (resp) {
-    //     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-    //       this.send(Tw.NTV_CMD.SERVER_SESSION, {
-    //         session: resp.result,
-    //         randomCode: randomCode
-    //       });
-    //     }
-    //   }, this));
+  _exitApp: function () {
+    this.send(Tw.NTV_CMD.EXIT, {});
   }
 
 };

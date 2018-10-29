@@ -280,6 +280,12 @@ Tw.PopupService.prototype = {
       history.go(-hashLength);
     }
   },
+  isPopup: function () {
+    if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
+      return true;
+    }
+    return false;
+  },
   afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
     this.open({
         'hbs': 'complete',

@@ -92,7 +92,7 @@
                                 <span class="num ff-tg-black">무제한</span>
                                 <% } else { %>
                                 <span class="num ff-tg-black"><%= homeData.usageData.data.showRemained.data %></span>
-                                <span class="dingbat gb"><span class="blind"><%= homeData.usageData.data.showRemained.unit %></span></span>
+                                <span class="dingbat <%= (homeData.usageData.data.showRemained.unit).toLowerCase() %>"><span class="blind"><%= homeData.usageData.data.showRemained.unit %></span></span>
                                 <% } %>
                             </div>
                             <div class="graph-area-type4">
@@ -218,7 +218,7 @@
                             <div class="real-remaining-notice">
                                 <p class="remaining-notice-txt">잔여량 조회 서비스가 <br/>제공되지 않습니다.</p>
                                 <p class="remaining-notice-sub">정지 이력이 있어 잔여량 조회 서비스가 제공되지 않습니다. <br/> 자세한 문의는 고객센터를 <br/>이용해주시기 바랍니다.</p>
-                                <a class="bt-link-tx underline mt16" href="">이메일로 문의하기</a>
+                                <a class="bt-link-tx underline mt16" href="/customer/email">이메일로 문의하기</a>
                                 <span class="ico"></span>
                             </div>
                         </dd>
