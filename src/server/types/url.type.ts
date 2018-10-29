@@ -77,6 +77,7 @@ export const URL = {
   '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
 
   // Customer
+  '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
   '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },

@@ -160,6 +160,8 @@ export const URL = {
   '/customer/event/detail': { login: false, id: 'CI_13_02', title: '이벤트 상세' }, // 이벤트 상세
   '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
   '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
+  '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
+
   // auth
   '/auth/cert/motp': { login: false, id: 'CO_02_01_02_L02_L01', title: '모바일T안심인증' },
   '/auth/cert/nice': { login: true, id: '', title: '' },

@@ -1,0 +1,245 @@
+<%#
+* FileName: customer.branch.search.html
+* Author: Hakjoon Sim (hakjoon.sim@sk.com)
+* Date: 2018.10.16
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <%- include('../../../../common/views/components/header.component.html', { title: '지점/대리점 찾기' }); %>
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <!-- .cont-box -->
+                <h2 class="blind">내용</h2>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a class="fe-replace-history" href="#name">매장명</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#address">주소</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#tube">지하철</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                            <!-- .search-point -->
+                                            <div class="search-point">
+                                                <!-- .cont-box -->
+                                                <div class="cont-box pb0">
+                                                    <!-- .inputbox -->
+                                                    <span class="inputbox">
+                                                        <span class="input">
+                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="" aria-labelledby="aria-citation-phone" />
+                                                            <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                    </span>
+                                                    <!-- // .inputbox -->
+                                                    <!-- .filter -->
+                                                    <div class="filter">
+                                                        <div class="inline">
+                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true">전체</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // .filter -->
+                                                    <!-- .btn-search -->
+                                                    <div class="btn-search">
+                                                        <ul class="bt-slice">
+                                                            <li class="bt-blue1">
+                                                                <button id="fe-btn-search-name" disabled>검색</button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- // .btn-search -->
+                                                </div>
+                                                <!-- // .cont-box -->
+                                            </div>
+                                            <!-- // .search-point -->
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                            <!-- .search-point -->
+                                            <div class="search-point">
+                                                <!-- .cont-box -->
+                                                <div class="cont-box pb0">
+                                                    <!-- .inputbox -->
+                                                    <span class="inputbox">
+                                                        <span class="input">
+                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="" aria-labelledby="aria-citation-phone" />
+                                                            <button id="fe-cancel-addr" class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                    </span>
+                                                    <!-- // .inputbox -->
+                                                    <!-- .filter -->
+                                                    <div class="filter">
+                                                        <div class="inline">
+                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true">전체</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // .filter -->
+                                                    <!-- .btn-search -->
+                                                    <div class="btn-search">
+                                                        <ul class="bt-slice">
+                                                            <li class="bt-blue1">
+                                                                <button id="fe-btn-search-addr" disabled>검색</button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- // .btn-search -->
+                                                </div>
+                                                <!-- // .cont-box -->
+                                            </div>
+                                            <!-- // .search-point -->
+                                        </li>
+                                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                                            <!-- .search-point -->
+                                            <div class="search-point">
+                                                <!-- .cont-box -->
+                                                <div class="cont-box pb0">
+                                                    <!-- .inputbox -->
+                                                    <span class="inputbox">
+                                                        <span class="input">
+                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="지하철명" value="" aria-labelledby="aria-citation-phone" />
+                                                            <button id="fe-cancel-tube" class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                    </span>
+                                                    <!-- // .inputbox -->
+                                                    <!-- .filter -->
+                                                    <div class="filter">
+                                                        <div class="inline">
+                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true">전체</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // .filter -->
+                                                    <!-- .btn-search -->
+                                                    <div class="btn-search">
+                                                        <ul class="bt-slice">
+                                                            <li class="bt-blue1">
+                                                                <button id="fe-btn-search-tube" disabled>검색</button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- // .btn-search -->
+                                                </div>
+                                                <!-- // .cont-box -->
+                                            </div>
+                                            <!-- // .search-point -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .component -->
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box pt0">
+                    <!-- .search-point -->
+                    <div class="search-point">
+                        <div class="fe-none none">
+                            <!-- .ti-caption-gray -->
+                            <div class="ti-caption-gray">
+                                <h3 class="tit">총 <em>0</em>개의 매장이 검색되었습니다.</h3>
+                            </div>
+                            <!-- // .ti-caption-gray -->
+                            <!-- .contents-empty -->
+                            <div class="contents-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">검색 결과가 없습니다.<br /><strong>다시 검색해주세요.</strong></p>
+                            </div>
+                            <!-- // .contents-empty -->
+                        </div>
+
+                        <div class="fe-result none">
+                            <!-- .ti-caption-gray -->
+                            <div class="ti-caption-gray">
+                                <h3 class="tit">총 <em id="fe-result-count">0</em>개의 매장이 검색되었습니다.</h3>
+                            </div>
+                            <!-- // .ti-caption-gray -->
+                            <!-- .shop-info -->
+                            <div class="shop-info">
+                                <div class="shop-txt">
+                                    <ul id="fe-result-list">
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- // .shop-info -->
+                            <!-- .btn-more -->
+                            <div class="btn-more">
+                                <div class="bt-more">
+                                    <button role="button" title="">더보기</button>
+                                </div>
+                            </div>
+                            <!-- // .btn-more -->
+                        </div>
+
+                        <!-- .bn-search -->
+                        <div class="bn-search">
+                            <div class="inner">
+                                <span class="ico"></span>
+                                <div class="txt">
+                                    나의 위치와
+                                    <strong>가까운 매장을 찾아보세요</strong>
+                                    <a class="bt-link-tx underline" href="">찾아보기</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // .bn-search -->
+                        <!-- .hours-of-business -->
+                        <div class="hours-of-business">
+                            <div class="tit">업무시간 안내</div>
+                            <div class="as-time-list">
+                                <dl>
+                                    <dt>일반지점</dt>
+                                    <dd>09:00 ~ 18:00</dd>
+                                </dl>
+                                <dl>
+                                    <dt>경주, 거제 소형지점</dt>
+                                    <dd>09:30 ~ 18:00</dd>
+                                </dl>
+                            </div>
+                            <div class="dot">토, 일요일 및 공휴일 휴무</div>
+                            <div class="dot">대리점 업무시간은 매장 별로 상이합니다.</div>
+                        </div>
+                        <!-- // .hours-of-business -->
+                    </div>
+                    <!-- // .search-point -->
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/template" id="tpl_search_result_item">
+  {{#list}}
+  <li>
+      <dl class="type02 fe-branch-detail">
+          <dt>{{locName}}</dt>
+          <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a></dd>
+      </dl>
+  </li>
+  {{/list}}
+</script>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerBranchSearch($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>
