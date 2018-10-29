@@ -61,8 +61,8 @@ class MyTFarePaymentMicroAutoInfo extends TwViewController {
       record.map((data) => {
         data.name = MYT_FARE_PREPAY_NAME[data.autoChrgReqClCd];
         data.date = DateHelper.getFullDateAndTime(data.operDtm);
-        data.autoChrgStrdAmount = FormatHelper.addComma(data.autoChrgStrdAmt);
-        data.autoChrgAmount = FormatHelper.addComma(data.autoChrgAmt);
+        data.autoChrgStrdAmount = FormatHelper.addComma(parseInt(data.autoChrgStrdAmt, 10).toString());
+        data.autoChrgAmount = FormatHelper.addComma(parseInt(data.autoChrgAmt, 10).toString());
       });
     }
     record.code = API_CODE.CODE_00;
