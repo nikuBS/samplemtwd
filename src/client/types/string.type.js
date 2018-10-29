@@ -253,6 +253,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
 };
 
 Tw.ALERT_MSG_COMMON = {
+  EXIT_APP: '앱을 종료하시겠습니까?',
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
 
