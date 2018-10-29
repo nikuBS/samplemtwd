@@ -61,7 +61,7 @@
                         <li>
                             <dl>
                                 <dt>자동 선결제<button aria-haspopup="true" class="info-view-ic fe-auto-pay-info">정보보기</button></dt>
-                                <% if (result.isAuto) { %>
+                                <% if (result.autoChrgStCd === 'U') { %>
                                 <dd>
                                     <span class="val">변경 및 해지</span>
                                     <button class="fe-auto-prepay-change">자동선결제 변경 및 해지</button>

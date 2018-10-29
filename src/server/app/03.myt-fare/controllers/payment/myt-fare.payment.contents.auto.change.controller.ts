@@ -38,8 +38,8 @@ class MyTFarePaymentContentsAutoChange extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000;
-      result.comboChargeAmount = result.cmbAutoChrgAmt / 10000;
+      result.comboStandardAmount = result.autoChrgStrdAmt / 10000;
+      result.comboChargeAmount = result.autoChrgAmt / 10000;
     }
     return result;
   }
