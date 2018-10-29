@@ -3092,6 +3092,10 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box; }
+    .history-list ul li button .title-box .tit, .history-list ul li a .title-box .tit {
+      color: #000; }
+    .history-list ul li button .title-box .sub-tit, .history-list ul li a .title-box .sub-tit {
+      color: #666; }
     .history-list ul li button .li-elem, .history-list ul li a .li-elem {
       border-top: 1px solid #e1e1e1;
       padding-left: 0;
@@ -8588,6 +8592,201 @@ a.bt-link-tx.underline.small {
       height: 1.25rem; }
       .graph-area-type3 .arrow-box .arrow-li button {
         display: inline-block; }
+
+.graph-area-type4 {
+  position: relative;
+  margin: 1.5625rem 0 0 0;
+  width: 100%;
+  height: 13.75rem;
+  padding: 0 0 1.25rem 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .graph-area-type4 .chart_ul {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 10.9375rem;
+    z-index: 2; }
+    .graph-area-type4 .chart_ul .graph-list {
+      float: left;
+      position: relative;
+      height: 100%; }
+      .graph-area-type4 .chart_ul .graph-list dl .graph-tit {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        color: #666;
+        font-size: 0.8125rem;
+        text-align: center; }
+      .graph-area-type4 .chart_ul .graph-list dl dd {
+        text-align: center; }
+        .graph-area-type4 .chart_ul .graph-list dl dd .box {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1.625rem;
+          bottom: 1.625rem; }
+          .graph-area-type4 .chart_ul .graph-list dl dd .box .bar {
+            position: absolute;
+            left: 50%;
+            right: 0;
+            bottom: 0;
+            margin: 0 0 0 -0.75rem;
+            width: 0.5rem;
+            background: #3b98e6; }
+            .graph-area-type4 .chart_ul .graph-list dl dd .box .bar:nth-of-type(3) {
+              background: url(/img/chart/pattern3.gif) repeat 0 0;
+              background-size: 0.5rem;
+              margin: 0 0 0 0.25rem; }
+          .graph-area-type4 .chart_ul .graph-list dl dd .box .txt {
+            display: block;
+            position: absolute;
+            right: 50%;
+            bottom: 50%;
+            margin-right: 0.1875rem;
+            color: #3b98e6;
+            font-size: 0.75rem;
+            text-align: right; }
+            .graph-area-type4 .chart_ul .graph-list dl dd .box .txt:nth-of-type(4) {
+              right: auto;
+              left: 50%;
+              margin-left: 0.1875rem;
+              text-align: left;
+              color: #e22f26; }
+  .graph-area-type4 .line-box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.625rem;
+    bottom: 1.625rem; }
+    .graph-area-type4 .line-box .line {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: repeating-linear-gradient(90deg, #ddd, #ddd 2%, #fff 2%, #fff 3%);
+      z-index: 1; }
+  .graph-area-type4 .chart-left {
+    position: absolute;
+    left: 0;
+    bottom: 1.25rem;
+    padding: 0 1.25rem 0 0.625rem;
+    width: 75%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .graph-area-type4 .chart-left .rec-box {
+      overflow: hidden; }
+      .graph-area-type4 .chart-left .rec-box .rec-ul {
+        position: relative; }
+      .graph-area-type4 .chart-left .rec-box .rec-li {
+        float: left;
+        margin: 0 1.25rem 0 0; }
+        .graph-area-type4 .chart-left .rec-box .rec-li:last-of-type {
+          margin: 0; }
+        .graph-area-type4 .chart-left .rec-box .rec-li .bar {
+          display: inline-block;
+          margin: 0 0.5rem 0 0;
+          width: 0.5rem;
+          height: 0.5rem;
+          background: #3b98e6; }
+        .graph-area-type4 .chart-left .rec-box .rec-li .txt {
+          color: #666;
+          font-size: 0.75rem; }
+        .graph-area-type4 .chart-left .rec-box .rec-li:nth-of-type(2) .bar {
+          background: url(/img/chart/pattern3.gif) repeat 0 0;
+          background-size: 0.5rem; }
+
+.graph-area-type5 {
+  position: relative;
+  margin: 2.5rem 0 0 0;
+  width: 100%;
+  height: 11.5625rem; }
+  .graph-area-type5 ul {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2; }
+    .graph-area-type5 ul .graph-list {
+      float: left;
+      position: relative;
+      height: 100%; }
+      .graph-area-type5 ul .graph-list dl .graph-tit {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        color: #666;
+        font-size: 0.8125rem;
+        text-align: center;
+        margin-top: -2.5rem; }
+      .graph-area-type5 ul .graph-list dl dd {
+        text-align: center; }
+        .graph-area-type5 ul .graph-list dl dd .box {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1.625rem;
+          bottom: 2.875rem; }
+          .graph-area-type5 ul .graph-list dl dd .box .bar {
+            position: absolute;
+            left: 50%;
+            right: 0;
+            bottom: 0;
+            margin: 0 0 0 -0.25rem;
+            width: 0.5rem;
+            background: #3b98e6; }
+            .graph-area-type5 ul .graph-list dl dd .box .bar.point {
+              background: url(/img/chart/pattern1.gif) repeat 0 0;
+              background-size: 0.5rem; }
+          .graph-area-type5 ul .graph-list dl dd .box .txt {
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 50%;
+            color: #3b98e6;
+            font-size: 0.75rem;
+            text-align: center; }
+      .graph-area-type5 ul .graph-list:nth-of-type(1) .bar {
+        background: url(/img/chart/pattern4.gif) repeat 0 0 !important;
+        background-size: 0.5rem !important; }
+      .graph-area-type5 ul .graph-list:nth-of-type(3) .bar {
+        background: url(/img/chart/pattern3.gif) repeat 0 0 !important;
+        background-size: 0.5rem !important; }
+      .graph-area-type5 ul .graph-list:nth-of-type(3) .txt {
+        color: #e22f26 !important; }
+  .graph-area-type5 .line-box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.625rem;
+    bottom: 2.875rem; }
+    .graph-area-type5 .line-box .line {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: repeating-linear-gradient(90deg, #ddd, #ddd 2%, #fff 2%, #fff 3%);
+      z-index: 1; }
+
+.chart-tit {
+  position: relative;
+  font-size: 0.875rem;
+  letter-spacing: -0.02em; }
+  .chart-tit .spot {
+    font-weight: 700;
+    letter-spacing: -0.02em; }
+  .chart-tit .rs {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #666;
+    letter-spacing: -0.02em; }
 
 .unpaid-charges .total-box {
   margin: 0 0 0.9375rem 0; }
