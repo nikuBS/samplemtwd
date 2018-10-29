@@ -71,6 +71,7 @@ Tw.CustomerVoiceRegister.prototype = {
   _onChoiceNumber: function (e) {
     this._popupService.close();
     this.$btn_select_phone.data('svcmgmtnum', $(e.currentTarget).data('service-number').toString());
+    this.$btn_select_phone.text($(e.currentTarget).text().trim());
   },
 
   _onClickRegister: function () {
@@ -80,7 +81,7 @@ Tw.CustomerVoiceRegister.prototype = {
 
   _onSuccessRegister: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // this._history.replaceURL('/customer/voice/complete');
+      this._history.replaceURL('/customer/voice/complete?targetNum=' + this.$btn_select_phone.text().trim());
     }
   }
 };
