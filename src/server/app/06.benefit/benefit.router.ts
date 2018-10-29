@@ -8,7 +8,7 @@ class BenefitRouter extends TwRouter {
     super();
     // this.controllers.push({ url: '/', controller: HomeMain });
 
-    this.controllers.push({ url: '/join', controller: BenefitMembershipJoin });
+    this.controllers.push({ url: '/membership/join', controller: BenefitMembershipJoin });
     this.controllers.push({ url: '/index', controller: BenefitIndex });
     this.controllers.push({ url: '/my-benefit/rainbow-point', controller: BenefitMyBenefitRainbowPoint });
   }
