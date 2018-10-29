@@ -92,11 +92,14 @@
     </div>
     <!-- // .popup hbs -->
 </div>
+<footer id="fe-all-menu">
+    <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</footer>
+</body>
 
 <script>
   $(document).ready(function () {
     new Tw.MyTJoinInfoSms($('.wrap'));
   });
 </script>
-</body>
 <% include ../../components/end.component.html %>

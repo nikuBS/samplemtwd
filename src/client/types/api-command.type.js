@@ -142,6 +142,8 @@ Tw.API_CMD = {
   BFF_05_0142: { path: '/core-modification/v1/wire-agreements', method: Tw.API_METHOD.PUT },
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.GET },
   BFF_05_0150: { path: '/core-modification/v1/wire-troubles-cancel', method: Tw.API_METHOD.DELETE },
+  BFF_05_0151: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.POST },
+  BFF_05_0152: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.DELETE },
   BFF_05_0155: { path: '/core-modification/v1/myinfo/discount-info', method: Tw.API_METHOD.GET },
   BFF_05_0156: { path: '/core-modification/v1/wire-troubles', method: Tw.API_METHOD.GET },
   BFF_05_0158: { path: '/core-modification/v1/wire/penalty-info', method: Tw.API_METHOD.GET },
@@ -226,9 +228,9 @@ Tw.API_CMD = {
   BFF_07_0018: { path: '/core-bill/v1/bill-pay/tax-reprint-email', method: Tw.API_METHOD.GET },
   BFF_07_0019: { path: '/core-bill/v1/bill-pay/tax-reprint-fax', method: Tw.API_METHOD.GET },
   BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: Tw.API_METHOD.GET },
-  BFF_07_0023: { path: '/core-bill/v1/bill-pay/settle-pay-bank', method: Tw.API_METHOD.POST },
+  BFF_07_0023: { path: '/payment/settle-pay-bank', method: Tw.API_METHOD.POST },
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: Tw.API_METHOD.GET },
-  BFF_07_0025: { path: '/core-bill/v1/bill-pay/settle-pay-card', method: Tw.API_METHOD.POST },
+  BFF_07_0025: { path: '/payment/settle-pay-card', method: Tw.API_METHOD.POST },
   BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: Tw.API_METHOD.GET },
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.POST },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
@@ -376,7 +378,7 @@ Tw.NODE_CMD = {
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
   GET_SERVICE_NOTICE: { path: '/service-notice', method: Tw.API_METHOD.GET },
 
-  CERT_TEST: { path: '/certTest', method: Tw.API_METHOD.GET }
+  GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

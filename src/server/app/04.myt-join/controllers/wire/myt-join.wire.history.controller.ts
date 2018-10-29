@@ -24,7 +24,7 @@ class MyTJoinWireHistory extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     this._list = [];
 
@@ -186,7 +186,7 @@ class MyTJoinWireHistory extends TwViewController {
         this._resultHandler(r0143periChg, this._ATYPE_143);
         this._resultHandler(r0153prodChg, this._ATYPE_153);
 
-        const option = { svcInfo: svcInfo, list: this._list };
+        const option = { svcInfo: svcInfo, pageInfo: pageInfo, list: this._list };
         res.render('wire/myt-join.wire.history.html', option);
       });
   }

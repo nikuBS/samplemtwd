@@ -20,6 +20,7 @@ Tw.CertificationSkSms = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._authKind = null;
   this._certResult = null;
   this._isFirstCert = true;
 };
@@ -43,11 +44,12 @@ Tw.CertificationSkSms.prototype = {
     SMS3001: 'SMS3001'
   },
 
-  openSmsPopup: function (svcInfo, authUrl, command, deferred, callback) {
+  openSmsPopup: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+    this._authKind = authKind;
 
     this._popupService.open({
       hbs: 'CO_02_01_02_01',
@@ -114,7 +116,9 @@ Tw.CertificationSkSms.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, {
       jobCode: 'NFM_TWD_MBIMASK_AUTH',
       authNum: this.$inputCert.val(),
-      authUrl: this._authUrl
+      authUrl: this._authUrl,
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successSmsConfirm, this));
   },
   _successSmsConfirm: function (resp) {

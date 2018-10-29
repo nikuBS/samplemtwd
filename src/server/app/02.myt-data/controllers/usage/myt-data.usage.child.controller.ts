@@ -22,7 +22,7 @@ class MyTDataUsageChild extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, children: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const self = this;
     const childSvcMgmtNum = req.params.childSvcMgmtNum;
     const childUsageReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0001, {
@@ -37,15 +37,15 @@ class MyTDataUsageChild extends TwViewController {
           const usageData = usageDataResp.result;
           const baseFeePlan = baseFeePlanResp.result;
           const fomattedData = self.myTDataUsage.parseUsageData(usageData, svcInfo);
-          const child = children.find((_child) => {
+          const child = childInfo.find((_child) => {
             return _child.svcMgmtNum === childSvcMgmtNum;
           });
           fomattedData['childSvcNum'] = child.svcNum;
           fomattedData['childProdId'] = baseFeePlan.prodId;
           fomattedData['childProdNm'] = baseFeePlan.prodName;
-          res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo: svcInfo });
+          res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo, pageInfo });
         } else {
-          res.render(VIEW.ERROR, { usageData: usageDataResp, svcInfo: svcInfo });
+          res.render(VIEW.ERROR, { usageData: usageDataResp, svcInfo });
         }
       }
     );

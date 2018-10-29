@@ -12,15 +12,17 @@ Tw.CertificationPublic = function () {
   this._command = null;
   this._callback = null;
   this._deferred = null;
+  this._authKind = null;
 };
 
 
 Tw.CertificationPublic.prototype = {
-  open: function (svcInfo, authUrl, command, deferred, callback) {
+  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._authUrl = authUrl;
     this._command = command;
     this._callback = callback;
     this._deferred = deferred;
+    this._authKind = authKind;
     this._requestAppMessage(authUrl, command);
   },
   _requestAppMessage: function (authUrl, command) {
@@ -56,8 +58,7 @@ Tw.CertificationPublic.prototype = {
       return '';
     }
     if ( this._needAccountInfo(this._command.command.path) ) {
-      // TODO: deleted
-      return Tw.PUBLIC_AUTH_COP + ',' + '신한은행' + ',' + this._command.params.bankOrCardAccn + ',' + result.custName + ',' + result.birthDate;
+      return Tw.PUBLIC_AUTH_COP + ',' + this._command.params.bankOrCardName + ',' + this._command.params.bankOrCardAccn + ',' + result.custName + ',' + result.birthDate;
     }
     return result.custName + ',' + result.birthDate;
   },
@@ -70,9 +71,11 @@ Tw.CertificationPublic.prototype = {
     return false;
   },
   _setComplete: function () {
+    // TODO: 상품인경우 prodAuthKey 추가
     this._apiService.request(Tw.API_CMD.BFF_01_0026, {
       authUrl: this._command.command.method + '|' + this._authUrl,
-      authKind: 'P'
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successComplete, this));
   },
   _successComplete: function (resp) {

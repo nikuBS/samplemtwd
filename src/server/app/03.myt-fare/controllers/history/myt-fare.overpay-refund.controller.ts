@@ -24,7 +24,7 @@ class MyTFareOverpayRefund extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -39,6 +39,7 @@ class MyTFareOverpayRefund extends TwViewController {
             code: resData.code,
             msg: resData.msg,
             svcInfo: svcInfo
+          //  ,pageInfo: pageInfo
           });
         }
 
@@ -63,25 +64,25 @@ class MyTFareOverpayRefund extends TwViewController {
           return prev;
         }, []);
 
-        this.renderListView(res, svcInfo, query, resData.result.refundPaymentRecord);
+        this.renderListView(res, svcInfo, pageInfo, query, resData.result.refundPaymentRecord);
       });
 
     } else if (query.current === 'detail') {
-      this.renderDetailView(res, svcInfo, query);
+      this.renderDetailView(res, svcInfo, pageInfo, query);
     }
   }
 
-  renderListView(res: Response, svcInfo: any, query: Query, data: any) {
+  renderListView(res: Response, svcInfo: any, pageInfo: any, query: Query, data: any) {
 
-    res.render('history/myt-fare.overpay-refund.history.html', {svcInfo: svcInfo, data: {
+    res.render('history/myt-fare.overpay-refund.history.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
       current: query.current,
         data: data
     }});
   }
 
-  renderDetailView(res: Response, svcInfo: any, query: Query) {
+  renderDetailView(res: Response, svcInfo: any, pageInfo: any, query: Query) {
 
-    res.render('history/myt-fare.overpay-refund.history.detail.html', {svcInfo: svcInfo, data: {
+    res.render('history/myt-fare.overpay-refund.history.detail.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
         current: query.current
       }});
   }

@@ -19,7 +19,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.reqBalances(),
       this.reqBalanceAddOns(),
@@ -49,7 +49,8 @@ class MyTDataUsageTotalSharingData extends TwViewController {
 
       const option = {
         defaultData: defaultData || {},
-        svcInfo: svcInfo || {}
+        svcInfo: svcInfo || {},
+        pageInfo: pageInfo || {}
       };
 
       option['balanceAddOns'] = balanceAddOnsResp.result;

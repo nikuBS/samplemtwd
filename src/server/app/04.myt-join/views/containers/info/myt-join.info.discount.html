@@ -41,14 +41,6 @@
 
                     <% include ../../components/info/myt-join.info.discount.fee-type-b.html %>
 
-                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_C' ) { %> <%#태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C %>
-
-                    <% include ../../components/info/myt-join.info.discount.fee-type-c.html %>
-
-                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_D' ) { %> <%#와이브로약정할인 | fee_type_D %>
-
-                    <% include ../../components/info/myt-join.info.discount.fee-type-d.html %>
-
                 <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_E' ) { %> <%#선택약정할인제도 | fee_type_E %>
 
                     <% include ../../components/info/myt-join.info.discount.fee-type-e.html %>
@@ -74,12 +66,7 @@
 
             <% for(var i=0; i < commDataInfo.terminalInfo.length; i++) { %>
 
-
-                <% if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_A' ) {%> <%# 가입 / T기본약정 | join_type_A %>
-
-                    <% include ../../components/info/myt-join.info.discount.join-type-a.html %>
-
-                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_B' ) { %> <%# 가입 / T지원금약정 | join_type_B %>
+                <% if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_B' ) { %> <%# 가입 / T지원금약정 | join_type_B %>
 
                     <% include ../../components/info/myt-join.info.discount.join-type-b.html %>
 
@@ -140,7 +127,10 @@
         </div>
     </div>
     <!--// #contents -->
-
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
 </div>
 
 

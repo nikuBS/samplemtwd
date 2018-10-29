@@ -7,12 +7,12 @@
           <span class="blind">상품명</span>
           <span class="title-l"><%= feePlan.feePlanProd.prodNm %></span>
         </div>
-        <% if ( feePlan.feePlanProd.prodFltImgPath ) { %>
-        <span class="subtitle3"><img src="<%= feePlan.feePlanProd.prodFltImgPath %>" alt="LTE"></span>
+        <% if ( feePlan.feePlanProd.prodFltNm ) { %>
+        <span class="subtitle3">#<%= feePlan.feePlanProd.prodFltNm %></span>
         <% } %>
       </div>
-      <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
       <div class="info-detail mt40">
+      <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
         <div class="tb-type">
           <ul>
             <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
@@ -56,7 +56,7 @@
         <% } %>
         <% if ( feePlan.feePlanProd.basFeeInfo ) { %>
         <div class="price-wrap mt20">
-          <span class="tx-sub"><span class="tx-bold vbl">월정액</span> 부가세포함</span>
+          <span class="tx-sub"><span class="tx-bold vbl">월정액</span><% if ( !feePlan.feePlanProd.basFeeInfo.isNaN ) { %> 부가세포함<% } %></span>
           <span class="tx-price">
             <span class="price"><%= feePlan.feePlanProd.basFeeInfo.value %></span>
             <% if ( !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>

@@ -13,15 +13,17 @@ Tw.CertificationPassword = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._authKind = null;
 };
 
 
 Tw.CertificationPassword.prototype = {
-  open: function (svcInfo, authUrl, command, deferred, callback ) {
+  open: function (svcInfo, authUrl, command, deferred, callback, authKind ) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+    this._authKind = authKind;
 
     this._nativeService.send(Tw.NTV_CMD.CERT_PW, {}, $.proxy(this._onCertResult, this));
   },
@@ -33,7 +35,9 @@ Tw.CertificationPassword.prototype = {
   _confirmPasswordCert: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0027, {
       type: Tw.AUTH_CERTIFICATION_METHOD.W,
-      authUrl: this._authUrl
+      authUrl: this._authUrl,
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successConfirmPasswordCert, this));
   },
   _successConfirmPasswordCert: function (resp) {

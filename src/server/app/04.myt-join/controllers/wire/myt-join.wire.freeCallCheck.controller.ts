@@ -21,6 +21,7 @@ class MyTJoinWireFreeCallCheck extends TwViewController {
   }
   public reqQuery: any;
   private _svcInfo: any;
+  public pageInfo: any;
 
   // 데이터
   private _resDataInfo: any = {};
@@ -33,10 +34,11 @@ class MyTJoinWireFreeCallCheck extends TwViewController {
     pageRenderView: 'wire/myt-join.wire.freeCallCheck.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
+    this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
@@ -72,6 +74,7 @@ class MyTJoinWireFreeCallCheck extends TwViewController {
     thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
       reqQuery: thisMain.reqQuery,
       svcInfo: svcInfo,
+      pageInfo: thisMain.pageInfo
     });
   }
 

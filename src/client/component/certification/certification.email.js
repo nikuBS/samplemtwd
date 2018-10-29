@@ -23,6 +23,7 @@ Tw.CertificationEmail = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._authKind = null;
   this._certResult = null;
 };
 
@@ -37,11 +38,12 @@ Tw.CertificationEmail.prototype = {
     ATH8005: 'ATH8005'
   },
 
-  open: function (svcInfo, authUrl, command, deferred, callback) {
+  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+    this._authKind = authKind;
 
     this._popupService.open({
       hbs: 'CO_02_01_03',
@@ -112,7 +114,9 @@ Tw.CertificationEmail.prototype = {
       email: this.$inputEmail.val(),
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
-      authTerm: 1000
+      authTerm: 1000,
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successEmailConfirm, this));
   },
   _successEmailConfirm: function (resp) {

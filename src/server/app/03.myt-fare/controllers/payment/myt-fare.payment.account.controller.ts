@@ -43,8 +43,8 @@ class MyTFarePaymentAccount extends TwViewController {
   }
 
   private getUnpaidList(): Observable<any> {
-    // return this.apiService.request(API_CMD.BFF_07_0021, {});
-    return Observable.of(UnpaidList);
+    return this.apiService.request(API_CMD.BFF_07_0021, {});
+    // return Observable.of(UnpaidList);
   }
 
   private getAutoInfo(): Observable<any> {

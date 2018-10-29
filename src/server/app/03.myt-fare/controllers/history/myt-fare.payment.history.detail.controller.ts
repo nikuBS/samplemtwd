@@ -27,7 +27,7 @@ class MyTFarePaymentHistoryDetail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -56,7 +56,9 @@ class MyTFarePaymentHistoryDetail extends TwViewController {
               break;
           }
           res.render('history/myt-fare.payment.history.detail.html', {
-            svcInfo: svcInfo, data: {
+            svcInfo: svcInfo,
+            pageInfo: pageInfo,
+            data: {
               current: query.current,
               headerTitle: MYT_PAYMENT_DETAIL_TITLE[requestType],
               data: resp
@@ -69,7 +71,9 @@ class MyTFarePaymentHistoryDetail extends TwViewController {
         requestType = req.query.type;
 
         res.render('history/myt-fare.payment.history.detail.html', {
-          svcInfo: svcInfo, data: {
+          svcInfo: svcInfo,
+          pageInfo: pageInfo,
+          data: {
             current: query.current,
             headerTitle: MYT_PAYMENT_DETAIL_TITLE[requestType]
           }

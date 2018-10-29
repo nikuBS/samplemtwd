@@ -39,6 +39,10 @@ class MyTJoinProductFeePlan extends TwViewController {
     return null;
   }
 
+  /**
+   * @param optionAndDiscountProgramList
+   * @private
+   */
   private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
@@ -52,37 +56,79 @@ class MyTJoinProductFeePlan extends TwViewController {
    * @param isWire
    * @private
    */
-  private _convertFeePlan(data, isWire): Observable<any> {
-    if ( isWire ) {
-      return Object.assign(data.result, {
-        basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt.toString()) : 0,
-        isDisplayFeeAmt: (data.result.coClCd !== 'T' && data.result.basFeeAmt > 0),
-        svcScrbDt: DateHelper.getShortDateWithFormat(data.result.svcScrbDt, 'YYYY.MM.DD'),
-        dcBenefits: data.result.dcBenefits.map((item) => {
-          return Object.assign(item, {
-            penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
-            dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
-            dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD')
-                : MYT_FEEPLAN_BENEFIT.ENDLESS,
-            dcVal: FormatHelper.addComma(item.dcVal.toString())
-          });
-        })
+  private _convertFeePlan(data, isWire): any {
+    return isWire ? this._convertWirePlan(data.result) : this._convertWirelessPlan(data.result);
+  }
+
+  /**
+   * @param wirePlan
+   * @private
+   */
+  private _convertWirePlan(wirePlan): any {
+    return Object.assign(wirePlan, {
+      basFeeAmt: wirePlan.basFeeAmt > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
+      isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
+      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.MM.DD'),
+      dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits),
+      optionFeePlans: this._convertWireOptionFeePlans(wirePlan.optionFeePlans)
+    });
+  }
+
+  /**
+   * @param optionFeePlans
+   * @private
+   */
+  private _convertWireOptionFeePlans(optionFeePlans): any {
+    return optionFeePlans.map((item) => {
+      return Object.assign(item, {
+        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
       });
+    });
+  }
+
+  /**
+   * @param dcBenefits
+   * @private
+   */
+  private _convertWireDcBenefits(dcBenefits): any {
+    return dcBenefits.map((item) => {
+      return Object.assign(item, {
+        penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
+        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
+        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD')
+            : MYT_FEEPLAN_BENEFIT.ENDLESS,
+        dcVal: FormatHelper.addComma(item.dcVal.toString())
+      });
+    });
+  }
+
+  /**
+   * @param wirelessPlan
+   * @private
+   */
+  private _convertWirelessPlan(wirelessPlan): any {
+    if (FormatHelper.isEmpty(wirelessPlan.feePlanProd)) {
+      return null;
     }
 
-    const spec = FormatHelper.convProductSpecifications(data.result.feePlanProd.basFeeTxt, data.result.feePlanProd.basDataTxt,
-      data.result.feePlanProd.basOfrVcallTmsTxt, data.result.feePlanProd.basOfrLtrAmtTxt);
+    const basFeeTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basFeeTxt),
+      basOfrDataQtyCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basDataTxt),
+      basOfrVcallTmsCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basOfrVcallTmsTxt),
+      basOfrCharCntCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basOfrLtrAmtTxt),
+      disProdList = FormatHelper.getValidVars(wirelessPlan.disProdList, []),
+      optProdList = FormatHelper.getValidVars(wirelessPlan.optProdList, []),
+      comProdList = FormatHelper.getValidVars(wirelessPlan.comProdList, []),
+      spec = FormatHelper.convProductSpecifications(basFeeTxt, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt);
 
-    return Object.assign(data.result, {
-      feePlanProd: FormatHelper.isEmpty(data.result.feePlanProd) ? null : Object.assign(data.result.feePlanProd, {
-        scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
+    return Object.assign(wirelessPlan, {
+      feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {
+        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.MM.DD'),
         basFeeInfo: spec.basFeeInfo,
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
         basOfrCharCntCtt: spec.basOfrCharCntCtt
       }),
-      optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...data.result.disProdList,
-        ...data.result.optProdList, ...data.result.comProdList])
+      optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...disProdList, ...optProdList, ...comProdList])
     });
   }
 
@@ -106,17 +152,13 @@ class MyTJoinProductFeePlan extends TwViewController {
         if ( feePlanInfo.code !== API_CODE.CODE_00 ) {
           return this.error.render(res, Object.assign(defaultOptions, {
             code: feePlanInfo.code,
-            msg: feePlanInfo.msg,
-            title: '나의 요금제',
-            svcInfo: svcInfo
+            msg: feePlanInfo.msg
           }));
         }
 
-        if ( FormatHelper.isEmpty(feePlanInfo.result.feePlanProd) ) {
-          return this.error.render(res, {
-            svcInfo: svcInfo,
-            title: '나의 요금제'
-          });
+        const feePlan = this._convertFeePlan(feePlanInfo, apiInfo.isWire);
+        if (FormatHelper.isEmpty(feePlan)) {
+          return this.error.render(res, defaultOptions);
         }
 
         res.render('product/myt-join.product.fee-plan.html', {
@@ -124,7 +166,7 @@ class MyTJoinProductFeePlan extends TwViewController {
           svcInfo: svcInfo,
           svcCdName: SVC_CDNAME,
           feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
-          feePlan: this._convertFeePlan(feePlanInfo, apiInfo.isWire),
+          feePlan: feePlan,
           isFeeAlarm: ['cellphone', 'pps'].indexOf(SVC_CDNAME[svcInfo.svcAttrCd]) !== -1
         });
     });

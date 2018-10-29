@@ -1,0 +1,96 @@
+<%#
+* FileName: customer.voice.info.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.10.24
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html',
+    { title: '서비스 상세안내', svcInfo: svcInfo, option: { back: 'step' } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="tit-desc">
+                    <strong>목소리인증서비스</strong>에 관한 <br>
+                    상세안내를&nbsp;확인할 수 있습니다.&nbsp;
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+
+            <div class="cont-box nogaps">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list pt0">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit">‘목소리 인증 서비스’가 무엇인가요?<button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont information-usebox">
+                                            <p class="text01">목소리에는 개인 고유의 특징이 있기 때문에 고객님과 가까운사람들은 얼굴을 보지 않고도 전화 목소리만으로 고객님을 알 수 있습니다. 이러한 고객님의 목소리 특징을 세밀하게 인지하여 고객님을 확인하는 방법이 목소리 인증 서비스 입니다.</p>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit">목소리 등록 과정에서 실패되었습니다.<button role="button" aria-pressed="false"></button></div>
+                                        <div class="acco-cont information-usebox">
+                                            <p class="text01">등록 과정에서 “SK텔레콤 비밀번호는 내 목소리입니다”를 너무 빨리 말씀하시거나, 너무 크게 말씀하시거나, 주변이 시끄럽거나, 다른 문장을 말씀하신 경우 실패됩니다. 타인 음성이 섞이지 않도록 주변이 조용한 곳에서 114로 다시 전화하여 휴대폰에 입을 조금 떼고 정확한 문장을 말씀하시면 성공적으로 등록됩니다.</p>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit">등록한 목소리가 해킹으로 유출될 수 있나요?<button role="button" aria-pressed="false"></button></div>
+                                        <div class="acco-cont information-usebox">
+                                            <p class="text01">고객님이 등록해 주신 목소리는 이진수 형태의 256바이트 암호화 파일로 저장되어 정보 유출 위험 없이 절대 안전합니다.</p>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box on">
+                                        <div class="acco-tit">목감기로 목소리가 변해도 인증 서비스를<br>받을 수 있나요?<button role="button" aria-pressed="true"></button></div>
+                                        <div class="acco-cont information-usebox">
+                                            <p class="text01">목소리 비교 시 발음, 강조, 액센트, 속도와 같은 특성과 성대특성, 비강구조, 입 모양과 크기 등의 신체적 특성에 따른 다양한 값을 비교하기 때문에 약간의 목소리 변화는 서비스를 이용하는데 지장이 없습니다.<br>변성기 전후/성대결절/심한 목감기 등 목소리가 많이 변했을 때는 인증되지 않을 수 있습니다.</p>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit">주변 소음이 심해도 인증 서비스를<br>받을 수 있나요?<button role="button" aria-pressed="false"></button></div>
+                                        <div class="acco-cont information-usebox">
+                                            <p class="text01">주변 잡음 제거 기술이 적용되어 있어 일반적인 생활 소음은 지장을 주지 않습니다.<br>그렇지만, 고객님의 목소리보다 주변 소음이 크거나 타인의 목소리가 더 큰 경우에는 인증되지 않을 수 있습니다.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+
+            <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+    <% include ../../components/javascript.component.html %>
+    <script>
+      $(document).ready(function () {
+      });
+    </script>
+</body>
+<% include ../../components/end.component.html %>

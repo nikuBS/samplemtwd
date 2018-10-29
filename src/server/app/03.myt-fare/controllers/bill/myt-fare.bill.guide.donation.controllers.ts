@@ -20,20 +20,22 @@ class MyTFareBillGuideDonation extends TwViewController {
   }
 
   public reqQuery: any;  // 쿼리스트링
-
+  public pageInfo: any;
   private _urlTplInfo: any = {
     default: 'bill/myt-fare.bill.guide.donation.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const thisMain = this;
     this.reqQuery = req.query;
+    this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
     thisMain.renderView(res, thisMain._urlTplInfo.default, {
       reqQuery: thisMain.reqQuery,
       svcInfo: svcInfo,
+      pageInfo: thisMain.pageInfo
     });
 
   }

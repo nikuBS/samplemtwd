@@ -35,8 +35,8 @@ export const URL = {
   '/myt/fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
   '/myt/join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
-  '/myt/join/product/additions': { login: true, id: 'MS_05', title: '나의 부가상품' },
-  '/myt/join/product/combinations': { login: true, id: 'MS_05', title: '나의 결합상품' },
+  '/myt/join/product/additions': { login: true, id: 'MS_06', title: '나의 부가상품' },
+  '/myt/join/product/combinations': { login: true, id: 'MS_07', title: '나의 결합상품' },
   '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
   '/myt/join/product/fee-alarm/terminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt/join/info/discount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
@@ -77,6 +77,7 @@ export const URL = {
   '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
 
   // Customer
+  '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
   '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },
@@ -85,6 +86,8 @@ export const URL = {
   '/customer/protect/guide': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드' },
   '/customer/protect/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
   '/customer/protect/additions': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
-  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' }
+  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' },
 
+  // Benefit
+  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' }
 };

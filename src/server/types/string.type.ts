@@ -298,3 +298,11 @@ export enum CUSTOMER_PROTECT_GUIDE {
   LATEST = '최신 이용자 피해예방 정보'
 }
 
+export const MY_BENEFIT_RAINBOW_POINT = {
+  TITLE: '레인보우 포인트',
+  OLCLCD: {
+    E: '적립',
+    U: '사용',
+    X: '소멸'
+  }
+};

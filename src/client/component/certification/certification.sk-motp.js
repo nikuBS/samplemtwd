@@ -19,6 +19,7 @@ Tw.CertificationSkMotp = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._authKind = null;
   this._certResult = null;
   this._isFirstCert = true;
 };
@@ -38,11 +39,12 @@ Tw.CertificationSkMotp.prototype = {
     ATH1228: 'ATH1228',
     ATG1231: 'ATG1231'
   },
-  openMotpPopup: function (svcInfo, authUrl, command, deferred, callback) {
+  openMotpPopup: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+    this._authKind = authKind;
 
     this._popupService.open({
       hbs: 'CO_02_01_02_03',
@@ -102,7 +104,9 @@ Tw.CertificationSkMotp.prototype = {
   _requestMotpConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0020, {
       authNum: this.$inputCert.val(),
-      authUrl: this._authUrl
+      authUrl: this._authUrl,
+      authKind: this._authKind,
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successMotpConfirm, this));
 
   },

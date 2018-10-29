@@ -23,6 +23,7 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public reqQuery: any;  // 쿼리스트링
+  public pageInfo: any;
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
   // private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = {}; // 통합청구등록회선조회 | BFF_05_0049
@@ -91,9 +92,10 @@ class MyTFareBillGuide extends TwViewController {
 
   private _typeChk: any = null; // 화면구분
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const thisMain = this;
     this.reqQuery = req.query;
+    this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
     // ---------------------------------------------------------------------------------[화면 구분]
@@ -269,6 +271,7 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.combineRepresentPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        pageInfo: thisMain.pageInfo,
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
         intBillLineInfo: thisMain._intBillLineInfo,
@@ -327,6 +330,7 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        pageInfo: thisMain.pageInfo,
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
         intBillLineInfo: thisMain._intBillLineInfo,
@@ -384,6 +388,7 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.individualPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        pageInfo: thisMain.pageInfo,
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
         intBillLineInfo: thisMain._intBillLineInfo,
@@ -454,6 +459,7 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.prepaidPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        pageInfo: thisMain.pageInfo,
         ppsInfo: thisMain._ppsInfo,
         commDataInfo: thisMain._commDataInfo
       });

@@ -1,4 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
+import CustomerBranchSearch from './controllers/branch/customer.branch.search.controller';
 import CustomerDocument from '../904.customer/controllers/document/customer.document.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
@@ -14,17 +15,21 @@ import CustomerProtectRelated from './controllers/protect/customer.protect.relat
 import CustomerProtectWarning from './controllers/protect/customer.protect.warning.controller';
 import CustomerProtectWarningView from './controllers/protect/customer.protect.warning-view.controller';
 import CustomerMain from './controllers/main/customer.main.controller';
+import CustomerVoice from './controllers/voice/customer.voice.controller';
+import CustomerEmail from './controllers/email/customer.email.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: CustomerMain} );
+    this.controllers.push({ url: '/branch/search', controller: CustomerBranchSearch });
     this.controllers.push({ url: '/document', controller: CustomerDocument} );
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     this.controllers.push({ url: '/praise', controller: CustomerPraise} );
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
+    this.controllers.push({ url: '/email(/:main_category)?(/:sub_category)?', controller: CustomerEmail} );
     // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse });
-
+    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice} );
     this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
     this.controllers.push({ url: '/protect', controller: CustomerProtect } );
     this.controllers.push({ url: '/protect/guide(/:category)?', controller: CustomerProtectGuide } );

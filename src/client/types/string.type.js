@@ -360,6 +360,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A64: { TITLE: '알림', MSG: '고객보호 비밀번호 설정이 완료 되었습니다.' },
   ALERT_2_A65: { TITLE: '알림', MSG: '망 작업 SMS 알림 신청이 완료 되었습니다.' },
   ALERT_2_A66: { TITLE: '알림', MSG: '망 작업 SMS 알림 수신번호가 변경 되었습니다.' },
+  ALERT_2_A68: { TITLE: '알림', MSG: '등록된 연락처가 없습니다.' },
   ALERT_2_A80: { TITLE: '알림', MSG: 'T_B끼리 통화 무제한에 가입하신 사용자가 아닙니다.' }
 };
 
@@ -562,6 +563,11 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE = {
+  '01' : '온라인',
+  '02' : '오프라인'
+};
+
 Tw.MYT_JOIN_WIRE_SET_PAUSE = {
   MONTH: '개월 ',
   DAY: '일',
@@ -606,9 +612,23 @@ Tw.MYT_JOIN_SUSPEND = {
     BTNAME: '신청하기',
     MESSAGE: '선택하신 기간동안 일시정지 처리됩니다.'
   },
+  CONFIRM_RESET: {
+    TITLE: '일시정지를 해제하시겠습니까?',
+    BTNAME: '해제하기',
+    MESSAGE: '일시정지가 즉시 해제됩니다.'
+  },
+  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
+  TYPE: {
+    ALL: '걸기/받기 모두 정지',
+    CALL: '걸기만 정지'
+  },
   NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
-  NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.'
+  NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
+  ALERT_EXCEED: {
+    TITLE: '신청불가',
+    MESSAGE: '월 5회 이상 신청이 불가능합니다.'
+  }
 };
 
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';
@@ -644,7 +664,14 @@ Tw.PROTECT_GUIDE = {
 
 Tw.CUSTOMER_PRAISE_COMPANY = '회사';
 Tw.CUSTOMER_PRAISE_OFFICE = '지점';
-
+Tw.CUSTOMER_VOICE = {
+  LINE_CHOICE: '회선선택',
+  EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
+  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해주세요.'
+};
+Tw.CUSTOMER_EMAIL = {
+  SELECT_SERVICE: '서비스 선택'
+}
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
@@ -700,4 +727,22 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
 Tw.MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
   DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
+};
+
+Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
+  TERMINATION_COMPLETE : '서비스 해지 신청'
+};
+
+Tw.BRANCH_SEARCH_OPTIONS = {
+  0: '전체',
+  1: '지점',
+  2: '대리점',
+  premium: 'T Premium  Store',
+  direct: '바로픽업',
+  rent: '임대폰',
+  skb: 'SK브로드밴드',
+  apple: '애플취급점',
+  authAgnYn: '공식인증대리점',
+  etc: ' 외 ',
+  count: '건'
 };

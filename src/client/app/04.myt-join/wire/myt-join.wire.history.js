@@ -94,6 +94,15 @@ Tw.MyTJoinWireHistory.prototype = {
       }
       this._list[i].dataNo = i;
       this._pagingList[page].push(this._list[i]);
+
+      // 날짜 및 데이터 변경
+      if ( this._list[i].atype === '167' || this._list[i].atype === '168' ) {
+        this._list[i]['svcPrefrDtm'] = Tw.DateHelper.getCurrentDateTime(this._list[i].svcPrefrDtm);
+      }
+      if ( this._list[i].atype === '162') {
+        this._list[i]['onOffName'] = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[this._list[i]['onOff']];
+        this._list[i]['setPrefrDt'] = Tw.DateHelper.getShortDateNoDot(this._list[i].setPrefrDt);
+      }
     }
     this._totPageNum = page;
 

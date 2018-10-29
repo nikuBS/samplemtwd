@@ -11,14 +11,14 @@ import MyTFareBillSetCommon from './myt-fare.bill.set.common.controller';
 
 class MyTFareBillSet extends MyTFareBillSetCommon {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string, pageInfo: any) {
     this.svcInfo = svcInfo;
     Observable.combineLatest(
       // this.mockReqBillType()
       this.reqBillType()
     ).subscribe(([resBillType]) => {
       if ( resBillType.code === API_CODE.CODE_00) {
-        const data = this.getData(resBillType.result, svcInfo);
+        const data = this.getData(resBillType.result, svcInfo, pageInfo);
         res.render( 'bill/myt-fare.bill.set.html', data );
       } else {
         this.fail(res, resBillType, svcInfo);
@@ -26,13 +26,14 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     });
   }
 
-  private getData(data: any, svcInfo: any): any {
+  private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
     this.makeAnotherBillList(data);
     this.parseTel(data);
 
     return {
       svcInfo,
+      pageInfo,
       data
     };
   }

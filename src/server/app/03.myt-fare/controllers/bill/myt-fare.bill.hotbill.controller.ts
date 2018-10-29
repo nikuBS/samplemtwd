@@ -21,11 +21,12 @@ class MyTFareBillHotbill extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any ) {
     // 2일부터 조회 가능
     if ( new Date().getDate() === 1 ) {
       res.render('bill/myt-fare.bill.hotbill.html', {
-        svcInfo: svcInfo,
+        svcInfo,
+        pageInfo,
         lines: [],
         billAvailable: false
       });
@@ -51,7 +52,8 @@ class MyTFareBillHotbill extends TwViewController {
           },
           () => {
             res.render('bill/myt-fare.bill.hotbill.html', {
-              svcInfo: svcInfo,
+              svcInfo,
+              pageInfo,
               lines: svcs,
               billAvailable: true
             });
@@ -59,6 +61,7 @@ class MyTFareBillHotbill extends TwViewController {
       } else {
         const options = {
           svcInfo: svcInfo,
+          pageInfo,
           lines: [],
           billAvailable: true
         };

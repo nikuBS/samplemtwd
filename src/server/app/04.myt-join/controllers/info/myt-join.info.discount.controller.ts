@@ -21,6 +21,7 @@ class MytJoinInfoDiscount extends TwViewController {
     super();
   }
   public reqQuery: any;
+  public pageInfo: any;
   private _svcInfo: any;
 
   // 데이터
@@ -38,10 +39,11 @@ class MytJoinInfoDiscount extends TwViewController {
     pageRenderView: 'info/myt-join.info.discount.html',
   };
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
+    this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
@@ -61,6 +63,7 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
+        pageInfo: thisMain.pageInfo,
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo
       });
@@ -129,18 +132,13 @@ class MytJoinInfoDiscount extends TwViewController {
     this._commDataInfo.repaymentInfo = [];
 
     const priceList = thisMain._resDataInfo.priceList;
-    const tablet = thisMain._resDataInfo.tablet;
-    const wibro = thisMain._resDataInfo.wibro;
     this.logger.info(this, '[ (priceList) ]', this.getSizeObjOrArr(priceList));
-    this.logger.info(this, '[ (tablet) ]', this.getSizeObjOrArr(tablet));
-    this.logger.info(this, '[ (wibro) ]', this.getSizeObjOrArr(wibro));
 
     const tAgree = thisMain._resDataInfo.tAgree;
     const tInstallment = thisMain._resDataInfo.tInstallment;
     const rsvPenTAgree = thisMain._resDataInfo.rsvPenTAgree;
     const sucesAgreeList = thisMain._resDataInfo.sucesAgreeList;
     this.logger.info(this, '[ (tAgree) ]', this.getSizeObjOrArr(tAgree));
-    console.dir(tAgree);
     this.logger.info(this, '[ (tInstallment) ]', this.getSizeObjOrArr(tInstallment));
     this.logger.info(this, '[ (rsvPenTAgree) ]', this.getSizeObjOrArr(rsvPenTAgree));
     this.logger.info(this, '[ (sucesAgreeList) ]', this.getSizeObjOrArr(sucesAgreeList));
@@ -153,8 +151,6 @@ class MytJoinInfoDiscount extends TwViewController {
     * 상품코드 분류(priceList.prodId)
     * 요금약정할인24 (730) : NA00003677 | fee_type_A | 상세할인 내역보기
     * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B | 상세할인 내역보기
-    * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C
-    * 와이브로약정할인 : wibro 객체로 구분 | fee_type_D
     * 선택약정할인제도 : NA00004430 | fee_type_E | 상세할인 내역보기
     * 해당분류에 포함되지않는 경우 | fee_noType
     */
@@ -164,7 +160,7 @@ class MytJoinInfoDiscount extends TwViewController {
 
         switch ( priceList[i].prodId ) {
 
-          case 'NA00003677':
+          case 'NA00003677': // 요금약정할인24 (730)
             priceList[i].typeStr = 'fee_type_A';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
             priceList[i].svcAgrmtDcObj = {
@@ -172,7 +168,7 @@ class MytJoinInfoDiscount extends TwViewController {
               svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
             };
             break;
-          case 'NA00003681':
+          case 'NA00003681': // 뉴태블릿약정
             priceList[i].typeStr = 'fee_type_B';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
             priceList[i].svcAgrmtDcObj = {
@@ -180,7 +176,7 @@ class MytJoinInfoDiscount extends TwViewController {
               svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
             };
             break;
-          case 'NA00004430':
+          case 'NA00004430': // 선택약정할인
             priceList[i].typeStr = 'fee_type_E';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_E.TIT_NM;
             priceList[i].svcAgrmtDcObj = {
@@ -205,41 +201,6 @@ class MytJoinInfoDiscount extends TwViewController {
         thisMain._commDataInfo.feeInfo.push(priceList[i]);
       }
     }
-    // 태블릿약정(구태블릿약정)
-    if ( this.getSizeObjOrArr(tablet) > 0 ) {
-      tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM; // 태블릿약정(구태블릿약정)
-      tablet.typeStr = 'fee_type_C';
-      tablet.svcAgrmtDcObj = {
-        svcAgrmtDcId : tablet.svcAgrmtDcId || '',
-        svcAgrmtDcCd : tablet.svcAgrmtDcCd || ''
-      };
-      tablet.salePay = FormatHelper.addComma(tablet.agrmtDcAmt);
-      tablet.agrmtDayCntNum = FormatHelper.addComma(tablet.agrmtDayCnt);
-      tablet.aGrmtPenAmtNum = FormatHelper.addComma(tablet.aGrmtPenAmt);
-      thisMain._proDateUseDt(
-        tablet,
-        tablet.agrmtDcStaDt,
-        tablet.agrmtDcEndDt,
-        tablet.agrmtDayCnt);
-
-      thisMain._commDataInfo.feeInfo.push(tablet);
-    }
-    // 와이브로약정할인
-    if ( this.getSizeObjOrArr(wibro) > 0 ) {
-      wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM; // 와이브로 약정
-      wibro.typeStr = 'fee_type_D';
-      wibro.svcAgrmtDcObj = {
-        svcAgrmtDcId : wibro.svcAgrmtDcId || '',
-        svcAgrmtDcCd : wibro.svcAgrmtDcCd || ''
-      };
-      wibro.salePay = FormatHelper.addComma(wibro.agrmtDcAmt);
-      thisMain._proDateUseDt(
-        wibro,
-        wibro.agrmtDcStaDt,
-        wibro.agrmtDcEndDt,
-        wibro.agrmtDayCnt );
-      thisMain._commDataInfo.feeInfo.push(wibro);
-    }
     this.logger.info(this, '[ 1. this._commDataInfo.feeInfo ]');
     // console.dir(this._commDataInfo.feeInfo);
 
@@ -248,7 +209,6 @@ class MytJoinInfoDiscount extends TwViewController {
 
       /*
       *  T 기본약정 분류(tAgree.agrmtDivision)
-      *  가입/T기본약정 : 'TAgree' | join_type_A
       *  가입/T지원금약정 : 'TSupportAgree' | join_type_B
       *  가입/T약정할부지원 : tInstallment 객체로 구분 | join_type_C
       *  가입/약정위약금2 : rsvPenTAgree 객체로 구분 | join_type_D
@@ -257,11 +217,6 @@ class MytJoinInfoDiscount extends TwViewController {
 
       switch ( tAgree.agrmtDivision ) {
 
-        case 'TAgree':
-          tAgree.typeStr = 'join_type_A';
-          tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_A.TITNM; // 가입/T기본약정
-          tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_A.AGREE_NM;
-          break;
         case 'TSupportAgree':
           tAgree.typeStr = 'join_type_B';
           tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_B.TITNM; // 가입/T지원금약정

@@ -16,6 +16,7 @@ Tw.CertificationFinance = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._authKind = null;
   this._resultUrl = null;
   this._isCompleteIden = false;
   this._isCheckTerm = true;
@@ -26,12 +27,13 @@ Tw.CertificationFinance = function () {
 
 Tw.CertificationFinance.prototype = {
 
-  open: function (svcInfo, authUrl, command, deferred, callback) {
+  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+    this._authKind = authKind;
     this._resultUrl = '/auth/cert/complete';
 
     this._popupService.open({
@@ -53,7 +55,7 @@ Tw.CertificationFinance.prototype = {
   },
   _onClickSkSms: function () {
     this._certSk.open(
-      this._svcInfo, this._authUrl, this._command, this._deferred, $.proxy(this._completeIdentification, this), Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
+      this._svcInfo, this._authUrl, this._command, this._deferred, $.proxy(this._completeIdentification, this), this._authKind, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
   },
   _onClickKtSms: function () {
     this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
@@ -98,7 +100,7 @@ Tw.CertificationFinance.prototype = {
   },
   _onClosePublicPopup: function () {
     if ( this._isCheckTerm ) {
-      this._certPublic.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+      this._certPublic.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
     }
   },
   _onChangePrivacy: function () {
