@@ -39,7 +39,7 @@
                         <h3 class="ff-tg-black"><%= svcInfo.svcNum %></h3>
                         <% } else { %>
                         <h3 class="inline">
-                            <button id="fe-bt-line" class="bt-dropdown sbig" title="데이터 용량" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><span class="ff-tg-black"><%= svcInfo.svcNum %></span><span class="ico"></span></button>
+                            <button id="fe-bt-line" class="bt-dropdown sbig <% if(svcInfo.expsSvcCnt === '1') { %>no-arrow<% } %>" title="데이터 용량" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><span class="ff-tg-black"><%= svcInfo.svcNum %></span><span class="ico"></span></button>
                         </h3>
                         <% } %>
 
