@@ -92,7 +92,7 @@
                                 <span class="num ff-tg-black">무제한</span>
                                 <% } else { %>
                                 <span class="num ff-tg-black"><%= homeData.usageData.data.showRemained.data %></span>
-                                <span class="dingbat gb"><span class="blind"><%= homeData.usageData.data.showRemained.unit %></span></span>
+                                <span class="dingbat <%= (homeData.usageData.data.showRemained.unit).toLowerCase() %>"><span class="blind"><%= homeData.usageData.data.showRemained.unit %></span></span>
                                 <% } %>
                             </div>
                             <div class="graph-area-type4">
