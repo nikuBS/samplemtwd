@@ -9,6 +9,7 @@ Tw.CustomerBranchSearch = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
@@ -208,5 +209,8 @@ Tw.CustomerBranchSearch.prototype = {
     if (e.target.nodeName === 'A') {
       return;
     }
+
+    var code = $(e.currentTarget).attr('value');
+    this._historyService.goLoad('/customer/branch/detail?code=' + code);
   }
 };

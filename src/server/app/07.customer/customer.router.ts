@@ -1,5 +1,6 @@
 import TwRouter from '../../common/route/tw.router';
 import CustomerBranchSearch from './controllers/branch/customer.branch.search.controller';
+import CustomerBranchDetail from './controllers/branch/customer.branch.detail.controller';
 import CustomerDocument from '../904.customer/controllers/document/customer.document.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
@@ -23,6 +24,7 @@ class CustomerRouter extends TwRouter {
     super();
     this.controllers.push({ url: '/', controller: CustomerMain} );
     this.controllers.push({ url: '/branch/search', controller: CustomerBranchSearch });
+    this.controllers.push({ url: '/branch/detail', controller: CustomerBranchDetail });
     this.controllers.push({ url: '/document', controller: CustomerDocument} );
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     this.controllers.push({ url: '/praise', controller: CustomerPraise} );
