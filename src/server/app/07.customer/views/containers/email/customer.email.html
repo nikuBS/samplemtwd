@@ -3,8 +3,8 @@
 * Author: Jiman Park (jiman.park@sk.com)
 * Date: 2018.10.25
 %>
-
 <% include ../../components/start.component.html %>
+
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -31,43 +31,17 @@
                 <div class="component">
                     <div class="component-box tabs">
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                            <div class="tab-linker">
-                                <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>서비스 관련 문의</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>통화품질 상담</a></li>
-                                </ul>
-                            </div>
+                            <%- include ../../components/email/customer.email.tab.html %>
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
-                                        <!-- .cont-box -->
-                                        <div class="cont-box nogaps-btm">
-                                            <div class="option-box">
-                                                <div>
-                                                    <button class="bt-dropdown big" title="서비스 선택" aria-haspopup="true">서비스 선택</button> 서비스의
-                                                </div>
-                                                <div>
-                                                    <button class="bt-dropdown big" title="문의사항 선택" aria-haspopup="true">문의사항 선택</button> 대해
-                                                </div>
-                                                <p>문의합니다.</p>
-                                                <div class="link-long questionbox-wrap">
-                                                    <a href="" class="disabled" title="xx로 이동">지금 해결할 수 있는 문의가 있는지 살펴보세요.
-                                                        <span class="tx-sub">
-                                                            <span class="ico"></span>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .cont-box -->
-
-                                        <hr class="cont-sp type1" aria-hidden="true">
+                                        <%- include ../../components/email/customer.email.service.category.html %>
 
                                         <div class="cont-box">
                                             <div class="inquiryform-wrap">
                                                 <p class="title">문의하실 회선과 내용을 작성해주세요.</p>
                                                 <div class="info-form-box">
-                                                    <button class="bt-dropdown big mt14" title="사용자번호" aria-haspopup="true">010-22**-57**<span class="ico"></span></button>
+                                                    <button class="bt-dropdown big mt14" title="사용자번호" aria-haspopup="true"><%-svcInfo.svcNum%><span class="ico"></span></button>
                                                 </div>
                                                 <div class="inputbox">
                                                     <div class="input">
@@ -195,17 +169,18 @@
 
                                             </div>
                                         </div>
-
+                                        <!--// .cont-box -->
+                                        <div class="bt-fixed-area">
+                                            <ul class="bt-slice full">
+                                                <li class="bt-red1">
+                                                    <button disabled>등록하기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
-                                        <div class="cont-box">
-                                            <div class="option-box">
-                                                <div>
-                                                    <button class="bt-dropdown big" title="서비스 선택" aria-haspopup="true">서비스 선택</button> 서비스의
-                                                </div>
-                                                <p class="">통화품질 개선을 요청합니다.</p>
-                                            </div>
-                                        </div>
+                                        <%- include ../../components/email/customer.email.quality.category.html %>
+
                                         <hr class="cont-sp type1" aria-hidden="true">
                                         <div class="cont-box">
                                             <div class="inquiryform-wrap">
@@ -328,6 +303,14 @@
 
                                             </div>
                                         </div>
+                                        <!--// .cont-box -->
+                                        <div class="bt-fixed-area">
+                                            <ul class="bt-slice full">
+                                                <li class="bt-red1">
+                                                    <button disabled>등록하기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -336,14 +319,7 @@
                 </div>
                 <!--// .component -->
             </div>
-            <!--// .cont-box -->
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button disabled>등록하기</button>
-                    </li>
-                </ul>
-            </div>
+
         </div>
     </div>
     <!-- // .container-wrap -->
@@ -351,6 +327,8 @@
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
+        new Tw.CustomerEmail();
+        new Tw.CustomerEmailCategory($('.wrap'));
       });
     </script>
 </body>
