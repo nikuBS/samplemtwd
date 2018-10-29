@@ -664,6 +664,9 @@ Tw.CUSTOMER_VOICE = {
   EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
   CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해주세요.'
 };
+Tw.CUSTOMER_EMAIL = {
+  SELECT_SERVICE: '서비스 선택'
+}
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',

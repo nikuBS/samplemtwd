@@ -398,3 +398,54 @@ Tw.CUSTOMER_PRAISE_AREAS = [
   { value: '부산/경남', code: 'A40' },
   { value: '대구/경북', code: 'A50' }
 ];
+
+Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
+  {
+    title: '휴대폰',
+    list: [
+      { title: '요금조회/납부', ofrCtgSeq: '5000273' },
+      { title: '단말기 관련', ofrCtgSeq: '5000274' },
+      { title: '요금제 부가서비스', ofrCtgSeq: '5000270' },
+      { title: '가입/변경/해지', ofrCtgSeq: '5000271' },
+      { title: '멤버쉽', ofrCtgSeq: '5000275' },
+      { title: '휴대폰 정지', ofrCtgSeq: '5000269' },
+      { title: '기타', ofrCtgSeq: '5000280' }
+    ]
+  },
+  {
+    title: '인터넷/집전화/TV',
+    list: [
+      { title: '요금조회/납부', ofrCtgSeq: '5000141' },
+      { title: '장애/고장신고', ofrCtgSeq: '5000143' },
+      { title: '가입/변경/해지', ofrCtgSeq: '5000153' },
+      { title: '부가서비스', ofrCtgSeq: '5000152' },
+      { title: '위약금/약정기간', ofrCtgSeq: '5000153' },
+      { title: '기사/상담원 불만', ofrCtgSeq: '5000147' },
+      { title: '기타', ofrCtgSeq: '5000153' }
+    ]
+  },
+  {
+    title: '다이렉트샵',
+    list: [
+      { title: '휴대폰 구매', ofrCtgSeq: '07' },
+      { title: '기타 문의', ofrCtgSeq: '10' },
+      { title: 'T기프트/액세서리', ofrCtgSeq: '12' },
+      { title: '휴대폰배송', ofrCtgSeq: '08' },
+      { title: '휴대폰 교환/반품', ofrCtgSeq: '09' }
+    ]
+  },
+  {
+    title: '초코렛',
+    list: [
+      { title: '상품문의', ofrCtgSeq: '010700' },
+      { title: '교환/반품', ofrCtgSeq: '010600' },
+      { title: '취소문의', ofrCtgSeq: '010800' },
+      { title: '이용문의', ofrCtgSeq: '010900' }
+    ]
+  }
+];
+
+Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
+  { title: '휴대폰/와이브로' },
+  { title: '인터넷/TV/집전화' }
+];
