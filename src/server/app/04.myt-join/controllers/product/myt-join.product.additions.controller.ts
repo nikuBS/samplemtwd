@@ -21,6 +21,7 @@ class MyTJoinProductAdditions extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0137, {}).subscribe(resp => {
         if (resp.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
+            ...resp,
             svcInfo: svcInfo,
             title: '나의 부가상품'
           });
@@ -33,6 +34,7 @@ class MyTJoinProductAdditions extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0129, {}).subscribe(resp => {
         if (resp.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
+            ...resp,
             svcInfo: svcInfo,
             title: '나의 부가상품'
           });
