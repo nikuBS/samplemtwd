@@ -101,3 +101,9 @@ Tw.EMAIL_CERT_CODE = {
   PWD_CHG_ENG: 'PWD_CHG_ENG',
   SECOND_AUTH: 'SECOND_AUTH'
 };
+
+Tw.PAYMENT_REQUEST_TYPE = {
+  R: '신규',
+  C: '변경',
+  F: '해지'
+};

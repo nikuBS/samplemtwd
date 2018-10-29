@@ -107,7 +107,7 @@ Tw.MyTFarePaymentAutoCancel.prototype = {
   _isValid: function () {
     if (this.$layer.find('.fe-account-box').is(':visible')) {
       if (this.$layer.find('.fe-account-selector').attr('id') === undefined) {
-        this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A02);
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3);
         return false;
       }
     }
@@ -146,7 +146,7 @@ Tw.MyTFarePaymentAutoCancel.prototype = {
     }
   },
   _cancelFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _smsSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {

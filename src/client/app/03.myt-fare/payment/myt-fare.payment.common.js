@@ -84,7 +84,7 @@ Tw.MyTFarePaymentCommon.prototype = {
   },
   _onClickDoneBtn: function () {
     if (this._amount === 0) {
-      this._popupService.openAlert('select line');
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.SELECT_LINE);
     } else {
       this._isClicked = true;
       this._popupService.close();

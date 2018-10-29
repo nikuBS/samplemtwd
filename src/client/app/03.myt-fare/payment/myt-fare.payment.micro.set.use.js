@@ -32,7 +32,7 @@ Tw.MyTFarePaymentMicroSetUse.prototype = {
     }
   },
   _changeFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _getToastMessage: function (tx) {
     var message = Tw.ALERT_MSG_MYT_FARE.MICRO;

@@ -277,6 +277,9 @@ Tw.VALIDATE_MSG_MYT_DATA = {
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
+  SELECT_LINE: '회선을 선택해 주세요.',
+  TEN_POINT: '10포인트 단위로 입력해 주세요.',
+  TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
@@ -336,6 +339,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V15: '일련번호가 올바르지 않습니다.',
   ALERT_2_V16: '공유 가능 데이터를 초과했습니다.',
   ALERT_2_V17: '가족에게 공유할 데이터를 입력해주세요.',
+  ALERT_2_V27: '보유하신 포인트 보다 초과 입력 하셨습니다.',
   ALERT_2_V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
   ALERT_2_V41: '법정대리인 휴대폰번호를 입력해주세요.',
   ALERT_2_V42: '이메일 주소를 입력해주세요.',

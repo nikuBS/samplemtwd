@@ -168,12 +168,12 @@ Tw.MyTFarePaymentAccount.prototype = {
   _isValid: function () {
     var isValid = true;
     if (this.$accountInputBox.hasClass('checked')) {
-      isValid = this._validation.checkIsSelected(this.$selectBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
-        this._validation.checkEmpty(this.$accountNumber.val(), Tw.MSG_PAYMENT.AUTO_A03);
+      isValid = this._validation.checkIsSelected(this.$selectBank, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3) &&
+        this._validation.checkEmpty(this.$accountNumber.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V2);
     }
     if (this.$refundInputBox.hasClass('checked')) {
-      isValid = this._validation.checkIsSelected(this.$refundBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
-        this._validation.checkEmpty(this.$refundNumber.val(), Tw.MSG_PAYMENT.AUTO_A03);
+      isValid = this._validation.checkIsSelected(this.$refundBank, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3) &&
+        this._validation.checkEmpty(this.$refundNumber.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V2);
     }
     return isValid;
   },

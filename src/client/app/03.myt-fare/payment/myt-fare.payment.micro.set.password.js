@@ -161,7 +161,7 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
     }
   },
   _fail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _goAdditionalService: function () {
     this._commonHelper.openUrlExternal(Tw.URL_PATH.SET_PASSWORD);
