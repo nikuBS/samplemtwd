@@ -67,7 +67,7 @@ const environment = {
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
-    DOMAIN: 'http://icp-stg.tworld.co.kr',
+    DOMAIN: 'https://beta.m.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: 'relay.signgate.com',
