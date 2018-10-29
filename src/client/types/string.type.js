@@ -563,6 +563,11 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE = {
+  '01' : '온라인',
+  '02' : '오프라인'
+};
+
 Tw.MYT_JOIN_WIRE_SET_PAUSE = {
   MONTH: '개월 ',
   DAY: '일',

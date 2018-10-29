@@ -140,16 +140,18 @@
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>설치 장소</dt>
-                                    <dd></dd>
+                                    <dd><%= data.oldBasAddr %> <%= data.oldDtlAddr %></dd>
                                 </dl>
                                 <dl class="show-data detail">
                                     <dt>변경 장소</dt>
                                     <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
                                 </dl>
-                                <dl class="show-data detail" style="display: none;">
+                                <% if ( data.ossOut && data.ossOut.operCoPhonNum ) { %>
+                                <dl class="show-data detail">
                                     <dt>관리 고객센터</dt>
-                                    <dd>홍길동 (02-1234-5678) XXXXXX</dd>
+                                    <dd><%= data.ossOut.operCoNm %> <%= data.ossOut.operCoPhonNum %></dd>
                                 </dl>
+                                <% } %>
                                 <dl class="show-data detail">
                                     <dt>설치 장소<br />(변경후)</dt>
                                     <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
@@ -157,32 +159,33 @@
                             </li>
                         </ul>
                     </div>
-                    <!--
-                    <div class="engineer-list" style="display: none;">
+                    <% if ( data.ossOut && data.ossOut.happyOperNm ) { %>
+                    <div class="engineer-list">
                         <ul>
                             <li>
                                 <div class="img-area">
-                                    <img src="/img/etc/engineer-noimg1.jpg" alt="행복기사사진"/></div>
+                                    <img src="http://www.tworld.co.kr/uploads/wire/happy_agent/finally/<%= data.ossOut.happyOperId %>.jpg" alt="행복기사사진"/>
+                                </div>
                                 <div class="basic-list">
                                     <ul>
                                         <li>
                                             <span class="title">행복기사</span>
-                                            <span class="tx-cont">홍길동 XXXXXXX</span>
+                                            <span class="tx-cont"><%= data.ossOut.happyOperNm %></span>
                                         </li>
                                         <li>
                                             <span class="title">소속</span>
-                                            <span class="tx-cont">SK텔레콤 XXXXXXX</span>
+                                            <span class="tx-cont"><%= data.ossOut.happyOperCoNm %></span>
                                         </li>
                                         <li>
                                             <span class="title">연락처</span>
-                                            <span class="tx-cont">010-1234-5678 XXXXXXX</span>
+                                            <span class="tx-cont"><%= data.ossOut.happyOperPhonNum %></span>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    -->
+                    <% } %>
                 </div>
             </div>
             <!--// .cont-box -->
