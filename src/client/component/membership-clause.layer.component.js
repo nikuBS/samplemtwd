@@ -34,6 +34,7 @@ Tw.MembershipClauseLayerPopup.prototype = {
       this.$membershipJoinBtn.off('click');
       this.$membershipJoinBtn = null;
     }
+    this._popupService.close();
   },
 
   _onClickJoinBtn: function() {

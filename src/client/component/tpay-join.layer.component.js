@@ -29,6 +29,7 @@ Tw.TPayJoinLayerPopup.prototype = {
   _closeCallback: function () {
     this.$setupBtn.off('click');
     this.$setupBtn = null;
+    this._popupService.close();
   },
 
   _onClickSetup: function () {
