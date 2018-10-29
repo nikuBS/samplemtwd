@@ -4556,6 +4556,12 @@ a.ui-button:active,
     font-size: 0.625rem;
     color: #fff;
     background: #666; }
+  .badge.badge-parents {
+    background-position: 0 -20.3125rem;
+    background-size: 4.6875rem;
+    width: 1.8125rem;
+    height: 0.9375rem;
+    margin-left: 0.3125rem; }
 
 .bar-chart-hoz {
   position: relative;
