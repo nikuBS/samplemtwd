@@ -41,7 +41,15 @@ Tw.LineComponent.prototype = {
   },
   _onClickBtLine: function (selectedMgmt, urlAuth, $event) {
     $event.stopPropagation();
-    this.onClickLine(selectedMgmt, urlAuth);
+    var curBtn = $($event.currentTarget);
+    if ( !curBtn.hasClass('no-arrow') ) {
+      // if ( !curBtn.hasClass('disabled') ) {
+      //   this._getLineList();
+      // } else {
+      //   this._closePopup();
+      // }
+      this.onClickLine(selectedMgmt, urlAuth);
+    }
   },
   onClickLine: function (selectedMgmt, urlAuth) {
     this._selectedMgmt = selectedMgmt;
