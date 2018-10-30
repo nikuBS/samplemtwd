@@ -121,7 +121,10 @@ Tw.API_CMD = {
   BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: Tw.API_METHOD.GET },
+  BFF_05_0094: { path: '/core-modification/v1/combination-discounts', method: Tw.API_METHOD.GET },
   BFF_05_0096: { path: '/core-product/v1/benefit-suggestions', method: Tw.API_METHOD.GET },
+  BFF_05_0106: { path: '/core-modification/v1/bill-discounts', method: Tw.API_METHOD.GET },
+  BFF_05_0115: { path: '/core-bill/v1/cookiz-ting-points', method: Tw.API_METHOD.GET },
   BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: Tw.API_METHOD.GET },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: Tw.API_METHOD.POST },
   BFF_05_0104: { path: '/core-bill/v1/rainbow-point-transfers', method: Tw.API_METHOD.POST },
@@ -158,6 +161,7 @@ Tw.API_CMD = {
   BFF_05_0172: { path: '/core-modification/v1/myinfo/get-wire-cancel-info', method: Tw.API_METHOD.GET },
   BFF_05_0173: { path: '/core-modification/v1/myinfo/get-wire-cancel-fee', method: Tw.API_METHOD.GET },
   BFF_05_0174: { path: '/core-modification/v1/myinfo/set-wire-cancel-service', method: Tw.API_METHOD.POST },
+  BFF_05_0175: { path: '/core-bill/v1/no-contract-plan-points', method: Tw.API_METHOD.GET },
   BFF_05_0176: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
   BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
   BFF_05_0182: { path: '/core-modification/v1/num-info', method: Tw.API_METHOD.POST },
@@ -339,6 +343,7 @@ Tw.API_CMD = {
   BFF_10_0036: { path: '/core-product/v1/mobiles/additions/args-0', method: Tw.API_METHOD.DELETE },
   BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: Tw.API_METHOD.GET },
   BFF_10_0038: { path: '/core-product/v1/mobiles/additions/args-0/vas-terms', method: Tw.API_METHOD.GET },
+  BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
   BFF_10_9001: { path: '/v1/products/args-0/auth/args-1', method: Tw.API_METHOD.GET },
 
   // MEMBERSHIP

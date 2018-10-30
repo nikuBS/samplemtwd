@@ -2,19 +2,140 @@
   "code": "00",
   "msg": "success",
   "result": {
-    "totCnt": "32",
+    "totCnt": "10",
     "list": [
       {
-        "benefitId": "NA00005917",
-        "benefitNm": "무엇이든 될 수 있는 0",
+        "benefitId": "NA00005696",
+        "benefitNm": "척척할인",
         "useYn": "사용중",
-        "benefitDesc": "0플랜 요금제로 중고생부터 20대까지 누릴 수 있는 다양한 선택",
-        "benefitPrice": "10000",
-        "benefitText": "결합최대 총 할인금액",
-        "imgFullPath": "http://....",
+        "imgFullPath": "/img/benefit/img_benefit_all01.png",
         "tagList": [
           {
-            "tagNm": "추천 요금제"
+            "tagNm": "제휴상품 구매시"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NE00000034",
+        "benefitNm": "Wibro 프리 약정할인",
+        "tagList": [
+          {
+            "tagNm": "24개월 약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00003677",
+        "benefitNm": "요금약정할인제도",
+        "tagList": [
+          {
+            "tagNm": "12/24개월약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00004430",
+        "benefitNm": "선택약정할인제도",
+        "tagList": [
+          {
+            "tagNm": "12/24개월약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00005923",
+        "benefitNm": "무약정플랜",
+        "tagList": [
+          {
+            "tagNm": "무약정"
+          },
+          {
+            "tagNm": "포인트 적립"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00003677",
+        "benefitNm": "요금약정할인제도",
+        "tagList": [
+          {
+            "tagNm": "12/24개월약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00004430",
+        "benefitNm": "선택약정할인제도",
+        "tagList": [
+          {
+            "tagNm": "12/24개월약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00005923",
+        "benefitNm": "무약정플랜",
+        "tagList": [
+          {
+            "tagNm": "무약정"
+          },
+          {
+            "tagNm": "포인트 적립"
+          }
+        ]
+      },
+      {
+        "benefitId": "NE00000034",
+        "benefitNm": "Wibro 프리 약정할인",
+        "tagList": [
+          {
+            "tagNm": "24개월 약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NE00000034",
+        "benefitNm": "Wibro 프리 약정할인",
+        "tagList": [
+          {
+            "tagNm": "24개월 약정"
+          },
+          {
+            "tagNm": "통신비 할인"
+          }
+        ]
+      },
+      {
+        "benefitId": "NA00005696",
+        "benefitNm": "척척할인",
+        "benefitPrice": "상세참조",
+        "tagList": [
+          {
+            "tagNm": "제휴상품 구매시"
+          },
+          {
+            "tagNm": "통신비 할인"
           }
         ]
       }

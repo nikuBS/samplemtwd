@@ -5,6 +5,7 @@
 -->
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/index/benefit.index.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -24,27 +25,29 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- cont-box -->
-            <div class="cont-box">
+            <!--나의 혜택&middot;할인 정보-->
+            <div id="fe-my-benefit-area" class="cont-box none">
                 <div class="my-benefit-info">
                     <button type="button" class="view">나의 혜택&middot;할인 정보</button>
                     <div class="info">
                         <ul>
                             <li>
                                 <em class="stit">멤버십</em>
-                                <span class="cont">VIP</span>
+                                <span id="fe-membership" class="cont"></span>
                             </li>
                             <li>
                                 <em class="stit">보유 포인트</em>
-                                <span class="cont">20,400점</span>
+                                <span id="fe-point" class="cont">점</span>
                             </li>
                             <li>
                                 <em class="stit">할인&middot;혜택</em>
-                                <span class="cont">3건</span>
+                                <span id="fe-benefit" class="cont">건</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
+            <!--// 나의 혜택&middot;할인 정보-->
             <!-- //cont-box -->
             <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -55,7 +58,7 @@
                     <div class="widget">
                         <div class="widget-box radio">
                             <div class="filtertype-wrap">
-                                <ul class="select-list division-five" role="group">
+                                <ul id="fe-category" class="select-list division-five" role="group">
                                     <li class="radiobox checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                         <input type="radio" name="radio1" value="" title="전체" checked /><!-- 체크상태일 경우 checked="checked" -->
                                         <p class="text-wrap">
@@ -63,25 +66,25 @@
                                         </p>
                                     </li>
                                     <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="" title="요금할인" /><!-- 체크상태일 경우 checked="false" -->
+                                        <input type="radio" name="radio1" value="F01421" title="요금할인"/><!-- 체크상태일 경우 checked="false" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit2"></i><span class="text">요금할인</span>
                                         </p>
                                     </li>
                                     <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="" title="결합할인" /><!-- 체크상태일 경우 checked="false" -->
+                                        <input type="radio" name="radio1" value="F01422" title="결합할인"/><!-- 체크상태일 경우 checked="false" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit3"></i><span class="text">결합할인</span>
                                         </p>
                                     </li>
                                     <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="" title="장기가입혜택" /><!-- 체크상태일 경우 checked="false" -->
+                                        <input type="radio" name="radio1" value="F01423" title="장기가입혜택"/><!-- 체크상태일 경우 checked="false" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit4"></i><span class="text">장기가입혜택</span>
                                         </p>
                                     </li>
                                     <li class="radiobox" role="radio" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
-                                        <input type="radio" name="radio1" value="" title="참여혜택" /><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                        <input type="radio" name="radio1" value="F01424" title="참여혜택"/><!-- 비활성화상태일 경우 disabled="disabled" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit5"></i><span class="text">참여혜택</span>
                                         </p>
@@ -93,39 +96,86 @@
                 </div>
                 <div class="benefit-productfilter-type">
                     <h3 class="blind">전체</h3>
-                    <ul>
-                        <li>
-                            <button class="list" type="button">
-                                <em>무엇이든 될 수 있는 0</em>
-                                <p>0플랜 요금제로 중고생부터 20대까지 누릴 수 있는 다양한 혜택</p>
-                                <div><span>추천 요금제</span></div>
-                                <span class="img"><img src="/img/benefit/img_benefit_all01.png" alt="무엇이든 될 수 있는 0" /></span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="list" type="button">
-                                <em>무약정플랜</em>
-                                <p>약정 없이 월정액별 최대 9천점 포인트 제공 (해당 포인트로 요금 납부 가능)</p>
-                                <div><span>무약정</span><span>포인트 적립</span></div>
-                                <span class="img"><img src="/img/benefit/img_benefit_all02.png" alt="무약정플랜" /></span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="list" type="button">
-                                <em>장기가입 요금할인 장기가입 요금할인 두줄 처리<span class="occupied">사용중</span></em>
-                                <p>SKT 가입기간에 따라 5~10% 통화료 할인 제공</p>
-                                <div><span>2년 이상 가입</span><span>통신비 할인</span></div>
-                                <span class="img"><img src="/img/benefit/img_benefit_all03.png" alt="장기가입 요금할인" /></span>
-                            </button>
-                        </li>
+                    <ul id="fe-list">
+                        <!-- 상품 리스트 area-->
                     </ul>
                 </div>
 
-                <div class="bt-more">
+                <div class="bt-more none">
                     <button>더보기</button>
                 </div>
             </div>
             <!--// .cont-box -->
+
+            <!--다른 상품 더보기 & 페이지 바로가기 area-->
+            <div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <div class="different-product-more">
+                        <strong class="stit-type">다른 상품 더보기</strong>
+                        <ul>
+                            <li>
+                                <button class="list" type="button">
+                                    <span><img src="/img/benefit/icon_benefit_tariff_system.gif" alt="요금제" /></span>
+                                    <p>요금제</p>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="list" type="button">
+                                    <span><img src="/img/benefit/icon_benefit_additional-service.gif" alt="부가서비스" /></span>
+                                    <p>부가서비스</p>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="list" type="button">
+                                    <span><img src="/img/benefit/icon_benefit_troaming.gif" alt="T로밍" /></span>
+                                    <p>T로밍</p>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="list" type="button">
+                                    <span><img src="/img/benefit/icon_benefit_tv.gif" alt="인터넷/전화/TV" /></span>
+                                    <p>인터넷/<br>전화/TV</p>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //cont-box -->
+                <!-- cont-box -->
+                <div class="benefit-page-shortcut">
+                    <ul>
+                        <li>
+                            <button class="list" type="button">
+                                <img src="/img/benefit/icon_benefit_shortcut01.png" alt="" />
+                                <span>나의 가입정보</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="list" type="button">
+                                <img src="/img/benefit/icon_benefit_shortcut02.png" alt="" />
+                                <span>멤버십 이용안내</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="list" type="button">
+                                <img src="/img/benefit/icon_benefit_shortcut03.png" alt="" />
+                                <span>내게 맞는 요금제</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="list" type="button">
+                                <img src="/img/benefit/icon_benefit_shortcut04.png" alt="" />
+                                <span>모바일 부가서비스</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //cont-box -->
+            </div>
+            <!--// 다른 상품 더보기 & 페이지 바로가기 area-->
+
         </div>
     </div>
     <!--// #contents -->
@@ -138,7 +188,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.BenefitIndex();
+    new Tw.BenefitIndex($('.wrap'), '<%=isLogin%>');
   });
 </script>
 <% include ../../components/end.component.html %>
