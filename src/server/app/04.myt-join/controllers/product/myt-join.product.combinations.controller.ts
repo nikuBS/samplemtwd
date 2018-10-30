@@ -60,6 +60,14 @@ export default class MyTJoinProductCombinations extends TwViewController {
         };
       }
 
+      const BADGE = {
+        '00': 'fam-members2',
+        '01': 'partner',
+        '02': 'fam',
+        '03': 'parents',
+        '04': 'siblings'
+      };
+
       return {
         ...resp.result,
         combinationGroup: {
@@ -73,6 +81,7 @@ export default class MyTJoinProductCombinations extends TwViewController {
             aftBasFeeAmtTx: FormatHelper.addComma(String(member.aftBasFeeAmtTx)),
             basFeeAmtTx: FormatHelper.addComma(String(member.basFeeAmtTx)),
             basFeeDcTx: FormatHelper.addComma(String(member.basFeeDcTx)),
+            badge: BADGE[member.relClCd],
             bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
               return wire.mblSvcMgmtNum === member.svcMgmtNum;
             })
