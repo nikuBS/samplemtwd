@@ -41,7 +41,7 @@ Tw.CustomerEmailCategory.prototype = {
       return {
         value: item.title,
         option: this.$select_service_depth1.data('service-depth1') === item.title ? true : false,
-        attr: 'data-service-depth1=' + item.title
+        attr: 'data-service-depth1="' + item.title + '"'
       };
     };
 
@@ -73,7 +73,7 @@ Tw.CustomerEmailCategory.prototype = {
         return {
           value: item.title,
           option: false,
-          attr: 'data-service-depth2=' + item.title
+          attr: 'data-service-depth2="' + item.title + '"'
         };
       };
 
@@ -96,7 +96,7 @@ Tw.CustomerEmailCategory.prototype = {
       return {
         value: item.title,
         option: true,
-        attr: 'data-quality-depth1=' + item.title
+        attr: 'data-quality-depth1="' + item.title + '"'
       };
     };
 
@@ -118,6 +118,15 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth1.addClass('tx-bold');
     this.$select_service_depth1.text(sDepth1Value);
     this.$select_service_depth1.data('service-depth1', sDepth1Value);
+
+    var sDepth2Category = this.$select_service_depth2.data('service-depth2');
+
+    if ( sDepth2Category ) {
+      // initialize depth2 category
+      this.$select_service_depth2.removeClass('tx-bold');
+      this.$select_service_depth2.text(Tw.CUSTOMER_EMAIL.SELECT_QUESTION);
+      this.$select_service_depth2.data('service-depth2', null);
+    }
   },
 
   _onSelectService2Depth: function (e) {
@@ -126,6 +135,8 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth2.addClass('tx-bold');
     this.$select_service_depth2.text(sDepth2Value);
     this.$select_service_depth2.data('service-depth2', sDepth2Value);
+
+    this.$container.trigger('changeServiceTemplate', 'test');
   },
 
   _onSelectQuality1Depth: function (e) {
@@ -134,5 +145,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_quality_depth1.addClass('tx-bold');
     this.$select_quality_depth1.text(sDepth1Value);
     this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
+
+    this.$container.trigger('changeQualityTemplate', 'test');
   }
 };

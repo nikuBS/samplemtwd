@@ -446,6 +446,6 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
-  { title: '휴대폰/와이브로' },
-  { title: '인터넷/TV/집전화' }
+  { title: '휴대폰/와이브로', ofrCtgSeq: '0001' },
+  { title: '인터넷/TV/집전화', ofrCtgSeq: '0002' }
 ];
