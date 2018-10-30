@@ -36,15 +36,7 @@
             <div class="widget-box accordion2">
                 <div class="acco-style data-famliy-group-list type2">
                     <ul class="acco-box">
-                        <% 
-                            const BADGE = {
-                                '00': 'fam-members2',
-                                '01': 'partner',
-                                '02': 'fam',
-                                '03': 'parents',
-                                '04': 'siblings'
-                            };
-                            combination.combinationWirelessMemberList.map(member => { 
+                        <%  combination.combinationWirelessMemberList.map(member => { 
                             const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
                             const isRep = member.relClCd === '00'; %>
                             <li class="acco-list"><!-- on , off -->
@@ -55,11 +47,11 @@
                                                 <div>
                                                     <% if (isMine) { %>
                                                         <strong class="me"><%= member.custNm %></strong>
-                                                        <i class="badge badge-<%= BADGE[member.relClCd] %>"><span class="blind"><%= member.relClNm %></span></i>
+                                                        <i class="badge badge-<%= member.badge %>"><span class="blind"><%= member.relClNm %></span></i>
                                                         <i class="badge badge-me2"><span class="blind">나</span></i><!-- 뱃지-나 -->
                                                     <% } else { %>
                                                         <em class="me"><%= member.custNm %></em>
-                                                        <i class="badge badge-<%= BADGE[member.relClCd] %>"><span class="blind"><%= member.relClNm %></span></i>
+                                                        <i class="badge badge-<%= member.badge %>"><span class="blind"><%= member.relClNm %></span></i>
                                                     <% } %>
                                                 </div>
                                                 <div class="num"><%= member.svcNum %></div>
