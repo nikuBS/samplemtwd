@@ -65,6 +65,10 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
   _hbRegisterHelper: function () {
 
+    Handlebars.registerHelper('date_txt', function (dateVal) {
+      return Tw.DateHelper.getShortDateWithFormatAddByUnit(dateVal, 1, 'days', 'YYYY년 MM월', 'YYYYMMDD');
+    });
+
     Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
     });
@@ -108,7 +112,6 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$lineSelectArea = $('[data-target="lineSelectArea"]');
 
     this.$searchNmSvcType = $('[data-target="searchNmSvcType"]');
-    this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
   },
   _bindEvent: function () {
@@ -178,6 +181,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       lineList: this.resData.commDataInfo.intBillLineList
     }];
     var hashName = 'conditionChange';
+
+    Tw.Logger.info('[팝업 오픈 전 : MF_02_01_01]', data);
 
     this._popupService.open({
         hbs: hbsName,
