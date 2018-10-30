@@ -70,7 +70,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
    * @param res - server response
    * @private
    */
-  _onCheckPwdSuccess : function (res){
+  _onCheckPwdSuccess : function (/*res*/){
 
     // step2 ui로 변경
     this._historyService.setHistory(event);
@@ -80,7 +80,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     skt_landing.action.loading.off({ ta: this.$container });
   },
 
-  _onCheckPwdFail : function(res, errCnt, unexpectedError){
+  _onCheckPwdFail : function(/*res, errCnt, unexpectedError*/){
     $('#pwd-input1').parents('.inputbox').addClass('error');
     skt_landing.action.loading.off({ ta: this.$container });
   },
@@ -166,9 +166,9 @@ Tw.MyTJoinProtectPwdChange.prototype = {
         return;
       }
 
-      var pwd1 = $('#pwd-input2').val();
-      var pwd2 = $('#pwd-input3').val();
-      $('#btn-change').prop('disabled', (pwd1.length < 6 || pwd2.length < 6));
+      var pwd21 = $('#pwd-input2').val();
+      var pwd22 = $('#pwd-input3').val();
+      $('#btn-change').prop('disabled', (pwd21.length < 6 || pwd22.length < 6));
     }
 
     $('input:password').parents('.inputbox').removeClass('error');

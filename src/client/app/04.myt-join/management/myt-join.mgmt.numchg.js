@@ -75,7 +75,7 @@ Tw.MyTJoinMgmtNumchg.prototype = {
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
     // TODO 변경
-    this._apiService.request(Tw.API_CMD.BFF_05_XXXX, {})
+    this._apiService.request(Tw.API_CMD.BFF_05_0185, param)
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){

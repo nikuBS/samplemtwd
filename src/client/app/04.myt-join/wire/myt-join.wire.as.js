@@ -96,9 +96,9 @@ Tw.MyTJoinWireAS.prototype = {
 
     for( var i = 0; i < list.length; i++ ){
 
-      if( this._lastYear !== list[i]['troubleDt'].substr(0,4) ){
+      if( this._lastYear !== list[i].troubleDt.substr(0,4) ){
         // 연도 출력
-        this._lastYear = list[i]['troubleDt'].substr(0,4);
+        this._lastYear = list[i].troubleDt.substr(0,4);
         $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
         $contBoxes.append(this._listContBox);
         $lastBox = $('.cont-box ul', $contBoxes).last();
@@ -166,7 +166,7 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _addMoreBtn: function(){
-    if( parseInt(this._listTotCnt) > this._list.length ) {
+    if( parseInt(this._listTotCnt, 10) > this._list.length ) {
       $('.cont-box').last().append(this._listMoreBtn);
     }
   },
@@ -176,7 +176,7 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function () {
-    if( parseInt(this._listTotCnt) > this._list.length ) {
+    if( parseInt(this._listTotCnt, 10) > this._list.length ) {
       $('.bt-more').show();
     } else {
       $('.bt-more').hide();
@@ -196,8 +196,13 @@ Tw.MyTJoinWireAS.prototype = {
         break;
       }
     }
-
-    this._historyService.goLoad('./as/detail?troubleNum='+num+'&troubleDt='+item.troubleDt+'&svcNm='+item.svcNm+'&troubleDetail='+item.troubleDetail+'&stNm');
+    var url = './as/detail?' +
+      'troubleNum='+num+'&' +
+      'troubleDt='+item.troubleDt+'&' +
+      'svcNm='+item.svcNm+'&' +
+      'troubleDetail='+item.troubleDetail+'&' +
+      'stNm';
+    this._historyService.goLoad(url);
   }
 
 
