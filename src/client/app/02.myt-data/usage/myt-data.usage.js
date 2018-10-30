@@ -181,7 +181,7 @@ Tw.MyTDataUsage.prototype = {
     $('#cont-troaming-share .data-state:eq(1) span:eq(1)').text(fmtData.unit);
 
     // 그래프 표시
-    var per = parseInt(data.dataSharing.data.remained) / parseInt(data.dataSharing.data.total) * 100;
+    var per = parseInt(data.dataSharing.data.remained, 10) / parseInt(data.dataSharing.data.total, 10) * 100;
     $('#cont-troaming-share .data-bar').width(per + '%');
     // 잔여일시
     var times = this.minToDayHourMin(data.dispRemainDay);
@@ -239,7 +239,8 @@ Tw.MyTDataUsage.prototype = {
     //console.log(data);
 
     // 쿠폰 적용 기간
-    $('#cont-discount .subtit span:eq(1)').text(Tw.DateHelper.getShortDateAndTime(data.couponDate) + ' ~ ' + Tw.DateHelper.getAddDay(data.couponDate));
+    $('#cont-discount .subtit span:eq(1)')
+      .text(Tw.DateHelper.getShortDateAndTime(data.couponDate) + ' ~ ' + Tw.DateHelper.getAddDay(data.couponDate));
 
     // 사용량
     var fmtData = Tw.FormatHelper.convDataFormat(data.used, Tw.DATA_UNIT.KB);
@@ -368,7 +369,7 @@ Tw.MyTDataUsage.prototype = {
       days: diffDuration.days(),
       hours: diffDuration.hours(),
       minutes: diffDuration.minutes()
-    }
+    };
   },
 
   /**
