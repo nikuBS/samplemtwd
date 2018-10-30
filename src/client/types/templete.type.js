@@ -314,7 +314,7 @@ Tw.PRODUCT_PLANS_ORDER = [
 
 Tw.PRODUCT_LIST_DEVICE_FILTERS = {
   'F01100': [
-    { 
+    {
       id: 'F01121',
       name: 'LTE',
       icon: 'lte'
@@ -336,7 +336,7 @@ Tw.PRODUCT_LIST_DEVICE_FILTERS = {
       icon: 'prepayment'
     }],
   'F01200': [
-    { 
+    {
       id: 'F01221',
       name: '스마트폰',
       icon: 'lte'
@@ -350,7 +350,7 @@ Tw.PRODUCT_LIST_DEVICE_FILTERS = {
       icon: 'device'
     }
   ]
-}
+};
 
 Tw.RESELL_TERMS = {
   title: '재판매 이용약관',
@@ -375,11 +375,11 @@ Tw.MYT_FARE_BILL_GUIDE = {
 Tw.HELPLINE_TYPES = [{ value: '일반' }, { value: '로밍' }, { value: '통화품질 상담' }];
 
 Tw.CUSTOMER_HELPLINE_AREAS = [
-  { value: '수도권 (서울, 경기, 인천, 강원)', attr: "data-area-code='1'" },
-  { value: '중부 (충남, 충북, 대전)', attr: "data-area-code='5'" },
-  { value: '서부 (전남, 전북, 광주, 제주)', attr: "data-area-code='4'" },
-  { value: '대구 (경북, 대구)', attr: "data-area-code='3'" },
-  { value: '부산 (경남, 울산, 부산)', attr: "data-area-code='2'" }
+  { value: '수도권 (서울, 경기, 인천, 강원)', attr: 'data-area-code="1"' },
+  { value: '중부 (충남, 충북, 대전)', attr: 'data-area-code="5"' },
+  { value: '서부 (전남, 전북, 광주, 제주)', attr: 'data-area-code="4"' },
+  { value: '대구 (경북, 대구)', attr: 'data-area-code="3"' },
+  { value: '부산 (경남, 울산, 부산)', attr: '"data-area-code="2""' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [

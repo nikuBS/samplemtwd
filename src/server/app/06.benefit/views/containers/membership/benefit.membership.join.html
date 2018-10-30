@@ -24,7 +24,7 @@
     title: '멤버십 가입하기', svcInfo: data.svcInfo, option: { back: 'step' } }); %>
     <!--// #header -->
     <!-- .container-wrap -->
-    <div class="container-wrap">
+    <div class="container-wrap" data-id="container">
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
@@ -283,7 +283,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button disabled="disabled">가입하기</button>
+                        <button disabled="disabled" data-id="join-btn">가입하기</button>
                     </li>
                 </ul>
             </div>
@@ -302,6 +302,10 @@
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
+    new Tw.MyTFareSubMain({
+      $element: $('[data-id=container]'),
+      data: JSON.parse(data)
+    });
   });
 </script>
 <% include ../components/end.component.html %>

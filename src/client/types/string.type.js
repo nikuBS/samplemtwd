@@ -569,8 +569,8 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
 };
 
 Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE = {
-  '01' : '온라인',
-  '02' : '오프라인'
+  '01': '온라인',
+  '02': '오프라인'
 };
 
 Tw.MYT_JOIN_WIRE_SET_PAUSE = {
@@ -677,7 +677,7 @@ Tw.CUSTOMER_VOICE = {
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택'
-}
+};
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
@@ -736,7 +736,7 @@ Tw.MSG_COMMON = {
 };
 
 Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
-  TERMINATION_COMPLETE : '서비스 해지 신청'
+  TERMINATION_COMPLETE: '서비스 해지 신청'
 };
 
 Tw.BRANCH_SEARCH_OPTIONS = {
