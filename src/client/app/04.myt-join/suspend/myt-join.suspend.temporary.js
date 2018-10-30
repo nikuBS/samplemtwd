@@ -43,7 +43,8 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$inputTel.on('change', $.proxy(this._checkSuspendable, this, true));
   },
 
-  _onClickBtnAddr: function () {
+  _onClickBtnAddr: function (e) {
+    e.stopPropagation();
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 

@@ -57,9 +57,18 @@
                                         <% }  %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">
-                                        <div class="cont-box">
-                                            장기일시정지
+                                        <div class="cont-box" data-suspend-state=<%= suspend.status %> >
+                                            <div class="charge-guide-wrap">
+                                                <div class="charge-cont">
+                                                    <span class="sub-disc01">
+                                                        <span class="elem">회선번호</span>
+                                                    </span>
+                                                    <span class="tit-tgothic"><%= phoneNum %></span>
+                                                    <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {}); %>
                                     </li>
                                 </ul>
                             </div>
@@ -68,8 +77,6 @@
                 </div>
                 <!--// .component -->
                 <footer id="fe-all-menu">
-                    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-                    <%- include('../../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
                 </footer>
             </div>
 
