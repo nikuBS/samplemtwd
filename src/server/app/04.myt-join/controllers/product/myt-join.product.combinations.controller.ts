@@ -9,21 +9,29 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { COMBINATION_PRODUCT } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 export default class MyTJoinProductCombinations extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.params.combination) {
-      const id = req.params.combination;
-      const pageId = COMBINATION_PRODUCT[id || ''];
-      this.getCombination(id).subscribe(combination => {
-        if (combination.code || !pageId) {
+      const prodId = req.params.combination;
+      const pageId = COMBINATION_PRODUCT[prodId || ''];
+
+      if (!pageId) {
+        return this.error.render(res, {
+          svcInfo
+        });
+      }
+
+      this.getCombination(prodId).subscribe(combination => {
+        if (combination.code) {
           return this.error.render(res, {
             ...combination,
             svcInfo
           });
         }
 
-        res.render('product/myt-join.product.combinations.combination.html', { svcInfo, pageInfo, combination, pageId });
+        res.render('product/myt-join.product.combinations.combination.html', { svcInfo, pageInfo, combination, pageId, prodId });
       });
     } else {
       this.apiService.request(API_CMD.BFF_05_0133, {}).subscribe(resp => {
@@ -37,7 +45,7 @@ export default class MyTJoinProductCombinations extends TwViewController {
         res.render('product/myt-join.product.combinations.html', {
           svcInfo,
           pageInfo,
-          combinations: resp.result.combinationWirelessMemberList || []
+          combinations: resp.result.combinationMemberList || []
         });
       });
     }
@@ -56,7 +64,8 @@ export default class MyTJoinProductCombinations extends TwViewController {
         ...resp.result,
         combinationGroup: {
           ...resp.result.combinationGroup,
-          totBasFeeDcTx: FormatHelper.addComma(String(resp.result.combinationGroup.totBasFeeDcTx))
+          totBasFeeDcTx: FormatHelper.addComma(String(resp.result.combinationGroup.totBasFeeDcTx)),
+          combStaDt: DateHelper.getShortDateNoDot(resp.result.combinationGroup.combStaDt)
         },
         combinationWirelessMemberList: (resp.result.combinationWirelessMemberList || []).map(member => {
           return {

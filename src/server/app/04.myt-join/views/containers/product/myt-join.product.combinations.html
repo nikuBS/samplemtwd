@@ -5,7 +5,7 @@
 * ID: MS_07
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 
 <body>
     <!-- #skip_navigation -->
@@ -34,7 +34,10 @@
                 <div class="cont-box nogaps-hoz">
                     <div class="my-product-list">
                         <ul>
-                            <% combinations.map(comb => { %>
+                            <% 
+                            const COMBINATION_PRODUCTS = ['NA00005055', 'NA00004211', 'NH00000084', 'TW20000008', 'NH00000059', 'TW20000007', 'NA00002040', 'TW20000010', 'NA00004728', 'TW20000011', 'TW20000012', 'TW20000009' ];
+                            const INTERNET_PRODUCTS = ['NH00000037','NH00000039','TW00000062','NH00000040','NH00000041','TW00000063'];
+                            combinations.map(comb => { %>
                             <li>
                                 <div class="inner">
                                     <strong class="tit"><%= comb.prodNm %></strong>
@@ -47,8 +50,12 @@
                                         <span class="txt">1~4 회선</span>
                                     </div>
                                     <!-- TODO: admin 정리후 추가 <button class="bt-link-tx underline">구비서류 제출</button>  -->
+                                    <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
                                     <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합가족 보기</a>
-                                     <% if (comb.prodLinkYn === "Y") { %>
+                                    <% } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { %>
+                                    <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합상품 보기</a>
+                                    <% } %>
+                                    <% if (comb.prodLinkYn === "Y") { %>
                                     <a class="btn" href="/product/detail/<%= comb.prodId %>"><span class="blind"><%= comb.prodNm %> 상품원장 보기</span></a>
                                     <% } %>
                                 </div>
