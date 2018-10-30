@@ -152,7 +152,12 @@ export enum PRODUCT_TYPE {
 
 export enum PRODUCT_CTG_NAME {
   F01100 = '요금제',
-  F01200 = '부가서비스'
+  F01200 = '부가서비스',
+  F01300 = '인터넷/전화/IPTV',
+  F01400 = '혜택ㆍ할인',
+  F01500 = 'T로밍 요금제',
+  F01600 = 'T로밍 부가서비스',
+  F01700 = 'T apps'
 }
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
