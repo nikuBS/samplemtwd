@@ -35,12 +35,12 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <h3>안내정보</h3>
-                    <p class="con-txt1 mt4"><span class="tx-bold"><%= data.guidReqSvcNum %></span> 에서<br /><span class="tx-bold"><%= data.sCurSvcNum %></span> 로<br /><span class="tx-bold">변경됨을 안내합니다.</span></p>
+                    <p class="con-txt1 mt4"><span class="tx-bold"><%= data.guidReqSvcNum %></span> 에서<br /><span class="tx-bold"><%= data.curSvcNum %></span> 로<br /><span class="tx-bold">변경됨을 안내합니다.</span></p>
                     <div class="basic-list bg-type mt20">
                         <ul>
                             <li>
                                 <span class="title">서비스 기간</span>
-                                <span class="tx-cont">2018.1.13 ~ 2018.4.12</span>
+                                <span class="tx-cont"><%= data.numGuidStaDt %> ~ <%= data.numGuidEndDt %></span>
                             </li>
                         </ul>
                     </div>
@@ -58,9 +58,9 @@
                             <div class="list-comp-input type3">
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="group">
+                                        <ul class="select-list" role="group" id="ul-svctype">
                                             <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio2" value="" title="연장" aria-labelledby="aria-comp-radio4" checked=""><!-- 체크상태일 경우 checked="checked" -->
+                                                <input type="radio" name="radio2" value="C" title="연장" aria-labelledby="aria-comp-radio4" checked=""><!-- 체크상태일 경우 checked="checked" -->
                                                 <div class="comp-list-layout" id="aria-comp-radio4" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext">연장</span>
@@ -69,7 +69,7 @@
                                                 </div>
                                             </li>
                                             <li class="radiobox type01" role="radio" aria-checked="false">
-                                                <input type="radio" name="radio2" value="" title="해지" aria-labelledby="aria-comp-radio5">
+                                                <input type="radio" name="radio2" value="E" title="해지" aria-labelledby="aria-comp-radio5">
                                                 <div class="comp-list-layout" id="aria-comp-radio5" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext">해지</span>
@@ -93,13 +93,13 @@
 
                     <ul class="form-data-list">
                         <li>
-                            <label class="tit" for="flab01">알림유형</label>
-                            <div class="list-comp-input">
+                            <label class="tit pt40">알림유형</label>
+                            <div class="list-comp-input type3">
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="group">
-                                            <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio" value="" title="알림만" aria-labelledby="aria-comp-radio1" checked=""><!-- 체크상태일 경우 checked="checked" -->
+                                        <ul class="select-list" role="group" id="ul-alramtype">
+                                            <li class="radiobox type01 <%= (data.numGuidOptYn === 'S' ? 'checked' : '') %>" role="radio" aria-checked="<%= (data.numGuidOptYn === 'S' ? 'true' : 'false') %>">
+                                                <input type="radio" name="radio" value="S" title="알림만" aria-labelledby="aria-comp-radio1" <%= (data.numGuidOptYn === 'S' ? 'checked="checked"' : '') %>">
                                                 <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext">알림만</span>
@@ -107,8 +107,8 @@
                                                     </p>
                                                 </div>
                                             </li>
-                                            <li class="radiobox type01" role="radio" aria-checked="false">
-                                                <input type="radio" name="radio" value="" title="알림 후 자동연결" aria-labelledby="aria-comp-radio2">
+                                            <li class="radiobox type01 <%= data.numGuidOptYn === 'Y' ? 'checked' : '' %>" role="radio" aria-checked="<%= data.numGuidOptYn === 'Y' ? 'true' : 'false' %>">
+                                                <input type="radio" name="radio" value="Y" title="알림 후 자동연결" aria-labelledby="aria-comp-radio2" <%= (data.numGuidOptYn === 'Y' ? 'checked="checked"' : '') %>>
                                                 <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext">알림 후 자동연결</span>
@@ -116,8 +116,8 @@
                                                     </p>
                                                 </div>
                                             </li>
-                                            <li class="radiobox type01" role="radio" aria-checked="false">
-                                                <input type="radio" name="radio" value="" title="알림없는 자동연결" aria-labelledby="aria-comp-radio3">
+                                            <li class="radiobox type01 <%= data.numGuidOptYn === 'N' ? 'checked' : '' %>" role="radio" aria-checked="<%= data.numGuidOptYn === 'N' ? 'true' : 'false' %>">
+                                                <input type="radio" name="radio" value="N" title="알림없는 자동연결" aria-labelledby="aria-comp-radio3" <%= (data.numGuidOptYn === 'N' ? 'checked="checked"' : '') %>>
                                                 <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext">알림없는 자동연결</span>
@@ -142,7 +142,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button disabled>신청하기</button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
+                            <button id="btn-ok" disabled>신청하기</button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
                         </li>
                     </ul>
                 </div>
@@ -154,11 +154,21 @@
         <!--// .popup-closeBtn -->
     </div>
     <!-- // .popup hbs -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
+    </footer>
 </div>
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinMgmtNumchgAlarmExt($('#contents'));
+    new Tw.MyTJoinMgmtNumchgAlarmExt($('.wrap'), {
+      curSvcNum : '<%= data.curSvcNum %>',
+      guidReqSvcNum : '<%= data.guidReqSvcNum %>',
+      firstNumGuidStaDt : '<%= data.firstNumGuidStaDt %>',
+      wDateChargFrom : '<%= data.wDateChargFrom %>',
+      numGuidStaDt : '<%= data.numGuidStaDt %>',
+      numGuidEndDt : '<%= data.numGuidEndDt %>'
+    });
   });
 </script>
 <% include ../../components/end.component.html %>

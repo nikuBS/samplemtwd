@@ -3,11 +3,14 @@
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.22
  */
-Tw.MyTJoinMgmtNumchgAlarm = function (rootEl) {
+Tw.MyTJoinMgmtNumchgAlarm = function (rootEl, options) {
   this.$container = rootEl;
+  this._options = options;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+
+  this._ATTR_DATA_PRD = 'data-prd';
 
   this._bindEvent();
 };
@@ -19,11 +22,13 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '.bt-red1', $.proxy(this._onclickBtnOk, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._onclickBtnCancel, this));
-    this.$container.on('change', '#rbt-alramtype', $.proxy(this._onchangeUiCondition, this));
-    this.$container.on('change', '#input-period', $.proxy(this._onchangeUiCondition, this));
-    this.$container.on('click', '.bt-dropdown', $.proxy(this._onclickBtnPrd, this));
+
+    this.$radioAlarmType = $('#ul-alramtype input[type=radio]');
+    this.$inputPrd = $('#input-prd');
+
+    this.$container.on('change', this.$radioAlarmType, $.proxy(this._onchangeUiCondition, this));
+    this.$container.on('click', '#btn-period', $.proxy(this._onclickBtnPrd, this));
+    this.$container.on('click', '#btn-ok', $.proxy(this._onclickBtnOk, this));
   },
 
 
@@ -45,15 +50,33 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
 
   _selectPopupCallback: function ($target, $layer) {
     $layer.one('click', '.condition', $.proxy(this._setSelectedValue, this, $target));
-    $layer.find('[data-prd=' + $target.attr('data-prd') + ']').addClass('checked');
+    $layer.find('['+this._ATTR_DATA_PRD+'=' + $target.attr(this._ATTR_DATA_PRD) + ']').addClass('checked');
   },
 
+  /**
+   * 기간 선택 완료시
+   * @param $target
+   * @param event
+   * @private
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.currentTarget);
-    var prd = $selectedValue.attr('data-prd');
-    $target.attr('data-prd', prd);
+    var prd = $selectedValue.attr(this._ATTR_DATA_PRD);
+    $target.attr(this._ATTR_DATA_PRD, prd);
     $target.text($selectedValue.text());
+    this.$inputPrd.val(prd);
     this._popupService.close();
+    this._onchangeUiCondition();
+  },
+
+
+  /**
+   * 신청 조건 변경시(기간선택, 알람유형 선택시)
+   * @private
+   */
+  _onchangeUiCondition: function(){
+    var btnDisabled = (!this.$inputPrd.val() || !this.$radioAlarmType.val());
+    $('.bt-red1 button').attr('disabled', btnDisabled);
   },
 
 
@@ -62,19 +85,27 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
    * @private
    */
   _onclickBtnOk: function(){
-    // 신청/변경
-    // BFF_05_0182
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
-    
+
     var param = {
-      guidReqSvcNum : '',     // 변경전 서비스번호
-      firstNumGuidStaDt : '', // 최초로 번호안내서비스 받은 일자
-      wDateChargFrom : '',    // 과금시작일
-      numGuidOptYn : $('#ul-alramtype input:checked').val()  // 알림유형
+      guidReqSvcNum : this._options.guidReqSvcNum,     // 변경전 서비스번호
+      firstNumGuidStaDt : this._options.firstNumGuidStaDt, // 최초로 번호안내서비스 받은 일자
+      wDateChargFrom : this._options.wDateChargFrom,    // 과금시작일
+      period : this.$inputPrd.val(),    // 선택 기간
+      numGuidOptYn : this.$radioAlarmType.val()  // 선택 알림유형
     };
 
-    //this._apiService.request(Tw.API_CMD.BFF_05_0182, param)
-    this._apiService.request(Tw.API_CMD.BFF_05_0150, param)
+    // 선택 기간 validation
+    if( !param.period ){
+      return;
+    }
+    // 선택 알람 유형 validation
+    if( !param.numGuidOptYn ){
+      return;
+    }
+
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    // 신청/변경 call api
+    this._apiService.request(Tw.API_CMD.BFF_05_0182, param)
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
@@ -91,28 +122,9 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
       }, this))
       .fail(function(err){
         Tw.Error(err.status, err.statusText).pop();
-        skt_landing.action.loading.off({ ta: '#container' });
+        skt_landing.action.loading.off({ ta: this.$container });
       });
-  },
-
-
-  /**
-   * 취소버튼 클릭시
-   * @private
-   */
-  _onclickBtnCancel: function(){
-    // this popup close
-  },
-
-
-  /**
-   * 신청 조건 변경시(기간선택, 알람유형 선택시)
-   * @private
-   */
-  _onchangeUiCondition: function(){
-    // #hdn-period 알림 기간
-    // #rbt-alramtype 알림 유형
-    var btnDisabled = (!$('#hdn-period').val() && !$('#rbt-alramtype').val());
-    $('.bt-red1 button').attr('disabled', btnDisabled);
   }
+
+
 };
