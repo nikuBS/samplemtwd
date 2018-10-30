@@ -558,6 +558,22 @@ export const API_CMD = {
   BFF_10_0038: { path: '/core-product/v1/mobiles/additions/args-0/vas-terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_9001: { path: '/v1/products/args-0/auth/args-1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
+  // MEMBERSHIP
+  BFF_11_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0002: { path: '/core-membership/v1/card/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0003: { path: '/core-membership/v1/card-reissue-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0004: { path: '/core-membership/v1/card-reissue-process', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0005: { path: '/core-membership/v1/card-reissue-cancel-process', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0006: { path: '/core-membership/v1/card/change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0007: { path: '/core-membership/v1/card/check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0009: { path: '/core-membership/v1/card/used-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0010: { path: '/core-membership/v1/card/used-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0011: { path: '/core-membership/v1/card/create', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0012: { path: '/core-membership/v1/card/modify', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0013: { path: '/core-membership/v1/card/cancel-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0014: { path: '/core-membership/v1/card/cancel', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0015: { path: '/core-membership/v1/card/create-check', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
   LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
