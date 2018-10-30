@@ -7,8 +7,8 @@
 Tw.MyTJoinSuspend = function (rootEl) {
   this.$container = rootEl;
   this.TYPE = {
-    TEMPORARY: 'temporary',
-    LONG_TERM: 'long-term'
+    TEMPORARY: '#temporary',
+    LONG_TERM: '#long-term'
   };
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
@@ -32,9 +32,9 @@ Tw.MyTJoinSuspend.prototype = {
   },
 
   _setInitialTab: function () {
-    var type = window.location.hash || '#' + this.TYPE.TEMPORARY;
+    var type = window.location.hash ||  this.TYPE.TEMPORARY;
     if ( Object.values(this.TYPE).indexOf(type) < 0 ) {
-      type = '#' + this.TYPE.TEMPORARY;
+      type =  this.TYPE.TEMPORARY;
     }
     this.$tabLinker.filter('[href="' + type + '"]').click();
   },
@@ -46,7 +46,7 @@ Tw.MyTJoinSuspend.prototype = {
   },
 
   _setActiveTab: function (type) {
-    type = type.replace('#', '').toLowerCase();
+    type = type.toLowerCase();
     switch ( type ) {
       case this.TYPE.TEMPORARY:
         if ( !this._temp ) {
