@@ -6,47 +6,39 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { PRODUCT_RESERVATION_TYPE_NM, PRODUCT_RESERVATION_COMBINE_NM } from '../../../types/string.type';
 import FormatHelper from '../../../utils/format.helper';
-import { Observable } from 'rxjs/Observable';
 
 class ProductJoinReservation extends TwViewController {
   constructor() {
     super();
   }
 
-  private _prodId;
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const typeCd = req.query.type_cd || null,
+      prodId = req.query.prod_id || null;
 
-  /**
-   * @private
-   */
-  private _getProdBasicInfo(): Observable<any> {
-    if (FormatHelper.isEmpty(this._prodId)) {
-      return Observable.of({});
+    if (FormatHelper.isEmpty(typeCd) || FormatHelper.isEmpty(PRODUCT_RESERVATION_TYPE_NM[typeCd])) {
+      return this.error.render(res, {
+        svcInfo: svcInfo,
+        title: '가입 상담 예약'
+      });
     }
 
-    return this.apiService.request(API_CMD.BFF_10_0001, {}, {}, this._prodId);
-  }
+    let prodNm: any = PRODUCT_RESERVATION_COMBINE_NM.NONE;
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this._prodId = req.params.prodId || null;
+    if (!FormatHelper.isEmpty(prodId)) {
+      prodNm = FormatHelper.isEmpty(PRODUCT_RESERVATION_COMBINE_NM[prodId]) ?
+          PRODUCT_RESERVATION_COMBINE_NM.ETC : PRODUCT_RESERVATION_COMBINE_NM[prodId];
+    }
 
-    this._getProdBasicInfo().subscribe((basicInfo) => {
-      if (!FormatHelper.isEmpty(this._prodId) && basicInfo.code !== API_CODE.CODE_00) {
-        return this.error.render(res, {
-          code: basicInfo.code,
-          msg: basicInfo.msg,
-          svcInfo: svcInfo,
-          title: '가입상담 예약'
-        });
-      }
-
-      res.render('product.join-reservation.html', {
-        prodId: this._prodId,
-        svcInfo: svcInfo,
-        pageInfo: pageInfo,
-        basicInfo: FormatHelper.isEmpty(this._prodId) ? null : basicInfo.result
-      });
+    res.render('product.join-reservation.html', {
+      typeCd: typeCd,
+      typeName: PRODUCT_RESERVATION_TYPE_NM[typeCd],
+      svcInfo: svcInfo,
+      pageInfo: pageInfo,
+      prodId: prodId,
+      prodNm: prodNm
     });
   }
 }

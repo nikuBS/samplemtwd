@@ -6,10 +6,10 @@
 
 Tw.ProductJoinReservation = function(rootEl) {
   this.$container = rootEl;
-  this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService();
   this._prodIdList = ['NH00000103', 'NA00002040', 'NH00000133', 'NH00000084'];
 
   this._cachedElement();
@@ -20,22 +20,40 @@ Tw.ProductJoinReservation = function(rootEl) {
 Tw.ProductJoinReservation.prototype = {
 
   _init: function() {
+    this._typeCd = this.$container.data('type_cd');
     this._prodId = this.$container.data('prod_id');
     this._isEtcProd = this._prodIdList.indexOf(this._prodId) === -1;
 
-    if (this.$agreeWrap.length < 1) {
-      this._toggleApplyBtn(true);
+    this._originalTypeCd = this._typeCd;
+    this._originalProdId = this._prodId;
+
+    if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId)) {
+      this._initCombineProduct();
     }
+  },
+
+  _initCombineProduct: function() {
+    if (this._prodId !== 'NH00000103') {
+      setTimeout(function() {
+        this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
+        this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
+      }.bind(this));
+    }
+
+    this.$combineSelected.prop('checked', true);
   },
 
   _cachedElement: function() {
     this.$reservName = this.$container.find('#formInput01');
     this.$reservNumber = this.$container.find('#formInput02');
     this.$agreeWrap = this.$container.find('.fe-agree_wrap');
+    this.$combineSelected = this.$container.find('.fe-combine_selected');
+    this.$combineExplain = this.$container.find('.fe-combine_explain');
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
     this.$btnInputCancel = this.$container.find('.fe-btn_cancel');
-    this.$btnSelectProduct = this.$container.find('.fe-btn_select_product');
+    this.$btnSelectTypeCd = this.$container.find('.fe-btn_select_type_cd');
+    this.$btnSelectCombine = this.$container.find('.fe-btn_select_combine');
   },
 
   _bindEvent: function() {
@@ -44,11 +62,56 @@ Tw.ProductJoinReservation.prototype = {
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnApply.on('click', $.proxy(this._procApply, this));
     this.$btnInputCancel.on('click', $.proxy(this._procClearInput, this));
-    this.$btnSelectProduct.on('click', $.proxy(this._openSelectProductPop, this));
+    this.$btnSelectTypeCd.on('click', $.proxy(this._openTypeCdPop, this));
     this.$agreeWrap.on('change', 'input[type=checkbox]', $.proxy(this._procAgreeCheck, this));
+    this.$btnSelectCombine.on('click', $.proxy(this._openCombinePop, this));
   },
 
-  _openSelectProductPop: function() {
+  _openTypeCdPop: function() {
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.PRODUCT_RESERVATION.title,
+      data: [{
+        'list': [
+          { value: Tw.PRODUCT_RESERVATION.cellphone,
+            option: this._typeCd === 'cellphone' ? 'checked' : '',
+            attr: 'data-type_cd="cellphone"' },
+          { value: Tw.PRODUCT_RESERVATION.internet,
+            option: this._typeCd === 'internet' ? 'checked' : '',
+            attr: 'data-type_cd="internet"' },
+          { value: Tw.PRODUCT_RESERVATION.phone,
+            option: this._typeCd === 'phone' ? 'checked' : '',
+            attr: 'data-type_cd="phone"' },
+          { value: Tw.PRODUCT_RESERVATION.tv,
+            option: this._typeCd === 'tv' ? 'checked' : '',
+            attr: 'data-type_cd="tv"' },
+          { value: Tw.PRODUCT_RESERVATION.combine,
+            option: this._typeCd === 'combine' ? 'checked' : '',
+            attr: 'data-type_cd="combine"' }
+        ]
+      }]
+    }, $.proxy(this._typeCdPopupBindEvent, this), $.proxy(this._typeCdPopupClose, this), 'type_cd_select');
+  },
+
+  _typeCdPopupBindEvent: function($popupContainer) {
+    $popupContainer.on('click', '[data-type_cd]', $.proxy(this._setTypeCd, this));
+  },
+
+  _setTypeCd: function(e) {
+    this._typeCd = $(e.currentTarget).data('type_cd');
+    this._popupService.close();
+  },
+
+  _typeCdPopupClose: function() {
+    if (this._typeCd === this._originalTypeCd) {
+      return;
+    }
+
+    this._historyService.goLoad('/product/join-reservation?typeCd=' + this._typeCd);
+  },
+
+  _openCombinePop: function() {
     this._popupService.open({
       hbs: 'actionsheet_select_b_type',
       layer: true,
@@ -57,8 +120,8 @@ Tw.ProductJoinReservation.prototype = {
         'type': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL,
         'list': [
           {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL_ITEMS.NH00000103.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL_ITEMS.NH00000103.EXPLAIN,
+            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.TITLE,
+            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
             option: (this._prodId === 'NH00000103') ? 'checked' : '', attr: 'data-prod_id="NH00000103"'
           }
         ]
@@ -67,28 +130,65 @@ Tw.ProductJoinReservation.prototype = {
         'type': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
         'list': [
           {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.NA00002040.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.NA00002040.EXPLAIN,
+            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.TITLE,
+            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
             option: (this._prodId === 'NA00002040') ? 'checked' : '', attr: 'data-prod_id="NA00002040"'
           },
           {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.NA00000133.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.NA00000133.EXPLAIN,
-            option: (this._prodId === 'NA00000133') ? 'checked' : '', attr: 'data-prod_id="NA00000133"'
+            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
+            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
+            option: (this._prodId === 'NH00000133') ? 'checked' : '', attr: 'data-prod_id="NH00000133"'
           },
           {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.NA00000084.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.NA00000084.EXPLAIN,
-            option: (this._prodId === 'NA00000084') ? 'checked' : '', attr: 'data-prod_id="NA00000084"'
+            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
+            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
+            option: (this._prodId === 'NH00000084') ? 'checked' : '', attr: 'data-prod_id="NH00000084"'
           },
           {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY_ITEMS.ETC.TITLE,
-            option: (!Tw.FormatHelper.isEmpty(this._prodId) && this._isEtcProd) ? 'checked' : '',
-            attr: 'data-prod_id="' + (Tw.FormatHelper.isEmpty(this._prodId) ? 'etc' : this._prodId) + '"'
+            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
+            option: this._isEtcProd || this._prodId === 'ETC' ? 'checked' : '',
+            attr: 'data-prod_id="' + (Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') + '"'
           }
         ]
       }]
-    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'inifinity_category_popup');
+    }, $.proxy(this._bindCombinePop, this), $.proxy(this._setCombineResult, this), 'combine_pop');
+  },
+
+  _bindCombinePop: function($popupContainer) {
+    $popupContainer.on('click', '[data-prod_id]', $.proxy(this._setCombine, this));
+  },
+
+  _setCombine: function(e) {
+    this._prodId = $(e.currentTarget).data('prod_id');
+    this._popupService.close();
+  },
+
+  _setCombineResult: function() {
+    if (this._prodId === this._originalProdId || this._isEtcProd && Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId])) {
+      return;
+    }
+
+    this._toggleCombineExplain();
+    this.$btnSelectCombine.html(this._getCombineProdNm() + '<span class="ico"></span>');
+  },
+
+  _getCombineProdNm: function() {
+    if (!Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId])) {
+      return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE;
+    }
+
+    return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].ETC;
+  },
+
+  _toggleCombineExplain: function() {
+    if (this._prodId === 'NH00000103') {
+      this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
+      this.$combineExplain.find('input[type=checkbox]').attr('disabled', 'disabled').prop('disabled', true)
+        .prop('checked', false);
+    } else {
+      this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
+      this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
+    }
   },
 
   _openAgreePop: function(e) {

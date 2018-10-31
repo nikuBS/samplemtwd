@@ -128,6 +128,23 @@ export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
   NA00006117 = '대상'
 }
 
+export enum PRODUCT_RESERVATION_TYPE_NM {
+  cellphone = '휴대폰',
+  internet = '인터넷',
+  phone = '전화',
+  tv = 'TV',
+  combine = '결합상품'
+}
+
+export enum PRODUCT_RESERVATION_COMBINE_NM {
+  NH00000103 = 'TB끼리 한가족할인',
+  NA00002040 = '온가족할인',
+  NH00000133 = 'New온가족플랜',
+  NH00000084 = 'TB끼리 온가족프리',
+  NONE = '결합상품을 선택해 주세요',
+  ETC = '그 외 결합상품'
+}
+
 export const MYT_FARE_BILL_REISSUE_TYPE = {
   P: 'T world',
   H: 'Bill Letter',
