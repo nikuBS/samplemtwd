@@ -219,9 +219,10 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   _getReceiveLine: function () {
+    var svcMgmtNumToGive = this._$btnLineToGive.data('svc-mgmt-num').toString();
     var svcMgmtNumToReceive = this._$btnLineToReceive.data('svc-mgmt-num').toString();
-    this._getLinesAttrToSelect(_.reject(this._lines, {
-      svcMgmtNum: this._$btnLineToGive.data('svc-mgmt-num').toString()
+    return this._getLinesAttrToSelect(_.reject(this._lines, {
+      svcMgmtNum: svcMgmtNumToGive
     }), svcMgmtNumToReceive);
   }
 });
