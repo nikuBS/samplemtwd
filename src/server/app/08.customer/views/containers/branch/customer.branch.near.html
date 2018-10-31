@@ -53,13 +53,13 @@
                         <div class="none" id="fe-div-list">
                             <!-- .shop-result -->
                             <div class="shop-result">
-                                <span class="count">총 <em>32</em>개의 매장이 검색되었습니다.</span>
-                                <div class="bt-alone"><button class="bt-line-gray2">지도보기</button></div>
+                                <span class="count">총 <em id="fe-result-count"></em>개의 매장이 검색되었습니다.</span>
+                                <div class="bt-alone"><button class="bt-line-gray2" id="fe-btn-view-map">지도보기</button></div>
                             </div>
                             <!-- // .shop-result -->
                             <!-- .shop-txt -->
                             <div class="shop-txt">
-                                <ul>
+                                <ul id="fe-list">
                                     <li>
                                         <dl class="type02">
                                             <dt>신사대리점 직영점</dt>
@@ -86,6 +86,20 @@
                     <!-- // .shop-info -->
                 </div>
                 <!-- // cont-box -->
+                <!-- .cont-box -->
+                <div class="none" id="fe-div-list-btns">
+                  <div class="cont-box nogaps">
+                      <div class="bt-more">
+                          <button role="button" id="fe-btn-more"title="">더보기</button>
+                      </div>
+                  </div>
+                  <!-- // .cont-box -->
+                  <!-- .bt-top -->
+                  <div class="bt-top">
+                      <button>top으로 이동</button>
+                  </div>
+                <!-- // .bt-top -->
+                </div>
             </div>
         </div>
         <!--// #contents -->
@@ -93,6 +107,19 @@
 </body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/tmap.component.html %>
+<script type="text/template" id="tpl_list_item">
+  {{#list}}
+  <li class='fe-type-{{storeType}}'>
+      <dl class="type02 fe-list" value={{locCode}}>
+          <dt>{{storeName}}</dt>
+          <dd>{{searchAddr}}<br />({{jibunAddr}})
+              <a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a>
+          </dd>
+      </dl>
+  </li>
+  {{/list}}
+</script>
+
 <script>
   $(document).ready(function () {
     new Tw.CustomerBranchNear($('.wrap'));

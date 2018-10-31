@@ -12,6 +12,8 @@ Tw.CustomerBranchNear = function (rootEl) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
 
+  this._listItemTemplate = Handlebars.compile($('#tpl_list_item').html());
+
   this._map = undefined;
   this._markerLayer1 = undefined;
   this._markerLayer2 = undefined;
@@ -28,9 +30,15 @@ Tw.CustomerBranchNear = function (rootEl) {
 
 Tw.CustomerBranchNear.prototype = {
   _cacheElements: function () {
+    this.$divMap = this.$container.find('#fe-div-map');
+    this.$divList = this.$container.find('#fe-div-list');
+    this.$divListBtns = this.$container.find('#fe-div-list-btns');
     this.$region1 = this.$container.find('#fe-region1');
     this.$region2 = this.$container.find('#fe-region2');
     this.$typeOption = this.$container.find('.bt-dropdown');
+    this.$resultCount = this.$container.find('#fe-result-count');
+    this.$resultList = this.$container.find('#fe-list');
+    this.$btnMore = this.$container.find('#fe-btn-more');
   },
   _init: function () {
     this.$container.find('.btn-switch').css('z-index', 1000);
@@ -60,6 +68,10 @@ Tw.CustomerBranchNear.prototype = {
   _bindEvents: function () {
     this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this));
     this.$typeOption.on('click', $.proxy(this._onTypeOption, this));
+    this.$container.on('click', '#fe-btn-view-list', $.proxy(this._switchToList, this));
+    this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
+    this.$btnMore.on('click', $.proxy(this._onMore, this));
+    this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
   },
   _onCurrentLocation: function (location) {
     var $tmapBox = this.$container.find('#fe-tmap-box');
@@ -157,15 +169,48 @@ Tw.CustomerBranchNear.prototype = {
       marker.events.register('touchstart', marker, this._onMarkerClicked);
     }
 
-    // this.$resultCount.text(this.$resultCount.text().replace(/\d*/, shops.length));
-    // this._onMore();
+    this.$resultCount.text(shops.length);
+    this.$resultList.empty();
+    this._onMore();
+  },
+  _onMore: function () {
+    var currentCount = this.$resultList.children().length;
+
+    var shops = this._nearShops;
+    var listToShow = shops.length - currentCount;
+    if (listToShow > 20) {
+      listToShow = 20;
+    }
+    this.$resultList.append(this._listItemTemplate({
+      list: shops.slice(currentCount, currentCount + listToShow)
+    }));
+
+    if (currentCount + listToShow >= shops.length) {
+      this.$btnMore.addClass('none');
+    }
+
+    if (this._currentBranchType === 1) {
+      this.$resultList.find('.fe-type-1').removeClass('none');
+      this.$resultList.find('.fe-type-2').addClass('none');
+    } else if (this._currentBranchType === 2) {
+      this.$resultList.find('.fe-type-2').removeClass('none');
+      this.$resultList.find('.fe-type-1').addClass('none');
+    }
   },
   _onMarkerClicked: function () {
     window.location.href = '/customer/branch/detail?code=' + this.popup.contentHTML;
   },
+  _onListItemClicked: function (e) {
+    if (e.target.nodeName.toLowerCase() === 'a') {
+      return;
+    }
+    var code = $(e.currentTarget).attr('value');
+    this._historyService.goLoad('/customer/branch/detail?code=' + code);
+  },
   _onRegionChangeClicked: function () {
     this._popupService.open({ hbs: 'CS_02_03_L01'}, $.proxy(function (container) {
-      new Tw.CustomerBranchRegion(container, this._currentGu, this._regions, $.proxy(this._onRegionChanged, this));
+      new Tw.CustomerBranchRegion(container, this._currentGu, this._regions,
+        $.proxy(this._onRegionChanged, this));
     }, this));
   },
   _onRegionChanged: function (largeCd, middleName, regions) {
@@ -214,17 +259,36 @@ Tw.CustomerBranchNear.prototype = {
       case 0:
         this._markerLayer1.setVisibility(true);
         this._markerLayer2.setVisibility(true);
+
+        this.$resultList.find('.fe-type-1').removeClass('none');
+        this.$resultList.find('.fe-type-2').removeClass('none');
         break;
       case 1:
         this._markerLayer1.setVisibility(true);
         this._markerLayer2.setVisibility(false);
+
+        this.$resultList.find('.fe-type-1').removeClass('none');
+        this.$resultList.find('.fe-type-2').addClass('none');
         break;
       case 2:
         this._markerLayer1.setVisibility(false);
         this._markerLayer2.setVisibility(true);
+
+        this.$resultList.find('.fe-type-2').removeClass('none');
+        this.$resultList.find('.fe-type-1').addClass('none');
         break;
       default:
         break;
     }
+  },
+  _switchToList: function () {
+    this.$divMap.addClass('none');
+    this.$divList.removeClass('none');
+    this.$divListBtns.removeClass('none');
+  },
+  _switchToMap: function () {
+    this.$divList.addClass('none');
+    this.$divListBtns.addClass('none');
+    this.$divMap.removeClass('none');
   }
 };
