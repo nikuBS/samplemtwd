@@ -4,7 +4,7 @@
 * Date: 2018.10.25
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 
 <body>
 <!-- #skip_navigation -->
@@ -79,7 +79,7 @@
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
                                     <li>
-                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false" data-id="all-agree-t">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="모두동의"
                                                    aria-labelledby="aria-comp-checkbox1"/>
@@ -92,7 +92,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_01">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="서비스 이용약관 동의(필수)"
                                                    aria-labelledby="aria-comp-checkbox2"/>
@@ -106,7 +106,7 @@
                                         <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_02">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="서비스 가입동의 (필수)"
                                                    aria-labelledby="aria-comp-checkbox3"/>
@@ -120,7 +120,7 @@
                                         <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_03">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="개인정보 수집/이용 위탁동의 (필수)"
                                                    aria-labelledby="aria-comp-checkbox4"/>
@@ -134,7 +134,7 @@
                                         <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_04">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value=""
                                                    title="개인정보 수집/이용 제3자 제공동의 (필수)"
@@ -185,12 +185,12 @@
             </div>
             <!--// .cont-box -->
 
+            <% if (data.isOkCashBag) { %>
             <div class="ti-caption-gray">
                 <h3 class="tit">OK캐쉬백 이용약관 동의
                     <button class="ico-tit-tip">TIP</button>
                 </h3>
             </div>
-
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="agree-chk-wrap agree-chk-type">
@@ -199,12 +199,12 @@
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
                                     <li>
-                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false" data-id="all-agree-c">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="모두동의"
-                                                   aria-labelledby="aria-comp-checkbox1"/>
+                                                   aria-labelledby="aria-comp-checkbox8"/>
                                             <!-- 체크상태일 경우 checked="checked" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                            <div class="comp-list-layout" id="aria-comp-checkbox8">
                                                 <p class="layout-text all-chk">
                                                     <span class="mtext">모두동의</span>
                                                 </p>
@@ -212,12 +212,12 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_05">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="서비스 이용약관 동의(필수)"
-                                                   aria-labelledby="aria-comp-checkbox2"/>
+                                                   aria-labelledby="aria-comp-checkbox9"/>
                                             <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                            <div class="comp-list-layout" id="aria-comp-checkbox9">
                                                 <p class="layout-text">
                                                     <span class="mtext">OK캐쉬백 카드 서비스 이용약관 동의 (필수)</span>
                                                 </p>
@@ -226,12 +226,12 @@
                                         <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_06">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="서비스 가입동의 (필수)"
-                                                   aria-labelledby="aria-comp-checkbox3"/>
+                                                   aria-labelledby="aria-comp-checkbox10"/>
                                             <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox3">
+                                            <div class="comp-list-layout" id="aria-comp-checkbox10">
                                                 <p class="layout-text">
                                                     <span class="mtext">OK캐쉬백 암호화된 동일인 식별정보<br>제공 동의 (필수)</span>
                                                 </p>
@@ -240,12 +240,12 @@
                                         <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-id="L_07">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="개인정보 수집/이용 위탁동의 (필수)"
-                                                   aria-labelledby="aria-comp-checkbox4"/>
+                                                   aria-labelledby="aria-comp-checkbox11"/>
                                             <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox4">
+                                            <div class="comp-list-layout" id="aria-comp-checkbox11">
                                                 <p class="layout-text">
                                                     <span class="mtext">마케팅 활용 동의 (선택)</span>
                                                 </p>
@@ -269,7 +269,7 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
+            <% } %>
             <div class="notice-comp-infolist">
                 <dl>
                     <dd>필수 동의 항목을 전부 체크하시고 필수 입력 항목이 있을 경우 전부 입력하시면 T멤버십 가입이 완료 됩니다.</dd>
@@ -296,13 +296,13 @@
         data.pageInfo }); %>
     </footer>
 </div>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 </body>
 <script>
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
-    new Tw.MyTFareSubMain({
+    new Tw.MyTBenefitMembershipJoin({
       $element: $('[data-id=container]'),
       data: JSON.parse(data)
     });

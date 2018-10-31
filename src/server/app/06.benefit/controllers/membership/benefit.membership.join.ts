@@ -16,7 +16,8 @@ class BenefitMembershipJoin extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
-      pageInfo: pageInfo
+      pageInfo: pageInfo,
+      isOkCashBag: false
     };
     // TODO: 피처폰, 법인 폰 구분하여 분기 처리 필요함
     // Feature phone
@@ -24,7 +25,7 @@ class BenefitMembershipJoin extends TwViewController {
     // data.isFeature = true;
     // Corporate
     // data.type = 'corporate';
-
+    data.isOkCashBag = true;
     res.render('membership/benefit.membership.join.html', { data });
   }
 }
