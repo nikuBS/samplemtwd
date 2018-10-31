@@ -10,6 +10,10 @@ import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
 import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
 import AuthCertComplete from './controllers/cert/auth.cert.complete.controller';
 import AuthLoginFindIdPwd from './controllers/login/auth.login.find-id-pwd.controller';
+import AuthWithdrawlGuide from './controllers/withdrawal/auth.withdrawal.guide.controller';
+import AuthWithdrawlSurvey from './controllers/withdrawal/auth.withdrawal.survey.controller';
+import AuthWithdrawlComplete from './controllers/withdrawal/auth.withdrawal.complete.controller';
+import AuthMemberManagement from './controllers/member/auth.member.management.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -28,6 +32,12 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/line/register/empty', controller: AuthLineEmptyRegister });
     // login
     this.controllers.push({ url: '/login/find-id-pwd', controller: AuthLoginFindIdPwd });
+    // member
+    this.controllers.push({ url: '/member/management', controller: AuthMemberManagement } );
+    // withdrawal
+    this.controllers.push({ url: '/withdrawal/guide', controller: AuthWithdrawlGuide } );
+    this.controllers.push({ url: '/withdrawal/survey', controller: AuthWithdrawlSurvey } );
+    this.controllers.push({ url: '/withdrawal/complete', controller: AuthWithdrawlComplete } );
   }
 }
 

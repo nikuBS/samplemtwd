@@ -14,7 +14,9 @@ Tw.TidLandingComponent = function (rootEl) {
 
 Tw.TidLandingComponent.prototype = {
   _bindEvent: function () {
+    this.$container.on('click', '.fe-bt-auth-line', $.proxy(this._onClickBtnAuthLine, this));
     this.$container.on('click', '.fe-bt-account', $.proxy(this._onClickBtAccount, this));
+    this.$container.on('click', '.fe-bt-auth-withdrawal-guide', $.proxy(this._onClickBtnAuthWithdrawalGuide, this));
     this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
@@ -26,8 +28,14 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad(url);
     }
   },
+  _onClickBtnAuthLine: function () {
+    this._historyService.goLoad('/auth/line');
+  },
   _onClickBtAccount: function () {
     this._goLoad(Tw.NTV_CMD.ACCOUNT, '/auth/tid/account', $.proxy(this._onNativeAccount, this));
+  },
+  _onClickBtnAuthWithdrawalGuide: function () {
+    this._historyService.goLoad('/auth/withdrawal/guide');
   },
   _onClickBtFindId: function () {
     this._goLoad(Tw.NTV_CMD.FIND_ID, '/auth/tid/find-id', $.proxy(this._onNativeFindId, this));

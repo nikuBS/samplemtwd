@@ -93,5 +93,6 @@ export const URL = {
   '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
 
   // Auth
-  '/auth/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' }
+  '/auth/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/auth/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' }
 };
