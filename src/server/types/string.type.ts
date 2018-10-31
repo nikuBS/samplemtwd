@@ -304,10 +304,26 @@ export enum CUSTOMER_PROTECT_GUIDE {
 }
 
 export const MY_BENEFIT_RAINBOW_POINT = {
-  TITLE: '레인보우 포인트',
+  TITLE: {
+    MAIN: '레인보우 포인트'
+  },
   OLCLCD: {
     E: '적립',
     U: '사용',
     X: '소멸'
+  }
+};
+
+export const MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT = {
+  TITLE: '포인트 합산',
+  ERROR: '레인보우 포인트가 복수회선인 경우만 포인트 조정이 가능합니다.'
+};
+
+export const MY_BENEFIT_RAINBOW_POINT_TRANSFER = {
+  TITLE: '포인트 양도',
+  ERROR: '법정대리인 정보가 존재하지 않습니다.',
+  REL_NM: {
+    C: '청소년',
+    P: '법정대리인'
   }
 };

@@ -286,3 +286,8 @@ export const COMBINATION_PRODUCT = {
   NA00004728: 'happy-plan',
   TW20000011: 'happy-plan' // 온가족행복플랜
 };
+
+export enum RAINBOW_POINT_REL_CD {
+  C = 'C',
+  P = 'P'
+}

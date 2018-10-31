@@ -1,0 +1,139 @@
+<%#
+* FileName: benefit.my-benefit.rainbow-point.adjustment.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.10.29
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div id="fe-my-benefit-rainbow-point-adjustment" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines="<%= linesData %>">
+    <div class="popup-page nobg tw-popup">
+        <div id="header" class="header-wrap">
+            <!-- #header -->
+            <%- include('../../../../common/views/components/header.component.html', { title: '포인트 합산', svcInfo: svcInfo, option: { back:'popup' } }); %>
+            <!--// #header -->
+        </div>
+    <!-- #contents -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="charge-guide-wrap">
+                        <div class="charge-cont">
+                            <span class="sub-disc01">레인보우 포인트</span>
+                            <span class="tit tx-blue"><span class="charge-txt fe-point-to-give" data-point="<%= lineToGive.point %>"><%= lineToGive.showPoint %></span>점</span>
+                        </div>
+                    </div>
+                    <div class="option-box point-type">
+                        <div class="dropdown-wrap">
+                            <button class="bt-dropdown big tx-bold fe-btn-line-to-give" title="포인트 주는 회선" aria-haspopup="true" data-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>">
+                                <span class="fe-svc-num"><%= lineToGive.svcNum %></span>
+                            </button> 에서
+                        </div>
+                        <div class="dropdown-wrap">
+                            <button class="bt-dropdown big tx-bold fe-btn-line-to-receive" title="포인트 받는 회선" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>">
+                                <span class="fe-svc-num"><%= lineToReceive.svcNum %></span>
+                            </button> 으로
+                        </div>
+                        <div class="inputbox">
+                                <span class="input">
+                                    <input type="text" placeholder="전환하실 포인트" maxlength="" title="전환하실 포인트 입력"class="fe-input-point" onInput="return Tw.InputHelper.inputNumberOnly(this);">
+                                    <!-- <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button> -->
+                                </span> 합산하기
+                        </div>
+                    </div>
+                    <ul class="bt-slice mt30">
+                        <li class="bt-blue1">
+                            <button class="fe-btn-preview">합산하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+                <% if (histories.length > 0) { %>
+                <div class="ti-caption-gray">
+                    <h3 class="tit">합산내역</h3>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="history-list type3">
+                        <ul>
+                            <% for (var i = 0; i < histories.length; i++) { %>
+                            <li>
+                                <div class="li-elem">
+                                    <div class="title-box">
+                                            <span class="sub-tit03">
+                                                <span class="elem"><span class="blind">포인트</span><span class="tx-bold"><%= histories[i].showPoint %></span>점</span>
+                                                <span class="elem"><span class="blind">처리일시</span><%= histories[i].showOpDt %></span>
+                                            </span>
+                                    </div>
+                                </div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">포인트를 준 회선</span>
+                                            <span class="tx-cont"><%= histories[i].sndrSvcNum %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">포인트를 받은 회선</span>
+                                            <span class="tx-cont"><%= histories[i].befrSvcNum %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <% if (paging.needPaging) { %>
+                    <div class="paging-wrap top-line type1">
+                        <div class="paging">
+                            <% if (paging.prevPageIdx) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
+                            <% } %>
+                            <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                            <% } %>
+                            <% if (paging.nextPageIdx) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next disabled"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+                <!--// .cont-box -->
+                <% } else { %>
+                <div class="cont-box nogaps-hoz">
+                    <div class="contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">내역이 없습니다.</p>
+                    </div>
+                </div>
+                <% } %>
+
+            </div>
+        </div>
+    <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.BenefitMyBenefitRainbowPointAdjustment($('#fe-my-benefit-rainbow-point-adjustment'));
+  });
+</script>
+<% include ../../components/end.component.html %>

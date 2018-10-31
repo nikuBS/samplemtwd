@@ -11,14 +11,9 @@ import FormatHelper from '../../../../utils/format.helper';
 import { MY_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
-class BenefitMyBenefitRainbowPoint extends TwViewController {
-  private _MAXIMUM_ITEM_LENGTH = 20;
-  private _MAXIMUM_LIST_LENGTH = 5;
-  private _VIEW = {
-    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html',
-    ERROR: 'error.server-error.html'
-  };
-  private _BASE_URL = '/benefit/my-benefit/rainbow-point';
+class BenefitMyBenefitRainbowPointCommon {
+  public static MAXIMUM_ITEM_LENGTH: number = 20;
+  public static MAXIMUM_LIST_LENGTH: number = 5;
 
   public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
     const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
@@ -40,6 +35,19 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       nextPageIdx
     };
   }
+
+  public static getResult(resp: any): any {
+    return resp.result;
+  }
+
+}
+
+class BenefitMyBenefitRainbowPoint extends TwViewController {
+  private _VIEW = {
+    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html',
+    ERROR: 'error.server-error.html'
+  };
+  private _BASE_URL = '/benefit/my-benefit/rainbow-point';
 
   constructor() {
     super();
@@ -63,9 +71,9 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       const rainbowPointHistoryResult = this._getRainbowPointHistoryResult(respRainbowPointHistories);
       const rainbowPointHistories = rainbowPointHistoryResult.history;
 
-      const paging = BenefitMyBenefitRainbowPoint.getPaging(this._BASE_URL,
-        this._MAXIMUM_ITEM_LENGTH,
-        this._MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
+      const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
+        BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
+        BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
 
       const options = {
         rainbowPointsInfo,
@@ -90,17 +98,8 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
 
   private _reqRainbowPointHistories(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0100, {
-      size: this._MAXIMUM_ITEM_LENGTH,
+      size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
       page
-    });
-  }
-
-  private _renderError(res, err, svcInfo): any {
-    return res.render(this._VIEW.ERROR, {
-      title: MY_BENEFIT_RAINBOW_POINT.TITLE,
-      code: err.code,
-      msg: err.msg,
-      svcInfo: svcInfo
     });
   }
 
@@ -128,6 +127,18 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
   private _getResult(resp: any): any {
     return resp.result;
   }
+
+  private _renderError(res, err, svcInfo): any {
+    return res.render(this._VIEW.ERROR, {
+      title: MY_BENEFIT_RAINBOW_POINT.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo: svcInfo
+    });
+  }
 }
 
-export default BenefitMyBenefitRainbowPoint;
+export {
+  BenefitMyBenefitRainbowPoint,
+  BenefitMyBenefitRainbowPointCommon
+};
