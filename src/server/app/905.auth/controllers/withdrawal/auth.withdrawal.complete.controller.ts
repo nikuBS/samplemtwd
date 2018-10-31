@@ -1,7 +1,7 @@
 /**
  * FileName: auth.withdrawal.complete.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.31
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.07.04
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
