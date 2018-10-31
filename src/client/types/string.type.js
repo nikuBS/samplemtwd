@@ -46,7 +46,8 @@ Tw.POPUP_TITLE = {
   SET_AREA: '지역설정',
   ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
   SELECT_SUBJECT_TYPE: '대상 설정',
-  AGREED_PERIOD: '약정기간'
+  AGREED_PERIOD: '약정기간',
+  SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -253,7 +254,6 @@ Tw.MYT_FARE_PAYMENT_NAME = {
 };
 
 Tw.ALERT_MSG_COMMON = {
-  EXIT_APP: '앱을 종료하시겠습니까?',
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
 
@@ -278,9 +278,6 @@ Tw.VALIDATE_MSG_MYT_DATA = {
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
-  SELECT_LINE: '회선을 선택해 주세요.',
-  TEN_POINT: '10포인트 단위로 입력해 주세요.',
-  TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
@@ -340,7 +337,6 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V15: '일련번호가 올바르지 않습니다.',
   ALERT_2_V16: '공유 가능 데이터를 초과했습니다.',
   ALERT_2_V17: '가족에게 공유할 데이터를 입력해주세요.',
-  ALERT_2_V27: '보유하신 포인트 보다 초과 입력 하셨습니다.',
   ALERT_2_V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
   ALERT_2_V41: '법정대리인 휴대폰번호를 입력해주세요.',
   ALERT_2_V42: '이메일 주소를 입력해주세요.',
@@ -691,10 +687,12 @@ Tw.CUSTOMER_VOICE = {
   EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
   CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해주세요.'
 };
+
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택'
 };
+
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
@@ -775,4 +773,32 @@ Tw.UPLOAD_FILE = {
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.'
+};
+
+Tw.PRODUCT_COMBINE_PRODUCT = {
+  GROUP_PERSONAL: '개인형 결합상품',
+  GROUP_PERSONAL_ITEMS: {
+    NH00000103: {
+      TITLE: 'TB끼리 한가족할인',
+      EXPLAIN: '이동전화와 인터넷을 묶으면 인터넷 기본료 8,800원 할인혜택 제공'
+    }
+  },
+  GROUP_FAMILY: '가족형 결합상품',
+  GROUP_FAMILY_ITEMS: {
+    NA00002040: {
+      TITLE: '온가족할인',
+      EXPLAIN: '가족들의 이동전화 가입기간 합산기간에 따라 이동전화 월정액 최대 50% 할인혜택 제공'
+    },
+    NA00000133: {
+      TITLE: 'New온가족플랜',
+      EXPLAIN: '이동전화와 인터넷 결합회선수에 따라 할인혜택 제공'
+    },
+    NA00000084: {
+      TITLE: 'TB끼리 온가족프리',
+      EXPLAIN: '이동전화와 인터넷을 묶으면 이동전화 및 인터넷 기본료 할인\n+ 추가혜택 제공'
+    },
+    ETC: {
+      TITLE: '그 외 결합상품'
+    }
+  }
 };

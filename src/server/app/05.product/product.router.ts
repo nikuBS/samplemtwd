@@ -1,6 +1,7 @@
 import TwRouter from '../../common/route/tw.router';
 import ProductDetail from './controllers/product.detail.controller';
 import ProductJoin from './controllers/product.join.controller';
+import ProductJoinReservation from './controllers/product.join-reservation.controller';
 import ProductSetting from './controllers/product.setting.controller';
 import ProductTerminate from './controllers/product.terminate.controller';
 import ProductDetailContents from './controllers/product.detail.contents.controller';
@@ -26,6 +27,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
     this.controllers.push({ url: '/detail/contents/:prodId', controller: ProductDetailContents });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
+    this.controllers.push({ url: '/join-reservation(/:prodId)?', controller: ProductJoinReservation });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
     this.controllers.push({ url: '/current-setting/:prodId', controller: ProductCurrentSetting });
