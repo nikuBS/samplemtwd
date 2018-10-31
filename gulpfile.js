@@ -119,6 +119,47 @@ gulp.task('js-util-client', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
+gulp.task('js-xtractor', function() {
+  return gulp.src([
+    'src/client/xtractor/xtractor_script.js',
+    'src/client/xtractor/xtractor_api.js'
+  ])
+    .pipe(concat('xtractor.js'))
+    .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('xtractor.min.js'))
+    .pipe(rev())
+    .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev.manifest(dist + 'tmp/xtractor-manifest.json'))
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('js-xtractor-client', function() {
+  return gulp.src([
+    'src/client/xtractor/xtractor_script.js',
+    'src/client/xtractor/xtractor_api.js'
+  ])
+  .pipe(concat('xtractor.js'))
+  .pipe(gulp.dest(dist_tmp + 'js'))
+  .pipe(gulp.dest(dist + 'js'))
+  .pipe(uglify())
+  .on('error', function (err) {
+    gutil.log(gutil.colors.red('[Error]'), err.toString());
+  })
+  .pipe(rename(manifest['xtractor.min.js']))
+  .on('error', function (err) {
+    gutil.log(gutil.colors.red('[Error]'), err.toString());
+    console.log(manifest);
+  })
+  .pipe(gulp.dest(dist_tmp + 'js'))
+  .pipe(gulp.dest(dist + 'js'));
+});
+
 oldAppNames.map(function (app, index) {
   gulp.task('js-old' + app, function () {
     return gulp.src('src/client/app/90' + index + '.' + app + '/**/*.js')
@@ -325,8 +366,8 @@ gulp.task('js-app', appNames.map(function (app) {
 gulp.task('js-app-client', appNames.map(function (app) {
   return 'js-' + app + '-client';
 }));
-gulp.task('js', ['js-util', 'js-old-app', 'js-app']);
-gulp.task('js-client', ['js-util-client', 'js-app-client']);
+gulp.task('js', ['js-util', 'js-xtractor', 'js-old-app', 'js-app']);
+gulp.task('js-client', ['js-util-client', 'js-xtractor-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs', 'font']);
 

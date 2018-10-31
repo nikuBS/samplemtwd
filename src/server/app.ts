@@ -23,7 +23,6 @@ import { default as OldRechargeRouter } from './app/902.recharge/recharge.router
 import { default as OldPaymentRouter } from './app/903.payment/payment.router';
 import { default as OldCustomerRouter } from './app/904.customer/customer.router';
 import { default as OldAuthRouter } from './app/905.auth/auth.router';
-import { default as OldCommonRouter } from './app/909.common/common.router';
 import CommonRouter from './app/00.common/common.router';
 import MainRouter from './app/01.main/main.router';
 import MyTDataRouter from './app/02.myt-data/myt-data.router';
