@@ -8,7 +8,7 @@ Tw.CustomerProtectGuide = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
-  this._category = this.$container.data('category');
+  this._lastSeq = this.$container.data('last_seq');
 
   this._cachedElement();
   this._bindEvent();
@@ -38,28 +38,28 @@ Tw.CustomerProtectGuide.prototype = {
       title: Tw.PROTECT_GUIDE.TITLE,
       data: [{
         'list': [
-          { value: Tw.PROTECT_GUIDE.VIDEO, option: (this._category === 'video') ? 'checked' : '', attr: 'data-category="video"' },
-          { value: Tw.PROTECT_GUIDE.WEBTOON, option: (this._category === 'webtoon') ? 'checked' : '', attr: 'data-category="webtoon"' },
-          { value: Tw.PROTECT_GUIDE.LATEST, option: (this._category === 'latest') ? 'checked' : '', attr: 'data-category="latest"' }
+          { value: Tw.PROTECT_GUIDE.VIDEO, option: (this._lastSeq === 'cmis_0002') ? 'checked' : '', attr: 'data-last_seq="cmis_0002"' },
+          { value: Tw.PROTECT_GUIDE.WEBTOON, option: (this._lastSeq === 'cmis_0003') ? 'checked' : '', attr: 'data-last_seq="cmis_0003"' },
+          { value: Tw.PROTECT_GUIDE.LATEST, option: (this._lastSeq === 'cmis_0004') ? 'checked' : '', attr: 'data-last_seq="cmis_0004"' }
         ]
       }]
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this));
   },
 
   _goCategory: function() {
-    if (this.$container.data('category') === this._category) {
+    if (this.$container.data('last_seq') === this._lastSeq) {
       return;
     }
 
-    this._history.goLoad('/customer/protect/guide/' + this._category);
+    this._history.goLoad('/customer/damage_info/' + this._lastSeq);
   },
 
   _categoryPopupBindEvent: function($layer) {
-    $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
+    $layer.on('click', '[data-last_seq]', $.proxy(this._applyCategory, this));
   },
 
   _applyCategory: function(e) {
-    this._category = $(e.currentTarget).data('category');
+    this._lastSeq = $(e.currentTarget).data('last_seq');
     this._popupService.close();
   },
 

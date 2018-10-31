@@ -9,17 +9,18 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PROTECT_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PROTECT_GUIDE_VIDEO, CUSTOMER_PROTECT_GUIDE_LATEST } from '../../../../types/outlink.type';
 import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 const guideCategory = {
-  video: {
+  cmis_0002: {
     LABEL: CUSTOMER_PROTECT_GUIDE.VIDEO,
     LIST: CUSTOMER_PROTECT_GUIDE_VIDEO
   },
-  webtoon: {
+  cmis_0003: {
     LABEL: CUSTOMER_PROTECT_GUIDE.WEBTOON,
     LIST: CUSTOMER_PROTECT_GUIDE_WEBTOON.reverse()
   },
-  latest: {
+  cmis_0004: {
     LABEL: CUSTOMER_PROTECT_GUIDE.LATEST,
     LIST: CUSTOMER_PROTECT_GUIDE_LATEST
   }
@@ -44,19 +45,15 @@ class CustomerProtectGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const category = req.params.category || 'video',
-      listMaxSize = category === 'webtoon' ? 20 : 30;
-
-    if (['video', 'webtoon', 'latest'].indexOf(category) === -1) {
-      return res.redirect('/customer/protect/guide');
-    }
+    const lastSeq = FormatHelper.getLastSeq(req.path),
+      listMaxSize = (lastSeq === 'cmis_0003') ? 20 : 30;
 
     res.render('protect/customer.protect.guide.html', {
-      category: category,
-      categoryLabel: guideCategory[category].LABEL,
+      lastSeq: lastSeq,
+      categoryLabel: guideCategory[lastSeq].LABEL,
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      list: this._convertList(guideCategory[category].LIST, listMaxSize),
+      list: this._convertList(guideCategory[lastSeq].LIST, listMaxSize),
       listMaxSize: listMaxSize
     });
   }

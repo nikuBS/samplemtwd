@@ -14,7 +14,7 @@
     </ul>
   </div>
   <!--// #skip_navigation -->
-  <div class="wrap" data-category="<%= category %>">
+  <div class="wrap">
     <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 가이드', svcInfo, option: { line: true } }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -69,9 +69,4 @@
   </div>
 </body>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    new Tw.CustomerProtectGuide($('.wrap'));
-  });
-</script>
 <% include ../../components/end.component.html %>

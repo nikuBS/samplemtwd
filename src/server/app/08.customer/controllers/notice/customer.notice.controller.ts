@@ -71,10 +71,10 @@ class CustomerNotice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const category = req.params.category || 'tworld';
+    const category = req.query.category || 'tworld';
 
     if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
-      return res.redirect('/customer/notice');
+      return res.redirect('/customer/svc_info/cmis_0039');
     }
 
     this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})

@@ -31,6 +31,11 @@ class FormatHelper {
     return FormatHelper.isEmpty(value) ? emptyValue : value;
   }
 
+  static getLastSeq(path: any): any {
+    const pathArray = path.split('/');
+    return pathArray[pathArray.length - 1];
+  }
+
   static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any, basOfrCharCntCtt?: any): any {
     const isValid = (value) => {
       return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
