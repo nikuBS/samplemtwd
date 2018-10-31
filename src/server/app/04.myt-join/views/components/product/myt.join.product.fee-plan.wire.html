@@ -9,28 +9,18 @@
         </div>
       </div>
       <div class="info-detail mt40">
+        <% if ( feePlan.prodBasBenfCtt && (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2') ) { %>
         <div class="tb-type">
           <ul>
-          <!-- @todo TBD; API 미작업 -->
-          <% if ( svcInfo.svcAttrCd === 'S1' ) { %>
             <li>
               <dl>
-                <dt>속도</dt>
-                <dd>500 Mbps</dd>
+                <dt><%= ( svcInfo.svcAttrCd === 'S1' ) ? '속도' : '채널' %></dt>
+                <dd><%= feePlan.prodBasBenfCtt %></dd>
               </dl>
             </li>
-          <% } %>
-          <% if ( svcInfo.svcAttrCd === 'S2' ) { %>
-            <li>
-              <dl>
-                <dt>채널</dt>
-                <dd>214개 이상</dd>
-              </dl>
-            </li>
-          <% } %>
-          <!-- // -->
           </ul>
         </div>
+        <% } %>
         <% if ( feePlan.isDisplayFeeAmt ) { %>
         <div class="price-wrap mt20">
           <span class="tx-sub"><span class="tx-bold vbl">월정액</span> 부가세포함</span>
@@ -38,7 +28,6 @@
             <span class="price"><%= feePlan.basFeeAmt %></span>
             <span class="unit">원</span>
           </span>
-          <span class="tx-extra">3년 약정시+초고속 결합시</span><!-- @todo TBD; API 미작업 -->
         </div>
         <% } %>
       </div>
