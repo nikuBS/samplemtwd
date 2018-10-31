@@ -30,7 +30,8 @@ class CustomerProtect extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 2})
       .subscribe((warningListInfo) => {
-        const isApp = BrowserHelper.isApp(req);
+        const lastSeq = FormatHelper.getLastSeq(req.path),
+          isApp = BrowserHelper.isApp(req) || lastSeq === 'cmis_0001';
 
         if (warningListInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {

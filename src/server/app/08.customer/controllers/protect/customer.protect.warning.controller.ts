@@ -46,7 +46,7 @@ class CustomerProtectWarning extends TwViewController {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 20})
       .subscribe((data) => {
         if (FormatHelper.isEmpty(data)) {
-          return res.redirect('/customer/protect');
+          return res.redirect('/customer/damage_info/cmis_0000');
         }
 
         res.render('protect/customer.protect.warning.html', {

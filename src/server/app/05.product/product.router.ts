@@ -20,6 +20,7 @@ class ProductRouter extends TwRouter {
   constructor() {
     super();
 
+    // old IA
     this.controllers.push({ url: '/', controller: Product });
     this.controllers.push({ url: '/addition', controller: ProductAddition });
     this.controllers.push({ url: '/plans', controller: ProductPlans });
@@ -36,6 +37,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/sel-contract', controller: ProductSelContract });
     this.controllers.push({ url: '/dis-program-join', controller: ProductDisPgmJoin });
     this.controllers.push({ url: '/t-plus-input', controller: ProductTPlusInput });
+
+    // new IA
   }
 }
 

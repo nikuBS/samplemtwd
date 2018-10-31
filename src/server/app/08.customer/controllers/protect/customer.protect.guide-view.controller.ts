@@ -9,36 +9,22 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-const categoryData = {
-  webtoon: CUSTOMER_PROTECT_GUIDE_WEBTOON
-};
-
 class CustomerProtectGuideView extends TwViewController {
   constructor() {
     super();
   }
 
-  private _isValid(category, idx): any {
-    return !FormatHelper.isEmpty(category)
-        && !FormatHelper.isEmpty(idx)
-        && ['webtoon', 'latest'].indexOf(category) !== -1
-        && !FormatHelper.isEmpty(categoryData[category][idx]);
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const category = req.params.category || '',
-      idx = req.params.idx || '',
-      backUrl = '/customer/protect/guide' + (FormatHelper.isEmpty(category) ? '' : '/' + category);
+    const idx = req.query.idx || '';
 
-    if (!this._isValid(category, idx)) {
-      return res.redirect(backUrl);
+    if (FormatHelper.isEmpty(idx) || FormatHelper.isEmpty(CUSTOMER_PROTECT_GUIDE_WEBTOON[idx])) {
+      return res.redirect('/customer/damage_info/cmis_0003');
     }
 
     res.render('protect/customer.protect.guide-view.html', {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      category: category,
-      data: categoryData[category][idx]
+      data: CUSTOMER_PROTECT_GUIDE_WEBTOON[idx]
     });
   }
 }

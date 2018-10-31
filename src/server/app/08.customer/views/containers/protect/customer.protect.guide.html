@@ -14,7 +14,7 @@
   </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap" data-category="<%= category %>">
+<div class="wrap" data-last_seq="<%= lastSeq %>">
   <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 가이드', svcInfo, option: { line: true } }); %>
   <!-- #contents -->
   <div id="contents" class="container-wrap">
@@ -26,7 +26,7 @@
           <button class="bt-select fe-btn_category" title="이용자 피해예방 가이드 선택" aria-haspopup="true"><%= categoryLabel %></button>
         </div>
 
-        <% if (category == 'video' || category == 'latest') { %>
+        <% if (lastSeq == 'cmis_0002' || lastSeq == 'cmis_0004') { %>
         <ul class="link-long-list fe-list" data-size="30">
           <% for (var i in list) { %>
           <li class="<%= list[i].itemClass %>">
@@ -41,11 +41,11 @@
           <% } %>
         </ul>
         <% } %>
-        <% if (category == 'webtoon') { %>
+        <% if (lastSeq == 'cmis_0003') { %>
         <div class="webtoon-box">
           <ul class="webtoon-list fe-list" data-size="20">
             <% for (var i in list) { %>
-            <li class="<%= list[i].itemClass %>"><a href="/customer/protect/guide/webtoon/view/<%= i %>" class="webtoon-bt"><img src="/resource/webtoon/<%= list[i].THUMB %>" alt="<%= list[i].TITLE %>"></a></li>
+            <li class="<%= list[i].itemClass %>"><a href="/customer/damage_info/cmis_0006?idx=<%= i %>" class="webtoon-bt"><img src="/resource/webtoon/<%= list[i].THUMB %>" alt="<%= list[i].TITLE %>"></a></li>
             <% } %>
           </ul>
           <p class="data-services">* 자료제공 : 방송통신이용자포털(<a href="http://www.wiswuser.go.kr" class="fe-outlink" title="새창열림" target="_blank">http://www.wiswuser.go.kr</a>)</p>
