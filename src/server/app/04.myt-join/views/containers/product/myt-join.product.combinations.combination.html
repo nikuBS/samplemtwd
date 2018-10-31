@@ -36,4 +36,11 @@
 </body>
 
 <% include ../../components/javascript.component.html %>
+<% if (pageId === 'data-share') { %>
+<script>
+    $(document).ready(function() {
+        new Tw.MyTJoinProductCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>);
+    });
+</script>
+<% } %>
 <% include ../../components/end.component.html %>
