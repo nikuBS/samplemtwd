@@ -341,6 +341,22 @@ Tw.API_CMD = {
   BFF_10_0038: { path: '/core-product/v1/mobiles/additions/args-0/vas-terms', method: Tw.API_METHOD.GET },
   BFF_10_9001: { path: '/v1/products/args-0/auth/args-1', method: Tw.API_METHOD.GET },
 
+  // MEMBERSHIP
+  BFF_11_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
+  BFF_11_0002: { path: '/core-membership/v1/card/info', method: Tw.API_METHOD.GET },
+  BFF_11_0003: { path: '/core-membership/v1/card-reissue-info', method: Tw.API_METHOD.GET },
+  BFF_11_0004: { path: '/core-membership/v1/card-reissue-process', method: Tw.API_METHOD.PUT },
+  BFF_11_0005: { path: '/core-membership/v1/card-reissue-cancel-process', method: Tw.API_METHOD.PUT },
+  BFF_11_0006: { path: '/core-membership/v1/card/change', method: Tw.API_METHOD.PUT },
+  BFF_11_0007: { path: '/core-membership/v1/card/check', method: Tw.API_METHOD.GET },
+  BFF_11_0009: { path: '/core-membership/v1/card/used-list', method: Tw.API_METHOD.GET },
+  BFF_11_0010: { path: '/core-membership/v1/card/used-list', method: Tw.API_METHOD.GET },
+  BFF_11_0011: { path: '/core-membership/v1/card/create', method: Tw.API_METHOD.POST },
+  BFF_11_0012: { path: '/core-membership/v1/card/modify', method: Tw.API_METHOD.PUT },
+  BFF_11_0013: { path: '/core-membership/v1/card/cancel-info', method: Tw.API_METHOD.GET },
+  BFF_11_0014: { path: '/core-membership/v1/card/cancel', method: Tw.API_METHOD.PUT },
+  BFF_11_0015: { path: '/core-membership/v1/card/create-check', method: Tw.API_METHOD.POST },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },

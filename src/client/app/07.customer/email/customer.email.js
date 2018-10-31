@@ -27,6 +27,8 @@ Tw.CustomerEmail.prototype = {
   },
 
   _cachedElement: function () {
+    // this.$btn_service_register = this.$container.find('.fe-service_register');
+    // this.$btn_quality_register = this.$container.find('.fe-quality_register');
   },
 
   _bindEvent: function () {
