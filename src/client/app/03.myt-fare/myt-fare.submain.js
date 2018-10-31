@@ -9,12 +9,8 @@ Tw.MyTFareSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._lineService = new Tw.LineComponent();
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
-  this._requestCount = -1;
-  this._resTimerID = null;
-  this._svcMgmtNumList = [];
   this._chartDefaultClass = 'chart_link item';
   this.data = params.data;
   this.loadingView(true);
@@ -195,6 +191,9 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _initialize: function () {
+    this._requestCount = -1;
+    this._resTimerID = null;
+    this._svcMgmtNumList = [];
     /**
      * /청구요금인 경우
      * 1. 최근요금내역
@@ -557,7 +556,8 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
-    this._lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    var lineService = new Tw.LineComponent();
+    lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리
