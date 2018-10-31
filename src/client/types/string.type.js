@@ -754,6 +754,11 @@ Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
   TERMINATION_COMPLETE: '서비스 해지 신청'
 };
 
+Tw.BRANCH = {
+  SELECT_REGION: '지역설정',
+  SELECT_BRANCH_TYPE: ['전체', '지점', '대리점']
+};
+
 Tw.BRANCH_SEARCH_OPTIONS = {
   0: '전체',
   1: '지점',
