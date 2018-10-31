@@ -89,5 +89,5 @@ export default class MyTJoinProductCombinations extends TwViewController {
         })
       };
     });
-  }
+  };
 }

@@ -1,0 +1,24 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup fixed-btn pt0">
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <h3 class="complete-title pt60">
+                <img src="/img/ico/ico-login-fail.png" alt="" />
+            <p class="complete-error-tx pt24">
+                <span class="tx2"><span class="tx-black">{{name}}({{number}})님께</span></span>
+            </p>
+                <span><strong>데이터 나눠쓰기 완료</strong></span>
+            </h3>
+            <p class="complete-error-tx pt32">
+                <span class="tx2">잔여 데이터: <strong>{{remainData}}MB</strong> / {{benefitData}}MB{{#unless remainData includeZero=true}}<br />이번 달까지 나눔 가능.{{/unless}}</span>
+            </p>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step">닫기</button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
