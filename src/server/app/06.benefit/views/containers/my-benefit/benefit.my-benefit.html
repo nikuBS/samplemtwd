@@ -1,0 +1,176 @@
+<%#
+* FileName: benefit.my-benefit.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 10. 30.
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap" id="fe-benefit-my">
+    <div id="header" class="header-wrap">
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '나의 혜택 할인', svcInfo: svcInfo, option: { line: true } }); %>
+        <!--// #header -->
+    </div>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="myinfo-wrap">
+                    <div class="myinfo-cont">
+                        <div class="title-m">고객님은 SK와 함께한지<br /><span class="tx-bold tx-red">298</span>일째 입니다.</div>
+                    </div>
+                    <div class="ico-wrap">
+                        <button><span class="ico-ill-type3">나의 멤버십 Submain 화면으로 이동</span></button>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="wrap-gaps-top">
+                    <div class="charge-guide-wrap">
+                        <div class="charge-cont">
+                            <span class="sub-disc01">포인트</span>
+                            <span class="tit tx-blue"><span class="charge-txt"><%= total %></span>점</span>
+                            <span class="sub-disc04"><span class="elem">OK캐쉬백 <%= okCashback %>점</span><span class="elem">T포인트 <%= t %>점</span></span>
+                        </div>
+                        <div class="right-area">
+                            <button class="bt-link-tx underline" id="fe-pay">포인트 요금납부</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="link-long-list">
+                    <% if(locals.rainbow) {%>
+                    <li>
+                        <div class="link-long">
+                            <button>레인보우 포인트
+                                <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold"><%= rainbow %></i> 점</span>
+	                                        <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <% } %>
+                    <% if(locals.noContract) {%>
+                    <li>
+                        <div class="link-long">
+                            <button>무약정플랜 포인트
+                                <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold"><%= noContract %></i> 점</span>
+	                                        <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <% } %>
+                    <% if(locals.military) {%>
+                    <li>
+                        <div class="link-long">
+                            <button>지켜줘서 고마워 현역플랜 포인트
+                                <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold">2,100</i> 점</span>
+	                                        <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <% } %>
+                    <% if(locals.cookiz) {%>
+                    <li>
+                        <div class="link-long">
+                            <button>쿠키즈팅 포인트
+                                <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold">8,000</i> 점</span>
+	                                        <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <% if(count > 0) { %>
+            <div class="ti-caption-gray">
+                <h3 class="tit">혜택 · 할인</h3>
+                <p class="num">총 <em><%= count %></em>건</p>
+            </div>
+            <% } %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="history-list type2">
+                    <ul>
+                        <% for(var i=0; i < benefits.length; i++) { %>
+                        <li>
+                            <div class="li-elem">
+                                <button class="bt-detail-top">
+                                    <div class="title-box">
+                                        <span class="sub-tit02">요금할인</span>
+                                        <span class="tit"><%= benefits[i].name %></span>
+                                        <span class="sub-tit">신청일 <%= benefits[i].date %></span>
+                                    </div>
+                                </button>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% if(locals.bond) { %>
+                        <li>
+                            <div class="li-elem">
+                                <button class="bt-detail-top">
+                                    <div class="title-box">
+                                        <span class="sub-tit02">결합할인</span>
+                                        <span class="tit">온가족플랜 <% if(bond.total > 1) { %> 외 <%= bond.total %>건 <% }%></span>
+                                    </div>
+                                </button>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% if(locals.coupons) { %>
+                        <li>
+                            <div class="li-elem">
+                                <button class="bt-detail-top">
+                                    <div class="title-box">
+                                        <span class="sub-tit02">장기가입 혜택</span>
+                                        <span class="tit">데이터 리필쿠폰 <%= coupons %>장</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.BenefitMyBenefit($('#fe-benefit-my'), '<%= okCashback %>', '<%= t %>', '<%= rainbow %>');
+  });
+</script>
+<% include ../components/end.component.html %>
