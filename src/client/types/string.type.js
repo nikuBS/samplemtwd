@@ -254,7 +254,9 @@ Tw.MYT_FARE_PAYMENT_NAME = {
 };
 
 Tw.ALERT_MSG_COMMON = {
-  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
+  ALERT_4_A3: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?',
+  ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.'
 };
 
 Tw.ALERT_MSG_HOME = {};
@@ -471,6 +473,7 @@ Tw.INFO = {
 };
 
 Tw.URL_PATH = {
+  SKT_ID: 'http://www.skt-id.co.kr',
   OKCASHBAG:
     'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/' +
     '' +

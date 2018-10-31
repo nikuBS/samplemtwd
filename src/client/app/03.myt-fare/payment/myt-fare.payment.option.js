@@ -50,7 +50,7 @@ Tw.MyTFarePaymentOption.prototype = {
   _openCancelAutoPayment: function () {
     this._popupService.open({
       'hbs':'MF_05_01_02'
-    }, $.proxy(this._cancelAutoPayment, this));
+    }, $.proxy(this._cancelAutoPayment, this), null, 'cancel');
   },
   _cancelAutoPayment: function ($layer) {
     new Tw.MyTFarePaymentAutoCancel(this.$container, $layer);
