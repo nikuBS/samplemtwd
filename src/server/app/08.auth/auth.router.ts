@@ -9,6 +9,7 @@ import AuthLineEmptyRegister from './controllers/line/auth.line.empty-register.c
 import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
 import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
 import AuthCertComplete from './controllers/cert/auth.cert.complete.controller';
+import AuthLoginFindIdPwd from './controllers/login/auth.login.find-id-pwd.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -25,7 +26,8 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/line/edit', controller: AuthLineEdit });
     this.controllers.push({ url: '/line/register/corporation', controller: AuthLineCopRegister });
     this.controllers.push({ url: '/line/register/empty', controller: AuthLineEmptyRegister });
-
+    // login
+    this.controllers.push({ url: '/login/find-id-pwd', controller: AuthLoginFindIdPwd });
   }
 }
 
