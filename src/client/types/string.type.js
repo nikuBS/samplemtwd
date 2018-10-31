@@ -254,6 +254,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
 };
 
 Tw.ALERT_MSG_COMMON = {
+  EXIT_APP: '앱을 종료하시겠습니까?',
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
   ALERT_4_A3: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?',
   ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.'
@@ -280,6 +281,9 @@ Tw.VALIDATE_MSG_MYT_DATA = {
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
+  SELECT_LINE: '회선을 선택해 주세요.',
+  TEN_POINT: '10포인트 단위로 입력해 주세요.',
+  TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
@@ -339,6 +343,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V15: '일련번호가 올바르지 않습니다.',
   ALERT_2_V16: '공유 가능 데이터를 초과했습니다.',
   ALERT_2_V17: '가족에게 공유할 데이터를 입력해주세요.',
+  ALERT_2_V27: '보유하신 포인트 보다 초과 입력 하셨습니다.',
   ALERT_2_V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
   ALERT_2_V41: '법정대리인 휴대폰번호를 입력해주세요.',
   ALERT_2_V42: '이메일 주소를 입력해주세요.',
@@ -690,12 +695,10 @@ Tw.CUSTOMER_VOICE = {
   EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
   CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해주세요.'
 };
-
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택'
 };
-
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
