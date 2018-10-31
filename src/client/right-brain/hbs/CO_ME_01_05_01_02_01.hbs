@@ -1,0 +1,57 @@
+<!-- .popup hbs -->
+<div class="popup-page nobg tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>내국인 인증</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <ul class="form-data-list">
+                    <li>
+                        <label class="tit" for="flab01">이름</label>
+                        <span class="inputbox">
+                            <span class="input">
+                                <input id="flab01" class="fe-name required-input-field" type="text" placeholder="회원가입 시 이름">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <label class="tit" for="flab02">법정 생년월일</label>
+                        <span class="inputbox fe-input-box">
+                            <span class="input">
+                                <input id="flab02" class="fe-birth required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                       placeholder="생년월일 8자리(YYYYMMDD)" aria-describedby="aria-birth-num1">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                            <span id="aria-birth-num2" class="error-txt" style="display:none;">입력한 정보가 확인되지 않습니다. 다시 입력해 주세요.</span><!-- 에러일 경우 추가 -->
+                        </span>
+                    </li>
+                </ul>
+                <p class="extra-txt" id="aria-birth-num1">주민등록번호 상의 법정 생년월일을 입력해 주세요.</p>
+            </div>
+            <!--// .cont-box -->
+            <p class="extra-txt ml16">* 개인정보 보호차원에서 이름, 법정 생년월일이 일치하는 경우에만 회원탈퇴가 가능합니다.</p>
+
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="btn-certify" disabled>인증하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

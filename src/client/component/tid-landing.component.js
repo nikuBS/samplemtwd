@@ -35,7 +35,7 @@ Tw.TidLandingComponent.prototype = {
     this._goLoad(Tw.NTV_CMD.ACCOUNT, '/auth/tid/account', $.proxy(this._onNativeAccount, this));
   },
   _onClickBtnAuthWithdrawalGuide: function () {
-    this._historyService.goLoad('/auth/withdrawal/guide');
+    new Tw.AuthWithdrawal();
   },
   _onClickBtFindId: function () {
     this._goLoad(Tw.NTV_CMD.FIND_ID, '/auth/tid/find-id', $.proxy(this._onNativeFindId, this));

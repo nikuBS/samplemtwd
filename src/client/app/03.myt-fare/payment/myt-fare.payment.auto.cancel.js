@@ -54,7 +54,7 @@ Tw.MyTFarePaymentAutoCancel.prototype = {
     }
   },
   _getAccountFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _setAccountList: function (bankList) {
     var accountList = [];
