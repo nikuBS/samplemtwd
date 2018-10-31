@@ -53,10 +53,10 @@ class BenefitMyBenefit extends TwViewController {
           options['total'] = FormatHelper.addComma(this._total + '');
 
           options['count'] = 0;
-          options['benefit'] = [];
+          options['benefits'] = [];
           if ( bill.code === API_CODE.CODE_00 ) {
             bill.result.priceAgrmt.forEach(prod => {
-              options['benefit'].push({
+              options['benefits'].push({
                 name: prod.prodNm,
                 date: DateHelper.getShortDateNoDot(prod.agreeStartDate)
               });
@@ -69,7 +69,7 @@ class BenefitMyBenefit extends TwViewController {
               name: combination.prodNm,
               total: parseInt(combination.etcCnt, 10)
             };
-            options['count']++;
+            options['count'] += options['bond'].total;
           }
 
           if ( long.code === API_CODE.CODE_00 ) {

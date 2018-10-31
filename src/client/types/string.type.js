@@ -815,10 +815,22 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
 };
 
 Tw.MEMBERSHIP_GRADE = {
-  V : 'VIP',
-  G : 'Gold',
-  S : 'Silver',
-  O : '일반'
+  V: 'VIP',
+  G: 'Gold',
+  S: 'Silver',
+  O: '일반'
+};
+
+Tw.BENEFIT = {
+  PAYMENT: {
+    TITLE: '포인트 요금 납부',
+    TYPE: {
+      OK: 'OK캐쉬백',
+      T: 'T포인트',
+      RAINBOW: '레인보우포인트'
+    },
+    UNIT: '점'
+  }
 };
 
 Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT = {

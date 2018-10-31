@@ -4,8 +4,8 @@
 * Date: 2018. 10. 30.
 %>
 
-<% include ../components/start.component.html %>
-<% include ../components/javascript.component.html %>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -17,14 +17,12 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap">
-    <!-- #header -->
+<div class="wrap" id="fe-benefit-my">
     <div id="header" class="header-wrap">
         <!-- #header -->
-        <%- include('../../../../common/views/components/header.component.html', { title: '나의 혜택 · 할인 정보', svcInfo: svcInfo, option: { line: true } }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '나의 혜택 할인', svcInfo: svcInfo, option: { line: true } }); %>
         <!--// #header -->
     </div>
-    <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -54,7 +52,7 @@
                             <span class="sub-disc04"><span class="elem">OK캐쉬백 <%= okCashback %>점</span><span class="elem">T포인트 <%= t %>점</span></span>
                         </div>
                         <div class="right-area">
-                            <button class="bt-link-tx underline">포인트 요금납부</button>
+                            <button class="bt-link-tx underline" id="fe-pay">포인트 요금납부</button>
                         </div>
                     </div>
                 </div>
@@ -121,14 +119,14 @@
             <div class="cont-box nogaps-hoz">
                 <div class="history-list type2">
                     <ul>
-                        <% for(var i=0; i < benefit.length; i++) { %>
+                        <% for(var i=0; i < benefits.length; i++) { %>
                         <li>
                             <div class="li-elem">
                                 <button class="bt-detail-top">
                                     <div class="title-box">
                                         <span class="sub-tit02">요금할인</span>
-                                        <span class="tit"><%= benefit[i].name %></span>
-                                        <span class="sub-tit">신청일 <%= benefit[i].date %></span>
+                                        <span class="tit"><%= benefits[i].name %></span>
+                                        <span class="sub-tit">신청일 <%= benefits[i].date %></span>
                                     </div>
                                 </button>
                             </div>
@@ -170,10 +168,9 @@
         <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </footer>
 </div>
-
-
 <script>
   $(document).ready(function () {
+    new Tw.BenefitMyBenefit($('#fe-benefit-my'), '<%= okCashback %>', '<%= t %>', '<%= rainbow %>');
   });
 </script>
 <% include ../components/end.component.html %>
