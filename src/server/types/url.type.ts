@@ -90,5 +90,9 @@ export const URL = {
   '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' },
 
   // Benefit
-  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' }
+  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
+
+  // Auth
+  '/auth/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/auth/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' }
 };
