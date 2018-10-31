@@ -449,3 +449,11 @@ Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
   { title: '휴대폰/와이브로', ofrCtgSeq: '0001' },
   { title: '인터넷/TV/집전화', ofrCtgSeq: '0002' }
 ];
+
+Tw.REGION_LIST_ITEM = {
+  start: '<li role="radio" aria-checked="false"><input type="radio" name="senddata" title="" value="',
+  close: '</li>',
+  getItem: function (name, code) {
+    return this.start + code + '">' + name + this.close;
+  }
+};

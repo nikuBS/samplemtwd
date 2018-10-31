@@ -162,6 +162,7 @@ export const URL = {
   '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
   '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/branch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
+  '/customer/branch/near': { login: false, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
 
   // auth
   '/auth/cert/motp': { login: false, id: 'CO_02_01_02_L02_L01', title: '모바일T안심인증' },

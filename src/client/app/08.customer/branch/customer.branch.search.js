@@ -206,7 +206,7 @@ Tw.CustomerBranchSearch.prototype = {
     }
   },
   _onBranchDetail: function (e) {
-    if (e.target.nodeName === 'A') {
+    if (e.target.nodeName.toLowerCase() === 'a') {
       return;
     }
 
