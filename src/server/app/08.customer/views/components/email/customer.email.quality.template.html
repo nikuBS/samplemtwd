@@ -1,9 +1,139 @@
 <script type="text/template" id="tpl_quality_cell">
-
+    <div class="cont-box">
+        <div class="widget formradio-style01">
+            <div class="widget-box radio">
+                <ul class="select-list" role="radiogroup">
+                    <li class="radiobox type01-big checked" role="radio" aria-checked="true">
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio1-big1" value="" title="값1" checked="checked"><!-- 체크상태일 경우 checked="checked" -->
+                        휴대폰
+                    </li>
+                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                        <input type="radio" name="radio1-big1" value="" title="값2"><!-- 체크상태일 경우 checked="false" -->
+                        와이브로
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="inquiryform-wrap">
+            <p class="title">문의하실 회선과 현상, 지역정보를 선택해 주세요.</p>
+            <div class="info-form-box">
+                <button class="bt-dropdown big tx-bold" title="사용자번호" aria-haspopup="true">010-22**-57**<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">현상선택 (필수)<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">세부현상 선택 (필수)<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">발생위치 선택 (필수)<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">건물종류 선택 (필수)<span class="ico"></span></button>
+            </div>
+            <p class="title">문의하실 상세현황을 기재해 주세요.</p>
+            <div class="option-box">
+                <div class="inputbox textarea-type">
+                    <div class="input">
+                        <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="상세한 현상 입력 (필수)" maxlength="12000"
+                                  aria-labelledby="aria-email-qacont"></textarea>
+                        <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                    </div>
+                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="접수자 성함 입력 (필수)" title="input" value="" aria-labelledby="aria-exp-label1"
+                           aria-describedby="aria-exp-desc1">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <p class="title">발생 지역 주소와 발생시기를 기재해 주세요.</p>
+            <div class="inputbox bt-add">
+                <span class="input">
+                    <input type="text" placeholder="우편번호 조회" title="input" value=""
+                           aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span
+                        class="blind">삭제</span></button>
+                </span>
+                <span class="bt-box">
+                    <button type="button">우편번호 검색</button>
+                </span>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big" title="발생시기 선택 (필수)" aria-haspopup="true">발생시기 선택 (필수)<span class="ico"></span></button>
+            </div>
+        </div>
+    </div>
     <%- include('../../components/email/customer.email.common.template.html', { type: 'quality' }); %>
 </script>
 
 <script type="text/template" id="tpl_quality_internet">
-
+    <div class="cont-box">
+        <div class="widget formradio-style01">
+            <div class="widget-box radio">
+                <ul class="select-list" role="radiogroup">
+                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                        <input type="radio" name="radio1-big1" value="" title="값2"><!-- 체크상태일 경우 checked="false" -->
+                        인터넷/TV
+                    </li>
+                    <li class="radiobox type01-big checked" role="radio" aria-checked="true">
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio1-big1" value="" title="값1" checked=""><!-- 체크상태일 경우 checked="checked" -->
+                        집전화
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="inquiryform-wrap">
+            <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
+            <div class="info-form-box">
+                <button class="bt-dropdown big tx-bold" title="사용자번호" aria-haspopup="true">010-22**-57**<span class="ico"></span></button>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="제목 입력" title="input" value="" aria-labelledby="aria-exp-label1"
+                           aria-describedby="aria-exp-desc1">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+                <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자(최대)</span>
+            </div>
+            <div class="option-box">
+                <div class="inputbox textarea-type">
+                    <div class="input">
+                        <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                                  aria-labelledby="aria-email-qacont"></textarea>
+                        <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                    </div>
+                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
+                </div>
+            </div>
+            <div class="fileplus-wrap">
+                <p class="text">최대 5개 파일을 등록할 수 있습니다.</p>
+                <div class="bt-alone">
+                    <button class="bt-bg-blue1">파일첨부하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <%- include('../../components/email/customer.email.common.template.html', { type: 'quality' }); %>
 </script>
