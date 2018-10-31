@@ -58,16 +58,17 @@ class BypassRouter {
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
 
-    this.authService.getUrlMeta(req, res, method).subscribe((resp) => {
-      if ( resp['cert'] ) {
-        return res.json({
-          code: API_CODE.CODE_03,
-          result: resp
-        });
-      } else {
-        this.sendRequest(cmd, req, res, next);
-      }
-    });
+    // this.authService.getUrlMeta(req, res, method).subscribe((resp) => {
+    //   if ( resp['cert'] ) {
+    //     return res.json({
+    //       code: API_CODE.CODE_03,
+    //       result: resp
+    //     });
+    //   } else {
+    //     this.sendRequest(cmd, req, res, next);
+    //   }
+    // });
+    this.sendRequest(cmd, req, res, next);
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
