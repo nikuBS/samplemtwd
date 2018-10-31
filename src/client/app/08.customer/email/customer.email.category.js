@@ -16,6 +16,9 @@ Tw.CustomerEmailCategory = function (rootEl) {
 };
 
 Tw.CustomerEmailCategory.prototype = {
+  service: { depth1: '', depth2: '' },
+  quality: { depth1: '' },
+
   _init: function () {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
@@ -37,11 +40,12 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onClickService1Depth: function () {
+
     var fnSelectLine = function (item) {
       return {
         value: item.title,
-        option: this.$select_service_depth1.data('service-depth1') === item.title ? true : false,
-        attr: 'data-service-depth1="' + item.title + '"'
+        option: false,
+        attr: 'data-service-depth1="' + item.category + '"'
       };
     };
 
@@ -61,7 +65,7 @@ Tw.CustomerEmailCategory.prototype = {
 
     if ( sDepth1Category ) {
       var fnSelectItem = function (item) {
-        if ( item.title === sDepth1Category ) {
+        if ( item.category === sDepth1Category ) {
           return true;
         }
         return false;
@@ -73,7 +77,7 @@ Tw.CustomerEmailCategory.prototype = {
         return {
           value: item.title,
           option: false,
-          attr: 'data-service-depth2="' + item.title + '"'
+          attr: 'data-service-depth2="' + item.ofrCtgSeq + '"'
         };
       };
 
@@ -96,7 +100,7 @@ Tw.CustomerEmailCategory.prototype = {
       return {
         value: item.title,
         option: true,
-        attr: 'data-quality-depth1="' + item.title + '"'
+        attr: 'data-quality-depth1="' + item.category + '"'
       };
     };
 
@@ -115,9 +119,11 @@ Tw.CustomerEmailCategory.prototype = {
     this._popupService.close();
 
     var sDepth1Value = $(e.currentTarget).data('service-depth1');
+    var sDepth1Text = $(e.currentTarget).text().trim();
     this.$select_service_depth1.addClass('tx-bold');
-    this.$select_service_depth1.text(sDepth1Value);
+    this.$select_service_depth1.text(sDepth1Text);
     this.$select_service_depth1.data('service-depth1', sDepth1Value);
+    this.service.depth1 = sDepth1Value;
 
     var sDepth2Category = this.$select_service_depth2.data('service-depth2');
 
@@ -126,26 +132,33 @@ Tw.CustomerEmailCategory.prototype = {
       this.$select_service_depth2.removeClass('tx-bold');
       this.$select_service_depth2.text(Tw.CUSTOMER_EMAIL.SELECT_QUESTION);
       this.$select_service_depth2.data('service-depth2', null);
+      this.service.depth2 = '';
     }
   },
 
   _onSelectService2Depth: function (e) {
     this._popupService.close();
-    var sDepth2Value = $(e.currentTarget).data('service-depth2');
-    this.$select_service_depth2.addClass('tx-bold');
-    this.$select_service_depth2.text(sDepth2Value);
-    this.$select_service_depth2.data('service-depth2', sDepth2Value);
 
-    this.$container.trigger('changeServiceTemplate', 'test');
+    var sDepth2Value = $(e.currentTarget).data('service-depth2');
+    var sDepth2Text = $(e.currentTarget).text().trim();
+    this.$select_service_depth2.addClass('tx-bold');
+    this.$select_service_depth2.text(sDepth2Text);
+    this.$select_service_depth2.data('service-depth2', sDepth2Value);
+    this.service.depth2 = sDepth2Value;
+
+    this.$container.trigger('changeServiceTemplate', this.service);
   },
 
   _onSelectQuality1Depth: function (e) {
     this._popupService.close();
-    var sDepth1Value = $(e.currentTarget).data('quality-depth1');
-    this.$select_quality_depth1.addClass('tx-bold');
-    this.$select_quality_depth1.text(sDepth1Value);
-    this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
 
-    this.$container.trigger('changeQualityTemplate', 'test');
+    var sDepth1Value = $(e.currentTarget).data('quality-depth1');
+    var sDepth1Text = $(e.currentTarget).text().trim();
+    this.$select_quality_depth1.addClass('tx-bold');
+    this.$select_quality_depth1.text(sDepth1Text);
+    this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
+    this.quality.depth1 = sDepth1Value;
+
+    this.$container.trigger('changeQualityTemplate', this.quality);
   }
 };
