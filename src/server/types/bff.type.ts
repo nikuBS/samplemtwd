@@ -80,6 +80,12 @@ export enum UNIT_E {
   SMS_2 = '320'
 }
 
+export const DAY_BTN_STANDARD_SKIP_ID = [
+  'DDZ25', // BTV 모바일팩
+  'DDZ23', // T스포츠팩
+  'DD0PB' // band 타임 프리
+];
+
 export const VOICE_UNIT = {
   HOURS: '시간',
   MIN: '분',
