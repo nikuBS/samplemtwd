@@ -4,7 +4,7 @@
 * Date: 2018.10.25
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 
 <body>
 <!-- #skip_navigation -->
@@ -296,13 +296,13 @@
         data.pageInfo }); %>
     </footer>
 </div>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 </body>
 <script>
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
-    new Tw.MyTFareSubMain({
+    new Tw.MyTBenefitMembershipJoin({
       $element: $('[data-id=container]'),
       data: JSON.parse(data)
     });
