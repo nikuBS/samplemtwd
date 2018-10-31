@@ -802,3 +802,10 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
     }
   }
 };
+
+Tw.MEMBERSHIP_GRADE = {
+  V : 'VIP',
+  G : 'Gold',
+  S : 'Silver',
+  O : '일반'
+};
