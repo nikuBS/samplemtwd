@@ -16,7 +16,7 @@ var gulp       = require('gulp'),
     options    = require('gulp-options');
 
 
-var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'auth'];
+var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'common'];
 var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'membership', 'customer', 'tevent'];
 // for docker (dev env)
 var dist_tmp = 'src/server/public/cdn/';

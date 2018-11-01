@@ -97,7 +97,7 @@
    },
    _onSurvey: function () {
      if (this._isCertified) {
-       new Tw.AuthWithdrawalSurvey();
+       new Tw.CommonWithdrawalSurvey();
      }
    },
    _error: function (err) {

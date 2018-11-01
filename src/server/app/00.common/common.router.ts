@@ -1,6 +1,6 @@
 /**
  * FileName: common.router.ts
- * Commonor: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.10.02
  */
 
