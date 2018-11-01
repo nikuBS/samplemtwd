@@ -26,7 +26,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
 
   _onClickBtnCancel: function (event) {
     var serNum = $(event.currentTarget).data('ser-num');
-    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_MYT.BENEFIT.A4, $.proxy(this._cancelTransfer, this, serNum));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A4, $.proxy(this._cancelTransfer, this, serNum));
   },
 
   _cancelTransfer: function (serNum) {

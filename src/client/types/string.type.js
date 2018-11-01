@@ -25,6 +25,7 @@ Tw.BUTTON_LABEL = {
 
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
+  CONFIRM: '확인',
   SELECT_BANK: '은행선택',
   SELECT_AMOUNT: '금액 선택',
   SELECT: '선택',
@@ -225,6 +226,17 @@ Tw.MYT_FARE_BILL_SET = {
       Paper: '기타(우편)'
     }
   }
+};
+
+Tw.MYT_FARE_BILL_SET_REISSUE = {
+  MSG_00: ' 요금안내서 재발행',
+  MSG_01: ' 요금안내서 재발행을 신청하시겠습니까?',
+  MSG_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
+  MSG_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  MSG_04: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다. 재발행 신청을 하시겠습니까?',
+  MSG_FAIL: '재발행 요청이 실패했습니다.',
+  MSG_EXIT: '요금안내서 재발행을 종료하시겠습니까?',
+  BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.'
 };
 
 Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {

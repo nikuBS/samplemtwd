@@ -44,20 +44,20 @@ Tw.MyTFareBillSetReIssue.prototype = {
       var billIsueTypCds = this.MYT_FARE_BILL_REQ_REISSUE_TYPE_CD[$checkedBillIsueTypsInput.val()];
       var idx = this._$billIsueTyps.index($checkedBillIsueTypsInput);
       var billIsueTypCd = billIsueTypCds[idx];
-      confirmContents = isueTypNm + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
+      confirmContents = isueTypNm + Tw.MYT_FARE_BILL_SET_REISSUE.MSG_01;
       switch ( billIsueTypCd ) {
         case '02':
-          confirmContents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
+          confirmContents = Tw.MYT_FARE_BILL_SET_REISSUE.MSG_02;
           break;
       }
     } else {
-      confirmContents = curBillIsueTypNm + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
+      confirmContents = curBillIsueTypNm + Tw.MYT_FARE_BILL_SET_REISSUE.MSG_01;
       switch ( this._options.billIsueTypCd ) {
         case Tw.MYT_FARE_BILL_REISSUE_TYPE_CD['2']:
-          confirmContents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
+          confirmContents = Tw.MYT_FARE_BILL_SET_REISSUE.MSG_02;
           break;
         case Tw.MYT_FARE_BILL_REISSUE_TYPE_CD['1']:
-          confirmContents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
+          confirmContents = Tw.MYT_FARE_BILL_SET_REISSUE.MSG_04;
           break;
       }
     }
@@ -113,6 +113,7 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   _requestReissue: function () {
+    this._popupService.close();
     var data = this._getReqData();
     this._apiService
       .request(Tw.API_CMD.BFF_05_0048, data)
@@ -121,24 +122,15 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   _onApiSuccess: function (params) {
-    var self = this;
-    this._popupService.close();
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
-      setTimeout(function () {
-        self._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03);
-      }, 100);
-    }
-    else if ( params.code && params.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET_REISSUE.MSG_03);
+    } else if ( params.code && params.code === Tw.API_CODE.CODE_00 ) {
       // 성공 - 발행 된 건이 없는 경우
-      setTimeout(function () {
-        self._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY, null, $.proxy(self._goToComplete, self));
-      }, 100);
-    }
-    else {
-      setTimeout(function () {
-        self._popupService.openAlert(params.msg, params.code);
-      }, 100);
+      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET_REISSUE.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY,
+        null, $.proxy(this._goToComplete, this));
+    } else {
+      this._popupService.openAlert(params.msg, params.code);
     }
   },
 
