@@ -2,6 +2,7 @@ import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
 import ApiService from '../../services/api.service';
+import FormatHelper from '../../utils/format.helper';
 
 
 class NativeRouter {
@@ -55,12 +56,22 @@ class NativeRouter {
     //   cookie: req.headers.cookie,
     //   'user-agent': req.headers['user-agent']
     // };
+    const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
-    this.apiService.nativeRequest(cmd, params, headers)
+    this.apiService.nativeRequest(cmd, params, headers, ...pathVar)
       .subscribe((data) => {
         res.cookie('session', data.serverSession);
         return res.json(data);
       });
+  }
+
+  private getPathVariable(params) {
+    if ( !FormatHelper.isEmpty(params) ) {
+      return Object.keys(params).map((key) => {
+        return params[key];
+      });
+    }
+    return [];
   }
 }
 

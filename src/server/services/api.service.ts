@@ -105,7 +105,7 @@ class ApiService {
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
     if ( args.length > 0 ) {
       args.map((argument, index) => {
-        path = path.replace(`args-${index}`, argument);
+        path = path.replace(`:args${index}`, argument);
       });
     }
     if ( !FormatHelper.isEmpty(params) ) {
