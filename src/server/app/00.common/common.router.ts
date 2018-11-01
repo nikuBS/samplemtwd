@@ -17,6 +17,18 @@ import CommonBiometricsTerms from './controllers/biometrics/common.biometrics.te
 import CommonBiometricsCert from './controllers/biometrics/common.biometircs.cert.controller';
 import CommonBiometricsMenu from './controllers/biometrics/common.biometrics.menu.cotroller';
 import CommonBiometricsRegister from './controllers/biometrics/common.biometrics.register.controller';
+import AuthCertMotp from './controllers/cert/auth.cert.motp.controller';
+import AuthCertMotpFail from './controllers/cert/auth.cert.motp-fail.controller';
+import AuthCertPublicExport from './controllers/cert/auth.cert.public-export.controller';
+import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
+import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
+import AuthCertComplete from './controllers/cert/auth.cert.complete.controller';
+import AuthLine from './controllers/line/auth.line.controller';
+import AuthLineEdit from './controllers/line/auth.line.edit.controller';
+import AuthLineCopRegister from './controllers/line/auth.line.cop-register.controller';
+import AuthLineEmptyRegister from './controllers/line/auth.line.empty-register.controller';
+import AuthMemberManagement from './controllers/member/auth.member.management.controller';
+import AuthLoginFindIdPwd from './controllers/login/auth.login.find-id-pwd.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -33,6 +45,23 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/biometrics/terms', controller: CommonBiometricsTerms });
     this.controllers.push({ url: '/biometrics/cert', controller: CommonBiometricsCert });
     this.controllers.push({ url: '/biometrics/register', controller: CommonBiometricsRegister });
+
+    // cert
+    this.controllers.push({ url: '/cert/motp', controller: AuthCertMotp });
+    this.controllers.push({ url: '/cert/motp/fail', controller: AuthCertMotpFail });
+    this.controllers.push({ url: '/cert/public/export', controller: AuthCertPublicExport });
+    this.controllers.push({ url: '/cert/nice', controller: AuthCertNice });
+    this.controllers.push({ url: '/cert/ipin', controller: AuthCertIpin });
+    this.controllers.push({ url: '/cert/complete', controller: AuthCertComplete });
+    // line
+    this.controllers.push({ url: '/line', controller: AuthLine });
+    this.controllers.push({ url: '/line/edit', controller: AuthLineEdit });
+    this.controllers.push({ url: '/line/register/corporation', controller: AuthLineCopRegister });
+    this.controllers.push({ url: '/line/register/empty', controller: AuthLineEmptyRegister });
+    // login
+    this.controllers.push({ url: '/login/find-id-pwd', controller: AuthLoginFindIdPwd });
+    // member
+    this.controllers.push({ url: '/member/management', controller: AuthMemberManagement } );
 
     this.controllers.push({ url: '/error', controller: CommonError });
   }
