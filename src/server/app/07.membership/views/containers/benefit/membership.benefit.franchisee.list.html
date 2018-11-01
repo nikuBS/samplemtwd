@@ -49,7 +49,7 @@
             <!--// .cont-box -->
 
             <div class="add-prd-top-wrap add-top-type" id="btnsSort">
-                <span class="counts type-l">가맹점 <em class="t-point">121</em></span>
+                <span class="counts type-l">가맹점 <em class="t-point"><%= data.totalCnt %></em></span>
                 <span class="select type-r">
                     <button id="btnSortGanada" class="on" data-code="N">가나다순</button>
                     <button id="btnSortRegDesc" data-code="R">최근 등록 순</button>
@@ -103,7 +103,7 @@
       $('.wrap'),
       <%- JSON.stringify(data) %>,
       <%- JSON.stringify(area1List) %>,
-      <%- JSON.stringify(data) %>);
+      <%- JSON.stringify(area2List) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

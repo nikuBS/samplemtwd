@@ -56,24 +56,6 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
   },
 
   /**
-   * button 클릭시 - 광역시도
-   * @private
-   */
-  _onclickBtnSido: function(event){
-    var $target = $(event.target);
-
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: '광역시도 선택',
-      data: this._sidoList
-    }, $.proxy(function($target, $layer){
-      $layer.one('click', '.condition', $.proxy(this._onselectSido, this, $target));
-      $layer.find('['+this._ATTR_DATA_LOC+'=' + $target.attr(this._ATTR_DATA_LOC) + ']').addClass('checked');
-    }, this, $target));
-  },
-
-  /**
    * 지역 선택 버튼 세팅
    * @param el - btn css selector
    * @param val - 지역
@@ -87,10 +69,33 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
   },
 
   /**
+   * button 클릭시 - 광역시도
+   * @private
+   */
+  _onclickBtnSido: function(event){
+    var $target = $(event.target);
+
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: '광역시도 선택',
+      data: this._sidoList
+    }, $.proxy(function($target, $layer){
+      console.log('actionsheet open 광영시도');
+      $layer.one('click', '.condition', $.proxy(this._onselectSido, this, $target));
+      $layer.find('['+this._ATTR_DATA_LOC+'=' + $target.attr(this._ATTR_DATA_LOC) + ']').addClass('checked');
+    }, this, $target));
+  },
+
+
+  /**
    * select 완료시 - 광역시도
    * @private
    */
   _onselectSido: function($target, event){
+    console.log('광역시도 select');
+    console.log($target);
+    console.log(event.currentTarget);
     var $selectedValue = $(event.currentTarget);
     var val = $selectedValue.attr(this._ATTR_DATA_LOC);
     $target.attr(this._ATTR_DATA_LOC, val);
@@ -102,7 +107,7 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0156, { page: String(this._nowPageNum+1) })
+    this._apiService.request(Tw.API_CMD.BFF_11_0022, { area: val })
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
@@ -167,6 +172,9 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
    * @private
    */
   _onselectSigungu: function($target, event){
+    console.log('시구군 select');
+    console.log($target);
+    console.log(event.currentTarget);
     var $selectedValue = $(event.currentTarget);
     var val = $selectedValue.attr(this._ATTR_DATA_LOC);
     $target.attr(this._ATTR_DATA_LOC, val);

@@ -33,27 +33,26 @@ class MembershipBenefitFranchiseeList extends TwViewController {
       area2: area2,
     };
 
-    if ( this._area1List.length === 0 ) {
 
-      this.apiService.request(API_CMD.BFF_11_0021, {})
-        .subscribe((resp) => {
-          console.log('====== area1 ======');
-          console.log(resp);
+    this.apiService.request(API_CMD.BFF_11_0021, {})
+      .subscribe((resp) => {
+        console.log('====== area1 ======');
+        console.log(resp);
 
-          resp = {
-            'code': '00',
-            'msg': 'success',
-            'result': [
-              { 'area': '강원' },
-              { 'area': '경기' }
-            ]
-          };
+        resp = {
+          'code': '00',
+          'msg': 'success',
+          'result': [
+            { 'area': '강원' },
+            { 'area': '경기' }
+          ]
+        };
 
-          if ( resp.code === API_CODE.CODE_00 ) {
-            this._area1List = resp.result;
-          }
-        });
-    }
+        if ( resp.code === API_CODE.CODE_00 ) {
+          this._area1List = resp.result;
+        }
+      });
+
 
     this._area2List = [];
     if ( area1 ) {
@@ -104,7 +103,7 @@ class MembershipBenefitFranchiseeList extends TwViewController {
           }
         };
 
-        if ( resp.code === API_CODE.CODE_00 ) {
+        // if ( resp.code === API_CODE.CODE_00 ) {
           const options: any = {
             svcInfo: svcInfo,
             pageInfo: pageInfo,
@@ -114,7 +113,7 @@ class MembershipBenefitFranchiseeList extends TwViewController {
           };
 
           res.render('benefit/membership.benefit.franchisee.list.html', options);
-        }
+        // }
       });
 
   }
