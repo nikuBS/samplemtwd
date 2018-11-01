@@ -30,18 +30,19 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', $.proxy(this._onClickContainer, this));
     this.$joinBtn.on('click', $.proxy(this._onClickJoinBtn, this));
     this.$tAgreeCheckBox.on('click', $.proxy(this._onClickTAgreeCheckbox, this));
-    this.$tAgreeItems.on('click', $.proxy(this._onClickTAgreeItems, this));
+    this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
     if ( this.data.isOkCashBag ) {
       this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
-      this.$cAgreeItems.on('click', $.proxy(this._onClickCAgreeItems, this));
+      this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
     }
   },
 
   _onClickTAgreeCheckbox: function (event) {
-    var $target = $(event.target).parents('[role=checkbox]');
-    var checked = ($target.attr('aria-checked') === 'true');
+    var checked = ($(event.target).parents('[role=checkbox]').attr('aria-checked') === 'true');
+    this._tAllCheck = checked;
     for ( var i = 0; i < this.$tAgreeItems.length; i++ ) {
       var item = this.$tAgreeItems.eq(i);
       var $input = item.find('input');
@@ -58,8 +59,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickCAgreeCheckbox: function (event) {
-    var $target = $(event.target).parents('[role=checkbox]');
-    var checked = ($target.attr('aria-checked') === 'true');
+    var checked = ($(event.target).parents('[role=checkbox]').attr('aria-checked') === 'true');
+    this._cAllCheck = checked;
     for ( var i = 0; i < this.$cAgreeItems.length; i++ ) {
       var item = this.$cAgreeItems.eq(i);
       var $input = item.find('input');
@@ -75,25 +76,38 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }
   },
 
-  _onClickTAgreeItems: function (event) {
-    var $target = $(event.target).parents('[role=checkbox]');
-    var checked = ($target.attr('aria-checked') === 'true');
-    if ( checked ) {
-      $target.removeClass('checked').attr('aria-checked', 'false');
-      $target.find('input').removeAttr('checked');
+  _onClickTAgreeItems: function (/*event*/) {
+    if ( this._tAllCheck ) {
       this.$tAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
       this.$tAgreeCheckBox.find('input').removeAttr('checked');
+      this._tAllCheck = false;
+      this.$tAgreeItems.trigger('click');
     }
   },
 
-  _onClickCAgreeItems: function (event) {
-    var $target = $(event.target).parents('[role=checkbox]');
-    var checked = ($target.attr('aria-checked') === 'true');
-    if ( checked ) {
-      $target.removeClass('checked').attr('aria-checked', 'false');
-      $target.find('input').removeAttr('checked');
+  _onClickCAgreeItems: function (/*event*/) {
+    if ( this._cAllCheck ) {
       this.$cAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
       this.$cAgreeCheckBox.find('input').removeAttr('checked');
+      this._cAllCheck = false;
+      this.$cAgreeItems.trigger('click');
+    }
+  },
+
+  _onClickContainer: function () {
+    var $items = this.$container.find('[aria-checked=true]:not(.all)');
+    var array = [];
+    $items.each(function (index) {
+      if ( $items.eq(index).attr('data-id') && $items.eq(index).attr('data-id').match(/L_/gi).length > 0 ) {
+        array.push($items.eq(index));
+      }
+    });
+    // 필수 항목 모두 체크되야 가입하기 버튼 활성화
+    if ( array.length === 4 ) {
+      this.$joinBtn.removeAttr('disabled');
+    }
+    else {
+      this.$joinBtn.attr('disabled', 'disabled');
     }
   },
 
