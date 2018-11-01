@@ -33,7 +33,7 @@
         <% if (svcInfo.totalSvcCnt === '0') { %>
         <button class="bt-user-status">신규 개통</button>
         <% } else if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') { %>
-        <a class="bt-user-status" href="/auth/line">회선 등록</a>
+        <a class="bt-user-status" href="/common/line">회선 등록</a>
         <% } else { %>
         <button id="fe-bt-line" class="bt-dropdown small <% if(svcInfo.expsSvcCnt === '1') { %>no-arrow<% } %>" title="회선 선택" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>">
             <%= svcInfo.svcNum %>

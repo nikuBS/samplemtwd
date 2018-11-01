@@ -34,7 +34,7 @@ Tw.CertificationFinance.prototype = {
     this._deferred = deferred;
     this._callback = callback;
     this._authKind = authKind;
-    this._resultUrl = '/auth/cert/complete';
+    this._resultUrl = '/common/cert/complete';
 
     this._popupService.open({
       hbs: 'CO_02_02_01',
@@ -58,13 +58,13 @@ Tw.CertificationFinance.prototype = {
       this._svcInfo, this._authUrl, this._command, this._deferred, $.proxy(this._completeIdentification, this), this._authKind, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
   },
   _onClickKtSms: function () {
-    this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
+    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
   },
   _onClickLgSms: function () {
-    this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.LG);
+    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.LG);
   },
   _onClickIpin: function () {
-    this._openCertBrowser('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+    this._openCertBrowser('/common/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
   },
   _onClickBio: function () {
   },

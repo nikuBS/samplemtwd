@@ -217,9 +217,8 @@ Tw.LineRegisterComponent.prototype = {
     this._popupService.close();
   },
   _onCloseCompletePopup: function () {
-    console.log('close');
     if ( this._goAuth ) {
-      this._historyService.goLoad('/auth/line');
+      this._historyService.goLoad('/common/line');
     }
   }
 };

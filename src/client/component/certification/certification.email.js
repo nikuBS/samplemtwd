@@ -168,7 +168,7 @@ Tw.CertificationEmail.prototype = {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(Tw.NTV_CMD.ACCOUNT, {}, $.proxy(this._onNativeAccount, this));
     } else {
-      window.open('/auth/tid/account', '_blank');
+      window.open('/common/tid/account', '_blank');
     }
   },
   _onNativeAccount: function () {

@@ -98,9 +98,9 @@ export const URL = {
   // Benefit
   '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
 
-  // Auth
-  '/auth/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
-  '/auth/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
+  // Common
+  '/common/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/common/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
 
   // Membership
   '/membership/membership_info/mbrs_0001': { login: true, id: 'BE_04_01', title: '멤버십 카드 및 등급 안내' }

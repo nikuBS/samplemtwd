@@ -96,9 +96,9 @@ Tw.NativeService.prototype = {
   _onEasyLogin: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
-        window.location.href = '/auth/login/easy-aos?mdn=' + resp.params.mdn;
+        window.location.href = '/common/login/easy-aos?mdn=' + resp.params.mdn;
       } else {
-        window.location.href = '/auth/login/easy-ios';
+        window.location.href = '/common/login/easy-ios';
       }
     } else {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_FAIL);
