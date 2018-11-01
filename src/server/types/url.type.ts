@@ -81,6 +81,7 @@ export const URL = {
   '/customer/branch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
   '/customer/branch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
   '/customer/branch/repair': { login: false, id: 'CS_03_01', title: 'AS센터 찾기' },
+  '/customer/branch/repair-manufacturer': { login: false, id: 'CS_03_03', title: '제조사 별 AS센터' },
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
   '/customer/svc_info/cmis_0039': { login: false, id: 'CS_10_01', title: '공지사항' },

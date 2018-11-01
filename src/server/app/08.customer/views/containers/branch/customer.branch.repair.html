@@ -16,16 +16,6 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="header">
-                <div class="header-ti align-l">
-                    <h1>매장 및 AS 센터</h1>
-                </div>
-                <button class="prev-step"><span class="blind">이전으로</span></button>
-            </div>
-        </div>
-        <!--// #header -->
         <%- include('../../../../common/views/components/header.component.html', { title: 'AS센터 찾기' }) %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -113,10 +103,12 @@
                 </div>
                 <!--// .cont-box -->
                 <!-- .customer-as -->
-                <div class="customer-as">
-                    <span class="ico"></span>
-                    <span class="txt"><strong>필요한 서류는 챙기셨나요?</strong>서비스 가입/변경/신청 시 필요한 구비서류를 미리 준비하시고 방문하시면 더욱 빠른 서비스를 받으실 수 있습니다.</span>
-                </div>
+                <a href="/customer/document">
+                    <div class="customer-as">
+                        <span class="ico"></span>
+                        <span class="txt"><strong>필요한 서류는 챙기셨나요?</strong>서비스 가입/변경/신청 시 필요한 구비서류를 미리 준비하시고 방문하시면 더욱 빠른 서비스를 받으실 수 있습니다.</span>
+                    </div>
+                </a>
                 <!-- // .customer-as -->
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
@@ -201,12 +193,12 @@
                     <ul class="link-long-list">
                         <li>
                             <div class="link-long">
-                                <button>
+                                <a href="/customer/branch/repair-manufacturer">
                                     <em>제조사 AS센터 확인하기</em>
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -219,8 +211,4 @@
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-  });
-</script>
 <% include ../../components/end.component.html %>

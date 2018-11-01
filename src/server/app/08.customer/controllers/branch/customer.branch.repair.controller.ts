@@ -24,9 +24,9 @@ class CustomerBranchRepair extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any): void {
     this.getRepairShopList(res, svcInfo).subscribe(
-      (result) => {
+      (result: Array<Centre>) => {
         if (!!result) {
-          res.render('./branch/customer.branch.repair.html', {
+          res.render('branch/customer.branch.repair.html', {
             centres: [
               result.filter((item) => item.orderDistrict === '1'),  // 서울
               result.filter((item) => item.orderDistrict === '2'),  // 경기
@@ -49,9 +49,9 @@ class CustomerBranchRepair extends TwViewController {
     );
   }
 
-  private getRepairShopList(res: Response, svcInfo: any): Observable<Array<Centre> | undefined> {
+  private getRepairShopList(res: Response, svcInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0049, {})
-      .map((resp) => {
+      .map((resp)  => {
         if (resp.code === API_CODE.CODE_00) {
           return resp.result;
         }
@@ -62,6 +62,7 @@ class CustomerBranchRepair extends TwViewController {
           msg: resp.msg,
           svcInfo: svcInfo
         });
+
         return undefined;
       });
   }

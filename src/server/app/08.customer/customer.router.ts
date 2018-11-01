@@ -3,6 +3,7 @@ import CustomerBranchSearch from './controllers/branch/customer.branch.search.co
 import CustomerBranchDetail from './controllers/branch/customer.branch.detail.controller';
 import CustomerBranchNear from './controllers/branch/customer.branch.near.controller';
 import CustomerBranchRepair from './controllers/branch/customer.branch.repair.controller';
+import CustomerBranchRepairManufacturer from './controllers/branch/customer.branch.repair-manufacturer.controllter';
 import CustomerDocument from '../904.customer/controllers/document/customer.document.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
@@ -31,6 +32,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/branch/detail', controller: CustomerBranchDetail });
     this.controllers.push({ url: '/branch/near', controller: CustomerBranchNear });
     this.controllers.push({ url: '/branch/repair', controller: CustomerBranchRepair });
+    this.controllers.push({ url: '/branch/repair-manufacturer', controller: CustomerBranchRepairManufacturer });
     this.controllers.push({ url: '/document', controller: CustomerDocument} );
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
     this.controllers.push({ url: '/praise', controller: CustomerPraise} );
