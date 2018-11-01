@@ -762,7 +762,13 @@ Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
 
 Tw.BRANCH = {
   SELECT_REGION: '지역설정',
-  SELECT_BRANCH_TYPE: ['전체', '지점', '대리점']
+  SELECT_BRANCH_TYPE: ['전체', '지점', '대리점'],
+  PERMISSION_TITLE: '위치정보 이용 동의 안내',
+  PERMISSION_DETAIL: '모바일 T world에서 내 위치 정보를 사용하기 위해서는 위치 정보 이용에 동의하셔야 합니다.',
+  VIEW_LOCATION_TERM: '위치기반 서비스 이용약관 전문보기',
+  DO_YOU_AGREE: '동의하시겠습니까?',
+  AGREE: '동의',
+  CLOSE: '닫기'
 };
 
 Tw.BRANCH_SEARCH_OPTIONS = {

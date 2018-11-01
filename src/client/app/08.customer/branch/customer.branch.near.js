@@ -42,8 +42,33 @@ Tw.CustomerBranchNear.prototype = {
   },
   _init: function () {
     this.$container.find('.btn-switch').css('z-index', 1000);
-    // TODO: hakjoon - Permission check
-    // Ask current location
+    var isAgreed = false;
+    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          isAgreed = res.result.twdLocUseAgreeYn === 'Y';
+          if (isAgreed) {
+            this._askCurrentLocation();
+          } else {
+            this._showPermission();
+          }
+        } else {
+          Tw.Error(res.code, res.msg).pop();
+        }
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
+  _bindEvents: function () {
+    this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this));
+    this.$typeOption.on('click', $.proxy(this._onTypeOption, this));
+    this.$container.on('click', '#fe-btn-view-list', $.proxy(this._switchToList, this));
+    this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
+    this.$btnMore.on('click', $.proxy(this._onMore, this));
+    this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
+  },
+  _askCurrentLocation: function () {
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         if (res.resultCode === 401) {
@@ -65,13 +90,50 @@ Tw.CustomerBranchNear.prototype = {
       }
     }
   },
-  _bindEvents: function () {
-    this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this));
-    this.$typeOption.on('click', $.proxy(this._onTypeOption, this));
-    this.$container.on('click', '#fe-btn-view-list', $.proxy(this._switchToList, this));
-    this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
-    this.$btnMore.on('click', $.proxy(this._onMore, this));
-    this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
+  _showPermission: function () {
+    this._popupService.open({
+      ico: 'type3',
+      title: Tw.BRANCH.PERMISSION_TITLE,
+      contents: Tw.BRANCH.PERMISSION_DETAIL,
+      link_list: [{
+        style_class: 'fe-link-term',
+        txt: Tw.BRANCH.VIEW_LOCATION_TERM
+      }],
+      bt: [{
+          style_class: 'bt-blue1',
+          txt: Tw.BRANCH.AGREE
+      }, {
+          style_class: 'bt-white2',
+          txt: Tw.BRANCH.CLOSE
+      }]
+    }, $.proxy(function (root) {
+      root.on('click', '.fe-link-term', $.proxy(function () {
+        this._popupService.close();
+        // this._historyService.goLoad(약관 전문)
+      }, this));
+
+      root.on('click', '.bt-white2', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+
+      // Request location agreement
+      root.on('click', '.bt-blue1', $.proxy(function () {
+        this._popupService.close();
+        var data = { twdLocUseAgreeYn: 'Y' };
+
+        this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
+          .done($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00) {
+              this._askCurrentLocation();
+            } else {
+              Tw.Error(res.code, res.msg).pop();
+            }
+          }, this))
+          .fail(function (err) {
+            Tw.Error(err.code, err.msg).pop();
+          });
+      }, this));
+    }, this));
   },
   _onCurrentLocation: function (location) {
     var $tmapBox = this.$container.find('#fe-tmap-box');
