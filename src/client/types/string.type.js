@@ -786,25 +786,32 @@ Tw.UPLOAD_FILE = {
   WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.'
 };
 
+Tw.PRODUCT_RESERVATION = {
+  title: '가입 상담 상품 선택',
+  cellphone: '휴대폰',
+  internet: '인터넷',
+  phone: '전화',
+  tv: 'TV',
+  combine: '결합상품'
+};
+
 Tw.PRODUCT_COMBINE_PRODUCT = {
   GROUP_PERSONAL: '개인형 결합상품',
-  GROUP_PERSONAL_ITEMS: {
+  GROUP_FAMILY: '가족형 결합상품',
+  ITEMS: {
     NH00000103: {
       TITLE: 'TB끼리 한가족할인',
       EXPLAIN: '이동전화와 인터넷을 묶으면 인터넷 기본료 8,800원 할인혜택 제공'
-    }
-  },
-  GROUP_FAMILY: '가족형 결합상품',
-  GROUP_FAMILY_ITEMS: {
+    },
     NA00002040: {
       TITLE: '온가족할인',
       EXPLAIN: '가족들의 이동전화 가입기간 합산기간에 따라 이동전화 월정액 최대 50% 할인혜택 제공'
     },
-    NA00000133: {
+    NH00000133: {
       TITLE: 'New온가족플랜',
       EXPLAIN: '이동전화와 인터넷 결합회선수에 따라 할인혜택 제공'
     },
-    NA00000084: {
+    NH00000084: {
       TITLE: 'TB끼리 온가족프리',
       EXPLAIN: '이동전화와 인터넷을 묶으면 이동전화 및 인터넷 기본료 할인\n+ 추가혜택 제공'
     },
@@ -845,4 +852,5 @@ Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT = {
   A13: '동일회선 간에는 포인트 합산이 불가합니다.',
   A14: '동일회선 간에는 포인트 양도가 불가합니다.'
 };
+
 

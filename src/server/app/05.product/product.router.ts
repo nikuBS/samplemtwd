@@ -28,7 +28,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
     this.controllers.push({ url: '/detail/contents/:prodId', controller: ProductDetailContents });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
-    this.controllers.push({ url: '/join-reservation(/:prodId)?', controller: ProductJoinReservation });
+    this.controllers.push({ url: '/join-reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
     this.controllers.push({ url: '/current-setting/:prodId', controller: ProductCurrentSetting });
