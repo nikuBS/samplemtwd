@@ -29,19 +29,19 @@
                     <h4 class="search-stit">가맹점 검색</h4>
                     <div class="input-wrap-half">
                             <span class="inputbox">
-                                <span class="input" id="btnSido">
-                                    <button class="bt-dropdown big" title="광역시/도 선택" aria-haspopup="true">광역시/도<span class="ico"></span></button>
+                                <span class="input">
+                                    <button id="btnSido" class="bt-dropdown big" title="광역시/도 선택" aria-haspopup="true">광역시/도<span class="ico"></span></button>
                                 </span>
                             </span>
                         <span class="inputbox">
-                                <span class="input" id="btnSigungu">
-                                    <button class="bt-dropdown big" title="시/군/구 선택" aria-haspopup="true" disabled="disabled">시/군/구<span class="ico"></span></button>
+                                <span class="input">
+                                    <button id="btnSigungu" class="bt-dropdown big" title="시/군/구 선택" aria-haspopup="true" disabled="disabled">시/군/구<span class="ico"></span></button>
                                 </span>
                             </span>
                     </div>
                     <ul class="bt-slice">
-                        <li class="bt-blue1" id="btnSearch">
-                            <button disabled="disabled">조회하기</button>
+                        <li class="bt-blue1">
+                            <button id="btnSearch" disabled="disabled">조회하기</button>
                         </li>
                     </ul>
                 </div>
@@ -49,10 +49,10 @@
             <!--// .cont-box -->
 
             <div class="add-prd-top-wrap add-top-type" id="btnsSort">
-                <span class="counts type-l">가맹점 <em class="t-point">121</em></span>
+                <span class="counts type-l">가맹점 <em class="t-point"><%= data.totalCnt %></em></span>
                 <span class="select type-r">
-                    <button id="btnSortGanada" class="on">가나다순</button>
-                    <button id="btnSortRegDesc">최근 등록 순</button>
+                    <button id="btnSortGanada" class="on" data-code="N">가나다순</button>
+                    <button id="btnSortRegDesc" data-code="R">최근 등록 순</button>
                 </span>
             </div>
 
@@ -99,7 +99,11 @@
 </div>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitFranchiseeList('.wrap', {});
+    new Tw.MembershipBenefitFranchiseeList(
+      $('.wrap'),
+      <%- JSON.stringify(data) %>,
+      <%- JSON.stringify(area1List) %>,
+      <%- JSON.stringify(area2List) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

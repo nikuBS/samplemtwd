@@ -5,6 +5,7 @@
 %>
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/tmap.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -27,24 +28,26 @@
                 <div class="map-box-wrap">
 
                     <!-- .shop-map -->
-                    <div class="shop-map">
+                    <div class="shop-map" id="fe-tmap-box">
+                        <!--
                         <img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" style="position:absolute;top:100px;left:100px;">
                         <img src="/img/dummy/map.jpg" style="width:100%;" alt="임시이미지">
+                        -->
                     </div>
                     <!--// .shop-map -->
 
                     <div class="franchisee-infor">
-                        <button class="franchisee-tit">파리바게뜨 종로구청점</button>
-                        <span class="franchisee-address">서울 종로구 삼봉로 95</span>
-                        <a href="tel:02-737-6330" class="bt-link-tx underline" title="전화걸기">02-737-6330</a>
+                        <button class="franchisee-tit"><%= data.coPtnrNm %> <%= data.mrchtNm %></button>
+                        <span class="franchisee-address"><%= data.addr %></span>
+                        <a href="tel:<%= data.telNo %>" class="bt-link-tx underline" title="전화걸기"><%= data.telNo %></a>
                         <button class="t-map" title="T맵 앱에서 길 찾기">T map</button>
                     </div>
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
-                            <button>혜택 보기</button>
+                            <button id="btnBenefit">혜택 보기</button>
                         </li>
                         <li class="bt-white2">
-                            <button>가맹점 전체보기</button>
+                            <button id="btnFranchiseeList">가맹점 전체보기</button>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +63,7 @@
 </div>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitFranchiseeMap('.wrap', {});
+    new Tw.MembershipBenefitFranchiseeMap($('.wrap'), $('#fe-tmap-box'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
