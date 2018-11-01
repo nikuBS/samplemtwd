@@ -58,11 +58,7 @@
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt ) { %>
           <li>
             <span class="title">음성</span>
-            <% if ( joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.isNaN ) { %>
             <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value %></span>
-            <% } else { %>
-            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value.data + joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value.unit %></span>
-            <% } %>
           </li>
           <% } %>
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt ) { %>

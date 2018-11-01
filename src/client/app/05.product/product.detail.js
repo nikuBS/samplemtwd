@@ -142,7 +142,6 @@ Tw.ProductDetail.prototype = {
   },
 
   _setSettingGoUrl: function(e) {
-    console.log('click');
     this._settingGoUrl = $(e.currentTarget).data('url');
     this._popupService.close();
   },

@@ -72,7 +72,7 @@ class FormatHelper {
 
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
-      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : FormatHelper.convVoiceFormatWithUnit(isNaNbasOfrVcallTmsCtt)
+      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : FormatHelper.convVoiceMinFormatWithUnit(isNaNbasOfrVcallTmsCtt)
     };
   }
 
@@ -177,6 +177,13 @@ class FormatHelper {
     const sec = data - (hours * 3600) - (min * 60);
 
     return { hours, min, sec };
+  }
+
+  static convVoiceMinFormatWithUnit(data: any): any {
+    const hours = Math.floor(data / 60),
+        min = data - (hours * 60);
+
+    return (hours > 0 ? hours + VOICE_UNIT.HOURS : '') + min + VOICE_UNIT.MIN;
   }
 
   static convVoiceFormatWithUnit(data: any): any[] {

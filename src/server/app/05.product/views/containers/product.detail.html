@@ -104,11 +104,7 @@
             <% } %>
             <% if ( prodRedisInfo.summary.basOfrVcallTmsCtt ) { %>
             <li>- 음성 <strong class="str">
-              <% if ( prodRedisInfo.summary.basOfrVcallTmsCtt.isNaN ) { %>
               <%= prodRedisInfo.summary.basOfrVcallTmsCtt.value %>
-              <% } else { %>
-              <%= prodRedisInfo.summary.basOfrVcallTmsCtt.value.data + prodRedisInfo.summary.basOfrVcallTmsCtt.value.unit %>
-              <% } %>
             </strong></li>
             <% } %>
             <% if ( prodRedisInfo.summary.basOfrCharCntCtt ) { %>
@@ -280,11 +276,7 @@
                         <% } %>
                         <% if ( series.seriesProdList[i].basOfrVcallTmsCtt ) { %>
                         <dt>음성</dt>
-                          <% if (series.seriesProdList[i].basOfrVcallTmsCtt.isNaN) { %>
-                          <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt.value %></dd>
-                          <% } else { %>
-                          <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt.value.data + series.seriesProdList[i].basOfrVcallTmsCtt.value.unit %></dd>
-                          <% } %>
+                        <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt.value %></dd>
                         <% } %>
                         <% if ( series.seriesProdList[i].basOfrCharCntCtt ) { %>
                         <dt>문자</dt>
