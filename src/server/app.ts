@@ -1,6 +1,4 @@
 // for APM
-import MembershipRouter from './app/07.membership/membership.router';
-
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -30,15 +28,16 @@ import MyTFareRouter from './app/03.myt-fare/myt-fare.router';
 import MyTJoinRouter from './app/04.myt-join/myt-join.router';
 import ProductRouter from './app/05.product/product.router';
 import BenefitRouter from './app/06.benefit/benefit.router';
+import MembershipRouter from './app/07.membership/membership.router';
 import CustomerRouter from './app/08.customer/customer.router';
-import AuthRouter from './app/08.auth/auth.router';
+import TeventRouter from './app/09.tevent/tevent.router';
 import BypassRouter from './common/route/bypass.router';
 import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-import TeventRouter from './app/09.tevent/tevent.router';
+
 
 class App {
   public app: Application = express();
@@ -132,8 +131,6 @@ class App {
     this.app.use('/membership', new AppRouter(MembershipRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/tevent', new AppRouter(TeventRouter.instance.controllers).router);
-
-    this.app.use('/auth', new AppRouter(AuthRouter.instance.controllers).router);
   }
 
   private setViewPath() {
