@@ -25,7 +25,7 @@ class BenefitMembershipJoin extends TwViewController {
     // data.isFeature = true;
     // Corporate
     // data.type = 'corporate';
-    data.isOkCashBag = true;
+    // data.isOkCashBag = true;
     res.render('membership/benefit.membership.join.html', { data });
   }
 }

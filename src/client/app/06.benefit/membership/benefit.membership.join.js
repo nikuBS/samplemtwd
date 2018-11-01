@@ -103,11 +103,16 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       }
     });
     // 필수 항목 모두 체크되야 가입하기 버튼 활성화
-    if ( array.length === 4 ) {
+    if ( this.data.isOkCashBag && array.length === 4 ) {
       this.$joinBtn.removeAttr('disabled');
     }
     else {
-      this.$joinBtn.attr('disabled', 'disabled');
+      if ( array.length === 2 ) {
+        this.$joinBtn.removeAttr('disabled');
+      }
+      else {
+        this.$joinBtn.attr('disabled', 'disabled');
+      }
     }
   },
 
