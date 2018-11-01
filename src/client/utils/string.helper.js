@@ -53,12 +53,11 @@ Tw.StringHelper = (function () {
         sDashTelNumber = sDashTelNumber.replace(/(\d{3})/, '$1');
       } else if ( sDashTelNumber.length > 3 && sDashTelNumber.length < 7 ) {
         sDashTelNumber = sDashTelNumber.replace(/(\d{1,3})\-?(\d{1,3})/, '$1-$2');
-      } else if ( sDashTelNumber.length >= 7 && sDashTelNumber.length < 11 ) {
-        sDashTelNumber = sDashTelNumber.replace(/(\d{1,3})\-?(\d{1,3})\-?(\d{1,4})/, '$1-$2-$3');
       } else {
-        sDashTelNumber = sDashTelNumber.replace(/(\d{1,3})\-?(\d{4})\-?(\d{4})/, '$1-$2-$3');
+        sDashTelNumber = sDashTelNumber.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g, '$1-$2-$3');
       }
-      return sDashTelNumber.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+
+      return sDashTelNumber;
     } else {
       return strCellphoneNum;
     }

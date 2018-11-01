@@ -7,6 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerEmail extends TwViewController {
   constructor() {
@@ -21,7 +22,8 @@ class CustomerEmail extends TwViewController {
     const responseData = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
     };
 
     switch ( page ) {
