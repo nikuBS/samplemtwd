@@ -22,8 +22,7 @@ Tw.CustomerEmailTemplate.prototype = {
 
     // this.$wrap_tpl_service.html(this.tpl_service_cell());
     // this.$wrap_tpl_quality.html(this.tpl_quality_cell());
-
-    skt_landing.widgets.widget_init();
+    // skt_landing.widgets.widget_init();
   },
 
   _cachedElement: function () {

@@ -17,6 +17,7 @@ Tw.CustomerEmailQuality = function (rootEl) {
 
 Tw.CustomerEmailQuality.prototype = {
   _init: function () {
+
   },
 
   _cachedElement: function () {

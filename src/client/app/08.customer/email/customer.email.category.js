@@ -40,7 +40,6 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onClickService1Depth: function () {
-
     var fnSelectLine = function (item) {
       return {
         value: item.title,
