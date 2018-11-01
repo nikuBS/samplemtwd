@@ -117,6 +117,31 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickJoinBtn: function () {
+    var $items = this.$container.find('[aria-checked=true]');
+    // var options = {};
+    for ( var i = 0; i < $items.length; i++ ) {
+      var $item = $items.eq(i);
+      switch ( $item.attr('data-type') ) {
+        case 'svc':
+          break;
+        case 'psi':
+          break;
+        case 'ad':
+          break;
+        case 'bsi':
+          break;
+        case 'sms':
+          break;
+        case 'pad':
+          break;
+        case 'ovc':
+          break;
+        case 'odi':
+          break;
+        case 'mak':
+          break;
+      }
+    }
     // TODO: 가입하기 완료 후 팝업 노출
     // this._apiService.request();
     //  this._tpayPopup.open();
