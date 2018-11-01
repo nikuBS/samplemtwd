@@ -401,7 +401,10 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
   ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' },
   ALERT_3_A30: { TITLE: '알림', MSG: '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.' },
-  ALERT_FRONT_VALIDATE_NUM: { TITLE: '알림', MSG: '올바른 회선 번호를 입력해주세요.' }
+  ALERT_3_A31: { TITLE: '알림', MSG: '선택하신 결합상품은 추가 정보 및 서류 제출을 할 수 있는 상품입니다.\n추가 정보 및 서류 제출 없이 상담 예약을 하시겠습니까?' },
+  ALERT_FRONT_VALIDATE_NUM: { TITLE: '알림', MSG: '올바른 회선 번호를 입력해주세요.' },
+  ALERT_JOIN_RESERVATION_NOT_COMBINE: { TITLE: '알림', MSG: '결합상품을 미선택 하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' },
+  ALERT_JOIN_RESERVATION_EXPLAIN: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {};
@@ -832,6 +835,9 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
     NH00000084: {
       TITLE: 'TB끼리 온가족프리',
       EXPLAIN: '이동전화와 인터넷을 묶으면 이동전화 및 인터넷 기본료 할인\n+ 추가혜택 제공'
+    },
+    NONE: {
+      TITLE: '결합상품을 선택해 주세요'
     },
     ETC: {
       TITLE: '그 외 결합상품'
