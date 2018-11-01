@@ -4,15 +4,21 @@
  * Date: 2018.10.30
  */
 
-Tw.MembershipBenefitFranchiseeList = function ($element, options) {
+Tw.MembershipBenefitFranchiseeList = function ($element, options, area1List, area2List) {
   this.$container = $element;
   this._options = options;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
 
+  //totalCnt
+
+
   this._ATTR_DATA_LOC = 'data-loc';
-  this._sigugunList = null;
+  this._sidoList = this._convAreaData(area1List);
+  this._sigugunList = this._convAreaData(area2List);
+  this._setLocBtnTxtAndAttr('#btnSido', this._options.area1);
+  this._setLocBtnTxtAndAttr('#btnSigungu', this._options.area2);
 
   this._bindEvent();
   console.log('MembershipBenefitFranchiseeList created');
@@ -32,6 +38,24 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
   },
 
   /**
+   * 서버에서 내려온 지역 목록을 select 목록에 맞게 수정해서 넘겨준다.
+   * @param areaList - 지역 목록
+   * @returns {*} - actionsheet_select_a_type에 맞는 데이터
+   * @private
+   */
+  _convAreaData: function(areaList){
+    if( !areaList || areaList.length === 0){
+      return [];
+    }
+    for(var i = 0; i < areaList.length; i++){
+      areaList[i].options = 'condition';
+      areaList[i].attr = 'data-loc="'+areaList[i].area+'"';
+      areaList[i].value = areaList[i].area;
+    }
+    return [{list:areaList}];
+  },
+
+  /**
    * button 클릭시 - 광역시도
    * @private
    */
@@ -42,20 +66,24 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
       hbs: 'actionsheet_select_a_type',
       layer: true,
       title: '광역시도 선택',
-      data: [
-        {
-          'list': [
-            {'option': 'condition', 'attr': 'data-loc="1"', value: '서울'},
-            {'option': 'condition', 'attr': 'data-loc="2"', value: '대전'},
-            {'option': 'condition', 'attr': 'data-loc="3"', value: '대구'},
-            {'option': 'condition', 'attr': 'data-loc="4"', value: '부산'}
-          ]
-        }
-      ]
+      data: this._sidoList
     }, $.proxy(function($target, $layer){
       $layer.one('click', '.condition', $.proxy(this._onselectSido, this, $target));
       $layer.find('['+this._ATTR_DATA_LOC+'=' + $target.attr(this._ATTR_DATA_LOC) + ']').addClass('checked');
     }, this, $target));
+  },
+
+  /**
+   * 지역 선택 버튼 세팅
+   * @param el - btn css selector
+   * @param val - 지역
+   * @private
+   */
+  _setLocBtnTxtAndAttr: function(el, val){
+    var $target = $(el);
+    if($target.length === 0 || !val) return ;
+    $target.attr(this._ATTR_DATA_LOC, val);
+    $target.text(val);
   },
 
   /**
@@ -70,22 +98,37 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
     this._popupService.close();
 
     console.log('_onselectSido 광역시도 선택완료 >>>> 시구군 데이터 가져오기');
-    var sigugunList = [
-      {
-        'list': [
-          {'option': 'condition', 'attr': 'data-loc="1"', value: '도봉구'},
-          {'option': 'condition', 'attr': 'data-loc="2"', value: '강북구'},
-          {'option': 'condition', 'attr': 'data-loc="3"', value: '노원구'},
-          {'option': 'condition', 'attr': 'data-loc="4"', value: '성북구'},
-          {'option': 'condition', 'attr': 'data-loc="5"', value: '종로구'},
-          {'option': 'condition', 'attr': 'data-loc="6"', value: '은평구'},
-          {'option': 'condition', 'attr': 'data-loc="7"', value: '마포구'},
-          {'option': 'condition', 'attr': 'data-loc="8"', value: '구로구'}
-        ]
-      }
-    ];
 
-    this._resetSigugunList(sigugunList);
+
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0156, { page: String(this._nowPageNum+1) })
+      .done($.proxy(function (resp) {
+
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+          Tw.Error(resp.code, resp.msg).pop();
+          skt_landing.action.loading.off({ ta: this.$container });
+          return ;
+        }
+
+        var areaList = resp.result;
+
+        /*var areaList = [
+          {area : 'area1' },
+          {area : 'area2' },
+          {area : 'area3' }
+        ];*/
+
+        this._resetSigugunList(areaList);
+
+        skt_landing.action.loading.off({ ta: this.$container });
+      }, this))
+      .fail($.proxy(function(err){
+        Tw.Error(err.status, err.statusText).pop();
+        skt_landing.action.loading.off({ ta: this.$container });
+      }, this));
+
+
   },
 
   /**
@@ -95,7 +138,7 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
    */
   _resetSigugunList: function(list){
     console.log('_resetSigugunList');
-    this._sigugunList = list;
+    this._sigugunList = this._convAreaData(list);
     $('#btnSigungu').text('시/군/구');
     $('#btnSigungu').attr('disabled', !$('#btnSido').attr(this._ATTR_DATA_LOC));
     this._onchangeUiCondition();
@@ -155,40 +198,46 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
    * @private
    */
   _onchangeSortCondition: function(event){
-    if(event.target.id === 'btnSortGanada'){
-      this._findPartnerShopList('가나다');
-    }else if(event.target.id === 'btnSortRegDesc'){
-      this._findPartnerShopList('최근 등록');
-    }
+    this._options.ordCol = $(event.target).attr('data-code');
+    console.log('선택 코드: ' + this._options.ordCol );
+    this._findPartnerShopList();
   },
 
   /**
    * 가맹점 찾기
    * @private
    */
-  _findPartnerShopList: function(sort){
-    sort = sort | '가나다';
+  _findPartnerShopList: function(){
+
     var param = {
       searchTitle: this._options.searchTitle,    // 검색 타이틀
-      sido: '',           // 광역시도
-      sigungu: '',        // 시군구
-      sort: sort          // 정렬조건
+      ordCol: this._options.ordCol,
+      area1: this._options.area1,
+      area2: this._options.area2,
+      pageNo: this._options.pageNo,
+      pageSize: this._options.pageSize
     };
-    // TODO call api
-    console.log('call api ' , param);
-  },
 
-  /**
-   * 가맹점 찾기 완료시
-   * @param res
-   * @private
-   */
-  _onfindSucess: function(res){
-    if(res.code === Tw.API_CODE.CODE_00){
-      //ulPartner
-    } else {
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
-    }
+    this._apiService.request(Tw.API_CMD.BFF_11_0023, param)
+      .done($.proxy(function (resp) {
+
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+          Tw.Error(resp.code, resp.msg).pop();
+          skt_landing.action.loading.off({ ta: this.$container });
+          return ;
+        }
+
+        // TODO 데이터 출력
+        console.log(resp);
+
+        skt_landing.action.loading.off({ ta: this.$container });
+      }, this))
+      .fail($.proxy(function(err){
+        Tw.Error(err.status, err.statusText).pop();
+        skt_landing.action.loading.off({ ta: this.$container });
+      }, this));
+
   }
-
 };
