@@ -42,23 +42,12 @@ Tw.CustomerBranchNear.prototype = {
   },
   _init: function () {
     this.$container.find('.btn-switch').css('z-index', 1000);
-    var isAgreed = false;
-    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
-      .done($.proxy(function (res) {
-        if (res.code === Tw.API_CODE.CODE_00) {
-          isAgreed = res.result.twdLocUseAgreeYn === 'Y';
-          if (isAgreed) {
-            this._askCurrentLocation();
-          } else {
-            this._showPermission();
-          }
-        } else {
-          Tw.Error(res.code, res.msg).pop();
-        }
-      }, this))
-      .fail(function (err) {
-        Tw.Error(err.code, err.msg).pop();
-      });
+
+    if (Tw.BrowserHelper.isApp()) {
+      this._askCurrentLocation();
+    } else {
+      this._checkTermAgreement();
+    }
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this));
@@ -68,6 +57,29 @@ Tw.CustomerBranchNear.prototype = {
     this.$btnMore.on('click', $.proxy(this._onMore, this));
     this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
   },
+  _checkTermAgreement: function (location) {
+    var isAgreed = false;
+    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          isAgreed = res.result.twdLocUseAgreeYn === 'Y';
+          if (isAgreed) {
+            if (Tw.BrowserHelper.isApp()) {
+              this._onCurrentLocation(location);
+            } else {
+              this._askCurrentLocation();
+            }
+          } else {
+            this._showPermission(location); // is it is not app, location will be undeinfed
+          }
+        } else {
+          Tw.Error(res.code, res.msg).pop();
+        }
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
   _askCurrentLocation: function () {
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
@@ -75,7 +87,7 @@ Tw.CustomerBranchNear.prototype = {
           this._historyService.goBack();
           return;
         } else {
-          this._onCurrentLocation(res.params);
+          this._checkTermAgreement(res.params);
         }
       }, this));
     } else {
@@ -90,7 +102,7 @@ Tw.CustomerBranchNear.prototype = {
       }
     }
   },
-  _showPermission: function () {
+  _showPermission: function (location) {
     this._popupService.open({
       ico: 'type3',
       title: Tw.BRANCH.PERMISSION_TITLE,
@@ -124,7 +136,11 @@ Tw.CustomerBranchNear.prototype = {
         this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
           .done($.proxy(function (res) {
             if (res.code === Tw.API_CODE.CODE_00) {
-              this._askCurrentLocation();
+              if (Tw.BrowserHelper.isApp()) {
+                this._onCurrentLocation(location);
+              } else {
+                this._askCurrentLocation();
+              }
             } else {
               Tw.Error(res.code, res.msg).pop();
             }
