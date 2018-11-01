@@ -22,10 +22,8 @@ Tw.ProductJoinReservation.prototype = {
   _init: function() {
     this._typeCd = this.$container.data('type_cd');
     this._prodId = this.$container.data('prod_id');
-    this._isEtcProd = this._prodIdList.indexOf(this._prodId) === -1;
-
+    this._isEtcProd = !Tw.FormatHelper.isEmpty(this._prodId) && this._prodIdList.indexOf(this._prodId) === -1;
     this._originalTypeCd = this._typeCd;
-    this._originalProdId = this._prodId;
 
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId)) {
       this._initCombineProduct();
@@ -49,6 +47,7 @@ Tw.ProductJoinReservation.prototype = {
     this.$agreeWrap = this.$container.find('.fe-agree_wrap');
     this.$combineSelected = this.$container.find('.fe-combine_selected');
     this.$combineExplain = this.$container.find('.fe-combine_explain');
+    this.$formData = this.$container.find('.fe-form_data');
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
     this.$btnInputCancel = this.$container.find('.fe-btn_cancel');
@@ -59,12 +58,16 @@ Tw.ProductJoinReservation.prototype = {
   _bindEvent: function() {
     this.$reservName.on('keyup input', $.proxy(this._toggleInputCancelBtn, this));
     this.$reservNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
+
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
-    this.$btnApply.on('click', $.proxy(this._procApply, this));
+    this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));
     this.$btnInputCancel.on('click', $.proxy(this._procClearInput, this));
     this.$btnSelectTypeCd.on('click', $.proxy(this._openTypeCdPop, this));
-    this.$agreeWrap.on('change', 'input[type=checkbox]', $.proxy(this._procAgreeCheck, this));
     this.$btnSelectCombine.on('click', $.proxy(this._openCombinePop, this));
+
+    this.$combineSelected.on('change', $.proxy(this._changeCombineSelected, this));
+    this.$agreeWrap.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyCheck, this));
+    this.$formData.on('keyup input', 'input', $.proxy(this._procEnableApplyCheck, this));
   },
 
   _openTypeCdPop: function() {
@@ -111,6 +114,19 @@ Tw.ProductJoinReservation.prototype = {
     this._historyService.goLoad('/product/join-reservation?typeCd=' + this._typeCd);
   },
 
+  _changeCombineSelected: function() {
+    if (this.$combineSelected.is(':checked')) {
+      return;
+    }
+
+    this._prodId = null;
+    this._setBtnCombineTxt(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NONE.TITLE);
+
+    this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
+    this.$combineExplain.find('input[type=checkbox]').attr('disabled', 'disabled').prop('disabled', true)
+      .prop('checked', false);
+  },
+
   _openCombinePop: function() {
     this._popupService.open({
       hbs: 'actionsheet_select_b_type',
@@ -146,7 +162,7 @@ Tw.ProductJoinReservation.prototype = {
           },
           {
             value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
-            option: this._isEtcProd || this._prodId === 'ETC' ? 'checked' : '',
+            option: (this._isEtcProd || this._prodId === 'ETC') ? 'checked' : '',
             attr: 'data-prod_id="' + (Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') + '"'
           }
         ]
@@ -159,17 +175,20 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _setCombine: function(e) {
+    this.$combineSelected.prop('checked', true);
+    this.$combineSelected.parent().addClass('checked').attr('aria-checked', true);
     this._prodId = $(e.currentTarget).data('prod_id');
     this._popupService.close();
   },
 
   _setCombineResult: function() {
-    if (this._prodId === this._originalProdId || this._isEtcProd && Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId])) {
-      return;
-    }
-
     this._toggleCombineExplain();
-    this.$btnSelectCombine.html(this._getCombineProdNm() + '<span class="ico"></span>');
+    this._setBtnCombineTxt(this._getCombineProdNm());
+  },
+
+  _setBtnCombineTxt: function(txt) {
+    var icoTmp = $('<div\>').append(this.$btnSelectCombine.find('.ico'));
+    this.$btnSelectCombine.html(txt + icoTmp.html());
   },
 
   _getCombineProdNm: function() {
@@ -177,28 +196,25 @@ Tw.ProductJoinReservation.prototype = {
       return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE;
     }
 
-    return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].ETC;
+    return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE;
   },
 
   _toggleCombineExplain: function() {
     if (this._prodId === 'NH00000103') {
+      this.$combineExplain.removeClass('checked');
+      this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
+        .attr('disabled', 'disabled').prop('disabled', true);
       this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
-      this.$combineExplain.find('input[type=checkbox]').attr('disabled', 'disabled').prop('disabled', true)
-        .prop('checked', false);
     } else {
-      this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
       this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
+      this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
     }
   },
 
-  _openAgreePop: function(e) {
-    var $agreeItem = $(e.currentTarget).parents('li');
+  _openAgreePop: function() {
     this._popupService.open({
-      hbs: 'FT_01_03_L01',
-      data: {
-        title: $agreeItem.find('.fe-agree_title').text(),
-        html: $agreeItem.find('.fe-agree_full_html').html()
-      }
+      hbs: 'FT_01_03_L01_case',
+      layer: true
     }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
   },
 
@@ -214,10 +230,20 @@ Tw.ProductJoinReservation.prototype = {
     var $btnCancel = $(e.currentTarget);
     $btnCancel.parent().find('input').val('');
     $btnCancel.removeClass('block');
+
+    this._procEnableApplyCheck();
   },
 
-  _procAgreeCheck: function() {
-    this._toggleApplyBtn(this.$agreeWrap.find('input[type=checkbox]:not(:checked)').length < 1);
+  _procEnableApplyCheck: function() {
+    if (this.$agreeWrap.find('input[type=checkbox]:not(:checked)').length > 0) {
+      return this._toggleApplyBtn(false);
+    }
+
+    if (this.$reservName.val().length < 1 || this.$reservNumber.val().length < 1) {
+      return this._toggleApplyBtn(false);
+    }
+
+    this._toggleApplyBtn(true);
   },
 
   _detectInputNumber: function(e) {
@@ -246,6 +272,73 @@ Tw.ProductJoinReservation.prototype = {
     }
   },
 
-  _procApply: function() {}
+  _procApplyCheck: function() {
+    if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId) &&
+      this._prodId !== 'NH00000103' && !this.$combineExplain.find('input[type=checkbox]').is(':checked')) {
+      this._isExplainFile = true;
+      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE, $.proxy(this._setNotExplainFile, this), $.proxy(this._procNotExplainFile, this));
+    }
+
+    if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(this._prodId)) {
+      this._isNotSelectCombine = true;
+      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_JOIN_RESERVATION_NOT_COMBINE.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_JOIN_RESERVATION_NOT_COMBINE.TITLE,
+        $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this));
+    }
+
+    this._procApply();
+  },
+
+  _setNotExplainFile: function() {
+    this._isExplainFile = false;
+    this._popupService.close();
+  },
+
+  _procNotExplainFile: function() {
+    if (this._isExplainFile) {
+      return;
+    }
+
+    this._procApply();
+  },
+
+  _setNotSelectCombine: function() {
+    this._isNotSelectCombine = false;
+    this._popupService.close();
+  },
+
+  _procNotSelectCombine: function() {
+    if (this._isNotSelectCombine) {
+      return;
+    }
+
+    this._procApply();
+  },
+
+  _openExplainFilePop: function() {
+    // @todo 추가정보 & 서류제출 팝업 오픈
+    // @todo 기 결합된 가족정보 리스트를 넘기자
+    this._popupService.open({
+      hbs: 'BS_05_01_01_01',
+      layer: true
+    });
+  },
+
+  _procApply: function() {
+    if (this._typeCd === 'combine' && this.$combineExplain.find('input[type=checkbox]').is(':checked') &&
+      !Tw.FormatHelper.isEmpty(this._prodId)) {
+      return this._openExplainFilePop();
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_DUMMY, {})
+      .done($.proxy(this._procApplyResult, this));
+  },
+
+  _procApplyResult: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+  }
 
 };

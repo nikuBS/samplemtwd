@@ -1,0 +1,26 @@
+<script id="fe-templ-reserv-file" type="text/x-handlebars-template">
+  <li data-file_id="{{fileId}}">
+    <span class="title">{{fileName}}</span>
+    <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
+  </li>
+</script>
+<script id="fe-tmpl-reserv-family" type="text/x-handlebars-template">
+  <li>
+    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+      <input type="checkbox" name="checkbox" value="" title="결합가족 목록1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+      <div class="comp-list-layout" id="aria-comp-checkbox1">
+        <div class="layout-text fusion-family ">
+          <span class="mtext">
+            <strong>최*영</strong>
+            <i class="badge badge-fam-members2"><span class="blind">가족대표</span></i>
+            <i class="badge badge-me2"><span class="blind">나</span></i>
+            <i class="badge-partner"><span class="blind">배우자</span></i>
+            <i class="badge badge-fam"><span class="blind">자녀</span></i>
+            <i class="badge-siblings"><span class="blind">형제자매</span></i>
+          </span>
+          <span class="ntext">010-12**-24**</span>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>
