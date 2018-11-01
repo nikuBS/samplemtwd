@@ -290,7 +290,9 @@ export const COMBINATION_PRODUCT = {
   NA00002040: 't-family',
   TW20000010: 't-family', // T끼리 온가족할인
   NA00004728: 'happy-plan',
-  TW20000011: 'happy-plan' // 온가족행복플랜
+  TW20000011: 'happy-plan', // 온가족행복플랜
+  TW20000013: 'family-plan', // 온가족플랜
+  NH00000133: 'family-plan' // NEW 온가족플랜
 };
 
 export enum RAINBOW_POINT_REL_CD {
