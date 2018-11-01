@@ -96,8 +96,8 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
   _resetSigugunList: function(list){
     console.log('_resetSigugunList');
     this._sigugunList = list;
-    $('#btnSigungu').text('시/구/군');
-    $('#btnSigungu').attr('disabled', $('#btnSido').attr(this._ATTR_DATA_LOC));
+    $('#btnSigungu').text('시/군/구');
+    $('#btnSigungu').attr('disabled', !$('#btnSido').attr(this._ATTR_DATA_LOC));
     this._onchangeUiCondition();
   },
 
@@ -156,9 +156,9 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
    */
   _onchangeSortCondition: function(event){
     if(event.target.id === 'btnSortGanada'){
-
+      this._findPartnerShopList('가나다');
     }else if(event.target.id === 'btnSortRegDesc'){
-
+      this._findPartnerShopList('최근 등록');
     }
   },
 
@@ -166,14 +166,16 @@ Tw.MembershipBenefitFranchiseeList.prototype = {
    * 가맹점 찾기
    * @private
    */
-  _findPartnerShopList: function(){
+  _findPartnerShopList: function(sort){
+    sort = sort | '가나다';
     var param = {
       searchTitle: this._options.searchTitle,    // 검색 타이틀
       sido: '',           // 광역시도
       sigungu: '',        // 시군구
-      sort: ''            // 정렬조건
+      sort: sort          // 정렬조건
     };
     // TODO call api
+    console.log('call api ' , param);
   },
 
   /**
