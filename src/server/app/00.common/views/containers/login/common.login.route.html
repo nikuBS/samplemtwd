@@ -1,0 +1,15 @@
+<%#
+* FileName: common.login.route.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.07.12
+%>
+
+<% include ../../components/start.component.html %>
+<!-- body -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CommonLoginRoute('<%= target %>', '<%= state %>');
+  });
+</script>
+<% include ../../components/end.component.html %>

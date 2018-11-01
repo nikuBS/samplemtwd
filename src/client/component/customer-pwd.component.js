@@ -158,7 +158,7 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      this._historyService.goLoad('/auth/tid/logout?target=/auth/login/customer-pwd-fail');
+      this._historyService.goLoad('/common/tid/logout?target=/common/login/customer-pwd-fail');
     }
   },
   openLayer: function (mdn, serviceNumber, callback) {

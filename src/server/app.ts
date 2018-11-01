@@ -20,7 +20,6 @@ import { default as OldMytRouter } from './app/901.myt/myt.router';
 import { default as OldRechargeRouter } from './app/902.recharge/recharge.router';
 import { default as OldPaymentRouter } from './app/903.payment/payment.router';
 import { default as OldCustomerRouter } from './app/904.customer/customer.router';
-import { default as OldAuthRouter } from './app/905.auth/auth.router';
 import CommonRouter from './app/00.common/common.router';
 import MainRouter from './app/01.main/main.router';
 import MyTDataRouter from './app/02.myt-data/myt-data.router';
@@ -119,7 +118,6 @@ class App {
     this.app.use('/recharge', new AppRouter(OldRechargeRouter.instance.controllers).router);
     this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(OldCustomerRouter.instance.controllers).router);
-    this.app.use('/auth', new AppRouter(OldAuthRouter.instance.controllers).router);
 
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);

@@ -1,5 +1,5 @@
 <%#
-* FileName: auth.error.no-register.html
+* FileName: error.no-register.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.08.08
 * CO_99_06_01_01
@@ -60,7 +60,7 @@
                         <div class="suggest-bt">
                             <ul class="bt-slice">
                                 <li class="bt-red1">
-                                    <a href="/auth/line">회선 등록하기</a>
+                                    <a href="/common/line">회선 등록하기</a>
                                 </li>
                             </ul>
                         </div>
@@ -92,7 +92,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.AuthLineEmptyRegister($('#authLineEmpty'));
+    new Tw.CommonLineEmptyRegister($('.wrap'));
   });
 </script>
 <% include ../components/end.component.html %>
