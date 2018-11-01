@@ -153,6 +153,18 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param relateTags
+   * @private
+   */
+  private _convertRelateTags (relateTags: any): any {
+    if (FormatHelper.isEmpty(relateTags.prodTagList)) {
+      return [];
+    }
+
+    return relateTags.prodTagList;
+  }
+
+  /**
    * @param additionsUseInfo
    * @private
    */
@@ -264,7 +276,7 @@ class ProductDetail extends TwViewController {
             prodId: this._prodId,
             basicInfo: this._convertBasicInfo(basicInfo.result),
             prodRedisInfo: this._convertRedisInfo(prodRedisInfo),
-            relateTags: relateTagsInfo.result,
+            relateTags: this._convertRelateTags(relateTagsInfo.result),
             series: this._convertSeriesInfo(seriesInfo.result),
             recommends: recommendsInfo.result,
             svcInfo: svcInfo,
