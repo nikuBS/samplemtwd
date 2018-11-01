@@ -27,7 +27,7 @@ spec:
             memory: "1024Mi"
         volumeMounts:
         - mountPath: /tworld/uploads                  # (root)/uploads 에 volume mount
-          name: pv-storage                            # volumes 의 name과 동일하게 설정
+          name: upload-volume                            # volumes 의 name과 동일하게 설정
 #        livenessProbe:
 #          httpGet:
 #            path: /api/health
@@ -43,6 +43,6 @@ spec:
 #      nodeSelector:
 #        kubernetes.io/hostname: 211.188.180.74        # 74번 Host Node 에만 앱을 배포 (현재 74, 75 에 배포 가능)
       volumes:
-      - hostPath:
-          path: /home/disk                            # Host Node의 실제 fs 경로 ( 고정)
-        name: pv-storage
+      - name: upload-volume
+        persistentVolumeClaim:
+          claimName: upload-pvc
