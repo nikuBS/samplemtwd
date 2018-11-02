@@ -184,8 +184,12 @@ class LoginService {
     });
   }
 
-  public getDeviceCookie(): string {
-    return this.request.cookies[COOKIE_KEY.DEVICE];
+  public getDevice(): string {
+    const userAgent = this.getUserAgent();
+    if ( /TWM_DEVICE/.test(userAgent) ) {
+      return userAgent.split(COOKIE_KEY.DEVICE + '=')[1];
+    }
+    return '';
   }
 
   public getNodeIp(): string {
