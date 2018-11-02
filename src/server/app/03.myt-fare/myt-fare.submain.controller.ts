@@ -60,7 +60,7 @@ class MyTFareSubmainController extends TwViewController {
     ).subscribe(([claim, nonpayment, paymentInfo, totalPayment,
                    taxInvoice, contribution, microPay, contentPay]) => {
       if ( claim.info ) {
-        res.render('error.server-error.html', {
+        this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: claim.info.code,
           msg: claim.info.msg,
@@ -144,7 +144,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getContentPrepay()
     ).subscribe(([usage, paymentInfo, microPay, contentPay]) => {
       if ( usage.info ) {
-        res.render('error.server-error.html', {
+        this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: usage.info.code,
           msg: usage.info.msg,
