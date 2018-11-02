@@ -54,7 +54,7 @@
                                                     <em class="me"><%= member.custNm %></em>
                                                 <% } %>
                                             </div>
-                                            <div class="num"><%= member.svcNum %></div>
+                                            <div class="num"><%= member.svcCdNm ? member.svcCdNm + '(' + member.speedCd + ')' : member.svcNum %></div>
                                         </div>
                                         <div class="list-arrow">
                                             <span class="ico-arrow"></span>
