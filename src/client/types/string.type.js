@@ -409,6 +409,8 @@ Tw.ALERT_MSG_PRODUCT = {
 
 Tw.ALERT_MSG_BENEFIT = {};
 
+Tw.ALERT_MSG_MEMBERSHIP = {};
+
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
   ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?',
@@ -418,6 +420,8 @@ Tw.ALERT_MSG_CUSTOMER = {
     MSG: '취소하시면 작성하신 정보가 모두 초기화됩니다.'
   }
 };
+
+Tw.ALERT_MSG_TEVENT = {};
 
 Tw.ALERT_MSG_AUTH = {
   L01: '선택하신 회선을 첫 번째 순서로 지정하시겠습니까?',
