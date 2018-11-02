@@ -22,7 +22,7 @@
       <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <% if ( displayId ) { %>
-        <%- include('../components/setting/product.setting.' + displayId + '.html'); %>
+        <%- include('../components/setting/' + displayId + '.html'); %>
         <% } %>
         <%- include('../components/product.join.' + displayGroup + '.component.html'); %>
       </div>

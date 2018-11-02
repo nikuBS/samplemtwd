@@ -136,7 +136,7 @@ Tw.FormatHelper = (function () {
 
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
-      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : Tw.FormatHelper.convVoiceFormatWithUnit(isNaNbasOfrVcallTmsCtt)
+      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : Tw.FormatHelper.convVoiceMinFormatWithUnit(basOfrVcallTmsCtt)
     };
   };
 
@@ -182,6 +182,13 @@ Tw.FormatHelper = (function () {
     var sec = data - (hours * 3600) - (min * 60);
 
     return { hours: hours, min: min, sec: sec };
+  };
+
+  var convVoiceMinFormatWithUnit = function (data) {
+    var hours = Math.floor(data / 60),
+      min = data - (hours * 60);
+
+    return (hours > 0 ? hours + Tw.VOICE_UNIT.HOURS : '') + min + Tw.VOICE_UNIT.MIN;
   };
 
   var convSmsPrice = function (smsCount) {
@@ -364,6 +371,7 @@ Tw.FormatHelper = (function () {
     convDataFormat: convDataFormat,
     addComma: addComma,
     removeComma: removeComma,
+    convVoiceMinFormatWithUnit: convVoiceMinFormatWithUnit,
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash,

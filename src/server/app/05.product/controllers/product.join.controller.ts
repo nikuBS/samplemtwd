@@ -235,10 +235,12 @@ class ProductJoin extends TwViewController {
     this._setDisplayId();
     this.logger.info(this, '[DISPLAY ID] ' + this._displayId);
 
-    this.apiService.request(API_CMD.BFF_10_0001, {
-      prodExpsTypCd: svcInfo.prodId !== this._prodId ? 'P' : 'SP'
-    }, {}, this._prodId)
-      .subscribe(( basicInfo ) => {
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0001, {
+        prodExpsTypCd: svcInfo.prodId !== this._prodId ? 'P' : 'SP'
+      }, {}, this._prodId),
+      this.redisService.getData('ProductLedger:' + this._prodId)
+    ).subscribe(([ basicInfo, prodRedisInfo ]) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             code: basicInfo.code,
@@ -251,12 +253,24 @@ class ProductJoin extends TwViewController {
         const displayGroup = this._getDisplayGroup(basicInfo.result.ctgCd);
         this.logger.info(this, '[DISPLAY GROUP] ' + displayGroup);
 
-        if (FormatHelper.isEmpty(displayGroup)) {
+        if (FormatHelper.isEmpty(displayGroup) || FormatHelper.isEmpty(prodRedisInfo)) {
           return this.error.render(res, {
             svcInfo: svcInfo,
             title: '가입'
           });
         }
+
+        const renderOptions = {
+          svcInfo: svcInfo,
+          pageInfo: pageInfo,
+          prodId: this._prodId,
+          prodNm: prodRedisInfo.summary.prodNm,
+          displayId: this._displayId,
+          displayGroup: displayGroup,
+          ctgCd: basicInfo.result.ctgCd,
+          isApp: BrowserHelper.isApp(req),
+          settingInfo: null
+        };
 
         // 모바일 요금제
         if (displayGroup === 'plans') {
@@ -273,19 +287,10 @@ class ProductJoin extends TwViewController {
               });
             }
 
-            res.render('product.join.html', {
+            res.render('product.join.html', Object.assign(renderOptions, {
               joinTermInfo: this._convertPlansJoinTermInfo(joinTermInfo.result),
-              svcInfo: svcInfo,
-              pageInfo: pageInfo,
-              prodId: this._prodId,
-              prodNm: joinTermInfo.result.preinfo.toProdInfo.prodNm,
-              displayId: this._displayId,
-              displayGroup: displayGroup,
-              ctgCd: basicInfo.result.ctgCd,
-              isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00,
-              isApp: BrowserHelper.isApp(req),
-              settingInfo: null
-            });
+              isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00
+            }));
           });
         }
 
@@ -302,18 +307,30 @@ class ProductJoin extends TwViewController {
                 });
               }
 
-              res.render('product.join.html', {
-                joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result),
-                svcInfo: svcInfo,
-                pageInfo: pageInfo,
-                prodId: this._prodId,
-                prodNm: joinTermInfo.result.preinfo.reqProdInfo.prodNm,
-                displayId: this._displayId,
-                displayGroup: displayGroup,
-                ctgCd: basicInfo.result.ctgCd,
-                isApp: BrowserHelper.isApp(req),
-                settingInfo: null
-              });
+              res.render('product.join.html', Object.assign(renderOptions, {
+                joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result)
+              }));
+            });
+        }
+
+        if (displayGroup === 'combine' && this._prodId === 'NA00004430') {
+          this.apiService.request(API_CMD.BFF_10_0062, {}, {}, this._prodId)
+            .subscribe((seldisSetsInfo) => {
+              if (seldisSetsInfo.code !== API_CODE.CODE_00) {
+                return this.error.render(res, {
+                  code: seldisSetsInfo.code,
+                  msg: seldisSetsInfo.msg,
+                  svcInfo: svcInfo,
+                  title: '가입'
+                });
+              }
+
+              res.render('product.join.html', Object.assign(renderOptions, {
+                seldisSets: Object.assign(seldisSetsInfo.result, {
+                  noContractPlanPoint: FormatHelper.isEmpty(seldisSetsInfo.result.noContractPlanPoint) ?
+                    0 : FormatHelper.addComma(seldisSetsInfo.result.noContractPlanPoint)
+                })
+              }));
             });
         }
       });

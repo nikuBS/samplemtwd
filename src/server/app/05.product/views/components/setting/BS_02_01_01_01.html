@@ -1,0 +1,82 @@
+<%#
+* FileName: BS_02_01_01_01.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2018.11.01
+%>
+<div class="container">
+
+  <div class="product-select-wrap">
+    <span class="data-tit">선택약정 할인기간 설정</span>
+    <span class="data-number">010-12**-24**</span>
+  </div>
+  <!-- .cont-box -->
+  <div class="cont-box nogaps">
+    <!-- .list-comp-input -->
+    <div class="list-comp-input">
+      <div class="widget">
+        <div class="widget-box radio">
+          <ul class="select-list" role="group">
+            <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+              <input type="radio" name="radio" value="" title="값1" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+              <div class="comp-list-layout" id="aria-comp-radio1">
+                <p class="layout-text">
+                  <span class="mtext">12개월</span>
+                </p>
+              </div>
+            </li>
+            <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+              <input type="radio" name="radio" value="" title="값2" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+              <div class="comp-list-layout" id="aria-comp-radio2">
+                <p class="layout-text">
+                  <span class="mtext">24개월</span>
+                </p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--// .list-comp-input -->
+  </div>
+  <!--// .cont-box -->
+
+  <% if ( seldisSets.noContractPlanPoint ) { %>
+  <!--
+      무약정플랜 가입정보 (계정에 따라 해당 사항 있는 경우만 노출 되는 영역)
+      비노출시 class="none" 사용, 노출 시 class="" 또는 class="block" 사용하시면 됩니다.
+  -->
+  <div class=""> <!--.none 추가 시 비노출 -->
+    <div class="product-select-wrap">
+      <span class="data-tit">무약정플랜 가입 정보</span>
+    </div>
+    <!-- .cont-box -->
+    <div class="cont-box">
+      <div class="charge-guide-wrap">
+        <div class="charge-cont">
+          <span class="sub-disc01">
+            <span class="elem">무약정플랜 포인트</span>
+          </span>
+          <span class="tit"><span class="charge-txt"><%= seldisSets.noContractPlanPoint %></span>p</span>
+          <p class="comment star_tx">무약정플랜 가입 고객의 경우 선택약정할인제도 가입 시, 포인트로 요금납부 후에 무약정플랜 자동해지됩니다.</p>
+        </div>
+      </div>
+    </div>
+    <!--// .cont-box -->
+  </div>
+  <!-- //무약정플랜 가입정보 -->
+  <% } %>
+
+
+  <hr class="cont-sp type1" aria-hidden="true"/>
+  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top; margin-bottom: 3.75rem">
+
+
+  <div class="bt-fixed-area">
+    <ul class="bt-slice full">
+      <li class="bt-red1">
+        <button>변경완료</button>
+      </li>
+    </ul>
+  </div>
+</div>
