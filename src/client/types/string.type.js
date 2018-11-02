@@ -881,6 +881,12 @@ Tw.BENEFIT = {
       RAINBOW: '레인보우포인트'
     },
     UNIT: '점'
+  },
+  MILITARY: {
+    TYPE: {
+      E: '적립',
+      U: '사용'
+    }
   }
 };
 
@@ -896,5 +902,6 @@ Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT = {
   A13: '동일회선 간에는 포인트 합산이 불가합니다.',
   A14: '동일회선 간에는 포인트 양도가 불가합니다.'
 };
+
 
 

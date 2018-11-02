@@ -5,6 +5,7 @@
 %>
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/my-benefit/benefit.my-benefit.military.list.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -15,7 +16,7 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap" id="fe-benefit-my">
+<div class="wrap" id="fe-benefit-military">
     <div id="header" class="header-wrap">
         <!-- #header -->
         <%- include('../../../../common/views/components/header.component.html', { title: '현역플랜 포인트', svcInfo: svcInfo, option: { line: true } }); %>
@@ -30,7 +31,7 @@
                 <div class="charge-guide-wrap">
                     <div class="charge-cont">
                         <span class="sub-disc05">현역플랜 포인트</span>
-                        <span class="tit tx-blue"><span class="charge-txt"><%= point =></span>점</span>
+                        <span class="tit tx-blue"><span class="charge-txt"><%= point %></span>점</span>
                     </div>
                 </div>
             </div>
@@ -40,68 +41,19 @@
                 <h4 class="tit">상세내역</h4>
             </div>
             <!-- .cont-box -->
+            <div class="cont-box nogaps" id="fe-no-item" style="display: none">
+                <div class="contents-empty">
+                    <span class="ico type1"></span>
+                    <p class="desc">내역이 없습니다.</p>
+                </div>
+            </div>
+
             <div class="cont-box nogaps">
-                <ul class="list-comp-lineinfo type5 no-bt">
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">적립</span>
-                            <span class="info-sub">
-	                                	<span class="elem">E-mail신청 레인보우포인트 적립</span>
-	                                	<span class="elem">2018.10.23</span>
-	                                </span>
-                        </div>
-                        <div class="lineinfo-data">
-	                                <span class="info-title">
-	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
-	                                </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">사용</span>
-                            <span class="info-sub">
-	                                	<span class="elem">요금납부</span>
-	                                	<span class="elem">2018.10.23</span>
-	                                </span>
-                        </div>
-                        <div class="lineinfo-data">
-	                                <span class="info-title">
-	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
-	                                </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">적립</span>
-                            <span class="info-sub">
-	                                	<span class="elem">기본 포인트 적립</span>
-	                                	<span class="elem">2018.10.23</span>
-	                                </span>
-                        </div>
-                        <div class="lineinfo-data">
-	                                <span class="info-title">
-	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
-	                                </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">사용</span>
-                            <span class="info-sub">
-	                                	<span class="elem">요금납부</span>
-	                                	<span class="elem">2018.10.23</span>
-	                                </span>
-                        </div>
-                        <div class="lineinfo-data">
-	                                <span class="info-title">
-	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
-	                                </span>
-                        </div>
-                    </li>
+                <ul class="list-comp-lineinfo type5 no-bt" id="fe-list">
                 </ul>
 
                 <div class="bt-more">
-                    <button>더보기</button>
+                    <button id="fe-bt-more">더보기<span>0</span></button>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -115,6 +67,7 @@
 </div>
 <script>
   $(document).ready(function () {
+    new Tw.BenefitMyBenefitMilitary($('#fe-benefit-military'));
   });
 </script>
 <% include ../components/end.component.html %>
