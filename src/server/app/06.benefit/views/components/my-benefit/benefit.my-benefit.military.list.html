@@ -1,0 +1,24 @@
+<%#
+* FileName: benefit.my-benefit.military.list.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 11. 1.
+%>
+<script id="fe-list-template" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <div class="lineinfo-user">
+            <span class="info-title">사용</span>
+            <span class="info-sub">
+                <span class="elem">{{ opDtl }}</span>
+                <span class="elem">{{ opDt }}</span>
+            </span>
+        </div>
+        <div class="lineinfo-data">
+            <span class="info-title">
+                <span class="num ff-tg-black">{{ point }}</span><span class="unit ff-tg-medium">점</span>
+            </span>
+        </div>
+    </li>
+    {{/each}}
+</script>
+
