@@ -19,7 +19,7 @@
             </li>
             <li>
                 <span class="title">결합회선</span>
-                <span class="tx-cont"><%= groupInfo.mblSvcCnt %>회선</span>
+                <span class="tx-cont"><%= groupInfo.mblSvcCnt + groupInfo.wirSvcCnt %>회선</span>
             </li>
         </ul>
     </div>
@@ -37,7 +37,7 @@
             <div class="acco-style data-famliy-group-list type2">
                 <ul class="acco-box">
                     <!-- TODO: 온가족플랜 유선상품 처리 추가해야함 -->
-                    <%  combination.combinationWirelessMemberList.map(member => { 
+                    <%  combination.combinationWirelessMemberList.concat(combination.combinationWireMemberList).map(member => { 
                         const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
                         const isRep = member.relClCd === '00'; %>
                         <li class="acco-list">
@@ -49,14 +49,12 @@
                                             <div>
                                                 <% if (isMine) { %>
                                                     <strong class="me"><%= member.custNm %></strong>
-                                                    <i class="badge badge-<%= member.badge %>"><span class="blind"><%= member.relClNm %></span></i>
                                                     <i class="badge badge-me2"><span class="blind">나</span></i><!-- 뱃지-나 -->
                                                 <% } else { %>
                                                     <em class="me"><%= member.custNm %></em>
-                                                    <i class="badge badge-<%= member.badge %>"><span class="blind"><%= member.relClNm %></span></i>
                                                 <% } %>
                                             </div>
-                                            <div class="num"><%= member.svcNum %></div>
+                                            <div class="num"><%= member.svcCdNm ? member.svcCdNm + '(' + member.speedCd + ')' : member.svcNum %></div>
                                         </div>
                                         <div class="list-arrow">
                                             <span class="ico-arrow"></span>
@@ -67,12 +65,14 @@
                             <div class="acco-content">
                                 <div class="data-info-list toggle-inner-list">
                                     <ul>
+                                        <% if (member.relClNm) { %>
                                         <li>
                                             <dl>
                                                 <dt>가족대표와의 관계</dt>
                                                 <dd><%= member.relClNm %><%= isMine? '(내번호)': ''%></dd>
                                             </dl>
                                         </li>
+                                        <% } %>
                                         <li>
                                             <dl>
                                                 <dt>온가족플랜할인대상</dt>
