@@ -65,6 +65,9 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
+  replacePathName: function (pathname) {
+    this.history.replaceState(this.historyObj, this.historyName, pathname);
+  },
   replaceTarget: function (target) {
     this.history.replaceState(this.historyObj, target, this.pathname);
   },

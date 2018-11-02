@@ -23,14 +23,18 @@ Tw.ProductJoinReservation.prototype = {
     this._typeCd = this.$container.data('type_cd');
     this._prodId = this.$container.data('prod_id');
     this._isEtcProd = !Tw.FormatHelper.isEmpty(this._prodId) && this._prodIdList.indexOf(this._prodId) === -1;
-    this._originalTypeCd = this._typeCd;
 
-    if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId)) {
+    if (this._typeCd === 'combine') {
       this._initCombineProduct();
     }
   },
 
   _initCombineProduct: function() {
+    this.$combineWrap.show();
+    if (Tw.FormatHelper.isEmpty(this._prodId)) {
+      return;
+    }
+
     if (this._prodId !== 'NH00000103') {
       setTimeout(function() {
         this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
@@ -47,6 +51,7 @@ Tw.ProductJoinReservation.prototype = {
     this.$agreeWrap = this.$container.find('.fe-agree_wrap');
     this.$combineSelected = this.$container.find('.fe-combine_selected');
     this.$combineExplain = this.$container.find('.fe-combine_explain');
+    this.$combineWrap = this.$container.find('.fe-combine_wrap');
     this.$formData = this.$container.find('.fe-form_data');
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -58,6 +63,8 @@ Tw.ProductJoinReservation.prototype = {
   _bindEvent: function() {
     this.$reservName.on('keyup input', $.proxy(this._toggleInputCancelBtn, this));
     this.$reservNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
+    this.$reservNumber.on('blur', $.proxy(this._blurInputNumber, this));
+    this.$reservNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));
@@ -107,11 +114,21 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _typeCdPopupClose: function() {
-    if (this._typeCd === this._originalTypeCd) {
-      return;
+    if (this._typeCd !== 'combine') {
+      this._resetCombineWrap();
+      this.$combineWrap.hide();
+    } else {
+      this.$combineWrap.show();
     }
 
-    this._historyService.goLoad('/product/join-reservation?typeCd=' + this._typeCd);
+    this.$btnSelectTypeCd.text(Tw.PRODUCT_RESERVATION[this._typeCd]);
+    this._historyService.replacePathName(window.location.pathname + '?type_cd=' + this._typeCd);
+  },
+
+  _resetCombineWrap: function() {
+    this.$combineSelected.prop('checked', false);
+    this.$combineSelected.parent().removeClass('checked').attr('aria-checked', false);
+    this._changeCombineSelected();
   },
 
   _changeCombineSelected: function() {
@@ -122,7 +139,7 @@ Tw.ProductJoinReservation.prototype = {
     this._prodId = null;
     this._setBtnCombineTxt(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NONE.TITLE);
 
-    this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
+    this.$combineExplain.attr('aria-disabled', true).addClass('disabled').removeClass('checked');
     this.$combineExplain.find('input[type=checkbox]').attr('disabled', 'disabled').prop('disabled', true)
       .prop('checked', false);
   },
@@ -255,6 +272,14 @@ Tw.ProductJoinReservation.prototype = {
     this._toggleInputCancelBtn(e);
   },
 
+  _blurInputNumber: function() {
+    this.$reservNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$reservNumber.val()));
+  },
+
+  _focusInputNumber: function() {
+    this.$reservNumber.val(this.$reservNumber.val().replace(/-/gi, ''));
+  },
+
   _toggleInputCancelBtn: function(e) {
     var $input = $(e.currentTarget);
     if ($input.val().length > 0) {
@@ -321,8 +346,46 @@ Tw.ProductJoinReservation.prototype = {
     // @todo 기 결합된 가족정보 리스트를 넘기자
     this._popupService.open({
       hbs: 'BS_05_01_01_01',
-      layer: true
-    });
+      layer: true,
+      list: [{
+        name: '테*트',
+        number: '010-00*0-00*0',
+        fam: {
+          leader: true,
+          me: true
+        }
+      },
+        {
+          name: '테*트',
+          number: '010-00*0-00*0',
+          fam: {
+            spouse: true
+          }
+        },
+        {
+          name: '테*트',
+          number: '010-00*0-00*0',
+          fam: {
+            children: true
+          }
+        },
+        {
+          name: '테*트',
+          number: '010-00*0-00*0',
+          fam: {
+            brother: true
+          }
+        }]
+    }, $.proxy(this._initExplainFilePop, this), null, 'explain_pop');
+  },
+
+  _initExplainFilePop: function($popupContainer) {
+    this.$familyWrap = $popupContainer.find('.fe-family_wrap');
+    this.$familyList = $popupContainer.find('.fe-family_list');
+
+    if (this.$familyList.find('li').length > 0) {
+      this.$familyWrap.show();
+    }
   },
 
   _procApply: function() {
@@ -331,8 +394,8 @@ Tw.ProductJoinReservation.prototype = {
       return this._openExplainFilePop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_DUMMY, {})
-      .done($.proxy(this._procApplyResult, this));
+    // this._apiService.request(Tw.API_CMD.BFF_DUMMY, {})
+    //   .done($.proxy(this._procApplyResult, this));
   },
 
   _procApplyResult: function(resp) {
