@@ -90,10 +90,13 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _makeParams: function () {
+    var arrPhoneNumber = $('.fe-service_phone').val().split('-');
+
     var params = {
-      cntcNum1: $('.fe-service_phone').val().split('-')[0],
-      cntcNum2: $('.fe-service_phone').val().split('-')[1],
-      cntcNum3: $('.fe-service_phone').val().split('-')[2],
+      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
+      cntcNum1: arrPhoneNumber[0],
+      cntcNum2: arrPhoneNumber[1],
+      cntcNum3: arrPhoneNumber[2],
       email: $('.fe-service_email').val(),
       subject: this.$wrap_tpl_service.find('.fe-text_title').val(),
       content: this.$wrap_tpl_service.find('.fe-text_content').val(),

@@ -19,12 +19,13 @@ Tw.CustomerEmailTemplate.prototype = {
   _init: function () {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
-
   },
 
   _cachedElement: function () {
     this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
     this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
+
+    // service, quality template
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').html());
     this.tpl_service_internet = Handlebars.compile($('#tpl_service_internet').html());
     this.tpl_service_direct = Handlebars.compile($('#tpl_service_direct').html());

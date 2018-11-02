@@ -22,23 +22,23 @@
                 <button class="bt-dropdown big tx-bold" title="사용자번호" aria-haspopup="true"><%-svcNum%><span class="ico"></span></button>
             </div>
             <div class="info-form-box">
-                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">현상선택 (필수)<span class="ico"></span></button>
+                <button class="bt-dropdown big fe-occurrence" title="사용자번호" aria-haspopup="true" required>현상선택 (필수)<span class="ico"></span></button>
             </div>
             <div class="info-form-box">
-                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">세부현상 선택 (필수)<span class="ico"></span></button>
+                <button class="bt-dropdown big fe-occurrence_detail" title="사용자번호" aria-haspopup="true" required>세부현상 선택 (필수)<span class="ico"></span></button>
             </div>
             <div class="info-form-box">
-                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">발생위치 선택 (필수)<span class="ico"></span></button>
+                <button class="bt-dropdown big fe-place" title="사용자번호" aria-haspopup="true" required>발생위치 선택 (필수)<span class="ico"></span></button>
             </div>
             <div class="info-form-box">
-                <button class="bt-dropdown big" title="사용자번호" aria-haspopup="true">건물종류 선택 (필수)<span class="ico"></span></button>
+                <button class="bt-dropdown big fe-place_detail" title="사용자번호" aria-haspopup="true" required>건물종류 선택 (필수)<span class="ico"></span></button>
             </div>
             <p class="title">문의하실 상세현황을 기재해 주세요.</p>
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="상세한 현상 입력 (필수)" maxlength="12000"
-                                  aria-labelledby="aria-email-qacont"></textarea>
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="상세한 현상 입력 (필수)" maxlength="12000"
+                                  aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
@@ -47,7 +47,7 @@
             <div class="inputbox">
                 <div class="input">
                     <input type="text" placeholder="접수자 성함 입력 (필수)" title="input" value="" aria-labelledby="aria-exp-label1"
-                           aria-describedby="aria-exp-desc1">
+                           aria-describedby="aria-exp-desc1" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
@@ -84,14 +84,14 @@
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list" role="radiogroup">
-                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                    <li class="radiobox type01-big checked" role="radio" aria-checked="false">
                         <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                        <input type="radio" name="radio1-big1" value="" title="값2"><!-- 체크상태일 경우 checked="false" -->
+                        <input type="radio" name="radio1-big1" value="" title="값2" checked=""><!-- 체크상태일 경우 checked="false" -->
                         인터넷/TV
                     </li>
-                    <li class="radiobox type01-big checked" role="radio" aria-checked="true">
+                    <li class="radiobox type01-big" role="radio" aria-checked="true">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="radio" name="radio1-big1" value="" title="값1" checked=""><!-- 체크상태일 경우 checked="checked" -->
+                        <input type="radio" name="radio1-big1" value="" title="값1"><!-- 체크상태일 경우 checked="checked" -->
                         집전화
                     </li>
                 </ul>
@@ -102,17 +102,17 @@
             <div class="info-form-box">
                 <button class="bt-dropdown big tx-bold" title="사용자번호" aria-haspopup="true"><%-svcNum%><span class="ico"></span></button>
             </div>
+            <!--<div class="inputbox">-->
+                <!--<div class="input">-->
+                    <!--<input type="text" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"-->
+                           <!--readonly="">-->
+                    <!--<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
-                           readonly="">
-                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                </div>
-            </div>
-            <div class="inputbox">
-                <div class="input">
-                    <input type="text" placeholder="제목 입력" title="input" value="" aria-labelledby="aria-exp-label1"
-                           aria-describedby="aria-exp-desc1">
+                    <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" aria-labelledby="aria-exp-label1"
+                           aria-describedby="aria-exp-desc1" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
                 <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자(최대)</span>
@@ -120,19 +120,19 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
-                                  aria-labelledby="aria-email-qacont"></textarea>
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                                  aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
                 </div>
             </div>
-            <div class="fileplus-wrap">
-                <p class="text">최대 5개 파일을 등록할 수 있습니다.</p>
-                <div class="bt-alone">
-                    <button class="bt-bg-blue1">파일첨부하기</button>
-                </div>
-            </div>
+            <!--<div class="fileplus-wrap">-->
+                <!--<p class="text">최대 5개 파일을 등록할 수 있습니다.</p>-->
+                <!--<div class="bt-alone">-->
+                    <!--<button class="bt-bg-blue1">파일첨부하기</button>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     <%- include('../../components/email/customer.email.common.template.html', { type: 'quality' }); %>

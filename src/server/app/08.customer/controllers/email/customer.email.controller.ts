@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import { API_CMD } from '../../../../types/api-command.type';
 
 class CustomerEmail extends TwViewController {
   constructor() {
@@ -35,7 +36,6 @@ class CustomerEmail extends TwViewController {
         break;
       case 'history':
         res.render('email/customer.email.history.html', responseData);
-        break;
       default:
         // Observable.combineLatest(
         // ).subscribe(([subscriptions]) => {
