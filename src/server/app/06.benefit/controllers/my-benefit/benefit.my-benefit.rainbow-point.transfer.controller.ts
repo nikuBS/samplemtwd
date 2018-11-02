@@ -35,11 +35,11 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
         return this._renderError(res, apiError, svcInfo);
       }
 
-      const lines = this.getLineWithRainbowPoint(rainbowPointFamilies);
-      const historyResult = this.getRainbowPointHistories(rainbowPointTransfers);
+      const lines = this.getLineWithRainbowPointFamilies(rainbowPointFamilies);
+      const transfersResult = this.getRainbowPointTransfersResult(rainbowPointTransfers);
       const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
         BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
-        BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, historyResult.totRecCnt);
+        BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, transfersResult.totRecCnt);
 
       // 법정대리인 정보가 없는 경우 에러 처리
       if ( FormatHelper.isEmpty(lines) ) {
@@ -59,7 +59,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
         lineToReceive,
         lineToGiveData: JSON.stringify(lineToGive),
         linesToReceiveData: JSON.stringify(linesToReceive),
-        histories: historyResult.history,
+        histories: transfersResult.history,
         paging
       };
 
@@ -80,7 +80,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     });
   }
 
-  private getLineWithRainbowPoint(resp: any): any {
+  private getLineWithRainbowPointFamilies(resp: any): any {
     const lines = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
@@ -89,7 +89,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     return lines;
   }
 
-  private getRainbowPointHistories(resp: any): any {
+  private getRainbowPointTransfersResult(resp: any): any {
     const result = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     const histories = result.history;
     histories.map((history) => {
