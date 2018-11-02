@@ -5,6 +5,7 @@
  */
 Tw.MembershipInfoGrade = function (rootEl) {
   this.$container = rootEl || $('.wrap');
+  this._apiService = Tw.Api;
   this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container);
   this._init();
 };
@@ -19,13 +20,19 @@ Tw.MembershipInfoGrade.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '#fe-expire-info', $.proxy(this._openExpireInfo,this));
+    this.$container.on('click', '[data-popup-id]', $.proxy(this._openPopup,this));
+    this.$container.on('click', '[data-external-url]', $.proxy(this._goExternalUrl,this));
   },
 
-  // 가입중지 카드(TPLE, Couple 카드) 팝업 오픈
-  _openExpireInfo : function (e) {
-    this._membershipLayerPopup.open('BE_04_01_L01');
-  }
+  // 팝업 오픈
+  _openPopup : function (e) {
+    this._membershipLayerPopup.open($(e.currentTarget).data('popupId'));
+  },
 
+  // 외부 URL 이동
+  _goExternalUrl : function (e) {
+    var _url = Tw.URL_PATH[$(e.currentTarget).data('externalUrl')];
+    Tw.CommonHelper.openUrlExternal(_url);
+  }
 
 };
