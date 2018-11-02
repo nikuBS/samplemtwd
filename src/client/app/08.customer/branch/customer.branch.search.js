@@ -57,6 +57,7 @@ Tw.CustomerBranchSearch.prototype = {
     this.$btnOptions.on('click', $.proxy(this._onOptionsClicked, this));
     this.$container.on('click', '.bt-more button', $.proxy(this._onMoreRequested, this));
     this.$container.on('click', '.fe-branch-detail', $.proxy(this._onBranchDetail, this));
+    this.$container.on('click', '.fe-data-charge', $.proxy(this._onNearBranchClicked, this));
   },
   _onInput: function (e) {
     var elem = e.currentTarget;
@@ -211,6 +212,32 @@ Tw.CustomerBranchSearch.prototype = {
     }
 
     var code = $(e.currentTarget).attr('value');
-    this._historyService.goLoad('/customer/branch/detail?code=' + code);
+
+    if (Tw.BrowserHelper.isApp()) {
+      this._showDataChargePopup($.proxy(function () {
+        this._historyService.goLoad('/customer/branch/detail?code=' + code);
+      }, this));
+    } else {
+      this._historyService.goLoad('/customer/branch/detail?code=' + code);
+    }
+  },
+  _onNearBranchClicked: function (e) {
+    if (Tw.BrowserHelper.isApp()) {
+      this._showDataChargePopup($.proxy(function () {
+        this._historyService.goLoad($(e.currentTarget).attr('href'));
+      }, this));
+      return false;
+    }
+    return true;
+  },
+  _showDataChargePopup: function (onConfirm) {
+    this._popupService.openConfirm(
+      Tw.POPUP_CONTENTS.NO_WIFI,
+      Tw.POPUP_TITLE.EXTERNAL_LINK,
+      $.proxy(function () {
+        this._popupService.close();
+        onConfirm();
+      }, this)
+    );
   }
 };

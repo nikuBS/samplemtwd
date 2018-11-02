@@ -1,41 +1,41 @@
 /**
- * FileName: customer.branch.repair-manufacturer.js
+ * FileName: customer.branch.repair.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.01
+ * Date: 2018.11.02
  */
 
-Tw.CustomerBranchRepairManufacturer = function (rootEl) {
+Tw.CustomerBranchRepair = function (rootEl) {
   if (!Tw.BrowserHelper.isApp()) {
     return;
   }
+
   this.$container = rootEl;
 
   this._popupService = Tw.Popup;
-  this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
 
   this._bindEvents();
 };
 
-Tw.CustomerBranchRepairManufacturer.prototype = {
+Tw.CustomerBranchRepair.prototype = {
   _bindEvents: function () {
-    this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
+    this.$container.on('click', '.fe-data-charge', $.proxy(this._showDataCharge, this));
   },
-  _onExternalLink: function (e) {
+  _showDataCharge: function (e) {
+    if (!Tw.BrowserHelper.isApp()) {
+      return true;
+    }
+
     this._popupService.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
       Tw.POPUP_TITLE.EXTERNAL_LINK,
       $.proxy(function () {
         this._popupService.close();
         var url = $(e.currentTarget).attr('href');
-        this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-          type: Tw.NTV_BROWSER.EXTERNAL,
-          url: url
-        });
+        this._historyService.goLoad(url);
       }, this)
     );
 
     return false;
   }
 };
-
-

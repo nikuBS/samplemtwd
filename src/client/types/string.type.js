@@ -64,7 +64,8 @@ Tw.POPUP_TITLE = {
   ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
   SELECT_SUBJECT_TYPE: '대상 설정',
   AGREED_PERIOD: '약정기간',
-  SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택'
+  SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
+  EXTERNAL_LINK: '외부 사이트로 연결됩니다.'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -73,7 +74,8 @@ Tw.POPUP_CONTENTS = {
   CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
-  RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.'
+  RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
+  NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.'
 };
 
 Tw.CHART_TYPE = {
