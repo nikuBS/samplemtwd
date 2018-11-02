@@ -610,6 +610,12 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN_MGMT_NUMCHG_ALARM = {
+  TOAST_SUC_REG : '신청이 완료되었습니다.',
+  TOAST_SUC_EXT : '연장이 완료되었습니다.',
+  TOAST_SUC_CAN : '해지가 완료되었습니다.'
+};
+
 Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE = {
   '01': '온라인',
   '02': '오프라인'
