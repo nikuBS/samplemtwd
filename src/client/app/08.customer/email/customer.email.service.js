@@ -22,9 +22,8 @@ Tw.CustomerEmailService.prototype = {
 
   _cachedElement: function () {
     this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
-    // this.$btn_service_register = this.$container.find('.fe-service_register');
-    // this.$input_phone = this.$container.find('.fe-service_phone');
-    // this.$input_email = this.$container.find('.fe-service_email');
+    this.$service_depth1 = this.$container.find('.fe-service_depth1');
+    this.$service_depth2 = this.$container.find('.fe-service_depth2');
   },
 
   _bindEvent: function () {
@@ -33,7 +32,7 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _request: function () {
-    var serviceCategory = $('.fe-service_depth1').data('service-depth1');
+    var serviceCategory = this.$service_depth1.data('service-depth1');
 
     switch ( serviceCategory ) {
       case 'cell':
@@ -53,32 +52,52 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestCell: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0042, this._makeParams()).done($.proxy(this._onSuccessRequest, this));
+    var htParams = $.extend(this._makeParams(), {
+      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
+      ofrCtgSeq: this.$service_depth2.data('serviceDepth2')
+    });
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestInternet: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0043, this._makeParams()).done($.proxy(this._onSuccessRequest, this));
+    var htParams = $.extend(this._makeParams(), {
+      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
+      ofrCtgSeq: this.$service_depth2.data('serviceDepth2')
+    });
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams)
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestDirect: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0020, this._makeParams()).done($.proxy(this._onSuccessRequest, this));
+    var htParams = $.extend(this._makeParams(), {
+      category: this.$service_depth2.data('serviceDepth2')
+    });
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0020, htParams)
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestChocolate: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0021, this._makeParams()).done($.proxy(this._onSuccessRequest, this));
+    var htParams = $.extend(this._makeParams(), {
+      category: this.$service_depth2.data('serviceDepth2')
+    });
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams)
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _makeParams: function () {
     var params = {
-      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
-      ofrCtgSeq: $('.fe-service_depth2').data('serviceDepth2'),
-      cntcNum1: '',
-      cntcNum2: '',
-      cntcNum3: '',
-      email: '',
-      subject: 'test',
-      content: 'test',
-      smsRcvYn: 'Y'
+      cntcNum1: $('.fe-service_phone').val().split('-')[0],
+      cntcNum2: $('.fe-service_phone').val().split('-')[1],
+      cntcNum3: $('.fe-service_phone').val().split('-')[2],
+      email: $('.fe-service_email').val(),
+      subject: this.$wrap_tpl_service.find('.fe-text_title').val(),
+      content: this.$wrap_tpl_service.find('.fe-text_content').val(),
+      smsRcvYn: $('.fe-service_sms').prop('checked') ? 'Y' : 'N'
     };
 
     return params;
@@ -86,19 +105,40 @@ Tw.CustomerEmailService.prototype = {
 
   _onSuccessRequest: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // this._history.replaceURL('/customer/email/complete?email=' + this.$input_email.val());
+      this._history.replaceURL('/customer/email/complete?email=' + $('.fe-service_email').val());
     } else {
-      this._popupService.openAlert(res.code + ' ' + res.msg);
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
   _validateForm: function () {
-    // this.$wrap_tpl_service.find('[required]').each(function (nIndex, el) {
-    // });
-    //TODO: validate form
-    if ( true ) {
+    var arrValid = [];
+
+    this.$wrap_tpl_service.find('[required]').each(function (nIndex, item) {
+      if ( $(item).prop('type') === 'checkbox' ) {
+        arrValid.push($(item).prop('checked'));
+      }
+
+      if ( $(item).prop('type') === 'number' ) {
+        var isValidNumber = $(item).val().length !== 0 ? true : false;
+        arrValid.push(isValidNumber);
+      }
+
+      if ( $(item).prop('type') === 'text' ) {
+        var isValidText = $(item).val().length !== 0 ? true : false;
+        arrValid.push(isValidText);
+      }
+
+      if ( $(item).prop('type') === 'textarea' ) {
+        var isValidTextArea = $(item).val().length !== 0 ? true : false;
+        arrValid.push(isValidTextArea);
+      }
+    });
+
+    if ( arrValid.indexOf(false) === -1 && !!this.$service_depth2.data('serviceDepth2') ) {
       $('.fe-service_register').prop('disabled', false);
+    } else {
+      $('.fe-service_register').prop('disabled', true);
     }
   }
 };

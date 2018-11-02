@@ -28,7 +28,13 @@ class CustomerEmail extends TwViewController {
 
     switch ( page ) {
       case 'complete':
-        res.render('email/customer.email.complete.html', responseData);
+        res.render('email/customer.email.complete.html', Object.assign(
+          responseData,
+          { email: req.query.email }
+        ));
+        break;
+      case 'history':
+        res.render('email/customer.email.history.html', responseData);
         break;
       default:
         // Observable.combineLatest(

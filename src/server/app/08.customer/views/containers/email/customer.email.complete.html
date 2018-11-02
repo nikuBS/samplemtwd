@@ -35,14 +35,16 @@
                     <span>이메일 상담 등록완료</span>
                 </h1>
                 <p class="complete-tx1">답변 받으시는 이메일 주소</p>
-                <p class="complete-tx2">abc@nate.com</p>
+                <% if ( email ) { %>
+                <p class="complete-tx2"><%-email%></p>
+                <% } %>
                 <ul class="complete-dot">
                     <li>통화품질 상담은 전문 상담사가 직접 전화드리겠습니다.</li>
                 </ul>
                 <div class="complete-btn-box pt40">
                     <ul class="bt-slice">
                         <li class="bt-white2">
-                            <button>내가 쓴 글 보기</button>
+                            <a href="/customer/email/history" class="fe-replace-history">내가 쓴 글 보기</a>
                         </li>
                     </ul>
                     <div class="bt-link-box">

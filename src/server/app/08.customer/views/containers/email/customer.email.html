@@ -101,15 +101,108 @@
         </div>
     </div>
     <!-- // .container-wrap -->
+
+    <div class="popup-page tw-popup fixed-btn fixed-bottom fe-wrap_faq" style="display: none"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>지금 해결할 수 있는 문의</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>무엇이 궁금합니다
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn fe-close_faq"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
 </div>
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
-        new Tw.CustomerEmailTemplate($('.wrap'));
-        new Tw.CustomerEmailCategory($('.wrap'));
+        new Tw.CustomerEmail($('.wrap'));
         new Tw.CustomerEmailService($('.wrap'));
         new Tw.CustomerEmailQuality($('.wrap'));
-        new Tw.CustomerEmail($('.wrap'));
+        new Tw.CustomerEmailTemplate($('.wrap'));
+        new Tw.CustomerEmailCategory($('.wrap'));
       });
     </script>
 </body>
