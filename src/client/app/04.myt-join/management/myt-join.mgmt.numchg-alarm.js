@@ -85,13 +85,13 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
    * @private
    */
   _onclickBtnOk: function(){
+    var prod = this.$inputPrd.val();
+    var notiEndDt = new Date();
+    notiEndDt.setMonth(notiEndDt.getMonth() + parseInt(prod, 10));
 
     var param = {
-      guidReqSvcNum : this._options.guidReqSvcNum,     // 변경전 서비스번호
-      firstNumGuidStaDt : this._options.firstNumGuidStaDt, // 최초로 번호안내서비스 받은 일자
-      wDateChargFrom : this._options.wDateChargFrom,    // 과금시작일
-      period : this.$inputPrd.val(),    // 선택 기간
-      numGuidOptYn : this.$radioAlarmType.val()  // 선택 알림유형
+      notiEndDt : Tw.DateHelper.getShortDateWithFormat(notiEndDt, 'YYYYMMDD'),
+      notiType : this.$radioAlarmType.val()  // 선택 알림유형
     };
 
     // 선택 기간 validation
@@ -115,9 +115,12 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
         }
 
         skt_landing.action.loading.off({ ta: this.$container });
-        // TODO
-        // ok alert
-        // popup close??
+
+        if (resp.code !== Tw.API_CODE.CODE_00) {
+          Tw.Error(resp.code, resp.msg).pop();
+        } else {
+          this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
+        }
 
       }, this))
       .fail(function(err){

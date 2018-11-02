@@ -16,21 +16,21 @@ class MyTJoinMgmtNumChgAlarm extends TwViewController {
     // this.apiService.request(API_CMD.BFF_05_0180, {})
     //   .subscribe((resp) => {
         const resp = {
-            'code': '00',
-            'msg': '결과메세지',
-            'result':
-              {
-                'curSvcNum': '0101234567',
-                'guidReqSvcNum': '01098765432',
-                'numGuidOptYn': 'S',
-                'firstNumGuidStaDt': '',
-                'wDateChargFrom': '',
-                'numGuidStaDt': '',
-                'numGuidEndDt': '',
-                'bExtYN': 'Y',
-                'offerBtnYn': 'Y'
-              }
-          };
+          'code': '00',
+          'msg': '결과메세지',
+          'result':
+            {
+              'oldSvcNum': '01056**78**',
+              'newSvcNum': '01012**34**',
+              'notiType': 'S',
+              'freeOfrEndDt': '20191030',
+              'notiStaDt': '20181031',
+              'notiEndDt': '20190331',
+              'extnsPsblYn': 'N',
+              'orglSktYn': 'Y'
+            }
+        };
+        
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
