@@ -86,7 +86,7 @@
                             <% let centre = centres[i][j]; %>
                             <li>
                                 <div class="link-long">
-                                    <a href="/customer/branch/repair-detail?code=<%= centre.locCode %>">
+                                    <a class="fe-data-charge" href="/customer/branch/repair-detail?code=<%= centre.locCode %>">
                                         <em><%= centre.locName %></em><%= centre.searchAddr %><br /><%= centre.jibunAddr %>
                                         <span class="tx-sub">
                                             <span class="ico"></span>
@@ -211,4 +211,9 @@
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerBranchRepair($('.wrap'));
+  });
+</script>
 <% include ../../components/end.component.html %>
