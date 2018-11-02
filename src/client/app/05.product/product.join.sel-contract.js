@@ -1,11 +1,11 @@
 /**
- * FileName: product.sel-contract.input
+ * FileName: product.join.sel-contract.js
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.22
  *
  */
 
-Tw.ProductSelContractInput = function (params) {
+Tw.ProductJoinSelContract = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.ProductSelContractInput = function (params) {
   this._bindEvent();
 };
 
-Tw.ProductSelContractInput.prototype = {
+Tw.ProductJoinSelContract.prototype = {
 
   _render: function () {
     this.$radioGroup = this.$container.find('[data-id=radio-group]');

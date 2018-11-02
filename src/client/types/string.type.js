@@ -6,6 +6,22 @@ Tw.DATA_UNIT = {
   PB: 'PB'
 };
 
+Tw.VOICE_UNIT = {
+  HOURS: '시간',
+  MIN: '분',
+  SEC: '초'
+};
+
+Tw.DATE_UNIT = {
+  MONTH: '개월',
+  MONTH_S: '월',
+  YEAR: '년',
+  ONE_YEAR: '1년',
+  ONE_MONTH: '1개월',
+  THREE_MONTH: '3개월',
+  SIX_MONTH: '6개월'
+};
+
 Tw.SMS_UNIT = '건';
 
 Tw.CURRENCY_UNIT = {

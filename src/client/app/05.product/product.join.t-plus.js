@@ -1,11 +1,11 @@
 /**
- * FileName: product.t-plus.input
+ * FileName: product.join.t-plus
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.22
  *
  */
 
-Tw.ProductTPlusInput = function (params) {
+Tw.ProductJoinTplus = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.ProductTPlusInput = function (params) {
   this._bindEvent();
 };
 
-Tw.ProductTPlusInput.prototype = {
+Tw.ProductJoinTplus.prototype = {
 
   _render: function () {
     this.$longDiscount = this.$container.find('[data-id=plus-example]');

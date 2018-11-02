@@ -17,7 +17,6 @@ Tw.ProductDetail = function(rootEl) {
 
 Tw.ProductDetail.prototype = {
 
-  _settingAuthList: ['NA00000291', 'NA00000273', 'NA00002121'],  // @todo 인증API 완료 후 삭제
   _settingBtnList: [],
 
   _init: function() {
@@ -137,7 +136,6 @@ Tw.ProductDetail.prototype = {
   },
 
   _bindSettingBtnListEvent: function($layer) {
-    console.log($layer.find('[data-url]'));
     $layer.find('[data-url]').on('click', $.proxy(this._setSettingGoUrl, this));
   },
 
