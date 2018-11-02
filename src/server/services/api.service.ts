@@ -99,7 +99,7 @@ class ApiService {
   private makeCookie(): string {
     return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';' +
       COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel() + ';' +
-      COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
+      COOKIE_KEY.DEVICE + '=' + this.loginService.getDevice();
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {

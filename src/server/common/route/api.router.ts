@@ -43,7 +43,7 @@ class ApiRouter {
     this.router.get('/health', this.checkHealth.bind(this));
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.get('/domain', this.getDomain.bind(this));
-    this.router.post('/device', this.setDeviceInfo.bind(this));
+    // this.router.post('/device', this.setDeviceInfo.bind(this));
     this.router.post('/user/sessions', this.loginTid.bind(this));   // BFF_03_0008
     this.router.post('/logout-tid', this.logoutTid.bind(this));
     this.router.post('/user/login/android', this.easyLoginAos.bind(this));    // BFF_03_0017
@@ -161,16 +161,16 @@ class ApiRouter {
 
   }
 
-  private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
-    const deviceInfo = req.body;
-    const deviceCookie = `osType:${deviceInfo.osType}|appVersion:${deviceInfo.appVersion}|osVersion:${deviceInfo.osVersion}`;
-    this.logger.info(this, '[set cookie]', deviceCookie);
-    res.cookie(COOKIE_KEY.DEVICE, deviceCookie);
-    const resp = {
-      code: API_CODE.CODE_00
-    };
-    res.json(resp);
-  }
+  // private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
+  //   const deviceInfo = req.body;
+  //   const deviceCookie = `osType:${deviceInfo.osType}|appVersion:${deviceInfo.appVersion}|osVersion:${deviceInfo.osVersion}`;
+  //   this.logger.info(this, '[set cookie]', deviceCookie);
+  //   res.cookie(COOKIE_KEY.DEVICE, deviceCookie);
+  //   const resp = {
+  //     code: API_CODE.CODE_00
+  //   };
+  //   res.json(resp);
+  // }
 
   private uploadFile(req: Request, res: Response, next: NextFunction) {
     this.upload(req, res, (err) => {
