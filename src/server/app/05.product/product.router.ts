@@ -12,6 +12,7 @@ import ProductAddition from './controllers/product.addition.controller';
 import ProductPlans from './controllers/product.plans.controller';
 import ProductAdditions from './controllers/product.additions.controller';
 import ProductFindMyBestPlans from './controllers/product.find-my-best-plans.controller';
+import ProductDisPgmJoin from './controllers/product.dis-pgm.join';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -31,6 +32,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/current-setting/:prodId', controller: ProductCurrentSetting });
     this.controllers.push({ url: '/infinity-benefit-usage-history', controller: ProductInfinityBenefitUsageHistory });
     this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
+    this.controllers.push({ url: '/dis-program-join/:prodId', controller: ProductDisPgmJoin });
 
     // new IA
   }
