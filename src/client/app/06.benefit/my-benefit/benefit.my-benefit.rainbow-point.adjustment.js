@@ -169,6 +169,7 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
     });
     this._$pointToGive.text(selectedLine.showPoint);
     this._$pointToGive.data('point', selectedLine.point);
+    this._lineToGive = selectedLine;
     this._changeLine(selectedLine, this._$btnLineToGive);
 
     //합산 받는 회선은 합산 하는 회선 제외하고 보여짐.
