@@ -1,5 +1,4 @@
 <script type="text/template" id="tpl_service_cell">
-    <hr class="cont-sp type1" aria-hidden="true">
     <div class="cont-box">
         <div class="inquiryform-wrap">
             <p class="title">문의하실 내용을 작성해주세요.</p>
@@ -25,7 +24,6 @@
 </script>
 
 <script type="text/template" id="tpl_service_internet">
-    <hr class="cont-sp type1" aria-hidden="true">
     <div class="cont-box">
         <div class="inquiryform-wrap">
             <p class="title">문의하실 내용을 작성해주세요.</p>
@@ -51,13 +49,12 @@
 </script>
 
 <script type="text/template" id="tpl_service_direct">
-    <hr class="cont-sp type1" aria-hidden="true">
     <div class="cont-box">
         <div class="inquiryform-wrap">
             <p class="title">주문번호와 내용을 작성해주세요.</p>
             <div class="inputbox bt-add">
                 <span class="input">
-                    <input type="text" placeholder="주문번호 조회" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                    <input type="text" class="fe-text_order" placeholder="주문번호 조회" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
                 <span class="bt-box">
@@ -67,7 +64,7 @@
             <p class="tip-text">* 배송, 교환/반품 관련 문의 시 주문번호를 선택해 주시면<br>보다 정확한 답변이 가능합니다.</p>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" placeholder="제목 입력" title="input" value="" maxlength="20" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                    <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
                 <span class="byte"><span class="byte-current">0</span> / <span class="byte-total">20</span>자(최대)</span>
@@ -75,7 +72,7 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="내용 입력" maxlength="12000" aria-labelledby="aria-email-qacont"></textarea>
+                        <textarea class="input-focus inner-tx fe-text-content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000" aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
                     <span class="byte"><span class="byte-current">0</span> / <span class="byte-total">12,000</span>자(최대)</span>
@@ -92,7 +89,7 @@
             <p class="title">내용을 작성해주세요.</p>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" placeholder="제목 입력" title="input" value="" maxlength="20" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                    <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
                 <span class="byte"><span class="byte-current">0</span> / <span class="byte-total">20</span>자(최대)</span>
@@ -100,7 +97,8 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="원활한 상담을 위해 아래 정보를 입력해주세요.
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="
+원활한 상담을 위해 아래 정보를 입력해주세요.
 성함:
 구매 휴대폰번호:
 구매한 상품명:

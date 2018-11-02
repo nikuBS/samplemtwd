@@ -27,13 +27,25 @@ Tw.CustomerEmail.prototype = {
   },
 
   _cachedElement: function () {
+    this.$btn_faq = this.$container.find('.fe-btn_faq');
+    this.$wrap_faq = this.$container.find('.fe-wrap_faq');
+    this.$close_faq = this.$container.find('.fe-close_faq');
   },
 
   _bindEvent: function () {
-    this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
-    this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$btn_faq.on('click', $.proxy(this._openFaq, this));
+    this.$close_faq.on('click', $.proxy(this._closeFaq, this));
+    this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-text_title', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-text_content', $.proxy(this._onChangeContent, this));
+    this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+  },
+
+  _onKeyUpPhoneNumber: function (e) {
+    var $elPhone = $(e.currentTarget);
+
+    $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
   },
 
   _onChangeContent: function (e) {
@@ -46,9 +58,14 @@ Tw.CustomerEmail.prototype = {
     $elLength.text(len);
   },
 
-  _onKeyUpPhoneNumber: function (e) {
-    var $elPhone = $(e.currentTarget);
-    $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
+  _openFaq: function (){
+    $(document.body).css('overflow', 'hidden');
+    this.$wrap_faq.show();
+  },
+
+  _closeFaq: function (){
+    $(document.body).css('overflow', 'auto');
+    this.$wrap_faq.hide();
   },
 
   _goQualityTab: function () {

@@ -1,10 +1,10 @@
 /**
- * FileName: customer.email.quality.js
+ * FileName: customer.email.history.js
  * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.10.29
+ * Date: 2018.11.1
  */
 
-Tw.CustomerEmailQuality = function (rootEl) {
+Tw.CustomerEmailHistory = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,15 +15,19 @@ Tw.CustomerEmailQuality = function (rootEl) {
   this._init();
 };
 
-Tw.CustomerEmailQuality.prototype = {
+Tw.CustomerEmailHistory.prototype = {
   _init: function () {
+    this._apiService
+      .request(Tw.API_CMD.BFF_08_0060, { svcDvcClCd: 'M' })
+      .done($.proxy(this._onSuccessHistoryList, this));
   },
 
   _cachedElement: function () {
-    this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
-    this.$btn_quality_register = this.$container.find('.fe-quality_register');
   },
 
   _bindEvent: function () {
+  },
+
+  _onSuccessHistoryList: function (res) {
   }
 };

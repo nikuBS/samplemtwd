@@ -20,9 +20,6 @@ Tw.CustomerEmailTemplate.prototype = {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
 
-    // this.$wrap_tpl_service.html(this.tpl_service_cell());
-    // this.$wrap_tpl_quality.html(this.tpl_quality_cell());
-    // skt_landing.widgets.widget_init();
   },
 
   _cachedElement: function () {

@@ -320,6 +320,9 @@ Tw.API_CMD = {
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: Tw.API_METHOD.GET },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: Tw.API_METHOD.GET },
   BFF_08_0058: { path: '/core-modification/v1/praise/savePraiseInfo', method: Tw.API_METHOD.POST },
+  BFF_08_0060: { path: '/core-modification/v1/email-inquiry-list', method: Tw.API_METHOD.GET },
+  BFF_08_0061: { path: '/core-modification/v1/email-inquiry-detail', method: Tw.API_METHOD.GET },
+  BFF_08_0062: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.DELETE },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
