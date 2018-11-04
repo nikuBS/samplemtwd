@@ -54,7 +54,8 @@ Tw.CustomerEmailService.prototype = {
   _requestCell: function () {
     var htParams = $.extend(this._makeParams(), {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
-      ofrCtgSeq: this.$service_depth2.data('serviceDepth2')
+      ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
+      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val()
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
@@ -64,7 +65,8 @@ Tw.CustomerEmailService.prototype = {
   _requestInternet: function () {
     var htParams = $.extend(this._makeParams(), {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
-      ofrCtgSeq: this.$service_depth2.data('serviceDepth2')
+      ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
+      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val()
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams)
@@ -93,7 +95,6 @@ Tw.CustomerEmailService.prototype = {
     var arrPhoneNumber = $('.fe-service_phone').val().split('-');
 
     var params = {
-      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
       cntcNum1: arrPhoneNumber[0],
       cntcNum2: arrPhoneNumber[1],
       cntcNum3: arrPhoneNumber[2],

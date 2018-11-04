@@ -65,6 +65,7 @@ Tw.CustomerEmailQuality.prototype = {
     var arrPhoneNumber = $('.fe-quality_phone').val().split('-');
     var params = {
       cntcNumClCd: $('.fe-quality-cntcNumClCd').find(':checked').val(),
+      inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(),
       cntcNum1: arrPhoneNumber[0],
       cntcNum2: arrPhoneNumber[1],
       cntcNum3: arrPhoneNumber[2],
