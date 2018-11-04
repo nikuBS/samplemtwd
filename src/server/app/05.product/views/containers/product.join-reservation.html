@@ -15,7 +15,7 @@
     </ul>
   </div>
   <!--// #skip_navigation -->
-  <div class="wrap" data-type_cd="<%= typeCd %>" data-prod_id="<%= prodId %>">
+  <div class="wrap step" data-type_cd="<%= typeCd %>" data-prod_id="<%= prodId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
       <%- include('../../../common/views/components/header.component.html', { title: '가입 상담 예약', svcInfo, option: { line: false } }); %>
@@ -55,7 +55,7 @@
                 <label class="tit" for="formInput02">상담가능 번호</label>
                 <span class="inputbox">
                   <span class="input">
-                      <input id="formInput02" type="number" placeholder="숫자만 입력" title="상담가능 번호 입력">
+                      <input id="formInput02" type="text" placeholder="숫자만 입력" title="상담가능 번호 입력">
                       <button class="fe-btn_cancel cancel"><span class="blind">삭제</span></button>
                   </span>
                 </span>
@@ -100,53 +100,53 @@
           </div>
           <!--// .cont-box -->
 
-          <% if ( typeCd === 'combine') { %>
-          <hr class="cont-sp type1" aria-hidden="true"/>
+          <div class="fe-combine_wrap" style="display: none">
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
-          <!-- .cont-box -->
-          <div class="cont-box nogaps">
-            <div class="agree-chk-wrap agree-chk-type2">
-              <div class="list-comp-input-agree">
-                <div class="widget">
-                  <div class="widget-box check">
-                    <ul class="select-list" role="group">
-                      <li>
-                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                          <input type="checkbox" name="checkbox" class="fe-combine_selected" value="" title="결합상품 선택" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                          <div class="comp-list-layout" id="aria-comp-checkbox2">
-                            <p class="layout-text">
-                              <span class="mtext">결합상품 선택</span>
-                              <span class="stext-ellipsis">결합상품을 선택 해주시면 상담원의 빠른 대응이 가능합니다.</span>
-                            </p>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+              <div class="agree-chk-wrap agree-chk-type2">
+                <div class="list-comp-input-agree">
+                  <div class="widget">
+                    <div class="widget-box check">
+                      <ul class="select-list" role="group">
+                        <li>
+                          <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                            <input type="checkbox" name="checkbox" class="fe-combine_selected" value="" title="결합상품 선택" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                            <div class="comp-list-layout" id="aria-comp-checkbox2">
+                              <p class="layout-text">
+                                <span class="mtext">결합상품 선택</span>
+                                <span class="stext-ellipsis">결합상품을 선택 해주시면 상담원의 빠른 대응이 가능합니다.</span>
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div class="select-list-desc">
+                          <div class="select-list-desc">
                           <span class="inputbox">
                             <button class="bt-dropdown big fe-btn_select_combine" title="결합상품을 선택" aria-haspopup="true"><%= prodNm %><span class="ico"></span></button>
                           </span>
-                          <ul class="select-list" role="group">
-                            <li>
-                              <div class="checkbox type01 fe-combine_explain" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                <input type="checkbox" name="checkbox" value="" title="개인정보 제공 동의(필수)" aria-labelledby="aria-comp-checkbox3" disabled="disabled" /><!-- 체크상태일 경우 checked="false" -->
-                                <div class="comp-list-layout" id="aria-comp-checkbox3">
-                                  <p class="layout-text">
-                                    <span class="mtext">추가 정보 및 서류 제출</span>
-                                    <span class="stext-ellipsis">가족할인 결합 상품일 경우 추가 정보 및 서류 제출이 가능합니다.</span>
-                                  </p>
+                            <ul class="select-list" role="group">
+                              <li>
+                                <div class="checkbox type01 fe-combine_explain" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                  <input type="checkbox" name="checkbox" value="" title="개인정보 제공 동의(필수)" aria-labelledby="aria-comp-checkbox3" disabled="disabled" /><!-- 체크상태일 경우 checked="false" -->
+                                  <div class="comp-list-layout" id="aria-comp-checkbox3">
+                                    <p class="layout-text">
+                                      <span class="mtext">추가 정보 및 서류 제출</span>
+                                      <span class="stext-ellipsis">가족할인 결합 상품일 경우 추가 정보 및 서류 제출이 가능합니다.</span>
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                    </ul>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!--// .cont-box -->
           </div>
-          <!--// .cont-box -->
-          <% } %>
 
           <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -172,7 +172,7 @@
       </div>
       <!--// .container-wrap -->
       <!-- .popup-closeBtn -->
-      <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+      <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
       <!--// .popup-closeBtn -->
       <!-- #footer -->
       <footer id="fe-all-menu">
