@@ -22,27 +22,29 @@ import CustomerProtectWarningView from './controllers/protect/customer.protect.w
 import CustomerMain from './controllers/main/customer.main.controller';
 import CustomerVoice from './controllers/voice/customer.voice.controller';
 import CustomerEmail from './controllers/email/customer.email.controller';
+import CustomerResearches from './controllers/researches/customer.researches.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
 
     // old IA
-    this.controllers.push({ url: '/', controller: CustomerMain} );
+    this.controllers.push({ url: '/', controller: CustomerMain });
     this.controllers.push({ url: '/branch/search', controller: CustomerBranchSearch });
     this.controllers.push({ url: '/branch/detail', controller: CustomerBranchDetail });
     this.controllers.push({ url: '/branch/near', controller: CustomerBranchNear });
     this.controllers.push({ url: '/branch/repair', controller: CustomerBranchRepair });
     this.controllers.push({ url: '/branch/repair-detail', controller: CustomerBranchRepairDetail });
     this.controllers.push({ url: '/branch/repair-manufacturer', controller: CustomerBranchRepairManufacturer });
-    this.controllers.push({ url: '/document', controller: CustomerDocument} );
-    this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
-    this.controllers.push({ url: '/praise', controller: CustomerPraise} );
+    this.controllers.push({ url: '/document', controller: CustomerDocument });
+    this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
+    this.controllers.push({ url: '/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail} );
+    this.controllers.push({ url: '/researches', controller: CustomerResearches });
+    this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail });
     // this.controllers.push({ url: '/email(/:main_category)?(/:sub_category)?', controller: CustomerEmail} );
     // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse });
-    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice} );
+    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice });
     // this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
     // this.controllers.push({ url: '/protect', controller: CustomerProtect } );
     // this.controllers.push({ url: '/protect/guide(/:category)?', controller: CustomerProtectGuide } );
@@ -64,7 +66,6 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/damage_info/cmis_0008', controller: CustomerProtectWarningView });
     this.controllers.push({ url: '/damage_info/cmis_0009', controller: CustomerProtectAdditions });
     this.controllers.push({ url: '/damage_info/cmis_0010', controller: CustomerProtectRelated });
-
   }
 }
 
