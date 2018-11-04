@@ -48,22 +48,17 @@ Tw.MyTJoinMgmtNumchgAlarmExt.prototype = {
 
     // C:연장, E:해지
     var svcType = this.$radioSvcType.val();
-    var param = {
-      guidReqSvcNum : this._options.guidReqSvcNum,     // 변경전 서비스번호
-      firstNumGuidStaDt : this._options.firstNumGuidStaDt, // 최초로 번호안내서비스 받은 일자
-      wDateChargFrom : this._options.wDateChargFrom,    // 과금시작일
-      numGuidOptYn : this.$radioAlarmType.val()  // 선택 알림유형
-    };
-
+    var param = {};
     var svcCmd = null;
+
     if(svcType === 'E'){    // 연장
       svcCmd = Tw.API_CMD.BFF_05_0182;
+      param = {
+        notiType : this.$radioAlarmType.val()  // 선택 알림유형
+      };
 
     }else if(svcType === 'C'){   // 해지
       svcCmd = Tw.API_CMD.BFF_05_0183;
-    }else {
-      console.log('연장인지 해지인지 선택되지 않았습니다.' + svcType);
-      return;
     }
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
@@ -78,9 +73,20 @@ Tw.MyTJoinMgmtNumchgAlarmExt.prototype = {
         }
 
         skt_landing.action.loading.off({ ta: this.$container });
-        //alert(title, msg)
 
-      }, this))
+        if (resp.code !== Tw.API_CODE.CODE_00) {
+
+          Tw.Error(resp.code, resp.msg).pop();
+        } else{
+
+          if(svcType === 'E'){    // 연장
+            this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_EXT);
+          }else if(svcType === 'C') {   // 해지
+            this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_CAN);
+          }
+        }
+
+        }, this))
       .fail(function(err){
         Tw.Error(err.status, err.statusText).pop();
         skt_landing.action.loading.off({ ta: this.$container });
