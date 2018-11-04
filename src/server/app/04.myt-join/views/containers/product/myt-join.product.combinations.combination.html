@@ -42,5 +42,11 @@
         new Tw.MyTJoinProductCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>);
     });
 </script>
+<% } else if (pageId === 'tb-free') { %>
+<script>
+    $(document).ready(function() {
+        new Tw.MyTJoinProductCombinationsTBFree($('.wrap'), <%- JSON.stringify(svcInfo) %>);
+    });
+</script>
 <% } %>
 <% include ../../components/end.component.html %>

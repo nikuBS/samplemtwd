@@ -43,18 +43,15 @@ Tw.MyTJoinProductCombinationsDataShare.prototype = {
         amounts: amounts,
         layer: true
       },
-      $.proxy(this._handleOpenSharePopup, this)
+      $.proxy(this._handleOpenSharePopup, this),
+      null,
+      'process'
     );
   },
 
   _handleOpenSharePopup: function($layer) {
     $layer.on('click', '.radio-slide li', $.proxy(this._handleSelectAmount, this, $layer));
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitShare, this, $layer));
-    $layer.on('click', '.prev-step', $.proxy(this._closeSharePopup, this));
-  },
-
-  _closeSharePopup: function() {
-    this._popupService.close();
   },
 
   _handleSelectAmount: function($layer, e) {
@@ -106,17 +103,18 @@ Tw.MyTJoinProductCombinationsDataShare.prototype = {
           remainData: this._remainAmount,
           benefitData: this._groupInfo.grpOfrPt
         },
-        $.proxy(this._openCompleteSubmitPopup, this)
+        $.proxy(this._openCompleteSubmitPopup, this),
+        $.proxy(this._closePopup, this),
+        'complete'
       );
     }
   },
 
   _openCompleteSubmitPopup: function($layer) {
-    $layer.on('click', '.prev-step', $.proxy(this._closeCompletePopup, this));
+    $layer.on('click', '.prev-step', $.proxy(this._closePopup, this));
   },
 
-  _closeCompletePopup: function() {
+  _closePopup: function() {
     this._popupService.close();
-    this._historyService.goBack();
   }
 };

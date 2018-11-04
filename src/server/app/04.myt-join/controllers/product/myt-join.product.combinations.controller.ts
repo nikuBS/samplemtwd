@@ -23,7 +23,7 @@ export default class MyTJoinProductCombinations extends TwViewController {
         });
       }
 
-      this.getCombination(prodId).subscribe(combination => {
+      this.getCombination(prodId, svcInfo).subscribe(combination => {
         if (combination.code) {
           return this.error.render(res, {
             ...combination,
@@ -51,8 +51,8 @@ export default class MyTJoinProductCombinations extends TwViewController {
     }
   }
 
-  private getCombination = id => {
-    return this.apiService.request({ ...API_CMD.BFF_05_0134, path: API_CMD.BFF_05_0134.path + '/' + id }, {}).map(resp => {
+  private getCombination = (id, svcInfo) => {
+    return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, id).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -89,5 +89,5 @@ export default class MyTJoinProductCombinations extends TwViewController {
         })
       };
     });
-  };
+  }
 }

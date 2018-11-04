@@ -49,7 +49,6 @@
                         <div class="acco-style data-famliy-group-list type2">
                             <ul class="acco-box">
                             <%  combination.combinationWirelessMemberList.map(member => { 
-                                const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
                                 const isRep = member.relClCd === '00'; %>
                                 <li class="acco-list"><!-- on , off -->
                                     <div class="acco-title">
@@ -85,7 +84,6 @@
                             <% }); %>
                             
                             <% combination.combinationWireMemberList.map(member => { 
-                                const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
                                 const isRep = member.relClCd === '00'; %>
                                 <li class="acco-list"><!-- on , off -->
                                     <div class="acco-title">
