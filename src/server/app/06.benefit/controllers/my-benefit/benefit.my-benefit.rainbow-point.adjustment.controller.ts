@@ -15,8 +15,7 @@ import { MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT } from '../../../../types/string.ty
 
 class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
   private _VIEW = {
-    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.adjustment.html',
-    ERROR: 'error.server-error.html'
+    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.adjustment.html'
   };
   private _BASE_URL = '/benefit/my-benefit/rainbow-point/adjustment';
 
@@ -31,7 +30,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this._renderError(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo);
       }
 
       const lines = this.getLineWithRainbowPoint(rainbowPointServices);
@@ -68,7 +67,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return this._renderError(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
@@ -101,8 +100,8 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     return result;
   }
 
-  private _renderError(res, err, svcInfo): any {
-    return res.render(this._VIEW.ERROR, {
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
       title: MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT.TITLE,
       code: err.code,
       msg: err.msg,

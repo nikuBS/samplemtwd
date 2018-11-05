@@ -40,12 +40,7 @@ class MyTJoinWireSetPause extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return res.render('error.server-error.html', {
-          title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
-          code: apiError.code,
-          msg: apiError.msg,
-          svcInfo
-        });
+        return this.renderErr(res, apiError, svcInfo);
       }
 
       const wirePauseInfo = this.getWirePauseInfo(wirePauseInfoResp);
@@ -65,12 +60,7 @@ class MyTJoinWireSetPause extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return res.render('error.server-error.html', {
-        title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
-        code: resp.code,
-        msg: resp.msg,
-        svcInfo: svcInfo
-      });
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
@@ -100,6 +90,15 @@ class MyTJoinWireSetPause extends TwViewController {
       wirePauseInfo['pause_range'] = rangeStr;
     }
     return wirePauseInfo;
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo
+    });
   }
 
 }

@@ -22,10 +22,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.error.render(res, {
-        title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
-        svcInfo: svcInfo
-      });
+      return this.renderErr(res, {}, svcInfo);
     }
 
     Observable.combineLatest(
@@ -36,12 +33,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return res.render('error.server-error.html', {
-          title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
-          code: apiError.code,
-          msg: apiError.msg,
-          svcInfo
-        });
+        return this.renderErr(res, apiError, svcInfo);
       }
 
       const wireAgreementsInfo = this.getWireAgreementsInfo(wireAgreementsInfoResp);
@@ -55,12 +47,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return res.render('error.server-error.html', {
-        title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
-        code: resp.code,
-        msg: resp.msg,
-        svcInfo: svcInfo
-      });
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
@@ -74,6 +61,15 @@ class MyTJoinWireModifyPeriod extends TwViewController {
     // wireAgreementsInfo.smartDirectYn = 'Y';
     // wireAgreementsInfo.grpProdYn = 'Y';
     return wireAgreementsInfo;
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo
+    });
   }
 
 }
