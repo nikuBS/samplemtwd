@@ -46,7 +46,19 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestCell: function () {
     var htParams = $.extend(this._makeParams(), {
-      connSite: Tw.BrowserHelper.isApp() ? '19' : '15'
+      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
+      selSvcMgmtNum: $('.fe-line').data('svcmgmtnum'),
+      inptZip: $('.fe-inptZip').val(),
+      inptBasAddr: $('.fe-inptBasAddr').val(),
+      content: this.tpl_quality_cell_content({
+        place: $('.fe-place').val(),
+        occurrence: $('.fe-occurrence').val(),
+        place_detail: $('.fe-place_detail').val(),
+        text_content: $('.fe-text_content').val(),
+        occurrence_date: $('.fe-occurrence_date').val(),
+        occurrence_detail: $('.occurrence_detail').val(),
+        inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val()
+      })
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams)
@@ -71,7 +83,7 @@ Tw.CustomerEmailQuality.prototype = {
       cntcNum2: arrPhoneNumber[1],
       cntcNum3: arrPhoneNumber[2],
       email: $('.fe-quality_email').val(),
-      subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
+      // subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
       content: this.$wrap_tpl_quality.find('.fe-text_content').val(),
       smsRcvYn: $('.fe-quality_sms').prop('checked') ? 'Y' : 'N'
     };

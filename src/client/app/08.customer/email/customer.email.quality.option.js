@@ -18,7 +18,6 @@ Tw.CustomerEmailQualityOption = function (rootEl, allSvc) {
 
 Tw.CustomerEmailQualityOption.prototype = {
   _init: function () {
-
     this.quality_options = Tw.CUSTOMER_EMAIL_QUALITY_QUESTION;
   },
 
@@ -28,8 +27,8 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _bindEvent: function () {
-    debugger;
-    this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this));
+    this.$container.on('click', '.fe-line_internet', $.proxy(this._showLineSheet, this, 'INTERNET'));
+    this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this, 'CELL'));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
     this.$container.on('click', '.fe-occurrence_detail', $.proxy(this._showOptionSheet, this, 'Q_TYPE02'));
     this.$container.on('click', '.fe-place', $.proxy(this._showOptionSheet, this, 'Q_TYPE03'));
@@ -39,8 +38,9 @@ Tw.CustomerEmailQualityOption.prototype = {
     this.$container.on('click', '.option_value', $.proxy(this._selectPopupCallback, this));
   },
 
-  _showLineSheet: function (e) {
+  _showLineSheet: function (sType, e) {
     var $elButton = $(e.currentTarget);
+    var lineList = sType === 'CELL' ? this.allSvc.M : this.allSvc.S;
     var fnSelectLine = function (item) {
       return {
         value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
@@ -53,7 +53,7 @@ Tw.CustomerEmailQualityOption.prototype = {
         hbs: 'actionsheet_select_a_type',
         layer: true,
         title: 'Test',
-        data: [{ list: this.allSvc.M.map($.proxy(fnSelectLine, this)) }]
+        data: [{ list: lineList.map($.proxy(fnSelectLine, this)) }]
       },
       $.proxy(this._selectLinePopupCallback, this, $elButton),
       null
@@ -82,15 +82,21 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _selectLinePopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-svcmgmtnum]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '[data-svcmgmtnum]', $.proxy(this._setSelectedLineValue, this, $target));
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-option_value]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '[data-type="option_value"]', $.proxy(this._setSelectedValue, this, $target));
   },
 
   _setSelectedValue: function ($target, el) {
     this._popupService.close();
+    $target.text($(el.currentTarget).text().trim());
+  },
+
+  _setSelectedLineValue: function ($target, el) {
+    this._popupService.close();
+    $target.data('svcmgmtnum', $(el.currentTarget).data('svcmgmtnum'));
     $target.text($(el.currentTarget).text().trim());
   }
 };
