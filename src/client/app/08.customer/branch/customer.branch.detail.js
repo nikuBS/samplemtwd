@@ -5,10 +5,35 @@
  */
 
 Tw.CustomerBranchDetail = function (mapEl, coord) {
-  this._initMap(mapEl, coord);
+  this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
+
+  this._dataChargeConfirmed = false;
+
+  this._showDataChargePopupIfNeeded(mapEl, coord);
 };
 
 Tw.CustomerBranchDetail.prototype = {
+  _showDataChargePopupIfNeeded: function (mapEl, coord) {
+    if (Tw.BrowserHelper.isApp()) {
+      this._popupService.openConfirm(
+        Tw.POPUP_CONTENTS.NO_WIFI,
+        Tw.POPUP_TITLE.EXTERNAL_LINK,
+        $.proxy(function () {
+          this._dataChargeConfirmed = true;
+          this._popupService.close();
+          this._initMap(mapEl, coord);
+        }, this),
+        $.proxy(function () {
+          if (!this._dataChargeConfirmed) {
+            this._historyService.goBack();
+          }
+        }, this)
+      );
+    } else {
+      this._initMap(mapEl, coord);
+    }
+  },
   _initMap: function (mapEl, coord) {
     var map = new Tmap.Map({
       div: mapEl[0].id,

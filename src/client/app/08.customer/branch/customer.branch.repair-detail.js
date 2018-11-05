@@ -6,14 +6,39 @@
 
 Tw.CustomerBranchRepairDetail = function (rootEl, location) {
   this.$container = rootEl;
-
   this._location = location;
 
-  this._cacheElements();
-  this._showMap();
+  this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
+
+  this._dataChargeConfirmed = false;
+
+  this._showDataChargePopupIfNeeded();
 };
 
 Tw.CustomerBranchRepairDetail.prototype = {
+  _showDataChargePopupIfNeeded: function () {
+    if (Tw.BrowserHelper.isApp()) {
+      this._popupService.openConfirm(
+        Tw.POPUP_CONTENTS.NO_WIFI,
+        Tw.POPUP_TITLE.EXTERNAL_LINK,
+        $.proxy(function () {
+          this._dataChargeConfirmed = true;
+          this._popupService.close();
+          this._cacheElements();
+          this._showMap();
+        }, this),
+        $.proxy(function () {
+          if (!this._dataChargeConfirmed) {
+            this._historyService.goBack();
+          }
+        }, this)
+      );
+    } else {
+      this._cacheElements();
+      this._showMap();
+    }
+  },
   _cacheElements: function () {
     this.$tmapBox = this.$container.find('#fe-map-box');
   },
