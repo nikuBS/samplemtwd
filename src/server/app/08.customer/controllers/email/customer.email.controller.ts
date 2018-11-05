@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import { API_CMD } from '../../../../types/api-command.type';
 
 class CustomerEmail extends TwViewController {
   constructor() {
@@ -16,8 +17,8 @@ class CustomerEmail extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, pageInfo?: any): void {
     const page = req.params.page;
-    const main_category = req.params.main_category; // 1. service 2. quality
-    const sub_category = req.params.sub_category; // ofrCtgSeq
+    // const main_category = req.params.main_category; // 1. service 2. quality
+    // const sub_category = req.params.sub_category; // ofrCtgSeq
 
     const responseData = {
       svcInfo: svcInfo,

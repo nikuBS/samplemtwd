@@ -17,8 +17,7 @@ Tw.CustomerEmailHistory = function (rootEl) {
 
 Tw.CustomerEmailHistory.prototype = {
   _init: function () {
-    this._apiService
-      .request(Tw.API_CMD.BFF_08_0060, { svcDvcClCd: 'M' })
+    this._apiService.request(Tw.API_CMD.BFF_08_0060, { svcDvcClCd: 'M' })
       .done($.proxy(this._onSuccessHistoryList, this));
   },
 
@@ -29,5 +28,6 @@ Tw.CustomerEmailHistory.prototype = {
   },
 
   _onSuccessHistoryList: function (res) {
+    debugger;
   }
 };
