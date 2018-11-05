@@ -52,6 +52,7 @@ import CommonLoginDormancy from './controllers/login/common.login.dormancy.contr
 import CommonLoginCustomerPwd from './controllers/login/common.login.customer-pwd.controller';
 import CommonLoginExceedFail from './controllers/login/common.login.exceed-fail.controller';
 import CommonSignupGuide from './controllers/signup/common.signup.guide.controller';
+import CommonLanding from './controllers/common.landing.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -113,5 +114,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/tid/route', controller: CommonTidRoute } );
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
+    // landing
+    this.controllers.push({ url: '/landing', controller: CommonLanding });
   }
 }
