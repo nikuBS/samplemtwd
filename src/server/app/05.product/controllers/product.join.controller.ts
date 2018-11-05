@@ -265,6 +265,7 @@ class ProductJoin extends TwViewController {
           pageInfo: pageInfo,
           prodId: this._prodId,
           prodNm: prodRedisInfo.summary.prodNm,
+          sktProdBenfCtt: prodRedisInfo.summary.sktProdBenfCtt,
           displayId: this._displayId,
           displayGroup: displayGroup,
           ctgCd: basicInfo.result.ctgCd,
