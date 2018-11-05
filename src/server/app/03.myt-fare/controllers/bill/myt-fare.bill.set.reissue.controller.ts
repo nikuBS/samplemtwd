@@ -6,10 +6,9 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import {
-  MYT_FARE_BILL_REISSUE_TYPE
-} from '../../../../types/string.type';
+import { MYT_FARE_BILL_REISSUE, MYT_FARE_BILL_REISSUE_TYPE } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 const MYT_FARE_BILL_REQ_REISSUE_MULTI_TYPE = {
   'I': ['05', '02'], // 무선 Bill Letter+이메일
@@ -41,16 +40,26 @@ class MyTFareBillSetReissue extends TwViewController {
       this.isLocal = true;
     }
     this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
+      const apiError = this.error.apiError([
+        reissueData
+      ]);
+
+      if ( !FormatHelper.isEmpty(apiError) ) {
+        return this.renderErr(res, apiError, svcInfo);
+      }
+
       // 화면 데이터 설정
       const data = this.convertData(reissueData, svcInfo, pageInfo);
       res.render('bill/myt-fare.bill.set.reissue.html', { data });
+    }, (resp) => {
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
   private convertData(response, svcInfo, pageInfo: any): any {
     const data: any = {
       type: '01', // 01:무선, 02:유선, 03:etc
-      svcInfo: svcInfo,
+      svcInfo,
       pageInfo
     };
     // 서버에서 받은 데이터 설정
@@ -91,6 +100,15 @@ class MyTFareBillSetReissue extends TwViewController {
     }
 
     return result;
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: MYT_FARE_BILL_REISSUE.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo
+    });
   }
 
 }

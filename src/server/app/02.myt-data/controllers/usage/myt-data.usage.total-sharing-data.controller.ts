@@ -29,22 +29,14 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       ]);
 
       if (!FormatHelper.isEmpty(apiError)) {
-        return res.render('error.server-error.html', {
-          title: MYT_DATA_USAGE_TOTAL_SHARING_DATA.TITLE,
-          code: apiError.code,
-          msg: apiError.msg,
-          svcInfo: svcInfo
-        });
+        return this.renderErr(res, apiError, svcInfo);
       }
 
       const fomattedData = this.myTDataUsage.parseUsageData(balancesResp.result, svcInfo);
       const defaultData = this.getDefaultData(fomattedData.data)[0];
 
       if (!defaultData) {
-        return this.error.render(res, {
-          title: MYT_DATA_USAGE_TOTAL_SHARING_DATA.TITLE,
-          svcInfo: svcInfo
-        });
+        return this.renderErr(res, {}, svcInfo);
       }
 
       const option = {
@@ -57,6 +49,8 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       // option['balanceAddOns'].sharingService.dataSharing = afterRequestSuccess'Y';
       res.render('usage/myt-data.usage.total-sharing-data.html', option);
 
+    }, (resp) => {
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
@@ -71,6 +65,15 @@ class MyTDataUsageTotalSharingData extends TwViewController {
   private getDefaultData(datas: any): any {
     return datas.filter((data) => {
       return data.sharedData;
+    });
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: MYT_DATA_USAGE_TOTAL_SHARING_DATA.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo
     });
   }
 }

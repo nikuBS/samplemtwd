@@ -145,6 +145,10 @@ export enum PRODUCT_RESERVATION_COMBINE_NM {
   ETC = '그 외 결합상품'
 }
 
+export const MYT_FARE_BILL_REISSUE = {
+  TITLE: '요금안내서 재발행'
+};
+
 export const MYT_FARE_BILL_REISSUE_TYPE = {
   P: 'T world',
   H: 'Bill Letter',
@@ -337,9 +341,7 @@ export enum CUSTOMER_PROTECT_GUIDE {
 }
 
 export const MY_BENEFIT_RAINBOW_POINT = {
-  TITLE: {
-    MAIN: '레인보우 포인트'
-  },
+  TITLE: '레인보우 포인트',
   OLCLCD: {
     E: '적립',
     U: '사용',

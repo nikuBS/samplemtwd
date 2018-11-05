@@ -44,8 +44,7 @@ class BenefitMyBenefitRainbowPointCommon {
 
 class BenefitMyBenefitRainbowPoint extends TwViewController {
   private _VIEW = {
-    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html',
-    ERROR: 'error.server-error.html'
+    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html'
   };
   private _BASE_URL = '/benefit/my-benefit/rainbow-point';
 
@@ -66,7 +65,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this._renderError(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo);
       }
 
       const rainbowPointsInfo = this.getRainbowPointsInfo(respRainbowPointsInfo);
@@ -97,7 +96,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       res.render(this._VIEW.DEFAULT, options);
 
     }, (resp) => {
-      return this._renderError(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
@@ -145,8 +144,8 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return lines.length > 1;
   }
 
-  private _renderError(res, err, svcInfo): any {
-    return res.render(this._VIEW.ERROR, {
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
       title: MY_BENEFIT_RAINBOW_POINT.TITLE,
       code: err.code,
       msg: err.msg,
