@@ -11,11 +11,9 @@ class MyTJoinMgmtNumChgAlarm extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
-    // res.render('management/myt-join.mgmt.numchg-alarm.html', { svcInfo: svcInfo, pageInfo: pageInfo, data: { numGuidOptYn : 'Y' } });
-
-    // this.apiService.request(API_CMD.BFF_05_0180, {})
-    //   .subscribe((resp) => {
-        const resp = {
+     this.apiService.request(API_CMD.BFF_05_0180, {})
+       .subscribe((resp) => {
+        /*const resp = {
           'code': '00',
           'msg': '결과메세지',
           'result':
@@ -29,7 +27,7 @@ class MyTJoinMgmtNumChgAlarm extends TwViewController {
               'extnsPsblYn': 'N',
               'orglSktYn': 'Y'
             }
-        };
+        };*/
         
 
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -37,8 +35,22 @@ class MyTJoinMgmtNumChgAlarm extends TwViewController {
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
           res.render('management/myt-join.mgmt.numchg-alarm.html', option);
+        } else {
+          return this.error.render(res, {
+            title: '번호변경 안내 서비스',
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
         }
-      // });
+       }, (resp) => {
+         return this.error.render(res, {
+           title: '번호변경 안내 서비스',
+           code: resp.code,
+           msg: resp.msg,
+           svcInfo: svcInfo
+         });
+       });
       
 
   }

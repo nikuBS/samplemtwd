@@ -4,13 +4,21 @@
  * Date: 2018.10.22
  */
 Tw.MyTJoinMgmtNumchgAlarmExt = function (rootEl, options) {
+  this._SVC_TYPE = {
+    EXT : 'E',    // 연장
+    CAN : 'C'     // 해지
+  };
+
   this.$container = rootEl;
   this._options = options;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
 
+  $.prototype.checkedVal = function(){ return this.filter(':checked').val(); };
+
   this._bindEvent();
+  this._onchangeUiCondition();
 };
 
 Tw.MyTJoinMgmtNumchgAlarmExt.prototype = {
@@ -35,7 +43,7 @@ Tw.MyTJoinMgmtNumchgAlarmExt.prototype = {
    * @private
    */
   _onchangeUiCondition: function(){
-    var btnDisabled = (!this.$radioSvcType.val() || !this.$radioAlarmType.val());
+    var btnDisabled = (!this.$radioSvcType.checkedVal() || !this.$radioAlarmType.checkedVal());
     $('#btn-ok').attr('disabled', btnDisabled);
   },
 
@@ -46,50 +54,45 @@ Tw.MyTJoinMgmtNumchgAlarmExt.prototype = {
    */
   _onclickBtnOk: function(){
 
-    // C:연장, E:해지
-    var svcType = this.$radioSvcType.val();
+    // E:연장, C:해지
+    var svcType = this.$radioSvcType.checkedVal();
     var param = {};
     var svcCmd = null;
 
-    if(svcType === 'E'){    // 연장
+    if(svcType === this._SVC_TYPE.EXT){    // 연장
       svcCmd = Tw.API_CMD.BFF_05_0182;
       param = {
-        notiType : this.$radioAlarmType.val()  // 선택 알림유형
+        notiType : this.$radioAlarmType.checkedVal()  // 선택 알림유형
       };
 
-    }else if(svcType === 'C'){   // 해지
+    }else if(svcType === this._SVC_TYPE.CAN){   // 해지
       svcCmd = Tw.API_CMD.BFF_05_0183;
     }
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+
     // 연장/해지 call api
     this._apiService.request(svcCmd, param)
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          Tw.Error(resp.code, resp.msg).pop();
           skt_landing.action.loading.off({ ta: this.$container });
+          Tw.Error(resp.code, resp.msg).pop();
           return ;
         }
 
         skt_landing.action.loading.off({ ta: this.$container });
 
-        if (resp.code !== Tw.API_CODE.CODE_00) {
-
-          Tw.Error(resp.code, resp.msg).pop();
-        } else{
-
-          if(svcType === 'E'){    // 연장
-            this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_EXT);
-          }else if(svcType === 'C') {   // 해지
-            this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_CAN);
-          }
+        if(svcType === this._SVC_TYPE.EXT){    // 연장
+          this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_EXT);
+        }else if(svcType === this._SVC_TYPE.CAN) {   // 해지
+          this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_CAN);
         }
 
         }, this))
       .fail(function(err){
-        Tw.Error(err.status, err.statusText).pop();
         skt_landing.action.loading.off({ ta: this.$container });
+        Tw.Error(err.status, err.statusText).pop();
       });
   }
 

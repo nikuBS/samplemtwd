@@ -10,6 +10,8 @@ Tw.MyTJoinMgmtNumchgAlarm = function (rootEl, options) {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
 
+  $.prototype.checkedVal = function(){ return this.filter(':checked').val(); };
+
   this._ATTR_DATA_PRD = 'data-prd';
 
   this._bindEvent();
@@ -75,7 +77,7 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
    * @private
    */
   _onchangeUiCondition: function(){
-    var btnDisabled = (!this.$inputPrd.val() || !this.$radioAlarmType.val());
+    var btnDisabled = (!this.$inputPrd.val() || !this.$radioAlarmType.checkedVal());
     $('.bt-red1 button').attr('disabled', btnDisabled);
   },
 
@@ -91,15 +93,11 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
 
     var param = {
       notiEndDt : Tw.DateHelper.getShortDateWithFormat(notiEndDt, 'YYYYMMDD'),
-      notiType : this.$radioAlarmType.val()  // 선택 알림유형
+      notiType : this.$radioAlarmType.checkedVal()  // 선택 알림유형
     };
 
-    // 선택 기간 validation
-    if( !param.period ){
-      return;
-    }
-    // 선택 알람 유형 validation
-    if( !param.numGuidOptYn ){
+    // 선택 기간, 선택 알람 유형 validation
+    if( !param.notiEndDt || !param.notiType ){
       return;
     }
 
@@ -109,23 +107,19 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          Tw.Error(resp.code, resp.msg).pop();
           skt_landing.action.loading.off({ ta: this.$container });
+          Tw.Error(resp.code, resp.msg).pop();
           return ;
         }
 
         skt_landing.action.loading.off({ ta: this.$container });
 
-        if (resp.code !== Tw.API_CODE.CODE_00) {
-          Tw.Error(resp.code, resp.msg).pop();
-        } else {
-          this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
-        }
+        this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
 
       }, this))
       .fail(function(err){
-        Tw.Error(err.status, err.statusText).pop();
         skt_landing.action.loading.off({ ta: this.$container });
+        Tw.Error(err.status, err.statusText).pop();
       });
   }
 
