@@ -22,6 +22,7 @@ Tw.CustomerEmailQuality.prototype = {
   _cachedElement: function () {
     this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
     this.$quality_depth1 = this.$container.find('.fe-quality_depth1');
+    this.tpl_quality_cell_content = Handlebars.compile($('#tpl_quality_cell_content').html());
   },
 
   _bindEvent: function () {
