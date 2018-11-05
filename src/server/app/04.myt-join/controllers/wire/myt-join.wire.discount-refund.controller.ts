@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+import { MYT_JOIN_WIRE } from '../../../../types/string.type';
 
 
 class MyTJoinWireDiscountRefund extends TwViewController {
@@ -16,7 +17,12 @@ class MyTJoinWireDiscountRefund extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
+    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+      return this.error.render(res, {
+        title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
+        svcInfo: svcInfo
+      });
+    }
     // res.render('wire/myt-join.wire.discount-refund.html', {svcInfo: svcInfo, reqDate: '20181017'});
 
     this.apiService.request(API_CMD.BFF_05_0158, {})
@@ -25,8 +31,21 @@ class MyTJoinWireDiscountRefund extends TwViewController {
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDateNoDot( resp.result.reqDate ) };
           res.render('wire/myt-join.wire.discount-refund.html', option);
         } else {
-          this.error.render(res, resp);
+          return this.error.render(res, {
+            title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
         }
+      }, (resp) => {
+        console.log('======== api error!! ==========');
+        return this.error.render(res, {
+          title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       });
 
   }
