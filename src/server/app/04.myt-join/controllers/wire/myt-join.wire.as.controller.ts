@@ -6,6 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { MYT_JOIN_WIRE, MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP } from '../../../../types/string.type';
 
 
 class MyTJoinWireAS extends TwViewController {
@@ -16,6 +17,12 @@ class MyTJoinWireAS extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+      return this.error.render(res, {
+        title: MYT_JOIN_WIRE.AS.TITLE,
+        svcInfo: svcInfo
+      });
+    }
 
     this.apiService.request(API_CMD.BFF_05_0156, { page: '1', size: '20' })
       .subscribe((resp) => {
@@ -69,11 +76,23 @@ class MyTJoinWireAS extends TwViewController {
         const result = resp.result;
 
         if ( resp.code === API_CODE.CODE_00 ) {
-
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
-
           res.render('wire/myt-join.wire.as.html', option);
+        } else {
+          return this.error.render(res, {
+            title: MYT_JOIN_WIRE.AS.TITLE,
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
         }
+      }, (resp) => {
+        return this.error.render(res, {
+          title: MYT_JOIN_WIRE.AS.TITLE,
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       });
   }
 }

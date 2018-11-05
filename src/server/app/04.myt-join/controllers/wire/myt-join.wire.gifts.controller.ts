@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { SVC_ATTR } from '../../../../types/bff.old.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { MYT_JOIN_WIRE } from '../../../../types/string.type';
 
 
 class MyTJoinWireGifts extends TwViewController {
@@ -16,6 +17,12 @@ class MyTJoinWireGifts extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+      return this.error.render(res, {
+        title: MYT_JOIN_WIRE.GIFTS.TITLE,
+        svcInfo: svcInfo
+      });
+    }
 
     this.apiService.request(API_CMD.BFF_05_0159, { requestPage: '1' })
       .subscribe((resp) => {
@@ -97,8 +104,20 @@ class MyTJoinWireGifts extends TwViewController {
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result};
           res.render('wire/myt-join.wire.gifts.html', option);
         } else {
-          this.error.render(res, resp);
+          return this.error.render(res, {
+            title: MYT_JOIN_WIRE.GIFTS.TITLE,
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
         }
+      }, (resp) => {
+        return this.error.render(res, {
+          title: MYT_JOIN_WIRE.GIFTS.TITLE,
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       });
   }
 }

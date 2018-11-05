@@ -12,7 +12,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
+import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 
 class MyTJoinWireFreeCallCheck extends TwViewController {
@@ -35,6 +35,12 @@ class MyTJoinWireFreeCallCheck extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+      return this.error.render(res, {
+        title: MYT_JOIN_WIRE.FREECALL_CHECK.TITLE,
+        svcInfo: svcInfo
+      });
+    }
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;

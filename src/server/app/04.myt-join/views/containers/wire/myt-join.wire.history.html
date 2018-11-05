@@ -178,9 +178,8 @@
     </footer>
 </div>
 <script>
-  var comp = null;
   $(document).ready(function () {
-    comp = new Tw.MyTJoinWireHistory($('.wrap'), decodeURIComponent('<%= JSON.stringify(list) %>').replace(/&#34;/g, '"'));
+    new Tw.MyTJoinWireHistory($('.wrap'), decodeURIComponent('<%= JSON.stringify(list) %>').replace(/&#34;/g, '"'));
   });
 </script>
 <% include ../../components/end.component.html %>
