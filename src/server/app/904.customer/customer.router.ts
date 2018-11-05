@@ -26,26 +26,26 @@ class CustomerRouter extends TwRouter {
     // this.controllers.push({ url: '/', controller: CustomerMain} );
     // this.controllers.push({ url: '/email(/:status)?(/:category)?', controller: CustomerEmail} );
     // this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
-    this.controllers.push({ url: '/shop/detail', controller: CustomerShopDetail} );
-    this.controllers.push({ url: '/shop/near', controller: CustomerShopNear} );
-    this.controllers.push({ url: '/shop/repair', controller: CustomerShopRepair} );
-    this.controllers.push({ url: '/shop/repair-detail', controller: CustomerShopRepairDetail} );
-    this.controllers.push({ url: '/shop/repair-manufacturer', controller: CustomerShopRepairManufacturer} );
-    this.controllers.push({ url: '/shop/search', controller: CustomerShopSearch} );
+    this.controllers.push({ url: '/shop/detail', controller: CustomerShopDetail });
+    this.controllers.push({ url: '/shop/near', controller: CustomerShopNear });
+    this.controllers.push({ url: '/shop/repair', controller: CustomerShopRepair });
+    this.controllers.push({ url: '/shop/repair-detail', controller: CustomerShopRepairDetail });
+    this.controllers.push({ url: '/shop/repair-manufacturer', controller: CustomerShopRepairManufacturer });
+    this.controllers.push({ url: '/shop/search', controller: CustomerShopSearch });
     // this.controllers.push({ url: '/voice/:type', controller: CustomerVoice} );
-    this.controllers.push({ url: '/researches/result', controller: CustomerResearchResult} );
-    this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches} );
-    this.controllers.push({ url: '/faq', controller: CustomerFaq} );
-    this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory} );
-    this.controllers.push({ url: '/faq/doitlikethis', controller: CustomerFaqDoItLikeThis} );
-    this.controllers.push({ url: '/faq/service-info', controller: CustomerFaqInfoService} );
-    this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: CustomerFaqInfoService} );
-    this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: CustomerFaqInfoSite} );
-    this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: CustomerFaqInfoSite} );
-    this.controllers.push({ url: '/document', controller: CustomerDocument} );
-    this.controllers.push({ url: '/event', controller: CustomerEvent} );
-    this.controllers.push({ url: '/event/detail', controller: CustomerEventDetail} );
-    this.controllers.push({ url: '/event/detail/win', controller: CustomerEventDetailWin} );
+    this.controllers.push({ url: '/researches/result', controller: CustomerResearchResult });
+    // this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches} );
+    this.controllers.push({ url: '/faq', controller: CustomerFaq });
+    this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
+    this.controllers.push({ url: '/faq/doitlikethis', controller: CustomerFaqDoItLikeThis });
+    this.controllers.push({ url: '/faq/service-info', controller: CustomerFaqInfoService });
+    this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: CustomerFaqInfoService });
+    this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: CustomerFaqInfoSite });
+    this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: CustomerFaqInfoSite });
+    this.controllers.push({ url: '/document', controller: CustomerDocument });
+    this.controllers.push({ url: '/event', controller: CustomerEvent });
+    this.controllers.push({ url: '/event/detail', controller: CustomerEventDetail });
+    this.controllers.push({ url: '/event/detail/win', controller: CustomerEventDetailWin });
   }
 }
 
