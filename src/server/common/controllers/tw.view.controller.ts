@@ -93,6 +93,7 @@ abstract class TwViewController {
     const tokenId = req.query.id_token;
     const userId = req.query.userId;
     this._type = req.query.type;
+    this.logger.debug(this, '[Request Header]', req.header);
 
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
