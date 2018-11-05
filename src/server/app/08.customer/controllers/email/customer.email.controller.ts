@@ -15,7 +15,7 @@ class CustomerEmail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, pageInfo?: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, pageInfo?: any): void {
     const page = req.params.page;
     // const main_category = req.params.main_category; // 1. service 2. quality
     // const sub_category = req.params.sub_category; // ofrCtgSeq
@@ -24,7 +24,8 @@ class CustomerEmail extends TwViewController {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       isApp: BrowserHelper.isApp(req),
-      svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
+      svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum),
+      allSvc: allSvc
     };
 
     switch ( page ) {

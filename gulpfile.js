@@ -13,7 +13,8 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     remoteSrc  = require('gulp-remote-src'),
     jeditor    = require('gulp-json-editor'),
-    options    = require('gulp-options');
+    options    = require('gulp-options'),
+    plumber    = require('gulp-plumber');
 
 
 var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'common'];
@@ -163,6 +164,7 @@ gulp.task('js-xtractor-client', function() {
 oldAppNames.map(function (app, index) {
   gulp.task('js-old' + app, function () {
     return gulp.src('src/client/app/90' + index + '.' + app + '/**/*.js')
+      .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + 'old.js'))
       .pipe(gulp.dest(dist_tmp + 'js'))
@@ -185,6 +187,7 @@ oldAppNames.map(function (app, index) {
 appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
+      .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist_tmp + 'js'))
@@ -207,6 +210,7 @@ appNames.map(function (app, index) {
 appNames.map(function (app, index) {
   gulp.task('js-' + app + '-client', function () {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
+      .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist_tmp + 'js'))

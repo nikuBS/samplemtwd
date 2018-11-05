@@ -4,7 +4,8 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerEmailQualityOption = function (rootEl) {
+Tw.CustomerEmailQualityOption = function (rootEl, allSvc) {
+  this.allSvc = allSvc.allSvc;
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -17,6 +18,7 @@ Tw.CustomerEmailQualityOption = function (rootEl) {
 
 Tw.CustomerEmailQualityOption.prototype = {
   _init: function () {
+
     this.quality_options = Tw.CUSTOMER_EMAIL_QUALITY_QUESTION;
   },
 
@@ -26,8 +28,36 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _bindEvent: function () {
+    debugger;
+    this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
+    this.$container.on('click', '.fe-occurrence_detail', $.proxy(this._showOptionSheet, this, 'Q_TYPE02'));
+    this.$container.on('click', '.fe-place', $.proxy(this._showOptionSheet, this, 'Q_TYPE03'));
+    this.$container.on('click', '.fe-place_detail', $.proxy(this._showOptionSheet, this, 'Q_TYPE04'));
+    this.$container.on('click', '.fe-occurrence_date', $.proxy(this._showOptionSheet, this, 'Q_TYPE05'));
+    // this.$container.on('click', '.fe-text_content', $.proxy(this._showOptionSheet, this, 'Q_TYPE05'));
     this.$container.on('click', '.option_value', $.proxy(this._selectPopupCallback, this));
+  },
+
+  _showLineSheet: function (e) {
+    var $elButton = $(e.currentTarget);
+    var fnSelectLine = function (item) {
+      return {
+        value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
+        option: false,
+        attr: 'data-svcMgmtNum=' + item.svcMgmtNum
+      };
+    };
+
+    this._popupService.open({
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: 'Test',
+        data: [{ list: this.allSvc.M.map($.proxy(fnSelectLine, this)) }]
+      },
+      $.proxy(this._selectLinePopupCallback, this, $elButton),
+      null
+    );
   },
 
   _showOptionSheet: function (sType, e) {
@@ -51,8 +81,12 @@ Tw.CustomerEmailQualityOption.prototype = {
     );
   },
 
+  _selectLinePopupCallback: function ($target, $layer) {
+    $layer.on('click', '[data-svcmgmtnum]', $.proxy(this._setSelectedValue, this, $target));
+  },
+
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-type="option_value"]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '[data-option_value]', $.proxy(this._setSelectedValue, this, $target));
   },
 
   _setSelectedValue: function ($target, el) {
