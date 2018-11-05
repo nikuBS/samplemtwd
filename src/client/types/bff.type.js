@@ -1,12 +1,12 @@
 Tw.MYT_FARE_AUTO = {
-  'Y': '신청',
-  'N': '미신청'
+  Y: '신청',
+  N: '미신청'
 };
 
 Tw.TING_TITLE = {
-  'HA': '통화가능금액',
-  'CH': '충전금액',
-  'PR': '선물충전금액'
+  HA: '통화가능금액',
+  CH: '충전금액',
+  PR: '선물충전금액'
 };
 
 Tw.MYT_FARE_SUB_MAIN = {
@@ -23,7 +23,6 @@ Tw.LINE_NAME = {
   INTERNET_PHONE_IPTV: 'S',
   SECURITY: 'O'
 };
-
 
 Tw.HOME_SMART_CARD_E = {
   CHILD: 'H01',
@@ -106,4 +105,22 @@ Tw.PAYMENT_REQUEST_TYPE = {
   R: '신규',
   C: '변경',
   F: '해지'
+};
+
+Tw.SVC_CATEGORY = {
+  M: '모바일',
+  S: '인터넷/집전화/IPTV',
+  O: '보안솔루션'
+};
+
+Tw.SVC_ATTR = {
+  M1: '휴대폰',
+  M2: '선불폰',
+  M3: 'T pocket Fi',
+  M4: 'T Login',
+  M5: 'T Wibro',
+  S1: '인터넷',
+  S2: 'IPTV',
+  S3: '집전화',
+  O1: '포인트캠'
 };
