@@ -13,6 +13,7 @@ Tw.MembershipInfoGrade = function (rootEl) {
 Tw.MembershipInfoGrade.prototype = {
   _init: function () {
     this._initVariables();
+    this._membershipLayerPopup.reqPossibleJoin();
     this._bindEvent();
   },
 
@@ -22,6 +23,7 @@ Tw.MembershipInfoGrade.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-popup-id]', $.proxy(this._openPopup,this));
     this.$container.on('click', '[data-external-url]', $.proxy(this._goExternalUrl,this));
+    this.$container.on('click', '#fe-req-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
   },
 
   // 팝업 오픈
@@ -34,5 +36,6 @@ Tw.MembershipInfoGrade.prototype = {
     var _url = Tw.URL_PATH[$(e.currentTarget).data('externalUrl')];
     Tw.CommonHelper.openUrlExternal(_url);
   }
+
 
 };

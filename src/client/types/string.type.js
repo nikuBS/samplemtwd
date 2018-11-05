@@ -439,7 +439,13 @@ Tw.ALERT_MSG_PRODUCT = {
 
 Tw.ALERT_MSG_BENEFIT = {};
 
-Tw.ALERT_MSG_MEMBERSHIP = {};
+Tw.ALERT_MSG_MEMBERSHIP = {
+  NO_JOIN : {
+    TITLE : 'T멤버십에 가입하실 수 없습니다.',
+    CONTENTS : '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
+    TXT : '회선 관리하기'
+  }
+};
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
