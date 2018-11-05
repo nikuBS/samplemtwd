@@ -12,7 +12,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
+import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 
 class MyTJoinWireSetWireCancelService extends TwViewController {
@@ -35,6 +35,13 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+      return this.error.render(res, {
+        title: MYT_JOIN_WIRE.SET_WIRE_CANCEL.TITLE,
+        svcInfo: svcInfo
+      });
+    }
+
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
@@ -66,7 +73,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
       return thisMain.error.render(res, {
-        title: 'title',
+        title: MYT_JOIN_WIRE.SET_WIRE_CANCEL.TITLE,
         code: err.code,
         msg: err.msg,
         svcInfo: svcInfo
