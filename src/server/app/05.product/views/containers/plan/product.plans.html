@@ -5,7 +5,7 @@
 * ID: MP_02
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <body>
   <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -45,14 +45,14 @@
                     <button class="bt-select fe-select-order" title="정렬 선택" aria-haspopup="true">추천순</button>
                     <div class="num">
                         <button class="bt-select fe-select-filter" title="조건 선택" aria-haspopup="true">
-                            <% const filters = plans.searchOption.searchFltIds; %>
+                            <% const filters = plans.searchOption && plans.searchOption.searchFltIds; %>
                             <% if (filters) { %>
                                 <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
                                     <% if (i > 0) { %>, <% } %>
                                     #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
                                 <% } %>
                                 <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
-                            <% } else if (plans.searchOption.searchProdTagNm) { %>
+                            <% } else if (plans.searchOption && plans.searchOption.searchProdTagNm) { %>
                                 #<span class="vbl tx-bold"><%= plans.searchOption.searchProdTagNm %></span>
                             <% } else { %>
                                 #<span class="vbl tx-bold">전체 요금제</span>
@@ -161,11 +161,11 @@
     </div>
 </body>
 
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
       new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01100', type: 'plans' });
   });
 </script>
-<% include ../components/product.plans.component.html %>
-<% include ../components/end.component.html %>
+<% include ../../components/product.plans.component.html %>
+<% include ../../components/end.component.html %>

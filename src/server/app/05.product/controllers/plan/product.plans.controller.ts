@@ -4,12 +4,12 @@
  * Date: 2018.10.08
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD } from '../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
-import { API_CODE } from '../../../types/api-command.type';
-import FormatHelper from '../../../utils/format.helper';
+import { API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 export default class ProductPlans extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -30,7 +30,7 @@ export default class ProductPlans extends TwViewController {
         });
       }
 
-      res.render('product.plans.html', { svcInfo, plans, params, pageInfo });
+      res.render('plan/product.plans.html', { svcInfo, plans, params, pageInfo });
     });
   }
 
