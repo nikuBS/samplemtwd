@@ -42,6 +42,10 @@
 
         <!-- .cont-box -->
         <div class="cont-box nogaps">
+          <div class="announcement-box wrap-gaps-top">
+            <div class="announcement-txt">최근 50건의 이용내역만 조회 가능합니다.</div>
+          </div>
+          <% if ( benefitList && benefitList.length > 0 ) { %>
           <div class="daily-benefit-use">
             <ul>
               <% for (var i in benefitList) { %>
@@ -88,6 +92,12 @@
               <% } %>
             </ul>
           </div>
+          <% } else { %>
+          <div class="contents-empty">
+            <span class="ico type1"></span>
+            <p class="desc">이용내역이 없습니다.</p>
+          </div>
+          <% } %>
         </div>
 
         <div class="bt-top">
