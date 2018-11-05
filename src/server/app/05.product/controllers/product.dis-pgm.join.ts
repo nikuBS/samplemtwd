@@ -7,6 +7,8 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import FormatHelper from '../../../utils/format.helper';
 
 class ProductDisPgmJoin extends TwViewController {
 
@@ -23,7 +25,22 @@ class ProductDisPgmJoin extends TwViewController {
     };
 
     if ( prodId === 'NA00004430' ) {
-      res.render('product.sel-contract.input.html', { data });
+      // 무선 선택약정 할인제도 상품 설정 조회
+      this.apiService.request(API_CMD.BFF_10_0062, {}, {}, prodId)
+        .subscribe((response) => {
+          if ( response.code === API_CODE.CODE_00 ) {
+            data.isContractPlan = (response.result.isNoContractPlanYn === 'Y');
+            data.contractPlanPoint = FormatHelper.addComma(response.result.noContractPlanPoint);
+            res.render('product.sel-contract.input.html', { data });
+          } else {
+            return this.error.render(res, {
+              code: response.code,
+              msg: response.msg,
+              svcInfo: svcInfo,
+              title: '가입'
+            });
+          }
+        });
     } else {
       // NA00002079, NA00002082, NA00002080, NA00002081
       switch ( prodId ) {
@@ -42,6 +59,10 @@ class ProductDisPgmJoin extends TwViewController {
         case 'NA00002081':
           // 10년이상
           data.percent = '80';
+          break;
+        default:
+          // 2년 미만
+          data.percent = '50';
           break;
       }
       res.render('product.t-plus.input.html', { data });
