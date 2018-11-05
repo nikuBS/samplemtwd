@@ -1,4 +1,5 @@
 /**
+ * 상품 설정
  * FileName: product.setting.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.11

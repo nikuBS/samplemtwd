@@ -75,6 +75,7 @@ Tw.ProductJoinReservation.prototype = {
     this.$combineSelected.on('change', $.proxy(this._changeCombineSelected, this));
     this.$agreeWrap.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyCheck, this));
     this.$formData.on('keyup input', 'input', $.proxy(this._procEnableApplyCheck, this));
+    this.$combineExplain.on('change', 'input[type=checkbox]', $.proxy(this._onChangeCombineExplain, this));
   },
 
   _openTypeCdPop: function() {
@@ -204,8 +205,7 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _setBtnCombineTxt: function(txt) {
-    var icoTmp = $('<div\>').append(this.$btnSelectCombine.find('.ico'));
-    this.$btnSelectCombine.html(txt + icoTmp.html());
+    this.$btnSelectCombine.html(txt + $('<div\>').append(this.$btnSelectCombine.find('.ico')).html());
   },
 
   _getCombineProdNm: function() {
@@ -312,6 +312,11 @@ Tw.ProductJoinReservation.prototype = {
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this));
     }
 
+    if (this._typeCd === 'combine' && this.$combineExplain.find('input[type=checkbox]').is(':checked') &&
+      !Tw.FormatHelper.isEmpty(this._prodId)) {
+      return this._openExplainFilePop();
+    }
+
     this._procApply();
   },
 
@@ -341,58 +346,51 @@ Tw.ProductJoinReservation.prototype = {
     this._procApply();
   },
 
+  _onChangeCombineExplain: function() {
+    if (this.$combineExplain.find('input[type=checkbox]').is(':checked')) {
+      this.$btnApply.text(Tw.BUTTON_LABEL.NEXT);
+    } else {
+      this.$btnApply.text(Tw.BUTTON_LABEL.APPLY);
+    }
+  },
+
   _openExplainFilePop: function() {
-    // @todo 추가정보 & 서류제출 팝업 오픈
-    // @todo 기 결합된 가족정보 리스트를 넘기자
-    this._popupService.open({
-      hbs: 'BS_05_01_01_01',
-      layer: true,
-      list: [{
+    // @todo Dummy Input
+    new Tw.ProductJoinReservationExplain([{
+      name: '테*트',
+      number: '010-00*0-00*0',
+      fam: {
+        leader: true,
+        me: true
+      }
+    },
+      {
         name: '테*트',
         number: '010-00*0-00*0',
         fam: {
-          leader: true,
-          me: true
+          spouse: true
         }
       },
-        {
-          name: '테*트',
-          number: '010-00*0-00*0',
-          fam: {
-            spouse: true
-          }
-        },
-        {
-          name: '테*트',
-          number: '010-00*0-00*0',
-          fam: {
-            children: true
-          }
-        },
-        {
-          name: '테*트',
-          number: '010-00*0-00*0',
-          fam: {
-            brother: true
-          }
-        }]
-    }, $.proxy(this._initExplainFilePop, this), null, 'explain_pop');
+      {
+        name: '테*트',
+        number: '010-00*0-00*0',
+        fam: {
+          children: true
+        }
+      },
+      {
+        name: '테*트',
+        number: '010-00*0-00*0',
+        fam: {
+          brother: true
+        }
+      }], $.proxy(this._procApply, this));
   },
 
-  _initExplainFilePop: function($popupContainer) {
-    this.$familyWrap = $popupContainer.find('.fe-family_wrap');
-    this.$familyList = $popupContainer.find('.fe-family_list');
-
-    if (this.$familyList.find('li').length > 0) {
-      this.$familyWrap.show();
-    }
-  },
-
-  _procApply: function() {
-    if (this._typeCd === 'combine' && this.$combineExplain.find('input[type=checkbox]').is(':checked') &&
-      !Tw.FormatHelper.isEmpty(this._prodId)) {
-      return this._openExplainFilePop();
-    }
+  _procApply: function(_combinationInfo) {
+    var combinationInfo = _combinationInfo || null;
+    console.log(combinationInfo);
+    console.log('* procApply');
 
     // this._apiService.request(Tw.API_CMD.BFF_DUMMY, {})
     //   .done($.proxy(this._procApplyResult, this));

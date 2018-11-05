@@ -1,4 +1,5 @@
 /**
+ * 상품 가입 (공통)
  * FileName: product.join.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.11
@@ -226,7 +227,6 @@ class ProductJoin extends TwViewController {
       autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
     });
   }
-
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this._prodId = req.params.prodId;

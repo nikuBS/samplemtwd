@@ -1,4 +1,5 @@
 /**
+ * 가입 상담/예약
  * FileName: product.join-reservation.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.30
