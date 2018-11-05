@@ -58,7 +58,7 @@ class ProductDisPgmDetail extends TwViewController {
             title: '가입'
           });
         }*/
-        res.render('product.sel-contract.input.html', { data });
+        res.render('product.sel-contract.detail.html', { data });
       });
     }
   }

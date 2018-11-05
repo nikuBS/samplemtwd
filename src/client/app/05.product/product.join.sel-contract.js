@@ -33,17 +33,13 @@ Tw.ProductJoinSelContract.prototype = {
       var checked = $target.attr('aria-checked');
       if ( checked === 'true') {
         this._isEnable = true;
+        this.selType = $target.attr('data-type');
         this.$okBtn.removeAttr('disabled');
       }
     }
   },
 
   _onOkBtnClicked: function () {
-    if ( this.data.type === 'input' ) {
-      // 가입 인 경우
-    }
-    else {
-      // 설정 인 경
-    }
+    this._historyService.goLoad('/product/dis-program-join/detail/'+ this.data.prodId +'?type='+this.selType);
   }
 };

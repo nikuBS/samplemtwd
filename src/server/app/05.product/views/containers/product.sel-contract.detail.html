@@ -31,7 +31,7 @@
     title: '가입', svcInfo: data.svcInfo, option: { back: 'step' } }); %>
     <!--// #header -->
     <!-- .container-wrap -->
-    <div class="container-wrap">
+    <div class="container-wrap" data-id="sel-ct-detail">
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
@@ -132,7 +132,7 @@
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
                                         <li>
-                                            <div class="checkbox type01 all" role="checkbox" aria-checked="false">
+                                            <div class="checkbox type01 all" role="checkbox" aria-checked="false" data-id="all-chk">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value="" title="모두동의"
                                                        aria-labelledby="aria-comp-checkbox1"/>
@@ -145,7 +145,7 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                            <div class="checkbox type01" role="checkbox" aria-checked="false" data-item="true" data-id="svc-chk">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value="" title="서비스 이용약관 동의(필수)"
                                                        aria-labelledby="aria-comp-checkbox2"/>
@@ -164,7 +164,7 @@
                                             <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                         </li>
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                            <div class="checkbox type01" role="checkbox" aria-checked="false" data-item="true" data-id="join-chk">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value="" title="서비스 가입동의 (필수)"
                                                        aria-labelledby="aria-comp-checkbox3"/>
@@ -183,7 +183,7 @@
                                             <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                         </li>
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                            <div class="checkbox type01" role="checkbox" aria-checked="false" data-item="true" data-id="etc-chk">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value=""
                                                        title="개인정보 수집/이용 위탁동의 (필수)"
@@ -232,7 +232,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button>가입하기</button>
+                            <button disabled="disabled" data-id="btn-join">가입하기</button>
                         </li>
                     </ul>
                 </div>
@@ -249,12 +249,12 @@
 </body>
 <script>
   // client 작업 중
-  /*var data = '<%- JSON.stringify(data) %>';
+  var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
-    new Tw.ProductJoinSelContract({
-      $element: $('[data-id=sel-ct-container]'),
+    new Tw.ProductJoinSelContractDetail({
+      $element: $('[data-id=sel-ct-detail]'),
       data: JSON.parse(data)
     });
-  });*/
+  });
 </script>
 <% include ../components/end.component.html %>
