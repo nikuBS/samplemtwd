@@ -373,6 +373,8 @@ Tw.API_CMD = {
   BFF_11_0022: { path: '/core-membership/v1/tmembership/area2-list', method: Tw.API_METHOD.GET },
   BFF_11_0023: { path: '/core-membership/v1/tmembership/mrcht-list', method: Tw.API_METHOD.GET },
   BFF_11_0024: { path: '/core-membership/v1/tmembership/mrcht-info', method: Tw.API_METHOD.GET },
+  BFF_10_0062: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.GET },
+  BFF_10_0063: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

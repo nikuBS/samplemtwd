@@ -9,6 +9,7 @@ Tw.ProductJoinSelContractDetail = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
+  this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._render();
   this._bindEvent();
@@ -57,7 +58,9 @@ Tw.ProductJoinSelContractDetail.prototype = {
   },
 
   __onJoinBtnClicked: function () {
-    this._historyService.goLoad('/product/dis-program-join/detail/'+ this.data.prodId +'?type='+this.selType);
+    // 가입하기
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, null, $.proxy(this._onJoinPopupConfirm, this), null);
   },
 
   _onClickContainer: function () {
@@ -75,5 +78,25 @@ Tw.ProductJoinSelContractDetail.prototype = {
     else {
       this.$joinBtn.attr('disabled', 'disabled');
     }
+  },
+
+  _onJoinPopupConfirm: function () {
+      this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.data.monthCode }, {}, this.data.prodId)
+      .done($.proxy(this._onSuccessSeldisSet, this))
+      .fail($.proxy(this._onErrorSeldisSet, this));
+  },
+
+  _onSuccessSeldisSet: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.afterRequestSuccess('/myt/join', '/product/join/' + this.data.prodId,
+        '나의 가입정보 확인하기 >', '선택약정할인제도', '상품 가입 완료');
+    }
+    else {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+
+  _onErrorSeldisSet: function (resp) {
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };
