@@ -31,8 +31,8 @@ Tw.MembershipInfoLayerPopup.prototype = {
 
   _openCallback: function ($element) {
     if ( this._hbs === 'BE_04_01_L02' ) {
-      this._reqPossibleJoin();
-      $element.find('button[data-id=join]').one('click', $.proxy(this._onClickJoinBtn, this));
+      this.reqPossibleJoin();
+      $element.find('button[data-id=join]').off().on('click', $.proxy(this.onClickJoinBtn, this));
     }
     else if ( this._hbs === 'BE_04_01_L01' ) {
       $element.find('.fe-outlink').off().on('click', $.proxy(this._openExternalUrl,this));
@@ -46,7 +46,10 @@ Tw.MembershipInfoLayerPopup.prototype = {
   },
 
   // 가입 가능여부 조회 요청
-  _reqPossibleJoin : function(){
+  reqPossibleJoin : function(){
+    if ( !Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
+      return;
+    }
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     var mockup = function () {
       $.ajax('/mock/membership.info.BFF_11_0015.json')
@@ -77,15 +80,31 @@ Tw.MembershipInfoLayerPopup.prototype = {
     this._popupService.close();
   },
 
-  _onClickJoinBtn: function () {
+  onClickJoinBtn: function () {
     if (this._isJoinOk === 'N') {
-      // TODO : 가입불가 팝업 SB 나오면 처리하기!!
-      var _mailUrl = '/membership/membership_info/mbrs_0001';
-      this._popupService.afterRequestSuccess(_mailUrl, _mailUrl, 'go main', 'No Join');
+      var param = Tw.ALERT_MSG_MEMBERSHIP.NO_JOIN;
+      this._popupService.openOneBtTypeB(
+        param.TITLE,
+        param.CONTENTS,
+        [{
+          style_class: 'fe-manage-line',
+          txt: param.TXT
+        }],
+        'type1',
+        $.proxy(this._noJoinOpenCallBack,this), null
+        );
       return;
     }
 
     this._historyService.goLoad('/benefit/membership/join');
+  },
+
+  _noJoinOpenCallBack : function ($layer) {
+    $layer.on('click', '.fe-manage-line', $.proxy(this._goManageLine, this));
+  },
+
+  _goManageLine : function () {
+    this._historyService.goLoad('/common/line');
   },
 
   // API Fail
