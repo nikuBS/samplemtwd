@@ -23,6 +23,8 @@ import CustomerMain from './controllers/main/customer.main.controller';
 import CustomerVoice from './controllers/voice/customer.voice.controller';
 import CustomerEmail from './controllers/email/customer.email.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
+import CustomerFaq from '../904.customer/controllers/faq/customer.faq.controller';
+import CustomerFaqSearch from './controllers/faq/customer.faq.search.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -36,9 +38,11 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/branch/repair', controller: CustomerBranchRepair });
     this.controllers.push({ url: '/branch/repair-detail', controller: CustomerBranchRepairDetail });
     this.controllers.push({ url: '/branch/repair-manufacturer', controller: CustomerBranchRepairManufacturer });
-    this.controllers.push({ url: '/document', controller: CustomerDocument });
-    this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
-    this.controllers.push({ url: '/praise', controller: CustomerPraise });
+    this.controllers.push({ url: '/document', controller: CustomerDocument} );
+    this.controllers.push({ url: '/faq', controller: CustomerFaq } );
+    this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch } );
+    this.controllers.push({ url: '/helpline', controller: CustomerHelpline} );
+    this.controllers.push({ url: '/praise', controller: CustomerPraise} );
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/researches', controller: CustomerResearches });
     this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail });

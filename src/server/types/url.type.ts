@@ -84,6 +84,8 @@ export const URL = {
   '/customer/branch/repair-detail': { login: false, id: 'CS_03_02', title: 'AS센터 정보' },
   '/customer/branch/repair-manufacturer': { login: false, id: 'CS_03_03', title: '제조사 별 AS센터' },
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
+  '/customer/faq': { login: false, id: 'CS_05_01', title: '자주 찾는 질문' },
+  '/customer/faq/search': { login: false, id: 'CS_05_04', title: 'FAQ' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
   '/customer/svc_info/cmis_0039': { login: false, id: 'CS_10_01', title: '공지사항' },
   '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
