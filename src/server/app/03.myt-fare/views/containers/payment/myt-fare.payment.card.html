@@ -53,7 +53,7 @@
                                 <button id="00" class="bt-dropdown big fe-select-card-type" title="납부 형태 선택" aria-haspopup="true">일시불<span class="ico"></span></button>
                             </div>
                             <div class="info-form-box">
-                                <p class="form-label" id="aria-exp-label3">카드번호</p>
+                                <p class="form-label" id="aria-exp-label3">카드번호 <button id="MF_01_01_tip_04" class="tip-view">TIP</button></p>
                                 <span class="inputbox">
                                     <span class="input">
                                       <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력"
@@ -106,7 +106,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div><button class="info-view-ic fe-refund-info">정보보기</button>
+                                </div><button id="MF_01_01_tip_05" class="info-view-ic fe-refund-info">TIP</button>
                             </div>
                             <div class="check-account-radio fe-refund-box mt28" style="display:none;">
                                 <% if (autoInfo && autoInfo.isAuto) { %>
@@ -154,6 +154,21 @@
                         </div>
                     </div>
                     <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                        <ul class="noti-list">
+                            <li>요금납부 안내 <button type="button" id="MF_01_01_tip_01" class="icon-tip">TIP</button></li>
+                            <li>이용정지 고객 안내 <button type="button" id="MF_01_01_tip_02" class="icon-tip">TIP</button></li>
+                            <li>통합청구이용 고객 안내 <button type="button" id="MF_01_01_tip_03" class="icon-tip">TIP</button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
@@ -161,6 +176,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 </div>
             </div>
             <!--// #contents -->
