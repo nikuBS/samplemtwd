@@ -137,7 +137,7 @@ skt_landing.widgets = {
         for(var i=0, leng=radioItems.length; i<leng; ++i){
           itemsW += radioItems.eq(i).outerWidth(true);
         }
-        radioSlide.find('.select-list').css('width',itemsW);
+        radioSlide.find('.select-list').css('width',itemsW + 1);
         /*
         if(itemsW <= skt_landing.util.win_info.get_winW()){
           radioSlide.find('.select-list').css('width','100%');
@@ -463,7 +463,7 @@ skt_landing.widgets = {
           tabCont = _this.find('.tab-contents');
       initLinkSlide(tabList);
       tabListOnChk();
-      tabList.find('button, a').on('click',function(){
+      tabList.find('button:not(".tip-view"), a:not(".tip-view")').on('click',function(){
         $(this).closest('li').attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         tabListOnChk();
         initLinkSlide(tabList);
@@ -481,14 +481,12 @@ skt_landing.widgets = {
         for(var i=0,leng=items.length; i<leng; ++i){
           itemsW += items.eq(i).outerWidth(true);
         }
-        items.closest('ul').css('width',itemsW);
-        /*
+        // items.closest('ul').css('width',itemsW);
         if(skt_landing.util.win_info.get_winW() > itemsW){
           items.closest('ul').css('width','100%');
         }else{
           items.closest('ul').css('width',itemsW);
         }
-        */
       }
     });
   },
