@@ -10,6 +10,7 @@ Tw.MembershipInfoLayerPopup = function ($element) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
+  this._apiService = Tw.Api;
 };
 
 Tw.MembershipInfoLayerPopup.prototype = {
@@ -51,20 +52,16 @@ Tw.MembershipInfoLayerPopup.prototype = {
       return;
     }
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    var mockup = function () {
+    /*
       $.ajax('/mock/membership.info.BFF_11_0015.json')
         .done($.proxy(this._onSuccess, this))
         .fail($.proxy(this._onFail, this));
-    };
+    */
 
-    var real = function () {
-      this._apiService
-        .request(Tw.API_CMD.BFF_11_0015, {})
-        .done($.proxy(this._onSuccess, this))
-        .fail($.proxy(this._onFail, this));
-    };
-    // TODO : API 개발완료되기 전까지 목업호출..
-    mockup.call(this);
+    this._apiService
+      .request(Tw.API_CMD.BFF_11_0015, {})
+      .done($.proxy(this._onSuccess, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _onSuccess : function (resp) {
