@@ -23,7 +23,7 @@ export default class MyTJoinProductCombinations extends TwViewController {
         });
       }
 
-      this.getCombination(prodId, svcInfo).subscribe(combination => {
+      this.getCombination(prodId).subscribe(combination => {
         if (combination.code) {
           return this.error.render(res, {
             ...combination,
@@ -34,10 +34,10 @@ export default class MyTJoinProductCombinations extends TwViewController {
         res.render('product/myt-join.product.combinations.combination.html', { svcInfo, pageInfo, combination, pageId, prodId });
       });
     } else {
-      this.apiService.request(API_CMD.BFF_05_0133, {}).subscribe(resp => {
-        if (resp.code !== API_CODE.CODE_00) {
+      this.getCombinations().subscribe(combinations => {
+        if (combinations.code) {
           return this.error.render(res, {
-            ...resp,
+            ...combinations,
             svcInfo
           });
         }
@@ -45,13 +45,31 @@ export default class MyTJoinProductCombinations extends TwViewController {
         res.render('product/myt-join.product.combinations.html', {
           svcInfo,
           pageInfo,
-          combinations: resp.result.combinationMemberList || []
+          combinations
         });
       });
     }
   }
 
-  private getCombination = (id, svcInfo) => {
+  private getCombinations = () => {
+    return this.apiService.request(API_CMD.BFF_05_0133, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
+
+      return (resp.result.combinationMemberList || []).map(comb => {
+        return {
+          ...comb,
+          scrbDt: DateHelper.getShortDateNoDot(comb.scrbDt)
+        };
+      });
+    });
+  }
+
+  private getCombination = id => {
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, id).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
