@@ -164,6 +164,32 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_POINT: [
+    {
+      'list': [
+        { 'option': 'point-type', 'attr': 'id="500"', value: '500P' },
+        { 'option': 'point-type', 'attr': 'id="1000"', value: '1,000P' },
+        { 'option': 'point-type', 'attr': 'id="1500"', value: '1,500P' },
+        { 'option': 'point-type', 'attr': 'id="2000"', value: '2,000P' },
+        { 'option': 'point-type', 'attr': 'id="2500"', value: '2,500P' },
+        { 'option': 'point-type', 'attr': 'id="3000"', value: '3,000P' },
+        { 'option': 'point-type', 'attr': 'id="3500"', value: '3,500P' },
+        { 'option': 'point-type', 'attr': 'id="4000"', value: '4,000P' },
+        { 'option': 'point-type', 'attr': 'id="4500"', value: '4,500P' },
+        { 'option': 'point-type', 'attr': 'id="5000"', value: '5,000P' },
+        { 'option': 'point-type', 'attr': 'id="5500"', value: '5,500P' },
+        { 'option': 'point-type', 'attr': 'id="6000"', value: '6,000P' },
+        { 'option': 'point-type', 'attr': 'id="6500"', value: '6,500P' },
+        { 'option': 'point-type', 'attr': 'id="7000"', value: '7,000P' },
+        { 'option': 'point-type', 'attr': 'id="7500"', value: '7,500P' },
+        { 'option': 'point-type', 'attr': 'id="8000"', value: '8,000P' },
+        { 'option': 'point-type', 'attr': 'id="8500"', value: '8,500P' },
+        { 'option': 'point-type', 'attr': 'id="9000"', value: '9,000P' },
+        { 'option': 'point-type', 'attr': 'id="9500"', value: '9,500P' },
+        { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' },
+      ]
+    }
+  ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [

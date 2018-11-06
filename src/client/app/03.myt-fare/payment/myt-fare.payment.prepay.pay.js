@@ -45,6 +45,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
+    this.$container.on('keypress', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -64,6 +65,10 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   _resetCardInfo: function () {
     this.$cardNumber.removeAttr('data-code');
     this.$cardNumber.removeAttr('data-name');
+  },
+  _setMaxValue: function (event) {
+    var $target = $(event.currentTarget);
+    return $target.val().length < $target.attr('maxLength');
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);

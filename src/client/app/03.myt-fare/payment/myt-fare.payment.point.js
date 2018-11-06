@@ -58,6 +58,7 @@ Tw.MyTFarePaymentPoint.prototype = {
   },
   _setPoint: function ($layer) {
     $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
+    $layer.on('keypress', '.fe-point-card-number', $.proxy(this._setMaxValue, this));
     $layer.on('change', '.fe-cashbag-agree', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.cancel', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.fe-get', $.proxy(this._getPoint, this, $layer));
@@ -69,6 +70,10 @@ Tw.MyTFarePaymentPoint.prototype = {
     } else {
       $layer.find('.fe-get').attr('disabled', 'disabled');
     }
+  },
+  _setMaxValue: function (event) {
+    var $target = $(event.currentTarget);
+    return $target.val().length < $target.attr('maxLength');
   },
   _getPoint: function ($layer) {
     this._pointCardNumber = $.trim($layer.find('.fe-point-card-number').val());

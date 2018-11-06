@@ -112,7 +112,8 @@ export enum MYT_FARE_PAYMENT_TITLE {
 
 export enum MYT_FARE_PAYMENT_NAME {
   NEW = '신청하기',
-  CHANGE = '변경하기'
+  CHANGE = '변경하기',
+  IS_AUTO = '신청'
 }
 
 export enum MYT_FARE_MICRO_NAME {
