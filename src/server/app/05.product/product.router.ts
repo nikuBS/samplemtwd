@@ -8,12 +8,13 @@ import ProductDetailContents from './controllers/product.detail.contents.control
 import ProductInfinityBenefitUsageHistory from './controllers/product.infinity-benefit-usage-history.controller';
 import ProductCurrentSetting from './controllers/product.current-setting.controller';
 import Product from './controllers/product.controller';
-import ProductAddition from './controllers/product.addition.controller';
-import ProductPlans from './controllers/product.plans.controller';
-import ProductAdditions from './controllers/product.additions.controller';
+import ProductAddition from './controllers/addition/product.addition.controller';
+import ProductPlans from './controllers/plan/product.plans.controller';
+import ProductAdditions from './controllers/addition/product.additions.controller';
 import ProductFindMyBestPlans from './controllers/product.find-my-best-plans.controller';
 import ProductDisPgmJoin from './controllers/product.dis-pgm.join';
 import ProductDisPgmDetail from './controllers/product.dis-pgm.detail';
+import ProductWire from './controllers/wire/product.wire.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -24,6 +25,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/addition', controller: ProductAddition });
     this.controllers.push({ url: '/plans', controller: ProductPlans });
     this.controllers.push({ url: '/additions', controller: ProductAdditions });
+    this.controllers.push({ url: '/wire', controller: ProductWire });
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
     this.controllers.push({ url: '/detail/contents/:prodId', controller: ProductDetailContents });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });

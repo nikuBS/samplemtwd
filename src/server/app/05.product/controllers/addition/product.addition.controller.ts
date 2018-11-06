@@ -4,10 +4,10 @@
  * Date: 2018.10.08
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import FormatHelper from '../../../utils/format.helper';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
 export default class ProductAddition extends TwViewController {
@@ -40,7 +40,7 @@ export default class ProductAddition extends TwViewController {
           recommendedAdditions,
           recommendedTags
         };
-        res.render('product.addition.html', { svcInfo, productData, pageInfo });
+        res.render('addition/product.addition.html', { svcInfo, productData, pageInfo });
       });
     } else {
       Observable.combineLatest(
@@ -66,7 +66,7 @@ export default class ProductAddition extends TwViewController {
           recommendedAdditions,
           recommendedTags
         };
-        res.render('product.addition.html', { svcInfo, productData, pageInfo });
+        res.render('addition/product.addition.html', { svcInfo, productData, pageInfo });
       });
     }
   }

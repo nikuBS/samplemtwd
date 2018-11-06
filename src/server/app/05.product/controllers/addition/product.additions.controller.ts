@@ -4,11 +4,10 @@
  * Date: 2018.10.09
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { PRODUCT_MY_ADDITIONS } from '../../../mock/server/product.submain.mock';
-import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import FormatHelper from '../../../utils/format.helper';
+import { API_CODE, API_CMD } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
 export default class ProductAdditions extends TwViewController {
@@ -32,11 +31,11 @@ export default class ProductAdditions extends TwViewController {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        res.render('product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
+        res.render('addition/product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
       });
     } else {
       this.getAddtions(params).subscribe(additions => {
-        res.render('product.additions.html', { svcInfo, additionData: { additions }, params, pageInfo });
+        res.render('addition/product.additions.html', { svcInfo, additionData: { additions }, params, pageInfo });
       });
     }
   }
