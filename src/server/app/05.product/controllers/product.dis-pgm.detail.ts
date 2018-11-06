@@ -10,6 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
+import DateHelper from '../../../utils/date.helper';
 
 class ProductDisPgmDetail extends TwViewController {
 
@@ -26,11 +27,15 @@ class ProductDisPgmDetail extends TwViewController {
       prodId: prodId
     };
     if ( prodId === 'NA00004430' ) {
+      const curDate = new Date();
+      let nextDate = curDate.getFullYear() + 1;
       if ( monthCode === 'M0012' ) {
         data.monthNm = '12';
       } else if ( monthCode === 'M0024' ) {
         data.monthNm = '24';
+        nextDate = curDate.getFullYear() + 2;
       }
+      data.monthDetail = DateHelper.getShortDateNoDot(curDate) + ' ~ ' + DateHelper.getShortDateNoDot(nextDate);
       data.monthCode = monthCode;
 
       Observable.combineLatest(
