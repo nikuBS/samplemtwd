@@ -30,7 +30,7 @@
                     <div class="submain-myfeeproducts-wrap">
                         <a href="/myt/join/product/fee-plan" class="submain-myfeeproducts">
                             <h3 class="title">사용중인 상품</h3>
-                            <p class="text"><%= myWire.feeProdNm %></p>
+                            <p class="text"><span class="tx-bold"><%= myWire.productJoinsInfo.recentlyJoinsProdNm %></span><% if (myWire.productJoinsInfo.productCount > 0) { %> 외 <%= myWire.productJoinsInfo.productCount %>건<% } %></p>
                         </a>
                     </div>
                 </div>
