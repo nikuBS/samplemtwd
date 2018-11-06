@@ -34,8 +34,6 @@ Tw.MyTFarePaymentCashbag.prototype = {
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
-
-    this.$pointCardNumber.maxLength = '16';
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
