@@ -9,79 +9,68 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 export default class ProductAddition extends TwViewController {
   private ADDITION_CODE = 'F01200';
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    if (svcInfo) {
-      Observable.combineLatest(
-        this.getMyAdditions(),
-        this.getPromotionBanners(),
-        this.getBestAdditions(),
-        this.getAdditionBanners(),
-        this.getRecommendedAdditions(),
-        this.getRecommendedTags()
-      ).subscribe(([myAdditions, banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
-        const error = {
-          code: myAdditions.code || banners.code || bestAdditions.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
-          msg: myAdditions.msg || banners.msg || bestAdditions.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
-        };
+    Observable.combineLatest(
+      this.getMyAdditions(!!svcInfo),
+      this.getPromotionBanners(),
+      this.getBestAdditions(),
+      this.getAdditionBanners(),
+      this.getRecommendedAdditions(),
+      this.getRecommendedTags()
+    ).subscribe(([myAdditions, banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
+      const error = {
+        code:
+          (myAdditions && myAdditions.code) ||
+          banners.code ||
+          bestAdditions.code ||
+          additionBanners.code ||
+          recommendedAdditions.code ||
+          recommendedTags.code,
+        msg:
+          (myAdditions && myAdditions.msg) ||
+          banners.msg ||
+          bestAdditions.msg ||
+          additionBanners.msg ||
+          recommendedAdditions.msg ||
+          recommendedTags.msg
+      };
 
-        if (error.code) {
-          return this.error.render(res, { ...error, svcInfo });
-        }
-
-        const productData = {
-          myAdditions,
-          banners,
-          bestAdditions,
-          additionBanners,
-          recommendedAdditions,
-          recommendedTags
-        };
-        res.render('addition/product.addition.html', { svcInfo, productData, pageInfo });
-      });
-    } else {
-      Observable.combineLatest(
-        this.getPromotionBanners(),
-        this.getBestAdditions(),
-        this.getAdditionBanners(),
-        this.getRecommendedAdditions(),
-        this.getRecommendedTags()
-      ).subscribe(([banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
-        const error = {
-          code: banners.code || bestAdditions.code || additionBanners.code || recommendedAdditions.code || recommendedTags.code,
-          msg: banners.msg || bestAdditions.msg || additionBanners.msg || recommendedAdditions.msg || recommendedTags.msg
-        };
-
-        if (error.code) {
-          return this.error.render(res, { ...error, svcInfo });
-        }
-
-        const productData = {
-          banners,
-          bestAdditions,
-          additionBanners,
-          recommendedAdditions,
-          recommendedTags
-        };
-        res.render('addition/product.addition.html', { svcInfo, productData, pageInfo });
-      });
-    }
-  }
-
-  private getMyAdditions = () => {
-    return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+      if (error.code) {
+        return this.error.render(res, { ...error, svcInfo });
       }
 
-      return resp.result;
+      const productData = {
+        myAdditions,
+        banners,
+        bestAdditions,
+        additionBanners,
+        recommendedAdditions,
+        recommendedTags
+      };
+      res.render('addition/product.addition.html', { svcInfo, productData, pageInfo });
     });
+  }
+
+  private getMyAdditions = isLogin => {
+    if (isLogin) {
+      return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return {
+            code: resp.code,
+            msg: resp.msg
+          };
+        }
+
+        return resp.result;
+      });
+    }
+
+    return of(undefined);
   }
 
   private getPromotionBanners = () => {
