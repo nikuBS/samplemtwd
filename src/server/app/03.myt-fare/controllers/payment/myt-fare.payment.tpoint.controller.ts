@@ -1,7 +1,7 @@
 /**
  * FileName: myt-fare.payment.tpoint.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.24
+ * Date: 2018.11.7
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -10,10 +10,9 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import {MYT_FARE_PAYMENT_TITLE} from '../../../../types/bff.type';
-import {SELECT_POINT} from '../../../../types/string.old.type';
+import {MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TITLE} from '../../../../types/bff.type';
+import {SELECT_POINT} from '../../../../types/string.type';
 import StringHelper from '../../../../utils/string.helper';
-import {PAYMENT_OPTION_TEXT} from '../../../../types/bff.old.type';
 
 class MyTFarePaymentTPoint extends TwViewController {
 
@@ -49,23 +48,24 @@ class MyTFarePaymentTPoint extends TwViewController {
   }
 
   private parseData(data: any): any {
-    data.cashbagPt = FormatHelper.addComma(data.availTPt);
-    data.cardNum = StringHelper.masking(data.ocbCcno, '*', 10);
+    data.point = FormatHelper.addComma(data.availTPt);
+    data.cardNumber = StringHelper.masking(data.ocbCcno, '*', 10);
     data.endDate = DateHelper.getNextYearShortDate();
 
     return data;
   }
 
   private getAutoData(autoInfo: any): any {
-    // if (autoInfo.code === API_CODE.CODE_00) {
-    //   return {
-    //     strRbpStatTxt: response.result.strRbpStatTxt,
-    //     endDate: FormatHelper.isEmpty(response.result.disOcbEffDate) ? DateHelper.getNextYearShortDate()
-    //       : DateHelper.getShortDateNoDot(response.result.disOcbEffDate),
-    //     ocbTermTodoAmt: FormatHelper.addComma(response.result.ocbTermTodoAmt),
-    //     amtText: FormatHelper.isEmpty(response.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(response.result.ocbTermTodoAmt)
-    //   };
-    // }
+    if (autoInfo.code === API_CODE.CODE_00) {
+      return {
+        isAuto: autoInfo.result.strRbpStatTxt === MYT_FARE_PAYMENT_NAME.IS_AUTO,
+        endDate: FormatHelper.isEmpty(autoInfo.result.disOcbEffDate) ? DateHelper.getNextYearShortDate()
+          : DateHelper.getShortDateNoDot(autoInfo.result.disOcbEffDate),
+        ocbTermTodoAmt: FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt),
+        amtId: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? null : autoInfo.result.ocbTermTodoAmt,
+        amtText: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt)
+      };
+    }
     return null;
   }
 

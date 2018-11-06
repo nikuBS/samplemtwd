@@ -75,12 +75,25 @@ Tw.MyTFarePaymentCashbag.prototype = {
   },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
+
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_POINT,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_POINT
+      title: this._getTitle(),
+      data: this._getData()
     }, $.proxy(this._selectPopupCallback, this, $target));
+  },
+  _getTitle: function () {
+    if (this.$pointType === 'CPT') {
+      return Tw.POPUP_TITLE.SELECT_POINT;
+    }
+    return Tw.POPUP_TITLE.SELECT_TPOINT;
+  },
+  _getData: function () {
+    if (this.$pointType === 'CPT') {
+      return Tw.POPUP_TPL.FARE_PAYMENT_POINT;
+    }
+    return Tw.POPUP_TPL.FARE_PAYMENT_TPOINT;
   },
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
@@ -156,7 +169,7 @@ Tw.MyTFarePaymentCashbag.prototype = {
     var subMessage = this._getSubMessage();
 
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._popupService.afterRequestSuccess('/myt/fare/history/point', '/myt/fare',
+      this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
         Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message, subMessage);
     } else {
       this._payFail(res);
@@ -184,7 +197,7 @@ Tw.MyTFarePaymentCashbag.prototype = {
         Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P';
     } else {
       message += Tw.MYT_FARE_PAYMENT_NAME.PAYMENT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.REQUEST + ' ' +
-        Tw.MYT_FARE_PAYMENT_NAME.POINT + this.$pointSelector.text();
+        Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + this.$pointSelector.text();
     }
     return message;
   },

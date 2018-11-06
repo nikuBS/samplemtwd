@@ -186,7 +186,17 @@ Tw.POPUP_TPL = {
         { 'option': 'point-type', 'attr': 'id="8500"', value: '8,500P' },
         { 'option': 'point-type', 'attr': 'id="9000"', value: '9,000P' },
         { 'option': 'point-type', 'attr': 'id="9500"', value: '9,500P' },
+        { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' }
+      ]
+    }
+  ],
+  FARE_PAYMENT_TPOINT: [
+    {
+      'list': [
         { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' },
+        { 'option': 'point-type', 'attr': 'id="20000"', value: '20,000P' },
+        { 'option': 'point-type', 'attr': 'id="50000"', value: '50,000P' },
+        { 'option': 'point-type', 'attr': 'id="100000"', value: '100,000P' }
       ]
     }
   ],

@@ -50,6 +50,7 @@ Tw.POPUP_TITLE = {
   SELECT_PAYMENT_OPTION: '납부 방법 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '납부포인트 선택',
+  SELECT_TPOINT: 'T포인트 선택',
   SELECT_ACCOUNT: '계좌번호 선택',
   SELECT_PAYMENT_DATE: '요금납부일 선택',
   CHANGE_PAYMENT_DATE: '요금납부일 변경',
