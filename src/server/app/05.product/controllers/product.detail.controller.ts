@@ -128,7 +128,9 @@ class ProductDetail extends TwViewController {
         return true;
       }
 
-      contentsResult.LIST.push(item);
+      contentsResult.LIST.push(Object.assign(item, {
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
+      }));
     });
 
     return contentsResult;

@@ -69,7 +69,6 @@ export const URL = {
   '/product/plans': { login: false, id: 'MP_02', title: '모바일 요금제' },
   '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
-  '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세보기' },
   '/product/join': { login: true, id: 'MP_02_02_06', title: '상품 가입' },
   '/product/terminate': { login: true, id: 'MP_02_02_06', title: '상품 해지' },
   '/product/additions-terminate': { login: true, id: 'MV_01_02_03', title: '부가상품 해지' },
