@@ -1,4 +1,5 @@
 /**
+ * 상품 해지(공통)
  * FileName: product.terminate.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.13

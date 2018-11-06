@@ -36,7 +36,9 @@ Tw.BUTTON_LABEL = {
   CLOSE: '닫기',
   MORE: '더보기',
   LINE: '회선관리',
-  CHANGE: '변경하기'
+  CHANGE: '변경하기',
+  APPLY: '신청하기',
+  NEXT: '다음'
 };
 
 Tw.POPUP_TITLE = {
@@ -65,7 +67,8 @@ Tw.POPUP_TITLE = {
   SELECT_SUBJECT_TYPE: '대상 설정',
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
-  EXTERNAL_LINK: '외부 사이트로 연결됩니다.'
+  EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
+  SELECT_FAMILY_TYPE: '가족선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -915,3 +918,13 @@ Tw.MYT_JOIN_TB_FREE_BENEFIT = {
   '2053-DAT1G': '데이터500M',
   '2053-LTESF': 'LTE안심옵션'
 };
+
+Tw.FAMILY_TYPE = {
+  SPOUSE: '배우자',
+  CHILDREN: '자녀',
+  PARENTS: '부모',
+  BROTHER: '형제자매',
+  GRANDPARENTS: '(증)조부모',
+  ME: '본인 / 가족대표'
+};
+
