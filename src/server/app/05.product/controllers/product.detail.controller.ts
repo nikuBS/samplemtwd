@@ -11,6 +11,8 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
 import { PRODUCT_CTG_NAME } from '../../../types/string.type';
+import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
+import ProductHelper from '../helper/product.helper';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -87,7 +89,7 @@ class ProductDetail extends TwViewController {
     }
 
     return Object.assign(prodRedisInfo, {
-      summary: Object.assign(prodRedisInfo.summary, FormatHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
+      summary: Object.assign(prodRedisInfo.summary, ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
         prodRedisInfo.summary.basOfrDataQtyCtt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt)),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
       contents: this._convertContents(prodRedisInfo.contents),
@@ -186,7 +188,7 @@ class ProductDetail extends TwViewController {
 
     return Object.assign(seriesInfo, {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        return Object.assign(item, FormatHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
+        return Object.assign(item, ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
           item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
       })
     });

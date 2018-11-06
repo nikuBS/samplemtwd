@@ -11,6 +11,7 @@ import { MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import ProductHelper from '../../../05.product/helper/product.helper';
 
 class MyTJoinProductFeePlan extends TwViewController {
   constructor() {
@@ -118,7 +119,7 @@ class MyTJoinProductFeePlan extends TwViewController {
       disProdList = FormatHelper.getValidVars(wirelessPlan.disProdList, []),
       optProdList = FormatHelper.getValidVars(wirelessPlan.optProdList, []),
       comProdList = FormatHelper.getValidVars(wirelessPlan.comProdList, []),
-      spec = FormatHelper.convProductSpecifications(basFeeTxt, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt);
+      spec = ProductHelper.convProductSpecifications(basFeeTxt, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt);
 
     return Object.assign(wirelessPlan, {
       feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {

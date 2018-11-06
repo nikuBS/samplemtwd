@@ -12,6 +12,7 @@ import { API_CMD } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
 import {PROD_CTG_CD_CODE} from '../../../types/bff.type';
+import ProductHelper from '../helper/product.helper';
 
 class ProductTerminate extends TwViewController {
   constructor() {
@@ -27,7 +28,7 @@ class ProductTerminate extends TwViewController {
   private _convertAdditionsJoinTermInfo(joinTermInfo): any {
     return Object.assign(joinTermInfo, {
       preinfo: this._convertAdditionsPreInfo(joinTermInfo.preinfo),
-      stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
     });
   }
 
@@ -46,31 +47,6 @@ class ProductTerminate extends TwViewController {
       autoJoinList: this._convertAutoJoinTermList(preInfo.autoJoinList),
       autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
     });
-  }
-
-  /**
-   * @param stipulationInfo
-   * @private
-   */
-  private _convertStipulationInfo(stipulationInfo): any {
-    if (FormatHelper.isEmpty(stipulationInfo) || FormatHelper.isEmpty(stipulationInfo.stipulation)) {
-      return null;
-    }
-
-    return Object.assign(stipulationInfo, {
-      stipulation: Object.assign(stipulationInfo.stipulation, {
-        termStplAgreeCttSummary: stipulationInfo.stipulation.termStplAgreeYn === 'Y' ?
-            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.termStplAgreeHtmlCtt) : ''
-      })
-    });
-  }
-
-  /**
-   * @param html
-   * @private
-   */
-  private _getStripTagsAndSubStrTxt(html): any {
-    return html.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   }
 
   /**

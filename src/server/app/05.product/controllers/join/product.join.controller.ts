@@ -5,14 +5,15 @@
  * Date: 2018.09.11
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { PRODUCT_SETTING, PRODUCT_JOIN } from '../../../mock/server/product.display-ids.mock';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { PROD_CTG_CD_CODE, UNIT } from '../../../types/bff.type';
-import FormatHelper from '../../../utils/format.helper';
+import { PRODUCT_SETTING, PRODUCT_JOIN } from '../../../../mock/server/product.display-ids.mock';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { PROD_CTG_CD_CODE, UNIT } from '../../../../types/bff.type';
+import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import BrowserHelper from '../../../utils/browser.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
+import ProductHelper from '../../helper/product.helper';
 
 class ProductJoin extends TwViewController {
   constructor() {
@@ -79,7 +80,7 @@ class ProductJoin extends TwViewController {
     return Object.assign(joinTermInfo, {
       preinfo: this._convertPlanPreInfo(joinTermInfo.preinfo),
       installmentAgreement: this._convertInstallmentAgreement(joinTermInfo.installmentAgreement),
-      stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
     });
   }
 
@@ -116,63 +117,14 @@ class ProductJoin extends TwViewController {
   }
 
   /**
-   * @param stipulationInfo
-   * @private
-   */
-  private _convertStipulationInfo(stipulationInfo): any {
-    if (FormatHelper.isEmpty(stipulationInfo) || FormatHelper.isEmpty(stipulationInfo.stipulation)) {
-      return null;
-    }
-
-    return Object.assign(stipulationInfo, {
-      stipulation: Object.assign(stipulationInfo.stipulation, {
-        scrbStplAgreeCttSummary: stipulationInfo.stipulation.scrbStplAgreeYn === 'Y' ?
-          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.scrbStplAgreeHtmlCtt) : '',
-        psnlInfoCnsgCttSummary: stipulationInfo.stipulation.psnlInfoCnsgAgreeYn === 'Y' ?
-          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
-        psnlInfoOfrCttSummary: stipulationInfo.stipulation.psnlInfoOfrAgreeYn === 'Y' ?
-            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoOfrHtmlCtt) : '',
-        adInfoOfrCttSummary: stipulationInfo.stipulation.adInfoOfrAgreeYn === 'Y' ?
-            this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
-        existsCount: this._getStipulationYnCnt([stipulationInfo.stipulation.scrbStplAgreeYn, stipulationInfo.stipulation.psnlInfoCnsgAgreeYn,
-          stipulationInfo.stipulation.psnlInfoOfrAgreeYn, stipulationInfo.stipulation.adInfoOfrAgreeYn])
-      })
-    });
-  }
-
-  /**
-   * @param yNarray
-   * @private
-   */
-  private _getStipulationYnCnt(yNarray): any {
-    let count = 0;
-
-    yNarray.forEach((flag) => {
-      if (flag === 'Y') {
-        count++;
-      }
-    });
-
-    return count;
-  }
-
-  /**
-   * @param html
-   * @private
-   */
-  private _getStripTagsAndSubStrTxt(html): any {
-    return html.replace(/(<([^>]+)>)|&nbsp;/ig, '');
-  }
-
-  /**
    * @param preInfo
    * @private
    */
   private _convertPlanPreInfo(preInfo): any {
     return Object.assign(preInfo, {
-      frProdInfo: Object.assign(preInfo.frProdInfo, FormatHelper.convProductSpecifications(preInfo.frProdInfo.basFeeInfo,
+      frProdInfo: Object.assign(preInfo.frProdInfo, ProductHelper.convProductSpecifications(preInfo.frProdInfo.basFeeInfo,
           preInfo.frProdInfo.basOfrDataQtyCtt, preInfo.frProdInfo.basOfrVcallTmsCtt, preInfo.frProdInfo.basOfrCharCntCtt)),
-      toProdInfo: Object.assign(preInfo.toProdInfo, FormatHelper.convProductSpecifications(preInfo.toProdInfo.basFeeInfo,
+      toProdInfo: Object.assign(preInfo.toProdInfo, ProductHelper.convProductSpecifications(preInfo.toProdInfo.basFeeInfo,
           preInfo.toProdInfo.basOfrDataQtyCtt, preInfo.toProdInfo.basOfrVcallTmsCtt, preInfo.toProdInfo.basOfrCharCntCtt)),
       autoJoinList: this._convertAutoJoinTermList(preInfo.autoJoinList),
       autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
@@ -207,7 +159,7 @@ class ProductJoin extends TwViewController {
   private _convertAdditionsJoinTermInfo(joinTermInfo): any {
     return Object.assign(joinTermInfo, {
       preinfo: this._convertAdditionsPreInfo(joinTermInfo.preinfo),
-      stipulationInfo: this._convertStipulationInfo(joinTermInfo.stipulationInfo)
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
     });
   }
 

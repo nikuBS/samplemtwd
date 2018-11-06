@@ -5,14 +5,14 @@
  * Date: 2018.09.11
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import FormatHelper from '../../../utils/format.helper';
-import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { PROD_CTG_CD_CODE, PROD_TTAB_BASIC_DATA_PLUS } from '../../../types/bff.type';
+import FormatHelper from '../../../../utils/format.helper';
+import { PRODUCT_SETTING } from '../../../../mock/server/product.display-ids.mock';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { PROD_CTG_CD_CODE, PROD_TTAB_BASIC_DATA_PLUS } from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
-import BrowserHelper from '../../../utils/browser.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class ProductSetting extends TwViewController {
   constructor() {
