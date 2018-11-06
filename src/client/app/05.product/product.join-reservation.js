@@ -389,8 +389,8 @@ Tw.ProductJoinReservation.prototype = {
 
   _procApply: function(_combinationInfo) {
     var combinationInfo = _combinationInfo || null;
-    console.log(combinationInfo);
-    console.log('* procApply');
+    // console.log(combinationInfo);
+    // console.log('* procApply');
 
     // this._apiService.request(Tw.API_CMD.BFF_DUMMY, {})
     //   .done($.proxy(this._procApplyResult, this));
