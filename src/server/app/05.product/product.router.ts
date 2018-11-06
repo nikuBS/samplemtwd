@@ -14,6 +14,7 @@ import ProductFindMyBestPlans from './controllers/product.find-my-best-plans.con
 import ProductDisPgmJoin from './controllers/product.dis-pgm.join';
 import ProductDisPgmDetail from './controllers/product.dis-pgm.detail';
 import ProductWire from './controllers/wire/product.wire.controller';
+import ProductWires from './controllers/wire/product.wires.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -25,6 +26,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/plans', controller: ProductPlans });
     this.controllers.push({ url: '/additions', controller: ProductAdditions });
     this.controllers.push({ url: '/wire', controller: ProductWire });
+    this.controllers.push({ url: '/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
     this.controllers.push({ url: '/detail/contents/:prodId', controller: ProductDetailContents });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });

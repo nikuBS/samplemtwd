@@ -1,0 +1,207 @@
+<%#
+* FileName: product.wires.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.11.06
+* id: WP_01
+%>
+
+<% include ../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <%- include('../../../common/views/components/header.component.html', { title: '인터넷', svcInfo, option: { line: true } }); %>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 사용중인 상품 -->
+                <% if (myWire) { %>
+                <div class="cont-box noborder gaps-style01">
+                    <div class="submain-myfeeproducts-wrap">
+                        <!-- <a href="#" class="submain-myfeeproducts">
+                                <h3 class="title">사용중인 상품</h3>
+                                <p class="text">band 데이터 퍼펙트S</p>
+                            </a> -->
+                        <button type="button" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text"><% myWire.prodNm %></p>
+                        </button>
+                    </div>
+                </div>
+                <% } %>
+                <!--//사용중인 상품 -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <!-- 인터넷 요금제 -->
+                <div class="cont-box">
+                    <div class="recommendedrate-wrap">
+                        <h3 class="title">인터넷 요금제 </h3>
+                        <!-- <div class="more"><button class="link">더보기</button></div> -->
+                    </div>
+                    <ul class="recommendedrate-list">
+                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                                <div class="products-titleinfo">
+                                    <h5 class="title">T_스마트광랜(다이렉트)</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <p class="product-date">100Mbps</p>
+                                <p class="product-detailtext">가장 경제적인 100M급 초고속 인터넷 요금제</p>
+                            </button>
+                        </li>
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                                <div class="products-titleinfo">
+                                    <h5 class="title">T_스마트광랜(다이렉트)</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <p class="product-date">100Mbps</p>
+                                <p class="product-detailtext">가장 경제적인 100M급 초고속 인터넷 요금제</p>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //인터넷 요금제  -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <div class="cont-box">
+                    <div class="recommendedrate-wrap">
+                        <h3 class="title">인터넷 부가서비스 </h3>
+                        <!-- <div class="more"><button class="link">더보기</button></div> -->
+                    </div>
+                    <ul class="recommendedrate-list">
+                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                                <div class="products-titleinfo">
+                                    <h5 class="title">T_세이퍼(NEW)</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <p class="product-detailtext">PC 보호 및 개인정보 보호까지 가능한 종합 보안 서비스</p>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //인터넷 요금제  -->
+
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <h3>다른상품 더보기</h3>
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list add-prod">
+                                    <li>
+                                        <div>
+                                            <a href="/product">
+                                                <span class="ico type1"></span>
+                                                <span>모바일<br />요금제</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <a href="/product/addition">
+                                                <span class="ico type1"></span>
+                                                <span>모바일<br />부가상품</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <a href="/benefit/index">
+                                                <span class="ico type2"></span>
+                                                <span>혜택&middot;할인</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button> <!-- TODO: 링크 이동 필요(화면 ID: TR)-->
+                                                <span class="ico type3"></span>
+                                                <span>T 로밍</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!-- // cont-box -->
+
+                <!-- 하단 link영역 -->
+                <div class="cont-box nogaps noborder">
+                    <ul class="link-long-list nobg">
+                        <li>
+                            <div class="link-long">
+                                <button> <!-- TODO: 링크 이동 필요(ID: MS_04_01)-->
+                                    <span class="ico-thum"></span>결합할인
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <a href="/myt/join/product/fee-plan">
+                                    <span class="ico-thum"></span>나의 가입정보
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button> <!-- TODO: 링크 이동 필요(ID: BE_01)-->
+                                    <span class="ico-thum"></span>멤버십 이용안내
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <a href="/product/find-my-best-plans">
+                                    <span class="ico-thum"></span>내게 맞는 요금제
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //하단 link영역 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+<% include ../components/javascript.component.html %>
+<% include ../components/end.component.html %>
