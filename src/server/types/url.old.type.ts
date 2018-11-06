@@ -134,6 +134,7 @@ export const URL = {
   '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
   '/product/plans': { login: false, id: 'MP_02', title: '모바일 요금제' },
   '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
+  '/product/wire': { login: false, id: 'WP', title: '인터넷/전화/TV' },
   // direct
   // customer
   '/customer': { login: false, id: 'CI_01_01', title: '고객센터 서브메인' }, // 고객센터 서브메인
