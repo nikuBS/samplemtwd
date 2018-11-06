@@ -6,6 +6,7 @@ import BenefitMyBenefitRainbowPointAdjustment from './controllers/my-benefit/ben
 import BenefitMyBenefitRainbowPointTransfer from './controllers/my-benefit/benefit.my-benefit.rainbow-point.transfer.controller';
 import BenefitMyBenefit from './controllers/my-benefit/benefit.myt-benefit.controller';
 import BenefitMilitary from './controllers/my-benefit/benefit.myt-benefit.military';
+import BenefitCookiz from './controllers/my-benefit/benefit.myt-benefit.cookiz';
 
 class BenefitRouter extends TwRouter {
   constructor() {
@@ -18,6 +19,7 @@ class BenefitRouter extends TwRouter {
     this.controllers.push({ url: '/my-benefit/rainbow-point/adjustment', controller: BenefitMyBenefitRainbowPointAdjustment });
     this.controllers.push({ url: '/my-benefit/rainbow-point/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
     this.controllers.push({ url: '/my-benefit/military', controller: BenefitMilitary });
+    this.controllers.push({ url: '/my-benefit/cookiz', controller: BenefitCookiz });
     this.controllers.push({ url: '/my-benefit', controller: BenefitMyBenefit });
   }
 }

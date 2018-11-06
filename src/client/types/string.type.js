@@ -892,11 +892,10 @@ Tw.BENEFIT = {
     },
     UNIT: '점'
   },
-  MILITARY: {
-    TYPE: {
-      E: '적립',
-      U: '사용'
-    }
+  TYPE: {
+    E: '적립',
+    U: '사용',
+    X: '소멸'
   }
 };
 
