@@ -22,6 +22,7 @@ Tw.CustomerEmailCategory.prototype = {
   _init: function () {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
+    this._setInitialTemplate();
   },
 
   _cachedElement: function () {
@@ -37,6 +38,10 @@ Tw.CustomerEmailCategory.prototype = {
     this.$container.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
     this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
     this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
+  },
+
+  _setInitialTemplate: function () {
+    // TODO : remake inquiry
   },
 
   _onClickService1Depth: function () {

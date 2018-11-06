@@ -44,9 +44,26 @@ Tw.CustomerEmailQuality.prototype = {
     }
   },
 
+  _makeParams: function () {
+    var arrPhoneNumber = $('.fe-quality_phone').val().split('-');
+    var params = {
+      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
+      cntcNumClCd: $('.fe-quality-cntcNumClCd').find(':checked').val(),
+      inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(),
+      // subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
+      content: this.$wrap_tpl_quality.find('.fe-text_content').val(),
+      cntcNum1: arrPhoneNumber[0],
+      cntcNum2: arrPhoneNumber[1],
+      cntcNum3: arrPhoneNumber[2],
+      email: $('.fe-quality_email').val(),
+      smsRcvYn: $('.fe-quality_sms').prop('checked') ? 'Y' : 'N'
+    };
+
+    return params;
+  },
+
   _requestCell: function () {
     var htParams = $.extend(this._makeParams(), {
-      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       selSvcMgmtNum: $('.fe-line').data('svcmgmtnum'),
       inptZip: $('.fe-inptZip').val(),
       inptBasAddr: $('.fe-inptBasAddr').val(),
@@ -56,7 +73,7 @@ Tw.CustomerEmailQuality.prototype = {
         place_detail: $('.fe-place_detail').val(),
         text_content: $('.fe-text_content').val(),
         occurrence_date: $('.fe-occurrence_date').val(),
-        occurrence_detail: $('.occurrence_detail').val(),
+        occurrence_detail: $('.fe-occurrence_detail').val(),
         inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val()
       })
     });
@@ -72,23 +89,6 @@ Tw.CustomerEmailQuality.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
       .done($.proxy(this._onSuccessRequest, this));
-  },
-
-  _makeParams: function () {
-    var arrPhoneNumber = $('.fe-quality_phone').val().split('-');
-    var params = {
-      cntcNumClCd: $('.fe-quality-cntcNumClCd').find(':checked').val(),
-      inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(),
-      cntcNum1: arrPhoneNumber[0],
-      cntcNum2: arrPhoneNumber[1],
-      cntcNum3: arrPhoneNumber[2],
-      email: $('.fe-quality_email').val(),
-      // subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
-      content: this.$wrap_tpl_quality.find('.fe-text_content').val(),
-      smsRcvYn: $('.fe-quality_sms').prop('checked') ? 'Y' : 'N'
-    };
-
-    return params;
   },
 
   _onSuccessRequest: function (res) {

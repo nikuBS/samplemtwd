@@ -4,7 +4,6 @@
 * Date: 2018.10.25
 %>
 <% include ../../components/start.component.html %>
-
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -27,60 +26,75 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="email-consult-list">
+                    <% inquiryList.map( (inquiry) => { %>
                     <li>
-                        <a href="#" class="list-inner">
-                            <strong class="tit">이메일 상담 제목(최대2줄) 이메일 상담 제목 (최대2줄) 이메일 상담 제목(최대2줄)</strong>
-                            <span class="date-state"><em class="date">2018.07.26</em> <span class="state">처리중</span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <button class="list-inner">
-                            <strong class="tit">이메일 상담 제목(최대2줄)</strong>
-                            <span class="date-state"><em class="date">2018.07.26</em> <span class="state">답변완료</span></span>
-                        </button>
-                        <ul>
-                            <li>
-                                <button class="list-inner">
-                                    <em class="again">재문의</em>
-                                    <strong class="tit">이메일sdss 상담 제목(최대2줄)</strong>
-                                    <span class="date-state"><em class="date">2018.07.26</em> <span class="state">답변완료</span></span>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="list-inner">
-                                    <em class="again">재문의</em>
-                                    <strong class="tit">이메일sdss 상담 제목(최대2줄)</strong>
-                                    <span class="date-state"><em class="date">2018.07.26</em> <span class="state">답변완료</span></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <button class="list-inner">
-                            <strong class="tit">이메일 상담 제목(최대2줄)</strong>
-                            <span class="date-state"><em class="date">2018.07.26</em> <span class="state">처리중</span></span>
+                        <button data-inqId="<%-inquiry.inqId%>" data-inqClCd="<%-inquiry.inqClCd%>" class="list-inner fe-btn_history_detail">
+                            <strong class="tit"><%-inquiry.title%></strong>
+                            <span class="date-state">
+                                <em class="date"><%-convertDate(inquiry.rgstDt)%></em>
+                                <% if ( inquiry.supInqId === '' ) { %>
+                                <span class="state">처리중</span>
+                                <% } else { %>
+                                <span class="state">답변완료</span>
+                                <% } %>
+                            </span>
                         </button>
                     </li>
-                    <li>
-                        <button class="list-inner">
-                            <strong class="tit">이메일 상담 제목(최대2줄)</strong>
-                            <span class="date-state"><em class="date">2018.07.26</em> <span class="state">처리중</span></span>
-                        </button>
-                    </li>
+                    <% }) %>
+                    <!--<li>-->
+                    <!--<a href="#" class="list-inner">-->
+                    <!--<strong class="tit">이메일 상담 제목(최대2줄) 이메일 상담 제목 (최대2줄) 이메일 상담 제목(최대2줄)</strong>-->
+                    <!--<span class="date-state"><em class="date">2018.07.26</em> <span class="state">처리중</span></span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<button class="list-inner">-->
+                    <!--<strong class="tit">이메일 상담 제목(최대2줄)</strong>-->
+                    <!--<span class="date-state"><em class="date">2018.07.26</em> <span class="state">답변완료</span></span>-->
+                    <!--</button>-->
+                    <!--<ul>-->
+                    <!--<li>-->
+                    <!--<button class="list-inner">-->
+                    <!--<em class="again">재문의</em>-->
+                    <!--<strong class="tit">이메일sdss 상담 제목(최대2줄)</strong>-->
+                    <!--<span class="date-state"><em class="date">2018.07.26</em> <span class="state">답변완료</span></span>-->
+                    <!--</button>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<button class="list-inner">-->
+                    <!--<em class="again">재문의</em>-->
+                    <!--<strong class="tit">이메일sdss 상담 제목(최대2줄)</strong>-->
+                    <!--<span class="date-state"><em class="date">2018.07.26</em> <span class="state">답변완료</span></span>-->
+                    <!--</button>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<button class="list-inner">-->
+                    <!--<strong class="tit">이메일 상담 제목(최대2줄)</strong>-->
+                    <!--<span class="date-state"><em class="date">2018.07.26</em> <span class="state">처리중</span></span>-->
+                    <!--</button>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<button class="list-inner">-->
+                    <!--<strong class="tit">이메일 상담 제목(최대2줄)</strong>-->
+                    <!--<span class="date-state"><em class="date">2018.07.26</em> <span class="state">처리중</span></span>-->
+                    <!--</button>-->
+                    <!--</li>-->
                 </ul>
-
                 <!--<div class="bt-more">-->
-                    <!--<button>더보기</button>-->
+                <!--<button>더보기</button>-->
                 <!--</div>-->
             </div>
             <!--// .cont-box -->
-
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
                 <div class="notice-comp-infolist">
                     <dl>
                         <dd>상담내역은 최근 6개월까지만 확인 가능합니다.</dd>
-                        <dd>고객님의 정보보호를 위해, 이동전화 문의 시 10일 후, 인터넷/IPTV/집전화/인터넷전화 문의 시 30일 후 (상담 접수일 기준) 고객님께서 제공한 정보(카드/계좌, 연락처, 주소 등)가 일부 암호화(*) 됩니다.</dd>
+                        <dd>고객님의 정보보호를 위해, 이동전화 문의 시 10일 후, 인터넷/IPTV/집전화/인터넷전화 문의 시 30일 후 (상담 접수일 기준) 고객님께서 제공한 정보(카드/계좌, 연락처, 주소 등)가 일부
+                            암호화(*) 됩니다.
+                        </dd>
                         <dd>접수된 문의는 접수 순서에 따라 순차적으로 진행됩니다.</dd>
                     </dl>
                 </div>
@@ -90,11 +104,11 @@
     </div>
     <!-- // .container-wrap -->
 </div>
-    <% include ../../components/javascript.component.html %>
-    <script>
-      $(document).ready(function () {
-        new Tw.CustomerEmailHistory($('.wrap'));
-      });
-    </script>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerEmailHistory($('.wrap'));
+  });
+</script>
 </body>
 <% include ../../components/end.component.html %>

@@ -1,7 +1,7 @@
 /**
  * FileName: customer.email.history.detail.js
  * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.1
+ * Date: 2018.11.05
  */
 
 Tw.CustomerEmailHistoryDetail = function (rootEl) {
@@ -23,6 +23,29 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-btn_retry_inquiry', $.proxy(this._retryInquiry, this));
+    this.$container.on('click', '.fe-btn_remove_inquiry', $.proxy(this._removeInquiry, this));
+  },
+
+  _retryInquiry: function (e) {
+    $(e.currentTarget);
+    // this._apiService.request(Tw.API_CMD.BFF_08_0061, { inqId: 'M', inqClCd: '', svcDvcClCd: 'M' })
+    //   .done($.proxy(this._onSuccessHistoryList, this));
+  },
+
+  _removeInquiry: function (e) {
+    this._apiService.request(Tw.API_CMD.BFF_08_0062, {
+      inqId: $(e.currentTarget).data('inqid'),
+      inqClCd: $(e.currentTarget).data('inqclcd')
+    }).done($.proxy(this._onSuccessRemoveInquiry, this));
+  },
+
+  _onSuccessRemoveInquiry: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._history.replaceURL('/customer');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   }
 };
 

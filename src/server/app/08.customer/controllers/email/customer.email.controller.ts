@@ -9,6 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD } from '../../../../types/api-command.type';
+import DateHelper from '../../../../utils/date.helper';
 
 class CustomerEmail extends TwViewController {
   constructor() {
@@ -36,7 +37,23 @@ class CustomerEmail extends TwViewController {
         ));
         break;
       case 'history':
-        res.render('email/customer.email.history.html', responseData);
+        this.getEmailHistory()
+          .subscribe((response) => {
+            res.render('email/customer.email.history.html',
+              Object.assign({}, responseData, {
+                inquiryList: response.result,
+                convertDate: this.convertDate
+              })
+            );
+          })
+        break;
+      case 'history-detail':
+        this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
+          .subscribe((response) => {
+            res.render('email/customer.email.history.detail.html',
+              Object.assign({}, responseData, { inquiryInfo: response.result })
+            );
+          })
         break;
       default:
         // Observable.combineLatest(
@@ -45,6 +62,24 @@ class CustomerEmail extends TwViewController {
         // });
         res.render('email/customer.email.html', responseData);
     }
+  }
+
+  private getEmailHistory() {
+    return this.apiService.request(API_CMD.BFF_08_0060, {
+      svcDvcClCd: 'M'
+    });
+  }
+
+  private getEmailHistoryDetail(inqId, inqClCd) {
+    return this.apiService.request(API_CMD.BFF_08_0061, {
+      inqId: inqId,
+      inqClCd: inqClCd,
+      svcDvcClCd: 'M'
+    });
+  }
+
+  public convertDate(sDate) {
+    return DateHelper.getShortDate(sDate);
   }
 }
 
