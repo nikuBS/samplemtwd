@@ -223,12 +223,16 @@
             <% for (var i in prodRedisInfo.contents.LIST) { %>
             <li>
               <div class="link-long">
-                <a href="/product/detail/contents/<%= prodId %>#contents<%= i %>">
+                <button class="fe-btn_contents_detail" data-contents="<%= i %>">
                   <%= prodRedisInfo.contents.LIST[i].briefTitNm %>
                   <span class="tx-sub">
                     <span class="ico"><span class="blind">보기</span></span>
                   </span>
-                </a>
+                </button>
+              </div>
+              <div class="none fe-contents_detail_item" aria-hidden="true"
+                 data-title="<%= prodRedisInfo.contents.LIST[i].briefTitNm %>" data-class="<%= prodRedisInfo.contents.LIST[i].vslClass %>">
+                <%- prodRedisInfo.contents.LIST[i].ledDtlHtmlCtt %>
               </div>
             </li>
             <% } %>

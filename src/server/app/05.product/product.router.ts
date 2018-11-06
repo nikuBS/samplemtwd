@@ -4,7 +4,6 @@ import ProductJoin from './controllers/join/product.join.controller';
 import ProductJoinReservation from './controllers/join/product.join.reservation.controller';
 import ProductSetting from './controllers/setting/product.setting.controller';
 import ProductTerminate from './controllers/product.terminate.controller';
-import ProductDetailContents from './controllers/product.detail.contents.controller';
 import ProductInfinityBenefitUsageHistory from './controllers/product.infinity-benefit-usage-history.controller';
 import Product from './controllers/product.controller';
 import ProductAddition from './controllers/addition/product.addition.controller';
@@ -28,7 +27,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wire', controller: ProductWire });
     this.controllers.push({ url: '/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
-    this.controllers.push({ url: '/detail/contents/:prodId', controller: ProductDetailContents });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
     this.controllers.push({ url: '/join-reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
