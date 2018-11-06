@@ -2546,7 +2546,8 @@
     padding: 0.5rem 0 0.75rem;
     font-size: 1.5rem;
     font-family: "TgothicBlack", Roboto, sans-serif;
-    line-height: 1; }
+    line-height: 1;
+    position: relative; }
   .charge-guide-wrap .tit02 {
     display: block;
     padding: 0.625rem 0 0.75rem;
@@ -2584,6 +2585,14 @@
         padding-left: 0; }
         .charge-guide-wrap [class^="sub-disc"] .elem:first-of-type:before {
           display: none; }
+    .charge-guide-wrap [class^="sub-disc"] .ico {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      vertical-align: middle; }
+      .charge-guide-wrap [class^="sub-disc"] .ico.ico-pin {
+        background: url(/img/ico/ico-pin.png) no-repeat;
+        background-size: 0.75rem auto; }
   .charge-guide-wrap .sub-disc01 {
     overflow: hidden;
     display: block;
@@ -2612,11 +2621,19 @@
     top: 0; }
   .charge-guide-wrap button.bt-link-tx, .charge-guide-wrap a.bt-link-tx {
     font-size: 0.8125rem; }
-  .charge-guide-wrap .list-type li {
+  .charge-guide-wrap .list-type > li {
     padding: 1.25rem 0;
     border-top: 1px solid #e1e1e1; }
-    .charge-guide-wrap .list-type li:first-of-type {
+    .charge-guide-wrap .list-type > li:first-of-type {
       border-top: 0; }
+    .charge-guide-wrap .list-type > li .basic-list ul li {
+      padding-top: 0.625rem; }
+      .charge-guide-wrap .list-type > li .basic-list ul li .title {
+        width: 30%; }
+      .charge-guide-wrap .list-type > li .basic-list ul li .tx-cont {
+        width: 70%; }
+      .charge-guide-wrap .list-type > li .basic-list ul li:first-of-type {
+        padding-top: 0; }
 
 .ellipsis {
   width: 100%;
@@ -2658,6 +2675,8 @@
       color: #666;
       font-size: 0.8125rem;
       padding-top: 0.25rem; }
+    .basic-list ul li .title.gray {
+      color: #666; }
   .basic-list ul li .tx-cont {
     font-size: 0.9375rem;
     text-align: right; }
@@ -2748,6 +2767,10 @@
     border-top: none; }
   .basic-list.li-line ul li:last-of-type {
     padding-bottom: 0; }
+
+.basic-list.li-line2 ul li {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 0.9375rem 0; }
 
 .basic-list.one-line ul li .title, .basic-list.one-line ul li .tx-cont {
   vertical-align: middle; }
@@ -2875,6 +2898,11 @@
 .tx-black3 {
   color: #666 !important; }
 
+.top-line {
+  border-top: 1px solid #e1e1e1;
+  padding-top: 1.25rem;
+  margin-top: 1.25rem; }
+
 .required-mark {
   display: inline-block;
   margin-left: 0.3125rem;
@@ -2883,6 +2911,11 @@
   height: 0.625rem;
   background: url(/img/ico/ico-group.png) no-repeat -2.0625rem -25.4375rem;
   background-size: 3.125rem auto; }
+
+.required-mark2 {
+  display: inline-block;
+  margin-left: 0.1875rem;
+  color: #e22f26; }
 
 .noti-words {
   padding-top: 1.25rem;
@@ -3456,6 +3489,8 @@
   font-size: 0.8125rem;
   color: #666;
   line-height: 1.1875rem; }
+  .cont-noti .type3.bk {
+    color: #000; }
 
 .cont-noti .type4 {
   font-size: 0.8125rem;
@@ -3678,7 +3713,8 @@
   .myinfo-wrap .ico-wrap {
     position: absolute;
     right: 0;
-    top: 0; }
+    top: 0;
+    overflow: hidden; }
     .myinfo-wrap .ico-wrap [class^="ico-ill-"] {
       margin-top: 0.625rem; }
       .myinfo-wrap .ico-wrap [class^="ico-ill-"]:first-of-type {
@@ -4013,6 +4049,12 @@
   font-size: 0.875rem;
   line-height: 1.375rem; }
 
+.basic-text .top-tx-m {
+  font-size: 0.9375rem;
+  line-height: 1.3125rem; }
+  .basic-text .top-tx-m.bk2 {
+    color: #212121; }
+
 .basic-text .top-tx-s {
   font-size: 0.8125rem;
   line-height: 1.1875rem; }
@@ -4023,6 +4065,11 @@
     font-size: 0.875rem;
     line-height: 1.375rem;
     list-style: decimal; }
+
+.basic-text.border {
+  border: 1px solid #d1d1d1;
+  padding: 0.8125rem;
+  border-radius: 0.3125rem; }
 
 .inputbox.bt-add.error .inner {
   display: table;
@@ -4225,6 +4272,32 @@
   .cont-box .tit-type3.bk {
     color: #000; }
 
+.cont-box .tit-type4 {
+  font-size: 0.875rem; }
+
+.title-wrap {
+  position: relative; }
+  .title-wrap .bt-detail {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 0.9375rem;
+    padding-right: 1.25rem; }
+    .title-wrap .bt-detail:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      display: inline-block;
+      width: 0.8125rem;
+      height: 0.5rem;
+      margin: -0.25rem 0 0 0;
+      background: url(/img/ico/ico-group.png) no-repeat -1.875rem -22.4375rem;
+      background-size: 3.125rem auto; }
+    .title-wrap .bt-detail.open:after {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg); }
+
 .popup .popup-info .btn-box2 {
   border-top: 1px solid #000; }
 
@@ -4298,6 +4371,81 @@
     display: table-cell;
     vertical-align: middle;
     font-size: 0.8125rem; }
+
+.link-area {
+  line-height: 1.875rem;
+  color: #3b98e6; }
+
+.place-list dl {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e1e1e1; }
+  .place-list dl dt {
+    font-size: 0.9375rem;
+    color: #212121; }
+  .place-list dl dd {
+    padding-top: 1.125rem; }
+    .place-list dl dd.time {
+      font-size: 0.9375rem;
+      color: #3b98e6;
+      font-weight: 700; }
+    .place-list dl dd.sub-tx {
+      padding-top: 0;
+      font-size: 0.8125rem;
+      color: #666; }
+    .place-list dl dd .ico-list {
+      padding: 0.625rem 1.25rem 1.25rem;
+      background: #ebf5fe;
+      overflow: hidden; }
+      .place-list dl dd .ico-list li {
+        float: left;
+        width: 33.33333%;
+        font-size: 0.6875rem;
+        color: #666;
+        text-align: center;
+        white-space: nowrap; }
+        .place-list dl dd .ico-list li .ico {
+          display: block;
+          margin: 0 auto;
+          width: 3.5rem;
+          height: 3.5rem; }
+          .place-list dl dd .ico-list li .ico.type1 {
+            background: url(/img/ico/ico-loaming1.png);
+            background-size: 3.5rem auto; }
+          .place-list dl dd .ico-list li .ico.type2 {
+            background: url(/img/ico/ico-loaming2.png);
+            background-size: 3.5rem auto; }
+          .place-list dl dd .ico-list li .ico.type3 {
+            background: url(/img/ico/ico-loaming3.png);
+            background-size: 3.5rem auto; }
+  .place-list dl:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none; }
+
+.mapimg-area {
+  padding-top: 1.25rem; }
+  .mapimg-area img {
+    width: 100%; }
+
+.more-view {
+  color: #fff;
+  display: inline-block;
+  font-size: 0.875rem;
+  padding-right: 0.9375rem;
+  position: relative; }
+  .more-view:after {
+    content: '';
+    display: inline-block;
+    width: 0.4375rem;
+    height: 0.8125rem;
+    background: url(/img/product/ico-arw02.png) no-repeat;
+    background-size: 0.4375rem auto;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
 
 /* 김연주 */
 .data-result {
@@ -6249,6 +6397,159 @@ a.bt-link-tx.underline.small {
       line-height: 1.75rem; }
     .discount-location li .btn {
       float: right; }
+
+/* 로밍안내 */
+.loaming-slide li {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 14.5rem;
+  height: 10.625rem;
+  padding: 1rem 0 1rem 1.25rem;
+  background: #e6f2fe;
+  border-radius: 0.1875rem;
+  margin-right: 0.625rem; }
+  .loaming-slide li:last-child {
+    margin-right: 0; }
+  .loaming-slide li .ico {
+    display: inline-block;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: url(/img/ico/ico-loam-slide.png);
+    background-size: 3.5rem; }
+  .loaming-slide li .tit {
+    padding: 0.8125rem 0 0.125rem;
+    font-size: 1.125rem;
+    font-weight: 700; }
+  .loaming-slide li .txt {
+    font-size: 0.75rem;
+    color: #666; }
+
+.loaming-tit {
+  padding: 1.75rem 1rem 0;
+  margin: 0 -1rem;
+  border-top: 1px solid #e1e1e1; }
+  .loaming-tit:first-child {
+    padding: 0;
+    margin: 0;
+    border: 0; }
+  .loaming-tit .num {
+    font-size: 0.75rem;
+    font-family: "TgothicBlack", Roboto, sans-serif;
+    color: #e22f26;
+    line-height: 0.875rem; }
+  .loaming-tit .tit {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.375rem; }
+
+.btn-loamg {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 1.25rem;
+  margin-top: 1.0625rem;
+  text-align: left;
+  border-radius: 0.1875rem;
+  background: url(/img/ico/ico-btloam.png) no-repeat #ebf5fe 91% 50%;
+  background-size: 2.625rem; }
+  .btn-loamg .tit {
+    display: block;
+    font-size: 0.9375rem; }
+  .btn-loamg .txt {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: #666; }
+
+.loaming-download {
+  padding: 0 1rem; }
+  .loaming-download li {
+    position: relative;
+    padding: 1.4375rem 0;
+    border-top: 1px solid #e1e1e1; }
+    .loaming-download li:first-child {
+      border: 0; }
+    .loaming-download li .tit {
+      font-size: 0.8125rem; }
+    .loaming-download li .txt {
+      margin-top: 0.1875rem;
+      font-size: 0.8125rem;
+      color: #666; }
+    .loaming-download li .btn-down {
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      background: url(/img/ico/bt-loam-down.png);
+      background-size: 2rem;
+      white-space: nowrap;
+      text-indent: 100%; }
+
+.loaming-tel-info {
+  padding: 0 1rem; }
+  .loaming-tel-info li {
+    position: relative;
+    padding: 1.25rem 0;
+    border-top: 1px solid #e1e1e1; }
+    .loaming-tel-info li .tit {
+      font-size: 0.8125rem;
+      color: #666; }
+    .loaming-tel-info li .tel-num {
+      font-size: 1.125rem;
+      font-family: "TgothicBlack", Roboto, sans-serif;
+      font-weight: 700; }
+    .loaming-tel-info li:after {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      width: 3.5rem;
+      height: 3.5rem;
+      content: '';
+      background: url(/img/ico/bg-loaming-tel-info.png);
+      background-size: 3.5rem; }
+    .loaming-tel-info li:first-child {
+      border: 0; }
+
+/* 아코디언 공통 클래스 추가 */
+.accordion .bgnone .acco-list {
+  padding-top: 0.3125rem; }
+  .accordion .bgnone .acco-list .acco-box .acco-tit button:after,
+  .accordion .bgnone .acco-list .acco-box .acco-tit a:after {
+    right: 0.4375rem !important; }
+  .accordion .bgnone .acco-list .acco-box.on > .acco-tit + .acco-cont,
+  .accordion .bgnone .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {
+    padding: 1.875rem 0;
+    background: #fff;
+    border-top: 1px solid #e1e1e1; }
+  .accordion .bgnone .acco-list .acco-box:after {
+    left: 0 !important;
+    right: 0 !important; }
+
+.accordion .bgnone2 .acco-list {
+  padding-top: 0.3125rem; }
+  .accordion .bgnone2 .acco-list .acco-box .acco-tit {
+    padding-left: 0 !important; }
+  .accordion .bgnone2 .acco-list .acco-box .acco-tit button:after,
+  .accordion .bgnone2 .acco-list .acco-box .acco-tit a:after {
+    right: 0.4375rem !important; }
+  .accordion .bgnone2 .acco-list .acco-box.on > .acco-tit + .acco-cont,
+  .accordion .bgnone2 .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {
+    padding: 1.875rem 0;
+    background: #fff;
+    border-top: 1px solid #e1e1e1; }
+  .accordion .bgnone2 .acco-list .acco-box:after {
+    left: 0 !important;
+    right: 0 !important; }
+
+/* 공통테이블 스타일 추가 */
+.data-a {
+  word-break: break-all; }
 
 .refill-coupon-box .coupon-list .coupon-paper {
   display: table;
@@ -10927,32 +11228,6 @@ a.bt-link-tx.underline.small {
     font-size: 0.75rem;
     font-weight: 700; }
 
-/* 상품상세 컬러값 */
-.bg-productdetail .header-wrap {
-  background: #676767; }
-
-.bg-productdetail .productdetails-bg {
-  padding: 0 1.25rem;
-  background: #676767; }
-  .bg-productdetail .productdetails-bg.t-logo {
-    background: #676767; }
-
-.bg-productdetail h1 {
-  font-size: 0;
-  line-heighT: 0;
-  text-indent: -999px; }
-
-.bg-productdetail .prev-step {
-  background: url(/img/ico/bg_prev.png) no-repeat 0 0 !important;
-  background-size: 1.1875rem 1rem !important; }
-
-.bg-productdetail .bt-dropdown {
-  color: #fff !important;
-  background: none !important; }
-  .bg-productdetail .bt-dropdown:after {
-    background: url(/img/ico/bg_header_dropdown2.png) no-repeat 100% 0.125rem !important;
-    background-size: 0.4375rem 0.25rem !important; }
-
 /* 상품상세 */
 .productdetails-wrap {
   height: 15.5rem; }
@@ -10980,6 +11255,7 @@ a.bt-link-tx.underline.small {
       display: inline-block;
       margin-left: 0.625rem;
       color: #fff;
+      font-size: 0.8125rem;
       /*
             &:after{
                 content:"";
@@ -12964,6 +13240,7 @@ a.bt-link-tx.underline.small {
   padding-left: 1.625rem; }
 
 .poll-box .division-two > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .division-two > li {
+  display: inline-block;
   vertical-align: top; }
 
 .poll-box .has-image > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image > li {
@@ -13595,8 +13872,8 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem;
       color: #999; }
     .acco-as .acco-list .list-item02 li .dot {
+      display: block;
       position: relative;
-      text-indent: -0.625rem;
       padding-left: 0.625rem; }
       .acco-as .acco-list .list-item02 li .dot::before {
         content: '';
@@ -14187,7 +14464,7 @@ a.bt-link-tx.underline.small {
 .operation-guide-banner {
   position: relative;
   height: 23.25rem;
-  padding: 3.125rem 0 0 1rem;
+  padding: 2.1875rem 1rem;
   background: #3b98e6;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
@@ -16367,7 +16644,10 @@ a.bt-link-tx.underline.small {
     .status-list-box .list-comp-lineinfo li button {
       padding: 0; }
     .status-list-box .list-comp-lineinfo li .btn-type {
-      overflow: hidden; }
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      color: inherit; }
       .status-list-box .list-comp-lineinfo li .btn-type .lineinfo-user {
         width: 65%; }
         .status-list-box .list-comp-lineinfo li .btn-type .lineinfo-user .info-title {
@@ -16432,6 +16712,235 @@ a.bt-link-tx.underline.small {
     color: #666;
     font-size: 0.8125rem;
     line-height: 1.1875rem; }
+
+.info-link-box {
+  padding: 0.9375rem 0 1.25rem 0; }
+  .info-link-box li:first-child {
+    padding-left: 1rem; }
+  .info-link-box li:last-child {
+    padding-right: 0.375rem; }
+  .info-link-box .info-link-inner {
+    display: block;
+    width: 11.25rem;
+    margin-right: 0.625rem;
+    padding: 1.25rem 0 1.5625rem 1rem;
+    background: #ebf5fe;
+    border-radius: 0.4375rem;
+    color: #3b98e6;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    text-align: left;
+    -webkit-box-shadow: 0 0.1875rem 0.9375rem #dedede;
+            box-shadow: 0 0.1875rem 0.9375rem #dedede; }
+    .info-link-box .info-link-inner .mark {
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: url(/img/product/ico-mark.png) no-repeat;
+      background-size: 8px auto;
+      color: transparent; }
+    .info-link-box .info-link-inner .tit {
+      font-weight: 700; }
+
+.roaming-product {
+  position: relative;
+  padding-top: 1.25rem; }
+  .roaming-product h3 {
+    padding-right: 7.8125rem;
+    font-size: 1.125rem;
+    line-height: 1.5rem; }
+  .roaming-product .b-more {
+    position: absolute;
+    top: 1.25rem;
+    right: 0;
+    height: 1.75rem;
+    padding: 0 0.9375rem;
+    background: #ebf5fe;
+    border-radius: 0.875rem;
+    color: #3b98e6;
+    font-size: 0.8125rem;
+    line-height: 1.75rem; }
+  .roaming-product .recommendedrate-list {
+    margin-top: 1.25rem; }
+
+.roaming-info-box .submain-findyourplan {
+  min-height: 6.875rem;
+  padding-right: 5rem; }
+
+.roaming-card-coupon .tit {
+  font-size: 2.125rem;
+  font-weight: 700; }
+
+.roaming-card-coupon .desc {
+  margin-top: 0.3125rem;
+  font-size: 0.875rem; }
+
+.roaming-card-coupon .stit {
+  margin-top: 1.5625rem;
+  color: #3b98e6;
+  font-size: 0.875rem; }
+
+.roaming-card-coupon .benefit-list li {
+  position: relative;
+  margin-top: 0.625rem;
+  padding-left: 1.875rem;
+  color: #666;
+  font-size: 0.875rem;
+  line-height: 1.3125rem; }
+  .roaming-card-coupon .benefit-list li:before {
+    content: '';
+    position: absolute;
+    top: 0.25rem;
+    left: 0;
+    width: 1.25rem;
+    height: 1rem;
+    background: url(/img/product/ico-card.png) no-repeat;
+    background-size: 20px auto; }
+
+.roaming-card-coupon .bt-slice {
+  margin-top: 1.25rem; }
+
+.card-coupon-wrap {
+  padding: 1.25rem 0; }
+  .card-coupon-wrap h3 {
+    padding-left: 1rem;
+    font-size: 0.9375rem; }
+
+.card-coupon-box {
+  margin-top: 0.9375rem; }
+  .card-coupon-box li:first-child {
+    padding-left: 1rem; }
+  .card-coupon-box li:last-child {
+    padding-right: 0.375rem; }
+  .card-coupon-box .card-coupon-inner {
+    display: block;
+    margin-right: 0.625rem;
+    color: inherit;
+    text-align: left; }
+    .card-coupon-box .card-coupon-inner .inner-box {
+      display: block;
+      overflow: hidden;
+      width: 17.5rem;
+      height: 19.5rem;
+      padding: 0 0.875rem;
+      background: #fff;
+      border-radius: 0.5rem;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+    .card-coupon-box .card-coupon-inner .card {
+      display: block;
+      height: 9.375rem;
+      margin: 0.625rem -0.875rem 0 -0.875rem; }
+      .card-coupon-box .card-coupon-inner .card img {
+        width: 100%;
+        height: 100%;
+        vertical-align: top; }
+    .card-coupon-box .card-coupon-inner .tit {
+      display: block;
+      margin-top: 0.3125rem;
+      font-size: 1.125rem;
+      font-weight: 400; }
+    .card-coupon-box .card-coupon-inner .send {
+      display: block;
+      color: #666;
+      font-size: 0.75rem; }
+    .card-coupon-box .card-coupon-inner .price {
+      display: block;
+      margin-top: 0.9375rem;
+      color: #e22f26;
+      font-size: 0.625rem;
+      font-family: "TgothicMedium", Roboto, sans-serif; }
+      .card-coupon-box .card-coupon-inner .price .num {
+        font-size: 1.125rem;
+        font-family: "TgothicBlack", Roboto, sans-serif; }
+    .card-coupon-box .card-coupon-inner .desc {
+      margin-top: 0.25rem;
+      font-size: 0.8125rem;
+      line-height: 1.1875rem; }
+
+.coupon-way .acco-list .acco-box .acco-tit button {
+  display: block;
+  width: 100%;
+  height: 3.25rem;
+  padding: 0 0 0 0;
+  font-size: 0.875rem;
+  line-height: 3.25rem; }
+  .coupon-way .acco-list .acco-box .acco-tit button:after {
+    right: 0; }
+
+.coupon-way .acco-list .acco-box:after {
+  left: 0;
+  right: 0; }
+
+.coupon-way .acco-list .acco-box.on > .acco-cont, .coupon-way .acco-list .acco-box.imp-view > .acco-cont {
+  padding: 0 !important;
+  border-top: 1px solid #e1e1e1;
+  background: none !important; }
+
+.way-cont-box {
+  padding: 1.875rem 0; }
+  .way-cont-box .txt {
+    font-size: 0.8125rem;
+    line-height: 1.1875rem; }
+  .way-cont-box .order li {
+    position: relative;
+    min-height: 2.75rem;
+    margin-top: 1.25rem;
+    padding-left: 3.4375rem; }
+    .way-cont-box .order li :after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2.75rem;
+      height: 2.75rem;
+      background: url(/img/product/ico-order.png) no-repeat;
+      background-size: 100%; }
+    .way-cont-box .order li strong {
+      font-size: 0.875rem; }
+    .way-cont-box .order li p {
+      color: #666;
+      font-size: 0.75rem; }
+  .way-cont-box .announcement-box {
+    margin-top: 1.875rem; }
+
+.coupon-way-guided li {
+  position: relative;
+  min-height: 2.75rem;
+  margin-top: 1.25rem;
+  padding: 0.125rem 0 0 3.5625rem;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .coupon-way-guided li .bt {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.75rem; }
+  .coupon-way-guided li:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    background-size: 100%;
+    background-repeat: no-repeat; }
+  .coupon-way-guided li.ico-type01:before {
+    background-image: url(/img/product/ico-coupon-guided01.png); }
+  .coupon-way-guided li.ico-type02:before {
+    background-image: url(/img/product/ico-coupon-guided02.png); }
+  .coupon-way-guided li.ico-type03:before {
+    background-image: url(/img/product/ico-coupon-guided03.png); }
+
+.coupon-way-guided + .detail-info-list {
+  margin-top: 1.875rem; }
+  .coupon-way-guided + .detail-info-list li:first-child {
+    border-top: 1px solid #e1e1e1; }
+
+.detail-info-list .tel {
+  color: inherit;
+  font-weight: 700; }
 
 /* 권은별 */
 .acco-notice .acco-list {
@@ -17148,6 +17657,9 @@ a.bt-link-tx.underline.small {
 .cont-box.b-line-none {
   border-bottom: 0; }
 
+.cont-box.t-line {
+  border-top: 1px solid #e1e1e1; }
+
 .myinfo-wrap.membership .myinfo-cont {
   padding: 0 6.875rem 0 4.25rem; }
   .myinfo-wrap.membership .myinfo-cont .rating {
@@ -17824,5 +18336,75 @@ a.bt-link-tx.underline.small {
     padding: 0.4375rem 0 0 0;
     font-size: 0.75rem;
     color: #666; }
+
+.service-check-wrap {
+  text-align: center; }
+  .service-check-wrap h1 {
+    padding-top: 3.75rem;
+    width: 100%;
+    height: 2.6875rem; }
+    .service-check-wrap h1 img {
+      width: 6.8125rem;
+      height: auto; }
+  .service-check-wrap em {
+    display: block;
+    padding: 4.6875rem 0 1.875rem;
+    font-size: 2rem;
+    letter-spacing: -0.125rem; }
+  .service-check-wrap p {
+    font-size: 0.8125rem;
+    color: #666; }
+
+.address-list.result .building {
+  margin-top: 0.25rem;
+  font-size: 1.125rem; }
+
+.address-list.result .num {
+  margin: 0.1875rem 0 0.25rem; }
+  .address-list.result .num span {
+    display: inline-block;
+    font-size: 0.8125rem;
+    color: #666; }
+  .address-list.result .num span:first-child:after {
+    content: '';
+    display: inline-block;
+    width: 0.0625rem;
+    height: 0.5625rem;
+    background: #e1e1e1;
+    vertical-align: middle;
+    margin: 0 0.3125rem 0 0.625rem; }
+
+.app-info-wrap {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: url(/img/common/bg-app-info.png) no-repeat;
+  background-size: 100% auto; }
+  .app-info-wrap ul {
+    overflow: hidden;
+    text-align: center;
+    padding: 25.625rem 0 0.875rem; }
+    .app-info-wrap ul li {
+      display: inline-block;
+      padding: 0 0.9375rem 0 0; }
+      .app-info-wrap ul li:first-child {
+        padding: 0 1.4375rem 0 0; }
+      .app-info-wrap ul li a {
+        display: inline-block;
+        width: 2.4375rem;
+        height: 2.4375rem; }
+        .app-info-wrap ul li a img {
+          width: 100%;
+          height: 100%; }
+  .app-info-wrap p {
+    text-align: center;
+    font-size: 0.8125rem;
+    color: #666; }
+  .app-info-wrap.service {
+    position: static;
+    background: none; }
+    .app-info-wrap.service ul {
+      padding: 13.125rem 0 0.875rem; }
 
 /* 최은현 */
