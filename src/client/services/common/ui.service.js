@@ -2,6 +2,7 @@ Tw.UIService = function () {
   this.setBack();
   this.setReplace();
   this.setBackRefresh();
+  this.setInputEvent();
 };
 
 Tw.UIService.prototype = {
@@ -41,6 +42,18 @@ Tw.UIService.prototype = {
         }
       }
     });
+  },
+
+  setInputEvent: function () {
+    $('input').on('keypress', $.proxy(this.setMaxValue, this));
+  },
+
+  setMaxValue: function (event) {
+    var $target = $(event.currentTarget);
+    if ($target.attr('maxLength')) {
+      if ( event.keyCode === 8 ) { return true; }
+      return $target.val().length < $target.attr('maxLength');
+    }
   }
 };
 

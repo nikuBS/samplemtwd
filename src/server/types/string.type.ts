@@ -362,3 +362,7 @@ export const MY_BENEFIT_RAINBOW_POINT_TRANSFER = {
     P: '법정대리인'
   }
 };
+
+export enum SELECT_POINT {
+  DEFAULT = '납부할 포인트 선택'
+}
