@@ -1,16 +1,23 @@
 /*
+ * FileName:
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.09.
+ *
+ */
+
+/*
  * FileName: product.dis-pgm.join.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.22
  *
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import FormatHelper from '../../../utils/format.helper';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
-class ProductDisPgmJoin extends TwViewController {
+class ProductJoinDisPgm extends TwViewController {
 
   constructor() {
     super();
@@ -70,4 +77,4 @@ class ProductDisPgmJoin extends TwViewController {
   }
 }
 
-export default ProductDisPgmJoin;
+export default ProductJoinDisPgm;
