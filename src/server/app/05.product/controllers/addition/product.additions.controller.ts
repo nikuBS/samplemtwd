@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 export default class ProductAdditions extends TwViewController {
   private ADDITION_CODE = 'F01200';
@@ -20,40 +21,38 @@ export default class ProductAdditions extends TwViewController {
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
-    if (svcInfo) {
-      Observable.combineLatest(this.getMyAdditions(), this.getAddtions(params)).subscribe(([myAdditions, additions]) => {
-        const error = {
-          code: myAdditions.code || additions.code,
-          msg: myAdditions.msg || additions.msg
-        };
+    Observable.combineLatest(this.getMyAdditions(!!svcInfo), this.getAdditions(params)).subscribe(([myAdditions, additions]) => {
+      const error = {
+        code: (myAdditions && myAdditions.code) || additions.code,
+        msg: (myAdditions && myAdditions.msg) || additions.msg
+      };
 
-        if (error.code) {
-          return this.error.render(res, { ...error, svcInfo });
-        }
-
-        res.render('addition/product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
-      });
-    } else {
-      this.getAddtions(params).subscribe(additions => {
-        res.render('addition/product.additions.html', { svcInfo, additionData: { additions }, params, pageInfo });
-      });
-    }
-  }
-
-  private getMyAdditions = () => {
-    return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+      if (error.code) {
+        return this.error.render(res, { ...error, svcInfo });
       }
 
-      return resp.result;
+      res.render('addition/product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
     });
   }
 
-  private getAddtions = params => {
+  private getMyAdditions = isLogin => {
+    if (isLogin) {
+      return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return {
+            code: resp.code,
+            msg: resp.msg
+          };
+        }
+
+        return resp.result;
+      });
+    }
+
+    return of(undefined);
+  }
+
+  private getAdditions = params => {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
