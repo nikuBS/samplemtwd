@@ -2362,3 +2362,43 @@ body.bg-gray {
             margin-top: 0.3125rem;
             font-size: 0.9375rem;
             font-weight: 400; }
+
+/* 상품상세 컬러값 */
+.bg-productdetail .container {
+  padding-top: 0 !important; }
+
+.bg-productdetail .productdetails-bg {
+  padding: 3.75rem 1.25rem 0;
+  background: #676767;
+  background-repeat: no-repeat;
+  background-size: cover; }
+  .bg-productdetail .productdetails-bg.t-logo {
+    background: #676767; }
+
+.bg-productdetail h1 {
+  font-size: 0;
+  line-heighT: 0;
+  text-indent: -999px; }
+
+.bg-productdetail .header-wrap {
+  background: transparent; }
+  .bg-productdetail .header-wrap .header .prev-step {
+    background: url(/img/ico/bg_prev.png) no-repeat 47% 49%;
+    background-size: 1.1875rem 1rem; }
+  .bg-productdetail .header-wrap .header .bt-dropdown {
+    color: #fff;
+    background: none; }
+    .bg-productdetail .header-wrap .header .bt-dropdown:after {
+      background: url(/img/ico/bg_header_dropdown2.png) no-repeat 50% 50%;
+      background-size: 0.4375rem 0.25rem; }
+  .bg-productdetail .header-wrap.bg-type {
+    background: #fff; }
+    .bg-productdetail .header-wrap.bg-type .prev-step {
+      background: url(/img/ico/ico-group.png) no-repeat 0 0 !important;
+      background-size: 3.125rem !important;
+      background-position: 0 -15.625rem !important; }
+    .bg-productdetail .header-wrap.bg-type .bt-dropdown {
+      color: #000; }
+      .bg-productdetail .header-wrap.bg-type .bt-dropdown:after {
+        background: url(/img/ico/ico-group.png) no-repeat -0.9375rem -6.5625rem;
+        background-size: 1.875rem; }

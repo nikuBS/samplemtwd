@@ -2,6 +2,9 @@ $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
   skt_landing.action.keyboard();
+  if($('body').hasClass('bg-productdetail')){
+    skt_landing.action.prd_header();
+  }
 });
 $(window).on('resize', function () {
 
@@ -562,6 +565,17 @@ skt_landing.action = {
     })
     $(document).on('focusout',selector, function(){
       $(this).closest('.popup-page').removeClass('focusin')
+    })
+  },
+  prd_header : function(){ // 상품상세 원장 헤더 색상 제어
+    $('#header').removeClass('bg-type');
+    $(window).bind('scroll', function(){
+      if(skt_landing.util.win_info.get_scrollT() == 0){
+        $('#header').removeClass('bg-type');
+      }else{
+        $('#header').addClass('bg-type');
+        
+      }
     })
   }
 };
