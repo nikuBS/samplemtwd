@@ -5,10 +5,10 @@
  * Date: 2018.10.30
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { PRODUCT_RESERVATION_TYPE_NM, PRODUCT_RESERVATION_COMBINE_NM } from '../../../types/string.type';
-import FormatHelper from '../../../utils/format.helper';
+import { PRODUCT_RESERVATION_TYPE_NM, PRODUCT_RESERVATION_COMBINE_NM } from '../../../../types/string.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 class ProductJoinReservation extends TwViewController {
   constructor() {
