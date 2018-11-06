@@ -17,17 +17,18 @@ Tw.CustomerEmailHistory = function (rootEl) {
 
 Tw.CustomerEmailHistory.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0060, { svcDvcClCd: 'M' })
-      .done($.proxy(this._onSuccessHistoryList, this));
+    // this._apiService.request(Tw.API_CMD.BFF_08_0060, { svcDvcClCd: 'M' })
+    //   .done($.proxy(this._onSuccessHistoryList, this));
   },
 
   _cachedElement: function () {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-btn_history_detail', $.proxy(this._goToHistoryDetail, this));
   },
 
-  _onSuccessHistoryList: function (res) {
-    debugger;
+  _goToHistoryDetail: function (e) {
+    this._history.replaceURL('/customer/email/history-detail?' + $.param($(e.currentTarget).data()));
   }
 };

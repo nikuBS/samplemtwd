@@ -51,6 +51,22 @@ Tw.CustomerEmailService.prototype = {
     }
   },
 
+  _makeParams: function () {
+    var arrPhoneNumber = $('.fe-service_phone').val().split('-');
+
+    var params = {
+      cntcNum1: arrPhoneNumber[0],
+      cntcNum2: arrPhoneNumber[1],
+      cntcNum3: arrPhoneNumber[2],
+      email: $('.fe-service_email').val(),
+      subject: this.$wrap_tpl_service.find('.fe-text_title').val(),
+      content: this.$wrap_tpl_service.find('.fe-text_content').val(),
+      smsRcvYn: $('.fe-service_sms').prop('checked') ? 'Y' : 'N'
+    };
+
+    return params;
+  },
+
   _requestCell: function () {
     var htParams = $.extend(this._makeParams(), {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
@@ -89,22 +105,6 @@ Tw.CustomerEmailService.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams)
       .done($.proxy(this._onSuccessRequest, this));
-  },
-
-  _makeParams: function () {
-    var arrPhoneNumber = $('.fe-service_phone').val().split('-');
-
-    var params = {
-      cntcNum1: arrPhoneNumber[0],
-      cntcNum2: arrPhoneNumber[1],
-      cntcNum3: arrPhoneNumber[2],
-      email: $('.fe-service_email').val(),
-      subject: this.$wrap_tpl_service.find('.fe-text_title').val(),
-      content: this.$wrap_tpl_service.find('.fe-text_content').val(),
-      smsRcvYn: $('.fe-service_sms').prop('checked') ? 'Y' : 'N'
-    };
-
-    return params;
   },
 
   _onSuccessRequest: function (res) {
