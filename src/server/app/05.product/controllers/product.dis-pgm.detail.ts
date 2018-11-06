@@ -19,18 +19,19 @@ class ProductDisPgmDetail extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const prodId = req.params && req.params.prodId || '';
-    const selMonth = req.query && req.query.type || '';
+    const monthCode = req.query && req.query.type || '';
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       prodId: prodId
     };
     if ( prodId === 'NA00004430' ) {
-      if ( selMonth === 'M0012' ) {
-        data.selMonth = '12';
-      } else if ( selMonth === 'M0024' ) {
-        data.selMonth = '24';
+      if ( monthCode === 'M0012' ) {
+        data.monthNm = '12';
+      } else if ( monthCode === 'M0024' ) {
+        data.monthNm = '24';
       }
+      data.monthCode = monthCode;
 
       Observable.combineLatest(
         /*this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),*/
@@ -61,73 +62,6 @@ class ProductDisPgmDetail extends TwViewController {
         res.render('product.sel-contract.detail.html', { data });
       });
     }
-  }
-
-  _convertAdditionsPreInfo(preInfo): any {
-    const isNumberBasFeeInfo = !isNaN(parseInt(preInfo.reqProdInfo.basFeeInfo, 10));
-
-    return Object.assign(preInfo, {
-      reqProdInfo: Object.assign(preInfo.reqProdInfo, {
-        isNumberBasFeeInfo: isNumberBasFeeInfo,
-        basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
-      }),
-      autoJoinList: this._convertAutoJoinTermList(preInfo.autoJoinList),
-      autoTermList: this._convertAutoJoinTermList(preInfo.autoTermList)
-    });
-  }
-
-  _convertAutoJoinTermList(autoList): any {
-    const autoListConvertResult: any = [];
-
-    autoList.forEach((item) => {
-      if ( FormatHelper.isEmpty(autoListConvertResult[item.svcProdCd]) ) {
-        autoListConvertResult[item.svcProdCd] = {
-          svcProdNm: item.svcProdNm,
-          svcProdList: []
-        };
-      }
-
-      autoListConvertResult[item.svcProdCd].svcProdList.push(item.prodNm);
-    });
-
-    return autoListConvertResult;
-  }
-
-  _convertStipulationInfo(stipulationInfo): any {
-    if ( FormatHelper.isEmpty(stipulationInfo) || FormatHelper.isEmpty(stipulationInfo.stipulation) ) {
-      return null;
-    }
-
-    return Object.assign(stipulationInfo, {
-      stipulation: Object.assign(stipulationInfo.stipulation, {
-        scrbStplAgreeCttSummary: stipulationInfo.stipulation.scrbStplAgreeYn === 'Y' ?
-          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.scrbStplAgreeHtmlCtt) : '',
-        psnlInfoCnsgCttSummary: stipulationInfo.stipulation.psnlInfoCnsgAgreeYn === 'Y' ?
-          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
-        psnlInfoOfrCttSummary: stipulationInfo.stipulation.psnlInfoOfrAgreeYn === 'Y' ?
-          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoOfrHtmlCtt) : '',
-        adInfoOfrCttSummary: stipulationInfo.stipulation.adInfoOfrAgreeYn === 'Y' ?
-          this._getStripTagsAndSubStrTxt(stipulationInfo.stipulation.psnlInfoCnsgHtmlCtt) : '',
-        existsCount: this._getStipulationYnCnt([stipulationInfo.stipulation.scrbStplAgreeYn, stipulationInfo.stipulation.psnlInfoCnsgAgreeYn,
-          stipulationInfo.stipulation.psnlInfoOfrAgreeYn, stipulationInfo.stipulation.adInfoOfrAgreeYn])
-      })
-    });
-  }
-
-  _getStripTagsAndSubStrTxt(html): any {
-    return html.replace(/(<([^>]+)>)|&nbsp;/ig, '');
-  }
-
-  _getStipulationYnCnt(yNarray): any {
-    let count = 0;
-
-    yNarray.forEach((flag) => {
-      if ( flag === 'Y' ) {
-        count++;
-      }
-    });
-
-    return count;
   }
 }
 
