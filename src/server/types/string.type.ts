@@ -276,7 +276,6 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   AU: '자동납부 상세 내역',
   MP: '소액 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
-
 };
 
 export const MYT_FARE_PAYMENT_ERROR = {
@@ -299,32 +298,32 @@ export const MYT_JOIN_WIRE_SVCATTRCD = {
 
 export const MYT_JOIN_WIRE = {
   TITLE: '신청내역',
-  AS : {TITLE: '장애 A/S신청 현황'},
-  AS_DETAIL : {TITLE: '장애 A/S 상세 내역'},
-  DISC_REFUND : {TITLE: '할인 반환금 조회'},
-  FREECALL_CHECK : {TITLE: 'B끼리 무료 통화 대상자 조회'},
-  GIFTS : {TITLE: '사은품 조회'},
-  HISTORY : {TITLE: '신청 현황'},
-  HISTORY_DETAIL : {TITLE: '신청 현황 상세'},
-  MODIFY_ADDRESS : {TITLE: '설치 장소 변경'},
-  MODIFY_PERIOD : {TITLE: '약정 기간 변경'},
-  MODIFY_PRODUCT : {TITLE: '상품 변경'},
-  NETPHONE_CHANGE : {TITLE: '신청내역'},
-  SET_WIRE_CANCEL : {TITLE: '할인 반환금 정보'}
+  AS: { TITLE: '장애 A/S신청 현황' },
+  AS_DETAIL: { TITLE: '장애 A/S 상세 내역' },
+  DISC_REFUND: { TITLE: '할인 반환금 조회' },
+  FREECALL_CHECK: { TITLE: 'B끼리 무료 통화 대상자 조회' },
+  GIFTS: { TITLE: '사은품 조회' },
+  HISTORY: { TITLE: '신청 현황' },
+  HISTORY_DETAIL: { TITLE: '신청 현황 상세' },
+  MODIFY_ADDRESS: { TITLE: '설치 장소 변경' },
+  MODIFY_PERIOD: { TITLE: '약정 기간 변경' },
+  MODIFY_PRODUCT: { TITLE: '상품 변경' },
+  NETPHONE_CHANGE: { TITLE: '신청내역' },
+  SET_WIRE_CANCEL: { TITLE: '할인 반환금 정보' }
 };
 
 export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
-  TITLE: '명의 변경 신청 방법 안내',
+  TITLE: '명의 변경 신청 방법 안내'
 };
 
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
-  TITLE: '약정 기간 변경',
+  TITLE: '약정 기간 변경'
 };
 
 export const MYT_JOIN_WIRE_SET_PAUSE = {
   TITLE: '일시 정지/해제',
   MONTH: '개월 ',
-  DAY: '일',
+  DAY: '일'
 };
 
 export enum CUSTOMER_NOTICE_CATEGORY {
@@ -366,3 +365,9 @@ export const MY_BENEFIT_RAINBOW_POINT_TRANSFER = {
 export enum SELECT_POINT {
   DEFAULT = '납부할 포인트 선택'
 }
+
+export const PRODUCT_WIRE_CATEGORIES = {
+  internet: '인터넷',
+  phone: '전화',
+  tv: 'TV'
+};
