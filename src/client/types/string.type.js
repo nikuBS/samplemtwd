@@ -137,7 +137,8 @@ Tw.AUTO_PAY_INFO = {
 Tw.AUTO_PAY_CANCEL = {
   TITLE: '자동 선결제를' + '<br/>' + '해지하시겠습니까?',
   CONTENTS: '자동 선결제가' + '<br/>' + '즉각 해지됩니다.',
-  BTN_NAME: '해지하기'
+  BTN_NAME: '해지하기',
+  CONFIRM_MESSAGE: '자동납부를 해지하시겠습니까?'
 };
 
 Tw.AMOUNT_INFO = {
@@ -288,6 +289,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   GO_PREPAY_HISTORY: '선결제내역 보기',
   REQUEST: '신청',
   CHANGE: '변경',
+  CANCEL: '자동납부 해지',
   GO_CHANGE_HISTORY: '변경내역 보기',
   RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감'
 };

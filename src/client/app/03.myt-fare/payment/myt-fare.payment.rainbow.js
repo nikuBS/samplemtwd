@@ -37,7 +37,7 @@ Tw.MyTFarePaymentRainbow.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-fare', $.proxy(this._selectFare, this));
-    this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
   },
@@ -64,6 +64,24 @@ Tw.MyTFarePaymentRainbow.prototype = {
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
+  },
+  _cancel: function () {
+    this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
+  },
+  _autoCancel: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'T1' })
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._fail, this));
+  },
+  _cancelSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      var message = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.CANCEL;
+
+      this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
+        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message);
+    } else {
+      this._fail(res);
+    }
   },
   _selectFare: function (event) {
     var $target = $(event.currentTarget);
@@ -99,7 +117,7 @@ Tw.MyTFarePaymentRainbow.prototype = {
 
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
         .done($.proxy(this._paySuccess, this))
-        .fail($.proxy(this._payFail, this));
+        .fail($.proxy(this._fail, this));
     }
   },
   _autoPay: function () {
@@ -107,7 +125,7 @@ Tw.MyTFarePaymentRainbow.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
       .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+      .fail($.proxy(this._fail, this));
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -117,7 +135,7 @@ Tw.MyTFarePaymentRainbow.prototype = {
       this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
         Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message, subMessage);
     } else {
-      this._payFail(res);
+      this._fail(res);
     }
   },
   _getCompleteMessage: function () {
@@ -126,7 +144,7 @@ Tw.MyTFarePaymentRainbow.prototype = {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
       message += ' ' + Tw.MYT_FARE_PAYMENT_NAME.RESERVATION;
     } else {
-      message += ' ' + Tw.MYT_FARE_PAYMENT_NAME.AUTO;
+      message += '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.AUTO;
     }
     return message;
   },
@@ -134,14 +152,14 @@ Tw.MyTFarePaymentRainbow.prototype = {
     var message = '';
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
       message += Tw.MYT_FARE_PAYMENT_NAME.RESERVATION + ' ' + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' +
-        Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P' + '\n' +
+        '<strong>' + Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P' + '</strong>' + '<br/>' +
         $.trim(this.$fareSelector.text());
     } else {
-      message += Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_MESSAGE + '\n' + this.$pointSelector.text();
+      message += Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_MESSAGE + '<br/>' + '<strong>' + this.$pointSelector.text() + '</strong>';
     }
     return message;
   },
-  _payFail: function (err) {
+  _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
   _makeRequestDataForOne: function () {

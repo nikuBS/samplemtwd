@@ -41,6 +41,7 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.fe-agree', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-agree-box', $.proxy(this._openAgreePop, this));
@@ -72,6 +73,34 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
+  },
+  _cancel: function () {
+    this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
+  },
+  _autoCancel: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0054, { reqClCd: '3', ptClCd: this.$pointType })
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._fail, this));
+  },
+  _cancelSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      var message = this._getCancelMessage();
+
+      this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
+        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message);
+    } else {
+      this._fail(res);
+    }
+  },
+  _getCancelMessage: function () {
+    var message = '';
+    if (this.$pointType === 'CPT') {
+      message += Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG;
+    } else {
+      message += Tw.MYT_FARE_PAYMENT_NAME.T_POINT;
+    }
+    message += '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.CANCEL;
+    return message;
   },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
@@ -152,7 +181,7 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
 
       this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
         .done($.proxy(this._paySuccess, this))
-        .fail($.proxy(this._payFail, this));
+        .fail($.proxy(this.fail, this));
     }
   },
   _autoPay: function () {
@@ -161,7 +190,7 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
 
       this._apiService.request(Tw.API_CMD.BFF_07_0054, reqData)
         .done($.proxy(this._paySuccess, this))
-        .fail($.proxy(this._payFail, this));
+        .fail($.proxy(this.fail, this));
     }
   },
   _paySuccess: function (res) {
@@ -172,7 +201,7 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
       this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
         Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message, subMessage);
     } else {
-      this._payFail(res);
+      this.fail(res);
     }
   },
   _getCompleteMessage: function () {
@@ -186,22 +215,23 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
       message += ' ' + Tw.MYT_FARE_PAYMENT_NAME.RESERVATION;
     } else {
-      message += ' ' + Tw.MYT_FARE_PAYMENT_NAME.AUTO;
+      message += '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.AUTO;
     }
     return message;
   },
   _getSubMessage: function () {
     var message = '';
+
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
       message += Tw.MYT_FARE_PAYMENT_NAME.RESERVATION + ' ' + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' +
-        Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P';
+        '<strong>' + Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P' + '</strong>';
     } else {
       message += Tw.MYT_FARE_PAYMENT_NAME.PAYMENT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.REQUEST + ' ' +
-        Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + this.$pointSelector.text();
+        Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + '<strong>' + this.$pointSelector.text() + '</strong>';
     }
     return message;
   },
-  _payFail: function (err) {
+  fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
   _makeRequestDataForOne: function () {
