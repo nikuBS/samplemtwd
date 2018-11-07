@@ -38,16 +38,16 @@ Tw.MembershipClauseLayerPopup.prototype = {
   },
 
   _openCallback: function($layer) {
-    console.log('_openCallback.....');
-    console.log($layer);
-    console.log($layer);
+    Tw.Logger.log('_openCallback.....');
+    Tw.Logger.log($layer);
+    Tw.Logger.log($layer);
     $layer.one('click', '.bt-red1', $.proxy(this._onclickBtnAgree,this));
   },
 
   _closeCallback: function($layer,hbs) {
-    console.log('_closeCallback.....');
-    console.log('$layer:' + $layer);
-    console.log('hbs:' + hbs);
+    Tw.Logger.log('_closeCallback.....');
+    Tw.Logger.log('$layer:' + $layer);
+    Tw.Logger.log('hbs:' + hbs);
     // remove button event
     $layer.unbind('click', this._onclickBtnAgree);
     this._popupService.close();
@@ -58,8 +58,8 @@ Tw.MembershipClauseLayerPopup.prototype = {
    * @private
    */
   _onclickBtnAgree: function(){
-    console.log('_onclickBtnAgree.....');
-    console.log('this._currentHbs: ' + this._currentHbs);
+    Tw.Logger.log('_onclickBtnAgree.....');
+    Tw.Logger.log('this._currentHbs: ' + this._currentHbs);
     this._agreeBtnClickHandler(this._currentHbs);
     this._popupService.close();
   }
