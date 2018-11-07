@@ -240,6 +240,7 @@ export const API_CMD = {
   BFF_05_0178: { path: '/core-modification/v1/wire-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0179: { path: '/core-product/v1/services/wire/additions/count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0180: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0181: { path: '/core-product/v1/submain/wire/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0182: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0183: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0184: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
