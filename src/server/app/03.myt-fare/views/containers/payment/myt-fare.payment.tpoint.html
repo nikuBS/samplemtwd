@@ -47,7 +47,7 @@
                                 <% if (autoInfo.isAuto) { %>
                                 <ul class="bt-slice mb20 fe-auto-info">
                                     <li class="bt-white2">
-                                        <button>자동 납부 해지</button>
+                                        <button class="fe-cancel">자동 납부 해지</button>
                                     </li>
                                 </ul>
                                 <% } %>
@@ -225,7 +225,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentCashbag($('#myt-fare-payment-tpoint'), 'TPT');
+    new Tw.MyTFarePaymentCashbagTpoint($('#myt-fare-payment-tpoint'), 'TPT');
   });
 </script>
 <% include ../../components/end.component.html %>

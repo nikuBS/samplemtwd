@@ -63,7 +63,7 @@ class MyTFarePaymentCashbag extends TwViewController {
           : DateHelper.getShortDateNoDot(autoInfo.result.disOcbEffDate),
         ocbTermTodoAmt: FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt),
         amtId: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? null : autoInfo.result.ocbTermTodoAmt,
-        amtText: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt)
+        amtText: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt) + 'P'
       };
     }
     return null;
