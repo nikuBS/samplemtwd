@@ -184,7 +184,7 @@ Tw.ProductTerminate.prototype = {
     }
 
     this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openTerminateResultPop, this));
+      $.proxy(this._openTerminateResultPop, this), 'vasterm_pop');
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {

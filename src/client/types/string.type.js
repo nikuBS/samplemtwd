@@ -436,6 +436,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A10: { TITLE: '알림', MSG: '1회선만 결합된 경우, 회선 해지가 불가합니다.' },
   ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
   ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' },
+  ALERT_3_A29: { TITLE: '알림', MSG: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.' },
   ALERT_3_A30: { TITLE: '알림', MSG: '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.' },
   ALERT_3_A31: {
     TITLE: '알림',
@@ -930,6 +931,6 @@ Tw.FAMILY_TYPE = {
   PARENTS: '부모',
   BROTHER: '형제자매',
   GRANDPARENTS: '(증)조부모',
-  ME: '본인 / 가족대표'
+  ME: '본인'
 };
 

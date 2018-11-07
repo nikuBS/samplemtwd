@@ -55,20 +55,19 @@ Tw.ProductJoinReservation.prototype = {
     this.$formData = this.$container.find('.fe-form_data');
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
-    this.$btnInputCancel = this.$container.find('.fe-btn_cancel');
     this.$btnSelectTypeCd = this.$container.find('.fe-btn_select_type_cd');
     this.$btnSelectCombine = this.$container.find('.fe-btn_select_combine');
   },
 
   _bindEvent: function() {
-    this.$reservName.on('keyup input', $.proxy(this._toggleInputCancelBtn, this));
-    this.$reservNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
-    this.$reservNumber.on('blur', $.proxy(this._blurInputNumber, this));
-    this.$reservNumber.on('focus', $.proxy(this._focusInputNumber, this));
+    this.$container.on('keyup input', '.fe-input_name', $.proxy(this._toggleInputCancelBtn, this));
+    this.$container.on('keyup input', '.fe-input_phone_number', $.proxy(this._detectInputNumber, this));
+    this.$container.on('blur', '.fe-input_phone_number', $.proxy(this._blurInputNumber, this));
+    this.$container.on('focus', '.fe-input_phone_number', $.proxy(this._focusInputNumber, this));
+    this.$container.on('click', '.fe-btn_cancel', $.proxy(this._procClearInput, this));
 
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));
-    this.$btnInputCancel.on('click', $.proxy(this._procClearInput, this));
     this.$btnSelectTypeCd.on('click', $.proxy(this._openTypeCdPop, this));
     this.$btnSelectCombine.on('click', $.proxy(this._openCombinePop, this));
 
@@ -185,7 +184,7 @@ Tw.ProductJoinReservation.prototype = {
           }
         ]
       }]
-    }, $.proxy(this._bindCombinePop, this), $.proxy(this._setCombineResult, this), 'combine_pop');
+    }, $.proxy(this._bindCombinePop, this), $.proxy(this._setCombineResult, this), 'combine_select');
   },
 
   _bindCombinePop: function($popupContainer) {
@@ -248,7 +247,9 @@ Tw.ProductJoinReservation.prototype = {
     $btnCancel.parent().find('input').val('');
     $btnCancel.removeClass('block');
 
-    this._procEnableApplyCheck();
+    if ($btnCancel.hasClass('fe-clear_check')) {
+      this._procEnableApplyCheck();
+    }
   },
 
   _procEnableApplyCheck: function() {
@@ -264,20 +265,23 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _detectInputNumber: function(e) {
-    this.$reservNumber.val(this.$reservNumber.val().replace(/[^0-9.]/g, ''));
-    if (this.$reservNumber.val().length > 11) {
-      this.$reservNumber.val(this.$reservNumber.val().substr(0, 11));
+    var $input = $(e.currentTarget);
+    $input.val($input.val().replace(/[^0-9.]/g, ''));
+    if ($input.val().length > 11) {
+      $input.val($input.val().substr(0, 11));
     }
 
     this._toggleInputCancelBtn(e);
   },
 
-  _blurInputNumber: function() {
-    this.$reservNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$reservNumber.val()));
+  _blurInputNumber: function(e) {
+    var $input = $(e.currentTarget);
+    $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
   },
 
-  _focusInputNumber: function() {
-    this.$reservNumber.val(this.$reservNumber.val().replace(/-/gi, ''));
+  _focusInputNumber: function(e) {
+    var $input = $(e.currentTarget);
+    $input.val($input.val().replace(/-/gi, ''));
   },
 
   _toggleInputCancelBtn: function(e) {
@@ -298,6 +302,10 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _procApplyCheck: function() {
+    if (!Tw.ValidationHelper.isCellPhone(this.$reservNumber.val()) && !Tw.ValidationHelper.isTelephone(this.$reservNumber.val())) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+    }
+
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId) &&
       this._prodId !== 'NH00000103' && !this.$combineExplain.find('input[type=checkbox]').is(':checked')) {
       this._isExplainFile = true;
@@ -397,9 +405,9 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _procApplyResult: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
+    // if (resp.code !== Tw.API_CODE.CODE_00) {
+    //   return Tw.Error(resp.code, resp.msg).pop();
+    // }
   }
 
 };

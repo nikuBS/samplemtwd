@@ -4,7 +4,7 @@
 * Date: 2018.10.30
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <body>
   <!-- #skip_navigation -->
   <div id="skipNav" class="skip_navi">
@@ -18,7 +18,7 @@
   <div class="wrap step" data-type_cd="<%= typeCd %>" data-prod_id="<%= prodId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
-      <%- include('../../../common/views/components/header.component.html', { title: '가입 상담 예약', svcInfo, option: { line: false } }); %>
+      <%- include('../../../../common/views/components/header.component.html', { title: '가입 상담 예약', svcInfo, option: { line: false } }); %>
       <!-- .container-wrap -->
       <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -46,8 +46,8 @@
                 <label class="tit" for="formInput01">신청자 이름</label>
                 <span class="inputbox">
                   <span class="input">
-                      <input id="formInput01" type="text" placeholder="이름 입력" title="신청자 이름 입력">
-                      <button class="fe-btn_cancel cancel"><span class="blind">삭제</span></button>
+                      <input id="formInput01" class="fe-input_name" type="text" placeholder="이름 입력" title="신청자 이름 입력">
+                      <button class="fe-btn_cancel fe-clear_check cancel"><span class="blind">삭제</span></button>
                   </span>
                 </span>
               </li>
@@ -55,8 +55,8 @@
                 <label class="tit" for="formInput02">상담가능 번호</label>
                 <span class="inputbox">
                   <span class="input">
-                      <input id="formInput02" type="text" placeholder="숫자만 입력" title="상담가능 번호 입력">
-                      <button class="fe-btn_cancel cancel"><span class="blind">삭제</span></button>
+                      <input id="formInput02" class="fe-input_phone_number" type="text" placeholder="숫자만 입력" title="상담가능 번호 입력">
+                      <button class="fe-btn_cancel fe-clear_check cancel"><span class="blind">삭제</span></button>
                   </span>
                 </span>
               </li>
@@ -176,18 +176,18 @@
       <!--// .popup-closeBtn -->
       <!-- #footer -->
       <footer id="fe-all-menu">
-        <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
       </footer>
       <!--// #footer -->
     </div>
     <!--// .popup hbs -->
   </div>
 </body>
-<% include ../components/product.join-reservation.component.html %>
-<% include ../components/javascript.component.html %>
+<% include ../../components/product.join-reservation.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductJoinReservation($('.wrap'));
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>

@@ -27,8 +27,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wire', controller: ProductWire });
     this.controllers.push({ url: '/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
+    this.controllers.push({ url: '/join/reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
-    this.controllers.push({ url: '/join-reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
     this.controllers.push({ url: '/infinity-benefit-usage-history', controller: ProductInfinityBenefitUsageHistory });

@@ -1,4 +1,5 @@
 /**
+ * @todo 상품별 설정페이지 controller 분리처리 하고 삭제 예정
  * 상품 설정
  * FileName: product.setting.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
@@ -231,7 +232,7 @@ class ProductSetting extends TwViewController {
                 });
               }
 
-              res.render('product.setting.html', {
+              res.render('setting/product.setting.html', {
                 svcInfo: svcInfo,
                 pageInfo: pageInfo,
                 prodNm: FormatHelper.isEmpty(prodRedisInfo) ? '' : prodRedisInfo.summary.prodNm,

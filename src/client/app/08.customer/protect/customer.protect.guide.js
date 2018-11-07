@@ -43,7 +43,7 @@ Tw.CustomerProtectGuide.prototype = {
           { value: Tw.PROTECT_GUIDE.LATEST, option: (this._lastSeq === 'cmis_0004') ? 'checked' : '', attr: 'data-last_seq="cmis_0004"' }
         ]
       }]
-    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this));
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'guide_category');
   },
 
   _goCategory: function() {

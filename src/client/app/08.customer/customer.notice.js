@@ -71,7 +71,7 @@ Tw.CustomerNotice.prototype = {
           { value: Tw.NOTICE.ROAMING, option: (this._category === 'roaming') ? 'checked' : '', attr: 'data-category="roaming"' }
         ]
       }]
-    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'inifinity_category_popup');
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category');
   },
 
   _goCategory: function() {
