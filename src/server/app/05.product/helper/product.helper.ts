@@ -38,14 +38,15 @@ class ProductHelper {
     });
   }
 
-  static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any, basOfrCharCntCtt?: any): any {
+  static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any,
+    basOfrCharCntCtt?: any, basDataUnit = DATA_UNIT.MB): any {
     const isValid = (value) => {
       return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
     };
 
     return {
       basFeeInfo: isValid(basFeeInfo) ? ProductHelper.convProductBasfeeInfo(basFeeInfo) : null,
-      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? ProductHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt) : null,
+      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? ProductHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, basDataUnit) : null,
       basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? ProductHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
       basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? ProductHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
     };
@@ -60,12 +61,12 @@ class ProductHelper {
     };
   }
 
-  static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt): any {
+  static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, dataUnit = DATA_UNIT.MB): any {
     const isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
 
     return {
       isNaN: isNaNbasOfrDataQtyCtt,
-      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.MB)
+      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : FormatHelper.convDataFormat(basOfrDataQtyCtt, dataUnit)
     };
   }
 

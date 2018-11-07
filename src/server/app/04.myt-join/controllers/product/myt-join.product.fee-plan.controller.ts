@@ -7,7 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { SVC_CDNAME, SVC_CDGROUP, UNIT, VOICE_UNIT } from '../../../../types/bff.type';
-import { MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
+import {DATA_UNIT, MYT_FEEPLAN_BENEFIT} from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -113,13 +113,17 @@ class MyTJoinProductFeePlan extends TwViewController {
     }
 
     const basFeeTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basFeeTxt),
-      basOfrDataQtyCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basDataTxt),
       basOfrVcallTmsCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basOfrVcallTmsTxt),
       basOfrCharCntCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basOfrLtrAmtTxt),
       disProdList = FormatHelper.getValidVars(wirelessPlan.disProdList, []),
       optProdList = FormatHelper.getValidVars(wirelessPlan.optProdList, []),
-      comProdList = FormatHelper.getValidVars(wirelessPlan.comProdList, []),
-      spec = ProductHelper.convProductSpecifications(basFeeTxt, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt);
+      comProdList = FormatHelper.getValidVars(wirelessPlan.comProdList, []);
+
+    const basDataGbTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basDataGbTxt),
+      basDataMbTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basDataMbTxt),
+      basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
+
+    const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
     return Object.assign(wirelessPlan, {
       feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {
@@ -131,6 +135,29 @@ class MyTJoinProductFeePlan extends TwViewController {
       }),
       optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...disProdList, ...optProdList, ...comProdList])
     });
+  }
+
+  /**
+   * @param basDataGbTxt
+   * @param basDataMbTxt
+   * @private
+   */
+  private _getBasDataTxt(basDataGbTxt: any, basDataMbTxt: any): any {
+    if (!FormatHelper.isEmpty(basDataGbTxt)) {
+      return {
+        txt: basDataGbTxt,
+        unit: DATA_UNIT.GB
+      };
+    }
+
+    if (!FormatHelper.isEmpty(basDataMbTxt)) {
+      return {
+        txt: basDataMbTxt,
+        unit: DATA_UNIT.MB
+      };
+    }
+
+    return null;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
