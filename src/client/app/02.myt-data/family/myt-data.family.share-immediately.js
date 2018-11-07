@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.family.setting-monthly.js
+ * FileName: myt-data.family.setting-immediately.js
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.10.04
  */
 
-Tw.MyTDataFamilySettingMonthly = function(rootEl) {
+Tw.MyTDataFamilyShareImmediately = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.MyTDataFamilySettingMonthly = function(rootEl) {
   this._init();
 };
 
-Tw.MyTDataFamilySettingMonthly.prototype = {
+Tw.MyTDataFamilyShareImmediately.prototype = {
   _init: function() {
     this.MAIN_URL = '/myt/data/family';
     this._shareAmount = this.$amountInput.data('share-amount');
@@ -29,7 +29,6 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   _bindEvent: function() {
     this.$container.on('click', '.bt-bg-blue1', $.proxy(this._addShareData, this));
     this.$container.on('focusout', 'span.input input', $.proxy(this._validateShareAmount, this));
-    this.$container.on('click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
     this.$amountInput.on('keyup', $.proxy(this._handleChangeAmount, this));
     this.$submitBtn.on('click', $.proxy(this._confirmSubmit, this));
   },
@@ -75,43 +74,31 @@ Tw.MyTDataFamilySettingMonthly.prototype = {
   },
 
   _confirmSubmit: function() {
-    var POPUP = Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY;
+    var POPUP = Tw.MYT_DATA_FAMILY_CONFIRM_SHARE;
     this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._handleSubmit, this));
   },
 
   _handleSubmit: function() {
     this._popupService.close();
-    var today = new Date();
-    var ALERT = Tw.MYT_DATA_FAMILY_SUCCESS_SHARE_MONTHLY;
-    this._apiService
-      .request(Tw.API_CMD.BFF_06_0048, { dataQty: this.$amountInput.val() })
-      .done(
-        $.proxy(
-          this._handleSuccessSubmit,
-          this,
-          ALERT.TITLE,
-          ALERT.CONTENTS.replace('{year}', today.getFullYear()).replace('{month}', today.getMonth() + 1)
-        )
-      );
-  },
-
-  _handleSuccessSubmit: function(title, contents, resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      Tw.Error(resp.code, resp.msg).pop();
+    var auto = this.$container.find('ul.select-list input').attr('checked') === 'checked',
+      value = this.$amountInput.val();
+    if (auto) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, true));
     } else {
-      this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, title, contents);
+      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, false));
     }
   },
 
-  _openDeleteMonthlyDataPopup: function() {
-    var POPUP = Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY;
-    this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._deleteMonthlyData, this));
-  },
-
-  _deleteMonthlyData: function() {
-    this._popupService.close();
-    this._apiService
-      .request(Tw.API_CMD.BFF_06_0049, {})
-      .done($.proxy(this._handleSuccessSubmit, this, Tw.MYT_DATA_FAMILY_SUCCESS_DELETE_MONTHLY, undefined));
+  _handleSuccessSubmit: function(isMonthly, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+    } else {
+      var ALERT = Tw.MYT_DATA_FAMILY_SUCCESS_SHARE;
+      if (isMonthly) {
+        this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, ALERT.CONTENTS);
+      } else {
+        this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
+      }
+    }
   }
 };

@@ -48,10 +48,10 @@
                                     <div class="tab-contents">
                                         <ul>
                                             <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                                <% include ../../components/family/myt-data.family.setting-immediately.html %>
+                                                <% include ../../components/family/myt-data.family.share-immediately.html %>
                                             </li>
                                             <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                                <% include ../../components/family/myt-data.family.setting-monthly.html %>
+                                                <% include ../../components/family/myt-data.family.share-monthly.html %>
                                             </li>
                                         </ul>
                                     </div>
@@ -73,8 +73,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        var oMyTDataFamilySettingImmediately = new Tw.MyTDataFamilySettingImmediately($('#tab1-tab'));
-        var oMyTDataFamilySettingMonthly = new Tw.MyTDataFamilySettingMonthly($('#tab2-tab'));
+        new Tw.MyTDataFamilyShareImmediately($('#tab1-tab'));
+        new Tw.MyTDataFamilyShareMonthly($('#tab2-tab'));
     });
 </script>
 <% include ../../components/end.component.html %>

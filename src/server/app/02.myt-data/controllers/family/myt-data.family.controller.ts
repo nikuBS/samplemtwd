@@ -10,7 +10,6 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.old.type';
-// import { BFF_06_0044_familyInfo, BFF_06_0045_ImmediatelyInfo, BFF_06_0047_MonthlyInfo } from '../../../../mock/server/myt.data.family.mock';
 import { Observable } from 'rxjs/Observable';
 
 class MyTDataFamily extends TwViewController {
@@ -26,7 +25,7 @@ class MyTDataFamily extends TwViewController {
     };
 
     switch (page) {
-      case 'setting':
+      case 'share':
         Observable.combineLatest(this.getImmediatelyInfo(), this.getMonthlyInfo()).subscribe(([immediatelyInfo, monthlyInfo]) => {
           const error = {
             code: immediatelyInfo.code || monthlyInfo.code,
@@ -46,7 +45,7 @@ class MyTDataFamily extends TwViewController {
             monthlyInfo
           };
 
-          res.render('family/myt-data.family.setting.html', responseData);
+          res.render('family/myt-data.family.share.html', responseData);
         });
         break;
       default:
@@ -70,7 +69,6 @@ class MyTDataFamily extends TwViewController {
 
   private getRemainDataInfo() {
     return this.apiService.request(API_CMD.BFF_06_0044, {}).map(resp => {
-      // const result = BFF_06_0044_familyInfo.result;
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -100,7 +98,6 @@ class MyTDataFamily extends TwViewController {
       }
       return resp.result;
     });
-    // return BFF_06_0045_ImmediatelyInfo.result;
   }
 
   private getMonthlyInfo() {
@@ -113,7 +110,6 @@ class MyTDataFamily extends TwViewController {
       }
       return resp.result;
     });
-    // return BFF_06_0047_MonthlyInfo.result;
   }
 
   private convertTFamilyDataSet(sQty) {
