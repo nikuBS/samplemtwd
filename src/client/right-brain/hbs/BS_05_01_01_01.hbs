@@ -19,7 +19,7 @@
 
       <!-- .cont-box -->
       <div class="cont-box">
-        <ul class="form-data-list">
+        <ul class="form-data-list fe-family_add_wrap">
           <li>
             <label class="tit" for="flab01">가족관계</label>
             <span class="inputbox">
@@ -30,23 +30,24 @@
             <label class="tit" for="flab03">이름</label>
             <span class="inputbox">
               <span class="input">
-                <input id="flab03" type="text" placeholder="이름 입력" title="이름 입력" />
+                <input id="flab03" class="fe-input_name" type="text" placeholder="이름 입력" title="이름 입력" />
+                <button class="fe-btn_cancel cancel"><span class="blind">삭제</span></button>
               </span>
             </span>
           </li>
           <li>
             <label class="tit" for="flab05">휴대폰 번호</label>
             <span class="inputbox">
-            <span class="input">
-              <input id="flab05" type="number" placeholder="숫자만 입력" title="휴대폰 숫자만 입력">
-              <button class="cancel"><span class="blind">삭제</span></button>
+              <span class="input">
+                <input id="flab05" class="fe-input_phone_number" type="text" placeholder="숫자만 입력" title="휴대폰 숫자만 입력">
+                <button class="fe-btn_cancel cancel"><span class="blind">삭제</span></button>
+              </span>
             </span>
-          </span>
           </li>
         </ul>
         <ul class="bt-slice mt30">
           <li class="bt-blue1">
-            <button class="fe-btn_family_add">가족 추가하기</button>
+            <button class="fe-btn_family_add" disabled="disabled">가족 추가하기</button>
           </li>
         </ul>
       </div>
@@ -71,10 +72,12 @@
                             <span class="mtext">
                               <strong>{{name}}</strong>
                               {{#if fam.leader}}<i class="badge badge-fam-members2"><span class="blind">가족대표</span></i>{{/if}}
+                              {{#if fam.parents}}<i class="badge-parents"><span class="blind">부모</span></i>{{/if}}
+                              {{#if fam.grandparents}}<i class="badge-grandparents"><span class="blind">(증)조부모</span></i>{{/if}}
                               {{#if fam.spouse}}<i class="badge-partner"><span class="blind">배우자</span></i>{{/if}}
                               {{#if fam.children}}<i class="badge badge-fam"><span class="blind">자녀</span></i>{{/if}}
                               {{#if fam.brother}}<i class="badge-siblings"><span class="blind">형제자매</span></i>{{/if}}
-                              {{#if fam.me}}<i class="badge badge-me2"><span class="blind">나</span></i>{{/if}}
+                              {{#if fam.me}}<i class="badge badge-me2"><span class="blind">본인</span></i>{{/if}}
                             </span>
                             <span class="ntext">{{number}}</span>
                           </div>
@@ -136,7 +139,7 @@
         <div class="cont-box">
           <h3>첨부된 서류</h3>
           <div class="basic-list li-line one-line pt10">
-            <ul>
+            <ul class="fe-file_list">
             </ul>
           </div>
         </div>
@@ -146,7 +149,7 @@
       <div class="bt-fixed-area">
         <ul class="bt-slice full">
           <li class="bt-red1">
-            <button disabled="disabled">신청하기</button>
+            <button disabled="disabled" class="fe-btn_explain_apply">신청하기</button>
           </li>
         </ul>
       </div>

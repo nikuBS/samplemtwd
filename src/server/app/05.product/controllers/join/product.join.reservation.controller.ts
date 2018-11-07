@@ -33,7 +33,7 @@ class ProductJoinReservation extends TwViewController {
           PRODUCT_RESERVATION_COMBINE_NM.ETC : PRODUCT_RESERVATION_COMBINE_NM[prodId];
     }
 
-    res.render('product.join-reservation.html', {
+    res.render('join/product.join.reservation.html', {
       typeCd: typeCd,
       typeName: PRODUCT_RESERVATION_TYPE_NM[typeCd],
       svcInfo: svcInfo,

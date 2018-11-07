@@ -4,7 +4,7 @@
 * Date: 2018.10.13
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -17,7 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="<%= displayId %>">
   <div class="popup-page nobg tw-popup no-btn">
-    <%- include('../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line: false } }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line: false } }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
       <h2 class="blind">내용</h2>
@@ -25,23 +25,23 @@
       <input type="hidden" id="update_api_code" value="<%= updateApiCode %>">
       <input type="hidden" id="prod_nm" value="<%= prodNm %>">
       <% } %>
-      <%- include('../components/setting/' + displayId + '.html'); %>
+      <%- include('../../components/setting/' + displayId + '.html'); %>
     </div>
     <!-- .popup-closeBtn -->
     <button class="prev-step fe-common-back">취소</button>
     <!--// .popup-closeBtn -->
     <!-- #footer -->
     <footer id="fe-all-menu">
-      <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+      <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </footer>
     <!--// #footer -->
   </div>
 </div>
 </body>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductSetting($('.wrap'));
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>

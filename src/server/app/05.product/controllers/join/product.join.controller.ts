@@ -1,4 +1,5 @@
 /**
+ * @todo 설정 있는 가입 상품 컨트롤러 분리 처리
  * 상품 가입 (공통)
  * FileName: product.join.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
@@ -181,6 +182,7 @@ class ProductJoin extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    console.log(req.params);
     this._prodId = req.params.prodId;
     this._displayId = null;
 
@@ -240,7 +242,7 @@ class ProductJoin extends TwViewController {
               });
             }
 
-            res.render('product.join.html', Object.assign(renderOptions, {
+            res.render('join/product.join.html', Object.assign(renderOptions, {
               joinTermInfo: this._convertPlansJoinTermInfo(joinTermInfo.result),
               isOverPayReq: overPayReqInfo.code === API_CODE.CODE_00
             }));
@@ -260,7 +262,7 @@ class ProductJoin extends TwViewController {
                 });
               }
 
-              res.render('product.join.html', Object.assign(renderOptions, {
+              res.render('join/product.join.html', Object.assign(renderOptions, {
                 joinTermInfo: this._convertAdditionsJoinTermInfo(joinTermInfo.result)
               }));
             });
@@ -278,7 +280,7 @@ class ProductJoin extends TwViewController {
                 });
               }
 
-              res.render('product.join.html', Object.assign(renderOptions, {
+              res.render('join/product.join.html', Object.assign(renderOptions, {
                 seldisSets: Object.assign(seldisSetsInfo.result, {
                   noContractPlanPoint: FormatHelper.isEmpty(seldisSetsInfo.result.noContractPlanPoint) ?
                     0 : FormatHelper.addComma(seldisSetsInfo.result.noContractPlanPoint)
