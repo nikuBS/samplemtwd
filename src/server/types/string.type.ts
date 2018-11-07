@@ -374,4 +374,18 @@ export const PRODUCT_WIRE_CATEGORIES = {
 
 export enum DEFAULT_SELECT {
   SELECT = '선택'
+}
+
+export const BRANCH_SEARCH_OPTIONS = {
+  0: '전체',
+  1: '지점',
+  2: '대리점',
+  premium: 'T Premium  Store',
+  direct: '바로픽업',
+  rent: '임대폰',
+  skb: 'SK브로드밴드',
+  apple: '애플취급점',
+  authAgnYn: '공식인증대리점',
+  etc: ' 외 ',
+  count: '건'
 };

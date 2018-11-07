@@ -4,7 +4,7 @@
  * Date: 2018.10.16
  */
 
-Tw.CustomerBranchSearch = function (rootEl) {
+Tw.CustomerBranchSearch = function (rootEl, params) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -17,22 +17,51 @@ Tw.CustomerBranchSearch = function (rootEl) {
     storeType: 0  // 0: 전체, 1: 지점, 2: 대리점
   };
 
-  this._page = 1;
-  this._lastCmd = null;
-  this._lastQueryParams = null;
-
-  this._init();
+  this._init(params);
   this._cacheElements();
   this._bindEvents();
 };
 
 Tw.CustomerBranchSearch.prototype = {
-  _init: function () {
+  _init: function (params) {
     var hash = window.location.hash;
     if (!Tw.FormatHelper.isEmpty(hash) && window.location.hash !== '#name') {
       setTimeout($.proxy(function () {
         this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
       }, this), 0);
+    }
+
+    // Save current search result's query detail
+    if (!Tw.FormatHelper.isEmpty(params)) {
+      this._page = 2;
+      $.extend(true, this._options, params);
+      delete this._options.searchText;
+
+      this._lastCmd = Tw.API_CMD.BFF_08_0004;
+      switch (hash) {
+        case '#addr':
+          this._lastCmd = Tw.API_CMD.BFF_08_0005;
+          break;
+        case '#tube':
+          this._lastCmd = Tw.API_CMD.BFF_08_0006;
+          break;
+      }
+
+      this._lastQueryParams = params;
+      this._lastQueryParams.searchText = encodeURIComponent(params.searchText);
+    }
+
+    if (!String.prototype.endsWith) {
+      String.prototype.endsWith = function(searchString, position) {
+          var subjectString = this.toString();
+          if (typeof position !== 'number' || !isFinite(position) ||
+              Math.floor(position) !== position || position > subjectString.length) {
+            position = subjectString.length;
+          }
+          position -= searchString.length;
+          var lastIndex = subjectString.indexOf(searchString, position);
+          return lastIndex !== -1 && lastIndex === position;
+      };
     }
   },
   _cacheElements: function () {
@@ -121,65 +150,44 @@ Tw.CustomerBranchSearch.prototype = {
     }
   },
   _onSearchRequested: function (e) {
-    var cmd = null;
-    var params = {};
+    var url = '/customer/branch/search?type=';
+    var hash = '#name';
+
     switch (e.currentTarget.id) {
       case 'fe-btn-search-name':
-        cmd = Tw.API_CMD.BFF_08_0004;
-        params.searchText = this.$inputName.val();
+        url += 'name&keyword=' + this.$inputName.val();
         break;
       case 'fe-btn-search-addr':
-        cmd = Tw.API_CMD.BFF_08_0005;
-        params.searchText = this.$inputAddr.val();
+        url += 'addr&keyword=' + this.$inputAddr.val();
+        hash = '#addr';
         break;
       case 'fe-btn-search-tube':
-        cmd = Tw.API_CMD.BFF_08_0006;
-        params.searchText = this.$inputTube.val();
+        url += 'tube&keyword=' + this.$inputTube.val();
+        hash = '#tube';
         break;
       default:
         return;
     }
-    params.searchText = encodeURIComponent(params.searchText);
 
-    $.extend(true, params, this._options);
+    url += '&storeType=' + this._options.storeType;
 
-    this._apiService.request(cmd, params)
-      .done($.proxy(this._onSearchResult, this))
-      .fail(function (err) {
-        Tw.Error(err.code, err.msg).pop();
-      });
-
-    this._page = 1;
-
-    this._lastCmd = cmd;
-    this._lastQueryParams = params;
-  },
-  _onSearchResult: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      if (res.result.regionInfoList.length === 0) {
-        this.$divNone.removeClass('none');
-        this.$divResult.addClass('none');
-      } else {
-        this.$divResult.removeClass('none');
-        this.$divNone.addClass('none');
-
-        this.$resultCount.text(res.result.totalCount);
-        this.$ulResult.empty();
-        this.$ulResult.append(this._searchedItemTemplate({
-          list: res.result.regionInfoList
-        }));
-
-        if (res.result.lastPageType === 'Y') {
-          this.$divMore.addClass('none');
-        } else {
-          this.$divMore.removeClass('none');
-        }
-
-        this._page++;
+    url += '&options=';
+    for (var key in this._options) {
+      if (key === 'storeType') {
+        continue;
       }
-    } else {
-      Tw.Error(res.code, res.msg).pop();
+      if (url.endsWith('&options=')) {
+        url += key;
+      } else {
+        url += '::' + key;
+      }
     }
+    if (url.endsWith('&options=')) {
+      url = url.substring(0, url.indexOf('&options='));
+    }
+    url += hash;
+
+    this._historyService.goLoad(url);
   },
   _onMoreRequested: function () {
     this._lastQueryParams.currentPage = this._page;
