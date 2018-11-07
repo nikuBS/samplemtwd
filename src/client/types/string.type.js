@@ -51,6 +51,7 @@ Tw.POPUP_TITLE = {
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '납부포인트 선택',
   SELECT_TPOINT: 'T포인트 선택',
+  SELECT_FARE: '요금 정보 선택',
   SELECT_ACCOUNT: '계좌번호 선택',
   SELECT_PAYMENT_DATE: '요금납부일 선택',
   CHANGE_PAYMENT_DATE: '요금납부일 변경',
@@ -287,7 +288,8 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   GO_PREPAY_HISTORY: '선결제내역 보기',
   REQUEST: '신청',
   CHANGE: '변경',
-  GO_CHANGE_HISTORY: '변경내역 보기'
+  GO_CHANGE_HISTORY: '변경내역 보기',
+  RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감'
 };
 
 Tw.ALERT_MSG_COMMON = {
@@ -321,6 +323,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   SELECT_LINE: '회선을 선택해 주세요.',
   TEN_POINT: '10포인트 단위로 입력해 주세요.',
   TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
+  UP_TO_ONE: '1점 이상 입력해주세요.',
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',

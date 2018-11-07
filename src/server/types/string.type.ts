@@ -371,3 +371,7 @@ export const PRODUCT_WIRE_CATEGORIES = {
   phone: '전화',
   tv: 'TV'
 };
+
+export enum DEFAULT_SELECT {
+  SELECT = '선택'
+};

@@ -1,7 +1,7 @@
 /**
  * FileName: myt-fare.payment.rainbow.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.24
+ * Date: 2018.11.7
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -9,11 +9,9 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import {MYT_FARE_PAYMENT_NAME, RAINBOW_FARE_CODE, RAINBOW_FARE_NAME} from '../../../../types/bff.type';
+import {DEFAULT_SELECT, SELECT_POINT} from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
-import {MYT_FARE_PAYMENT_TITLE} from '../../../../types/bff.type';
-import {SELECT_POINT} from '../../../../types/string.old.type';
-import StringHelper from '../../../../utils/string.helper';
-import {PAYMENT_OPTION_TEXT} from '../../../../types/bff.old.type';
 
 class MyTFarePaymentRainbow extends TwViewController {
 
@@ -48,20 +46,18 @@ class MyTFarePaymentRainbow extends TwViewController {
   }
 
   private parseData(data: any): any {
-    data.rainbowPt = FormatHelper.addComma(data.usableRbpPt);
+    data.point = FormatHelper.addComma(data.usableRbpPt);
     return data;
   }
 
   private getAutoData(autoInfo: any): any {
-    // if (autoInfo.code === API_CODE.CODE_00) {
-    //   return {
-    //     strRbpStatTxt: response.result.strRbpStatTxt,
-    //     endDate: FormatHelper.isEmpty(response.result.disOcbEffDate) ? DateHelper.getNextYearShortDate()
-    //       : DateHelper.getShortDateNoDot(response.result.disOcbEffDate),
-    //     ocbTermTodoAmt: FormatHelper.addComma(response.result.ocbTermTodoAmt),
-    //     amtText: FormatHelper.isEmpty(response.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(response.result.ocbTermTodoAmt)
-    //   };
-    // }
+    if (autoInfo.code === API_CODE.CODE_00) {
+      return {
+        isAuto: autoInfo.result.reqStateNm === MYT_FARE_PAYMENT_NAME.IS_AUTO,
+        autoFareCode: FormatHelper.isEmpty(autoInfo.result.reqProdNm) ? '' : RAINBOW_FARE_CODE[autoInfo.result.reqProdNm],
+        autoFareText: FormatHelper.isEmpty(autoInfo.result.reqProdNm) ? DEFAULT_SELECT.SELECT : RAINBOW_FARE_NAME[autoInfo.result.reqProdNm]
+      };
+    }
     return null;
   }
 

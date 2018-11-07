@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.payment.cashbag.js
+ * FileName: myt-fare.payment.cashbag.tpoint.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.7
  */
 
-Tw.MyTFarePaymentCashbag = function (rootEl, pointType) {
+Tw.MyTFarePaymentCashbagTpoint = function (rootEl, pointType) {
   this.$container = rootEl;
   this.$pointType = pointType;
 
@@ -16,7 +16,7 @@ Tw.MyTFarePaymentCashbag = function (rootEl, pointType) {
   this._init();
 };
 
-Tw.MyTFarePaymentCashbag.prototype = {
+Tw.MyTFarePaymentCashbagTpoint.prototype = {
   _init: function () {
     this._initVariables('tab1');
     this._bindEvent();
@@ -165,10 +165,10 @@ Tw.MyTFarePaymentCashbag.prototype = {
     }
   },
   _paySuccess: function (res) {
-    var message = this._getCompleteMessage();
-    var subMessage = this._getSubMessage();
-
     if (res.code === Tw.API_CODE.CODE_00) {
+      var message = this._getCompleteMessage();
+      var subMessage = this._getSubMessage();
+
       this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
         Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message, subMessage);
     } else {

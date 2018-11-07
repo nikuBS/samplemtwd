@@ -200,6 +200,19 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_RAINBOW: [
+    {
+      'list': [
+        { 'option': 'point-type', 'attr': 'id="CCBBAE0"', value: '국내 음성 통화료' },
+        { 'option': 'point-type', 'attr': 'id="CCRPDDC"', value: '국내 데이터 통화료' },
+        { 'option': 'point-type', 'attr': 'id="CCBCOE0"', value: '부가서비스(컬러링)' },
+        { 'option': 'point-type', 'attr': 'id="CCPCRBE"', value: '부가서비스(퍼펙트콜)' },
+        { 'option': 'point-type', 'attr': 'id="CCPLRBE"', value: '부가서비스(퍼펙트콜 라이트)' },
+        { 'option': 'point-type', 'attr': 'id="CCRPGDC"', value: '기본료 및 월정액' },
+        { 'option': 'point-type', 'attr': 'id="CCRMRBE"', value: '로밍사용요금' }
+      ]
+    }
+  ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [

@@ -305,3 +305,23 @@ export enum RAINBOW_POINT_REL_CD {
   C = 'C',
   P = 'P'
 }
+
+export enum RAINBOW_FARE_CODE {
+  '국내음성통화' = 'CCBBAE0',
+  '무료컬러링' = 'CCBCOE0',
+  '로밍통화' = 'CCRMRBE',
+  '무료퍼펙트콜' = 'CCPCRBE',
+  '무료퍼펙트콜라이트' = 'CCPLRBE',
+  '데이터통화료' = 'CCRPDDC',
+  '기본료 및 월정액' = 'CCRPGDC'
+}
+
+export enum RAINBOW_FARE_NAME {
+  '국내음성통화' = '국내 음성 통화료',
+  '무료컬러링' = '부가서비스(컬러링)',
+  '로밍통화' = '로밍사용요금',
+  '무료퍼펙트콜' = '부가서비스(퍼펙트콜)',
+  '무료퍼펙트콜라이트' = '부가서비스(퍼펙트콜 라이트)',
+  '데이터통화료' = '국내 데이터 통화료',
+  '기본료 및 월정액' = '기본료 및 월정액'
+}
