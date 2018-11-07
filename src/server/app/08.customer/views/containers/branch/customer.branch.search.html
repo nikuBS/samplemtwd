@@ -31,7 +31,7 @@
                                 <div class="tab-linker">
                                     <ul role="tablist">
                                         <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a class="fe-replace-history" href="#name">매장명</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#address">주소</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#addr">주소</a></li>
                                         <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#tube">지하철</a></li>
                                     </ul>
                                 </div>
@@ -45,7 +45,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="" aria-labelledby="aria-citation-phone" />
+                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" aria-labelledby="aria-citation-phone" />
                                                             <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -53,7 +53,7 @@
                                                     <!-- .filter -->
                                                     <div class="filter">
                                                         <div class="inline">
-                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true">전체</button>
+                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
                                                         </div>
                                                     </div>
                                                     <!-- // .filter -->
@@ -61,7 +61,7 @@
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button id="fe-btn-search-name" disabled>검색</button>
+                                                                <button id="fe-btn-search-name" <%= isSearch && type === 'name' ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -79,7 +79,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="" aria-labelledby="aria-citation-phone" />
+                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch && type === 'addr' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" />
                                                             <button id="fe-cancel-addr" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -87,7 +87,7 @@
                                                     <!-- .filter -->
                                                     <div class="filter">
                                                         <div class="inline">
-                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true">전체</button>
+                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
                                                         </div>
                                                     </div>
                                                     <!-- // .filter -->
@@ -95,7 +95,7 @@
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button id="fe-btn-search-addr" disabled>검색</button>
+                                                                <button id="fe-btn-search-addr" <%= isSearch && type === 'addr' ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -113,7 +113,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="지하철명" value="" aria-labelledby="aria-citation-phone" />
+                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="지하철명" value="<%= isSearch && type === 'tube' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" />
                                                             <button id="fe-cancel-tube" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -121,7 +121,7 @@
                                                     <!-- .filter -->
                                                     <div class="filter">
                                                         <div class="inline">
-                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true">전체</button>
+                                                            <button class="bt-dropdown text-type01" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
                                                         </div>
                                                     </div>
                                                     <!-- // .filter -->
@@ -129,7 +129,7 @@
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button id="fe-btn-search-tube" disabled>검색</button>
+                                                                <button id="fe-btn-search-tube" <%= isSearch && type === 'tube' ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -151,7 +151,7 @@
                 <div class="cont-box pt0">
                     <!-- .search-point -->
                     <div class="search-point">
-                        <div class="fe-none none">
+                        <div class="fe-none <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
                             <!-- .ti-caption-gray -->
                             <div class="ti-caption-gray">
                                 <h3 class="tit">총 <em>0</em>개의 매장이 검색되었습니다.</h3>
@@ -165,22 +165,34 @@
                             <!-- // .contents-empty -->
                         </div>
 
-                        <div class="fe-result none">
+                        <div class="fe-result <%= isSearch && result.totalCount > '0' ? undefined : 'none' %>">
                             <!-- .ti-caption-gray -->
                             <div class="ti-caption-gray">
-                                <h3 class="tit">총 <em id="fe-result-count">0</em>개의 매장이 검색되었습니다.</h3>
+                                <h3 class="tit">총 <em id="fe-result-count"><%= isSearch ? result.totalCount : '0' %></em>개의 매장이 검색되었습니다.</h3>
                             </div>
                             <!-- // .ti-caption-gray -->
                             <!-- .shop-info -->
                             <div class="shop-info">
                                 <div class="shop-txt">
                                     <ul id="fe-result-list">
+                                        <% if (isSearch && result.regionInfoList.length > 0) { %>
+                                        <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
+                                        <li>
+                                            <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
+                                                <dt><%= result.regionInfoList[i].locName %></dt>
+                                                <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>}
+                                                    <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                        <% } %>
+                                        <% } %>
                                     </ul>
                                 </div>
                             </div>
                             <!-- // .shop-info -->
                             <!-- .btn-more -->
-                            <div class="btn-more">
+                            <div class="btn-more <%= isSearch && result.lastPageType === 'N' ? undefined : 'none' %>">
                                 <div class="bt-more">
                                     <button role="button" title="">더보기</button>
                                 </div>
@@ -239,7 +251,11 @@
 </script>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerBranchSearch($('.wrap'));
+    var data = '<%- isSearch ? JSON.stringify(params) : undefined %>';
+    if (!!data) {
+        data = JSON.parse(data);
+    }
+    new Tw.CustomerBranchSearch($('.wrap'), data);
   });
 </script>
 <% include ../../components/end.component.html %>
