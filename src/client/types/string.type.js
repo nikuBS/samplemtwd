@@ -449,10 +449,10 @@ Tw.ALERT_MSG_PRODUCT = {
 Tw.ALERT_MSG_BENEFIT = {};
 
 Tw.ALERT_MSG_MEMBERSHIP = {
-  NO_JOIN : {
-    TITLE : 'T멤버십에 가입하실 수 없습니다.',
-    CONTENTS : '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
-    TXT : '회선 관리하기'
+  NO_JOIN: {
+    TITLE: 'T멤버십에 가입하실 수 없습니다.',
+    CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
+    TXT: '회선 관리하기'
   }
 };
 
@@ -612,10 +612,20 @@ Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
   BTN_NAME: '공유하기'
 };
 
+Tw.MYT_DATA_FAMILY_SUCCESS_SHARE = {
+  TITLE: '데이터 공유',
+  CONTENTS: '매월 자동으로 공유됩니다.'
+};
+
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
   TITLE: '매월 자동으로 데이터를 공유 하시겠습니까?',
   CONTENTS: '다음달부터 자동 공유되며, 이번 달 안으로 변경이 가능합니다.',
   BTN_NAME: '변경하기'
+};
+
+Tw.MYT_DATA_FAMILY_SUCCESS_SHARE_MONTHLY = {
+  TITLE: '매월 자동 공유 설정',
+  CONTENTS: '{year}년 {month}월부터 적용'
 };
 
 Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
@@ -623,6 +633,8 @@ Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
   CONTENTS: '다음달부터 자동 공유가 해지되며, 이번 달 안으로 변경이 가능합니다.',
   BTN_NAME: '그만하기'
 };
+
+Tw.MYT_DATA_FAMILY_SUCCESS_DELETE_MONTHLY = '매월 자동 공유 해지 완료';
 
 Tw.MYT_DATA_CANCEL_MONTHLY = {
   TITLE: '매월 자동 충전을 취소하시겠습니까?',
@@ -932,4 +944,3 @@ Tw.FAMILY_TYPE = {
   GRANDPARENTS: '(증)조부모',
   ME: '본인 / 가족대표'
 };
-
