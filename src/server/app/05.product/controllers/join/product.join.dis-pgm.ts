@@ -67,7 +67,7 @@ class ProductJoinDisPgm extends TwViewController {
           // 10년이상
           data.percent = '80';
           break;
-        default:
+        case 'NA00002246':
           // 2년 미만
           data.percent = '50';
           break;
