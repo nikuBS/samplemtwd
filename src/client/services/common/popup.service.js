@@ -304,7 +304,13 @@ Tw.PopupService.prototype = {
     $layer.on('click', '.fe-submain', $.proxy(this._goLink, this, mainUrl));
   },
   _goLink: function (url) {
-    location.href = url;
+    if (typeof(url) === 'object') {
+      this.open({
+        'hbs': url.hbs
+      }, url.open, url.close, url.name);
+    } else {
+      location.href = url;
+    }
   },
   _checkIsComplete: function (event) {
     if (location.hash.match('complete')) {

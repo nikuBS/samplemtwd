@@ -75,7 +75,7 @@ Tw.MyTFarePaymentRainbow.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var message = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.CANCEL;
+      var message = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.AUTO_CANCEL;
 
       this._popupService.afterRequestSuccess('/myt/fare/history/payment', '/myt/fare',
         Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message);

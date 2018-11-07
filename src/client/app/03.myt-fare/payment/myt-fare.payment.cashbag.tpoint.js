@@ -99,7 +99,7 @@ Tw.MyTFarePaymentCashbagTpoint.prototype = {
     } else {
       message += Tw.MYT_FARE_PAYMENT_NAME.T_POINT;
     }
-    message += '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.CANCEL;
+    message += '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.AUTO_CANCEL;
     return message;
   },
   _selectPoint: function (event) {
