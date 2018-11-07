@@ -10,8 +10,8 @@ import ProductAddition from './controllers/addition/product.addition.controller'
 import ProductPlans from './controllers/plan/product.plans.controller';
 import ProductAdditions from './controllers/addition/product.additions.controller';
 import ProductFindMyBestPlans from './controllers/product.find-my-best-plans.controller';
-import ProductDisPgmJoin from './controllers/product.dis-pgm.join';
-import ProductDisPgmDetail from './controllers/product.dis-pgm.detail';
+import ProductJoinDisPgm from './controllers/join/product.join.dis-pgm';
+import ProductJoinDisPgmDetail from './controllers/join/product.join.dis-pgm.detail';
 import ProductWire from './controllers/wire/product.wire.controller';
 import ProductWires from './controllers/wire/product.wires.controller';
 
@@ -33,8 +33,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
     this.controllers.push({ url: '/infinity-benefit-usage-history', controller: ProductInfinityBenefitUsageHistory });
     this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
-    this.controllers.push({ url: '/dis-program-join(/:prodId)', controller: ProductDisPgmJoin });
-    this.controllers.push({ url: '/dis-program-join/detail(/:prodId)', controller: ProductDisPgmDetail });
+    this.controllers.push({ url: '/join/dis-program(/:prodId)', controller: ProductJoinDisPgm });
+    this.controllers.push({ url: '/join/dis-program/detail(/:prodId)', controller: ProductJoinDisPgmDetail });
 
     // new IA
   }

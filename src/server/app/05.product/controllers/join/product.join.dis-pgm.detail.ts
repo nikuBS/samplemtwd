@@ -1,18 +1,25 @@
 /*
+ * FileName:
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.09.
+ *
+ */
+
+/*
  * FileName: product.dis-pgm.detail.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.22
  *
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import FormatHelper from '../../../utils/format.helper';
-import DateHelper from '../../../utils/date.helper';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
-class ProductDisPgmDetail extends TwViewController {
+class ProductJoinDisPgmDetail extends TwViewController {
 
   constructor() {
     super();
@@ -70,4 +77,4 @@ class ProductDisPgmDetail extends TwViewController {
   }
 }
 
-export default ProductDisPgmDetail;
+export default ProductJoinDisPgmDetail;

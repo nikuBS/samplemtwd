@@ -40,6 +40,6 @@ Tw.ProductJoinSelContract.prototype = {
   },
 
   _onOkBtnClicked: function () {
-    this._historyService.goLoad('/product/dis-program-join/detail/'+ this.data.prodId +'?type='+this.selType);
+    this._historyService.goLoad('/product/join/dis-program/detail/'+ this.data.prodId +'?type='+this.selType);
   }
 };
