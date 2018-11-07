@@ -1,5 +1,5 @@
 /**
- * FileName: product.join-reservation.explain.js
+ * FileName: product.join.reservation.explain.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.11.05
  */
@@ -11,11 +11,14 @@ Tw.ProductJoinReservationExplain = function(familyList, callback) {
   this._historyService = new Tw.HistoryService();
   this._callback = callback;
 
-  this._familyList = [];
+  this._familyList = familyList || [];
   this._fileList = [];
 
   this._fileTemplate = Handlebars.compile($('#fe-templ-reserv-file').html());
   this._familyTemplate = Handlebars.compile($('#fe-tmpl-reserv-family').html());
+
+  this._limitFileByteSize = 2097152;
+  this._acceptExt = ['jpg', 'jpeg', 'png', 'tif', 'bmp'];
 
   this._popupService.open({
     hbs: 'BS_05_01_01_01',
@@ -36,8 +39,6 @@ Tw.ProductJoinReservationExplain.prototype = {
     if (this._familyList.length > 0) {
       this.$familyWrap.show();
     }
-
-    this._procEnableApplyBtn();
   },
 
   _cachedElement: function() {
@@ -47,9 +48,11 @@ Tw.ProductJoinReservationExplain.prototype = {
     this.$familyList = this.$container.find('.fe-family_list');
     this.$fileWrap = this.$container.find('.fe-file_wrap');
     this.$fileList = this.$container.find('.fe-file_list');
+    this.$explainFile = this.$container.find('.fe-explain_file');
 
     this.$btnFamilyType = this.$container.find('.fe-btn_family_type');
     this.$btnFamilyAdd = this.$container.find('.fe-btn_family_add');
+    this.$btnExplainFileAdd = this.$container.find('.fe-btn_explain_file_add');
     this.$btnExplainApply = this.$container.find('.fe-btn_explain_apply');
   },
 
@@ -57,7 +60,14 @@ Tw.ProductJoinReservationExplain.prototype = {
     this.$btnFamilyType.on('click', $.proxy(this._openFamilyTypePop, this));
     this.$btnExplainApply.on('click', $.proxy(this._procApply, this));
     this.$btnFamilyAdd.on('click', $.proxy(this._addFamily, this));
+    this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
+
     this.$familyAddWrap.on('keyup input', 'input[type=text]', $.proxy(this._procEnableAddFamilyBtn, this));
+    this.$familyList.find('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
+    this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
+
+    this.$explainFile.on('change', $.proxy(this._onChangeExplainFile, this));
+    this.$fileList.on('click', '.fe-btn_explain_file_del', $.proxy(this._delExplainFile, this));
   },
 
   _openFamilyTypePop: function() {
@@ -73,6 +83,8 @@ Tw.ProductJoinReservationExplain.prototype = {
           { value: Tw.FAMILY_TYPE.BROTHER, option: (this._familyType === 'brother') ? 'checked' : '', attr: 'data-family_type="brother"' },
           { value: Tw.FAMILY_TYPE.GRANDPARENTS, option: (this._familyType === 'grandparents') ? 'checked' : '',
             attr: 'data-family_type="grandparents"' },
+          { value: Tw.FAMILY_TYPE.GRANDCHILDREN, option: (this._familyType === 'grandchildren') ? 'checked' : '',
+            attr: 'data-family_type="grandchildren"' },
           { value: Tw.FAMILY_TYPE.ME, option: (this._familyType === 'me') ? 'checked' : '', attr: 'data-family_type="me"' }
         ]
       }]
@@ -81,7 +93,7 @@ Tw.ProductJoinReservationExplain.prototype = {
 
   _procEnableAddFamilyBtn: function() {
     if (Tw.FormatHelper.isEmpty(this._familyType) || this.$familyAddWrap.find('.fe-input_name').val().length < 1 ||
-      this.$familyAddWrap.find('.fe-input_phone_number').val().length < 1) {
+      this.$familyAddWrap.find('.fe-input_phone_number').val().length < 1 || this._familyList.length > 4) {
       return this._toggleBtn(this.$btnFamilyAdd, false);
     }
 
@@ -93,7 +105,51 @@ Tw.ProductJoinReservationExplain.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    if (this._familyList.length > 4) {
+      return;
+    }
+
+    var familyAddData = {
+      name: this.$familyAddWrap.find('.fe-input_name').val(),
+      number: this.$familyAddWrap.find('.fe-input_phone_number').val(),
+      no: this._familyList.length,
+      fam: {}
+    };
+
+    familyAddData.fam[this._familyType] = true;
+
+    this._familyList.push(familyAddData);
     this._toggleBtn(this.$btnFamilyAdd, this._familyList.length < 5);
+    this._clearFamilyAddWrap();
+
+    this.$familyList.append(this._familyTemplate(familyAddData));
+    this.$familyWrap.show();
+
+    this.$familyWrap.find('.checkbox').off();
+    skt_landing.widgets.widget_init('.fe-family_wrap');
+  },
+
+  _delFamily: function(e) {
+    var $item = $(e.currentTarget).parents('li'),
+      delNo = $item.data('no'),
+      delNoIdx = null;
+
+    $.each(this._familyList, function(item, index) {
+      if (item.no === delNo) {
+        delNoIdx = index;
+        return false;
+      }
+    });
+
+    this._familyList.splice(delNoIdx, 1);
+    this._toggleBtn(this.$btnFamilyAdd, this._familyList.length < 5);
+    this._procEnableAddFamilyBtn();
+
+    $item.remove();
+
+    if (this._familyList.length < 1) {
+      this.$familyWrap.hide();
+    }
   },
 
   _bindFamilyTypePop: function($popupContainer) {
@@ -106,12 +162,68 @@ Tw.ProductJoinReservationExplain.prototype = {
     this._popupService.close();
   },
 
+  _clearFamilyAddWrap: function() {
+    this._familyType = null;
+    this.$btnFamilyType.html(Tw.FAMILY_TYPE.DEFAULT + $('<div\>').append(this.$btnFamilyType.find('.ico')).html());
+    this.$familyAddWrap.find('input[type=text]').val('').blur();
+    this.$familyAddWrap.find('.fe-btn_cancel').removeClass('block');
+  },
+
+  _delExplainFile: function(e) {
+    var $item = $(e.currentTarget).parents('li');
+
+    this._fileList.splice($item.index(), 1);
+    this._toggleBtn(this.$btnExplainFileAdd, this._fileList.length < 5);
+
+    $item.remove();
+
+    if (this._fileList.length < 1) {
+      this.$fileWrap.hide();
+    }
+  },
+
+  _onChangeExplainFile: function(e) {
+    // if (!Tw.FormatHelper.isEmpty(e.currentTarget.files) ||
+    //   e.currentTarget.files[0].size > this._limitFileByteSize ||
+    //   this._acceptExt.indexOf(e.currentTarget.files[0].name.split('.').pop()) === -1) {
+    //   return this._toggleBtn(this.$btnExplainFileAdd, false);
+    // }
+
+    this._toggleBtn(this.$btnExplainFileAdd, !Tw.FormatHelper.isEmpty(e.currentTarget.files));
+  },
+
   _procEnableApplyBtn: function() {
     if (this._familyList.length < 1 || this._fileList.length < 1) {
-      this._toggleBtn(this.$btnExplainApply, true);
+      return this._toggleBtn(this.$btnExplainApply, false);
     }
 
-    this._toggleBtn(this.$btnExplainApply, false);
+    this._toggleBtn(this.$btnExplainApply, true);
+  },
+
+  _uploadExplainFile: function() {
+    var fileInfo = this.$explainFile.get(0).files[0],
+      formData = new FormData();
+
+    if (fileInfo.size > this._limitFileByteSize) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A04);
+    }
+
+    if (this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A05);
+    }
+
+    if (this._fileList.length > 4) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
+    }
+
+    formData.append('file', this.$explainFile.get(0).files[0]);
+
+    this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
+      .done($.proxy(this._successUploadFile, this));
+  },
+
+  _successUploadFile: function(resp) {
+    // console.log(resp);
   },
 
   _toggleBtn: function($btn, isEnable) {

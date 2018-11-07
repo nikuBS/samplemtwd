@@ -150,7 +150,7 @@ Tw.ProductSetting.prototype = {
     var isProdMoney = this.$prodMoney && (this.$prodMoney.length > 0);
 
     this._popupService.open({
-      hbs: 'DC_05_01_end_01_product',
+      hbs: 'complete_product',
       data: $.extend(this._successData, {
         typeNm: Tw.PRODUCT_TYPE_NM.CHANGE,
         isBasFeeInfo: isProdMoney,

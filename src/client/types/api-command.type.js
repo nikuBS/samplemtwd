@@ -352,6 +352,7 @@ Tw.API_CMD = {
   BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: Tw.API_METHOD.GET },
   BFF_10_0038: { path: '/core-product/v1/mobiles/additions/:args0/vas-terms', method: Tw.API_METHOD.GET },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
+  BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: Tw.API_METHOD.POST },
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
 
   // MEMBERSHIP

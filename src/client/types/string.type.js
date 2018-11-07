@@ -857,7 +857,9 @@ Tw.UPLOAD_FILE = {
   UPLOAD_FILE: '파일 추가하기',
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
-  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.'
+  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
+  WARNING_A04: '첨부파일 용량은 2MB를 넘을 수 없습니다.',
+  WARNING_A05: 'MS워드, 한글hwp, 이미지 (jpg, jpeg, png, tif, bmp)파일을 첨부할 수 있습니다.'
 };
 
 Tw.PRODUCT_RESERVATION = {
@@ -866,7 +868,13 @@ Tw.PRODUCT_RESERVATION = {
   internet: '인터넷',
   phone: '전화',
   tv: 'TV',
-  combine: '결합상품'
+  combine: '결합상품',
+  success: {
+    text: '가입상담 예약',
+    subtext_product: '상담상품 : ',
+    subtext_applyer: '신청자 정보 : ',
+    subtext_info: '상담예정일 : 신청일로부터 2일 이내(영업일 기준)'
+  }
 };
 
 Tw.PRODUCT_COMBINE_PRODUCT = {
@@ -943,10 +951,12 @@ Tw.MYT_JOIN_TB_FREE_BENEFIT = {
 };
 
 Tw.FAMILY_TYPE = {
+  DEFAULT: '선택',
   SPOUSE: '배우자',
   CHILDREN: '자녀',
   PARENTS: '부모',
   BROTHER: '형제자매',
   GRANDPARENTS: '(증)조부모',
+  GRANDCHILDREN: '손자녀',
   ME: '본인'
 };
