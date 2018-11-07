@@ -266,6 +266,7 @@ Tw.API_CMD = {
   BFF_07_0061: { path: '/v1/auto-payments', method: Tw.API_METHOD.POST },
   BFF_07_0062: { path: '/v1/auto-payments', method: Tw.API_METHOD.PUT },
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
+  BFF_07_0064: { path: '/core-bill/v1/autopay/db-req', method: Tw.API_METHOD.POST },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/:args0', method: Tw.API_METHOD.GET },
   BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.POST },

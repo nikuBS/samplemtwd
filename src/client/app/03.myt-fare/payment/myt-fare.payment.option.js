@@ -26,7 +26,7 @@ Tw.MyTFarePaymentOption.prototype = {
     if (type) {
       var message = '';
 
-      if (type === 'new') {
+      if (type === 'new' || type === 'sms') {
         message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_NEW;
       }
       if (type === 'change') {

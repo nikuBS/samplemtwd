@@ -287,11 +287,14 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   GO_PAYMENT_HISTORY: '납부내역 보기',
   PREPAY: '선결제',
   GO_PREPAY_HISTORY: '선결제내역 보기',
+  GO_SMS: '문자 알림서비스 신청하기',
   REQUEST: '신청',
   CHANGE: '변경',
-  CANCEL: '자동납부 해지',
+  CANCEL: '해지',
+  AUTO_CANCEL: '자동납부 해지',
   GO_CHANGE_HISTORY: '변경내역 보기',
-  RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감'
+  RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감',
+  SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.'
 };
 
 Tw.ALERT_MSG_COMMON = {

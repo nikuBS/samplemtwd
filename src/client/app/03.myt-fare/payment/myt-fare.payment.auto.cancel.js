@@ -13,105 +13,46 @@ Tw.MyTFarePaymentAutoCancel = function (rootEl, $layer) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._commonHelper = Tw.CommonHelper;
+  this._historyService = new Tw.HistoryService(rootEl);
 
-  this._init();
+  this._bindEvent();
 };
 
 Tw.MyTFarePaymentAutoCancel.prototype = {
-  _init: function () {
-    this._bindEvent();
-  },
   _bindEvent: function () {
-    this.$layer.on('change', '.fe-send-sms-yn', $.proxy(this._showAndHideAccount, this));
-    this.$layer.on('click', '.fe-account-selector', $.proxy(this._getAccountList, this));
-    this.$layer.on('click', '.fe-sms-info', $.proxy(this._openSmsInfo, this));
     this.$layer.on('click', '.fe-go-cancel', $.proxy(this._cancel, this));
   },
-  _showAndHideAccount: function (event) {
-    var $target = $(event.target);
-    var $accountBox = this.$layer.find('.fe-account-box');
-    if ($target.is(':checked')) {
-      $accountBox.show();
-    } else {
-      $accountBox.hide();
-    }
-  },
-  _getAccountList: function (event) {
-    if (Tw.FormatHelper.isEmpty(this.$bankList)) {
-      this._apiService.request(Tw.API_CMD.BFF_07_0026, {})
-        .done($.proxy(this._getAccountSuccess, this, event))
-        .fail($.proxy(this._getAccountFail, this));
-    } else {
-      this._selectAccountList(event);
-    }
-  },
-  _getAccountSuccess: function (event, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      this._setAccountList(res.result.virtualBankList);
-      this._selectAccountList(event);
-    } else {
-      this._getAccountFail(res);
-    }
-  },
-  _getAccountFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
-  },
-  _setAccountList: function (bankList) {
-    var accountList = [];
-    var listObj = {
-      'list': []
-    };
-
-    for (var i = 0; i < bankList.length; i++) {
-      var obj = {
-        'option': 'account',
-        'attr': 'id="' + bankList[i].bankCd + '"',
-        'value': bankList[i].sVirtualBankNum
-      };
-      listObj.list.push(obj);
-    }
-    accountList.push(listObj);
-    this.$bankList = accountList;
-  },
-  _selectAccountList: function (event) {
-    var $target = $(event.currentTarget);
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT_ACCOUNT,
-      data: this.$bankList
-    }, $.proxy(this._selectPopupCallback, this, $target));
-  },
-  _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.account', $.proxy(this._setSelectedValue, this, $target));
-  },
-  _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    $target.text($selectedValue.text());
-
-    this._popupService.close();
-  },
-  _openSmsInfo: function () {
-    this._popupService.openAlert(Tw.SMS_INFO.CONTENTS, Tw.SMS_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
-  },
   _cancel: function () {
-    if (this._isValid()) {
-      var reqData = this._makeRequestData();
-      this._apiService.request(Tw.API_CMD.BFF_07_0063, reqData)
-        .done($.proxy(this._cancelSuccess, this))
-        .fail($.proxy(this._cancelFail, this));
+    var reqData = this._makeRequestData();
+    this._apiService.request(Tw.API_CMD.BFF_07_0063, reqData)
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._fail, this));
+  },
+  _cancelSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      var link = null;
+      var linkText = null;
+      var subMessage = null;
 
-      this._popupService.close();
+      if (res.result.mobileMYn === 'Y') {
+        link = {
+          hbs: 'MF_05_01_03',
+          open: $.proxy(this._openSmsInfo, this, res.result.bankList),
+          close: $.proxy(this._closeSmsInfo, this),
+          name: 'sms'
+        };
+        linkText = Tw.MYT_FARE_PAYMENT_NAME.GO_SMS;
+        subMessage = Tw.MYT_FARE_PAYMENT_NAME.SMS_MESSAGE;
+      }
+
+      this._popupService.afterRequestSuccess(link, '/myt/fare/payment/option',
+        linkText, Tw.MYT_FARE_PAYMENT_NAME.CANCEL, subMessage);
+    } else {
+      this._fail(res);
     }
   },
-  _isValid: function () {
-    if (this.$layer.find('.fe-account-box').is(':visible')) {
-      if (this.$layer.find('.fe-account-selector').attr('id') === undefined) {
-        this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3);
-        return false;
-      }
-    }
-    return true;
+  _fail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   },
   _makeRequestData: function () {
     var $selectBox = this.$layer.find('.fe-select-payment-option');
@@ -128,32 +69,70 @@ Tw.MyTFarePaymentAutoCancel.prototype = {
     };
     return reqData;
   },
-  _cancelSuccess: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      if (this.$layer.find('.fe-account-box').is(':visible')) {
-        this._apiService.request(Tw.API_CMD.BFF_07_0064, {
-          acntNum: this.$infoBox.attr('data-acnt-num'),
-          billSmsYn: 'Y',
-          bankCd1: this.$layer.find('.fe-account-selector').attr('id')
-        }).done($.proxy(this._smsSuccess, this))
-          .fail($.proxy(this._cancelFail, this));
-      } else {
-        this._popupService.close();
-        this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CANCEL);
-      }
-    } else {
-      this._cancelFail(res);
+  _openSmsInfo: function (bankList, $layer) {
+    this.$layer = $layer;
+    $layer.on('click', '.fe-select-bank', $.proxy(this._setBankList, this, bankList));
+    $layer.on('click', '.fe-request', $.proxy(this._request, this));
+  },
+  _closeSmsInfo: function () {
+    if (this.$isComplete) {
+      this._historyService.goLoad('/myt/fare/payment/option?type=sms');
     }
   },
-  _cancelFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _setBankList: function (bankList, event) {
+    if (Tw.FormatHelper.isEmpty(this.$bankList)) {
+      var list = [];
+      var listObj = {
+        'list': []
+      };
+
+      for (var i = 0; i < bankList.length; i++) {
+        var obj = {
+          'option': 'bank-name',
+          'attr': 'id="' + bankList[i].bankCd + '"',
+          'value': bankList[i].bankNm
+        };
+        listObj.list.push(obj);
+      }
+      list.push(listObj);
+      this.$bankList = list;
+    }
+    this._selectBankList(event);
+  },
+  _selectBankList: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT_BANK,
+      data: this.$bankList
+    }, $.proxy(this._selectPopupCallback, this, $target));
+  },
+  _selectPopupCallback: function ($target, $layer) {
+    $layer.on('click', '.bank-name', $.proxy(this._setSelectedValue, this, $target));
+  },
+  _setSelectedValue: function ($target, event) {
+    var $selectedValue = $(event.currentTarget);
+    $target.attr('id', $selectedValue.attr('id'));
+    $target.text($selectedValue.text());
+
+    this.$layer.find('.fe-request').removeAttr('disabled');
+    this._popupService.close();
+  },
+  _request: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0064, {
+      acntNum: this.$infoBox.attr('data-acnt-num'),
+      billSmsYn: 'Y',
+      bankCd1: this.$layer.find('.fe-select-bank').attr('id')
+    }).done($.proxy(this._smsSuccess, this))
+      .fail($.proxy(this._fail, this));
   },
   _smsSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this.$isComplete = true;
       this._popupService.close();
-      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CANCEL);
     } else {
-      this._cancelFail(res);
+      this._fail(res);
     }
   }
 };
