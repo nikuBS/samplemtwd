@@ -287,12 +287,12 @@ export const COMBINATION_PRODUCT = {
   TW20000008: 'tb-free', // TB끼리 온가족프리
   NH00000059: 'tb-family',
   TW20000007: 'tb-family', // TB끼리 온가족무료
-  NH00000037: 'tb-internet',
-  NH00000039: 'tb-internet',
-  TW00000062: 'tb-internet', // T+B인터넷
-  NH00000040: 'tb-internet',
-  NH00000041: 'tb-internet',
-  TW00000063: 'tb-internet', // T+B전화/인터넷전화
+  NH00000037: 'tb-wire',
+  NH00000039: 'tb-wire',
+  TW00000062: 'tb-wire', // T+B인터넷
+  NH00000040: 'tb-wire',
+  NH00000041: 'tb-wire',
+  TW00000063: 'tb-wire', // T+B전화/인터넷전화
   NA00002040: 't-family',
   TW20000010: 't-family', // T끼리 온가족할인
   NA00004728: 'happy-plan',
