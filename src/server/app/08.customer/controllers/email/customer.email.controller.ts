@@ -36,6 +36,20 @@ class CustomerEmail extends TwViewController {
           { email: req.query.email }
         ));
         break;
+      case 'retry-service':
+        res.render('email/customer.email.service.retry.html',
+          Object.assign({}, responseData, {
+            convertDate: this.convertDate
+          })
+        );
+        break;
+      case 'retry-quality':
+        res.render('email/customer.email.quality.retry.html',
+          Object.assign({}, responseData, {
+            convertDate: this.convertDate
+          })
+        );
+        break;
       case 'history':
         this.getEmailHistory()
           .subscribe((response) => {

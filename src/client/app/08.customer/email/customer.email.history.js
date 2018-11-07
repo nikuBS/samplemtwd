@@ -28,6 +28,7 @@ Tw.CustomerEmailHistory.prototype = {
     this.$container.on('click', '.fe-btn_history_detail', $.proxy(this._goToHistoryDetail, this));
   },
 
+
   _goToHistoryDetail: function (e) {
     this._history.replaceURL('/customer/email/history-detail?' + $.param($(e.currentTarget).data()));
   }
