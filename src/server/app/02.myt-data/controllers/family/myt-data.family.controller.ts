@@ -26,12 +26,6 @@ class MyTDataFamily extends TwViewController {
     };
 
     switch (page) {
-      case 'complete':
-        res.render('family/myt-data.family.complete.html', {
-          ...responseData,
-          query: req.query
-        });
-        break;
       case 'setting':
         Observable.combineLatest(this.getImmediatelyInfo(), this.getMonthlyInfo()).subscribe(([immediatelyInfo, monthlyInfo]) => {
           const error = {
