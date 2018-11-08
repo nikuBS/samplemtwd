@@ -49,6 +49,8 @@ Tw.CustomerBranchSearch.prototype = {
 
       this._lastQueryParams = params;
       this._lastQueryParams.searchText = encodeURIComponent(params.searchText);
+
+      this._isSearched = true;
     }
 
     if (!String.prototype.endsWith) {
@@ -124,8 +126,28 @@ Tw.CustomerBranchSearch.prototype = {
   },
   _onOptionsChanged: function (options) {
     this._popupService.close();
-    if (options) {
+
+    if (!!options) {
       this._options = options;
+
+      if (!!this._isSearched) {
+        var $activeTab = this.$container.find('li[role="tab"][aria-selected="true"]');
+        var tabId = $activeTab.attr('id');
+        var id = 'fe-btn-search-name';
+        switch (tabId) {
+          case 'tab2':
+            id = 'fe-btn-search-addr';
+            break;
+          case 'tab3':
+            id = 'fe-btn-search-tube';
+            break;
+          default:
+            break;
+        }
+
+        this._onSearchRequested({ currentTarget: { id: id } });
+        return;
+      }
 
       // make text to show about options set
       var text = Tw.BRANCH_SEARCH_OPTIONS[this._options.storeType];
