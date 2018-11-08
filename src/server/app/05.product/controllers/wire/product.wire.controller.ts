@@ -9,27 +9,30 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { empty } from 'rxjs/observable/empty';
 
 export default class ProductWire extends TwViewController {
   private WIRE_CODE = 'F01300';
 
-  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.getMyWireInfo(svcInfo), this.getBanners()).subscribe(([myWire, banners]) => {
-      const error = {
-        code: (myWire && myWire.code) || banners.code,
-        msg: (myWire && myWire.msg) || banners.msg
-      };
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    if (req.url.replace('/wire', '')) {
+      res.render('wire/product.wire.service-area.html', { svcInfo, pageInfo });
+    } else {
+      Observable.combineLatest(this.getMyWireInfo(svcInfo), this.getBanners()).subscribe(([myWire, banners]) => {
+        const error = {
+          code: (myWire && myWire.code) || banners.code,
+          msg: (myWire && myWire.msg) || banners.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, {
-          ...error,
-          svcInfo
-        });
-      }
+        if (error.code) {
+          return this.error.render(res, {
+            ...error,
+            svcInfo
+          });
+        }
 
-      res.render('wire/product.wire.html', { svcInfo, pageInfo, myWire, banners });
-    });
+        res.render('wire/product.wire.html', { svcInfo, pageInfo, myWire, banners });
+      });
+    }
   }
 
   private getMyWireInfo = svcInfo => {
@@ -55,7 +58,7 @@ export default class ProductWire extends TwViewController {
         top: (resp.result || []).filter(banner => {
           return banner.bnnrLocCd === 'T';
         }),
-        center: resp.result.filter(banner => {
+        center: (resp.result || []).filter(banner => {
           return banner.bnnrLocCd === 'C';
         })
       };
