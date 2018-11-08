@@ -28,9 +28,15 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   },
 
   _retryInquiry: function (e) {
-    $(e.currentTarget);
-    // this._apiService.request(Tw.API_CMD.BFF_08_0061, { inqId: 'M', inqClCd: '', svcDvcClCd: 'M' })
-    //   .done($.proxy(this._onSuccessHistoryList, this));
+    var inqclcd = $(e.currentTarget).data().inqclcd;
+
+    if ( inqclcd === 'Q' ) {
+      this._history.replaceURL('/customer/email/quality-retry?' + $.param($(e.currentTarget).data()));
+    }
+
+    if ( inqclcd === 'B' ) {
+      this._history.replaceURL('/customer/email/service-retry?' + $.param($(e.currentTarget).data()));
+    }
   },
 
   _removeInquiry: function (e) {

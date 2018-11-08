@@ -29,7 +29,7 @@
                     <div class="details-top">
                         <strong class="tit"><%-inquiryInfo.title%></strong>
                         <p>
-                            <em class="date"><%-inquiryInfo.rgstDt%></em>
+                            <em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
                             <% if ( inquiryInfo.answYn === 'Y' ) { %>
                                 <span class="state">답변완료</span>
                             <% } %>

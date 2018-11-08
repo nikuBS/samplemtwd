@@ -447,6 +447,7 @@ export const API_CMD = {
   BFF_08_0008: { path: '/core-modification/v1/region-close-store-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0009: { path: '/core-modification/v1/voice-certification-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0010: { path: '/core-modification/v1/email-inquiry-categories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0012: { path: '/core-modification/v1/email-inquiry/append-inquiry', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0014: { path: '/cs/file-upload', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0015: { path: '/core-modification/v1/brand-phone-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
