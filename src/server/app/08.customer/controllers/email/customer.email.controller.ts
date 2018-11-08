@@ -36,19 +36,27 @@ class CustomerEmail extends TwViewController {
           { email: req.query.email }
         ));
         break;
-      case 'retry-service':
-        res.render('email/customer.email.service.retry.html',
-          Object.assign({}, responseData, {
-            convertDate: this.convertDate
-          })
-        );
+      case 'service-retry':
+        this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
+          .subscribe((response) => {
+            res.render('email/customer.email.service.retry.html',
+              Object.assign({}, responseData, {
+                inquiryInfo: response.result,
+                convertDate: this.convertDate
+              })
+            );
+          });
         break;
-      case 'retry-quality':
-        res.render('email/customer.email.quality.retry.html',
-          Object.assign({}, responseData, {
-            convertDate: this.convertDate
-          })
-        );
+      case 'quality-retry':
+        this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
+          .subscribe((response) => {
+            res.render('email/customer.email.quality.retry.html',
+              Object.assign({}, responseData, {
+                inquiryInfo: response.result,
+                convertDate: this.convertDate
+              })
+            );
+          });
         break;
       case 'history':
         this.getEmailHistory()
@@ -65,9 +73,12 @@ class CustomerEmail extends TwViewController {
         this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
           .subscribe((response) => {
             res.render('email/customer.email.history.detail.html',
-              Object.assign({}, responseData, { inquiryInfo: response.result })
+              Object.assign({}, responseData, {
+                inquiryInfo: response.result,
+                convertDate: this.convertDate
+              })
             );
-          })
+          });
         break;
       default:
         // Observable.combineLatest(

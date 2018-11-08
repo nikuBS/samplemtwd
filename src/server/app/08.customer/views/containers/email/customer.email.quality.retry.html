@@ -45,28 +45,14 @@
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
-                                        <div class="cont-box">
+                                        <div class="blind fe-inqid"><%-inquiryInfo.inqId%></div>
+                                        <div class="cont-box nogaps-btm">
                                             <div class="plan-title">
                                                 <h3 class="tit">
-                                                    인터넷/TV/집전화 <span class="tx-normal">서비스의</span><br>
-                                                    <span class="tx-normal">통화품질 개선을 요청합니다.</span>
+                                                    휴대폰 <span class="tx-normal">서비스의</span><br>
+                                                    가입/변경/해지 <span class="tx-normal">대해</span><br>
+                                                    <span class="tx-normal">문의합니다.</span>
                                                 </h3>
-                                            </div>
-                                            <div class="widget formradio-style01">
-                                                <div class="widget-box radio">
-                                                    <ul class="select-list" role="radiogroup">
-                                                        <li class="radiobox type01-big checked disabled" role="radio" aria-checked="true"
-                                                            aria-disabled="true">
-                                                            <input type="radio" name="radio2-big" value="" title="값4" disabled=""
-                                                                   checked="">
-                                                            인터넷/TV
-                                                        </li>
-                                                        <li class="radiobox type01-big" role="radio" aria-checked="false">
-                                                            <input type="radio" name="radio1-big" value="" title="값2">
-                                                            집전화
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </div>
                                         </div>
                                         <hr class="cont-sp type1" aria-hidden="true">
@@ -76,9 +62,7 @@
 
                                                 <div class="inputbox">
                                                     <div class="input">
-                                                        <input type="text" value="010-22**-57**" title="input"
-                                                               aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
-                                                               readonly="">
+                                                        <input type="text" class="fe-retry_cell" value="<%-inquiryInfo.mblPhonNum%>" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">
                                                         <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                                     </div>
                                                 </div>
@@ -91,18 +75,23 @@
                                                                 <ul class="acco-list">
                                                                     <li class="acco-box">
                                                                         <div class="acco-tit servicecenter-inqbox">
-                                                                            <p class="title">USIM 기변관련하여 문의 드립니다.<br>2줄인 경우</p>
-                                                                            <div class="date-state"><em class="date">2018.07.26</em> <span
-                                                                                class="state">답변완료</span></div>
+                                                                            <p class="title"><%-inquiryInfo.title%></p>
+                                                                            <div class="date-state"><em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
+                                                                                <% if (inquiryInfo.supInqId !== '') { %>
+                                                                                <span class="state">답변완료</span>
+                                                                                <% } else { %>
+                                                                                <span class="state">진행중</span>
+                                                                                <% } %>
+                                                                            </div>
                                                                             <button role="button" aria-pressed="false"></button>
                                                                         </div>
                                                                         <div class="servicecenter-inbox">
                                                                             <p class="text-wrap">
-                                                                                USIM 기변방법이 궁금해요.기변방법에 대해 알려주세요.
+                                                                                <%-inquiryInfo.contents%>
                                                                             </p>
                                                                             <div class="emainbox-wrap">
                                                                                 답변 이메일
-                                                                                <span class="name">ma**************</span>
+                                                                                <span class="name"><%-inquiryInfo.answEmailAddr%></span>
                                                                             </div>
                                                                         </div>
                                                                     </li>
@@ -114,8 +103,29 @@
                                             </div>
                                         </div>
                                         <hr class="cont-sp type1" aria-hidden="true">
-                                        <%- include('../../components/email/customer.email.common.template.html', { type: 'service' }); %>
-
+                                        <div class="cont-box">
+                                            <div class="inquiryform-wrap">
+                                                <p class="title">추가 문의 내용을 작성해주세요.</p>
+                                                <div class="inputbox">
+                                                    <div class="input">
+                                                        <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>
+                                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                                    </div>
+                                                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자(최대)</span>
+                                                </div>
+                                                <div class="option-box">
+                                                    <div class="inputbox textarea-type">
+                                                        <div class="input">
+                                                            <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000" aria-labelledby="aria-email-qacont" required></textarea>
+                                                            <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                                        </div>
+                                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="cont-sp type1" aria-hidden="true">
+                                        <%- include('../../components/email/customer.email.common.template.html', { type: 'quality' }); %>
                                     </li>
                                 </ul>
                             </div>
@@ -129,6 +139,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.CustomerEmail($('.wrap'));
     new Tw.CustomerEmailQualityRetry($('.wrap'));
   });
 </script>

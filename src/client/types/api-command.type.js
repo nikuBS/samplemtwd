@@ -293,6 +293,7 @@ Tw.API_CMD = {
   BFF_08_0008: { path: '/core-modification/v1/region-close-store-list', method: Tw.API_METHOD.GET },
   BFF_08_0009: { path: '/core-modification/v1/voice-certification-check', method: Tw.API_METHOD.GET },
   BFF_08_0010: { path: '/core-modification/v1/email-inquiry-categories', method: Tw.API_METHOD.GET },
+  BFF_08_0012: { path: '/core-modification/v1/email-inquiry/append-inquiry', method: Tw.API_METHOD.POST },
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.POST },
   BFF_08_0014: { path: '/cs/file-upload', method: Tw.API_METHOD.POST },
   BFF_08_0015: { path: '/core-modification/v1/brand-phone-list', method: Tw.API_METHOD.GET },
