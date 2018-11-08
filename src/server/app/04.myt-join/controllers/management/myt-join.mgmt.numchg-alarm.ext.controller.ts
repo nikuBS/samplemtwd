@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+import StringHelper from '../../../../utils/string.helper';
 
 class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
 
@@ -14,24 +15,26 @@ class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_05_0180, {})
       .subscribe((resp) => {
-        /*const resp = {
-          'code': '00',
-          'msg': '결과메세지',
-          'result':
-            {
-              'oldSvcNum': '01056**78**',
-              'newSvcNum': '01012**34**',
-              'notiType': 'S',
-              'freeOfrEndDt': '20191030',
-              'notiStaDt': '20181031',
-              'notiEndDt': '20190331',
-              'extnsPsblYn': 'N',
-              'orglSktYn': 'Y'
-            }
-        };*/
+    //     const resp = {
+    //       'code': '00',
+    //       'msg': '결과메세지',
+    //       'result':
+    //         {
+    //           'oldSvcNum': '01056**78**',
+    //           'newSvcNum': '01012**34**',
+    //           'notiType': 'S',
+    //           'freeOfrEndDt': '20191030',
+    //           'notiStaDt': '20181031',
+    //           'notiEndDt': '20190331',
+    //           'extnsPsblYn': 'N',
+    //           'orglSktYn': 'Y'
+    //         }
+    //     };
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
+          result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
+          result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
           result['notiStaDt'] = DateHelper.getShortDateNoDot(result['notiStaDt']);
           result['notiEndDt'] = DateHelper.getShortDateNoDot(result['notiEndDt']);
 

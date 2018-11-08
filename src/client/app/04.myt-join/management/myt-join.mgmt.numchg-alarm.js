@@ -106,13 +106,16 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0182, param)
       .done($.proxy(function (resp) {
 
+        skt_landing.action.loading.off({ ta: this.$container });
+
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          skt_landing.action.loading.off({ ta: this.$container });
-          Tw.Error(resp.code, resp.msg).pop();
+          this._popupService.openTypeA(
+            Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.TITLE,
+            Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.CONTENTS
+          );
+          //   Tw.Error(resp.code, resp.msg).pop();
           return ;
         }
-
-        skt_landing.action.loading.off({ ta: this.$container });
 
         this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
 
