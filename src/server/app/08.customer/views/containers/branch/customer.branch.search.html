@@ -30,9 +30,9 @@
                             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul role="tablist">
-                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a class="fe-replace-history" href="#name">매장명</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#addr">주소</a></li>
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab3"><a class="fe-replace-history" href="#tube">지하철</a></li>
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a class="fe-custom-replace-history" href="#name">매장명</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-custom-replace-history" href="#addr">주소</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab3"><a class="fe-custom-replace-history" href="#tube">지하철</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-contents">
@@ -45,7 +45,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" aria-labelledby="aria-citation-phone" />
+                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch ? keyword : '' %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -61,7 +61,7 @@
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button id="fe-btn-search-name" <%= isSearch && type === 'name' ? undefined : 'disabled' %>>검색</button>
+                                                                <button id="fe-btn-search-name" <%= isSearch ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -79,7 +79,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch && type === 'addr' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" />
+                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-addr" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -95,7 +95,7 @@
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button id="fe-btn-search-addr" <%= isSearch && type === 'addr' ? undefined : 'disabled' %>>검색</button>
+                                                                <button id="fe-btn-search-addr" <%= isSearch ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -113,7 +113,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="지하철명" value="<%= isSearch && type === 'tube' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" />
+                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="지하철명" value="<%= isSearch ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-tube" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -129,7 +129,7 @@
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button id="fe-btn-search-tube" <%= isSearch && type === 'tube' ? undefined : 'disabled' %>>검색</button>
+                                                                <button id="fe-btn-search-tube" <%= isSearch ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
