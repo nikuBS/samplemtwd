@@ -155,7 +155,8 @@ Tw.MyTFarePaymentRainbow.prototype = {
         '<strong>' + Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P' + '</strong>' + '<br/>' +
         $.trim(this.$fareSelector.text());
     } else {
-      message += Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_MESSAGE + '<br/>' + '<strong>' + this.$pointSelector.text() + '</strong>';
+      message += Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_MESSAGE + '<br/>' +
+        $.trim(this.$fareSelector.text());
     }
     return message;
   },
