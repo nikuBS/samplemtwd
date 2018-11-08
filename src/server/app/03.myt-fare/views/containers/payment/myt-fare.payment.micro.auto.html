@@ -62,7 +62,8 @@
                                 <label class="tit" for="flab07">생년월일</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab07" class="fe-card-birth required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="예시)891124" />
+                                        <input id="flab07" class="fe-card-birth required-input-field" type="number" maxlength="6"
+                                               inputmode="numeric" min="0" pattern="[0-9]*" placeholder="예시)891124" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -71,7 +72,8 @@
                                 <label class="tit" for="flab04">카드번호</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab04" class="fe-card-number required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
+                                        <input id="flab04" class="fe-card-number required-input-field" type="number" maxlength="16"
+                                               inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -81,14 +83,16 @@
                                 <div class="input-wrap-half">
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input id="flab05" class="fe-card-y required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                            <input id="flab05" class="fe-card-y required-input-field" type="number"
+                                                   inputmode="numeric" min="0" pattern="[0-9]*"
                                                    placeholder="YYYY" title="유효 년" maxlength="4">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input class="fe-card-m required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                            <input class="fe-card-m required-input-field" type="number"
+                                                   inputmode="numeric" min="0" pattern="[0-9]*"
                                                    placeholder="MM" title="유효 월" maxlength="2">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
@@ -109,6 +113,16 @@
                     </div>
                     <!--// .cont-box -->
                     <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                        <ul class="noti-list">
+                            <li>이용 안내 <button aria-haspopup="true" id="MF_06_04_tip_02" class="tip-view" title="정보보기">TIP</button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">

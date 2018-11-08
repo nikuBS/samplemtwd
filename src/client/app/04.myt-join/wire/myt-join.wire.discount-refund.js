@@ -25,7 +25,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _bindEvent: function () {
-    $('button').click($.proxy(this._requestData, this))
+    $('button').click($.proxy(this._requestData, this));
   },
 
   /**

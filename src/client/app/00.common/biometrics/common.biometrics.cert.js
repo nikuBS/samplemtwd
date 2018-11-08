@@ -36,7 +36,7 @@ Tw.CommonBiometricsCert.prototype = {
     this.$btNext.on('click', $.proxy(this._onClickNext, this));
   },
   _getSvcInfo: function () {
-    this._resultUrl = '/auth/cert/complete';
+    this._resultUrl = '/common/cert/complete';
 
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._successSvcInfo, this))
@@ -55,13 +55,13 @@ Tw.CommonBiometricsCert.prototype = {
       this._svcInfo, this._authUrl, null, null, $.proxy(this._completeIdentification, this), Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
   },
   _onClickKtSms: function () {
-    this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
+    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
   },
   _onClickLgSms: function () {
-    this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.LG);
+    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.LG);
   },
   _onClickIpin: function () {
-    this._openCertBrowser('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+    this._openCertBrowser('/common/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
   },
   _onClickPublic: function () {
     this._certPublic.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);

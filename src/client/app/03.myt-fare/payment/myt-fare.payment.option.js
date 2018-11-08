@@ -26,7 +26,7 @@ Tw.MyTFarePaymentOption.prototype = {
     if (type) {
       var message = '';
 
-      if (type === 'new') {
+      if (type === 'new' || type === 'sms') {
         message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_NEW;
       }
       if (type === 'change') {
@@ -50,17 +50,17 @@ Tw.MyTFarePaymentOption.prototype = {
   _openCancelAutoPayment: function () {
     this._popupService.open({
       'hbs':'MF_05_01_02'
-    }, $.proxy(this._cancelAutoPayment, this));
+    }, $.proxy(this._cancelAutoPayment, this), null, 'cancel');
   },
   _cancelAutoPayment: function ($layer) {
     new Tw.MyTFarePaymentAutoCancel(this.$container, $layer);
   },
   _changePaymentDate: function () {
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE,
-      data:Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE,
+      data: Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE
     }, $.proxy(this._selectDatePopupCallback, this));
   },
   _selectDatePopupCallback: function ($layer) {
@@ -88,12 +88,12 @@ Tw.MyTFarePaymentOption.prototype = {
     }
   },
   _changeFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _changeAddress: function () {
     this._popupService.open({
       'hbs':'MF_05_02_02'
-    }, $.proxy(this._openChangeAddress, this));
+    }, $.proxy(this._openChangeAddress, this), null, 'address');
   },
   _openChangeAddress: function () {
 

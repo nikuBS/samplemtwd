@@ -174,9 +174,9 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     return apiName;
   },
   _checkIsUp: function () {
-    return ((this.$monthSelector.attr('id') > this.$monthSelector.attr('origin-value')) ||
-      (this.$daySelector.attr('id') > this.$daySelector.attr('origin-value')) ||
-      (this.$onceSelector.attr('id') > this.$onceSelector.attr('origin-value')));
+    return ((parseInt(this.$monthSelector.attr('id'), 10) > parseInt(this.$monthSelector.attr('origin-value'), 10)) ||
+      (parseInt(this.$daySelector.attr('id'), 10) > parseInt(this.$daySelector.attr('origin-value'), 10)) ||
+      (parseInt(this.$onceSelector.attr('id'), 10) > parseInt(this.$onceSelector.attr('origin-value'), 10)));
   },
   _makeRequestData: function () {
     var reqData = {};
@@ -196,6 +196,6 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     }
   },
   _changeLimitFail: function (err) {
-    Tw.Error(err.msg, err.code).pop();
+    Tw.Error(err.code, err.msg).pop();
   }
 };

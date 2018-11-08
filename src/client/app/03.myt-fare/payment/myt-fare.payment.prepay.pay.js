@@ -45,6 +45,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
+    this.$container.on('keypress', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -64,6 +65,10 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
   _resetCardInfo: function () {
     this.$cardNumber.removeAttr('data-code');
     this.$cardNumber.removeAttr('data-name');
+  },
+  _setMaxValue: function (event) {
+    var $target = $(event.currentTarget);
+    return $target.val().length < $target.attr('maxLength');
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -93,8 +98,8 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     var _prepayAmount = this.$prepayAmount.val();
     return (
       this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
-      this._validation.checkIsMore(_prepayAmount, 9999, Tw.MSG_PAYMENT.PRE_A11) &&
-      this._validation.checkMultiple(_prepayAmount, 10000, Tw.MSG_PAYMENT.PRE_A11) &&
+      this._validation.checkIsMore(_prepayAmount, 9999, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
+      this._validation.checkMultiple(_prepayAmount, 10000, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
       this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
       this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
       this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
@@ -119,7 +124,7 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
         this._getFail();
       }
     } else {
-      this._getFail(res);
+      this._getFail();
     }
   },
   _getFail: function () {

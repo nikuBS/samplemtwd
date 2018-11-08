@@ -31,11 +31,7 @@
             <li>
               <dl>
                 <dt>음성</dt>
-                <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt.isNaN ) { %>
                 <dd><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %></dd>
-                <% } else { %>
-                <dd><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value.data + feePlan.feePlanProd.basOfrVcallTmsCtt.value.unit %></dd>
-                <% } %>
               </dl>
             </li>
             <% } %>

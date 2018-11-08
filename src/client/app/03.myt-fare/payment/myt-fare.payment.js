@@ -61,7 +61,8 @@ Tw.MyTFarePayment.prototype = {
       data: Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA
     },
       $.proxy(this._onOpenPopup, this),
-      $.proxy(this._goLoad, this));
+      $.proxy(this._goLoad, this),
+      'select');
   },
   _onOpenPopup: function ($layer) {
     this.$layer = $layer;

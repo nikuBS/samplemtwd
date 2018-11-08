@@ -9,7 +9,6 @@ Tw.MyTJoinSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._lineService = new Tw.LineComponent();
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this.data = params.data;
@@ -140,24 +139,46 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function() {
-    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
-    // this._historyService.goLoad('/myt/join/suspend');
-    this._popupService.openAlert('TBD');
+    this._historyService.goLoad('/myt/join/suspend#temporary');
+    // this._popupService.openAlert('TBD');
   },
   // 인터넷/IPTV/집전화 신청 내역 및 조회
   _onMovedWireInquire: function() {
-    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
-    this._popupService.openAlert('TBD');
+    this._historyService.goLoad('/myt/wire');
   },
   // B끼리 무료통화 대상자 조회
   _onMovedBInquire: function() {
-    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
-    this._popupService.openAlert('TBD');
+    this._historyService.goLoad('/myt/join/freeCallCheck');
   },
   // 유선기타서비스
-  _onMovedWireOtherSvc: function() {
-    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
-    this._popupService.openAlert('TBD');
+  _onMovedWireOtherSvc: function(event) {
+    var $target = $(event.target);
+    switch ( $target.attr('data-id') ) {
+      case 'addr-chg':
+        this._historyService.goLoad('/myt/join/wire/modify/address');
+        break;
+      case 'prod-chg':
+        this._historyService.goLoad('/myt/join/wire/modify/product');
+        break;
+      case 'transfer-fee':
+        this._historyService.goLoad('/myt/join/wire/guide/change-ownership');
+        break;
+      case 'inst-chg':
+        this._historyService.goLoad('/myt/join/wire/modify/period');
+        break;
+      case 'svc-cancel':
+        this._historyService.goLoad('/myt/join/wire/set/wire-cancel-service');
+        break;
+      case 'wire-pause':
+        this._historyService.goLoad('/myt/join/wire/set/pause');
+        break;
+      case 'until-info':
+        this._historyService.goLoad('/myt/join/info/contract');
+        break;
+      case 'work-notify':
+        this._historyService.goLoad('/myt/join/info/sms');
+        break;
+    }
   },
 
   // 다른회선조회
@@ -178,7 +199,8 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
-    this._lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    var lineService = new Tw.LineComponent();
+    lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리

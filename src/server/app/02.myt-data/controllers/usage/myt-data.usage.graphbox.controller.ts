@@ -6,9 +6,8 @@
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { UNIT, UNIT_E } from '../../../../types/bff.old.type';
+import { DAY_BTN_STANDARD_SKIP_ID, UNIT, UNIT_E } from '../../../../types/bff.type';
 import { SKIP_NAME } from '../../../../types/string.type';
-import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff.old.type';
 
 class MyTUsageGraphbox {
   static convShowData(data: any) {

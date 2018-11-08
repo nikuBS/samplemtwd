@@ -27,6 +27,9 @@ import MyTJoinWireGifts from './controllers/wire/myt-join.wire.gifts.controller'
 import MyTJoinWireHistory from './controllers/wire/myt-join.wire.history.controller';
 import MyTJoinWireHistoryDetail from './controllers/wire/myt-join.wire.history.detail.controller';
 import MyTJoinWireInetPhoneNumChange from './controllers/wire/myt-join.wire.netphone.change.controller';
+import MyTJoinMgmtNumChgAlarm from './controllers/management/myt-join.mgmt.numchg-alarm.controller';
+import MyTJoinMgmtNumChgAlarmExt from './controllers/management/myt-join.mgmt.numchg-alarm.ext.controller';
+import MyTJoinMgmtNumChg from './controllers/management/myt-join.mgmt.numchg.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -59,6 +62,9 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/wire/set/pause', controller: MyTJoinWireSetPause });
     this.controllers.push({ url: '/wire/guide/change-ownership', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
+    this.controllers.push({ url: '/mgmt/numchg', controller: MyTJoinMgmtNumChg });
+    this.controllers.push({ url: '/mgmt/numchg/alarm', controller: MyTJoinMgmtNumChgAlarm });
+    this.controllers.push({ url: '/mgmt/numchg/alarm/ext', controller: MyTJoinMgmtNumChgAlarmExt });
   }
 }
 

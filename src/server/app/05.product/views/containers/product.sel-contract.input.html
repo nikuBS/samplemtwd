@@ -21,14 +21,13 @@
     <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', {
-    title: (data.type === 'input')? '가입' : '설정', svcInfo: data.svcInfo, option: { back: 'step' } }); %>
+    title: '가입', svcInfo: data.svcInfo, option: { back: 'step' } }); %>
     <!--// #header -->
 
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container" data-id="sel-ct-container">
-            <% if (data.type === 'input') { %>
             <div class="cont-box">
                 <div class="box-suggest">
                     <div class="suggest-info">
@@ -37,12 +36,10 @@
                     </div>
                 </div>
             </div>
-            <% } %>
             <div class="product-select-wrap">
                 <span class="data-tit">선택약정 할인기간 설정</span>
                 <span class="data-number"><%= data.svcInfo.svcNum %></span>
             </div>
-            <% var checked = (data.type !== 'input'); %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <!-- .list-comp-input -->
@@ -50,26 +47,18 @@
                     <div class="widget">
                         <div class="widget-box radio">
                             <ul class="select-list" role="group" data-id="radio-group">
-                                <% if (data.type === 'input') { %>
-                                <li class="radiobox type01" role="radio" aria-checked="">
+                                <li class="radiobox type01" role="radio" aria-checked="" data-type="M0012">
                                     <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                     <input type="radio" name="radio" value="" title="값1"
                                            aria-labelledby="aria-comp-radio1"/>
                                     <!-- 체크상태일 경우 checked="checked" -->
-                                <% } else {%>
-                                <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                    <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="radio" name="radio" value="" title="값1"
-                                           aria-labelledby="aria-comp-radio1" checked/>
-                                    <!-- 체크상태일 경우 checked="checked" -->
-                                <% } %>
                                     <div class="comp-list-layout" id="aria-comp-radio1">
                                         <p class="layout-text">
                                             <span class="mtext">12개월</span>
                                         </p>
                                     </div>
                                 </li>
-                                <li class="radiobox type01" role="radio" aria-checked="false">
+                                <li class="radiobox type01" role="radio" aria-checked="false" data-type="M0024">
                                     <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                     <input type="radio" name="radio" value="" title="값2"
                                            aria-labelledby="aria-comp-radio2"/><!-- 체크상태일 경우 checked="checked" -->
@@ -101,9 +90,9 @@
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
                                     <span class="sub-disc01">
-                                        <span class="elem">무약적플랜 포인트</span>
+                                        <span class="elem">무약정플랜 포인트</span>
                                     </span>
-                            <span class="tit"><span class="charge-txt">5,000</span>p</span>
+                            <span class="tit"><span class="charge-txt"><%= data.contractPlanPoint %></span>p</span>
                             <p class="comment star_tx">무약정플랜 가입 고객의 경우 선택약정할인제도 가입 시, 포인트로 요금납부 후에 무약정플랜
                                 자동해지됩니다.</p>
                         </div>
@@ -122,11 +111,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <% if (data.type === 'input') { %>
                         <button data-id="btn-ok" disabled>설정완료</button>
-                        <% } else { %>
-                        <button data-id="btn-ok">변경완료</button>
-                        <% } %>
                     </li>
                 </ul>
             </div>
@@ -143,7 +128,7 @@
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
-    new Tw.ProductSelContractInput({
+    new Tw.ProductJoinSelContract({
       $element: $('[data-id=sel-ct-container]'),
       data: JSON.parse(data)
     });

@@ -1,0 +1,80 @@
+<%#
+* FileName: customer.email.detail.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.11.05
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html',
+    { title: '이메일 상담 상세내역', svcInfo: svcInfo, option: { line: false } }); %>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="email-details-box">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="details-top">
+                        <strong class="tit"><%-inquiryInfo.title%></strong>
+                        <p>
+                            <em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
+                            <% if ( inquiryInfo.answYn === 'Y' ) { %>
+                                <span class="state">답변완료</span>
+                            <% } %>
+                        </p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="details-btm">
+                        <ul class="details-info">
+                            <li>
+                                <strong>답변 이메일</strong>
+                                <em><%-inquiryInfo.answEmailAddr%></em>
+                            </li>
+                        </ul>
+                        <div class="details-cont">
+                            <%-inquiryInfo.contents%>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice item-two full">
+                        <li class="bt-gray1">
+                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>" data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기</button>
+                        </li>
+                        <li class="bt-red1">
+                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>" data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            </div>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+</div>
+    <% include ../../components/javascript.component.html %>
+    <script>
+      $(document).ready(function () {
+        new Tw.CustomerEmailHistoryDetail($('.wrap'));
+      });
+    </script>
+</body>
+<% include ../../components/end.component.html %>

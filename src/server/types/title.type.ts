@@ -26,3 +26,7 @@ export const MYT_FARE_HOTBILL_TITLE = {
 export const MYT_JOIN_SUSPEND = {
   MAIN: '일시정지'
 };
+
+export const MY_BENEFIT = {
+  MAIN: '나의 혜택 · 할인정보'
+};

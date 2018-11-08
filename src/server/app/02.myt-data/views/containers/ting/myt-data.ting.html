@@ -24,6 +24,22 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <button>팅 선물 차단 설정
+                                <span class="tx-sub">
+                                            <span class="normal"><i class="tx-bold">허용중</i></span>
+                                            <span class="ico"><span class="blind">팅 선물 차단 설정 자세히 보기</span></span>
+                                        </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <h4 class="tabcon-title0">받는 분 번호</h4>
@@ -42,7 +58,10 @@
                         <% } %>
                     </div>
                 </div>
-                <h4 class="tabcon-title0">충전 금액</h4>
+                <h4 class="tabcon-title0">
+                    충전 금액
+                    <button aria-haspopup="true" class="tip-view" title="충전 금액 정보보기">TIP</button>
+                </h4>
                 <div class="widget">
                     <div class="widget-box radio">
                         <div class="radio-slide">
@@ -51,51 +70,51 @@
                                     <input type="radio" name="radio4" value="20000" title="값1">
                                     <!-- 체크상태일 경우 checked="checked" -->
                                     <span class="radio-txt">
-												<span>20,000</span><span class="unit">원</span>
-											</span>
+                                        <span>20,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="15000" title="값2">
                                     <!-- 체크상태일 경우 checked="false" -->
                                     <span class="radio-txt">
-												<span>15,000</span><span class="unit">원</span>
-											</span>
+                                        <span>15,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="10000" title="값3"><!-- 비활성화상태일 경우 disabled="disabled" -->
                                     <span class="radio-txt">
-												<span>10,000</span><span class="unit">원</span>
-											</span>
+                                        <span>10,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="5000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                                     <span class="radio-txt">
-												<span>5,000</span><span class="unit">원</span>
-											</span>
+                                        <span>5,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="4000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                                     <span class="radio-txt">
-												<span>4,000</span><span class="unit">원</span>
-											</span>
+                                        <span>4,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="3000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                                     <span class="radio-txt">
-												<span>3,000</span><span class="unit">원</span>
-											</span>
+                                        <span>3,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="2000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                                     <span class="radio-txt">
-												<span>2,000</span><span class="unit">원</span>
-											</span>
+                                        <span>2,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                                 <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="1000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                                     <span class="radio-txt">
-												<span>1,000</span><span class="unit">원</span>
-											</span>
+                                        <span>1,000</span><span class="unit">원</span>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -103,6 +122,16 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>상한금액 안내<button aria-haspopup="true" class="tip-view" title="상한금액 안내 정보보기">TIP</button></li>
+                    <li>요금상품 안내<button aria-haspopup="true" class="tip-view" title="요금상품 안내 정보보기">TIP</button></li>
+                    <li>매월 자동 충전 안내<button aria-haspopup="true" class="tip-view" title="매월 자동 충전 안내 정보보기">TIP</button></li>
+                    <li>충전 허용금액 변경 안내<button aria-haspopup="true" class="tip-view" title="충전 허용금액 변경 안내 정보보기">TIP</button></li>
+                </ul>
+            </div>
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
@@ -116,12 +145,10 @@
 </div>
 
 <% include ../../components/javascript.component.html %>
-
 <script>
   $(document).ready(function () {
     var oMyTDataTing = new Tw.MyTDataTing();
   });
 </script>
-
 </body>
 <% include ../../components/end.component.html %>

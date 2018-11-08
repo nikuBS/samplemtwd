@@ -93,6 +93,7 @@ abstract class TwViewController {
     const tokenId = req.query.id_token;
     const userId = req.query.userId;
     this._type = req.query.type;
+    this._logger.debug(this, '[Request Header]', req.headers);
 
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
@@ -146,7 +147,7 @@ abstract class TwViewController {
       if ( !FormatHelper.isEmpty(loginYn) && loginYn === 'Y' ) {
         this._logger.info(this, '[Session expired]');
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        res.redirect('/auth/logout/expire');
+        res.redirect('/common/logout/expire');
       } else {
         this._logger.info(this, '[Session empty]');
         this.renderPage(req, res, next, path);
@@ -192,7 +193,7 @@ abstract class TwViewController {
           //   } else {
           //     const loginType = svcInfo.loginType;
           //     if ( loginType === LOGIN_TYPE.EASY ) {
-          //       res.redirect('/auth/login/easy-fail');
+          //       res.redirect('/common/login/easy-fail');
           //     } else {
           //       this.errorAuth(req, res, next, svcInfo);
           //     }
@@ -242,13 +243,13 @@ abstract class TwViewController {
 
   private failLogin(req, res, next, errorCode) {
     if ( errorCode === API_LOGIN_ERROR.ICAS3228 ) {    // 고객보호비밀번호
-      res.redirect('/auth/login/customer-pwd');
+      res.redirect('/common/login/customer-pwd');
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
-      res.redirect('/auth/login/dormancy');
+      res.redirect('/common/login/dormancy');
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
-      res.redirect('/auth/login/exceed-fail');
+      res.redirect('/common/login/exceed-fail');
     } else {
-      res.redirect('/auth/login/fail?errorCode=' + errorCode);
+      res.redirect('/common/login/fail?errorCode=' + errorCode);
     }
   }
 

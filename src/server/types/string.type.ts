@@ -128,6 +128,27 @@ export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
   NA00006117 = '대상'
 }
 
+export enum PRODUCT_RESERVATION_TYPE_NM {
+  cellphone = '휴대폰',
+  internet = '인터넷',
+  phone = '전화',
+  tv = 'TV',
+  combine = '결합상품'
+}
+
+export enum PRODUCT_RESERVATION_COMBINE_NM {
+  NH00000103 = 'TB끼리 한가족할인',
+  NA00002040 = '온가족할인',
+  NH00000133 = 'New온가족플랜',
+  NH00000084 = 'TB끼리 온가족프리',
+  NONE = '결합상품을 선택해 주세요',
+  ETC = '그 외 결합상품'
+}
+
+export const MYT_FARE_BILL_REISSUE = {
+  TITLE: '요금안내서 재발행'
+};
+
 export const MYT_FARE_BILL_REISSUE_TYPE = {
   P: 'T world',
   H: 'Bill Letter',
@@ -152,7 +173,12 @@ export enum PRODUCT_TYPE {
 
 export enum PRODUCT_CTG_NAME {
   F01100 = '요금제',
-  F01200 = '부가서비스'
+  F01200 = '부가서비스',
+  F01300 = '인터넷/전화/IPTV',
+  F01400 = '혜택ㆍ할인',
+  F01500 = 'T로밍 요금제',
+  F01600 = 'T로밍 부가서비스',
+  F01700 = 'T apps'
 }
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
@@ -250,7 +276,6 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   AU: '자동납부 상세 내역',
   MP: '소액 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
-
 };
 
 export const MYT_FARE_PAYMENT_ERROR = {
@@ -271,18 +296,34 @@ export const MYT_JOIN_WIRE_SVCATTRCD = {
   O1: '포인트캠'
 };
 
+export const MYT_JOIN_WIRE = {
+  TITLE: '신청내역',
+  AS: { TITLE: '장애 A/S신청 현황' },
+  AS_DETAIL: { TITLE: '장애 A/S 상세 내역' },
+  DISC_REFUND: { TITLE: '할인 반환금 조회' },
+  FREECALL_CHECK: { TITLE: 'B끼리 무료 통화 대상자 조회' },
+  GIFTS: { TITLE: '사은품 조회' },
+  HISTORY: { TITLE: '신청 현황' },
+  HISTORY_DETAIL: { TITLE: '신청 현황 상세' },
+  MODIFY_ADDRESS: { TITLE: '설치 장소 변경' },
+  MODIFY_PERIOD: { TITLE: '약정 기간 변경' },
+  MODIFY_PRODUCT: { TITLE: '상품 변경' },
+  NETPHONE_CHANGE: { TITLE: '신청내역' },
+  SET_WIRE_CANCEL: { TITLE: '할인 반환금 정보' }
+};
+
 export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
-  TITLE: '명의 변경 신청 방법 안내',
+  TITLE: '명의 변경 신청 방법 안내'
 };
 
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
-  TITLE: '약정 기간 변경',
+  TITLE: '약정 기간 변경'
 };
 
 export const MYT_JOIN_WIRE_SET_PAUSE = {
   TITLE: '일시 정지/해제',
   MONTH: '개월 ',
-  DAY: '일',
+  DAY: '일'
 };
 
 export enum CUSTOMER_NOTICE_CATEGORY {
@@ -305,4 +346,46 @@ export const MY_BENEFIT_RAINBOW_POINT = {
     U: '사용',
     X: '소멸'
   }
+};
+
+export const MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT = {
+  TITLE: '포인트 합산',
+  ERROR: '레인보우 포인트가 복수회선인 경우만 포인트 조정이 가능합니다.'
+};
+
+export const MY_BENEFIT_RAINBOW_POINT_TRANSFER = {
+  TITLE: '포인트 양도',
+  ERROR: '법정대리인 정보가 존재하지 않습니다.',
+  REL_NM: {
+    C: '청소년',
+    P: '법정대리인'
+  }
+};
+
+export enum SELECT_POINT {
+  DEFAULT = '납부할 포인트 선택'
+}
+
+export const PRODUCT_WIRE_CATEGORIES = {
+  internet: '인터넷',
+  phone: '전화',
+  tv: 'TV'
+};
+
+export enum DEFAULT_SELECT {
+  SELECT = '선택'
+}
+
+export const BRANCH_SEARCH_OPTIONS = {
+  0: '전체',
+  1: '지점',
+  2: '대리점',
+  premium: 'T Premium  Store',
+  direct: '바로픽업',
+  rent: '임대폰',
+  skb: 'SK브로드밴드',
+  apple: '애플취급점',
+  authAgnYn: '공식인증대리점',
+  etc: ' 외 ',
+  count: '건'
 };

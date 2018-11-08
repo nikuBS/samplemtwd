@@ -2,8 +2,10 @@ import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
-import { COOKIE_KEY } from '../types/common.type';
+import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { UserCertModel } from '../models/user-cert.model';
+import EnvHelper from '../utils/env.helper';
+
 class LoginService {
   static instance;
   private request;
@@ -152,7 +154,7 @@ class LoginService {
 
   public setChannel(channel: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session)) {
+      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
         this.request.session.channel = channel;
         this.request.session.save(() => {
           this.logger.debug(this, '[setChannel]', this.request.session);
@@ -182,8 +184,12 @@ class LoginService {
     });
   }
 
-  public getDeviceCookie(): string {
-    return this.request.cookies[COOKIE_KEY.DEVICE];
+  public getDevice(): string {
+    const userAgent = this.getUserAgent();
+    if ( /TWM_DEVICE/.test(userAgent) ) {
+      return userAgent.split(COOKIE_KEY.DEVICE + '=')[1];
+    }
+    return '';
   }
 
   public getNodeIp(): string {
@@ -193,6 +199,37 @@ class LoginService {
         this.request.socket.remoteAddress ||
         (this.request.connection.socket ? this.request.connection.socket.remoteAddress : '');
       return ip;
+    }
+    return '';
+  }
+
+  public getPath(): string {
+    if ( !FormatHelper.isEmpty(this.request) ) {
+      return this.request.baseUrl + this.request.path;
+    }
+    return '';
+  }
+
+  public getDns(): string {
+    if ( !FormatHelper.isEmpty(this.request) ) {
+      return this.request.headers.host;
+    }
+    return '';
+  }
+
+  public getBlueGreen(): string {
+    const dns = this.getDns();
+    if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {
+      return BUILD_TYPE.GREEN;
+    } else if ( dns === EnvHelper.getEnvironment('DOMAIN_B') ) {
+      return BUILD_TYPE.BLUE;
+    }
+    return '';
+  }
+
+  public getUserAgent(): string {
+    if ( !FormatHelper.isEmpty(this.request) ) {
+      return this.request.headers['user-agent'];
     }
     return '';
   }

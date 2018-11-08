@@ -90,6 +90,7 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$layer.on('keypress', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
   },
@@ -106,6 +107,10 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
     } else {
       this.$setBtn.attr('disabled', 'disabled');
     }
+  },
+  _setMaxValue: function (event) {
+    var $target = $(event.currentTarget);
+    return $target.val().length < $target.attr('maxLength');
   },
   _setPassword: function () {
     if (this._isValid()) {
@@ -161,7 +166,7 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
     }
   },
   _fail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    Tw.Error(err.code, err.msg).pop();
   },
   _goAdditionalService: function () {
     this._commonHelper.openUrlExternal(Tw.URL_PATH.SET_PASSWORD);

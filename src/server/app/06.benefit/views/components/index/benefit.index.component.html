@@ -1,0 +1,26 @@
+<!--
+* FileName: benefit.index.component.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.10.30
+-->
+<script id="productList" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <button class="list" type="button">
+            <em>
+                {{benefitNm}}
+                {{#ifCond useYn '===' '사용중' }}
+                    <span class="occupied">사용중</span>
+                {{/ifCond}}
+            </em>
+            <p>{{benefitDesc}}</p>
+            <div>
+                {{#each tagList}}
+                    <span>{{tagNm}}</span>
+                {{/each}}
+            </div>
+            <span class="img"><img src="{{imgFullPath}}" alt="{{benefitNm}}"/></span>
+        </button>
+    </li>
+    {{/each}}
+</script>

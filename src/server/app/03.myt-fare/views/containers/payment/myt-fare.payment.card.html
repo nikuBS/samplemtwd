@@ -53,10 +53,10 @@
                                 <button id="00" class="bt-dropdown big fe-select-card-type" title="납부 형태 선택" aria-haspopup="true">일시불<span class="ico"></span></button>
                             </div>
                             <div class="info-form-box">
-                                <p class="form-label" id="aria-exp-label3">카드번호</p>
+                                <p class="form-label" id="aria-exp-label3">카드번호 <button id="MF_01_01_tip_04" class="tip-view">TIP</button></p>
                                 <span class="inputbox">
                                     <span class="input">
-                                      <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력"
+                                      <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="16"
                                              title="input" value="" aria-labelledby="aria-exp-label3" class="fe-card-number required-input-field">
                                       <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
@@ -67,13 +67,15 @@
                                 <div class="input-wrap-half">
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field" placeholder="YYYY" title="유효 년" maxlength="4">
+                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
+                                                   placeholder="YYYY" title="유효 년" maxlength="4">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field" placeholder="MM" title="유효 월" maxlength="2">
+                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field"
+                                                   placeholder="MM" title="유효 월" maxlength="2">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
@@ -106,7 +108,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div><button class="info-view-ic fe-refund-info">정보보기</button>
+                                </div><button id="MF_01_01_tip_05" class="info-view-ic fe-refund-info">TIP</button>
                             </div>
                             <div class="check-account-radio fe-refund-box mt28" style="display:none;">
                                 <% if (autoInfo && autoInfo.isAuto) { %>
@@ -125,10 +127,12 @@
                                                 <input type="radio" name="radio2" value="" title="값2"><!-- 체크상태일 경우 checked="false" -->
                                                 <span class="check-title">직접입력</span>
                                                 <span class="account-info self">
-                                                    <button class="bt-dropdown big placeholder select-bank fe-select-refund-bank" title="은행 이름" aria-haspopup="true">은행선택<span class="ico"></span></button>
+                                                    <button class="bt-dropdown big placeholder select-bank fe-select-refund-bank" title="은행 이름" aria-haspopup="true">
+                                                        은행선택<span class="ico"></span>
+                                                    </button>
                                                     <span class="inputbox mt6">
                                                         <span class="input">
-                                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
+                                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)" maxlength="20"
                                                                    title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number required-input-field">
                                                             <button class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
@@ -143,7 +147,7 @@
                                     <button class="bt-dropdown big select-bank fe-select-refund-bank" title="은행 이름" aria-haspopup="true">은행선택<span class="ico"></span></button>
                                     <span class="inputbox mt6">
                                         <span class="input">
-                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
+                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)" maxlength="20"
                                                    title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number required-input-field">
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
@@ -154,6 +158,21 @@
                         </div>
                     </div>
                     <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                        <ul class="noti-list">
+                            <li>요금납부 안내 <button type="button" id="MF_01_01_tip_01" class="icon-tip">TIP</button></li>
+                            <li>이용정지 고객 안내 <button type="button" id="MF_01_01_tip_02" class="icon-tip">TIP</button></li>
+                            <li>통합청구이용 고객 안내 <button type="button" id="MF_01_01_tip_03" class="icon-tip">TIP</button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
@@ -161,6 +180,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 </div>
             </div>
             <!--// #contents -->

@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import { MYT_JOIN_WIRE } from '../../../../types/string.type';
 
 
 class MyTJoinWire extends TwViewController {
@@ -16,6 +17,12 @@ class MyTJoinWire extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+      return this.error.render(res, {
+        title: MYT_JOIN_WIRE.TITLE,
+        svcInfo: svcInfo
+      });
+    }
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0167, {}),
@@ -47,6 +54,13 @@ class MyTJoinWire extends TwViewController {
         infoData['asCnt'] = asCnt;
 
         res.render('wire/myt-join.wire.html', { svcInfo: svcInfo, pageInfo: pageInfo, data: infoData });
+      }, (resp) => {
+        return this.error.render(res, {
+          title: MYT_JOIN_WIRE.TITLE,
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       });
 
   }
@@ -58,7 +72,7 @@ class MyTJoinWire extends TwViewController {
     if ( resp.code === API_CODE.CODE_00 && list ) {
       if ( Array.isArray(list) ) {
         for ( let i = list.length; i >= 0; i-- ) {
-          if ( !list[i] ) {
+          if ( !list[i] || Object.keys(list[i]).length === 0) {
             // 빈값 삭제
             list.splice(i, 1);
           }

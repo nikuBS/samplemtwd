@@ -80,6 +80,12 @@ export enum UNIT_E {
   SMS_2 = '320'
 }
 
+export const DAY_BTN_STANDARD_SKIP_ID = [
+  'DDZ25', // BTV 모바일팩
+  'DDZ23', // T스포츠팩
+  'DD0PB' // band 타임 프리
+];
+
 export const VOICE_UNIT = {
   HOURS: '시간',
   MIN: '분',
@@ -106,7 +112,8 @@ export enum MYT_FARE_PAYMENT_TITLE {
 
 export enum MYT_FARE_PAYMENT_NAME {
   NEW = '신청하기',
-  CHANGE = '변경하기'
+  CHANGE = '변경하기',
+  IS_AUTO = '신청'
 }
 
 export enum MYT_FARE_MICRO_NAME {
@@ -219,7 +226,12 @@ export enum PROD_SCRB_E {
 
 export enum PROD_CTG_CD_CODE {
   F01100 = 'plans',
-  F01200 = 'additions'
+  F01200 = 'additions',
+  F01300 = 'wire',
+  F01400 = 'combine',
+  F01500 = 'troamingplans',
+  F01600 = 'troamingadditions',
+  F01700 = 'tapps'
 }
 
 export enum PROD_TTAB_BASIC_DATA_PLUS {
@@ -267,20 +279,49 @@ export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
 };
 
 export const COMBINATION_PRODUCT = {
+  TW20000012: 'data-share',
   NA00005055: 'data-share', // 가족나눔데이터
+  TW20000009: 'data-share',
   NA00004211: 'data-share', // T가족결합(착한가족)
   NH00000084: 'tb-free',
   TW20000008: 'tb-free', // TB끼리 온가족프리
   NH00000059: 'tb-family',
   TW20000007: 'tb-family', // TB끼리 온가족무료
-  NH00000037: 'tb-internet',
-  NH00000039: 'tb-internet',
-  TW00000062: 'tb-internet', // T+B인터넷
-  NH00000040: 'tb-internet',
-  NH00000041: 'tb-internet',
-  TW00000063: 'tb-internet', // T+B전화/인터넷전화
+  NH00000037: 'tb-wire',
+  NH00000039: 'tb-wire',
+  TW00000062: 'tb-wire', // T+B인터넷
+  NH00000040: 'tb-wire',
+  NH00000041: 'tb-wire',
+  TW00000063: 'tb-wire', // T+B전화/인터넷전화
   NA00002040: 't-family',
   TW20000010: 't-family', // T끼리 온가족할인
   NA00004728: 'happy-plan',
-  TW20000011: 'happy-plan' // 온가족행복플랜
+  TW20000011: 'happy-plan', // 온가족행복플랜
+  TW20000013: 'family-plan', // 온가족플랜
+  NH00000133: 'family-plan' // NEW 온가족플랜
 };
+
+export enum RAINBOW_POINT_REL_CD {
+  C = 'C',
+  P = 'P'
+}
+
+export enum RAINBOW_FARE_CODE {
+  '국내음성통화' = 'CCBBAE0',
+  '무료컬러링' = 'CCBCOE0',
+  '로밍통화' = 'CCRMRBE',
+  '무료퍼펙트콜' = 'CCPCRBE',
+  '무료퍼펙트콜라이트' = 'CCPLRBE',
+  '데이터통화료' = 'CCRPDDC',
+  '기본료 및 월정액' = 'CCRPGDC'
+}
+
+export enum RAINBOW_FARE_NAME {
+  '국내음성통화' = '국내 음성 통화료',
+  '무료컬러링' = '부가서비스(컬러링)',
+  '로밍통화' = '로밍사용요금',
+  '무료퍼펙트콜' = '부가서비스(퍼펙트콜)',
+  '무료퍼펙트콜라이트' = '부가서비스(퍼펙트콜 라이트)',
+  '데이터통화료' = '국내 데이터 통화료',
+  '기본료 및 월정액' = '기본료 및 월정액'
+}

@@ -7,9 +7,9 @@
       <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
       <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
       <div class="in-info">
-        <span class="number"><span class="blind">회선번호</span>010-73**-06**</span>
+        <span class="number"><span class="blind">회선번호</span><%= svcInfo.svcNum %></span>
         <span class="sub-info">
-          <span class="elem"><span class="blind">사용요금제명</span>Band 데이터 퍼팩트</span>
+          <span class="elem"><span class="blind">사용요금제명</span><%= svcInfo.prodNm %></span>
           <span class="elem">
             <span class="blind">월 이용요금</span>
             <% if ( joinTermInfo.preinfo.frProdInfo.basFeeInfo.isNaN ) { %>
@@ -42,6 +42,11 @@
           <% } %>
         </span>
       </div>
+      <% if ( sktProdBenfCtt ) { %>
+      <div class="cont-noti mt36">
+        <p class="type1"><%- sktProdBenfCtt %></p>
+      </div>
+      <% } %>
       <div class="basic-list bg-type mt36">
         <span class="blind">변경 요금제 데이터/ 음성/ 문자 정보 노출</span>
         <ul>
@@ -58,11 +63,7 @@
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt ) { %>
           <li>
             <span class="title">음성</span>
-            <% if ( joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.isNaN ) { %>
             <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value %></span>
-            <% } else { %>
-            <span class="tx-cont"><%= joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value.data + joinTermInfo.preinfo.toProdInfo.basOfrVcallTmsCtt.value.unit %></span>
-            <% } %>
           </li>
           <% } %>
           <% if ( joinTermInfo.preinfo.toProdInfo.basOfrCharCntCtt ) { %>
@@ -130,16 +131,22 @@
               <% } %>
             </dl>
             <% } %>
-            <% if ( joinTermInfo.preinfo.frProdInfo.chgSktProdBenfCtt ) { %>
             <dl>
               <dt>혜택</dt>
+              <% if ( joinTermInfo.preinfo.frProdInfo.chgSktProdBenfCtt ) { %>
               <dd>
                 <ul>
                   <%- joinTermInfo.preinfo.frProdInfo.chgSktProdBenfCtt %>
                 </ul>
               </dd>
+              <% } else { %>
+              <dd class="list-none">
+                <ul>
+                  <li>자동가입 혜택이 없습니다.</li>
+                </ul>
+              </dd>
+              <% } %>
             </dl>
-            <% } %>
           </div>
         </li>
 
@@ -157,16 +164,22 @@
               <% } %>
             </dl>
             <% } %>
-            <% if ( joinTermInfo.preinfo.toProdInfo.chgSktProdBenfCtt ) { %>
             <dl>
               <dt>혜택</dt>
+              <% if ( joinTermInfo.preinfo.toProdInfo.chgSktProdBenfCtt ) { %>
               <dd>
                 <ul>
                   <%- joinTermInfo.preinfo.toProdInfo.chgSktProdBenfCtt %>
                 </ul>
               </dd>
+              <% } else { %>
+              <dd class="list-none">
+                <ul>
+                  <li>자동해지 혜택이 없습니다.</li>
+                </ul>
+              </dd>
+              <% } %>
             </dl>
-            <% } %>
           </div>
         </li>
       </ul>
@@ -177,6 +190,9 @@
       <span class="type2"><%= joinTermInfo.downgrade.guidMsgCtt %></span>
       <% } else { %>
       <%- joinTermInfo.downgrade.guidMsgCtt %>
+      <% } %>
+      <% if ( joinTermInfo.installmentAgreement.premTermMsg ) { %>
+      <span class="type2 mt10"><%- joinTermInfo.installmentAgreement.premTermMsg %></span>
       <% } %>
     </div>
     <% } %>
@@ -198,13 +214,21 @@
     </div>
     <!-- .cont-box -->
     <div class="cont-box">
-      <p>요금제의 기본제공 음성/문자/데이터 혜택은 월 중 요금제 변경 시 실제 이용기간을 기준으로 일할계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.</p>
-      <div class="cont-noti pt20">
-        <span class="type2">(초과 과금 예시)<br>
-        band 데이터 1.2G 사용 고객이 총 900MB의 데이터 사용 후 16일에 요금제 변경 시(30일 기준)<br>
-        - 변경 전 사용일 (1~15일) 기준 일할 제공량 : 약 600MB (= 1.2GB X 15일/30일)<br>
-        - 초과사용량 : 300MB (= 사용량 900MB - 일할 제공량 600MB)<br>
-        → 초과 사용한 데이터(약 300MB)에 대해 종량 요율(22.528원/MB)로 과금 (단, 최대 19,800원)</span>
+      <div class="cont-txt-type01">
+        <div class="announcement-box">
+          <div class="announcement-txt fs-13">요금제의 기본제공 음성/문자/데이터 혜택은 월 중 요금제 변경 시 실제 이용기간을 기준으로 일할계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.</div>
+        </div>
+        <h3 class="tit mt30">초과 과금 예시</h3>
+        <div class="announcement-box mt10">
+          <div class="announcement-txt c-black">band 데이터 1.2G 사용 고객이 총 900MB의 데이터 사용 후 16일에 요금제 변경 시(30일 기준)</div>
+        </div>
+        <ul class="round-dot-list mt12">
+          <li>변경 전 사용일 (1~15일) 기준 일할 제공량 : 약 600MB <br>(= 1.2GB X 15일/30일)</li>
+          <li>초과사용량 : 300MB <br>
+            (= 사용량 900MB - 일할 제공량 600MB)<br>
+            → 초과 사용한 데이터(약 300MB)에 대해 종량 요율<br>
+            (22.528원/MB)로 과금 (단, 최대 19,800원)</li>
+        </ul>
       </div>
     </div>
     <!--// .cont-box -->
@@ -276,9 +300,6 @@
                       </div>
                       <span class="stext mt20">
                         고객님의 약정잔여기간(약정기간-사용기간)을 고려하여, 보조금 차액 정산 부과액 또는 환급액이 결정됩니다.
-                        <% if ( joinTermInfo.installmentAgreement.premTermMsg ) { %>
-                        <br><%- joinTermInfo.installmentAgreement.premTermMsg %>
-                        <% } %>
                       </span>
                     </div>
                   </div>
@@ -354,11 +375,18 @@
   <!--// .cont-box -->
   <% } %>
 
-  <hr class="cont-sp type1" aria-hidden="true">
+  <hr class="cont-sp type1" aria-hidden="true"/>
 
-  <!-- TBD -->
-  <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;">
-  <!--// TBD -->
+  <!-- .cont-box -->
+  <div class="cont-box nogaps-btm">
+    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+    <ul class="noti-list">
+      <li>텍스트가 1줄인 Case입니다.</li>
+      <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+      <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+    </ul>
+  </div>
+  <!--// .cont-box -->
 
   <ul class="bt-slice full">
     <li class="bt-red1">

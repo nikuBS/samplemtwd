@@ -17,6 +17,8 @@ export const URL = {
   '/myt/fare/payment/card': { login: true, id: 'MF_01_02', title: '체크/신용카드 납부' },
   '/myt/fare/payment/point': { login: true, id: 'MF_01_03', title: 'OK캐쉬백/T포인트 납부' },
   '/myt/fare/payment/sms': { login: true, id: 'MF_01_04', title: '입금전용계좌 신청' },
+  '/myt/fare/payment/cashbag': { login: true, id: 'MF_01_05', title: 'OK캐쉬백 요금납부' },
+  '/myt/fare/payment/tpoint': { login: true, id: 'MF_01_06', title: 'T포인트 요금납부' },
   '/myt/fare/payment/option': { login: true, id: 'MF_05_01', title: '납부방법' },
   '/myt/fare/payment/auto': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
   '/myt/fare/payment/micro': { login: true, id: 'MF_06', title: '소액결제' },
@@ -68,8 +70,8 @@ export const URL = {
   '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
   '/product/plans': { login: false, id: 'MP_02', title: '모바일 요금제' },
   '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
+  '/product/wire': { login: false, id: 'WP', title: '인터넷/전화/TV' },
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
-  '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세보기' },
   '/product/join': { login: true, id: 'MP_02_02_06', title: '상품 가입' },
   '/product/terminate': { login: true, id: 'MP_02_02_06', title: '상품 해지' },
   '/product/additions-terminate': { login: true, id: 'MV_01_02_03', title: '부가상품 해지' },
@@ -78,16 +80,39 @@ export const URL = {
 
   // Customer
   '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
+  '/customer/branch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
+  '/customer/branch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
+  '/customer/branch/repair': { login: false, id: 'CS_03_01', title: 'AS센터 찾기' },
+  '/customer/branch/repair-detail': { login: false, id: 'CS_03_02', title: 'AS센터 정보' },
+  '/customer/branch/repair-manufacturer': { login: false, id: 'CS_03_03', title: '제조사 별 AS센터' },
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
+  '/customer/faq': { login: false, id: 'CS_05_01', title: '자주 찾는 질문' },
+  '/customer/faq/search': { login: false, id: 'CS_05_04', title: 'FAQ' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
-  '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },
+  '/customer/svc_info/cmis_0039': { login: false, id: 'CS_10_01', title: '공지사항' },
   '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
-  '/customer/protect': { login: false, id: 'CS_13_01', title: '이용자 피해예방 센터' },
-  '/customer/protect/guide': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드' },
-  '/customer/protect/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
-  '/customer/protect/additions': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
-  '/customer/protect/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' },
+  '/customer/damage_info/cmis_0000': { login: false, id: 'CS_13_01', title: '이용자 피해예방 센터 (모바일 웹)' },
+  '/customer/damage_info/cmis_0001': { login: false, id: 'CS_13_02', title: '이용자 피해예방 센터 (모바일 앱)' },
+  '/customer/damage_info/cmis_0002': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드 (동영상으로 보는 피해예방법)' },
+  '/customer/damage_info/cmis_0003': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드 (웹툰으로 보는 피해예방법)' },
+  '/customer/damage_info/cmis_0004': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드 (최신 이용자 피해예방 정보)' },
+  '/customer/damage_info/cmis_0006': { login: false, id: 'CS_13_04', title: '이용자 피해예방 가이드 (웹툰으로 보는 피해예방법) - 상세화면' },
+  '/customer/damage_info/cmis_0007': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },
+  '/customer/damage_info/cmis_0008': { login: false, id: 'CS_13_06', title: '최신 이용자 피해예방 주의보 - 상세화면' },
+  '/customer/damage_info/cmis_0009': { login: false, id: 'CS_13_07', title: '유용한 부가서비스' },
+  '/customer/damage_info/cmis_0010': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' },
 
   // Benefit
-  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' }
+  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
+  '/benefit/my-benefit': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
+  '/benefit/my-benefit/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
+  '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
+
+  // Common
+  '/common/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/common/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
+
+  // Membership
+  '/membership_benefit/mbrs_0001': { login: false, id: 'BE_03_01', title: '제휴브랜드' },
+  '/membership/membership_info/mbrs_0001': { login: false, id: 'BE_04_01', title: '멤버십 카드 및 등급 안내' }
 };

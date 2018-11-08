@@ -48,7 +48,7 @@ class MytDataSubmainController extends TwViewController {
     ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, familyMock]) => {
       if ( !svcInfo.svcMgmtNum && present.info ) {
         // 비정상 진입 또는 API 호출 오류
-        res.render('error.server-error.html', {
+        this.error.render(res, {
           title: MYT_DATA_SUBMAIN_TITLE.MAIN,
           code: present.info.code,
           msg: present.info.msg,

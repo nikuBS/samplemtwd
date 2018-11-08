@@ -68,6 +68,7 @@ class BypassRouter {
         this.sendRequest(cmd, req, res, next);
       }
     });
+    // this.sendRequest(cmd, req, res, next);
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {

@@ -4,8 +4,8 @@
 * Date: 2018.10.26
 %>
 
-<% include ../components/start.component.html %>
-<% include ../components/javascript.component.html %>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -17,7 +17,7 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap">
+<div id="fe-my-benefit-rainbow-point" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <!-- #header -->
@@ -79,7 +79,7 @@
                         <dl>
                             <dt>포인트 합산<button class="tip-view">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
                             <dd>
-                                <button>포인트 합산 화면 이동</button>
+                                <a class="fe-anchor-go-adjustment" href="/benefit/my-benefit/rainbow-point/adjustment">포인트 합산 화면 이동</a>
                             </dd>
                         </dl>
                     </li>
@@ -87,7 +87,7 @@
                         <dl>
                             <dt>청소년 - 법정대리인 간 양도<button class="tip-view">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
                             <dd>
-                                <button>청소년 - 법정대리인 간 양도 화면 이동</button>
+                                <a class="fe-anchor-go-transfer" href="/benefit/my-benefit/rainbow-point/transfer">청소년 - 법정대리인 간 양도 화면 이동</a>
                             </dd>
                         </dl>
                     </li>
@@ -144,9 +144,12 @@
     </footer>
 </div>
 
-
 <script>
   $(document).ready(function () {
+    new Tw.BenefitMyBenefitRainbowPoint($('#fe-my-benefit-rainbow-point'), {
+      isMultiLineToAdjustment: $.parseJSON("<%= isMultiLineToAdjustment %>"),
+      isMultiLineToTransfer: $.parseJSON("<%= isMultiLineToTransfer %>")
+    });
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>

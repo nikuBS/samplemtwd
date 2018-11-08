@@ -41,7 +41,15 @@ Tw.LineComponent.prototype = {
   },
   _onClickBtLine: function (selectedMgmt, urlAuth, $event) {
     $event.stopPropagation();
-    this.onClickLine(selectedMgmt, urlAuth);
+    var curBtn = $($event.currentTarget);
+    if ( !curBtn.hasClass('no-arrow') ) {
+      // if ( !curBtn.hasClass('disabled') ) {
+      //   this._getLineList();
+      // } else {
+      //   this._closePopup();
+      // }
+      this.onClickLine(selectedMgmt, urlAuth);
+    }
   },
   onClickLine: function (selectedMgmt, urlAuth) {
     this._selectedMgmt = selectedMgmt;
@@ -88,7 +96,7 @@ Tw.LineComponent.prototype = {
   _onCloseListPopup: function () {
     // this.$btLine.removeClass('disabled');
     if ( this._goAuthLine ) {
-      this._historyService.goLoad('/auth/line');
+      this._historyService.goLoad('/common/line');
     } else if ( this._changeLine ) {
       this._historyService.reload();
     }
@@ -160,7 +168,7 @@ Tw.LineComponent.prototype = {
       // 고객보호 비밀번호 설정 페이지
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     } else {
-      // this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
+      // this._historyService.goLoad('/common/login/fail?errorCode=' + resp.code);
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },

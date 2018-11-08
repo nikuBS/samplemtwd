@@ -60,7 +60,7 @@ class MyTJoinSubmainController extends TwViewController {
     ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
-        res.render('error.server-error.html', {
+        this.error.render(res, {
           title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
           code: myif.info.code,
           msg: myif.info.msg,

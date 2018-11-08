@@ -312,7 +312,7 @@ body.bg-gray {
           box-shadow: 0.125rem 0.125rem 0.9375rem rgba(0, 0, 0, 0.2);
   -webkit-transition: all .5s;
   transition: all .5s;
-  z-index: 9999; }
+  z-index: 190; }
   .masking button, .masking a {
     display: block;
     width: 100%;
@@ -1257,6 +1257,9 @@ body.bg-gray {
       vertical-align: baseline;
       color: #e22f26;
       font-weight: 700; }
+    .box-suggest .suggest-info .suggest-dot li .tx-point02 {
+      vertical-align: baseline;
+      font-weight: 700; }
   .box-suggest .link-tuberound {
     margin-top: 2.5rem; }
     .box-suggest .link-tuberound .tuberound-list li {
@@ -1324,6 +1327,9 @@ body.bg-gray {
   .certify-wrap .left-time span {
     vertical-align: baseline;
     font-family: "Helvetica Neue", Roboto, sans-serif; }
+
+.certify-wrap .add-time {
+  margin: 1.25rem 1.25rem 0 1.25rem; }
 
 .contents-notice {
   padding-top: 0.375rem;
@@ -1406,11 +1412,16 @@ body.bg-gray {
   .box-citation .citation-form {
     margin-top: 0.625rem; }
     .box-citation .citation-form .form-cell {
+      position: relative;
       margin-bottom: 1rem; }
       .box-citation .citation-form .form-cell .form-ti {
         display: block;
         margin-bottom: 0.625rem;
         font-size: 0.9375rem; }
+      .box-citation .citation-form .form-cell .form-check {
+        position: absolute;
+        right: 0;
+        top: 0; }
       .box-citation .citation-form .form-cell:last-of-type {
         margin-bottom: 0; }
       .box-citation .citation-form .form-cell .widget-box.radio {
@@ -1421,6 +1432,9 @@ body.bg-gray {
           font-weight: 400; }
           .box-citation .citation-form .form-cell .widget-box.radio .radiobox:last-of-type {
             margin-right: 0; }
+  .box-citation .another-way {
+    font-size: 0.8125rem;
+    padding-bottom: 1.25rem; }
   .box-citation.n-type {
     padding: 0; }
     .box-citation.n-type .citation-form {
@@ -1524,33 +1538,33 @@ body.bg-gray {
 
 .ico-certifi-card {
   display: inline-block;
-  width: 2.75rem;
-  height: 2.75rem;
-  background-image: url(/img/ico/ico-group-100.png);
+  width: 2rem;
+  height: 2rem;
+  background-image: url(/img/ico/ico-group-64.png);
   background-repeat: no-repeat;
-  background-size: 6.25rem; }
+  background-size: 2rem; }
   .ico-certifi-card.type1 {
-    background-position: -0.25rem -50.125rem; }
+    background-position: 0 0; }
   .ico-certifi-card.type2 {
-    background-position: -3.25rem -50.125rem; }
+    background-position: 0 -2rem; }
   .ico-certifi-card.type3 {
-    background-position: -0.25rem -53.25rem; }
+    background-position: 0 -4rem; }
   .ico-certifi-card.type4 {
-    background-position: -3.375rem -53.25rem; }
+    background-position: 0 -6rem; }
   .ico-certifi-card.type5 {
-    background-position: -0.25rem -56.375rem; }
+    background-position: 0 -8rem; }
   .ico-certifi-card.type6 {
-    background-position: -3.375rem -56.375rem; }
+    background-position: 0 -8rem; }
   .ico-certifi-card.type7 {
-    background-position: -0.25rem -59.375rem; }
+    background-position: 0 -8rem; }
   .ico-certifi-card.type8 {
-    background-position: -3.375rem -59.375rem; }
+    background-position: 0 -8rem; }
   .ico-certifi-card.type9 {
-    background-position: -0.25rem -62.5rem; }
+    background-position: 0 -8rem; }
   .ico-certifi-card.type10 {
-    background-position: -3.375rem -62.5rem; }
+    background-position: 0 -8rem; }
   .ico-certifi-card.type11 {
-    background-position: -3.25rem -37.5rem; }
+    background-position: 0 -8rem; }
 
 .certifi-repre {
   padding: 1.5625rem 0;
@@ -1584,12 +1598,12 @@ body.bg-gray {
   font-size: 0; }
   .box-certifi-card .certifi-card-list li {
     display: inline-block;
-    height: 6.5625rem;
+    height: 6.125rem;
     margin-right: 1%;
     margin-bottom: 1%;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    padding: 0.625rem 0;
+    padding: 1.25rem 0;
     border-radius: 0.3125rem;
     text-align: center;
     background: #fff; }
@@ -2348,3 +2362,43 @@ body.bg-gray {
             margin-top: 0.3125rem;
             font-size: 0.9375rem;
             font-weight: 400; }
+
+/* 상품상세 컬러값 */
+.bg-productdetail .container {
+  padding-top: 0 !important; }
+
+.bg-productdetail .productdetails-bg {
+  padding: 3.75rem 1.25rem 0;
+  background: #676767;
+  background-repeat: no-repeat;
+  background-size: cover; }
+  .bg-productdetail .productdetails-bg.t-logo {
+    background: #676767; }
+
+.bg-productdetail h1 {
+  font-size: 0;
+  line-heighT: 0;
+  text-indent: -999px; }
+
+.bg-productdetail .header-wrap {
+  background: transparent; }
+  .bg-productdetail .header-wrap .header .prev-step {
+    background: url(/img/ico/bg_prev.png) no-repeat 47% 49%;
+    background-size: 1.1875rem 1rem; }
+  .bg-productdetail .header-wrap .header .bt-dropdown {
+    color: #fff;
+    background: none; }
+    .bg-productdetail .header-wrap .header .bt-dropdown:after {
+      background: url(/img/ico/bg_header_dropdown2.png) no-repeat 50% 50%;
+      background-size: 0.4375rem 0.25rem; }
+  .bg-productdetail .header-wrap.bg-type {
+    background: #fff; }
+    .bg-productdetail .header-wrap.bg-type .prev-step {
+      background: url(/img/ico/ico-group.png) no-repeat 0 0 !important;
+      background-size: 3.125rem !important;
+      background-position: 0 -15.625rem !important; }
+    .bg-productdetail .header-wrap.bg-type .bt-dropdown {
+      color: #000; }
+      .bg-productdetail .header-wrap.bg-type .bt-dropdown:after {
+        background: url(/img/ico/ico-group.png) no-repeat -0.9375rem -6.5625rem;
+        background-size: 1.875rem; }

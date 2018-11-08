@@ -1,6 +1,6 @@
 /**
  * FileName: common.error.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
+ * Author: Jihun Yang (jihun202@sk.com)
  * Date: 2018.08.21
  */
 

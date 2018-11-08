@@ -55,10 +55,10 @@ Tw.MenuComponent.prototype = {
     }
   },
   _onClickLogin: function () {
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/auth/tid/login', $.proxy(this._onNativeLogin, this));
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
   },
   _onClickLogout: function () {
-    this._goLoad(Tw.NTV_CMD.LOGOUT, '/auth/tid/logout', $.proxy(this._onNativeLogout, this));
+    this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
   },
   _onNativeLogin: function (resp) {
     if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
@@ -73,14 +73,14 @@ Tw.MenuComponent.prototype = {
       this._historyService.goLoad('/main/home');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      this._historyService.goLoad('/auth/login/customer-pwd');
+      this._historyService.goLoad('/common/login/customer-pwd');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
-      this._historyService.goLoad('/auth/login/dormancy');
+      this._historyService.goLoad('/common/login/dormancy');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.goLoad('/auth/login/exceed-fail');
+      this._historyService.goLoad('/common/login/exceed-fail');
     } else {
-      this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
+      this._historyService.goLoad('/common/login/fail?errorCode=' + resp.code);
     }
   },
   _onNativeLogout: function () {
@@ -90,7 +90,7 @@ Tw.MenuComponent.prototype = {
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
     // if(resp.code === NTV_CODE.CODE_00) {
-    this._historyService.goLoad('/auth/logout/complete');
+    this._historyService.goLoad('/common/logout/complete');
     // }
   }
 };

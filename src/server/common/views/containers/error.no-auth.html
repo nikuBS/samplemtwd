@@ -1,5 +1,5 @@
 <%#
-* FileName: auth.error.no-auth.html
+* FileName: error.no-auth.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.08.08
 * CO_99_06_01_03
@@ -32,7 +32,7 @@
                         <div class="suggest-bt">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <a href="/auth/line">회선 관리 바로가기</a>
+                                    <a href="/common/line">회선 관리 바로가기</a>
                                 </li>
                             </ul>
                         </div>
@@ -63,7 +63,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.AuthLineEmptyRegister($('#authLineEmpty'));
+    new Tw.CommonLineEmptyRegister($('.wrap'));
   });
 </script>
 <% include ../components/end.component.html %>

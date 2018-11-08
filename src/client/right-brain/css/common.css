@@ -54,6 +54,9 @@ body {
 .block {
   display: block !important; }
 
+.iblock {
+  display: inline-block !important; }
+
 /*font basic*/
 .ff-hn {
   font-family: "Helvetica Neue", Roboto, sans-serif;
@@ -417,6 +420,28 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       font-weight: 300;
       color: #757575;
       background: #fbfbfb; }
+  .inputbox .validation-txt {
+    display: block;
+    margin: 0.375rem 0 0;
+    color: #3b98e6;
+    font-size: 0.75rem; }
+  .inputbox .error-txt {
+    display: block;
+    margin: 0.375rem 0 0;
+    color: #e84f01;
+    font-size: 0.75rem; }
+
+.validation-txt {
+  display: block;
+  margin: 0.375rem 0 0;
+  color: #3b98e6;
+  font-size: 0.75rem; }
+
+.error-txt {
+  display: block;
+  margin: 0.375rem 0 0;
+  color: #e84f01;
+  font-size: 0.75rem; }
 
 .txfield-combined {
   position: relative;
@@ -3984,8 +4009,8 @@ a.ui-button:active,
       background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -59.875rem;
       background-size: 3.125rem; }
     .bt-dropdown.big:disabled {
-      background: #e5e8ee;
-      color: #808698;
+      background: #d1d1d1;
+      color: #b2b2b2;
       /* disable 디자인 미정으로 임시처리 */ }
       .bt-dropdown.big:disabled:after {
         content: "";
@@ -3996,10 +4021,8 @@ a.ui-button:active,
         width: 0.75rem;
         height: 0.4375rem;
         margin: 0;
-        background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -59.875rem;
-        background-size: 3.125rem;
-        -webkit-transform: rotate(180deg);
-                transform: rotate(180deg); }
+        background: url(/img/ico/bt-btn-disable.png) repeat;
+        background-size: 0.75rem; }
   .bt-dropdown.sbig {
     display: block;
     width: 100%;
@@ -4556,6 +4579,22 @@ a.ui-button:active,
     font-size: 0.625rem;
     color: #fff;
     background: #666; }
+  .badge.badge-parents {
+    background-position: 0 -20.3125rem;
+    background-size: 4.6875rem;
+    width: 1.8125rem;
+    height: 0.9375rem;
+    margin-left: 0.3125rem; }
+  .badge.badge-auto {
+    background-position: 0 -21.5625rem;
+    background-size: 4.6875rem;
+    width: 1.875rem;
+    height: 1rem; }
+  .badge.badge-one {
+    background-position: 0 -22.8125rem;
+    background-size: 4.6875rem;
+    width: 1.875rem;
+    height: 1rem; }
 
 .bar-chart-hoz {
   position: relative;

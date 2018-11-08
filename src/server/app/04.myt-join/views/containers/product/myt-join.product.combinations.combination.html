@@ -5,7 +5,7 @@
 * id: MS_07_01
 %>
 
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -18,7 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '결합가족 보기', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: pageId === 'tb-internet' ? '결합상품 보기' : '결합가족 보기', svcInfo, option: { line: true } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -34,5 +34,19 @@
         </footer>
     </div>
 </body>
+
 <% include ../../components/javascript.component.html %>
+<% if (pageId === 'data-share') { %>
+<script>
+    $(document).ready(function() {
+        new Tw.MyTJoinProductCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>);
+    });
+</script>
+<% } else if (pageId === 'tb-free') { %>
+<script>
+    $(document).ready(function() {
+        new Tw.MyTJoinProductCombinationsTBFree($('.wrap'), <%- JSON.stringify(svcInfo) %>);
+    });
+</script>
+<% } %>
 <% include ../../components/end.component.html %>

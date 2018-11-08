@@ -4,7 +4,7 @@ Tw.Init = function () {
 
   this._initService();
   this._initComponent();
-  this._getDeviceInfo();
+  // this._getDeviceInfo();
   this._getEnvironment();
   this._getSession();
 };

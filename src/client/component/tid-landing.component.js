@@ -14,7 +14,9 @@ Tw.TidLandingComponent = function (rootEl) {
 
 Tw.TidLandingComponent.prototype = {
   _bindEvent: function () {
+    this.$container.on('click', '.fe-bt-auth-line', $.proxy(this._onClickBtnAuthLine, this));
     this.$container.on('click', '.fe-bt-account', $.proxy(this._onClickBtAccount, this));
+    this.$container.on('click', '.fe-bt-auth-withdrawal-guide', $.proxy(this._onClickBtnAuthWithdrawalGuide, this));
     this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
@@ -26,17 +28,23 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad(url);
     }
   },
+  _onClickBtnAuthLine: function () {
+    this._historyService.goLoad('/common/line');
+  },
   _onClickBtAccount: function () {
-    this._goLoad(Tw.NTV_CMD.ACCOUNT, '/auth/tid/account', $.proxy(this._onNativeAccount, this));
+    this._goLoad(Tw.NTV_CMD.ACCOUNT, '/common/tid/account', $.proxy(this._onNativeAccount, this));
+  },
+  _onClickBtnAuthWithdrawalGuide: function () {
+    new Tw.CommonWithdrawal();
   },
   _onClickBtFindId: function () {
-    this._goLoad(Tw.NTV_CMD.FIND_ID, '/auth/tid/find-id', $.proxy(this._onNativeFindId, this));
+    this._goLoad(Tw.NTV_CMD.FIND_ID, '/common/tid/find-id', $.proxy(this._onNativeFindId, this));
   },
   _onClickBtFindPw: function () {
-    this._goLoad(Tw.NTV_CMD.FIND_PW, '/auth/tid/find-pw', $.proxy(this._onNativeFindPw, this));
+    this._goLoad(Tw.NTV_CMD.FIND_PW, '/common/tid/find-pw', $.proxy(this._onNativeFindPw, this));
   },
   _onClickBtChangePw: function () {
-    this._goLoad(Tw.NTV_CMD.CHANGE_PW, '/auth/tid/change-pw', $.proxy(this._onNativeChangePw, this));
+    this._goLoad(Tw.NTV_CMD.CHANGE_PW, '/common/tid/change-pw', $.proxy(this._onNativeChangePw, this));
   },
   _onNativeAccount: function () {
     this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeAccount' });

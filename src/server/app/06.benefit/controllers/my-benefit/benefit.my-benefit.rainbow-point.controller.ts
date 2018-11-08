@@ -11,14 +11,9 @@ import FormatHelper from '../../../../utils/format.helper';
 import { MY_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
-class BenefitMyBenefitRainbowPoint extends TwViewController {
-  private _MAXIMUM_ITEM_LENGTH = 20;
-  private _MAXIMUM_LIST_LENGTH = 5;
-  private _VIEW = {
-    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html',
-    ERROR: 'error.server-error.html'
-  };
-  private _BASE_URL = '/benefit/my-benefit/rainbow-point';
+class BenefitMyBenefitRainbowPointCommon {
+  public static MAXIMUM_ITEM_LENGTH: number = 20;
+  public static MAXIMUM_LIST_LENGTH: number = 5;
 
   public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
     const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
@@ -41,6 +36,18 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     };
   }
 
+  public static getResult(resp: any): any {
+    return resp.result;
+  }
+
+}
+
+class BenefitMyBenefitRainbowPoint extends TwViewController {
+  private _VIEW = {
+    DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html'
+  };
+  private _BASE_URL = '/benefit/my-benefit/rainbow-point';
+
   constructor() {
     super();
   }
@@ -48,28 +55,37 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const curPage = req.query.curPage || 1;
     Observable.combineLatest(
-      this._reqRainbowPointsInfo(),
-      this._reqRainbowPointHistories(curPage)
-    ).subscribe(([respRainbowPointsInfo, respRainbowPointHistories]) => {
+      this.reqRainbowPointsInfo(),
+      this.reqRainbowPointHistories(curPage),
+      this.reqRainbowPointServices(),
+      this.reqRainbowPointFamilies()
+    ).subscribe(([respRainbowPointsInfo, respRainbowPointHistories, rainbowPointServices, rainbowPointFamilies]) => {
       const apiError = this.error.apiError([
-        respRainbowPointsInfo, respRainbowPointHistories
+        respRainbowPointsInfo, respRainbowPointHistories, rainbowPointServices, rainbowPointFamilies
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this._renderError(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo);
       }
 
-      const rainbowPointsInfo = this._getRainbowPointsInfo(respRainbowPointsInfo);
-      const rainbowPointHistoryResult = this._getRainbowPointHistoryResult(respRainbowPointHistories);
+      const rainbowPointsInfo = this.getRainbowPointsInfo(respRainbowPointsInfo);
+      const rainbowPointHistoryResult = this.getRainbowPointHistoryResult(respRainbowPointHistories);
       const rainbowPointHistories = rainbowPointHistoryResult.history;
+      const linesToAdjustment = BenefitMyBenefitRainbowPointCommon.getResult(rainbowPointServices);
+      const linesToTransfer = BenefitMyBenefitRainbowPointCommon.getResult(rainbowPointFamilies);
 
-      const paging = BenefitMyBenefitRainbowPoint.getPaging(this._BASE_URL,
-        this._MAXIMUM_ITEM_LENGTH,
-        this._MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
+      const isMultiLineToAdjustment = this.isMultiLine(linesToAdjustment);
+      const isMultiLineToTransfer = this.isMultiLine(linesToTransfer);
+
+      const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
+        BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
+        BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
 
       const options = {
         rainbowPointsInfo,
         rainbowPointHistories,
+        isMultiLineToAdjustment,
+        isMultiLineToTransfer,
         paging,
         svcInfo,
         pageInfo
@@ -80,32 +96,31 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       res.render(this._VIEW.DEFAULT, options);
 
     }, (resp) => {
-      return this._renderError(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
-  private _reqRainbowPointsInfo(): Observable<any> {
+  private reqRainbowPointsInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0132, {});
   }
 
-  private _reqRainbowPointHistories(page: number): Observable<any> {
+  private reqRainbowPointHistories(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0100, {
-      size: this._MAXIMUM_ITEM_LENGTH,
+      size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
       page
     });
   }
 
-  private _renderError(res, err, svcInfo): any {
-    return res.render(this._VIEW.ERROR, {
-      title: MY_BENEFIT_RAINBOW_POINT.TITLE,
-      code: err.code,
-      msg: err.msg,
-      svcInfo: svcInfo
-    });
+  private reqRainbowPointServices(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0101, {});
   }
 
-  private _getRainbowPointsInfo(resp: any): any {
-    const rainbowPointsInfo = this._getResult(resp);
+  private reqRainbowPointFamilies(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0103, {});
+  }
+
+  private getRainbowPointsInfo(resp: any): any {
+    const rainbowPointsInfo = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     rainbowPointsInfo.usblPoint = FormatHelper.addComma(rainbowPointsInfo.usblPoint);
     rainbowPointsInfo.erndPoint = FormatHelper.addComma(rainbowPointsInfo.erndPoint);
     rainbowPointsInfo.usdPoint = FormatHelper.addComma(rainbowPointsInfo.usdPoint);
@@ -114,8 +129,8 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return rainbowPointsInfo;
   }
 
-  private _getRainbowPointHistoryResult(resp: any): any {
-    const rainbowPointHistoryResult = this._getResult(resp);
+  private getRainbowPointHistoryResult(resp: any): any {
+    const rainbowPointHistoryResult = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     rainbowPointHistoryResult.history.map((history) => {
       history.opDt = DateHelper.getShortDateNoDot(history.opDt);
       history.point = FormatHelper.addComma(history.point);
@@ -125,9 +140,21 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return rainbowPointHistoryResult;
   }
 
-  private _getResult(resp: any): any {
-    return resp.result;
+  private isMultiLine(lines: any): boolean {
+    return lines.length > 1;
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: MY_BENEFIT_RAINBOW_POINT.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo: svcInfo
+    });
   }
 }
 
-export default BenefitMyBenefitRainbowPoint;
+export {
+  BenefitMyBenefitRainbowPoint,
+  BenefitMyBenefitRainbowPointCommon
+};

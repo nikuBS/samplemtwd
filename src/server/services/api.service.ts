@@ -8,7 +8,7 @@ import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import { COOKIE_KEY } from '../types/common.type';
+import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { LOGIN_TYPE } from '../types/bff.old.type';
 
 class ApiService {
@@ -54,7 +54,8 @@ class ApiService {
   }
 
   public getServerUri(command: any): string {
-    return EnvHelper.getEnvironment(command.server);
+    const buildType = this.loginService.getBlueGreen() === BUILD_TYPE.GREEN ? '_G' : '';
+    return EnvHelper.getEnvironment(command.server + buildType);
   }
 
   private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {
@@ -78,6 +79,9 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
           'x-user-ip': this.loginService.getNodeIp(),
+          'x-menu-name': this.loginService.getPath(),
+          'x-useragent': this.loginService.getUserAgent(),
+          'x-env': this.loginService.getBlueGreen(),
           cookie: (FormatHelper.isEmpty(header.cookie) || (header.cookie).indexOf(COOKIE_KEY.APP_API) === -1) ? this.makeCookie() : header.cookie,
         });
       case API_SERVER.TID:
@@ -95,13 +99,13 @@ class ApiService {
   private makeCookie(): string {
     return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';' +
       COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel() + ';' +
-      COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
+      COOKIE_KEY.DEVICE + '=' + this.loginService.getDevice();
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
     if ( args.length > 0 ) {
       args.map((argument, index) => {
-        path = path.replace(`args-${index}`, argument);
+        path = path.replace(`:args${index}`, argument);
       });
     }
     if ( !FormatHelper.isEmpty(params) ) {

@@ -9,12 +9,8 @@ Tw.MyTFareSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._lineService = new Tw.LineComponent();
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
-  this._requestCount = -1;
-  this._resTimerID = null;
-  this._svcMgmtNumList = [];
   this._chartDefaultClass = 'chart_link item';
   this.data = params.data;
   this.loadingView(true);
@@ -195,6 +191,9 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _initialize: function () {
+    this._requestCount = -1;
+    this._resTimerID = null;
+    this._svcMgmtNumList = [];
     /**
      * /청구요금인 경우
      * 1. 최근요금내역
@@ -214,27 +213,9 @@ Tw.MyTFareSubMain.prototype = {
 
   // 사용요금내역조회-1
   _usageFeeRequest: function () {
-    // TODO: 서버 데이터 변경되면 주석제거 예정
     this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
       .done($.proxy(this._responseUsageFee, this))
       .fail($.proxy(this._errorRequest, this));
-    /*var usageDtArray = this.data.usage.invDtArr;
-    if ( usageDtArray.length > 0 ) {
-      var requestCommand = [];
-      for ( var index = 0; index < usageDtArray.length; index++ ) {
-        requestCommand.push({
-          command: Tw.API_CMD.BFF_05_0047, params: {
-            invDt: usageDtArray[index]
-          }
-        });
-      }
-      this._apiService.requestArray(requestCommand)
-        .done($.proxy(this._responseUsageFee, this))
-        .fail($.proxy(this._errorRequest, this));
-    }
-    else {
-      this._responseUsageFee();
-    }*/
   },
 
   // 사용요금내역조회-2
@@ -249,7 +230,6 @@ Tw.MyTFareSubMain.prototype = {
         };
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
-          // TODO: 서버데이터 변경되면 제거
           var date = this.getLastDate(item.invDt); // item.invDt;
           var amt = item.invAmt.replace(',', '');
           var absDeduck = item.deduckInvAmt.replace(',', '');
@@ -266,53 +246,15 @@ Tw.MyTFareSubMain.prototype = {
         this._initPatternChart(chart_data);
       }
     }
-    /*if ( arguments.length > 0 ) {
-      var chart_data = {
-        co: '#3b98e6', //색상
-        da_arr: []
-      };
-      for ( var idx = arguments.length - 1; idx > -1; idx-- ) {
-        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
-          var item = arguments[idx].result;
-          var amt = parseInt(item.useAmtTot, 10);
-          chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
-            'class': this._chartDefaultClass + item.invDt,
-            'data': [amt] // 사용금액
-          });
-        }
-      }
-      if ( chart_data.da_arr.length > 0 ) {
-        this._initPatternChart(chart_data);
-      }
-    }*/
     // 실시간요금
     setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
-    // TODO: 서버 데이터 변경되면 주석제거 예정
     this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
       .done($.proxy(this._responseClaimPayment, this))
       .fail($.proxy(this._errorRequest, this));
-    /*var claimDtArray = this.data.claim && this.data.claim.invDtArr;
-    if ( claimDtArray && claimDtArray.length > 0 ) {
-      var requestCommand = [];
-      for ( var index = 0; index < claimDtArray.length; index++ ) {
-        requestCommand.push({
-          command: Tw.API_CMD.BFF_05_0036, params: {
-            invDt: claimDtArray[index]
-          }
-        });
-      }
-      this._apiService.requestArray(requestCommand)
-        .done($.proxy(this._responseClaimPayment, this))
-        .fail($.proxy(this._errorRequest, this));
-    }
-    else {
-      this._responseClaimPayment();
-    }*/
   },
 
   // 최근청구요금내역조회-2
@@ -327,7 +269,6 @@ Tw.MyTFareSubMain.prototype = {
         };
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
-          // TODO: 서버데이터 변경되면 제거
           var date = this.getLastDate(item.invDt); // item.invDt;
           var amt = item.invAmt.replace(',', '');
           var absDeduck = item.deduckInvAmt.replace(',', '');
@@ -344,28 +285,6 @@ Tw.MyTFareSubMain.prototype = {
         this._initPatternChart(chart_data);
       }
     }
-    /*if ( arguments.length > 0 ) {
-      var chart_data = {
-        co: '#3b98e6', //색상
-        da_arr: []
-      };
-      for ( var idx = arguments.length - 1; idx > -1; idx-- ) {
-        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
-          var item = arguments[idx].result;
-          var amt = parseInt(item.useAmtTot, 10);
-          var absDeduck = Math.abs(parseInt(item.deduckTotInvAmt, 10));
-          chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanAfterMonth(item.invDt), // 날짜
-            'class': this._chartDefaultClass + item.invDt,
-            'data': [amt], // 청구금액
-            'sale': [absDeduck] // 할인금액
-          });
-        }
-      }
-      if ( chart_data.da_arr.length > 0 ) {
-        this._initPatternChart(chart_data);
-      }
-    }*/
     setTimeout($.proxy(this._otherLineBills, this), 300);
   },
 
@@ -557,7 +476,8 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
-    this._lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    var lineService = new Tw.LineComponent();
+    lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리
@@ -652,9 +572,9 @@ Tw.MyTFareSubMain.prototype = {
     var $moreBtn = $container.find('.link-list button');
     var $closeBtn = $container.find('.bt-blue1 button');
     if ( $moreBtn.length > 0 ) {
-      // TODO: 요금제 부가서비스 > 휴대폰결제 이용동의 상품 상세 페이지로 이동(TBD)
       $moreBtn.on('click', $.proxy(function () {
-
+        this._popupService.close();
+        this._historyService.goLoad('/product/detail/NA00004184');
       }, this));
     }
     $closeBtn.on('click', $.proxy(function () {

@@ -103,9 +103,16 @@ Tw.MainHome.prototype = {
     var $billTemp = $('#fe-smart-bill');
     var tplBillCard = Handlebars.compile($billTemp.html());
     element.html(tplBillCard(result));
+    this._bindBillEvent();
   },
   _failBillData: function () {
 
+  },
+  _bindBillEvent: function () {
+    this.$container.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
+  },
+  _onClickPayment: function () {
+    new Tw.MyTFarePayment(this.$container);
   },
   _parseBillData: function (billData) {
     var repSvc = billData.charge.repSvcYn === 'Y';

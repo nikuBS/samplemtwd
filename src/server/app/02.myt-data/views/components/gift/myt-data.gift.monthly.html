@@ -16,7 +16,10 @@
 <div class="cont-box nogaps inborder">
     <% if ( autoList ) { %>
     <div class="list-comp-thumnail">
-        <p class="list-comp-title">자동선물 신청된 결합가족</p>
+        <p class="list-comp-title">
+            자동선물 신청된 결합가족
+            <button class="tip-view">TIP</button>
+        </p>
         <ul class="comp-box">
             <% autoList.map (item => { %>
             <li class="list-box">
@@ -57,8 +60,10 @@
             <% } %>
         </div>
     </div>
+    <p class="ctext2"><button class="bt-link-tx underline fe-available_product">선물 받을 수 있는 요금제 확인</button></p>
     <h4 class="tabcon-title0 mt30">
         자동선물할 데이터 량
+        <button class="tip-view">TIP</button>
         <span class="title0-sub-tx0"><span class="fe-remain_data">0.00GB</span> 남음</span>
     </h4>
     <!-- .widget -->
@@ -138,8 +143,17 @@
         </div>
     </div>
     <!--// .widget -->
-    <p class="tabcon-tx0 pt14">* 1.0GB는 고객님이 가장 많이 선택하는 데이터 량입니다.</p>
+    <p class="tabcon-tx0 pt14">* 발송된 데이터는 취소가 불가능합니다.</p>
 </div>
+<hr class="cont-sp type1" aria-hidden="true">
+<div class="cont-box nogaps-btm">
+    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+    <ul class="noti-list">
+        <li>T끼리 데이터 자동 선물 중단 안내 <button class="tip-view">TIP</button></li>
+        <li>T끼리 데이터 선물하기 유의사항 <button class="tip-view">TIP</button></li>
+    </ul>
+</div>
+
 <div class="bt-fixed-area">
     <ul class="bt-slice full">
         <li class="bt-red1">

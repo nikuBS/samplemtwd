@@ -13,11 +13,12 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     remoteSrc  = require('gulp-remote-src'),
     jeditor    = require('gulp-json-editor'),
-    options    = require('gulp-options');
+    options    = require('gulp-options'),
+    plumber    = require('gulp-plumber');
 
 
-var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'auth'];
-var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'customer', 'auth'];
+var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'common'];
+var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'membership', 'customer', 'tevent'];
 // for docker (dev env)
 var dist_tmp = 'src/server/public/cdn/';
 var dist = 'dist/';
@@ -119,9 +120,51 @@ gulp.task('js-util-client', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
+gulp.task('js-xtractor', function() {
+  return gulp.src([
+    'src/client/xtractor/xtractor_script.js',
+    'src/client/xtractor/xtractor_api.js'
+  ])
+    .pipe(concat('xtractor.js'))
+    .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('xtractor.min.js'))
+    .pipe(rev())
+    .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev.manifest(dist + 'tmp/xtractor-manifest.json'))
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('js-xtractor-client', function() {
+  return gulp.src([
+    'src/client/xtractor/xtractor_script.js',
+    'src/client/xtractor/xtractor_api.js'
+  ])
+  .pipe(concat('xtractor.js'))
+  .pipe(gulp.dest(dist_tmp + 'js'))
+  .pipe(gulp.dest(dist + 'js'))
+  .pipe(uglify())
+  .on('error', function (err) {
+    gutil.log(gutil.colors.red('[Error]'), err.toString());
+  })
+  .pipe(rename(manifest['xtractor.min.js']))
+  .on('error', function (err) {
+    gutil.log(gutil.colors.red('[Error]'), err.toString());
+    console.log(manifest);
+  })
+  .pipe(gulp.dest(dist_tmp + 'js'))
+  .pipe(gulp.dest(dist + 'js'));
+});
+
 oldAppNames.map(function (app, index) {
   gulp.task('js-old' + app, function () {
     return gulp.src('src/client/app/90' + index + '.' + app + '/**/*.js')
+      .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + 'old.js'))
       .pipe(gulp.dest(dist_tmp + 'js'))
@@ -144,6 +187,7 @@ oldAppNames.map(function (app, index) {
 appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
+      .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist_tmp + 'js'))
@@ -166,6 +210,7 @@ appNames.map(function (app, index) {
 appNames.map(function (app, index) {
   gulp.task('js-' + app + '-client', function () {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
+      .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist_tmp + 'js'))
@@ -297,10 +342,10 @@ gulp.task('post-clean', function () {
 
 gulp.task('watch', function () {
   livereload.listen();
-  gulp.watch('src/client/**/*.hbs', ['hbs']);
-  gulp.watch('src/client/**/*.js', ['client-build']);
-  gulp.watch('src/client/**/*.css', ['css-vendor', 'css-rb']);
-  gulp.watch('dist/**').on('change', livereload.changed);
+  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs']);
+  gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
+  gulp.watch('src/client/**/*.css', { interval: 500 }, ['css-vendor', 'css-rb']);
+  gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
 });
 
 gulp.task('get-manifest', function () {
@@ -325,8 +370,8 @@ gulp.task('js-app', appNames.map(function (app) {
 gulp.task('js-app-client', appNames.map(function (app) {
   return 'js-' + app + '-client';
 }));
-gulp.task('js', ['js-util', 'js-old-app', 'js-app']);
-gulp.task('js-client', ['js-util-client', 'js-app-client']);
+gulp.task('js', ['js-util', 'js-xtractor', 'js-old-app', 'js-app']);
+gulp.task('js-client', ['js-util-client', 'js-xtractor-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs', 'font']);
 

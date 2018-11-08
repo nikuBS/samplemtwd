@@ -97,11 +97,11 @@ Tw.MyTJoinWireHistory.prototype = {
 
       // 날짜 및 데이터 변경
       if ( this._list[i].atype === '167' || this._list[i].atype === '168' ) {
-        this._list[i]['svcPrefrDtm'] = Tw.DateHelper.getCurrentDateTime(this._list[i].svcPrefrDtm);
+        this._list[i].svcPrefrDtm = Tw.DateHelper.getCurrentDateTime(this._list[i].svcPrefrDtm);
       }
       if ( this._list[i].atype === '162') {
-        this._list[i]['onOffName'] = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[this._list[i]['onOff']];
-        this._list[i]['setPrefrDt'] = Tw.DateHelper.getShortDateNoDot(this._list[i].setPrefrDt);
+        this._list[i].onOffName = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[this._list[i].onOff];
+        this._list[i].setPrefrDt = Tw.DateHelper.getShortDateNoDot(this._list[i].setPrefrDt);
       }
     }
     this._totPageNum = page;
@@ -168,9 +168,9 @@ Tw.MyTJoinWireHistory.prototype = {
 
     for( var i = 0; i < list.length; i++ ){
 
-      if( this._lastYear !== list[i]['dt'].substr(0,4) ){
+      if( this._lastYear !== list[i].dt.substr(0,4) ){
         // 연도 출력
-        this._lastYear = list[i]['dt'].substr(0,4);
+        this._lastYear = list[i].dt.substr(0,4);
         $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
         $contBoxes.append(this._listContBox);
         $lastBox = $('.history-list:last ul:eq(0)', $contBoxes);
@@ -233,7 +233,7 @@ Tw.MyTJoinWireHistory.prototype = {
     var num = event.currentTarget.getAttribute('data-no');
     var item = null;
     for(var i = 0; i < this._list.length; i++){
-      if(this._list[i].dataNo === parseInt(num)){
+      if(this._list[i].dataNo === parseInt(num, 10)){
         item = this._list[i];
         break;
       }

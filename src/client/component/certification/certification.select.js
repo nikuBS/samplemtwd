@@ -37,7 +37,7 @@ Tw.CertificationSelect.prototype = {
     this._authUrl = certInfo.url;
     this._svcInfo = certInfo.svcInfo;
     this._urlMeta = certInfo.urlMeta;
-    this._resultUrl = '/auth/cert/complete';
+    this._resultUrl = '/common/cert/complete';
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
@@ -160,10 +160,10 @@ Tw.CertificationSelect.prototype = {
           this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
-        this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
+        this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.IPIN:
-        this._openCertBrowser('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+        this._openCertBrowser('/common/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.EMAIL:
         this._certEmail.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);

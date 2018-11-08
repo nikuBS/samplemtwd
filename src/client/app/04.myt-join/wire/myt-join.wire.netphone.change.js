@@ -55,7 +55,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     }
   },
 
-  _onclickInputDel: function(event){
+  _onclickInputDel: function(/*event*/){
     //$('#inputReqPhone').val('');
     $('.inputbox').removeClass('error');
   },
@@ -75,7 +75,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     }
     if(value.length >= 9){
       value = value.replace(/-/g, '');
-      value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+      value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
       $('input').val(value);
     }
 

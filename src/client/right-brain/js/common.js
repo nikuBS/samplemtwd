@@ -2,6 +2,9 @@ $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
   skt_landing.action.keyboard();
+  if($('body').hasClass('bg-productdetail')){
+    skt_landing.action.prd_header();
+  }
 });
 $(window).on('resize', function () {
 
@@ -458,7 +461,19 @@ skt_landing.action = {
       $.get(hbsURL+popup_info.hbs+'.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);
-        skt_landing.action.fix_scroll();
+        /*
+        if(!popup_info.layer){
+          skt_landing.action.fix_scroll();
+        }else{
+          if($('.wrap > .popup,.wrap > .popup-page').length == 0){
+            skt_landing.action.fix_scroll();
+          }
+        }
+        */
+        /* 11.07 jsk */
+        if($('.wrap > .popup,.wrap > .popup-page').length == 0){
+          skt_landing.action.fix_scroll();
+        }
         $('.wrap').append(html);
         skt_landing.util.set_zindex();
       }).done(function () {
@@ -496,6 +511,10 @@ skt_landing.action = {
       layer.css('bottom','-100%');
       setTimeout(function(){
         layer.closest('.popup').empty().remove();
+        /* 11.07 jsk */
+        if($('.wrap > .popup,.wrap > .popup-page').length == 0){
+          skt_landing.action.auto_scroll();
+        }
         if(callback){
           callback();
         }
@@ -508,7 +527,10 @@ skt_landing.action = {
         var popups = $('.wrap > .popup,.wrap > .popup-page');
         popups.eq(popups.length-1).empty().remove();
       }
-      skt_landing.action.auto_scroll();
+      /* 11.07 jsk */
+      if($('.wrap > .popup,.wrap > .popup-page').length == 0){
+        skt_landing.action.auto_scroll();
+      }
     },
     scroll_chk: function () {
       var pop_h = $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-contents').height();
@@ -562,6 +584,17 @@ skt_landing.action = {
     })
     $(document).on('focusout',selector, function(){
       $(this).closest('.popup-page').removeClass('focusin')
+    })
+  },
+  prd_header : function(){ // 상품상세 원장 헤더 색상 제어
+    $('#header').removeClass('bg-type');
+    $(window).bind('scroll', function(){
+      if(skt_landing.util.win_info.get_scrollT() == 0){
+        $('#header').removeClass('bg-type');
+      }else{
+        $('#header').addClass('bg-type');
+        
+      }
     })
   }
 };

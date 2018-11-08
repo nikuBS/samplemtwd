@@ -17,7 +17,6 @@ Tw.ProductDetail = function(rootEl) {
 
 Tw.ProductDetail.prototype = {
 
-  _settingAuthList: ['NA00000291', 'NA00000273', 'NA00002121'],  // @todo 인증API 완료 후 삭제
   _settingBtnList: [],
 
   _init: function() {
@@ -25,7 +24,9 @@ Tw.ProductDetail.prototype = {
     this._ctgCd = this.$container.data('ctg_cd');
     this._ctgKey = this.$container.data('ctg_key');
     this._filterIds = this.$container.data('filter_ids');
+    this._contentsDetailList = [];
 
+    this._setContentsDetailList();
     this._loadRecommendedrateList();
     this._setSettingBtnList();
   },
@@ -37,9 +38,11 @@ Tw.ProductDetail.prototype = {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnRecommendRateListMore = this.$container.find('.fe-btn_recommended_rate_list_more');
     this.$btnRecommendProd = this.$container.find('.fe-btn_recommend_prod');
+    this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
 
     this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
     this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
+    this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
   },
 
   _bindEvent: function() {
@@ -49,6 +52,7 @@ Tw.ProductDetail.prototype = {
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
     this.$btnRecommendProd.on('click', $.proxy(this._goRecommendProd, this));
+    this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
   },
 
   _getJoinTermCd: function(typcd) {
@@ -81,6 +85,23 @@ Tw.ProductDetail.prototype = {
       value: $btn.text(),
       url: $btn.data('url'),
       attr: 'data-url="' + $btn.data('url') + '"'
+    });
+  },
+
+  _setContentsDetailList: function() {
+    _.each(this.$contentsDetailItem, $.proxy(this._pushContentsDetail, this));
+  },
+
+  _pushContentsDetail: function(item) {
+    var $item = $(item);
+    if (Tw.FormatHelper.isEmpty($item.data('title'))) {
+      return;
+    }
+
+    this._contentsDetailList.push({
+      title: $item.data('title'),
+      contentsClass: $item.data('class'),
+      contents: $item.html()
     });
   },
 
@@ -125,6 +146,22 @@ Tw.ProductDetail.prototype = {
     this._historyService.replaceURL('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
 
+  _openContentsDetailPop: function(e) {
+    var $item = $(e.currentTarget),
+      contentsIndex = $item.data('contents');
+
+    this._popupService.open({
+      hbs: 'MP_02_02_06',
+      layer: true,
+      list: this._contentsDetailList
+    }, $.proxy(this._focusContentsDetail, this, contentsIndex), null, 'contents_detail');
+  },
+
+  _focusContentsDetail: function(contentsIndex, $popupContainer) {
+    $popupContainer.find('.container-wrap')
+      .scrollTop($popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]').offset().top - 60);
+  },
+
   _openSettingPop: function() {
     this._popupService.open({
       hbs: 'actionsheet_link_a_type',
@@ -137,12 +174,10 @@ Tw.ProductDetail.prototype = {
   },
 
   _bindSettingBtnListEvent: function($layer) {
-    console.log($layer.find('[data-url]'));
     $layer.find('[data-url]').on('click', $.proxy(this._setSettingGoUrl, this));
   },
 
   _setSettingGoUrl: function(e) {
-    console.log('click');
     this._settingGoUrl = $(e.currentTarget).data('url');
     this._popupService.close();
   },

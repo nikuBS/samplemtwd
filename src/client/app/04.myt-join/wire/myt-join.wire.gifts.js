@@ -137,7 +137,7 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function () {
-    if( parseInt(this._listTotCnt) > this._list.length ) {
+    if( parseInt(this._listTotCnt, 10) > this._list.length ) {
       $('.bt-more').show();
     } else {
       $('.bt-more').hide();

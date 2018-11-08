@@ -31,56 +31,14 @@ class FormatHelper {
     return FormatHelper.isEmpty(value) ? emptyValue : value;
   }
 
-  static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any, basOfrCharCntCtt?: any): any {
-    const isValid = (value) => {
-      return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
-    };
-
-    return {
-      basFeeInfo: isValid(basFeeInfo) ? FormatHelper.convProductBasfeeInfo(basFeeInfo) : null,
-      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? FormatHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt) : null,
-      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? FormatHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
-      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? FormatHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
-    };
+  static getLastSeq(path: any): any {
+    const pathArray = path.split('/');
+    return pathArray[pathArray.length - 1];
   }
 
-  static convProductBasfeeInfo(basFeeInfo): any {
-    const isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
-
-    return {
-      isNaN: isNaNbasFeeInfo,
-      value: isNaNbasFeeInfo ? basFeeInfo : FormatHelper.addComma(basFeeInfo)
-    };
+  static stripTags(context: any): any {
+    return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   }
-
-  static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt): any {
-    const isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
-
-    return {
-      isNaN: isNaNbasOfrDataQtyCtt,
-      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.MB)
-    };
-  }
-
-  static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt): any {
-    const isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
-
-    return {
-      isNaN: isNaNbasOfrVcallTmsCtt,
-      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : FormatHelper.convVoiceFormatWithUnit(isNaNbasOfrVcallTmsCtt)
-    };
-  }
-
-  static convProductBasOfrCharCntCtt(basOfrCharCntCtt): any {
-    const isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
-
-    return {
-      isNaN: isNaNbasOfrCharCntCtt,
-      value: basOfrCharCntCtt,
-      unit: UNIT['310']
-    };
-  }
-
 
   static customDataFormat(data: any, curUnit: string, targetUnit: string): any {
     const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB];
@@ -172,6 +130,13 @@ class FormatHelper {
     const sec = data - (hours * 3600) - (min * 60);
 
     return { hours, min, sec };
+  }
+
+  static convVoiceMinFormatWithUnit(data: any): any {
+    const hours = Math.floor(data / 60),
+        min = data - (hours * 60);
+
+    return (hours > 0 ? hours + VOICE_UNIT.HOURS : '') + min + VOICE_UNIT.MIN;
   }
 
   static convVoiceFormatWithUnit(data: any): any[] {

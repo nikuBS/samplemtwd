@@ -180,7 +180,7 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
   },
   _isValidForNew: function () {
     return (
-      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount, Tw.MSG_PAYMENT.PRE_A08) &&
+      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
       this._validation.checkLength(this.$cardBirth.val(), 6, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V11) &&
       this._validation.checkEmpty(this.$cardNumber.attr('data-code'), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
       this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
@@ -190,7 +190,7 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
   _isValidForChange: function () {
     if (this.$changeType === 'A') {
       return (
-        this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount, Tw.MSG_PAYMENT.PRE_A08) &&
+        this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
         this._commonValidationForCard()
       );
     } else if (this.$changeType === 'C') {
@@ -201,7 +201,7 @@ Tw.MyTFarePaymentPrepayAuto.prototype = {
       );
     } else {
       return (
-        this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount, Tw.MSG_PAYMENT.PRE_A08) &&
+        this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
         this._validation.checkEmpty(this.$cardNumber.attr('data-code'), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
         this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
         this._commonValidationForCard(this.$cardWrap));

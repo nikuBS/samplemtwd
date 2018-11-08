@@ -40,7 +40,7 @@ Tw.CertificationPublic.prototype = {
   _openPublicCert: function (message) {
     this._nativeService.send(Tw.NTV_CMD.AUTH_CERT, {
       message: message,
-      authUrl: this._authUrl
+      authUrl: this._command.command.method + '|' + this._authUrl
     }, $.proxy(this._onPublicCert, this));
   },
   _onPublicCert: function (resp) {
