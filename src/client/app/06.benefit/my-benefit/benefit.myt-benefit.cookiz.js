@@ -52,9 +52,9 @@ Tw.BenefitMyBenefitCookiz.prototype = {
       } else {
         var _items = $.extend(true, [], resp.result.history);
         _.map(_items, $.proxy(function (point) {
-          point.point = Tw.FormatHelper.addComma(point.point),
-            point.opDt = Tw.DateHelper.getShortFirstDateNoNot(point.opDt),
-            point.type = Tw.BENEFIT.TYPE[point.opClCd]
+          point.point = Tw.FormatHelper.addComma(point.point);
+          point.opDt = Tw.DateHelper.getShortFirstDateNoNot(point.opDt);
+          point.type = Tw.BENEFIT.TYPE[point.opClCd];
         }, this));
 
         this._renderItems(_items);
