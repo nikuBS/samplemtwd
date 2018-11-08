@@ -1,3 +1,3 @@
 Tw.environment = {
-  version: 'CBT_QA_v1.0'
+  version: 'v9.0.0'
 };
