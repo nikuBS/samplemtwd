@@ -24,7 +24,7 @@ Tw.ProductJoinReservationExplain = function(familyList, callback) {
     hbs: 'BS_05_01_01_01',
     layer: true,
     list: familyList || []
-  }, $.proxy(this._init, this), $.proxy(this._closePop), 'combine_explain');
+  }, $.proxy(this._init, this), $.proxy(this._closePop, this), 'combine_explain');
 };
 
 Tw.ProductJoinReservationExplain.prototype = {
@@ -49,6 +49,7 @@ Tw.ProductJoinReservationExplain.prototype = {
     this.$fileWrap = this.$container.find('.fe-file_wrap');
     this.$fileList = this.$container.find('.fe-file_list');
     this.$explainFile = this.$container.find('.fe-explain_file');
+    this.$explainFileView = this.$container.find('.fe-explain_file_view');
 
     this.$btnFamilyType = this.$container.find('.fe-btn_family_type');
     this.$btnFamilyAdd = this.$container.find('.fe-btn_family_add');
@@ -63,7 +64,7 @@ Tw.ProductJoinReservationExplain.prototype = {
     this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
 
     this.$familyAddWrap.on('keyup input', 'input[type=text]', $.proxy(this._procEnableAddFamilyBtn, this));
-    this.$familyList.find('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
+    this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
 
     this.$explainFile.on('change', $.proxy(this._onChangeExplainFile, this));
@@ -150,6 +151,8 @@ Tw.ProductJoinReservationExplain.prototype = {
     if (this._familyList.length < 1) {
       this.$familyWrap.hide();
     }
+
+    this._procEnableApplyBtn();
   },
 
   _bindFamilyTypePop: function($popupContainer) {
@@ -180,20 +183,21 @@ Tw.ProductJoinReservationExplain.prototype = {
     if (this._fileList.length < 1) {
       this.$fileWrap.hide();
     }
+
+    this._clearExplainFile();
+    this._procEnableApplyBtn();
   },
 
   _onChangeExplainFile: function(e) {
-    // if (!Tw.FormatHelper.isEmpty(e.currentTarget.files) ||
-    //   e.currentTarget.files[0].size > this._limitFileByteSize ||
-    //   this._acceptExt.indexOf(e.currentTarget.files[0].name.split('.').pop()) === -1) {
-    //   return this._toggleBtn(this.$btnExplainFileAdd, false);
-    // }
+    if (this._fileList.length > 4) {
+      return this._toggleBtn(this.$btnExplainFileAdd, false);
+    }
 
     this._toggleBtn(this.$btnExplainFileAdd, !Tw.FormatHelper.isEmpty(e.currentTarget.files));
   },
 
   _procEnableApplyBtn: function() {
-    if (this._familyList.length < 1 || this._fileList.length < 1) {
+    if (this.$familyList.find('input[type=checkbox]:checked').length < 1 || this._fileList.length < 1) {
       return this._toggleBtn(this.$btnExplainApply, false);
     }
 
@@ -205,11 +209,11 @@ Tw.ProductJoinReservationExplain.prototype = {
       formData = new FormData();
 
     if (fileInfo.size > this._limitFileByteSize) {
-      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A04);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
     }
 
     if (this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1) {
-      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A05);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
     }
 
     if (this._fileList.length > 4) {
@@ -217,13 +221,29 @@ Tw.ProductJoinReservationExplain.prototype = {
     }
 
     formData.append('file', this.$explainFile.get(0).files[0]);
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this));
   },
 
   _successUploadFile: function(resp) {
-    // console.log(resp);
+    skt_landing.action.loading.off({ ta: '.container' });
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
+    }
+
+    this._fileList.push(resp.result[0]);
+    this.$fileList.append(this._fileTemplate(resp.result[0]));
+    this.$fileWrap.show();
+
+    this._clearExplainFile();
+    this._procEnableApplyBtn();
+  },
+
+  _clearExplainFile: function() {
+    this.$explainFileView.val('');
+    this._toggleBtn(this.$btnExplainFileAdd, false);
   },
 
   _toggleBtn: function($btn, isEnable) {

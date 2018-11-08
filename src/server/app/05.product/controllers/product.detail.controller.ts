@@ -11,7 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
 import { PRODUCT_CTG_NAME } from '../../../types/string.type';
-import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
 import ProductHelper from '../helper/product.helper';
 
 const productApiCmd = {

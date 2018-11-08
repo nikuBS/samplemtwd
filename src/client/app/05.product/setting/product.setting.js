@@ -175,8 +175,8 @@ Tw.ProductSetting.prototype = {
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (!Tw.ValidationHelper.isCellPhone(number)) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.TITLE);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
     this._apiService.request(Tw.API_CMD.BFF_10_0020, {

@@ -450,7 +450,8 @@ Tw.ALERT_MSG_PRODUCT = {
     TITLE: '알림',
     MSG: '선택하신 결합상품은 추가 정보 및 서류 제출을 할 수 있는 상품입니다.\n추가 정보 및 서류 제출 없이 상담 예약을 하시겠습니까?'
   },
-  ALERT_FRONT_VALIDATE_NUM: { TITLE: '알림', MSG: '올바른 회선 번호를 입력해주세요.' },
+  ALERT_3_A32: { TITLE: '알림', MSG: '파일당 제한용량(2MB)을 초과하여 첨부파일을 등록할 수 없습니다. 다시 확인해주세요.' },
+  ALERT_3_A33: { TITLE: '알림', MSG: '파일 확장자가 jpg, jpeg, png인 파일만 첨부할 수 있습니다. 다시 확인해주세요.' },
   ALERT_JOIN_RESERVATION_NOT_COMBINE: { TITLE: '알림', MSG: '결합상품을 미선택 하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' },
   ALERT_JOIN_RESERVATION_EXPLAIN: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
@@ -863,11 +864,10 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 
 Tw.UPLOAD_FILE = {
   UPLOAD_FILE: '파일 추가하기',
+  WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
-  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
-  WARNING_A04: '첨부파일 용량은 2MB를 넘을 수 없습니다.',
-  WARNING_A05: 'MS워드, 한글hwp, 이미지 (jpg, jpeg, png, tif, bmp)파일을 첨부할 수 있습니다.'
+  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.'
 };
 
 Tw.PRODUCT_RESERVATION = {
