@@ -27,12 +27,17 @@ Tw.CustomerDocument.prototype = {
   _bindEvent: function () {
     this.$tabLinker = this.$container.find('.tab-linker');
     this.$tabLinker.on('click', 'li', $.proxy(this._onTabChange, this));
+    this.$container.on('click', '.disabled', $.proxy(this._offClickEvent, this));
   },
   _onTabChange: function (event) {
     var $target = $(event.currentTarget);
 
     this._initVariables($target.attr('id'));
     this._initList();
+  },
+  _offClickEvent: function (event) {
+    var $target = $(event.currentTarget);
+    $target.removeClass('on');
   },
   _initList: function () {
     var $target = this.$selector.find('.acco-list:first');
@@ -77,6 +82,8 @@ Tw.CustomerDocument.prototype = {
       $target.find('.select-list').empty();
       $target.find('.question').show();
       $target.find('.result-txt').empty().hide();
+
+      this._initDisabled($target);
     }
   },
   _resetOption: function (index) {
@@ -87,6 +94,12 @@ Tw.CustomerDocument.prototype = {
   _resetReqData: function (index) {
     for (var i = index; i < this._paramList.length; i++) {
       this._makeRequestData(i, '');
+    }
+  },
+  _initDisabled: function ($target) {
+    if ($target.hasClass('disabled')) {
+      $target.find('.question').css('color', 'black');
+      $target.removeClass('disabled');
     }
   },
   _setData: function ($parentTarget, $nextTarget, isEmpty) {
@@ -137,8 +150,13 @@ Tw.CustomerDocument.prototype = {
     }
   },
   _setCallOption: function ($target) {
+    this._setTargetDisabled($target);
     this.nextIndex = 1;
     this._setData($target, $target.next(), true);
+  },
+  _setTargetDisabled: function ($target) {
+    $target.addClass('disabled');
+    $target.find('.question').css('color', 'grey');
   },
   _setListData: function ($target, list) {
     for (var i = 0; i < list.length; i++) {
