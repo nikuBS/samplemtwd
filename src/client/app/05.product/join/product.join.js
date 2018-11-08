@@ -487,7 +487,7 @@ Tw.ProductJoin.prototype = {
       prodNm = this.$joinConfirmLayer.data('prod_nm') || '';
 
     this._popupService.open({
-      hbs: 'DC_05_01_end_01_product',
+      hbs: 'complete_product',
       data: $.extend(this._successData, {
         prodId: this._prodId,
         prodNm: prodNm,

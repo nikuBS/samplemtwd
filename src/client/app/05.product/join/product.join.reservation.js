@@ -1,5 +1,5 @@
 /**
- * FileName: product.join-reservation.js
+ * FileName: product.join.reservation.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.30
  */
@@ -180,7 +180,8 @@ Tw.ProductJoinReservation.prototype = {
           {
             value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
             option: (this._isEtcProd || this._prodId === 'ETC') ? 'checked' : '',
-            attr: 'data-prod_id="' + (Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') + '"'
+            attr: 'data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
+            Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') + '"'
           }
         ]
       }]
@@ -276,6 +277,10 @@ Tw.ProductJoinReservation.prototype = {
 
   _blurInputNumber: function(e) {
     var $input = $(e.currentTarget);
+    if (Tw.FormatHelper.isEmpty($input.val())) {
+      return;
+    }
+
     $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
   },
 
@@ -364,50 +369,41 @@ Tw.ProductJoinReservation.prototype = {
 
   _openExplainFilePop: function() {
     // @todo Dummy Input
-    new Tw.ProductJoinReservationExplain([{
-      name: '테*트',
-      number: '010-00*0-00*0',
-      fam: {
-        leader: true,
-        me: true
-      }
-    },
-      {
-        name: '테*트',
-        number: '010-00*0-00*0',
-        fam: {
-          spouse: true
-        }
-      },
-      {
-        name: '테*트',
-        number: '010-00*0-00*0',
-        fam: {
-          children: true
-        }
-      },
-      {
-        name: '테*트',
-        number: '010-00*0-00*0',
-        fam: {
-          brother: true
-        }
-      }], $.proxy(this._procApply, this));
+    new Tw.ProductJoinReservationExplain([], $.proxy(this._procApply, this));
   },
 
   _procApply: function(_combinationInfo) {
     var combinationInfo = _combinationInfo || null;
     // console.log(combinationInfo);
     // console.log('* procApply');
+    //
+    // this._apiService.request(Tw.API_CMD.BFF_10_0076, {
+    // }).done($.proxy(this._procApplyResult, this));
 
-    // this._apiService.request(Tw.API_CMD.BFF_DUMMY, {})
-    //   .done($.proxy(this._procApplyResult, this));
+    // @todo dummy result
+    this._procApplyResult({
+      code: Tw.API_CODE.CODE_00
+    });
   },
 
   _procApplyResult: function(resp) {
-    // if (resp.code !== Tw.API_CODE.CODE_00) {
-    //   return Tw.Error(resp.code, resp.msg).pop();
-    // }
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._popupService.open({
+      hbs: 'complete_subtexts',
+      text: Tw.PRODUCT_RESERVATION.success.text,
+      subtexts: [
+        Tw.PRODUCT_RESERVATION.success.subtext_product + this.$btnSelectTypeCd.text(),
+        Tw.PRODUCT_RESERVATION.success.subtext_applyer + this.$reservName.val() + ' / ' + this.$reservNumber.val(),
+        Tw.PRODUCT_RESERVATION.success.subtext_info
+      ]
+    }, null, $.proxy(this._closeSuccessPop, this));
+  },
+
+  _closeSuccessPop: function() {
+    this._popupService.close();
   }
 
 };
