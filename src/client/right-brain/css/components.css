@@ -4447,6 +4447,27 @@
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%); }
 
+.option-box .bt-dropdown:disabled {
+  background-color: transparent; }
+  .option-box .bt-dropdown:disabled:after {
+    right: 0;
+    top: 50%;
+    margin-top: -0.1875rem; }
+
+.accordion .acco-style.btn-hold .acco-list {
+  padding-top: 0; }
+  .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit.servicecenter-inqbox {
+    padding: 0; }
+    .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit.servicecenter-inqbox button {
+      right: -0.375rem !important;
+      top: 0 !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      -moz-transform: none !important;
+      width: 1.5625rem;
+      height: 1.5625rem;
+      padding: 0; }
+
 /* 김연주 */
 .data-result {
   padding: 1.875rem 0;
@@ -4877,7 +4898,7 @@
     .bul-list-dep1 li:before {
       position: absolute;
       left: 0.1875rem;
-      top: 50%;
+      top: 0.625rem;
       width: 0.25rem;
       height: 0.0625rem;
       content: '';
@@ -5012,21 +5033,21 @@
   .detail-info-list li dl {
     display: table;
     width: 100%; }
-  .detail-info-list li dt {
+  .detail-info-list li dt, .detail-info-list li dt.tit {
     display: table-cell;
     width: 40%;
     padding: 0.9375rem 0;
     font-size: 0.875rem;
     color: #666; }
-  .detail-info-list li dd {
+  .detail-info-list li dd, .detail-info-list li dd.txt {
     display: table-cell;
     width: 60%;
     padding: 0.9375rem 0;
     text-align: right;
     font-size: 0.9375rem; }
-    .detail-info-list li dd .bt-link-tx {
+    .detail-info-list li dd .bt-link-tx, .detail-info-list li dd.txt .bt-link-tx {
       font-size: 0.75rem; }
-    .detail-info-list li dd .value2 {
+    .detail-info-list li dd .value2, .detail-info-list li dd.txt .value2 {
       font-size: 0.9375rem;
       color: #3b98e6;
       font-weight: 700; }
@@ -5174,6 +5195,12 @@
       background: #626262; }
   .bul-list.type2 {
     padding: 0.1875rem 0 0 0; }
+  .bul-list.type3 {
+    padding: 0.1875rem 0 0 0; }
+    .bul-list.type3 li {
+      color: #000;
+      font-size: 0.8125rem;
+      margin-top: 0.5625rem; }
 
 .popup-contents .bul-list {
   padding: 0.875rem;
@@ -5623,24 +5650,6 @@
 .acco-style.data-famliy-group-list.type2 .data-info-list > ul > li dl dt {
   color: #666; }
 
-.badge-partner {
-  display: inline-block;
-  width: 2.375rem;
-  height: 0.9375rem;
-  margin-left: 0.4375rem;
-  content: '';
-  background: url(/img/ico/ico-badge-partner.png);
-  background-size: 2.375rem; }
-
-.badge-siblings {
-  display: inline-block;
-  width: 2.9375rem;
-  height: 0.9375rem;
-  margin-left: 0.4375rem;
-  content: '';
-  background: url(/img/ico/ico-badge-siblings.png);
-  background-size: 2.9375rem; }
-
 .expect-benefit {
   position: relative;
   padding: 1.6875rem 0 0; }
@@ -5728,6 +5737,12 @@
 .cont-box .tit-type2 {
   font-size: 1.125rem; }
   .cont-box .tit-type2 .str {
+    font-weight: 700; }
+
+.cont-box .tit-type5 {
+  font-size: 1.5rem;
+  line-height: 1.875rem; }
+  .cont-box .tit-type5 .str {
     font-weight: 700; }
 
 .tit-wrap2 {
@@ -6414,7 +6429,7 @@ a.bt-link-tx.underline.small {
     display: inline-block;
     width: 3.5rem;
     height: 3.5rem;
-    background: url(/img/ico/ico-loam-slide.png);
+    background: url(/img/product/ico-loam-slide.png);
     background-size: 3.5rem; }
   .loaming-slide li .tit {
     padding: 0.8125rem 0 0.125rem;
@@ -6450,7 +6465,7 @@ a.bt-link-tx.underline.small {
   margin-top: 1.0625rem;
   text-align: left;
   border-radius: 0.1875rem;
-  background: url(/img/ico/ico-btloam.png) no-repeat #ebf5fe 91% 50%;
+  background: url(/img/product/ico-btloam.png) no-repeat #ebf5fe 91% 50%;
   background-size: 2.625rem; }
   .btn-loamg .tit {
     display: block;
@@ -6484,7 +6499,7 @@ a.bt-link-tx.underline.small {
               transform: translateY(-50%);
       width: 2rem;
       height: 2rem;
-      background: url(/img/ico/bt-loam-down.png);
+      background: url(/img/product/bt-loam-down.png);
       background-size: 2rem;
       white-space: nowrap;
       text-indent: 100%; }
@@ -6511,7 +6526,7 @@ a.bt-link-tx.underline.small {
       width: 3.5rem;
       height: 3.5rem;
       content: '';
-      background: url(/img/ico/bg-loaming-tel-info.png);
+      background: url(/img/product/bg-loaming-tel-info.png);
       background-size: 3.5rem; }
     .loaming-tel-info li:first-child {
       border: 0; }
@@ -6547,9 +6562,168 @@ a.bt-link-tx.underline.small {
     left: 0 !important;
     right: 0 !important; }
 
-/* 공통테이블 스타일 추가 */
+/* 공통 테이블 스타일 추가 */
 .data-a {
   word-break: break-all; }
+
+/* 공통 안내문구 스타일 추가 */
+.announcement-box .announcement-txt.ft13,
+.announcement-box .announcement-bullet.ft13 {
+  font-size: 0.8125rem; }
+
+.announcement-box .announcement-txt.bk {
+  color: #000; }
+
+/* 휴대폰에서 lte 로밍설정 */
+.loaming-visual {
+  font-size: 0; }
+  .loaming-visual img {
+    width: 100%; }
+
+.setting-step-txt {
+  margin-top: 0.1875rem; }
+  .setting-step-txt li {
+    position: relative;
+    padding-left: 0.9375rem;
+    margin-top: 0.5625rem;
+    font-size: 0.8125rem; }
+    .setting-step-txt li .num {
+      position: absolute;
+      left: 0;
+      font-size: 0.8125rem;
+      font-weight: 700; }
+  .setting-step-txt .txt {
+    font-size: 0.8125rem; }
+
+/* 자동로밍 통화방법 */
+.int-call-wrap .nationality {
+  margin-bottom: 0.9375rem; }
+  .int-call-wrap .nationality:not(:first-child) {
+    margin: 1.6875rem 0 0.9375rem; }
+  .int-call-wrap .nationality .ico {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: -0.3125rem 0.3125rem 0 0;
+    content: '';
+    background: url(/img/product/ico-nation.png);
+    background-size: 1.25rem;
+    vertical-align: middle; }
+  .int-call-wrap .nationality .arrow {
+    display: inline-block;
+    width: 1.125rem;
+    height: 0.5rem;
+    margin: -0.3125rem 0.3125rem 0 0;
+    content: '';
+    background: url(/img/product/ico-intcall-arr.png);
+    background-size: 1.125rem;
+    vertical-align: middle; }
+  .int-call-wrap .nationality .txt {
+    font-size: 1.125rem;
+    font-weight: 700; }
+
+.int-call-wrap .extxt {
+  font-size: 0.75rem; }
+
+.int-call-wrap .calling-steps {
+  overflow: hidden;
+  padding: 1.6875rem 0.9375rem 1.5625rem;
+  margin-top: 0.5rem;
+  background: #ebf5fe; }
+  .int-call-wrap .calling-steps .step {
+    float: left;
+    font-size: 0; }
+    .int-call-wrap .calling-steps .step .tit {
+      display: block;
+      font-size: 0.75rem;
+      color: #3b98e6; }
+    .int-call-wrap .calling-steps .step .num {
+      display: inline-block;
+      font-size: 1.125rem;
+      color: #3b98e6;
+      font-weight: 700;
+      vertical-align: top; }
+      .int-call-wrap .calling-steps .step .num.asterisk {
+        margin-top: 0.1875rem; }
+    .int-call-wrap .calling-steps .step .arr {
+      display: inline-block;
+      width: 0.3125rem;
+      height: 0.625rem;
+      margin: 0.5rem 1.125rem 0;
+      content: '';
+      background: url(/img/product/ico-intcall-arr2.png);
+      background-size: 0.3125rem; }
+    .int-call-wrap .calling-steps .step .ico-phone {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.8125rem;
+      margin-top: 0.3125rem;
+      content: '';
+      background: url(/img/product/ico-call.png);
+      background-size: 0.75rem; }
+    .int-call-wrap .calling-steps .step .ico-plus {
+      display: inline-block;
+      width: 0.6875rem;
+      height: 0.6875rem;
+      margin-top: 0.4375rem;
+      vertical-align: top;
+      content: '';
+      background: url(/img/product/ico-plus.png);
+      background-size: 0.6875rem; }
+
+.cellphone-setting li:not(:first-child) {
+  margin-top: 0.5625rem; }
+
+.cellphone-setting li .bul-tit {
+  display: block;
+  position: relative;
+  padding-left: 0.5625rem;
+  font-size: 0.8125rem;
+  font-weight: 700; }
+  .cellphone-setting li .bul-tit:before {
+    position: absolute;
+    left: 0;
+    top: 0.3125rem;
+    width: 0.1875rem;
+    height: 0.1875rem;
+    border-radius: 50%;
+    content: '';
+    background: #626262; }
+
+.cellphone-setting li .txt {
+  position: relative;
+  padding-left: 0.5625rem;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: #666; }
+
+.cellphone-setting li .value {
+  position: absolute;
+  right: 0;
+  color: #e22f26;
+  font-size: 0.625rem; }
+  .cellphone-setting li .value .str {
+    font-weight: 700;
+    font-size: 0.75rem; }
+
+/* 자동안심 t로밍이란 */
+.loaming-box {
+  border-top: 1px solid #e1e1e1; }
+  .loaming-box .tit-type2 {
+    padding: 1rem 0 0.6875rem; }
+
+/* 국가별 수신자 부담 전화번호 안내 */
+.national-call-info li {
+  overflow: hidden;
+  padding: 1.0625rem 0 1rem;
+  border-bottom: 1px solid #e5e5e5; }
+  .national-call-info li .tit {
+    float: left;
+    font-size: 0.9375rem;
+    color: #666; }
+  .national-call-info li .txt {
+    float: right;
+    font-size: 0.9375rem; }
 
 .refill-coupon-box .coupon-list .coupon-paper {
   display: table;
@@ -6673,6 +6847,12 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem;
       line-height: 1rem;
       color: #666; }
+    .plan-pay-title .tit .pay-sum {
+      display: block;
+      margin-top: 0.9375rem;
+      font-size: 0.8125rem;
+      line-height: 1.1875rem;
+      color: #000; }
     .plan-pay-title .tit .pay-line {
       display: block;
       margin-top: 0.5rem;
@@ -11255,20 +11435,17 @@ a.bt-link-tx.underline.small {
       display: inline-block;
       margin-left: 0.625rem;
       color: #fff;
-      font-size: 0.8125rem;
-      /*
-            &:after{
-                content:"";
-                position:absolute;
-                left:0;
-                right:0;
-                bottom:rem(-3px);
-                height:rem(1px);
-                background-color:$white1;
-            }
-            */ }
+      font-size: 0.8125rem; }
       .productdetails-wrap .productdetails-taglist .tag-text:first-child {
         margin-left: 0; }
+      .productdetails-wrap .productdetails-taglist .tag-text:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.1875rem;
+        height: 0.0625rem;
+        background-color: #fff; }
   .productdetails-wrap .productdetails-text {
     margin-top: 1.6875rem; }
     .productdetails-wrap .productdetails-text li {
@@ -11295,7 +11472,8 @@ a.bt-link-tx.underline.small {
     line-height: 1.25rem; }
   .productdetails-wrap .productdetails-text03 {
     margin-top: 0.9375rem;
-    color: #b8c2e1;
+    color: #fff;
+    opacity: 0.8;
     font-size: 0.75rem; }
   .productdetails-wrap .productdetails-box {
     margin-top: 0.625rem; }
@@ -11899,7 +12077,7 @@ a.bt-link-tx.underline.small {
   padding-right: 0 !important; }
 
 .shoppingbox-wrap {
-  padding: 1rem 0.3125rem 1.5rem 0 !important; }
+  padding: 1.25rem 1rem 1.25rem 0 !important; }
   .shoppingbox-wrap .title {
     color: #000;
     font-size: 0.875rem;
@@ -12430,6 +12608,44 @@ a.bt-link-tx.underline.small {
   width: 0.9375rem;
   height: 0.9375rem;
   margin-left: 0.3125rem; }
+
+.badge.badge-me2 {
+  background-position: 0 -15rem;
+  background-size: 4.6875rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  margin-left: 0.3125rem; }
+
+/* 추가  */
+.badge-partner {
+  display: inline-block;
+  width: 2.375rem;
+  height: 0.9375rem;
+  margin-left: 0.4375rem;
+  background: url(/img/ico/ico-badge-partner.png);
+  background-size: 2.375rem; }
+
+.badge-siblings {
+  display: inline-block;
+  width: 2.9375rem;
+  height: 0.9375rem;
+  margin-left: 0.4375rem;
+  background: url(/img/ico/ico-badge-siblings.png);
+  background-size: 2.9375rem; }
+
+.badge-grandparents {
+  display: inline-block;
+  width: 3.1875rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-badge-grandparents.png);
+  background-size: 3.1875rem; }
+
+.badge-grandchildren {
+  display: inline-block;
+  width: 2.375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-badge-grandchildren.png);
+  background-size: 2.375rem; }
 
 .data-famliy-group-summary .dc-use.small.type2 {
   position: relative; }
@@ -16942,6 +17158,89 @@ a.bt-link-tx.underline.small {
   color: inherit;
   font-weight: 700; }
 
+.list-line-type {
+  border-bottom: 1px solid #e1e1e1; }
+
+.app-details-box .phone-num-box {
+  overflow: hidden;
+  padding: 1.25rem 1rem;
+  border-top: 1px solid #e1e1e1; }
+  .app-details-box .phone-num-box:first-child {
+    border-top: none; }
+  .app-details-box .phone-num-box .phone-num {
+    float: left;
+    font-size: 1.125rem; }
+    .app-details-box .phone-num-box .phone-num .phone {
+      display: block;
+      font-weight: 700; }
+    .app-details-box .phone-num-box .phone-num .num {
+      display: block;
+      margin-top: 0.3125rem;
+      color: #666;
+      font-size: 0.8125rem; }
+  .app-details-box .phone-num-box .price {
+    float: right;
+    font-size: 0.625rem;
+    font-family: "TgothicMedium", Roboto, sans-serif; }
+    .app-details-box .phone-num-box .price .num {
+      font-size: 1.125rem;
+      font-weight: 700;
+      font-family: "TgothicBlack", Roboto, sans-serif; }
+
+.app-details-box .basic-list {
+  border-top: 1px solid #e1e1e1;
+  margin: 0 1rem;
+  padding: 1.25rem 0; }
+  .app-details-box .basic-list ul li {
+    padding-top: 0.4375rem; }
+    .app-details-box .basic-list ul li:first-child {
+      padding: 0; }
+    .app-details-box .basic-list ul li .title {
+      color: #666; }
+  .app-details-box .basic-list .bt-link-tx {
+    margin-top: 0.625rem;
+    font-size: 0.8125rem; }
+
+.captcha-box {
+  margin-top: 0.9375rem; }
+  .captcha-box .captcha {
+    position: relative;
+    padding-right: 2.875rem; }
+    .captcha-box .captcha .captcha-img {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      height: 5.5rem;
+      border-radius: 0.3125rem;
+      z-index: 1; }
+      .captcha-box .captcha .captcha-img img {
+        width: 100%;
+        height: 100%;
+        vertical-align: top; }
+    .captcha-box .captcha .captcha-refresh {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: #ebf5fe url(/img/common/ico-refresh.png) no-repeat center;
+      background-size: 23px 18px;
+      border-radius: 0.3125rem;
+      color: transparent; }
+    .captcha-box .captcha .captcha-sound {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: #ebf5fe url(/img/common/ico-sound.png) no-repeat center;
+      background-size: 18px 17px;
+      border-radius: 0.3125rem;
+      color: transparent; }
+  .captcha-box .inputbox {
+    margin-top: 0.625rem; }
+
 /* 권은별 */
 .acco-notice .acco-list {
   padding: 0; }
@@ -17228,9 +17527,10 @@ a.bt-link-tx.underline.small {
             box-sizing: border-box;
     vertical-align: top;
     display: inline-block;
-    width: 20%; }
+    width: 20%;
+    text-align: center; }
     .phonefilter-wrap.benefit-icon li.checked .ico {
-      border: 1px solid #3b98e6;
+      border: 1px solid #3b98e6 !important;
       background: #fff !important; }
     .phonefilter-wrap.benefit-icon li.checked .text {
       color: #3b98e6 !important;
@@ -17245,7 +17545,8 @@ a.bt-link-tx.underline.small {
         border-radius: 50%;
         -webkit-box-sizing: border-box;
                 box-sizing: border-box;
-        background: #ebf5fe; }
+        background: #ebf5fe;
+        border: 1px solid #ebf5fe; }
         .phonefilter-wrap.benefit-icon li .text-wrap .ico:after {
           content: '';
           position: absolute; }
@@ -17261,45 +17562,45 @@ a.bt-link-tx.underline.small {
     font-weight: 400;
     padding: 0 0 1.5625rem; }
   .phonefilter-wrap.benefit-icon .benefit1:after {
-    top: 1.875rem;
+    top: 1.75rem;
     left: 50%;
-    width: 1.4375rem;
+    width: 1.125rem;
     height: 0.625rem;
-    margin: -0.3125rem 0 0 -0.75rem;
+    margin: -0.3125rem 0 0 -0.5625rem;
     background: url(/img/benefit/bg_b_filter01.png) no-repeat 0 0;
-    background-size: 1.4375rem 0.625rem; }
+    background-size: 1.125rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit2:after {
-    top: 1.875rem;
+    top: 1.75rem;
     left: 50%;
-    width: 1.4375rem;
+    width: 1.125rem;
     height: 0.625rem;
-    margin: -0.3125rem 0 0 -0.75rem;
+    margin: -0.3125rem 0 0 -0.5625rem;
     background: url(/img/benefit/bg_b_filter02.png) no-repeat 0 0;
-    background-size: 1.4375rem 0.625rem; }
+    background-size: 1.125rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit3:after {
-    top: 1.875rem;
+    top: 1.75rem;
     left: 50%;
-    width: 1.4375rem;
+    width: 1.125rem;
     height: 0.625rem;
-    margin: -0.3125rem 0 0 -0.75rem;
+    margin: -0.3125rem 0 0 -0.5625rem;
     background: url(/img/benefit/bg_b_filter03.png) no-repeat 0 0;
-    background-size: 1.4375rem 0.625rem; }
+    background-size: 1.125rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit4:after {
-    top: 1.875rem;
+    top: 1.75rem;
     left: 50%;
-    width: 1.4375rem;
+    width: 1.125rem;
     height: 0.625rem;
-    margin: -0.3125rem 0 0 -0.75rem;
+    margin: -0.3125rem 0 0 -0.5625rem;
     background: url(/img/benefit/bg_b_filter04.png) no-repeat 0 0;
-    background-size: 1.4375rem 0.625rem; }
+    background-size: 1.125rem 0.625rem; }
   .phonefilter-wrap.benefit-icon .benefit5:after {
-    top: 1.875rem;
+    top: 1.75rem;
     left: 50%;
-    width: 1.4375rem;
+    width: 1.125rem;
     height: 0.625rem;
-    margin: -0.3125rem 0 0 -0.75rem;
+    margin: -0.3125rem 0 0 -0.5625rem;
     background: url(/img/benefit/bg_b_filter05.png) no-repeat 0 0;
-    background-size: 1.4375rem 0.625rem; }
+    background-size: 1.125rem 0.625rem; }
 
 .benefit-productfilter-type {
   border-top: 1px solid #e1e1e1;
@@ -17428,7 +17729,7 @@ a.bt-link-tx.underline.small {
 
 .discount-look-ahead .board-type {
   padding-top: 1.875rem; }
-  .discount-look-ahead .board-type em {
+  .discount-look-ahead .board-type p {
     display: block;
     padding: 0 0 0.625rem 0;
     color: #666;
@@ -17436,8 +17737,13 @@ a.bt-link-tx.underline.small {
   .discount-look-ahead .board-type > div {
     padding: 0 0 1.875rem; }
 
-.discount-look-ahead .select-list li:last-child {
-  margin-right: 0 !important; }
+.discount-look-ahead .select-list {
+  overflow: hidden; }
+  .discount-look-ahead .select-list li {
+    position: relative;
+    float: left; }
+  .discount-look-ahead .select-list li:last-child {
+    margin-right: 0 !important; }
 
 .btn-line-add {
   display: inline-block; }
@@ -17897,6 +18203,17 @@ a.bt-link-tx.underline.small {
     color: #666; }
     .membership-info-modify01 .agreement-info-txt strong {
       color: #e22f26; }
+  .membership-info-modify01 .acco-tit {
+    padding: 0.9375rem 1rem !important; }
+    .membership-info-modify01 .acco-tit .checkbox.type01:before, .membership-info-modify01 .acco-tit .shop-info .shop-txt .checkbox.type02:before, .shop-info .shop-txt .membership-info-modify01 .acco-tit .checkbox.type02:before, .membership-info-modify01 .acco-tit .shop-info .shop-txt .checkbox.type03:before, .shop-info .shop-txt .membership-info-modify01 .acco-tit .checkbox.type03:before {
+      margin-right: 1.125rem; }
+  .membership-info-modify01 .acco-cont.type01, .membership-info-modify01 .shop-info .shop-txt .acco-cont.type02, .shop-info .shop-txt .membership-info-modify01 .acco-cont.type02, .membership-info-modify01 .shop-info .shop-txt .acco-cont.type03, .shop-info .shop-txt .membership-info-modify01 .acco-cont.type03 {
+    border-top: 1px solid #e1e1e1;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: hidden !important; }
+  .membership-info-modify01 .announcement-bullet {
+    font-size: 0.75rem !important; }
 
 .operation-guide-wrap {
   padding: 1.25rem 0.9375rem; }
@@ -18406,5 +18723,35 @@ a.bt-link-tx.underline.small {
     background: none; }
     .app-info-wrap.service ul {
       padding: 13.125rem 0 0.875rem; }
+
+.category-box-wrap.tab-type01 {
+  position: relative; }
+  .category-box-wrap.tab-type01 .link-long.type01, .category-box-wrap.tab-type01 .shop-info .shop-txt .link-long.type02, .shop-info .shop-txt .category-box-wrap.tab-type01 .link-long.type02, .category-box-wrap.tab-type01 .shop-info .shop-txt .link-long.type03, .shop-info .shop-txt .category-box-wrap.tab-type01 .link-long.type03 {
+    -webkit-box-shadow: -0.75rem 0 1.25rem 0rem #fff;
+            box-shadow: -0.75rem 0 1.25rem 0rem #fff;
+    display: inline-block;
+    width: 1.5625rem;
+    height: 1.5625rem;
+    position: absolute;
+    right: 0;
+    top: 0.8125rem;
+    z-index: 10;
+    background: #fff;
+    margin: 0; }
+    .category-box-wrap.tab-type01 .link-long.type01 .tx-sub, .category-box-wrap.tab-type01 .shop-info .shop-txt .link-long.type02 .tx-sub, .shop-info .shop-txt .category-box-wrap.tab-type01 .link-long.type02 .tx-sub, .category-box-wrap.tab-type01 .shop-info .shop-txt .link-long.type03 .tx-sub, .shop-info .shop-txt .category-box-wrap.tab-type01 .link-long.type03 .tx-sub {
+      right: 0;
+      top: 0; }
+  .category-box-wrap.tab-type01 .counts {
+    font-size: 0.8125rem;
+    color: #212121; }
+    .category-box-wrap.tab-type01 .counts button:after {
+      content: '';
+      display: inline-block;
+      width: 0.4375rem;
+      height: 0.25rem;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      background: url(/img/benefit/icon-rating-arw01.png) no-repeat;
+      background-size: 100% auto; }
 
 /* 최은현 */

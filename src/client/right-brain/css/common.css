@@ -54,6 +54,9 @@ body {
 .block {
   display: block !important; }
 
+.iblock {
+  display: inline-block !important; }
+
 /*font basic*/
 .ff-hn {
   font-family: "Helvetica Neue", Roboto, sans-serif;
