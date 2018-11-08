@@ -1,3 +1,3 @@
-const version = 'CBT_QA_v1.0';
+const version = 'v9.0.0';
 
 export default version;
