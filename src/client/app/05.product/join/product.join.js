@@ -133,8 +133,8 @@ Tw.ProductJoin.prototype = {
   _showConfirmLayer: function() {
     if (this.$inputNumber.length > 0 && this.$lineWrap.length < 1) {
       if (!Tw.ValidationHelper.isCellPhone(this.$inputNumber.val())) {
-        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.MSG,
-          Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.TITLE);
+        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
+          Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       }
     }
 
@@ -300,8 +300,8 @@ Tw.ProductJoin.prototype = {
     }
 
     if (!Tw.ValidationHelper.isCellPhone(number) || this._data.addList.indexOf(number) !== -1) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_FRONT_VALIDATE_NUM.TITLE);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
     this._data.addList.push(number);

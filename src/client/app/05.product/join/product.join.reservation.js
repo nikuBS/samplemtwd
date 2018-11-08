@@ -374,11 +374,11 @@ Tw.ProductJoinReservation.prototype = {
 
   _procApply: function(_combinationInfo) {
     var combinationInfo = _combinationInfo || null;
-    // console.log(combinationInfo);
-    // console.log('* procApply');
     //
     // this._apiService.request(Tw.API_CMD.BFF_10_0076, {
     // }).done($.proxy(this._procApplyResult, this));
+
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     // @todo dummy result
     this._procApplyResult({
@@ -387,6 +387,7 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _procApplyResult: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -399,11 +400,18 @@ Tw.ProductJoinReservation.prototype = {
         Tw.PRODUCT_RESERVATION.success.subtext_applyer + this.$reservName.val() + ' / ' + this.$reservNumber.val(),
         Tw.PRODUCT_RESERVATION.success.subtext_info
       ]
-    }, null, $.proxy(this._closeSuccessPop, this));
+    }, $.proxy(this._bindSuccessPop, this), $.proxy(this._backToParentPage, this));
+  },
+
+  _bindSuccessPop: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closeSuccessPop, this));
   },
 
   _closeSuccessPop: function() {
     this._popupService.close();
-  }
+  },
 
+  _backToParentPage: function() {
+    this._historyService.goBack();
+  }
 };

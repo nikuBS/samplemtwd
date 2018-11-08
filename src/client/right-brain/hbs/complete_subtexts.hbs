@@ -7,9 +7,13 @@
         <img src="/img/dummy/dmy-complete.jpg" alt=""/>
         <span><strong>{{text}} 완료</strong></span>
       </h1>
-      {{#each sub_text}}
-        <p class="complete-tx0">{{{this}}}</p>
-      {{/each}}
+      {{#if subtexts}}
+        <p class="complete-tx0">
+          {{#each subtexts}}
+            {{{this}}}<br>
+          {{/each}}
+        </p>
+      {{/if}}
       <ul class="bt-slice full">
         <li class="bt-red1">
           <button class="fe-btn_success_close">닫기</button>

@@ -182,7 +182,6 @@ class ProductJoin extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    console.log(req.params);
     this._prodId = req.params.prodId;
     this._displayId = null;
 
