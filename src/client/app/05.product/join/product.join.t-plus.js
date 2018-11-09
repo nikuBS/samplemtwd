@@ -32,7 +32,7 @@ Tw.ProductJoinTplus.prototype = {
     this._popupService.open({
       hbs:'BS_03_02_01_02',
       layer: true
-    }, null, null, 'BS_03_02_01_02');
+    }, null, null, 'long_discount');
   },
 
   _onPlusExampleClicked: function() {
@@ -40,7 +40,7 @@ Tw.ProductJoinTplus.prototype = {
       hbs:'BS_03_02_01_03',
       layer: true,
       info: this.data.svcInfo
-    }, null, null, 'BS_03_02_01_03');
+    }, null, null, 'tplus-example');
   },
 
   _onOkBtnClicked: function() {

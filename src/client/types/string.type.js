@@ -943,6 +943,15 @@ Tw.BENEFIT = {
     E: '적립',
     U: '사용',
     X: '소멸'
+  },
+  DISCOUNT_PGM: {
+    SELECTED: {
+      FINISH: {
+        TITLE: '선택약정할인',
+        CONTENT: '상품 가입 완료',
+        LINK_TITLE: '나의 가입정보 확인하기 >'
+      }
+    }
   }
 };
 
