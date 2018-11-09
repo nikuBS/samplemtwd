@@ -80,25 +80,17 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
 
   _handleSubmit: function() {
     this._popupService.close();
-    var auto = this.$container.find('ul.select-list input').attr('checked') === 'checked',
-      value = this.$amountInput.val();
-    if (auto) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, true));
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this, false));
-    }
+    var value = this.$amountInput.val();
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: value }).done($.proxy(this._handleSuccessSubmit, this));
   },
 
-  _handleSuccessSubmit: function(isMonthly, resp) {
+  _handleSuccessSubmit: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       var ALERT = Tw.MYT_DATA_FAMILY_SUCCESS_SHARE;
-      if (isMonthly) {
-        this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, ALERT.CONTENTS);
-      } else {
-        this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
-      }
+      this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
     }
   }
 };
