@@ -106,7 +106,7 @@ Tw.MyTJoinMgmtNumchg.prototype = {
     // num1	전환할 가운데 전화번호	O
     // num2	전환할 뒷 전화번호	O
     var selectedNum = $('.select-list input[type=radio]:checked').val();
-    console.log('selectedNum : ' + selectedNum);
+
     var numArr = null;
     if(selectedNum){
       numArr = selectedNum.split('-');
