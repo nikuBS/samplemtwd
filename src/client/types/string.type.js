@@ -70,7 +70,8 @@ Tw.POPUP_TITLE = {
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
-  SELECT_FAMILY_TYPE: '가족선택'
+  SELECT_FAMILY_TYPE: '가족선택',
+  HISTORY: '이용내역'
 };
 
 Tw.POPUP_CONTENTS = {

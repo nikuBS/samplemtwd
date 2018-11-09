@@ -213,6 +213,14 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_MICRO_HISTORY_LIST: [
+    {
+      'list': [
+        { 'option': 'go-history', 'attr': 'data-link="/myt/fare/billsmall/history"', value: '소액결제 이용내역' },
+        { 'option': 'go-history', 'attr': 'data-link="/myt/fare/billsmall/block"', value: '자동결제 차단내역' }
+      ]
+    }
+  ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
