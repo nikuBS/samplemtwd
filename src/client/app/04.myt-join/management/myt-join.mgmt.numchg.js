@@ -3,10 +3,14 @@
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.22
  */
-Tw.MyTJoinMgmtNumchg = function (rootEl) {
+Tw.MyTJoinMgmtNumchg = function (rootEl, options) {
   this.$container = rootEl;
+  this._options = options;
+  this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
 
+  this._listItemTmpl = Handlebars.compile($('#list-cont-item-tmplt').html());
+  this._registHelper();
   this._bindEvent();
 };
 
@@ -17,10 +21,18 @@ Tw.MyTJoinMgmtNumchg.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '.bt-blue1', $.proxy(this._onclickSchNums, this));
-    this.$container.on('click', '.bt-red1', $.proxy(this._onclickBtnOk, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._onclickBtnCancel, this));
+    this.$container.on('click', '#btnNumSearch', $.proxy(this._onclickSchNums, this));
+    this.$container.on('click', '#btnOk', $.proxy(this._onclickBtnOk, this));
+    this.$container.on('click', '#btnMore', $.proxy(this._showMorePhoneNum, this));
     this.$container.on('click', '.select-list .radiobox', $.proxy(this._onchangeUiCondition, this));
+  },
+
+  /**
+   * hbs helper 등록
+   * @private
+   */
+  _registHelper: function(){
+    Handlebars.registerHelper('phonenum', Tw.StringHelper.phoneStringToDash);
   },
 
   /**
@@ -28,35 +40,60 @@ Tw.MyTJoinMgmtNumchg.prototype = {
    * @private
    */
   _onclickSchNums: function(){
-    $('#divNumList').hide();
+    // $('#divNumList').hide();
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
-    // TODO 변경할 번호 search
-    //this._apiService.request(Tw.API_CMD.BFF_05_XXXX, {})
-    this._apiService.request(Tw.API_CMD.BFF_05_0150, {})
+    // 변경할 번호 search
+    this._apiService.request(Tw.API_CMD.BFF_05_0184, {})
       .done($.proxy(function (resp) {
 
+        skt_landing.action.loading.off({ ta: this.$container });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
-          skt_landing.action.loading.off({ ta: this.$container });
           return ;
         }
 
-        $('#divNumList').show();
+        this._list = resp.result.numSearchInfoList;
+        if( this._list && this._list.length > 0 ){
+          $('#divNumList').show();
+        }
 
+        this._showMorePhoneNum();
 
-        skt_landing.action.loading.off({ ta: this.$container });
-        // TODO
-        // ok alert
-        // popup close??
-
-        this._showOrHideMoreBtn();
       }, this))
       .fail(function(err){
         Tw.Error(err.status, err.statusText).pop();
-        skt_landing.action.loading.off({ ta: '#container' });
+        skt_landing.action.loading.off({ ta: this.$container });
       });
+  },
+
+  /**
+   * 목록 더 보기
+   * @private
+   */
+  _showMorePhoneNum: function(){
+
+    this._lastSeq = this._lastSeq || 0;
+    var listLimit = 20;
+    var sttNo = this._lastSeq;
+    var endNo = this._lastSeq + listLimit;
+    if(endNo > this._list.length){
+      endNo = this._list.length;
+    }
+
+    $('.radiobox').unbind('click');
+
+    var html = '';
+    for(var i = sttNo; i < endNo; i++){
+      html += this._listItemTmpl(this._list[i]);
+    }
+    $('.select-list').append(html);
+
+    skt_landing.widgets.widget_radio('.select-list');
+
+    this._lastSeq = endNo;
+    this._showOrHideMoreBtn();
   },
 
   /**
@@ -64,56 +101,57 @@ Tw.MyTJoinMgmtNumchg.prototype = {
    * @private
    */
   _onclickBtnOk: function(){
+
+    // coCd	변경전번호원사업자코드	O
+    // num1	전환할 가운데 전화번호	O
+    // num2	전환할 뒷 전화번호	O
+    var selectedNum = $('.select-list input[type=radio]:checked').val();
+
+    var numArr = null;
+    if(selectedNum){
+      numArr = selectedNum.split('-');
+      if(numArr.length < 3){
+        return ;
+      }
+    }
+
     var param = {
-      chgnum : '010-1234-5678'
+      coCd : this._options.coCd,
+      num1 : numArr[1],
+      num2 : numArr[2]
     };
-
-    // TODO validation
-
-
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
-    // TODO 변경
     this._apiService.request(Tw.API_CMD.BFF_05_0185, param)
       .done($.proxy(function (resp) {
 
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          Tw.Error(resp.code, resp.msg).pop();
-          skt_landing.action.loading.off({ ta: this.$container });
-          return ;
-        }
-
-
-
         skt_landing.action.loading.off({ ta: this.$container });
+        /*if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
+          Tw.Error(resp.code, resp.msg).pop();
+          return ;
+        }*/
 
-        // TODO 완료화면으로 이동
-        // ok alert
-        // popup close??
+        Tw.Popup.afterRequestSuccess(
+          '/myt/join/mgmt/numchg/alarm',
+          '/myt-join/submain',
+          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
+          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
+          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + selectedNum.replace('n',''));
 
       }, this))
       .fail(function(err){
+        skt_landing.action.loading.off({ ta: this.$container });
         Tw.Error(err.status, err.statusText).pop();
-        skt_landing.action.loading.off({ ta: '#container' });
       });
   },
-
-  /**
-   * 취소버튼 클릭시
-   * @private
-   */
-  _onclickBtnCancel: function(){
-    // this popup close
-  },
-
 
   /**
    * 신청 조건 변경시(기간선택, 알람유형 선택시)
    * @private
    */
   _onchangeUiCondition: function(){
-    var btnDisabled = ($('.select-list .radiobox .checked').length <= 0);
+    var btnDisabled = ($('.select-list .radiobox .checked').length !== 0);
     $('.bt-red1 button').attr('disabled', btnDisabled);
   },
 
@@ -123,8 +161,10 @@ Tw.MyTJoinMgmtNumchg.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function(){
-    $('.bt-more').show();
-    // TODO 보이기/숨기기 기능
-
+    if( !this._list || this._list.length === 0 || !this._lastSeq || this._lastSeq >= this._list.length){
+      $('.bt-more').hide();
+    } else {
+      $('.bt-more').show();
+    }
   }
 };

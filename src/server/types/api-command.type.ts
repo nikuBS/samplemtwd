@@ -243,8 +243,9 @@ export const API_CMD = {
   BFF_05_0181: { path: '/core-product/v1/submain/wire/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0182: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0183: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0184: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0185: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0184: { path: '/core-modification/v1/numberSearch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0185: { path: '/core-modification/v1/numberChange', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0186: { path: '/core-modification/v1/numberChangeInit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
