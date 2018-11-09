@@ -52,7 +52,7 @@ Tw.CustomerEmailQualityOption.prototype = {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',
         layer: true,
-        title: 'Test',
+        title: Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_LINE,
         data: [{ list: lineList.map($.proxy(fnSelectLine, this)) }]
       },
       $.proxy(this._selectLinePopupCallback, this, $elButton),

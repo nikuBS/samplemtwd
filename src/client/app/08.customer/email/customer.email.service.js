@@ -27,6 +27,7 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
     this.$wrap_tpl_service.on('click', '.fe-service_register', $.proxy(this._request, this));
   },
@@ -90,9 +91,19 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestDirect: function () {
-    var htParams = $.extend(this._makeParams(), {
-      category: this.$service_depth2.data('serviceDepth2')
-    });
+    var depth2Category = this.$service_depth2.data('serviceDepth2');
+    var htParams;
+    if ( depth2Category === '08' || depth2Category === '09' || depth2Category === '12' ) {
+      htParams = $.extend(this._makeParams(), {
+        category: this.$service_depth2.data('serviceDepth2'),
+        orderNo: ''
+      });
+    } else {
+      htParams = $.extend(this._makeParams(), {
+        category: this.$service_depth2.data('serviceDepth2'),
+        phoneId: $('.fe-select-device').data().phoneid
+      });
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0020, htParams)
       .done($.proxy(this._onSuccessRequest, this));

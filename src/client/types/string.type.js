@@ -980,3 +980,9 @@ Tw.FAMILY_TYPE = {
   GRANDCHILDREN: '손자녀',
   ME: '본인'
 };
+
+Tw.CUSTOMER_EMAIL.ACTION_TYPE = {
+  SELECT_BRAND:'브랜드 선택',
+  SELECT_DEVICE: '기종 선택',
+  SELECT_LINE: '회선 선택'
+}
