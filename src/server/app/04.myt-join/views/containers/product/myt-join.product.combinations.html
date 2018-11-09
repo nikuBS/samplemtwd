@@ -34,13 +34,38 @@
                 <div class="cont-box nogaps-hoz">
                     <div class="my-product-list">
                         <ul>
-                            <% const COMBINATION_PRODUCTS = ['NA00005055', 'NA00004211', 'NH00000084', 'TW20000008', 'NH00000059', 'TW20000007', 
-                                'NA00002040', 'TW20000010', 'NA00004728', 'TW20000011', 'TW20000012', 'TW20000009', 'TW20000013', 'NH00000133' ];
+                            <% const COMBINATION_PRODUCTS = [ 'TW20000012', 'NA00005055', 'TW20000009', 'NA00004211', 'NH00000084', 'TW20000008', 'NH00000059', 
+                                'TW20000007', 'NA00002040', 'TW20000010', 'NA00004728', 'TW20000011', 'NH00000114', 'TW20000013', 'NH00000133' ];
                             const INTERNET_PRODUCTS = ['NH00000037','NH00000039','TW00000062','NH00000040','NH00000041','TW00000063'];
+                            const TIPS = {
+                                NA00005055: '02',
+                                TW20000012: '02',
+                                NA00002040: '03',
+                                TW20000010: '03',
+                                NA00004728: '04',
+                                TW20000011: '04',
+                                TW20000009: '05',
+                                NA00004211: '05',
+                                NH00000084: '06',
+                                TW20000008: '06',
+                                NH00000039: '07',
+                                TW00000062: '07',
+                                NH00000059: '08',
+                                TW20000007: '08',
+                                NH00000103: '09',
+                                TW00000009: '09',
+                                NH00000037: '10',
+                                TW00000062: '10',
+                                NH00000041: '10',
+                                TW00000063: '10',
+                                NH00000105: '11',
+                                TW00000016: '11'
+                            }
                             combinations.map(comb => { %>
                             <li>
                                 <div class="inner">
-                                    <strong class="tit"><%= comb.prodNm %><button type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button></strong>
+                                    <% const tip = TIPS[comb.prodId]%>
+                                    <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
                                     <p class="txt"><%= comb.prodBasBenfCtt %></p>
                                     <p class="date">신청일  <%= comb.scrbDt %></p>
                                     <!-- TODO: admin 정리후 추가 <button class="bt-link-tx underline" type="button" aria-haspopup="true">구비서류 제출</button> -->
@@ -62,8 +87,15 @@
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1" aria-hidden="true" />
-                <!-- TBD -->
-                <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        <li>결합상품 변경/해지 문의 <button id="MS_07_tip_01" type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+                <!--// 2018-11-02 수정 -->
 
             </div>
         </div>
