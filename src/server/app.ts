@@ -62,10 +62,8 @@ class App {
     // development env
     this.app.use(express.static(path.join(__dirname, '/public/cdn')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
-    // this.app.use((req, res, next) => {
-    //   res.status(404).render('error.page-not-found.html', { svcInfo: null });
-    // });
 
+    this.exceptionHandler();
     this.setViewPath();
     this.setRoutes();
     this.setApis();
@@ -155,22 +153,34 @@ class App {
     ]);
   }
 
-  private handleNotFoundError(req, res, next) {
-    console.log('[Error] 404 Error');
+  private exceptionHandler() {
+    process
+      .on('unhandledRejection', (reason, p) => {
+        console.log(reason, 'Unhandled Rejection at Promise', p);
+      })
+      .on('uncaughtException', (err) => {
+        console.log(err, 'Uncaught Exception thrown');
+      });
 
-    // 여기서 응답 주지 않고 넘겨주려면 next()
+  }
+
+
+  private handleNotFoundError(req, res, next) {
+    console.log('[Error] 404 Error', req.baseUrl + req.path);
+
+    if ( req.accepts('html') ) {
+      return res.status(404).render('error.page-not-found.html', { svcInfo: null });
+    }
     next();
   }
 
   private handleInternalServerError(err, req, res, next) {
-    console.log('[Error] 500 Error');
-    console.log(err);
+    console.log('[Error] 500 Error', err);
 
-    // 여기서 응답시 already sent 오류 안남. ejs error 도 여기서 잡힘
-    // return res.redirect('/common/error');
-
-    // 여기서 응답 주지 않고 넘겨주려면 next(err)
-    next(err);
+    // if ( req.accepts('html') ) {
+    //   return res.status(404).render('error.page-not-found.html', { svcInfo: null });
+    // }
+    return res.status(500).send(err.message);
   }
 }
 
