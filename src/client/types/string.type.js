@@ -452,8 +452,12 @@ Tw.ALERT_MSG_PRODUCT = {
   },
   ALERT_3_A32: { TITLE: '알림', MSG: '파일당 제한용량(2MB)을 초과하여 첨부파일을 등록할 수 없습니다. 다시 확인해주세요.' },
   ALERT_3_A33: { TITLE: '알림', MSG: '파일 확장자가 jpg, jpeg, png인 파일만 첨부할 수 있습니다. 다시 확인해주세요.' },
-  ALERT_JOIN_RESERVATION_NOT_COMBINE: { TITLE: '알림', MSG: '결합상품을 미선택 하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' },
-  ALERT_JOIN_RESERVATION_EXPLAIN: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
+  ALERT_3_A34: { TITLE: '알림', MSG: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.' },
+  ALERT_3_A35: { TITLE: '알림', MSG: '지정번호 6회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.' },
+  ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
+  ALERT_3_A37: { TITLE: '알림', MSG: '이미 사용하고 있는 상품입니다.' },
+  ALERT_3_A40: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' },
+  ALERT_JOIN_RESERVATION_NOT_COMBINE: { TITLE: '알림', MSG: '결합상품을 미선택 하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {};
