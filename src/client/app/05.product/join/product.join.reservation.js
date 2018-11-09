@@ -322,19 +322,11 @@ Tw.ProductJoinReservation.prototype = {
       return this._procExistsCheckPersonalCombine();
     }
 
-    // 결합상품(가족형), 추가정보 없이 상담에약
-    if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId) &&
-      this._prodId !== 'NH00000103' && !this.$combineExplain.find('input[type=checkbox]').is(':checked')) {
-      this._isExplainFile = true;
-      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE, $.proxy(this._setNotExplainFile, this), $.proxy(this._procNotExplainFile, this));
-    }
-
     // 결합상품, 상품 선택 없이 상담 예약
     if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(this._prodId)) {
       this._isNotSelectCombine = true;
-      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_JOIN_RESERVATION_NOT_COMBINE.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_JOIN_RESERVATION_NOT_COMBINE.TITLE,
+      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE,
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this));
     }
 
@@ -348,7 +340,8 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _procExistsCheckPersonalCombine: function() {
-
+    // @todo 상품 가입여부 처리 추가
+    this._procApply();
   },
 
   _setNotExplainFile: function() {
