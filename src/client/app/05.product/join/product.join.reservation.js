@@ -26,6 +26,8 @@ Tw.ProductJoinReservation.prototype = {
 
     if (this._typeCd === 'combine') {
       this._initCombineProduct();
+    } else {
+      this.$nonCombineTip.show();
     }
   },
 
@@ -53,6 +55,8 @@ Tw.ProductJoinReservation.prototype = {
     this.$combineExplain = this.$container.find('.fe-combine_explain');
     this.$combineWrap = this.$container.find('.fe-combine_wrap');
     this.$formData = this.$container.find('.fe-form_data');
+    this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
+
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
     this.$btnSelectTypeCd = this.$container.find('.fe-btn_select_type_cd');
@@ -117,8 +121,10 @@ Tw.ProductJoinReservation.prototype = {
     if (this._typeCd !== 'combine') {
       this._resetCombineWrap();
       this.$combineWrap.hide();
+      this.$nonCombineTip.show();
     } else {
       this.$combineWrap.show();
+      this.$nonCombineTip.hide();
     }
 
     this.$btnSelectTypeCd.text(Tw.PRODUCT_RESERVATION[this._typeCd]);
@@ -311,6 +317,12 @@ Tw.ProductJoinReservation.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    // 결합상품(개인형) 기 가입 상품 유무 체크
+    if (this._typeCd === 'combine' && this._prodId === 'NH00000103') {
+      return this._procExistsCheckPersonalCombine();
+    }
+
+    // 결합상품(가족형), 추가정보 없이 상담에약
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(this._prodId) &&
       this._prodId !== 'NH00000103' && !this.$combineExplain.find('input[type=checkbox]').is(':checked')) {
       this._isExplainFile = true;
@@ -318,6 +330,7 @@ Tw.ProductJoinReservation.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE, $.proxy(this._setNotExplainFile, this), $.proxy(this._procNotExplainFile, this));
     }
 
+    // 결합상품, 상품 선택 없이 상담 예약
     if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(this._prodId)) {
       this._isNotSelectCombine = true;
       return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_JOIN_RESERVATION_NOT_COMBINE.MSG,
@@ -325,12 +338,17 @@ Tw.ProductJoinReservation.prototype = {
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this));
     }
 
+    // 결합상품, 상품 선택 및 추가정보 체크하여 입력 팝업 호출
     if (this._typeCd === 'combine' && this.$combineExplain.find('input[type=checkbox]').is(':checked') &&
       !Tw.FormatHelper.isEmpty(this._prodId)) {
       return this._openExplainFilePop();
     }
 
     this._procApply();
+  },
+
+  _procExistsCheckPersonalCombine: function() {
+
   },
 
   _setNotExplainFile: function() {
@@ -368,7 +386,7 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _openExplainFilePop: function() {
-    // @todo Dummy Input
+    // @todo 기 결합된 가족 리스트 넘겨줘야함
     new Tw.ProductJoinReservationExplain([], $.proxy(this._procApply, this));
   },
 

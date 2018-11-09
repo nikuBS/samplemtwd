@@ -13,6 +13,17 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../05.product/helper/product.helper';
 
+const FEE_PLAN_TIP = {
+  M1: ['MS_05_tip_01'], // 휴대폰
+  M2: ['MS_05_tip_02'], // 선불폰(PPS)
+  M3: ['MS_05_tip_06', 'MS_05_tip_07'], // T pocket Fi
+  M4: ['MS_05_tip_04', 'MS_05_tip_05'], // T Login
+  M5: [], // T Wibro
+  S1: ['MS_05_tip_03'], // 인터넷
+  S2: ['MS_05_tip_03'], // IPTV
+  S3: ['MS_05_tip_03'] // 집전화
+};
+
 class MyTJoinProductFeePlan extends TwViewController {
   constructor() {
     super();
@@ -160,6 +171,18 @@ class MyTJoinProductFeePlan extends TwViewController {
     return null;
   }
 
+  /**
+   * @param svcAttrCd
+   * @private
+   */
+  private _getTipList(svcAttrCd: any): any {
+    if (FormatHelper.isEmpty(svcAttrCd)) {
+      return [];
+    }
+
+    return FEE_PLAN_TIP[svcAttrCd];
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const defaultOptions = {
       title: '나의 요금제',
@@ -184,7 +207,9 @@ class MyTJoinProductFeePlan extends TwViewController {
           }));
         }
 
-        const feePlan = this._convertFeePlan(feePlanInfo, apiInfo.isWire);
+        const feePlan = this._convertFeePlan(feePlanInfo, apiInfo.isWire),
+          tipList = this._getTipList(svcInfo.svcAttrCd);
+
         if (FormatHelper.isEmpty(feePlan)) {
           return this.error.render(res, defaultOptions);
         }
@@ -195,6 +220,7 @@ class MyTJoinProductFeePlan extends TwViewController {
           svcCdName: SVC_CDNAME,
           feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
           feePlan: feePlan,
+          tipList: tipList,
           isFeeAlarm: ['cellphone', 'pps'].indexOf(SVC_CDNAME[svcInfo.svcAttrCd]) !== -1
         });
     });
