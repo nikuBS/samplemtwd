@@ -118,7 +118,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
   _onClickJoinBtn: function () {
     var $items = this.$container.find('[aria-checked=true]');
-    // var options = {};
+    // TODO: 현재 가입하기 API 에서 사용 중인 필드가 현재 SB 문서와 일치하지 않아 문의 중
+    var params = {
+      mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
+      card_isue_typ_cd: '1' // 모바일 카드
+    };
     for ( var i = 0; i < $items.length; i++ ) {
       var $item = $items.eq(i);
       switch ( $item.attr('data-type') ) {
@@ -142,8 +146,26 @@ Tw.MyTBenefitMembershipJoin.prototype = {
           break;
       }
     }
-    // TODO: 가입하기 완료 후 팝업 노출
-    // this._apiService.request();
-    //  this._tpayPopup.open();
+    this._apiService.request(Tw.API_CMD.BFF_11_0011, params)
+      .done($.proxy(this._onSuccessJoinMembership, this))
+      .fail($.proxy(this._onFailJoinMembership, this));
+  },
+
+  _onSuccessJoinMembership: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.afterRequestSuccess('/membership/submain', '/membership/mymembership/history',
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
+      // TODO: 가입하기 완료 후 TPay 팝업 노출
+      // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
+      setTimeout(this._tpayPopup.open, 500);
+    }
+    else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+
+  _onFailJoinMembership: function (resp) {
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };

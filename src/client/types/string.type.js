@@ -463,6 +463,11 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     TITLE: 'T멤버십에 가입하실 수 없습니다.',
     CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
     TXT: '회선 관리하기'
+  },
+  JOIN_COMPLETE: {
+    TITLE: '멤버십 가입 완료',
+    CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',
+    LINK_TITLE: '발급 변경 내역 보기 >'
   }
 };
 
