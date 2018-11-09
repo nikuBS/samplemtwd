@@ -66,31 +66,25 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/set/change', controller: MyTFareBillSetChange });
     this.controllers.push({ url: '/bill/set/complete', controller: MyTFareBillSetComplete });
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
-    this.controllers.push({ url: '/history/micro', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/micro/monthly', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/micro/block', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/micro/detail', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/contents', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/contents/monthly', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/contents/detail', controller: MyTFareHistory });
-    this.controllers.push({ url: '/history/payment', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/all', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/direct', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/auto', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/auto-all', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/micro-prepay', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/content-prepay', controller: MyTFarePaymentHistory });
-    this.controllers.push({ url: '/history/payment/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/payment/all/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/payment/direct/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/payment/auto/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/payment/auto-all/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/payment/micro-prepay/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/payment/content-prepay/detail', controller: MyTFarePaymentHistoryDetail });
-    this.controllers.push({ url: '/history/bill/tax', controller: MyTFareBillHistory });
-    this.controllers.push({ url: '/history/bill/cash', controller: MyTFareBillHistory });
-    this.controllers.push({ url: '/history/overpay-refund', controller: MyTFareOverpayRefund });
-    this.controllers.push({ url: '/history/overpay-refund/detail', controller: MyTFareOverpayRefund });
+
+    // 소액결제, 컨텐츠 이용료
+    this.controllers.push({ url: '/billsmall/history', controller: MyTFareHistory });
+    this.controllers.push({ url: '/billsmall/monthly', controller: MyTFareHistory });
+    this.controllers.push({ url: '/billsmall/block', controller: MyTFareHistory });
+    this.controllers.push({ url: '/billsmall/history/detail', controller: MyTFareHistory });
+
+    this.controllers.push({ url: '/billcontents/history', controller: MyTFareHistory });
+    this.controllers.push({ url: '/billcontents/monthly', controller: MyTFareHistory });
+    this.controllers.push({ url: '/billcontents/detail', controller: MyTFareHistory });
+
+    // 납부내역
+    this.controllers.push({ url: '/info/history', controller: MyTFarePaymentHistory });
+    this.controllers.push({ url: '/info/history/detail', controller: MyTFarePaymentHistoryDetail });
+
+    this.controllers.push({ url: '/info/bill-tax', controller: MyTFareBillHistory });
+    this.controllers.push({ url: '/info/bill-cash', controller: MyTFareBillHistory });
+    this.controllers.push({ url: '/info/overpay-refund', controller: MyTFareOverpayRefund });
+    this.controllers.push({ url: '/info/overpay-refund/detail', controller: MyTFareOverpayRefund });
   }
 }
 

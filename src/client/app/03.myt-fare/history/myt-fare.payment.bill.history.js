@@ -16,10 +16,10 @@ Tw.MyTFarePaymentBillHistory = function (rootEl, data) {
   this._bindEvent();
 
   switch (this.data.current) {
-    case 'tax':
+    case 'bill-tax':
       this._initTax();
       break;
-    case 'cash':
+    case 'bill-cash':
       this._initCash();
       break;
     default:
@@ -183,7 +183,8 @@ Tw.MyTFarePaymentBillHistory.prototype = {
     data.hbs = 'MF_08_01_01_01';
     this._popupService.open(data,
         $.proxy(this._openResendByFaxCallback, this), null,
-        Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_FAX
+        Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_FAX,
+        'byFax'
     );
   },
   _openResendByFaxCallback: function ($container) {
@@ -207,7 +208,8 @@ Tw.MyTFarePaymentBillHistory.prototype = {
     data.hbs = 'MF_08_01_01_02';
     this._popupService.open(data,
         $.proxy(this._openResendByEmailCallback, this), null,
-        Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_EMAIL
+        Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_EMAIL,
+        'byEmail'
     );
   },
   _openResendByEmailCallback: function ($container) {

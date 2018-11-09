@@ -9,8 +9,8 @@ import CustomerDocument from '../904.customer/controllers/document/customer.docu
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
 import CustomerGuideSiteUse from './controllers/useguide/customer.useguide.site.controller';
+import CustomerGuideServiceUse from './controllers/useguide/customer.useguide.service.controller';
 import CustomerPraise from './controllers/praise/customer.praise.controller';
-// import CustomerGuideSeviceUse from './controllers/useguide/customer.useguide.service.controller';
 import CustomerNotice from './controllers/notice/customer.notice.controller';
 import CustomerProtect from './controllers/protect/customer.protect.controller';
 import CustomerProtectGuide from './controllers/protect/customer.protect.guide.controller';
@@ -47,8 +47,12 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/researches', controller: CustomerResearches });
     this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail });
     // this.controllers.push({ url: '/email(/:main_category)?(/:sub_category)?', controller: CustomerEmail} );
-    // this.controllers.push({ url: '/useguide/service', controller: CustomerGuideSeviceUse });
-    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice });
+    this.controllers.push({ url: '/svc-info/service', controller: CustomerGuideServiceUse });
+    this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerGuideServiceUse });
+    this.controllers.push({ url: '/svc-info/mcustomer', controller: CustomerGuideServiceUse });
+    this.controllers.push({ url: '/svc-info/site', controller: CustomerGuideSiteUse });
+    this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerGuideSiteUse });
+    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice} );
     // this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
     // this.controllers.push({ url: '/protect', controller: CustomerProtect } );
     // this.controllers.push({ url: '/protect/guide(/:category)?', controller: CustomerProtectGuide } );
