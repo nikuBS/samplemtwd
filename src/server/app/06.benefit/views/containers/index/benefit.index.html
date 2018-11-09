@@ -107,8 +107,109 @@
             </div>
             <!--// .cont-box -->
 
+            <!--결합할인 금액 미리보기-->
+            <div id="fe-combination-preview" class="none">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <div class="discount-look-ahead">
+                        <strong class="stit-type">결합할인금액 미리보기</strong>
+                        <p>내게  딱 맞는 결합할인 금액을 확인하세요</p>
+                        <div class="board-type">
+                            <p>인터넷</p>
+                            <div>
+                                <div class="widget">
+                                    <div class="widget-box radio">
+                                        <ul class="select-list" role="radiogroup" data-check-disabled>
+                                            <li class="radiobox btn-type01" role="radio">
+                                                <input type="radio" name="inetTypCd" value="F1" title="광랜 1회선" data-name="inetTypCd"/><!-- 체크상태일 경우 checked="checked" -->
+                                                <span class="radio-txt">광랜 1회선</span>
+                                            </li>
+                                            <li class="radiobox btn-type01" role="radio">
+                                                <input type="radio" name="inetTypCd" value="F2" title="광랜 2회선" data-name="inetTypCd"/><!-- 체크상태일 경우 checked="false" -->
+                                                <span class="radio-txt">광랜 2회선</span>
+                                            </li>
+                                            <li class="radiobox btn-type01" role="radio">
+                                                <input type="radio" name="inetTypCd" value="G0" title="Giga" data-name="inetTypCd"/><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                                <span class="radio-txt">Giga</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>이동전화</p>
+                            <div>
+								<span class="btn-line-add">
+									<button class="del active" type="button">회선삭제</button>
+									<span><span data-name="mblPhonLineCnt">1</span>회선</span>
+									<button class="add" type="button">회선추가</button>
+								</span>
+                            </div>
+                            <p>TV</p>
+                            <div>
+                                <div class="widget">
+                                    <div class="widget-box radio">
+                                        <ul class="select-list" role="radiogroup" data-check-disabled>
+                                            <li class="radiobox btn-type01" role="radio">
+                                                <input type="radio" name="btvUseYn" value="Y" title="값1" data-name="btvUseYn"/><!-- 체크상태일 경우 checked="checked" -->
+                                                <span class="radio-txt">있음</span>
+                                            </li>
+                                            <li class="radiobox btn-type01" role="radio">
+                                                <input type="radio" name="btvUseYn" value="N" title="값2" data-name="btvUseYn"/><!-- 체크상태일 경우 checked="false" -->
+                                                <span class="radio-txt">없음</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="bt-slice">
+                            <li class="bt-red1">
+                                <button id="fe-show-discount" disabled="disabled">할인 금액 보기</button>
+                            </li>
+                        </ul>
+                        <!--할인금액 결과 보기-->
+                        <div id="fe-discount-result" class="data-result-type01 none">
+                            <div class="data-result">
+                                <p id="fe-discount-amt" class="data"><!--<em>15,000</em><span>원</span>--></p>
+                                <p id="fe-with-tax" class="tit"><!--부가세포함--></p>
+                            </div>
+                            <strong class="stit-type">이용조건</strong>
+                            <ul class="round-dot-list">
+                                <li>최소 1회선이 이동전화 62 요금제 이상 / Band데이터 47요금제  사용</li>
+                                <li>인터넷 스마트 다이렉트 요금제 (월 2만원) 사용 </li>
+                                <li>IPTV “Btv New 스마트“ 요금제 (월 11,000원)사용</li>
+                                <li>IPTV 3년약정 </li>
+                                <li>이동전화 2천원 할인 포함 </li>
+                            </ul>
+                        </div>
+                        <!--// 할인금액 결과 보기-->
+                    </div>
+                </div>
+                <!-- //cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="reserve-formdown">
+                        <ul>
+                            <li>
+                                <button type="button" class="list">가입상담예약</button>
+                            </li>
+                            <li>
+                                <button type="button" class="list">신청서 다운로드</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //cont-box -->
+            </div>
+            <!--// 결합할인 금액 미리보기-->
+
+
             <!--다른 상품 더보기 & 페이지 바로가기 area-->
-            <div>
+            <div id="fe-another-product" class="none">
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- cont-box -->
                 <div class="cont-box">
@@ -116,13 +217,13 @@
                         <strong class="stit-type">다른 상품 더보기</strong>
                         <ul>
                             <li>
-                                <button class="list" type="button">
+                                <button class="list" type="button" data-url="/product">
                                     <span><img src="/img/benefit/icon_benefit_tariff_system.gif" alt="요금제" /></span>
                                     <p>요금제</p>
                                 </button>
                             </li>
                             <li>
-                                <button class="list" type="button">
+                                <button class="list" type="button" data-url="/product/addition">
                                     <span><img src="/img/benefit/icon_benefit_additional-service.gif" alt="부가서비스" /></span>
                                     <p>부가서비스</p>
                                 </button>
@@ -147,7 +248,7 @@
                 <div class="benefit-page-shortcut">
                     <ul>
                         <li>
-                            <button class="list" type="button">
+                            <button class="list" type="button" data-url="/myt/join">
                                 <img src="/img/benefit/icon_benefit_shortcut01.png" alt="" />
                                 <span>나의 가입정보</span>
                             </button>
@@ -159,13 +260,13 @@
                             </button>
                         </li>
                         <li>
-                            <button class="list" type="button">
+                            <button class="list" type="button" data-url="/product/find-my-best-plans">
                                 <img src="/img/benefit/icon_benefit_shortcut03.png" alt="" />
                                 <span>내게 맞는 요금제</span>
                             </button>
                         </li>
                         <li>
-                            <button class="list" type="button">
+                            <button class="list" type="button" data-url="/product/addition">
                                 <img src="/img/benefit/icon_benefit_shortcut04.png" alt="" />
                                 <span>모바일 부가서비스</span>
                             </button>

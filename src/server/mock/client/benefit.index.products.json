@@ -9,6 +9,8 @@
         "benefitNm": "척척할인",
         "useYn": "사용중",
         "imgFullPath": "/img/benefit/img_benefit_all01.png",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "제휴상품 구매시"
@@ -21,6 +23,8 @@
       {
         "benefitId": "NE00000034",
         "benefitNm": "Wibro 프리 약정할인",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "24개월 약정"
@@ -33,6 +37,8 @@
       {
         "benefitId": "NA00003677",
         "benefitNm": "요금약정할인제도",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "12/24개월약정"
@@ -45,6 +51,8 @@
       {
         "benefitId": "NA00004430",
         "benefitNm": "선택약정할인제도",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "12/24개월약정"
@@ -57,6 +65,8 @@
       {
         "benefitId": "NA00005923",
         "benefitNm": "무약정플랜",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "무약정"
@@ -69,6 +79,8 @@
       {
         "benefitId": "NA00003677",
         "benefitNm": "요금약정할인제도",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "12/24개월약정"
@@ -81,6 +93,8 @@
       {
         "benefitId": "NA00004430",
         "benefitNm": "선택약정할인제도",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "12/24개월약정"
@@ -93,6 +107,8 @@
       {
         "benefitId": "NA00005923",
         "benefitNm": "무약정플랜",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "무약정"
@@ -105,6 +121,8 @@
       {
         "benefitId": "NE00000034",
         "benefitNm": "Wibro 프리 약정할인",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "24개월 약정"
@@ -117,6 +135,8 @@
       {
         "benefitId": "NE00000034",
         "benefitNm": "Wibro 프리 약정할인",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "24개월 약정"
@@ -129,7 +149,8 @@
       {
         "benefitId": "NA00005696",
         "benefitNm": "척척할인",
-        "benefitPrice": "상세참조",
+        "benefitPrice" : "10000",
+        "benefitText" : "결합최대 총 할인금액",
         "tagList": [
           {
             "tagNm": "제휴상품 구매시"
