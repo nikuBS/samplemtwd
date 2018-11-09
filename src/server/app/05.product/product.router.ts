@@ -14,6 +14,7 @@ import ProductJoinDisPgm from './controllers/join/product.join.dis-pgm';
 import ProductJoinDisPgmDetail from './controllers/join/product.join.dis-pgm.detail';
 import ProductWire from './controllers/wire/product.wire.controller';
 import ProductWires from './controllers/wire/product.wires.controller';
+import ProductApps from './app/product.apps.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -26,6 +27,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/additions', controller: ProductAdditions });
     this.controllers.push({ url: '/wire(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/internet|phone|tv', controller: ProductWires });
+    this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/detail/:prodId', controller: ProductDetail });
     this.controllers.push({ url: '/join/reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
