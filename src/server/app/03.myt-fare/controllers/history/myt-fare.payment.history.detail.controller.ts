@@ -9,15 +9,13 @@ import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import {MYT_PAYMENT_DETAIL_TITLE} from '../../../../types/string.type';
 
-// import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-// import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
-// import FormatHelper from '../../../../utils/format.helper';
-// import DateHelper from '../../../../utils/date.helper';
+import {API_CMD} from '../../../../types/api-command.type';
+
 
 interface Query {
   current: string;
   isQueryEmpty: boolean;
+  // sortType: string;
 }
 
 

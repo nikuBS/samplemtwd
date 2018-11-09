@@ -435,6 +435,9 @@ export const API_CMD = {
   BFF_07_0090: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0091: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0092: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0093: { path: '/core-bill/v1/point-onetime-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
+  BFF_07_0094: { path: '/core-bill/v1/point-autopay-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
+
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

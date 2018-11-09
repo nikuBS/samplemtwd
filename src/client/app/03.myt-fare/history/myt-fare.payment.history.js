@@ -20,7 +20,7 @@ Tw.MyTFarePaymentHistory = function (rootEl, data) {
 Tw.MyTFarePaymentHistory.prototype = {
   _init: function () {
 
-    this.rootPathName = this.data.current === 'all' ? this._historyService.pathname : this._historyService.pathname.split('/').slice(0, -1).join('/');
+    this.rootPathName = this._historyService.pathname;
 
     if (this.data && this.data.current !== 'detail') {
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
@@ -78,8 +78,6 @@ Tw.MyTFarePaymentHistory.prototype = {
   },
 
   _initPaymentList: function() {
-    // console.log(this.data);
-
     var initedListTemplate;
     var totalDataCounter = this.data.listData.mergedListData.length;
     this.renderListData = {};
@@ -212,7 +210,8 @@ Tw.MyTFarePaymentHistory.prototype = {
           hbs: 'MF_08_02'
         },
         $.proxy(this._openAddRefundAccountCallback, this), $.proxy(this._closeAddRefundAccountCallback, this),
-        Tw.MYT_PAYMENT_HISTORY_HASH.OVERPAY_REFUND
+        Tw.MYT_PAYMENT_HISTORY_HASH.OVERPAY_REFUND,
+        'refundAccount'
     );
   },
 
@@ -306,7 +305,7 @@ Tw.MyTFarePaymentHistory.prototype = {
   },
 
   _moveRefundList: function () {
-    this._historyService.goLoad('/myt/fare/history/overpay-refund');
+    this._historyService.goLoad(this.data.refundURL);
   },
 
   _getAllData: function () {
@@ -338,12 +337,13 @@ Tw.MyTFarePaymentHistory.prototype = {
 
   _moveByPaymentType: function (e) {
     var target    = $(e.currentTarget),
-        targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
+        targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName
 
     this._popupService.close();
     if (!target.hasClass('checked')) {
       targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)] ?
-          targetURL : targetURL + '/' + Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)];
+          targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)];
+
       this._historyService.goLoad(targetURL);
     }
   },

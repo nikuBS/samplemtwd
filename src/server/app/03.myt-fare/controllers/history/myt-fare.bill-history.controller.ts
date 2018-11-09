@@ -34,9 +34,9 @@ class MyTFareBillHistory extends TwViewController {
 
     // this.logger.info(this, query.current, '----', svcInfo);
 
-    if (query.current === 'tax' || query.current === 'cash') {
+    if (query.current === 'bill-tax' || query.current === 'bill-cash') {
 
-      if (query.current === 'tax') {
+      if (query.current === 'bill-tax') {
         this.apiService.request(API_CMD.BFF_07_0017, {}).subscribe((resp) => {
 
           if (resp.code !== API_CODE.CODE_00) {
@@ -58,7 +58,7 @@ class MyTFareBillHistory extends TwViewController {
           });
 
           res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, data: {
-              isTax: query.current === 'tax',
+              isTax: query.current === 'bill-tax',
               current: query.current,
               items: resp.result.taxReprintList
             }});
@@ -98,7 +98,7 @@ class MyTFareBillHistory extends TwViewController {
           }, []);
 
           res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
-              isTax: query.current === 'tax',
+              isTax: query.current === 'bill-tax',
               current: query.current,
               list: resp.result
             }});

@@ -1,0 +1,40 @@
+<%#
+* FileName: customer.useguide.service.detail.html
+* Author: Lee Sanghyoung (silion@sk.com)
+* Date: 2018.10.25
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <%- include('../../../../../common/views/components/header.component.html', { title: '서비스 이용 방법', svcInfo: svcInfo }); %>
+    
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+
+    </div>
+
+    <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerUseguideCommon($(document), '<%- JSON.stringify(data) %>');
+  });
+</script>
+</body>
+<% include ../../components/end.component.html %>
