@@ -36,7 +36,7 @@
                     <p class="con-txt1">고객님은 <span class="tx-bold">타사번호(016/018/019)</span>를<br>이용 중 입니다.</p>
                     <ul class="bt-slice mt20">
                         <li class="bt-blue1">
-                            <button>변경할 010 번호 찾기</button>
+                            <button id="btnNumSearch">변경할 010 번호 찾기</button>
                         </li>
                     </ul>
                 </div>
@@ -53,12 +53,12 @@
                         <div class="widget">
                             <div class="widget-box radio">
                                 <ul class="select-list" role="group">
-                                    <script id="list-cont-item-tmplt-143" type="text/x-handlebars-template">
+                                    <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
                                     <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" name="radio" value="" title="{{ phonenum }}" aria-labelledby="aria-comp-radio1"/><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-radio1">
+                                        <input type="radio" name="radio" value="n{{ phonenum svc_num }}" title="{{ svc_num }}" aria-labelledby="aria-comp-radio1"/><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout">
                                             <p class="layout-text">
-                                                <span class="mtext">{{ phonenum }}</span>
+                                                <span class="mtext">{{ phonenum svc_num }}</span>
                                             </p>
                                         </div>
                                     </li>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="bt-more" style="display: none;">
-                        <button>더보기</button>
+                        <button id="btnMore">더보기</button>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -81,7 +81,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button>변경하기</button>
+                            <button id="btnOk" disabled="disabled">변경하기</button>
                         </li>
                     </ul>
                 </div>
@@ -94,10 +94,13 @@
     </div>
     <!-- // .popup hbs -->
 </div>
-
+<!-- // .popup hbs -->
+<footer id="fe-all-menu">
+    <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
+</footer>
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinMgmtNumchg($('#contents'));
+    new Tw.MyTJoinMgmtNumchg($('.wrap'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

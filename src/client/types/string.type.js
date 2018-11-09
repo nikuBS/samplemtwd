@@ -659,6 +659,14 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN_MGMT_NUMCHG = {
+  COMPLETE_POPUP : {
+    MAIN_TXT: '변경',
+    SUB_TXT : '변경한 번호 : ',
+    LINK_TXT: '번호변경 안내 서비스'
+  }
+};
+
 Tw.MYT_JOIN_MGMT_NUMCHG_ALARM = {
   ALERT_SVC_DISABLED: {
     TITLE: '번호 변경 안내 서비스 <br>이용이 불가능합니다.',
