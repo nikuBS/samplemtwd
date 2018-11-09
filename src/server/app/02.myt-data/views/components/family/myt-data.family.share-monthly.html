@@ -13,8 +13,8 @@
 	<!-- 2018-09-18 info-wrap 삭제 -->
 	<h4 class="tabcon-title0 pt40">
 		<%=new Date().getFullYear()%>년
-		<%=new Date().getMonth()+1%>월 부터<br>가족에게 공유할 데이터</h4>
-	<div class="inp-tx-wrap">
+		<%=new Date().getMonth()+1%>월 부터<br>가족에게 공유할 데이터 <button id="DC_02_02_tip_01" type="button" class="tip-view" title="T가족모아 공유 데이터 설정 안내" aria-haspopup="true">TIP</button></h4><!-- 2018-11.02 추가 -->
+	<div class="inp-tx-wrap pb26"><!-- 2018-11.02 수정 -->
 		<div class="inputbox bt-add error">
 			<div class="inner">
 				<span class="input">
@@ -32,37 +32,42 @@
 			<button class="bt-bg-blue1" data-value="10">+10</button>
 			<button class="bt-bg-blue1" data-value="all">전체</button>
 		</div>
+		<!-- 2018-11.02 추가 -->
+		<div class="announcement-box mt20">
+			<div class="announcement-bullet type02">발송된 데이터는 취소가 불가능합니다.</div>
+		</div>
+		<!-- //2018-11.02 추가 -->   
 	</div>
 	<div class="data-number-wrap type1">
 		<span class="data-title">선물하기, 함께 쓰기, 2nd Device<br>공유 가능 데이터</span>
 		<span class="data-value">
 			<span class="tx-bold vbl"><%= monthlyInfo.shrblData %></span> GB</span>
 	</div>
+	<% if (monthlyInfo.regularShrYn === "Y") { %>
+	<div class="setting-share">
+		<ul class="swtich-list">
+			<li>
+				자동공유 사용중
+				<span class="widget">
+					<span class="widget-box switch">
+						<span class="btn-switch type1 on">
+							<span class="switch-style" role="checkbox" aria-checked="true">
+								<span class="off-tx">꺼짐</span>
+								<input type="checkbox" title="사용" checked="checked">
+								<span class="on-tx">사용</span>
+							</span>
+						</span>
+					</span>
+				</span>
+			</li>
+		</ul>
+	</div>
+	<% } %>
 </div>
-<% if (monthlyInfo.regularShrYn === "Y") { %>
-<div class="setting-share">
-	<ul class="swtich-list">
-        <li>
-            자동공유 사용중
-            <span class="widget">
-                <span class="widget-box switch">
-                    <span class="btn-switch type1 on">
-                        <span class="switch-style" role="checkbox" aria-checked="true">
-                            <span class="off-tx">꺼짐</span>
-                            <input type="checkbox" title="사용" checked="checked">
-                            <span class="on-tx">사용</span>
-                        </span>
-                    </span>
-                </span>
-            </span>
-        </li>
-	</ul>
-</div>
-<% } %>
 <div class="bt-fixed-area">
 	<ul class="bt-slice full">
 		<li class="bt-red1">
-			<button disabled="disabled">변경하기</button>
+			<button disabled="disabled">매월 자동으로 공유하기</button>
 		</li>
 	</ul>
 </div>
