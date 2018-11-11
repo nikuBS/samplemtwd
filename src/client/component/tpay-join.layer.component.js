@@ -33,6 +33,7 @@ Tw.TPayJoinLayerPopup.prototype = {
   },
 
   _onClickSetup: function () {
-    // TODO: 안드로이드만 가능? 확인필요
+    // T Apps로 이동
+    this._historyService.goLoad('/product/apps');
   }
 };
