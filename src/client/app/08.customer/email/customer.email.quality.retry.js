@@ -25,6 +25,7 @@ Tw.CustomerEmailQualityRetry.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-quality_register', $.proxy(this._retry_inquiry, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
+    this.$container.on('validateForm', $.proxy(this._validateForm, this));
   },
 
   _makeParams: function () {

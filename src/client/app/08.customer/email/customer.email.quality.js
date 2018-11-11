@@ -26,6 +26,7 @@ Tw.CustomerEmailQuality.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
     this.$wrap_tpl_quality.on('click', '.fe-quality_register', $.proxy(this._request, this));
   },
@@ -50,7 +51,6 @@ Tw.CustomerEmailQuality.prototype = {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       cntcNumClCd: $('.fe-quality-cntcNumClCd').find(':checked').val(),
       inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(),
-      // subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
       content: this.$wrap_tpl_quality.find('.fe-text_content').val(),
       cntcNum1: arrPhoneNumber[0],
       cntcNum2: arrPhoneNumber[1],
@@ -67,6 +67,7 @@ Tw.CustomerEmailQuality.prototype = {
       selSvcMgmtNum: $('.fe-line').data('svcmgmtnum'),
       inptZip: $('.fe-inptZip').val(),
       inptBasAddr: $('.fe-inptBasAddr').val(),
+      inptDtlAddr: 'test',
       content: this.tpl_quality_cell_content({
         place: $('.fe-place').val(),
         occurrence: $('.fe-occurrence').val(),
@@ -84,7 +85,8 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestInternet: function () {
     var htParams = $.extend(this._makeParams(), {
-      connSite: Tw.BrowserHelper.isApp() ? '19' : '15'
+      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
+      subject: this.$wrap_tpl_quality.find('.fe-text_title').val()
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)

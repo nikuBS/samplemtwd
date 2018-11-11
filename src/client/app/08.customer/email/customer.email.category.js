@@ -117,7 +117,7 @@ Tw.CustomerEmailCategory.prototype = {
   _onSelectService1Depth: function (e) {
     this._popupService.close();
 
-    var sDepth1Value = $(e.currentTarget).data('service-depth1');
+    var sDepth1Value = $(e.currentTarget).data('service-depth1').toString();
     var sDepth1Text = $(e.currentTarget).text().trim();
     this.$select_service_depth1.addClass('tx-bold');
     this.$select_service_depth1.text(sDepth1Text);
@@ -138,7 +138,7 @@ Tw.CustomerEmailCategory.prototype = {
   _onSelectService2Depth: function (e) {
     this._popupService.close();
 
-    var sDepth2Value = $(e.currentTarget).data('service-depth2');
+    var sDepth2Value = $(e.currentTarget).data('service-depth2').toString();
     var sDepth2Text = $(e.currentTarget).text().trim();
     this.$select_service_depth2.addClass('tx-bold');
     this.$select_service_depth2.text(sDepth2Text);

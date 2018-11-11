@@ -18,9 +18,6 @@ class CustomerEmail extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, pageInfo?: any): void {
     const page = req.params.page;
-    // const main_category = req.params.main_category; // 1. service 2. quality
-    // const sub_category = req.params.sub_category; // ofrCtgSeq
-
     const responseData = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
@@ -67,7 +64,7 @@ class CustomerEmail extends TwViewController {
                 convertDate: this.convertDate
               })
             );
-          })
+          });
         break;
       case 'history-detail':
         this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
@@ -81,10 +78,6 @@ class CustomerEmail extends TwViewController {
           });
         break;
       default:
-        // Observable.combineLatest(
-        // ).subscribe(([subscriptions]) => {
-        //
-        // });
         res.render('email/customer.email.html', responseData);
     }
   }
