@@ -279,24 +279,25 @@ export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
 };
 
 export const COMBINATION_PRODUCT = {
-  TW20000012: 'data-share',
-  NA00005055: 'data-share', // 가족나눔데이터
+  NA00005055: 'data-share',
+  TW20000012: 'data-share', // 가족나눔데이터
   TW20000009: 'data-share',
   NA00004211: 'data-share', // T가족결합(착한가족)
   NH00000084: 'tb-free',
   TW20000008: 'tb-free', // TB끼리 온가족프리
   NH00000059: 'tb-family',
   TW20000007: 'tb-family', // TB끼리 온가족무료
-  NH00000037: 'tb-wire',
-  NH00000039: 'tb-wire',
+  NH00000037: 'tb-wire', // T+B인터넷(개인형)
+  NH00000039: 'tb-wire', // T+B인터넷(패밀리형)
   TW00000062: 'tb-wire', // T+B인터넷
-  NH00000040: 'tb-wire',
-  NH00000041: 'tb-wire',
+  NH00000040: 'tb-wire', // T+B전화/인터넷전화(개인형)
+  NH00000041: 'tb-wire', // T+B전화/인터넷전화(패밀리형)
   TW00000063: 'tb-wire', // T+B전화/인터넷전화
   NA00002040: 't-family',
   TW20000010: 't-family', // T끼리 온가족할인
   NA00004728: 'happy-plan',
   TW20000011: 'happy-plan', // 온가족행복플랜
+  NH00000114: 'family-plan',
   TW20000013: 'family-plan', // 온가족플랜
   NH00000133: 'family-plan' // NEW 온가족플랜
 };
