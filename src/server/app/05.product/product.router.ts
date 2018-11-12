@@ -25,9 +25,9 @@ class ProductRouter extends TwRouter {
 
     // old IA
     this.controllers.push({ url: '/mobileplan', controller: Product });
-    this.controllers.push({ url: '/addition', controller: ProductAddition });
+    this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
-    this.controllers.push({ url: '/additions', controller: ProductAdditions });
+    this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
     this.controllers.push({ url: '/wire(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/apps', controller: ProductApps });

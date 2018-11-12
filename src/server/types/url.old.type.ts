@@ -131,9 +131,9 @@ export const URL = {
   // membership
   // product
   '/product/mobileplan': { login: false, id: 'MP', title: '모바일 요금제' },
-  '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
+  '/product/mobileplan-add': { login: false, id: 'MV', title: '부가서비스' },
   '/product/mobileplan/list': { login: false, id: 'MP_02', title: '모바일 요금제' },
-  '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
+  '/product/mobileplan-add/list': { login: false, id: 'MV_01', title: '부가서비스' },
   '/product/wire': { login: false, id: 'WP', title: '인터넷/전화/TV' },
   '/product/internet': { login: false, id: 'WP_01', title: '인터넷' },
   '/product/phone': { login: false, id: 'WP_01', title: '전화' },
