@@ -469,7 +469,9 @@ Tw.ALERT_MSG_CUSTOMER = {
   ALERT_PRAISE_CANCEL: {
     TITLE: '작성을 취소하시겠습니까?',
     MSG: '취소하시면 작성하신 정보가 모두 초기화됩니다.'
-  }
+  },
+  ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
+  ALERT_RESEARCHES_A02: '설문에 참여해주셔서 감사합니다.'
 };
 
 Tw.ALERT_MSG_TEVENT = {};
@@ -656,9 +658,9 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
 };
 
 Tw.MYT_JOIN_MGMT_NUMCHG = {
-  COMPLETE_POPUP : {
+  COMPLETE_POPUP: {
     MAIN_TXT: '변경',
-    SUB_TXT : '변경한 번호 : ',
+    SUB_TXT: '변경한 번호 : ',
     LINK_TXT: '번호변경 안내 서비스'
   }
 };
@@ -666,7 +668,8 @@ Tw.MYT_JOIN_MGMT_NUMCHG = {
 Tw.MYT_JOIN_MGMT_NUMCHG_ALARM = {
   ALERT_SVC_DISABLED: {
     TITLE: '번호 변경 안내 서비스 <br>이용이 불가능합니다.',
-    CONTENTS: '번호를 변경한 다음날부터 28일이 지나지 않은 고객님만 이용이 가능합니다.<br>' +
+    CONTENTS:
+      '번호를 변경한 다음날부터 28일이 지나지 않은 고객님만 이용이 가능합니다.<br>' +
       '(010 전환 번호변경 고객님은 지점/대리점/고객센터에서 +180일 까지 가능합니다.)'
   },
   TOAST_SUC_REG: '신청이 완료되었습니다.',
@@ -983,7 +986,7 @@ Tw.FAMILY_TYPE = {
 };
 
 Tw.CUSTOMER_EMAIL.ACTION_TYPE = {
-  SELECT_BRAND:'브랜드 선택',
+  SELECT_BRAND: '브랜드 선택',
   SELECT_DEVICE: '기종 선택',
   SELECT_LINE: '회선 선택'
-}
+};
