@@ -40,7 +40,8 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
-    this.$container.on('click', '.fe-history', $.proxy(this._prepayHistory, this));
+    this.$container.on('click', '.fe-micro-history', $.proxy(this._microHistory, this));
+    this.$container.on('click', '.fe-contents-history', $.proxy(this._contentsHistory, this));
     this.$container.on('click', '.fe-change-limit', $.proxy(this._changeLimit, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._autoPrepay, this));
@@ -52,8 +53,29 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
   _prepayHistoryMonth: function () {
     this._historyService.goLoad('/myt/fare/history/' + this.$title + '/monthly');
   },
-  _prepayHistory: function () {
-    this._historyService.goLoad('/myt/fare/history/' + this.$title);
+  _microHistory: function () {
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.HISTORY,
+      data: Tw.POPUP_TPL.FARE_PAYMENT_MICRO_HISTORY_LIST
+    },
+      $.proxy(this._selectPopupCallback, this),
+      $.proxy(this._goLoad, this)
+    );
+  },
+  _selectPopupCallback: function ($layer) {
+    $layer.on('click', '.go-history', $.proxy(this._setEvent, this));
+  },
+  _setEvent: function (event) {
+    this.$microHistoryUri = $(event.currentTarget).attr('data-link');
+    this._popupService.close();
+  },
+  _contentsHistory: function () {
+    this._historyService.goLoad('/myt/fare/billcontents/history');
+  },
+  _goLoad: function () {
+    this._historyService.goLoad(this.$microHistoryUri);
   },
   _changeLimit: function () {
     new Tw.MyTFarePaymentPrepayChangeLimit(this.$container, this.$title);

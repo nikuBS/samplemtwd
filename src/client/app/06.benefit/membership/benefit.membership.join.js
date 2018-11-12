@@ -23,10 +23,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$joinBtn = this.$container.find('[data-id=join-btn]');
     this.$tAgreeCheckBox = this.$container.find('[data-id=all-agree-t]');
     this.$tAgreeItems = this.$container.find('[data-role=TL]');
-    if ( this.data.isOkCashBag ) {
-      this.$cAgreeCheckBox = this.$container.find('[data-id=all-agree-c]');
-      this.$cAgreeItems = this.$container.find('[data-role=CL]');
-    }
+    this.$cAgreeCheckBox = this.$container.find('[data-id=all-agree-c]');
+    this.$cAgreeItems = this.$container.find('[data-role=CL]');
+    this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
+    this.$cashbagAccodianBtn = this.$container.find('[data-id=cashbag_list]');
   },
 
   _bindEvent: function () {
@@ -34,10 +34,9 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$joinBtn.on('click', $.proxy(this._onClickJoinBtn, this));
     this.$tAgreeCheckBox.on('click', $.proxy(this._onClickTAgreeCheckbox, this));
     this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
-    if ( this.data.isOkCashBag ) {
-      this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
-      this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
-    }
+    this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
+    this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
+    this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
   },
 
   _onClickTAgreeCheckbox: function (event) {
@@ -97,14 +96,28 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _onClickContainer: function () {
     var $items = this.$container.find('[aria-checked=true]:not(.all)');
     var array = [];
-    $items.each(function (index) {
+    $items.each($.proxy(function (index) {
       if ( $items.eq(index).attr('data-id') && $items.eq(index).attr('data-id').match(/L_/gi).length > 0 ) {
-        array.push($items.eq(index));
+        var $item = $items.eq(index);
+        var id = $item.attr('data-id');
+        if ( !this._checkOkCashbag ) {
+          if ( id === 'L_01' || id === 'L_02' ) {
+            array.push($items.eq(index));
+          }
+        }
+        else {
+          array.push($items.eq(index));
+        }
       }
-    });
+    }, this));
     // 필수 항목 모두 체크되야 가입하기 버튼 활성화
-    if ( this.data.isOkCashBag && array.length === 4 ) {
-      this.$joinBtn.removeAttr('disabled');
+    if ( this._checkOkCashbag ) {
+      if ( array.length === 4 ) {
+        this.$joinBtn.removeAttr('disabled');
+      }
+      else {
+        this.$joinBtn.attr('disabled', 'disabled');
+      }
     }
     else {
       if ( array.length === 2 ) {
@@ -116,9 +129,28 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }
   },
 
+  _onClickCashbagCheckbox: function (event) {
+    var $target = $(event.target);
+    var checked = $target.prop('checked');
+    if ( !checked ) {
+      if ( this.$cAgreeCheckBox.find('input').prop('checked') ) {
+        this.$cAgreeCheckBox.find('input').trigger('click');
+      }
+      this._checkOkCashbag = false;
+    }
+    else {
+      this._checkOkCashbag = true;
+    }
+    this.$cashbagAccodianBtn.trigger('click');
+  },
+
   _onClickJoinBtn: function () {
     var $items = this.$container.find('[aria-checked=true]');
-    // var options = {};
+    // TODO: 현재 가입하기 API 에서 사용 중인 필드가 현재 SB 문서와 일치하지 않아 문의 중
+    var params = {
+      mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
+      card_isue_typ_cd: '1' // 모바일 카드
+    };
     for ( var i = 0; i < $items.length; i++ ) {
       var $item = $items.eq(i);
       switch ( $item.attr('data-type') ) {
@@ -142,8 +174,26 @@ Tw.MyTBenefitMembershipJoin.prototype = {
           break;
       }
     }
-    // TODO: 가입하기 완료 후 팝업 노출
-    // this._apiService.request();
-    //  this._tpayPopup.open();
+    this._apiService.request(Tw.API_CMD.BFF_11_0011, params)
+      .done($.proxy(this._onSuccessJoinMembership, this))
+      .fail($.proxy(this._onFailJoinMembership, this));
+  },
+
+  _onSuccessJoinMembership: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.afterRequestSuccess('/membership/submain', '/membership/mymembership/history',
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
+      // TODO: 가입하기 완료 후 TPay 팝업 노출
+      // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
+      setTimeout(this._tpayPopup.open, 500);
+    }
+    else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+
+  _onFailJoinMembership: function (resp) {
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };

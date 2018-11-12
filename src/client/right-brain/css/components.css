@@ -4468,6 +4468,9 @@
       height: 1.5625rem;
       padding: 0; }
 
+.comma {
+  padding-right: 0.625rem; }
+
 /* 김연주 */
 .data-result {
   padding: 1.875rem 0;
@@ -5520,80 +5523,6 @@
     .my-product-list .inner .visual-area img {
       width: 100%; }
 
-/*
-.my-product-list {
-    li {
-        padding:rem(21px 0 24px);
-        border-top:1px solid $gray9;
-        &:first-child {
-            border-top:0;
-        }
-        .inner {
-            position:relative;
-            font-size:0;
-        }
-        .tit {
-            font-size:$fs-18;
-            font-weight:$fw-regular;
-        }
-        .date {
-            margin-top:rem(3px);
-            color:$black3;
-            font-size:$fs-13;
-        }
-        .bundle-type {
-            padding:rem(10px 0);
-            margin:rem(7px 0 8px);
-            background:$skblue-light;
-            color:$skblue;
-            text-align:center;
-            font-size:0;
-            border-radius:rem(2px);
-            .ico {
-                display:inline-block;
-                width:rem(20px);
-                height:rem(20px);
-                margin-right:rem(2px);
-                content:'';
-                background:url(/img/ico/ico-bundle-product.png);
-                background-size:rem(20px);
-                vertical-align:middle;
-            }
-            .txt {
-                vertical-align:middle;
-                font-size:$fs-14;
-            }
-            .plus {
-                margin:rem(0 16px);
-                vertical-align:middle;
-                color:$black1;
-                font-size:$fs-14;
-            }
-        }
-        .bt-link-tx {
-            font-size:$fs-12;
-        }
-        .btn {
-            position:absolute;
-            right:0;
-            top:rem(6px);
-            width:rem(30px);
-            height:rem(30px);
-            content:'';
-            &:after {
-                position:absolute;
-                right:0;
-                top:0;
-                width:rem(7px);
-                height:rem(13px);
-                content:'';
-                background:url(/img/ico/bt-bundle-product.png);
-                background-size:rem(7px);
-            }
-        }
-    }
-}
-*/
 .bundle-tit-wrap .tit {
   font-size: 0.9375rem; }
 
@@ -5744,6 +5673,47 @@
   line-height: 1.875rem; }
   .cont-box .tit-type5 .str {
     font-weight: 700; }
+
+.cont-box .article-type1 {
+  font-size: 0.8125rem;
+  color: #666; }
+  .cont-box .article-type1.bk {
+    color: #000; }
+
+.cont-box .bul-txt {
+  position: relative;
+  padding-left: 0.4375rem;
+  word-break: break-all;
+  color: #666;
+  font-size: 0.8125rem; }
+  .cont-box .bul-txt.type1:before {
+    position: absolute;
+    left: 0;
+    top: -0.125rem;
+    content: '*';
+    color: #626262;
+    font-size: 0.75rem;
+    vertical-align: super; }
+
+.fs12 {
+  font-size: 0.75rem !important; }
+  .fs12 li {
+    font-size: 0.75rem !important; }
+
+.fs13 {
+  font-size: 0.8125rem !important; }
+  .fs13 li {
+    font-size: 0.8125rem !important; }
+
+.fs14 {
+  font-size: 0.875rem !important; }
+  .fs14 li {
+    font-size: 0.875rem !important; }
+
+.fs15 {
+  font-size: 0.875rem !important; }
+  .fs15 li {
+    font-size: 0.875rem !important; }
 
 .tit-wrap2 {
   overflow: hidden;
@@ -6194,10 +6164,6 @@ a.bt-link-tx.underline.small {
 
 .expect-discount-list li .data-a {
   margin-top: 1rem; }
-  .expect-discount-list li .data-a th {
-    padding: 0.8125rem 0.75rem; }
-  .expect-discount-list li .data-a th {
-    padding: 0.8125rem 0.75rem; }
 
 .expect-discount-list li:first-child .exd-sum {
   margin-top: 2rem; }
@@ -6562,18 +6528,6 @@ a.bt-link-tx.underline.small {
     left: 0 !important;
     right: 0 !important; }
 
-/* 공통 테이블 스타일 추가 */
-.data-a {
-  word-break: break-all; }
-
-/* 공통 안내문구 스타일 추가 */
-.announcement-box .announcement-txt.ft13,
-.announcement-box .announcement-bullet.ft13 {
-  font-size: 0.8125rem; }
-
-.announcement-box .announcement-txt.bk {
-  color: #000; }
-
 /* 휴대폰에서 lte 로밍설정 */
 .loaming-visual {
   font-size: 0; }
@@ -6626,13 +6580,15 @@ a.bt-link-tx.underline.small {
   font-size: 0.75rem; }
 
 .int-call-wrap .calling-steps {
-  overflow: hidden;
-  padding: 1.6875rem 0.9375rem 1.5625rem;
+  padding: 1.6875rem 0 1.5625rem;
   margin-top: 0.5rem;
-  background: #ebf5fe; }
+  background: #ebf5fe;
+  text-align: center;
+  font-size: 0; }
   .int-call-wrap .calling-steps .step {
-    float: left;
-    font-size: 0; }
+    display: inline-block;
+    font-size: 0;
+    text-align: left; }
     .int-call-wrap .calling-steps .step .tit {
       display: block;
       font-size: 0.75rem;
@@ -6657,7 +6613,7 @@ a.bt-link-tx.underline.small {
       display: inline-block;
       width: 0.75rem;
       height: 0.8125rem;
-      margin-top: 0.3125rem;
+      margin: 0.3125rem 0 0 0.1875rem;
       content: '';
       background: url(/img/product/ico-call.png);
       background-size: 0.75rem; }
@@ -6724,6 +6680,125 @@ a.bt-link-tx.underline.small {
   .national-call-info li .txt {
     float: right;
     font-size: 0.9375rem; }
+
+/* 이용안내 -이메일상담 */
+.infoviewic-wrap {
+  position: relative; }
+  .infoviewic-wrap .checkbox.type01:before, .infoviewic-wrap .shop-info .shop-txt .checkbox.type02:before, .shop-info .shop-txt .infoviewic-wrap .checkbox.type02:before, .infoviewic-wrap .shop-info .shop-txt .checkbox.type03:before, .shop-info .shop-txt .infoviewic-wrap .checkbox.type03:before {
+    margin-right: 0.625rem; }
+
+.btn-detail-view {
+  position: absolute;
+  right: 0.0625rem;
+  top: 0.625rem;
+  width: 1.5625rem;
+  height: 1.5rem;
+  content: ''; }
+  .btn-detail-view:after {
+    position: absolute;
+    right: 0;
+    top: 0.3125rem;
+    width: 0.4375rem;
+    height: 0.8125rem;
+    content: '';
+    background: url(/img/ico/bt-bundle-product.png);
+    background-size: 0.4375rem; }
+
+/* 최신 이용자 피해예방 주의보 */
+.prevention-list li .list-inner .list-tit.tx-bold {
+  font-weight: 700; }
+
+/* 진행중 이벤트 */
+.card-visual-list li {
+  margin: 0.9375rem auto;
+  -webkit-box-shadow: 0 4px 8px 0 #e1e1e1;
+          box-shadow: 0 4px 8px 0 #e1e1e1;
+  border-radius: 0.1875rem;
+  font-size: 0; }
+  .card-visual-list li .btn-cvl {
+    width: 100%; }
+    .card-visual-list li .btn-cvl img {
+      width: 100%;
+      vertical-align: top; }
+
+.extra-info {
+  position: relative;
+  padding: 0.9375rem;
+  font-size: 0; }
+  .extra-info .date {
+    color: #666;
+    font-size: 0.8125rem; }
+  .extra-info .dday {
+    color: #e22f26;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    margin-left: 0.625rem; }
+  .extra-info .entry {
+    position: absolute;
+    right: 0.9375rem;
+    color: #3b98e6;
+    font-size: 0.8125rem;
+    font-weight: 700; }
+
+/* 지난이벤트 */
+.event-article-list {
+  padding: 0 1rem; }
+  .event-article-list li {
+    border-bottom: 1px solid #e1e1e1; }
+    .event-article-list li:last-child {
+      border: 0; }
+    .event-article-list li .btn {
+      position: relative;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      width: 100%;
+      padding: 1.375rem 1.25rem 1.375rem 0;
+      text-align: left; }
+      .event-article-list li .btn:after {
+        position: absolute;
+        right: 0;
+        top: 1.6875rem;
+        width: 0.4375rem;
+        height: 0.8125rem;
+        content: '';
+        background: url(/img/ico/bt-bundle-product.png);
+        background-size: 0.4375rem; }
+      .event-article-list li .btn .tit {
+        display: block;
+        font-size: 0.875rem;
+        line-height: 1.25rem; }
+      .event-article-list li .btn .subtxt {
+        display: block;
+        margin-top: 0.125rem;
+        font-size: 0.8125rem; }
+        .event-article-list li .btn .subtxt .date {
+          color: #666; }
+        .event-article-list li .btn .subtxt .entry {
+          position: relative;
+          padding-left: 1rem;
+          color: #3b98e6;
+          font-size: 0.8125rem;
+          font-weight: 700; }
+          .event-article-list li .btn .subtxt .entry:before {
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            content: '';
+            width: 0.0625rem;
+            height: 0.5625rem;
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+            background: #e1e1e1; }
+      .event-article-list li .btn .prize {
+        font-size: 0.8125rem;
+        color: #666; }
+
+/* 목소리인증서비스 이용안내 */
+.accordion .acco-style.btn-hold.active-txt-type .acco-list .acco-box .acco-tit {
+  font-size: 0.875rem; }
+
+.accordion .acco-style.btn-hold.active-txt-type .acco-list .acco-box.on .acco-tit {
+  font-weight: 700; }
 
 .refill-coupon-box .coupon-list .coupon-paper {
   display: table;
@@ -10029,6 +10104,9 @@ a.bt-link-tx.underline.small {
     color: #000;
     letter-spacing: -0.04em;
     line-height: 2.25rem; }
+    .complete-title span.f-size {
+      font-size: 1.125rem;
+      line-height: 1.5rem; }
 
 .complete-tx0 {
   padding-top: 2.5rem;
@@ -10755,7 +10833,7 @@ a.bt-link-tx.underline.small {
           width: 2.1875rem;
           height: 1rem;
           margin-left: 0.3125rem;
-          vertical-align: middle; }
+          vertical-align: -0.1875rem; }
       .representcharge-list > li .representcharge-info .text {
         margin-top: 0.3125rem;
         color: #666;
@@ -13142,6 +13220,7 @@ a.bt-link-tx.underline.small {
 
 /* 임지선 ~ 2018.10.05 */
 /* 김재성 */
+/* 2018.11.09 new header */
 /* widget */
 .widget-box .horizontal-slide {
   width: 100%;
@@ -15465,38 +15544,34 @@ a.bt-link-tx.underline.small {
     margin-top: -0.25rem;
     background: #e1e1e1; }
 
-.details-btm .details-info {
-  padding: 0.8125rem 0; }
-  .details-btm .details-info li {
-    display: table;
-    width: 100%;
-    padding: 0.25rem 0;
-    line-height: 1.3125rem;
-    table-layout: fixed; }
-    .details-btm .details-info li strong {
-      display: table-cell;
-      color: #666;
-      font-size: 0.875rem;
-      font-weight: 400;
-      vertical-align: top; }
-    .details-btm .details-info li em {
-      display: table-cell;
-      color: #666;
-      font-size: 0.9375rem;
-      text-align: right;
-      vertical-align: top; }
-    .details-btm .details-info li:first-child strong {
-      color: #000; }
-    .details-btm .details-info li:first-child em {
-      color: #000;
-      font-size: 0.9375rem;
-      font-weight: 700; }
-    .details-btm .details-info li:nth-child(2) {
-      margin-top: 0.625rem; }
+.details-btm .details-info .tit {
+  display: table;
+  width: 100%;
+  padding: 1rem 0 1.0625rem;
+  line-height: 1.3125rem;
+  table-layout: fixed;
+  border-bottom: 1px solid #e1e1e1; }
+  .details-btm .details-info .tit strong {
+    display: table-cell;
+    font-size: 0.875rem;
+    font-weight: 400;
+    vertical-align: top; }
+  .details-btm .details-info .tit em {
+    display: table-cell;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-align: right;
+    vertical-align: top; }
+
+.details-btm .dt-list {
+  margin: 0.9375rem 0 1.375rem; }
+  .details-btm .dt-list li {
+    font-size: 0.875rem;
+    color: #666;
+    line-height: 1.375rem; }
 
 .details-btm .details-cont {
-  padding: 0.9375rem 0;
-  border-top: 1px solid #e1e1e1;
+  margin: 1rem 0;
   color: #666;
   font-size: 0.875rem;
   line-height: 1.3125rem; }
@@ -15921,26 +15996,29 @@ a.bt-link-tx.underline.small {
   border: 1px solid #cfcfcf;
   table-layout: fixed;
   font-size: 0.8125rem;
-  line-height: 1rem; }
+  line-height: 1rem;
+  word-break: break-all; }
   .data-a th {
-    padding: 0.4375rem 0.75rem 0.4375rem 0.75rem;
+    padding: 0.6875rem 0.75rem 0.625rem 0.75rem;
     border-left: 1px solid #cfcfcf;
     border-bottom: 1px solid #cfcfcf;
     background: #f5f5f5;
     color: #666;
-    font-size: 0.8125rem;
-    line-height: 1rem; }
+    line-height: 1.125rem;
+    text-align: left;
+    vertical-align: top; }
     .data-a th:first-child {
       border-left: none; }
   .data-a td {
-    padding: 0.9375rem 0.75rem 0.9375rem 0.75rem;
+    padding: 0.625rem 0.75rem;
     border-left: 1px solid #cfcfcf;
     border-top: 1px solid #cfcfcf;
-    text-align: center; }
+    line-height: 1.1875rem;
+    vertical-align: top; }
     .data-a td:first-child {
       border-left: none; }
-  .data-a .t-l {
-    text-align: left; }
+  .data-a .t-r {
+    text-align: right; }
 
 .agree-chk-type {
   margin-bottom: -0.125rem; }
@@ -16805,8 +16883,6 @@ a.bt-link-tx.underline.small {
 
 .form-info-box {
   position: relative; }
-  .form-info-box .slick-dots {
-    display: none !important; }
   .form-info-box .slick-prev {
     position: absolute;
     top: 50%;
@@ -17241,6 +17317,17 @@ a.bt-link-tx.underline.small {
   .captcha-box .inputbox {
     margin-top: 0.625rem; }
 
+.discount-look-ahead.discount-type .board-type {
+  padding-top: 0; }
+  .discount-look-ahead.discount-type .board-type p {
+    padding: 1.875rem 0 0 0; }
+    .discount-look-ahead.discount-type .board-type p:first-child {
+      padding: 0; }
+  .discount-look-ahead.discount-type .board-type > div {
+    padding: 0; }
+    .discount-look-ahead.discount-type .board-type > div .select-list li {
+      margin-top: 0.625rem; }
+
 /* 권은별 */
 .acco-notice .acco-list {
   padding: 0; }
@@ -17451,13 +17538,6 @@ a.bt-link-tx.underline.small {
 
 .txt-red {
   color: #e22f26; }
-
-/* table.data-a */
-.data-a .t-r {
-  text-align: right; }
-
-.data-a .v-t {
-  vertical-align: top; }
 
 .t-example {
   padding-bottom: 1.875rem; }
@@ -17745,6 +17825,9 @@ a.bt-link-tx.underline.small {
   .discount-look-ahead .select-list li:last-child {
     margin-right: 0 !important; }
 
+.discount-look-ahead h4.sstit {
+  font-size: 0.875rem; }
+
 .btn-line-add {
   display: inline-block; }
   .btn-line-add .del {
@@ -17837,6 +17920,10 @@ a.bt-link-tx.underline.small {
 
 .round-dot-list.type01 li, .shop-info .shop-txt .round-dot-list.type02 li, .shop-info .shop-txt .round-dot-list.type03 li {
   font-size: 0.75rem; }
+
+.round-dot-list.type02 li {
+  font-size: 0.9375rem;
+  color: #000; }
 
 .popup-contents .round-dot-list li {
   font-size: 0.75rem; }
@@ -18477,6 +18564,8 @@ a.bt-link-tx.underline.small {
   padding: 0; }
   .comp-box.country-roaming .list-box {
     padding-bottom: 2.5rem; }
+    .comp-box.country-roaming .list-box .tit {
+      font-size: 1.125rem !important; }
   .comp-box.country-roaming .bt-add {
     border-bottom: 1px solid #e1e1e1;
     padding-bottom: 1.25rem; }
@@ -18537,6 +18626,9 @@ a.bt-link-tx.underline.small {
 .roaming-info-wrap .txt.tline {
   padding: 1.875rem 0 0 0;
   border-top: 1px solid #e1e1e1; }
+
+.roaming-info-wrap h4.txt {
+  font-size: 0.9375rem; }
 
 .confirm-noti.charge-info .icon {
   display: inline-block;
@@ -18663,12 +18755,12 @@ a.bt-link-tx.underline.small {
     .service-check-wrap h1 img {
       width: 6.8125rem;
       height: auto; }
-  .service-check-wrap em {
+  .service-check-wrap .stit {
     display: block;
     padding: 4.6875rem 0 1.875rem;
     font-size: 2rem;
     letter-spacing: -0.125rem; }
-  .service-check-wrap p {
+  .service-check-wrap .stxt {
     font-size: 0.8125rem;
     color: #666; }
 
@@ -18753,5 +18845,127 @@ a.bt-link-tx.underline.small {
       vertical-align: middle;
       background: url(/img/benefit/icon-rating-arw01.png) no-repeat;
       background-size: 100% auto; }
+
+.penalty-system-wrap h3 {
+  font-weight: 700;
+  padding-bottom: 0.8125rem; }
+  .penalty-system-wrap h3.type01, .penalty-system-wrap .shop-info .shop-txt h3.type02, .shop-info .shop-txt .penalty-system-wrap h3.type02, .penalty-system-wrap .shop-info .shop-txt h3.type03, .shop-info .shop-txt .penalty-system-wrap h3.type03 {
+    padding: 2.5rem 0 1.25rem; }
+
+.penalty-system-wrap .stit {
+  font-size: 0.9375rem; }
+
+.penalty-system-wrap .data-a {
+  margin-top: 1.25rem; }
+
+.penalty-system-wrap .announcement-bullet {
+  color: #000; }
+
+.penalty-system-wrap .announcement-bullet.type02 {
+  font-size: 0.9375rem;
+  color: #666; }
+
+.phone-restrict-subsidies li {
+  padding: 1.5rem 0;
+  border-top: 1px solid #e1e1e1; }
+  .phone-restrict-subsidies li:first-child {
+    padding: 0 0 1.5rem;
+    border-top: 0; }
+
+.phone-restrict-subsidies li span {
+  display: block; }
+
+.phone-restrict-subsidies .bt-link-tx {
+  margin-bottom: 0.3125rem;
+  font-size: 0.8125rem !important; }
+
+.phone-restrict-subsidies .con-txt3 {
+  padding-top: 0.125rem; }
+
+.join-pdt-wrap .data-a {
+  margin-top: 0; }
+  .join-pdt-wrap .data-a th {
+    text-align: left; }
+  .join-pdt-wrap .data-a td {
+    text-align: left; }
+
+.clubt-pdt-wrap h3 {
+  padding-bottom: 2.0625rem; }
+
+.clubt-pdt-wrap .round-dot-list li {
+  font-size: 0.9375rem;
+  color: #000; }
+
+.clubt-pdt-wrap .data-a th {
+  text-align: left;
+  color: #666; }
+
+.clubt-pdt-wrap .data-a td {
+  text-align: left; }
+  .clubt-pdt-wrap .data-a td.txt-type01 {
+    border-bottom: 1px solid #cfcfcf;
+    background: #f5f5f5;
+    color: #666; }
+
+.clubt-pdt-wrap h4.stit {
+  padding-bottom: 1.25rem;
+  font-weight: 700;
+  font-size: 0.9375rem; }
+
+.clubt-pdt-wrap .announcement-bullet {
+  font-size: 0.9375rem !important; }
+  .clubt-pdt-wrap .announcement-bullet.type01, .clubt-pdt-wrap .shop-info .shop-txt .announcement-bullet.type02, .shop-info .shop-txt .clubt-pdt-wrap .announcement-bullet.type02, .clubt-pdt-wrap .shop-info .shop-txt .announcement-bullet.type03, .shop-info .shop-txt .clubt-pdt-wrap .announcement-bullet.type03 {
+    color: #000; }
+
+.clubt-pdt-wrap h5.sstit {
+  padding: 0 0 1.25rem;
+  font-size: 0.9375rem; }
+
+.clubt-pdt-wrap .round-dot-list li .comm-indent-txt {
+  padding-top: 0.25rem;
+  font-size: 0.9375rem;
+  color: #000; }
+
+.campus-university-list {
+  overflow: hidden;
+  margin-top: -1.25rem; }
+  .campus-university-list .select-list li {
+    float: left;
+    width: 55%;
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.5rem; }
+    .campus-university-list .select-list li:nth-child(2n) {
+      width: 45%; }
+
+.concierge-service-detail h3.tit {
+  padding-bottom: 2.5rem;
+  font-size: 0.9375rem; }
+
+.concierge-service-detail h4.stit {
+  padding-bottom: 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 700; }
+
+.concierge-service-detail .round-dot-list li {
+  font-size: 0.9375rem;
+  color: #000; }
+
+.concierge-service-detail dl dt {
+  padding: 0.9375rem 0 0.9375rem;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+  font-size: 0.9375rem; }
+  .concierge-service-detail dl dt:first-child {
+    border-top: 0;
+    padding-top: 0; }
+
+.concierge-service-detail dl dd {
+  padding: 1.875rem 0;
+  font-size: 0.9375rem; }
+
+.concierge-service-detail .announcement-bullet {
+  font-size: 0.9375rem !important;
+  color: #000; }
 
 /* 최은현 */

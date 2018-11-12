@@ -70,7 +70,8 @@ Tw.POPUP_TITLE = {
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
-  SELECT_FAMILY_TYPE: '가족선택'
+  SELECT_FAMILY_TYPE: '가족선택',
+  HISTORY: '이용내역'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -249,17 +250,7 @@ Tw.MYT_FARE_BILL_SET = {
       'E-Mail': '이메일',
       Paper: '기타(우편)'
     }
-  }
-};
-
-Tw.MYT_FARE_BILL_SET_REISSUE = {
-  MSG_00: ' 요금안내서 재발행',
-  MSG_01: ' 요금안내서 재발행을 신청하시겠습니까?',
-  MSG_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
-  MSG_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
-  MSG_04: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다. 재발행 신청을 하시겠습니까?',
-  MSG_FAIL: '재발행 요청이 실패했습니다.',
-  MSG_EXIT: '요금안내서 재발행을 종료하시겠습니까?',
+  },
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.'
 };
 
@@ -446,14 +437,14 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' },
   ALERT_3_A29: { TITLE: '알림', MSG: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.' },
   ALERT_3_A30: { TITLE: '알림', MSG: '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.' },
-  ALERT_3_A31: {
-    TITLE: '알림',
-    MSG: '선택하신 결합상품은 추가 정보 및 서류 제출을 할 수 있는 상품입니다.\n추가 정보 및 서류 제출 없이 상담 예약을 하시겠습니까?'
-  },
+  ALERT_3_A31: { TITLE: '알림', MSG: '결합상품명을 미선택하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' },
   ALERT_3_A32: { TITLE: '알림', MSG: '파일당 제한용량(2MB)을 초과하여 첨부파일을 등록할 수 없습니다. 다시 확인해주세요.' },
   ALERT_3_A33: { TITLE: '알림', MSG: '파일 확장자가 jpg, jpeg, png인 파일만 첨부할 수 있습니다. 다시 확인해주세요.' },
-  ALERT_JOIN_RESERVATION_NOT_COMBINE: { TITLE: '알림', MSG: '결합상품을 미선택 하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' },
-  ALERT_JOIN_RESERVATION_EXPLAIN: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
+  ALERT_3_A34: { TITLE: '알림', MSG: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.' },
+  ALERT_3_A35: { TITLE: '알림', MSG: '지정번호 6회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.' },
+  ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
+  ALERT_3_A37: { TITLE: '알림', MSG: '이미 사용하고 있는 상품입니다.' },
+  ALERT_3_A40: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {};
@@ -463,6 +454,11 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     TITLE: 'T멤버십에 가입하실 수 없습니다.',
     CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
     TXT: '회선 관리하기'
+  },
+  JOIN_COMPLETE: {
+    TITLE: '멤버십 가입 완료',
+    CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',
+    LINK_TITLE: '발급 변경 내역 보기 >'
   }
 };
 
@@ -657,6 +653,14 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   AUTO_WITHDRAWAL: 'auto-withdrawal',
   BILL_RESEND_BY_FAX: 'by-fax',
   BILL_RESEND_BY_EMAIL: 'by-email'
+};
+
+Tw.MYT_JOIN_MGMT_NUMCHG = {
+  COMPLETE_POPUP : {
+    MAIN_TXT: '변경',
+    SUB_TXT : '변경한 번호 : ',
+    LINK_TXT: '번호변경 안내 서비스'
+  }
 };
 
 Tw.MYT_JOIN_MGMT_NUMCHG_ALARM = {
@@ -935,6 +939,15 @@ Tw.BENEFIT = {
     E: '적립',
     U: '사용',
     X: '소멸'
+  },
+  DISCOUNT_PGM: {
+    SELECTED: {
+      FINISH: {
+        TITLE: '선택약정할인',
+        CONTENT: '상품 가입 완료',
+        LINK_TITLE: '나의 가입정보 확인하기 >'
+      }
+    }
   }
 };
 
@@ -968,3 +981,9 @@ Tw.FAMILY_TYPE = {
   GRANDCHILDREN: '손자녀',
   ME: '본인'
 };
+
+Tw.CUSTOMER_EMAIL.ACTION_TYPE = {
+  SELECT_BRAND:'브랜드 선택',
+  SELECT_DEVICE: '기종 선택',
+  SELECT_LINE: '회선 선택'
+}

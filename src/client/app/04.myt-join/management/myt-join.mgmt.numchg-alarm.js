@@ -109,10 +109,23 @@ Tw.MyTJoinMgmtNumchgAlarm.prototype = {
         skt_landing.action.loading.off({ ta: this.$container });
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          this._popupService.openTypeA(
-            Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.TITLE,
-            Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.CONTENTS
-          );
+          var option = {
+            ico: 'type2',
+            title: Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.TITLE,
+            contents: Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.CONTENTS,
+            bt: [{
+              style_class: 'bt-blue1 tw-popup-closeBtn',
+              txt: Tw.BUTTON_LABEL.CLOSE
+            }]
+          };
+          this._popupService._setOpenCallback(null);
+          this._popupService._addHash(null, 'disable-service');
+          this._popupService._open(option);
+
+          // this._popupService.openTypeA(
+          //   Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.TITLE,
+          //   Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.ALERT_SVC_DISABLED.CONTENTS
+          // );
           //   Tw.Error(resp.code, resp.msg).pop();
           return ;
         }

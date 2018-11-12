@@ -170,8 +170,8 @@ Tw.API_CMD = {
   BFF_05_0177: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
   BFF_05_0182: { path: '/core-modification/v1/new-number-notifications', method: Tw.API_METHOD.POST },
   BFF_05_0183: { path: '/core-modification/v1/new-number-notifications', method: Tw.API_METHOD.DELETE },
-  BFF_05_0184: { path: '/core-modification/v1/', method: Tw.API_METHOD.GET },
-  BFF_05_0185: { path: '/core-modification/v1/', method: Tw.API_METHOD.GET },
+  BFF_05_0184: { path: '/core-modification/v1/numberSearch', method: Tw.API_METHOD.GET },
+  BFF_05_0185: { path: '/core-modification/v1/numberChange', method: Tw.API_METHOD.POST },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -353,6 +353,7 @@ Tw.API_CMD = {
   BFF_10_0036: { path: '/core-product/v1/mobiles/additions/:args0', method: Tw.API_METHOD.DELETE },
   BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: Tw.API_METHOD.GET },
   BFF_10_0038: { path: '/core-product/v1/mobiles/additions/:args0/vas-terms', method: Tw.API_METHOD.GET },
+  BFF_10_0039: { path: '/core-product/v1/combinations/discount-simulation', method: Tw.API_METHOD.GET },
   BFF_10_0048: { path: '/core-modification/v1/wireJoin/listUseAddressService', method: Tw.API_METHOD.POST },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: Tw.API_METHOD.POST },

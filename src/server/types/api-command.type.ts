@@ -243,8 +243,9 @@ export const API_CMD = {
   BFF_05_0181: { path: '/core-product/v1/submain/wire/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0182: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0183: { path: '/core-modification/v1/new-number-notifications', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0184: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0185: { path: '/core-modification/v1/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0184: { path: '/core-modification/v1/numberSearch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0185: { path: '/core-modification/v1/numberChange', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0186: { path: '/core-modification/v1/numberChangeInit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -435,6 +436,9 @@ export const API_CMD = {
   BFF_07_0090: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0091: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0092: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0093: { path: '/core-bill/v1/point-onetime-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
+  BFF_07_0094: { path: '/core-bill/v1/point-autopay-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
+
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -565,12 +569,14 @@ export const API_CMD = {
   BFF_10_0036: { path: '/core-product/v1/mobiles/additions/:args0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_10_0037: { path: '/core-product/v1/mobiles/fee-plans/t-tab-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0038: { path: '/core-product/v1/mobiles/additions/:args0/vas-terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0039: { path: '/core-product/v1/combinations/discount-simulation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0048: { path: '/core-modification/v1/wireJoin/listUseAddressService', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0050: { path: '/core-product/v1/submain/banners', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0062: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0063: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // MEMBERSHIP

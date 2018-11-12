@@ -13,19 +13,19 @@
     <h2 class="blind">내용</h2>
     <div class="container">
       {{#list}}
-      {{#unless @first}}
-      <hr class="cont-sp type1" aria-hidden="true"/>
-      {{/unless}}
-      <!-- .cont-box -->
-      <div class="cont-box nogaps" data-anchor="contents_{{@index}}">
-        <div class="ti-caption-gray">
-          <span class="tit">{{title}}</span>
+        {{#unless @first}}
+          <hr class="cont-sp type1" aria-hidden="true"/>
+        {{/unless}}
+        <!-- .cont-box -->
+        <div class="cont-box nogaps" data-anchor="contents_{{@index}}">
+          <div class="ti-caption-gray">
+            <span class="tit">{{title}}</span>
+          </div>
+          <div class="cont-box {{contentsClass}}">
+            {{{contents}}}
+          </div>
         </div>
-        <div class="cont-box {{contentsClass}}">
-          {{{contents}}}
-        </div>
-      </div>
-      <!--// .cont-box -->
+        <!--// .cont-box -->
       {{/list}}
     </div>
   </div>

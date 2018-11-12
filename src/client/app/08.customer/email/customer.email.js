@@ -17,9 +17,6 @@ Tw.CustomerEmail = function (rootEl) {
 
 Tw.CustomerEmail.prototype = {
   _init: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
-    //   .done($.proxy(this._onSuccessQuestionList, this));
-
     // If there is hash #auto, show second tab(auto gift)
     // if ( window.location.hash === '#quailty' ) {
     //   this._goQualityTab();
@@ -44,7 +41,6 @@ Tw.CustomerEmail.prototype = {
 
   _onKeyUpPhoneNumber: function (e) {
     var $elPhone = $(e.currentTarget);
-
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
   },
 
@@ -56,16 +52,8 @@ Tw.CustomerEmail.prototype = {
       .find('.byte-current');
 
     $elLength.text(len);
-  },
 
-  _openFaq: function (){
-    $(document.body).css('overflow', 'hidden');
-    this.$wrap_faq.show();
-  },
-
-  _closeFaq: function (){
-    $(document.body).css('overflow', 'auto');
-    this.$wrap_faq.hide();
+    this.$container.trigger('validateForm');
   },
 
   _goQualityTab: function () {
@@ -73,6 +61,16 @@ Tw.CustomerEmail.prototype = {
     var $tab2 = this.$container.find('#tab2');
     $tab1.attr('aria-selected', false);
     $tab2.attr('aria-selected', true);
+  },
+
+  _openFaq: function () {
+    $(document.body).css('overflow', 'hidden');
+    this.$wrap_faq.show();
+  },
+
+  _closeFaq: function () {
+    $(document.body).css('overflow', 'auto');
+    this.$wrap_faq.hide();
   }
 };
 

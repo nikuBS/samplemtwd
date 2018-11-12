@@ -68,6 +68,19 @@
                 </div>
                 <!--// .cont-box -->
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        <li>텍스트가 1줄인 Case입니다. <button aria-haspopup="true" class="tip-view" title="정보보기">TIP</button></li>
+                        <li>텍스트가 2줄이상인<br>Case입니다. <button aria-haspopup="true" class="tip-view" title="정보보기">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+
             </div>
         </div>
 
@@ -84,10 +97,11 @@
     </script>
     <script id="fe-template-items" type="text/x-handlebars-template">
         {{#each items}}
-        <button data-list-id="{{listId}}">
-            <div class="li-elem">
+        <div class="li-elem">
+            <button class="bt-detail" data-list-id="{{listId}}">
                 <div class="title-box">
                     <span class="tit">{{listTitle}}</span>
+                    <!--
                     <span class="sub-tit">
                         {{#if dataSubInfo2}}
                         <span>{{dataSubInfo}}</span><span>{{dataSubInfo2}}</span>
@@ -95,10 +109,25 @@
                         {{dataSubInfo}}
                         {{/if}}
                     </span>
+                    -->
                 </div>
                 <div class="price"><span class="tx-price">{{dataAmt}}</span><span class="unit">원</span></div>
-            </div>
-        </button>
+            </button>
+            <span class="txt-type">
+                {{#if hasTip}}
+                <button aria-haspopup="true" class="tip-view mr6" title="정보보기" id="MF_08">TIP</button>
+                {{/if}}
+                {{#if dataSubInfo2}}
+                <span>{{dataSubInfo}}</span><span>{{dataSubInfo2}}</span>
+                {{else}}
+                {{dataSubInfo}}
+                {{/if}}
+                {{#if reserveCancelable}}
+                <button class="bt-link-tx underline red align-r">예약 취소</button>
+                {{/if}}
+            </span>
+            <!--<span class="txt-type bk">납부신청</span>-->
+        </div>
         {{/each}}
     </script>
     <script id="fe-template-day" type="text/x-handlebars-template">
@@ -118,7 +147,7 @@
     <script id="list-template-wrapper" type="text/x-handlebars-template">
         <!-- .cont-box -->
         <div class="cont-box nogaps">
-            <div class="history-list">
+            <div class="history-list type4">
                 <ul class="fe-list-inner">
                     {{>list records=records}}
                 </ul>

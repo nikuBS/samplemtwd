@@ -1,0 +1,9 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "dcPhrsCtt": "총 10,000원 할인",
+    "dcPhrsAddDesc": "(부가세 포함 11,000원)",
+    "useCondHtmlCtt": "<DD>인터넷 'Giga 인터넷' 요금제 사용 시</DD> <EM>(필수)</EM> <DD>인터넷 3년약정 시</DD> <EM>(필수)</EM> <DD><STRONG>이동전화 3천원 할인 포함</STRONG></DD>"
+  }
+}

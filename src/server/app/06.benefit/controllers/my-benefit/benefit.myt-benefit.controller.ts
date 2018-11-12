@@ -34,20 +34,20 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0106, {}),
       this.apiService.request(API_CMD.BFF_05_0094, {}),
       this.apiService.request(API_CMD.BFF_06_0001, {}),
-    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, long]) => {
+      this.apiService.request(API_CMD.BFF_03_0004, {}),
+    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, long, lines]) => {
 
-      // checks all API errors except that the API has valid code not API_CODE.CODE_00
-      const apiError = this.error.apiError([/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, long]);
-      if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.error.render(res, {
-          title: MY_BENEFIT.MAIN,
-          svcInfo: svcInfo,
-          msg: apiError.msg,
-          code: apiError.code
-        });
-      }
+        // checks all API errors except that the API has valid code not API_CODE.CODE_00
+        const apiError = this.error.apiError([/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, long]);
+        if ( !FormatHelper.isEmpty(apiError) ) {
+          return this.error.render(res, {
+            title: MY_BENEFIT.MAIN,
+            svcInfo: svcInfo,
+            msg: apiError.msg,
+            code: apiError.code
+          });
+        }
 
-      if ( true ) {
         const options = { svcInfo, pageInfo };
         if ( ocb.result.svcYN === 'Y' ) {
           options['okCashback'] = this._dataPreprocess(ocb.result.availPt);
@@ -57,7 +57,10 @@ class BenefitMyBenefit extends TwViewController {
           options['t'] = 0;
         }
         options['rainbow'] = this._dataPreprocess(rainbow.result.usblPoint);
-        options['noContract'] = this._dataPreprocess(noContract.result.muPoint);
+
+        if ( noContract.muPointYn === 'Y' ) {
+          options['noContract'] = this._dataPreprocess(noContract.result.muPoint);
+        }
 
         if ( cookiz.code === API_CODE.CODE_00 ) {
           options['cookiz'] = this._dataPreprocess(cookiz.result.usblPoint);
@@ -69,7 +72,6 @@ class BenefitMyBenefit extends TwViewController {
 
         options['count'] = 0;
         options['benefits'] = [];
-        // if ( bill.code === API_CODE.CODE_00 ) {
         bill.result.priceAgrmt.forEach(prod => {
           options['benefits'].push({
             name: prod.prodNm,
@@ -77,30 +79,34 @@ class BenefitMyBenefit extends TwViewController {
           });
           options['count']++;
         });
-        // }
 
-        // if ( combination.code === API_CODE.CODE_00 ) {
         options['bond'] = {
           name: combination.prodNm,
           total: parseInt(combination.etcCnt, 10)
         };
         options['count'] += options['bond'].total;
-        // }
-
-        // if ( long.code === API_CODE.CODE_00 ) {
         const coupons = long.result.filter(coupon => {
           return coupon.copnOperStCd === 'A10';
         });
         options['coupons'] = coupons.length;
-        // }
-        res.render('my-benefit/benefit.my-benefit.html', options);
-      } else {
-        return this.error.render(res, {
-          title: MY_BENEFIT.MAIN,
-          svcInfo: svcInfo
+
+        // gets the subscribe date
+        let _lines = [];
+        Object['values'](lines.result).forEach(type => _lines = _lines.concat(type));
+        const line = _lines.find((item, idx) => {
+          return item['svcMgmtNum'] === svcInfo.svcMgmtNum;
         });
+        if ( line ) {
+          options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), line['svcScrbDt'], 'days');
+        } else {
+          this.error.render(res, {
+            title: MY_BENEFIT.MAIN,
+            svcInfo: svcInfo
+          });
+        }
+        res.render('my-benefit/benefit.my-benefit.html', options);
       }
-    });
+    );
   }
 
 }

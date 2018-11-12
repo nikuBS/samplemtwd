@@ -89,7 +89,8 @@ Tw.ProductJoinSelContractDetail.prototype = {
   _onSuccessSeldisSet: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.afterRequestSuccess('/myt/join', '/product/join/' + this.data.prodId,
-        '나의 가입정보 확인하기 >', '선택약정할인제도', '상품 가입 완료');
+        Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
+        Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
     }
     else {
       return Tw.Error(resp.code, resp.msg).pop();

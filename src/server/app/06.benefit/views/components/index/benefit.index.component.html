@@ -4,7 +4,7 @@
 * Date: 2018.10.30
 -->
 <script id="productList" type="text/x-handlebars-template">
-    {{#each list}}
+    {{#list}}
     <li>
         <button class="list" type="button">
             <em>
@@ -14,6 +14,9 @@
                 {{/ifCond}}
             </em>
             <p>{{benefitDesc}}</p>
+            {{#ifCond ../category '===' 'F01422'}}
+                <span class="total">{{benefitText}} <strong>{{numComma benefitPrice}}</strong>원 </span>
+            {{/ifCond}}
             <div>
                 {{#each tagList}}
                     <span>{{tagNm}}</span>
@@ -22,5 +25,5 @@
             <span class="img"><img src="{{imgFullPath}}" alt="{{benefitNm}}"/></span>
         </button>
     </li>
-    {{/each}}
+    {{/list}}
 </script>

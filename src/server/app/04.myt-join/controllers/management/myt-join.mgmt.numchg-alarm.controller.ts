@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class MyTJoinMgmtNumChgAlarm extends TwViewController {
 
@@ -14,27 +15,34 @@ class MyTJoinMgmtNumChgAlarm extends TwViewController {
 
      this.apiService.request(API_CMD.BFF_05_0180, {})
        .subscribe((resp) => {
-        // const resp = {
-        //   'code': '00',
-        //   'msg': '결과메세지',
-        //   'result':
-        //     {
-        //       'oldSvcNum': '01056**78**',
-        //       'newSvcNum': '01012**34**',
-        //       'notiType': 'S',
-        //       'freeOfrEndDt': '20191030',
-        //       'notiStaDt': '20181031',
-        //       'notiEndDt': '20190331',
-        //       'extnsPsblYn': 'N',
-        //       'orglSktYn': 'Y'
-        //     }
-        // };
+     //    const resp = {
+     //      'code': '00',
+     //      'msg': '결과메세지',
+     //      'result':
+     //        {
+     //          'oldSvcNum': '01056**78**',
+     //          'newSvcNum': '01012**34**',
+     //          'notiType': 'S',
+     //          'freeOfrEndDt': '20191030',
+     //          'notiStaDt': '20181031',
+     //          'notiEndDt': '20181130',
+     //          'extnsPsblYn': 'N',
+     //          'orglSktYn': 'Y'
+     //        }
+     //    };
         
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
           result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
           result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
+
+          // 서비스 이용중(서비스 종료일이 오늘날짜보다 크거나 같으면) 이라면 연장으로 이동
+          const today = DateHelper.getShortDateNoDot(new Date());
+          if ( result['notiEndDt'] && DateHelper.getShortDateNoDot(result['notiEndDt']) >= today ) {
+            res.redirect('/myt/join/mgmt/numchg/alarm/ext');
+            return;
+          }
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
           res.render('management/myt-join.mgmt.numchg-alarm.html', option);

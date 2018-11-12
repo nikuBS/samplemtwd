@@ -64,8 +64,8 @@ class LoggerService {
 
   private getFileTransport() {
     const option = {
-      level: 'debug',
-      filename: this.logDir + '/logs.log',
+      level: 'error',
+      filename: this.logDir + '/error.log',
       timestamp: this.tsFormat,
       maxsize: 1000000,
       maxFiles: 5

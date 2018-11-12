@@ -27,11 +27,12 @@ Tw.CustomerEmailTemplate.prototype = {
 
     // service, quality template
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').html());
-    this.tpl_service_internet = Handlebars.compile($('#tpl_service_internet').html());
-    this.tpl_service_direct = Handlebars.compile($('#tpl_service_direct').html());
-    this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').html());
     this.tpl_quality_cell = Handlebars.compile($('#tpl_quality_cell').html());
+    this.tpl_service_direct = Handlebars.compile($('#tpl_service_direct').html());
+    this.tpl_service_direct_brand = Handlebars.compile($('#tpl_service_direct_brand').html());
+    this.tpl_service_internet = Handlebars.compile($('#tpl_service_internet').html());
     this.tpl_quality_internet = Handlebars.compile($('#tpl_quality_internet').html());
+    this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').html());
   },
 
   _bindEvent: function () {
@@ -48,7 +49,11 @@ Tw.CustomerEmailTemplate.prototype = {
         this.$wrap_tpl_service.html(this.tpl_service_internet());
         break;
       case 'direct':
-        this.$wrap_tpl_service.html(this.tpl_service_direct());
+        if ( serviceCategory.depth2 === '08' || serviceCategory.depth2 === '09' || serviceCategory.depth2 === '12' ) {
+          this.$wrap_tpl_service.html(this.tpl_service_direct());
+        } else {
+          this.$wrap_tpl_service.html(this.tpl_service_direct_brand());
+        }
         break;
       case 'chocolate':
         this.$wrap_tpl_service.html(this.tpl_service_chocolate());

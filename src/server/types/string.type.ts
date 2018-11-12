@@ -188,6 +188,8 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   autoAll: '자동 납부 통합 인출',
   microPrepay: '소액결제 선결제',
   contentPrepay: '콘텐츠 이용료 선결제',
+  pointReserve: '포인트 납부 예약',
+  pointAuto: '포인트 자동 납부',
   PAY_KOR_TITLE: '납부',
   CANCEL_KOR_TITLE: '취소',
   AUTO_KOR_TITLE: '자동'

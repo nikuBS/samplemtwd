@@ -35,33 +35,13 @@ Tw.MyTFareBillSetReIssue.prototype = {
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
   },
 
-  _onClickBtnSubmit: function () {
-    var curBillIsueTypNm = this._options.billIsueTypNm;
-    var confirmContents;
-    if ( this._isComplexBill() ) {
-      var $checkedBillIsueTypsInput = this._$billIsueTyps.filter('[checked]');
-      var isueTypNm = $checkedBillIsueTypsInput.attr('title');
-      var billIsueTypCds = this.MYT_FARE_BILL_REQ_REISSUE_TYPE_CD[$checkedBillIsueTypsInput.val()];
-      var idx = this._$billIsueTyps.index($checkedBillIsueTypsInput);
-      var billIsueTypCd = billIsueTypCds[idx];
-      confirmContents = isueTypNm + Tw.MYT_FARE_BILL_SET_REISSUE.MSG_01;
-      switch ( billIsueTypCd ) {
-        case '02':
-          confirmContents = Tw.MYT_FARE_BILL_SET_REISSUE.MSG_02;
-          break;
-      }
-    } else {
-      confirmContents = curBillIsueTypNm + Tw.MYT_FARE_BILL_SET_REISSUE.MSG_01;
-      switch ( this._options.billIsueTypCd ) {
-        case Tw.MYT_FARE_BILL_REISSUE_TYPE_CD['2']:
-          confirmContents = Tw.MYT_FARE_BILL_SET_REISSUE.MSG_02;
-          break;
-        case Tw.MYT_FARE_BILL_REISSUE_TYPE_CD['1']:
-          confirmContents = Tw.MYT_FARE_BILL_SET_REISSUE.MSG_04;
-          break;
-      }
-    }
-    this._popupService.openConfirm(confirmContents, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onOkPopupClicked, this), null);
+  _onClickBtnSubmit : function () {
+    var _modal = Tw.MYT_FARE_BILL_SET.A45;
+
+    this._popupService.openModalTypeA(
+      _modal.TITLE,
+      _modal.CONTENTS,
+      Tw.BUTTON_LABEL.APPLY, null, $.proxy(this._onOkPopupClicked, this), null);
   },
 
   _isComplexBill: function () {
@@ -124,10 +104,12 @@ Tw.MyTFareBillSetReIssue.prototype = {
   _onApiSuccess: function (params) {
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
-      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET_REISSUE.MSG_03);
+      this._popupService.openOneBtTypeB(
+        Tw.MYT_FARE_BILL_SET.A44.TITLE,
+        Tw.MYT_FARE_BILL_SET.A44.CONTENTS);
     } else if ( params.code && params.code === Tw.API_CODE.CODE_00 ) {
       // 성공 - 발행 된 건이 없는 경우
-      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET_REISSUE.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY,
+      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY,
         null, $.proxy(this._goToComplete, this));
     } else {
       this._popupService.openAlert(params.msg, params.code);

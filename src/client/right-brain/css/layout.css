@@ -684,8 +684,7 @@ body.bg-gray {
     top: auto;
     bottom: -100%;
     min-height: 0;
-    max-height: calc(100% - 3.375rem);
-    /* 100% - rem(54px)*/
+    max-height: 80%;
     -webkit-transition: all 1s;
     transition: all 1s; }
     .popup-page.layer .header-wrap {

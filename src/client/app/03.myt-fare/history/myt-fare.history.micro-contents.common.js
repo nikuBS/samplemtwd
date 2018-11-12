@@ -10,6 +10,9 @@ Tw.MyTFareHistoryMicroContents = function (rootEl, data) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+  this._urlHelper = Tw.UrlHelper;
+
+  this._params = this._urlHelper.getQueryParams();
 
   this._init(data);
 };
@@ -22,8 +25,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this._bindEvent();
 
     switch (this.current) {
-      case 'micro':
-      case 'contents':
+      case 'history':
         this._initMicroPaymentContentsHistory(data);
         break;
       case 'detail':
@@ -73,17 +75,9 @@ Tw.MyTFareHistoryMicroContents.prototype = {
       $listWrapper: this.$container.find('#list-wrapper'),
       $emptyList: this.$container.find('#list-empty')
     };
-
-    // this._apiService.request(Tw.API_CMD.BFF_05_0079, {
-    //   payMethod: 'ALL',
-    //   fromDt: this.dateInfo.end,
-    //   toDt: this.dateInfo.start
-    // })
-    //     .done($.proxy(this._setMicroPayementHistory), this)
-    //     .fail();
   },
 
-  _moveDetailPage: function(e) {
+  _moveDetailPage: function (e) {
     Tw.UIService.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.currentMonthData[$(e.currentTarget).data('listId')]));
   },
 
@@ -124,8 +118,8 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this._renderMicroPayContentsList();
   },
 
-  _setCurrentMonthDataIndex: function() {
-    this.currentMonthData.map($.proxy(function(o, i) {
+  _setCurrentMonthDataIndex: function () {
+    this.currentMonthData.map($.proxy(function (o, i) {
       o.listId = i;
     }, this));
   },
@@ -150,13 +144,13 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     }, 20, '.bt-more button', '.list-inner', $.proxy(this._appendListCallBack, this));
   },
 
-  _appendListCallBack: function() {
+  _appendListCallBack: function () {
   },
 
-  _initDetailView: function() {
+  _initDetailView: function () {
     var parentPath = this._historyService.pathname.split('/').slice(-2)[0];
     this.$detailInfo = {
-      name : this.$container.find('#fe-detail-cp-name') || null,
+      name: this.$container.find('#fe-detail-cp-name') || null,
       serviceName: this.$container.find('#fe-detail-service-name') || null,
       pgName: this.$container.find('#fe-detail-pg-name') || null,
       usageType: this.$container.find('#fe-detail-usage-type') || null,
@@ -171,7 +165,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
 
     this.detailData = JSON.parse(Tw.UIService.getLocalStorage('myTFareHistoryDetailData'));
 
-    if(this.detailData.useServiceCompany) {
+    if (this.detailData.useServiceCompany) {
       var tempArr = this.detailData.useServiceCompany.split(' ');
       tempArr.pop();
       this.detailData.useServiceCompany = tempArr.join(' ');
@@ -183,16 +177,16 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this.$detailInfo.charge.text(this.detailData.sumPriceFormed);
     this.$detailInfo.date.text(this.detailData.useDtFormed);
 
-    if (parentPath === 'micro'){
+    if (parentPath === 'micro') {
       this.$detailInfo.btnAutoPaymentBlock.hide();
       this.$detailInfo.linkMoveBlockList.hide();
       this.$detailInfo.paymentBlockState.hide();
       this.$detailInfo.pgName.text(this.detailData.pgNm);
       this.$detailInfo.paymentType.text(this.detailData.paymentType);
-      if(this.detailData.payMethod === '03') {
+      if (this.detailData.payMethod === '03') {
         this.$detailInfo.paymentBlockState.show();
         this.$detailInfo.paymentBlockState.text(this._getDetailBlockState(this.detailData.cpState));
-        if(this.detailData.cpState === 'C0') {
+        if (this.detailData.cpState === 'C0') {
           this.$detailInfo.btnAutoPaymentBlock.show();
           this.$detailInfo.btnAutoPaymentBlock.on('click', $.proxy(this._appendAutoPaymentBlockHandler, this, this._detailBlockCallback));
         } else {
@@ -204,7 +198,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     }
   },
 
-  _appendAutoPaymentBlockHandler: function(callback) {
+  _appendAutoPaymentBlockHandler: function (callback) {
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
       idpg: this.detailData.idpg,
       tySvc: this.detailData.tySvc,
@@ -212,12 +206,12 @@ Tw.MyTFareHistoryMicroContents.prototype = {
       state: 'C'
     })
         .done($.proxy(callback, this))
-        .fail(function(e) {
+        .fail(function (e) {
           Tw.Logger.info(e);
         });
   },
 
-  _detailBlockCallback: function() {
+  _detailBlockCallback: function () {
     Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.BLOCK);
     this.$detailInfo.btnAutoPaymentBlock.hide();
     this.$detailInfo.linkMoveBlockList.show();
@@ -226,18 +220,18 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     Tw.UIService.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.detailData));
   },
 
-  _getDetailUsageType: function(wapInfo) {
+  _getDetailUsageType: function (wapInfo) {
     return Tw.MYT_FARE_HISTORY_MICRO_TYPE[wapInfo];
   },
 
-  _getDetailBlockState: function(cpState) {
-    if(cpState === 'C0')
+  _getDetailBlockState: function (cpState) {
+    if (cpState === 'C0')
       return;
     else
       return Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[cpState];
   },
 
-  _historyBack: function() {
+  _historyBack: function () {
     this._historyService.goBack();
   },
 
@@ -282,8 +276,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
 
   _autoPaymentBlockToggle: function (e) {
     var wrapper = $(e.target).parents('li');
-    // Tw.CommonHelper.toast('asdfkajsdflaksdjf');
-    // console.log(wrapper.data('feCpcode'), wrapper.data('feTysvc'), wrapper.data('feIdpg'));
+
     this.detailData = {
       idpg: wrapper.data('feIdpg'),
       tySvc: wrapper.data('feTysvc'),
@@ -299,7 +292,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     }
 
     Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.REVOCATION);
-    window.setTimeout($.proxy(function() {
+    window.setTimeout($.proxy(function () {
       this._historyService.reload();
     }, this), 2000);
   },

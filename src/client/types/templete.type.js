@@ -213,6 +213,14 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_MICRO_HISTORY_LIST: [
+    {
+      'list': [
+        { 'option': 'go-history', 'attr': 'data-link="/myt/fare/billsmall/history"', value: '소액결제 이용내역' },
+        { 'option': 'go-history', 'attr': 'data-link="/myt/fare/billsmall/block"', value: '자동결제 차단내역' }
+      ]
+    }
+  ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
@@ -288,7 +296,9 @@ Tw.POPUP_TPL = {
         { value: '자동 납부' },
         { value: '자동 납부 통합 인출' },
         { value: '소액결제 선결제' },
-        { value: '콘텐츠 이용료 선결제' }
+        { value: '콘텐츠 이용료 선결제' },
+        { value: '포인트 납부 예약' },
+        { value: '포인트 자동 납부' }
       ]
     }
   ],

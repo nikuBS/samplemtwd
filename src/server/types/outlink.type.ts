@@ -281,3 +281,8 @@ export const CUSTOMER_PROTECT_RELATE_ORG = [
     LINK: 'http://www.kisa.or.kr'
   }
 ];
+
+export const URL_APP_STORE = {
+    AOS: '',
+    IOS: ''
+};

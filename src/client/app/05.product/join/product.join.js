@@ -1,6 +1,7 @@
 /**
+ * 상품 가입(공통) @todo 옵션 있는 상품 분리 예정
  * FileName: product.join.js
- * Author: Jihun Yang (jihun202@sk.com)
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.01
  */
 

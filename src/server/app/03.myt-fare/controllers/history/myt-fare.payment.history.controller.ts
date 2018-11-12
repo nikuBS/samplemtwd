@@ -9,12 +9,10 @@ import {Request, Response, NextFunction} from 'express';
 import {MYT_FARE_PAYMENT_HISTORY_TYPE, MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE, MYT_PAYMENT_HISTORY_REFUND_TYPE,
-  MYT_PAYMENT_HISTORY_AUTO_UNITED_TYPE, MYT_PAYMENT_HISTORY_AUTO_TYPE} from '../../../../types/bff.type';
-
-// import {myTPaymentHistory} from '../../../../mock/server/myt.payment.history';
-
-// import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
+import {
+  MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE, MYT_PAYMENT_HISTORY_REFUND_TYPE,
+  MYT_PAYMENT_HISTORY_AUTO_UNITED_TYPE, MYT_PAYMENT_HISTORY_AUTO_TYPE
+} from '../../../../types/bff.type';
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -22,6 +20,7 @@ import DateHelper from '../../../../utils/date.helper';
 interface Query {
   current: string;
   isQueryEmpty: boolean;
+  sortType: string;
 }
 
 interface PaymentData {
@@ -54,13 +53,14 @@ class MyTFarePaymentHistory extends TwViewController {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
-      current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
+      current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0],
+      sortType: req.query.sortType
     };
 
-    if (query.current === 'payment' || query.current === '') {
+    if (query.sortType === 'payment' || query.sortType === undefined) {
       this.getAllPaymentData(req, res, next, query, svcInfo);
     } else {
-      switch (query.current) {
+      switch (query.sortType) {
         case 'direct':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -111,6 +111,26 @@ class MyTFarePaymentHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        case 'point-reserve':
+          Observable.combineLatest(
+              this.checkHasPersonalBizNumber(),
+              this.getAutoWithdrawalAccountInfo(),
+              this.getOverAndRefundPaymentData(query.current),
+              this.getOnetimePointReserveData()
+          ).subscribe(histories => {
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+          });
+          break;
+        case 'point-auto':
+          Observable.combineLatest(
+              this.checkHasPersonalBizNumber(),
+              this.getAutoWithdrawalAccountInfo(),
+              this.getOverAndRefundPaymentData(query.current),
+              this.getPointAutoPaymentData()
+          ).subscribe(histories => {
+            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+          });
+          break;
         default:
           break;
       }
@@ -123,7 +143,7 @@ class MyTFarePaymentHistory extends TwViewController {
     res.render('history/myt-fare.payment.history.html', {
       svcInfo: data.svcInfo,
       pageInfo: data.pageInfo,
-      currentString: this.getKorStringWithQuery(data.query.current) || MYT_FARE_PAYMENT_HISTORY_TYPE.all,
+      currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.all,
       data: {
         isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse,
         autoWithdrawalBankName: this.paymentData.withdrawalBankName,
@@ -134,15 +154,14 @@ class MyTFarePaymentHistory extends TwViewController {
         isPersonalBiz: this.paymentData.isPersonalBiz,
         personalBizNum: this.paymentData.personalBizNum,
         listData: this.mergeData(data.listData),
-        current: (data.query.current === 'payment' || data.query.current === '') ? 'all' : data.query.current
+        refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
+        current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType
       }
     });
   }
 
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0017, {selType:'H'}).map((resp: { code: string; result: any; }) => {
-
-      // this.logger.info(this, '-------->', resp.result.selectMonth, resp.result.selectQuarter, resp.result.selectHalf, resp.result.taxReprintList);
+    return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).map((resp: { code: string; result: any; }) => {
 
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
@@ -154,7 +173,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return null;
     });
-  }
+  };
 
   private getAutoWithdrawalAccountInfo = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0070, {}).map((resp: { code: string; result: any }) => {
@@ -171,7 +190,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return null;
     });
-  }
+  };
 
   private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any) {
     Observable.combineLatest(
@@ -182,7 +201,9 @@ class MyTFarePaymentHistory extends TwViewController {
         this.getAutoPaymentData(),
         this.getAutoUnitedPaymentData(),
         this.getMicroPaymentData(),
-        this.getContentsPaymentData()
+        this.getContentsPaymentData(),
+        this.getOnetimePointReserveData(),
+        this.getPointAutoPaymentData()
     ).subscribe(histories => {
       // this.logger.info(this, '-[MyTFarePaymentHistory] -------->');
 
@@ -217,7 +238,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; result: any }) => {
@@ -229,6 +250,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       resp.result.directPaymentList.map((o) => {
         o.dataPayMethodCode = 'DI';
+        o.hasTip = true;
         o.dataTitle = o.cardCdNm;
         o.dataIsBankOrCard = this.isBankOrCard(o.dataTitle);
         o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
@@ -245,7 +267,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; result: any }) => {
@@ -257,6 +279,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       resp.result.autoPaymentList.map((o) => {
         o.dataPayMethodCode = 'AT';
+        o.hasTip = true;
         o.dataTitle = o.bankCardCoCdNm;
         o.sortDt = o.drwDt;
         o.dataAmt = FormatHelper.addComma(o.drwAmt);
@@ -275,7 +298,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; result: any }) => {
@@ -288,6 +311,7 @@ class MyTFarePaymentHistory extends TwViewController {
       resp.result.autoUnitedPaymentList.map((o) => {
         o.sortDt = o.drwDt;
         o.dataTitle = o.bankNm;
+        o.hasTip = true;
         o.dataPayMethodCode = 'AU';
         o.dataIsBank = this.isBank(o.dataTitle);
         o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
@@ -301,7 +325,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
@@ -324,7 +348,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
@@ -332,11 +356,11 @@ class MyTFarePaymentHistory extends TwViewController {
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
-      // this.logger.info(this, '-------------------// contents payment data', resp.result);
 
       resp.result.useContentsPrepayRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'CP';
+        o.listTitle = o.settlWayNm;
         o.dataIsBank = this.isBankOrCard(o.settlWayNm);
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
@@ -346,7 +370,40 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
+
+  private getOnetimePointReserveData = (): Observable<any | null> => {
+    return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
+
+      // 2018.11.8 : api 에러로 노출 불가
+
+      resp.result.map((o) => {
+        o.hasTip = true;
+      });
+
+      return resp.result;
+    });
+  };
+
+  private getPointAutoPaymentData = (): Observable<any | null> => {
+    return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
+
+      if (resp.code !== API_CODE.CODE_00) {
+        return null;
+      }
+
+      // 2018.11.8 : api 에러로 노출 불가
+
+      resp.result.map((o) => {
+        o.hasTip = true;
+      });
+
+      return resp.result;
+    });
+  };
 
   private mergeData(data: PaymentList): any {
     data = data.slice(2);
@@ -399,7 +456,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return prev;
     }, []);
-    
+
     return data;
   }
 

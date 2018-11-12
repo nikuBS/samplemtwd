@@ -33,7 +33,6 @@ class CustomerBranchSearch extends TwViewController {
         (result) => {
           res.render('branch/customer.branch.search.html', {
             isSearch: true,
-            type,
             keyword,
             optionsText: this.makeOptionsText(storeType, optionsString),
             result,

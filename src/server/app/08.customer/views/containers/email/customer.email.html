@@ -212,6 +212,7 @@
   $(document).ready(function () {
     new Tw.CustomerEmail($('.wrap'));
     new Tw.CustomerEmailService($('.wrap'));
+    new Tw.CustomerEmailServiceOption($('.wrap'));
     new Tw.CustomerEmailQuality($('.wrap'));
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailTemplate($('.wrap'));

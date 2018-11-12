@@ -266,27 +266,6 @@ class ProductJoin extends TwViewController {
               }));
             });
         }
-
-        if (displayGroup === 'combine' && this._prodId === 'NA00004430') {
-          this.apiService.request(API_CMD.BFF_10_0062, {}, {}, this._prodId)
-            .subscribe((seldisSetsInfo) => {
-              if (seldisSetsInfo.code !== API_CODE.CODE_00) {
-                return this.error.render(res, {
-                  code: seldisSetsInfo.code,
-                  msg: seldisSetsInfo.msg,
-                  svcInfo: svcInfo,
-                  title: '가입'
-                });
-              }
-
-              res.render('join/product.join.html', Object.assign(renderOptions, {
-                seldisSets: Object.assign(seldisSetsInfo.result, {
-                  noContractPlanPoint: FormatHelper.isEmpty(seldisSetsInfo.result.noContractPlanPoint) ?
-                    0 : FormatHelper.addComma(seldisSetsInfo.result.noContractPlanPoint)
-                })
-              }));
-            });
-        }
       });
   }
 }
