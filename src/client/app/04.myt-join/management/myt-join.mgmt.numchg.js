@@ -127,14 +127,14 @@ Tw.MyTJoinMgmtNumchg.prototype = {
       .done($.proxy(function (resp) {
 
         skt_landing.action.loading.off({ ta: this.$container });
-        /*if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
-        }*/
+        }
 
         Tw.Popup.afterRequestSuccess(
           '/myt/join/mgmt/numchg/alarm',
-          '/myt-join/submain',
+          '/myt/join',
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + selectedNum.replace('n',''));
