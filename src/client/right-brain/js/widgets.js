@@ -318,7 +318,7 @@ skt_landing.widgets = {
           setOnList.eq(i).addClass('imp-view');
         }
       }
-      _this.find('.acco-cover:not(".focuson")')/*.addClass('toggle')*/.find('.acco-box.on').removeClass('on');  // 2018-07-19 default : 모두 닫힘, toggle 여부에 따라 다름
+      // _this.find('.acco-cover:not(".focuson")')/*.addClass('toggle')*/.find('.acco-box.on').removeClass('on');  // 2018-07-19 default : 모두 닫힘, toggle 여부에 따라 다름
       _this.find('> .acco-cover > .bt-whole button').on('click',function(event){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
