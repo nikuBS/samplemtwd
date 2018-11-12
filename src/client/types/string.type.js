@@ -71,7 +71,8 @@ Tw.POPUP_TITLE = {
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
   SELECT_FAMILY_TYPE: '가족선택',
-  HISTORY: '이용내역'
+  HISTORY: '이용내역',
+  MEMBERSHIP_CORPORATE_LIST: '명의자 선택'
 };
 
 Tw.POPUP_CONTENTS = {

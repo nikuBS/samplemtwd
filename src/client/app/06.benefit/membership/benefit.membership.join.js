@@ -15,6 +15,7 @@ Tw.MyTBenefitMembershipJoin = function (params) {
   this.data = params.data;
   this._render();
   this._bindEvent();
+  this._initialize();
 };
 
 Tw.MyTBenefitMembershipJoin.prototype = {
@@ -27,6 +28,16 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeItems = this.$container.find('[data-role=CL]');
     this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
     this.$cashbagAccodianBtn = this.$container.find('[data-id=cashbag_list]');
+    if ( this.data.type === 'corporate' ) {
+      this.$copListBtn = this.$container.find('[data-id=cop-list]');
+    }
+    else if ( this.data.type === 'feature' ) {
+      // TODO: 우편번호 공통화 작업 완료 후 처리
+      // this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
+      this.$zipCodeBtn = this.$container.find('[data-id=zip-code]');
+      // this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
+      // this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
+    }
   },
 
   _bindEvent: function () {
@@ -37,6 +48,50 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
     this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
     this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
+    if ( this.data.type === 'corporate' ) {
+      this.$copListBtn.on('click', $.proxy(this._onClickCorporateList, this));
+    }
+    else if ( this.data.type === 'feature' ) {
+      this.$zipCodeBtn.on('click', $.proxy(this._onClickZipCodeBtn, this));
+    }
+  },
+
+  _initialize: function () {
+
+    this.svcNominalRelCd = '010'; // default 본인
+
+    if ( this.data.type === 'corporate' ) {
+      this.svcNominalRelCd = this.$copListBtn.attr('data-type');
+    }
+  },
+
+  _onClickCorporateList: function () {
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.MEMBERSHIP_CORPORATE_LIST,
+      data: Tw.POPUP_TPL.MEMBERSHIP_CORPORATE_LIST
+    }, $.proxy(this._corporateListPopupCallback, this));
+  },
+
+  _corporateListPopupCallback: function ($layer) {
+    var type = this.$copListBtn.attr('data-type');
+    $layer.find('#' + type).addClass('checked');
+    $layer.on('click', '.nominal', $.proxy(this._setCorporateValue, this));
+  },
+
+  _setCorporateValue: function (event) {
+    var $selectedValue = $(event.currentTarget);
+    var id = $selectedValue.attr('id');
+    this.$copListBtn.attr('data-type', id);
+    this.$copListBtn.text($selectedValue.text());
+    this.svcNominalRelCd = id;
+    this._popupService.close();
+  },
+
+  _onClickZipCodeBtn: function () {
+    // TODO: 우편번호 검색 공통 영역으로 완료 되면 적용
+    this._popupService.openAlert('TBD');
   },
 
   _onClickTAgreeCheckbox: function (event) {
@@ -146,31 +201,33 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
   _onClickJoinBtn: function () {
     var $items = this.$container.find('[aria-checked=true]');
-    // TODO: 현재 가입하기 API 에서 사용 중인 필드가 현재 SB 문서와 일치하지 않아 문의 중
     var params = {
       mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
-      card_isue_typ_cd: '1' // 모바일 카드
+      svc_nominal_rel_cd: this.svcNominalRelCd, // 본인: 010, 직원: 090, 기타: 990
+      card_isue_typ_cd: this.data.isFeature ? '0' : '1', // 플라스틱 카드 0, 모바일 카드 1
+      skt_news_yn: 'N', // 광고성 정보 수신
+      skt_tm_yn: 'N', // 고객 혜택 제공
+      sms_agree_yn: 'N', // 멤버십 이용내역 안내
+      ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
+      mktg_agree_yn: 'N' // 마케팅활용
     };
     for ( var i = 0; i < $items.length; i++ ) {
       var $item = $items.eq(i);
       switch ( $item.attr('data-type') ) {
-        case 'svc':
-          break;
-        case 'psi':
-          break;
         case 'ad':
+          params.skt_news_yn = 'Y';
           break;
         case 'bsi':
+          params.skt_tm_yn = 'Y';
           break;
         case 'sms':
+          params.sms_agree_yn = 'Y';
           break;
-        case 'pad':
-          break;
-        case 'ovc':
-          break;
-        case 'odi':
+        case 'okadd':
+          params.ocb_accum_agree_yn = 'Y';
           break;
         case 'mak':
+          params.mktg_agree_yn = 'Y';
           break;
       }
     }
