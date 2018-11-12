@@ -71,26 +71,26 @@ class CustomerNotice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const category = req.query.category || 'tworld';
+    const category = req.params.category || 'tworld';
 
     if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
-      return res.redirect('/customer/svc_info/cmis_0039');
+      return res.redirect('/customer/notice');
     }
 
     this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})
-        .subscribe((data) => {
-          if (FormatHelper.isEmpty(data)) {
-            return res.redirect('/customer');
-          }
+      .subscribe((data) => {
+        if (FormatHelper.isEmpty(data)) {
+          return res.redirect('/customer');
+        }
 
-          res.render('notice/customer.notice.html', {
-            category: category,
-            categoryLabel: categorySwitchingData[category].LABEL,
-            data: this._convertData(data),
-            svcInfo: svcInfo,
-            pageInfo: pageInfo
-          });
+        res.render('notice/customer.notice.html', {
+          category: category,
+          categoryLabel: categorySwitchingData[category].LABEL,
+          data: this._convertData(data),
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
+      });
   }
 }
 
