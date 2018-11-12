@@ -10,6 +10,7 @@ import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.old.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+// import { Researches } from '../../../../mock/server/customer.researches.mock';
 
 export default class CustomerResearches extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
@@ -20,6 +21,7 @@ export default class CustomerResearches extends TwViewController {
     //   });
     // } else {
 
+    // const researches: any = this.getResearches();
     this.getResearches().subscribe(researches => {
       if (researches.code) {
         return this.error.render(res, {
@@ -33,6 +35,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   private getResearches = () => {
+    // const resp = Researches;
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {

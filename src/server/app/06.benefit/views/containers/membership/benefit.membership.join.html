@@ -60,11 +60,14 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
             <% if (data.type === 'feature') { %>
-                <%- include('../components/membership/benefit.membership.join-feature.html', { data }); %>
+                <% if (data.isIndividual) { %>
+                    <%- include('../components/membership/benefit.membership.join-corporate.html', { data }); %>
+                <% } %>
             <% } else if (data.type === 'corporate') { %>
-                <%- include('../components/membership/benefit.membership.join-corporate.html', { data }); %>
+                <% if (data.isCorporateBody) { %>
+                    <%- include('../components/membership/benefit.membership.join-feature.html', { data }); %>
+                <% } %>
             <% } %>
 
             <div class="ti-caption-gray">
