@@ -15,10 +15,10 @@ class CustomerProtectGuideView extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const idx = req.query.idx || '';
+    const idx = req.params.idx || '';
 
     if (FormatHelper.isEmpty(idx) || FormatHelper.isEmpty(CUSTOMER_PROTECT_GUIDE_WEBTOON[idx])) {
-      return res.redirect('/customer/damage_info/cmis_0003');
+      return res.redirect('/customer/damage-info/guide/webtoon');
     }
 
     res.render('protect/customer.protect.guide-view.html', {

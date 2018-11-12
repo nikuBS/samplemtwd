@@ -22,9 +22,9 @@ class CustomerProtectWarningView extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const idx = req.query.idx || '';
+    const idx = req.params.idx || '';
     if (FormatHelper.isEmpty(idx)) {
-      return res.redirect('/customer/damage_info/cmis_0007');
+      return res.redirect('/customer/damage-info/warning');
     }
 
     this.apiService.request(API_CMD.BFF_08_0041, {}, {}, idx)
