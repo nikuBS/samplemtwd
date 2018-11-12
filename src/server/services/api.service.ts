@@ -79,7 +79,8 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
           'x-user-ip': this.loginService.getNodeIp(),
-          'x-menu-name': this.loginService.getPath(),
+          'x-menu-name': '',
+          'x-node-url': this.loginService.getPath(),
           'x-useragent': this.loginService.getUserAgent(),
           'x-env': this.loginService.getBlueGreen(),
           cookie: (FormatHelper.isEmpty(header.cookie) || (header.cookie).indexOf(COOKIE_KEY.APP_API) === -1) ? this.makeCookie() : header.cookie,

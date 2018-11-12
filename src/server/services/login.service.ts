@@ -205,7 +205,14 @@ class LoginService {
 
   public getPath(): string {
     if ( !FormatHelper.isEmpty(this.request) ) {
-      return this.request.baseUrl + this.request.path;
+      const url = this.request.baseUrl + this.request.path;
+      if ( url.indexOf('bypass') !== -1 ) {
+        // console.log('path', this.request.headers.referer);
+        return this.request.headers.referer;
+      } else {
+        // console.log('path', url);
+        return this.request.baseUrl + this.request.path;
+      }
     }
     return '';
   }
@@ -219,10 +226,10 @@ class LoginService {
 
   public getBlueGreen(): string {
     const dns = this.getDns();
-    if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {
-      return BUILD_TYPE.GREEN;
-    } else if ( dns === EnvHelper.getEnvironment('DOMAIN_B') ) {
+    if ( dns === EnvHelper.getEnvironment('DOMAIN_B') ) {
       return BUILD_TYPE.BLUE;
+    } else if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {
+      return BUILD_TYPE.GREEN;
     }
     return '';
   }
