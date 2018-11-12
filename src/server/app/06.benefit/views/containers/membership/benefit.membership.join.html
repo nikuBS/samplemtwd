@@ -185,91 +185,111 @@
             </div>
             <!--// .cont-box -->
 
-            <% if (data.isOkCashBag) { %>
-            <div class="ti-caption-gray">
-                <h3 class="tit">OK캐쉬백 이용약관 동의
-                    <button class="ico-tit-tip">TIP</button>
-                </h3>
-            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="agree-chk-wrap agree-chk-type">
-                    <div class="list-comp-input-agree">
-                        <div class="widget">
-                            <div class="widget-box check">
-                                <ul class="select-list" role="group">
-                                    <li>
-                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false" data-id="all-agree-c">
-                                            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="모두동의"
-                                                   aria-labelledby="aria-comp-checkbox8"/>
-                                            <!-- 체크상태일 경우 checked="checked" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox8">
-                                                <p class="layout-text all-chk">
-                                                    <span class="mtext">모두동의</span>
-                                                </p>
-                                            </div>
+            <div class="cont-box membership-info-modify01">
+                <div class="cont-box pb0">
+                    <p class="con-txt1"><strong>T멤버십과 함께</strong> <br/>OK캐쉬백을 적립&middot;사용해보세요</p>
+                    <p class="con-txt3 pt6">OK캐쉬백 기능을 추가하시면, OK캐쉬백 적립 및 사용이 가능합니다. OK캐쉬백 기능을 추가하시겠습니까?</p>
+                </div>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <!-- .on: 열기 -->
+                                    <li class="acco-box">
+                                        <div class="acco-tit">
+                                            <div class="checkbox type01">
+                                                <input type="checkbox" name="checkbox" value=""  data-id="usage_cashbag"
+                                                       title="OK캐쉬백 기능 추가하기"/>OK캐쉬백 기능 추가하기</div>
+                                            <button role="button" aria-pressed="false" data-id="cashbag_list"></button>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_03" data-type="ovc">
-                                            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="OK캐쉬백 카드 서비스 이용약관 동의 (필수)"
-                                                   aria-labelledby="aria-comp-checkbox9"/>
-                                            <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox9">
-                                                <p class="layout-text">
-                                                    <span class="mtext">OK캐쉬백 카드 서비스 이용약관 동의 (필수)</span>
-                                                </p>
+                                        <div class="acco-cont type01">
+                                            <div class="agree-chk-wrap agree-chk-type">
+                                                <div class="list-comp-input-agree">
+                                                    <div class="widget">
+                                                        <div class="widget-box check">
+                                                            <ul class="select-list" role="group">
+                                                                <li>
+                                                                    <div class="checkbox type01 all" role="checkbox" aria-checked="false" data-id="all-agree-c">
+                                                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                        <input type="checkbox" name="checkbox" value="" title="모두동의"
+                                                                               aria-labelledby="aria-comp-checkbox8"/>
+                                                                        <!-- 체크상태일 경우 checked="checked" -->
+                                                                        <div class="comp-list-layout" id="aria-comp-checkbox8">
+                                                                            <p class="layout-text all-chk">
+                                                                                <span class="mtext">모두동의</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_03" data-type="ovc">
+                                                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                        <input type="checkbox" name="checkbox" value="" title="OK캐쉬백 카드 서비스 이용약관 동의 (필수)"
+                                                                               aria-labelledby="aria-comp-checkbox9"/>
+                                                                        <!-- 체크상태일 경우 checked="false" -->
+                                                                        <div class="comp-list-layout" id="aria-comp-checkbox9">
+                                                                            <p class="layout-text">
+                                                                                <span class="mtext">OK캐쉬백 카드 서비스 이용약관 동의 (필수)</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_04" data-type="odi">
+                                                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                        <input type="checkbox" name="checkbox" value="" title="OK캐쉬백 암호화된 동일인 식별정보 제공 동의 (필수)"
+                                                                               aria-labelledby="aria-comp-checkbox10"/>
+                                                                        <!-- 체크상태일 경우 checked="false" -->
+                                                                        <div class="comp-list-layout" id="aria-comp-checkbox10">
+                                                                            <p class="layout-text">
+                                                                                <span class="mtext">OK캐쉬백 암호화된 동일인 식별정보<br>제공 동의 (필수)</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-type="mak">
+                                                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                        <input type="checkbox" name="checkbox" value="" title="마케팅 활용 동의 (선택)"
+                                                                               aria-labelledby="aria-comp-checkbox11"/>
+                                                                        <!-- 체크상태일 경우 checked="false" -->
+                                                                        <div class="comp-list-layout" id="aria-comp-checkbox11">
+                                                                            <p class="layout-text">
+                                                                                <span class="mtext">마케팅 활용 동의 (선택)</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="cont-box noborder bgnone">
+                                                                <div class="announcement-box">
+                                                                    <div class="announcement-bullet type01">필수 동의사항에 동의하셔야, OK캐쉬백 포인트가 적립됩니다. 단, 포인트가 적립될  때에는 OK캐쉬백 수수료 정책에 따라 서비스 <strong>이용수수료로 차감</strong>된 후 최종 적립됩니다.</div>
+                                                                    <div class="announcement-bullet type01">멤버십 가입 완료 후 ‘마케팅 활용 동의’ 여부를 변경하시려면 OK캐쉬백 고객행복센터(1599-0512)를 통해 변경 가능합니다.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_04" data-type="odi">
-                                            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="OK캐쉬백 암호화된 동일인 식별정보 제공 동의 (필수)"
-                                                   aria-labelledby="aria-comp-checkbox10"/>
-                                            <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox10">
-                                                <p class="layout-text">
-                                                    <span class="mtext">OK캐쉬백 암호화된 동일인 식별정보<br>제공 동의 (필수)</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-type="mak">
-                                            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="마케팅 활용 동의 (선택)"
-                                                   aria-labelledby="aria-comp-checkbox11"/>
-                                            <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox11">
-                                                <p class="layout-text">
-                                                    <span class="mtext">마케팅 활용 동의 (선택)</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div class="notice-comp-infolist">
-                        <dl>
-                            <dd>필수 동의사항에 동의하셔야, OK캐쉬백 포인트가 적립됩니다. 단, 포인트가 적립될 때에는 OK캐쉬백 수수료 정책에 따라 <strong>서비스 이용수수료로
-                                차감</strong>된 후 최종 적립됩니다.
-                            </dd>
-                            <dd>멤버십 가입 완료 후 ‘마케팅 활용 동의’ 여부를 변경하시려면 OK캐쉬백 고객행복센터(1599-0512)를 통해 변경 가능합니다.</dd>
-                        </dl>
-                    </div>
                 </div>
+                <!--// .widget -->
             </div>
             <!--// .cont-box -->
-            <% } %>
+
             <div class="notice-comp-infolist">
                 <dl>
                     <dd>필수 동의 항목을 전부 체크하시고 필수 입력 항목이 있을 경우 전부 입력하시면 T멤버십 가입이 완료 됩니다.</dd>
