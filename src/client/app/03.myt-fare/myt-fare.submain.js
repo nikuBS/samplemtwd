@@ -230,7 +230,7 @@ Tw.MyTFareSubMain.prototype = {
         };
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
-          var date = this.getLastDate(item.invDt); // item.invDt;
+          var date = item.invDt; // this.getLastDate(item.invDt);
           var amt = item.invAmt.replace(',', '');
           var absDeduck = item.deduckInvAmt.replace(',', '');
           // --------------------
@@ -269,7 +269,7 @@ Tw.MyTFareSubMain.prototype = {
         };
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
-          var date = this.getLastDate(item.invDt); // item.invDt;
+          var date = item.invDt; // this.getLastDate(item.invDt);
           var amt = item.invAmt.replace(',', '');
           var absDeduck = item.deduckInvAmt.replace(',', '');
           // --------------------
