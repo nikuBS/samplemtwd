@@ -990,3 +990,14 @@ Tw.CUSTOMER_EMAIL.ACTION_TYPE = {
   SELECT_DEVICE: '기종 선택',
   SELECT_LINE: '회선 선택'
 };
+
+Tw.PRODUCT_COMBINE_FAMILY_TYPE = {
+  leader: '가족대표',
+  parents: '부모',
+  grandparents: '(증)조부모',
+  grandchildren: '손자녀',
+  spouse: '배우자',
+  children: '자녀',
+  brother: '형제자매',
+  me: '본인'
+};

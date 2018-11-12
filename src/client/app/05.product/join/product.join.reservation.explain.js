@@ -12,7 +12,9 @@ Tw.ProductJoinReservationExplain = function(familyList, callback) {
   this._callback = callback;
 
   this._familyList = familyList || [];
+  this._familyListOriginalLength = this._familyList.length;
   this._fileList = [];
+  this._combGrpNewYn = 'N';
 
   this._fileTemplate = Handlebars.compile($('#fe-templ-reserv-file').html());
   this._familyTemplate = Handlebars.compile($('#fe-tmpl-reserv-family').html());
@@ -165,6 +167,25 @@ Tw.ProductJoinReservationExplain.prototype = {
     this._popupService.close();
   },
 
+  _setFamilyTypeText: function(familyList) {
+    familyList.map(function(item) {
+      var familyTypeText = [];
+
+      if (item.parents) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.parents); }
+      if (item.grandparents) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.grandparents); }
+      if (item.grandchildren) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.grandchildren); }
+      if (item.spouse) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.spouse); }
+      if (item.children) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.children); }
+      if (item.brother) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.brother); }
+      if (item.me) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.me); }
+      if (item.leader) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.leader); }
+
+      return $.extend(item, {
+        familyTypeText: familyTypeText.join('')
+      });
+    });
+  },
+
   _clearFamilyAddWrap: function() {
     this._familyType = null;
     this.$btnFamilyType.html(Tw.FAMILY_TYPE.DEFAULT + $('<div\>').append(this.$btnFamilyType.find('.ico')).html());
@@ -265,7 +286,8 @@ Tw.ProductJoinReservationExplain.prototype = {
     }
 
     this._callback({
-      familyList: this._familyList,
+      combGrpNewYn: (this._familyListOriginalLength !== this._familyList) ? 'Y' : 'N',
+      familyList: this._setFamilyTypeText(this._familyList),
       fileList: this._fileList
     });
   }
