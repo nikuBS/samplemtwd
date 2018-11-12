@@ -1,0 +1,76 @@
+/**
+ * FileName: product.join.require-document.apply.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.08
+ */
+
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { NextFunction, Request, Response } from 'express';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
+import ProductHelper from '../../helper/product.helper';
+
+class ProductJoinCombineLine extends TwViewController {
+  constructor() {
+    super();
+  }
+
+  private _prodIdList = ['NA00004778'];
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const prodId = req.params.prodId || null,
+      renderCommonInfo = {
+        pageInfo: pageInfo,
+        svcInfo: svcInfo,
+        title: '가입'
+      };
+
+    if (FormatHelper.isEmpty(prodId) || this._prodIdList.indexOf(prodId) === -1) {
+      return this.error.render(res, renderCommonInfo);
+    }
+
+    this.apiService.request(API_CMD.BFF_05_0133, {}).subscribe((currentCombineInfo) => {
+      if (currentCombineInfo.code !== API_CODE.CODE_00) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: currentCombineInfo.code,
+          msg: currentCombineInfo.msg
+        }));
+      }
+
+      const currentCombineList = currentCombineInfo.result.combinationMemberList.map((item) => {
+        return item.prodId;
+      });
+
+      if (currentCombineList.indexOf(prodId) !== -1) {
+        return this.error.render(res, renderCommonInfo);
+      }
+
+      Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
+        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),
+        this.redisService.getData('ProductLedger:' + prodId)
+      ).subscribe(([ basicInfo, joinTermInfo, prodRedisInfo ]) => {
+        const apiError = this.error.apiError([basicInfo, joinTermInfo]);
+
+        if (!FormatHelper.isEmpty(apiError)) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: apiError.code,
+            msg: apiError.msg
+          }));
+        }
+
+        res.render('join/product.join.combine-line.html', Object.assign(renderCommonInfo, {
+          prodId: prodId,
+          isApp: BrowserHelper.isApp(req),
+          basicInfo: basicInfo.result,
+          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result),
+          prodRedisInfo: prodRedisInfo
+        }));
+      });
+    });
+  }
+}
+
+export default ProductJoinCombineLine;

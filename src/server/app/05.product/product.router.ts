@@ -17,6 +17,7 @@ import ProductWires from './controllers/wire/product.wires.controller';
 import ProductJoinRequireDocumentApply from './controllers/join/product.join.require-document.apply.controller';
 import ProductJoinRequireDocumentHistory from './controllers/join/product.join.require-document.history.controller';
 import ProductApps from './app/product.apps.controller';
+import ProductJoinCombineLine from './controllers/join/product.join.combine-line.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -34,6 +35,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/join/reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/join/require-document/apply', controller: ProductJoinRequireDocumentApply });
     this.controllers.push({ url: '/join/require-document/history', controller: ProductJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/join/combine-line/:prodId', controller: ProductJoinCombineLine });
     this.controllers.push({ url: '/join/dis-program(/:prodId)', controller: ProductJoinDisPgm });
     this.controllers.push({ url: '/join/dis-program/detail(/:prodId)', controller: ProductJoinDisPgmDetail });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
