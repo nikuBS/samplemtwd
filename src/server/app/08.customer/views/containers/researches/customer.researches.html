@@ -48,7 +48,7 @@
                                     <ul class="acco-list">
                                         <!-- .on: 열기 -->  
                                         <% researches.map(research => { %>
-                                        <li class="acco-box <%= research.isProceeding && 'on' %>">
+                                        <li class="acco-box <%= research.isProceeding && 'on' %>" data-research-id="<%= research.bnnrRsrchId %>" data-type-code="<%= research.bnnrRsrchTypCd %>" data-answer-num="<%= research.canswNum %>">
                                             <div class="acco-tit">
                                                 <span class="poll-question"><%= research.bnnrRsrchTitleNm %></span>
                                                 <span class="poll-date"><%= research.staDtm %><span class="blind">에서</span><span
@@ -58,38 +58,62 @@
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="cont-box">
-                                                    <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><div class="mb20"><button class="bt-link-tx underline">힌트보기</button></div><% } %>
-                                                    <% if (research.examples.length > 0) { %>
+                                                    <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><div class="mb20"><button class="bt-link-tx underline">힌트보기</button></div><% }
+                                                    const examCount = research.examples.length;
+                                                    if (examCount > 0) { %>
                                                         <!-- .widget -->
-                                                        <% const isRadio = research.bnnrRsrchRpsTypCd === 'C'; %>
                                                         <div class="widget">
-                                                            <div class="widget-box <%= isRadio ? 'radio' : 'check'%>">
-                                                                <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> has-image versus" role="<%= isRadio ? 'radio' : '' %>group">
-                                                                    <% research.examples.map(exam => { %>
-                                                                    <li class="checkbox type01" role="<%= isRadio ? 'radio' : 'checkbox' %>" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                                        <% if (exam.image) { %><div class="poll-img"><img src="<%= exam.image %>" alt=""/></div><% } %>
-                                                                        <input type="<%= isRadio ? 'radio' : 'checkbox' %>" name="<%= isRadio ? 'radio' + research.bnnrRsrchId : 'checkbox' %>" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                        <div class="poll-text"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
-                                                                    </li>
-                                                                    <% }); %>
-                                                                </ul>
-                                                            </div>
+                                                            <% if (research.bnnrRsrchRpsTypCd === 'C') { %>
+                                                                <div class="widget-box radio">
+                                                                    <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> <%= research.examples[0].image ? 'has-image' : '' %>" role="radiogroup">
+                                                                        <% research.examples.map(exam => { %>
+                                                                        <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                            <% if (exam.image) { %>
+                                                                                <div class="poll-img"><img src="<%= exam.image %>" /></div>
+                                                                                <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <div class="poll-text"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
+                                                                            <% } else { %>
+                                                                                <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
+                                                                            <% } %>
+                                                                        </li>
+                                                                        <% }); %>
+                                                                    </ul>
+                                                                </div>
+                                                            <% } else { %>
+                                                                <div class="widget-box check">
+                                                                    <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> <%= research.examples[0].image ? 'has-image' : '' %>" role="group">
+                                                                        <% research.examples.map(exam => { %>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                            <% if (exam.image) { %>
+                                                                                <div class="poll-img"><img src="<%= exam.image %>" /></div>
+                                                                                <input type="checkbox" name="checkbox" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <div class="poll-text"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
+                                                                            <% } else { %>
+                                                                                <input type="checkbox" name="checkbox" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
+                                                                            <% } %>
+                                                                        </li>
+                                                                        <% }); %>
+                                                                    </ul>
+                                                                </div>
+                                                            <% } %>
                                                         </div>
                                                         <!--// .widget -->
-                                                        <% if (research.examples[research.examples.length - 1].isEtc) { %><textarea class="poll-area mt10 mb10" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                                        <% if (research.examples[examCount - 1].isEtc) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= examCount %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
                                                         <% if (research.motMsgHtmlCtt) { %><div class="mb20"><%- research.motMsgHtmlCtt %></div><% } %>
                                                     <% } %>
                                                     <% if (research.isProceeding) { %>
-                                                        <% if (research.type === "R") { %>
+                                                        <% if (research.bnnrRsrchRpsTypCd === "R") { %>
                                                             <ul class="bt-slice">
                                                                 <li class="bt-blue1">
-                                                                    <button data-question-id="<%= research.hintUrl %>">설문 시작하기</button>
+                                                                    <a href="/customer/researches/<%= research.hintExUrl %>">설문 시작하기</a>
                                                                 </li>
                                                             </ul>
                                                         <% } else { %>
                                                             <ul class="bt-slice item-two">
                                                                 <li class="bt-white2">
-                                                                    <button>결과보기</button>
+                                                                    <a href="/customer/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
                                                                 </li>
                                                                 <li class="bt-blue1">
                                                                     <button disabled>참여하기</button>
@@ -99,7 +123,7 @@
                                                     <% } else { %>
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <button>결과보기</button>
+                                                                <a href="/customer/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
                                                             </li>
                                                         </ul>
                                                     <% } %>
@@ -135,4 +159,9 @@
 </body>
 
 <% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.CustomerResearches($('.wrap'));
+    });
+</script>
 <% include ../../components/end.component.html %>
