@@ -30,6 +30,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cashbagAccodianBtn = this.$container.find('[data-id=cashbag_list]');
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
+      this.$emailAddr = this.$container.find('[data-id=email-addr]');
     }
     else if ( this.data.type === 'feature' ) {
       // TODO: 우편번호 공통화 작업 완료 후 처리
@@ -59,7 +60,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _initialize: function () {
 
     this.svcNominalRelCd = '010'; // default 본인
-
+    this.myAddress = this.data.svcInfo.addr; // 주소
     if ( this.data.type === 'corporate' ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
     }
@@ -71,7 +72,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       layer: true,
       title: Tw.POPUP_TITLE.MEMBERSHIP_CORPORATE_LIST,
       data: Tw.POPUP_TPL.MEMBERSHIP_CORPORATE_LIST
-    }, $.proxy(this._corporateListPopupCallback, this));
+    }, $.proxy(this._corporateListPopupCallback, this), null, 'select_nominee');
   },
 
   _corporateListPopupCallback: function ($layer) {
@@ -209,8 +210,17 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       skt_tm_yn: 'N', // 고객 혜택 제공
       sms_agree_yn: 'N', // 멤버십 이용내역 안내
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
-      mktg_agree_yn: 'N' // 마케팅활용
+      mktg_agree_yn: 'N', // 마케팅활용
+      cust_email_addr: ''
+      // zip: this.$zipCodeInput.val(),
+      // bas_addr: this.$zipCodeInputDetail_1.val()
+      // dtl_addr: this.$zipCodeInputDetail_2.val()
     };
+
+    if ( this.data.type === 'corporate' ) {
+      params.cust_email_addr = this.$emailAddr.val(); // email 주소
+    }
+
     for ( var i = 0; i < $items.length; i++ ) {
       var $item = $items.eq(i);
       switch ( $item.attr('data-type') ) {
