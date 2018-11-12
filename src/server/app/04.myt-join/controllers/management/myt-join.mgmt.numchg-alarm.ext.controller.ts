@@ -25,7 +25,7 @@ class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
     //           'notiType': 'S',
     //           'freeOfrEndDt': '20191030',
     //           'notiStaDt': '20181031',
-    //           'notiEndDt': '20190331',
+    //           'notiEndDt': '20181130',
     //           'extnsPsblYn': 'N',
     //           'orglSktYn': 'Y'
     //         }
@@ -37,6 +37,12 @@ class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
           result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
           result['notiStaDt'] = DateHelper.getShortDateNoDot(result['notiStaDt']);
           result['notiEndDt'] = DateHelper.getShortDateNoDot(result['notiEndDt']);
+
+          // 서비스 종료 후 면 신청으로 이동
+          const today = DateHelper.getShortDateNoDot(new Date());
+          if ( result['notiEndDt'] && result['notiEndDt'] < today ) {
+            res.redirect('/myt/join/mgmt/numchg/alarm');
+          }
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result };
           res.render('management/myt-join.mgmt.numchg-alarm.ext.html', option);
