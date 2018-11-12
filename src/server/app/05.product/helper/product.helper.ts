@@ -88,6 +88,43 @@ class ProductHelper {
       unit: UNIT['310']
     };
   }
+
+  static convAdditionsJoinTermInfo(joinTermInfo): any {
+    return Object.assign(joinTermInfo, {
+      preinfo: ProductHelper.convAdditionsPreInfo(joinTermInfo.preinfo),
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+    });
+  }
+
+  static convAdditionsPreInfo(preInfo): any {
+    const isNumberBasFeeInfo = !isNaN(parseInt(preInfo.reqProdInfo.basFeeInfo, 10));
+
+    return Object.assign(preInfo, {
+      reqProdInfo: Object.assign(preInfo.reqProdInfo, {
+        isNumberBasFeeInfo: isNumberBasFeeInfo,
+        basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
+      }),
+      autoJoinList: ProductHelper.convAutoJoinTermList(preInfo.autoJoinList),
+      autoTermList: ProductHelper.convAutoJoinTermList(preInfo.autoTermList)
+    });
+  }
+
+  static convAutoJoinTermList(autoList): any {
+    const autoListConvertResult: any = [];
+
+    autoList.forEach((item) => {
+      if (FormatHelper.isEmpty(autoListConvertResult[item.svcProdCd])) {
+        autoListConvertResult[item.svcProdCd] = {
+          svcProdNm: item.svcProdNm,
+          svcProdList: []
+        };
+      }
+
+      autoListConvertResult[item.svcProdCd].svcProdList.push(item.prodNm);
+    });
+
+    return autoListConvertResult;
+  }
 }
 
 export default ProductHelper;

@@ -37,13 +37,17 @@
         <div class="charge-guide-wrap">
           <div class="charge-cont">
             <span class="sub-disc01">
-              <span class="elem">변경할 {{typeText}}</span>
+              <span class="elem">{{joinTypeText}}할 {{typeText}}</span>
             </span>
             {{#if isMobilePlan}}
             <span class="tit-tx"><span class="blind">변경 요금제명</span>{{toProdName}}</span>
-            <span class="sub-disc03"><span class="tx-bold vbl">{{toProdPrice}}</span> 부가세포함</span>
             {{else}}
             <span class="tit-tx"><span class="blind">가입할 상품정보</span>{{toProdName}}</span>
+            {{/if}}
+            {{#if isNumberBasFeeInfo}}
+            <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}원</span> 부가세포함</span>
+            {{else}}
+            <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}</span></span>
             {{/if}}
           </div>
           {{#if toProdDesc}}
@@ -73,8 +77,10 @@
             <dl>
               <dt>설정 정보</dt>
               <dd>
-                <span class="val">{{settingSummaryText}}</span>
-                <button class="fe-btn_back_setting">정보입력 팝업 열기</button>
+                {{#settingSummaryTexts}}
+                  <span class="{{spanClass}}">{{text}}</span>
+                {{/settingSummaryTexts}}
+                <button class="fe-btn_close_confirm">정보입력 팝업 열기</button>
               </dd>
             </dl>
           </li>
@@ -263,8 +269,8 @@
                 <ul class="select-list" role="group">
                   <li>
                     <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                      <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
-                      <div class="comp-list-layout" id="aria-comp-checkbox1">
+                      <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox-all" /><!-- 체크상태일 경우 checked="checked" -->
+                      <div class="comp-list-layout" id="aria-comp-checkbox-all">
                         <p class="layout-text all-chk">
                           <span class="mtext">모두동의</span>
                         </p>
@@ -428,6 +434,6 @@
   </div>
   <!-- // .container-wrap -->
   <!-- .popup-closeBtn -->
-  <button class="prev-step fe-common-back">취소</button>
+  <button class="prev-step fe-btn_cancel_join">취소</button>
   <!--// .popup-closeBtn -->
 </div>
