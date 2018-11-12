@@ -66,15 +66,15 @@ export const URL = {
   '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
-  '/product': { login: false, id: 'MP', title: '모바일 요금제' },
+  '/product/mobileplan': { login: false, id: 'MP', title: '모바일 요금제' },
   '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
-  '/product/plans': { login: false, id: 'MP_02', title: '모바일 요금제' },
+  '/product/mobileplan/list': { login: false, id: 'MP_02', title: '모바일 요금제' },
   '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
   '/product/wire': { login: false, id: 'WP', title: '인터넷/전화/TV' },
   '/product/internet': { login: false, id: 'WP_01', title: '인터넷' },
   '/product/phone': { login: false, id: 'WP_01', title: '전화' },
   '/product/tv': { login: false, id: 'WP_01', title: 'TV' },
-  '/product/apps': { login: false, id: 'TA', title: 'T apps'},
+  '/product/apps': { login: false, id: 'TA', title: 'T apps' },
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
   '/product/join': { login: true, id: 'MP_02_02_06', title: '상품 가입' },
   '/product/terminate': { login: true, id: 'MP_02_02_06', title: '상품 해지' },
