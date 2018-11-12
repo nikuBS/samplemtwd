@@ -1,0 +1,148 @@
+<%#
+* FileName: customer.researches.research.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.11.12
+* id: CS_12_03
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '설문조사 진행', svcInfo }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- .poll-title -->
+                    <div class="poll-title mb30">
+                        <span class="poll-question"><%= research.info.qstnTitleNm %></span>
+                        <%- research.info.qstnHtmlCtt %>
+                        <span class="poll-date"><%= research.info.staDtm %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.info.endDtm %></span>
+                        <em class="poll-condition">진행</em>
+                    </div>
+                    <!-- // .poll-title -->
+                    <!-- poll-chart-box -->
+                    <div class="poll-chart-box">
+                        <div class="poll-chart-sbox">
+                            <dl class="poll-chart-txt">
+                                <dt>진행률</dt>
+                                <dd>80%</dd>
+                            </dl>
+                            <div class="bar-chart-hoz">
+                                <span class="data-bar blue2" style="width:80%"></span>
+                            </div><br/>
+                        </div>
+                    </div>
+                    <!-- // poll-chart-box -->
+                    <div class="poll-box">
+                        <% research.questions.map(question => { %>
+                            <div><%= question.inqDtlCtt %></div>
+                            <% switch (question.inqItmTypCd) { 
+                                case '0': {
+                                let etcIdx = -1; %>
+                                <div class="widget">
+                                    <div class="widget-box radio">
+                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'D' ? 'division-two' : '' %>" role="radiogroup">
+                                            <% for (let idx in question.examples) { 
+                                                const exam = question.examples[idx];
+                                                if (exam.isEtc) {
+                                                    etcIdx = idx;
+                                                }
+                                                const content = exam.isEtc ? '기타' : exam.content %>
+                                                <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                    <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                    <%= content %>
+                                                </li>
+                                            <% }; %>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
+                                <% break;
+                                }
+                                case '1': {
+                                let etcIdx = -1; %>
+                                <div class="widget">
+                                    <div class="widget-box check">
+                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'D' ? 'division-two' : '' %>" role="group">
+                                            <% for (let idx in question.examples) { 
+                                                const exam = question.examples[idx];
+                                                if (exam.isEtc) {
+                                                    etcIdx = idx;
+                                                }
+                                                const content = exam.isEtc ? '기타' : exam.content %>
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                    <%= content %>
+                                                </li>
+                                            <% }; %>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
+                                <% break;
+                                }
+                                case '2': {%> 
+                                <textarea class="poll-area mt10 mb10" cols="20" rows="3" placeholder="내용을 입력해주세요."></textarea>
+                                <% break;
+                                }
+                            } %>
+                        <% }); %>
+                    </div>
+                    <ul class="bt-slice mt30">
+                        <li class="bt-blue1">
+                            <button>다음</button>
+                        </li>
+                    </ul>
+                    <!--
+                    <ul class="bt-slice mt30">
+                        <li class="bt-blue1">
+                            <button>다음</button>
+                        </li>
+                    </ul>
+                    -->
+                    <!--
+                    <ul class="bt-slice mt30 item-two">
+                        <li class="bt-white2">
+                            <button>이전으로</button>
+                        </li>
+                        <li class="bt-blue1">
+                            <button>참여하기</button>
+                        </li>
+                    </ul>
+                    -->
+                </div>
+                <!-- // .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.CustomerResearches($('.wrap'));
+    });
+</script>
+<% include ../../components/end.component.html %>
