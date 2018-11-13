@@ -40,7 +40,7 @@ class MyTJoinMgmtNumChgAlarm extends TwViewController {
           // 서비스 이용중(서비스 종료일이 오늘날짜보다 크거나 같으면) 이라면 연장으로 이동
           const today = DateHelper.getShortDateNoDot(new Date());
           if ( result['notiEndDt'] && DateHelper.getShortDateNoDot(result['notiEndDt']) >= today ) {
-            res.redirect('/myt/join/mgmt/numchg/alarm/ext');
+            res.redirect('/myt-join/submain/phone/extalarm');
             return;
           }
 

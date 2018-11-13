@@ -188,13 +188,13 @@ Tw.MyTJoinProtectPwdChange.prototype = {
 
     // 비밀번호 입력란에 아무것도 없을 때
     if ( pwd.length === 0 ) {
-      this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A04, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.AUTO_A04, Tw.POPUP_TITLE.NOTIFY);
       return null;
     }
     // 1차 6자리 이상인지 확인 (6자리 미만인 경우 알림)
     if ( pwd.length < 6 ) {
       // 숫자만 입력가능하기때문에 length 로 비교
-      this._popupService.openAlert(Tw.MSG_MYT.JOIN_SERVICE.EMPTY_PWD, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.EMPTY_PWD, Tw.POPUP_TITLE.NOTIFY);
       return null;
     }
     return pwd;
@@ -222,7 +222,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     if ( orgPwd !== checkPwd ) {
       $('#pwd-input2').parents('.inputbox').addClass('error');
       $('#pwd-input3').parents('.inputbox').addClass('error');
-      this._popupService.openAlert(Tw.MSG_MYT.JOIN_SERVICE.FAIL_PWD, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.FAIL_PWD, Tw.POPUP_TITLE.NOTIFY);
       return;
     }
 
@@ -257,7 +257,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     if ( params.code === Tw.API_CODE.CODE_00 ) {
       var msgObj = this._new ? Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A64 : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A62;
       this._popupService.openAlert(msgObj.MSG, msgObj.TITLE, null, $.proxy(function(){
-        this._historyService.goLoad('/myt/join/join-info');
+        this._historyService.goLoad('/myt-join/submain/');
       }, this));
     }
     else {
@@ -278,7 +278,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
   },
 
   _onclickBtnCancel: function(){
-    this._historyService.goLoad('/myt/join');
+    this._historyService.goLoad('/myt-join/submain');
   }
 
 

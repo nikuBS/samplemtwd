@@ -133,8 +133,8 @@ Tw.MyTJoinMgmtNumchg.prototype = {
         }
 
         Tw.Popup.afterRequestSuccess(
-          '/myt/join/mgmt/numchg/alarm',
-          '/myt/join',
+          '/myt-join/submain/phone/alarm',
+          '/myt-join/submain',
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + selectedNum.replace('n',''));

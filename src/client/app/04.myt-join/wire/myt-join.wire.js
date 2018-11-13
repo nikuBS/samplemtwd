@@ -21,7 +21,7 @@ Tw.MyTJoinWire.prototype = {
       this._historyService.goLoad('./wire/gifts');
     },this));
     $('#btnDiscRefund').click($.proxy(function(){
-      this._historyService.goLoad('./wire/discount-refund');
+      this._historyService.goLoad('./wire/discountrefund');
     },this));
     $('#btnHist').click($.proxy(function(){
       this._historyService.goLoad('./wire/history');
@@ -30,7 +30,7 @@ Tw.MyTJoinWire.prototype = {
       this._historyService.goLoad('./wire/as');
     },this));
     $('#btnNetphone').click($.proxy(function(){
-      this._historyService.goLoad('./wire/inetphone-num/change');
+      this._historyService.goLoad('./wire/inetphone');
     },this));
   }
 

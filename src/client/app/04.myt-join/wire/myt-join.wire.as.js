@@ -196,7 +196,7 @@ Tw.MyTJoinWireAS.prototype = {
         break;
       }
     }
-    var url = './as/detail?' +
+    var url = './asdetail?' +
       'troubleNum='+num+'&' +
       'troubleDt='+item.troubleDt+'&' +
       'svcNm='+item.svcNm+'&' +
