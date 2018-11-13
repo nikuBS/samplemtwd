@@ -9,7 +9,6 @@ Tw.MyTBenefitMembershipJoin = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._tpayPopup = new Tw.TPayJoinLayerPopup(this.$container);
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this.data = params.data;
@@ -19,6 +18,22 @@ Tw.MyTBenefitMembershipJoin = function (params) {
 };
 
 Tw.MyTBenefitMembershipJoin.prototype = {
+
+  loadingView: function (value, selector) {
+    if ( !selector ) {
+      selector = '[data-id="container"]';
+    }
+    if ( value ) {
+      skt_landing.action.loading.on({
+        ta: selector, co: 'grey', size: true
+      });
+    }
+    else {
+      skt_landing.action.loading.off({
+        ta: selector
+      });
+    }
+  },
 
   _render: function () {
     this.$joinBtn = this.$container.find('[data-id=join-btn]');
@@ -215,6 +230,12 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickJoinBtn: function () {
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_MEMBERSHIP.JOIN.TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN.CONTENT,
+      Tw.ALERT_MSG_MEMBERSHIP.JOIN.OK_BTN, null, $.proxy(this._requestMembershipJoin, this), null);
+  },
+
+  _requestMembershipJoin: function() {
+    this.loadingView(true);
     var $items = this.$container.find('[aria-checked=true]');
     var params = {
       mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
@@ -261,15 +282,19 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_11_0011, params)
       .done($.proxy(this._onSuccessJoinMembership, this))
       .fail($.proxy(this._onFailJoinMembership, this));
+    this._popupService.close();
   },
 
   _onSuccessJoinMembership: function (resp) {
+    this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/membership/submain', '/membership/mymembership/history',
+      this._popupService.afterRequestSuccess('/membership/mymembership/history', '/membership/submain',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
-      setTimeout(this._tpayPopup.open, 500);
+      setTimeout($.proxy(function() {
+        new Tw.TPayJoinLayerPopup(this.$container).open();
+      }, this), 100);
     }
     else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -277,6 +302,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onFailJoinMembership: function (resp) {
+    this.loadingView(false);
     Tw.Error(resp.code, resp.msg).pop();
   },
 
