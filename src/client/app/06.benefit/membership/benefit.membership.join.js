@@ -63,8 +63,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
     this.svcNominalRelCd = '010'; // default 본인
     this.myAddress = this.data.svcInfo.addr; // 주소
+    this.addrCd = '03'; // 주소구분코드: 자택
     if ( this.data.type === 'corporate' && this.data.isCorporateBody ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
+      this.addrCd = '04'; // 직장
     }
   },
 
@@ -225,7 +227,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       sms_agree_yn: 'N', // 멤버십 이용내역 안내
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
-      cust_email_addr: ''
+      cust_email_addr: '',
+      addr_cd: this.addrCd
       // zip: this.$zipCodeInput.val(),
       // bas_addr: this.$zipCodeInputDetail_1.val()
       // dtl_addr: this.$zipCodeInputDetail_2.val()
