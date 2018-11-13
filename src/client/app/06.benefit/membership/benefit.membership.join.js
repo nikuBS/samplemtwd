@@ -34,11 +34,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
     }
     else if ( this.data.type === 'feature' ) {
-      // TODO: 우편번호 공통화 작업 완료 후 처리
-      // this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
+      this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
       this.$zipCodeBtn = this.$container.find('[data-id=zip-code]');
-      // this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
-      // this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
+      this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
+      this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
     }
   },
 
@@ -62,7 +61,6 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _initialize: function () {
 
     this.svcNominalRelCd = '010'; // default 본인
-    this.myAddress = this.data.svcInfo.addr; // 주소
     this.addrCd = '03'; // 주소구분코드: 자택
     if ( this.data.type === 'corporate' && this.data.isCorporateBody ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
@@ -227,15 +225,17 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       sms_agree_yn: 'N', // 멤버십 이용내역 안내
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
-      cust_email_addr: '',
       addr_cd: this.addrCd
-      // zip: this.$zipCodeInput.val(),
-      // bas_addr: this.$zipCodeInputDetail_1.val()
-      // dtl_addr: this.$zipCodeInputDetail_2.val()
     };
 
     if ( this.data.type === 'corporate' ) {
       params.cust_email_addr = this.$emailAddr.val(); // email 주소
+    }
+
+    if ( this.data.type === 'feature' ) {
+      params.zip = this.$zipCodeInput.val();
+      params.bas_addr = this.$zipCodeInputDetail_1.val();
+      params.dtl_addr = this.$zipCodeInputDetail_2.val();
     }
 
     for ( var i = 0; i < $items.length; i++ ) {
@@ -268,7 +268,6 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       this._popupService.afterRequestSuccess('/membership/submain', '/membership/mymembership/history',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
-      // TODO: 가입하기 완료 후 TPay 팝업 노출
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
       setTimeout(this._tpayPopup.open, 500);
     }
