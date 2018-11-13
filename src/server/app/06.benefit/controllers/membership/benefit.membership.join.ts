@@ -18,7 +18,8 @@ class BenefitMembershipJoin extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
-      pageInfo: pageInfo
+      pageInfo: pageInfo,
+      isCorporateBody: true
     };
     this.apiService.request(API_CMD.BFF_11_0015, {}).subscribe((createInfo) => {
       if ( createInfo.code === API_CODE.CODE_00 ) {

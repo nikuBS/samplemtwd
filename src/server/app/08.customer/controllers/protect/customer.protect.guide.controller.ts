@@ -12,15 +12,15 @@ import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 const guideCategory = {
-  cmis_0002: {
+  video: {
     LABEL: CUSTOMER_PROTECT_GUIDE.VIDEO,
     LIST: CUSTOMER_PROTECT_GUIDE_VIDEO
   },
-  cmis_0003: {
+  webtoon: {
     LABEL: CUSTOMER_PROTECT_GUIDE.WEBTOON,
     LIST: CUSTOMER_PROTECT_GUIDE_WEBTOON.reverse()
   },
-  cmis_0004: {
+  latest: {
     LABEL: CUSTOMER_PROTECT_GUIDE.LATEST,
     LIST: CUSTOMER_PROTECT_GUIDE_LATEST
   }
@@ -45,15 +45,15 @@ class CustomerProtectGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const lastSeq = FormatHelper.getLastSeq(req.path),
-      listMaxSize = (lastSeq === 'cmis_0003') ? 20 : 30;
+    const category = req.params.category || 'video',
+      listMaxSize = (category === 'webtoon') ? 20 : 30;
 
     res.render('protect/customer.protect.guide.html', {
-      lastSeq: lastSeq,
-      categoryLabel: guideCategory[lastSeq].LABEL,
+      category: category,
+      categoryLabel: guideCategory[category].LABEL,
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      list: this._convertList(guideCategory[lastSeq].LIST, listMaxSize),
+      list: this._convertList(guideCategory[category].LIST, listMaxSize),
       listMaxSize: listMaxSize
     });
   }

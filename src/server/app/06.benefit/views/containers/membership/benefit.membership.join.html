@@ -62,11 +62,11 @@
             <!--// .cont-box -->
             <% if (data.type === 'feature') { %>
                 <% if (data.isIndividual) { %>
-                    <%- include('../components/membership/benefit.membership.join-corporate.html', { data }); %>
+                    <%- include('../components/membership/benefit.membership.join-feature.html', { data }); %>
                 <% } %>
             <% } else if (data.type === 'corporate') { %>
                 <% if (data.isCorporateBody) { %>
-                    <%- include('../components/membership/benefit.membership.join-feature.html', { data }); %>
+                     <%- include('../components/membership/benefit.membership.join-corporate.html', { data }); %>
                 <% } %>
             <% } %>
 
@@ -97,7 +97,7 @@
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_01" data-type="svc">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="서비스 이용약관 동의(필수)"
+                                            <input type="checkbox" name="checkbox" value="" title="멤버십 회원약관 동의 (필수)"
                                                    aria-labelledby="aria-comp-checkbox2"/>
                                             <!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox2">
@@ -166,20 +166,6 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-type="pad">
-                                            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value=""
-                                                   title="개인 맞춤 정보 ·광고 수신 (이메일 및 SMS 수신)"
-                                                   aria-labelledby="aria-comp-checkbox7"/>
-                                            <!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox7">
-                                                <p class="layout-text">
-                                                    <span class="mtext">개인 맞춤 정보 ·광고 수신<br>(이메일 및 SMS 수신)</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -204,7 +190,7 @@
                                     <!-- .on: 열기 -->
                                     <li class="acco-box">
                                         <div class="acco-tit">
-                                            <div class="checkbox type01">
+                                            <div class="checkbox type01" data-type="okadd">
                                                 <input type="checkbox" name="checkbox" value=""  data-id="usage_cashbag"
                                                        title="OK캐쉬백 기능 추가하기"/>OK캐쉬백 기능 추가하기</div>
                                             <button role="button" aria-pressed="false" data-id="cashbag_list"></button>

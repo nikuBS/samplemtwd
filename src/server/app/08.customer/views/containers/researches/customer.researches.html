@@ -18,14 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="header">
-                <div class="header-ti align-l">
-                    <h1>설문조사</h1>
-                </div>
-                <button class="prev-step"><span class="blind">이전으로</span></button>
-            </div>
-        </div>
+        <%- include('../../../common/views/components/header.component.html', { title: '설문조사', svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -66,15 +59,16 @@
                                                             <% if (research.bnnrRsrchRpsTypCd === 'C') { %>
                                                                 <div class="widget-box radio">
                                                                     <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> <%= research.examples[0].image ? 'has-image' : '' %>" role="radiogroup">
-                                                                        <% research.examples.map(exam => { %>
+                                                                        <% research.examples.map(exam => { 
+                                                                            const content = exam.isEtc ? '기타' : exam.content %>
                                                                         <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                                             <% if (exam.image) { %>
                                                                                 <div class="poll-img"><img src="<%= exam.image %>" /></div>
-                                                                                <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                <div class="poll-text"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
+                                                                                <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <div class="poll-text"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
                                                                             <% } else { %>
-                                                                                <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                <%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
+                                                                                <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
                                                                             <% } %>
                                                                         </li>
                                                                         <% }); %>
@@ -83,15 +77,16 @@
                                                             <% } else { %>
                                                                 <div class="widget-box check">
                                                                     <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> <%= research.examples[0].image ? 'has-image' : '' %>" role="group">
-                                                                        <% research.examples.map(exam => { %>
+                                                                        <% research.examples.map(exam => { 
+                                                                            const content = exam.isEtc ? '기타' : exam.content %>
                                                                         <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                                             <% if (exam.image) { %>
                                                                                 <div class="poll-img"><img src="<%= exam.image %>" /></div>
-                                                                                <input type="checkbox" name="checkbox" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                <div class="poll-text"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
+                                                                                <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <div class="poll-text"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
                                                                             <% } else { %>
-                                                                                <input type="checkbox" name="checkbox" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                <%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
+                                                                                <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                                <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
                                                                             <% } %>
                                                                         </li>
                                                                         <% }); %>

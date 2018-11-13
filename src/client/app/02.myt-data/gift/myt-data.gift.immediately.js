@@ -47,8 +47,8 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._setAmountUI(Number(res.result.dataRemQty));
-      var dataQty = Tw.FormatHelper.convDataFormat(res.result.dataRemQty, 'MB');
+      this._setAmountUI(Number(900));
+      var dataQty = Tw.FormatHelper.convDataFormat(900, 'MB');
       this.$remainQty.text(dataQty.data + dataQty.unit);
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -58,7 +58,6 @@ Tw.MyTDataGiftImmediately.prototype = {
   _setAmountUI: function (nLimitMount) {
     var fnCheckedUI = function (nIndex, elInput) {
       var $input = $(elInput);
-
       if ( Number($input.val()) > nLimitMount ) {
         $input.prop('disabled', true);
         $input.parent().addClass('disabled');

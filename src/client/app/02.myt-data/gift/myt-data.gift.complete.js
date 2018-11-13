@@ -40,7 +40,7 @@ Tw.MyTDataGiftComplete.prototype = {
     }
 
     if ( this.paramData.befrSvcNum ) {
-      this.$phone.text(this.paramData.befrSvcNum);
+      this.$phone.text(Tw.FormatHelper.conTelFormatWithDash(this.paramData.befrSvcNum));
     }
 
     if ( this.paramData.dataQty ) {

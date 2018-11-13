@@ -44,35 +44,24 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
     this.controllers.push({ url: '/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/researches', controller: CustomerResearches });
+    this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches });
     this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail });
     this.controllers.push({ url: '/svc-info/service', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/mcustomer', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/site', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice} );
-    // this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
-    // this.controllers.push({ url: '/protect', controller: CustomerProtect });
-    // this.controllers.push({ url: '/protect/guide(/:category)?', controller: CustomerProtectGuide } );
-    // this.controllers.push({ url: '/protect/guide/:category/view/:idx', controller: CustomerProtectGuideView } );
-    // this.controllers.push({ url: '/protect/additions', controller: CustomerProtectAdditions } );
-    // this.controllers.push({ url: '/protect/related', controller: CustomerProtectRelated } );
-    // this.controllers.push({ url: '/protect/warning', controller: CustomerProtectWarning } );
-    // this.controllers.push({ url: '/protect/warning/view/:idx', controller: CustomerProtectWarningView } );
+    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice });
 
     // new IA
-    this.controllers.push({ url: '/svc_info/cmis_0039', controller: CustomerNotice });
-    this.controllers.push({ url: '/damage_info/cmis_0000', controller: CustomerProtect });
-    this.controllers.push({ url: '/damage_info/cmis_0001', controller: CustomerProtect });
-    this.controllers.push({ url: '/damage_info/cmis_0002', controller: CustomerProtectGuide });
-    this.controllers.push({ url: '/damage_info/cmis_0003', controller: CustomerProtectGuide });
-    this.controllers.push({ url: '/damage_info/cmis_0004', controller: CustomerProtectGuide });
-    this.controllers.push({ url: '/damage_info/cmis_0006', controller: CustomerProtectGuideView });
-    this.controllers.push({ url: '/damage_info/cmis_0007', controller: CustomerProtectWarning });
-    this.controllers.push({ url: '/damage_info/cmis_0008', controller: CustomerProtectWarningView });
-    this.controllers.push({ url: '/damage_info/cmis_0009', controller: CustomerProtectAdditions });
-    this.controllers.push({ url: '/damage_info/cmis_0010', controller: CustomerProtectRelated });
+    this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
+    this.controllers.push({ url: '/damage-info', controller: CustomerProtect });
+    this.controllers.push({ url: '/damage-info/guide(/:category)?', controller: CustomerProtectGuide });
+    this.controllers.push({ url: '/damage-info/guide/webtoon/view/:idx', controller: CustomerProtectGuideView });
+    this.controllers.push({ url: '/damage-info/warning', controller: CustomerProtectWarning });
+    this.controllers.push({ url: '/damage-info/warning/view/:idx', controller: CustomerProtectWarningView });
+    this.controllers.push({ url: '/damage-info/additions', controller: CustomerProtectAdditions });
+    this.controllers.push({ url: '/damage-info/related', controller: CustomerProtectRelated });
   }
 }
 

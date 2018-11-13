@@ -31,11 +31,6 @@ class FormatHelper {
     return FormatHelper.isEmpty(value) ? emptyValue : value;
   }
 
-  static getLastSeq(path: any): any {
-    const pathArray = path.split('/');
-    return pathArray[pathArray.length - 1];
-  }
-
   static stripTags(context: any): any {
     return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   }

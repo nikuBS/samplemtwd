@@ -79,7 +79,12 @@ class MyTFarePaymentOption extends TwViewController {
     }
 
     if (info.address) {
-      info.addr = info.address.replace('<br/>', '\n');
+      let brCode = '<br>';
+      if (info.address.match('<br/>')) {
+        brCode = '<br/>';
+      }
+      info.addr1 = info.address.split(brCode)[0];
+      info.addr2 = info.address.split(brCode)[1];
     }
     return info;
   }

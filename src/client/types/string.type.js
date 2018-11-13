@@ -71,7 +71,8 @@ Tw.POPUP_TITLE = {
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
   SELECT_FAMILY_TYPE: '가족선택',
-  HISTORY: '이용내역'
+  HISTORY: '이용내역',
+  MEMBERSHIP_CORPORATE_LIST: '명의자 선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -292,7 +293,8 @@ Tw.ALERT_MSG_COMMON = {
   EXIT_APP: '앱을 종료하시겠습니까?',
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
   ALERT_4_A3: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?',
-  ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.'
+  ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.',
+  ALERT_MORE_TWO: '2자 이상 입력해 주세요.'
 };
 
 Tw.ALERT_MSG_HOME = {};
@@ -657,6 +659,13 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN_CUSTPASS = {
+  AUTO_A04: '비밀번호를 입력해 주세요.',
+  EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
+  ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
+  FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
+};
+
 Tw.MYT_JOIN_MGMT_NUMCHG = {
   COMPLETE_POPUP: {
     MAIN_TXT: '변경',
@@ -989,4 +998,15 @@ Tw.CUSTOMER_EMAIL.ACTION_TYPE = {
   SELECT_BRAND: '브랜드 선택',
   SELECT_DEVICE: '기종 선택',
   SELECT_LINE: '회선 선택'
+};
+
+Tw.PRODUCT_COMBINE_FAMILY_TYPE = {
+  leader: '가족대표',
+  parents: '부모',
+  grandparents: '(증)조부모',
+  grandchildren: '손자녀',
+  spouse: '배우자',
+  children: '자녀',
+  brother: '형제자매',
+  me: '본인'
 };

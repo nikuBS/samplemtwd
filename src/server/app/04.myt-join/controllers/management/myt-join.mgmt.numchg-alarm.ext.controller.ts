@@ -41,7 +41,7 @@ class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
           // 서비스 종료 후 면 신청으로 이동
           const today = DateHelper.getShortDateNoDot(new Date());
           if ( result['notiEndDt'] && result['notiEndDt'] < today ) {
-            res.redirect('/myt/join/mgmt/numchg/alarm');
+            res.redirect('/myt-join/submain/phone/alarm');
           }
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result };

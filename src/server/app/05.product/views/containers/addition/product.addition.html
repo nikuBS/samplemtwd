@@ -79,37 +79,37 @@
                 <!--상품 퀵메뉴-->
                 <ul class="product-quickmenu">
                     <li>
-                        <a class="link" href="/product/additions?filters=F01231">
+                        <a class="link" href="/product/mobileplan-add/list?filters=F01231">
                             <i class="ico type-data"></i>
                             <p class="title">데이터</p>
                         </a>
                     </li>
                     <li>
-                        <a class="link" href="/product/additions?filters=F01232">
+                        <a class="link" href="/product/mobileplan-add/list?filters=F01232">
                             <i class="ico type-benefits"></i>
                             <p class="title">혜택/편의</p>
                         </a>
                     </li>
                     <li>
-                        <a class="link" href="/product/additions?filters=F01233">
+                        <a class="link" href="/product/mobileplan-add/list?filters=F01233">
                             <i class="ico type-insurance"></i>
                             <p class="title">안심/보험</p>
                         </a>
                     </li>
                     <li>
-                        <a class="link" href="/product/additions?filters=F01234">
+                        <a class="link" href="/product/mobileplan-add/list?filters=F01234">
                             <i class="ico type-message"></i>
                             <p class="title">통화/메시지</p>
                         </a>
                     </li>
                     <li>
-                        <a class="link" href="/product/additions?filters=F01235">
+                        <a class="link" href="/product/mobileplan-add/list?filters=F01235">
                             <i class="ico type-contents"></i>
                             <p class="title">컨텐츠 이용</p>
                         </a>
                     </li>
                     <li>
-                        <a class="link" href="/product/additions?filters=F01236">
+                        <a class="link" href="/product/mobileplan-add/list?filters=F01236">
                             <i class="ico type-payment"></i>
                             <p class="title">인증/결제</p>
                         </a>
@@ -125,7 +125,7 @@
                 <div class="cont-box">
                     <div class="plan-title">
                          <h3 class="tit"><%= productData.bestAdditions.expsTitNm %></h3>
-                         <div class="bt-alone mt4"><a href="/product/additions" class="bt-bg-blue1">전체 부가서비스</a></div>
+                         <div class="bt-alone mt4"><a href="/product/mobileplan-add/list" class="bt-bg-blue1">전체 부가서비스</a></div>
                     </div>
 
                     <ul class="recommendedrate-list">
@@ -241,7 +241,7 @@
                             <ul>
                             <% for (let i = 0; i < recommendedTags.length; i++) { %>
                                 <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
-                                <li><a href="/product/additions?tag=<%= recommendedTags[i].tagId %>" class="link">#<%= recommendedTags[i].tagNm %></a></li>
+                                <li><a href="/product/mobileplan-add/list?tag=<%= recommendedTags[i].tagId %>" class="link">#<%= recommendedTags[i].tagNm %></a></li>
                             <% } %>
                             </ul>
                         </div>
@@ -261,7 +261,7 @@
                     <div class="moreitems-wrap">
                         <ul class="moreitems-list"> <!-- TODO: 링크 이동 추가 필요 -->
                             <li>
-                                <a class="link link-type01" href="/product" >모바일<br>요금제</a>
+                                <a class="link link-type01" href="/product/mobileplan" >모바일<br>요금제</a>
                                 <!-- <a href="#" class="link link-type01">모바일<br>부가상품</a> -->
                             </li>
                             <li>
@@ -273,7 +273,7 @@
                                 <!-- <a href="#" class="link link-type03">T 로밍</a> -->
                             </li>
                             <li>
-                                <a href="/product/wire" class="link link-type04">인터넷/전화/<br>IPTV</a>
+                                <a href="/product/wireplan" class="link link-type04">인터넷/전화/<br>IPTV</a>
                                 <!-- <a href="#" class="link link-type04">인터넷/전화/<br>IPTV</a> -->
                             </li>
                             <li>
