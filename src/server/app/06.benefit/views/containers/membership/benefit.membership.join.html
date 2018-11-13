@@ -60,11 +60,11 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <% if (data.type === 'feature') { %>
+            <% if (data.isFeature) { %>
                 <% if (data.isIndividual) { %>
                     <%- include('../components/membership/benefit.membership.join-feature.html', { data }); %>
                 <% } %>
-            <% } else if (data.type === 'corporate') { %>
+            <% } else { %>
                 <% if (data.isCorporateBody) { %>
                      <%- include('../components/membership/benefit.membership.join-corporate.html', { data }); %>
                 <% } %>
@@ -106,7 +106,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                        <button class="agree-view" data-type="BE_04_02_L01"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_02" data-type="psi">
@@ -120,7 +120,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                        <button class="agree-view" data-type="BE_04_02_L02"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-type="ad">
@@ -134,7 +134,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                        <button class="agree-view" data-type="BE_04_02_L03"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-type="bsi">
@@ -149,7 +149,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                        <button class="agree-view" data-type="BE_04_02_L04"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-type="sms">
@@ -226,7 +226,7 @@
                                                                             </p>
                                                                         </div>
                                                                     </div>
-                                                                    <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                                                    <button class="agree-view" data-type="BE_04_02_L05"><span class="blind">자세히 보기</span></button>
                                                                 </li>
                                                                 <li>
                                                                     <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-id="L_04" data-type="odi">
@@ -240,7 +240,7 @@
                                                                             </p>
                                                                         </div>
                                                                     </div>
-                                                                    <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                                                    <button class="agree-view" data-type="BE_04_02_L06"><span class="blind">자세히 보기</span></button>
                                                                 </li>
                                                                 <li>
                                                                     <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="CL" data-type="mak">
@@ -254,7 +254,7 @@
                                                                             </p>
                                                                         </div>
                                                                     </div>
-                                                                    <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                                                    <button class="agree-view" data-type="BE_04_02_L07"><span class="blind">자세히 보기</span></button>
                                                                 </li>
                                                             </ul>
                                                             <div class="cont-box noborder bgnone">

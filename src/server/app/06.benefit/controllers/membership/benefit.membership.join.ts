@@ -18,8 +18,7 @@ class BenefitMembershipJoin extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
-      pageInfo: pageInfo,
-      isCorporateBody: true
+      pageInfo: pageInfo
     };
     this.apiService.request(API_CMD.BFF_11_0015, {}).subscribe((createInfo) => {
       if ( createInfo.code === API_CODE.CODE_00 ) {
@@ -50,16 +49,6 @@ class BenefitMembershipJoin extends TwViewController {
           msg: createInfo.msg,
           svcInfo: svcInfo
         });
-      }
-    });
-  }
-
-  _getMembershipCreateCheck() {
-    this.apiService.request(API_CMD.BFF_11_0015, {}).map((createInfo) => {
-      if ( createInfo.code === API_CODE.CODE_00 ) {
-        return createInfo.result;
-      } else {
-        return null;
       }
     });
   }

@@ -28,6 +28,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeItems = this.$container.find('[data-role=CL]');
     this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
     this.$cashbagAccodianBtn = this.$container.find('[data-id=cashbag_list]');
+    this.$agreeViewBtn = this.$container.find('button.agree-view');
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
@@ -45,9 +46,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$container.on('click', $.proxy(this._onClickContainer, this));
     this.$joinBtn.on('click', $.proxy(this._onClickJoinBtn, this));
     this.$tAgreeCheckBox.on('click', $.proxy(this._onClickTAgreeCheckbox, this));
-    this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
     this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
+    this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
     this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
+    this.$agreeViewBtn.on('click', $.proxy(this._onItemsAgreeView, this));
     this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn.on('click', $.proxy(this._onClickCorporateList, this));
@@ -61,7 +63,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
     this.svcNominalRelCd = '010'; // default 본인
     this.myAddress = this.data.svcInfo.addr; // 주소
-    if ( this.data.type === 'corporate' ) {
+    if ( this.data.type === 'corporate' && this.data.isCorporateBody ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
     }
   },
@@ -131,21 +133,33 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }
   },
 
-  _onClickTAgreeItems: function (/*event*/) {
-    if ( this._tAllCheck ) {
-      this.$tAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
-      this.$tAgreeCheckBox.find('input').removeAttr('checked');
-      this._tAllCheck = false;
-      this.$tAgreeItems.trigger('click');
+  _onClickTAgreeItems: function (event) {
+    var $target = $(event.target);
+    if ( $target.hasClass('.agree-view') ) {
+      this._onItemsAgreeView($target);
+    }
+    else {
+      if ( this._tAllCheck ) {
+        this.$tAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
+        this.$tAgreeCheckBox.find('input').removeAttr('checked');
+        this._tAllCheck = false;
+        this.$tAgreeItems.trigger('click');
+      }
     }
   },
 
-  _onClickCAgreeItems: function (/*event*/) {
-    if ( this._cAllCheck ) {
-      this.$cAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
-      this.$cAgreeCheckBox.find('input').removeAttr('checked');
-      this._cAllCheck = false;
-      this.$cAgreeItems.trigger('click');
+  _onClickCAgreeItems: function (event) {
+    var $target = $(event.target);
+    if ( $target.hasClass('.agree-view') ) {
+      this._onItemsAgreeView($target);
+    }
+    else {
+      if ( this._cAllCheck ) {
+        this.$cAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
+        this.$cAgreeCheckBox.find('input').removeAttr('checked');
+        this._cAllCheck = false;
+        this.$cAgreeItems.trigger('click');
+      }
     }
   },
 
@@ -262,5 +276,21 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
   _onFailJoinMembership: function (resp) {
     Tw.Error(resp.code, resp.msg).pop();
+  },
+
+  _onItemsAgreeView: function (event) {
+    this._agreeViewTarget = $(event.target).siblings('[role="checkbox"]');
+    var type = $(event.target).attr('data-type');
+    new Tw.MembershipClauseLayerPopup({
+      $element: this.$container,
+      callback: $.proxy(this._agreeViewCallback, this)
+    }).open(type);
+  },
+
+  _agreeViewCallback: function () {
+    if ( !this._agreeViewTarget.find('input').prop('checked') ) {
+      this._agreeViewTarget.find('input').trigger('click');
+      this._agreeViewTarget = null;
+    }
   }
 };
