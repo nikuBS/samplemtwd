@@ -419,12 +419,14 @@ Tw.ProductJoin.prototype = {
           this._data.asgnNumList.push(this.$inputNumber.val());
         }
 
+      // ,
+      //   prodId: this._prodId,
+      //     prodProcTypeCd: 'JN'
+
         this._apiService.request(Tw.API_CMD.BFF_10_0012, {
           asgnNumList: this._data.asgnNumList,
           optProdId: this._data.tplanProdId,
-          svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id'),
-          prodId: this._prodId,
-          prodProcTypeCd: 'JN'
+          svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id')
         }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
 
         this._successData = {
