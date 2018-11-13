@@ -36,7 +36,7 @@ class MyTJoinSuspend extends TwViewController {
           const to = DateHelper.getShortDateWithFormat(result.toDt, 'YYYY-MM-DD');
           options['suspend'] = {
             status: true,
-            reason: result.reason,
+            reason: result.svcChgRsnNm,
             period: { from, to }
           };
         } else {

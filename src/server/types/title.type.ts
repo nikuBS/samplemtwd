@@ -24,7 +24,8 @@ export const MYT_FARE_HOTBILL_TITLE = {
 };
 
 export const MYT_JOIN_SUSPEND = {
-  MAIN: '일시정지'
+  MAIN: '일시정지',
+  STATE: '일시정지 신청현황'
 };
 
 export const MY_BENEFIT = {
