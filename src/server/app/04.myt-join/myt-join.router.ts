@@ -34,7 +34,7 @@ import MyTJoinMgmtNumChg from './controllers/management/myt-join.mgmt.numchg.con
 class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
+    this.controllers.push({ url: '/', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/product/fee-plan', controller: MyTJoinProductFeePlan });
     this.controllers.push({ url: '/product/additions', controller: MyTJoinProductAdditions });
     this.controllers.push({ url: '/product/combinations(/:combination)?', controller: MyTJoinProductCombinations });
@@ -67,6 +67,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/mgmt/numchg/alarm/ext', controller: MyTJoinMgmtNumChgAlarmExt });
 
     // new url
+    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/custpassword', controller: MyTJoinProtectChange });
     this.controllers.push({ url: '/myplancombine/infodiscount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/myplancombine/infodiscount/month', controller: MyTJoinInfoDiscountMonth });
@@ -94,5 +95,6 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinMgmtNumChgAlarmExt });
   }
 }
+
 
 export default MyTJoinRouter;
