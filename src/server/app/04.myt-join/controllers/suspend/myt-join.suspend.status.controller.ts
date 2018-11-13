@@ -23,22 +23,21 @@ class MyTJoinSuspendStatus extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0194, {})
     ).subscribe(([suspendStatus, progress]) => {
 
-      const apiError = this.error.apiError([suspendStatus, progress]);
-      if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.error.render(res, {
-          title: MYT_JOIN_SUSPEND.STATE,
-          svcInfo: svcInfo,
-          msg: apiError.msg,
-          code: apiError.code
-        });
-      }
+      // const apiError = this.error.apiError([suspendStatus, progress]);
+      // if ( !FormatHelper.isEmpty(apiError) ) {
+      //   return this.error.render(res, {
+      //     title: MYT_JOIN_SUSPEND.STATE,
+      //     svcInfo: svcInfo,
+      //     msg: apiError.msg,
+      //     code: apiError.code
+      //   });
+      // }
 
       const options = {
         svcInfo,
         pageInfo,
         phoneNum: StringHelper.phoneStringToDash(svcInfo.svcNum)
       };
-
 
       if ( suspendStatus.result.svcStCd === 'SP' ) {
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY-MM-DD');
@@ -54,7 +53,6 @@ class MyTJoinSuspendStatus extends TwViewController {
           options['type'] = 'temporary';
         }
         res.render('suspend/myt-join.suspend.status.html', options);
-        // res.render('suspend/myt-join.suspend.html', options);
       } else {
 
         switch ( progress.result.opStateCd ) {

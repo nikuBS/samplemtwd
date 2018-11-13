@@ -14,10 +14,10 @@
         <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
-<div id="fe-myt-fare-hotbill" class="wrap">
+<div id="fe-myt-join-suspend" class="wrap">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
-    { title: locals.child ? '자녀실시간 사용요금' : '일시정지 신청현황', svcInfo: svcInfo, option: { line: false }  }); %>
+    { title: '일시정지 신청현황', svcInfo: svcInfo, option: { line: false } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -31,7 +31,7 @@
                                 <span class="elem">회선번호</span>
                             </span>
                         <span class="tit-tgothic"><%= svcInfo.svcNum %></span>
-                        <span class="sub-disc04"><%= svcInfo.prodNm %></span>
+                        <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                         <% } %>
                     </li>
                     <li class="bt-white2">
-                        <button>해제하기</button>
+                        <button id="bt-reset">해제하기</button>
                     </li>
                 </ul>
             </div>
@@ -82,10 +82,16 @@
                 <h3 class="tx-bold">꼭 확인해주세요!</h3>
                 <ul class="noti-list">
                     <% if(type === 'long-term') { %>
-                    <li>장기일시정지 안내 <button type="button" class="tip-view" id="MS_03_05_03_01_tip_03">TIP</button></li>
+                    <li>장기일시정지 안내
+                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_03">TIP</button>
+                    </li>
                     <% } else { %>
-                    <li>일시정지 기간안내 <button type="button" class="tip-view" id="MS_03_05_03_01_tip_01">TIP</button></li>
-                    <li>일시정지 요금안내 <button type="button" class="tip-view" id="MS_03_05_03_01_tip_02">TIP</button></li>
+                    <li>일시정지 기간안내
+                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_01">TIP</button>
+                    </li>
+                    <li>일시정지 요금안내
+                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_02">TIP</button>
+                    </li>
                     <% } %>
                 </ul>
             </div>
@@ -96,14 +102,15 @@
     <!--// #contents -->
     <footer id="fe-all-menu">
         <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <%- include('../../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo:
+        pageInfo }); %>
     </footer>
 </div>
 
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    // new Tw.MyTFareHotBill($('#fe-myt-fare-hotbill'));
+    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({period, reason, type}) %> );
   });
 </script>
 <% include ../../components/end.component.html %>
