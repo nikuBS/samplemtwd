@@ -21,9 +21,30 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '#bt-reset', $.proxy(this._onClickReset, this));
+    this.$container.on('click', '#bt-resuspend', $.proxy(this._onClickResuspend, this));
   },
 
-  _onClickReset: function (e) {
+  _onClickResuspend: function () {
+    this._popupService.open({
+      hbs: 'MS_03_05_04',
+      data: {
+        svcInfo: this._svcInfo,
+        period: this._params.period,
+        reason: this._params.reason
+      }
+    }, $.proxy(this._onOpenResuspendPopup, this), null, 'reset');
+  },
+
+  _onOpenResuspendPopup: function ($popup) {
+    $popup.find('input[type="date"]').val(Tw.DateHelper.getAddDay(null, 'YYYY-MM-DD'));
+    $popup.one('click', '#fe-resuspend', $.proxy(this._requestResuspend, this));
+  },
+
+  _requestResuspend: function () {
+
+  },
+
+  _onClickReset: function () {
     this._popupService.open({
       hbs: 'MS_03_05_05',
       data: {

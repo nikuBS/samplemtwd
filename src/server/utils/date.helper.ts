@@ -195,11 +195,11 @@ class DateHelper {
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018-06-02 11:59
    */
-  static getAddDay(date) {
+  static getAddDay(date, format) {
     return moment(this.convDateFormat(date))
       .add(1, 'days')
       .subtract(1, 'minutes')
-      .format('YYYY.MM.DD hh:mm');
+      .format(format || 'YYYY.MM.DD hh:mm');
   }
 
   /**

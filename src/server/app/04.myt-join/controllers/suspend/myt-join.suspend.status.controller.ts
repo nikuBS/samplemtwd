@@ -49,8 +49,7 @@ class MyTJoinSuspendStatus extends TwViewController {
           || suspendStatus.result.svcChgRsnCd === 22 ) { // 일시정지(case 1)
           options['type'] = 'temporary';
         } else { // 장기일시정지(case 6)
-          // options['type'] = 'long-term';
-          options['type'] = 'temporary';
+          options['type'] = 'long-term';
         }
         res.render('suspend/myt-join.suspend.status.html', options);
       } else {
