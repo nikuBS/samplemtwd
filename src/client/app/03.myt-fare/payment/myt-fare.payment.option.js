@@ -91,21 +91,7 @@ Tw.MyTFarePaymentOption.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _changeAddress: function () {
-    this._popupService.open({
-      'hbs':'MF_05_02_02'
-    },
-      $.proxy(this._openChangeAddress, this), null, 'address');
-  },
-  _openChangeAddress: function ($layer) {
-    $layer.find('.fe-phone').val(this.$container.find('.fe-phone').text());
-    $layer.find('.fe-zip').val(this.$container.find('.fe-zip-code').attr('id'));
-    $layer.find('.fe-main-address').val(this.$container.find('.fe-addr1').text());
-    $layer.find('.fe-detail-address').val(this.$container.find('.fe-addr2').text());
-
-    $layer.on('click', '.fe-post', $.proxy(this._getPostcode, this, $layer));
-  },
-  _getPostcode: function ($layer) {
-    new Tw.CommonPostcodeMain($layer);
+    new Tw.MyTFarePaymentChangeAddress(this.$container);
   },
   _isBackOrReload: function () {
     if (window.performance) {
