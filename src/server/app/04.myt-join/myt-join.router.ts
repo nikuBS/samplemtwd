@@ -30,6 +30,7 @@ import MyTJoinWireInetPhoneNumChange from './controllers/wire/myt-join.wire.netp
 import MyTJoinMgmtNumChgAlarm from './controllers/management/myt-join.mgmt.numchg-alarm.controller';
 import MyTJoinMgmtNumChgAlarmExt from './controllers/management/myt-join.mgmt.numchg-alarm.ext.controller';
 import MyTJoinMgmtNumChg from './controllers/management/myt-join.mgmt.numchg.controller';
+import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -62,6 +63,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/wire/wirestopgo', controller: MyTJoinWireSetPause });
     this.controllers.push({ url: '/submain/wire/changeowner', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/submain/suspend', controller: MyTJoinSuspend });
+    this.controllers.push({ url: '/submain/suspend/status', controller: MyTJoinSuspendStatus });
     this.controllers.push({ url: '/submain/numchange', controller: MyTJoinMgmtNumChg });
     this.controllers.push({ url: '/submain/phone/alarm', controller: MyTJoinMgmtNumChgAlarm });
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinMgmtNumChgAlarmExt });
