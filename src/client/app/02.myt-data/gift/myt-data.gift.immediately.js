@@ -31,10 +31,11 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
-    this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    this.$inputImmediatelyGift.on('keyup input blur change', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
   },
 
   _getRemainDataInfo: function () {
