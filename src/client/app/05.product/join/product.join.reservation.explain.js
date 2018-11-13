@@ -14,7 +14,6 @@ Tw.ProductJoinReservationExplain = function(familyList, callback) {
   this._familyList = familyList || [];
   this._familyListOriginalLength = this._familyList.length;
   this._fileList = [];
-  this._combGrpNewYn = 'N';
 
   this._fileTemplate = Handlebars.compile($('#fe-templ-reserv-file').html());
   this._familyTemplate = Handlebars.compile($('#fe-tmpl-reserv-family').html());
@@ -26,7 +25,7 @@ Tw.ProductJoinReservationExplain = function(familyList, callback) {
     hbs: 'BS_05_01_01_01',
     layer: true,
     list: familyList || []
-  }, $.proxy(this._init, this), $.proxy(this._closePop, this), 'combine_explain');
+  }, $.proxy(this._init, this), null, 'combine_explain');
 };
 
 Tw.ProductJoinReservationExplain.prototype = {
@@ -36,7 +35,6 @@ Tw.ProductJoinReservationExplain.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._familyType = null;
-    this._doApply = false;
 
     if (this._familyList.length > 0) {
       this.$familyWrap.show();
@@ -61,7 +59,7 @@ Tw.ProductJoinReservationExplain.prototype = {
 
   _bindEvent: function() {
     this.$btnFamilyType.on('click', $.proxy(this._openFamilyTypePop, this));
-    this.$btnExplainApply.on('click', $.proxy(this._procApply, this));
+    this.$btnExplainApply.on('click', $.proxy(this._doCallback, this));
     this.$btnFamilyAdd.on('click', $.proxy(this._addFamily, this));
     this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
 
@@ -168,7 +166,7 @@ Tw.ProductJoinReservationExplain.prototype = {
   },
 
   _setFamilyTypeText: function(familyList) {
-    familyList.map(function(item) {
+    return familyList.map(function(item) {
       var familyTypeText = [];
 
       if (item.parents) { familyTypeText.push(Tw.PRODUCT_COMBINE_FAMILY_TYPE.parents); }
@@ -275,18 +273,9 @@ Tw.ProductJoinReservationExplain.prototype = {
     }
   },
 
-  _procApply: function() {
-    this._doApply = true;
-    this._popupService.close();
-  },
-
-  _closePop: function() {
-    if (!this._doApply) {
-      return;
-    }
-
+  _doCallback: function() {
     this._callback({
-      combGrpNewYn: (this._familyListOriginalLength !== this._familyList) ? 'Y' : 'N',
+      combGrpNewYn: (this._familyListOriginalLength === 0 && this._familyList.length > 0) ? 'Y' : 'N',
       familyList: this._setFamilyTypeText(this._familyList),
       fileList: this._fileList
     });

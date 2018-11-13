@@ -45,6 +45,7 @@ Tw.API_CMD = {
   BFF_01_0036: { paht: '/cert/info', method: Tw.API_METHOD.POST },
   BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: Tw.API_METHOD.POST },
   BFF_01_0038: { path: '/deregistrationrequestfromfc', method: Tw.API_METHOD.POST },
+  BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
@@ -141,6 +142,7 @@ Tw.API_CMD = {
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
   BFF_05_0129: { path: '/core-product/v1/services/wire/additions', method: Tw.API_METHOD.GET },
   BFF_05_0132: { path: '/core-bill/v1/rainbow-points', method: Tw.API_METHOD.GET },
+  BFF_05_0134: { path: '/core-product/v1/services/combinations/:args0', method: Tw.API_METHOD.GET },
   BFF_05_0135: { path: '/core-product/v1/services/combinations/data-benefits', method: Tw.API_METHOD.PUT },
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
