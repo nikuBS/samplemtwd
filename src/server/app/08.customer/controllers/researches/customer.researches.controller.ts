@@ -6,32 +6,37 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.old.type';
-import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
-// import { Researches } from '../../../../mock/server/customer.researches.mock';
+// import { Researches, StepResearch } from '../../../../mock/server/customer.researches.mock';
 
 export default class CustomerResearches extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    // if (req.params.researchId) {
-    //   this.apiService.request(API_CMD.BFF_08_0038, { qstnId: req.params.researchId }).subscribe(resp => {
-    //     const research = this.getProperResearchData(resp.result);
-    //     res.render('researches/customer.researches.research.html', { svcInfo, research });
-    //   });
-    // } else {
+    if (req.params.researchId) {
+      this.getResearch(req.params.researchId).subscribe(research => {
+        // const research: any = this.getResearch('');
 
-    // const researches: any = this.getResearches();
-    this.getResearches().subscribe(researches => {
-      if (researches.code) {
-        return this.error.render(res, {
-          svcInfo,
-          ...researches
-        });
-      }
-      res.render('researches/customer.researches.html', { svcInfo, researches, pageInfo });
-    });
-    // }
+        if (research.code) {
+          return this.error.render(res, {
+            svcInfo,
+            ...research
+          });
+        }
+
+        res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
+      });
+    } else {
+      // const researches: any = this.getResearches();
+      this.getResearches().subscribe(researches => {
+        if (researches.code) {
+          return this.error.render(res, {
+            svcInfo,
+            ...researches
+          });
+        }
+        res.render('researches/customer.researches.html', { svcInfo, researches, pageInfo });
+      });
+    }
   }
 
   private getResearches = () => {
@@ -53,7 +58,7 @@ export default class CustomerResearches extends TwViewController {
           const isEtc = idx === count && research['exCtt' + idx] === 'QSTNETC';
 
           examples.push({
-            content: isEtc ? RESEARCH_EXAMPLE_TYPE.ETC : research['exCtt' + idx] || '',
+            content: research['exCtt' + idx] || '',
             image: research['exImgFilePathNm' + idx],
             motHtml: research['motExCtt' + idx],
             isEtc
@@ -66,6 +71,43 @@ export default class CustomerResearches extends TwViewController {
           isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
         };
       });
+    });
+  }
+
+  private getResearch = id => {
+    return this.apiService.request(API_CMD.BFF_08_0038, { qstnId: id }).map(resp => {
+      // const resp = StepResearch;
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+
+      const questions: any[] = resp.result.surveyQstnInqItm;
+      const examples: any[] = resp.result.surveyQstnAnswItm;
+
+      const len = examples.length;
+      for (let i = 0; i < len; i++) {
+        const example = examples[i];
+        const exampleIdx = Number(example.answItmNum);
+        const question = questions[Number(example.inqItmNum) - 1];
+        const isEtc = example.answItmCtt === 'QSTNETC';
+
+        if (question) {
+          if (!question.examples) {
+            question.examples = {};
+          }
+
+          question.examples[exampleIdx] = {
+            content: example.answItmCtt || '',
+            nextQuestion: Number(example.nxtInqItmNum),
+            isEtc
+          };
+        }
+      }
+
+      return {
+        info: resp.result.surveyQstnMaster[0] || {},
+        questions
+      };
     });
   }
 }

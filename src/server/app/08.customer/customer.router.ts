@@ -44,14 +44,14 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
     this.controllers.push({ url: '/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/researches', controller: CustomerResearches });
+    this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches });
     this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail });
     this.controllers.push({ url: '/svc-info/service', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/mcustomer', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/site', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice} );
+    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice });
 
     // new IA
     this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
