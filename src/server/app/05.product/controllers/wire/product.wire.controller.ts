@@ -14,7 +14,7 @@ export default class ProductWire extends TwViewController {
   private WIRE_CODE = 'F01300';
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    if (req.url.replace('/wire', '')) {
+    if (req.url.replace('/wireplan', '')) {
       res.render('wire/product.wire.service-area.html', { svcInfo, pageInfo });
     } else {
       Observable.combineLatest(this.getMyWireInfo(svcInfo), this.getBanners()).subscribe(([myWire, banners]) => {
