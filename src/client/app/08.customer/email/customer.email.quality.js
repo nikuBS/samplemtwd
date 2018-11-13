@@ -64,7 +64,7 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestCell: function () {
     var htParams = $.extend(this._makeParams(), {
-      selSvcMgmtNum: $('.fe-line').data('svcmgmtnum'),
+      // selSvcMgmtNum: $('.fe-line').data('svcmgmtnum').toString(),
       inptZip: $('.fe-inptZip').val(),
       inptBasAddr: $('.fe-inptBasAddr').val(),
       inptDtlAddr: 'test',
