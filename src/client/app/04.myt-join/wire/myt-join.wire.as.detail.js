@@ -77,7 +77,7 @@ Tw.MyTJoinWireASDetail.prototype = {
    * @private
    */
   _onclickSmsAlarmReqBtn: function() {
-    this._historyService.goLoad('/myt/join/info/sms');
+    this._historyService.goLoad('/myt-join/wire/wiredo/sms');
   }
 };
 

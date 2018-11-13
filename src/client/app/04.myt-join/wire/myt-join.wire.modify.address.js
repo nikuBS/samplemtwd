@@ -293,7 +293,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       // 설치장소 변경 신청이 완료되었습니다. 빠른 시일 내에 신청내역 확인을 위해 상담원이 연락 드리겠습니다. 감사합니다
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
         $.proxy(function(){
-        this._goLoad('/myt/join/wire/history');
+        this._goLoad('/myt-join/submain/wire/history');
       }, this));
     }
   },

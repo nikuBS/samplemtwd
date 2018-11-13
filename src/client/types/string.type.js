@@ -658,6 +658,13 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN_CUSTPASS = {
+  AUTO_A04: '비밀번호를 입력해 주세요.',
+  EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
+  ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
+  FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
+};
+
 Tw.MYT_JOIN_MGMT_NUMCHG = {
   COMPLETE_POPUP: {
     MAIN_TXT: '변경',
