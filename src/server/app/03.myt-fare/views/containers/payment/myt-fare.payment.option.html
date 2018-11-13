@@ -160,7 +160,7 @@
                             <dl>
                                 <dt>연락처</dt>
                                 <dd>
-                                    <p class="value"><%= addrInfo.phoneNum %></p>
+                                    <p class="value fe-phone"><%= addrInfo.phoneNum %></p>
                                 </dd>
                             </dl>
                         </li>
@@ -168,7 +168,10 @@
                             <dl>
                                 <dt>주소</dt>
                                 <dd>
-                                    <p class="value"><%= addrInfo.addr %></p>
+                                    <p class="value fe-zip-code" id="<%= addrInfo.zipCode %>">
+                                        <span class="fe-addr1"><%= addrInfo.addr1 %></span><br/>
+                                        <span class="fe-addr2"><%= addrInfo.addr2 %></span>
+                                    </p>
                                 </dd>
                             </dl>
                         </li>
