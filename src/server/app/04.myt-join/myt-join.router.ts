@@ -35,12 +35,40 @@ import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.
 class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
+    this.controllers.push({ url: '/', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/product/fee-plan', controller: MyTJoinProductFeePlan });
     this.controllers.push({ url: '/product/additions', controller: MyTJoinProductAdditions });
     this.controllers.push({ url: '/product/combinations(/:combination)?', controller: MyTJoinProductCombinations });
     this.controllers.push({ url: '/product/fee-alarm', controller: MyTJoinProductFeeAlarm });
     this.controllers.push({ url: '/product/fee-alarm/terminate', controller: MyTJoinProductFeeAlarmTerminate });
+    this.controllers.push({ url: '/protect/change', controller: MyTJoinProtectChange });
+    this.controllers.push({ url: '/info/discount', controller: MytJoinInfoDiscount });
+    this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
+    this.controllers.push({ url: '/info/no-agreement', controller: MyTJoinInfoNoAgreement });
+    this.controllers.push({ url: '/info/contract', controller: MyTJoinInfoContract });
+    this.controllers.push({ url: '/info/sms', controller: MyTJoinInfoSms });
+    this.controllers.push({ url: '/wire', controller: MyTJoinWire });
+    this.controllers.push({ url: '/wire/as', controller: MyTJoinWireAS });
+    this.controllers.push({ url: '/wire/as/detail', controller: MyTJoinWireASDetail });
+    this.controllers.push({ url: '/wire/discount-refund', controller: MyTJoinWireDiscountRefund });
+    this.controllers.push({ url: '/wire/gifts', controller: MyTJoinWireGifts });
+    this.controllers.push({ url: '/wire/history', controller: MyTJoinWireHistory });
+    this.controllers.push({ url: '/wire/detail', controller: MyTJoinWireHistoryDetail });
+    this.controllers.push({ url: '/wire/inetphone-num/change', controller: MyTJoinWireInetPhoneNumChange });
+    this.controllers.push({ url: '/wire/freeCallCheck', controller: MyTJoinWireFreeCallCheck });
+    this.controllers.push({ url: '/wire/modify/address', controller: MyTJoinWireModifyAddress });
+    this.controllers.push({ url: '/wire/modify/product', controller: MyTJoinWireModifyProduct });
+    this.controllers.push({ url: '/wire/modify/period', controller: MyTJoinWireModifyPeriod });
+    this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: MyTJoinWireSetWireCancelService });
+    this.controllers.push({ url: '/wire/set/pause', controller: MyTJoinWireSetPause });
+    this.controllers.push({ url: '/wire/guide/change-ownership', controller: MyTJoinWireGuideChangeOwnership });
+    this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
+    this.controllers.push({ url: '/mgmt/numchg', controller: MyTJoinMgmtNumChg });
+    this.controllers.push({ url: '/mgmt/numchg/alarm', controller: MyTJoinMgmtNumChgAlarm });
+    this.controllers.push({ url: '/mgmt/numchg/alarm/ext', controller: MyTJoinMgmtNumChgAlarmExt });
+
+    // new url
+    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/custpassword', controller: MyTJoinProtectChange });
     this.controllers.push({ url: '/myplancombine/infodiscount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/myplancombine/infodiscount/month', controller: MyTJoinInfoDiscountMonth });
@@ -69,5 +97,6 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinMgmtNumChgAlarmExt });
   }
 }
+
 
 export default MyTJoinRouter;
