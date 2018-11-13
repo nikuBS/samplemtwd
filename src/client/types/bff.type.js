@@ -89,6 +89,14 @@ Tw.AUTH_CERTIFICATION_KIND = {
   R: 'R'
 };
 
+Tw.PRODUCT_RESERVATION_VALUE = {
+  cellphone: '19',
+  internet: '07',
+  phone: '08',
+  tv: '09',
+  combine: '10'
+};
+
 Tw.EMAIL_CERT_CODE = {
   ID: 'ID',
   PWD: 'PWD',

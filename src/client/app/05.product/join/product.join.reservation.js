@@ -10,7 +10,8 @@ Tw.ProductJoinReservation = function(rootEl) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
-  this._prodIdList = ['NH00000103', 'NA00002040', 'NH00000133', 'NH00000084'];
+  this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000084'];
+  this._prodIdList = _.merge(this._prodIdFamilyList, ['NH00000103']);
 
   this._cachedElement();
   this._bindEvent();
@@ -333,14 +334,30 @@ Tw.ProductJoinReservation.prototype = {
     // 결합상품, 상품 선택 및 추가정보 체크하여 입력 팝업 호출
     if (this._typeCd === 'combine' && this.$combineExplain.find('input[type=checkbox]').is(':checked') &&
       !Tw.FormatHelper.isEmpty(this._prodId)) {
-      return this._openExplainFilePop();
+      return this._procExplainFilePop();
     }
 
     this._procApply();
   },
 
   _procExistsCheckPersonalCombine: function() {
-    // @todo 상품 가입여부 처리 추가
+    this._apiService.request(Tw.API_CMD.BFF_05_0133, {})
+      .done($.proxy(this._procExistsCheckPersonalCombineRes, this));
+  },
+
+  _procExistsCheckPersonalCombineRes: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var currentCombineProductList = resp.result.combinationMemberList ? resp.result.combinationMemberList.map(function(item) {
+      return item.prodId;
+    }) : [];
+
+    if (currentCombineProductList.indexOf('NH00000103') !== -1) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.TITLE);
+    }
+
     this._procApply();
   },
 
@@ -378,23 +395,52 @@ Tw.ProductJoinReservation.prototype = {
     }
   },
 
-  _openExplainFilePop: function() {
-    // @todo 기 결합된 가족 리스트 넘겨줘야함
-    new Tw.ProductJoinReservationExplain([], $.proxy(this._procApply, this));
+  _procExplainFilePop: function() {
+    if (this._prodIdFamilyList.indexOf(this._prodId) === -1) {
+      return this._openExplainFilePop([]);
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, this._prodId)
+      .done($.proxy(this._procExpalinFilePopRes, this));
+  },
+
+  _procExpalinFilePopRes: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var wirelessMemberList = resp.result.combinationWirelessMemberList.map(function(item) {});
+    var wireMemberList = resp.result.combinationWireMemberList.map(function(item) {});
+
+    this._openExplainFilePop(_.merge(wirelessMemberList, wireMemberList));
+  },
+
+  _openExplainFilePop: function(familyList) {
+    new Tw.ProductJoinReservationExplain(familyList, $.proxy(this._procApply, this));
   },
 
   _procApply: function(_combinationInfo) {
-    var combinationInfo = _combinationInfo || null;
-    //
-    // this._apiService.request(Tw.API_CMD.BFF_10_0076, {
-    // }).done($.proxy(this._procApplyResult, this));
+    var combinationInfo = _combinationInfo || [],
+      reqParams = {
+        productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
+        userNm: this.$reservName.val(),
+        InputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
+      };
+
+    if (this._typeCd === 'combine') {
+      reqParams = $.extend(reqParams, {
+        combGrpNewYn: combinationInfo.combGrpNewYn,
+        combGrpInfo: (combinationInfo.familyList.map(function(item) {
+          return [item.familyTypeText, item.name, item.number].join('/');
+        })).join(';'),
+        combProdNm: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE
+      });
+    }
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
-    // @todo dummy result
-    this._procApplyResult({
-      code: Tw.API_CODE.CODE_00
-    });
+    this._apiService.request(Tw.API_CMD.BFF_10_0076, reqParams)
+      .done($.proxy(this._procApplyResult, this));
   },
 
   _procApplyResult: function(resp) {
