@@ -17,7 +17,7 @@ Tw.CommonPostcodeMain = function (rootEl) {
 Tw.CommonPostcodeMain.prototype = {
   _init: function () {
     this._popupService.open({
-      hbs: 'CO_UT_05_04'
+      hbs: 'CO_UT_05_04_01'
     },
       $.proxy(this._onMainSearch, this),
       $.proxy(this._goDetail, this),
