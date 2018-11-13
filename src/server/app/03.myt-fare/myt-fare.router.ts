@@ -37,14 +37,14 @@ import MyTFarePaymentRainbow from './controllers/payment/myt-fare.payment.rainbo
 class MytFareRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/submain', controller: MyTFareSubMain });
-    this.controllers.push({ url: '/submain/unbill', controller: MyTFareSubMainNonPayment });
-    this.controllers.push({ url: '/billguide/guide', controller: MyTFareBillGuide });
-    this.controllers.push({ url: '/billguide/callgift', controller: MyTFareBillGuideCallGift });
-    this.controllers.push({ url: '/billguide/roaming', controller: MyTFareBillGuideRoaming });
-    this.controllers.push({ url: '/billguide/donation', controller: MyTFareBillGuideDonation });
-    this.controllers.push({ url: '/billsetup', controller: MyTFareBillSet });
-    this.controllers.push({ url: '/billsetup/reissue', controller: MyTFareBillSetReissue });
+    this.controllers.push({ url: '/', controller: MyTFareSubMain });
+    this.controllers.push({ url: '/nonpayment', controller: MyTFareSubMainNonPayment });
+    this.controllers.push({ url: '/bill/guide', controller: MyTFareBillGuide });
+    this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
+    this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });
+    this.controllers.push({ url: '/bill/guide/donation', controller: MyTFareBillGuideDonation });
+    this.controllers.push({ url: '/bill/set', controller: MyTFareBillSet });
+    this.controllers.push({ url: '/bill/set/reissue', controller: MyTFareBillSetReissue });
     this.controllers.push({ url: '/payment/option', controller: MyTFarePaymentOption });
     this.controllers.push({ url: '/payment/auto', controller: MyTFarePaymentAuto });
     this.controllers.push({ url: '/payment/account', controller: MyTFarePaymentAccount });
@@ -62,10 +62,10 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/payment/contents/auto', controller: MyTFarePaymentContentsAuto });
     this.controllers.push({ url: '/payment/contents/auto/info', controller: MyTFarePaymentContentsAutoInfo });
     this.controllers.push({ url: '/payment/contents/auto/change', controller: MyTFarePaymentContentsAutoChange });
-    this.controllers.push({ url: '/billsetup/historyreturn', controller: MyTFareBillSetReturnHistory });
-    this.controllers.push({ url: '/billsetup/change', controller: MyTFareBillSetChange });
+    this.controllers.push({ url: '/bill/set/return-history', controller: MyTFareBillSetReturnHistory });
+    this.controllers.push({ url: '/bill/set/change', controller: MyTFareBillSetChange });
     this.controllers.push({ url: '/bill/set/complete', controller: MyTFareBillSetComplete });
-    this.controllers.push({ url: '/hotbill', controller: MytFareHotbill });
+    this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
 
     // 소액결제, 컨텐츠 이용료
     this.controllers.push({ url: '/billsmall/history', controller: MyTFareHistory });
@@ -85,6 +85,19 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/info/bill-cash', controller: MyTFareBillHistory });
     this.controllers.push({ url: '/info/overpay-refund', controller: MyTFareOverpayRefund });
     this.controllers.push({ url: '/info/overpay-refund/detail', controller: MyTFareOverpayRefund });
+
+    // new url
+    this.controllers.push({ url: '/submain', controller: MyTFareSubMain });
+    this.controllers.push({ url: '/nonpayment', controller: MyTFareSubMainNonPayment });
+    this.controllers.push({ url: '/bill/guide', controller: MyTFareBillGuide });
+    this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
+    this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });
+    this.controllers.push({ url: '/bill/guide/donation', controller: MyTFareBillGuideDonation });
+    this.controllers.push({ url: '/bill/set', controller: MyTFareBillSet });
+    this.controllers.push({ url: '/bill/set/reissue', controller: MyTFareBillSetReissue });
+    this.controllers.push({ url: '/billsetup/historyreturn', controller: MyTFareBillSetReturnHistory });
+    this.controllers.push({ url: '/billsetup/change', controller: MyTFareBillSetChange });
+    this.controllers.push({ url: '/hotbill', controller: MytFareHotbill });
   }
 }
 

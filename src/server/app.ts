@@ -127,6 +127,11 @@ class App {
     this.app.use('/membership', new AppRouter(MembershipRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/tevent', new AppRouter(TeventRouter.instance.controllers).router);
+
+    // new url
+    this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
+    this.app.use('/myt-fare', new AppRouter(MyTFareRouter.instance.controllers).router);
+    this.app.use('/myt-join', new AppRouter(MyTJoinRouter.instance.controllers).router);
   }
 
   private setViewPath() {
