@@ -311,6 +311,15 @@ Tw.POPUP_TPL = {
         { value: '3년', attr: 'id="3"', cnt: 3 }
       ]
     }
+  ],
+  MEMBERSHIP_CORPORATE_LIST: [
+    {
+      'list': [
+        { 'option': 'nominal', 'attr': 'id="010"', value: '본인' },
+        { 'option': 'nominal', 'attr': 'id="090"', value: '직원' },
+        { 'option': 'nominal', 'attr': 'id="990"', value: '기타' }
+      ]
+    }
   ]
 };
 
