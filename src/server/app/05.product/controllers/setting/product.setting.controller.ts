@@ -1,4 +1,6 @@
 /**
+ * @deprecated
+ * @TODO remove
  * @todo 상품별 설정페이지 controller 분리처리 하고 삭제 예정
  * 상품 설정
  * FileName: product.setting.controller.ts

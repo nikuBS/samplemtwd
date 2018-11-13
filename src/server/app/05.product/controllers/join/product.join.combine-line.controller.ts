@@ -49,9 +49,8 @@ class ProductJoinCombineLine extends TwViewController {
 
       Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
-        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),
-        this.redisService.getData('ProductLedger:' + prodId)
-      ).subscribe(([ basicInfo, joinTermInfo, prodRedisInfo ]) => {
+        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+      ).subscribe(([ basicInfo, joinTermInfo ]) => {
         const apiError = this.error.apiError([basicInfo, joinTermInfo]);
 
         if (!FormatHelper.isEmpty(apiError)) {
@@ -65,8 +64,7 @@ class ProductJoinCombineLine extends TwViewController {
           prodId: prodId,
           isApp: BrowserHelper.isApp(req),
           basicInfo: basicInfo.result,
-          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result),
-          prodRedisInfo: prodRedisInfo
+          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
         }));
       });
     });
