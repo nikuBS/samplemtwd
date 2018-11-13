@@ -24,7 +24,7 @@ export default class ProductWires extends TwViewController {
   private MAX_SEARCH_COUNT = 100;
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    const page = req.url.substring(1);
+    const page = req.url.replace('/wireplan/', '');
 
     const params = { idxCtgCd: this.WIRE_CODE, searchCount: this.MAX_SEARCH_COUNT };
 
