@@ -11,7 +11,8 @@ Tw.ProductJoinReservation = function(rootEl) {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000084'];
-  this._prodIdList = _.merge(this._prodIdFamilyList, ['NH00000103']);
+  this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
+  this._logged = false;
 
   this._cachedElement();
   this._bindEvent();
@@ -30,6 +31,9 @@ Tw.ProductJoinReservation.prototype = {
     } else {
       this.$nonCombineTip.show();
     }
+
+    this._reqSvcMgmtNum();
+    this._restoreLocalStorage();
   },
 
   _initCombineProduct: function() {
@@ -46,6 +50,44 @@ Tw.ProductJoinReservation.prototype = {
     }
 
     this.$combineSelected.prop('checked', true);
+  },
+
+  _restoreLocalStorage: function() {
+    if (!Tw.UIService.getLocalStorage('productJoinReservation')) {
+      return;
+    }
+
+    var data = Tw.UIService.getLocalStorage('productJoinReservation');
+    if (Tw.FormatHelper.isEmpty(data)) {
+      return;
+    }
+
+    data = JSON.parse(data);
+    if (data.expireTime < new Date().getTime()) {
+      return;
+    }
+
+    this.$reservName = data.name;
+    this.$reservNumber = data.number;
+    this._typeCd = data.typeCd;
+    this._prodId = data.prodId;
+
+    this._typeCdPopupClose();
+    this._setCombineResult();
+
+    if (data.isExplain) {
+      this.$combineExplain.addClass('checked');
+      this.$combineExplain.find('input[type=checkbox]').prop('checked', true).attr('checked', 'checked')
+        .removeAttr('disabled').prop('disabled', false);
+      this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
+    } else {
+      this.$combineExplain.removeClass('checked');
+      this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
+        .attr('disabled', 'disabled').prop('disabled', true);
+      this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
+    }
+
+    Tw.UIService.setLocalStorage('productJoinReservation', '');
   },
 
   _cachedElement: function() {
@@ -80,6 +122,24 @@ Tw.ProductJoinReservation.prototype = {
     this.$agreeWrap.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyCheck, this));
     this.$formData.on('keyup input', 'input', $.proxy(this._procEnableApplyCheck, this));
     this.$combineExplain.on('change', 'input[type=checkbox]', $.proxy(this._onChangeCombineExplain, this));
+  },
+
+  _reqSvcMgmtNum: function(isApply) {
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(this._setSvcMgmtNum, this, isApply));
+  },
+
+  _setSvcMgmtNum: function(isApply, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return;
+    }
+
+    this._logged = true;
+    this._svcMgmtNum = resp.result.svcMgmtNum;
+
+    if (isApply) {
+      this._procApplyCheck();
+    }
   },
 
   _openTypeCdPop: function() {
@@ -318,6 +378,11 @@ Tw.ProductJoinReservation.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    if (this._typeCd === 'combine' && !this._logged) {
+      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
+        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this));
+    }
+
     // 결합상품(개인형) 기 가입 상품 유무 체크
     if (this._typeCd === 'combine' && this._prodId === 'NH00000103') {
       return this._procExistsCheckPersonalCombine();
@@ -400,19 +465,45 @@ Tw.ProductJoinReservation.prototype = {
       return this._openExplainFilePop([]);
     }
 
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, this._prodId)
       .done($.proxy(this._procExpalinFilePopRes, this));
   },
 
   _procExpalinFilePopRes: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+      return this._openExplainFilePop([]);
     }
 
-    var wirelessMemberList = resp.result.combinationWirelessMemberList.map(function(item) {});
-    var wireMemberList = resp.result.combinationWireMemberList.map(function(item) {});
+    var currentSvcMgmtNum = this._svcMgmtNum,
+      wirelessMemberList = resp.result.combinationWirelessMemberList.map(function(item) {
+      return {
+        name: item.custNm,
+        number: item.svcNum,
+        fam: {
+          leader: item.relClCd === '00',
+          parents: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.parents,
+          grandparents: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.grandparents,
+          grandchildren: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.grandchildren,
+          spouse: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.spouse,
+          children: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.children,
+          brother: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.brother,
+          me: item.svcMgmtNum === currentSvcMgmtNum
+        }
+      };
+    });
 
-    this._openExplainFilePop(_.merge(wirelessMemberList, wireMemberList));
+    var wireMemberList = resp.result.combinationWireMemberList.map(function(item) {
+      return {
+        name: item.custNm,
+        number: item.svcNum,
+        fam: {}
+      };
+    });
+
+    this._openExplainFilePop($.merge(wirelessMemberList, wireMemberList));
   },
 
   _openExplainFilePop: function(familyList) {
@@ -420,20 +511,30 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _procApply: function(_combinationInfo) {
-    var combinationInfo = _combinationInfo || [],
+    var combinationInfo = _combinationInfo || {},
       reqParams = {
         productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
         userNm: this.$reservName.val(),
         InputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
       };
 
-    if (this._typeCd === 'combine') {
+    if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
       reqParams = $.extend(reqParams, {
         combGrpNewYn: combinationInfo.combGrpNewYn,
         combGrpInfo: (combinationInfo.familyList.map(function(item) {
           return [item.familyTypeText, item.name, item.number].join('/');
         })).join(';'),
         combProdNm: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE
+      });
+
+      this._sendUscan(combinationInfo.fileList);
+    }
+
+    if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(combinationInfo)) {
+      reqParams = $.extend(reqParams, {
+        combGrpNewYn: '',
+        combGrpInfo: '',
+        combProdNm: Tw.FormatHelper.isEmpty(this._prodId) ? '' : Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE
       });
     }
 
@@ -443,12 +544,94 @@ Tw.ProductJoinReservation.prototype = {
       .done($.proxy(this._procApplyResult, this));
   },
 
-  _procApplyResult: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+  _sendUscan: function(fileList) {
+    if (fileList.length < 1) {
+      return;
+    }
+
+    var convFileList = fileList.map(function(item) {
+      return {
+        fileSize: item.size,
+        fileName: item.name,
+        filePath: 'uploads/'
+      };
+    });
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
+      recvFaxNum: 'skt404@sk.com',
+      prodMemo: Tw.PRODUCT_RESERVATION.combine,
+      scanFiles: convFileList
+    });
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
+      recvFaxNum: 'skt219@sk.com',
+      prodMemo: Tw.PRODUCT_RESERVATION.combine,
+      scanFiles: convFileList
+    });
+  },
+
+  _setGoLoginFlag: function() {
+    this._isGoLogin = true;
+    this._popupService.close();
+  },
+
+  _goLogin: function() {
+    if (!this._isGoLogin) {
+      return;
+    }
+
+    this._isGoLogin = false;
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
+  },
+
+  _goLoad: function (nativeCommand, url, callback) {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeService.send(nativeCommand, {}, callback);
+    } else {
+      this._setLocalStorage();
+      this._historyService.goLoad(url);
+    }
+  },
+
+  _setLocalStorage: function() {
+    Tw.UIService.setLocalStorage('productJoinReservation', JSON.stringify({
+      name: this.$reservName.val(),
+      number: this.$reservNumber.val(),
+      typeCd: this._typeCd,
+      prodId: this._prodId,
+      isExplain: this.$combineExplain.find('input[type=checkbox]').is(':checked'),
+      expireTime: new Date().getTime() + (3600 * 10)
+    }));
+  },
+
+  _onNativeLogin: function (resp) {
+    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
+        .done($.proxy(this._successLogin, this));
+    }
+  },
+
+  _successLogin: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
+      .done($.proxy(this._reqSvcMgmtNum, this, true));
+  },
+
+  _procApplyResult: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    $.when(this._popupService.close())
+      .then($.proxy(this._openSuccessPop, this));
+  },
+
+  _openSuccessPop: function() {
     this._popupService.open({
       hbs: 'complete_subtexts',
       text: Tw.PRODUCT_RESERVATION.success.text,
