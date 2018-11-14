@@ -54,7 +54,7 @@ class ApiService {
   }
 
   public getServerUri(command: any): string {
-    const buildType = this.loginService.getBlueGreen() === BUILD_TYPE.GREEN ? '_G' : '';
+    const buildType = this.loginService.isGreen() === BUILD_TYPE.GREEN ? '_G' : '';
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
@@ -82,7 +82,7 @@ class ApiService {
           'x-menu-name': '',
           'x-node-url': this.loginService.getPath(),
           'x-useragent': this.loginService.getUserAgent(),
-          'x-env': this.loginService.getBlueGreen(),
+          'x-env': this.loginService.isGreen(),
           cookie: (FormatHelper.isEmpty(header.cookie) || (header.cookie).indexOf(COOKIE_KEY.APP_API) === -1) ? this.makeCookie() : header.cookie,
         });
       case API_SERVER.TID:

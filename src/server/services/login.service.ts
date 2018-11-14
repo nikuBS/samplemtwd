@@ -224,11 +224,9 @@ class LoginService {
     return '';
   }
 
-  public getBlueGreen(): string {
+  public isGreen(): string {
     const dns = this.getDns();
-    if ( dns === EnvHelper.getEnvironment('DOMAIN_B') ) {
-      return BUILD_TYPE.BLUE;
-    } else if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {
+    if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {
       return BUILD_TYPE.GREEN;
     }
     return '';
