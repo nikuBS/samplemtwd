@@ -22,7 +22,14 @@
             {{#if isMobilePlan}}
             <span class="sub-info">
               <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
-              <span class="elem"><span class="blind">월 이용요금</span>{{svcProdBasFeeInfo}}</span>
+              <span class="elem">
+                <span class="blind">월 이용요금</span>
+                {{#if svcProdBasFeeInfo.isNaN}}
+                {{svcProdBasFeeInfo.value}}
+                {{else}}
+                월 {{svcProdBasFeeInfo.value}} 원
+                {{/if}}
+              </span>
             </span>
             {{/if}}
           </div>
@@ -103,9 +110,9 @@
                 {{#autoJoinList}}
                 <dl>
                   <dt>{{svcProdNm}}</dt>
-                  {{#svcProdLIst}}
+                  {{#each svcProdList}}
                   <dd>{{{this}}}</dd>
-                  {{/svcProdLIst}}
+                  {{/each}}
                 </dl>
                 {{/autoJoinList}}
                 {{#if isMobilePlan}}
@@ -137,9 +144,9 @@
                 {{#autoTermList}}
                 <dl>
                   <dt>{{svcProdNm}}</dt>
-                  {{#svcProdLIst}}
+                  {{#each svcProdList}}
                     <dd>{{{this}}}</dd>
-                  {{/svcProdLIst}}
+                  {{/each}}
                 </dl>
                 {{/autoTermList}}
                 {{#if isMobilePlan}}

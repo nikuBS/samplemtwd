@@ -4,11 +4,14 @@
  * Date: 2018.11.09
  */
 
-Tw.ProductJoinCombineLine = function(rootEl, confirmOptions) {
+Tw.ProductJoinCombineLine = function(rootEl, prodId, displayId, confirmOptions) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+
+  this._prodId = prodId;
+  this._displayId = displayId;
   this._confirmOptions = JSON.parse(confirmOptions);
 
   this.$container = rootEl;
@@ -33,8 +36,6 @@ Tw.ProductJoinCombineLine.prototype = {
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
 
-    this._prodId = this.$container.data('prod_id');
-    this._displayId = this.$container.data('display_id');
     this._combinationTemplate = Handlebars.compile($('#fe-templ-combination_item').html());
   },
 
@@ -184,6 +185,8 @@ Tw.ProductJoinCombineLine.prototype = {
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      autoJoinList: this._confirmOptions.preinfo.autoJoinList,
+      autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 1)
     });
   },
@@ -217,6 +220,11 @@ Tw.ProductJoinCombineLine.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    $.when(this._popupService.close())
+      .then($.proxy(this._openSuccessPop, this));
+  },
+
+  _openSuccessPop: function() {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
@@ -229,18 +237,21 @@ Tw.ProductJoinCombineLine.prototype = {
         basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
           this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
+    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
   _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._goProductDetail, this));
+    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
   },
 
-  _goProductDetail: function() {
+  _closePop: function() {
     this._popupService.close();
-    this._historyService.replaceURL('/product/detail/' + this._prodId);
+  },
+
+  _onClosePop: function() {
+    this._historyService.goBack();
   }
 
 };

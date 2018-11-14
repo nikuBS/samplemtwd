@@ -17,6 +17,8 @@ class ProductSettingOption extends TwViewController {
     super();
   }
 
+  private readonly _allowedProdIdList = ['NA00005058', 'NA00005059', 'NA00005060', 'NA00005069', 'NA00005070', 'NA00005071'];
+
   /**
    * @param prodId
    * @param optionInfo
@@ -36,7 +38,7 @@ class ProductSettingOption extends TwViewController {
         title: '설정'
       };
 
-    if (FormatHelper.isEmpty(prodId)) {
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 

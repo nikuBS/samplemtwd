@@ -19,7 +19,7 @@
   </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="MP_02_02_03_10" data-use_option_prod_id="<%= optionInfo.useOptionProdId %>">
+<div class="wrap step">
   <!-- .popup hbs -->
   <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line: false } }); %>
@@ -64,7 +64,7 @@
                       <span class="ico ico-watch"></span>
                       <p class="layout-text">
                         <span class="mtext">기본 데이터 추가</span>
-                        <span class="stext">기본 제공 데이터 추가 제공 (+<%= settingInfo.basicDataPlus %>)</span>
+                        <span class="stext">기본 제공 데이터 추가 제공 (+<%= optionInfo.basicDataPlus %>)</span>
                       </p>
                     </div>
                   </li>
@@ -98,9 +98,5 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    new Tw.ProductSettingOption($('.wrap'));
-  });
-</script>
+<script>$(function () { new Tw.ProductSettingOption($('.wrap'), '<%= prodId %>', 'MP_02_02_03_10', '<%= optionInfo.useOptionProdId %>'); });</script>
 <% include ../../components/end.component.html %>

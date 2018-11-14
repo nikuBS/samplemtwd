@@ -4,11 +4,15 @@
  * Date: 2018.11.13
  */
 
-Tw.ProductSettingCombineLine = function(rootEl) {
+Tw.ProductSettingCombineLine = function(rootEl, prodId, displayId, svcProdGrpId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+
+  this._prodId = prodId;
+  this._displayId = displayId;
+  this._svcProdGrpId = svcProdGrpId;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -30,9 +34,6 @@ Tw.ProductSettingCombineLine.prototype = {
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
-
-    this._prodId = this.$container.data('prod_id');
-    this._svcProdGrpId = this.$container.data('svc_prod_grp_id');
   },
 
   _bindEvent: function() {
