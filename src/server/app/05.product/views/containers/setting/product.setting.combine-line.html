@@ -1,7 +1,7 @@
 <%#
 * FileName: product.join.combine-line.html
 * Author: Ji Hun Yang (jihun202@sk.com)
-* Date: 2018.11.09
+* Date: 2018.11.13
 %>
 <% include ../../components/start.component.html %>
 <body>
@@ -14,10 +14,10 @@
     </ul>
   </div>
   <!--// #skip_navigation -->
-  <div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="MV_02_02_01">
+  <div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="MV_02_02_01" data-svc_prod_grp_id="<%= combineLineInfo.svcProdGrpId %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-      <%- include('../../../../common/views/components/header.component.html', { title: '가입', svcInfo, option: { line: false } }); %>
+      <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line: false } }); %>
       <!-- .container-wrap -->
       <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -25,7 +25,7 @@
           <div class="cont-box">
             <div class="product-tit-wrap">
               <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
-              <span class="tit-big">내폰끼리 결</span>
+              <span class="tit-big">내폰끼리 결합</span>
             </div>
           </div>
 
@@ -61,7 +61,7 @@
           </div>
           <!--// .cont-box -->
 
-          <div class="fe-line_wrap" style="display: none">
+          <div class="fe-line_wrap">
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
@@ -69,19 +69,22 @@
               <div class="input-number-wrap">
                 <h3 class="tit type1">결합 신청된 회선</h3>
                 <div class="list-comp-thumnail">
-                  <ul class="comp-box fe-line_list"></ul>
+                  <ul class="comp-box fe-line_list">
+                    <% for ( var i in combineLineInfo.combinationLineList) { %>
+                    <li class="list-box">
+                      <p class="list-text">
+                        <span class="mtext"><%= combineLineInfo.combinationLineList[i].svcNumMask %></span>
+                      </p>
+                      <div class="list-btn">
+                        <div class="bt-alone"><button class="fe-btn_del_num bt-line-gray1" data-grp_id="<%= combineLineInfo.combinationLineList[i].svcProdGrpId %>">삭제</button></div>
+                      </div>
+                    </li>
+                    <% } %>
+                  </ul>
                 </div>
               </div>
             </div>
             <!--// .cont-box -->
-          </div>
-
-          <div class="bt-fixed-area">
-            <ul class="bt-slice full">
-              <li class="bt-red1">
-                <button disabled="disabled" class="fe-btn_setup_ok">설정완료</button>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
@@ -98,11 +101,11 @@
     <!-- // .popup hbs -->
   </div>
 </body>
-<% include ../../components/join/product.join.combine-line.component.html %>
+<% include ../../components/setting/product.setting.combine-line.component.html %>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductJoinCombineLine($('.wrap'), '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductSettingCombineLine($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>
