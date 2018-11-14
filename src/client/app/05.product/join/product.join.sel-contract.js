@@ -12,6 +12,7 @@ Tw.ProductJoinSelContract = function (params) {
   this._historyService = new Tw.HistoryService();
   this._render();
   this._bindEvent();
+  this._initialize();
 };
 
 Tw.ProductJoinSelContract.prototype = {
@@ -26,12 +27,24 @@ Tw.ProductJoinSelContract.prototype = {
     this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
   },
 
+  _initialize: function () {
+    this.joinInfoTerm = $.extend(this.data.joinInfoTerm, {
+      svcNumMask: this.data.joinInfoTerm.preinfo.svcNumMask,
+      toProdName: this.data.joinInfoTerm.preinfo.reqProdInfo.prodNm,
+      toProdDesc: this.data.joinInfoTerm.preinfo.reqProdInfo.prodSmryDesc,
+      toProdBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.basFeeInfo,
+      isNumberBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.isNumberBasFeeInfo,
+      isAutoJoinTermList: (this.data.joinInfoTerm.preinfo.autoJoinList.length > 0 || this.data.joinInfoTerm.preinfo.autoTermList.length > 0),
+      isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.stipulation.existsCount > 1)
+    });
+  },
+
   _onRadioGroupClicked: function (evt) {
     // 아이템 선택 시 버튼 enable 처리
     if ( !this._isEnable ) {
       var $target = $(evt.target).parents('li');
       var checked = $target.attr('aria-checked');
-      if ( checked === 'true') {
+      if ( checked === 'true' ) {
         this._isEnable = true;
         this.selType = $target.attr('data-type');
         this.$okBtn.removeAttr('disabled');
@@ -40,6 +53,49 @@ Tw.ProductJoinSelContract.prototype = {
   },
 
   _onOkBtnClicked: function () {
-    this._historyService.goLoad('/product/join/dis-program/detail/'+ this.data.prodId +'?type='+this.selType);
+    new Tw.ProductJoinCommonConfirm(true, this.$container, $.extend(this.joinInfoTerm, {
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
+      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
+      isSelectedProgram: true,
+      isContractPlan: this.data.isContractPlan,
+      isAutoJoinTermList: true,
+      setInfo: 'set-info',
+      settingSummaryTexts: [
+        {
+          spanClass: 'term',
+          text: this.data.monthCode[this.selType] + Tw.DATE_UNIT.MONTH
+        },
+        {
+          spanClass: 'date',
+          text: this.data.monthDetail[this.selType]
+        }]
+    }), $.proxy(this._prodJoinConfirm, this));
+  },
+
+  _prodJoinConfirm: function() {
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.TITLE,
+      null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, null,
+      $.proxy(this._joinCompleteConfirm, this), null);
+  },
+
+  _joinCompleteConfirm: function() {
+    this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
+      .done($.proxy(this._onSuccessSeldisSet, this))
+      .fail($.proxy(this._onErrorSeldisSet, this));
+  },
+
+  _onSuccessSeldisSet: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.afterRequestSuccess('/myt/join', '/product/join/' + this.data.prodId,
+        Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
+        Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
+    }
+    else {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+
+  _onErrorSeldisSet: function (resp) {
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };

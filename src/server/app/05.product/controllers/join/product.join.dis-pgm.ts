@@ -16,6 +16,9 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import { Observable } from 'rxjs/Observable';
+import ProductHelper from '../../helper/product.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class ProductJoinDisPgm extends TwViewController {
 
@@ -32,22 +35,42 @@ class ProductJoinDisPgm extends TwViewController {
     };
 
     if ( prodId === 'NA00004430' ) {
-      // 무선 선택약정 할인제도 상품 설정 조회
-      this.apiService.request(API_CMD.BFF_10_0062, {}, {}, prodId)
-        .subscribe((response) => {
-          if ( response.code === API_CODE.CODE_00 ) {
-            data.isContractPlan = (response.result.isNoContractPlanYn === 'Y');
-            data.contractPlanPoint = FormatHelper.addComma(response.result.noContractPlanPoint);
-            res.render('product.sel-contract.input.html', { data });
-          } else {
-            return this.error.render(res, {
-              code: response.code,
-              msg: response.msg,
-              svcInfo: svcInfo,
-              title: '가입'
-            });
-          }
-        });
+      const curDate = new Date();
+      const nextDate_1 = curDate.getFullYear() + 1;
+      const nextDate_2 = curDate.getFullYear() + 2;
+      data.monthDetail = {
+        'M0012': DateHelper.getShortDateNoDot(curDate) + ' ~ ' + DateHelper.getShortDateNoDot(nextDate_1),
+        'M0024': DateHelper.getShortDateNoDot(curDate) + ' ~ ' + DateHelper.getShortDateNoDot(nextDate_2)
+      };
+      data.monthCode = { 'M0012': '12', 'M0024': '24' };
+      Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),
+        this.apiService.request(API_CMD.BFF_10_0062, {}, {}, prodId)
+      ).subscribe(([joinTermInfo, seldisSets]) => {
+        // 무선 선택약정 할인제도 상품 설정 조회
+        if ( seldisSets.code === API_CODE.CODE_00 ) {
+          data.isContractPlan = (seldisSets.result.isNoContractPlanYn === 'Y');
+          data.contractPlanPoint = FormatHelper.addComma(seldisSets.result.noContractPlanPoint);
+        } else {
+          return this.error.render(res, {
+            code: seldisSets.code,
+            msg: seldisSets.msg,
+            svcInfo: svcInfo,
+            title: '가입'
+          });
+        }
+        if ( joinTermInfo.code === API_CODE.CODE_00 ) {
+          data.joinInfoTerm = this._convertJoinInfoTerm(joinTermInfo.result);
+        } else {
+          return this.error.render(res, {
+            code: joinTermInfo.code,
+            msg: joinTermInfo.msg,
+            svcInfo: svcInfo,
+            title: '가입'
+          });
+        }
+        res.render('product.sel-contract.input.html', { data });
+      });
     } else {
       // NA00002079, NA00002082, NA00002080, NA00002081
       switch ( prodId ) {
@@ -74,6 +97,13 @@ class ProductJoinDisPgm extends TwViewController {
       }
       res.render('product.t-plus.input.html', { data });
     }
+  }
+
+  _convertJoinInfoTerm(joinTermInfo) {
+    return Object.assign(joinTermInfo, {
+      preinfo: ProductHelper.convAdditionsPreInfo(joinTermInfo.preinfo),
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+    });
   }
 }
 
