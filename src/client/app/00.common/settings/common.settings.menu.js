@@ -27,29 +27,26 @@ Tw.CommonSettingsMenu.prototype = {
     this.$updateBox = this.$container.find('#fe-update-box');
   },
   _init: function () {
-    Tw.DeviceInfo.getDeviceInfo().done($.proxy(this._onDeviceVersion, this));
-
+    this._setVersionInfo();
     // Set FIDO type
-    if (Tw.BrowserHelper.isApp()) {
-      this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(function (resp) {
-        if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
-          this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=finger');
-        } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
-          this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=face');
-        } else {
-          this.$container.find('#fe-bio').addClass('none');
-        }
-      }, this));
-    }
+    this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(function (resp) {
+      if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
+        this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=finger');
+      } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
+        this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=face');
+      } else {
+        this.$container.find('#fe-bio').addClass('none');
+      }
+    }, this));
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
     this.$container.on('click', '#fe-btn-update', $.proxy(this._onUpdate, this));
   },
-  _onDeviceVersion: function (res) {
-    // TODO: joon version object will change
-    this._currentVersion = res.appVersion;
-    this.$versionText.text(this._currentVersion);
+  _setVersionInfo: function () {
+    var userAgentString = Tw.BrowserHelper.getUserAgent();
+    var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
+    this.$versionText.text(version);
 
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
       .done($.proxy(this._onLatestVersion, this));
