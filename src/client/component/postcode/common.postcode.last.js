@@ -44,7 +44,7 @@ Tw.CommonPostcodeLast.prototype = {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId);
     $selectedTarget.attr('aria-selected', 'true');
     $selectedTarget.siblings().attr('aria-selected', 'false');
-    $selectedTarget.siblings().attr('aria-disabled', 'true');
+    $selectedTarget.siblings().find('button').attr('disabled', 'disabled');
   },
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;
