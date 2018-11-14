@@ -23,6 +23,8 @@ import ProductJoinTplan from './controllers/join/product.join.tplan.controller';
 import ProductSettingTplan from './controllers/setting/product.setting.tplan.controller';
 import ProductLookupTplan from './controllers/lookup/product.lookup.tplan.controller';
 import ProductJoinShareLine from './controllers/join/product.join.share-line.controller';
+import ProductSettingSignatureLine from './controllers/setting/product.setting.signature-line.controller';
+import ProductJoinSignatureLine from './controllers/join/product.join.signature-line.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -52,6 +54,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
+    this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductSettingSignatureLine });
+    this.controllers.push({ url: '/mobileplan-add/join/signature-line/:prodId', controller: ProductJoinSignatureLine });
     this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/apps', controller: ProductApps });
