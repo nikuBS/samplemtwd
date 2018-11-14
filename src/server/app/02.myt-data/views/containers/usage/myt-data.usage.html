@@ -55,6 +55,9 @@
                                 <div class="line-info">
                                     <p class="line-num"><span class="blind">T데이터셰어링 USIM번호</span>{{ usimFormat usimNum }}</p>
                                     <p class="state">{{ svcStNm }}<span class="sep"></span><span class="blind">서비스등록일</span>{{ dateFormat svcScrbDt }}</p>
+                                    {{#if isUsing }}
+                                    <div class="termination-btn"><a class="bt-link-tx underline" href="/myt/data/usage/cancel-tshare?cSvcMgmtNum={{cSvcMgmtNum}}" >해지하기</a></div>
+                                    {{/if}}
                                 </div>
                                 <div class="used-data">
                                     <p class="num"><span class="str">{{ byteFormat useAmt }}</span>{{ byteUnit useAmt}}</p>
@@ -68,7 +71,32 @@
                     </div>
                     <!--// .cont-box -->
                 </div>
+                <% } else { %>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="submain-findyourplan-wrap type02">
+                    <!-- <a href="#" class="submain-findyourplan">
+                        <h3 class="title">내게 맞는 요금제 찾기</h3>
+                        <p class="text">나의 사용패턴, 할인정보에 딱 맞는 요금제를 추천해드려요.</p>
+                    </a> -->
+                    <a class="submain-findyourplan" href="/product/detail/NA00002887">
+                        <h3 class="title">T데이터셰어링을 이용해보세요!</h3>
+                        <p class="text">하나의 데이터 요금으로<br>여러 디지털기기 이용하기</p>
+                    </a>
+                </div>
                 <% } %>
+                <div class="cont-box nogaps-hoz">
+                    <ul class="liststyle-type01">
+                        <li class="category-type">
+                            <p class="title">사용량 조회 안내 <button class="tip-view" id="DC_01_01_tip_07">TIP</button></p>
+                        </li>
+                        <li class="category-type">
+                            <p class="title">이용제한/자동해지 안내 <button class="tip-view" id="DC_01_01_tip_05">TIP</button></p>
+                        </li>
+                        <li class="category-type">
+                            <p class="title">USIM 안내 <button class="tip-view" id="DC_01_01_tip_06">TIP</button></p>
+                        </li>
+                    </ul>
+                </div>
 
                 <% if (balanceAddOns && balanceAddOns.sharingService.troamingSharing === 'Y') { %>
                 <div id="fe-troaming-share">
@@ -297,6 +325,16 @@
             <!-- //유효기간 -->
             <% } %>
 
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>실시간 사용량 조회 안내 <button type="button" class="tip-view" title="실시간 사용량 조회 안내 TIP보기" aria-haspopup="true" id="DC_01_01_tip_01">TIP</button></li>
+                    <li>실시간 사용량 조회가 불가능한 경우 <button type="button" class="tip-view" title="실시간 사용량 조회가 불가능한 경우 TIP보기" aria-haspopup="true" id="DC_01_01_tip_02">TIP</button></li>
+                    <li>월중 요금상품 변경, 일시정지 시 유의사항 <button type="button" class="tip-view" title="월중 요금상품 변경, 일시정지 시 유의사항 TIP보기" aria-haspopup="true" id="DC_01_01_tip_03">TIP</button></li>
+                    <li>마이벨 서비스 및 다다익선 요금상품<br>가용고객 대상 안내 <button type="button" class="tip-view" title="마이벨 서비스 및 다다익선 요금상품 가용고객 대상 안내 TIP보기" aria-haspopup="true" id="DC_01_01_tip_04">TIP</button></li>
+                </ul>
+            </div>
     </div>
     </div>
     <!--// #contents -->

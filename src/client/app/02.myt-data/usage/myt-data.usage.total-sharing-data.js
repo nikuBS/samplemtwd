@@ -32,7 +32,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
   },
 
   _onHashChange: function (hash) {
-    if ( hash.raw && hash.raw === 'data-share-popup' ) {
+    if ( hash.raw && hash.raw === 'datashare_P' ) {
       this._myTDataUsageDataShare.open();
     } else {
       this._myTDataUsageDataShare.close();

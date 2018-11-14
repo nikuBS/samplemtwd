@@ -185,6 +185,10 @@ Tw.NON_PAYMENT = {
   }
 };
 
+Tw.MYT_DATA_CANCEL_TSHARE = {
+  TITLE: 'T데이터 셰어링 USIM 해지'
+};
+
 Tw.MYT_DATA_TOTAL_SHARING_DATA = {
   USED_DATA_PREFIX: '총 ',
   USED_DATA_SUFFIX: ' 사용',

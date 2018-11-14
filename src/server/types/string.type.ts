@@ -51,6 +51,10 @@ export const MYT_DATA_USAGE_TOTAL_SHARING_DATA = {
   TITLE: '통합공유 데이터'
 };
 
+export const MYT_DATA_USAGE_CANCEL_TSHARE = {
+  TITLE: 'T데이터 셰어링 USIM 해지'
+};
+
 export const MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 MM월'
