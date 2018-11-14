@@ -518,7 +518,8 @@ Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
 
 Tw.PRODUCT_CTG_NM = {
   PLANS: '요금제',
-  ADDITIONS: '부가서비스'
+  ADDITIONS: '부가서비스',
+  DISCOUNT_PROGRAM: '할인프로그램'
 };
 
 Tw.PRODUCT_TYPE_NM = {
