@@ -34,7 +34,7 @@ Tw.ProductSetting.prototype = {
       case 'MP_02_02_03_10':
       case 'MP_02_02_03_14':
         if (this._displayId === 'MP_02_02_03_01') {
-          this._resultPage = '/product/infinity-benefit-usage-history';
+          this._resultPage = '/product/lookup/tplan';
         } else {
           this._resultPage = '/myt/join/product/fee-plans';
         }
