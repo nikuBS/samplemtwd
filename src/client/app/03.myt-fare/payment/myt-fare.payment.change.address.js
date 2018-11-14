@@ -18,13 +18,21 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
   _init: function () {
     this._popupService.open({
       'hbs':'MF_05_02_02'
-    }, $.proxy(this._openChangeAddress, this), null, 'address');
+    },
+      $.proxy(this._openChangeAddress, this),
+      $.proxy(this._setToast, this),
+      'address');
   },
   _openChangeAddress: function ($layer) {
     this.$layer = $layer;
 
     this._setInitData();
     this._bindEvent();
+  },
+  _setToast: function () {
+    if (this.$isChanged) {
+      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE);
+    }
   },
   _setInitData: function () {
     this.$layer.find('.fe-phone').val(this.$container.find('.fe-phone').text());
@@ -83,7 +91,8 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
   },
   _changeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-
+      this.$isChanged = true;
+      this._popupService.close();
     } else {
       this._changeFail(res);
     }
