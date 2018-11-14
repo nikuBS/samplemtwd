@@ -41,7 +41,7 @@ Tw.ProductJoinCommonConfirm.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnApply.on('click', $.proxy(this._procApply, this));
+    this.$btnApply.on('click', $.proxy(this._doCallback, this));
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
     this.$btnCloseConfirm.on('click', $.proxy(this._closeConfirmPop, this));
@@ -66,7 +66,7 @@ Tw.ProductJoinCommonConfirm.prototype = {
     this._popupService.open($.extend(this._data, {
       hbs: 'product_join_confirm',
       layer: true
-    }, this._data), $.proxy(this._setContainer, this), $.proxy(this._closePop, this));
+    }, this._data), $.proxy(this._setContainer, this), $.proxy(this._closePop, this), 'join_confirm');
   },
 
   _setContainer: function($container) {
@@ -155,19 +155,8 @@ Tw.ProductJoinCommonConfirm.prototype = {
     }
   },
 
-  _procApply: function() {
-    this._isApply = true;
-    this._popupService.close();
-  },
-
-  _closePop: function() {
-    if (!this._isApply) {
-      return;
-    }
-
-    if (typeof(this._applyCallback) === 'function') {
-      this._applyCallback();
-    }
+  _doCallback: function() {
+    this._applyCallback();
   }
 
 };

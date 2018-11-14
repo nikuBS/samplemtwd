@@ -20,6 +20,8 @@ import ProductApps from './app/product.apps.controller';
 import ProductJoinCombineLine from './controllers/join/product.join.combine-line.controller';
 import ProductSettingCombineLine from './controllers/setting/product.setting.combine-line.controller';
 import ProductSettingOption from './controllers/setting/product.setting.option.controller';
+import ProductJoinTplan from './controllers/join/product.join.tplan.controller';
+import ProductSettingTplan from './controllers/setting/product.setting.tplan.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -30,12 +32,14 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/join/reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/join/require-document/apply', controller: ProductJoinRequireDocumentApply });
     this.controllers.push({ url: '/join/require-document/history', controller: ProductJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/join/tplan/:prodId', controller: ProductJoinTplan });
     this.controllers.push({ url: '/join/combine-line/:prodId', controller: ProductJoinCombineLine });
     this.controllers.push({ url: '/join/dis-program(/:prodId)', controller: ProductJoinDisPgm });
     this.controllers.push({ url: '/join/dis-program/detail(/:prodId)', controller: ProductJoinDisPgmDetail });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
     this.controllers.push({ url: '/setting/combine-line/:prodId', controller: ProductSettingCombineLine });
     this.controllers.push({ url: '/setting/option/:prodId', controller: ProductSettingOption });
+    this.controllers.push({ url: '/setting/tplan/:prodId', controller: ProductSettingTplan });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
     this.controllers.push({ url: '/infinity-benefit-usage-history', controller: ProductInfinityBenefitUsageHistory });

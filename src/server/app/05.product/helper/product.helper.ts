@@ -89,6 +89,49 @@ class ProductHelper {
     };
   }
 
+  static convPlansJoinTermInfo(joinTermInfo): any {
+    return Object.assign(joinTermInfo, {
+      preinfo: ProductHelper.convPlanPreInfo(joinTermInfo.preinfo),
+      installmentAgreement: ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement),
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+    });
+  }
+
+  static convPlanPreInfo(preInfo): any {
+    return Object.assign(preInfo, {
+      frProdInfo: Object.assign(preInfo.frProdInfo, ProductHelper.convProductSpecifications(preInfo.frProdInfo.basFeeInfo,
+          preInfo.frProdInfo.basOfrDataQtyCtt, preInfo.frProdInfo.basOfrVcallTmsCtt, preInfo.frProdInfo.basOfrCharCntCtt)),
+      toProdInfo: Object.assign(preInfo.toProdInfo, ProductHelper.convProductSpecifications(preInfo.toProdInfo.basFeeInfo,
+          preInfo.toProdInfo.basOfrDataQtyCtt, preInfo.toProdInfo.basOfrVcallTmsCtt, preInfo.toProdInfo.basOfrCharCntCtt)),
+      autoJoinList: ProductHelper.convAutoJoinTermList(preInfo.autoJoinList),
+      autoTermList: ProductHelper.convAutoJoinTermList(preInfo.autoTermList)
+    });
+  }
+
+  static convInstallmentAgreement(installmentAgreement): any {
+    const isNumberPenAmt = !isNaN(parseInt(installmentAgreement.penAmt, 10)),
+        isNumberFrDcAmt = !isNaN(parseInt(installmentAgreement.frDcAmt, 10)),
+        isNumberToDcAmt = !isNaN(parseInt(installmentAgreement.toDcAmt, 10)),
+        isNumberGapDcAmt = !isNaN(parseInt(installmentAgreement.gapDcAmt, 10));
+
+    return Object.assign(installmentAgreement, {
+      isNumberPenAmt: isNumberPenAmt,
+      penAmt: isNumberPenAmt ? FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,
+      isNumberFrDcAmt: isNumberFrDcAmt,
+      frDcAmt: isNumberFrDcAmt ? FormatHelper.addComma(installmentAgreement.frDcAmt) + UNIT['110'] : installmentAgreement.frDcAmt,
+      isNumberToDcAmt: isNumberToDcAmt,
+      toDcAmt: isNumberToDcAmt ? FormatHelper.addComma(installmentAgreement.toDcAmt) + UNIT['110'] : installmentAgreement.toDcAmt,
+      isNumberGapDcAmt: isNumberGapDcAmt,
+      gapDcAmt: isNumberGapDcAmt ? FormatHelper.addComma(installmentAgreement.gapDcAmt) + UNIT['110'] : installmentAgreement.gapDcAmt,
+      agrmtDayCnt: ProductHelper.calcAgrmtMonth(installmentAgreement.agrmtDayCnt),
+      agrmtUseCnt: ProductHelper.calcAgrmtMonth(installmentAgreement.agrmtUseCnt)
+    });
+  }
+
+  static calcAgrmtMonth(days): any {
+    return days / 30.4;
+  }
+
   static convAdditionsJoinTermInfo(joinTermInfo): any {
     return Object.assign(joinTermInfo, {
       preinfo: ProductHelper.convAdditionsPreInfo(joinTermInfo.preinfo),
@@ -110,7 +153,7 @@ class ProductHelper {
   }
 
   static convAutoJoinTermList(autoList): any {
-    const autoListConvertResult: any = [];
+    const autoListConvertResult: any = {};
 
     autoList.forEach((item) => {
       if (FormatHelper.isEmpty(autoListConvertResult[item.svcProdCd])) {
@@ -123,7 +166,7 @@ class ProductHelper {
       autoListConvertResult[item.svcProdCd].svcProdList.push(item.prodNm);
     });
 
-    return autoListConvertResult;
+    return Object.keys(autoListConvertResult).map(key => autoListConvertResult[key]);
   }
 }
 
