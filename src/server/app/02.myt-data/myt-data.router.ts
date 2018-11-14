@@ -11,6 +11,7 @@ import MyTDataLimit from './controllers/limit/myt-data.limit.controller';
 import MyTDataCookiz from './controllers/cookiz/myt-data.cookiz.controller';
 import MyTDataRechargeHistory from './controllers/recharge/myt-data.recharge.history.controller';
 import MyTDataFamily from './controllers/family/myt-data.family.controller';
+import MyTDataPrepaid from './controllers/prepaid/myt-data.prepaid.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -27,6 +28,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/cookiz(/:page)?', controller: MyTDataCookiz });
     this.controllers.push({ url: '/family(/:page)?', controller: MyTDataFamily });
     this.controllers.push({ url: '/recharge/coupon(/:page)?', controller: MyTDataRechargeCoupon });
+    this.controllers.push({ url: '/recharge/prepaid(/:page)?', controller: MyTDataPrepaid });
 
     // new url
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
