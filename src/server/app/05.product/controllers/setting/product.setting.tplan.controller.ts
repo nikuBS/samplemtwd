@@ -38,8 +38,6 @@ class ProductSettingTplan extends TwViewController {
           }));
         }
 
-        console.log(benefitInfo.result);
-
         res.render('setting/product.setting.tplan.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
           benefitInfo: benefitInfo.result
