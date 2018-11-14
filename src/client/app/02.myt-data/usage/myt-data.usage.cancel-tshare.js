@@ -38,11 +38,7 @@ Tw.MyTDataUsageCancelTshare.prototype = {
           usimNum: this._options.usimNum,
           date: Tw.DateHelper.getShortDateNoDot(new Date())
         }
-      }, $.proxy(function ($layer) {
-        $layer.find('.fe-go-usage-home').click($.proxy(function() {
-          this._historyService.replaceURL(this._URL.MYT_DATA_USAGE);
-        }, this));
-      }, this), null, this._COMPLETE_POPUP_HBS);
+      }, null, null, this._COMPLETE_POPUP_HBS);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
