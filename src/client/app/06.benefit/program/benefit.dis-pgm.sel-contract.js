@@ -25,6 +25,7 @@ Tw.ProductJoinSelContract.prototype = {
   _bindEvent: function () {
     this.$radioGroup.on('click', 'li', $.proxy(this._onRadioGroupClicked, this));
     this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
+    // TODO: 할인반환금조회(#refund_info) 및 단말 위약금 조회(#cancel_fee) admin 작업처리
   },
 
   _initialize: function () {

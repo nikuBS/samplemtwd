@@ -9,7 +9,6 @@ import ProductAddition from './controllers/addition/product.addition.controller'
 import ProductPlans from './controllers/plan/product.plans.controller';
 import ProductAdditions from './controllers/addition/product.additions.controller';
 import ProductFindMyBestPlans from './controllers/product.find-my-best-plans.controller';
-import ProductJoinDisPgm from './controllers/join/product.join.dis-pgm';
 import ProductWire from './controllers/wire/product.wire.controller';
 import ProductWires from './controllers/wire/product.wires.controller';
 import ProductJoinRequireDocumentApply from './controllers/join/product.join.require-document.apply.controller';
@@ -42,7 +41,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/join/combine-line/:prodId', controller: ProductJoinCombineLine });
     this.controllers.push({ url: '/join/share-line/:prodId', controller: ProductJoinShareLine });
     this.controllers.push({ url: '/join/data-together/:prodId', controller: ProductJoinDataTogether });
-    this.controllers.push({ url: '/join/dis-program(/:prodId)', controller: ProductJoinDisPgm });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
     this.controllers.push({ url: '/setting/combine-line/:prodId', controller: ProductSettingCombineLine });
     this.controllers.push({ url: '/setting/option/:prodId', controller: ProductSettingOption });
