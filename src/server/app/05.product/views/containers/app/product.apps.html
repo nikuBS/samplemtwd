@@ -77,84 +77,6 @@
                             </div>
                         </div>
                         <div class="app-list-bottom">
-                            <ul>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app01.png" alt="t전화" class="ico" />
-                                        <span class="i-atv"><span class="blind">active</span></span>
-                                    </span>
-                                    <span class="app-name">T 전화</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app02.png" alt="T 통화 매니저" class="ico" />
-                                        <span class="i-new"><span class="blind">new</span></span>
-                                    </span>
-                                    <span class="app-name">T 통화 매니저</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app03.png" alt="T 연락처" class="ico" />
-                                        <span class="i-new"><span class="blind">new</span></span>
-                                    </span>
-                                    <span class="app-name">T 연락처</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app04.png" alt="T ARS" class="ico" />
-                                    </span>
-                                    <span class="app-name">T ARS</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app05.png" alt="T PAY" class="ico" />
-                                    </span>
-                                    <span class="app-name">T PAY</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app06.png" alt="T 맴버쉽" class="ico" />
-                                    </span>
-                                    <span class="app-name">T 맴버쉽</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app07.png" alt="T map" class="ico" />
-                                    </span>
-                                    <span class="app-name">T map</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app08.png" alt="클라우드 베리" class="ico" />
-                                        <span class="i-atv"><span class="blind">active</span></span>
-                                    </span>
-                                    <span class="app-name">클라우드 베리</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app09.png" alt="행복을 들려 주는도서관" class="ico" />
-                                    </span>
-                                    <span class="app-name">행복을 들려 주는도서관</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app02.png" alt="T 통화 매니저" class="ico" />
-                                    </span>
-                                    <span class="app-name">T 통화 매니저</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app03.png" alt="T 연락처" class="ico" />
-                                    </span>
-                                    <span class="app-name">T 연락처</span>
-                                </li>
-                                <li class="item">
-                                    <span class="app-ico">
-                                        <img src="/img/dummy/dmy-app04.png" alt="T ARS" class="ico" />
-                                    </span>
-                                    <span class="app-name">T ARS</span>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                     <!-- // .app-list -->
@@ -275,5 +197,11 @@
         </footer>
     </div>
 </body>
+<% include ../../components/app/product.apps.list.html %>
 <% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function() {
+        new Tw.ProductApps($('.wrap'));
+    })
+</script>
 <% include ../../components/end.component.html %>
