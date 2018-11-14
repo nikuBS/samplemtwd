@@ -44,7 +44,6 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
     this.$layer.on('keyup', '.fe-phone', $.proxy(this._checkNumber, this));
     this.$layer.on('keypress', '.fe-phone', $.proxy(this._setMaxValue, this));
     this.$layer.on('click', '.fe-post', $.proxy(this._getPostcode, this));
-    this.$layer.on('change', '.fe-change-field', $.proxy(this._setChangeBtnAble, this));
     this.$layer.on('click', '.fe-change', $.proxy(this._changeAddress, this));
   },
   _checkNumber: function (event) {
@@ -52,6 +51,7 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
 
     this._addHipen(target);
+    this._setChangeBtnAble();
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
@@ -67,10 +67,11 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
     }
   },
   _getPostcode: function () {
+    this._setChangeBtnAble();
     new Tw.CommonPostcodeMain(this.$layer);
   },
   _setChangeBtnAble: function () {
-    if (!(Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-phone').val())))) {
+    if (!Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-phone').val()))) {
       this.$layer.find('.fe-change').removeAttr('disabled');
     } else {
       this.$layer.find('.fe-change').attr('disabled', 'disabled');
@@ -82,15 +83,18 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
       .fail($.proxy(this._changeFail, this));
   },
   _makeRequestData: function () {
-    return {
+    this._changeData = {
       billSvcNum: $.trim(this.$layer.find('.fe-phone').val()),
       zip: $.trim(this.$layer.find('.fe-zip').val()),
       basAddr: $.trim(this.$layer.find('.fe-main-address').val()),
       dtlAddr: $.trim(this.$layer.find('.fe-detail-address').val())
     };
+    return this._changeData;
   },
   _changeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this._setChangedData();
+
       this.$isChanged = true;
       this._popupService.close();
     } else {
@@ -99,5 +103,11 @@ Tw.MyTFarePaymentChangeAddress.prototype = {
   },
   _changeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _setChangedData: function () {
+    this.$container.find('.fe-phone').text(this._changeData.billSvcNum);
+    this.$container.find('.fe-zip').text(this._changeData.zip);
+    this.$container.find('.fe-addr1').text(this._changeData.basAddr);
+    this.$container.find('.fe-addr2').text(this._changeData.dtlAddr);
   }
 };
