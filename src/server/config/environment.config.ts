@@ -34,7 +34,7 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://icp-dev.tworld.co.kr',
-    DOMAIN_G: 'icp-devgm.tworld.co.kr',
+    DOMAIN_G: 'devgm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',

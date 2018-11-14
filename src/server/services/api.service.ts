@@ -165,7 +165,7 @@ class ApiService {
     if ( !FormatHelper.isEmpty(err.response) ) {
       const error = err.response.data;
       const headers = err.response.headers;
-      this.logger.error(this, '[API ERROR]', error);
+      this.logger.error(this, '[API ERROR Native]', error);
 
       if ( command.server === API_SERVER.BFF ) {
         serverSession = this.setServerSession(headers);
