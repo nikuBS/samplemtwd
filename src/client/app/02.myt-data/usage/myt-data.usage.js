@@ -149,6 +149,10 @@ Tw.MyTDataUsage.prototype = {
     $('#head-tdata-share .num em').text(fmtData.data);
     $('#head-tdata-share .num span').text(fmtData.unit);
 
+    _.each(data.childList, function(child) {
+      child.isUsing = data.adultYn === 'Y' && child.svcStCd === 'AC';
+    });
+
     var childHtml = this._dataToHtml(data.childList, '#fe-tdata-share-child-item');
     $('#list-tdata-share').append(childHtml);
 
@@ -312,7 +316,7 @@ Tw.MyTDataUsage.prototype = {
     Handlebars.registerHelper('dateFormat', Tw.DateHelper.getShortDateNoDot);
     Handlebars.registerHelper('dashPhoneNum', Tw.FormatHelper.getFormattedPhoneNumber);
     Handlebars.registerHelper('numComma', Tw.FormatHelper.addComma);
-    Handlebars.registerHelper('usimFormat', this.convUnimFormat);
+    Handlebars.registerHelper('usimFormat', this.convUsimFormat);
   },
 
   /**
@@ -377,7 +381,7 @@ Tw.MyTDataUsage.prototype = {
    * @param v(string)
    * @returns 'xxxx-xxxx-xxxx-xx'(string) format
    */
-  convUnimFormat : function (v) {
+  convUsimFormat : function (v) {
     if( !v || v.replace(/-/g).trim().length < 14 ) return v || '';
     var ret = v.replace(/-/g).trim();
     ret = ret.substr(0, 4) + '-' + ret.substr(4, 4) + '-' + ret.substr(8, 4) + '-' + ret.substr(12, 2);
