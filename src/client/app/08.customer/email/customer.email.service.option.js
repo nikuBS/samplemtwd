@@ -25,6 +25,12 @@ Tw.CustomerEmailServiceOption.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
+    this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
+  },
+
+  _getOrderInfo: function () {
+    this._apiService.request(Tw.API_CMD.BFF_08_0016, { svcDvcClCd: 'M' })
+      .done($.proxy(this._onSuccessOrderInfo, this));
   },
 
   _getDirectBrand: function (e) {
@@ -40,6 +46,14 @@ Tw.CustomerEmailServiceOption.prototype = {
     if ( $('.fe-select-brand').data('brandcd') ) {
       this._apiService.request(Tw.API_CMD.BFF_08_0015, { brandCd: $('.fe-select-brand').data('brandcd') })
         .done($.proxy(this._onSuccessDirectDevice, this, $elTarget));
+    }
+  },
+
+  _onSuccessOrderInfo: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      console.log(res);
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 
