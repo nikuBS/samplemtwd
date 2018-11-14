@@ -36,6 +36,11 @@ Tw.CustomerEmailQualityOption.prototype = {
     this.$container.on('click', '.fe-occurrence_date', $.proxy(this._showOptionSheet, this, 'Q_TYPE05'));
     // this.$container.on('click', '.fe-text_content', $.proxy(this._showOptionSheet, this, 'Q_TYPE05'));
     this.$container.on('click', '.option_value', $.proxy(this._selectPopupCallback, this));
+    this.$container.on('click', '.fe-search-post', $.proxy(this._onClickSearchPost, this));
+  },
+
+  _onClickSearchPost: function (e) {
+    new Tw.CommonPostcodeMain(this.$container);
   },
 
   _showLineSheet: function (sType, e) {
