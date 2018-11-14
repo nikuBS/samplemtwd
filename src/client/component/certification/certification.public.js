@@ -64,8 +64,7 @@ Tw.CertificationPublic.prototype = {
   },
   _needAccountInfo: function (path) {
     if ( path === '/core-bill/v1/bill-pay/settle-pay-bank' ||
-      path === '/bypass/core-bill/v1/bill-pay/settle-pay-card' ||
-      path === '/bypass/core-bill/v1/ocb-point-pay' ) {
+      path === '/bypass/core-bill/v1/bill-pay/settle-pay-card' ) {
       return true;
     }
     return false;
