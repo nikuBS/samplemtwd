@@ -457,6 +457,12 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
     TXT: '회선 관리하기'
   },
+  JOIN: {
+    TITLE: '멤버십에 가입하시겠습니까?',
+    CONTENT: '선택 동의 사항은 <br/>나의 멤버십 〉 정보 수정에서 수정 가능합니다',
+    OK_BTN: '가입하기',
+    CANCEL_BTN: '취소'
+  },
   JOIN_COMPLETE: {
     TITLE: '멤버십 가입 완료',
     CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',

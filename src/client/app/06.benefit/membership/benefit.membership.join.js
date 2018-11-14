@@ -9,7 +9,6 @@ Tw.MyTBenefitMembershipJoin = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._tpayPopup = new Tw.TPayJoinLayerPopup(this.$container);
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this.data = params.data;
@@ -20,6 +19,22 @@ Tw.MyTBenefitMembershipJoin = function (params) {
 
 Tw.MyTBenefitMembershipJoin.prototype = {
 
+  loadingView: function (value, selector) {
+    if ( !selector ) {
+      selector = '[data-id="container"]';
+    }
+    if ( value ) {
+      skt_landing.action.loading.on({
+        ta: selector, co: 'grey', size: true
+      });
+    }
+    else {
+      skt_landing.action.loading.off({
+        ta: selector
+      });
+    }
+  },
+
   _render: function () {
     this.$joinBtn = this.$container.find('[data-id=join-btn]');
     this.$tAgreeCheckBox = this.$container.find('[data-id=all-agree-t]');
@@ -28,16 +43,16 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeItems = this.$container.find('[data-role=CL]');
     this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
     this.$cashbagAccodianBtn = this.$container.find('[data-id=cashbag_list]');
+    this.$agreeViewBtn = this.$container.find('button.agree-view');
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
     }
     else if ( this.data.type === 'feature' ) {
-      // TODO: 우편번호 공통화 작업 완료 후 처리
-      // this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
+      this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
       this.$zipCodeBtn = this.$container.find('[data-id=zip-code]');
-      // this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
-      // this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
+      this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
+      this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
     }
   },
 
@@ -45,9 +60,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$container.on('click', $.proxy(this._onClickContainer, this));
     this.$joinBtn.on('click', $.proxy(this._onClickJoinBtn, this));
     this.$tAgreeCheckBox.on('click', $.proxy(this._onClickTAgreeCheckbox, this));
-    this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
     this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
+    this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
     this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
+    this.$agreeViewBtn.on('click', $.proxy(this._onItemsAgreeView, this));
     this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn.on('click', $.proxy(this._onClickCorporateList, this));
@@ -60,9 +76,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _initialize: function () {
 
     this.svcNominalRelCd = '010'; // default 본인
-    this.myAddress = this.data.svcInfo.addr; // 주소
-    if ( this.data.type === 'corporate' ) {
+    this.addrCd = '03'; // 주소구분코드: 자택
+    if ( this.data.type === 'corporate' && this.data.isCorporateBody ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
+      this.addrCd = '04'; // 직장
     }
   },
 
@@ -131,21 +148,33 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }
   },
 
-  _onClickTAgreeItems: function (/*event*/) {
-    if ( this._tAllCheck ) {
-      this.$tAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
-      this.$tAgreeCheckBox.find('input').removeAttr('checked');
-      this._tAllCheck = false;
-      this.$tAgreeItems.trigger('click');
+  _onClickTAgreeItems: function (event) {
+    var $target = $(event.target);
+    if ( $target.hasClass('.agree-view') ) {
+      this._onItemsAgreeView($target);
+    }
+    else {
+      if ( this._tAllCheck ) {
+        this.$tAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
+        this.$tAgreeCheckBox.find('input').removeAttr('checked');
+        this._tAllCheck = false;
+        this.$tAgreeItems.trigger('click');
+      }
     }
   },
 
-  _onClickCAgreeItems: function (/*event*/) {
-    if ( this._cAllCheck ) {
-      this.$cAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
-      this.$cAgreeCheckBox.find('input').removeAttr('checked');
-      this._cAllCheck = false;
-      this.$cAgreeItems.trigger('click');
+  _onClickCAgreeItems: function (event) {
+    var $target = $(event.target);
+    if ( $target.hasClass('.agree-view') ) {
+      this._onItemsAgreeView($target);
+    }
+    else {
+      if ( this._cAllCheck ) {
+        this.$cAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
+        this.$cAgreeCheckBox.find('input').removeAttr('checked');
+        this._cAllCheck = false;
+        this.$cAgreeItems.trigger('click');
+      }
     }
   },
 
@@ -201,6 +230,12 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickJoinBtn: function () {
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_MEMBERSHIP.JOIN.TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN.CONTENT,
+      Tw.ALERT_MSG_MEMBERSHIP.JOIN.OK_BTN, null, $.proxy(this._requestMembershipJoin, this), null);
+  },
+
+  _requestMembershipJoin: function() {
+    this.loadingView(true);
     var $items = this.$container.find('[aria-checked=true]');
     var params = {
       mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
@@ -211,14 +246,17 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       sms_agree_yn: 'N', // 멤버십 이용내역 안내
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
-      cust_email_addr: ''
-      // zip: this.$zipCodeInput.val(),
-      // bas_addr: this.$zipCodeInputDetail_1.val()
-      // dtl_addr: this.$zipCodeInputDetail_2.val()
+      addr_cd: this.addrCd
     };
 
     if ( this.data.type === 'corporate' ) {
       params.cust_email_addr = this.$emailAddr.val(); // email 주소
+    }
+
+    if ( this.data.type === 'feature' ) {
+      params.zip = this.$zipCodeInput.val();
+      params.bas_addr = this.$zipCodeInputDetail_1.val();
+      params.dtl_addr = this.$zipCodeInputDetail_2.val();
     }
 
     for ( var i = 0; i < $items.length; i++ ) {
@@ -244,16 +282,19 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_11_0011, params)
       .done($.proxy(this._onSuccessJoinMembership, this))
       .fail($.proxy(this._onFailJoinMembership, this));
+    this._popupService.close();
   },
 
   _onSuccessJoinMembership: function (resp) {
+    this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/membership/submain', '/membership/mymembership/history',
+      this._popupService.afterRequestSuccess('/membership/mymembership/history', '/membership/submain',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
-      // TODO: 가입하기 완료 후 TPay 팝업 노출
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
-      setTimeout(this._tpayPopup.open, 500);
+      setTimeout($.proxy(function() {
+        new Tw.TPayJoinLayerPopup(this.$container).open();
+      }, this), 100);
     }
     else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -261,6 +302,23 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onFailJoinMembership: function (resp) {
+    this.loadingView(false);
     Tw.Error(resp.code, resp.msg).pop();
+  },
+
+  _onItemsAgreeView: function (event) {
+    this._agreeViewTarget = $(event.target).siblings('[role="checkbox"]');
+    var type = $(event.target).attr('data-type');
+    new Tw.MembershipClauseLayerPopup({
+      $element: this.$container,
+      callback: $.proxy(this._agreeViewCallback, this)
+    }).open(type);
+  },
+
+  _agreeViewCallback: function () {
+    if ( !this._agreeViewTarget.find('input').prop('checked') ) {
+      this._agreeViewTarget.find('input').trigger('click');
+      this._agreeViewTarget = null;
+    }
   }
 };
