@@ -20,12 +20,14 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _cachedElement: function () {
+    this.tpl_service_direct_order = Handlebars.compile($('#tpl_service_direct_order').html());
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
     this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
+    this.$container.on('click', '.fe-wrap_direct_order .popup-closeBtn', $.proxy(this._closeDirectOrder, this));
   },
 
   _getOrderInfo: function () {
@@ -51,7 +53,7 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _onSuccessOrderInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      console.log(res);
+      this.$container.append(this.tpl_service_direct_order());
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -101,7 +103,6 @@ Tw.CustomerEmailServiceOption.prototype = {
         $.proxy(this._selectDevicePopupCallback, this, $elButton),
         null
       );
-
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -126,5 +127,9 @@ Tw.CustomerEmailServiceOption.prototype = {
     this._popupService.close();
     $target.data('phoneid', $(el.currentTarget).data('phoneid'));
     $target.text($(el.currentTarget).text().trim());
+  },
+
+  _closeDirectOrder: function () {
+    $('.fe-wrap_direct_order').remove();
   }
 };

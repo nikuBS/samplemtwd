@@ -31,8 +31,8 @@ Tw.CustomerEmailTemplate.prototype = {
     this.tpl_service_direct = Handlebars.compile($('#tpl_service_direct').html());
     this.tpl_service_direct_brand = Handlebars.compile($('#tpl_service_direct_brand').html());
     this.tpl_service_internet = Handlebars.compile($('#tpl_service_internet').html());
-    this.tpl_quality_internet = Handlebars.compile($('#tpl_quality_internet').html());
     this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').html());
+    this.tpl_quality_internet = Handlebars.compile($('#tpl_quality_internet').html());
   },
 
   _bindEvent: function () {
