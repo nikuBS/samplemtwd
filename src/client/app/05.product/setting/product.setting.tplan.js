@@ -1,10 +1,10 @@
 /**
- * FileName: product.setting.option.js
+ * FileName: product.setting.tplan.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * Date: 2018.11.14
  */
 
-Tw.ProductSettingOption = function(rootEl, prodId, displayId, currentOptionProdId) {
+Tw.ProductSettingTplan = function(rootEl, prodId, displayId, currentBenefitProdId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -12,7 +12,7 @@ Tw.ProductSettingOption = function(rootEl, prodId, displayId, currentOptionProdI
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._currentOptionProdId = currentOptionProdId;
+  this._currentBenefitProdId = currentBenefitProdId;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -20,14 +20,14 @@ Tw.ProductSettingOption = function(rootEl, prodId, displayId, currentOptionProdI
   this._init();
 };
 
-Tw.ProductSettingOption.prototype = {
+Tw.ProductSettingTplan.prototype = {
 
   _init: function() {
-    if (Tw.FormatHelper.isEmpty(this._currentOptionProdId)) {
+    if (Tw.FormatHelper.isEmpty(this._currentBenefitProdId)) {
       return;
     }
 
-    this.$container.find('input[value="' + this._currentOptionProdId + '"]').trigger('click');
+    this.$container.find('input[value="' + this._currentBenefitProdId + '"]').trigger('click');
   },
 
   _cachedElement: function() {
@@ -47,12 +47,15 @@ Tw.ProductSettingOption.prototype = {
   _procSetupOk: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
 
-    if (this._currentOptionProdId === $checked.val()) {
+    if (this._currentBenefitProdId === $checked.val()) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
     }
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(Tw.API_CMD.BFF_10_0046, {}, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0014, {
+      beforeTDiyGrCd: this._currentBenefitProdId,
+      afterTDiyGrCd: $checked.val()
+    }, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this));
   },
 
   _procSetupOkRes: function(resp) {
@@ -82,5 +85,5 @@ Tw.ProductSettingOption.prototype = {
   _onClosePop: function() {
     this._historyService.goBack();
   }
-
+  
 };

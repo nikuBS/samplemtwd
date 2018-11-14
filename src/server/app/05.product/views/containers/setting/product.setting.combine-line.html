@@ -5,43 +5,50 @@
 %>
 <% include ../../components/start.component.html %>
 <body>
-  <!-- #skip_navigation -->
-  <div id="skipNav" class="skip_navi">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
     <ul>
-      <li><a href="#gnb">메뉴 바로가기</a></li>
-      <li><a href="#contents">본문 바로가기</a></li>
-      <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
-  </div>
-  <!--// #skip_navigation -->
-  <div class="wrap step">
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-      <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line: false } }); %>
-      <!-- .container-wrap -->
-      <div class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-          <div class="cont-box">
-            <div class="product-tit-wrap">
-              <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
-              <span class="tit-big">내폰끼리 결합</span>
-            </div>
-          </div>
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line:
+        false } }); %>
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+                        <span class="tit-big">내폰끼리 결합</span>
+                    </div>
+                </div>
 
-          <div class="ti-caption-gray">
-            <h4 class="tit">내폰끼리 결합 회선 설정 <button type="button" class="tip-view" title="내폰끼리 결합 할 회선 정보보기" id="MV_02_02_01_tip_01" aria-haspopup="true">TIP</button></h4>
-            <p class="num"><%= svcInfo.svcNum %></p>
-          </div>
+                <div class="ti-caption-gray">
+                    <h4 class="tit">내폰끼리 결합 회선 설정
+                        <button type="button" class="tip-view" title="내폰끼리 결합 할 회선 정보보기" id="MV_02_02_01_tip_01"
+                                aria-haspopup="true">TIP
+                        </button>
+                    </h4>
+                    <p class="num"><%= svcInfo.svcNum %></p>
+                </div>
 
-          <!-- .cont-box -->
-          <div class="cont-box">
-            <div class="input-number-wrap">
-              <h3 class="tit">내폰끼리 결합 할 회선</h3>
-              <div class="form-box">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="input-number-wrap">
+                        <h3 class="tit">내폰끼리 결합 할 회선</h3>
+                        <div class="form-box">
                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                   <span class="input">
-                    <input type="text" class="fe-num_input" title="데이터 함께쓰기를 설정할 회선번호를 입력하세요" placeholder="번호를 입력하세요." aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+                    <input type="text" class="fe-num_input" title="데이터 함께쓰기를 설정할 회선번호를 입력하세요" placeholder="번호를 입력하세요."
+                           aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
                     <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
                   </span>
                   <% if (isApp) { %>
@@ -50,58 +57,67 @@
                   </span>
                   <% } %>
                 </span>
-                <span id="aria-phone-tx1" class="input-comment">band 데이터 / T시그니처 요금제에 가입된 동일명의 회선끼리 결합 하실 수 있습니다. (단, 법인명의, 데이터 함께쓰기 가입회선 불가)</span>
-              </div>
-            </div>
-            <ul class="bt-slice pt26">
-              <li class="bt-blue1">
-                <button class="fe-btn_add_num" disabled="">추가하기</button>
-              </li>
-            </ul>
-          </div>
-          <!--// .cont-box -->
-
-          <div class="fe-line_wrap">
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-              <div class="input-number-wrap">
-                <h3 class="tit type1">결합 신청된 회선</h3>
-                <div class="list-comp-thumnail">
-                  <ul class="comp-box fe-line_list">
-                    <% for ( var i in combineLineInfo.combinationLineList) { %>
-                    <li class="list-box">
-                      <p class="list-text">
-                        <span class="mtext"><%= combineLineInfo.combinationLineList[i].svcNumMask %></span>
-                      </p>
-                      <div class="list-btn">
-                        <div class="bt-alone"><button class="fe-btn_del_num bt-line-gray1" data-grp_id="<%= combineLineInfo.combinationLineList[i].svcProdGrpId %>">삭제</button></div>
-                      </div>
-                    </li>
-                    <% } %>
-                  </ul>
+                            <span id="aria-phone-tx1" class="input-comment">band 데이터 / T시그니처 요금제에 가입된 동일명의 회선끼리 결합 하실 수 있습니다. (단, 법인명의, 데이터 함께쓰기 가입회선 불가)</span>
+                        </div>
+                    </div>
+                    <ul class="bt-slice pt26">
+                        <li class="bt-blue1">
+                            <button class="fe-btn_add_num" disabled="">추가하기</button>
+                        </li>
+                    </ul>
                 </div>
-              </div>
+                <!--// .cont-box -->
+
+                <div class="fe-line_wrap">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <div class="input-number-wrap">
+                            <h3 class="tit type1">결합 신청된 회선</h3>
+                            <div class="list-comp-thumnail">
+                                <ul class="comp-box fe-line_list">
+                                    <% for ( var i in combineLineInfo.combinationLineList) { %>
+                                    <li class="list-box">
+                                        <p class="list-text">
+                                            <span
+                                                class="mtext"><%= combineLineInfo.combinationLineList[i].svcNumMask %></span>
+                                        </p>
+                                        <div class="list-btn">
+                                            <div class="bt-alone">
+                                                <button class="fe-btn_del_num bt-line-gray1"
+                                                        data-grp_id="<%= combineLineInfo.combinationLineList[i].svcProdGrpId %>">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                </div>
             </div>
-            <!--// .cont-box -->
-          </div>
         </div>
-      </div>
-      <!-- // .container-wrap -->
-      <!-- .popup-closeBtn -->
-      <button class="prev-step fe-common-back">취소</button>
-      <!--// .popup-closeBtn -->
-      <!-- #footer -->
-      <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-      </footer>
-      <!--// #footer -->
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo:
+            pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
     <!-- // .popup hbs -->
-  </div>
+</div>
 </body>
 <% include ../../components/setting/product.setting.combine-line.component.html %>
 <% include ../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductSettingCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_01', '<%= combineLineInfo.svcProdGrpId %>'); });</script>
+<script>$(function () {
+  new Tw.ProductSettingCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_01', '<%= combineLineInfo.svcProdGrpId %>');
+});</script>
 <% include ../../components/end.component.html %>

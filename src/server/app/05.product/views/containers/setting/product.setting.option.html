@@ -3,100 +3,105 @@
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2018.11.13
 %>
-<%#
-* FileName: product.join.combine-line.html
-* Author: Ji Hun Yang (jihun202@sk.com)
-* Date: 2018.11.13
-%>
 <% include ../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
-  <ul>
-    <li><a href="#gnb">메뉴 바로가기</a></li>
-    <li><a href="#contents">본문 바로가기</a></li>
-    <li><a href="#footer">푸터 바로가기</a></li>
-  </ul>
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
 </div>
 <!--// #skip_navigation -->
 <div class="wrap step">
-  <!-- .popup hbs -->
-  <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line: false } }); %>
-    <!-- .container-wrap -->
-    <div class="container-wrap">
-      <h2 class="blind">내용</h2>
-      <div class="container">
-        <div class="product-select-wrap">
-          <span class="data-tit">옵션 선택</span>
-        </div>
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo, option: { line:
+        false } }); %>
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="product-select-wrap">
+                    <span class="data-tit">옵션 선택</span>
+                </div>
 
-        <!-- .cont-box -->
-        <div class="cont-box nogaps">
-          <div class="list-comp-input fe-product_radio_wrap">
-            <div class="widget">
-              <div class="widget-box radio">
-                <ul class="select-list" role="group">
-                  <li class="radiobox type01-big" role="radio" aria-checked="false">
-                    <input type="radio" name="radio" value="NA00005061" title="데이터 프리 동영상" aria-labelledby="aria-comp-radio1">
-                    <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
-                      <p class="layout-text">
-                        <span class="mtext">데이터 프리 동영상</span>
-                        <span class="stext">콘텐츠 전용 데이터(oksusu) 일 2GB 제공 후 속도 제어</span>
-                      </p>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="list-comp-input fe-product_radio_wrap">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list" role="group">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="NA00005061" title="데이터 프리 동영상"
+                                               aria-labelledby="aria-comp-radio1">
+                                        <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext">데이터 프리 동영상</span>
+                                                <span class="stext">콘텐츠 전용 데이터(oksusu) 일 2GB 제공 후 속도 제어</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <% if (['NA00005058', 'NA00005059', 'NA00005060'].indexOf(prodId) === -1) { %>
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="NA00005131" title="안심옵션"
+                                               aria-labelledby="aria-comp-radio2">
+                                        <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                            <span class="ico ico-movie"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">안심옵션</span>
+                                                <span
+                                                    class="stext">기본제공 데이터를 다 써도 초과 요금 걱정 없이 데이터 이용 가능 (400kbps 속도제어)</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="NA00005084" title="기본 데이터 추가"
+                                               aria-labelledby="aria-comp-radio3">
+                                        <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                                            <span class="ico ico-watch"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">기본 데이터 추가</span>
+                                                <span
+                                                    class="stext">기본 제공 데이터 추가 제공 (+<%= optionInfo.basicDataPlus %>)</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                  </li>
-                  <% if (['NA00005058', 'NA00005059', 'NA00005060'].indexOf(prodId) === -1) { %>
-                  <li class="radiobox type01-big" role="radio" aria-checked="false">
-                    <input type="radio" name="radio" value="NA00005131" title="안심옵션" aria-labelledby="aria-comp-radio2">
-                    <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
-                      <span class="ico ico-movie"></span>
-                      <p class="layout-text">
-                        <span class="mtext">안심옵션</span>
-                        <span class="stext">기본제공 데이터를 다 써도 초과 요금 걱정 없이 데이터 이용 가능 (400kbps 속도제어)</span>
-                      </p>
-                    </div>
-                  </li>
-                  <% } %>
-                  <li class="radiobox type01-big" role="radio" aria-checked="false">
-                    <input type="radio" name="radio" value="NA00005084" title="기본 데이터 추가" aria-labelledby="aria-comp-radio3">
-                    <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
-                      <span class="ico ico-watch"></span>
-                      <p class="layout-text">
-                        <span class="mtext">기본 데이터 추가</span>
-                        <span class="stext">기본 제공 데이터 추가 제공 (+<%= optionInfo.basicDataPlus %>)</span>
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok" disabled="disabled">변경완료</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
-        <!--// .cont-box -->
-
-        <div class="bt-fixed-area">
-          <ul class="bt-slice full">
-            <li class="bt-red1">
-              <button class="fe-btn_setup_ok" disabled="disabled">변경완료</button>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo:
+            pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
-    <!-- // .container-wrap -->
-    <!-- .popup-closeBtn -->
-    <button class="prev-step fe-common-back">취소</button>
-    <!--// .popup-closeBtn -->
-    <!-- #footer -->
-    <footer id="fe-all-menu">
-      <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
-    <!--// #footer -->
-  </div>
-  <!-- // .popup hbs -->
+    <!-- // .popup hbs -->
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductSettingOption($('.wrap'), '<%= prodId %>', 'MP_02_02_03_10', '<%= optionInfo.useOptionProdId %>'); });</script>
+<script>$(function () {
+  new Tw.ProductSettingOption($('.wrap'), '<%= prodId %>', 'MP_02_02_03_10', '<%= optionInfo.useOptionProdId %>');
+});</script>
 <% include ../../components/end.component.html %>

@@ -9,7 +9,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { PROD_TTAB_BASIC_DATA_PLUS } from '../../../../types/bff.type';
-import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 class ProductSettingOption extends TwViewController {
@@ -53,8 +52,7 @@ class ProductSettingOption extends TwViewController {
 
         res.render('setting/product.setting.option.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          optionInfo: this._convOptionInfo(prodId, optionInfo.result),
-          isApp: BrowserHelper.isApp(req)
+          optionInfo: this._convOptionInfo(prodId, optionInfo.result)
         }));
       });
   }

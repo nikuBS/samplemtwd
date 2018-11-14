@@ -1,15 +1,18 @@
 <script id="fe-templ-reserv-file" type="text/x-handlebars-template">
-  <li>
-    <span class="title">{{originalName}}</span>
-    <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1 fe-btn_explain_file_del">삭제</button></div></span>
-  </li>
+    <li>
+        <span class="title">{{originalName}}</span>
+        <span class="tx-cont"><div class="bt-alone"><button
+            class="bt-line-gray1 fe-btn_explain_file_del">삭제</button></div></span>
+    </li>
 </script>
 <script id="fe-tmpl-reserv-family" type="text/x-handlebars-template">
-  <li data-no="{{no}}">
-    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-      <input type="checkbox" name="family_checkbox{{no}}" value="" title="결합가족 목록{{no}}" aria-labelledby="aria-comp-checkbox{{no}}" /><!-- 체크상태일 경우 checked="false" -->
-      <div class="comp-list-layout" id="aria-comp-checkbox{{no}}">
-        <div class="layout-text fusion-family ">
+    <li data-no="{{no}}">
+        <div class="checkbox type01" role="checkbox" aria-checked="false">
+            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+            <input type="checkbox" name="family_checkbox{{no}}" value="" title="결합가족 목록{{no}}"
+                   aria-labelledby="aria-comp-checkbox{{no}}"/><!-- 체크상태일 경우 checked="false" -->
+            <div class="comp-list-layout" id="aria-comp-checkbox{{no}}">
+                <div class="layout-text fusion-family ">
           <span class="mtext">
             <strong>{{name}}</strong>
             {{#if fam.leader}}<i class="badge badge-fam-members2"><span class="blind">가족대표</span></i>{{/if}}
@@ -21,10 +24,10 @@
             {{#if fam.brother}}<i class="badge-siblings"><span class="blind">형제자매</span></i>{{/if}}
             {{#if fam.me}}<i class="badge badge-me2"><span class="blind">나</span></i>{{/if}}
           </span>
-          <span class="ntext">{{number}}</span>
-          <button type="button" class="fe-btn_family_del">삭제</button><!-- dummy button -->
+                    <span class="ntext">{{number}}</span>
+                    <button type="button" class="fe-btn_family_del">삭제</button><!-- dummy button -->
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </li>
+    </li>
 </script>
