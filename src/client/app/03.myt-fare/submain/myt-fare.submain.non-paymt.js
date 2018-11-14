@@ -175,6 +175,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
 
   // 이용정지해제 팝업 호출
   _onClickedSuspension: function () {
+    // openModalTypeA hash 값 추가 되면 suspend 값 추가
     var colAmt = parseInt(this.data.suspension.colAmt, 10);
     this._popupService.openModalTypeA(Tw.NON_PAYMENT.SUSPENSION.TITLE,
       Tw.NON_PAYMENT.SUSPENSION.CONTENT_1 + colAmt + Tw.NON_PAYMENT.SUSPENSION.CONTENT_2,

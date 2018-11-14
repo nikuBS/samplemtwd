@@ -87,8 +87,8 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/info/overpay-refund/detail', controller: MyTFareOverpayRefund });
 
     // new url
-    this.controllers.push({ url: '/submain', controller: MyTFareSubMain });
-    this.controllers.push({ url: '/nonpayment', controller: MyTFareSubMainNonPayment });
+    this.controllers.push({ url: '/submain(/:usagefee)', controller: MyTFareSubMain });
+    this.controllers.push({ url: '/unbill', controller: MyTFareSubMainNonPayment });
     this.controllers.push({ url: '/bill/guide', controller: MyTFareBillGuide });
     this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
     this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });

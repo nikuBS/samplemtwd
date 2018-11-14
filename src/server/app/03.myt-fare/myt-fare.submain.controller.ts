@@ -19,7 +19,6 @@ class MyTFareSubmainController extends TwViewController {
     super();
   }
 
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
       svcInfo: svcInfo,
@@ -29,9 +28,9 @@ class MyTFareSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    if ( req && req.query && req.query.type === 'UF' ) {
+    if ( req && req.params.usagefee === 'usagefee') {
       // 사용요금
-      data.type = req.query.type;
+      data.type = 'UF';
       this._requestUsageFee(req, res, data, svcInfo);
     } else {
       // 청구요금
