@@ -37,11 +37,34 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onOpenResuspendPopup: function ($popup) {
     $popup.find('input[type="date"]').val(Tw.DateHelper.getAddDay(null, 'YYYY-MM-DD'));
-    $popup.one('click', '#fe-resuspend', $.proxy(this._requestResuspend, this));
+    $popup.find('#fe-resuspend').on('click', $.proxy(this._requestResuspend, this, $popup));
   },
 
-  _requestResuspend: function () {
+  _requestResuspend: function ($popup) {
+    var fromDate = $popup.find('input[type="date"]').val();
+    var diff = Tw.DateHelper.getDiffByUnit(fromDate, Tw.DateHelper.getCurrentShortDate(), 'days');
+    if ( diff < 0 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
+      return;
+    }
 
+    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    var params = { fromDt: fromDate.replace(/-/g, '') };
+    this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
+      .done($.proxy(this._onSuccessResuspend, this, params))
+      .fail($.proxy(this._onError, this));
+  },
+
+  _onSuccessResuspend: function (params, res) {
+    skt_landing.action.loading.off({ ta: 'body' });
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
+      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
+        .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
+      this._popupService.afterRequestSuccess('/myt/join/submain', '/myt/join/submain', null, '재신청', desc);
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _onClickReset: function () {
@@ -93,5 +116,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _failSvcInfo: function () {
 
   },
+
+  _onError: function (res) {
+    Tw.Error(res.code, res.msg).pop();
+  }
 
 };
