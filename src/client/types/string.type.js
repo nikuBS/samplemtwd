@@ -751,6 +751,9 @@ Tw.MYT_JOIN_SUSPEND = {
     BTNAME: '해제하기',
     MESSAGE: '일시정지가 즉시 해제됩니다.'
   },
+  RESUSPEND:'재신청',
+  CANCEL_RESUSPEND:'재신청 취소',
+  RESET: '해제',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   TYPE: {

@@ -5,7 +5,7 @@
  */
 Tw.MyTJoinSuspendStatus = function (rootEl, params) {
   this.$container = rootEl;
-  this._historyService = new Tw.HistoryService();
+  this._historyService = new Tw.HistoryService(rootEl);
   this._historyService.init();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
@@ -22,8 +22,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '#bt-reset', $.proxy(this._onClickReset, this));
     this.$container.on('click', '#bt-resuspend', $.proxy(this._onClickResuspend, this));
+    this.$container.on('click', '#bt-cancel-resuspend', $.proxy(this._onClickCancelResuspend, this));
   },
 
+  // Resuspend
   _onClickResuspend: function () {
     this._popupService.open({
       hbs: 'MS_03_05_04',
@@ -32,7 +34,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         period: this._params.period,
         reason: this._params.reason
       }
-    }, $.proxy(this._onOpenResuspendPopup, this), null, 'reset');
+    }, $.proxy(this._onOpenResuspendPopup, this), Tw.Popup.close, 'resuspend');
   },
 
   _onOpenResuspendPopup: function ($popup) {
@@ -61,12 +63,49 @@ Tw.MyTJoinSuspendStatus.prototype = {
       var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt/join/submain', '/myt/join/submain', null, '재신청', desc);
+      this._popupService.afterRequestSuccess('/myt/join/submain', '/myt/join/submain', null, Tw.MYT_JOIN_SUSPEND.RESUSPEND, desc);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
+  // Cancel resuspend
+  _onClickCancelResuspend: function () {
+    this._popupService.open({
+      hbs: 'MS_03_05_06',
+      data: {
+        svcInfo: this._svcInfo,
+        period: this._params.period,
+        resuspend: this._params.resuspend
+      }
+    }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelReset');
+  },
+
+  _onOpenCancelResuspendPopup: function ($popup) {
+    $popup.find('#fe-reset').on('click', $.proxy(this._requesCancelResuspend, this, $popup));
+  },
+
+  _requesCancelResuspend: function ($popup) {
+    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    var params = { isReserveCancel: 'Y' };
+    this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
+      .done($.proxy(this._onSuccessResuspend, this, params))
+      .fail($.proxy(this._onError, this));
+  },
+
+  _onSuccessResuspend: function (params, res) {
+    skt_landing.action.loading.off({ ta: 'body' });
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
+      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
+        .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
+      this._popupService.afterRequestSuccess('/myt/join/submain', '/myt/join/submain', null, Tw.MYT_JOIN_SUSPEND.CANCEL_RESUSPEND, desc);
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  // Reset
   _onClickReset: function () {
     this._popupService.open({
       hbs: 'MS_03_05_05',
@@ -92,7 +131,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessRequestReset: function (res) {
     skt_landing.action.loading.off({ ta: 'body' });
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('', '/myt/join/submain', null, '해제', null);
+      this._popupService.afterRequestSuccess('', '/myt/join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET, null);
     } else if ( res.code === 'MOD0022' ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {
@@ -103,7 +142,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _getSvcInfo: function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._successSvcInfo, this))
-      .fail($.proxy(this._failSvcInfo, this));
+      .fail($.proxy(this._onError, this));
   },
   _successSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -111,10 +150,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
       this._svcInfo.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(this._svcInfo.svcNum)
       this._bindEvent();
     }
-  },
-
-  _failSvcInfo: function () {
-
   },
 
   _onError: function (res) {
