@@ -1,9 +1,9 @@
 <%#
-* FileName: product.benefit-usage-history.html
+* FileName: product.lookup.tplan.html
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2018.09.17
 %>
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
   <div class="popup-page nobg tw-popup no-btn">
-    <%- include('../../../common/views/components/header.component.html', { title: '혜택 이용내역', svcInfo, option: { line: false } }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '혜택 이용내역', svcInfo, option: { line: false } }); %>
     <!-- .container-wrap -->
     <div class="container-wrap">
       <h2 class="blind">내용</h2>
@@ -32,7 +32,7 @@
             <strong class="tit"><%= beforeTDiyGrNm %></strong>
             <p class="subtxt"><%- beforeTDiyGrDesc %></p>
           </div>
-          <a href="/product/setting/NA00005959" title="인피니티 혜택 변경" aria-haspopup="true">혜택 변경</a>
+          <a href="/product/setting/tplan/NA00005959" title="인피니티 혜택 변경" aria-haspopup="true">혜택 변경</a>
         </div>
 
         <div class="ti-caption-gray">
@@ -112,16 +112,16 @@
     <!--// .popup-closeBtn -->
     <!-- #footer -->
     <footer id="fe-all-menu">
-      <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+      <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </footer>
     <!--// #footer -->
   </div>
 </div>
 </body>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductInfinityBenefitUsageHistory($('.wrap'));
+    new Tw.ProductLookupTplan($('.wrap'));
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>

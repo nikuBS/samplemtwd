@@ -1,22 +1,22 @@
 /**
- * FileName: product.benefit-usage-history.controller.ts
+ * FileName: product.lookup.tplan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.01
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import FormatHelper from '../../../utils/format.helper';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { PRODUCT_INFINITY_BENEFIT, PRODUCT_INFINITY_BENEFIT_NM, PRODUCT_INFINITY_BENEFIT_PROD_NM } from '../../../types/string.type';
-import DateHelper from '../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { PRODUCT_INFINITY_BENEFIT, PRODUCT_INFINITY_BENEFIT_NM, PRODUCT_INFINITY_BENEFIT_PROD_NM } from '../../../../types/string.type';
+import DateHelper from '../../../../utils/date.helper';
 
-class ProductInfinityBenefitUsageHistory extends TwViewController {
+class ProductLookupTplan extends TwViewController {
   constructor() {
     super();
   }
 
-  private _prodIdList = {
+  private readonly _prodIdList = {
     NA00006114: 'infiTravelList',
     NA00006115: 'infiMovieList',
     NA00006116: 'infiWatchList',
@@ -94,26 +94,31 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const tDiyGrCd = req.query.prod_id || '';
+    const tDiyGrCd = req.params.prodId || null,
+      renderCommonInfo = {
+        pageInfo: pageInfo,
+        svcInfo: svcInfo,
+        title: '혜택 이용내역'
+      };
 
     this.apiService.request(API_CMD.BFF_10_0015, { tDiyGrCd: tDiyGrCd }, {}, 'NA00005959')
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
-          return this.error.render(res, {
-            title: '혜택 이용내역',
+          return this.error.render(res, Object.assign(renderCommonInfo, {
             code: data.code,
-            msg: data.msg,
-            svcInfo: svcInfo
-          });
+            msg: data.msg
+          }));
+        }
+
+        if (FormatHelper.isEmpty(PRODUCT_INFINITY_BENEFIT_NM[data.result.beforeTDiyGrCd])) {
+          return this.error.render(res, renderCommonInfo);
         }
 
         const printProdId = FormatHelper.isEmpty(tDiyGrCd) ? data.result.beforeTDiyGrCd : tDiyGrCd;
         const currentGrToken = PRODUCT_INFINITY_BENEFIT_NM[data.result.beforeTDiyGrCd].split('_');
         const grToken = PRODUCT_INFINITY_BENEFIT_NM[printProdId].split('_');
 
-        res.render('product.infinity-benefit-usage-history.html', {
-          svcInfo: svcInfo,
-          pageInfo: pageInfo,
+        res.render('lookup/product.lookup.tplan.html', Object.assign(renderCommonInfo, {
           beforeTDiyGrNm: currentGrToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
           beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[data.result.beforeTDiyGrCd],
@@ -121,9 +126,9 @@ class ProductInfinityBenefitUsageHistory extends TwViewController {
           benefitList: this._parseBenefitList(data.result, printProdId),
           listCase: this._listCase,
           listTotal: this._listTotal
-        });
+        }));
       });
   }
 }
 
-export default ProductInfinityBenefitUsageHistory;
+export default ProductLookupTplan;

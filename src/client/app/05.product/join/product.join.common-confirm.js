@@ -28,6 +28,7 @@ Tw.ProductJoinCommonConfirm.prototype = {
     this.$btnCancelJoin = this.$container.find('.fe-btn_cancel_join');
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnCloseConfirm = this.$container.find('.fe-btn_close_confirm');
+    this.$btnComparePlans = this.$container.find('.fe-btn_compare_plans');
 
     this.$agreeWrap = this.$container.find('.fe-agree_wrap');
     this.$checkboxAgreeAll = this.$container.find('.fe-checkbox_agree_all');
@@ -41,10 +42,11 @@ Tw.ProductJoinCommonConfirm.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnApply.on('click', $.proxy(this._doCallback, this));
+    this.$btnApply.on('click', $.proxy(this._openConfirmAlert, this));
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
-    this.$btnCloseConfirm.on('click', $.proxy(this._closeConfirmPop, this));
+    this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));
+    this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
 
     this.$checkboxAgreeAll.on('change', $.proxy(this._agreeAllToggle, this));
     this.$checkboxAgreeItem.on('change', $.proxy(this._agreeItemToggle, this));
@@ -60,6 +62,8 @@ Tw.ProductJoinCommonConfirm.prototype = {
     if (this.$overPayTmpl.length > 0) {
       this._template = Handlebars.compile(this.$overPayTmpl.html());
     }
+
+    this._joinConfirmAlert = this._data.joinConfirmAlert || Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
   },
 
   _openPop: function() {
@@ -136,15 +140,40 @@ Tw.ProductJoinCommonConfirm.prototype = {
   },
 
   _bindAgreePop: function($popupContainer) {
-    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closeAgreePop, this));
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closePop, this));
   },
 
-  _closeAgreePop: function() {
+  _openComparePlans: function() {
+    this._popupService.open({
+      hbs: 'MP_02_02_01',
+      data: {}
+    }, null, null, 'compare_plans');
+  },
+
+  _closePop: function() {
     this._popupService.close();
   },
 
-  _closeConfirmPop: function() {
+  _openConfirmAlert: function() {
+    this._popupService.openModalTypeA(this._joinConfirmAlert.TITLE, this._joinConfirmAlert.MSG,
+      this._joinConfirmAlert.BUTTON, $.proxy(this._bindConfirmAlert, this), null, $.proxy(this._onCloseConfirmAlert, this));
+  },
+
+  _bindConfirmAlert: function($popupContainer) {
+    $popupContainer.find('.tw-popup-confirm>button').on('click', $.proxy(this._setConfirmAlertApply, this));
+  },
+
+  _setConfirmAlertApply: function() {
+    this._isDoCallback = true;
     this._popupService.close();
+  },
+
+  _onCloseConfirmAlert: function() {
+    if (!this._isDoCallback) {
+      return;
+    }
+
+    this._doCallback();
   },
 
   _toggleApplyBtn: function(toggle) {

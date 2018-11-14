@@ -4,7 +4,6 @@ import ProductJoin from './controllers/join/product.join.controller';
 import ProductJoinReservation from './controllers/join/product.join.reservation.controller';
 import ProductSetting from './controllers/setting/product.setting.controller';
 import ProductTerminate from './controllers/product.terminate.controller';
-import ProductInfinityBenefitUsageHistory from './controllers/product.infinity-benefit-usage-history.controller';
 import Product from './controllers/product.controller';
 import ProductAddition from './controllers/addition/product.addition.controller';
 import ProductPlans from './controllers/plan/product.plans.controller';
@@ -22,6 +21,8 @@ import ProductSettingCombineLine from './controllers/setting/product.setting.com
 import ProductSettingOption from './controllers/setting/product.setting.option.controller';
 import ProductJoinTplan from './controllers/join/product.join.tplan.controller';
 import ProductSettingTplan from './controllers/setting/product.setting.tplan.controller';
+import ProductLookupTplan from './controllers/lookup/product.lookup.tplan.controller';
+import ProductJoinShareLine from './controllers/join/product.join.share-line.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -34,6 +35,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/join/require-document/history', controller: ProductJoinRequireDocumentHistory });
     this.controllers.push({ url: '/join/tplan/:prodId', controller: ProductJoinTplan });
     this.controllers.push({ url: '/join/combine-line/:prodId', controller: ProductJoinCombineLine });
+    this.controllers.push({ url: '/join/share-line/:prodId', controller: ProductJoinShareLine });
     this.controllers.push({ url: '/join/dis-program(/:prodId)', controller: ProductJoinDisPgm });
     this.controllers.push({ url: '/join/dis-program/detail(/:prodId)', controller: ProductJoinDisPgmDetail });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
@@ -41,8 +43,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/setting/option/:prodId', controller: ProductSettingOption });
     this.controllers.push({ url: '/setting/tplan/:prodId', controller: ProductSettingTplan });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
+    this.controllers.push({ url: '/lookup/tplan(/:prodId)?', controller: ProductLookupTplan });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
-    this.controllers.push({ url: '/infinity-benefit-usage-history', controller: ProductInfinityBenefitUsageHistory });
     this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
 
     // new IA
