@@ -1,11 +1,4 @@
 /*
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.
- *
- */
-
-/*
  * FileName: product.dis-pgm.join.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.22
@@ -17,11 +10,10 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../05.product/helper/product.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class ProductJoinDisPgm extends TwViewController {
-
+class BenefitDisProgram extends TwViewController {
   constructor() {
     super();
   }
@@ -69,7 +61,7 @@ class ProductJoinDisPgm extends TwViewController {
             title: '가입'
           });
         }
-        res.render('product.sel-contract.input.html', { data });
+        res.render('program/benefit.dis-pgm.sel-contract.html', { data });
       });
     } else {
       // NA00002079, NA00002082, NA00002080, NA00002081
@@ -107,4 +99,5 @@ class ProductJoinDisPgm extends TwViewController {
   }
 }
 
-export default ProductJoinDisPgm;
+export default BenefitDisProgram;
+

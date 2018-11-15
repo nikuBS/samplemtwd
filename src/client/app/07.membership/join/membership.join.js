@@ -108,8 +108,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickZipCodeBtn: function () {
-    // TODO: 우편번호 검색 공통 영역으로 완료 되면 적용
-    this._popupService.openAlert('TBD');
+    new Tw.CommonPostcodeMain(this.$container);
   },
 
   _onClickTAgreeCheckbox: function (event) {
