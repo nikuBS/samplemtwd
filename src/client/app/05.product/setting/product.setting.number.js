@@ -1,10 +1,10 @@
 /**
- * FileName: product.setting.combine-line.js
+ * FileName: product.setting.number.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * Date: 2018.11.15
  */
 
-Tw.ProductSettingCombineLine = function(rootEl, prodId, displayId, svcProdGrpId) {
+Tw.ProductSettingNumber = function(rootEl, prodId, displayId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -12,14 +12,13 @@ Tw.ProductSettingCombineLine = function(rootEl, prodId, displayId, svcProdGrpId)
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._svcProdGrpId = svcProdGrpId;
 
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
 };
 
-Tw.ProductSettingCombineLine.prototype = {
+Tw.ProductSettingNumber.prototype = {
 
   _cachedElement: function() {
     this.$lineList = this.$container.find('.fe-line_list');
@@ -63,11 +62,10 @@ Tw.ProductSettingCombineLine.prototype = {
     }
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(Tw.API_CMD.BFF_10_0020, {
-      svcProdGrpId: this._svcProdGrpId,
-      svcNumList: [this._getServiceNumberFormat(number)]
-    }, {}, this._prodId)
-      .done($.proxy(this._addDelNumRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0074, {
+      opClCd: '1',
+      asgnNum: number
+    }, {}).done($.proxy(this._addDelNumRes, this));
   },
 
   _addDelNumRes: function(resp) {
@@ -81,20 +79,20 @@ Tw.ProductSettingCombineLine.prototype = {
   },
 
   _delNum: function(e) {
-    if (this.$lineList.find('li').length < 2) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.TITLE);
-    }
-
+    var $elem = $(e.currentTarget).parents('li');
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
+      $.proxy(this._delNumReq, this, $elem.data('number'), $elem.data('audit_dtm')));
   },
 
-  _delNumReq: function(grpId) {
+  _delNumReq: function(number, auditDtm) {
     this._popupService.close();
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(Tw.API_CMD.BFF_10_0019, {
-      chldSvcMgmtNum: grpId
+    this._apiService.request(Tw.API_CMD.BFF_10_0074, {
+      opClCd: '2',
+      asgnNum: number,
+      auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
   },
 
@@ -113,7 +111,7 @@ Tw.ProductSettingCombineLine.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 0 && this.$lineList.find('li').length < 6) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

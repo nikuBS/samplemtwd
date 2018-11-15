@@ -1,0 +1,85 @@
+/**
+ * 모바일 요금제 > TTL절친10
+ * FileName: product.setting.number-friend.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.15
+ */
+
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { Request, Response, NextFunction } from 'express';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import BrowserHelper from '../../../../utils/browser.helper';
+import FormatHelper from '../../../../utils/format.helper';
+
+class ProductSettingNumberFriend extends TwViewController {
+  constructor() {
+    super();
+  }
+
+  private readonly _allowedProdIdList = ['NA00002586'];
+
+  /**
+   * @param numberInfo
+   * @private
+   */
+  private _convNumberInfo(numberInfo: any): any {
+    return Object.assign(numberInfo, this._convertNumCoupleList(numberInfo.numCoupleList));
+  }
+
+  /**
+   * @param numCoupleList
+   * @private
+   */
+  private _convertNumCoupleList(numCoupleList): any {
+    let frBestAsgnNum: any = null;
+
+    numCoupleList.map((item) => {
+      if (item.cuplYn === '1') {
+        frBestAsgnNum = item.svcNum;
+      }
+
+      return Object.assign(item, {
+        custNmMaskFirstName: FormatHelper.isEmpty(item.custNmMask) ? '-' : item.custNmMask.substr(0, 1),
+        custNmMask: FormatHelper.isEmpty(item.custNmMask) ? '-' : item.custNmMask,
+        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNumMask),
+        isFriendClass: item.cuplYn === '1' ? 'on' : ''
+      });
+    });
+
+    return {
+      numCoupleList: numCoupleList,
+      frBestAsgnNum: frBestAsgnNum
+    };
+  }
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const prodId = req.params.prodId || null,
+      renderCommonInfo = {
+        pageInfo: pageInfo,
+        svcInfo: svcInfo,
+        title: '설정'
+      };
+
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
+      return this.error.render(res, renderCommonInfo);
+    }
+
+    this.apiService.request(API_CMD.BFF_10_0070, {}, {})
+      .subscribe((numberInfo) => {
+        if (numberInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: numberInfo.code,
+            msg: numberInfo.msg
+          }));
+        }
+
+        res.render('setting/product.setting.number-friend.html', Object.assign(renderCommonInfo, {
+          prodId: prodId,
+          numberInfo: this._convNumberInfo(numberInfo.result),
+          isApp: BrowserHelper.isApp(req)
+        }));
+      });
+  }
+}
+
+export default ProductSettingNumberFriend;

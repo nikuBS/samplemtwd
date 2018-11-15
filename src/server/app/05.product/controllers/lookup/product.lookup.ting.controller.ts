@@ -7,7 +7,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 class ProductLookupTing extends TwViewController {
   constructor() {
@@ -28,19 +27,7 @@ class ProductLookupTing extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0040, {}, {}, prodId)
-      .subscribe((tingInfo) => {
-        if (tingInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: tingInfo.code,
-            msg: tingInfo.msg
-          }));
-        }
-
-        res.render('lookup/product.lookup.ting.html', Object.assign(renderCommonInfo, {
-          tingInfo: tingInfo.result
-        }));
-      });
+    res.render('lookup/product.lookup.ting.html', renderCommonInfo);
   }
 }
 

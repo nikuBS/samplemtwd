@@ -1,10 +1,10 @@
 /**
- * FileName: product.setting.combine-line.js
+ * FileName: product.setting.number-friend.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * Date: 2018.11.15
  */
 
-Tw.ProductSettingCombineLine = function(rootEl, prodId, displayId, svcProdGrpId) {
+Tw.ProductSettingNumberFriend = function(rootEl, prodId, displayId, frBestAsgnNum) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -12,14 +12,14 @@ Tw.ProductSettingCombineLine = function(rootEl, prodId, displayId, svcProdGrpId)
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._svcProdGrpId = svcProdGrpId;
+  this._frBestAsgnNum = frBestAsgnNum;
 
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
 };
 
-Tw.ProductSettingCombineLine.prototype = {
+Tw.ProductSettingNumberFriend.prototype = {
 
   _cachedElement: function() {
     this.$lineList = this.$container.find('.fe-line_list');
@@ -30,13 +30,16 @@ Tw.ProductSettingCombineLine.prototype = {
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
+    this.$btnToggleFriend = this.$container.find('.fe-btn_toggle_friend');
   },
 
   _bindEvent: function() {
     this.$btnAddNum.on('click', $.proxy(this._addNum, this));
-    this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
+    this.$btnToggleFriend.on('click', $.proxy(this._toggleFriend, this));
+    this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
+
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
@@ -63,11 +66,10 @@ Tw.ProductSettingCombineLine.prototype = {
     }
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(Tw.API_CMD.BFF_10_0020, {
-      svcProdGrpId: this._svcProdGrpId,
-      svcNumList: [this._getServiceNumberFormat(number)]
-    }, {}, this._prodId)
-      .done($.proxy(this._addDelNumRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0074, {
+      opClCd: '1',
+      asgnNum: number
+    }, {}).done($.proxy(this._addDelNumRes, this));
   },
 
   _addDelNumRes: function(resp) {
@@ -81,20 +83,25 @@ Tw.ProductSettingCombineLine.prototype = {
   },
 
   _delNum: function(e) {
-    if (this.$lineList.find('li').length < 2) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.TITLE);
+    var $elem = $(e.currentTarget).parents('li');
+
+    if ($elem.data('number') === this._frBestAsgnNum) { // @todo 절친 해지 안되도록 alert
+      return;
     }
 
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
+      $.proxy(this._delNumReq, this, $elem.data('number'), $elem.data('audit_dtm')));
   },
 
-  _delNumReq: function(grpId) {
+  _delNumReq: function(number, auditDtm) {
     this._popupService.close();
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(Tw.API_CMD.BFF_10_0019, {
-      chldSvcMgmtNum: grpId
+    this._apiService.request(Tw.API_CMD.BFF_10_0071, {
+      opClCd: '2',
+      asgnNum: number,
+      auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
   },
 
@@ -112,8 +119,37 @@ Tw.ProductSettingCombineLine.prototype = {
     this._toggleNumAddBtn();
   },
 
+  _toggleFriend: function(e) {
+    if ($(e.currentTarget).hasClass('on')) {  // @todo 절친 해제 기능은 없음 alert
+      return;
+    }
+
+    var $elem = $(e.currentTarget).parents('li'),
+      number = $elem.data('number');
+
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0071, {
+      opClCd: '7',
+      asgnNum: number,
+      frBestAsgnNum: this._frBestAsgnNum
+    }).done($.proxy(this._toggleFriendRes, this, number));
+  },
+
+  _toggleFriendRes: function(number, resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._frBestAsgnNum = number;
+    this.$lineList.find('.fe-btn_toggle_friend.on').removeClass('on');
+    this.$lineList.find('li[data-number="' + number + '"] .fe-btn_toggle_friend').addClass('on');
+  },
+
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 0 && this.$lineList.find('li').length < 4) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
