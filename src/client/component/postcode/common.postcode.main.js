@@ -33,18 +33,13 @@ Tw.CommonPostcodeMain.prototype = {
   },
   _goDetail: function () {
     if (this.$isNext) {
-      new Tw.CommonPostcodeDetail(this.$container, {
-        tabId: this._selectedTabId,
-        id: this._addressId,
-        text: this._addressText
-      }, this.$callback);
+      new Tw.CommonPostcodeDetail(this.$container, this.$addressObject, this.$callback);
     }
   },
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;
     this._page = 0;
-    this._addressId = null;
-    this._addressText = null;
+    this.$addressObject = {};
     this.$isNext = false;
     this.$selectedTab = this.$layer.find('#' + $targetId + '-tab');
     this.$searchField = this.$selectedTab.find('.fe-input');
@@ -153,7 +148,7 @@ Tw.CommonPostcodeMain.prototype = {
           $text += ' (' + $content[i].rdongNm + ')';
         }
       }
-      $cloneNode.attr('id', $content[i][$id]);
+      $cloneNode.attr({'id': $content[i][$id], 'data-origin': $content[i].jusoMain});
       $btn.text($text);
 
       $cloneNode.on('click', $.proxy(this._goNextPage, this));
@@ -177,8 +172,12 @@ Tw.CommonPostcodeMain.prototype = {
     var $target = $(event.currentTarget);
 
     this.$isNext = true;
-    this._addressId = $target.attr('id');
-    this._addressText = $target.text();
+    this.$addressObject = {
+      tabId: this._selectedTabId,
+      id: $target.attr('id'),
+      text: $target.text(),
+      originText: $target.attr('data-origin')
+    };
 
     this._popupService.close();
   }

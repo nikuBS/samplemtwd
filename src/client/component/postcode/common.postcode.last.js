@@ -55,20 +55,31 @@ Tw.CommonPostcodeLast.prototype = {
     this._selectedTabId = $targetId;
     this.$isNext = false;
     this.$selectedTab = this.$layer.find('#' + $targetId + '-tab');
+    this.$mainAddress = this.$selectedTab.find('.fe-main');
+    this.$number = this.$selectedTab.find('.fe-number');
+    this.$building = this.$selectedTab.find('.fe-building');
+    this.$zip = this.$selectedTab.find('.fe-zip');
+    this.$detailAddress = this.$selectedTab.find('.fe-address');
+    this._postType = this.$selectedTab.attr('data-type');
     this.$saveBtn = this.$selectedTab.find('.fe-save');
     this.$saveAddress = {};
   },
   _initData: function ($addressObject) {
-    this.$selectedTab.find('.fe-main').text($addressObject.main);
-    this.$selectedTab.find('.fe-number').text($addressObject.number);
-    this.$selectedTab.find('.fe-building').text($addressObject.building);
-    this.$selectedTab.find('.fe-zip').text($addressObject.zip);
+    this.$mainAddress.text($addressObject.main)
+      .attr({
+        'data-bld-cd': $addressObject.bldCd,
+        'data-ldong-cd': $addressObject.ldongCd,
+        'data-origin': $addressObject.originText
+      });
+    this.$number.text($addressObject.number);
+    this.$building.text($addressObject.building);
+    this.$zip.text($addressObject.zip);
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-address', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-prevent li', $.proxy(this._preventDefault, this));
-    this.$layer.on('click', '.fe-save', $.proxy(this._save, this));
+    this.$layer.on('click', '.fe-save', $.proxy(this._getStandardAddress, this));
   },
   _checkIsAbled: function (event) {
     var $address = $(event.currentTarget).val();
@@ -81,15 +92,62 @@ Tw.CommonPostcodeLast.prototype = {
   _preventDefault: function (event) {
     event.preventDefault();
   },
-  _save: function () {
+  _getStandardAddress: function () {
+    var $apiName = this._getStandardApiName();
+    var $reqData = this._getStandardReqData();
+
+    this._apiService.request($apiName, $reqData)
+      .done($.proxy(this._success, this))
+      .fail($.proxy(this._fail, this));
+  },
+  _getStandardApiName: function () {
+    var apiName = Tw.API_CMD.BFF_01_0012;
+    if (this._selectedTabId === 'tab2') {
+      apiName = Tw.API_CMD.BFF_01_0013;
+    }
+    return apiName;
+  },
+  _getStandardReqData: function () {
+    return {
+      postType: this._postType,
+      bldCd: this.$mainAddress.attr('data-bld-cd'),
+      baseAddress: encodeURI(this.$mainAddress.attr('data-origin')),
+      detailAddress: encodeURI($.trim(this.$detailAddress.val())),
+      ldongCd: this.$mainAddress.attr('data-ldong-cd')
+    };
+  },
+  _success: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._save(res.result);
+    } else {
+      this._fail(res);
+    }
+  },
+  _fail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
+  },
+  _save: function ($result) {
+    var code = this._getStandardCode();
+
     this.$isNext = true;
     this.$saveAddress = {
-      zip: $.trim(this.$selectedTab.find('.fe-zip').text()),
-      main: $.trim(this.$selectedTab.find('.fe-main').text()) + ' ' +
-        $.trim(this.$selectedTab.find('.fe-number').text()),
-      detail: $.trim(this.$selectedTab.find('.fe-building').text()) + ' ' +
-        $.trim(this.$selectedTab.find('.fe-address').val())
+      zip: $result.zip,
+      main: $result[code.main],
+      detail: $result[code.sub],
+      addrId: $result.addrId
     };
+
     this._popupService.close();
+  },
+  _getStandardCode: function () {
+    var code = {
+      main: 'jusoMain',
+      sub: 'jusoSub'
+    };
+    if (this._selectedTabId === 'tab2') {
+      code.main = 'bunjiAddrFix';
+      code.sub = 'bunjiAddrDtl';
+    }
+    return code;
   }
 };
