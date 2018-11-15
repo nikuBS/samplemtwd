@@ -7,9 +7,9 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
-import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class MyTDataPrepaid extends TwViewController {
   constructor() {
@@ -25,43 +25,62 @@ class MyTDataPrepaid extends TwViewController {
 
     switch ( page ) {
       case 'voice':
-        res.render('prepaid/myt-data.prepaid.voice.html', responseData);
+        this.getPPSInfo().subscribe((result) => {
+          res.render(
+            'prepaid/myt-data.prepaid.voice.html',
+            Object.assign(responseData,
+              {
+                PPSInfo: result,
+                convertDate: this.convertDate,
+                convertAmount: this.convertAmount
+              }
+            )
+          );
+        });
         break;
       case 'data':
         res.render('prepaid/myt-data.prepaid.data.html', responseData);
         break;
       default:
-        // Observable.combineLatest(
-        //   this.getLimitUserInfo()
-        // ).subscribe(([limitUserInfo]) => {
-        //   const response = Object.assign(
-        //     { limitUserInfo: limitUserInfo },
-        //     responseData
-        //   );
-        //
-        //   if ( limitUserInfo ) {
-        //     res.render('limit/myt-data.limit.html', response);
-        //   } else {
-        //     res.render('limit/myt-data.limit.error.html', response);
-        //   }
-        // });
+      // Observable.combineLatest(
+      //   this.getLimitUserInfo()
+      // ).subscribe(([limitUserInfo]) => {
+      //   const response = Object.assign(
+      //     { limitUserInfo: limitUserInfo },
+      //     responseData
+      //   );
+      //
+      //   if ( limitUserInfo ) {
+      //     res.render('limit/myt-data.limit.html', response);
+      //   } else {
+      //     res.render('limit/myt-data.limit.error.html', response);
+      //   }
+      // });
     }
   }
 
-  getLimitUserInfo = () => this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp) => {
-    if ( resp.code === API_CODE.CODE_00 ) {
-      const response = Object.assign(
-        {},
-        resp.result,
-        {
-          regularTopUpAmt: resp.result.regularTopUpAmt ? FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) : ''
-        });
+  public getPPSInfo = () => this.apiService
+    .request(API_CMD.BFF_05_0013, {})
+    .map((res) => {
+      // if ( res.code === API_CODE.CODE_00 ) {
+      //   return res.result;
+      // } else {
+      //   return null;
+      // }
+      return {
+        'prodAmt': '50000',
+        'remained': '100',
+        'obEndDt': '20190820',
+        'inbEndDt': '20190830',
+        'numEndDt': '20210421',
+        'dataYn': 'Y',
+        'dataOnlyYn': 'N'
+      };
+    })
 
-      return response;
-    } else {
-      return null;
-    }
-  })
+  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+
+  public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }
 
 export default MyTDataPrepaid;
