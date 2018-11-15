@@ -5,9 +5,10 @@
  * Page ID: MP_02_02_03_09(hbs)
  * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역 변경 > 할인지역 검색
  */
-Tw.ProductSettingLocationSearch = function(rootEl, keyword) {
+Tw.ProductSettingLocationSearch = function(rootEl, keyword, applyCallback) {
   this.$container = rootEl;
   this.$selectList = $('.select-list', this.$container);
+  this._applyCallback = applyCallback;
 
   // 지역 item 템플릿
   this._tmpltLocItem = Handlebars.compile($('#loc-search-list-tmplt-item').html());
@@ -23,8 +24,6 @@ Tw.ProductSettingLocationSearch.prototype = {
    * @private
    */
   init: function(keyword) {
-
-    this.changed = false;
     if( keyword ){
       $('input[type=text]', this.$container).val(keyword);
       this._search();
@@ -52,7 +51,7 @@ Tw.ProductSettingLocationSearch.prototype = {
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0044, { areaNm : keyword })
+    Tw.Api.request(Tw.API_CMD.BFF_10_0044, { areaNm : keyword })
       .done($.proxy(function (resp) {
 
         skt_landing.action.loading.off({ ta: this.$container });
@@ -110,38 +109,13 @@ Tw.ProductSettingLocationSearch.prototype = {
   },
 
   /**
-   * 지역 추가 api 호출
+   * 지역 추가 버튼 클릭시
    * @private
    */
   _addLocation: function(){
+    Tw.Popup.close();
     var selectedNum = this.$selectList.find('input[type=radio]:checked').val();
-
-    var params = {
-      chgCd: '1',               // 변경코드 1:등록, 2:변경, 3:삭제
-      frDcAreaNum: selectedNum, // 현재 할인지역코드
-      toDcAreaNum: null,        // 변경할 할인지역코드
-      toDcAreaNm: null,         // 변경할 할인지역명
-      auditDtm: null            // 최종변경일시 (조회때 받은값)
-    };
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0045, params )
-      .done($.proxy(function (resp) {
-
-        skt_landing.action.loading.off({ ta: this.$container });
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          Tw.Error(resp.code, resp.msg).pop();
-          return ;
-        }
-        this.changed = true;
-        Tw.Popup.close();
-
-      }, this))
-      .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
-        Tw.Error(err.status, err.statusText).pop();
-      });
-
+    this._applyCallback(selectedNum);
   }
 
 };

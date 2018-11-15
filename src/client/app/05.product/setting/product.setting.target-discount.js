@@ -13,10 +13,12 @@ Tw.ProductSettingTargetDiscount = function(rootEl, options) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
+  console.log(options);
   this._init();
   this._bindEvent();
   this._registHelder();
   this._appendLocationLi(this._options.zoneSetInfoList);
+  this._appendNumberLi(this._options.snumSetInfoList);
 };
 
 Tw.ProductSettingTargetDiscount.prototype = {
@@ -27,13 +29,13 @@ Tw.ProductSettingTargetDiscount.prototype = {
    */
   _bindEvent: function() {
     // 지역할인 tab
-    $('.discount-location').on('click', '.bt-line-gray1', this._removeLocationLi);
+    $('.discount-location').on('click', '.bt-line-gray1', $.proxy(this._removeLocation, this));
     $('#btnSearchPop').click($.proxy(this._openLocSearchPopup, this));
 
     // 지정번호 tab
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
-    $('.comp-box').on('click', '.bt-line-gray1', this._removeNumber);
+    $('.comp-box').on('click', '.bt-line-gray1', $.proxy(this._removeNumber, this));
 
   },
 
@@ -42,6 +44,7 @@ Tw.ProductSettingTargetDiscount.prototype = {
    * @private
    */
   _registHelder: function(){
+    Handlebars.registerHelper('hp', Tw.FormatHelper.conTelFormatWithDash);
     Handlebars.registerHelper('shortNm', function(val){
       val = val || ' ';
       return val.substr(0, 1);
@@ -77,19 +80,6 @@ Tw.ProductSettingTargetDiscount.prototype = {
 
 
   /**
-   * 장소 li 삭제
-   * @param list
-   * @private
-   */
-  _removeLocationLi: function(event){
-    // alert 3_A6
-    var dcAreaNum = $(event.target).closest('li').data('dcareanum');
-
-    $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
-  },
-
-
-  /**
    * 지역찾기 팝업
    */
   _openLocSearchPopup: function(){
@@ -97,62 +87,113 @@ Tw.ProductSettingTargetDiscount.prototype = {
     this._popupService.open(
       { hbs: 'MP_02_02_03_09' },
       $.proxy(function ($root) {
-        if(!this._locSearchService){
-          this._locSearchService = new Tw.ProductSettingLocationSearch($root, keyword);
-        } else {
-          this._locSearchService.init(keyword);
-        }
+        new Tw.ProductSettingLocationSearch(
+          $root,
+          keyword,
+          $.proxy(this._addLocation, this));
       }, this),
-      $.proxy(this._locSearchPopupClosed, this),
-      'options'
+      $.proxy(function (){
+        // close func..
+      }, this),
+      'searchlocation'
     );
   },
 
   /**
-   * 지역 검색 팝업 close handler
+   * 할인지역 추가
    * @private
    */
-  _locSearchPopupClosed: function(){
-
-    if( this._locSearchService.changed ) {
-
-      $('.discount-location').html('');
-
-      skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
-
-      this._apiService.request(Tw.API_CMD.BFF_10_0043, {})
-        .done($.proxy(function (resp) {
-
-          skt_landing.action.loading.off({ ta: this.$container });
-          if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-            Tw.Error(resp.code, resp.msg).pop();
-            return ;
-          }
-
-          this._appendLocationLi(resp.result.zoneSetInfoList);
-
-        }, this))
-        .fail(function(err){
-          skt_landing.action.loading.off({ ta: this.$container });
-          Tw.Error(err.status, err.statusText).pop();
-        });
-    }
+  _addLocation: function(dcAreaNum) {
+    this._settingTargetLocation('1', dcAreaNum, $.proxy(this._reloadLocList, this));
   },
 
+  /**
+   * 할인지역 삭제
+   * @private
+   */
+  _removeLocation: function(event){
+    var dcAreaNum = $(event.target).closest('li').data('dcareanum');
+
+    // alert 3_A6
+    this._settingTargetLocation('3', dcAreaNum, function(){
+      $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
+    });
+  },
+
+  /**
+   * 지역 추가/삭제 api 호출
+   * @private
+   */
+  _settingTargetLocation: function(chgCd, frDcAreaNum, callback){
+    var params = {
+      chgCd: chgCd,             // 변경코드 1:등록, 2:변경, 3:삭제
+      frDcAreaNum: frDcAreaNum, // 현재 할인지역코드
+      toDcAreaNum: null,        // 변경할 할인지역코드
+      toDcAreaNm: null,         // 변경할 할인지역명
+      auditDtm: null            // 최종변경일시 (조회때 받은값)
+    };
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0045, params )
+      .done($.proxy(function (resp) {
+
+        skt_landing.action.loading.off({ ta: this.$container });
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
+          Tw.Error(resp.code, resp.msg).pop();
+          return ;
+        }
+        callback();
+
+      }, this))
+      .fail(function(err){
+        skt_landing.action.loading.off({ ta: this.$container });
+        Tw.Error(err.status, err.statusText).pop();
+      });
+
+  },
+
+
+  /**
+   * reload 할인지역 목록
+   * @private
+   */
+  _reloadLocList: function(){
+
+    $('.discount-location').html('');
+
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0043, {})
+      .done($.proxy(function (resp) {
+
+        skt_landing.action.loading.off({ ta: this.$container });
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
+          Tw.Error(resp.code, resp.msg).pop();
+          return ;
+        }
+
+        this._appendLocationLi(resp.result.zoneSetInfoList);
+
+      }, this))
+      .fail(function(err){
+        skt_landing.action.loading.off({ ta: this.$container });
+        Tw.Error(err.status, err.statusText).pop();
+      });
+  },
 
   /**
    * 지정번호 li 추가
    * @param list
    * @private
    */
-  _appendNumLi: function(list){
+  _appendNumberLi: function(list){
 
     if(!list || list.length === 0){
       return;
     }
     var html = '';
     for(var i = 0; i < list.length; i++){
-      html += this._tmpltLocItem(list[i]);
+      html += this._tmpltNumItem(list[i]);
     }
     $('.comp-box').append(html);
   },
@@ -163,7 +204,7 @@ Tw.ProductSettingTargetDiscount.prototype = {
    */
   _addNumber: function(){
     var num = $('#num-input').val();
-    this._settingTargetNumber('1', num, $.proxy(this._reloadNumList,this));
+    this._settingTargetNumber('1', num, $.proxy(this._reloadNumList, this));
   },
 
   /**
@@ -172,14 +213,14 @@ Tw.ProductSettingTargetDiscount.prototype = {
    */
   _removeNumber: function(event){
     var svcNum = $(event.target).closest('li').data('svcnum');
-    this._settingTargetNumber('1', svcNum, function(){
+    this._settingTargetNumber('2', svcNum, function(){
       $('.comp-box li').filter('[data-svcnum='+svcNum+']').remove();
     });
   },
 
 
   /**
-   * 추가하기 버튼 클릭시
+   * 지정번호 추가/삭제 api 호출
    * @private
    */
   _settingTargetNumber: function(opClCd, asgnNum, callback){
@@ -245,7 +286,7 @@ Tw.ProductSettingTargetDiscount.prototype = {
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0073, params )
+    this._apiService.request(Tw.API_CMD.BFF_10_0073, {} )
       .done($.proxy(function (resp) {
 
         skt_landing.action.loading.off({ ta: this.$container });
@@ -255,7 +296,7 @@ Tw.ProductSettingTargetDiscount.prototype = {
         }
 
         $('.comp-box').html('');
-        this._appendNumLi(resp.result);
+        this._appendNumberLi(resp.result);
 
       }, this))
       .fail(function(err){

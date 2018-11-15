@@ -8,7 +8,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { MYT_JOIN_WIRE } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
 
 class ProductSettingTargetDiscount extends TwViewController {
   constructor() {
@@ -17,9 +17,10 @@ class ProductSettingTargetDiscount extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
-
-    // this.apiService.request(API_CMD.BFF_10_0072, {})
-    //   .subscribe((resp) => {
+    // Observable.combineLatest(
+    //   this.apiService.request(API_CMD.BFF_10_0072, {}),
+    //   this.apiService.request(API_CMD.BFF_10_0073, {}))
+    //   .subscribe(([resp, resp2]) => {
         const resp = {
           'code': '00',
           'msg': 'success',
@@ -48,7 +49,30 @@ class ProductSettingTargetDiscount extends TwViewController {
           }
         };
 
-        if ( resp.code === API_CODE.CODE_00 ) {
+        const resp2 = {
+          'code': '00',
+          'msg': 'success',
+          'result': {
+            'snumSetInfoList': [
+              {
+                'svcNum': '010xxxxxxxx',
+                'svcNumMask': '010xx**xx**',
+                'custNmMask': '',
+                'auditDtm': '20051016193024'
+              },
+              {
+                'svcNum': '010xxxxxxxx',
+                'svcNumMask': '010xx**xx**',
+                'custNmMask': 'x*x',
+                'auditDtm': '20060920151950'
+              }
+            ]
+          }
+        };
+
+
+    if ( resp.code === API_CODE.CODE_00 ) {
+          resp['result']['snumSetInfoList'] = resp2['result']['snumSetInfoList'];
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
           res.render('setting/product.setting.target-discount.html', option);
@@ -61,15 +85,15 @@ class ProductSettingTargetDiscount extends TwViewController {
             svcInfo: svcInfo
           });
         }
+    //   }, (err) => {
+    //     return this.error.render(res, {
+    //       title: '할인지역,지정번호 설정',
+    //       code: err.code,
+    //       msg: err.msg,
+    //       svcInfo: svcInfo
+    //     });
+    //   });
 
-      // }, (resp) => {
-      //   return this.error.render(res, {
-      //     title: '할인지역,지정번호 설정',
-      //     code: resp.code,
-      //     msg: resp.msg,
-      //     svcInfo: svcInfo
-      //   });
-      // });
   }
 }
 
