@@ -1,8 +1,8 @@
 /**
- * 모바일 요금제 > Data 인피니티 설정
- * FileName: product.setting.tplan.controller.ts
+ * 모바일 요금제 > 0플랜 라지 설정
+ * FileName: product.setting.0plan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,12 +10,12 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-class ProductSettingTplan extends TwViewController {
+class ProductSetting0plan extends TwViewController {
   constructor() {
     super();
   }
 
-  private readonly _allowedProdIdList = ['NA00005959'];
+  private readonly _allowedProdIdList = ['NA00006157'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
@@ -29,21 +29,21 @@ class ProductSettingTplan extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0013, {}, {}, prodId)
-      .subscribe((benefitInfo) => {
-        if (benefitInfo.code !== API_CODE.CODE_00) {
+    this.apiService.request(API_CMD.BFF_10_0034, {}, {}, prodId)
+      .subscribe((ZeroPlanInfo) => {
+        if (ZeroPlanInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: benefitInfo.code,
-            msg: benefitInfo.msg
+            code: ZeroPlanInfo.code,
+            msg: ZeroPlanInfo.msg
           }));
         }
 
-        res.render('setting/product.setting.tplan.html', Object.assign(renderCommonInfo, {
+        res.render('setting/product.setting.0plan.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          benefitInfo: benefitInfo.result
+          ZeroPlanInfo: ZeroPlanInfo.result
         }));
       });
   }
 }
 
-export default ProductSettingTplan;
+export default ProductSetting0plan;

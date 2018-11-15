@@ -136,7 +136,8 @@ Tw.ProductJoinShareLine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       prodId: this._prodId,
       prodProcTypeCd: 'JN',
-      asgnNumList: this.$inputNumber.val().replace(/[^0-9.]/g, '')
+      asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
+      svcProdGrpId: Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.svcProdGrpId) ? '' : this._confirmOptions.preinfo.svcProdGrpId
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },
 

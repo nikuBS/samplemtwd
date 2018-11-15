@@ -1,6 +1,6 @@
 /**
- * 모바일 요금제 > Ttab 공유회선
- * FileName: product.join.share-line.controller.ts
+ * 모바일 요금제 > 데이터 함께쓰기
+ * FileName: product.join.data-together.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.11.14
  */
@@ -13,13 +13,18 @@ import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import ProductHelper from '../../helper/product.helper';
 
-class ProductJoinShareLine extends TwViewController {
+class ProductJoinDataTogether extends TwViewController {
   constructor() {
     super();
   }
 
-  private readonly _allowedProdIdList = ['NA00005057', 'NA00005058', 'NA00005059', 'NA00005060',
-    'NA00003958', 'NA00003557', 'NA00003558', 'NA00003556', 'NA00005057'];
+  private readonly _allowedProdIdList = ['NA00003556', 'NA00003557', 'NA00003558', 'NA00003958'];
+  private readonly _tipIds = {
+    NA00003556: 'MP_02_02_03_05_tip_01',
+    NA00003557: 'MP_02_02_03_05_tip_01',
+    NA00003558: 'MP_02_02_03_05_tip_01',
+    NA00003958: 'MP_02_02_03_05_tip_02'
+  };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
@@ -47,15 +52,16 @@ class ProductJoinShareLine extends TwViewController {
         }));
       }
 
-      res.render('join/product.join.share-line.html', Object.assign(renderCommonInfo, {
+      res.render('join/product.join.data-together.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         basicInfo: basicInfo.result,
         joinTermInfo: ProductHelper.convPlansJoinTermInfo(joinTermInfo.result),
         isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
-        isApp: BrowserHelper.isApp(req)
+        isApp: BrowserHelper.isApp(req),
+        tipId: this._tipIds[prodId]
       }));
     });
   }
 }
 
-export default ProductJoinShareLine;
+export default ProductJoinDataTogether;

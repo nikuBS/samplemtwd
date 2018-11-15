@@ -1,49 +1,47 @@
 /**
- * 모바일 요금제 > Data 인피니티 설정
- * FileName: product.setting.tplan.controller.ts
+ * FileName: product.lookup.ting.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
-class ProductSettingTplan extends TwViewController {
+class ProductLookupTing extends TwViewController {
   constructor() {
     super();
   }
 
-  private readonly _allowedProdIdList = ['NA00005959'];
+  private readonly _allowedProdIdList = ['NA00002670', 'NA00002671', 'NA00002669'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '설정'
+        title: '혜택 이용내역'
       };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0013, {}, {}, prodId)
-      .subscribe((benefitInfo) => {
-        if (benefitInfo.code !== API_CODE.CODE_00) {
+    this.apiService.request(API_CMD.BFF_10_0040, {}, {}, prodId)
+      .subscribe((tingInfo) => {
+        if (tingInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: benefitInfo.code,
-            msg: benefitInfo.msg
+            code: tingInfo.code,
+            msg: tingInfo.msg
           }));
         }
 
-        res.render('setting/product.setting.tplan.html', Object.assign(renderCommonInfo, {
-          prodId: prodId,
-          benefitInfo: benefitInfo.result
+        res.render('lookup/product.lookup.ting.html', Object.assign(renderCommonInfo, {
+          tingInfo: tingInfo.result
         }));
       });
   }
 }
 
-export default ProductSettingTplan;
+export default ProductLookupTing;

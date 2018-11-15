@@ -23,6 +23,10 @@ import ProductJoinTplan from './controllers/join/product.join.tplan.controller';
 import ProductSettingTplan from './controllers/setting/product.setting.tplan.controller';
 import ProductLookupTplan from './controllers/lookup/product.lookup.tplan.controller';
 import ProductJoinShareLine from './controllers/join/product.join.share-line.controller';
+import ProductSetting0plan from './controllers/setting/product.setting.0plan.controller';
+import ProductJoinDataTogether from './controllers/join/product.join.data-together.controller';
+import ProductSettingTing from './controllers/setting/product.setting.ting.controllter';
+import ProductLookupTing from './controllers/lookup/product.lookup.ting.controller';
 import ProductSettingSignatureLine from './controllers/setting/product.setting.signature-line.controller';
 import ProductJoinSignatureLine from './controllers/join/product.join.signature-line.controller';
 
@@ -38,14 +42,18 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/join/tplan/:prodId', controller: ProductJoinTplan });
     this.controllers.push({ url: '/join/combine-line/:prodId', controller: ProductJoinCombineLine });
     this.controllers.push({ url: '/join/share-line/:prodId', controller: ProductJoinShareLine });
+    this.controllers.push({ url: '/join/data-together/:prodId', controller: ProductJoinDataTogether });
     this.controllers.push({ url: '/join/dis-program(/:prodId)', controller: ProductJoinDisPgm });
     this.controllers.push({ url: '/join/dis-program/detail(/:prodId)', controller: ProductJoinDisPgmDetail });
     this.controllers.push({ url: '/join/:prodId', controller: ProductJoin });
     this.controllers.push({ url: '/setting/combine-line/:prodId', controller: ProductSettingCombineLine });
     this.controllers.push({ url: '/setting/option/:prodId', controller: ProductSettingOption });
     this.controllers.push({ url: '/setting/tplan/:prodId', controller: ProductSettingTplan });
+    this.controllers.push({ url: '/setting/ting/:prodId', controller: ProductSettingTing });
+    this.controllers.push({ url: '/setting/0plan/:prodId', controller: ProductSetting0plan });
     this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
     this.controllers.push({ url: '/lookup/tplan(/:prodId)?', controller: ProductLookupTplan });
+    this.controllers.push({ url: '/lookup/ting/:prodId', controller: ProductLookupTing });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
     this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
 
