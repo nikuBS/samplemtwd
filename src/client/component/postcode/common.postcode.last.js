@@ -65,7 +65,7 @@ Tw.CommonPostcodeLast.prototype = {
     this.$saveAddress = {};
   },
   _initData: function ($addressObject) {
-    this.$mainAddress.text($addressObject.main)
+    this.$mainAddress.text($addressObject.originText)
       .attr({
         'data-bld-cd': $addressObject.bldCd,
         'data-ldong-cd': $addressObject.ldongCd,
@@ -127,26 +127,31 @@ Tw.CommonPostcodeLast.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _save: function ($result) {
-    var code = this._getStandardCode();
+    var code = this._getStandardCode($result);
 
     this.$isNext = true;
     this.$saveAddress = {
       zip: $result.zip,
-      main: $result[code.main],
-      detail: $result[code.sub],
+      main: code.main,
+      detail: code.sub,
       addrId: $result.addrId
     };
 
     this._popupService.close();
   },
-  _getStandardCode: function () {
+  _getStandardCode: function ($result) {
     var code = {
-      main: 'jusoMain',
-      sub: 'jusoSub'
+      main: $result.jusoMain,
+      sub: $result.jusoSub
     };
     if (this._selectedTabId === 'tab2') {
-      code.main = 'bunjiAddrFix';
-      code.sub = 'bunjiAddrDtl';
+      if ($result.stnmAddrFix === '') {
+        code.main = $result.bunjiAddrFix;
+        code.sub = $result.bunjiAddrDtl;
+      } else {
+        code.main = $result.stnmAddrFix;
+        code.sub = $result.stnmAddrDtl;
+      }
     }
     return code;
   }
