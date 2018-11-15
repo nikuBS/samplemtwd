@@ -4,8 +4,9 @@
  * Date: 2018.11.12
  */
 
-Tw.CommonPostcodeMain = function (rootEl) {
+Tw.CommonPostcodeMain = function (rootEl, callback) {
   this.$container = rootEl;
+  this.$callback = callback;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -36,7 +37,7 @@ Tw.CommonPostcodeMain.prototype = {
         tabId: this._selectedTabId,
         id: this._addressId,
         text: this._addressText
-      });
+      }, this.$callback);
     }
   },
   _initVariables: function ($targetId) {

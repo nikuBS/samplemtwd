@@ -4,8 +4,9 @@
  * Date: 2018.11.12
  */
 
-Tw.CommonPostcodeDetail = function ($container, $addressObject) {
+Tw.CommonPostcodeDetail = function ($container, $addressObject, $callback) {
   this.$container = $container;
+  this.$callback = $callback;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -35,7 +36,7 @@ Tw.CommonPostcodeDetail.prototype = {
   },
   _goLast: function () {
     if (this.$isNext) {
-      new Tw.CommonPostcodeLast(this.$container, this.$selectedAddressObject);
+      new Tw.CommonPostcodeLast(this.$container, this.$selectedAddressObject, this.$callback);
     }
   },
   _setInitTab: function ($addressObject) {
