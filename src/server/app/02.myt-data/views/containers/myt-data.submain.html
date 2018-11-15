@@ -31,26 +31,30 @@
             </div>
             <!--// .cont-box -->
             <!-- .cont-box -->
-            <div class="cont-box nogaps noborder">
-                <ul class="link-long-list">
+            <div class="cont-box noborder">
+                <ul class="liststyle-type01">
                     <% if(data.refill) { %>
-                    <li data-id="refill">
-                        <div class="link-long">
-                            <button>나의 리필 쿠폰
-                                <span class="tx-sub"><%= data.refill.length %>장<span class="ico"></span></span>
-                            </button>
+                    <li class="category-type" data-id="refill">
+                        <p class="title">나의 리필 쿠폰 <button class="tip-view">TIP</button></p>
+                        <div class="infobox">
+                            <strong class="text"><%= data.refill.length %>장</strong>
+                            <button type="button" class="link">보기</button>
                         </div>
                     </li>
                     <% } %>
                     <% if(data.isBenefit) { %>
-                    <li data-id="pester">
-                        <div class="link-long">
-                            <button >데이터 조르기<span class="ico"></span></button>
-                        </div>
-                    </li>
-                    <li data-id="benefit">
-                        <div class="link-long">
-                            <button>데이터 혜택<span class="ico"></span></button>
+                    <% if(data.isApp) { %>
+                        <li class="category-type">
+                            <p class="title">데이터 조르기</p>
+                            <div class="infobox" data-id="pester">
+                                <button type="button" class="link">보기</button>
+                            </div>
+                        </li>
+                    <% } %>
+                    <li class="category-type" data-id="benefit">
+                        <p class="title">데이터 혜택</p>
+                        <div class="infobox">
+                            <button type="button" class="link">보기</button>
                         </div>
                     </li>
                     <% } %>
@@ -123,12 +127,16 @@
             <% if (data.pattern) { %>
                 <%- include('../components/submain/myt-data.submain.usage-pattern.html', data) %>
             <% } %>
-
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="bnr-show"><button><img src="/img/dummy/dmy-banner.png" alt="더미배너" class="img" /></button></div>
+            </div>
+            <!-- //.cont-box -->
             <% if (data.otherLines.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps" data-id="other-lines">
-                    <p class="list-comp-title">다른 회선 잔여량 정보</p>
+                    <p class="list-comp-title">다른 회선 잔여량 정보<button class="tip-view">TIP</button></p>
                     <ul class="list-comp-lineinfo">
                         <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
                         <% for (var i=0; i < length; i++) { %>
@@ -149,17 +157,52 @@
                 <ul class="link-long-list nobg">
                     <li>
                         <div class="link-long">
-                            <button><span class="ico-thum"></span>요금제<span class="ico"></span></button>
+                            <a href="">
+                                <span class="ico-thum"></span>나의 요금제
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
                         </div>
                     </li>
                     <li>
                         <div class="link-long">
-                            <button><span class="ico-thum"></span>데이터 부가서비스<span class="ico"></span></button>
+                            <a href="">
+                                <span class="ico-thum"></span>나의 부가상품
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
                         </div>
                     </li>
                     <li>
                         <div class="link-long">
-                            <a href="/myt/data/family"><span class="ico-thum"></span>가족 공유 데이터<span class="ico"></span></a>
+                            <a href="">
+                                <span class="ico-thum"></span>요금안내서
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>실시간 요금
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 로밍
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
                         </div>
                     </li>
                 </ul>

@@ -175,7 +175,7 @@ Tw.MyTDataSubMain.prototype = {
   _onFamilyMoaDetail: function () {
     if ( this.data.family.possible ) {
       // TODO: 미가입 관련 상태 업데이트 후 처리
-      // this._historyService.goLoad('');
+      this._historyService.goLoad('/product/detail/NA00006031');
     }
     else {
       this._historyService.goLoad('/myt/data/family');
@@ -184,14 +184,21 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
-    // 혜택 할인 페이지로 이동
-    this._popupService.openAlert('TBD');
+    // 혜택 할인 페이지 BPCP 페이지
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_FACTORY);
   },
 
   // 데이터 조르기
   _onDataPesterDetail: function () {
     //  2_A17 Alert 호출
-    this._popupService.openAlert('TBD');
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.MSG,
+      Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+  },
+
+  _pesterDetailConfirm: function() {
+    this._popupService.close();
+    // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
+    this._historyService.goLoad('/myt/data/gift');
   },
 
   // 리필쿠폰
