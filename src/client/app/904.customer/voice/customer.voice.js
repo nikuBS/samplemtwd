@@ -22,8 +22,9 @@ Tw.CustomerVoice.prototype = {
   userLineList: [],
 
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
-      .done($.proxy(this._onSuccessLine, this));
+    // TODO: change Tw.NODE_CMD.GET_ALL_SVC
+    // this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
+    //   .done($.proxy(this._onSuccessLine, this));
   },
 
   _cachedElement: function () {
