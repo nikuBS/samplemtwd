@@ -29,25 +29,28 @@
                 <div class="unpaid-charges">
                     <dl class="total-box">
                         <dt>현재 카드 잔액</dt>
-                        <dd class="t-point"><span class="num ff-tg-black">9,120</span><span class="ff-tg-medium">원</span></dd>
+                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span
+                            class="ff-tg-medium">원</span></dd>
                     </dl>
                     <ul class="point-box mb0">
                         <li>
                             <dl>
-                                <dt>발신 기간 <button class="tip-view">TIP</button></dt>
-                                <dd>2018.05.23</dd>
+                                <dt>발신 기간
+                                    <button class="tip-view">TIP</button>
+                                </dt>
+                                <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>수신 기간</dt>
-                                <dd>2018.05.23</dd>
+                                <dd><%-convertDate(PPSInfo.inbEndDt)%></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>번호 유지 기간</dt>
-                                <dd>2018.05.23</dd>
+                                <dd><%-convertDate(PPSInfo.numEndDt)%></dd>
                             </dl>
                         </li>
                     </ul>
@@ -65,8 +68,9 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">선불 이동전화 카드</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">신용카드</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>선불 이동전화 카드</a></li>
+                                    <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>신용카드</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -78,29 +82,110 @@
                                                     <label class="tit" for="formInput01">카드번호</label>
                                                     <span class="inputbox validation">
                                                                 <span class="input">
-                                                                    <input id="formInput01" type="number" placeholder="숫자만 입력" title="선불 이동전화 카드번호 입력" value="1234">
-                                                                    <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
+                                                                    <input id="formInput01" type="number" placeholder="숫자만 입력"
+                                                                           title="선불 이동전화 카드번호 입력" maxlength="16">
+                                                                    <button class="cancel" style="display: inline-block;">
+                                                                        <span class="blind">삭제</span>
+                                                                    </button>
                                                                 </span>
-                                                                <span class="validation-txt"><button class="bt-link-tx underline">카드번호 예시 보기</button></span>
+                                                                <span class="validation-txt">
+                                                                    <button
+                                                                        class="bt-link-tx underline fe-btn-show-example">카드번호 예시 보기</button>
+                                                                </span>
                                                             </span>
                                                 </li>
                                                 <li>
                                                     <label class="tit" for="formInput02">일련번호</label>
                                                     <span class="inputbox">
                                                                 <span class="input">
-                                                                    <input id="formInput02" type="number" placeholder="일련번호 입력" title="선불 이동전화 카드 일련번호 번호 입력" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-                                                                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                                                    <input id="formInput02" type="number" placeholder="일련번호 입력"
+                                                                           title="선불 이동전화 카드 일련번호 번호 입력" aria-labelledby="aria-exp-label1"
+                                                                           aria-describedby="aria-exp-desc1">
+                                                                    <button class="cancel" style="display: none;">
+                                                                        <span class="blind">삭제</span>
+                                                                    </button>
                                                                 </span>
                                                                 <span id="aria-exp-desc1" class="guide-txt">유통기한 위에 표기된 숫자</span>
                                                             </span>
                                                 </li>
                                             </ul>
                                         </div>
+                                        <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                                        <div class="bt-fixed-area">
+                                            <ul class="bt-slice full">
+                                                <li class="bt-red1">
+                                                    <button class="fe-request-prepaid-card" disabled="disabled">충전하기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
                                         <div class="cont-box">
-                                            신용카드 내용입니다.
+                                            <ul class="form-data-list">
+                                                <li>
+                                                    <label class="tit" for="formInput01">충전금액</label>
+                                                    <span class="inputbox">
+                                                        <button class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true">
+                                                            금액 선택
+                                                            <span class="ico"></span>
+                                                        </button>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <label class="tit" for="formInput02">카드번호</label>
+                                                    <span class="inputbox">
+                                                                <span class="input">
+                                                                    <input id="formInput02" type="number" placeholder="숫자만 입력"
+                                                                           title="선불 이동전화 카드번호 입력" maxlength="16">
+                                                                    <button class="cancel" style="display: none;"><span
+                                                                        class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                </li>
+                                                <li>
+                                                    <label class="tit" for="formInput03">유효기간</label>
+                                                    <div class="input-wrap-half">
+                                                                <span class="inputbox">
+                                                                    <span class="input">
+                                                                        <input id="formInput03" type="number" placeholder="YYYY"
+                                                                               title="유효 년" maxlength="4">
+                                                                        <button class="cancel" style="display: none;"><span
+                                                                            class="blind">삭제</span></button>
+                                                                    </span>
+                                                                </span>
+                                                        <span class="inputbox">
+                                                                    <span class="input">
+                                                                        <input type="number" placeholder="MM" title="유효 월" maxlength="2">
+                                                                        <button class="cancel" style="display: none;"><span
+                                                                            class="blind">삭제</span></button>
+                                                                    </span>
+                                                                </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <label class="tit" for="formInput04">카드 비밀번호</label>
+                                                    <span class="inputbox">
+                                                                <span class="input">
+                                                                    <input id="formInput04" type="number" placeholder="앞 2자리"
+                                                                           title="카드 비밀번호 입력란" value="" aria-labelledby="aria-exp-label4"
+                                                                           maxlength="2">
+                                                                    <button class="cancel" style="display: none;"><span
+                                                                        class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                </li>
+                                            </ul>
                                         </div>
+                                        <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                                        <div class="bt-fixed-area">
+                                            <ul class="bt-slice full">
+                                                <li class="bt-red1">
+                                                    <button class="fe-request-credit-card" disabled="disabled">충전하기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                                     </li>
                                 </ul>
                             </div>
@@ -118,29 +203,25 @@
                 <h3 class="tx-bold">꼭 확인해주세요!</h3>
                 <ul class="noti-list">
                     <li>텍스트가 1줄인 Case입니다.</li>
-                    <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                    <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button disabled="disabled">충전하기</button>
+                    <li>텍스트가 1줄인 Case입니다.
+                        <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button>
+                    </li>
+                    <li>텍스트가 2줄이상인<br>Case입니다.
+                        <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button>
                     </li>
                 </ul>
             </div>
-            <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            <!--// .cont-box -->
         </div>
     </div>
     <!--// #contents -->
+    <% include ../../components/prepaid/myt-data.prepaid.example.card.html %>
 </div>
 <% include ../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
+    new Tw.MyTDataPrepaidVoice($('.wrap'));
   });
 </script>
 

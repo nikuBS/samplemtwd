@@ -322,13 +322,13 @@ Tw.POPUP_TPL = {
     }
   ],
   MEMBERSHIP_CLAUSE_ITEM: {
-    '01': { title: 'SK텔레콤 멤버십 회원 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html'},
-    '02': { title: '개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe2.html'},
-    '03': { title: '광고성 정보 수신 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe3.html'},
-    '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe4.html'},
-    '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html'},
-    '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html'},
-    '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html'}
+    '01': { title: 'SK텔레콤 멤버십 회원 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html' },
+    '02': { title: '개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe2.html' },
+    '03': { title: '광고성 정보 수신 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe3.html' },
+    '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe4.html' },
+    '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html' },
+    '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html' },
+    '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' }
   }
 };
 
@@ -584,4 +584,16 @@ Tw.REGION_LIST_ITEM = {
   getItem: function (name, code) {
     return this.start + code + '">' + name + this.close;
   }
+};
+
+Tw.MYT_PREPAID_AMOUNT = {
+
+  title: '충전 금액',
+  list: [
+    { title: '50,000원', value: 50000 },
+    { title: '30,000원', value: 30000 },
+    { title: '20,000원', value: 20000 },
+    { title: '10,000원', value: 10000 },
+    { title: '5,000원', value: 5000 }
+  ]
 };
