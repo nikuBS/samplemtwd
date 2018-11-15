@@ -27,7 +27,25 @@ Tw.CustomerEmailServiceOption.prototype = {
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
     this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
+    this.$container.on('click', '.fe-select-order', $.proxy(this._setOrderNumber, this));
     this.$container.on('click', '.fe-wrap_direct_order .popup-closeBtn', $.proxy(this._closeDirectOrder, this));
+    this.$container.on('click', '.fe-wrap_direct_order input[type="checkbox"]', $.proxy(this._disabledCheckbox, this));
+  },
+
+  _disabledCheckbox: function (e) {
+    $('.fe-wrap_direct_order li.checked').each(function (nIndex, elChecked) {
+      if ( !$(e.currentTarget).closest('li.checked').is($(elChecked)) ) {
+        $(elChecked).removeClass('checked');
+      }
+    });
+
+    $('.fe-select-order').prop('disabled', false);
+  },
+
+  _setOrderNumber: function (e) {
+    var orderNumber = $('.fe-wrap_direct_order li.checked .fe-order-number').text();
+    $('.fe-text_order').val(orderNumber);
+    this._closeDirectOrder();
   },
 
   _getOrderInfo: function () {
@@ -53,7 +71,8 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _onSuccessOrderInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.$container.append(this.tpl_service_direct_order());
+      this.$container.append(this.tpl_service_direct_order(res.result));
+      skt_landing.widgets.widget_init('.fe-wrap_direct_order');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

@@ -30,13 +30,16 @@
                     <% inquiryList.map( (inquiry) => { %>
                     <li>
                         <button data-inqId="<%-inquiry.inqId%>" data-inqClCd="<%-inquiry.inqClCd%>" class="list-inner fe-btn_history_detail">
+                            <% if ( inquiry.supInqId !== '' ) { %>
+                            <em class="again">재문의</em>
+                            <% } %>
                             <strong class="tit"><%-inquiry.title%></strong>
                             <span class="date-state">
                                 <em class="date"><%-convertDate(inquiry.rgstDt)%></em>
-                                <% if ( inquiry.supInqId === '' ) { %>
-                                <span class="state">처리중</span>
-                                <% } else { %>
+                                <% if ( inquiry.answYn == 'Y' ) { %>
                                 <span class="state">답변완료</span>
+                                <% } else { %>
+                                <span class="state">처리중</span>
                                 <% } %>
                             </span>
                         </button>

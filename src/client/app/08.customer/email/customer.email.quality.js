@@ -64,10 +64,9 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestCell: function () {
     var htParams = $.extend(this._makeParams(), {
-      // selSvcMgmtNum: $('.fe-line').data('svcmgmtnum').toString(),
-      inptZip: $('.fe-inptZip').val(),
-      inptBasAddr: $('.fe-inptBasAddr').val(),
-      inptDtlAddr: 'test',
+      inptZip: $('.fe-zip').val(),
+      inptBasAddr: $('.fe-main-address').val(),
+      inptDtlAddr: $('.fe-detail-address').val(),
       content: this.tpl_quality_cell_content({
         place: $('.fe-place').val(),
         occurrence: $('.fe-occurrence').val(),
@@ -86,7 +85,10 @@ Tw.CustomerEmailQuality.prototype = {
   _requestInternet: function () {
     var htParams = $.extend(this._makeParams(), {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
-      subject: this.$wrap_tpl_quality.find('.fe-text_title').val()
+      subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
+      inptZip: $('.fe-zip').val(),
+      inptBasAddr: $('.fe-main-address').val(),
+      inptDtlAddr: $('.fe-detail-address').val(),
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
