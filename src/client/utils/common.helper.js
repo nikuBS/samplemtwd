@@ -50,12 +50,25 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  var showDataCharge = function (confirmCallback, cancelCallback) {
+    Tw.Popup.openConfirm(
+      Tw.POPUP_CONTENTS.NO_WIFI,
+      Tw.POPUP_TITLE.EXTERNAL_LINK,
+      function () {
+        Tw.Popup.close();
+        confirmCallback();
+      },
+      cancelCallback
+    );
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
     toggle: toggle,
     toast: toast,
     setLocalStorage: setLocalStorage,
-    getLocalStorage: getLocalStorage
+    getLocalStorage: getLocalStorage,
+    showDataCharge: showDataCharge
   };
 })();

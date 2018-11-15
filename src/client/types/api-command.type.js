@@ -41,6 +41,7 @@ Tw.API_CMD = {
   BFF_01_0036: { paht: '/v1/cert/info', method: Tw.API_METHOD.POST },
   BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: Tw.API_METHOD.POST },
   BFF_01_0038: { path: '/deregistrationrequestfromfc', method: Tw.API_METHOD.POST },
+  BFF_01_0044: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
 
   // AUTH

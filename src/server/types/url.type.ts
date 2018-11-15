@@ -10,6 +10,9 @@ export const URL = {
   '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
   '/common/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
 
+  // Main
+  '/main/menu/refund': { login: false, id: 'MN_01_04_01_01', title: '미환급금 조회' },
+
   // MyT
   '/myt/fare': { login: true, id: 'MF1', title: '나의 요금' },
   '/myt/fare/nonpayment': { login: true, id: 'MF_02', title: '미납요금' },
