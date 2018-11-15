@@ -61,7 +61,7 @@ Tw.CommonPostcodeDetail.prototype = {
     this._postType = this.$selectedTab.attr('data-type');
   },
   _initData: function ($addressObject) {
-    this.$selectedAddress.attr('id', $addressObject.id)
+    this.$selectedAddress.attr({'id': $addressObject.id, 'data-origin': $addressObject.originText})
       .text($addressObject.text);
   },
   _bindEvent: function () {
@@ -110,7 +110,11 @@ Tw.CommonPostcodeDetail.prototype = {
     };
     if (this._selectedTabId === 'tab1') {
       reqData.stNmCd = this.$selectedAddress.attr('id');
-      reqData.bldMainNum = $searchValue;
+      if (this.$searchTarget.hasClass('fe-search-number')) {
+        reqData.bldMainNum = $searchValue;
+      } else {
+        reqData.bldNm = encodeURI($searchValue);
+      }
     } else {
       if (this.$searchTarget.hasClass('fe-search-number')) {
         reqData.searchKey = 'KEY';
@@ -157,6 +161,8 @@ Tw.CommonPostcodeDetail.prototype = {
       $cloneNode.addClass('fe-clone');
       $cloneNode.removeClass('none');
 
+      $cloneNode.attr('data-bld-cd', $content[i].bldCd);
+
       $cloneNode.find('.fe-building').text($content[i].bldNm);
       $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
       $cloneNode.find('.fe-zip').text($content[i].zip);
@@ -184,10 +190,13 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$isNext = true;
     this.$selectedAddressObject = {
       'tabId': this._selectedTabId,
+      'originText': $.trim(this.$selectedAddress.attr('data-origin')),
       'main': $.trim(this.$selectedAddress.text()),
       'number': $.trim($target.find('.fe-number').text()),
       'building': $.trim($target.find('.fe-building').text()),
-      'zip': $.trim($target.find('.fe-zip').text())
+      'zip': $.trim($target.find('.fe-zip').text()),
+      'ldongCd': this.$selectedAddress.attr('id'),
+      'bldCd': $target.attr('data-bld-cd')
     };
 
     this._popupService.close();
