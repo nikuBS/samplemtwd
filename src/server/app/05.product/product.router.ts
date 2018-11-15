@@ -29,6 +29,7 @@ import ProductSettingSignatureLine from './controllers/setting/product.setting.s
 import ProductJoinSignatureLine from './controllers/join/product.join.signature-line.controller';
 import ProductSettingNumber from './controllers/setting/product.setting.number.controller';
 import ProductSettingNumberFriend from './controllers/setting/product.setting.number-friend.controller';
+import ProductSettingTargetDiscount from './controllers/setting/product.setting.target-discount.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -66,6 +67,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan(/service-area|/portability)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/apps', controller: ProductApps });
+    this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductSettingTargetDiscount });
   }
 }
 
