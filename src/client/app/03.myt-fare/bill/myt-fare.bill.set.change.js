@@ -9,7 +9,6 @@ Tw.MyTFareBillSetChange = function (rootEl, data) {
   this.$window = window;
   this._data = data !== undefined ? JSON.parse( data ) : {};
   this._init();
-
 };
 
 Tw.MyTFareBillSetChange.prototype = {
@@ -39,17 +38,34 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.on('change', 'input[name="ccurNotiYn"]', $.proxy(this._onChangeCcurNotiYn, this)); // 옵션 설정 > 법정대리인
     this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onDisableSubmitButton, this));
     this.$container.on('change', '[name="scurMailYn"]', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정
+    this.$container.on('click', '.fe-search-zip', $.proxy(this._searchZip, this)); // 우편번호 검색
+  },
+
+  _searchZip : function () {
+    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._callBackSearchZip, this));
+  },
+
+  _callBackSearchZip : function (resp) {
+    this._setAddrData({
+      zip : resp.zip,
+      basAddr : resp.main,
+      dtlAddr : resp.detail
+    });
   },
 
   // 기타(우편) 데이터 설정
   _setAddrData : function (data) {
+    this.$container.find('#fe-no-addr-area').addClass('none');
+    this._addrArea.addClass('none');
+
     if ( Tw.FormatHelper.isEmpty(data.zip) ) {
-      this.$container.find('#fe-search-zip').removeClass('none');
+      this.$container.find('#fe-no-addr-area').removeClass('none');
     } else {
-      this._addrArea.removeClass('none').find('input[name="zip"]').val(data.zip).prop('disabled',true).next().addClass('none');
-      this._addrArea.find('input[name="basAddr"]').val(data.basAddr).prop('disabled',true).next().addClass('none');
-      this._addrArea.find('input[name="dtlAddr"]').val(data.dtlAddr).next();
+      this._addrArea.removeClass('none').find('input[name="zip"]').val(data.zip);
+      this._addrArea.find('input[name="basAddr"]').val(data.basAddr);
+      this._addrArea.find('input[name="dtlAddr"]').val(data.dtlAddr);
     }
+    this._onDisableSubmitButton();
   },
 
   // 이메일 보안설정 이벤트
@@ -458,7 +474,11 @@ Tw.MyTFareBillSetChange.prototype = {
       return;
     }
 
-    this.$window.location.href = '/myt/fare/bill/set/complete?type=1';
+    this.popupService.afterRequestSuccess(
+      '/myt/fare/bill/guide',
+      '/myt/fare/bill/set',
+      Tw.MYT_FARE_BILL_SET.GUIDE_CONFIRM_TEXT,
+      Tw.MYT_FARE_BILL_SET.COMPLETE_TEXT_CHANGE);
   },
 
   // API Fail

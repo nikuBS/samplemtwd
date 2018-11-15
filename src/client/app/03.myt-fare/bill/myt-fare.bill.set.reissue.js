@@ -121,7 +121,11 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   _goToComplete: function () {
-    this.$window.location.href = '/myt/fare/bill/set/complete?type=2';
+    this._popupService.afterRequestSuccess(
+      '/myt/fare/bill/guide',
+      '/myt/fare/bill/set',
+      Tw.MYT_FARE_BILL_SET.GUIDE_CONFIRM_TEXT,
+      Tw.MYT_FARE_BILL_SET.COMPLETE_TEXT_REISSUE);
   }
 
 };

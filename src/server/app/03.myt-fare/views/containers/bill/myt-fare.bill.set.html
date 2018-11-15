@@ -70,7 +70,7 @@
                     <%}%>
 
                     <!--T world 확인은 [설정한 옵션] 없음-->
-                    <% if ( 'P' !== data.curBillType ) { %>
+                    <% if ( data.isSetOptions ) { %>
                     <dl class="info-tx1">
                         <dt>설정한 옵션</dt>
                         <dd>

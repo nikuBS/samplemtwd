@@ -256,7 +256,10 @@ Tw.MYT_FARE_BILL_SET = {
       Paper: '기타(우편)'
     }
   },
-  BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.'
+  BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
+  COMPLETE_TEXT_REISSUE : '안내서 재발행',
+  COMPLETE_TEXT_CHANGE : '안내서 변경',
+  GUIDE_CONFIRM_TEXT : '요금안내서 확인'
 };
 
 Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
