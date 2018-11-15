@@ -4,8 +4,9 @@
  * Date: 2018.11.13
  */
 
-Tw.CommonPostcodeLast = function ($container, $addressObject) {
+Tw.CommonPostcodeLast = function ($container, $addressObject, $callback) {
   this.$container = $container;
+  this.$callback = $callback;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -35,9 +36,13 @@ Tw.CommonPostcodeLast.prototype = {
   },
   _saveAddress: function () {
     if (this.$isNext) {
-      this.$container.find('.fe-zip').val(this.$saveAddress.zip);
-      this.$container.find('.fe-main-address').val(this.$saveAddress.main);
-      this.$container.find('.fe-detail-address').val(this.$saveAddress.detail);
+      if (this.$callback) {
+        this.$callback(this.$saveAddress);
+      } else {
+        this.$container.find('.fe-zip').val(this.$saveAddress.zip);
+        this.$container.find('.fe-main-address').val(this.$saveAddress.main);
+        this.$container.find('.fe-detail-address').val(this.$saveAddress.detail);
+      }
     }
   },
   _setInitTab: function ($addressObject) {
