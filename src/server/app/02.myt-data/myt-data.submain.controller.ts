@@ -14,6 +14,7 @@ import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import { BFF_06_0044_familyInfo } from '../../mock/server/myt.data.family.mock';
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
+import BrowserHelper from '../../utils/browser.helper';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -29,7 +30,8 @@ class MytDataSubmainController extends TwViewController {
       present: false,
       isPrepayment: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(svcInfo, allSvc)
+      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      isApp: BrowserHelper.isApp(req)
     };
     Observable.combineLatest(
       this._getFamilyMoaData(),
