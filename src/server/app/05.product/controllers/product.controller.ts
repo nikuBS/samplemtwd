@@ -18,27 +18,34 @@ export default class Product extends TwViewController {
     super();
   }
 
-  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      this.getPromotionBanners(),
-      this.getProductGroups(),
-      this.getRecommendedPlans(),
-      this.getMyFilters(!!svcInfo),
-      this.getRecommendedTags()
-    ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
-      const error = {
-        code: banners.code || groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
-        msg: banners.msg || groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
-      };
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    const uri = req.url.replace('/mobileplan/', '');
+    if (uri === 'club-t') {
+      res.render('plan/product.plan.club-t.html', { svcInfo });
+    } else if (uri === 'campuszone') {
+      res.render('plan/product.plan.campuszone.html', { svcInfo });
+    } else {
+      Observable.combineLatest(
+        this.getPromotionBanners(),
+        this.getProductGroups(),
+        this.getRecommendedPlans(),
+        this.getMyFilters(!!svcInfo),
+        this.getRecommendedTags()
+      ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
+        const error = {
+          code: banners.code || groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
+          msg: banners.msg || groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
-      }
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
 
-      const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
+        const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
 
-      res.render('product.html', { svcInfo, productData, pageInfo });
-    });
+        res.render('product.html', { svcInfo, productData, pageInfo });
+      });
+    }
   }
 
   private getPromotionBanners = () => {
@@ -52,7 +59,7 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -82,7 +89,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  }
+  };
 
   private getMyFilters = isLogin => {
     if (isLogin) {
@@ -99,7 +106,7 @@ export default class Product extends TwViewController {
     }
 
     return of(undefined);
-  }
+  };
 
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -124,7 +131,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  }
+  };
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -137,5 +144,5 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 }

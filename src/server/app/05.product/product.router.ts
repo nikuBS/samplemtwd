@@ -27,7 +27,6 @@ import ProductSettingTing from './controllers/setting/product.setting.ting.contr
 import ProductLookupTing from './controllers/lookup/product.lookup.ting.controller';
 import ProductSettingSignatureLine from './controllers/setting/product.setting.signature-line.controller';
 import ProductJoinSignatureLine from './controllers/join/product.join.signature-line.controller';
-import ProductPlanCampuszone from './controllers/plan/product.plan.campuszone.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -55,10 +54,9 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
 
     // new IA
-    this.controllers.push({ url: '/mobileplan', controller: Product });
+    this.controllers.push({ url: '/mobileplan(/club-t|/campuszone)?', controller: Product });
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
-    this.controllers.push({ url: '/mobileplan/campuszone', controller: ProductPlanCampuszone });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
     this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductSettingSignatureLine });
     this.controllers.push({ url: '/mobileplan-add/join/signature-line/:prodId', controller: ProductJoinSignatureLine });
