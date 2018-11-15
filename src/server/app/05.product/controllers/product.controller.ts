@@ -24,6 +24,8 @@ export default class Product extends TwViewController {
       res.render('plan/product.plan.club-t.html', { svcInfo });
     } else if (uri === 'campuszone') {
       res.render('plan/product.plan.campuszone.html', { svcInfo });
+    } else if (uri === 'concierge') {
+      res.render('plan/product.plan.concierge.html', { svcInfo });
     } else {
       Observable.combineLatest(
         this.getPromotionBanners(),
@@ -59,7 +61,7 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -89,7 +91,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getMyFilters = isLogin => {
     if (isLogin) {
@@ -106,7 +108,7 @@ export default class Product extends TwViewController {
     }
 
     return of(undefined);
-  };
+  }
 
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -131,7 +133,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -144,5 +146,5 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 }

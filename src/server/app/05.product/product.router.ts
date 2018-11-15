@@ -54,7 +54,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/find-my-best-plans', controller: ProductFindMyBestPlans });
 
     // new IA
-    this.controllers.push({ url: '/mobileplan(/club-t|/campuszone)?', controller: Product });
+    this.controllers.push({ url: '/mobileplan(/club-t|/campuszone|/concierge)?', controller: Product });
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
