@@ -62,7 +62,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
     this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductSettingSignatureLine });
     this.controllers.push({ url: '/mobileplan-add/join/signature-line/:prodId', controller: ProductJoinSignatureLine });
-    this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
+    this.controllers.push({ url: '/wireplan(/service-area|/portability)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/apps', controller: ProductApps });
   }
