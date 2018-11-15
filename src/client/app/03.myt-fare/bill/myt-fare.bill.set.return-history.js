@@ -63,6 +63,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
 
   // 반송내역조회 호출 후 > 반송내역 리스트 더보기 세팅
   _successReturnHistory : function (res) {
+    skt_landing.action.loading.off({ ta: '.container' });
     // 발행내역 없는 경우
     if ( res.code === 'ZINVN8319' ) {
       // this._onFail(res);
@@ -85,7 +86,6 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
       },
       isOnMoreView : true
     });
-    skt_landing.action.loading.off({ ta: '.container' });
   },
 
   // 반송내역 리스트 생성

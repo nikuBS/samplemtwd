@@ -19,7 +19,6 @@ import MyTFarePaymentOption from './controllers/payment/myt-fare.payment.option.
 import MyTFarePaymentMicro from './controllers/payment/myt-fare.payment.micro.controller';
 import MyTFarePaymentMicroAuto from './controllers/payment/myt-fare.payment.micro.auto.controller';
 import MyTFarePaymentMicroAutoChange from './controllers/payment/myt-fare.payment.micro.auto.change.controller';
-import MyTFareBillSetComplete from './controllers/bill/myt-fare.bill.set.complete.controller';
 import MyTFarePaymentMicroAutoInfo from './controllers/payment/myt-fare.payment.micro.auto.info.controller';
 import MyTFarePaymentContents from './controllers/payment/myt-fare.payment.contents.controller';
 import MyTFarePaymentContentsAuto from './controllers/payment/myt-fare.payment.contents.auto.controller';
@@ -64,7 +63,6 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/payment/contents/auto/change', controller: MyTFarePaymentContentsAutoChange });
     this.controllers.push({ url: '/bill/set/return-history', controller: MyTFareBillSetReturnHistory });
     this.controllers.push({ url: '/bill/set/change', controller: MyTFareBillSetChange });
-    this.controllers.push({ url: '/bill/set/complete', controller: MyTFareBillSetComplete });
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
 
     // 소액결제, 컨텐츠 이용료

@@ -17,9 +17,9 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
       // this.mockReqBillType()
       this.reqBillType()
     ).subscribe(([resBillType]) => {
-      if ( resBillType.code === API_CODE.CODE_00) {
+      if (resBillType.code === API_CODE.CODE_00) {
         const data = this.getData(resBillType.result, svcInfo, pageInfo);
-        res.render( 'bill/myt-fare.bill.set.html', data );
+        res.render('bill/myt-fare.bill.set.html', data);
       } else {
         this.fail(res, resBillType, svcInfo);
       }
@@ -28,6 +28,7 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
 
   private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
+    this.setShowSetupOption(data);
     this.makeAnotherBillList(data);
     this.parseTel(data);
 
@@ -38,14 +39,25 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     };
   }
 
+  // 설정한 옵션 노출 유/무
+  private setShowSetupOption(data: any): void {
+    const options = new Array();
+    options.push(data.scurBillYn || 'N'); // Bill Letter 보안강화
+    options.push(data.phonNumPrtClCd || 'N'); // 휴대폰 번호 전체 표시
+    options.push(data.infoInvDtlDispYn || 'N'); // 휴대폰 번호 전체 표시
+    options.push(data.ccurNotiYn || 'N'); // 법정대리인 함께 수령
+
+    data.isSetOptions = options.indexOf('Y') > -1;
+  }
+
   // 하단 > "다른 요금안내서로 받기" 리스트
   private makeAnotherBillList(data: any): void {
     const billList = new Array();
 
-    'P,H,B,2,1'.split(',').forEach( (cd) => {
+    'P,H,B,2,1'.split(',').forEach((cd) => {
       // 현재 안내서는 빼기
-      if ( cd !== data.billInfo[0].cd ) {
-        if ( this.getLinetype() === 'W' && ['H', 'B'].some( e => e === cd ) ) {
+      if (cd !== data.billInfo[0].cd) {
+        if (this.getLinetype() === 'W' && ['H', 'B'].some(e => e === cd)) {
           return true;
         }
 
