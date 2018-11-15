@@ -14,11 +14,12 @@ Tw.ProductWireServiceArea = function(rootEl) {
 
 Tw.ProductWireServiceArea.prototype = {
   _bindEvent: function() {
-    this.$container.on('click', '.bt-red1', $.proxy(this._handleSearchArea, this));
+    this.$container.on('click', '.fe-submit', $.proxy(this._handleSearchArea, this));
+    this.$container.on('click', '.fe-post', $.proxy(this._openPostcode, this));
   },
 
   _handleSearchArea: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0048, { addr_id: '100000004070867' }).done($.proxy(this._handleSuccessSearchArea, this)); // TODO: API 확인 필요, 우편번호 추가 후 addr_id 수정 필요
+    this._apiService.request(Tw.API_CMD.BFF_10_0048, this._addr).done($.proxy(this._handleSuccessSearchArea, this));
   },
 
   _handleSuccessSearchArea: function(resp) {
@@ -45,17 +46,21 @@ Tw.ProductWireServiceArea.prototype = {
         address: resp.result.full_ADDRESS,
         services: services
       },
-      $.proxy(this._handleOpenSearchArea, this),
+      undefined,
       undefined,
       'result'
     );
   },
 
-  _handleOpenSearchArea: function($layer) {
-    $layer.on('click', '.fe-search', $.proxy(this._closePopup, this));
+  _openPostcode: function() {
+    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
   },
 
-  _closePopup: function() {
-    this._popupService.close();
+  _handleChangeAddress: function(result) {
+    this._addr = {
+      bas_addr: result.main,
+      dtl_addr: result.detail,
+      addr_id: result.addrId
+    };
   }
 };
