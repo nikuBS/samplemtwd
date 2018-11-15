@@ -53,6 +53,12 @@
                                 <span class="title"><% if(type === 'long-term'){ %>장기<% } %>일시정지 기간</span>
                                 <span class="tx-cont"><%= period.from %> ~ <%= period.to %></span>
                             </li>
+                            <% if(locals.resuspend){ %>
+                            <li>
+                                <span class="title">재시작일자</span>
+                                <span class="tx-cont"><%= resuspend %></span>
+                            </li>
+                            <% } %>
                             <li>
                                 <span class="title">사유</span>
                                 <span class="tx-cont"><%= reason %></span>
@@ -60,6 +66,13 @@
                         </ul>
                     </div>
                 </div>
+                <% if(locals.resuspend){ %>
+                <ul class="bt-slice mt20 mb20">
+                    <li class="bt-white2">
+                        <button id="bt-cancel-resuspend">재신청 취소하기</button>
+                    </li>
+                </ul>
+                <% } else { %>
                 <ul class="bt-slice mt20 mb20 item-two">
                     <li class="bt-white2">
                         <% if(type === 'temporary'){ %>
@@ -72,6 +85,7 @@
                         <button id="bt-reset">해제하기</button>
                     </li>
                 </ul>
+                <% } %>
             </div>
             <!--// .cont-box -->
 
@@ -110,7 +124,7 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({period, reason, type}) %> );
+    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({period, reason, type, resuspend}) %> );
   });
 </script>
 <% include ../../components/end.component.html %>

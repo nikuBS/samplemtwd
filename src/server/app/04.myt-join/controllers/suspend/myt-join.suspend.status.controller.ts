@@ -6,11 +6,9 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import StringHelper from '../../../../utils/string.helper';
-import FormatHelper from '../../../../utils/format.helper';
 
 class MyTJoinSuspendStatus extends TwViewController {
   constructor() {
@@ -44,12 +42,16 @@ class MyTJoinSuspendStatus extends TwViewController {
         const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY-MM-DD');
         options['period'] = { from, to };
         options['reason'] = suspendStatus.result.svcChgRsnNm;
-
+        options['resuspend'] = null;
         if ( suspendStatus.result.svcChgRsnCd === 21
           || suspendStatus.result.svcChgRsnCd === 22 ) { // 일시정지(case 1)
           options['type'] = 'temporary';
         } else { // 장기일시정지(case 6)
           options['type'] = 'long-term';
+          // suspendStatus.result.reFormDt = '2020.02.02';
+          if ( suspendStatus.result.reFormDt ) { // 장기일시정지(case 7)
+            options['resuspend'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY-MM-DD');
+          }
         }
         res.render('suspend/myt-join.suspend.status.html', options);
       } else {
