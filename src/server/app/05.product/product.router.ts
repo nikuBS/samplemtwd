@@ -27,6 +27,8 @@ import ProductSettingTing from './controllers/setting/product.setting.ting.contr
 import ProductLookupTing from './controllers/lookup/product.lookup.ting.controller';
 import ProductSettingSignatureLine from './controllers/setting/product.setting.signature-line.controller';
 import ProductJoinSignatureLine from './controllers/join/product.join.signature-line.controller';
+import ProductSettingNumber from './controllers/setting/product.setting.number.controller';
+import ProductSettingNumberFriend from './controllers/setting/product.setting.number-friend.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -47,7 +49,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/setting/tplan/:prodId', controller: ProductSettingTplan });
     this.controllers.push({ url: '/setting/ting/:prodId', controller: ProductSettingTing });
     this.controllers.push({ url: '/setting/0plan/:prodId', controller: ProductSetting0plan });
-    this.controllers.push({ url: '/setting/:prodId', controller: ProductSetting });
+    this.controllers.push({ url: '/setting/number/:prodId', controller: ProductSettingNumber });
+    this.controllers.push({ url: '/setting/number-friend/:prodId', controller: ProductSettingNumberFriend });
     this.controllers.push({ url: '/lookup/tplan(/:prodId)?', controller: ProductLookupTplan });
     this.controllers.push({ url: '/lookup/ting/:prodId', controller: ProductLookupTing });
     this.controllers.push({ url: '/terminate/:prodId', controller: ProductTerminate });
