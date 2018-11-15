@@ -25,7 +25,10 @@ import ProductLookupTplan from './controllers/lookup/product.lookup.tplan.contro
 import ProductJoinShareLine from './controllers/join/product.join.share-line.controller';
 import ProductSettingSignatureLine from './controllers/setting/product.setting.signature-line.controller';
 import ProductJoinSignatureLine from './controllers/join/product.join.signature-line.controller';
+import ProductSettingNumber from './controllers/setting/product.setting.number.controller';
+import ProductSettingNumberFriend from './controllers/setting/product.setting.number-friend.controller';
 import ProductSettingTargetDiscount from './controllers/setting/product.setting.target-discount.controller';
+
 
 class ProductRouter extends TwRouter {
   constructor() {
