@@ -395,3 +395,10 @@ export const BRANCH_SEARCH_OPTIONS = {
   etc: ' 외 ',
   count: '건'
 };
+
+export const PRODUCT_TYPE_NM = {
+  JOIN: '가입',
+  CHANGE: '변경',
+  TERMINATE: '해지',
+  SETTING: '설정'
+};

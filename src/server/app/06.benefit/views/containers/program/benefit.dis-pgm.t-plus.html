@@ -74,14 +74,29 @@
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역"
-                 style="width:100%;vertical-align: top; margin-bottom: 3.75rem">
+
+            <!-- .cont-box --><!-- 2018-11-02 수정 -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>텍스트가 1줄인 Case입니다.</li>
+                    <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
 
 
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button data-id="btn-ok">확인</button>
+                        <button data-id="btn-ok">
+                            <% if (data.isJoin) { %>
+                            확인
+                            <% } else { %>
+                            가입
+                            <% } %>
+                        </button>
                     </li>
                 </ul>
             </div>

@@ -448,8 +448,8 @@ export const API_CMD = {
   BFF_07_0090: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0091: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0092: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0093: { path: '/core-bill/v1/point-onetime-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
-  BFF_07_0094: { path: '/core-bill/v1/point-autopay-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
+  BFF_07_0093: { path: '/core-bill/v1/point-onetime-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0094: { path: '/core-bill/v1/point-autopay-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
 
   // CUSTOMER
@@ -600,6 +600,18 @@ export const API_CMD = {
   BFF_10_0074: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0081: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0082: {
+    path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets',
+    method: API_METHOD.POST, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0083: {
+    path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets',
+    method: API_METHOD.DELETE,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
