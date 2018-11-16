@@ -238,7 +238,7 @@ class ApiService {
   }
 
   public requestLoginTest(userId: string): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0001, { id: userId }, LOGIN_TYPE.TID);
+    return this.requestLogin(API_CMD.BFF_03_0000, { id: userId }, LOGIN_TYPE.TID);
   }
 
   public requestLoginTid(token: string, state: string): Observable<any> {
@@ -287,7 +287,7 @@ class ApiService {
   }
 
   public requestChangeSession(params: any): Observable<any> {
-    return this.requestUpdateSvcInfo(API_CMD.BFF_01_0004, params);
+    return this.requestUpdateSvcInfo(API_CMD.BFF_01_0003, params);
   }
 
   public requestUpdateAllSvcInfo(command, params): Observable<any> {

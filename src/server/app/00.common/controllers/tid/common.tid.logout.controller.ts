@@ -22,7 +22,7 @@ class CommonTidLogout extends TwViewController {
     const target = req.query.target || '/common/logout/complete';
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_03_0007, {}),
-      this.apiService.request(API_CMD.LOGOUT_BFF, {})
+      this.apiService.request(API_CMD.BFF_03_0001, {})
     ).subscribe(([key, logout]) => {
       if ( key.code === API_CODE.CODE_00 ) {
         const params = {
