@@ -456,7 +456,7 @@ Tw.CUSTOMER_HELPLINE_AREAS = [
   { value: '중부 (충남, 충북, 대전)', attr: 'data-area-code="5"' },
   { value: '서부 (전남, 전북, 광주, 제주)', attr: 'data-area-code="4"' },
   { value: '대구 (경북, 대구)', attr: 'data-area-code="3"' },
-  { value: '부산 (경남, 울산, 부산)', attr: '"data-area-code="2""' }
+  { value: '부산 (경남, 울산, 부산)', attr: 'data-area-code="2"' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
@@ -597,3 +597,9 @@ Tw.MYT_PREPAID_AMOUNT = {
     { title: '5,000원', value: 5000 }
   ]
 };
+
+Tw.PRODUCT_APPS_ORDER = [
+  { value: '최신순', attr: 'data-prop="storRgstDtm"' },
+  { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
+  { value: '가나다순', attr: 'data-prop="prodNm"' }
+];
