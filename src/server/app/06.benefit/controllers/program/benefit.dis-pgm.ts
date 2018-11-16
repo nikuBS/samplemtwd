@@ -12,6 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import ProductHelper from '../../../05.product/helper/product.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
 class BenefitDisProgram extends TwViewController {
   constructor() {
@@ -48,7 +49,7 @@ class BenefitDisProgram extends TwViewController {
             code: seldisSets.code,
             msg: seldisSets.msg,
             svcInfo: svcInfo,
-            title: '가입'
+            title: PRODUCT_TYPE_NM.JOIN
           });
         }
         if ( joinTermInfo.code === API_CODE.CODE_00 ) {
@@ -58,36 +59,41 @@ class BenefitDisProgram extends TwViewController {
             code: joinTermInfo.code,
             msg: joinTermInfo.msg,
             svcInfo: svcInfo,
-            title: '가입'
+            title: PRODUCT_TYPE_NM.JOIN
           });
         }
         res.render('program/benefit.dis-pgm.sel-contract.html', { data });
       });
     } else {
-      // NA00002079, NA00002082, NA00002080, NA00002081
-      switch ( prodId ) {
-        case 'NA00002079':
-          // 2년이상
-          data.percent = '65';
-          break;
-        case 'NA00002082':
-          // 3년이상
-          data.percent = '70';
-          break;
-        case 'NA00002080':
-          // 5년이상
-          data.percent = '75';
-          break;
-        case 'NA00002081':
-          // 10년이상
-          data.percent = '80';
-          break;
-        case 'NA00002246':
-          // 2년 미만
-          data.percent = '50';
-          break;
-      }
-      res.render('product.t-plus.input.html', { data });
+      // NA00002079 (2년이상), NA00002082(3년이상), NA00002080(5년이상), NA00002081(10년이상), NA00002246(2년미만)
+      Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),
+        this.apiService.request(API_CMD.BFF_10_0081, {}, {}, prodId),
+      ).subscribe(([joinTermInfo, tplusInfo]) => {
+        if ( tplusInfo.code === API_CODE.CODE_00 ) {
+          data.percent = tplusInfo.result.discountRate;
+          data.isJoin = (tplusInfo.result.subscriptionCode === 'Y');
+        } else {
+          return this.error.render(res, {
+            code: tplusInfo.code,
+            msg: tplusInfo.msg,
+            svcInfo: svcInfo,
+            title: PRODUCT_TYPE_NM.JOIN
+          });
+        }
+
+        if ( joinTermInfo.code === API_CODE.CODE_00 ) {
+          data.joinInfoTerm = this._convertJoinInfoTerm(joinTermInfo.result);
+        } else {
+          return this.error.render(res, {
+            code: joinTermInfo.code,
+            msg: joinTermInfo.msg,
+            svcInfo: svcInfo,
+            title: PRODUCT_TYPE_NM.JOIN
+          });
+        }
+        res.render('program/benefit.dis-pgm.t-plus.html', { data });
+      });
     }
   }
 
