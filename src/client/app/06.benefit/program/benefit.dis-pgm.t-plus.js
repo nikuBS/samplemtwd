@@ -28,25 +28,26 @@ Tw.BenefitDisPgmTplus.prototype = {
     this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
   },
 
-  _onLongDiscountClicked: function() {
+  _onLongDiscountClicked: function () {
     this._popupService.open({
-      hbs:'BS_03_02_01_02',
+      hbs: 'BS_03_02_01_02',
       layer: true
     }, null, null, 'long_discount');
   },
 
-  _onPlusExampleClicked: function() {
+  _onPlusExampleClicked: function () {
     this._popupService.open({
-      hbs:'BS_03_02_01_03',
+      hbs: 'BS_03_02_01_03',
       layer: true,
       info: this.data.svcInfo
     }, null, null, 'tplus-example');
   },
 
-  _onOkBtnClicked: function() {
-    if(this.data.isJoin) {
+  _onOkBtnClicked: function () {
+    if ( this.data.isJoin ) {
       this._historyService.goBack();
-    } else {
+    }
+    else {
       // page 이동
     }
   }
