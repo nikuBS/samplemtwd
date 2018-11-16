@@ -30,7 +30,7 @@ import ProductJoinSignatureLine from './controllers/join/product.join.signature-
 import ProductSettingNumber from './controllers/setting/product.setting.number.controller';
 import ProductSettingNumberFriend from './controllers/setting/product.setting.number-friend.controller';
 import ProductSettingTargetDiscount from './controllers/setting/product.setting.target-discount.controller';
-import ProductJoinRemoteControl from './controllers/join/product.join.remote-control.controller';
+import ProductJoinRemotePwd from './controllers/join/product.join.remote-pwd.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -63,10 +63,10 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
-    this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductSettingSignatureLine });
     this.controllers.push({ url: '/mobileplan-add/join/signature-line/:prodId', controller: ProductJoinSignatureLine });
     this.controllers.push({ url: '/wireplan(/service-area|/portability)?', controller: ProductWire });
-    this.controllers.push({ url: '/mobileplan-add/join/remote-control/:prodId', controller: ProductJoinRemoteControl });
+    this.controllers.push({ url: '/mobileplan-add/join/remote-pwd/:prodId', controller: ProductJoinRemotePwd });
+    this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductSettingSignatureLine });
     this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/apps', controller: ProductApps });

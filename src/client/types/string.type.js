@@ -461,6 +461,13 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A40: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
 
+Tw.ALERT_MSG_PASSWORD = {
+  A16: '비밀번호는 4자리입니다.',
+  A17: '입력하신 비밀번호가 일치하지 않습니다.\n입력하신 비밀번호를 다시 확인해 주세요.',
+  A18: '연속된 숫자는 설정 불가합니다',
+  A19: '동일한 번호가 반복되는 숫자는 사용 불가합니다'
+};
+
 Tw.ALERT_MSG_BENEFIT = {};
 
 Tw.ALERT_MSG_MEMBERSHIP = {

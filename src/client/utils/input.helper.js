@@ -4,6 +4,11 @@ Tw.InputHelper = (function () {
     $input.val($input.val().replace(/[^0-9]/g, ''));
   }
 
+  function inputNumberAndAsteriskOnly(input) {
+    var $input = $(input);
+    $input.val($input.val().replace(/[^0-9*]/g, ''));
+  }
+
   function inputNumKeyDown(event) {
     // input keydown event (only input number)
     var key = event.which;
@@ -59,6 +64,7 @@ Tw.InputHelper = (function () {
 
   return {
     inputNumberOnly: inputNumberOnly,
+    inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
     validateEmail: validateEmail,
     validateNumber: validateNumber,
     inputNumKeyUp: inputNumKeyUp,

@@ -1,5 +1,5 @@
 /**
- * FileName: product.join.remote-control.controller.ts
+ * FileName: product.join.remote-pwd.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.15
  */
@@ -12,12 +12,12 @@ import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import ProductHelper from '../../helper/product.helper';
 
-class ProductJoinRemoteControl extends TwViewController {
+class ProductJoinRemotePwd extends TwViewController {
   constructor() {
     super();
   }
 
-  private _prodIdList = ['NA00000299'];
+  private readonly _allowedProdIdList = ['NA00000299'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
@@ -27,7 +27,7 @@ class ProductJoinRemoteControl extends TwViewController {
         title: '가입'
       };
 
-    if (FormatHelper.isEmpty(prodId) || this._prodIdList.indexOf(prodId) === -1) {
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
@@ -44,7 +44,7 @@ class ProductJoinRemoteControl extends TwViewController {
         }));
       }
 
-      res.render('join/product.join.remote-control.html', Object.assign(renderCommonInfo, {
+      res.render('join/product.join.remote-pwd.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         isApp: BrowserHelper.isApp(req),
         basicInfo: basicInfo.result,
@@ -54,4 +54,4 @@ class ProductJoinRemoteControl extends TwViewController {
   }
 }
 
-export default ProductJoinRemoteControl;
+export default ProductJoinRemotePwd;

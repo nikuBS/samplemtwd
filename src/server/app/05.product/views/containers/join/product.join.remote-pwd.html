@@ -1,5 +1,5 @@
 <%#
-* FileName: product.join.remote-control.html
+* FileName: product.join.remote-pwd.html
 * Author: Jayoon Kong (jayoon.kong@sk.com)
 * Date: 2018.11.15
 %>
@@ -44,18 +44,21 @@
                             <label class="tit">비밀번호 입력</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input type="number" style="-webkit-text-security: disc;" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-input-password"
-                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요">
+                                    <input type="text" class="fe-input-password"
+                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요" maxlength="4">
+                                    <input type="hidden" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
+                                <span id="aria-exp-desc3" class="error-txt none"></span>
                             </span>
                         </li>
                         <li>
                             <label class="tit">비밀번호 확인</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input type="number" style="-webkit-text-security: disc;" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-confirm-password"
-                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요">
+                                    <input type="text" class="fe-confirm-password"
+                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요" maxlength="4">
+                                    <input type="hidden" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -87,19 +90,18 @@
         <!--// .popup-closeBtn -->
         <!-- #footer -->
         <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo:
-            pageInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
         </footer>
         <!--// #footer -->
     </div>
     <!-- // .popup hbs -->
 </div>
 </body>
-<% include ../../components/join/product.join.combine-line.component.html %>
+<% include ../../components/setting/product.setting.combine-line.component.html %>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductJoinCombineLine($('.wrap'), '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductJoinRemotePwd($('.wrap'), '<%= prodId %>', 'MV_02_02_03', '<%- JSON.stringify(joinTermInfo) %>');
   });
 </script>
 <% include ../../components/end.component.html %>

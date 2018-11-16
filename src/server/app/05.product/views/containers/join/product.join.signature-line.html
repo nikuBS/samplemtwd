@@ -110,7 +110,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductJoinCombineLine($('.wrap'), '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductJoinCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- JSON.stringify(joinTermInfo) %>');
   });
 </script>
 <% include ../../components/end.component.html %>
