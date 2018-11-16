@@ -70,14 +70,22 @@
                     <%}%>
 
                     <!--T world 확인은 [설정한 옵션] 없음-->
-                    <% if ( data.isSetOptions ) { %>
+                    <%
+                        if ( data.options.length > 0 ) {
+                        let options = {
+                            '1':'Bill Letter 보안강화',
+                            '2':'휴대폰 번호 전체 표시',
+                            '3':'콘텐츠 이용 상세내역 표시',
+                            '4':'법정대리인 함께 수령'
+                        };
+                    %>
                     <dl class="info-tx1">
                         <dt>설정한 옵션</dt>
                         <dd>
-                            <%- data.scurBillYn === 'Y' ? 'Bill Letter 보안강화<br/>':'' %>
-                            <%- data.phonNumPrtClCd === 'Y' ? '휴대폰 번호 전체 표시<br/>':'' %>
-                            <%- data.infoInvDtlDispYn === 'Y' ? '콘텐츠 이용 상세내역 표시<br/>':'' %>
-                            <%- data.ccurNotiYn === 'Y' ? '법정대리인 함께 수령':'' %>
+                            <% for(let i=0; i< data.options.length; i++) { %>
+                                <%= options[data.options[i]]%>
+                                <%if( (i+1) < data.options.length ){%><br/><%}%>
+                            <%}%>
                         </dd>
                     </dl>
                     <%}%>

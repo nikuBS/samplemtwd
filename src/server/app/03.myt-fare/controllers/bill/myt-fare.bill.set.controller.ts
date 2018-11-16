@@ -28,9 +28,9 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
 
   private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
-    this.setShowSetupOption(data);
     this.makeAnotherBillList(data);
     this.parseTel(data);
+    this.makeOptions(data);
 
     return {
       svcInfo,
@@ -39,15 +39,52 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     };
   }
 
-  // 설정한 옵션 노출 유/무
-  private setShowSetupOption(data: any): void {
-    const options = new Array();
-    options.push(data.scurBillYn || 'N'); // Bill Letter 보안강화
-    options.push(data.phonNumPrtClCd || 'N'); // 휴대폰 번호 전체 표시
-    options.push(data.infoInvDtlDispYn || 'N'); // 휴대폰 번호 전체 표시
-    options.push(data.ccurNotiYn || 'N'); // 법정대리인 함께 수령
+  // 설정한 옵션 생성
+  private makeOptions(data: any): void {
+    const billType = data.billInfo[0].cd;
+    const mergeType = billType + data.billInfo[1].cd;
+    const lineType = this.getLinetype();
 
-    data.isSetOptions = options.indexOf('Y') > -1;
+    const options = new Array();
+
+    // Bill Letter  보안강화 (안내서 유형이 Bill Letter 포함일때)
+    if ('H' === billType && data.scurBillYn === 'Y') {
+      options.push('1');
+    }
+    // 휴대폰 번호 전체 표시 여부
+    if ((mergeType !== 'HX' && mergeType !== 'HB') && data.phonNumPrtClCd === 'Y') {
+      if (mergeType === 'BX') {
+        if (lineType === 'S') {
+          options.push('2');
+        }
+      } else {
+        options.push('2');
+      }
+    }
+
+    // 회선이 무선,와이브로 일때
+    if (lineType === 'M' || lineType === 'W') {
+      // 콘텐츠 이용 상세내역 표시
+      if (billType === '2' && data.infoInvDtlDispYn === 'Y') {
+        options.push('3');
+      }
+      // 회선이 무선 일때
+      if (lineType === 'M') {
+        // 콘텐츠 이용 상세내역 표시
+        if (['H2', 'B2'].indexOf(mergeType) > -1 && data.infoInvDtlDispYn === 'Y') {
+          options.push('3');
+        }
+
+        // 법정 대리인 함께 수령
+        if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) > -1 && data.ccurNotiYn === 'Y') {
+          if (data.kidsYn === 'Y') {
+            options.push('4');
+          }
+        }
+      }
+    }
+
+    data.options = options;
   }
 
   // 하단 > "다른 요금안내서로 받기" 리스트
