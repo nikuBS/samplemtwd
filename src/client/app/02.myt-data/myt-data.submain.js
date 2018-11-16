@@ -168,9 +168,9 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onTPresentDetail: function () {
-    if(this.data.svcInfo.svcAttrCd === 'M2') {
+    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
       // PPS 인 경우 자동알람서비스
-      if(Tw.BrowserHelper.isApp()) {
+      if ( Tw.BrowserHelper.isApp() ) {
         // TODO: 금융거래 본인인증 작업이 완료되면 이후 처리 우선은 페이지 이동으로만 처리하고 완료 후 [DC_09_05] 이동
         this._popupService.openAlert('TBD');
       }
@@ -187,7 +187,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onOpenTworldMovedAlert: function ($layer) {
-    $layer.find('.pos-left .tw-popup-closeBtn').on('click', $.proxy(function(){
+    $layer.find('.pos-left .tw-popup-closeBtn').on('click', $.proxy(function () {
       // TODO: 서비스 이용 안내 페이지로 이동 [CO_UT_09_01]
       this._popupService.openAlert('TBD');
     }, this));
@@ -249,15 +249,12 @@ Tw.MyTDataSubMain.prototype = {
       this._historyService.goLoad('/myt/data/usage/child/' + mgmtNum);
     }
     else {
-      // 앱에서만 제공
-      if ( Tw.BrowserHelper.isApp() ) {
-        var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
-        var selectLineInfo = number + ' ' + name;
-        this.changeLineMgmtNum = mgmtNum;
-        this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-          defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-          Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
-      }
+      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+      var selectLineInfo = number + ' ' + name;
+      this.changeLineMgmtNum = mgmtNum;
+      this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
+        defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
+        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
     }
   },
 
