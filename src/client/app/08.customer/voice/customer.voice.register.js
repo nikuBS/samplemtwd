@@ -17,9 +17,8 @@ Tw.CustomerVoiceRegister = function (rootEl) {
 
 Tw.CustomerVoiceRegister.prototype = {
   _init: function () {
-    // TODO: change Tw.NODE_CMD.GET_ALL_SVC
-    // this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
-    //   .done($.proxy(this._onSuccessLineInfo, this));
+    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+      .done($.proxy(this._onSuccessLineInfo, this));
   },
 
   _cachedElement: function () {
