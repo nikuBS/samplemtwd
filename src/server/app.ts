@@ -17,7 +17,6 @@ const manifest = require('./config/manifest.json');
 // Route Modules
 import AppRouter from './common/route/app.router';
 import { default as OldMytRouter } from './app/901.myt/myt.router';
-import { default as OldRechargeRouter } from './app/902.recharge/recharge.router';
 import { default as OldPaymentRouter } from './app/903.payment/payment.router';
 import { default as OldCustomerRouter } from './app/904.customer/customer.router';
 import CommonRouter from './app/00.common/common.router';
@@ -113,7 +112,6 @@ class App {
 
   private setRoutes() {
     this.app.use('/myt', new AppRouter(OldMytRouter.instance.controllers).router);
-    this.app.use('/recharge', new AppRouter(OldRechargeRouter.instance.controllers).router);
     this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(OldCustomerRouter.instance.controllers).router);
 
