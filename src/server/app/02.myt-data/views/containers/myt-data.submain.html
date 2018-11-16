@@ -30,6 +30,8 @@
             <%- include('../components/submain/myt-data.submain.remnant.html', data) %>
             </div>
             <!--// .cont-box -->
+
+            <% if (data.svcInfo.svcAttrCd === 'M1') { %>
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <ul class="liststyle-type01">
@@ -60,6 +62,7 @@
                     <% } %>
                 </ul>
             </div>
+            <% } %>
             <!-- //.cont-box -->
 
             <% if (data.isPrepayment) { %>
