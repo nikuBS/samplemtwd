@@ -10,6 +10,7 @@ import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import ProductHelper from '../../helper/product.helper';
 
 export default class ProductPlans extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -52,7 +53,7 @@ export default class ProductPlans extends TwViewController {
         products: resp.result.products.map(plan => {
           return {
             ...plan,
-            basFeeAmt: FormatHelper.getFeeContents(plan.basFeeAmt)
+            basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt)
           };
         })
       };

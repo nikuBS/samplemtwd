@@ -67,15 +67,9 @@ Tw.ProductList.prototype = {
         item.isMonthly = true;
       }
 
-      if (item.basOfrDataQtyCtt) {
-        item.basOfrDataQtyCtt = Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt);
-      }
-      if (item.basOfrVcallTmsCtt) {
-        item.basOfrVcallTmsCtt = Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
-      }
-      if (item.basOfrCharCntCtt) {
-        item.basOfrCharCntCtt = Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
-      }
+      item.basOfrDataQtyCtt = item.basOfrDataQtyCtt ? Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt) : '-';
+      item.basOfrVcallTmsCtt = item.basOfrVcallTmsCtt ? Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt) : '-';
+      item.basOfrCharCntCtt = item.basOfrCharCntCtt ? Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt) : '-';
 
       return item;
     });

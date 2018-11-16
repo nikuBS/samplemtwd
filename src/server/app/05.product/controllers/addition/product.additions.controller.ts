@@ -10,6 +10,7 @@ import { API_CODE, API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import ProductHelper from '../../helper/product.helper';
 
 export default class ProductAdditions extends TwViewController {
   private ADDITION_CODE = 'F01200';
@@ -50,7 +51,7 @@ export default class ProductAdditions extends TwViewController {
     }
 
     return of(undefined);
-  }
+  };
 
   private getAdditions = params => {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
@@ -70,10 +71,13 @@ export default class ProductAdditions extends TwViewController {
         products: resp.result.products.map(addition => {
           return {
             ...addition,
-            basFeeAmt: FormatHelper.getFeeContents(addition.basFeeAmt)
+            basFeeAmt: ProductHelper.convProductBasfeeInfo(addition.basFeeAmt),
+            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt || '-'),
+            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt || '-'),
+            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt || '-')
           };
         })
       };
     });
-  }
+  };
 }
