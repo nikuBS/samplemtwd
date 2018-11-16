@@ -95,13 +95,6 @@ class MytDataSubmainController extends TwViewController {
         data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
         data.family.limitation = parseInt(data.family.limitation, 10);
       }
-      /*else {
-             // TODO: 우선 MOCK 데이터 사용
-             data.family = this.convertFamilyData(familyMock.result);
-             const remained = parseInt(data.family.remained, 10);
-             data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
-             data.family.limitation = parseInt(data.family.limitation, 10);
-           }*/
 
       // 최근 충전 및 선물 내역
       const breakdownList: any = [];
@@ -266,12 +259,10 @@ class MytDataSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else if ( resp.code === API_T_FAMILY_ERROR.BLN0010 ) {
-        // TODO: 배포 된 이후 처리
         // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-        /*return {
-          possible: true
-        };*/
-        return null;
+        return {
+          impossible: true
+        };
       } else {
         // error
         return null;
