@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import ProductHelper from '../../helper/product.helper';
+import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
 class ProductJoinDataTogether extends TwViewController {
   constructor() {
@@ -31,7 +32,7 @@ class ProductJoinDataTogether extends TwViewController {
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '가입'
+        title: PRODUCT_TYPE_NM.JOIN
       };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {

@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../helper/product.helper';
+import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
 class ProductJoinTplan extends TwViewController {
   constructor() {
@@ -24,7 +25,7 @@ class ProductJoinTplan extends TwViewController {
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '가입'
+        title: PRODUCT_TYPE_NM.JOIN
       };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {

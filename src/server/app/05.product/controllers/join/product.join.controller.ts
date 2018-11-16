@@ -15,6 +15,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import BrowserHelper from '../../../../utils/browser.helper';
 import ProductHelper from '../../helper/product.helper';
+import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
 class ProductJoin extends TwViewController {
   constructor() {
@@ -199,7 +200,7 @@ class ProductJoin extends TwViewController {
             code: basicInfo.code,
             msg: basicInfo.msg,
             svcInfo: svcInfo,
-            title: '가입'
+            title: PRODUCT_TYPE_NM.JOIN
           });
         }
 
@@ -209,7 +210,7 @@ class ProductJoin extends TwViewController {
         if (FormatHelper.isEmpty(displayGroup) || FormatHelper.isEmpty(prodRedisInfo)) {
           return this.error.render(res, {
             svcInfo: svcInfo,
-            title: '가입'
+            title: PRODUCT_TYPE_NM.JOIN
           });
         }
 
@@ -237,7 +238,7 @@ class ProductJoin extends TwViewController {
                 code: joinTermInfo.code,
                 msg: joinTermInfo.msg,
                 svcInfo: svcInfo,
-                title: '가입'
+                title: PRODUCT_TYPE_NM.JOIN
               });
             }
 
@@ -257,7 +258,7 @@ class ProductJoin extends TwViewController {
                   code: joinTermInfo.code,
                   msg: joinTermInfo.msg,
                   svcInfo: svcInfo,
-                  title: '가입'
+                  title: PRODUCT_TYPE_NM.JOIN
                 });
               }
 
