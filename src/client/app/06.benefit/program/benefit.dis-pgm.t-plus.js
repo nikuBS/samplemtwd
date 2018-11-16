@@ -5,7 +5,7 @@
  *
  */
 
-Tw.ProductJoinTplus = function (params) {
+Tw.BenefitDisPgmTplus = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.ProductJoinTplus = function (params) {
   this._bindEvent();
 };
 
-Tw.ProductJoinTplus.prototype = {
+Tw.BenefitDisPgmTplus.prototype = {
 
   _render: function () {
     this.$longDiscount = this.$container.find('[data-id=plus-example]');
@@ -44,6 +44,10 @@ Tw.ProductJoinTplus.prototype = {
   },
 
   _onOkBtnClicked: function() {
-    this._historyService.goBack();
+    if(this.data.isJoin) {
+      this._historyService.goBack();
+    } else {
+      // page 이동
+    }
   }
 };
