@@ -35,7 +35,7 @@
                     <div class="charge-cont">
                         <span class="sub-disc05">
                             레인보우 포인트
-                            <button class="tip-view">정보보기</button>
+                            <button class="tip-view" id="BS_01_01_tip_01">정보보기</button>
                         </span>
                         <span class="tit tx-blue"><span class="charge-txt"><%= rainbowPointsInfo.usblPoint %></span>점</span>
                     </div>
@@ -57,7 +57,7 @@
                                 </li>
                                 <% if (parseInt(rainbowPointsInfo.nearlyExprdPoint, 10) > 0) { %>
                                 <li>
-                                    <span class="title">이번달 소멸 예정<button class="tip-view">정보보기</button></button></span>
+                                    <span class="title">이번달 소멸 예정</span>
                                     <span class="tx-cont"><%= rainbowPointsInfo.nearlyExprdPoint %> 점</span>
                                 </li>
                                 <% } %>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
 
-                    <button class="bt-link-tx underline">포인트 안내 자세히보기</button>
+                    <!--<button class="bt-link-tx underline">포인트 안내 자세히보기</button>-->
                 </div>
             </div>
             <!--// .cont-box -->
@@ -77,7 +77,7 @@
                 <ul class="link-list type2">
                     <li>
                         <dl>
-                            <dt>포인트 합산<button class="tip-view">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
+                            <dt>포인트 합산<button class="tip-view" id="BS_01_01_tip_02">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
                             <dd>
                                 <a class="fe-anchor-go-adjustment" href="/benefit/my-benefit/rainbow-point/adjustment">포인트 합산 화면 이동</a>
                             </dd>
@@ -85,7 +85,7 @@
                     </li>
                     <li>
                         <dl>
-                            <dt>청소년 - 법정대리인 간 양도<button class="tip-view">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
+                            <dt>청소년 - 법정대리인 간 양도<button class="tip-view" id="BS_01_01_tip_03">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
                             <dd>
                                 <a class="fe-anchor-go-transfer" href="/benefit/my-benefit/rainbow-point/transfer">청소년 - 법정대리인 간 양도 화면 이동</a>
                             </dd>
@@ -136,6 +136,18 @@
             </div>
             <!--// .cont-box -->
 
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>적립 안내 <button type="button" class="tip-view" id="BS_01_01_tip_04">TIP</button></li>
+                    <li>사용 안내 <button type="button" class="tip-view" id="BS_01_01_tip_05">TIP</button></li>
+                    <li>소멸예정포인트 안내 <button type="button" class="tip-view" id="BS_01_01_tip_06">TIP</button></li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
         </div>
     </div>
     <!--// #contents -->
