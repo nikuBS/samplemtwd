@@ -94,7 +94,7 @@ export const API_CMD = {
   BFF_04_0002: { path: '/core-product/v1/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // MYT
   BFF_05_0001: { path: '/v1/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0002: { path: '/core-balance/v1/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0003: { path: '/core-balance/v1/troaming-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0004: { path: '/core-balance/v1/data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0005: { path: '/core-balance/v1/tdata-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

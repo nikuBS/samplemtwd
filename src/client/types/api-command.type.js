@@ -71,7 +71,7 @@ Tw.API_CMD = {
 
   // MYT
   BFF_05_0001: { path: '/v1/my-t/balances', method: Tw.API_METHOD.GET },
-  BFF_05_0002: { path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET },
+  BFF_05_0002: { path: '/core-balance/v1/balance-add-ons', method: Tw.API_METHOD.GET },
   BFF_05_0003: { path: '/core-balance/v1/troaming-sharings', method: Tw.API_METHOD.GET },
   BFF_05_0004: { path: '/core-balance/v1/data-sharings', method: Tw.API_METHOD.GET },
   BFF_05_0005: { path: '/core-balance/v1/tdata-sharings', method: Tw.API_METHOD.GET },
