@@ -11,7 +11,7 @@ class ProductHelper {
     function _getStipulationYnCnt(yNarray) {
       let count = 0;
 
-      yNarray.forEach((flag) => {
+      yNarray.forEach(flag => {
         if (flag === 'Y') {
           count++;
         }
@@ -22,25 +22,34 @@ class ProductHelper {
 
     return Object.assign(stipulation, {
       stipulation: Object.assign(stipulation.stipulation, {
-        scrbStplAgreeCttSummary: stipulation.stipulation.scrbStplAgreeYn === 'Y' ?
-            FormatHelper.stripTags(stipulation.stipulation.scrbStplAgreeHtmlCtt) : '',
-        termStplAgreeCttSummary: stipulation.stipulation.termStplAgreeYn === 'Y' ?
-            FormatHelper.stripTags(stipulation.stipulation.termStplAgreeHtmlCtt) : '',
-        psnlInfoCnsgCttSummary: stipulation.stipulation.psnlInfoCnsgAgreeYn === 'Y' ?
-            FormatHelper.stripTags(stipulation.stipulation.psnlInfoCnsgHtmlCtt) : '',
-        psnlInfoOfrCttSummary: stipulation.stipulation.psnlInfoOfrAgreeYn === 'Y' ?
-            FormatHelper.stripTags(stipulation.stipulation.psnlInfoOfrHtmlCtt) : '',
-        adInfoOfrCttSummary: stipulation.stipulation.adInfoOfrAgreeYn === 'Y' ?
-            FormatHelper.stripTags(stipulation.stipulation.psnlInfoCnsgHtmlCtt) : '',
-        existsCount: _getStipulationYnCnt([stipulation.stipulation.scrbStplAgreeYn, stipulation.stipulation.psnlInfoCnsgAgreeYn,
-          stipulation.stipulation.psnlInfoOfrAgreeYn, stipulation.stipulation.adInfoOfrAgreeYn])
+        scrbStplAgreeCttSummary:
+          stipulation.stipulation.scrbStplAgreeYn === 'Y' ? FormatHelper.stripTags(stipulation.stipulation.scrbStplAgreeHtmlCtt) : '',
+        termStplAgreeCttSummary:
+          stipulation.stipulation.termStplAgreeYn === 'Y' ? FormatHelper.stripTags(stipulation.stipulation.termStplAgreeHtmlCtt) : '',
+        psnlInfoCnsgCttSummary:
+          stipulation.stipulation.psnlInfoCnsgAgreeYn === 'Y' ? FormatHelper.stripTags(stipulation.stipulation.psnlInfoCnsgHtmlCtt) : '',
+        psnlInfoOfrCttSummary:
+          stipulation.stipulation.psnlInfoOfrAgreeYn === 'Y' ? FormatHelper.stripTags(stipulation.stipulation.psnlInfoOfrHtmlCtt) : '',
+        adInfoOfrCttSummary:
+          stipulation.stipulation.adInfoOfrAgreeYn === 'Y' ? FormatHelper.stripTags(stipulation.stipulation.psnlInfoCnsgHtmlCtt) : '',
+        existsCount: _getStipulationYnCnt([
+          stipulation.stipulation.scrbStplAgreeYn,
+          stipulation.stipulation.psnlInfoCnsgAgreeYn,
+          stipulation.stipulation.psnlInfoOfrAgreeYn,
+          stipulation.stipulation.adInfoOfrAgreeYn
+        ])
       })
     });
   }
 
-  static convProductSpecifications(basFeeInfo?: any, basOfrDataQtyCtt?: any, basOfrVcallTmsCtt?: any,
-    basOfrCharCntCtt?: any, basDataUnit = DATA_UNIT.MB): any {
-    const isValid = (value) => {
+  static convProductSpecifications(
+    basFeeInfo?: any,
+    basOfrDataQtyCtt?: any,
+    basOfrVcallTmsCtt?: any,
+    basOfrCharCntCtt?: any,
+    basDataUnit = DATA_UNIT.MB
+  ): any {
+    const isValid = value => {
       return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
     };
 
@@ -53,7 +62,7 @@ class ProductHelper {
   }
 
   static convProductBasfeeInfo(basFeeInfo): any {
-    const isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
+    const isNaNbasFeeInfo = isNaN(Number(basFeeInfo));
 
     return {
       isNaN: isNaNbasFeeInfo,
@@ -62,7 +71,7 @@ class ProductHelper {
   }
 
   static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, dataUnit = DATA_UNIT.MB): any {
-    const isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
+    const isNaNbasOfrDataQtyCtt = isNaN(Number(basOfrDataQtyCtt));
 
     return {
       isNaN: isNaNbasOfrDataQtyCtt,
@@ -71,7 +80,7 @@ class ProductHelper {
   }
 
   static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt): any {
-    const isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
+    const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
 
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
@@ -80,7 +89,7 @@ class ProductHelper {
   }
 
   static convProductBasOfrCharCntCtt(basOfrCharCntCtt): any {
-    const isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
+    const isNaNbasOfrCharCntCtt = isNaN(Number(basOfrCharCntCtt));
 
     return {
       isNaN: isNaNbasOfrCharCntCtt,
@@ -99,20 +108,34 @@ class ProductHelper {
 
   static convPlanPreInfo(preInfo): any {
     return Object.assign(preInfo, {
-      frProdInfo: Object.assign(preInfo.frProdInfo, ProductHelper.convProductSpecifications(preInfo.frProdInfo.basFeeInfo,
-          preInfo.frProdInfo.basOfrDataQtyCtt, preInfo.frProdInfo.basOfrVcallTmsCtt, preInfo.frProdInfo.basOfrCharCntCtt)),
-      toProdInfo: Object.assign(preInfo.toProdInfo, ProductHelper.convProductSpecifications(preInfo.toProdInfo.basFeeInfo,
-          preInfo.toProdInfo.basOfrDataQtyCtt, preInfo.toProdInfo.basOfrVcallTmsCtt, preInfo.toProdInfo.basOfrCharCntCtt)),
+      frProdInfo: Object.assign(
+        preInfo.frProdInfo,
+        ProductHelper.convProductSpecifications(
+          preInfo.frProdInfo.basFeeInfo,
+          preInfo.frProdInfo.basOfrDataQtyCtt,
+          preInfo.frProdInfo.basOfrVcallTmsCtt,
+          preInfo.frProdInfo.basOfrCharCntCtt
+        )
+      ),
+      toProdInfo: Object.assign(
+        preInfo.toProdInfo,
+        ProductHelper.convProductSpecifications(
+          preInfo.toProdInfo.basFeeInfo,
+          preInfo.toProdInfo.basOfrDataQtyCtt,
+          preInfo.toProdInfo.basOfrVcallTmsCtt,
+          preInfo.toProdInfo.basOfrCharCntCtt
+        )
+      ),
       autoJoinList: ProductHelper.convAutoJoinTermList(preInfo.autoJoinList),
       autoTermList: ProductHelper.convAutoJoinTermList(preInfo.autoTermList)
     });
   }
 
   static convInstallmentAgreement(installmentAgreement): any {
-    const isNumberPenAmt = !isNaN(parseInt(installmentAgreement.penAmt, 10)),
-        isNumberFrDcAmt = !isNaN(parseInt(installmentAgreement.frDcAmt, 10)),
-        isNumberToDcAmt = !isNaN(parseInt(installmentAgreement.toDcAmt, 10)),
-        isNumberGapDcAmt = !isNaN(parseInt(installmentAgreement.gapDcAmt, 10));
+    const isNumberPenAmt = !isNaN(Number(installmentAgreement.penAmt)),
+      isNumberFrDcAmt = !isNaN(Number(installmentAgreement.frDcAmt)),
+      isNumberToDcAmt = !isNaN(Number(installmentAgreement.toDcAmt)),
+      isNumberGapDcAmt = !isNaN(Number(installmentAgreement.gapDcAmt));
 
     return Object.assign(installmentAgreement, {
       isNumberPenAmt: isNumberPenAmt,
@@ -140,7 +163,7 @@ class ProductHelper {
   }
 
   static convAdditionsPreInfo(preInfo): any {
-    const isNumberBasFeeInfo = !isNaN(parseInt(preInfo.reqProdInfo.basFeeInfo, 10));
+    const isNumberBasFeeInfo = !isNaN(Number(preInfo.reqProdInfo.basFeeInfo));
 
     return Object.assign(preInfo, {
       reqProdInfo: Object.assign(preInfo.reqProdInfo, {
@@ -155,7 +178,7 @@ class ProductHelper {
   static convAutoJoinTermList(autoList): any {
     const autoListConvertResult: any = {};
 
-    autoList.forEach((item) => {
+    autoList.forEach(item => {
       if (FormatHelper.isEmpty(autoListConvertResult[item.svcProdCd])) {
         autoListConvertResult[item.svcProdCd] = {
           svcProdNm: item.svcProdNm,

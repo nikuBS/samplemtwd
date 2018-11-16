@@ -41,8 +41,8 @@
                 <!--//사용중인 상품 -->
 
                 <!-- 스와이프 -->
-                <% const banners = productData.banners; %>
-                <% if (banners) { %>
+                <% const banners = productData.banners;
+                if (banners && banners.length > 0) { %>
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner dot-btm slide-pagingtype">
                         <!-- .widget -->
@@ -50,8 +50,7 @@
                             <div class="widget-box slider1">
                                 <div class="slider-box">
                                     <ul class="slider">
-                                        <% for (let i = 0; i < banners.length; i++) { %>
-                                        <% const banner = banners[i]; %>
+                                        <% banners.map(banner => { %>
                                         <li>
                                             <% if (banner.bnnrTypCd === 'H') { %>
                                             <button>
@@ -63,7 +62,7 @@
                                             </a>
                                             <% } %>
                                         </li>
-                                        <% } %>
+                                        <% }); %>
                                     </ul>
                                 </div>
                             </div>
@@ -91,7 +90,7 @@
 
                 <!-- 대표 요금제 보기 -->
                 <% const groups = productData.groups.grpProdList; %>
-                <% if (groups) { %> 
+                <% if (groups && groups.length > 0) { %> 
                 <div class="cont-box nogaps-btm widget">
                     <div class="plan-title">
                         <h3 class="tit">
@@ -108,58 +107,54 @@
                             <% const group = groups[i]; %>
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info type01">
-                                    <h4 class="title">
-                                        <%= group.prodGrpNm %><img src='<%= group.prodGrpFlagImgUrl %>'></h4>
-                                    <p class="text">
-                                        <%= group.prodGrpDesc %>
-                                    </p>
+                                    <h4 class="title"><%= group.prodGrpNm %><img src="<%= group.prodGrpFlagImgUrl %>" /></h4>
+                                    <p class="text"><%= group.prodGrpDesc %></p>
                                 </button>
                                 <ul class="representcharge-product">
-                                    <% for (let j = 0; j < group.prodList.length; j++) { %>
-                                    <% const product = group.prodList[j]; %>
+                                    <% group.prodList.map(product => { %>
                                     <li>
                                         <a class="product-infolink" href="/product/detail/<%= product.prodId %>">
                                             <div class="products-titleinfo">
                                                 <h5 class="title">
                                                     <%= product.prodNm %>
                                                 </h5>
-                                                <% if (/^[0-9,]+$/.test(product.basFeeInfo)) { %>
-                                                    <p class="info">월<span class="money"><%= product.basFeeInfo %></span>원</p>
+                                                <% if (product.basFeeInfo.isNaN) { %>
+                                                    <p class="info"><span class="money"><%= product.basFeeInfo.value %></span></p>
                                                 <% } else { %>
-                                                    <p class="info"><span class="money"><%= product.basFeeInfo %></span></p>
+                                                    <p class="info">월<span class="money"><%= product.basFeeInfo.value %></span>원</p>
                                                 <% } %>
                                             </div>
                                             <dl class="products-additionalinfo">
                                                 <dt>데이터</dt>
                                                 <dd class="point">
-                                                    <%= product.basOfrDataQtyCtt %>
+                                                    <%= product.basOfrDataQtyCtt.isNaN ? product.basOfrDataQtyCtt.value : product.basOfrDataQtyCtt.value.data + product.basOfrDataQtyCtt.value.unit  %>
                                                 </dd>
                                                 <dt>음성</dt>
                                                 <dd>
-                                                    <%= product.basOfrVcallTmsCtt %>
+                                                    <%= product.basOfrVcallTmsCtt.value %>
                                                 </dd>
                                                 <dt>문자</dt>
                                                 <dd>
-                                                    <%= product.basOfrCharCntCtt %>
+                                                    <%= product.basOfrCharCntCtt.isNaN ? product.basOfrCharCntCtt.value : product.basOfrCharCntCtt.value + product.basOfrCharCntCtt.unit %>
                                                 </dd>
                                             </dl>
                                         </a>
                                     </li>
-                                    <% } %>
+                                    <% }) %>
                                 </ul>
                             </li>
                             <% } %>
                         </ul>
-                        <% } %>
                     </div>
                 </div>
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <% } %>
                 <!-- //대표 요금제 보기 -->
 
-                <hr class="cont-sp type1" aria-hidden="true" />
 
                 <!-- 내 요금제와 비슷한 요금제 -->
                 <% const filters = productData.myFilters && productData.myFilters.list %>
-                <% if (svcInfo && filters) { %>
+                <% if (filters) { %>
                 <div class="cont-box">
                     <div class="similarmyplan-wrap">
                             <h3 class="title">내 요금제와 비슷한 요금제</h3>
@@ -169,9 +164,9 @@
                             </div>
                     </div>
                     <ul class="similarmyplan-list">
-                        <% for (let i = 0; i < filters.length; i++) { %>
-                        <li><span class="link">#<%= filters[i].prodFltNm %></span></li>
-                        <% } %>
+                        <% filters.map(filter => { %>
+                        <li><span class="link">#<%= filter.prodFltNm %></span></li>
+                        <% }); %>
                     </ul>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true" />
@@ -198,10 +193,10 @@
                                     <h5 class="title">
                                         <%= plan.prodNm %>
                                     </h5>
-                                    <% if (/^[0-9,]+$/.test(plan.basFeeInfo)) { %>
-                                        <p class="info">월<span class="money"><%= plan.basFeeInfo %></span>원</p>
+                                    <% if (plan.basFeeInfo.isNaN) { %>
+                                        <p class="info"><span class="money"><%= plan.basFeeInfo.value %></span></p>
                                     <% } else { %>
-                                        <p class="info"><span class="money"><%= plan.basFeeInfo %></span></p>
+                                        <p class="info">월<span class="money"><%= plan.basFeeInfo.value %></span>원</p>
                                     <% } %>
                                 </div>
                                 <div class="taglist-wrap">
@@ -212,16 +207,11 @@
                                 </div>
                                 <dl class="products-additionalinfo">
                                     <dt>데이터</dt>
-                                    <dd><span class="point">
-                                            <%= plan.basOfrDataQtyCtt %></span></dd>
+                                    <dd><span class="point"><%= plan.basOfrDataQtyCtt.isNaN ? plan.basOfrDataQtyCtt.value : plan.basOfrDataQtyCtt.value.data + plan.basOfrDataQtyCtt.value.unit  %></span></dd>
                                     <dt>음성</dt>
-                                    <dd>
-                                        <%= plan.basOfrVcallTmsCtt %>
-                                    </dd>
+                                    <dd><%= plan.basOfrVcallTmsCtt.value %></dd>
                                     <dt>문자</dt>
-                                    <dd>
-                                        <%= plan.basOfrCharCntCtt %>
-                                    </dd>
+                                    <dd><%= plan.basOfrCharCntCtt.isNaN ? plan.basOfrCharCntCtt.value : plan.basOfrCharCntCtt.value + plan.basOfrCharCntCtt.unit %></dd>
                                 </dl>
                             </a>
                         </li>
@@ -237,17 +227,14 @@
                 <% const recommendedTags = productData.recommendedTags.tagList %>
                 <% if (recommendedTags) { %>
                 <div class="cont-box nogaps-btm widget">
-                    <h3 class="suggest-tag-title">#
-                        <%= productData.recommendedTags.expsTitNm %>
-                    </h3>
+                    <h3 class="suggest-tag-title">#<%= productData.recommendedTags.expsTitNm %></h3>
                     <div class="widget-box toggle02">
                         <div class="suggest-tag-list">
                             <ul>
-                            <% for (let i = 0; i < recommendedTags.length; i++) { %>
+                            <% recommendedTags.map(tag => { %>
                             <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
-                            <li><a class="link" href="/product/mobileplan/list?tag=<%= recommendedTags[i].tagId %>">#
-                                    <%= recommendedTags[i].tagNm %></a></li>
-                            <% } %>
+                            <li><a class="link" href="/product/mobileplan/list?tag=<%= tag.tagId %>">#<%= tag.tagNm %></a></li>
+                            <% }); %>
                             </ul>
                         </div>
                         <div class="suggest-tag-morewrap">
@@ -257,6 +244,7 @@
                         </div>
                     </div>
                 </div>
+                <hr class="cont-sp type1" aria-hidden="true" />
                 <% } %>
                 <!--//추천태그 -->
 
@@ -265,35 +253,18 @@
                     <h3 class="moreitems-title">다른상품 더보기</h3>
                     <div class="moreitems-wrap">
                         <ul class="moreitems-list">
-                            <!-- TODO: 링크 연결 필요 -->
                             <li>
                                 <a class="link link-type01" href="/product/mobileplan-add">부가서비스</a>
-                            </li>
-                            <li>
-                                <a href="/benefit/index" class="link link-type02">혜택&middot;할인</a>
-                            </li>
-                            <li>
-                                <button class="link link-type03">T 로밍</button><!-- 화면ID: TR -->
-                                <!-- <a href="#" class="link link-type03">T 로밍</a> -->
                             </li>
                             <li>
                                 <a href="/product/wireplan" class="link link-type04">인터넷/전화/<br>IPTV</a>
                             </li>
                             <li>
-                                <button class="link link-type05">NUGU 서비스</button>
-                                <!-- <a href="#" class="link link-type05">NUGU 서비스</a> -->
+                                <button class="link link-type03">T 로밍</button><!-- TODO: 링크 연결 필요(화면ID: TR) -->
+                                <!-- <a href="#" class="link link-type03">T 로밍</a> -->
                             </li>
                             <li>
-                                <button class="link link-type06">스마트홈<br>서비스</button>
-                                <!-- <a href="#" class="link link-type06">스마트홈<br>서비스</a> -->
-                            </li>
-                            <li>
-                                <button class="link link-type07">보안솔루션<br>서비스</button>
-                                <!-- <a href="#" class="link link-type07">보안솔루션<br>서비스</a> -->
-                            </li>
-                            <li>
-                                <button class="link link-type08">T apps<br>서비스</button>
-                                <!-- <a href="#" class="link link-type08">T apps<br>서비스</a> -->
+                                <a href="/benefit/index" class="link link-type02">혜택&middot;할인</a>
                             </li>
                         </ul>
                     </div>
@@ -359,6 +330,7 @@
                 <!-- //하단 link영역 -->
 
                 <!-- 알뜰폰 한눈에 보기 -->
+                <% if (!isApp) { %>
                 <div class="cont-box bgnone noborder">
                     <!-- <a href="#" class="goodphonview-wrap">
                       <h3 class="title">알뜰폰 요금상품  보기</h3>
@@ -369,6 +341,7 @@
                         <p class="text">알뜰폰 브랜드별 요금상품을<br>확인해보세요.</p>
                     </button>
                 </div>
+                <% } %>
                 <!-- //알뜰폰 한눈에 보기 -->
 
             </div>
