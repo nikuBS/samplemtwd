@@ -16,6 +16,8 @@ class ProductSettingSignatureLine extends TwViewController {
     super();
   }
 
+  private readonly _allowedProdIdList = ['NA00005381'];
+
   /**
    * @param combineLIneInfo
    * @private
@@ -47,7 +49,7 @@ class ProductSettingSignatureLine extends TwViewController {
         title: '설정'
       };
 
-    if (FormatHelper.isEmpty(prodId)) {
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 

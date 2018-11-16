@@ -112,7 +112,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductSettingCombineLine($('.wrap'));
+    new Tw.ProductSettingCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%= combineLineInfo.svcProdGrpId %>');
   });
 </script>
 <% include ../../components/end.component.html %>
