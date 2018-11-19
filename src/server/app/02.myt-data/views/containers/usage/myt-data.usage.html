@@ -37,7 +37,7 @@
             <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
             <div>
 
-                <% if (balanceAddOns && balanceAddOns.sharingService.tdataSharing === 'Y') { %>
+                <% if (balanceAddOns && balanceAddOns.tdataSharing === 'Y') { %>
                 <div id="fe-tdata-share">
                     <div class="data-type" id="head-tdata-share">
                         <div class="tit-box">
@@ -98,7 +98,7 @@
                     </ul>
                 </div>
 
-                <% if (balanceAddOns && balanceAddOns.sharingService.troamingSharing === 'Y') { %>
+                <% if (balanceAddOns && balanceAddOns.troamingSharing === 'Y') { %>
                 <div id="fe-troaming-share">
 
                     <div class="data-type" id="head-troaming-share">
@@ -243,7 +243,7 @@
                 </div>
                 <% } %>
 
-                <% if (balanceAddOns && balanceAddOns.sharingService.bandDataSharing === 'Y') { %>
+                <% if (balanceAddOns && balanceAddOns.bandDataSharing === 'Y') { %>
                 <div id="fe-band-data-share">
 
                     <div class="data-type" id="head-band-data-share">
@@ -350,12 +350,12 @@
   $(document).ready(function () {
     new Tw.MyTDataUsage($('#myt-data-usage'), {
       svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
-      tdataSharing : '<%= balanceAddOns && balanceAddOns.sharingService.tdataSharing %>',
-      troamingSharing : '<%= balanceAddOns && balanceAddOns.sharingService.troamingSharing %>',
+      tdataSharing : '<%= balanceAddOns && balanceAddOns.tdataSharing %>',
+      troamingSharing : '<%= balanceAddOns && balanceAddOns.troamingSharing %>',
       dataTopUp : '<%= usageData && usageData.dataTopUp %>',
       ting : '<%= usageData && usageData.ting %>',
       dataDiscount : '<%= usageData && usageData.dataDiscount %>',
-      bandDataSharing : '<%= balanceAddOns && balanceAddOns.sharingService.bandDataSharing %>'
+      bandDataSharing : '<%= balanceAddOns && balanceAddOns.bandDataSharing %>'
     });
   });
 </script>
