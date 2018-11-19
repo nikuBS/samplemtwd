@@ -116,7 +116,10 @@ Tw.MyTFarePaymentHistory.prototype = {
     this.$btnListViewMorewrapper = this.$container.find('#fe-list-wrapper .bt-more');
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-    this.$appendListTarget.on('click', 'button', $.proxy(this._listViewDetailHandler, this));
+    this.$appendListTarget.on('click', 'button.bt-detail', $.proxy(this._listViewDetailHandler, this));
+    //예약취소버튼
+    this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this))
+    //TIP버튼의 클릭이동에 대한 정의 추가 필요
   },
 
   _listViewDetailHandler: function(e) {
@@ -127,6 +130,14 @@ Tw.MyTFarePaymentHistory.prototype = {
     Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
     this._historyService.goLoad(this._historyService.pathname + '/detail?type=' + detailData.dataPayMethodCode +
         '&isBank=' + detailData.dataIsBank + '&settleWayCd=' + (detailData.settleWayCd || ''));
+  },
+
+  _reserveCancelHandler: function(e) {
+    var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
+    if(detailData.listTitle.indexOf('OK캐쉬백')>=0){
+      this._popupService.openConfirm('삭제확인','삭제',function(){},function(){})
+    }
+    console.log(detailData)
   },
 
   _updatePaymentList: function(e) {

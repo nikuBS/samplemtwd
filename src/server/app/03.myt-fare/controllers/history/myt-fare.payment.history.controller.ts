@@ -512,7 +512,7 @@ class MyTFarePaymentHistory extends TwViewController {
     }).join('');
   }
 
-  // 꼭 알아두세요의 팁 메뉴 정리
+  // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
       {link: 'MF_08_tip_01', title: '다회선 통합납부 고객'},
