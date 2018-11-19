@@ -11,8 +11,10 @@
             <li class="item">
                 <span class="app-ico">
                     <img src="{{iconImg}}" alt="{{imgAlt}}" class="ico" />
-                    <span class="i-atv none"><span class="blind">active</span></span>
-                    {{#if isNew}}<span class="i-new"><span class="blind">new</span></span>{{/if}}
+                    {{#if isInstalled}}<span class="i-atv"><span class="blind">active</span></span>
+                    {{else}}
+                        {{#if isNew}}<span class="i-new"><span class="blind">new</span></span>{{/if}}
+                    {{/if}}
                 </span>
                 <span class="app-name">{{prodNm}}</span>
             </li>
