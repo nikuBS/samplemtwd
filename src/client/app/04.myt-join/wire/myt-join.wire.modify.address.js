@@ -20,8 +20,8 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this.addressFormData = {
     bldTypNm: '',               // 건물유형명
 
-    basAddr: '기본주소',        // 설치장소 변경후 기본 주소
-    dtlAddr: '상세주소',        // 설치장소 변경후 상세주소
+    basAddr: '',                // 설치장소 변경후 기본 주소
+    dtlAddr: '',                // 설치장소 변경후 상세주소
 
     mvDt: '',                   // 이사일자 (YYYYMMDD)
     stopPrefrDt: '',            // 중단희망일자 (YYYYMMDD)
@@ -73,6 +73,9 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
 
+    this.$container.on('click', '#btnPostSearch', $.proxy(this._addr_search_clickEvt, this));
+    this.$container.on('change', '.fe-main-address', $.proxy(this._formValidateionChk, this));
+    this.$container.on('change', '.fe-detail-address', $.proxy(this._formValidateionChk, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   $submitApplyEvt: function(event) {
@@ -206,19 +209,35 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     var tempDt = this.$select_install_input.val();
     Tw.Logger.info('[설치희망날짜]', tempDt, curDt, endDt);
 
-    //유효성 체크
-    if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
-      Tw.Logger.info('[범위에 포함]');
-      this.$select_install_input.val( tempDt );
-      this.addressFormData.setPrefrDt = tempDt;
+    // 범위에포함되야함?
+    this.$select_install_input.val( tempDt );
+    this.addressFormData.setPrefrDt = tempDt;
 
-    } else {
-      Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
-      this.$select_install_input.val('');
-    }
+    // //유효성 체크
+    // if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
+    //   Tw.Logger.info('[범위에 포함]');
+    //   this.$select_install_input.val( tempDt );
+    //   this.addressFormData.setPrefrDt = tempDt;
+    //
+    // } else {
+    //   Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
+    //   this.$select_install_input.val('');
+    // }
 
     this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
+  },
+  // 우편번호 찾기
+  _addr_search_clickEvt: function(){
+    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._addr_search_success_callback, this));
+  },
+  // 주소 - 우편번호 찾기 완료 시
+  _addr_search_success_callback: function(resp){
+    if(!resp || !resp.main) return;
+    $('.fe-main-address', this.$container).val(resp.main);
+    $('.fe-detail-address', this.$container).val(resp.detail);
+    this.addressFormData.basAddr = resp.main;
+    this.addressFormData.dtlAddr = resp.detail;
   },
   //--------------------------------------------------------------------------[Validation]
   /*
@@ -250,6 +269,13 @@ Tw.MyTJoinWireModifyAddress.prototype = {
             throw new Error('break');
 
           }
+        }
+
+        if( key === 'basAddr' && item !== $('.fe-main-address', this.$container).val()){
+          throw new Error('break');
+        }
+        if( key === 'dtlAddr' && item !== $('.fe-detail-address', this.$container).val()){
+          throw new Error('break');
         }
 
       });
