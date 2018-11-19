@@ -515,7 +515,7 @@ Tw.ProductJoinReservation.prototype = {
       reqParams = {
         productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
         userNm: this.$reservName.val(),
-        InputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
+        inputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
       };
 
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
