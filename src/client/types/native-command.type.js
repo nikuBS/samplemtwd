@@ -29,7 +29,8 @@ Tw.NTV_CMD = {
   SERVER_SESSION: 'serverSession',
   SESSION: 'session',
   EXIT: 'exit',
-  LOG: 'log'
+  LOG: 'log',
+  SHARE: 'share'
 };
 
 Tw.NTV_CODE = {

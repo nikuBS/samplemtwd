@@ -62,6 +62,12 @@ Tw.CommonHelper = (function () {
     );
   };
 
+  var share = function(content) {
+    Tw.Native.send(Tw.NTV_CMD.SHARE, {
+      content: content
+    }, null);
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -69,6 +75,7 @@ Tw.CommonHelper = (function () {
     toast: toast,
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
-    showDataCharge: showDataCharge
+    showDataCharge: showDataCharge,
+    share: share
   };
 })();
