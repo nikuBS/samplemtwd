@@ -26,7 +26,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
-    // this.$selectAmount =
   },
 
   _bindEvent: function () {
@@ -34,17 +33,18 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('click', '.fe-btn-show-example', $.proxy(this._onShowExampleCard, this));
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowSelectAmount, this));
     this.$container.on('click', '.fe-request-prepaid-card', $.proxy(this._onRequestPrepaidCard, this));
-    this.$container.on('change', '.fe-input_credit', $.proxy(this._validateCreditCard, this));
+    this.$container.on('click', '.fe-request-credit-card', $.proxy(this._validateCreditCard, this));
     this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
-    this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._validateCreditCard, this));
+    this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-prepaid-voice-cancel', $.proxy(this._closePrepaidPopup, this));
+    this.$container.on('click', '.fe-prepaid-complete', $.proxy(this._requestCompleteCreditCard, this));
   },
 
   _validatePrepaidCard: function () {
-    var arrValid = $.map($('#tab1-tab [required]'), function (item) {
-      if ( $(item).val().length !== 0 ) {
+    var arrValid = $.map($('#tab1-tab [required]'), function (elInput) {
+      if ( $(elInput).val().length !== 0 ) {
         return true;
       }
-
       return false;
     });
 
@@ -58,37 +58,75 @@ Tw.MyTDataPrepaidVoice.prototype = {
     return isValid;
   },
 
+  _checkIsAbled: function () {
+    if ( this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '' ) {
+      $('.fe-request-credit-card').prop('disabled', false);
+    } else {
+      $('.fe-request-credit-card').prop('disabled', true);
+    }
+  },
+
   _validateCreditCard: function () {
-    // if ( this.$cardNumber.val() !== '' ) {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0065, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-    //     .done($.proxy(this._getCardInfo, this));
-    // }
+    var isValid = this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
+      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
+      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
+      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
+      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
+      this._validation.checkLength(this.$cardPw.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
+
+    if ( isValid ) {
+      var htParams = {
+        cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)
+      };
+
+      this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
+        .done($.proxy(this._getCreditCardInfo, this));
+    }
   },
 
   _onRequestPrepaidCard: function () {
     var htParams = {
-      cardNum : $('.fe-prepaid-card').val(),
+      cardNum: $('.fe-prepaid-card').val(),
       serialNum: $('.fe-prepaid-serial').val()
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0052, htParams)
-      .done($.proxy(this._getCardInfo, this));
+      .done($.proxy(this._getPrepaidCardInfo, this));
   },
 
-  _getCardInfo: function (res) {
+  _getCreditCardInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var result = res.result;
+      var previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
+      var rechargeAmount = Number($('.fe-select-amount').data('amount'));
+      var afterAmount = previousAmount + rechargeAmount;
+
+      this._popupService.open({
+        hbs: 'DC_09_01_01',
+        layer: true,
+        data: {
+          cardNumber: this.$cardNumber.val(),
+          cardCompany: result.prchsCardName,
+          previousAmount: Tw.FormatHelper.addComma(previousAmount.toString()),
+          afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
+          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
+        }
+      });
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _isValidCreditCard: function () {
-    return true;
+  _getPrepaidCardInfo: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _onShowSelectAmount: function (e) {
     var $elButton = $(e.currentTarget);
-
     var fnSelectAmount = function (item) {
       return {
         value: item.title,
@@ -124,5 +162,30 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _onShowExampleCard: function () {
     this.$wrapExampleCard.show();
+  },
+
+  _closePrepaidPopup: function () {
+    this._popupService.close();
+  },
+
+  _requestCompleteCreditCard: function () {
+    var htParams = {
+      amt: Number($('.fe-select-amount').data('amount')).toString(),
+      cardNum: this.$cardNumber.val(),
+      expireYY: this.$cardY.val(),
+      expireMM: this.$cardM.val(),
+      pwd: this.$cardPw.val()
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0053, htParams)
+      .done($.proxy(this._onCompleteRechargeByCreditCard, this));
+  },
+
+  _onCompleteRechargeByCreditCard: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   }
 };
