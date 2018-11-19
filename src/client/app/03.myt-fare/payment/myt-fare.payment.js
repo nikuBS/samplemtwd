@@ -83,7 +83,7 @@ Tw.MyTFarePayment.prototype = {
     var cashbag, tpoint, rainbow = '';
 
     if (!this._isPointTarget) {
-      cashbag = Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
+      cashbag = Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
       tpoint = Tw.MYT_FARE_PAYMENT_NAME.T_POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
       rainbow = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
     } else {
