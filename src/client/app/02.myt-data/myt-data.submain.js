@@ -224,7 +224,9 @@ Tw.MyTDataSubMain.prototype = {
   _pesterDetailConfirm: function () {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
-    this._historyService.goLoad('/myt/data/gift');
+    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE +
+      this.data.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
+    Tw.CommonHelper.share(content);
   },
 
   // 리필쿠폰
