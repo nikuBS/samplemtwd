@@ -5,7 +5,7 @@
  *
  */
 
-Tw.ProductJoinSelContract = function (params) {
+Tw.BenefitDisPgmSelContract = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.ProductJoinSelContract = function (params) {
   this._initialize();
 };
 
-Tw.ProductJoinSelContract.prototype = {
+Tw.BenefitDisPgmSelContract.prototype = {
 
   _render: function () {
     this.$radioGroup = this.$container.find('[data-id=radio-group]');
@@ -61,6 +61,7 @@ Tw.ProductJoinSelContract.prototype = {
       isContractPlan: this.data.isContractPlan,
       isAutoJoinTermList: true,
       setInfo: 'set-info',
+      joinConfirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
       settingSummaryTexts: [
         {
           spanClass: 'term',
@@ -70,24 +71,21 @@ Tw.ProductJoinSelContract.prototype = {
           spanClass: 'date',
           text: this.data.monthDetail[this.selType]
         }]
-    }), $.proxy(this._prodJoinConfirm, this));
-  },
-
-  _prodJoinConfirm: function() {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.TITLE,
-      null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A2.BUTTON, null,
-      $.proxy(this._joinCompleteConfirm, this), null);
+    }), $.proxy(this._joinCompleteConfirm, this));
   },
 
   _joinCompleteConfirm: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
+    this._popupService.afterRequestSuccess('/myt/join', '/product/detail/' + this.data.prodId,
+      Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
+      Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
+    /*this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
       .done($.proxy(this._onSuccessSeldisSet, this))
-      .fail($.proxy(this._onErrorSeldisSet, this));
+      .fail($.proxy(this._onErrorSeldisSet, this));*/
   },
 
   _onSuccessSeldisSet: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt/join', '/product/join/' + this.data.prodId,
+      this._popupService.afterRequestSuccess('/myt/join', '/product/detail/' + this.data.prodId,
         Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
         Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
     }

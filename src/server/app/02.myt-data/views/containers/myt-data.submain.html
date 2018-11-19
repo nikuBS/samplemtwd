@@ -30,6 +30,8 @@
             <%- include('../components/submain/myt-data.submain.remnant.html', data) %>
             </div>
             <!--// .cont-box -->
+
+            <% if (data.svcInfo.svcAttrCd === 'M1') { %>
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <ul class="liststyle-type01">
@@ -60,6 +62,7 @@
                     <% } %>
                 </ul>
             </div>
+            <% } %>
             <!-- //.cont-box -->
 
             <% if (data.isPrepayment) { %>
@@ -113,7 +116,14 @@
             <!-- 충전/선물 내역 -->
             <% if (data.breakdownList) { %>
                 <div class="cont-box nogaps" data-id="bd-container">
-                    <p class="list-comp-title">최근 충전/선물 내역<button class="bt">더보기</button></p>
+                    <p class="list-comp-title">
+                        <% if (data.svcInfo.svcAttrCd === 'M2') { %>
+                        충전 내역
+                        <% } else { %>
+                        최근 충전/선물 내역
+                        <% } %>
+                        <button class="bt">더보기</button>
+                    </p>
                     <div class="contents-info-list">
                         <ul class="result-history">
                             <% for (var i=0; i < data.breakdownList.length; i++) { %>

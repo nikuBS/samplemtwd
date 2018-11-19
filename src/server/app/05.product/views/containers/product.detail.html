@@ -8,51 +8,13 @@
 <body class="bg-productdetail">
 <% if ( basicInfo && ( basicInfo.bgimgUrl || basicInfo.smrySurrColor ) ) { %>
 <style type="text/css">
-    <
-    %
-    if
-
-    (
-    basicInfo.smrySurrColor
-
-    )
-    {
-    %
-    >
-    .bg-productdetail .header-wrap {
-        background-color: <% = basicInfo . smrySurrColor% >
-    }
-
-    .bg-productdetail .productdetails-bg {
-        background-color: <% = basicInfo . smrySurrColor% >
-    }
-
-    <
-    %
-    }
-    %
-    >
-    <
-
-    %
-    if
-
-    (
-    basicInfo.bgimgUrl
-
-    )
-    {
-    %
-    >
-    .bg-productdetail .productdetails-bg {
-        background-image: url('<%= basicInfo.bgimgUrl %>')
-    }
-
-    <
-    %
-    }
-    %
-    >
+    <% if ( basicInfo.smrySurrColor ) { %>
+        .bg-productdetail .header-wrap { background-color: <%= basicInfo.smrySurrColor %> }
+        .bg-productdetail .productdetails-bg { background-color: <%= basicInfo.smrySurrColor %> }
+    <% } %>
+    <% if ( basicInfo.bgimgUrl ) { %>
+        .bg-productdetail .productdetails-bg { background-image: url('<%= basicInfo.bgimgUrl %>'); }
+    <% } %>
 </style>
 <% } %>
 <!-- #skip_navigation -->

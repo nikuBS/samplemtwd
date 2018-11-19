@@ -301,7 +301,12 @@ Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
   ALERT_4_A3: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?',
   ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.',
-  ALERT_MORE_TWO: '2자 이상 입력해 주세요.'
+  ALERT_MORE_TWO: '2자 이상 입력해 주세요.',
+  T_WORLD_APP_MOVED: {
+    TITLE:'T world App으로 이동하시겠습니까?',
+    MSG: '선택하신 서비스는<br/>모바일 T world app에서만<br/>이용하실 수 있습니다.',
+    BUTTON: '이동'
+  }
 };
 
 Tw.ALERT_MSG_HOME = {};
