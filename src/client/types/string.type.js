@@ -326,6 +326,10 @@ Tw.ALERT_MSG_MYT_DATA = {
     TITLE: '데이터 조르기',
     MSG: 'SKT를 이용하는 고객에게 문자와 SNS로 데이터 조르기를 하실 수 있습니다.',
     BUTTON: '조르기'
+  },
+  DATA_PESTER: {
+    TITLE: '[SKT] ',
+    CONTENT: '님이<br/>"T끼리 데이터 선물 조르기"를 요청하셨습니다.<br/>데이터 선물 하러가기'
   }
 };
 
