@@ -91,8 +91,8 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
     this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });
     this.controllers.push({ url: '/bill/guide/donation', controller: MyTFareBillGuideDonation });
-    this.controllers.push({ url: '/bill/set', controller: MyTFareBillSet });
-    this.controllers.push({ url: '/bill/set/reissue', controller: MyTFareBillSetReissue });
+    this.controllers.push({ url: '/billsetup', controller: MyTFareBillSet });
+    this.controllers.push({ url: '/billsetup/reissue', controller: MyTFareBillSetReissue });
     this.controllers.push({ url: '/billsetup/historyreturn', controller: MyTFareBillSetReturnHistory });
     this.controllers.push({ url: '/billsetup/change', controller: MyTFareBillSetChange });
     this.controllers.push({ url: '/hotbill', controller: MytFareHotbill });
