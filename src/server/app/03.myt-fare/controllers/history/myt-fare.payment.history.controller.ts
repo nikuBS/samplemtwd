@@ -41,12 +41,16 @@ interface PaymentData {
 interface PaymentList {
   [key: string]: any;
 }
-
+interface Info {
+  [key: string]: string;
+}
 class MyTFarePaymentHistory extends TwViewController {
   private paymentData: PaymentData = {};
 
   constructor() {
     super();
+
+    
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
@@ -155,7 +159,8 @@ class MyTFarePaymentHistory extends TwViewController {
         personalBizNum: this.paymentData.personalBizNum,
         listData: this.mergeData(data.listData),
         refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
-        current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType
+        current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType,
+        noticeInfo: this.getNoticeInfo()
       }
     });
   }
@@ -173,7 +178,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return null;
     });
-  };
+  }
 
   private getAutoWithdrawalAccountInfo = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0070, {}).map((resp: { code: string; result: any }) => {
@@ -190,7 +195,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return null;
     });
-  };
+  }
 
   private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any) {
     Observable.combineLatest(
@@ -238,7 +243,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; result: any }) => {
@@ -267,7 +272,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; result: any }) => {
@@ -298,7 +303,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; result: any }) => {
@@ -325,7 +330,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
@@ -348,7 +353,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
@@ -370,7 +375,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getOnetimePointReserveData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
@@ -378,15 +383,23 @@ class MyTFarePaymentHistory extends TwViewController {
         return null;
       }
 
-      // 2018.11.8 : api 에러로 노출 불가
+      resp.result.reservePointList = resp.result;
 
-      resp.result.map((o) => {
-        o.hasTip = true;
+      resp.result.reservePointList.map((o) => {
+        o.sortDt = o.opDt;
+        o.dataPayMethodCode = 'RP'; // 포인트예약
+        o.reqSt = o.reqSt;
+        o.listTitle = o.pointNm;
+        o.isPoint = true;
+        o.dataAmt = o.point;
+        o.reserveCancelable = o.cancelYn; // 취소가능여부
+        o.dataSubInfo = o.reqNm;
+        o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
       });
 
       return resp.result;
     });
-  };
+  }
 
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
@@ -394,16 +407,24 @@ class MyTFarePaymentHistory extends TwViewController {
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
-
-      // 2018.11.8 : api 에러로 노출 불가
-
-      resp.result.map((o) => {
-        o.hasTip = true;
+      // this.logger.info(this, '-------------------// point payment data', resp.result);
+      resp.result.usePointList = resp.result;
+      
+      resp.result.usePointList.map((o) => {
+        o.sortDt = o.opDt;
+        o.dataPayMethodCode = 'PN';
+        o.reqSt = o.reqSt; // 상태
+        o.noLink = (o.reqSt === '납부신청'); // 납부신청단계에서는 링크를 걸지 않음
+        o.listTitle = o.pointNm; 
+        o.isPoint = true;
+        o.dataAmt = FormatHelper.addComma(o.point);
+        o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
+        o.dataSubInfo = o.reqNm;
       });
 
       return resp.result;
     });
-  };
+  }
 
   private mergeData(data: PaymentList): any {
     data = data.slice(2);
@@ -427,6 +448,10 @@ class MyTFarePaymentHistory extends TwViewController {
           // }
         } else if (cur.autoUnitedPaymentList) {
           prev.mergedListData = prev.mergedListData.concat(cur.autoUnitedPaymentList);
+        } else if (cur.usePointList) {
+          prev.mergedListData = prev.mergedListData.concat(cur.usePointList);
+        } else if (cur.reservePointList) {
+          prev.mergedListData = prev.mergedListData.concat(cur.reservePointList);
         }
 
         if (cur.refundPaymentRecord && !prev.refundRecordList) {
@@ -485,6 +510,17 @@ class MyTFarePaymentHistory extends TwViewController {
       }
       return elem;
     }).join('');
+  }
+
+  // 꼭 알아두세요의 팁 메뉴 정리
+  private getNoticeInfo(): Info[] {
+    return [
+      {link: 'MF_08_tip_01', title: '다회선 통합납부 고객'},
+      {link: 'MF_08_tip_02', title: '납부내역 조회기간 안내'},
+      {link: 'MF_08_tip_03', title: '자동납부, 지로납부 확인'},
+      {link: 'MF_08_tip_04', title: '요금납부 안내'},
+      {link: 'MF_08_tip_05', title: '납부취소 안내'}
+    ];
   }
 }
 
