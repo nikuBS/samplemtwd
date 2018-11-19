@@ -10,6 +10,8 @@ import { API_CODE, API_CMD } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import BrowserHelper from '../../../utils/browser.helper';
+import ProductHelper from '../helper/product.helper';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -44,8 +46,7 @@ export default class Product extends TwViewController {
         }
 
         const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
-
-        res.render('product.html', { svcInfo, productData, pageInfo });
+        res.render('product.html', { svcInfo, productData, pageInfo, isApp: BrowserHelper.isApp(req) });
       });
     }
   }
@@ -61,7 +62,7 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -84,14 +85,17 @@ export default class Product extends TwViewController {
             prodList: group.prodList.map(plan => {
               return {
                 ...plan,
-                basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+                basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+                basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
+                basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
+                basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
               };
             })
           };
         })
       };
     });
-  }
+  };
 
   private getMyFilters = isLogin => {
     if (isLogin) {
@@ -108,7 +112,7 @@ export default class Product extends TwViewController {
     }
 
     return of(undefined);
-  }
+  };
 
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -128,12 +132,15 @@ export default class Product extends TwViewController {
         prodList: resp.result.prodList.map(plan => {
           return {
             ...plan,
-            basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+            basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
+            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
+            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
           };
         })
       };
     });
-  }
+  };
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -146,5 +153,5 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 }

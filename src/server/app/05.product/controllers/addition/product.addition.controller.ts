@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import ProductHelper from '../../helper/product.helper';
 
 export default class ProductAddition extends TwViewController {
   private ADDITION_CODE = 'F01200';
@@ -104,7 +105,7 @@ export default class ProductAddition extends TwViewController {
         prodList: (resp.result.prodList || []).map(addition => {
           return {
             ...addition,
-            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+            basFeeInfo: ProductHelper.convProductBasfeeInfo(addition.basFeeInfo)
           };
         })
       };
@@ -146,7 +147,7 @@ export default class ProductAddition extends TwViewController {
         prodList: (resp.result.prodList || []).map(addition => {
           return {
             ...addition,
-            basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
+            basFeeInfo: ProductHelper.convProductBasfeeInfo(addition.basFeeInfo)
           };
         })
       };

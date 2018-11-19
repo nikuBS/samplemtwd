@@ -29,10 +29,6 @@
                 <% if (svcInfo && productData.myAdditions) { %>
                     <div class="cont-box gaps-style01">
                        <div class="submain-myfeeproducts-wrap">
-                            <!-- <a href="#" class="submain-myfeeproducts">
-                                <h3 class="title">사용중인 상품</h3>
-                                <p class="text">band 데이터 퍼펙트S</p>
-                            </a> -->
                            <a href="/myt/join/product/additions" class="submain-myfeeproducts">
                                <h3 class="title">사용중인 상품</h3>
                                <p class="text"><span class="tx-bold"><%= productData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= productData.myAdditions.addProdCnt %>건</p>
@@ -52,8 +48,7 @@
                             <div class="widget-box slider1">
                                 <div class="slider-box">
                                     <ul class="slider">
-                                        <% for (let i = 0; i < banners.length; i++) { %>
-                                            <% const banner = banners[i]; %>
+                                        <% banners.map(banner => { %>
                                             <li>
                                                 <% if (banner.bnnrTypCd === 'H') { %>
                                                     <button>
@@ -65,7 +60,7 @@
                                                     </a>
                                                 <% } %>
                                             </li>
-                                        <% } %>
+                                        <% }); %>
                                     </ul>
                                 </div>
                             </div>
@@ -138,10 +133,10 @@
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
                                         <p class="info">
-                                            <% if (/^[0-9,]+$/.test(addition.basFeeInfo)) { %>
-                                                월<span class="money"><%= addition.basFeeInfo %></span>원
+                                            <% if (addition.basFeeInfo.isNaN) { %>
+                                                <span class="money"><%= addition.basFeeInfo.value %></span>
                                             <% } else { %>
-                                                <span class="money"><%= addition.basFeeInfo %></span>
+                                                월<span class="money"><%= addition.basFeeInfo.value %></span>원
                                             <% } %>
                                         </p>
                                     </div>
@@ -158,6 +153,7 @@
                         <% } %>
                     </ul>
                 </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <% } %>
                 <!-- //SKT의 대표 부가상품 -->
 
@@ -187,6 +183,7 @@
                         <!--// .widget -->
                     </div>
                 </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <% } %>
                 <!-- //스와이프 -->
 
@@ -208,10 +205,10 @@
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
                                         <p class="info">
-                                        <% if (/^[0-9,]+$/.test(addition.basFeeInfo)) { %>
-                                            월<span class="money"><%= addition.basFeeInfo %></span>원
+                                        <% if (addition.basFeeInfo.isNaN) { %>
+                                            <span class="money"><%= addition.basFeeInfo.value %></span>
                                         <% } else { %>
-                                            <span class="money"><%= addition.basFeeInfo %></span>
+                                            월<span class="money"><%= addition.basFeeInfo.value %></span>원
                                         <% } %>
                                         </p>
                                     </div>
@@ -226,10 +223,10 @@
                         <% } %>
                     </ul>
                 </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <% } %>
                 <!-- //부가상품 추천 -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- 추천태그 -->
                 <% const recommendedTags = productData.recommendedTags.tagList %>
@@ -252,6 +249,7 @@
                         </div>
                     </div>
                 </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <% } %>
                 <!--//추천태그 -->
 
@@ -262,35 +260,18 @@
                         <ul class="moreitems-list"> <!-- TODO: 링크 이동 추가 필요 -->
                             <li>
                                 <a class="link link-type01" href="/product/mobileplan" >모바일<br>요금제</a>
-                                <!-- <a href="#" class="link link-type01">모바일<br>부가상품</a> -->
-                            </li>
-                            <li>
-                                <a href="/benefit/index" class="link link-type02">혜택&middot;할인</a>
-                                <!-- <a href="#" class="link link-type02">혜택과 할인</a></li> -->
-                            </li>
-                            <li>
-                                <button class="link link-type03">T 로밍</button>
-                                <!-- <a href="#" class="link link-type03">T 로밍</a> -->
                             </li>
                             <li>
                                 <a href="/product/wireplan" class="link link-type04">인터넷/전화/<br>IPTV</a>
                                 <!-- <a href="#" class="link link-type04">인터넷/전화/<br>IPTV</a> -->
                             </li>
                             <li>
-                                <button class="link link-type05">NUGU 서비스</button>
-                                <!-- <a href="#" class="link link-type05">NUGU 서비스</a> -->
+                                <button class="link link-type03">T 로밍</button>
+                                <!-- <a href="#" class="link link-type03">T 로밍</a> -->
                             </li>
                             <li>
-                                <button class="link link-type06">스마트홈<br>서비스</button>
-                                <!-- <a href="#" class="link link-type06">스마트홈<br>서비스</a> -->
-                            </li>
-                            <li>
-                                <button class="link link-type07">보안솔루션<br>서비스</button>
-                                <!-- <a href="#" class="link link-type07">보안솔루션<br>서비스</a> -->
-                            </li>
-                            <li>
-                                <button class="link link-type08">T apps<br>서비스</button>
-                                <!-- <a href="#" class="link link-type08">T apps<br>서비스</a> -->
+                                <a href="/benefit/index" class="link link-type02">혜택&middot;할인</a>
+                                <!-- <a href="#" class="link link-type02">혜택과 할인</a></li> -->
                             </li>
                         </ul>
                     </div>

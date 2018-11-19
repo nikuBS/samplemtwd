@@ -79,10 +79,10 @@
                                     <h5 class="title">
                                         <%= addition.prodNm %>
                                     </h5>
-                                    <% if (/^[0-9,]+$/.test(addition.basFeeAmt)) { %>
-                                        <p class="info">월<span class="money"><%= addition.basFeeAmt %></span>원</p>
+                                    <% if (addition.basFeeAmt.isNaN) { %>
+                                        <p class="info"><span class="money"><%= addition.basFeeAmt.value %></span></p>
                                     <% } else { %>
-                                        <p class="info"><span class="money"><%= addition.basFeeAmt %></span></p>
+                                        <p class="info">월<span class="money"><%= addition.basFeeAmt.value %></span>원</p>
                                     <% } %>
                                 </div>
                                 <% if (addition.filters && addition.filters.length > 0) { %>
@@ -117,29 +117,12 @@
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list add-prod">
-                                    <!--TODO: 링크 이동 추가 필요-->
                                     <li>
                                         <div>
                                             <a href="/product/mobileplan">
                                                 <span class="ico type1"></span>
                                                 <span>모바일<br />요금제</span>
                                             </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <a href="/benefit/index">
-                                                <span class="ico type2"></span>
-                                                <span>혜택&middot;할인</span>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type3"></span>
-                                                <span>T 로밍</span>
-                                            </button>
                                         </div>
                                     </li>
                                     <li>
@@ -153,33 +136,17 @@
                                     <li>
                                         <div>
                                             <button>
-                                                <span class="ico type5"></span>
-                                                <span>NUGU 서비스</span>
+                                                <span class="ico type3"></span>
+                                                <span>T 로밍</span><!--TODO: 링크 이동 추가 필요(ID: TR)-->
                                             </button>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
-                                            <button>
-                                                <span class="ico type5"></span>
-                                                <span>스마트홈<br />서비스</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type5"></span>
-                                                <span>보안솔루션<br />서비스</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type5"></span>
-                                                <span>T apps<br />서비스</span>
-                                            </button>
+                                            <a href="/benefit/index">
+                                                <span class="ico type2"></span>
+                                                <span>혜택&middot;할인</span>
+                                            </a>
                                         </div>
                                     </li>
                                 </ul>
