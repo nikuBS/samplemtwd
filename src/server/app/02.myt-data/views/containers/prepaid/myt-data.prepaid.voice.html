@@ -29,8 +29,9 @@
                 <div class="unpaid-charges">
                     <dl class="total-box">
                         <dt>현재 카드 잔액</dt>
-                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span
-                            class="ff-tg-medium">원</span></dd>
+                        <dd class="t-point"><span class="num ff-tg-black fe-remain-amount" data-remain-amount="<%-PPSInfo.prodAmt%>"><%-convertAmount(PPSInfo.prodAmt)%></span><span
+                            class="ff-tg-medium">원</span>
+                        </dd>
                     </dl>
                     <ul class="point-box mb0">
                         <li>
@@ -57,9 +58,7 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
             <hr class="cont-sp type1" aria-hidden="true">
-
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <!-- .component -->
@@ -82,7 +81,8 @@
                                                     <label class="tit" for="formInput01">카드번호</label>
                                                     <span class="inputbox validation">
                                                         <span class="input">
-                                                            <input class="fe-prepaid-card" id="formInput01" type="number" placeholder="숫자만 입력"
+                                                            <input class="fe-prepaid-card" id="formInput01" type="number"
+                                                                   placeholder="숫자만 입력"
                                                                    title="선불 이동전화 카드번호 입력" maxlength="16" required>
                                                             <button class="cancel" style="display: inline-block;">
                                                                 <span class="blind">삭제</span>
@@ -98,7 +98,8 @@
                                                     <label class="tit" for="formInput02">일련번호</label>
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input class="fe-prepaid-serial" id="formInput02" type="number" placeholder="일련번호 입력"
+                                                            <input class="fe-prepaid-serial" id="formInput02" type="number"
+                                                                   placeholder="일련번호 입력"
                                                                    title="선불 이동전화 카드 일련번호 번호 입력" aria-labelledby="aria-exp-label1"
                                                                    aria-describedby="aria-exp-desc1" required>
                                                             <button class="cancel" style="display: none;">
@@ -126,7 +127,8 @@
                                                 <li>
                                                     <label class="tit" for="formInput01">충전금액</label>
                                                     <span class="inputbox">
-                                                        <button class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true">
+                                                        <button class="bt-dropdown big fe-select-amount" title="충전금액 선택"
+                                                                aria-haspopup="true">
                                                             금액 선택
                                                             <span class="ico"></span>
                                                         </button>
@@ -136,8 +138,9 @@
                                                     <label class="tit" for="formInput02">카드번호</label>
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input class="fe-card-number" id="formInput02" type="number" placeholder="숫자만 입력"
-                                                                   title="신용 카드번호 입력" maxlength="16" required>
+                                                            <input class="fe-card-number" id="formInput02" type="number"
+                                                                   placeholder="숫자만 입력"
+                                                                   title="신용카드번호 입력" maxlength="16" value="4364200647623980" required>
                                                             <button class="cancel" style="display: none;"><span
                                                                 class="blind">삭제</span></button>
                                                         </span>
@@ -149,14 +152,15 @@
                                                     <span class="inputbox">
                                                         <span class="input">
                                                             <input class="fe-card-y" id="formInput03" type="number" placeholder="YYYY"
-                                                                   title="유효 년" maxlength="4" required>
+                                                                   title="유효 년" maxlength="4" value="2019" required>
                                                             <button class="cancel" style="display: none;"><span
                                                                 class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
-                                                    <span class="inputbox">
+                                                        <span class="inputbox">
                                                         <span class="input">
-                                                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월" maxlength="2" required>
+                                                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월"
+                                                                   maxlength="2" value="03" required>
                                                             <button class="cancel" style="display: none;"><span
                                                                 class="blind">삭제</span></button>
                                                         </span>

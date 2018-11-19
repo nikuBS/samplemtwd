@@ -239,6 +239,7 @@ Tw.API_CMD = {
   BFF_06_0064: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.POST },
   BFF_06_0065: { path: '/core-bill/v1/credit-cards', method: Tw.API_METHOD.GET },
   BFF_06_0066: { path: '/core-product/v1/gift-refill-products', method: Tw.API_METHOD.GET },
+  BFF_06_0067: { path: '/core-bill/v1/pp-cards', method: Tw.API_METHOD.GET },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
