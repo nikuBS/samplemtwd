@@ -64,7 +64,7 @@
                     <% } %>
                     <% if ( ctgKey === 'plans' && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') )
                     { %>
-                    <%- prodRedisInfo.summary.ledDtlHtmlCtt %>
+                    <%- prodRedisInfo.summary.smryHtmlCtt %>
                     <% } %>
                     <% if ( ctgKey === 'additions' && prodRedisInfo.summary.prodSmryDesc ) { %>
                     <p class="productdetails-text02"><%= prodRedisInfo.summary.prodSmryDesc %></p>
@@ -156,8 +156,8 @@
 
             <!-- 상단 배너 -->
             <% if ( prodRedisInfo.banner.T ) { %>
-            <% if ( prodRedisInfo.banner.T.imgFilePathNm ) { %>
-            <img src="<%= prodRedisInfo.banner.T.imgFilePathNm %>">
+            <% if ( prodRedisInfo.banner.T.bnnrImgUrl ) { %>
+            <a href="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.T.bnnrImgUrl %>"></a>
             <% } else { %>
             <%- prodRedisInfo.banner.T.bnnrDtlHtmlCtt %>
             <% } %>
@@ -239,16 +239,16 @@
                     <li>
                         <div class="link-long">
                             <button class="fe-btn_contents_detail" data-contents="<%= i %>">
-                                <%= prodRedisInfo.contents.LIST[i].briefTitNm %>
+                                <%= prodRedisInfo.contents.LIST[i].titleNm %>
                                 <span class="tx-sub">
                     <span class="ico"><span class="blind">보기</span></span>
                   </span>
                             </button>
                         </div>
                         <div class="none fe-contents_detail_item" aria-hidden="true"
-                             data-title="<%= prodRedisInfo.contents.LIST[i].briefTitNm %>"
+                             data-title="<%= prodRedisInfo.contents.LIST[i].titleNm %>"
                              data-class="<%= prodRedisInfo.contents.LIST[i].vslClass %>">
-                            <%- prodRedisInfo.contents.LIST[i].ledDtlHtmlCtt %>
+                            <%- prodRedisInfo.contents.LIST[i].ledItmDesc %>
                         </div>
                     </li>
                     <% } %>
@@ -259,8 +259,8 @@
 
             <!-- 중단 배너 -->
             <% if ( prodRedisInfo.banner.C ) { %>
-            <% if ( prodRedisInfo.banner.C.imgFilePathNm ) { %>
-            <img src="<%= prodRedisInfo.banner.C.imgFilePathNm %>">
+            <% if ( prodRedisInfo.banner.C.bnnrImgUrl ) { %>
+            <a href="<%= prodRedisInfo.banner.C.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.C.bnnrImgUrl %>"></a>
             <% } else { %>
             <%- prodRedisInfo.banner.C.bnnrDtlHtmlCtt %>
             <% } %>
@@ -463,8 +463,8 @@
 
             <!-- 하단 배너 -->
             <% if ( prodRedisInfo.banner.B ) { %>
-            <% if ( prodRedisInfo.banner.B.imgFilePathNm ) { %>
-            <img src="<%= prodRedisInfo.banner.B.imgFilePathNm %>">
+            <% if ( prodRedisInfo.banner.B.bnnrImgUrl ) { %>
+            <a href="<%= prodRedisInfo.banner.B.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.B.bnnrImgUrl %>"></a>
             <% } else { %>
             <%- prodRedisInfo.banner.B.bnnrDtlHtmlCtt %>
             <% } %>
@@ -478,8 +478,7 @@
                 <h3 class="suggest-tag-title">추천태그</h3>
                 <ul class="suggest-tag-list openlist-wrap">
                     <% for (var i in relateTags) { %>
-                    <li><a href="/product/<%= ctgKey %>?tag=<%= relateTags[i].tagId %>" class="link">#<%=
-                        relateTags[i].tagNm %></a></li>
+                    <li><a href="/product/<%= ctgKey %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
                     <% } %>
                 </ul>
             </div>
