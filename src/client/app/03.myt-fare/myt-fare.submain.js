@@ -459,7 +459,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 기부금/후원금
   _onClickedContribution: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/bill/guide/donation');
+    this._historyService.goLoad('/myt-fare/billguide/donation');
   },
 
   // 요금안내서 이동(chart)

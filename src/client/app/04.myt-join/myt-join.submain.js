@@ -131,7 +131,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 약정 할인
   _onMovedInstallement: function() {
-    this._historyService.goLoad('/myt/join/info/discount');
+    this._historyService.goLoad('/myt-join/myplancombine/infodiscount');
   },
   // 무약정플랜
   _onMovedContractPlan: function() {
@@ -154,10 +154,10 @@ Tw.MyTJoinSubMain.prototype = {
     var $target = $(event.target);
     switch ( $target.attr('data-id') ) {
       case 'addr-chg':
-        this._historyService.goLoad('/myt/join/wire/modify/address');
+        this._historyService.goLoad('/myt-join/submain/wire/modifyaddress');
         break;
       case 'prod-chg':
-        this._historyService.goLoad('/myt/join/wire/modify/product');
+        this._historyService.goLoad('/myt-join/submain/wire/modifyproduct');
         break;
       case 'transfer-fee':
         this._historyService.goLoad('/myt-join/submain/wire/changeowner');
@@ -166,7 +166,7 @@ Tw.MyTJoinSubMain.prototype = {
         this._historyService.goLoad('/myt-join/submain/wire/modifyperiod');
         break;
       case 'svc-cancel':
-        this._historyService.goLoad('/myt/join/wire/set/wire-cancel-service');
+        this._historyService.goLoad('/myt-join/submain/wire/cancelsvc');
         break;
       case 'wire-pause':
         this._historyService.goLoad('/myt-join/submain/wire/wirestopgo');

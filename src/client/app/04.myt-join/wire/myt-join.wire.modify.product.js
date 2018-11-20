@@ -286,14 +286,14 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       // 가입 서비스 변경 신청이 완료 되었습니다 빠른 시일내에 연락 드리도록 하겠습니다
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A36.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A36.TITLE, null,
         $.proxy(function(){
-          this._goLoad('/myt/join/wire/history');
+          this._goLoad('/myt-join/submain/wire/history');
         }, this));
 
     } else if ( res.code === 'WI0007' ) {
       // 선택하신 서비스는 SK브로드밴드를 통해 가입하신 서비스이므로 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주시기 바랍니다.
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT.ERROR_ALERT, null,
         $.proxy(function(){
-          this._goLoad('/myt/join/wire/history');
+          this._goLoad('/myt-join/submain/wire/history');
       }, this));
     }
 
