@@ -241,7 +241,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // 충전/선물내역 상세
   _onBreakdownListDetail: function () {
-    this._historyService.goLoad('/myt/data/recharge/history');
+    this._historyService.goLoad('/myt/data/datainfo');
   },
 
   // 다른 회선 잔여량 상세
