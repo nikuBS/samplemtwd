@@ -135,7 +135,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 무약정플랜
   _onMovedContractPlan: function() {
-    this._historyService.goLoad('/myt/join/info/no-agreement');
+    this._historyService.goLoad('/myt-join/myplancombine/noagreement');
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function() {
@@ -172,10 +172,10 @@ Tw.MyTJoinSubMain.prototype = {
         this._historyService.goLoad('/myt/join/wire/set/pause');
         break;
       case 'until-info':
-        this._historyService.goLoad('/myt/join/info/contract');
+        this._historyService.goLoad('/myt-join/myinfo/contract');
         break;
       case 'work-notify':
-        this._historyService.goLoad('/myt/join/info/sms');
+        this._historyService.goLoad('myt-join/wire/wiredo/sms');
         break;
     }
   },

@@ -409,7 +409,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 요금안내서 설정 이동
   _onClickedSetBillReport: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/bill/set');
+    this._historyService.goLoad('/myt-fare/billsetup');
   },
 
   // 납부방법 이동
