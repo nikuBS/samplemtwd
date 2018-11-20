@@ -1,17 +1,17 @@
 /**
- * FileName: product.controller.ts
+ * FileName: product.mobileplan.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.09.06
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import FormatHelper from '../../../utils/format.helper';
+import { API_CODE, API_CMD } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import BrowserHelper from '../../../utils/browser.helper';
-import ProductHelper from '../helper/product.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
+import ProductHelper from '../../helper/product.helper';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -23,11 +23,11 @@ export default class Product extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const uri = req.url.replace('/mobileplan/', '');
     if (uri === 'club-t') {
-      res.render('plan/product.plan.club-t.html', { svcInfo });
+      res.render('mobileplan/product.mobileplan.club-t.html', { svcInfo });
     } else if (uri === 'campuszone') {
-      res.render('plan/product.plan.campuszone.html', { svcInfo });
+      res.render('mobileplan/product.mobileplan.campuszone.html', { svcInfo });
     } else if (uri === 'concierge') {
-      res.render('plan/product.plan.concierge.html', { svcInfo });
+      res.render('mobileplan/product.mobileplan.concierge.html', { svcInfo });
     } else {
       Observable.combineLatest(
         this.getPromotionBanners(),
@@ -46,7 +46,7 @@ export default class Product extends TwViewController {
         }
 
         const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
-        res.render('product.html', { svcInfo, productData, pageInfo, isApp: BrowserHelper.isApp(req) });
+        res.render('mobileplan/product.mobileplan.html', { svcInfo, productData, pageInfo, isApp: BrowserHelper.isApp(req) });
       });
     }
   }
@@ -62,7 +62,7 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -95,7 +95,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getMyFilters = isLogin => {
     if (isLogin) {
@@ -112,7 +112,7 @@ export default class Product extends TwViewController {
     }
 
     return of(undefined);
-  };
+  }
 
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -140,7 +140,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -153,5 +153,5 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 }

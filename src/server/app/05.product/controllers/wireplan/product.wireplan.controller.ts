@@ -16,9 +16,9 @@ export default class ProductWire extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const uri = req.url.replace('/wireplan/', '');
     if (uri === 'service-area') {
-      res.render('wire/product.wire.service-area.html', { svcInfo, pageInfo });
+      res.render('wireplan/product.wireplan.service-area.html', { svcInfo, pageInfo });
     } else if (uri === 'portability') {
-      res.render('wire/product.wire.portability.html', { svcInfo, pageInfo });
+      res.render('wireplan/product.wireplan.portability.html', { svcInfo, pageInfo });
     } else {
       Observable.combineLatest(this.getMyWireInfo(svcInfo), this.getBanners()).subscribe(([myWire, banners]) => {
         const error = {
@@ -33,7 +33,7 @@ export default class ProductWire extends TwViewController {
           });
         }
 
-        res.render('wire/product.wire.html', { svcInfo, pageInfo, myWire, banners });
+        res.render('wireplan/product.wireplan.html', { svcInfo, pageInfo, myWire, banners });
       });
     }
   }

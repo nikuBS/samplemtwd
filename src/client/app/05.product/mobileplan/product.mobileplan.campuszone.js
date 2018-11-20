@@ -1,11 +1,11 @@
-Tw.ProductPlanCampuszone = function(rootEl) {
+Tw.ProductMobilePlanCampuszone = function(rootEl) {
   this.$container = rootEl;
 
   this._cachedElements();
   this._bindEvent();
 };
 
-Tw.ProductPlanCampuszone.prototype = {
+Tw.ProductMobilePlanCampuszone.prototype = {
   _cachedElements: function() {
     this.$lists = this.$container.find('.data-type01-wrap');
   },
