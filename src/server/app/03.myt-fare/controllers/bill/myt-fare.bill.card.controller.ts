@@ -42,15 +42,11 @@ class MyTFareBillCard extends TwViewController {
   }
 
   private getUnpaidList(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0021, {}).map((res) => {
-      return res;
-    });
+    return this.apiService.request(API_CMD.BFF_07_0021, {});
   }
 
   private getAutoInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0022, {}).map((res) => {
-      return res;
-    });
+    return this.apiService.request(API_CMD.BFF_07_0022, {});
   }
 
   private parseData(result: any, svcInfo: any): any {
