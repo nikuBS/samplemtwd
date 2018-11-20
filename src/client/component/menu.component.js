@@ -9,11 +9,12 @@ Tw.MenuComponent = function () {
 
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._apiService = Tw.Api;
 
   // this._bindEvent();
   this._bindLogin();
-  Tw.Logger.info('[MainMenu] init complete');
+  Tw.Logger.info('[MainMenu] init complete', this._tidLanding);
 };
 Tw.MenuComponent.prototype = {
   _bindEvent: function () {
@@ -47,50 +48,10 @@ Tw.MenuComponent.prototype = {
     $('.fe-bt-login').on('click', $.proxy(this._onClickLogin, this));
     $('.fe-bt-logout').on('click', $.proxy(this._onClickLogout, this));
   },
-  _goLoad: function (nativeCommand, url, callback) {
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeService.send(nativeCommand, {}, callback);
-    } else {
-      this._historyService.goLoad(url);
-    }
-  },
   _onClickLogin: function () {
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
+    this._tidLanding.goLogin();
   },
   _onClickLogout: function () {
-    this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
-  },
-  _onNativeLogin: function (resp) {
-    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
-      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this));
-    }
-  },
-  _successLogin: function (resp) {
-    Tw.Logger.info('[Login Resp]', resp);
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // this._historyService.reload();
-      this._historyService.goLoad('/main/home');
-    } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
-      // 고객보호비밀번호
-      this._historyService.goLoad('/common/login/customer-pwd');
-    } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
-      // 휴면계정
-      this._historyService.goLoad('/common/login/dormancy');
-    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.goLoad('/common/login/exceed-fail');
-    } else {
-      this._historyService.goLoad('/common/login/fail?errorCode=' + resp.code);
-    }
-  },
-  _onNativeLogout: function () {
-    this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
-      .done($.proxy(this._successLogout, this));
-  },
-  _successLogout: function (resp) {
-    Tw.Logger.info('[Logout Resp]', resp);
-    // if(resp.code === NTV_CODE.CODE_00) {
-    this._historyService.goLoad('/common/logout/complete');
-    // }
+    this._tidLanding.goLogout();
   }
 };
