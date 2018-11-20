@@ -192,7 +192,7 @@ Tw.ProductJoinCombineLine.prototype = {
   },
 
   _procConfirm: function() {
-    new Tw.ProductJoinCommonConfirm(true, null, $.extend(this._confirmOptions, {
+    new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,

@@ -38,6 +38,8 @@ Tw.BUTTON_LABEL = {
   LINE: '회선관리',
   CHANGE: '변경하기',
   APPLY: '신청하기',
+  JOIN: '가입하기',
+  TERMINATE: '해지하기',
   NEXT: '다음'
 };
 

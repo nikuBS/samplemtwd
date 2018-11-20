@@ -54,14 +54,14 @@ Tw.BenefitDisPgmSelContract.prototype = {
   },
 
   _onOkBtnClicked: function () {
-    new Tw.ProductJoinCommonConfirm(true, this.$container, $.extend(this.joinInfoTerm, {
+    new Tw.ProductCommonConfirm(true, this.$container, $.extend(this.joinInfoTerm, {
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       isSelectedProgram: true,
       isContractPlan: this.data.isContractPlan,
       isAutoJoinTermList: true,
       setInfo: 'set-info',
-      joinConfirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
       settingSummaryTexts: [
         {
           spanClass: 'term',

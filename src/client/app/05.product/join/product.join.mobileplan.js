@@ -1,65 +1,37 @@
 /**
- * FileName: product.join.tplan.js
+ * 상품 가입 - 모바일 요금제
+ * FileName: product.join.mobileplan.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.09
+ * Date: 2018.10.01
  */
 
-Tw.ProductJoinTplan = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn) {
-  this._popupService = Tw.Popup;
+Tw.ProductJoinMobileplan = function(rootEl, prodId, confirmOptions, isOverPayReqYn) {
+  this.$container = rootEl;
+
+  this._historyService = new Tw.HistoryService();
+  this._popupService = new Tw.PopupService();
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
-  this._historyService = new Tw.HistoryService();
 
   this._prodId = prodId;
-  this._displayId = displayId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._confirmOptions = JSON.parse(confirmOptions);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 
-  this.$container = rootEl;
-  this._cachedElement();
-  this._bindEvent();
-  this._convConfirmOptions();
+  this._init();
 };
 
-Tw.ProductJoinTplan.prototype = {
+Tw.ProductJoinMobileplan.prototype = {
 
-  _cachedElement: function() {
-    this.$inputRadioInWidgetbox = this.$container.find('.widget-box.radio input[type="radio"]');
-    this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
-  },
-
-  _bindEvent: function() {
-    this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this));
-    this.$btnSetupOk.on('click', $.proxy(this._reqOverpay, this));
-  },
-
-  _enableSetupButton: function() {
-    this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
-  },
-
-  _convConfirmOptions: function() {
-    this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
-      svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
-      svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
-      toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
-      isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
-      toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
-      toProdDesc: this._confirmOptions.sktProdBenfCtt,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
-      autoJoinList: this._confirmOptions.preinfo.autoJoinList,
-      autoTermList: this._confirmOptions.preinfo.autoTermList,
-      autoJoinBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      autoTermBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 1)
-    });
+  _init: function() {
+    this._convConfirmOptions();
+    this._reqOverpay();
   },
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
-      return this._procConfirm();
+      return this._getJoinConfirmContext();
     }
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
@@ -99,20 +71,47 @@ Tw.ProductJoinTplan.prototype = {
     }
 
     this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
-    this._procConfirm();
+    this._getJoinConfirmContext();
   },
 
-  _procConfirm: function() {
-    new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
+  _getJoinConfirmContext: function() {
+    $.get('/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
+  },
+
+  _setConfirmBodyIntoContainer: function(context) {
+    var tmpl = Handlebars.compile(context),
+      html = tmpl(this._confirmOptions);
+
+    this.$container.html(html);
+    this._callConfirmCommonJs();
+  },
+
+  _convConfirmOptions: function() {
+    this._confirmOptions = $.extend(this._confirmOptions, {
+      title: Tw.PRODUCT_TYPE_NM.JOIN,
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
       isMobilePlan: true,
       joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
-      settingSummaryTexts: [{
-        spanClass: 'val',
-        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
-      }]
-    }), $.proxy(this._prodConfirmOk, this));
+      svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
+      svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
+      toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
+      isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
+      toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
+      toProdDesc: this._confirmOptions.sktProdBenfCtt,
+      autoJoinBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
+      autoTermBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
+      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      autoJoinList: this._confirmOptions.preinfo.autoJoinList,
+      autoTermList: this._confirmOptions.preinfo.autoTermList,
+      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 1)
+    });
+  },
+
+  _callConfirmCommonJs: function() {
+    new Tw.ProductCommonConfirm(false, this.$container, {}, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
@@ -120,10 +119,7 @@ Tw.ProductJoinTplan.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       prodId: this._prodId,
-      prodProcTypeCd: 'JN',
-      asgnNumList: [],
-      optProdId: this.$container.find('.widget-box.radio input[type="radio"]:checked').val(),
-      svcProdGrpId: ''
+      prodProcTypeCd: 'JN'
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },
 
@@ -169,3 +165,4 @@ Tw.ProductJoinTplan.prototype = {
   }
 
 };
+
