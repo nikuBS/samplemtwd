@@ -31,13 +31,16 @@ Tw.NTV_CMD = {
   EXIT: 'exit',
   LOG: 'log',
   SHARE: 'share',
-  IS_INSTALLED: 'isAppInstall'
+  IS_INSTALLED: 'isAppInstall',
+  FREE_SMS: 'freeSMS'
 };
 
 Tw.NTV_CODE = {
   CODE_00: 0, // success (FIDO_TYPE: fingerprint)
   CODE_01: 1, // (FIDO_TUYPE: face)
-  CODE_ERROR: -1
+  CODE_ERROR: -1,
+
+  CODE_A80: 'A80'
 };
 
 Tw.IOS_URL = 'tworld://';
