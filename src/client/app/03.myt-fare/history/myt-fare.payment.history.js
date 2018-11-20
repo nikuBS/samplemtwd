@@ -116,7 +116,10 @@ Tw.MyTFarePaymentHistory.prototype = {
     this.$btnListViewMorewrapper = this.$container.find('#fe-list-wrapper .bt-more');
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-    this.$appendListTarget.on('click', 'button', $.proxy(this._listViewDetailHandler, this));
+    this.$appendListTarget.on('click', 'button.bt-detail', $.proxy(this._listViewDetailHandler, this));
+    //예약취소버튼
+    this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this))
+    //TIP버튼의 클릭이동에 대한 정의 추가 필요
   },
 
   _listViewDetailHandler: function(e) {
@@ -127,6 +130,70 @@ Tw.MyTFarePaymentHistory.prototype = {
     Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
     this._historyService.goLoad(this._historyService.pathname + '/detail?type=' + detailData.dataPayMethodCode +
         '&isBank=' + detailData.dataIsBank + '&settleWayCd=' + (detailData.settleWayCd || ''));
+  },
+
+  _reserveCancelHandler: function(e) {
+    this.reserveCancelData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
+    var alertCode, alertType;
+
+    // alertCode 설정
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A85';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A87';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A92';
+
+    if(alertCode) alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
+
+    if(alertType) this._popupService.openConfirm(alertType.MSG,alertType.TITLE,$.proxy(this._execReserveCancel,this),$.proxy(this._popupService.close,this));
+    
+  },
+
+  // 포인트 1회 납부예약 취소 실행
+  _execReserveCancel: function(){
+    this._popupService.close();
+
+    var apiCode, apiBody={};
+
+    //apiCode,apiBody 설정
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0||this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0){ 
+      apiCode='BFF_07_0047';
+      apiBody={
+        ptClCd:this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0?'TPT':'CPT',
+        opDt:this.reserveCancelData.opDt,
+        payOpTm:this.reserveCancelData.opTm,//.substring(8),
+        rbpSerNum:this.reserveCancelData.rbpSerNum
+      }
+    }
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0){ 
+      apiCode='BFF_07_0050';
+      apiBody={
+        rbpSerNum:this.reserveCancelData.rbpSerNum
+      }
+    }
+
+    if(apiCode){
+      this._apiService.request(Tw.API_CMD[apiCode], apiBody)
+        .done($.proxy(this._successReserveCancel, this)).fail($.proxy(this._apiError, this));
+    }
+  },
+
+  // 포인트 1회 납부예약 취소 res
+  _successReserveCancel: function(res){
+    var alertCode, alertType;
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A86';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A88';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A93';
+
+    alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
+
+    if(res.code === '00') {
+      this._popupService.openAlert(alertType.MSG, alertType.TITLE, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
+        this._popupService.close();
+      }, this));
+    } else {
+      this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
+        this._popupService.close();
+      }, this));
+    }
   },
 
   _updatePaymentList: function(e) {
