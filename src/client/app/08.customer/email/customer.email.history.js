@@ -19,6 +19,6 @@ Tw.CustomerEmailHistory.prototype = {
   },
 
   _goToHistoryDetail: function (e) {
-    this._history.replaceURL('/customer/email/history-detail?' + $.param($(e.currentTarget).data()));
+    this._history.replaceURL('/customer/emailconsult/history-detail?' + $.param($(e.currentTarget).data()));
   }
 };

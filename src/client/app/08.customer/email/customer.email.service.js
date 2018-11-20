@@ -73,11 +73,9 @@ Tw.CustomerEmailService.prototype = {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
-      atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'),
-        function (item) {
-          return $(item).data('hashfile');
-        }
-      ).join()
+      atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'), function (item) {
+        return $.trim($(item).find('.text').text() + ':' + '/uploads' + $(item).data('hashfile'));
+      })
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
@@ -88,7 +86,10 @@ Tw.CustomerEmailService.prototype = {
     var htParams = $.extend(this._makeParams(), {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
-      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val()
+      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
+      atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'), function (item) {
+        return $.trim($(item).find('.text').text() + ':' + '/uploads' + $(item).data('hashfile'));
+      })
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams)
@@ -125,7 +126,7 @@ Tw.CustomerEmailService.prototype = {
 
   _onSuccessRequest: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer/email/complete?email=' + $('.fe-service_email').val());
+      this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-service_email').val());
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

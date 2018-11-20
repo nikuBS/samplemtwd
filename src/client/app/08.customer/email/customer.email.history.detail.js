@@ -31,11 +31,11 @@ Tw.CustomerEmailHistoryDetail.prototype = {
     var inqclcd = $(e.currentTarget).data().inqclcd;
 
     if ( inqclcd === 'Q' ) {
-      this._history.replaceURL('/customer/email/quality-retry?' + $.param($(e.currentTarget).data()));
+      this._history.replaceURL('/customer/emailconsult/quality-retry?' + $.param($(e.currentTarget).data()));
     }
 
     if ( inqclcd === 'B' ) {
-      this._history.replaceURL('/customer/email/service-retry?' + $.param($(e.currentTarget).data()));
+      this._history.replaceURL('/customer/emailconsult/service-retry?' + $.param($(e.currentTarget).data()));
     }
   },
 

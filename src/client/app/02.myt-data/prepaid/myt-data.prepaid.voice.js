@@ -196,10 +196,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _onCompleteRechargeByCreditCard: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
+    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
+    // if ( res.code === Tw.API_CODE.CODE_00 ) {
+    //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
+    // } else {
+    //   Tw.Error(res.code, res.msg).pop();
+    // }
   }
 };

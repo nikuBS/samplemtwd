@@ -36,7 +36,7 @@ class MyTDataPrepaid extends TwViewController {
         });
         break;
       case 'voice-auto':
-        this.getPPSInfo().subscribe((result) => {
+        this.getAutoPPSInfo().subscribe((result) => {
           res.render(
             'prepaid/myt-data.prepaid.voice-auto.html', Object.assign(responseData, {
               PPSInfo: result,
@@ -79,6 +79,17 @@ class MyTDataPrepaid extends TwViewController {
           );
         });
         break;
+      case 'voice-complete':
+        this.getPPSInfo().subscribe((result) => {
+          res.render(
+            'prepaid/myt-data.prepaid.voice.complete.html', Object.assign(responseData, {
+              PPSInfo: result,
+              convertDate: this.convertDate,
+              convertAmount: this.convertAmount
+            })
+          );
+        });
+        break;
       default:
       // Observable.combineLatest(
       //   this.getLimitUserInfo()
@@ -113,6 +124,22 @@ class MyTDataPrepaid extends TwViewController {
         'numEndDt': '20210421',
         'dataYn': 'Y',
         'dataOnlyYn': 'N'
+      };
+    })
+
+  public getAutoPPSInfo = () => this.apiService
+    .request(API_CMD.BFF_06_0055, {})
+    .map((res) => {
+      // if ( res.code === API_CODE.CODE_00 ) {
+      //   return res.result;
+      // } else {
+      //   return null;
+      // }
+      return {
+        amt : '10000',
+        amtCd: '01',
+        endDt: '20181231',
+        cardNum : '****'
       };
     })
 

@@ -17,14 +17,13 @@ import MyTDataPrepaidHistory from './controllers/prepaid/myt-data.prepaid.histor
 class MytDataRouter extends TwRouter {
   constructor() {
     super();
+    // new url
     this.controllers.push({ url: '/', controller: MyTDataSubMain });
     this.controllers.push({ url: '/giftdata(/:page)?', controller: MyTDataGift });
-    this.controllers.push({ url: '/ting(/:page)?', controller: MyTDataTing });
-    this.controllers.push({ url: '/limit(/:page)?', controller: MyTDataLimit });
-    this.controllers.push({ url: '/cookiz(/:page)?', controller: MyTDataCookiz });
+    this.controllers.push({ url: '/recharge/ting(/:page)?', controller: MyTDataTing });
+    this.controllers.push({ url: '/recharge/limit(/:page)?', controller: MyTDataLimit });
+    this.controllers.push({ url: '/recharge/cookiz(/:page)?', controller: MyTDataCookiz });
     this.controllers.push({ url: '/recharge/coupon(/:page)?', controller: MyTDataRechargeCoupon });
-
-    // new url
     this.controllers.push({ url: '/familydata(/share)?', controller: MyTDataFamily });
     this.controllers.push({ url: '/datainfo', controller: MyTDataInfo });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
