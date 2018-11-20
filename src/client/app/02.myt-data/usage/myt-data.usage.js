@@ -43,7 +43,7 @@ Tw.MyTDataUsage.prototype = {
 
     // 내폰끼리 결합 상세 조회
     this.$container.on('click', '.fe-btn-share', $.proxy(function() {
-      this._historyService.goLoad('/myt/data/usage/total-sharing-data');
+      this._historyService.goLoad('/myt-data/hotdata/total-sharing');
     }, this));
 
   },

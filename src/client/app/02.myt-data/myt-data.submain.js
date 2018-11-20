@@ -160,7 +160,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // event callback funtion
   _onRemnantDetail: function () {
-    this._historyService.goLoad('/myt/data/usage');
+    this._historyService.goLoad('/myt-data/hotdata');
   },
 
   _onImmChargeDetail: function () {
@@ -253,7 +253,7 @@ Tw.MyTDataSubMain.prototype = {
         isChild = ($target.find('.badge').length > 0);
     if ( isChild ) {
       // 자녀회선
-      this._historyService.goLoad('/myt/data/usage/child/' + mgmtNum);
+      this._historyService.goLoad('/myt-data/submain/child-hotdata/' + mgmtNum);
     }
     else {
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;

@@ -46,7 +46,6 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       };
 
       option['balanceAddOns'] = balanceAddOnsResp.result;
-      // option['balanceAddOns'].sharingService.dataSharing = afterRequestSuccess'Y';
       res.render('usage/myt-data.usage.total-sharing-data.html', option);
 
     }, (resp) => {

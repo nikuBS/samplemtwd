@@ -58,7 +58,7 @@
                             <button>데이터 함께쓰기
                                 <span class="tx-sub">
                                     <span class="data-txt">
-                                        <% if (balanceAddOns.sharingService.dataSharing === 'N') { %>
+                                        <% if (balanceAddOns.dataSharing === 'N') { %>
                                             가입하기
                                         <% }%>
                                         <!--총 12.00GB 사용-->
@@ -103,7 +103,7 @@
 <script>
   $(document).ready(function () {
     new Tw.MyTDataUsageTotalSharingData($('#fe-myt-data-usage-total-sharing-data'), {
-      dataSharingJoined: '<%= balanceAddOns.sharingService.dataSharing %>'
+      dataSharingJoined: '<%= balanceAddOns.dataSharing %>'
     });
   });
 </script>
