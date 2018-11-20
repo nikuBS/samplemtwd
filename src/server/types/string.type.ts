@@ -402,3 +402,12 @@ export const PRODUCT_TYPE_NM = {
   TERMINATE: '해지',
   SETTING: '설정'
 };
+
+export const MYT_SUSPEND_STATE = {
+  R: '접수중',
+  D: '서류확인 중',
+  E: '재첨부서류확인중',
+  A: '서류재첨부필요',
+  F: '처리불가',
+  C: '처리완료'
+};
