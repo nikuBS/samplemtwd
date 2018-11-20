@@ -67,6 +67,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan(/service-area|/portability)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
+    this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductJoinReservation });
     this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductJoinRequireDocumentApply });
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductJoinRequireDocumentHistory });
 
@@ -74,7 +75,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps(/:appId)?', controller: ProductApps });
 
     this.controllers.push({ url: '(/mobileplan|/mobileplan-add|/wireplan|/roaming)/detail/:prodId', controller: ProductDetail });
-    this.controllers.push({ url: '(/mobileplan|/mobileplan-add|/wireplan)/join/reservation', controller: ProductJoinReservation });
   }
 }
 

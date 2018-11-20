@@ -518,7 +518,9 @@ Tw.ProductJoinReservation.prototype = {
         inputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
       };
 
+    this._isCombineInfo = false;
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
+      this._isCombineInfo = true;
       reqParams = $.extend(reqParams, {
         combGrpNewYn: combinationInfo.combGrpNewYn,
         combGrpInfo: (combinationInfo.familyList.map(function(item) {
@@ -559,13 +561,13 @@ Tw.ProductJoinReservation.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_01_0046, {
       recvFaxNum: 'skt404@sk.com',
-      prodMemo: Tw.PRODUCT_RESERVATION.combine,
+      proMemo: Tw.PRODUCT_RESERVATION.combine,
       scanFiles: convFileList
     });
 
     this._apiService.request(Tw.API_CMD.BFF_01_0046, {
       recvFaxNum: 'skt219@sk.com',
-      prodMemo: Tw.PRODUCT_RESERVATION.combine,
+      proMemo: Tw.PRODUCT_RESERVATION.combine,
       scanFiles: convFileList
     });
   },
@@ -627,8 +629,7 @@ Tw.ProductJoinReservation.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    $.when(this._popupService.close())
-      .then($.proxy(this._openSuccessPop, this));
+    this._openSuccessPop();
   },
 
   _openSuccessPop: function() {
@@ -640,7 +641,7 @@ Tw.ProductJoinReservation.prototype = {
         Tw.PRODUCT_RESERVATION.success.subtext_applyer + this.$reservName.val() + ' / ' + this.$reservNumber.val(),
         Tw.PRODUCT_RESERVATION.success.subtext_info
       ]
-    }, $.proxy(this._bindSuccessPop, this), $.proxy(this._backToParentPage, this));
+    }, $.proxy(this._bindSuccessPop, this), $.proxy(this._backToParentPage, this), 'join_reservation_success');
   },
 
   _bindSuccessPop: function($popupContainer) {
@@ -652,6 +653,10 @@ Tw.ProductJoinReservation.prototype = {
   },
 
   _backToParentPage: function() {
+    if (this._isCombineInfo) {
+      return this._historyService.go(-2);
+    }
+
     this._historyService.goBack();
   }
 };
