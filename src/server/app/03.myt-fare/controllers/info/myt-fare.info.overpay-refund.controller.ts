@@ -18,7 +18,7 @@ interface Query {
   isQueryEmpty: boolean;
 }
 
-class MyTFareOverpayRefund extends TwViewController {
+class MyTFareInfoOverpayRefund extends TwViewController {
 
   constructor() {
     super();
@@ -74,7 +74,7 @@ class MyTFareOverpayRefund extends TwViewController {
 
   renderListView(res: Response, svcInfo: any, pageInfo: any, query: Query, data: any) {
 
-    res.render('history/myt-fare.overpay-refund.history.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
+    res.render('info/myt-fare.info.overpay-refund.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
       current: query.current,
         data: data
     }});
@@ -82,11 +82,11 @@ class MyTFareOverpayRefund extends TwViewController {
 
   renderDetailView(res: Response, svcInfo: any, pageInfo: any, query: Query) {
 
-    res.render('history/myt-fare.overpay-refund.history.detail.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
+    res.render('info/myt-fare.info.overpay-refund.detail.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
         current: query.current
       }});
   }
 
 }
 
-export default MyTFareOverpayRefund;
+export default MyTFareInfoOverpayRefund;
