@@ -160,16 +160,16 @@ Tw.MyTJoinSubMain.prototype = {
         this._historyService.goLoad('/myt/join/wire/modify/product');
         break;
       case 'transfer-fee':
-        this._historyService.goLoad('/myt/join/wire/guide/change-ownership');
+        this._historyService.goLoad('/myt-join/submain/wire/changeowner');
         break;
       case 'inst-chg':
-        this._historyService.goLoad('/myt/join/wire/modify/period');
+        this._historyService.goLoad('/myt-join/submain/wire/modifyperiod');
         break;
       case 'svc-cancel':
         this._historyService.goLoad('/myt/join/wire/set/wire-cancel-service');
         break;
       case 'wire-pause':
-        this._historyService.goLoad('/myt/join/wire/set/pause');
+        this._historyService.goLoad('/myt-join/submain/wire/wirestopgo');
         break;
       case 'until-info':
         this._historyService.goLoad('/myt/join/info/contract');

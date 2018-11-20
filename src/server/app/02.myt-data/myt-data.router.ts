@@ -17,10 +17,6 @@ class MytDataRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: MyTDataSubMain });
-    this.controllers.push({ url: '/usage', controller: MyTDataUsage });
-    this.controllers.push({ url: '/usage/child(/:childSvcMgmtNum)?', controller: MyTDataUsageChild });
-    this.controllers.push({ url: '/usage/total-sharing-data', controller: MyTDataUsageTotalSharingData });
-    this.controllers.push({ url: '/usage/cancel-tshare', controller: MyTDataUsageCancelTshare });
     this.controllers.push({ url: '/recharge/history', controller: MyTDataRechargeHistory });
     this.controllers.push({ url: '/giftdata(/:page)?', controller: MyTDataGift });
     this.controllers.push({ url: '/ting(/:page)?', controller: MyTDataTing });
@@ -32,9 +28,10 @@ class MytDataRouter extends TwRouter {
 
     // new url
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
-    this.controllers.push({ url: '/hotdata', controller: MyTDataUsage });
     this.controllers.push({ url: '/submain/child-hotdata(/:childSvcMgmtNum)?', controller: MyTDataUsageChild });
+    this.controllers.push({ url: '/hotdata', controller: MyTDataUsage });
     this.controllers.push({ url: '/hotdata/total-sharing', controller: MyTDataUsageTotalSharingData });
+    this.controllers.push({ url: '/hotdata/cancel-tshare', controller: MyTDataUsageCancelTshare });
   }
 }
 

@@ -17,7 +17,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
   private _VIEW = {
     DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.adjustment.html'
   };
-  private _BASE_URL = '/benefit/my-benefit/rainbow-point/adjustment';
+  private _BASE_URL = '/benefit/my/rainbowpoint/adjustment';
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const curPage = req.query.curPage || 1;

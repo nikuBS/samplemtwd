@@ -71,7 +71,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
 
     Tw.Logger.info('[dataValObj > param]', param );
 
-    this._goLoad('/myt/join/info/discount/month?' + param);
+    this._goLoad('/myt-join/myplancombine/infodiscount/month?' + param);
 
   },
   _monthBtnEvt: function (e) {

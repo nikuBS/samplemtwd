@@ -46,7 +46,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
   private _VIEW = {
     DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.html'
   };
-  private _BASE_URL = '/benefit/my-benefit/rainbow-point';
+  private _BASE_URL = '/benefit/my/rainbowpoint';
 
   constructor() {
     super();
