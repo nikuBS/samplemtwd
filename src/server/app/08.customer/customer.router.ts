@@ -1,10 +1,4 @@
 import TwRouter from '../../common/route/tw.router';
-import CustomerBranchSearch from './controllers/branch/customer.branch.search.controller';
-import CustomerBranchDetail from './controllers/branch/customer.branch.detail.controller';
-import CustomerBranchNear from './controllers/branch/customer.branch.near.controller';
-import CustomerBranchRepair from './controllers/branch/customer.branch.repair.controller';
-import CustomerBranchRepairDetail from './controllers/branch/customer.branch.repair-detail.controller';
-import CustomerBranchRepairManufacturer from './controllers/branch/customer.branch.repair-manufacturer.controllter';
 import CustomerDocument from '../904.customer/controllers/document/customer.document.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
@@ -25,6 +19,12 @@ import CustomerEmail from './controllers/email/customer.email.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
 import CustomerFaq from '../904.customer/controllers/faq/customer.faq.controller';
 import CustomerFaqSearch from './controllers/faq/customer.faq.search.controller';
+import CustomerAgentsearch from './controllers/agentsearch/customer.agentsearch.controller';
+import CustomerAgentsearchDetail from './controllers/agentsearch/customer.agentsearch.detail.controller';
+import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsearch.near.controller';
+import CustomerAgentsearchRepair from './controllers/agentsearch/customer.agentsearch.repair.controller';
+import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.agentsearch.repair-detail.controller';
+import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -32,12 +32,6 @@ class CustomerRouter extends TwRouter {
 
     // old IA
     this.controllers.push({ url: '/', controller: CustomerMain });
-    this.controllers.push({ url: '/branch/search', controller: CustomerBranchSearch });
-    this.controllers.push({ url: '/branch/detail', controller: CustomerBranchDetail });
-    this.controllers.push({ url: '/branch/near', controller: CustomerBranchNear });
-    this.controllers.push({ url: '/branch/repair', controller: CustomerBranchRepair });
-    this.controllers.push({ url: '/branch/repair-detail', controller: CustomerBranchRepairDetail });
-    this.controllers.push({ url: '/branch/repair-manufacturer', controller: CustomerBranchRepairManufacturer });
     this.controllers.push({ url: '/document', controller: CustomerDocument });
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
@@ -62,6 +56,13 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/damage-info/warning/view/:idx', controller: CustomerProtectWarningView });
     this.controllers.push({ url: '/damage-info/additions', controller: CustomerProtectAdditions });
     this.controllers.push({ url: '/damage-info/related', controller: CustomerProtectRelated });
+    this.controllers.push({ url: '/agentsearch', controller: CustomerAgentsearch });
+    this.controllers.push({ url: '/agentsearch/detail', controller: CustomerAgentsearchDetail });
+    this.controllers.push({ url: '/agentsearch/near', controller: CustomerAgentsearchNear });
+    this.controllers.push({ url: '/agentsearch/repair', controller: CustomerAgentsearchRepair });
+    this.controllers.push({ url: '/agentsearch/repair-detail', controller: CustomerAgentsearchRepairDetail });
+    this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });
+
   }
 }
 
