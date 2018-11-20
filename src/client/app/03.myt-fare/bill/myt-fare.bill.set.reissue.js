@@ -123,7 +123,7 @@ Tw.MyTFareBillSetReIssue.prototype = {
   _goToComplete: function () {
     this._popupService.afterRequestSuccess(
       '/myt/fare/bill/guide',
-      '/myt/fare/bill/set',
+      '/myt-fare/billsetup',
       Tw.MYT_FARE_BILL_SET.GUIDE_CONFIRM_TEXT,
       Tw.MYT_FARE_BILL_SET.COMPLETE_TEXT_REISSUE);
   }

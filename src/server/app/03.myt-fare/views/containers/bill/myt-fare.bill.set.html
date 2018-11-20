@@ -94,18 +94,18 @@
                 <%if( !('P' === data.curBillType && 'N' === data.isusimchk ) || 'B' !== data.curBillType ) {%>
                 <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 문자-->
                 <div class="bt-alone">
-                    <a class="bt-bg-blue1" href="/myt/fare/bill/set/change?billType=<%=data.billInfo[0].cd%>&subBillType=<%=data.billInfo[1].cd%>&isChangeInfo=Y">정보변경</a>
+                    <a class="bt-bg-blue1" href="/myt-fare/billsetup/change?billType=<%=data.billInfo[0].cd%>&subBillType=<%=data.billInfo[1].cd%>&isChangeInfo=Y">정보변경</a>
                 </div>
                 <%}%>
                 <ul class="bt-slice item-two pt40">
                     <li class="bt-blue1">
-                        <a href="/myt/fare/bill/set/return-history">반송내역</a>
+                        <a href="/myt-fare/billsetup/historyreturn">반송내역</a>
                     </li>
                     <!--T world 확인은 재발행 기능 없음-->
                     <% if ( 'P' !== data.curBillType ) { %>
                     <li class="bt-blue1">
                         <!--<button>재발행</button>-->
-                        <a href="/myt/fare/bill/set/reissue">재발행</a>
+                        <a href="/myt-fare/billsetup/reissue">재발행</a>
                     </li>
                     <%}%>
                 </ul>
@@ -120,7 +120,7 @@
                     <% data.billList.forEach( (bill) => { %>
                     <li>
                         <div class="link-long lower-h">
-                            <a href="/myt/fare/bill/set/change?billType=<%=bill.cd%>&subBillType=X">
+                            <a href="/myt-fare/billsetup/change?billType=<%=bill.cd%>&subBillType=X">
                                 <span class="ico-thum2"></span><%= bill.nm %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>
