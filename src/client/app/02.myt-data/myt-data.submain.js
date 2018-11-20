@@ -164,7 +164,12 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onImmChargeDetail: function () {
-    new Tw.ImmediatelyRechargeLayer(this.$container);
+    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      new Tw.PPSRechargeLayer(this.$container);
+    }
+    else {
+      new Tw.ImmediatelyRechargeLayer(this.$container);
+    }
   },
 
   _onTPresentDetail: function () {
