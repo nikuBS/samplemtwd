@@ -161,16 +161,16 @@ Tw.MyTFareSubMainNonPayment.prototype = {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.P_R);
       }
       else {
-        Tw.Logger.warn('Server Error..');
+        Tw.Error(resp.code, resp.msg).pop();
       }
     }
     else {
-      Tw.Logger.warn('pDay Registration failure');
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
 
   _onErrorPdayInput: function(resp) {
-    Tw.Logger.error(resp.msg);
+    Tw.Error(resp.code, resp.msg).pop();
   },
 
   // 이용정지해제 팝업 호출
@@ -209,11 +209,11 @@ Tw.MyTFareSubMainNonPayment.prototype = {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.S_R);
       }
       else {
-        Tw.Logger.warn('Server Error..');
+        Tw.Error(resp.code, resp.msg).pop();
       }
     }
     else {
-      Tw.Logger.warn('Disable suspension failure');
+      Tw.Error(resp.code, resp.msg).pop();
     }
   }
 };
