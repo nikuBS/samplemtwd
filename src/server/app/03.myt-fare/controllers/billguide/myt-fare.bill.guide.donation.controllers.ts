@@ -22,7 +22,7 @@ class MyTFareBillGuideDonation extends TwViewController {
   public reqQuery: any;  // 쿼리스트링
   public pageInfo: any;
   private _urlTplInfo: any = {
-    default: 'bill/myt-fare.bill.guide.donation.html',
+    default: 'billguide/myt-fare.bill.guide.donation.html',
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

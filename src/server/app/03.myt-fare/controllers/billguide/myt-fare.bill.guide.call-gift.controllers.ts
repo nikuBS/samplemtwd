@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.bill.guide.roaming.controllers.ts
+ * FileName: myt-fare.bill.guide.call-gift.controllers.ts
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.21
  */
@@ -14,15 +14,14 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
 
-class MyTFareBillGuideRoaming extends TwViewController {
+class MyTFareBillGuideCallGift extends TwViewController {
   constructor() {
     super();
   }
-
   public reqQuery: any;  // 쿼리스트링
   public pageInfo: any;
   private _urlTplInfo: any = {
-    default: 'bill/myt-fare.bill.guide.roaming.html',
+    default: 'billguide/myt-fare.bill.guide.call-gift.html',
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -37,9 +36,7 @@ class MyTFareBillGuideRoaming extends TwViewController {
       svcInfo: svcInfo,
       pageInfo: thisMain.pageInfo
     });
-
   }
-
   // -------------------------------------------------------------[SVC]
 
   // -------------------------------------------------------------[프로미스 생성]
@@ -88,4 +85,4 @@ class MyTFareBillGuideRoaming extends TwViewController {
 
 }
 
-export default MyTFareBillGuideRoaming;
+export default MyTFareBillGuideCallGift;

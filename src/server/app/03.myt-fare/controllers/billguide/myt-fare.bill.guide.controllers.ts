@@ -82,12 +82,12 @@ class MyTFareBillGuide extends TwViewController {
   };
 
   private _urlTplInfo: any = {
-    combineRepresentPage: 'bill/myt-fare.bill.guide.integrated-rep.html', // 통합청구(대표)
-    combineCommonPage: 'bill/myt-fare.bill.guide.integrated-normal.html', // 통합청구(일반)
-    individualPage: 'bill/myt-fare.bill.guide.individual.html', // 개별청구
-    prepaidPage: 'bill/myt-fare.bill.guide.pps.html', // PPS(선불폰)
-    companyPage: 'bill/myt-fare.bill.guide.solution.html', // 기업솔루션(포인트캠)
-    skbroadbandPage: 'bill/myt-fare.bill.guide.skbd.html' // sk브로드밴드(인터넷/IPTV/집전화)
+    combineRepresentPage: 'billguide/myt-fare.bill.guide.integrated-rep.html', // 통합청구(대표)
+    combineCommonPage: 'billguide/myt-fare.bill.guide.integrated-normal.html', // 통합청구(일반)
+    individualPage: 'billguide/myt-fare.bill.guide.individual.html', // 개별청구
+    prepaidPage: 'billguide/myt-fare.bill.guide.pps.html', // PPS(선불폰)
+    companyPage: 'billguide/myt-fare.bill.guide.solution.html', // 기업솔루션(포인트캠)
+    skbroadbandPage: 'billguide/myt-fare.bill.guide.skbd.html' // sk브로드밴드(인터넷/IPTV/집전화)
   };
 
   private _typeChk: any = null; // 화면구분
