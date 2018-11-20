@@ -119,7 +119,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 고객보호비밀번호 변경
   _onMovedChangePwd: function() {
-    this._historyService.goLoad('/myt/join/protect/change');
+    this._historyService.goLoad('/myt-join/custpassword');
   },
   // 부가 상품
   _onMovedAddProduct: function() {

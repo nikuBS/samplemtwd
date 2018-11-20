@@ -88,7 +88,7 @@ Tw.MyTJoinJoinInfo.prototype = {
 
     // status '0' 인 경우 설정
     if ( status.indexOf('0') !== -1 ) {
-      this._historyService.goLoad('/myt/join/protect/change');
+      this._historyService.goLoad('/myt-join/custpassword');
     }
     // status '1' 인 경우 변경
     else if ( status.indexOf('1') !== -1 ) {
