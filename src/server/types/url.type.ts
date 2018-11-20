@@ -52,7 +52,7 @@ export const URL = {
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
   '/myt-join/myplancombine/noagreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
   '/myt-join/myinfo/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
-  '/myt-join/wire/wiredo/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
+  'myt-join/wire/wiredo/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
   '/myt-join/submain/wire/wirestopgo': { login: true, id: 'MS_04_03', title: '일시 정지/해제' },
   '/myt-join/submain/wire/modifyperiod': { login: true, id: 'MS_04_06', title: '약정기간 변경' },
   '/myt-join/submain/wire/changeowner': { login: true, id: 'MS_04_07', title: '명의 변경' },
@@ -110,12 +110,12 @@ export const URL = {
 
   // Benefit
   '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
-  '/benefit/my': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
-  '/benefit/my/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
-  '/benefit/my/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
+  '/benefit/my-benefit': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
   '/benefit/my/rainbowpoint': { login: true, id: 'BS_01_01', title: '레인보우 포인트' },
   '/benefit/my/rainbowpoint/adjustment': { login: true, id: 'BS_01_01_03', title: '포인트 합산' },
   '/benefit/my/rainbowpoint/transfer': { login: true, id: 'BS_01_01_04', title: '포인트 양도' },
+  '/benefit/my-benefit/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
+  '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
 
   // Common
   '/common/member/tid-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
