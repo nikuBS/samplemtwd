@@ -12,8 +12,8 @@ export const URL = {
   '/main/menu/refund': { login: false, id: 'MN_01_04_01_01', title: '미환급금 조회' },
 
   // MyT
-  '/myt/fare': { login: true, id: 'MF1', title: '나의 요금' },
-  '/myt/fare/nonpayment': { login: true, id: 'MF_02', title: '미납요금' },
+  '/myt-fare/submain': { login: true, id: 'MF1', title: '나의 요금' },
+  '/myt-fare/unbill': { login: true, id: 'MF_02', title: '미납요금' },
   '/myt-fare/bill/account': { login: true, id: 'MF_01_01', title: '계좌이체 납부' },
   '/myt-fare/bill/card': { login: true, id: 'MF_01_02', title: '체크/신용카드 납부' },
   '/myt-fare/bill/point': { login: true, id: 'MF_01_03', title: 'OK캐쉬백/T포인트 납부' },
@@ -56,7 +56,7 @@ export const URL = {
   '/myt-join/submain/wire/changeowner': { login: true, id: 'MS_04_07', title: '명의 변경' },
 
   // MyT-data
-  '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
+  '/myt-data/submain': { login: true, id: 'DC', title: '데이터/통화 관리' },
   '/myt-data/hotdata': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
   '/myt-data/submain/child-hotdata': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
   '/myt-data/hotdata/total-sharing': { login: true, id: 'DC_01_01_01', title: '통합공유 데이터' },

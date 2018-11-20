@@ -165,7 +165,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
         Tw.MYT_JOIN_SUSPEND.TYPE.ALL : Tw.MYT_JOIN_SUSPEND.TYPE.CALL;
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SUSPEND_TYPE}', type);
-      this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt/join', null, '신청', desc);
+      this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, '신청', desc);
     } else if ( res.code === 'MOD0022' ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {
@@ -175,7 +175,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _onSuccessRequestReset: function () {
     skt_landing.action.loading.off({ ta: 'body' });
-    this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt/join', null, '해제');
+    this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, '해제');
   },
 
   _onError: function (res) {
