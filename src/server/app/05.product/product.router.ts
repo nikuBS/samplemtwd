@@ -13,7 +13,7 @@ import ProductWire from './controllers/wire/product.wire.controller';
 import ProductWires from './controllers/wire/product.wires.controller';
 import ProductJoinRequireDocumentApply from './controllers/join/product.join.require-document.apply.controller';
 import ProductJoinRequireDocumentHistory from './controllers/join/product.join.require-document.history.controller';
-import ProductApps from './app/product.apps.controller';
+import ProductApps from './controllers/apps/product.apps.controller';
 import ProductJoinCombineLine from './controllers/join/product.join.combine-line.controller';
 import ProductSettingCombineLine from './controllers/setting/product.setting.combine-line.controller';
 import ProductSettingOption from './controllers/setting/product.setting.option.controller';
@@ -69,7 +69,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductSettingSignatureLine });
     this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
-    this.controllers.push({ url: '/apps', controller: ProductApps });
+    this.controllers.push({ url: '/apps(/:appId)?', controller: ProductApps });
     this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductSettingTargetDiscount });
   }
 }
