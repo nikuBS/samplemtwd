@@ -18,6 +18,7 @@
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
+        <!--<%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo: svcInfo, option: { back:'popup' } }) %>-->
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti">
@@ -37,13 +38,13 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tabpanel" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#tab1-tab">할인지역</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tabpane2" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#tab2-tab">지정번호</a></li>
+                                    <li role="tabpanel" aria-selected="true" aria-controls="tab-loc" id="tab1"><a href="#tab-loc">할인지역</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tabpane2" aria-selected="false" aria-controls="tab-num" id="tab2"><a href="#tab-num">지정번호</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                    <li role="tabpanel" id="tab-loc" aria-labelledby="tab1">
                                         <div class="ti-caption-gray">
                                             <h3 class="tit" id="aria-exp-label1">할인지역 설정</h3>
                                             <div class="num">010-94**-04**</div>
@@ -74,7 +75,7 @@
                                         </div>
                                     </li>
 
-                                    <li role="tabpane2" id="tab2-tab" aria-labelledby="tab2">
+                                    <li role="tabpane2" id="tab-num" aria-labelledby="tab2">
                                         <div class="ti-caption-gray">
                                             <h3 class="tit">지정번호 설정</h3>
                                             <div class="num">010-94**-04**</div>
@@ -87,7 +88,7 @@
                                                 <div class="form-box">
                                                         <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                                             <span class="input">
-                                                                <input id="num-input" type="text" placeholder="번호를 입력하세요" value="" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+                                                                <input id="num-input" type="tel" placeholder="번호를 입력하세요" value="" title="데이터 함께쓰기를 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
                                                                 <button class="cancel"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="bt-box">
@@ -144,6 +145,11 @@
             </div>
         </div>
         <!-- // .container-wrap -->
+        <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: data.pageInfo }); %>
+        </footer>
+
         <!-- .popup-closeBtn -->
         <button class="prev-step">취소</button>
         <!--// .popup-closeBtn -->
