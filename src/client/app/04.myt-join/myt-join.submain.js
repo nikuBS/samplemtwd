@@ -123,11 +123,11 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 부가 상품
   _onMovedAddProduct: function() {
-    this._historyService.goLoad('/myt/join/product/additions');
+    this._historyService.goLoad('/myt-join/myplanadd');
   },
   // 결합 상품
   _onMovedComProduct: function() {
-    this._historyService.goLoad('/myt/join/product/combinations');
+    this._historyService.goLoad('/myt-join/myplancombine');
   },
   // 약정 할인
   _onMovedInstallement: function() {

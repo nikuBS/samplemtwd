@@ -1,16 +1,16 @@
 <%#
-* FileName: myt-join.product.combinations.tb-family.html
+* FileName: myt-join.myplancombine.happy-plan.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.10.26
-* id: MS_07_01_05
+* id: MS_07_01_02
 %>
 
+
 <!-- .cont-box -->
-<% const groupInfo = combination.combinationGroup; 
-const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
+<% const groupInfo = combination.combinationGroup; %>
 <div class="cont-box">
         <div class="bundle-tit-wrap">
-            <h3 class="tit">TB끼리 온가족무료</h3>
+            <h3 class="tit">온가족행복플랜</h3>
         </div>
         <div class="basic-list bg-type mt10">
             <ul>
@@ -20,31 +20,9 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
                 </li>
                 <li>
                     <span class="title">결합회선</span>
-                    <span class="tx-cont"><%= memberCount %>회선</span>
-                </li>
-                <li>
-                    <span class="title">가입상태</span>
-                    <span class="tx-cont"><%= groupInfo.combSt %></span>
+                    <span class="tx-cont"><%= groupInfo.mblSvcCnt %>회선</span>
                 </li>
             </ul>
-        </div>
-        <div class="expect-benefit">
-            <h4 class="tit">예상 혜택</h4>
-            <% if (memberCount === 2) { %>
-            <!-- 2회선일 경우 -->
-            <p class="txt"><span class="str">집전화 무료</span> 또는<br /><span class="str">초고속 인터넷 할인</span></p>
-            <!--// 2회선일 경우 -->
-            <% } else if (memberCount === 3) { %>
-            <!-- 3회선일 경우 -->
-            <p class="txt"><span class="str">초고속 인터넷 할인</span></p>
-            <!--// 3회선일 경우 -->
-            <% } else if (memberCount > 3) { %>
-            <!-- 4회선일 경우 -->
-            <p class="txt"><span class="str">집전화 + <br />초고속 인터넷 할인</span></p>
-            <!--// 4회선일 경우 -->
-            <% } %>
-            <p class="ext-txt">결합회선 중 정지된 회선이 있을 경우(30일 이상)<br />제외되어 혜택이 다를 수 있습니다. </p>
-            <i class="ico-expect"></i>
         </div>
     </div>
     <!--// .cont-box -->
@@ -53,7 +31,7 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
     
     <!-- .cont-box -->
     <div class="cont-box nogaps-hoz">
-         <!-- .widget -->
+        <!-- .widget -->
        <div class="widget">
             <div class="widget-box accordion2">
                 <div class="acco-style data-famliy-group-list type2">
@@ -87,41 +65,29 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
                                 <div class="acco-content">
                                     <div class="data-info-list toggle-inner-list">
                                         <ul>
-                                            <li>
-                                                <dl>
-                                                    <dt>가족대표와의 관계</dt>
-                                                    <dd><%= member.relClNm %><%= isMine? '(내번호)': ''%><br /></dd>
-                                                </dl>
-                                            </li>
-                                            <li>
-                                                <dl>
-                                                    <dt>결합유선상품</dt>
-                                                    <dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].svcCdNm : '-' %></dd>
-                                                </dl>
-                                            </li>
+                                            <li><dl><dt>가족대표와의 관계</dt><dd><%= member.relClNm %><%= isMine? '(내번호)': ''%></dd></dl></li>
+                                            <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/mobileplan/callplan/<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
-                        <% }); %>                        
+                        <% }); %>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- //.widget -->
+        
     </div>
     <!--// .cont-box -->
     
     <hr class="cont-sp type1" aria-hidden="true"/>
-    
     <!-- .cont-box --><!-- 2018-11-02 수정 -->
     <div class="cont-box nogaps-btm">
         <h3 class="tx-bold">꼭 확인해주세요!</h3>
         <ul class="noti-list">
-            <li>TB끼리 온가족무료 해지 할 경우<button id="MS_07_01_05_tip_01" type="button" class="tip-view" title="TB끼리 온가족무료 해지 할 경우" aria-haspopup="true">TIP</button></li>
-            <li>결합상품 자동 해지되는 경우<button id="MS_07_01_05_tip_02" type="button" class="tip-view" title="결합상품 자동 해지되는 경우" aria-haspopup="true">TIP</button></li>
-            <li>결합혜택 제공되는 경우<button id="MS_07_01_05_tip_03" type="button" class="tip-view" title="결합혜택 제공되는 경우" aria-haspopup="true">TIP</button></li>
-            <li>할인 적용되는 경우<button id="MS_07_01_05_tip_04" type="button" class="tip-view" title="할인 적용되는 경우" aria-haspopup="true">TIP</button></li>
+            <li>장기가입할인 및 레인보우포인트 적립<button id="MS_07_01_02_tip_01" type="button" class="tip-view" title="장기가입할인 및 레인보우포인트 적립" aria-haspopup="true">TIP</button></li>
+            <li>중복가입<button id="MS_07_01_02_tip_02" type="button" class="tip-view" title="중복가입" aria-haspopup="true">TIP</button></li>
         </ul>
     </div>
     <!--// .cont-box -->

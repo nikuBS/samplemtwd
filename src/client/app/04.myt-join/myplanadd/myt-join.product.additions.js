@@ -4,7 +4,7 @@
  * Date: 2018.10.11
  */
 
-Tw.MyTJoinProductAdditions = function(rootEl) {
+Tw.MyTJoinMyPlanAdd = function(rootEl) {
   this.$container = rootEl;
 
   this.cachedElement();
@@ -12,7 +12,7 @@ Tw.MyTJoinProductAdditions = function(rootEl) {
   this.init();
 };
 
-Tw.MyTJoinProductAdditions.prototype = {
+Tw.MyTJoinMyPlanAdd.prototype = {
   init: function() {
     this._totalCount = Number(this.$container.find('span.counts > em').text());
   },

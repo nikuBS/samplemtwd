@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.product.combinations.controller.ts
+ * FileName: myt-join.myplancombine.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.09.19
  */
@@ -11,7 +11,7 @@ import { COMBINATION_PRODUCT } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-export default class MyTJoinProductCombinations extends TwViewController {
+export default class MyTJoinMyPlanCombine extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.params.combination) {
       const prodId = req.params.combination;
@@ -31,7 +31,7 @@ export default class MyTJoinProductCombinations extends TwViewController {
           });
         }
 
-        res.render('product/myt-join.product.combinations.combination.html', { svcInfo, pageInfo, combination, pageId, prodId });
+        res.render('myplancombine/myt-join.myplancombine.combination.html', { svcInfo, pageInfo, combination, pageId, prodId });
       });
     } else {
       this.getCombinations().subscribe(combinations => {
@@ -42,7 +42,7 @@ export default class MyTJoinProductCombinations extends TwViewController {
           });
         }
 
-        res.render('product/myt-join.product.combinations.html', {
+        res.render('myplancombine/myt-join.myplancombine.html', {
           svcInfo,
           pageInfo,
           combinations

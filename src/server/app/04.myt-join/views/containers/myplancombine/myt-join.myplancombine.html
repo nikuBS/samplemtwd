@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-join.product.combinations.html
+* FileName: myt-join.myplancombine.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.10.19
 * ID: MS_07
@@ -70,9 +70,9 @@
                                     <p class="date">신청일  <%= comb.scrbDt %></p>
                                     <!-- TODO: admin 정리후 추가 <button class="bt-link-tx underline" type="button" aria-haspopup="true">구비서류 제출</button> -->
                                     <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
-                                    <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합가족 보기</a>
+                                    <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합가족 보기</a>
                                     <% } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { %>
-                                    <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합상품 보기</a>
+                                    <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합상품 보기</a>
                                     <% } %>
                                     <% if (comb.prodLinkYn === "Y") { %>
                                     <a class="bt-link-tx underline" href="/product/mobileplan-add/callplan/<%= comb.prodId %>">상품정보 보기</a>
