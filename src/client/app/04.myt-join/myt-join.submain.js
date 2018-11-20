@@ -143,11 +143,11 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 인터넷/IPTV/집전화 신청 내역 및 조회
   _onMovedWireInquire: function() {
-    this._historyService.goLoad('/myt/wire');
+    this._historyService.goLoad('/myt-join/submain/wire');
   },
   // B끼리 무료통화 대상자 조회
   _onMovedBInquire: function() {
-    this._historyService.goLoad('/myt/join/freeCallCheck');
+    this._historyService.goLoad('/myt-join/submain/wire/freecallcheck');
   },
   // 유선기타서비스
   _onMovedWireOtherSvc: function(event) {
