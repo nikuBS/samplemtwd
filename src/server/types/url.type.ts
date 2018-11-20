@@ -36,7 +36,8 @@ export const URL = {
   '/myt-fare/billsetup/historyreturn': { login: true, id: 'MF_04_04', title: '요금안내서 반송내역' },
   '/myt-fare/billsetup/reissue': { login: true, id: 'MF_04_01', title: '요금안내서 재발행' },
   '/myt-fare/billsetup/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
-  '/myt/fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
+  '/myt-fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
+
   '/myt/join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
   '/myt/join/product/additions': { login: true, id: 'MS_06', title: '나의 부가상품' },
@@ -51,7 +52,7 @@ export const URL = {
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
   '/myt-join/myplancombine/noagreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
   '/myt-join/myinfo/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
-  'myt-join/wire/wiredo/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
+  '/myt-join/wire/wiredo/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
@@ -105,9 +106,9 @@ export const URL = {
 
   // Benefit
   '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
-  '/benefit/my-benefit': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
-  '/benefit/my-benefit/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
-  '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
+  '/benefit/my': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
+  '/benefit/my/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
+  '/benefit/my/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
 
   // Common
   '/common/member/tid-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },

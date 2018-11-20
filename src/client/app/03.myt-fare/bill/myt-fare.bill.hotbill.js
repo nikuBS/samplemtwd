@@ -168,7 +168,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onClickChild: function (target) {
-    this._historyService.goLoad('/myt/fare/bill/hotbill?child=' + target.svcMgmtNum);
+    this._historyService.goLoad('/myt-fare/hotbill?child=' + target.svcMgmtNum);
   },
 
   _confirmSwitchLine: function (target) {
