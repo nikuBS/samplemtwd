@@ -46,6 +46,39 @@ class MyTDataPrepaid extends TwViewController {
           );
         });
         break;
+      case 'data':
+        this.getPPSInfo().subscribe((result) => {
+          res.render(
+            'prepaid/myt-data.prepaid.data.html', Object.assign(responseData, {
+              PPSInfo: result,
+              convertDate: this.convertDate,
+              convertAmount: this.convertAmount
+            })
+          );
+        });
+        break;
+      case 'data-auto':
+        this.getPPSInfo().subscribe((result) => {
+          res.render(
+            'prepaid/myt-data.prepaid.data-auto.html', Object.assign(responseData, {
+              PPSInfo: result,
+              convertDate: this.convertDate,
+              convertAmount: this.convertAmount
+            })
+          );
+        });
+        break;
+      case 'alarm':
+        this.getPPSInfo().subscribe((result) => {
+          res.render(
+            'prepaid/myt-data.prepaid.alarm.html', Object.assign(responseData, {
+              PPSInfo: result,
+              convertDate: this.convertDate,
+              convertAmount: this.convertAmount
+            })
+          );
+        });
+        break;
       default:
       // Observable.combineLatest(
       //   this.getLimitUserInfo()
