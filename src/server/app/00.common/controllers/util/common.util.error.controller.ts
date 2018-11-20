@@ -1,10 +1,10 @@
 /**
- * FileName: common.error.controller.ts
+ * FileName: common.util.error.controller.ts
  * Author: Jihun Yang (jihun202@sk.com)
  * Date: 2018.08.21
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 
 class CommonError extends TwViewController {

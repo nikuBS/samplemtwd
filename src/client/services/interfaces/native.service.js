@@ -65,9 +65,7 @@ Tw.NativeService.prototype = {
 
   _onBack: function (resp) {
     Tw.Logger.info('onBack', resp);
-    if ( /\/main\/home/.test(location.href) ||
-      /\/main\/t-notify/.test(location.href) ||
-      /\/main\/search/.test(location.href) ) {
+    if ( /\/main\/home/.test(location.href)) {
       if(this._popupService.isPopup()) {
         this._popupService.close();
       } else {
@@ -96,9 +94,9 @@ Tw.NativeService.prototype = {
   _onEasyLogin: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
-        window.location.href = '/common/login/easy-aos?mdn=' + resp.params.mdn;
+        window.location.href = '/common/member/slogin/aos?mdn=' + resp.params.mdn;
       } else {
-        window.location.href = '/common/login/easy-ios';
+        window.location.href = '/common/member/slogin/ios';
       }
     } else {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_FAIL);

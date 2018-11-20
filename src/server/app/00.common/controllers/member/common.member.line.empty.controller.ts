@@ -1,5 +1,5 @@
 /**
- * FileName: common.line.empty-register.controller.ts
+ * FileName: common.member.line.empty.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.01
  */
@@ -7,14 +7,14 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class CommonLineEmptyRegister extends TwViewController {
+class CommonMemberLineEmpty extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('line/common.line.empty-register.html', { svcInfo });
+    res.render('member/common.member.line.empty.html', { svcInfo });
   }
 }
 
-export default CommonLineEmptyRegister;
+export default CommonMemberLineEmpty;

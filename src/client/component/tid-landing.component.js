@@ -40,7 +40,7 @@ Tw.TidLandingComponent.prototype = {
     this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
   },
   _onClickBtnAuthLine: function () {
-    this._historyService.goLoad('/common/line');
+    this._historyService.goLoad('/common/member/line');
   },
   _onClickBtAccount: function () {
     this._goLoad(Tw.NTV_CMD.ACCOUNT, '/common/tid/account', $.proxy(this._onNativeAccount, this));
@@ -91,9 +91,9 @@ Tw.TidLandingComponent.prototype = {
       // 휴면계정
       this._historyService.goLoad('/common/login/dormancy');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.goLoad('/common/login/exceed-fail');
+      this._historyService.goLoad('/common/member/login/exceed-fail');
     } else {
-      this._historyService.goLoad('/common/login/fail?errorCode=' + resp.code);
+      this._historyService.goLoad('/common/member/login/fail?errorCode=' + resp.code);
     }
   },
   _onNativeLogout: function () {
@@ -103,7 +103,7 @@ Tw.TidLandingComponent.prototype = {
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
     // if(resp.code === NTV_CODE.CODE_00) {
-    this._historyService.goLoad('/common/logout/complete');
+    this._historyService.goLoad('/common/member/logout/complete');
     // }
   },
   _getSession: function () {

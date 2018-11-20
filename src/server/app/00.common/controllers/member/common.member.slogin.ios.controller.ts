@@ -1,5 +1,5 @@
 /**
- * FileName: common.login.easy-fail.controller.ts
+ * FileName: common.member.slogin.ios.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.07.25
  */
@@ -7,14 +7,14 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class CommonLoginEasyFail extends TwViewController {
+class CommonMemberSloginIos extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('login/common.login.easy-fail.html', { svcInfo });
+    res.render('member/common.member.login.ios.html', { svcInfo });
   }
 }
 
-export default CommonLoginEasyFail;
+export default CommonMemberSloginIos;

@@ -101,7 +101,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
   },
 
   _goManageLine : function () {
-    this._historyService.goLoad('/common/line');
+    this._historyService.goLoad('/common/member/line');
   },
 
   // API Fail

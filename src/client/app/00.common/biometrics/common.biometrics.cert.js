@@ -82,6 +82,6 @@ Tw.CommonBiometricsCert.prototype = {
     }
   },
   _onClickNext: function () {
-    this._historyService.goLoad('/common/biometrics/register?target=' + this._target);
+    this._historyService.goLoad('/main/menu/settings/biometrics/register?target=' + this._target);
   }
 };

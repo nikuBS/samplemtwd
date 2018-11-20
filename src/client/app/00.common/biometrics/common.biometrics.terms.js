@@ -37,7 +37,7 @@ Tw.CommonBiometricsTerms.prototype = {
     this._enableBtns();
   },
   onClickConfirm: function () {
-    this._historyService.goLoad('/common/biometrics/cert?target=' + this._target);
+    this._historyService.goLoad('/main/menu/settings/biometrics/cert?target=' + this._target);
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);
