@@ -4,68 +4,78 @@ import MyTFareBillGuide from './controllers/bill/myt-fare.bill.guide.controllers
 import MyTFareBillSet from './controllers/bill/myt-fare.bill.set.controller';
 import MyTFareBillSetReissue from './controllers/bill/myt-fare.bill.set.reissue.controller';
 import MyTFareBillSetReturnHistory from './controllers/bill/myt-fare.bill.set.return-history.controller';
-import MyTFarePaymentAuto from './controllers/payment/myt-fare.payment.auto.controller';
-import MyTFarePaymentAccount from './controllers/payment/myt-fare.payment.account.controller';
-import MyTFarePaymentCard from './controllers/payment/myt-fare.payment.card.controller';
-import MyTFarePaymentPoint from './controllers/payment/myt-fare.payment.point.controller';
-import MyTFarePaymentSms from './controllers/payment/myt-fare.payment.sms.controller';
+import MyTFareBillauto from './controllers/billauto/myt-fare.billauto.controller';
 import MytFareHotbill from './controllers/bill/myt-fare.bill.hotbill.controller';
 import MyTFareBillSetChange from './controllers/bill/myt-fare.bill.set.change.controller';
 import MyTFareBillGuideCallGift from './controllers/bill/myt-fare.bill.guide.call-gift.controllers';
 import MyTFareBillGuideRoaming from './controllers/bill/myt-fare.bill.guide.roaming.controllers';
 import MyTFareBillGuideDonation from './controllers/bill/myt-fare.bill.guide.donation.controllers';
-import MyTFareSubMainNonPayment from './controllers/submain/myt-fare.submain.non-paymt';
-import MyTFarePaymentOption from './controllers/payment/myt-fare.payment.option.controller';
-import MyTFarePaymentMicro from './controllers/payment/myt-fare.payment.micro.controller';
-import MyTFarePaymentMicroAuto from './controllers/payment/myt-fare.payment.micro.auto.controller';
-import MyTFarePaymentMicroAutoChange from './controllers/payment/myt-fare.payment.micro.auto.change.controller';
-import MyTFarePaymentMicroAutoInfo from './controllers/payment/myt-fare.payment.micro.auto.info.controller';
-import MyTFarePaymentContents from './controllers/payment/myt-fare.payment.contents.controller';
-import MyTFarePaymentContentsAuto from './controllers/payment/myt-fare.payment.contents.auto.controller';
-import MyTFarePaymentContentsAutoInfo from './controllers/payment/myt-fare.payment.contents.auto.info.controller';
-import MyTFarePaymentContentsAutoChange from './controllers/payment/myt-fare.payment.contents.auto.change.controller';
+import MyTFareSubMainNonBill from './controllers/submain/myt-fare.submain.non-paymt';
 import MyTFareHistory from './controllers/history/myt-fare.history.controller';
 import MyTFarePaymentHistory from './controllers/history/myt-fare.payment.history.controller';
 import MyTFarePaymentHistoryDetail from './controllers/history/myt-fare.payment.history.detail.controller';
 import MyTFareBillHistory from './controllers/history/myt-fare.bill-history.controller';
 import MyTFareOverpayRefund from './controllers/history/myt-fare.overpay-refund.controller';
-import MyTFarePaymentCashbag from './controllers/payment/myt-fare.payment.cashbag.controller';
-import MyTFarePaymentTPoint from './controllers/payment/myt-fare.payment.tpoint.controller';
-import MyTFarePaymentRainbow from './controllers/payment/myt-fare.payment.rainbow.controller';
+import MyTFareBillAccount from './controllers/bill/myt-fare.bill.account.controller';
+import MyTFareBillCard from './controllers/bill/myt-fare.bill.card.controller';
+import MyTFareBillPoint from './controllers/bill/myt-fare.bill.point.controller';
+import MyTFareBillSms from './controllers/bill/myt-fare.bill.sms.controller';
+import MyTFareBillCashbag from './controllers/bill/myt-fare.bill.cashbag.controller';
+import MyTFareBillTPoint from './controllers/bill/myt-fare.bill.tpoint.controller';
+import MyTFareBillRainbow from './controllers/bill/myt-fare.bill.rainbow.controller';
+import MyTFareBillsmall from './controllers/billsmall/myt-fare.billsmall.controller';
+import MyTFareBillsmallAuto from './controllers/billsmall/myt-fare.billsmall.auto.controller';
+import MyTFareBillsmallAutoInfo from './controllers/billsmall/myt-fare.billsmall.auto.info.controller';
+import MyTFareBillsmallAutoChange from './controllers/billsmall/myt-fare.billsmall.auto.change.controller';
+import MyTFareBillcontents from './controllers/billcontents/myt-fare.billcontents.controller';
+import MyTFareBillcontentsAuto from './controllers/billcontents/myt-fare.billcontents.auto.controller';
+import MyTFareBillcontentsAutoInfo from './controllers/billcontents/myt-fare.billcontents.auto.info.controller';
+import MyTFareBillcontentsAutoChange from './controllers/billcontents/myt-fare.billcontents.auto.change.controller';
+import MyTFareBillautoRegister from './controllers/billauto/myt-fare.billauto.register.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: MyTFareSubMain });
-    this.controllers.push({ url: '/nonpayment', controller: MyTFareSubMainNonPayment });
+    this.controllers.push({ url: '/nonbill', controller: MyTFareSubMainNonBill });
+
+    // 요금납부
+    this.controllers.push({ url: '/bill/account', controller: MyTFareBillAccount });
+    this.controllers.push({ url: '/bill/card', controller: MyTFareBillCard });
+    this.controllers.push({ url: '/bill/point', controller: MyTFareBillPoint });
+    this.controllers.push({ url: '/bill/sms', controller: MyTFareBillSms });
+    this.controllers.push({ url: '/bill/cashbag', controller: MyTFareBillCashbag });
+    this.controllers.push({ url: '/bill/tpoint', controller: MyTFareBillTPoint });
+    this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
+
+    // 자동납부
+    this.controllers.push({ url: '/billauto', controller: MyTFareBillauto });
+    this.controllers.push({ url: '/billauto/register', controller: MyTFareBillautoRegister });
+
+    // 소액결제
+    this.controllers.push({ url: '/billsmall', controller: MyTFareBillsmall });
+    this.controllers.push({ url: '/billsmall/auto', controller: MyTFareBillsmallAuto });
+    this.controllers.push({ url: '/billsmall/auto/info', controller: MyTFareBillsmallAutoInfo });
+    this.controllers.push({ url: '/billsmall/auto/change', controller: MyTFareBillsmallAutoChange });
+
+    // 콘텐츠이용내역
+    this.controllers.push({ url: '/billcontents', controller: MyTFareBillcontents });
+    this.controllers.push({ url: '/billcontents/auto', controller: MyTFareBillcontentsAuto });
+    this.controllers.push({ url: '/billcontents/auto/info', controller: MyTFareBillcontentsAutoInfo });
+    this.controllers.push({ url: '/billcontents/auto/change', controller: MyTFareBillcontentsAutoChange });
+
+    //
     this.controllers.push({ url: '/bill/guide', controller: MyTFareBillGuide });
     this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
     this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });
     this.controllers.push({ url: '/bill/guide/donation', controller: MyTFareBillGuideDonation });
     this.controllers.push({ url: '/bill/set', controller: MyTFareBillSet });
     this.controllers.push({ url: '/bill/set/reissue', controller: MyTFareBillSetReissue });
-    this.controllers.push({ url: '/payment/option', controller: MyTFarePaymentOption });
-    this.controllers.push({ url: '/payment/auto', controller: MyTFarePaymentAuto });
-    this.controllers.push({ url: '/payment/account', controller: MyTFarePaymentAccount });
-    this.controllers.push({ url: '/payment/card', controller: MyTFarePaymentCard });
-    this.controllers.push({ url: '/payment/point', controller: MyTFarePaymentPoint });
-    this.controllers.push({ url: '/payment/sms', controller: MyTFarePaymentSms });
-    this.controllers.push({ url: '/payment/cashbag', controller: MyTFarePaymentCashbag });
-    this.controllers.push({ url: '/payment/tpoint', controller: MyTFarePaymentTPoint });
-    this.controllers.push({ url: '/payment/rainbow', controller: MyTFarePaymentRainbow });
-    this.controllers.push({ url: '/payment/micro', controller: MyTFarePaymentMicro });
-    this.controllers.push({ url: '/payment/micro/auto', controller: MyTFarePaymentMicroAuto });
-    this.controllers.push({ url: '/payment/micro/auto/info', controller: MyTFarePaymentMicroAutoInfo });
-    this.controllers.push({ url: '/payment/micro/auto/change', controller: MyTFarePaymentMicroAutoChange });
-    this.controllers.push({ url: '/payment/contents', controller: MyTFarePaymentContents });
-    this.controllers.push({ url: '/payment/contents/auto', controller: MyTFarePaymentContentsAuto });
-    this.controllers.push({ url: '/payment/contents/auto/info', controller: MyTFarePaymentContentsAutoInfo });
-    this.controllers.push({ url: '/payment/contents/auto/change', controller: MyTFarePaymentContentsAutoChange });
     this.controllers.push({ url: '/bill/set/return-history', controller: MyTFareBillSetReturnHistory });
     this.controllers.push({ url: '/bill/set/change', controller: MyTFareBillSetChange });
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
 
-    // 소액결제, 컨텐츠 이용료
+    // 소액결제, 컨텐츠 이용료 상세내역
     this.controllers.push({ url: '/billsmall/history', controller: MyTFareHistory });
     this.controllers.push({ url: '/billsmall/monthly', controller: MyTFareHistory });
     this.controllers.push({ url: '/billsmall/block', controller: MyTFareHistory });
@@ -86,7 +96,7 @@ class MytFareRouter extends TwRouter {
 
     // new url
     this.controllers.push({ url: '/submain(/usagefee)', controller: MyTFareSubMain });
-    this.controllers.push({ url: '/unbill', controller: MyTFareSubMainNonPayment });
+    this.controllers.push({ url: '/unbill', controller: MyTFareSubMainNonBill });
     this.controllers.push({ url: '/bill/guide', controller: MyTFareBillGuide });
     this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
     this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });

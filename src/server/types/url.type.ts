@@ -111,8 +111,8 @@ export const URL = {
   '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
 
   // Common
-  '/common/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
-  '/common/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
+  '/common/member/tid-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/common/member/manage': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
 
   // Membership
   '/membership_benefit/mbrs_0001': { login: false, id: 'BE_03_01', title: '제휴브랜드' },
