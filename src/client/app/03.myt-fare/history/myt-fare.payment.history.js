@@ -10,7 +10,7 @@ Tw.MyTFarePaymentHistory = function (rootEl, data) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._bankList = new Tw.MyTFarePaymentBankList(this.$container);
+  this._bankList = new Tw.MyTFareBillBankList(this.$container);
 
   this._cachedElement();
   this._bindEvent();
