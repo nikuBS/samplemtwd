@@ -1,5 +1,5 @@
 /**
- * FileName: product.plans.controller.ts
+ * FileName: product.mobileplan.list.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.10.08
  */
@@ -31,7 +31,7 @@ export default class ProductPlans extends TwViewController {
         });
       }
 
-      res.render('plan/product.plans.html', { svcInfo, plans, params, pageInfo });
+      res.render('mobileplan/product.mobileplan.list.html', { svcInfo, plans, params, pageInfo });
     });
   }
 
@@ -53,7 +53,10 @@ export default class ProductPlans extends TwViewController {
         products: resp.result.products.map(plan => {
           return {
             ...plan,
-            basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt)
+            basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
+            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
+            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
+            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
           };
         })
       };

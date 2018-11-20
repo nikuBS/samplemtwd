@@ -330,7 +330,9 @@ Tw.FormatHelper = (function () {
   };
 
   var appendDataUnit = function (data) {
-    if (/^[0-9\.]+$/.test(data)) {
+    if (/^\d{1,3}\.?\d*$/.test(data)) {
+      return data + Tw.DATA_UNIT.MB;
+    } else if (/^\d{4,}\.?\d*$/.test(data)) {
       return data + Tw.DATA_UNIT.GB;
     }
     return data;

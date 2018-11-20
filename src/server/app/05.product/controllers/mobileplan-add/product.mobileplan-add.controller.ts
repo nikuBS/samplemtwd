@@ -1,5 +1,5 @@
 /**
- * FileName: product.addition.controller.ts
+ * FileName: product.mobileplan-add.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.10.08
  */
@@ -53,7 +53,7 @@ export default class ProductAddition extends TwViewController {
         recommendedAdditions,
         recommendedTags
       };
-      res.render('addition/product.addition.html', { svcInfo, productData, pageInfo });
+      res.render('mobileplan-add/product.mobileplan-add.html', { svcInfo, productData, pageInfo });
     });
   }
 

@@ -45,7 +45,7 @@ export default class ProductWires extends TwViewController {
         });
       }
 
-      res.render('wire/product.wires.html', { svcInfo, pageInfo, myWire, page: PRODUCT_WIRE_CATEGORIES[page], plan, addition });
+      res.render('wireplan/product.wireplan.list.html', { svcInfo, pageInfo, myWire, page: PRODUCT_WIRE_CATEGORIES[page], plan, addition });
     });
   }
 

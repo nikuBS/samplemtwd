@@ -1,5 +1,5 @@
 /**
- * FileName: product.additions.controller.ts
+ * FileName: product.mobileplan-add.list.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.10.09
  */
@@ -32,7 +32,7 @@ export default class ProductAdditions extends TwViewController {
         return this.error.render(res, { ...error, svcInfo });
       }
 
-      res.render('addition/product.additions.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
+      res.render('mobileplan-add/product.mobileplan-add.list.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
     });
   }
 
@@ -51,7 +51,7 @@ export default class ProductAdditions extends TwViewController {
     }
 
     return of(undefined);
-  };
+  }
 
   private getAdditions = params => {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
@@ -79,5 +79,5 @@ export default class ProductAdditions extends TwViewController {
         })
       };
     });
-  };
+  }
 }
