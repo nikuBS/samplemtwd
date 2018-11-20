@@ -4,13 +4,14 @@
  * Date: 2018.11.09
  */
 
-Tw.ProductJoinCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
+Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._data = data;
   this._isApply = false;
+  this._isPopup = isPopup;
   this._applyCallback = applyCallback;
 
   if (isPopup) {
@@ -21,7 +22,7 @@ Tw.ProductJoinCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   }
 };
 
-Tw.ProductJoinCommonConfirm.prototype = {
+Tw.ProductCommonConfirm.prototype = {
 
   _cachedElement: function() {
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -63,14 +64,16 @@ Tw.ProductJoinCommonConfirm.prototype = {
       this._template = Handlebars.compile(this.$overPayTmpl.html());
     }
 
-    this._joinConfirmAlert = this._data.joinConfirmAlert || Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
+    this._confirmAlert = this._data.confirmAlert || Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
   },
 
   _openPop: function() {
     this._popupService.open($.extend(this._data, {
-      hbs: 'product_join_confirm',
-      layer: true
-    }, this._data), $.proxy(this._setContainer, this), $.proxy(this._closePop, this), 'join_confirm');
+      hbs: 'product_common_confirm',
+      layer: true,
+      title: Tw.PRODUCT_TYPE_NM.JOIN,
+      applyBtnText: Tw.BUTTON_LABEL.JOIN
+    }), $.proxy(this._setContainer, this), $.proxy(this._closePop, this), 'join_confirm');
   },
 
   _setContainer: function($container) {
@@ -101,6 +104,10 @@ Tw.ProductJoinCommonConfirm.prototype = {
   },
 
   _getOverpay: function() {
+    if (this._data.isOverPayReqYn !== 'Y') {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0010)
       .done($.proxy(this._setOverpay, this));
   },
@@ -155,8 +162,8 @@ Tw.ProductJoinCommonConfirm.prototype = {
   },
 
   _openConfirmAlert: function() {
-    this._popupService.openModalTypeA(this._joinConfirmAlert.TITLE, this._joinConfirmAlert.MSG,
-      this._joinConfirmAlert.BUTTON, $.proxy(this._bindConfirmAlert, this), null, $.proxy(this._onCloseConfirmAlert, this));
+    this._popupService.openModalTypeA(this._confirmAlert.TITLE, this._confirmAlert.MSG,
+      this._confirmAlert.BUTTON, $.proxy(this._bindConfirmAlert, this), null, $.proxy(this._onCloseConfirmAlert, this));
   },
 
   _bindConfirmAlert: function($popupContainer) {
@@ -165,7 +172,10 @@ Tw.ProductJoinCommonConfirm.prototype = {
 
   _setConfirmAlertApply: function() {
     this._isDoCallback = true;
-    this._popupService.close();
+
+    if (this._isPopup) {
+      this._popupService.close();
+    }
   },
 
   _onCloseConfirmAlert: function() {

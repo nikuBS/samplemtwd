@@ -36,7 +36,7 @@ class ProductDetail extends TwViewController {
   private _getApi (key: string, optionKey?: any): Observable<any> {
     let params = {};
     if (key === 'basic') {
-      params = { prodExpsTypCd: this._prodId === optionKey ? 'SP' : 'P' };
+      params = { prodExpsTypCd: 'P' };
     }
 
     if (key === 'series' && optionKey !== 'F01100') {
@@ -245,7 +245,7 @@ class ProductDetail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this._prodId = req.params.prodId;
+    this._prodId = req.params.prodId || null;
 
     if (FormatHelper.isEmpty(this._prodId)) {
       return this.error.render(res, {
@@ -254,8 +254,7 @@ class ProductDetail extends TwViewController {
       });
     }
 
-    this._getApi('basic', svcInfo.prodId)
-      .subscribe((basicInfo) => {
+    this._getApi('basic').subscribe((basicInfo) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             title: '상품 상세 정보',
@@ -301,6 +300,7 @@ class ProductDetail extends TwViewController {
           }
 
           res.render('product.detail.html', {
+            pathCategory: req.path.split('/')[1],
             pageInfo: pageInfo,
             prodId: this._prodId,
             basicInfo: this._convertBasicInfo(basicInfo.result),

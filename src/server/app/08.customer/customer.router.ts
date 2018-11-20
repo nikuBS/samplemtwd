@@ -54,7 +54,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice });
 
     // new IA
-    this.controllers.push({ url: '/notice(/:category)?', controller: CustomerNotice });
+    this.controllers.push({ url: '/svc-info/notice(/:category)?', controller: CustomerNotice });
     this.controllers.push({ url: '/damage-info', controller: CustomerProtect });
     this.controllers.push({ url: '/damage-info/guide(/:category)?', controller: CustomerProtectGuide });
     this.controllers.push({ url: '/damage-info/guide/webtoon/view/:idx', controller: CustomerProtectGuideView });

@@ -79,7 +79,7 @@ Tw.CustomerNotice.prototype = {
       return;
     }
 
-    this._history.goLoad('/customer/notice/' + this._category);
+    this._history.goLoad('/customer/svc-info/notice/' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {

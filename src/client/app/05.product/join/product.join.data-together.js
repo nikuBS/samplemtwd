@@ -118,11 +118,11 @@ Tw.ProductJoinDataTogether.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
-    new Tw.ProductJoinCommonConfirm(true, null, $.extend(this._confirmOptions, {
+    new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
-      joinConfirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
       settingSummaryTexts: [{
         spanClass: 'val',
         text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' 1' + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
