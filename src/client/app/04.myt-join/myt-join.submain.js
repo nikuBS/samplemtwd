@@ -127,7 +127,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 결합 상품
   _onMovedComProduct: function() {
-    this._historyService.goLoad('/myt/join/product/combinations');
+    this._historyService.goLoad('/myt-join/myplancombine');
   },
   // 약정 할인
   _onMovedInstallement: function() {

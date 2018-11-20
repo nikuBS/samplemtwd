@@ -2,7 +2,7 @@ import TwRouter from '../../common/route/tw.router';
 import MyTJoinSubmainController from './myt-join.submain.controller';
 import MyTJoinProductFeePlan from './controllers/product/myt-join.product.fee-plan.controller';
 import MyTJoinMyPlanAdd from './controllers/myplanadd/myt-join.myplanadd.controller';
-import MyTJoinProductCombinations from './controllers/product/myt-join.product.combinations.controller';
+import MyTJoinMyPlanCombine from './controllers/myplancombine/myt-join.myplancombine.controller';
 import MyTJoinProductFeeAlarm from './controllers/product/myt-join.product.fee-alarm.controller';
 import MyTJoinProductFeeAlarmTerminate from './controllers/product/myt-join.product.fee-alarm.terminate.controller';
 import MyTJoinProtectChange from './controllers/protect/myt-join.protect.change.controller';
@@ -37,8 +37,6 @@ class MyTJoinRouter extends TwRouter {
     super();
     this.controllers.push({ url: '/', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/product/fee-plan', controller: MyTJoinProductFeePlan });
-
-    this.controllers.push({ url: '/product/combinations(/:combination)?', controller: MyTJoinProductCombinations });
     this.controllers.push({ url: '/product/fee-alarm', controller: MyTJoinProductFeeAlarm });
     this.controllers.push({ url: '/product/fee-alarm/terminate', controller: MyTJoinProductFeeAlarmTerminate });
     this.controllers.push({ url: '/protect/change', controller: MyTJoinProtectChange });
@@ -90,6 +88,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/phone/alarm', controller: MyTJoinMgmtNumChgAlarm });
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinMgmtNumChgAlarmExt });
     this.controllers.push({ url: '/myplanadd', controller: MyTJoinMyPlanAdd });
+    this.controllers.push({ url: '/myplancombine(/:combination)?', controller: MyTJoinMyPlanCombine });
   }
 }
 
