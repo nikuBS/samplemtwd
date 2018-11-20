@@ -20,8 +20,6 @@ class ProductJoinRequireDocumentApply extends TwViewController {
    * @private
    */
   private _converRequireDocumentInfo(requireDocumentInfo: any): any {
-    return {};  // @todo
-
     return Object.assign(requireDocumentInfo, {
       opDtm: FormatHelper.isEmpty(requireDocumentInfo.opDtm) ? null :
         DateHelper.getShortDateWithFormat(requireDocumentInfo.opDtm, 'YYYY.MM.DD'),
@@ -30,20 +28,17 @@ class ProductJoinRequireDocumentApply extends TwViewController {
     });
   }
 
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     this.apiService.request(API_CMD.BFF_10_0078, {})
       .subscribe((requireDocumentInfo) => {
-        // @todo
-        // if (requireDocumentInfo.code !== API_CODE.CODE_00) {
-        //   return this.error.render(res, {
-        //     svcInfo: svcInfo,
-        //     code: requireDocumentInfo.code,
-        //     msg: requireDocumentInfo.msg,
-        //     title: '구비서류 제출'
-        //   });
-        // }
+        if (requireDocumentInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            svcInfo: svcInfo,
+            code: requireDocumentInfo.code,
+            msg: requireDocumentInfo.msg,
+            title: '구비서류 제출'
+          });
+        }
 
         res.render('join/product.join.require-document.apply.html', {
           requireDocumentInfo: this._converRequireDocumentInfo(requireDocumentInfo.result),

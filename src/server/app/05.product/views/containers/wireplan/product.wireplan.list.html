@@ -56,7 +56,7 @@
                         <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
                         <% plan.products.map(prod => { %>
                         <li class="type01">
-                            <a type="button" class="product-infolink" href="/product/detail/<%= prod.prodId %>">
+                            <a type="button" class="product-infolink" href="/product/wireplan/callplan/<%= prod.prodId %>">
                                 <div class="img-box"><img class="lte" src="<%= prod.rgstImg %>" alt="명칭"></div>
                                 <div class="products-titleinfo">
                                     <h5 class="title"><%= prod.prodNm %></h5>
@@ -88,7 +88,7 @@
                         <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
                         <% addition.products.map(prod => { %>
                             <li class="type01">
-                                <a type="button" class="product-infolink" href="/product/detail/<%= prod.prodId %>">
+                                <a type="button" class="product-infolink" href="/product/wireplan/callplan/<%= prod.prodId %>">
                                     <div class="img-box"><img class="lte" src="<%= prod.rgstImg %>" alt="명칭"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= prod.prodNm %></h5>

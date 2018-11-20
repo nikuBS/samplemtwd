@@ -75,7 +75,7 @@ Tw.BenefitDisPgmSelContract.prototype = {
   },
 
   _joinCompleteConfirm: function() {
-    this._popupService.afterRequestSuccess('/myt/join', '/product/detail/' + this.data.prodId,
+    this._popupService.afterRequestSuccess('/myt/join', '/benefit/callplan/' + this.data.prodId,
       Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
       Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
     /*this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
@@ -85,7 +85,7 @@ Tw.BenefitDisPgmSelContract.prototype = {
 
   _onSuccessSeldisSet: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt/join', '/product/detail/' + this.data.prodId,
+      this._popupService.afterRequestSuccess('/myt/join', '/benefit/callplan/' + this.data.prodId,
         Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
         Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
     }

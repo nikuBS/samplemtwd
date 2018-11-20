@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="lineinfo-data">
                                         <% if (addition.prodLinkYn === "Y") { %>
-                                            <a href="/product/detail/<%= addition.prodId %>">
+                                            <a href="/product/mobileplan-add/callplan/<%= addition.prodId %>">
                                                 <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
                                                 <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                                 <% } else { %>
