@@ -2164,6 +2164,1231 @@
     padding-top: 1.375rem;
     padding-bottom: 1.375rem; }
 
+.icon-check {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: url(/img/svg/component_check_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-check.on {
+    background-image: url(/img/svg/component_check_on.svg); }
+  .icon-check.disabled {
+    background-image: url(/img/svg/component_check_off_disabled.svg); }
+  .icon-check.on.disabled {
+    background-image: url(/img/svg/component_check_on_disabled.svg); }
+
+.icon-check-small {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-check-small.on {
+    background-image: url(/img/svg/component_check_small_on.svg); }
+  .icon-check-small.disabled {
+    background-image: url(/img/svg/component_check_small_off_disabled.svg); }
+  .icon-check-small.on.disabled {
+    background-image: url(/img/svg/component_check_small_on_disabled.svg); }
+
+.icon-radio {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: url(/img/svg/component_radio_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-radio.on {
+    background-image: url(/img/svg/component_radio_on.svg); }
+  .icon-radio.disabled {
+    background-image: url(/img/svg/component_radio_off_disabled.svg); }
+  .icon-radio.on.disabled {
+    background-image: url(/img/svg/component_radio_on_disabled.svg); }
+
+.icon-radio-small {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/component_radio_small_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-radio-small.on {
+    background-image: url(/img/svg/component_radio_small_on.svg); }
+  .icon-radio-small.disabled {
+    background-image: url(/img/svg/component_radio_small_off_disabled.svg); }
+  .icon-radio-small.on.disabled {
+    background-image: url(/img/svg/component_radio_small_on_disabled.svg); }
+
+.icon-toggle {
+  display: inline-block;
+  width: 3.375rem;
+  height: 1.75rem;
+  background: url(/img/svg/component_toggle_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-toggle.on {
+    background-image: url(/img/svg/component_toggle_on.svg); }
+  .icon-toggle.disabled {
+    background-image: url(/img/svg/component_toggle_off_disabled.svg); }
+  .icon-toggle.on.disabled {
+    background-image: url(/img/svg/component_toggle_on_disabled.svg); }
+
+.icon-badge-tip {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1rem;
+  background: url(/img/svg/graphic_56px_badge_tip.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-bi-skt-56 {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: url(/img/svg/graphic_56px_bi_skt.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-bi-skt-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-thumb-gift-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_thumb_gift.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-thumb-profile-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_thumb_profile.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-thumb-recieve-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_thumb_recieve.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cell-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_cell.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-creditcard-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_creditcard.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-data-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_data.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-internet-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_internet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-movie-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_movie.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cellphone1-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_cellphone1.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-discount1-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_discount1.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-discount2-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_discount2.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-roaming-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_roaming.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-vas-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_vas.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-watch-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_watch.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-accessory-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_accessory.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-nugu-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_nugu.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-time-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_time.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-bi-p-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_bi_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-bi-n-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_bi_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-lock-n-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_lock_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-lock-p-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_lock_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-lock-s-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_lock_s.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-lock-sp-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_lock_sp.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-pin-n-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_pin_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-pin-p-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_pin_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-pin-s-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_pin_s.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-fab-pin-sp-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_fab_pin_sp.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gift-88 {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: url(/img/svg/graphic_88px_thumb_gift.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-profile-88 {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: url(/img/svg/graphic_88px_thumb_profile.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-recieve-88 {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: url(/img/svg/graphic_88px_thumb_recieve.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-send-88 {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: url(/img/svg/graphic_88px_thumb_send.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-112 {
+  display: inline-block;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url(/img/svg/graphic_112px_graph_call.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-data-112 {
+  display: inline-block;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url(/img/svg/graphic_112px_graph_data.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-sms-112 {
+  display: inline-block;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url(/img/svg/graphic_112px_graph_sms.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-complete-120 {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/svg/graphic_120px_complete.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-information-120 {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/svg/graphic_120px_information.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-warning-120 {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/svg/graphic_120px_warning.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-smile-120 {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/svg/graphic_120px_smile.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-badge-claim {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1rem;
+  background: url(/img/svg/graphic_badge_claim.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-badge-family {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1rem;
+  background: url(/img/svg/graphic_badge_family.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-badge-plan-child {
+  display: inline-block;
+  width: 2rem;
+  height: 1.25rem;
+  background: url(/img/svg/graphic_badge_plan_child.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-badge-plan-my {
+  display: inline-block;
+  width: 2rem;
+  height: 1.25rem;
+  background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-ci-sktelecom {
+  display: inline-block;
+  width: 9.625rem;
+  height: 0.75rem;
+  background: url(/img/svg/graphic_ci_sktelecom.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-home-tab-my {
+  display: inline-block;
+  width: 4.25rem;
+  height: 1.75rem;
+  background: url(/img/svg/graphic_home_tab_my_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-home-tab-my.on {
+    background-image: url(/img/svg/graphic_home_tab_my_on.svg); }
+
+.icon-home-tab-store {
+  display: inline-block;
+  width: 4.25rem;
+  height: 1.75rem;
+  background: url(/img/svg/graphic_home_tab_store_off.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-home-tab-store.on {
+    background-image: url(/img/svg/graphic_home_tab_store_on.svg); }
+
+.icon-arrowdown-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowdown.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-arrowmore-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-arrowmore-32.white {
+    background-image: url(/img/svg/icon_32px_arrowmore_white.svg); }
+
+.icon-arrowmore-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-arrowmore-32.white {
+    background-image: url(/img/svg/icon_32px_arrowmore_white.svg); }
+
+.icon-exit-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_exit.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-history-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_history.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-input-cancel-n-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_input_cancel_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-input-cancel-p-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_input_cancel_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-list-close-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_list_close.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-list-open-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_list_open.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-reload-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_reload.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-setting-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_setting.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-sms-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_sms.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_call.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cellphone-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_cellphone.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-charge-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_charge.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-dcoupon-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_dcoupon.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-discount-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_discount.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-event-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_event.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gift-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_gift.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-history-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_history.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-internet-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_internet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-my-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_my.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-pc-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_pc.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-price-plan-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_price_plan.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-price-plan-data-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_price_plan_data.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-roaming-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_roaming.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-sms-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_sms.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tcoupon-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_tcoupon.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tmembership-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_tmembership.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-vas-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_vas.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tablet-40 {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/svg/icon_40px_tablet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48p_call.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-alarm-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_alarm.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-back-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_back.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cellphone-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_cellphone.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-charge-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_charge.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-dcoupon-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_dcoupon.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-discount-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_discount.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-event-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_event.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-exit-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_exit.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-favorite-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_favorite.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-history-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_history.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-internet-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_internet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-lock-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_lock.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-logout-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_logout.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-my-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_my.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-next-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_next.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-next-48.off {
+    background-image: url(/img/svg/icon_48px_next_dimd.svg); }
+
+.icon-pc-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_pc.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-price-plan-data-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_price_plan_data.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-roaming-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_roaming.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-search-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_search.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-setting-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_setting.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-share-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_share.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tablet-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_tablet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tbd-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_tbd.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tcoupon-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_tcoupon.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-titlebar-exit-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_titlebar_exit.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-titlebar-exit-48.white {
+    background-image: url(/img/svg/icon_48px_titlebar_exit_white.svg); }
+
+.icon-titlebar-menu-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_titlebar_menu.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-titlebar-menu-48.white {
+    background-image: url(/img/svg/icon_48px_titlebar_menu_white.svg); }
+
+.icon-titlebar-search-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_titlebar_search.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-titlebar-search-48.white {
+    background-image: url(/img/svg/icon_48px_titlebar_search_white.svg); }
+
+.icon-tmembership-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_tmembership.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-vas-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_vas.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-sms-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_sms.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-notice-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_notice.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_call.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-dialog-emoji-56 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_56px_dialog_emoji.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_call.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cellphone-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_cellphone.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cellphone2-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_cellphone2.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-charge-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_charge.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-chat-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_chat.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-contents-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_contents.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-security-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_security.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-data-charge-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_data_charge.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-data-gift-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_data_gift.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-discount-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_discount.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-immediate-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_immediate.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-pc-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_pc.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tablet-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_tablet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tbd-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_tbd.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tfamily-gather-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_tfamily_gather.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tmembership-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_tmembership.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-price-plan-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_price_plan.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-back-d {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_back_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-back-n {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_back_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-back-p {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_back_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-bi-d {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_bi_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-bi-n {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_bi_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-bi-p {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_bi_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-internet-d {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_internet_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-internet-n {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_internet_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-internet-p {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_internet_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-lock-d {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_lock_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-lock-n {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_lock_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-lock-p {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_lock_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-lock-s {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_lock_s.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-next-d {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_next_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-next-n {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_next_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-next-p {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_next_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-pin-d {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_pin_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-pin-n {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_pin_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-pin-p {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_pin_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-pin-s {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_pin_s.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-share-d {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_share_d.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-share-n {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_share_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-share-p {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_gnb_share_p.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+/* 정리전에 한거 */
+.icon-dialog-emoji {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: url(/img/svg/icon_56px_dialog_emoji.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-32px-exit {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_exit.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-search {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_titlebar_search.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-close {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_titlebar_exit.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-menu {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_titlebar_menu.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-gnb-menu.white {
+    background-image: url(/img/svg/icon_48px_titlebar_menu_white.svg); }
+
+.icon-gnb-home {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-arrowmore-blue-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowmore_blue.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-filter-n-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_filter_n.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-filter-s-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_filter_s.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-my-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/ico/icon_80px_my.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 /* 최민규 ~ 2018.10.05 */
 .data-number-wrap {
   display: table;
@@ -4470,6 +5695,11 @@
 
 .comma {
   padding-right: 0.625rem; }
+
+.link-wrap {
+  text-align: center; }
+  .link-wrap button.bt-link-tx, .link-wrap a.bt-link-tx {
+    font-size: 0.8125rem; }
 
 /* 김연주 */
 .data-result {
@@ -7502,8 +8732,7 @@ a.bt-link-tx.underline.small {
           left: -0.625rem; }
 
 .sortlist #sortable-enabled {
-  position: relative;
-  padding-bottom: 1.25rem; }
+  position: relative; }
   .sortlist #sortable-enabled .ui-state-default .bt-active {
     display: table-cell;
     vertical-align: middle; }
@@ -7691,20 +8920,6 @@ a.bt-link-tx.underline.small {
 
 .mline-list .acco-list .widget:last-of-type .acco-cover .acco-list .acco-box {
   margin-bottom: 1.375rem; }
-
-.mline-list .bt-more {
-  background: #fbfbfb;
-  display: block;
-  padding: 0.9375rem;
-  font-size: 0.9375rem;
-  font-weight: 300;
-  color: #757575;
-  text-align: center;
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #e1e1e1; }
-  .mline-list .bt-more > span {
-    font-family: "Helvetica Neue", Roboto, sans-serif;
-    vertical-align: baseline; }
 
 .list-edit-guide {
   font-size: 0.8125rem;
@@ -8798,6 +10013,10 @@ a.bt-link-tx.underline.small {
         line-height: 1.5rem;
         color: #000;
         font-weight: 300; }
+      .th-use .real-remaining > dd .graph-area-type4 {
+        height: 0.75rem;
+        -webkit-box-sizing: inherit;
+                box-sizing: inherit; }
   .th-use.small {
     margin: 0 0 0.625rem 0; }
     .th-use.small .real-remaining {
@@ -9347,7 +10566,7 @@ a.bt-link-tx.underline.small {
         position: absolute;
         bottom: 0;
         width: 100%;
-        color: #666;
+        color: #959595;
         font-size: 0.8125rem;
         text-align: center; }
       .graph-area-type2 ul .graph-list dl dd {
@@ -9363,9 +10582,10 @@ a.bt-link-tx.underline.small {
             left: 50%;
             right: 0;
             bottom: 0;
-            margin: 0 0 0 -0.25rem;
-            width: 0.5rem;
-            background: #3b98e6; }
+            margin: 0 0 0 -0.625rem;
+            width: 1.25rem;
+            border-radius: 0.1875rem 0.1875rem 0 0;
+            background: #f76252; }
             .graph-area-type2 ul .graph-list dl dd .box .bar.point {
               background: url(/img/chart/pattern1.gif) repeat 0 0;
               background-size: 0.5rem; }
@@ -9375,7 +10595,7 @@ a.bt-link-tx.underline.small {
             left: 0;
             right: 0;
             bottom: 50%;
-            color: #3b98e6;
+            color: #f76252;
             font-size: 0.75rem;
             text-align: center; }
   .graph-area-type2 .line-box {
@@ -9384,6 +10604,15 @@ a.bt-link-tx.underline.small {
     right: 0;
     top: 1.625rem;
     bottom: 1.625rem; }
+    .graph-area-type2 .line-box::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: block;
+      width: 100%;
+      height: 0;
+      border-bottom: 1px solid #e5e5e5; }
     .graph-area-type2 .line-box .line {
       display: block;
       position: absolute;
@@ -9476,30 +10705,32 @@ a.bt-link-tx.underline.small {
         left: 50%;
         right: 0;
         bottom: 0;
-        margin: 0 0 0 -0.75rem;
-        width: 0.5rem;
-        background: #3b98e6; }
+        margin: 0 0 0 -1.25rem;
+        width: 1.25rem;
+        border-radius: 0.1875rem 0.1875rem 0 0;
+        background: #f76252; }
         .graph-area-type3 .chart-dl .chart-dd .box .bar.point {
           background: url(/img/chart/pattern1.gif) repeat 0 0;
           background-size: 0.5rem; }
         .graph-area-type3 .chart-dl .chart-dd .box .bar.point1 {
-          background: url(/img/chart/pattern3.gif) repeat 0 0;
+          background: #58bcf5;
           background-size: 0.5rem; }
         .graph-area-type3 .chart-dl .chart-dd .box .bar.point2 {
           background: url(/img/chart/pattern4.gif) repeat 0 0;
           background-size: 0.5rem; }
         .graph-area-type3 .chart-dl .chart-dd .box .bar.pos-second {
           left: 50%;
-          margin: 0 0 0 0.25rem; }
+          margin: 0 0 0 0.125rem; }
       .graph-area-type3 .chart-dl .chart-dd .box .txt {
         display: block;
         position: absolute;
         left: 0;
         bottom: 50%;
         width: 100%;
-        color: #3b98e6;
+        color: #f76252;
         font-size: 0.75rem;
-        text-align: center; }
+        text-align: center;
+        font-weight: 700; }
   .graph-area-type3 .chart-right {
     position: absolute;
     right: 0;
@@ -9536,7 +10767,7 @@ a.bt-link-tx.underline.small {
   position: relative;
   margin: 1.5625rem 0 0 0;
   width: 100%;
-  height: 1.75rem;
+  height: 13.75rem;
   padding: 0 0 1.25rem 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
@@ -12636,6 +13867,7 @@ a.bt-link-tx.underline.small {
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
   .cancelbox-info .title {
+    clear: both;
     float: left;
     padding: 0.3125rem 0;
     color: #000;
@@ -13220,7 +14452,863 @@ a.bt-link-tx.underline.small {
 
 /* 임지선 ~ 2018.10.05 */
 /* 김재성 */
-/* 2018.11.09 new header */
+/* .chart-wrap  */
+.chart-wrap {
+  padding: 1.25rem 1rem; }
+  .chart-wrap.bar1 {
+    background: #fff; }
+    .chart-wrap.bar1 > ul {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      padding-top: 1.875rem; }
+      .chart-wrap.bar1 > ul > li {
+        float: left;
+        width: 50%;
+        height: 10.625rem; }
+        .chart-wrap.bar1 > ul > li > dl {
+          position: relative;
+          width: 6.875rem;
+          height: 100%;
+          margin: 0 auto; }
+          .chart-wrap.bar1 > ul > li > dl dt {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;
+            padding-top: 0.3125rem;
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+            border-top: 1px solid #e5e5e5;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8125rem;
+            color: #000; }
+          .chart-wrap.bar1 > ul > li > dl dd {
+            position: absolute;
+            height: 8.125rem;
+            width: 2.75rem; }
+            .chart-wrap.bar1 > ul > li > dl dd.first {
+              left: 0.75rem; }
+              .chart-wrap.bar1 > ul > li > dl dd.first .shapes {
+                background: #f76252; }
+              .chart-wrap.bar1 > ul > li > dl dd.first .data {
+                color: #f76252; }
+            .chart-wrap.bar1 > ul > li > dl dd.second {
+              right: 0.75rem; }
+              .chart-wrap.bar1 > ul > li > dl dd.second .shapes {
+                background: #3583e3; }
+              .chart-wrap.bar1 > ul > li > dl dd.second .data {
+                color: #3583e3; }
+            .chart-wrap.bar1 > ul > li > dl dd .shapes {
+              position: absolute;
+              display: block;
+              left: 0.75rem;
+              bottom: 0;
+              width: 1.25rem;
+              border-radius: 0.3125rem 0.3125rem 0 0; }
+            .chart-wrap.bar1 > ul > li > dl dd .data {
+              position: absolute;
+              width: 100%;
+              margin-top: -0.3125rem;
+              text-align: center;
+              font-size: 0.75rem;
+              font-weight: 500;
+              letter-spacing: -0.025em; }
+    .chart-wrap.bar1 .legend {
+      display: block;
+      width: 100%;
+      height: 1.5625rem;
+      font-size: 0.8125rem;
+      font-weight: 300;
+      color: #888; }
+      .chart-wrap.bar1 .legend .first {
+        float: left;
+        width: 50%;
+        text-align: center; }
+        .chart-wrap.bar1 .legend .first::before {
+          content: '';
+          display: inline-block;
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+          background: #f76252;
+          vertical-align: top;
+          margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.bar1 .legend .second {
+        float: left;
+        width: 50%;
+        text-align: center; }
+        .chart-wrap.bar1 .legend .second::before {
+          content: '';
+          display: inline-block;
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+          background: #3583e3;
+          vertical-align: top;
+          margin: 0.3125rem 0.1875rem 0 0; }
+  .chart-wrap.circle {
+    padding: 1.25rem 0;
+    background: #fff; }
+    .chart-wrap.circle.removelegend .legend {
+      display: none; }
+    .chart-wrap.circle .circle-belt {
+      position: relative;
+      width: 18.75rem;
+      height: 10.9375rem;
+      padding: 0 0 4.6875rem 0;
+      margin: 0 auto; }
+    .chart-wrap.circle .as-is {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 10.9375rem;
+      height: 10.9375rem;
+      padding: 0 0 4.6875rem 0;
+      z-index: 2; }
+    .chart-wrap.circle .to-be {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 10.9375rem;
+      height: 10.9375rem;
+      padding: 0 0 4.6875rem 0; }
+      .chart-wrap.circle .to-be .data {
+        font-size: 1.25rem; }
+    .chart-wrap.circle .data {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.75rem; }
+    .chart-wrap.circle dl {
+      position: relative; }
+    .chart-wrap.circle dt {
+      position: absolute;
+      left: 0;
+      bottom: 2.8125rem;
+      width: 100%;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      text-align: center; }
+    .chart-wrap.circle .circle {
+      position: relative;
+      width: 10.9375rem;
+      height: 10.9375rem; }
+    .chart-wrap.circle .legend {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 18.75rem; }
+      .chart-wrap.circle .legend .first {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50%;
+        text-align: center;
+        font-size: 0.8125rem;
+        letter-spacing: -0.025em;
+        color: #888888; }
+        .chart-wrap.circle .legend .first::before {
+          content: '';
+          display: inline-block;
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+          background: url(/img/chart/pattern1.gif) repeat 0 0;
+          background-size: 0.375rem 0.375rem;
+          vertical-align: top;
+          margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.circle .legend .second {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50%;
+        text-align: center;
+        font-size: 0.8125rem;
+        letter-spacing: -0.025em;
+        color: #888888; }
+        .chart-wrap.circle .legend .second::before {
+          content: '';
+          display: inline-block;
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+          background: #f76252;
+          opacity: .4;
+          vertical-align: top;
+          margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.circle .legend strong {
+        font-weight: 700; }
+    .chart-wrap.circle .shapes {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+      display: block;
+      border-radius: 50%; }
+      .chart-wrap.circle .shapes.blue {
+        background: #3583e3; }
+      .chart-wrap.circle .shapes.gray {
+        width: 50% !important;
+        height: 50% !important;
+        background: #999; }
+      .chart-wrap.circle .shapes.red {
+        background: #f76252;
+        opacity: .4; }
+      .chart-wrap.circle .shapes.patten1 {
+        background: url(/img/chart/pattern1.gif) repeat 0 0;
+        background-size: 0.375rem 0.375rem; }
+  .chart-wrap.type1 {
+    position: relative;
+    background: #fff; }
+    .chart-wrap.type1 .tit {
+      padding: 0 0 1.25rem 0;
+      font-size: 1rem;
+      color: #000;
+      letter-spacing: -0.025em; }
+    .chart-wrap.type1 .legend {
+      position: absolute;
+      top: 1rem;
+      right: 1rem; }
+    .chart-wrap.type1 .data-arry {
+      position: relative; }
+      .chart-wrap.type1 .data-arry .dash {
+        position: absolute;
+        left: 0;
+        top: 1.5625rem;
+        bottom: 1.5625rem;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box; }
+        .chart-wrap.type1 .data-arry .dash span {
+          position: absolute;
+          display: block;
+          width: 100%;
+          height: 0.0625rem;
+          background: url(/img/chart/pattern6.gif) repeat 0 0;
+          background-size: 0.625rem 0.0625rem; }
+      .chart-wrap.type1 .data-arry .data-belt {
+        overflow-x: auto;
+        height: 10.625rem;
+        position: relative;
+        z-index: 2; }
+      .chart-wrap.type1 .data-arry .data-ul {
+        position: relative;
+        height: 100%; }
+        .chart-wrap.type1 .data-arry .data-ul::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 1.5625rem;
+          display: block;
+          width: 100%;
+          height: 0;
+          border-bottom: 1px solid #e5e5e5; }
+        .chart-wrap.type1 .data-arry .data-ul > li {
+          height: 100%;
+          float: left; }
+          .chart-wrap.type1 .data-arry .data-ul > li > dl {
+            height: 100%;
+            padding: 1.5625rem 0;
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+            position: relative;
+            text-align: center; }
+            .chart-wrap.type1 .data-arry .data-ul > li > dl > dt {
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              width: 100%;
+              color: #959595;
+              font-size: 0.8125rem;
+              letter-spacing: -0.025em; }
+            .chart-wrap.type1 .data-arry .data-ul > li > dl > dd {
+              height: 100%;
+              position: relative; }
+              .chart-wrap.type1 .data-arry .data-ul > li > dl > dd .v {
+                position: absolute;
+                left: 0;
+                text-align: center;
+                width: 100%;
+                color: #f76252;
+                font-size: 0.75rem;
+                font-weight: 700; }
+              .chart-wrap.type1 .data-arry .data-ul > li > dl > dd .bar {
+                position: absolute;
+                left: 50%;
+                margin-left: -0.625rem;
+                bottom: 0;
+                display: inline-block;
+                width: 1.25rem;
+                background-color: #f76252;
+                border-radius: 0.1875rem 0.1875rem 0 0; }
+          .chart-wrap.type1 .data-arry .data-ul > li.average .bar {
+            background: url(/img/chart/pattern1.gif) repeat 0 0;
+            background-size: 0.375rem 0.375rem; }
+
+/* new header */
+.header-wrap {
+  position: relative;
+  min-height: 3.25rem;
+  z-index: 25;
+  background: #fff; }
+  .header-wrap.home .h-belt {
+    border-bottom-color: transparent; }
+  .header-wrap .h-belt {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 3.1875rem;
+    border-bottom: 1px solid #f2f2f2;
+    background: #fff; }
+    .header-wrap .h-belt .h-default {
+      height: 3.1875rem; }
+      .header-wrap .h-belt .h-default .h-menu {
+        position: absolute;
+        left: 0.8125rem;
+        top: 0.875rem; }
+      .header-wrap .h-belt .h-default .h-tit {
+        margin: 0 3.75rem;
+        padding-top: 0.8125rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        overflow: hidden;
+        font-size: 1.0625rem; }
+        .header-wrap .h-belt .h-default .h-tit .logo img {
+          width: 3.8125rem;
+          height: 1.5rem; }
+      .header-wrap .h-belt .h-default .h-serarch {
+        position: absolute;
+        right: 0.75rem;
+        top: 0.875rem; }
+      .header-wrap .h-belt .h-default .h-logo {
+        position: absolute;
+        top: 0.3125rem;
+        left: 50%;
+        -webkit-transform: translate(-50%, 0);
+                transform: translate(-50%, 0);
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        opacity: 1; }
+
+/* home tab */
+.home-tab {
+  width: 100%;
+  height: 2.5rem;
+  background: #fff; }
+  .home-tab .home-tab-belt {
+    position: relative;
+    z-index: 26;
+    width: 100%;
+    height: 2.5rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0.25rem 1rem 0 1rem;
+    border-bottom: 1px solid #f2f2f2;
+    -webkit-transition: 0.5s;
+    transition: 0.5s; }
+    .home-tab .home-tab-belt .tab {
+      float: left;
+      width: 50%;
+      text-align: center;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+      .home-tab .home-tab-belt .tab:nth-of-type(1) {
+        padding-right: 1rem; }
+      .home-tab .home-tab-belt .tab:nth-of-type(2) {
+        padding-left: 1rem; }
+      .home-tab .home-tab-belt .tab > div {
+        position: relative;
+        height: 2.1875rem;
+        -webkit-transition: .7s;
+        transition: .7s; }
+      .home-tab .home-tab-belt .tab [class*=ico-tab] {
+        position: relative;
+        -webkit-transition: top .5s;
+        transition: top .5s;
+        top: 0; }
+      .home-tab .home-tab-belt .tab .on + .bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: block;
+        width: 100%;
+        border-bottom: 2px solid red; }
+
+/* home 에서 scroll발생시 */
+.fly .header-wrap .h-belt .h-default .h-logo {
+  top: -3.125rem;
+  opacity: 0; }
+
+.fly .home-tab .home-tab-belt {
+  padding: 0.25rem 3.125rem 0 3.125rem; }
+  .fly .home-tab .home-tab-belt .tab:nth-of-type(1) {
+    padding-right: 0.5rem; }
+  .fly .home-tab .home-tab-belt .tab:nth-of-type(2) {
+    padding-left: 0.5rem; }
+  .fly .home-tab .home-tab-belt .tab > div {
+    display: inline-block; }
+  .fly .home-tab .home-tab-belt .tab [class*=ico-tab] {
+    top: -0.25rem; }
+  .fly .home-tab .home-tab-belt.fixed {
+    position: fixed;
+    left: 0;
+    top: 0.75rem; }
+
+.dialog-box {
+  position: relative;
+  background: #eff6fb;
+  min-height: 1.75rem;
+  padding: 0.75rem 3.4375rem; }
+  .dialog-box .dialog-txt .name {
+    letter-spacing: -.25em;
+    font-size: 0.8125rem;
+    font-weight: 300; }
+  .dialog-box .dialog-txt .key {
+    letter-spacing: -.25em;
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .dialog-box .dialog-ico {
+    position: absolute;
+    left: 1.125rem;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
+  .dialog-box .dialog-right-btn {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
+
+/* donut chart */
+.donut-chart {
+  position: relative;
+  width: 13.5rem;
+  height: 13.5rem;
+  background: url(/img/ico/bg-donut.png) no-repeat 0 0;
+  background-size: 100% 100%;
+  /* color code */
+  /* size small */ }
+  .donut-chart .donut-chart-area {
+    width: 12.5rem;
+    height: 12.5rem;
+    position: absolute;
+    left: 0.5rem;
+    top: 0; }
+  .donut-chart .c100 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; }
+  .donut-chart .c100.p51 .slice, .donut-chart .c100.p52 .slice, .donut-chart .c100.p53 .slice, .donut-chart .c100.p54 .slice, .donut-chart .c100.p55 .slice, .donut-chart .c100.p56 .slice, .donut-chart .c100.p57 .slice, .donut-chart .c100.p58 .slice, .donut-chart .c100.p59 .slice, .donut-chart .c100.p60 .slice, .donut-chart .c100.p61 .slice, .donut-chart .c100.p62 .slice, .donut-chart .c100.p63 .slice, .donut-chart .c100.p64 .slice, .donut-chart .c100.p65 .slice, .donut-chart .c100.p66 .slice, .donut-chart .c100.p67 .slice, .donut-chart .c100.p68 .slice, .donut-chart .c100.p69 .slice, .donut-chart .c100.p70 .slice, .donut-chart .c100.p71 .slice, .donut-chart .c100.p72 .slice, .donut-chart .c100.p73 .slice, .donut-chart .c100.p74 .slice, .donut-chart .c100.p75 .slice, .donut-chart .c100.p76 .slice, .donut-chart .c100.p77 .slice, .donut-chart .c100.p78 .slice, .donut-chart .c100.p79 .slice, .donut-chart .c100.p80 .slice, .donut-chart .c100.p81 .slice, .donut-chart .c100.p82 .slice, .donut-chart .c100.p83 .slice, .donut-chart .c100.p84 .slice, .donut-chart .c100.p85 .slice, .donut-chart .c100.p86 .slice, .donut-chart .c100.p87 .slice, .donut-chart .c100.p88 .slice, .donut-chart .c100.p89 .slice, .donut-chart .c100.p90 .slice, .donut-chart .c100.p91 .slice, .donut-chart .c100.p92 .slice, .donut-chart .c100.p93 .slice, .donut-chart .c100.p94 .slice, .donut-chart .c100.p95 .slice, .donut-chart .c100.p96 .slice, .donut-chart .c100.p97 .slice, .donut-chart .c100.p98 .slice, .donut-chart .c100.p99 .slice, .donut-chart .c100.p100 .slice {
+    clip: rect(auto, auto, auto, auto); }
+  .donut-chart .c100 .bar, .donut-chart .c100.p51 .fill, .donut-chart .c100.p52 .fill, .donut-chart .c100.p53 .fill, .donut-chart .c100.p54 .fill, .donut-chart .c100.p55 .fill, .donut-chart .c100.p56 .fill, .donut-chart .c100.p57 .fill, .donut-chart .c100.p58 .fill, .donut-chart .c100.p59 .fill, .donut-chart .c100.p60 .fill, .donut-chart .c100.p61 .fill, .donut-chart .c100.p62 .fill, .donut-chart .c100.p63 .fill, .donut-chart .c100.p64 .fill, .donut-chart .c100.p65 .fill, .donut-chart .c100.p66 .fill, .donut-chart .c100.p67 .fill, .donut-chart .c100.p68 .fill, .donut-chart .c100.p69 .fill, .donut-chart .c100.p70 .fill, .donut-chart .c100.p71 .fill, .donut-chart .c100.p72 .fill, .donut-chart .c100.p73 .fill, .donut-chart .c100.p74 .fill, .donut-chart .c100.p75 .fill, .donut-chart .c100.p76 .fill, .donut-chart .c100.p77 .fill, .donut-chart .c100.p78 .fill, .donut-chart .c100.p79 .fill, .donut-chart .c100.p80 .fill, .donut-chart .c100.p81 .fill, .donut-chart .c100.p82 .fill, .donut-chart .c100.p83 .fill, .donut-chart .c100.p84 .fill, .donut-chart .c100.p85 .fill, .donut-chart .c100.p86 .fill, .donut-chart .c100.p87 .fill, .donut-chart .c100.p88 .fill, .donut-chart .c100.p89 .fill, .donut-chart .c100.p90 .fill, .donut-chart .c100.p91 .fill, .donut-chart .c100.p92 .fill, .donut-chart .c100.p93 .fill, .donut-chart .c100.p94 .fill, .donut-chart .c100.p95 .fill, .donut-chart .c100.p96 .fill, .donut-chart .c100.p97 .fill, .donut-chart .c100.p98 .fill, .donut-chart .c100.p99 .fill, .donut-chart .c100.p100 .fill {
+    position: absolute;
+    border: 1.75rem solid #fe6b5c;
+    width: 100%;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    clip: rect(0, 100px, 200px, 0);
+    border-radius: 50%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  .donut-chart .c100.p51 .bar:after, .donut-chart .c100.p51 .fill, .donut-chart .c100.p52 .bar:after, .donut-chart .c100.p52 .fill, .donut-chart .c100.p53 .bar:after, .donut-chart .c100.p53 .fill, .donut-chart .c100.p54 .bar:after, .donut-chart .c100.p54 .fill, .donut-chart .c100.p55 .bar:after, .donut-chart .c100.p55 .fill, .donut-chart .c100.p56 .bar:after, .donut-chart .c100.p56 .fill, .donut-chart .c100.p57 .bar:after, .donut-chart .c100.p57 .fill, .donut-chart .c100.p58 .bar:after, .donut-chart .c100.p58 .fill, .donut-chart .c100.p59 .bar:after, .donut-chart .c100.p59 .fill, .donut-chart .c100.p60 .bar:after, .donut-chart .c100.p60 .fill, .donut-chart .c100.p61 .bar:after, .donut-chart .c100.p61 .fill, .donut-chart .c100.p62 .bar:after, .donut-chart .c100.p62 .fill, .donut-chart .c100.p63 .bar:after, .donut-chart .c100.p63 .fill, .donut-chart .c100.p64 .bar:after, .donut-chart .c100.p64 .fill, .donut-chart .c100.p65 .bar:after, .donut-chart .c100.p65 .fill, .donut-chart .c100.p66 .bar:after, .donut-chart .c100.p66 .fill, .donut-chart .c100.p67 .bar:after, .donut-chart .c100.p67 .fill, .donut-chart .c100.p68 .bar:after, .donut-chart .c100.p68 .fill, .donut-chart .c100.p69 .bar:after, .donut-chart .c100.p69 .fill, .donut-chart .c100.p70 .bar:after, .donut-chart .c100.p70 .fill, .donut-chart .c100.p71 .bar:after, .donut-chart .c100.p71 .fill, .donut-chart .c100.p72 .bar:after, .donut-chart .c100.p72 .fill, .donut-chart .c100.p73 .bar:after, .donut-chart .c100.p73 .fill, .donut-chart .c100.p74 .bar:after, .donut-chart .c100.p74 .fill, .donut-chart .c100.p75 .bar:after, .donut-chart .c100.p75 .fill, .donut-chart .c100.p76 .bar:after, .donut-chart .c100.p76 .fill, .donut-chart .c100.p77 .bar:after, .donut-chart .c100.p77 .fill, .donut-chart .c100.p78 .bar:after, .donut-chart .c100.p78 .fill, .donut-chart .c100.p79 .bar:after, .donut-chart .c100.p79 .fill, .donut-chart .c100.p80 .bar:after, .donut-chart .c100.p80 .fill, .donut-chart .c100.p81 .bar:after, .donut-chart .c100.p81 .fill, .donut-chart .c100.p82 .bar:after, .donut-chart .c100.p82 .fill, .donut-chart .c100.p83 .bar:after, .donut-chart .c100.p83 .fill, .donut-chart .c100.p84 .bar:after, .donut-chart .c100.p84 .fill, .donut-chart .c100.p85 .bar:after, .donut-chart .c100.p85 .fill, .donut-chart .c100.p86 .bar:after, .donut-chart .c100.p86 .fill, .donut-chart .c100.p87 .bar:after, .donut-chart .c100.p87 .fill, .donut-chart .c100.p88 .bar:after, .donut-chart .c100.p88 .fill, .donut-chart .c100.p89 .bar:after, .donut-chart .c100.p89 .fill, .donut-chart .c100.p90 .bar:after, .donut-chart .c100.p90 .fill, .donut-chart .c100.p91 .bar:after, .donut-chart .c100.p91 .fill, .donut-chart .c100.p92 .bar:after, .donut-chart .c100.p92 .fill, .donut-chart .c100.p93 .bar:after, .donut-chart .c100.p93 .fill, .donut-chart .c100.p94 .bar:after, .donut-chart .c100.p94 .fill, .donut-chart .c100.p95 .bar:after, .donut-chart .c100.p95 .fill, .donut-chart .c100.p96 .bar:after, .donut-chart .c100.p96 .fill, .donut-chart .c100.p97 .bar:after, .donut-chart .c100.p97 .fill, .donut-chart .c100.p98 .bar:after, .donut-chart .c100.p98 .fill, .donut-chart .c100.p99 .bar:after, .donut-chart .c100.p99 .fill, .donut-chart .c100.p100 .bar:after, .donut-chart .c100.p100 .fill {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  .donut-chart .c100 .red .bar, .donut-chart .c100 .red .fill {
+    border-color: #fe6b5c !important; }
+  .donut-chart .c100 .red .slice.transparent::before {
+    background-color: #fe6b5c !important; }
+  .donut-chart .c100 .red .slice.transparent .bar::before {
+    background-color: #fe6b5c !important; }
+  .donut-chart .c100 .blue .bar, .donut-chart .c100 .blue .fill {
+    border-color: #69c0ed !important; }
+  .donut-chart .c100 .blue .slice.transparent::before {
+    background-color: #69c0ed !important; }
+  .donut-chart .c100 .blue .slice.transparent .bar::before {
+    background-color: #69c0ed !important; }
+  .donut-chart .c100 .green .bar, .donut-chart .c100 .green .fill {
+    border-color: #18b46c !important; }
+  .donut-chart .c100 .green .slice.transparent::before {
+    background-color: #18b46c !important; }
+  .donut-chart .c100 .green .slice.transparent .bar::before {
+    background-color: #18b46c !important; }
+  .donut-chart .c100 .yellow .bar, .donut-chart .c100 .yellow .fill {
+    border-color: #ffc11a !important; }
+  .donut-chart .c100 .yellow .slice.transparent::before {
+    background-color: #ffc11a !important; }
+  .donut-chart .c100 .yellow .slice.transparent .bar::before {
+    background-color: #ffc11a !important; }
+  .donut-chart .c100 *, .donut-chart .c100 *:before, .donut-chart .c100 *:after {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box; }
+  .donut-chart .c100 .slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip: rect(0em, 200px, 200px, 100px); }
+    .donut-chart .c100 .slice.transparent {
+      clip: inherit; }
+      .donut-chart .c100 .slice.transparent * {
+        border-color: transparent !important; }
+      .donut-chart .c100 .slice.transparent::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        margin-left: -0.875rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 50%;
+        background: #fe6b5c; }
+      .donut-chart .c100 .slice.transparent .bar {
+        clip: inherit; }
+        .donut-chart .c100 .slice.transparent .bar::before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: 0;
+          margin: -1.75rem 0 0 -0.875rem;
+          width: 1.75rem;
+          height: 1.75rem;
+          border-radius: 50%;
+          background: #fe6b5c; }
+  .donut-chart .c100.p1 .bar {
+    -webkit-transform: rotate(3.6deg);
+            transform: rotate(3.6deg); }
+  .donut-chart .c100.p2 .bar {
+    -webkit-transform: rotate(7.2deg);
+            transform: rotate(7.2deg); }
+  .donut-chart .c100.p3 .bar {
+    -webkit-transform: rotate(10.8deg);
+            transform: rotate(10.8deg); }
+  .donut-chart .c100.p4 .bar {
+    -webkit-transform: rotate(14.4deg);
+            transform: rotate(14.4deg); }
+  .donut-chart .c100.p5 .bar {
+    -webkit-transform: rotate(18deg);
+            transform: rotate(18deg); }
+  .donut-chart .c100.p6 .bar {
+    -webkit-transform: rotate(21.6deg);
+            transform: rotate(21.6deg); }
+  .donut-chart .c100.p7 .bar {
+    -webkit-transform: rotate(25.2deg);
+            transform: rotate(25.2deg); }
+  .donut-chart .c100.p8 .bar {
+    -webkit-transform: rotate(28.8deg);
+            transform: rotate(28.8deg); }
+  .donut-chart .c100.p9 .bar {
+    -webkit-transform: rotate(32.4deg);
+            transform: rotate(32.4deg); }
+  .donut-chart .c100.p10 .bar {
+    -webkit-transform: rotate(36deg);
+            transform: rotate(36deg); }
+  .donut-chart .c100.p11 .bar {
+    -webkit-transform: rotate(39.6deg);
+            transform: rotate(39.6deg); }
+  .donut-chart .c100.p12 .bar {
+    -webkit-transform: rotate(43.2deg);
+            transform: rotate(43.2deg); }
+  .donut-chart .c100.p13 .bar {
+    -webkit-transform: rotate(46.8deg);
+            transform: rotate(46.8deg); }
+  .donut-chart .c100.p14 .bar {
+    -webkit-transform: rotate(50.4deg);
+            transform: rotate(50.4deg); }
+  .donut-chart .c100.p15 .bar {
+    -webkit-transform: rotate(54deg);
+            transform: rotate(54deg); }
+  .donut-chart .c100.p16 .bar {
+    -webkit-transform: rotate(57.6deg);
+            transform: rotate(57.6deg); }
+  .donut-chart .c100.p17 .bar {
+    -webkit-transform: rotate(61.2deg);
+            transform: rotate(61.2deg); }
+  .donut-chart .c100.p18 .bar {
+    -webkit-transform: rotate(64.8deg);
+            transform: rotate(64.8deg); }
+  .donut-chart .c100.p19 .bar {
+    -webkit-transform: rotate(68.4deg);
+            transform: rotate(68.4deg); }
+  .donut-chart .c100.p20 .bar {
+    -webkit-transform: rotate(72deg);
+            transform: rotate(72deg); }
+  .donut-chart .c100.p21 .bar {
+    -webkit-transform: rotate(75.6deg);
+            transform: rotate(75.6deg); }
+  .donut-chart .c100.p22 .bar {
+    -webkit-transform: rotate(79.2deg);
+            transform: rotate(79.2deg); }
+  .donut-chart .c100.p23 .bar {
+    -webkit-transform: rotate(82.8deg);
+            transform: rotate(82.8deg); }
+  .donut-chart .c100.p24 .bar {
+    -webkit-transform: rotate(86.4deg);
+            transform: rotate(86.4deg); }
+  .donut-chart .c100.p25 .bar {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg); }
+  .donut-chart .c100.p26 .bar {
+    -webkit-transform: rotate(93.6deg);
+            transform: rotate(93.6deg); }
+  .donut-chart .c100.p27 .bar {
+    -webkit-transform: rotate(97.2deg);
+            transform: rotate(97.2deg); }
+  .donut-chart .c100.p28 .bar {
+    -webkit-transform: rotate(100.8deg);
+            transform: rotate(100.8deg); }
+  .donut-chart .c100.p29 .bar {
+    -webkit-transform: rotate(104.4deg);
+            transform: rotate(104.4deg); }
+  .donut-chart .c100.p30 .bar {
+    -webkit-transform: rotate(108deg);
+            transform: rotate(108deg); }
+  .donut-chart .c100.p31 .bar {
+    -webkit-transform: rotate(111.6deg);
+            transform: rotate(111.6deg); }
+  .donut-chart .c100.p32 .bar {
+    -webkit-transform: rotate(115.2deg);
+            transform: rotate(115.2deg); }
+  .donut-chart .c100.p33 .bar {
+    -webkit-transform: rotate(118.8deg);
+            transform: rotate(118.8deg); }
+  .donut-chart .c100.p34 .bar {
+    -webkit-transform: rotate(122.4deg);
+            transform: rotate(122.4deg); }
+  .donut-chart .c100.p35 .bar {
+    -webkit-transform: rotate(126deg);
+            transform: rotate(126deg); }
+  .donut-chart .c100.p36 .bar {
+    -webkit-transform: rotate(129.6deg);
+            transform: rotate(129.6deg); }
+  .donut-chart .c100.p37 .bar {
+    -webkit-transform: rotate(133.2deg);
+            transform: rotate(133.2deg); }
+  .donut-chart .c100.p38 .bar {
+    -webkit-transform: rotate(136.8deg);
+            transform: rotate(136.8deg); }
+  .donut-chart .c100.p39 .bar {
+    -webkit-transform: rotate(140.4deg);
+            transform: rotate(140.4deg); }
+  .donut-chart .c100.p40 .bar {
+    -webkit-transform: rotate(144deg);
+            transform: rotate(144deg); }
+  .donut-chart .c100.p41 .bar {
+    -webkit-transform: rotate(147.6deg);
+            transform: rotate(147.6deg); }
+  .donut-chart .c100.p42 .bar {
+    -webkit-transform: rotate(151.2deg);
+            transform: rotate(151.2deg); }
+  .donut-chart .c100.p43 .bar {
+    -webkit-transform: rotate(154.8deg);
+            transform: rotate(154.8deg); }
+  .donut-chart .c100.p44 .bar {
+    -webkit-transform: rotate(158.4deg);
+            transform: rotate(158.4deg); }
+  .donut-chart .c100.p45 .bar {
+    -webkit-transform: rotate(162deg);
+            transform: rotate(162deg); }
+  .donut-chart .c100.p46 .bar {
+    -webkit-transform: rotate(165.6deg);
+            transform: rotate(165.6deg); }
+  .donut-chart .c100.p47 .bar {
+    -webkit-transform: rotate(169.2deg);
+            transform: rotate(169.2deg); }
+  .donut-chart .c100.p48 .bar {
+    -webkit-transform: rotate(172.8deg);
+            transform: rotate(172.8deg); }
+  .donut-chart .c100.p49 .bar {
+    -webkit-transform: rotate(176.4deg);
+            transform: rotate(176.4deg); }
+  .donut-chart .c100.p50 .bar {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  .donut-chart .c100.p51 .bar {
+    -webkit-transform: rotate(183.6deg);
+            transform: rotate(183.6deg); }
+  .donut-chart .c100.p52 .bar {
+    -webkit-transform: rotate(187.2deg);
+            transform: rotate(187.2deg); }
+  .donut-chart .c100.p53 .bar {
+    -webkit-transform: rotate(190.8deg);
+            transform: rotate(190.8deg); }
+  .donut-chart .c100.p54 .bar {
+    -webkit-transform: rotate(194.4deg);
+            transform: rotate(194.4deg); }
+  .donut-chart .c100.p55 .bar {
+    -webkit-transform: rotate(198deg);
+            transform: rotate(198deg); }
+  .donut-chart .c100.p56 .bar {
+    -webkit-transform: rotate(201.6deg);
+            transform: rotate(201.6deg); }
+  .donut-chart .c100.p57 .bar {
+    -webkit-transform: rotate(205.2deg);
+            transform: rotate(205.2deg); }
+  .donut-chart .c100.p58 .bar {
+    -webkit-transform: rotate(208.8deg);
+            transform: rotate(208.8deg); }
+  .donut-chart .c100.p59 .bar {
+    -webkit-transform: rotate(212.4deg);
+            transform: rotate(212.4deg); }
+  .donut-chart .c100.p60 .bar {
+    -webkit-transform: rotate(216deg);
+            transform: rotate(216deg); }
+  .donut-chart .c100.p61 .bar {
+    -webkit-transform: rotate(219.6deg);
+            transform: rotate(219.6deg); }
+  .donut-chart .c100.p62 .bar {
+    -webkit-transform: rotate(223.2deg);
+            transform: rotate(223.2deg); }
+  .donut-chart .c100.p63 .bar {
+    -webkit-transform: rotate(226.8deg);
+            transform: rotate(226.8deg); }
+  .donut-chart .c100.p64 .bar {
+    -webkit-transform: rotate(230.4deg);
+            transform: rotate(230.4deg); }
+  .donut-chart .c100.p65 .bar {
+    -webkit-transform: rotate(234deg);
+            transform: rotate(234deg); }
+  .donut-chart .c100.p66 .bar {
+    -webkit-transform: rotate(237.6deg);
+            transform: rotate(237.6deg); }
+  .donut-chart .c100.p67 .bar {
+    -webkit-transform: rotate(241.2deg);
+            transform: rotate(241.2deg); }
+  .donut-chart .c100.p68 .bar {
+    -webkit-transform: rotate(244.8deg);
+            transform: rotate(244.8deg); }
+  .donut-chart .c100.p69 .bar {
+    -webkit-transform: rotate(248.4deg);
+            transform: rotate(248.4deg); }
+  .donut-chart .c100.p70 .bar {
+    -webkit-transform: rotate(252deg);
+            transform: rotate(252deg); }
+  .donut-chart .c100.p71 .bar {
+    -webkit-transform: rotate(255.6deg);
+            transform: rotate(255.6deg); }
+  .donut-chart .c100.p72 .bar {
+    -webkit-transform: rotate(259.2deg);
+            transform: rotate(259.2deg); }
+  .donut-chart .c100.p73 .bar {
+    -webkit-transform: rotate(262.8deg);
+            transform: rotate(262.8deg); }
+  .donut-chart .c100.p74 .bar {
+    -webkit-transform: rotate(266.4deg);
+            transform: rotate(266.4deg); }
+  .donut-chart .c100.p75 .bar {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg); }
+  .donut-chart .c100.p76 .bar {
+    -webkit-transform: rotate(273.6deg);
+            transform: rotate(273.6deg); }
+  .donut-chart .c100.p77 .bar {
+    -webkit-transform: rotate(277.2deg);
+            transform: rotate(277.2deg); }
+  .donut-chart .c100.p78 .bar {
+    -webkit-transform: rotate(280.8deg);
+            transform: rotate(280.8deg); }
+  .donut-chart .c100.p79 .bar {
+    -webkit-transform: rotate(284.4deg);
+            transform: rotate(284.4deg); }
+  .donut-chart .c100.p80 .bar {
+    -webkit-transform: rotate(288deg);
+            transform: rotate(288deg); }
+  .donut-chart .c100.p81 .bar {
+    -webkit-transform: rotate(291.6deg);
+            transform: rotate(291.6deg); }
+  .donut-chart .c100.p82 .bar {
+    -webkit-transform: rotate(295.2deg);
+            transform: rotate(295.2deg); }
+  .donut-chart .c100.p83 .bar {
+    -webkit-transform: rotate(298.8deg);
+            transform: rotate(298.8deg); }
+  .donut-chart .c100.p84 .bar {
+    -webkit-transform: rotate(302.4deg);
+            transform: rotate(302.4deg); }
+  .donut-chart .c100.p85 .bar {
+    -webkit-transform: rotate(306deg);
+            transform: rotate(306deg); }
+  .donut-chart .c100.p86 .bar {
+    -webkit-transform: rotate(309.6deg);
+            transform: rotate(309.6deg); }
+  .donut-chart .c100.p87 .bar {
+    -webkit-transform: rotate(313.2deg);
+            transform: rotate(313.2deg); }
+  .donut-chart .c100.p88 .bar {
+    -webkit-transform: rotate(316.8deg);
+            transform: rotate(316.8deg); }
+  .donut-chart .c100.p89 .bar {
+    -webkit-transform: rotate(320.4deg);
+            transform: rotate(320.4deg); }
+  .donut-chart .c100.p90 .bar {
+    -webkit-transform: rotate(324deg);
+            transform: rotate(324deg); }
+  .donut-chart .c100.p91 .bar {
+    -webkit-transform: rotate(327.6deg);
+            transform: rotate(327.6deg); }
+  .donut-chart .c100.p92 .bar {
+    -webkit-transform: rotate(331.2deg);
+            transform: rotate(331.2deg); }
+  .donut-chart .c100.p93 .bar {
+    -webkit-transform: rotate(334.8deg);
+            transform: rotate(334.8deg); }
+  .donut-chart .c100.p94 .bar {
+    -webkit-transform: rotate(338.4deg);
+            transform: rotate(338.4deg); }
+  .donut-chart .c100.p95 .bar {
+    -webkit-transform: rotate(342deg);
+            transform: rotate(342deg); }
+  .donut-chart .c100.p96 .bar {
+    -webkit-transform: rotate(345.6deg);
+            transform: rotate(345.6deg); }
+  .donut-chart .c100.p97 .bar {
+    -webkit-transform: rotate(349.2deg);
+            transform: rotate(349.2deg); }
+  .donut-chart .c100.p98 .bar {
+    -webkit-transform: rotate(352.8deg);
+            transform: rotate(352.8deg); }
+  .donut-chart .c100.p99 .bar {
+    -webkit-transform: rotate(356.4deg);
+            transform: rotate(356.4deg); }
+  .donut-chart .c100.p100 .bar {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); }
+  .donut-chart.small {
+    width: 3.75rem;
+    height: 3.75rem;
+    background: url(/img/ico/bg-donut-small.png) no-repeat 0 0;
+    background-size: 100% 100%; }
+    .donut-chart.small .donut-chart-area {
+      width: 3.75rem;
+      height: 3.75rem;
+      left: 0; }
+    .donut-chart.small .c100.p51 .slice, .donut-chart.small .c100.p52 .slice, .donut-chart.small .c100.p53 .slice, .donut-chart.small .c100.p54 .slice, .donut-chart.small .c100.p55 .slice, .donut-chart.small .c100.p56 .slice, .donut-chart.small .c100.p57 .slice, .donut-chart.small .c100.p58 .slice, .donut-chart.small .c100.p59 .slice, .donut-chart.small .c100.p60 .slice, .donut-chart.small .c100.p61 .slice, .donut-chart.small .c100.p62 .slice, .donut-chart.small .c100.p63 .slice, .donut-chart.small .c100.p64 .slice, .donut-chart.small .c100.p65 .slice, .donut-chart.small .c100.p66 .slice, .donut-chart.small .c100.p67 .slice, .donut-chart.small .c100.p68 .slice, .donut-chart.small .c100.p69 .slice, .donut-chart.small .c100.p70 .slice, .donut-chart.small .c100.p71 .slice, .donut-chart.small .c100.p72 .slice, .donut-chart.small .c100.p73 .slice, .donut-chart.small .c100.p74 .slice, .donut-chart.small .c100.p75 .slice, .donut-chart.small .c100.p76 .slice, .donut-chart.small .c100.p77 .slice, .donut-chart.small .c100.p78 .slice, .donut-chart.small .c100.p79 .slice, .donut-chart.small .c100.p80 .slice, .donut-chart.small .c100.p81 .slice, .donut-chart.small .c100.p82 .slice, .donut-chart.small .c100.p83 .slice, .donut-chart.small .c100.p84 .slice, .donut-chart.small .c100.p85 .slice, .donut-chart.small .c100.p86 .slice, .donut-chart.small .c100.p87 .slice, .donut-chart.small .c100.p88 .slice, .donut-chart.small .c100.p89 .slice, .donut-chart.small .c100.p90 .slice, .donut-chart.small .c100.p91 .slice, .donut-chart.small .c100.p92 .slice, .donut-chart.small .c100.p93 .slice, .donut-chart.small .c100.p94 .slice, .donut-chart.small .c100.p95 .slice, .donut-chart.small .c100.p96 .slice, .donut-chart.small .c100.p97 .slice, .donut-chart.small .c100.p98 .slice, .donut-chart.small .c100.p99 .slice, .donut-chart.small .c100.p100 .slice {
+      clip: rect(auto, auto, auto, auto); }
+    .donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill {
+      border: 0.5rem solid #fe6b5c;
+      clip: rect(0, 30px, 60px, 0); }
+    .donut-chart.small .c100.p51 .bar:after, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .bar:after, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .bar:after, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .bar:after, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .bar:after, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .bar:after, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .bar:after, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .bar:after, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .bar:after, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .bar:after, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .bar:after, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .bar:after, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .bar:after, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .bar:after, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .bar:after, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .bar:after, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .bar:after, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .bar:after, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .bar:after, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .bar:after, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .bar:after, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .bar:after, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .bar:after, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .bar:after, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .bar:after, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .bar:after, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .bar:after, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .bar:after, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .bar:after, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .bar:after, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .bar:after, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .bar:after, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .bar:after, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .bar:after, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .bar:after, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .bar:after, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .bar:after, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .bar:after, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .bar:after, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .bar:after, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .bar:after, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .bar:after, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .bar:after, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .bar:after, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .bar:after, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .bar:after, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .bar:after, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .bar:after, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .bar:after, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .bar:after, .donut-chart.small .c100.p100 .fill {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg); }
+    .donut-chart.small .c100 .slice {
+      clip: rect(0em, 60px, 60px, 30px); }
+
 /* widget */
 .widget-box .horizontal-slide {
   width: 100%;
@@ -13528,11 +15616,13 @@ a.bt-link-tx.underline.small {
   .poll-box .max-byte em, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .max-byte em {
     color: #000; }
 
-.poll-box .alignment01 > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .alignment01 > li {
-  display: block;
-  margin-bottom: 0.9375rem;
-  text-indent: -1.625rem;
-  padding-left: 1.625rem; }
+.poll-box .alignment01, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .alignment01 {
+  padding-top: 0.1875rem; }
+  .poll-box .alignment01 > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .alignment01 > li {
+    display: block;
+    margin-bottom: 0.9375rem;
+    text-indent: -1.625rem;
+    padding-left: 1.625rem; }
 
 .poll-box .division-two > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .division-two > li {
   display: inline-block;

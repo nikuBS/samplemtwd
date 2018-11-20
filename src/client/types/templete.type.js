@@ -136,6 +136,14 @@ Tw.POPUP_TPL = {
       }
     }
   },
+  PPS_CHARGE_DATA: {
+    TITLE: '선불폰 충전',
+    VOICE: '음성 충전',
+    DATA: '데이터 충',
+    ONCE: '1회 충전',
+    AUTO: '자동 충전',
+    AUTO_CHANGE: '자동 충전 변경/해제'
+  },
   FARE_PAYMENT_CARD_TYPE_LIST: [
     {
       'list': [
