@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_40px_discount</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/40/Discount">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="40.32" height="40.32"></rect>
+            <g id="Group-15" transform="translate(1.008000, 5.376000)" stroke="#666666" stroke-width="2">
+                <path d="M36.632,23.7206294 L36.632,5.29803142 C34.570015,5.00758328 32.8907621,3.49496683 32.3793206,1.504 L5.92467944,1.504 C5.41323794,3.49496683 3.73398504,5.00758328 1.672,5.29803142 L1.672,23.7206294 C3.92792183,24.0378403 5.71394369,25.8153902 6.03396724,28.064 L32.2700328,28.064 C32.5900563,25.8153902 34.3760782,24.0378403 36.632,23.7206294 Z" id="Combined-Shape"></path>
+                <path d="M23.2482353,10.3517647 L14.8191472,18.7808528" id="Line-14" stroke-linecap="square"></path>
+                <circle id="Oval-18" cx="13.44" cy="11.76" r="2.52"></circle>
+                <circle id="Oval-18-Copy" cx="24.36" cy="17.64" r="2.52"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

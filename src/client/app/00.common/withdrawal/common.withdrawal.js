@@ -18,7 +18,7 @@
      },
        $.proxy(this._bindEvent, this),
        $.proxy(this._onCertify, this),
-       'guide'
+       'withdrawal-guide'
      );
    },
    _bindEvent: function ($layer) {
@@ -55,7 +55,7 @@
      },
        $.proxy(this._onOpenKYC, this),
        $.proxy(this._onSurvey, this),
-       'certify');
+       'withdrawal-cert');
    },
    _onOpenKYC: function ($layer) {
      $layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this, $layer));

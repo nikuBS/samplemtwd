@@ -164,18 +164,49 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onImmChargeDetail: function () {
-    new Tw.ImmediatelyRechargeLayer(this.$container);
+    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      new Tw.PPSRechargeLayer(this.$container);
+    }
+    else {
+      new Tw.ImmediatelyRechargeLayer(this.$container);
+    }
   },
 
   _onTPresentDetail: function () {
-    this._historyService.goLoad('/myt/data/gift');
+    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      // PPS 인 경우 자동알람서비스
+      if ( Tw.BrowserHelper.isApp() ) {
+        // TODO: 금융거래 본인인증 작업이 완료되면 이후 처리 우선은 페이지 이동으로만 처리하고 완료 후 [DC_09_05] 이동
+        this._popupService.openAlert('TBD');
+      }
+      else {
+        // 웹인 경우 모바일 앱으로 유도 (설치/미설치)
+        this._popupService.openModalTypeA(Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.TITLE,
+          Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.MSG, Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.BUTTON,
+          $.proxy(this._onOpenTworldMovedAlert, this), $.proxy(this._onConfirmTworldMovedAlert, this), this);
+      }
+    }
+    else {
+      this._historyService.goLoad('/myt/data/gift');
+    }
+  },
+
+  _onOpenTworldMovedAlert: function ($layer) {
+    $layer.find('.pos-left .tw-popup-closeBtn').on('click', $.proxy(function () {
+      // TODO: 서비스 이용 안내 페이지로 이동 [CO_UT_09_01]
+      this._popupService.openAlert('TBD');
+    }, this));
+  },
+
+  _onConfirmTworldMovedAlert: function () {
+
   },
 
   // T가족모아
   _onFamilyMoaDetail: function () {
     if ( this.data.family.possible ) {
       // TODO: 미가입 관련 상태 업데이트 후 처리
-      // this._historyService.goLoad('');
+      this._historyService.goLoad('/product/detail/NA00006031');
     }
     else {
       this._historyService.goLoad('/myt/data/family');
@@ -184,14 +215,23 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
-    // 혜택 할인 페이지로 이동
-    this._popupService.openAlert('TBD');
+    // 혜택 할인 페이지 BPCP 페이지
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_FACTORY);
   },
 
   // 데이터 조르기
   _onDataPesterDetail: function () {
     //  2_A17 Alert 호출
-    this._popupService.openAlert('TBD');
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.MSG,
+      Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+  },
+
+  _pesterDetailConfirm: function () {
+    this._popupService.close();
+    // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
+    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE +
+      this.data.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
+    Tw.CommonHelper.share(content);
   },
 
   // 리필쿠폰

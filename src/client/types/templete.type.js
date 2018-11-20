@@ -90,15 +90,15 @@ Tw.POPUP_TPL = {
       'type': '요금 납부',
       'list': [
         { 'value': '계좌이체 납부', 'option': 'fe-account' },
-        { 'value': '체크/신용카드 납부', 'option': 'fe-card' },
-        { 'value': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
+        { 'value': '체크∙신용카드 납부', 'option': 'fe-card' },
+        { 'value': 'OK캐쉬백∙T포인트 납부', 'option': 'fe-point' }
       ]
     },
     {
       'list': [
         {
-          'value': '입금전용계좌 SMS 신청', 'option': 'fe-sms',
-          'explain': '입금전용계좌 정보를 SMS로 전송합니다.' + '<br/>' +
+          'value': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'explain': '입금전용계좌 정보를 문자로 전송합니다.' + '<br/>' +
           '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.'
         }
       ]
@@ -135,6 +135,14 @@ Tw.POPUP_TPL = {
         TING: '팅요금제 충전 선물'
       }
     }
+  },
+  PPS_CHARGE_DATA: {
+    TITLE: '선불폰 충전',
+    VOICE: '음성 충전',
+    DATA: '데이터 충',
+    ONCE: '1회 충전',
+    AUTO: '자동 충전',
+    AUTO_CHANGE: '자동 충전 변경/해제'
   },
   FARE_PAYMENT_CARD_TYPE_LIST: [
     {
@@ -320,7 +328,16 @@ Tw.POPUP_TPL = {
         { 'option': 'nominal', 'attr': 'id="990"', value: '기타' }
       ]
     }
-  ]
+  ],
+  MEMBERSHIP_CLAUSE_ITEM: {
+    '01': { title: 'SK텔레콤 멤버십 회원 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html' },
+    '02': { title: '개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe2.html' },
+    '03': { title: '광고성 정보 수신 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe3.html' },
+    '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe4.html' },
+    '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html' },
+    '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html' },
+    '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' }
+  }
 };
 
 Tw.MYT_TPL = {
@@ -447,7 +464,7 @@ Tw.CUSTOMER_HELPLINE_AREAS = [
   { value: '중부 (충남, 충북, 대전)', attr: 'data-area-code="5"' },
   { value: '서부 (전남, 전북, 광주, 제주)', attr: 'data-area-code="4"' },
   { value: '대구 (경북, 대구)', attr: 'data-area-code="3"' },
-  { value: '부산 (경남, 울산, 부산)', attr: '"data-area-code="2""' }
+  { value: '부산 (경남, 울산, 부산)', attr: 'data-area-code="2"' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
@@ -576,3 +593,21 @@ Tw.REGION_LIST_ITEM = {
     return this.start + code + '">' + name + this.close;
   }
 };
+
+Tw.MYT_PREPAID_AMOUNT = {
+
+  title: '충전 금액',
+  list: [
+    { title: '50,000원', value: 50000 },
+    { title: '30,000원', value: 30000 },
+    { title: '20,000원', value: 20000 },
+    { title: '10,000원', value: 10000 },
+    { title: '5,000원', value: 5000 }
+  ]
+};
+
+Tw.PRODUCT_APPS_ORDER = [
+  { value: '최신순', attr: 'data-prop="storRgstDtm"' },
+  { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
+  { value: '가나다순', attr: 'data-prop="prodNm"' }
+];

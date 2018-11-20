@@ -129,21 +129,22 @@ Tw.ProductDetail.prototype = {
       .done($.proxy(this._procAdvanceCheck, this, btnLink));
   },
 
-  _goJoinTerminate: function(joinTermCd) {
+  _goJoinTerminate: function(joinTermCd, e) {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
     }, null, this._prodId)
-      .done($.proxy(this._goJoinTerminateResult, this, joinTermCd));
+      .done($.proxy(this._goJoinTerminateResult, this, joinTermCd, $(e.currentTarget).data('href')));
   },
 
-  _goJoinTerminateResult: function(joinTermCd, resp) {
+  _goJoinTerminateResult: function(joinTermCd, href, resp) {
     skt_landing.action.loading.off({ ta: '.container' });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._historyService.replaceURL('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
+    this._historyService.goLoad(href);
   },
 
   _openContentsDetailPop: function(e) {

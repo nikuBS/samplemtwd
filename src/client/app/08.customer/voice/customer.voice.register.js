@@ -17,7 +17,7 @@ Tw.CustomerVoiceRegister = function (rootEl) {
 
 Tw.CustomerVoiceRegister.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
+    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
       .done($.proxy(this._onSuccessLineInfo, this));
   },
 

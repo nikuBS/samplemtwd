@@ -19,12 +19,12 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
       // this.mockReqBillType()
       this.reqBillType()
     ).subscribe(([resBillType]) => {
-      if ( resBillType.code === API_CODE.CODE_00) {
+      if (resBillType.code === API_CODE.CODE_00) {
         let data = resBillType.result;
         data.query = req.query;
         data = this.getData(data, svcInfo, pageInfo);
 
-        res.render( 'bill/myt-fare.bill.set.change.html', data );
+        res.render('bill/myt-fare.bill.set.change.html', data);
       } else {
         this.fail(res, resBillType, svcInfo);
       }
@@ -36,11 +36,12 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     this.makeTogetherBill(data);
     this.parseData(data);
     this.makeHpParam(data);
+    this.makeUsageGuideTipId(data);
 
     // 변경할 요금 안내서 유형
     data.changeBillInfo = {
-      cd : data.query.billType,
-      nm : MYT_FARE_BILL_TYPE[data.query.billType]
+      cd: data.query.billType,
+      nm: MYT_FARE_BILL_TYPE[data.query.billType]
     };
     data.lineType = this.getLinetype();
     data.svcGr = svcInfo.svcGr;
@@ -52,11 +53,23 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     };
   }
 
+  // '요금 안내서 이용안내' TIP ID 생성
+  private makeUsageGuideTipId(data: any): void {
+    const tipId = {
+      'P': 'MF_04_02_tip_01',  // T world
+      'H': 'MF_04_02_tip_02',  // Bill Letter
+      'B': 'MF_04_02_tip_03',  // 문자
+      '2': 'MF_04_02_tip_04',  // 이메일
+      '1': 'MF_04_02_tip_05'  // 기타(우편)
+    };
+    data.tipId = tipId[data.query.billType];
+  }
+
   // 함께 받을 요금 안내서 만들기
   private makeTogetherBill(data: any): void {
     const billType = data.query.billType;
     // 기타(우편) 함께 받는 요금 안내서 없음
-    if ( billType === '1' ) {
+    if (billType === '1') {
       return;
     }
 
@@ -65,21 +78,21 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     this.pushBillInfo(billArr, 'X');
 
     // T world, Bill Letter
-    if ( ['P', 'H'].some( o => o === billType ) ) {
+    if (['P', 'H'].some(o => o === billType)) {
       // 무선 일 때만
-      if ( 'M' === lineType ) {
+      if ('M' === lineType) {
         // 단독 USIM 체크가 Y 일때 (= SMS 수신 가능일때)
-        if ( 'Y' === data.isusimchk ) {
+        if ('Y' === data.isusimchk) {
           this.pushBillInfo(billArr, 'B');
         }
       }
     }
     // 문자 , Bill Letter
-    if ( ['B', 'H'].some( o => o === billType ) ) {
+    if (['B', 'H'].some(o => o === billType)) {
       this.pushBillInfo(billArr, '2');
     }
 
-    if ( billArr.length > 1) {
+    if (billArr.length > 1) {
       data.togetherList = billArr;
     }
   }
@@ -88,14 +101,14 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
   private makeHpParam(data: any): void {
     const lineType = this.getLinetype();
     const param = {
-      name : '',
-      value : ''
+      name: '',
+      value: ''
     };
     // 기타(우편)
     if (data.query.billType === '1') {
       param.name = 'cntcNum1';
       param.value = data.cntcNum1;
-    } else if ( lineType === 'S' ) { // 유선회선일 때
+    } else if (lineType === 'S') { // 유선회선일 때
       // 빌레터
       if (data.query.billType === 'H') {
         param.name = 'wireSmtBillSvcNum';
@@ -109,8 +122,8 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     data.hpParam = param;
     // 법정 대리인 휴대폰 번호
     data.deputyHpParam = {
-      name : 'ccurNotiSvcNum',
-      value : data.ccurNotiSvcNum
+      name: 'ccurNotiSvcNum',
+      value: data.ccurNotiSvcNum
     };
   }
 }

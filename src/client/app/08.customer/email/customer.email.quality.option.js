@@ -22,8 +22,6 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _cachedElement: function () {
-    // this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
-    // this.$quality_depth1 = this.$container.find('.fe-quality_depth1');
   },
 
   _bindEvent: function () {
@@ -34,13 +32,18 @@ Tw.CustomerEmailQualityOption.prototype = {
     this.$container.on('click', '.fe-place', $.proxy(this._showOptionSheet, this, 'Q_TYPE03'));
     this.$container.on('click', '.fe-place_detail', $.proxy(this._showOptionSheet, this, 'Q_TYPE04'));
     this.$container.on('click', '.fe-occurrence_date', $.proxy(this._showOptionSheet, this, 'Q_TYPE05'));
-    // this.$container.on('click', '.fe-text_content', $.proxy(this._showOptionSheet, this, 'Q_TYPE05'));
     this.$container.on('click', '.option_value', $.proxy(this._selectPopupCallback, this));
+    this.$container.on('click', '.fe-search-post', $.proxy(this._onClickSearchPost, this));
+  },
+
+  _onClickSearchPost: function (e) {
+    new Tw.CommonPostcodeMain(this.$container);
   },
 
   _showLineSheet: function (sType, e) {
     var $elButton = $(e.currentTarget);
     var lineList = sType === 'CELL' ? this.allSvc.M : this.allSvc.S;
+
     var fnSelectLine = function (item) {
       return {
         value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),

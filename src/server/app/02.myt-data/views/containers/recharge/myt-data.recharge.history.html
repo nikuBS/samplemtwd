@@ -25,14 +25,12 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <% const list = chargeData.display || chargeData.all; %>
-                <div class="cont-box nogaps noborder">
-                    <div class="sub-top-box0">
-                      <button class="bt-dropdown big wd-auto" title="데이터 용량" aria-haspopup="true"><%= list.typeName %><span class="ico"></span></button>
-                      <p class="total-num-tx">총<strong><%= list.count %></strong>건</p>
+                <div class="cont-box nogaps">
+                    <div class="ti-caption-gray">
+                        <button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true"><%= list.typeName %><span class="ico"></span></button>
+                        <div class="num">총 <em><%= list.count %></em>건</div>
                     </div>
-                </div>
-                <!-- .cont-box -->
-                <div class="cont-box nogaps noborder">
+
                     <div class="list-comp-history">
                         <ul class="comp-box" data-filter-index="<%= chargeData.filterIdx %>">
                             <% let displayCount = 0, dIdx = 0, iIdx, displayedYear = (new Date()).getFullYear().toString(); %>
@@ -76,13 +74,33 @@
                                     iIdx = items.length === iIdx ? 0 : iIdx;
                                     break;
                                 } %>                               
-                          <% } %>
-                      </ul>
+                            <% } %>
+                        </ul>
                     </div>
+
+                    <div class="contents-empty <%= keys.length > 0 ? 'none': '' %>">
+                        <span class="ico type1"></span>
+                        <p class="desc">충전/선물 내역이 없습니다.</p>
+                    </div>
+                    <% const leftCount = list.count - displayCount; %>
+                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기 (<%= leftCount %>)</button></div>  
                 </div>
                 <!--// .cont-box -->
-                <% const leftCount = list.count - displayCount; %>
-                <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기 (<%= leftCount %>)</button></div>  
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps-btm">
+					<h3 class="tx-bold">꼭 확인해주세요!</h3>
+					<ul class="noti-list">
+						<li>T끼리 데이터 선물 내역 안내 <button id="DC_07_tip_04" type="button" class="tip-view" title="T끼리 데이터 선물 내역 안내 정보보기" aria-haspopup="true">TIP</button></li>
+						<li>리필 쿠폰 사용내역 안내 <button id="DC_07_tip_05" type="button" class="tip-view" title="리필 쿠폰 사용내역 안내 정보보기" aria-haspopup="true">TIP</button></li>
+						<li>팅 요금제 충전 선물 내역 안내 <button id="DC_07_tip_01" type="button" class="tip-view" title="팅 요금제 충전 선물 내역 안내 정보보기" aria-haspopup="true">TIP</button></li>
+						<li>T팅/쿠키즈 요금한도 충전 내역 안내 <button id="DC_07_tip_02" type="button" class="tip-view" title="T팅/쿠키즈 요금한도 충전 내역 안내 정보보기" aria-haspopup="true">TIP</button></li>
+						<li>데이터 한도 요금제 충전 내역 안내 <button id="DC_07_tip_03" type="button" class="tip-view" title="데이터 한도 요금제 충전 내역 안내 정보보기" aria-haspopup="true">TIP</button></li>
+					</ul>
+				</div>
+				<!--// .cont-box -->
             </div>
         </div>
         <!--// #contents -->

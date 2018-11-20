@@ -215,6 +215,22 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* 동일 숫자 반복 체크하는 function */
+  function checkIsSameLetters(value, message) {
+    var isSame = true;
+    for (var i = 1; i < value.length; i++) {
+      if (value.substring(i - 1, i) !== value.substring(i, i + 1)) {
+        isSame = false;
+      }
+    }
+
+    if (isSame) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
   /* 동일 값 체크하는 function */
   function checkIsSame(value, standard, message) {
     if ($.trim(value.toString()) === standard) {
@@ -256,6 +272,7 @@ Tw.ValidationHelper = (function () {
     checkMonth: checkMonth,
     checkMultiple: checkMultiple,
     checkIsStraight: checkIsStraight,
+    checkIsSameLetters: checkIsSameLetters,
     checkIsSame: checkIsSame,
     checkIsDifferent: checkIsDifferent
   };

@@ -378,7 +378,7 @@ Tw.ProductJoinReservation.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
-    if (this._typeCd === 'combine' && !this._logged) {
+    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
       return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
         $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this));
     }
@@ -515,7 +515,7 @@ Tw.ProductJoinReservation.prototype = {
       reqParams = {
         productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
         userNm: this.$reservName.val(),
-        InputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
+        inputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
       };
 
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {

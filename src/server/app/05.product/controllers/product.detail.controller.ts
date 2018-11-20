@@ -10,7 +10,7 @@ import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
-import { PRODUCT_CTG_NAME } from '../../../types/string.type';
+import {DATA_UNIT, PRODUCT_CTG_NAME} from '../../../types/string.type';
 import ProductHelper from '../helper/product.helper';
 
 const productApiCmd = {
@@ -36,7 +36,7 @@ class ProductDetail extends TwViewController {
   private _getApi (key: string, optionKey?: any): Observable<any> {
     let params = {};
     if (key === 'basic') {
-      params = { prodExpsTypCd: this._prodId === optionKey ? 'SP' : 'P' };
+      params = { prodExpsTypCd: 'P' };
     }
 
     if (key === 'series' && optionKey !== 'F01100') {
@@ -87,9 +87,13 @@ class ProductDetail extends TwViewController {
       return {};
     }
 
+    const basDataGbTxt = FormatHelper.getValidVars(prodRedisInfo.summary.basOfrGbDataQtyCtt),
+      basDataMbTxt = FormatHelper.getValidVars(prodRedisInfo.summary.basOfrMbDataQtyCtt),
+      basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
+
     return Object.assign(prodRedisInfo, {
       summary: Object.assign(prodRedisInfo.summary, ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
-        prodRedisInfo.summary.basOfrDataQtyCtt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt)),
+        basDataTxt.txt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit)),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
       contents: this._convertContents(prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
@@ -97,11 +101,34 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param basDataGbTxt
+   * @param basDataMbTxt
+   * @private
+   */
+  private _getBasDataTxt(basDataGbTxt: any, basDataMbTxt: any): any {
+    if (!FormatHelper.isEmpty(basDataGbTxt)) {
+      return {
+        txt: basDataGbTxt,
+        unit: DATA_UNIT.GB
+      };
+    }
+
+    if (!FormatHelper.isEmpty(basDataMbTxt)) {
+      return {
+        txt: basDataMbTxt,
+        unit: DATA_UNIT.MB
+      };
+    }
+
+    return null;
+  }
+
+  /**
    * @param summaryInfo
    * @private
    */
   private _getSummaryCase(summaryInfo): any {
-    if (!FormatHelper.isEmpty(summaryInfo.ledDtlHtmlCtt)) {
+    if (!FormatHelper.isEmpty(summaryInfo.ledItmDesc)) {
       return '3';
     }
 
@@ -124,8 +151,8 @@ class ProductDetail extends TwViewController {
     };
 
     contentsInfo.forEach((item) => {
-      if (item.ledStylCd === 'R' || item.ledStylCd === 'LA') {
-        contentsResult[item.ledStylCd] = item.ledDtlHtmlCtt;
+      if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
+        contentsResult[item.vslLedStylCd] = item.ledItmDesc;
         return true;
       }
 
@@ -218,7 +245,7 @@ class ProductDetail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this._prodId = req.params.prodId;
+    this._prodId = req.params.prodId || null;
 
     if (FormatHelper.isEmpty(this._prodId)) {
       return this.error.render(res, {
@@ -227,8 +254,7 @@ class ProductDetail extends TwViewController {
       });
     }
 
-    this._getApi('basic', svcInfo.prodId)
-      .subscribe((basicInfo) => {
+    this._getApi('basic').subscribe((basicInfo) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             title: '상품 상세 정보',
@@ -274,6 +300,7 @@ class ProductDetail extends TwViewController {
           }
 
           res.render('product.detail.html', {
+            pathCategory: req.path.split('/')[1],
             pageInfo: pageInfo,
             prodId: this._prodId,
             basicInfo: this._convertBasicInfo(basicInfo.result),

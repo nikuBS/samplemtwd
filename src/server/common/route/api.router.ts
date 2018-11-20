@@ -48,7 +48,7 @@ class ApiRouter {
     this.router.post('/logout-tid', this.logoutTid.bind(this));
     this.router.post('/user/login/android', this.easyLoginAos.bind(this));    // BFF_03_0017
     this.router.post('/user/login/ios', this.easyLoginIos.bind(this));        // BFF_03_0018
-    this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0004
+    this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0003
     this.router.post('/user/service-password-sessions', this.loginSvcPassword.bind(this));    // BFF_03_0009
     this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
     this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
@@ -285,7 +285,7 @@ class ApiRouter {
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
     Observable.combineLatest(
-      this.apiService.request(API_CMD.LOGOUT_BFF, {}),
+      this.apiService.request(API_CMD.BFF_03_0001, {}),
       this.loginService.logoutSession()
     ).subscribe((resp) => {
       res.json({ code: API_CODE.CODE_00 });

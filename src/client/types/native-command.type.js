@@ -29,12 +29,14 @@ Tw.NTV_CMD = {
   SERVER_SESSION: 'serverSession',
   SESSION: 'session',
   EXIT: 'exit',
-  LOG: 'log'
+  LOG: 'log',
+  SHARE: 'share',
+  IS_INSTALLED: 'isAppInstall'
 };
 
 Tw.NTV_CODE = {
-  CODE_00: 0,    // success (FIDO_TYPE: fingerprint)
-  CODE_01: 1,    // (FIDO_TUYPE: face)
+  CODE_00: 0, // success (FIDO_TYPE: fingerprint)
+  CODE_01: 1, // (FIDO_TUYPE: face)
   CODE_ERROR: -1
 };
 

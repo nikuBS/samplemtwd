@@ -38,6 +38,8 @@ Tw.BUTTON_LABEL = {
   LINE: '회선관리',
   CHANGE: '변경하기',
   APPLY: '신청하기',
+  JOIN: '가입하기',
+  TERMINATE: '해지하기',
   NEXT: '다음'
 };
 
@@ -185,6 +187,10 @@ Tw.NON_PAYMENT = {
   }
 };
 
+Tw.MYT_DATA_CANCEL_TSHARE = {
+  TITLE: 'T데이터 셰어링 USIM 해지'
+};
+
 Tw.MYT_DATA_TOTAL_SHARING_DATA = {
   USED_DATA_PREFIX: '총 ',
   USED_DATA_SUFFIX: ' 사용',
@@ -252,7 +258,10 @@ Tw.MYT_FARE_BILL_SET = {
       Paper: '기타(우편)'
     }
   },
-  BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.'
+  BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
+  COMPLETE_TEXT_REISSUE : '안내서 재발행',
+  COMPLETE_TEXT_CHANGE : '안내서 변경',
+  GUIDE_CONFIRM_TEXT : '요금안내서 확인'
 };
 
 Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
@@ -294,7 +303,12 @@ Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
   ALERT_4_A3: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?',
   ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.',
-  ALERT_MORE_TWO: '2자 이상 입력해 주세요.'
+  ALERT_MORE_TWO: '2자 이상 입력해 주세요.',
+  T_WORLD_APP_MOVED: {
+    TITLE:'T world App으로 이동하시겠습니까?',
+    MSG: '선택하신 서비스는<br/>모바일 T world app에서만<br/>이용하실 수 있습니다.',
+    BUTTON: '이동'
+  }
 };
 
 Tw.ALERT_MSG_HOME = {};
@@ -309,7 +323,16 @@ Tw.ALERT_MSG_MYT_DATA = {
   CONFIRM_SHARE: '공유된 데이터는 취소하실 수 없습니다.',
   A5: '변경 정보가 없습니다.',
   A6: '사용 가능 공유 데이터량 보다 한도가 높게 설정되었습니다. 확인 후 다시 시도해주세요.',
-  A7: '{reason}로 실패하였습니다. 잠시 후 다시 시도해주세요.'
+  A7: '{reason}로 실패하였습니다. 잠시 후 다시 시도해주세요.',
+  ALERT_2_A17: {
+    TITLE: '데이터 조르기',
+    MSG: 'SKT를 이용하는 고객에게 문자와 SNS로 데이터 조르기를 하실 수 있습니다.',
+    BUTTON: '조르기'
+  },
+  DATA_PESTER: {
+    TITLE: '[SKT] ',
+    CONTENT: '님이<br/>"T끼리 데이터 선물 조르기"를 요청하셨습니다.<br/>데이터 선물 하러가기'
+  }
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
@@ -449,6 +472,13 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A40: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
 
+Tw.ALERT_MSG_PASSWORD = {
+  A16: '비밀번호는 4자리입니다.',
+  A17: '입력하신 비밀번호가 일치하지 않습니다.\n입력하신 비밀번호를 다시 확인해 주세요.',
+  A18: '연속된 숫자는 설정 불가합니다',
+  A19: '동일한 번호가 반복되는 숫자는 사용 불가합니다'
+};
+
 Tw.ALERT_MSG_BENEFIT = {};
 
 Tw.ALERT_MSG_MEMBERSHIP = {
@@ -456,6 +486,12 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     TITLE: 'T멤버십에 가입하실 수 없습니다.',
     CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
     TXT: '회선 관리하기'
+  },
+  JOIN: {
+    TITLE: '멤버십에 가입하시겠습니까?',
+    CONTENT: '선택 동의 사항은 <br/>나의 멤버십 〉 정보 수정에서 수정 가능합니다',
+    OK_BTN: '가입하기',
+    CANCEL_BTN: '취소'
   },
   JOIN_COMPLETE: {
     TITLE: '멤버십 가입 완료',
@@ -508,7 +544,8 @@ Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
 
 Tw.PRODUCT_CTG_NM = {
   PLANS: '요금제',
-  ADDITIONS: '부가서비스'
+  ADDITIONS: '부가서비스',
+  DISCOUNT_PROGRAM: '할인프로그램'
 };
 
 Tw.PRODUCT_TYPE_NM = {
@@ -574,7 +611,8 @@ Tw.URL_PATH = {
   MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit',
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
-  CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30'
+  CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
+  SMART_CHOICE: 'http://www.smartchoice.or.kr'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
@@ -740,7 +778,11 @@ Tw.MYT_JOIN_SUSPEND = {
     BTNAME: '해제하기',
     MESSAGE: '일시정지가 즉시 해제됩니다.'
   },
+  RESUSPEND:'재신청',
+  CANCEL_RESUSPEND:'재신청 취소',
+  RESET: '해제',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
+  SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   TYPE: {
     ALL: '걸기/받기 모두 정지',
     CALL: '걸기만 정지'
@@ -748,6 +790,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
+  NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   ALERT_EXCEED: {
     TITLE: '신청불가',
     MESSAGE: '월 5회 이상 신청이 불가능합니다.'
@@ -759,7 +802,8 @@ Tw.MYT_JOIN_SUSPEND = {
         '- 병적증명서(지방병무청, 시군구 읍면동 주민센터 등에서 발급), 입영 사실 기재 주민등록초본 or 입영통지서, 선발 통지서 등 병역법 시행규칙에서 정한 서식과 신분증 2종 필수 제출입니다.<br />' +
         '- ‘교육소집 기간’이 확인되는 군입대 입증 서류 필요하며, 군입대 장기 일시정지 처리 시 구비서류에 기재된 ‘입대일자‘ 확인 후 장기 일시정지 신청이 가능합니다.<br />' +
         '- 첨부파일은 최대 30MB 까지 등록 가능 합니다.<br />' +
-        '- MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf) 파일을 첨부할 수 있습니다.<br />'
+        '- MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf) 파일을 첨부할 수 있습니다.<br />',
+      UPLOAD_DESC: '입영통지서 등 군입증명서류, 신분증 2종 제출'
     },
     ABROAD: {
       TITLE: '구비서류 첨부 안내',
@@ -767,7 +811,8 @@ Tw.MYT_JOIN_SUSPEND = {
         '- 항공권 사본(편도, 왕복 모두 인정/전자항공권 인정), 출입국에 관한 사실 증명서(출입국 관리사무소, 인터넷 발급 인정) 등 해외체류입증 서류 필수 제출입니다.' +
         '- 단, 항공권(편도, 왕복)의 경우 국내에서 국외로 출국하는 내용이 기재되어 있어야 인정됩니다.' +
         '- 첨부파일은 최대 30MB 까지 등록 가능 합니다.' +
-        '- MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf) 파일을 첨부할 수 있습니다.'
+        '- MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf) 파일을 첨부할 수 있습니다.',
+      UPLOAD_DESC: '항공권 사본 등 해외체류입증 서류 1종 제출'
     }
   }
 };
@@ -1009,4 +1054,8 @@ Tw.PRODUCT_COMBINE_FAMILY_TYPE = {
   children: '자녀',
   brother: '형제자매',
   me: '본인'
+};
+
+Tw.PREPAID_VOICE = {
+  PREPAID_CARD: '선불폰 카드'
 };

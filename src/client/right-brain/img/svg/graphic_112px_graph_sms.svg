@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="112px" height="112px" viewBox="0 0 112 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>graphic_112px_graph_sms</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M56,93 C76.4345357,93 93,76.4345357 93,56 C93,35.5654643 76.4345357,19 56,19 C35.5654643,19 19,35.5654643 19,56 C19,76.4345357 35.5654643,93 56,93 Z M56,112 C25.072054,112 0,86.927946 0,56 C0,25.072054 25.072054,0 56,0 C86.927946,0 112,25.072054 112,56 C112,86.927946 86.927946,112 56,112 Z" id="path-1"></path>
+    </defs>
+    <g id="New-GUI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Element/Graph/Dounut/Small/SMS">
+            <g id="Rectangle-8">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#E8E8E8" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <polygon fill="#FFB11A" mask="url(#mask-2)" points="56 0 112 0 112 112 75.2281342 112 56 56"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

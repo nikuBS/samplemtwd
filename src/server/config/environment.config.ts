@@ -13,8 +13,7 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://m.tworld.co.kr:3000',
-    DOMAIN_B: 'localhost:3000',
-    DOMAIN_G: 'm.tworld.co.kr:3000',
+    DOMAIN_G: 'm-dev.tworld.co.kr:3000',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',
@@ -35,8 +34,7 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://icp-dev.tworld.co.kr',
-    DOMAIN_B: 'icp-dev.tworld.co.kr',
-    DOMAIN_G: 'icp-dev.tworld.co.kr',
+    DOMAIN_G: 'devgm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',
@@ -57,8 +55,7 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'http://icp-stg.tworld.co.kr',
-    DOMAIN_B: 'icp-stg.tworld.co.kr',
-    DOMAIN_G: 'icp-stg.tworld.co.kr',
+    DOMAIN_G: 'icp-stggm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',
@@ -78,8 +75,7 @@ const environment = {
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     DOMAIN: 'https://beta.m.tworld.co.kr',
-    DOMAIN_B: 'beta.m.tworld.co.kr',
-    DOMAIN_G: 'beta.m.tworld.co.kr',
+    DOMAIN_G: 'beta.g.m.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: 'relay.signgate.com',

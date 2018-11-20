@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_48px_discount</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="New-GUI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/48/Discount">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+            <g id="Group-15" transform="translate(1.200000, 6.400000)" stroke="#333333" stroke-width="2">
+                <path d="M43.8,28.406746 L43.8,6.13932024 C41.2975937,5.85741883 39.2534933,4.01927119 38.6964795,1.6 L6.90352046,1.6 C6.34650671,4.01927119 4.30240633,5.85741883 1.8,6.13932024 L1.8,28.406746 C4.53387915,28.7141084 6.70535533,30.8752969 7.01565283,33.6 L38.5843472,33.6 C38.8946447,30.8752969 41.0661209,28.7141084 43.8,28.406746 Z" id="Combined-Shape"></path>
+                <path d="M27.6764706,12.3235294 L17.641842,22.358158" id="Line-14" stroke-linecap="square"></path>
+                <circle id="Oval-18" cx="16" cy="14" r="3"></circle>
+                <circle id="Oval-18-Copy" cx="29" cy="21" r="3"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

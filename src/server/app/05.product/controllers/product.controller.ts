@@ -10,6 +10,8 @@ import { API_CODE, API_CMD } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import BrowserHelper from '../../../utils/browser.helper';
+import ProductHelper from '../helper/product.helper';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -18,27 +20,35 @@ export default class Product extends TwViewController {
     super();
   }
 
-  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      this.getPromotionBanners(),
-      this.getProductGroups(),
-      this.getRecommendedPlans(),
-      this.getMyFilters(!!svcInfo),
-      this.getRecommendedTags()
-    ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
-      const error = {
-        code: banners.code || groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
-        msg: banners.msg || groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
-      };
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    const uri = req.url.replace('/mobileplan/', '');
+    if (uri === 'club-t') {
+      res.render('plan/product.plan.club-t.html', { svcInfo });
+    } else if (uri === 'campuszone') {
+      res.render('plan/product.plan.campuszone.html', { svcInfo });
+    } else if (uri === 'concierge') {
+      res.render('plan/product.plan.concierge.html', { svcInfo });
+    } else {
+      Observable.combineLatest(
+        this.getPromotionBanners(),
+        this.getProductGroups(),
+        this.getRecommendedPlans(),
+        this.getMyFilters(!!svcInfo),
+        this.getRecommendedTags()
+      ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
+        const error = {
+          code: banners.code || groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
+          msg: banners.msg || groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
-      }
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
 
-      const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
-
-      res.render('product.html', { svcInfo, productData, pageInfo });
-    });
+        const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
+        res.render('product.html', { svcInfo, productData, pageInfo, isApp: BrowserHelper.isApp(req) });
+      });
+    }
   }
 
   private getPromotionBanners = () => {
@@ -52,7 +62,7 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -75,14 +85,17 @@ export default class Product extends TwViewController {
             prodList: group.prodList.map(plan => {
               return {
                 ...plan,
-                basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+                basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+                basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
+                basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
+                basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
               };
             })
           };
         })
       };
     });
-  }
+  };
 
   private getMyFilters = isLogin => {
     if (isLogin) {
@@ -99,7 +112,7 @@ export default class Product extends TwViewController {
     }
 
     return of(undefined);
-  }
+  };
 
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -119,12 +132,15 @@ export default class Product extends TwViewController {
         prodList: resp.result.prodList.map(plan => {
           return {
             ...plan,
-            basFeeInfo: FormatHelper.addComma(plan.basFeeInfo)
+            basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
+            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
+            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
           };
         })
       };
     });
-  }
+  };
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -137,5 +153,5 @@ export default class Product extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 }

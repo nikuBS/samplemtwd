@@ -10,6 +10,9 @@ export const URL = {
   '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
   '/common/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
 
+  // Main
+  '/main/menu/refund': { login: false, id: 'MN_01_04_01_01', title: '미환급금 조회' },
+
   // MyT
   '/myt/fare': { login: true, id: 'MF1', title: '나의 요금' },
   '/myt/fare/nonpayment': { login: true, id: 'MF_02', title: '미납요금' },
@@ -29,11 +32,10 @@ export const URL = {
   '/myt/fare/payment/contents/auto': { login: true, id: 'MF_07_04', title: '콘텐츠이용료 자동선결제 신청' },
   '/myt/fare/payment/contents/auto/info': { login: true, id: 'MF_07_05', title: '콘텐츠이용료 자동선결제 변경 및 해지 정보' },
   '/myt/fare/payment/contents/auto/change': { login: true, id: 'MF_07_05_01', title: '콘텐츠이용료 자동선결제 변경' },
-  '/myt/fare/bill/set': { login: true, id: 'MF_04', title: '요금 안내서 설정' },
-  '/myt/fare/bill/set/return-history': { login: true, id: 'MF_04_04', title: '요금안내서 반송내역' },
-  '/myt/fare/bill/set/reissue': { login: true, id: 'MF_04_01', title: '요금안내서 재발행' },
-  '/myt/fare/bill/set/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
-  '/myt/fare/bill/set/complete': { login: true, id: 'GR_01', title: '안내서 설정 완료' },
+  '/myt-fare/billsetup': { login: true, id: 'MF_04', title: '요금 안내서 설정' },
+  '/myt-fare/billsetup/historyreturn': { login: true, id: 'MF_04_04', title: '요금안내서 반송내역' },
+  '/myt-fare/billsetup/reissue': { login: true, id: 'MF_04_01', title: '요금안내서 재발행' },
+  '/myt-fare/billsetup/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
   '/myt/fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
   '/myt/join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
@@ -47,9 +49,9 @@ export const URL = {
   '/myt/bill/guide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
   '/myt/bill/guide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
-  '/myt/join/info/no-agreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
-  '/myt/join/info/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
-  '/myt/join/info/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
+  '/myt-join/myplancombine/noagreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
+  '/myt-join/myinfo/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
+  'myt-join/wire/wiredo/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
@@ -77,9 +79,9 @@ export const URL = {
   '/product/apps': { login: false, id: 'TA', title: 'T apps' },
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
   '/product/join': { login: true, id: 'MP_02_02_06', title: '상품 가입' },
+  '/product/lookup/tplan': { login: true, id: 'MP_02_02_03_02', title: '인피니티 혜택 이용 내역' },
   '/product/terminate': { login: true, id: 'MP_02_02_06', title: '상품 해지' },
   '/product/additions-terminate': { login: true, id: 'MV_01_02_03', title: '부가상품 해지' },
-  '/product/infinity-benefit-usage-history': { login: true, id: 'MP_02_02_03_02', title: '인피니티 혜택 이용 내역' },
   '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
 
   // Customer
@@ -108,8 +110,8 @@ export const URL = {
   '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
 
   // Common
-  '/common/login/find-id-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
-  '/common/member/management': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
+  '/common/member/tid-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/common/member/manage': { login: true, id: 'CO_ME_01_05', title: '회원정보' },
 
   // Membership
   '/membership_benefit/mbrs_0001': { login: false, id: 'BE_03_01', title: '제휴브랜드' },

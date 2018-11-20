@@ -54,7 +54,7 @@ class ApiService {
   }
 
   public getServerUri(command: any): string {
-    const buildType = this.loginService.getBlueGreen() === BUILD_TYPE.GREEN ? '_G' : '';
+    const buildType = this.loginService.isGreen() === BUILD_TYPE.GREEN ? '_G' : '';
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
@@ -82,7 +82,7 @@ class ApiService {
           'x-menu-name': '',
           'x-node-url': this.loginService.getPath(),
           'x-useragent': this.loginService.getUserAgent(),
-          'x-env': this.loginService.getBlueGreen(),
+          'x-env': this.loginService.isGreen(),
           cookie: (FormatHelper.isEmpty(header.cookie) || (header.cookie).indexOf(COOKIE_KEY.APP_API) === -1) ? this.makeCookie() : header.cookie,
         });
       case API_SERVER.TID:
@@ -165,7 +165,7 @@ class ApiService {
     if ( !FormatHelper.isEmpty(err.response) ) {
       const error = err.response.data;
       const headers = err.response.headers;
-      this.logger.error(this, '[API ERROR]', error);
+      this.logger.error(this, '[API ERROR Native]', error);
 
       if ( command.server === API_SERVER.BFF ) {
         serverSession = this.setServerSession(headers);
@@ -238,7 +238,7 @@ class ApiService {
   }
 
   public requestLoginTest(userId: string): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0001, { id: userId }, LOGIN_TYPE.TID);
+    return this.requestLogin(API_CMD.BFF_03_0000, { id: userId }, LOGIN_TYPE.TID);
   }
 
   public requestLoginTid(token: string, state: string): Observable<any> {
@@ -287,7 +287,7 @@ class ApiService {
   }
 
   public requestChangeSession(params: any): Observable<any> {
-    return this.requestUpdateSvcInfo(API_CMD.BFF_01_0004, params);
+    return this.requestUpdateSvcInfo(API_CMD.BFF_01_0003, params);
   }
 
   public requestUpdateAllSvcInfo(command, params): Observable<any> {

@@ -51,6 +51,10 @@ export const MYT_DATA_USAGE_TOTAL_SHARING_DATA = {
   TITLE: '통합공유 데이터'
 };
 
+export const MYT_DATA_USAGE_CANCEL_TSHARE = {
+  TITLE: 'T데이터 셰어링 USIM 해지'
+};
+
 export const MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 MM월'
@@ -390,4 +394,20 @@ export const BRANCH_SEARCH_OPTIONS = {
   authAgnYn: '공식인증대리점',
   etc: ' 외 ',
   count: '건'
+};
+
+export const PRODUCT_TYPE_NM = {
+  JOIN: '가입',
+  CHANGE: '변경',
+  TERMINATE: '해지',
+  SETTING: '설정'
+};
+
+export const MYT_SUSPEND_STATE = {
+  R: '접수중',
+  D: '서류확인 중',
+  E: '재첨부서류확인중',
+  A: '서류재첨부필요',
+  F: '처리불가',
+  C: '처리완료'
 };

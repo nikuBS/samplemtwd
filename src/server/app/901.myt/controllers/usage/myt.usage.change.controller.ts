@@ -13,11 +13,12 @@ class MyTUsageChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_01_0002, {}) // 사용량 조회
-      .subscribe((response) => {
-        console.log(response);
-        res.render('usage/myt.usage.change.html', { result: response.result, svcInfo: svcInfo });
-      });
+    // TODO: change allSvc (render parameter)
+    // this.apiService.request(API_CMD.BFF_01_0002, {}) // 사용량 조회
+    //   .subscribe((response) => {
+    //     console.log(response);
+    //     res.render('usage/myt.usage.change.html', { result: response.result, svcInfo: svcInfo });
+    //   });
   }
 }
 

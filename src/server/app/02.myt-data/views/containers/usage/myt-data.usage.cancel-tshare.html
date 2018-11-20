@@ -1,0 +1,73 @@
+<%#
+* FileName: myt-data.usage.cancel-tshare.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.11.12
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<div id="myt-data-usage-cancel-tshare" class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+        <!-- #header -->
+        <%- include('../../../../../common/views/components/header.component.html', { title: 'T데이터 셰어링 USIM 해지', svcInfo: svcInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box noborder">
+
+                    <h3 class="tdateusim-cancel-title">
+                        T 데이터셰어링 USIM을<br>해지하시겠습니까?
+                    </h3>
+                    <h4 class="tdateusim-cancel-title02">해지 정보</h4>
+
+                    <dl class="cancelbox-info">
+                        <dt class="title">연결 휴대폰 번호</dt>
+                        <dd class="text"><%= svcInfo.svcNum %></dd>
+                        <dt class="title">해지 USIM번호</dt>
+                        <dd class="text"><%= child.cSvcMgmtNum %></dd>
+                    </dl>
+
+                    <div class="announcement-box mt20">
+                        <p class="announcement-bullet type02">T데이터셰어링 USIM은 해지 후<br>1개월 이내에 다시 등록할 수 없습니다. <br>(다른 휴대폰에서도 1개월 이내에 다시 등록할 수 없습니다.)</p>
+                    </div>
+
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button class="btn-cancel-tshare">해지하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+<!--// #skip_navigation -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTDataUsageCancelTshare($('#myt-data-usage-cancel-tshare'), {
+      cSvcMgmtNum : '<%= child.cSvcMgmtNum %>',
+      usimNum : '<%= child.usimNum %>',
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

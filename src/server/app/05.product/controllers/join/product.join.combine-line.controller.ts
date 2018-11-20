@@ -1,5 +1,6 @@
 /**
- * FileName: product.join.require-document.apply.controller.ts
+ * 모바일 부가서비스 > 내폰끼리 결합
+ * FileName: product.join.combine-line.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.11.08
  */
@@ -17,7 +18,7 @@ class ProductJoinCombineLine extends TwViewController {
     super();
   }
 
-  private _prodIdList = ['NA00004778'];
+  private readonly _allowedProdIdList = ['NA00004778'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
@@ -27,7 +28,7 @@ class ProductJoinCombineLine extends TwViewController {
         title: '가입'
       };
 
-    if (FormatHelper.isEmpty(prodId) || this._prodIdList.indexOf(prodId) === -1) {
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
@@ -49,9 +50,8 @@ class ProductJoinCombineLine extends TwViewController {
 
       Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
-        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),
-        this.redisService.getData('ProductLedger:' + prodId)
-      ).subscribe(([ basicInfo, joinTermInfo, prodRedisInfo ]) => {
+        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+      ).subscribe(([ basicInfo, joinTermInfo ]) => {
         const apiError = this.error.apiError([basicInfo, joinTermInfo]);
 
         if (!FormatHelper.isEmpty(apiError)) {
@@ -65,8 +65,7 @@ class ProductJoinCombineLine extends TwViewController {
           prodId: prodId,
           isApp: BrowserHelper.isApp(req),
           basicInfo: basicInfo.result,
-          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result),
-          prodRedisInfo: prodRedisInfo
+          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
         }));
       });
     });

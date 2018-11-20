@@ -1,0 +1,25 @@
+
+<!--
+* FileName: product.apps.list.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.11.14
+-->
+
+<script id="fe-tmpl-apps" type="text/x-handlebars-template">
+    <ul>
+        {{#each apps}}
+            <li class="item">
+                <a href="/product/apps/{{prodId}}">
+                    <span class="app-ico">
+                        <img src="{{iconImg}}" alt="{{imgAlt}}" class="ico" />
+                        {{#if isInstalled}}<span class="i-atv"><span class="blind">active</span></span>
+                        {{else}}
+                            {{#if isNew}}<span class="i-new"><span class="blind">new</span></span>{{/if}}
+                        {{/if}}
+                    </span>
+                    <span class="app-name">{{prodNm}}</span>
+                </a>
+            </li>
+        {{/each}}
+    </ul>
+</script>

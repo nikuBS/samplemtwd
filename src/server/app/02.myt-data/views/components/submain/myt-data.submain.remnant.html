@@ -68,39 +68,39 @@
             <dl class="data-family-list">
                 <dt>
                     <!-- 퍼블리싱화면 나오면 새로 반영 -->
-                    <!--<% if (data.family.possible) { %>-->
+                    <% if (data.family.impossible) { %>
                     T가족모아 데이터를 가입해보세요!
-                    <!--<% } else { %>-->
+                    <% } else { %>
                     나의 T가족모아 데이터
-                    <!--<% } %>-->
+                    <% } %>
                     <button class="ico"></button>
                 </dt>
-                <!--<% if (!data.family.possible) { %>-->
+                <% if (!data.family.impossible) { %>
                     <% if (data.family.remained === 0) { %>
+                        <dd><em class="data"><%= data.family.remained %></em><em class="unit">GB</em><span class="tx">남음</span></dd>
+                    <% } else { %>
                         <% if (data.family.limitedYn === 'Y' && data.family.limitation === 0 ) { %>
                         <dd><em class="data">0</em><em class="unit">GB</em><span class="tx">남음</span></dd>
                         <% } else { %>
                         <dd><em class="data">모두 소진</em></dd>
                         <% } %>
-                    <% } else { %>
-                        <dd><em class="data"><%= data.family.remained %></em><em class="unit">GB</em><span class="tx">남음</span></dd>
                     <% } %>
-                <!--<% } %>-->
+                <% } %>
             </dl>
             <span class="ico-data-family"></span>
-            <!--<% if (!data.family.possible) { %>-->
-                <% if (data.family.limitedYn === 'Y') { %>
-                    <span class="data-family-limit">한도 <%= data.family.limitation %>GB</span>
-                <% } else { %>
-                    <span class="data-family-limit">자유사용</span>
-                <% } %>
-            <!--<% } else { %>-->
+            <% if (data.family.impossible) { %>
                 <span class="data-family-limit">
                     T플랜을 이용중이시군요 <br/>
                     가족과 자유롭게 데이터 공유하는 방법 <br/>
-                    (114 또는 대리점 방문으로 신청)
+                    (114 또는 대리점 방문으로 신청 가능합니)
                 </span>
-            <!--<% } %>-->
+            <% } else { %>
+                <% if (data.family.limitedYn === 'Y') { %>
+                <span class="data-family-limit">한도 <%= data.family.limitation %>GB</span>
+                <% } else { %>
+                <span class="data-family-limit">자유사용</span>
+                <% } %>
+            <% } %>
         </div>
     </div>
 <% } %>
@@ -128,6 +128,21 @@
         </dd>
     </dl>
 </div>
+<% var twoItem = data.immCharge && data.present; %>
+<% if(data.immCharge || data.present) { %>
+<ul class="bt-slice <%= twoItem? 'item-two': '' %>">
+    <% if(data.immCharge) { %>
+    <li class="bt-white2" data-id="immCharge">
+        <button>즉시 충전</button>
+    </li>
+    <% } %>
+    <% if(data.present) { %>
+    <li class="bt-white2" data-id="present">
+        <button>자동알람 서비스</button>
+    </li>
+    <% } %>
+</ul>
+<% } %>
 <!-- PPS -->
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
 <!-- T-PocketFi & T-Login -->
@@ -152,5 +167,15 @@
                             </span>
     </div>
 </div>
+<% var twoItem = data.immCharge && data.present; %>
+<% if(data.immCharge || data.present) { %>
+<ul class="bt-slice <%= twoItem? 'item-two': '' %>">
+    <% if(data.immCharge) { %>
+    <li class="bt-white2" data-id="immCharge">
+        <button>즉시 충전</button>
+    </li>
+    <% } %>
+</ul>
+<% } %>
 <!-- T-PocketFi & T-Login -->
 <% } %>

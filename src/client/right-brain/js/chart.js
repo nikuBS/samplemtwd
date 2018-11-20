@@ -1,3 +1,280 @@
+$.fn.chart2 = function(o){
+  /*
+    target : draw 대상
+    type : 차트 유형
+    tit : 차트 제목
+    legend : 범례
+    data_type : 데이터 타입
+    data_arry : 데이터
+    unlimited : 데이터에 무제한이 있는지 여부
+    max : 최대값
+    prdname : 상품명 // circle 타입에서 사용
+  */
+  var d = {target:null,type:null,tit:null,legend:null,average:null,unit:null,data_arry:null,unlimited:false,prdname:null}
+  var max = 0;
+  $.extend(d,o);
+  if(d.target == null) return;
+  
+  $(d.target).addClass(d.type);
+
+  if(d.type == 'bar1'){ // bar1
+    
+
+  }
+
+  if(d.type == 'circle'){ // circle - min 50% ~ max 100%
+    var capa_pattern= [];
+    var style_pattern = [];
+    var text_pattern = [];
+    var class_pattern = ['patten1', 'red', 'blue'];
+    for(var i=0; i < d.data_arry.length; i++){
+      if(typeof d.data_arry[i].v == 'number'){
+        max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
+        capa_pattern.push(d.data_arry[i].v + d.unit)
+      }else if(d.data_arry[i].v == '사용안함'){
+        capa_pattern.push(d.data_arry[i].v);
+      }else if(d.data_arry[i].v == '무제한'){
+        capa_pattern.push(d.data_arry[i].v);
+        d.unlimited = true;
+      }
+    }
+    for(var i=0; i < d.data_arry.length; i++){
+      if(d.unlimited){
+        if(d.data_arry[i].v == '사용안함'){
+          style_pattern.push(50);
+          class_pattern[0] = 'gray';
+          class_pattern[1] = '';
+          $(d.target).addClass('removelegend');
+        }else if(d.data_arry[i].v == '무제한'){
+          style_pattern.push(100);
+        }else{
+          style_pattern.push((((d.data_arry[i].v/max) * 100) / 4) + 50);
+        }
+      }else{
+        if(d.data_arry[i].v == '사용안함'){
+          style_pattern.push(50);
+          class_pattern[0] = 'gray';
+          class_pattern[1] = '';
+          $(d.target).addClass('removelegend');
+        }else{
+          style_pattern.push((((d.data_arry[i].v/max) * 100) / 2) + 50);
+        }
+      }
+    }
+    for(var i=0; i < style_pattern.length; i++){
+      style_pattern[i] = Math.floor(style_pattern[i])
+    }
+    $(d.target)
+      .append(
+        $('<div>').addClass('circle-belt')
+          .append(
+            $('<dl>').addClass('as-is') // as is
+              .append(
+                $('<dt>').text(d.prdname[0])
+              )
+              .append(
+                $('<dd>').addClass('circle')
+                  .append(
+                    $('<span>').addClass('shapes').addClass(class_pattern[0]).css('width', style_pattern[0] + '%').css('height', style_pattern[0] + '%')
+                  )
+                  .append(
+                    $('<span>').addClass('data').text(capa_pattern[0])
+                    .prepend(
+                      $('<span>').addClass('blind').text(d.data_arry[0].t)
+                    )
+                  )
+                  .append(
+                    $('<span>').addClass('shapes').addClass(class_pattern[1]).css('width', style_pattern[1] + '%').css('height', style_pattern[1] + '%')
+                  )
+                  .append(
+                    $('<span>').addClass('blind').text(d.data_arry[0].t + capa_pattern[1])
+                  )
+              )
+              .append(
+                $('<dd>').addClass('legend')
+                .append(
+                  $('<span>').addClass('first')
+                  .append(
+                    $('<strong>').text(d.data_arry[0].t)
+                  )
+                )
+                .append(
+                  $('<span>').addClass('second')
+                  .append(
+                    $('<strong>').text(d.data_arry[1].t)
+                  )
+                )
+              )
+          )
+          .append(
+            $('<dl>').addClass('to-be') // to be
+              .append(
+                $('<dt>').text(d.prdname[1])
+              )
+              .append(
+                $('<dd>').addClass('circle')
+                .append(
+                  $('<span>').addClass('shapes').addClass(class_pattern[2]).css('width', style_pattern[2] + '%').css('height', style_pattern[2] + '%')
+                )
+                .append(
+                  $('<span>').addClass('data').text(capa_pattern[2])
+                  .prepend(
+                    $('<span>').addClass('blind').text(d.data_arry[2].t)
+                  )
+                )
+              )
+          )
+      )
+  }
+
+  
+
+
+  if(d.type == 'type1'){ // type1
+    if(d.tit){
+      $(d.target).append(
+        $('<div>').addClass('tit').text(d.tit)
+      )
+    }
+    if(d.legend){
+      $(d.target).append($('<div>').addClass('legend'));
+      for(var i=0; i < d.legend.length; i++){
+        $(d.target).find('.legend').append($('<div>').text(d.legend[i]))
+      }
+    }
+    if(d.data_arry){
+      /* dom append */
+      $(d.target).append($('<div>').addClass('data-arry').append($('<div>').addClass('data-belt').append($('<ul>').addClass('data-ul'))));
+      if(d.average){ // 평균
+        var sum = 0;
+        var average = 0;
+        for(var i=0; i < d.data_arry.length; i++){
+          if(d.data_arry[i].v !== '무제한'){
+            sum += d.data_arry[i].v;
+          }
+        }
+        average = sum/d.data_arry.length;
+        $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>')));
+        $(d.target).find('.data-ul')
+          .append($('<li>').addClass('average').data('value', average)
+            .append($('<dl>')
+              .append($('<dt>')
+                .text('평균')
+              )
+              .append($('<dd>')
+                .append($('<span>')
+                  .addClass('v')
+                  .text(average + d.unit)
+                )
+                .append($('<span>')
+                  .addClass('bar')
+                )
+              )
+            )
+          )
+      }
+      for(var i=0; i < d.data_arry.length; i++){
+        if(d.data_arry[i].v !== '무제한'){
+          max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
+        }else{
+          d.unlimited = true;
+        }
+        $(d.target).find('.data-ul')
+          .append($('<li>').data('value', d.data_arry[i].v)
+            .append($('<dl>')
+              .append($('<dt>')
+                .text(d.data_arry[i].t)
+              )
+              .append($('<dd>')
+                .append($('<span>')
+                  .addClass('v')
+                  .text((d.data_arry[i].v !== '무제한') ? d.data_arry[i].v + d.unit : d.data_arry[i].v)
+                )
+                .append($('<span>')
+                  .addClass('bar')
+                )
+              )
+            )
+          )
+      }
+      /* style */
+      $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+      if($(d.target).find('.data-ul > li').length > 4){
+        $(d.target).find('.data-ul').css('width', 25 * $(d.target).find('.data-ul > li').length + '%');
+      }
+
+      if(!d.unlimited){
+        $(d.target).find('.data-ul > li').each(function(){
+          if($(this).hasClass('average')){
+            $(d.target).find('.dash span').css('bottom', ($(this).data('value') / max) * 100 + '%').show();
+          }
+          $(this).find('.bar').css('height', ($(this).data('value') / max) * 100 + '%');
+          $(this).find('.v').css('bottom', ($(this).data('value') / max) * 100 + '%');
+        })
+      }else{
+       
+      }
+
+      /*
+      1. 단위 처리 : GB, MB, 원, 분초, 통, *무제한
+      2. 범례 : 
+      3. 스킨 : 
+      4. BAR가 여러개인경우
+      5. 평균을 각 항목별로 할 경우
+      6. 2개만 노출될경우
+      7. 무제한 처리
+      */
+
+
+
+
+      /* fx */
+      function sum_aver(arr,decimal,sale){//각 배열합 평균
+        var num = 0,
+          total = arr.length;
+        for(var i = 0; i < total; ++i){
+          if(sale){
+            num += arr[i].sale*1;
+          }else{
+            if(option.unit == 'time'){
+              num += operation_minutes(arr[i].data[0]);
+            }else{
+              num += arr[i].data*1;
+            }
+          }
+        }
+        if(decimal == 'won'){
+          return add_comma(Math.round((num/total)));
+        }else if(typeof decimal == Number){
+          return Math.round((num/total)*Math.pow(10,decimal))/Math.pow(10,decimal);
+        }else{
+          return Math.round((num/total));
+        }
+      }
+      function operation_minutes(num){
+        return (num.split(':')[0]*1*60)+num.split(':')[1]*1;
+      }
+      function operation_time(num){
+        var min = Math.floor(num/60),
+            sec = num%60;
+        if(min == 0){
+          return sec+'초';
+        }else{
+          return min+'분 '+sec+'초';
+        }
+      }
+      function add_comma(num) {
+        var regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(regexp, ',');
+      }
+      /* // fx */
+    }
+  }
+}
+
+
+
+
 $.fn.chart = function(option){
   var chart_data = {caption:'표제목',tf_txt:'평균값',td_txt:'각항목값',da_arr:[]};
   $.extend(chart_data,option.data);
@@ -24,7 +301,7 @@ $.fn.chart = function(option){
   max = max[0];
   if(option.type == 'bar'){
     var chart_ul = make_tag('ul','chart_ul',container);
-    for(var i = 0; i <= chart_length; ++i){
+    for(var i = -1; i < chart_length; ++i){
       var el = make_tag('li','graph-list',chart_ul);
       el.style.width = 100/(chart_length+1)+'%';
       var el_dl = make_tag('dl','chart-dl',el),
@@ -34,7 +311,7 @@ $.fn.chart = function(option){
           bar = make_tag('span','bar',box),
           txt = make_tag('span','txt',box);
       var count,count_txt,average_count,average_txt;
-      if(i == chart_length){
+      if(i == -1){
         if(option.unit == 'time'){
           average_txt = operation_time(sum_aver(chart_data.da_arr));
           average_count = sum_aver(chart_data.da_arr);

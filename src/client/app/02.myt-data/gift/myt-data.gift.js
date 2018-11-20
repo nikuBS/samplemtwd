@@ -6,6 +6,7 @@
 
 Tw.MyTDataGift = function (rootEl) {
   this.$container = rootEl;
+  this._apiService = Tw.Api;
   this._init();
 };
 
@@ -17,7 +18,7 @@ Tw.MyTDataGift.prototype = {
     }
 
     this.$container.on('click', '.fe-available_product', $.proxy(this._onClickShowAvailableProduct, this));
-
+    this.$container.on('click', '.fe-close-available_product', $.proxy(this._onHideAvailableProduct, this));
   },
   _goAutoGiftTab: function () {
     var $tab1 = this.$container.find('#tab1');
@@ -27,6 +28,19 @@ Tw.MyTDataGift.prototype = {
   },
 
   _onClickShowAvailableProduct: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0066, {}).done($.proxy(this._onSuccessAvailableProduct, this));
+  },
 
+  _onSuccessAvailableProduct: function (res) {
+    $('.fe-layer_available_product').show();
+    // if ( res.code === Tw.API_CODE.CODE_00 ) {
+    //   debugger;
+    // } else {
+    //   Tw.Error(res.code, res.msg).pop();
+    // }
+  },
+
+  _onHideAvailableProduct: function () {
+    $('.fe-layer_available_product').hide();
   }
 };

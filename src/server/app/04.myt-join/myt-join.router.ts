@@ -44,9 +44,6 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/protect/change', controller: MyTJoinProtectChange });
     this.controllers.push({ url: '/info/discount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
-    this.controllers.push({ url: '/info/no-agreement', controller: MyTJoinInfoNoAgreement });
-    this.controllers.push({ url: '/info/contract', controller: MyTJoinInfoContract });
-    this.controllers.push({ url: '/info/sms', controller: MyTJoinInfoSms });
     this.controllers.push({ url: '/wire', controller: MyTJoinWire });
     this.controllers.push({ url: '/wire/as', controller: MyTJoinWireAS });
     this.controllers.push({ url: '/wire/as/detail', controller: MyTJoinWireASDetail });

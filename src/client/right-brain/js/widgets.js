@@ -242,11 +242,11 @@ skt_landing.widgets = {
         speed : 300,
         centerMode: false,
         focusOnSelect: false,
-    customPaging: function(slider, i) {
-      return $('<span />').text(i + 1);
-    },
+        touchMove : true,
+        customPaging: function(slider, i) {
+          return $('<span />').text(i + 1);
+        },
       });
-
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
@@ -261,6 +261,18 @@ skt_landing.widgets = {
           $slides.eq(slideIndex).triggerHandler('click');
         }, 0);
       });
+      if($('.home-slider').length > 0){
+        _this.on('swipe', function () {
+          $('.home-slider .home-slider-belt')[0].slick.setOption({
+            swipe: false
+          })
+        })
+        _this.on('afterChange', function () {
+          $('.home-slider .home-slider-belt')[0].slick.setOption({
+            swipe: true
+          })
+        })
+      }
     });
   },
   widget_slider2: function (ta) {
@@ -551,4 +563,45 @@ skt_landing.widgets = {
       */
     });
   },
+  widget_donutchart: function(ta){
+    var widget = ta ? $(ta).find('.widget-box.donutchart') : $('.widget-box.donutchart');
+    $(widget).each(function(){
+      var time = 1500,
+      now = 0,
+      interval = 10,
+      max = 100,
+      loop = 100,
+      reverceTic = 1,
+      _this = this;
+      $(_this).find('.donut-chart .c100').each(function(){
+        $(this)
+            .data('reverce', false)
+            .data('now', 0)
+            .data('unit', (max - $(this).data('percent') + loop) / (time / interval))
+            .data('reverse', 0)
+      })
+      var t = setInterval(function(){
+        $(_this).find('.donut-chart .c100').each(function(){
+            if(!$(this).data('reverse')){
+               $(this).data('now', Math.ceil($(this).data('unit') * now / 10));
+            }else{
+              $(this).data('reverse', $(this).data('reverse') + 1)
+              $(this).data('now', max - Math.floor($(this).data('unit') * $(this).data('reverse')));
+            }
+            $(this).attr('class','').addClass('c100').addClass('p'+$(this).data('now'));
+            if($(this).data('now') >= max){ // reverse flag
+              $(this).data('now', max)
+              $(this).data('reverse', true)
+            }
+        })
+        now += interval;
+        if(now >= time){
+          $(_this).find('.donut-chart .c100').each(function(){
+            $(this).attr('class','').addClass('c100').addClass('p'+$(this).data('percent'));
+          })
+          clearInterval(t);
+        }
+      }, interval)
+    });
+  }
 }

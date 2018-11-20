@@ -3,12 +3,11 @@
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.19
  */
+
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_JOIN_ADDITONS, MYT_JOIN_WIRE_ADDITIONS } from '../../../../mock/server/myt.join.product.additions.mock';
 import DateHelper from '../../../../utils/date.helper';
 
 class MyTJoinProductAdditions extends TwViewController {
@@ -39,7 +38,7 @@ class MyTJoinProductAdditions extends TwViewController {
             title: '나의 부가상품'
           });
         }
-        // const resp = MYT_JOIN_WIRE_ADDITIONS;
+
         const additions = {
           joined: this.convertAdditions(resp.result.pays || []).concat(resp.result.frees || []),
           joinable: this.convertAdditions(resp.result.joinables || [])

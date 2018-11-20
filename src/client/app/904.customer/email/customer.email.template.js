@@ -30,7 +30,8 @@ Tw.CustomerEmailTemplate.prototype = {
       this._setPostCode();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0002, {}).done($.proxy(this._onSuccessLineList, this));
+    // TODO: change Tw.NODE_CMD.GET_ALL_SVC
+    // this._apiService.request(Tw.API_CMD.BFF_01_0002, {}).done($.proxy(this._onSuccessLineList, this));
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
     this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
   },

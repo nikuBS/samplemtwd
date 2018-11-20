@@ -66,16 +66,15 @@
                 <% if (products) { %>
                 <div class="cont-box nogaps-hoz">
                     <ul class="recommendedrate-list">
-                        <% for (let i = 0; i < products.length; i++) { %>
-                            <% const plan = products[i]; %>
+                        <% products.map(plan => { %>
                             <li class="type01">
                                 <a href="/product/detail/<%= plan.prodId %>" class="product-infolink">
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= plan.prodNm %></h5>
-                                        <% if (/^[0-9,]+$/.test(plan.basFeeAmt)) { %>
-                                        <p class="info">월<span class="money"><%= plan.basFeeAmt %></span>원</p>
+                                        <% if (plan.basFeeAmt.isNaN) { %>
+                                            <p class="info"><span class="money"><%= plan.basFeeAmt.value %></span></p>
                                         <% } else { %>
-                                        <p class="info"><span class="money"><%= plan.basFeeAmt %></span></p>
+                                            <p class="info">월<span class="money"><%= plan.basFeeAmt.value %></span>원</p>
                                         <% } %>
                                     </div>
                                     <% if (plan.filters) { %>
@@ -87,15 +86,15 @@
                                     <% } %>
                                     <dl class="products-additionalinfo">
                                         <dt>데이터</dt>
-                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrDataQtyCtt) ? 'GB' : '' %></span></dd>
+                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt.isNaN ? plan.basOfrDataQtyCtt.value : plan.basOfrDataQtyCtt.value.data + plan.basOfrDataQtyCtt.value.unit %></span></dd>
                                         <dt>음성</dt>
-                                        <dd><%= plan.basOfrVcallTmsCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrVcallTmsCtt) ? '분' : '' %></dd>
+                                        <dd><%= plan.basOfrVcallTmsCtt.value %></dd>
                                         <dt>문자</dt>
-                                        <dd><%= plan.basOfrCharCntCtt %> <%= /^[0-9\.]+$/.test(plan.basOfrCharCntCtt) ? '건' : '' %></dd>
+                                        <dd><%= plan.basOfrCharCntCtt.isNaN ? plan.basOfrCharCntCtt.value : plan.basOfrCharCntCtt.value + plan.basOfrCharCntCtt.unit %></dd>
                                     </dl>
                                 </a>
                             </li>
-                        <% } %>
+                        <% }); %>
                     </ul>
 
                     <% const leftCount = plans.productCount - products.length; %>
