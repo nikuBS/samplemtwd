@@ -181,7 +181,7 @@ export const URL = {
   '/common/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' }, // 로그인 횟수 초과
   '/common/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' }, // 로그인 실패
   '/common/login/dormancy': { login: false, id: 'CO_01_02_02', title: '휴면 해제' },
-  '/common/login/find-id-pwd': { login: false, id: 'CO_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/common/member/tid-pwd': { login: false, id: 'CO_01_04', title: '아이디 찾기/비밀번호 재설정' },
   '/common/login/customer-pwd': { login: false, id: 'CO_01_02_03_01', title: '고객보호 비밀번호 서비스 로그인' },
   '/common/login/customer-pwd-fail': { login: false, id: 'CO_01_02_03_01_01', title: '로그인 실패' },
   '/common/login/route': { login: false, id: '', title: '' },
@@ -191,7 +191,7 @@ export const URL = {
   '/common/logout/complete': { login: false, id: 'CO_01_03_01', title: '' }, // 로그아웃 성공
   '/common/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
   '/common/logout/route': { login: false, id: '', title: '' },
-  '/common/member/management': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
+  '/common/member/manage': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
   '/common/signup/guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
   '/common/tid/login': { login: false, id: '', title: '' },
   '/common/tid/account': { login: true, id: '', title: '' },

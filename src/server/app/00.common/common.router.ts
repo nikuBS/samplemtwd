@@ -27,8 +27,6 @@ import CommonLine from './controllers/line/common.line.controller';
 import CommonLineEdit from './controllers/line/common.line.edit.controller';
 import CommonLineCopRegister from './controllers/line/common.line.cop-register.controller';
 import CommonLineEmptyRegister from './controllers/line/common.line.empty-register.controller';
-import CommonMemberManagement from './controllers/member/common.member.management.controller';
-import CommonLoginFindIdPwd from './controllers/login/common.login.find-id-pwd.controller';
 import CommonLogoutComplete from './controllers/logout/common.logout.complete.controller';
 import CommonLogoutExpire from './controllers/logout/common.logout.expire.controller';
 import CommonLogoutRoute from './controllers/logout/common.logout.route.controller';
@@ -53,6 +51,8 @@ import CommonLoginCustomerPwd from './controllers/login/common.login.customer-pw
 import CommonLoginExceedFail from './controllers/login/common.login.exceed-fail.controller';
 import CommonSignupGuide from './controllers/signup/common.signup.guide.controller';
 import CommonLanding from './controllers/common.landing.controller';
+import CommonMemberManage from './controllers/member/common.member.manage.controller';
+import CommonMemberTidPwd from './controllers/member/common.member.tid-pwd.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -86,7 +86,6 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/login/exceed-fail', controller: CommonLoginExceedFail } );
     this.controllers.push({ url: '/login/fail', controller: CommonLoginFail } );
     this.controllers.push({ url: '/login/dormancy', controller: CommonLoginDormancy } );
-    this.controllers.push({ url: '/login/find-id-pwd', controller: CommonLoginFindIdPwd });
     this.controllers.push({ url: '/login/customer-pwd', controller: CommonLoginCustomerPwd } );
     this.controllers.push({ url: '/login/customer-pwd-fail', controller: CommonLoginCustomerPwdFail } );
     this.controllers.push({ url: '/login/route', controller: CommonLoginRoute } );
@@ -98,7 +97,8 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/logout/expire', controller: CommonLogoutExpire } );
     this.controllers.push({ url: '/logout/route', controller: CommonLogoutRoute } );
     // member
-    this.controllers.push({ url: '/member/management', controller: CommonMemberManagement } );
+    this.controllers.push({ url: '/member/manage', controller: CommonMemberManage } );
+    this.controllers.push({ url: '/member/tid-pwd', controller: CommonMemberTidPwd });
     // signup
     this.controllers.push({ url: '/signup/guide', controller: CommonSignupGuide } );
     // tid

@@ -19,7 +19,7 @@ Tw.CommonWithdrawalSurvey.prototype = {
       },
       $.proxy(this._onSurveyEvent, this),
       $.proxy(this._onWithdrawal, this),
-      'withdrawal');
+      'withdrawal-survey');
   },
   _onSurveyEvent: function ($layer) {
     this._cachedElement($layer);
