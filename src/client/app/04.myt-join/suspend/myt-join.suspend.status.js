@@ -5,7 +5,7 @@
  */
 Tw.MyTJoinSuspendStatus = function (rootEl, params) {
   this.$container = rootEl;
-  this._historyService = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService();
   this._historyService.init();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
@@ -16,7 +16,6 @@ Tw.MyTJoinSuspendStatus = function (rootEl, params) {
 
 Tw.MyTJoinSuspendStatus.prototype = {
   _cachedElement: function () {
-
   },
 
   _bindEvent: function () {
@@ -34,7 +33,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         period: this._params.period,
         reason: this._params.reason
       }
-    }, $.proxy(this._onOpenResuspendPopup, this), Tw.Popup.close, 'resuspend');
+    }, $.proxy(this._onOpenResuspendPopup, this), null, 'resuspend');
   },
 
   _onOpenResuspendPopup: function ($popup) {
@@ -85,15 +84,15 @@ Tw.MyTJoinSuspendStatus.prototype = {
     $popup.find('#fe-reset').on('click', $.proxy(this._requesCancelResuspend, this, $popup));
   },
 
-  _requesCancelResuspend: function ($popup) {
+  _requesCancelResuspend: function () {
     skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
     var params = { isReserveCancel: 'Y' };
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
-      .done($.proxy(this._onSuccessResuspend, this, params))
+      .done($.proxy(this._onSuccessRequestCancel, this, params))
       .fail($.proxy(this._onError, this));
   },
 
-  _onSuccessResuspend: function (params, res) {
+  _onSuccessRequestCancel: function (params, res) {
     skt_landing.action.loading.off({ ta: 'body' });
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
@@ -147,7 +146,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _successSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._svcInfo = _.clone(resp.result);
-      this._svcInfo.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(this._svcInfo.svcNum)
+      this._svcInfo.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(this._svcInfo.svcNum);
       this._bindEvent();
     }
   },

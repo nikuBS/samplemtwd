@@ -9,6 +9,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
+import { MYT_SUSPEND_STATE } from '../../../../types/string.type';
 
 class MyTJoinSuspendStatus extends TwViewController {
   constructor() {
@@ -43,8 +44,8 @@ class MyTJoinSuspendStatus extends TwViewController {
         options['period'] = { from, to };
         options['reason'] = suspendStatus.result.svcChgRsnNm;
         options['resuspend'] = null;
-        if ( suspendStatus.result.svcChgRsnCd === 21
-          || suspendStatus.result.svcChgRsnCd === 22 ) { // 일시정지(case 1)
+        if ( false && (suspendStatus.result.svcChgRsnCd === 21
+          || suspendStatus.result.svcChgRsnCd === 22) ) { // 일시정지(case 1)
           options['type'] = 'temporary';
         } else { // 장기일시정지(case 6)
           options['type'] = 'long-term';
@@ -56,6 +57,10 @@ class MyTJoinSuspendStatus extends TwViewController {
         res.render('suspend/myt-join.suspend.status.html', options);
       } else {
 
+        options['suspend'] = progress.result;
+        options['suspend'].rgstDt = DateHelper.getShortDateWithFormat(options['suspend'].rgstDt, 'YYYY-MM-DD');
+        options['suspend'].opDtm = DateHelper.getShortDateWithFormat(options['suspend'].opDtm, 'YYYY-MM-DD');
+        options['suspend'].state = MYT_SUSPEND_STATE[options['suspend'].opStateCd];
         switch ( progress.result.opStateCd ) {
           case 'R': // 접수중(case 2)
           case 'D': // 서류접수중
@@ -67,7 +72,7 @@ class MyTJoinSuspendStatus extends TwViewController {
           case 'C': // 처리완료(case 5)
             break;
         }
-        res.render('suspend/myt-join.suspend.html', options);
+        res.render('suspend/myt-join.suspend.progress.html', options);
       }
 
     });
