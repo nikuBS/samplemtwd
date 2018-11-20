@@ -90,7 +90,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       serialNum: $('.fe-prepaid-serial').val()
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0052, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_06_0067, htParams)
       .done($.proxy(this._getPrepaidCardInfo, this));
   },
 
@@ -117,11 +117,25 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
-  _getPrepaidCardInfo: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+  _getPrepaidCardInfo: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var previousAmount = Number(resp.result.curAmt);
+      var rechargeAmount = Number(resp.result.cardAmt);
+      var afterAmount = previousAmount + rechargeAmount;
 
+      this._popupService.open({
+        hbs: 'DC_09_01_01',
+        layer: true,
+        data: {
+          cardNumber: $('.fe-prepaid-card').val(),
+          cardCompany: Tw.PREPAID_VOICE.PREPAID_CARD,
+          previousAmount: Tw.FormatHelper.addComma(previousAmount.toString()),
+          afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
+          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
+        }
+      });
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
 
