@@ -132,3 +132,9 @@ Tw.SVC_ATTR = {
   S3: '집전화',
   O1: '포인트캠'
 };
+
+Tw.POINT_NM={
+  OK: 'OK캐쉬백',
+  T: 'T포인트',
+  RAINBOW: '레인보우 포인트'
+}

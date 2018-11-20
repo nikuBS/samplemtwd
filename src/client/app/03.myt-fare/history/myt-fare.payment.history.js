@@ -137,9 +137,9 @@ Tw.MyTFarePaymentHistory.prototype = {
     var alertCode, alertType;
 
     // alertCode 설정
-    if(this.reserveCancelData.listTitle.indexOf('T포인트')>=0) alertCode='ALERT_2_A85';
-    else if(this.reserveCancelData.listTitle.indexOf('레인보우')>=0) alertCode='ALERT_2_A87';
-    else if(this.reserveCancelData.listTitle.indexOf('OK캐쉬백')>=0) alertCode='ALERT_2_A92';
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A85';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A87';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A92';
 
     if(alertCode) alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
 
@@ -154,16 +154,16 @@ Tw.MyTFarePaymentHistory.prototype = {
     var apiCode, apiBody={};
 
     //apiCode,apiBody 설정
-    if(this.reserveCancelData.listTitle.indexOf('T포인트')>=0||this.reserveCancelData.listTitle.indexOf('OK캐쉬백')>=0){ 
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0||this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0){ 
       apiCode='BFF_07_0047';
       apiBody={
-        ptClCd:this.reserveCancelData.listTitle.indexOf('T포인트')>=0?'TPT':'CPT',
+        ptClCd:this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0?'TPT':'CPT',
         opDt:this.reserveCancelData.opDt,
         payOpTm:this.reserveCancelData.opTm,//.substring(8),
         rbpSerNum:this.reserveCancelData.rbpSerNum
       }
     }
-    else if(this.reserveCancelData.listTitle.indexOf('레인보우')>=0){ 
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0){ 
       apiCode='BFF_07_0050';
       apiBody={
         rbpSerNum:this.reserveCancelData.rbpSerNum
@@ -179,9 +179,9 @@ Tw.MyTFarePaymentHistory.prototype = {
   // 포인트 1회 납부예약 취소 res
   _successReserveCancel: function(res){
     var alertCode, alertType;
-    if(this.reserveCancelData.listTitle.indexOf('T포인트')>=0) alertCode='ALERT_2_A86';
-    else if(this.reserveCancelData.listTitle.indexOf('레인보우')>=0) alertCode='ALERT_2_A88';
-    else if(this.reserveCancelData.listTitle.indexOf('OK캐쉬백')>=0) alertCode='ALERT_2_A93';
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A86';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A88';
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A93';
 
     alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
 
