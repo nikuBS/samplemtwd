@@ -647,6 +647,10 @@ textarea::-webkit-input-placeholder {
   color: #8f8f8f;
   font-weight: 700; }
 
+textarea:-ms-input-placeholder {
+  color: #8f8f8f;
+  font-weight: 700; }
+
 textarea::-ms-input-placeholder {
   color: #8f8f8f;
   font-weight: 700; }
