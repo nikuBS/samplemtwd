@@ -16,7 +16,7 @@ Tw.MyTDataFamilyShareImmediately = function(rootEl) {
 
 Tw.MyTDataFamilyShareImmediately.prototype = {
   _init: function() {
-    this.MAIN_URL = '/myt/data/familydata';
+    this.MAIN_URL = '/myt-data/familydata';
     this._shareAmount = this.$amountInput.data('share-amount');
   },
 

@@ -53,6 +53,6 @@ Tw.MyTDataGiftComplete.prototype = {
   },
 
   _goToHistory: function () {
-    this._historyService.replaceURL('/myt/data/datainfo');
+    this._historyService.replaceURL('/myt-data/datainfo');
   }
 };

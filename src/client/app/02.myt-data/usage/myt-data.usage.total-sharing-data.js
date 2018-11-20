@@ -242,7 +242,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   _onClickBtnTFamilySharing: function () {
     if ( !this._tFamilySharingErrCode ) { // 성공 : T가족모아 메인 페이지로 이동
-      this._historyService.goLoad('/myt/data/familydata');
+      this._historyService.goLoad('/myt-data/familydata');
     } else if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) { // T가족모아 가입 가능한 요금제이나 미가입
       this._popupService.openOneBtTypeB(
         Tw.ALERT_MSG_MYT_DATA.JOIN_ONLY_CUSTOMER_CENTER_T,
@@ -266,7 +266,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._historyService.goLoad('/myt/data/gift');
     }
     else {
-      this._historyService.goLoad('/myt/data/datainfo?filter=data-gifts');
+      this._historyService.goLoad('/myt-data/datainfo?filter=data-gifts');
     }
   },
 
