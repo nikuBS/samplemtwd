@@ -1,5 +1,5 @@
 /**
- * FileName: common.login.easy-aos.controller.ts
+ * FileName: common.member.slogin.aos.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.07.25
  */
@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CommonLoginEasyAos extends TwViewController {
+class CommonMemberSloginAos extends TwViewController {
   constructor() {
     super();
   }
@@ -21,8 +21,8 @@ class CommonLoginEasyAos extends TwViewController {
       show: FormatHelper.conTelFormatWithDash(query.mdn)
     };
 
-    res.render('login/common.login.easy-aos.html', { svcInfo, mdn });
+    res.render('member/common.member.slogin.aos.html', { svcInfo, mdn });
   }
 }
 
-export default CommonLoginEasyAos;
+export default CommonMemberSloginAos;

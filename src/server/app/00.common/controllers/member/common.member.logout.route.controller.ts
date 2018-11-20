@@ -1,5 +1,5 @@
 /**
- * FileName: common.logout.route.controller.ts
+ * FileName: common.member.logout.route.controller.ts
  * Author: Ara Jo(araara.jo@sk.com)
  * Date: 2018.07.18
  */
@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CommonLogoutRoute extends TwViewController {
+class CommonMemberLogoutRoute extends TwViewController {
   constructor() {
     super();
   }
@@ -26,4 +26,4 @@ class CommonLogoutRoute extends TwViewController {
   }
 }
 
-export default CommonLogoutRoute;
+export default CommonMemberLogoutRoute;

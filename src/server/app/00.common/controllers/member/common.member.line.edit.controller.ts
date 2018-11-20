@@ -1,5 +1,5 @@
 /**
- * FileName: common.line.edit.controller.ts
+ * FileName: common.member.line.edit.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.09.28
  */
@@ -11,7 +11,7 @@ import { SVC_CATEGORY, SVC_ATTR_NAME } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class CommonLineEdit extends TwViewController {
+class CommonMemberLineEdit extends TwViewController {
   private category = '';
   constructor() {
     super();
@@ -22,7 +22,7 @@ class CommonLineEdit extends TwViewController {
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const lineList = this.parseLineList(resp.result);
-        res.render('line/common.line.edit.html', Object.assign(lineList, {
+        res.render('member/common.member.line.edit.html', Object.assign(lineList, {
           category: this.category,
           lineCategory: SVC_CATEGORY[this.category],
           svcInfo
@@ -60,4 +60,4 @@ class CommonLineEdit extends TwViewController {
   }
 }
 
-export default CommonLineEdit;
+export default CommonMemberLineEdit;

@@ -1,5 +1,5 @@
 /**
- * FileName: common.login.route.controller.ts
+ * FileName: common.member.login.route.controller.ts
  * Author: Ara Jo(araara.jo@sk.com)
  * Date: 2018.07.12
  */
@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CommonLoginRoute extends TwViewController {
+class CommonMemberLoginRoute extends TwViewController {
   constructor() {
     super();
   }
@@ -19,7 +19,7 @@ class CommonLoginRoute extends TwViewController {
       res.send(query.error_description);
     } else {
       const param = this.getParams(query.target);
-      res.render('login/common.login.route.html', param);
+      res.render('member/common.member.login.route.html', param);
     }
   }
 
@@ -38,4 +38,4 @@ class CommonLoginRoute extends TwViewController {
   }
 }
 
-export default CommonLoginRoute;
+export default CommonMemberLoginRoute;

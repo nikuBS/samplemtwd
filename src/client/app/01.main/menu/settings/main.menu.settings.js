@@ -31,9 +31,9 @@ Tw.MainMenuSettings.prototype = {
     // Set FIDO type
     this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(function (resp) {
       if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
-        this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=finger');
+        this.$container.find('#fe-bio-link').attr('href', '/main/menu/settings/biometrics?target=finger');
       } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
-        this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=face');
+        this.$container.find('#fe-bio-link').attr('href', '/main/menu/settings/common/biometrics?target=face');
       } else {
         this.$container.find('#fe-bio').addClass('none');
       }

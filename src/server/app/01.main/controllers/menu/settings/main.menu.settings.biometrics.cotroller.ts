@@ -5,14 +5,14 @@
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
-import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { FIDO_TYPE } from '../../../../types/common.type';
+import TwViewController from '../../../../../common/controllers/tw.view.controller';
+import { FIDO_TYPE } from '../../../../../types/common.type';
 
-export default class CommonBiometricsMenu extends TwViewController {
+export default class MainMenuSettingsBiometrics extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const target = req.query.target;
 
-    res.render('biometrics/common.biometrics.menu.html', { svcInfo, target });
+    res.render('menu/settings/main.menu.settings.biometrics.html', { svcInfo, target });
   }
 }

@@ -5,24 +5,24 @@
  */
 
 import TwRouter from '../../common/route/tw.router';
-import CommonError from './controllers/common.error.controller';
-import CommonBiometricsTerms from './controllers/biometrics/common.biometrics.terms.controller';
-import CommonBiometricsCert from './controllers/biometrics/common.biometircs.cert.controller';
-import CommonBiometricsMenu from './controllers/biometrics/common.biometrics.menu.cotroller';
-import CommonBiometricsRegister from './controllers/biometrics/common.biometrics.register.controller';
+import CommonError from './controllers/util/common.util.error.controller';
+import MainMenuSettingsBiometricsTerms from '../01.main/controllers/menu/settings/main.menu.settings.biometrics.terms.controller';
+import MainMenuSettingsBiometricsCert from '../01.main/controllers/menu/settings/main.menu.settings.biometircs.cert.controller';
+import MainMenuSettingsBiometrics from '../01.main/controllers/menu/settings/main.menu.settings.biometrics.cotroller';
+import MainMenuSettingsBiometricsRegister from '../01.main/controllers/menu/settings/main.menu.settings.bometrics.register.controller';
 import CommonCertMotp from './controllers/cert/common.cert.motp.controller';
 import CommonCertMotpFail from './controllers/cert/common.cert.motp-fail.controller';
 import CommonCertPublicExport from './controllers/cert/common.cert.public-export.controller';
 import CommonCertNice from './controllers/cert/common.cert.nice.controller';
 import CommonCertIpin from './controllers/cert/common.cert.ipin.controller';
 import CommonCertComplete from './controllers/cert/common.cert.complete.controller';
-import CommonLine from './controllers/line/common.line.controller';
-import CommonLineEdit from './controllers/line/common.line.edit.controller';
-import CommonLineCopRegister from './controllers/line/common.line.cop-register.controller';
-import CommonLineEmptyRegister from './controllers/line/common.line.empty-register.controller';
-import CommonLogoutComplete from './controllers/logout/common.logout.complete.controller';
-import CommonLogoutExpire from './controllers/logout/common.logout.expire.controller';
-import CommonLogoutRoute from './controllers/logout/common.logout.route.controller';
+import CommonMemberLine from './controllers/member/common.member.line.controller';
+import CommonMemberLineEdit from './controllers/member/common.member.line.edit.controller';
+import CommonMemberLineBizRegister from './controllers/member/common.member.line.biz-register.controller';
+import CommonMemberLineEmpty from './controllers/member/common.member.line.empty.controller';
+import CommonMemberLogoutComplete from './controllers/member/common.member.logout.complete.controller';
+import CommonMemberLogoutExpire from './controllers/member/common.member.logout.expire.controller';
+import CommonMemberLogoutRoute from './controllers/member/common.member.logout.route.controller';
 import CommonTidLogin from './controllers/tid/common.tid.login.controller';
 import CommonTidAccountInfo from './controllers/tid/common.tid.account-info.controller';
 import CommonTidChangePw from './controllers/tid/common.tid.change-pw.controller';
@@ -33,15 +33,15 @@ import CommonTidSignUpLocal from './controllers/tid/common.tid.signup-local.cont
 import CommonTidSignUpForeigner from './controllers/tid/common.tid.signup-foreigner.controller';
 import CommonTidGuide from './controllers/tid/common.tid.guide.controller';
 import CommonTidRoute from './controllers/tid/common.tid.route';
-import CommonLoginFail from './controllers/login/common.login.fail.controller';
+import CommonMemberLoginFail from './controllers/member/common.member.login.fail.controller';
 import CommonLoginCustomerPwdFail from './controllers/login/common.login.customer-pwd-fail.controller';
-import CommonLoginRoute from './controllers/login/common.login.route.controller';
-import CommonLoginEasyIos from './controllers/login/common.login.easy-ios.controller';
-import CommonLoginEasyFail from './controllers/login/common.login.easy-fail.controller';
-import CommonLoginEasyAos from './controllers/login/common.login.easy-aos.controller';
+import CommonMemberLoginRoute from './controllers/member/common.member.login.route.controller';
+import CommonMemberSloginIos from './controllers/member/common.member.slogin.ios.controller';
+import CommonMemberSloginFail from './controllers/member/common.member.slogin.fail.controller';
+import CommonMemberSloginAos from './controllers/member/common.member.slogin.aos.controller';
 import CommonLoginDormancy from './controllers/login/common.login.dormancy.controller';
 import CommonLoginCustomerPwd from './controllers/login/common.login.customer-pwd.controller';
-import CommonLoginExceedFail from './controllers/login/common.login.exceed-fail.controller';
+import CommonMemberLoginExceedFail from './controllers/member/common.member.login.exceed-fail.controller';
 import CommonSignupGuide from './controllers/signup/common.signup.guide.controller';
 import CommonMemberManage from './controllers/member/common.member.manage.controller';
 import CommonMemberTidPwd from './controllers/member/common.member.tid-pwd.controller';
@@ -51,11 +51,6 @@ import CommonShareBridge from './controllers/share/common.share.bridge.controlle
 export default class CommonRouter extends TwRouter {
   constructor() {
     super();
-    // biometrics
-    this.controllers.push({ url: '/biometrics/menu', controller: CommonBiometricsMenu });
-    this.controllers.push({ url: '/biometrics/terms', controller: CommonBiometricsTerms });
-    this.controllers.push({ url: '/biometrics/cert', controller: CommonBiometricsCert });
-    this.controllers.push({ url: '/biometrics/register', controller: CommonBiometricsRegister });
     // cert
     this.controllers.push({ url: '/cert/motp', controller: CommonCertMotp });
     this.controllers.push({ url: '/cert/motp/fail', controller: CommonCertMotpFail });
@@ -63,28 +58,32 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/cert/nice', controller: CommonCertNice });
     this.controllers.push({ url: '/cert/ipin', controller: CommonCertIpin });
     this.controllers.push({ url: '/cert/complete', controller: CommonCertComplete });
-    // line
-    this.controllers.push({ url: '/line', controller: CommonLine });
-    this.controllers.push({ url: '/line/edit', controller: CommonLineEdit });
-    this.controllers.push({ url: '/line/register/corporation', controller: CommonLineCopRegister });
-    this.controllers.push({ url: '/line/register/empty', controller: CommonLineEmptyRegister });
-    // login
-    this.controllers.push({ url: '/login/exceed-fail', controller: CommonLoginExceedFail });
-    this.controllers.push({ url: '/login/fail', controller: CommonLoginFail });
+
     this.controllers.push({ url: '/login/dormancy', controller: CommonLoginDormancy });
     this.controllers.push({ url: '/login/customer-pwd', controller: CommonLoginCustomerPwd });
     this.controllers.push({ url: '/login/customer-pwd-fail', controller: CommonLoginCustomerPwdFail });
-    this.controllers.push({ url: '/login/route', controller: CommonLoginRoute });
-    this.controllers.push({ url: '/login/easy-aos', controller: CommonLoginEasyAos });
-    this.controllers.push({ url: '/login/easy-ios', controller: CommonLoginEasyIos });
-    this.controllers.push({ url: '/login/easy-fail', controller: CommonLoginEasyFail });
+
+    // member - login
+    this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
+    this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
+    this.controllers.push({ url: '/member/login/exceed-fail', controller: CommonMemberLoginExceedFail });
+    // member - slogin
+    this.controllers.push({ url: '/member/slogin/aos', controller: CommonMemberSloginAos });
+    this.controllers.push({ url: '/member/slogin/ios', controller: CommonMemberSloginIos });
+    this.controllers.push({ url: '/member/slogin/fail', controller: CommonMemberSloginFail });
     // logout
-    this.controllers.push({ url: '/logout/complete', controller: CommonLogoutComplete });
-    this.controllers.push({ url: '/logout/expire', controller: CommonLogoutExpire });
-    this.controllers.push({ url: '/logout/route', controller: CommonLogoutRoute });
+    this.controllers.push({ url: '/member/logout/complete', controller: CommonMemberLogoutComplete });
+    this.controllers.push({ url: '/member/logout/expire', controller: CommonMemberLogoutExpire });
+    this.controllers.push({ url: '/memberlogout/route', controller: CommonMemberLogoutRoute });
+    // member - line
+    this.controllers.push({ url: '/member/line', controller: CommonMemberLine });
+    this.controllers.push({ url: '/member/line/edit', controller: CommonMemberLineEdit });
+    this.controllers.push({ url: '/member/line/biz-register', controller: CommonMemberLineBizRegister });
+    this.controllers.push({ url: '/member/line/empty', controller: CommonMemberLineEmpty });
     // member
     this.controllers.push({ url: '/member/manage', controller: CommonMemberManage });
     this.controllers.push({ url: '/member/tid-pwd', controller: CommonMemberTidPwd });
+
     // signup
     this.controllers.push({ url: '/signup/guide', controller: CommonSignupGuide });
     // tid
@@ -100,7 +99,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/tid/route', controller: CommonTidRoute });
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
-    // landing
+    // share
     this.controllers.push({ url: '/share/landing', controller: CommonShareLanding });
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
   }

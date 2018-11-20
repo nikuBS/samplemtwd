@@ -26,7 +26,7 @@ class CommonTidSignUpLocal extends TwViewController {
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.SIGN_UP,
           redirect_uri: EnvHelper.getEnvironment('DOMAIN') +
-          '/common/login/route?target=/main/home=' + resp.result.state,
+          '/common/member/login/route?target=/main/home=' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE

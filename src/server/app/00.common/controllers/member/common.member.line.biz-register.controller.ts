@@ -6,7 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-class CommonLineCopRegister extends TwViewController {
+class CommonMemberLineBizRegister extends TwViewController {
   constructor() {
     super();
   }
@@ -16,4 +16,4 @@ class CommonLineCopRegister extends TwViewController {
   }
 }
 
-export default CommonLineCopRegister;
+export default CommonMemberLineBizRegister;

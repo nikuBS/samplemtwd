@@ -174,23 +174,23 @@ export const URL = {
   '/common/cert/nice': { login: true, id: '', title: '' },
   '/common/cert/ipin': { login: true, id: '', title: '' },
   '/common/cert/complete': { login: true, id: '', title: '' },
-  '/common/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
-  '/common/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
-  '/common/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록
-  '/common/line/register/empty': { login: true, id: 'CO_01_05_02_02', title: '' }, // 가입된 회선 없음
-  '/common/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' }, // 로그인 횟수 초과
-  '/common/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' }, // 로그인 실패
+  '/common/member/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
+  '/common/member/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
+  '/common/member/line/biz-register': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록
+  '/common/member/line/empty': { login: true, id: 'CO_01_05_02_02', title: '' }, // 가입된 회선 없음
+  '/common/member/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' }, // 로그인 횟수 초과
+  '/common/member/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' }, // 로그인 실패
   '/common/login/dormancy': { login: false, id: 'CO_01_02_02', title: '휴면 해제' },
   '/common/member/tid-pwd': { login: false, id: 'CO_01_04', title: '아이디 찾기/비밀번호 재설정' },
   '/common/login/customer-pwd': { login: false, id: 'CO_01_02_03_01', title: '고객보호 비밀번호 서비스 로그인' },
   '/common/login/customer-pwd-fail': { login: false, id: 'CO_01_02_03_01_01', title: '로그인 실패' },
-  '/common/login/route': { login: false, id: '', title: '' },
-  '/common/login/easy-aos': { login: false, id: 'CO_01_02_06_01', title: '' }, // 간편로그인 안드로이드
-  '/common/login/easy-ios': { login: false, id: 'CO_01_02_06_02', title: '' }, // 간편로그인 IOS
-  '/common/login/easy-fail': { login: false, id: 'CO_01_02_06_03', title: '' }, // 간편로그인 이용불가
-  '/common/logout/complete': { login: false, id: 'CO_01_03_01', title: '' }, // 로그아웃 성공
-  '/common/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
-  '/common/logout/route': { login: false, id: '', title: '' },
+  '/common/member/login/route': { login: false, id: '', title: '' },
+  '/common/member/slogin/aos': { login: false, id: 'CO_01_02_06_01', title: '' }, // 간편로그인 안드로이드
+  '/common/member/slogin/ios': { login: false, id: 'CO_01_02_06_02', title: '' }, // 간편로그인 IOS
+  '/common/member/slogin/fail': { login: false, id: 'CO_01_02_06_03', title: '' }, // 간편로그인 이용불가
+  '/common/member/logout/complete': { login: false, id: 'CO_01_03_01', title: '' }, // 로그아웃 성공
+  '/common/member/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
+  '/common/member/logout/route': { login: false, id: '', title: '' },
   '/common/member/manage': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
   '/common/signup/guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
   '/common/tid/login': { login: false, id: '', title: '' },

@@ -54,7 +54,7 @@ Tw.CommonBiometricsMenu.prototype = {
     console.log(resp);
   },
   _onClickRegisterFido: function () {
-    this._historyService.goLoad('/common/biometrics/terms?target=' + this._target);
+    this._historyService.goLoad('/main/menu/settings/biometrics/terms?target=' + this._target);
   },
   _setEnableStatus: function(str) {
     this.$txtFido.text(str);

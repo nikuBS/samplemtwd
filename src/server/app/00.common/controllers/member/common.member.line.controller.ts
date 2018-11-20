@@ -1,5 +1,5 @@
 /**
- * FileName: common.line.controller.ts
+ * FileName: common.member.line.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.09.27
  */
@@ -12,7 +12,7 @@ import { LINE_NAME, SVC_ATTR_NAME } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 
-class CommonLine extends TwViewController {
+class CommonMemberLine extends TwViewController {
   constructor() {
     super();
   }
@@ -22,12 +22,12 @@ class CommonLine extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         const list = resp.result;
         const lineInfo = this.parseLineList(list);
-        res.render('line/common.line.html', Object.assign(lineInfo, {
+        res.render('member/common.member.line.html', Object.assign(lineInfo, {
           svcInfo
         }));
       } else {
         // ICAS3101
-        res.render('line/common.line.empty-register.html',  { svcInfo });
+        res.render('member/common.member.line.empty.html',  { svcInfo });
       }
     });
   }
@@ -80,4 +80,4 @@ class CommonLine extends TwViewController {
   }
 }
 
-export default CommonLine;
+export default CommonMemberLine;
