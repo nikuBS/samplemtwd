@@ -99,7 +99,7 @@ export const URL = {
   '/customer/faq/search': { login: false, id: 'CS_05_04', title: 'FAQ' },
   '/customer/helpline': { login: false, id: 'CS_14_01', title: '전화상담 예약하기' },
   '/customer/notice': { login: false, id: 'CS_10_01', title: '공지사항' },
-  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
+  '/customer/svc-info/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
   '/customer/damage-info': { login: false, id: 'CS_13_01', title: '이용자 피해예방 센터' },
   '/customer/damage-info/guide': { login: false, id: 'CS_13_03', title: '이용자 피해예방 가이드' },
   '/customer/damage-info/warning': { login: false, id: 'CS_13_05', title: '최신 이용자 피해예방 주의보' },

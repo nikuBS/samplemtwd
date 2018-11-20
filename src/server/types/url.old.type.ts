@@ -152,7 +152,7 @@ export const URL = {
   '/customer/shop/repair-detail': { login: false, id: 'CI_03_03', title: 'AS센터 정보' }, // 매장 및 AS센터 > AS센터 자세히
   '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 제조사 별 AS센터
   '/customer/shop/search': { login: false, id: 'CI_02_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지점/대리점 찾기
-  '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
+  '/customer/svc-info/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   '/customer/faq': { login: false, id: 'CI_11_01', title: '자주 찾는 질문' }, // 자주 찾는 질문
   '/customer/faq/category': { login: false, id: 'CI_11_02', title: '자주 찾는 질문/Category' }, // 자주 찾는 질문(Category: 요금상품, 가입/변경/해지 ....)
@@ -164,10 +164,10 @@ export const URL = {
   '/customer/event': { login: false, id: 'CI_13_01', title: '이벤트' }, // 이벤트
   '/customer/event/detail': { login: false, id: 'CI_13_02', title: '이벤트 상세' }, // 이벤트 상세
   '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
-  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
   '/customer/agentsearch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
+  '/customer/svc-info/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
 
   // common
   '/common/cert/motp': { login: false, id: 'CO_02_01_02_L02_L01', title: '모바일T안심인증' },

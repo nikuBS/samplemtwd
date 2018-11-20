@@ -102,13 +102,13 @@
                                                         <% if (research.bnnrRsrchRpsTypCd === "R") { %>
                                                             <ul class="bt-slice">
                                                                 <li class="bt-blue1">
-                                                                    <a href="/customer/researches/<%= research.hintExUrl %>">설문 시작하기</a>
+                                                                    <a href="/customer/svc-info/researches/<%= research.hintExUrl %>">설문 시작하기</a>
                                                                 </li>
                                                             </ul>
                                                         <% } else { %>
                                                             <ul class="bt-slice item-two">
                                                                 <li class="bt-white2">
-                                                                    <a href="/customer/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
+                                                                    <a href="/customer/svc-info/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
                                                                 </li>
                                                                 <li class="bt-blue1">
                                                                     <button disabled>참여하기</button>
@@ -118,7 +118,7 @@
                                                     <% } else { %>
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <a href="/customer/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
+                                                                <a href="/customer/svc-info/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
                                                             </li>
                                                         </ul>
                                                     <% } %>
