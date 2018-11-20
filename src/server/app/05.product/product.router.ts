@@ -74,7 +74,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps(/:appId)?', controller: ProductApps });
 
-    this.controllers.push({ url: '(/mobileplan|/mobileplan-add|/wireplan|/roaming)/detail/:prodId', controller: ProductDetail });
+    this.controllers.push({ url: '(/mobileplan|/mobileplan-add|/wireplan|/roaming)/callplan/:prodId', controller: ProductDetail });
   }
 }
 

@@ -205,7 +205,7 @@ Tw.ProductDetail.prototype = {
       return;
     }
 
-    this._historyService.goLoad('/product/detail/' + prodId);
+    this._historyService.goLoad('/product/mobileplan/callplan/' + prodId);
   },
 
   _loadRecommendedrateList: function() {
