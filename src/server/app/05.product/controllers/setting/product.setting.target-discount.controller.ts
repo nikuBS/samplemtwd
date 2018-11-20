@@ -9,13 +9,26 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 class ProductSettingTargetDiscount extends TwViewController {
+  private readonly _allowedProdIdList = ['NA00000008', 'NA00002563', 'NA00002585'];
+
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const prodId = req.params.prodId || null,
+      renderCommonInfo = {
+        pageInfo: pageInfo,
+        svcInfo: svcInfo,
+        title: '설정'
+      };
+
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
+      return this.error.render(res, renderCommonInfo);
+    }
 
     // Observable.combineLatest(
     //   this.apiService.request(API_CMD.BFF_10_0072, {}),
