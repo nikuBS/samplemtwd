@@ -25,7 +25,7 @@ Tw.CommonHelper = (function () {
   };
 
   var toast = function (message) {
-    if(Tw.BrowserHelper.isApp()) {
+    if ( Tw.BrowserHelper.isApp() ) {
       Tw.Native.send(Tw.NTV_CMD.TOAST, {
         message: message
       });
@@ -62,10 +62,27 @@ Tw.CommonHelper = (function () {
     );
   };
 
-  var share = function(content) {
+  var share = function (content) {
     Tw.Native.send(Tw.NTV_CMD.SHARE, {
       content: content
     }, null);
+  };
+
+  var openFreeSms = function () {
+    Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function (resp) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          if ( resp.result.totalSvcCnt > 0 && resp.result.expsSvcCnt < 1 ) {
+            Tw.Native.send(Tw.NTV_CMD.FREE_SMS, {
+              error: Tw.NTV_CODE.CODE_A80
+            });
+          } else {
+            Tw.Native.send(Tw.NTV_CMD.FREE_SMS, {});
+          }
+        } else {
+          Tw.Error(resp.code, resp.msg).pop();
+        }
+      }, this));
   };
 
   return {
@@ -76,6 +93,7 @@ Tw.CommonHelper = (function () {
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
     showDataCharge: showDataCharge,
-    share: share
+    share: share,
+    openFreeSms: openFreeSms
   };
 })();

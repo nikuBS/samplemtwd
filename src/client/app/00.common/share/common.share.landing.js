@@ -16,7 +16,9 @@ Tw.CommonShareLanding = function (command, isLogin) {
 Tw.CommonShareLanding.prototype = {
   _init: function () {
     if ( this._isLogin === 'true' ) {
-      this._nativeService.send(this._command, {});
+      if ( this._command === Tw.NTV_CMD.FREE_SMS ) {
+        Tw.CommonHelper.openFreeSms();
+      }
     } else {
       this._tidLanding.goLogin();
     }
