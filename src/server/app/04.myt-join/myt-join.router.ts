@@ -55,10 +55,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/wire/freeCallCheck', controller: MyTJoinWireFreeCallCheck });
     this.controllers.push({ url: '/wire/modify/address', controller: MyTJoinWireModifyAddress });
     this.controllers.push({ url: '/wire/modify/product', controller: MyTJoinWireModifyProduct });
-    this.controllers.push({ url: '/wire/modify/period', controller: MyTJoinWireModifyPeriod });
     this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: MyTJoinWireSetWireCancelService });
-    this.controllers.push({ url: '/wire/set/pause', controller: MyTJoinWireSetPause });
-    this.controllers.push({ url: '/wire/guide/change-ownership', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
     this.controllers.push({ url: '/mgmt/numchg', controller: MyTJoinMgmtNumChg });
     this.controllers.push({ url: '/mgmt/numchg/alarm', controller: MyTJoinMgmtNumChgAlarm });
