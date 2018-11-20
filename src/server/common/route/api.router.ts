@@ -99,11 +99,14 @@ class ApiRouter {
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
-          result: null
+          result: {}
         };
 
         if ( !FormatHelper.isEmpty(result) ) {
-          resp.result = result.ver;
+          resp.result = {
+            ver: result.ver,
+            signGateGW: result.signGateGW
+          };
         } else {
           resp.code = API_CODE.CODE_404;
         }
