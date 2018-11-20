@@ -22,7 +22,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/usage/total-sharing-data', controller: MyTDataUsageTotalSharingData });
     this.controllers.push({ url: '/usage/cancel-tshare', controller: MyTDataUsageCancelTshare });
     this.controllers.push({ url: '/recharge/history', controller: MyTDataRechargeHistory });
-    this.controllers.push({ url: '/gift(/:page)?', controller: MyTDataGift });
+    this.controllers.push({ url: '/giftdata(/:page)?', controller: MyTDataGift });
     this.controllers.push({ url: '/ting(/:page)?', controller: MyTDataTing });
     this.controllers.push({ url: '/limit(/:page)?', controller: MyTDataLimit });
     this.controllers.push({ url: '/cookiz(/:page)?', controller: MyTDataCookiz });
