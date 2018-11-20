@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.payment.history.detail.controller.ts
+ * FileName: myt-fare.info.history.detail.controller.ts
  * Author: Lee Sanghyoung (silion@sk.com)
  * Date: 2018.09.17
  */

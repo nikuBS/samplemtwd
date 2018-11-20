@@ -1,9 +1,9 @@
 /**
- * FileName: myt-fare.payment.history.js
+ * FileName: myt-fare.info.history.js
  * Author: Lee Sanghyoung (silion@sk.com)
  * Date: 2018. 9. 17
  */
-Tw.MyTFarePaymentHistory = function (rootEl, data) {
+Tw.MyTFareInfoHistory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
 
@@ -17,7 +17,7 @@ Tw.MyTFarePaymentHistory = function (rootEl, data) {
   this._init();
 };
 
-Tw.MyTFarePaymentHistory.prototype = {
+Tw.MyTFareInfoHistory.prototype = {
   _init: function () {
 
     this.rootPathName = this._historyService.pathname;

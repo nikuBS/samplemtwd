@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-fare.overpay-refund.history.html
+* FileName: myt-fare.info.overpay-refund.history.html
 * Author: Lee Sanghyoung (silion@sk.com)
 * Date: 2018.09.17
 %>
@@ -40,7 +40,7 @@
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
-        new Tw.MyTFareOverpayRefund($(document), '<%- JSON.stringify(data.data)%>');
+        new Tw.MyTFareInfoOverpayRefund($(document), '<%- JSON.stringify(data.data)%>');
       });
     </script>
     <script id="fe-template-list-items" type="text/x-handlebars-template">

@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-fare.bill-history.html
+* FileName: myt-fare.info.bill.html
 * Author: Lee Sanghyoung (silion@sk.com)
 * Date: 2018.09.17
 %>
@@ -66,7 +66,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentBillHistory($(document), '<%- JSON.stringify(data) %>');
+    new Tw.MyTFareInfoBillHistory($(document), '<%- JSON.stringify(data) %>');
   });
 </script>
 <script id="fe-template-tax-list" type="text/x-handlebars-template">
