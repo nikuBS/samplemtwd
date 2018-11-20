@@ -42,7 +42,8 @@ Tw.MyTDataTing.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._setAmountUI(Number(res.result.transferableAmt));
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this._setAmountUI(0);
+      // Tw.Error(res.code, res.msg).pop();
     }
   },
 
@@ -111,7 +112,7 @@ Tw.MyTDataTing.prototype = {
 
   _onSuccessSendingData: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/ting/complete');
+      this._historyService.replaceURL('/myt-data/recharge/ting/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

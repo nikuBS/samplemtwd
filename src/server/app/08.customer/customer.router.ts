@@ -37,15 +37,16 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/email(/:page)?', controller: CustomerEmail });
+    this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches });
+
+    // new IA
+    this.controllers.push({ url: '/emailconsult(/:page)?', controller: CustomerEmail });
     this.controllers.push({ url: '/svc-info/service', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/mcustomer', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/site', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/voice(/:page)?', controller: CustomerVoice });
-
-    // new IA
+    this.controllers.push({ url: '/svc-info/voice(/:page)?', controller: CustomerVoice });
     this.controllers.push({ url: '/svc-info/notice(/:category)?', controller: CustomerNotice });
     this.controllers.push({ url: '/damage-info', controller: CustomerProtect });
     this.controllers.push({ url: '/damage-info/guide(/:category)?', controller: CustomerProtectGuide });

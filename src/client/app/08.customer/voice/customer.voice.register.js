@@ -81,7 +81,7 @@ Tw.CustomerVoiceRegister.prototype = {
 
   _onSuccessRegister: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer/voice/complete?targetNum=' + this.$btn_select_phone.text().trim());
+      this._history.replaceURL('/customer/svc-info/voice/complete?targetNum=' + this.$btn_select_phone.text().trim());
     }
   }
 };

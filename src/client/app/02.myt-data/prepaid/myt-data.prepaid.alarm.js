@@ -21,12 +21,40 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _cachedElement: function () {
-    this.$cardNumber = this.$container.find('.fe-card-number');
-    this.$cardY = this.$container.find('.fe-card-y');
-    this.$cardM = this.$container.find('.fe-card-m');
-    this.$cardPw = this.$container.find('.fe-card-pw');
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-alarm-status', $.proxy(this._onChangeStatus, this));
+    this.$container.on('click', '.fe-alarm-category', $.proxy(this._onChangeStatus, this));
+    this.$container.on('click', '.fe-alarm-date', $.proxy(this._onChangeStatus, this));
+    this.$container.on('click', '.fe-alarm-amount', $.proxy(this._onChangeStatus, this));
+  },
+
+  _onChangeStatus: function (e) {
+    var fnSelectStatus = function (item) {
+      return {
+        value: item.title,
+        option: false,
+        attr: 'data-value=' + item.value
+      };
+    };
+
+    this._popupService.open({
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.MYT_PREPAID_AMOUNT.title,
+        data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectStatus, this)) }]
+      },
+      $.proxy(this._selectPopupCallback, this),
+      null
+    );
+  },
+
+  _selectPopupCallback: function ($target, $layer) {
+    $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, $target));
+  },
+
+  _requestAlarmSetting: function () {
+
   }
 };

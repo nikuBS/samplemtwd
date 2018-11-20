@@ -595,7 +595,6 @@ Tw.REGION_LIST_ITEM = {
 };
 
 Tw.MYT_PREPAID_AMOUNT = {
-
   title: '충전 금액',
   list: [
     { title: '50,000원', value: 50000 },
@@ -603,6 +602,22 @@ Tw.MYT_PREPAID_AMOUNT = {
     { title: '20,000원', value: 20000 },
     { title: '10,000원', value: 10000 },
     { title: '5,000원', value: 5000 }
+  ]
+};
+
+Tw.MYT_PREPAID_RECHARGE_AMOUNT = {
+  list: [
+    { text: '5,000원', value: 5000 },
+    { text: '3,000원', value: 3000 },
+    { text: '2,000원', value: 2000 },
+    { text: '1,000원', value: 1000 }
+  ]
+};
+
+Tw.MYT_PREPAID_DATE = {
+  list: [
+    { text: '15일', value: 15 },
+    { text: '26일', value: 26 }
   ]
 };
 

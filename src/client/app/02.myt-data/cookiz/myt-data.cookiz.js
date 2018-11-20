@@ -87,7 +87,7 @@ Tw.MyTDataCookiz.prototype = {
 
   _onSuccessRechargeImmediately: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/cookiz/complete');
+      this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -104,7 +104,7 @@ Tw.MyTDataCookiz.prototype = {
 
   _onSuccessRechargeMonthly: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/cookiz/complete');
+      this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

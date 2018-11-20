@@ -34,7 +34,7 @@ Tw.MyTDataUsage.prototype = {
 
     // 데이터 한도 요금제 - 충전 가능 금액 확인 버튼 - 데이터 한도 요금제로 이동
     this.$container.on('click', '#cont-data-limit .bt-slice button', $.proxy(function(){
-      this._historyService.goLoad('/myt/data/limit');
+      this._historyService.goLoad('/myt-data/recharge/limit');
     }, this));
 
     // 내폰끼리 결합 상세 조회
