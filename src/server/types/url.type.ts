@@ -43,7 +43,7 @@ export const URL = {
   '/myt/join/product/combinations': { login: true, id: 'MS_07', title: '나의 결합상품' },
   '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
   '/myt/join/product/fee-alarm/terminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
-  '/myt/join/info/discount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
+  '/myt-join/myplancombine/infodiscount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
   '/myt/bill/guide': { login: true, id: 'MF_02_01', title: '요금안내서' },
   '/myt/bill/guide/call-gift': { login: true, id: 'MF_02_01_02', title: '요금안내서 콜기프트 사용요금 조회' },
   '/myt/bill/guide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
@@ -52,12 +52,16 @@ export const URL = {
   '/myt-join/myplancombine/noagreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
   '/myt-join/myinfo/contract': { login: true, id: 'MS_02_01', title: '이용계약 정보' },
   'myt-join/wire/wiredo/sms': { login: true, id: 'MS_02_02', title: '망 작업 SMS 알림 신청' },
+  '/myt-join/submain/wire/wirestopgo': { login: true, id: 'MS_04_03', title: '일시 정지/해제' },
+  '/myt-join/submain/wire/modifyperiod': { login: true, id: 'MS_04_06', title: '약정기간 변경' },
+  '/myt-join/submain/wire/changeowner': { login: true, id: 'MS_04_07', title: '명의 변경' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
-  '/myt/data/usage': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
-  '/myt/data/usage/child': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
-  '/myt/data/usage/total-sharing-data': { login: true, id: 'DC_01_01_01', title: '통합공유 데이터' },
+  '/myt-data/hotdata': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
+  '/myt-data/submain/child-hotdata': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
+  '/myt-data/hotdata/total-sharing': { login: true, id: 'DC_01_01_01', title: '통합공유 데이터' },
+  '/myt-data/hotdata/cancel-tshare': { login: true, id: 'DC_01_01_02', title: 'T데이터 셰어링 USIM 해지' },
   '/myt/data/family': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },
   '/myt/data/gift': { login: true, id: 'DC_03_01', title: 'T끼리 데이터 선물하기' },
   '/myt/data/ting': { login: true, id: 'DC_04_03', title: '팅요금제 충전 선물' },
@@ -106,6 +110,9 @@ export const URL = {
   // Benefit
   '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
   '/benefit/my-benefit': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
+  '/benefit/my/rainbowpoint': { login: true, id: 'BS_01_01', title: '레인보우 포인트' },
+  '/benefit/my/rainbowpoint/adjustment': { login: true, id: 'BS_01_01_03', title: '포인트 합산' },
+  '/benefit/my/rainbowpoint/transfer': { login: true, id: 'BS_01_01_04', title: '포인트 양도' },
   '/benefit/my-benefit/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
   '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
 
