@@ -104,13 +104,13 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _callGiftBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/call-gift');
+    this._goLoad('/myt-fare/billguide/callgift');
   },
   _roamingBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/roaming');
+    this._goLoad('/myt-fare/billguide/roaming');
   },
   _donationBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/donation');
+    this._goLoad('/myt-fare/billguide/donation');
   },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
@@ -165,7 +165,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var param = {
       date: this.paramDate
     };
-    this._goLoad('/myt/fare/bill/guide?' + $.param(param));
+    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]

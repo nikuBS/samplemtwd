@@ -69,7 +69,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
 
   },
   // _popupCloseBtEvt: function () {
-  //   this._goLoad('/myt/fare/bill/guide');
+  //   this._goLoad('/myt-fare/billguide/guide');
   // },
 
   _proData: function () { //데이터 가공

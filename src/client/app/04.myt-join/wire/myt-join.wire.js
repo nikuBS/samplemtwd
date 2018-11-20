@@ -18,19 +18,19 @@ Tw.MyTJoinWire.prototype = {
    */
   _bindEvent: function () {
     $('#btnGifts').click($.proxy(function(){
-      this._historyService.goLoad('./wire/gifts');
+      this._historyService.goLoad('/myt-join/submain/wire/gifts');
     },this));
     $('#btnDiscRefund').click($.proxy(function(){
-      this._historyService.goLoad('./wire/discountrefund');
+      this._historyService.goLoad('/myt-join/submain/wire/discountrefund');
     },this));
     $('#btnHist').click($.proxy(function(){
-      this._historyService.goLoad('./wire/history');
+      this._historyService.goLoad('/myt-join/submain/wire/history');
     },this));
     $('#btnAs').click($.proxy(function(){
-      this._historyService.goLoad('./wire/as');
+      this._historyService.goLoad('/myt/join/submain/wire/as');
     },this));
     $('#btnNetphone').click($.proxy(function(){
-      this._historyService.goLoad('./wire/inetphone');
+      this._historyService.goLoad('/myt-join/submain/wire/inetphone');
     },this));
   }
 
