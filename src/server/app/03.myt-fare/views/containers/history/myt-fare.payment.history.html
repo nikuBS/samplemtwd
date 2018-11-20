@@ -97,44 +97,42 @@
     </script>
     <script id="fe-template-items" type="text/x-handlebars-template">
         {{#each items}}
-        <button data-list-id="{{listId}}">
-            <div class="li-elem">
-                {{#if noLink}}
-                <div class="bt-detail">
-                {{else}}
-                <button class="bt-detail" data-list-id="{{listId}}">
-                {{/if}}
-                    <div class="title-box">
-                        <span class="tit">{{listTitle}}</span>
-                    </div>
-                    <div class="price"><span class="tx-price">{{dataAmt}}</span><span class="unit">
-                        {{#if isPoint}}점{{else}}원{{/if}}
-                    </span></div>
-                {{#if noLink}}
+        <div class="li-elem">
+            {{#if noLink}}
+            <div class="bt-detail">
+            {{else}}
+            <button class="bt-detail" data-list-id="{{listId}}">
+            {{/if}}
+                <div class="title-box">
+                    <span class="tit">{{listTitle}}</span>
                 </div>
-                {{else}}
-                </button>
-                {{/if}}
-
-                <span class="txt-type">
-                    <span class="elem">{{dataSubInfo}}</span>
-                    {{#if dataSubInfo2}}
-                    <span class="elem">{{dataSubInfo2}}</span>
-                    {{/if}}
-                    {{#if dataDt}}
-                    <span class="elem">{{dataDt}}</span>
-                    {{/if}}
-                    {{#if reserveCancelable}}
-                    <button class="bt-link-tx underline red align-r" data-list-id="{{listId}}">예약 취소</button>
-                    {{/if}}
-                </span>
-                {{#if isPoint}}
-                <span class="txt-type bk">
-                    {{reqSt}}
-                </span>
-                {{/if}}
+                <div class="price"><span class="tx-price">{{dataAmt}}</span><span class="unit">
+                    {{#if isPoint}}점{{else}}원{{/if}}
+                </span></div>
+            {{#if noLink}}
             </div>
-        </button>
+            {{else}}
+            </button>
+            {{/if}}
+
+            <span class="txt-type">
+                <span class="elem">{{dataSubInfo}}</span>
+                {{#if dataSubInfo2}}
+                <span class="elem">{{dataSubInfo2}}</span>
+                {{/if}}
+                {{#if dataDt}}
+                <span class="elem">{{dataDt}}</span>
+                {{/if}}
+                {{#if reserveCancelable}}
+                <button class="bt-link-tx underline red align-r" data-list-id="{{listId}}">예약 취소</button>
+                {{/if}}
+            </span>
+            {{#if isPoint}}
+            <span class="txt-type bk">
+                {{reqSt}}
+            </span>
+            {{/if}}
+        </div>
         {{/each}}
     </script>
     <script id="fe-template-day" type="text/x-handlebars-template">

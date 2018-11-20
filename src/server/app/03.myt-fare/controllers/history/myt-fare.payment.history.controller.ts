@@ -392,7 +392,7 @@ class MyTFarePaymentHistory extends TwViewController {
         o.listTitle = o.pointNm;
         o.isPoint = true;
         o.dataAmt = o.point;
-        o.reserveCancelable = o.cancelYn; // 취소가능여부
+        o.reserveCancelable = o.cancelYn; // === 'Y'; // 취소가능여부
         o.dataSubInfo = o.reqNm;
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
       });
