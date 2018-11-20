@@ -50,8 +50,9 @@ Tw.ApiService.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty(resp.serverSession) ) {
       this._nativeService.send(Tw.NTV_CMD.SESSION, {
-        serverSession: resp.serverSession,
-        expired: 60 * 60 * 1000
+        serverSession: resp.result.serverSession,
+        expired: 60 * 60 * 1000,
+        loginType: resp.result.loginType
       });
       delete resp.serverSession;
     }

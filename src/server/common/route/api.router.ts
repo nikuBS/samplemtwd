@@ -213,9 +213,19 @@ class ApiRouter {
     this.logger.info(this, '[get serverSession]');
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
+
+    const svcInfo = this.loginService.getSvcInfo();
+    let loginType = '';
+    if ( !FormatHelper.isEmpty(svcInfo) ) {
+      loginType = svcInfo.loginType;
+    }
+
     res.json({
       code: API_CODE.CODE_00,
-      result: this.loginService.getServerSession()
+      result: {
+        serverSession: this.loginService.getServerSession(),
+        loginType: loginType
+      }
     });
   }
 
