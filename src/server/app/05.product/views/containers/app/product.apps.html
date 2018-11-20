@@ -60,15 +60,16 @@
                 <div class="cont-box">
                     <!-- .app-list -->
                     <div class="app-list">
+                        <% if (isApp) { %>
                         <div class="app-list-top">
                             <div class="app-list-tit">설치된 앱 표시</div>
                             <div class="app-list-toggle">
                                 <span class="widget">
                                     <span class="widget-box switch">
-                                        <span class="btn-switch type1">
-                                            <span class="switch-style" role="checkbox" aria-checked="false">
+                                        <span class="btn-switch type1 on">
+                                            <span class="switch-style" role="checkbox" aria-checked="true">
                                                 <span class="off-tx">꺼짐</span>
-                                                    <input type="checkbox" title="설치된 앱 표시" />
+                                                    <input type="checkbox" title="설치된 앱 표시" checked="checked" />
                                                 <span class="on-tx">켜짐</span>
                                             </span>
                                         </span>
@@ -76,6 +77,7 @@
                                 </span>
                             </div>
                         </div>
+                        <% } %>
                         <div class="app-list-bottom">
                         </div>
                     </div>

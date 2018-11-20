@@ -8,6 +8,7 @@ Tw.ProductApps = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
   this._cachedElement();
   this._bindEvent();
@@ -22,6 +23,7 @@ Tw.ProductApps.prototype = {
 
   _bindEvent: function() {
     this.$orderBtn.on('click', $.proxy(this._openOrderPopup, this));
+    this.$container.on('change', '.btn-switch input', $.proxy(this._toggleShowInstalled, this));
   },
 
   _cachedElement: function() {
@@ -41,13 +43,46 @@ Tw.ProductApps.prototype = {
 
     var apps = resp.result.prodList || [];
 
+    if (Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(
+        Tw.NTV_CMD.IS_INSTALLED,
+        {
+          list: _.map(apps, function(app) {
+            return {
+              appKey: app.prodNm,
+              scheme: app.lnkgAppScmCtt,
+              package: app.lnkgAppPkgNm
+            };
+          })
+        },
+        $.proxy(this._handleConfirmAppInstalled, this, apps)
+      );
+    } else {
+      this._apps = _.map(apps, function(app) {
+        app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
+        return app;
+      });
+
+      this._appendApps(false);
+    }
+  },
+
+  _handleConfirmAppInstalled: function(apps, resp) {
+    var list = (resp.params && resp.params.list) || [];
+
     this._apps = _.map(apps, function(app) {
       app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
+      app.isInstalled = list[app.prodNm] || false;
+
       return app;
     });
 
+    this._appendApps(true);
+  },
+
+  _appendApps: function(isApp) {
     this._sort('storRgstDtm');
-    this.$list.html(this._appsTmpl({ apps: this._apps }));
+    this.$list.html(this._appsTmpl({ apps: this._apps, isApp: isApp }));
   },
 
   _openOrderPopup: function() {
@@ -107,5 +142,15 @@ Tw.ProductApps.prototype = {
     if (a[this._order] < b[this._order]) return -1;
     if (a[this._order] > b[this._order]) return 1;
     return 0;
+  },
+
+  _toggleShowInstalled: function(e) {
+    var isOn = e.currentTarget.getAttribute('checked');
+
+    if (isOn) {
+      this.$list.find('.i-atv').removeClass('none');
+    } else {
+      this.$list.find('.i-atv').addClass('none');
+    }
   }
 };

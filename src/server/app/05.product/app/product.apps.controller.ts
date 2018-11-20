@@ -7,11 +7,12 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import BrowserHelper from '../../../utils/browser.helper';
 
 export default class ProductApps extends TwViewController {
   private APPS_CODE = 'F01700';
 
-  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.getBanners().subscribe(banners => {
       if (banners.code) {
         return this.error.render(res, {
@@ -20,7 +21,7 @@ export default class ProductApps extends TwViewController {
         });
       }
 
-      res.render('app/product.apps.html', { svcInfo, pageInfo, banners });
+      res.render('app/product.apps.html', { svcInfo, pageInfo, banners, isApp: BrowserHelper.isApp(req) });
     });
   }
 
@@ -32,5 +33,5 @@ export default class ProductApps extends TwViewController {
 
       return resp.result;
     });
-  }
+  };
 }
