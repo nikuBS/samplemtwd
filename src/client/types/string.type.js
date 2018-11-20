@@ -1051,3 +1051,7 @@ Tw.PRODUCT_COMBINE_FAMILY_TYPE = {
   brother: '형제자매',
   me: '본인'
 };
+
+Tw.PREPAID_VOICE = {
+  PREPAID_CARD: '선불폰 카드'
+}

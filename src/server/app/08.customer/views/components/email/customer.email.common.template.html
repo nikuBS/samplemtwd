@@ -4,11 +4,13 @@
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-<%-type%>-cntcNumClCd" role="radiogroup">
-                    <li class="radiobox type01-big checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                    <li class="radiobox type01-big checked" role="radio" aria-checked="true">
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="radio1-big-<%-type%>" value="C" title="값1" checked=""><!-- 체크상태일 경우 checked="checked" -->
                         휴대폰
                     </li>
-                    <li class="radiobox type01-big" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                         <input type="radio" name="radio1-big-<%-type%>" value="P" title="값2"><!-- 체크상태일 경우 checked="false" -->
                         일반전화
                     </li>
@@ -17,7 +19,8 @@
         </div>
         <div class="inputbox bt-add">
             <span class="input">
-                <input type="text" placeholder="받으실분 번호" title="input" value="010-2923-0720" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" class="fe-<%-type%>_phone" maxlength="13" required>
+                <input type="text" placeholder="받으실분 번호" title="input" value="010-2923-0720" aria-labelledby="aria-exp-label1"
+                       aria-describedby="aria-exp-desc1" class="fe-<%-type%>_phone" maxlength="13" required>
                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
             </span>
             <% if ( isApp ) { %>
@@ -29,8 +32,10 @@
         <div class="widget formradio-style02">
             <div class="widget-box check">
                 <ul class="select-list" role="group">
-                    <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_sms"><!-- 체크상태일 경우 checked="checked" -->
+                    <li class="checkbox type01-big" role="checkbox" aria-checked="false">
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_sms">
+                        <!-- 체크상태일 경우 checked="checked" -->
                         답변이 등록되면 SMS 알림을 받습니다.
                     </li>
                 </ul>
@@ -39,7 +44,8 @@
         <p class="title">답변 받으실 이메일을 작성해주세요.</p>
         <div class="inputbox">
             <div class="input">
-                <input type="text" placeholder="답변 받으실 이메일" title="input" value="im@gman.io" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" class="fe-<%-type%>_email" maxlength="30" required>
+                <input type="text" placeholder="답변 받으실 이메일" title="input" value="im@gman.io" aria-labelledby="aria-exp-label1"
+                       aria-describedby="aria-exp-desc1" class="fe-<%-type%>_email" maxlength="30" required>
                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
             </div>
         </div>
@@ -56,12 +62,16 @@
                         <div class="widget-box check">
                             <div class="infoviewic-wrap">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" checked value="" title="값1" class="fe-<%-type%>_term1" required><!-- 체크상태일 경우 checked="checked" -->
+                                    <li class="checkbox type01-big" role="checkbox" aria-checked="false">
+                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="checkbox" name="checkbox" checked value="" title="값1" class="fe-<%-type%>_term1"
+                                               required><!-- 체크상태일 경우 checked="checked" -->
                                         개인정보 수집이용에 대한 동의(필수)
                                     </li>
                                 </ul>
-                                <div class="infoviewictooltip"><button aria-haspopup="true" class="info-view-ic" title="tooltip보기">tooltip보기</button></div>
+                                <div class="infoviewictooltip">
+                                    <button aria-haspopup="true" class="info-view-ic" title="tooltip보기">tooltip보기</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,8 +88,10 @@
                         <div class="widget-box check">
                             <div class="infoviewic-wrap">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" checked value="" title="값1" class="fe-<%-type%>_term2" required><!-- 체크상태일 경우 checked="checked" -->
+                                    <li class="checkbox type01-big" role="checkbox" aria-checked="false">
+                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="checkbox" name="checkbox" checked value="" title="값1" class="fe-<%-type%>_term2"
+                                               required><!-- 체크상태일 경우 checked="checked" -->
                                         개인정보 처리위탁에 대한 동의(필수)
                                     </li>
                                 </ul>
@@ -106,7 +118,8 @@
 </div>
 
 <script type="text/template" id="tpl_upload_file">
-    <div class="popup-page tw-popup fixed-btn fixed-bottom fe-wrap-file-upload"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup fixed-btn fixed-bottom fe-wrap-file-upload">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -206,14 +219,25 @@
 
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button>적용하기</button>
+                        <button class="fe-upload_email_files">적용하기</button>
                     </li>
                 </ul>
             </div>
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <button class="popup-closeBtn fe-close-upload"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
+</script>
+
+<script type="text/template" id="tpl_upload_list">
+    {{#each files}}
+    <li data-hashFile="{{name}}">
+        <p class="text">{{originalName}}</p>
+        <div class="bt-alone">
+            <button class="bt-line-gray1 fe-remove-file">삭제</button>
+        </div>
+    </li>
+    {{/each}}
 </script>

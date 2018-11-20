@@ -72,7 +72,12 @@ Tw.CustomerEmailService.prototype = {
     var htParams = $.extend(this._makeParams(), {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
-      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val()
+      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
+      atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'),
+        function (item) {
+          return $(item).data('hashfile');
+        }
+      ).join()
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
