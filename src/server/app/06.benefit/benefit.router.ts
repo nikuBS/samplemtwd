@@ -20,8 +20,8 @@ class BenefitRouter extends TwRouter {
 
     // new IA
     this.controllers.push({ url: '/submain/detail/dis-pgm/:prodId', controller: BenefitDisPgm });
-    this.controllers.push({ url: '/my/benefit/military', controller: BenefitMilitary });
-    this.controllers.push({ url: '/my/benefit/cookiz', controller: BenefitCookiz });
+    this.controllers.push({ url: '/my/military', controller: BenefitMilitary });
+    this.controllers.push({ url: '/my/cookiz', controller: BenefitCookiz });
     this.controllers.push({ url: '/my', controller: BenefitMyBenefit });
   }
 }
