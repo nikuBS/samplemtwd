@@ -50,9 +50,10 @@ import CommonLoginDormancy from './controllers/login/common.login.dormancy.contr
 import CommonLoginCustomerPwd from './controllers/login/common.login.customer-pwd.controller';
 import CommonLoginExceedFail from './controllers/login/common.login.exceed-fail.controller';
 import CommonSignupGuide from './controllers/signup/common.signup.guide.controller';
-import CommonLanding from './controllers/common.landing.controller';
 import CommonMemberManage from './controllers/member/common.member.manage.controller';
 import CommonMemberTidPwd from './controllers/member/common.member.tid-pwd.controller';
+import CommonShareLanding from './controllers/share/common.share.landing.controller';
+import CommonShareBridge from './controllers/share/common.share.bridge.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -83,38 +84,39 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/line/register/corporation', controller: CommonLineCopRegister });
     this.controllers.push({ url: '/line/register/empty', controller: CommonLineEmptyRegister });
     // login
-    this.controllers.push({ url: '/login/exceed-fail', controller: CommonLoginExceedFail } );
-    this.controllers.push({ url: '/login/fail', controller: CommonLoginFail } );
-    this.controllers.push({ url: '/login/dormancy', controller: CommonLoginDormancy } );
-    this.controllers.push({ url: '/login/customer-pwd', controller: CommonLoginCustomerPwd } );
-    this.controllers.push({ url: '/login/customer-pwd-fail', controller: CommonLoginCustomerPwdFail } );
-    this.controllers.push({ url: '/login/route', controller: CommonLoginRoute } );
-    this.controllers.push({ url: '/login/easy-aos', controller: CommonLoginEasyAos } );
-    this.controllers.push({ url: '/login/easy-ios', controller: CommonLoginEasyIos } );
-    this.controllers.push({ url: '/login/easy-fail', controller: CommonLoginEasyFail } );
+    this.controllers.push({ url: '/login/exceed-fail', controller: CommonLoginExceedFail });
+    this.controllers.push({ url: '/login/fail', controller: CommonLoginFail });
+    this.controllers.push({ url: '/login/dormancy', controller: CommonLoginDormancy });
+    this.controllers.push({ url: '/login/customer-pwd', controller: CommonLoginCustomerPwd });
+    this.controllers.push({ url: '/login/customer-pwd-fail', controller: CommonLoginCustomerPwdFail });
+    this.controllers.push({ url: '/login/route', controller: CommonLoginRoute });
+    this.controllers.push({ url: '/login/easy-aos', controller: CommonLoginEasyAos });
+    this.controllers.push({ url: '/login/easy-ios', controller: CommonLoginEasyIos });
+    this.controllers.push({ url: '/login/easy-fail', controller: CommonLoginEasyFail });
     // logout
-    this.controllers.push({ url: '/logout/complete', controller: CommonLogoutComplete } );
-    this.controllers.push({ url: '/logout/expire', controller: CommonLogoutExpire } );
-    this.controllers.push({ url: '/logout/route', controller: CommonLogoutRoute } );
+    this.controllers.push({ url: '/logout/complete', controller: CommonLogoutComplete });
+    this.controllers.push({ url: '/logout/expire', controller: CommonLogoutExpire });
+    this.controllers.push({ url: '/logout/route', controller: CommonLogoutRoute });
     // member
-    this.controllers.push({ url: '/member/manage', controller: CommonMemberManage } );
+    this.controllers.push({ url: '/member/manage', controller: CommonMemberManage });
     this.controllers.push({ url: '/member/tid-pwd', controller: CommonMemberTidPwd });
     // signup
-    this.controllers.push({ url: '/signup/guide', controller: CommonSignupGuide } );
+    this.controllers.push({ url: '/signup/guide', controller: CommonSignupGuide });
     // tid
-    this.controllers.push({ url: '/tid/login', controller: CommonTidLogin } );
-    this.controllers.push({ url: '/tid/account', controller: CommonTidAccountInfo } );
-    this.controllers.push({ url: '/tid/change-pw', controller: CommonTidChangePw } );
-    this.controllers.push({ url: '/tid/find-id', controller: CommonTidFindId } );
-    this.controllers.push({ url: '/tid/find-pw', controller: CommonTidFindPw } );
-    this.controllers.push({ url: '/tid/logout', controller: CommonTidLogout } );
-    this.controllers.push({ url: '/tid/signup-local', controller: CommonTidSignUpLocal } );
-    this.controllers.push({ url: '/tid/signup-foreigner', controller: CommonTidSignUpForeigner } );
-    this.controllers.push({ url: '/tid/guide', controller: CommonTidGuide } );
-    this.controllers.push({ url: '/tid/route', controller: CommonTidRoute } );
+    this.controllers.push({ url: '/tid/login', controller: CommonTidLogin });
+    this.controllers.push({ url: '/tid/account', controller: CommonTidAccountInfo });
+    this.controllers.push({ url: '/tid/change-pw', controller: CommonTidChangePw });
+    this.controllers.push({ url: '/tid/find-id', controller: CommonTidFindId });
+    this.controllers.push({ url: '/tid/find-pw', controller: CommonTidFindPw });
+    this.controllers.push({ url: '/tid/logout', controller: CommonTidLogout });
+    this.controllers.push({ url: '/tid/signup-local', controller: CommonTidSignUpLocal });
+    this.controllers.push({ url: '/tid/signup-foreigner', controller: CommonTidSignUpForeigner });
+    this.controllers.push({ url: '/tid/guide', controller: CommonTidGuide });
+    this.controllers.push({ url: '/tid/route', controller: CommonTidRoute });
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
     // landing
-    this.controllers.push({ url: '/landing', controller: CommonLanding });
+    this.controllers.push({ url: '/share/landing', controller: CommonShareLanding });
+    this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
   }
 }

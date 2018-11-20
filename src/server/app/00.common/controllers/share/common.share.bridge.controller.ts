@@ -1,0 +1,20 @@
+/**
+ * FileName: common.share.bridge.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.11.20
+ */
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { NextFunction, Request, Response } from 'express';
+import FormatHelper from '../../../../utils/format.helper';
+
+class CommonShareBridge extends TwViewController {
+  constructor() {
+    super();
+  }
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    res.render('share/common.share.bridge.html');
+
+  }
+}
+export default CommonShareBridge;

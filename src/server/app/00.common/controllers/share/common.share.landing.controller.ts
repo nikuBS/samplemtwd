@@ -1,13 +1,13 @@
 /**
- * FileName: common.landing.controller.ts
+ * FileName: common.share.landing.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.11.05
  */
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import FormatHelper from '../../../utils/format.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
-class CommonLanding extends TwViewController {
+class CommonShareLanding extends TwViewController {
   constructor() {
     super();
   }
@@ -28,7 +28,7 @@ class CommonLanding extends TwViewController {
         result[target.split('=')[0]] = target.split('=')[1];
       });
 
-      res.render('common.landing.html', { result, isLogin: !FormatHelper.isEmpty(svcInfo) });
+      res.render('share/common.share.landing.html', { result, isLogin: !FormatHelper.isEmpty(svcInfo) });
 
     } else {
       res.json(url);
@@ -36,4 +36,4 @@ class CommonLanding extends TwViewController {
   }
 }
 
-export default CommonLanding;
+export default CommonShareLanding;
