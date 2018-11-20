@@ -394,7 +394,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 요금납부 이동
   _onClickedBillPym: function (/*event*/) {
-    new Tw.MyTFarePayment(this.$container);
+    new Tw.MyTFareBill(this.$container);
   },
 
   // 실시간요금 이동
@@ -414,7 +414,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/payment/option');
+    this._historyService.goLoad('/myt-fare/billauto');
   },
 
   // 소액결제 이동
@@ -520,11 +520,11 @@ Tw.MyTFareSubMain.prototype = {
     var code, url;
     if ( type === 'M' ) {
       code = this.data.microPay.code;
-      url = '/myt/fare/payment/micro';
+      url = '/myt-fare/billsmall';
     }
     else {
       code = this.data.contentPay.code;
-      url = '/myt/fare/payment/contents';
+      url = '/myt-fare/billcontents';
     }
     var title = '', content = '', more = '';
     switch ( code ) {

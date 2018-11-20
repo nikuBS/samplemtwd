@@ -38,15 +38,15 @@ Tw.BenefitMyBenefit.prototype = {
 
         'list': [
           {
-            attr: 'data-role="fe-link"; data-url="/myt/fare/payment/cashbag"',
+            attr: 'data-role="fe-link"; data-url="/myt-fare/bill/cashbag"',
             value: Tw.BENEFIT.PAYMENT.TYPE.OK + ' (' + this._points.ocb + Tw.BENEFIT.PAYMENT.UNIT + ')'
           },
           {
-            attr: 'data-role="fe-link"; data-url="/myt/fare/payment/tpoint"',
+            attr: 'data-role="fe-link"; data-url="/myt-fare/bill/tpoint"',
             value: Tw.BENEFIT.PAYMENT.TYPE.T + ' (' + this._points.t + Tw.BENEFIT.PAYMENT.UNIT + ')'
           },
           {
-            attr: 'data-role="fe-link"; data-url="/myt/fare/payment/rainbow"',
+            attr: 'data-role="fe-link"; data-url="/myt-fare/bill/rainbow"',
             value: Tw.BENEFIT.PAYMENT.TYPE.RAINBOW + '  (' + this._points.rainbow + Tw.BENEFIT.PAYMENT.UNIT + ')'
           }
         ]

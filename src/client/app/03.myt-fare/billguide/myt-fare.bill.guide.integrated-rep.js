@@ -128,17 +128,17 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
-      this._goLoad('/myt/fare/payment/contents');
+      this._goLoad('/myt-fare/billcontents');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
-      this._goLoad('/myt/fare/payment/micro');
+      this._goLoad('/myt-fare/billsmall');
     }, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
-    Tw.Logger.info('[요금납부]', Tw.MyTFarePayment);
-    this.myTFarePayment = new Tw.MyTFarePayment(this.$container);
+    Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
+    this.myTFarePayment = new Tw.MyTFareBill(this.$container);
   },
   _payListBtnEvt: function () {
     Tw.Logger.info('[납부내역조회]');

@@ -112,7 +112,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
   },
   _onClickPayment: function () {
-    new Tw.MyTFarePayment(this.$container);
+    new Tw.MyTFareBill(this.$container);
   },
   _parseBillData: function (billData) {
     var repSvc = billData.charge.repSvcYn === 'Y';
