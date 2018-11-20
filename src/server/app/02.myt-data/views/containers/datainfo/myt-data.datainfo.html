@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-data.usage.refill.history.html
+* FileName: myt-data.datainfo.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.09.20
 %>
@@ -114,7 +114,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify({ ...chargeData.all, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
+    new Tw.MyTDataInfo($('.wrap'), <%- JSON.stringify({ ...chargeData.all, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

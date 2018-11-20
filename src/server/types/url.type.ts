@@ -61,14 +61,14 @@ export const URL = {
   '/myt-data/submain/child-hotdata': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
   '/myt-data/hotdata/total-sharing': { login: true, id: 'DC_01_01_01', title: '통합공유 데이터' },
   '/myt-data/hotdata/cancel-tshare': { login: true, id: 'DC_01_01_02', title: 'T데이터 셰어링 USIM 해지' },
-  '/myt/data/family': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },
+  '/myt-data/familydata': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },
   '/myt/data/gift': { login: true, id: 'DC_03_01', title: 'T끼리 데이터 선물하기' },
   '/myt/data/ting': { login: true, id: 'DC_04_03', title: '팅요금제 충전 선물' },
   '/myt/data/cookiz': { login: true, id: 'DC_04_02', title: '팅/쿠키즈/안심음성 요' },
   '/myt/data/limit': { login: true, id: 'DC_04_01', title: '데이터 한도 요금제' },
   '/myt/data/recharge/coupon': { login: true, id: 'DC_05', title: '나의 리필쿠폰' },
   '/myt/data/recharge/coupon/use': { login: true, id: 'DC_05_01', title: '리필 쿠폰 사용' },
-  '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
+  '/myt-data/datainfo': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
   '/product/mobileplan': { login: false, id: 'MP', title: '모바일 요금제' },

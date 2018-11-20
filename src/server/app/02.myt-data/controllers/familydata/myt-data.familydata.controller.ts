@@ -1,5 +1,5 @@
 /**
- * FileName: myt-data.family.controller.ts
+ * FileName: myt-data.familydata.controller.ts
  * Author: 박지만 (jiman.park@sk.com)
  * Date: 2018.10.01
  */
@@ -18,14 +18,14 @@ class MyTDataFamily extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    const page = req.params.page;
+    const page = req.url.replace('/familydata', '');
     let responseData: any = {
       svcInfo: svcInfo,
       isApp: BrowserHelper.isApp(req)
     };
 
     switch (page) {
-      case 'share':
+      case '/share':
         Observable.combineLatest(this.getImmediatelyInfo(), this.getMonthlyInfo()).subscribe(([immediatelyInfo, monthlyInfo]) => {
           const error = {
             code: immediatelyInfo.code || monthlyInfo.code,
@@ -45,7 +45,7 @@ class MyTDataFamily extends TwViewController {
             monthlyInfo
           };
 
-          res.render('family/myt-data.family.share.html', responseData);
+          res.render('familydata/myt-data.familydata.share.html', responseData);
         });
         break;
       default:
@@ -62,7 +62,7 @@ class MyTDataFamily extends TwViewController {
             pageInfo
           };
 
-          res.render('family/myt-data.family.main.html', responseData);
+          res.render('familydata/myt-data.familydata.html', responseData);
         });
     }
   }

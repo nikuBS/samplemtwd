@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.recharge.history.js
+ * FileName: myt-data.datainfo.js
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.09.21
  */
 
-Tw.MyTDataRechargeHistory = function(rootEl, histories) {
+Tw.MyTDataInfo = function(rootEl, histories) {
   this.$container = rootEl;
   this._histories = histories;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.MyTDataRechargeHistory = function(rootEl, histories) {
   this._init();
 };
 
-Tw.MyTDataRechargeHistory.prototype = {
+Tw.MyTDataInfo.prototype = {
   DEFAULT_LIST_COUNT: 20,
   CURRENT_YEAR: String(new Date().getFullYear()),
   _init: function() {

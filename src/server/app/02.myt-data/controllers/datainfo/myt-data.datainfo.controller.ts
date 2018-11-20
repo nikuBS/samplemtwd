@@ -1,5 +1,5 @@
 /**
- * FileName: myt-data.usage.refill.history.controller.ts
+ * FileName: myt-data.datainfo.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.09.20
  */
@@ -51,7 +51,7 @@ enum BadgeTypes {
   CHARGE = 'refill'
 }
 
-export default class MyTDataRechargeHistory extends TwViewController {
+export default class MyTDataInfo extends TwViewController {
   private fromDt: string = DateHelper.getPastYearShortDate();
   private toDt: string = DateHelper.getShortDate(new Date());
 
@@ -98,7 +98,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
         chargeData.filterIdx = filterIdx + 1;
       }
 
-      res.render('recharge/myt-data.recharge.history.html', { svcInfo, chargeData, pageInfo });
+      res.render('datainfo/myt-data.datainfo.html', { svcInfo, chargeData, pageInfo });
     });
   }
 
