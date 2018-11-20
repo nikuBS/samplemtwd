@@ -139,7 +139,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function() {
-    this._historyService.goLoad('/myt/join/suspend#temporary');
+    this._historyService.goLoad('/myt-join/submain/suspend#temporary');
   },
   // 인터넷/IPTV/집전화 신청 내역 및 조회
   _onMovedWireInquire: function() {
