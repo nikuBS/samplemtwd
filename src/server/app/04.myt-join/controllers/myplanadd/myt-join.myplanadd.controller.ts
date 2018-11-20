@@ -10,7 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class MyTJoinProductAdditions extends TwViewController {
+class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
     super();
   }
@@ -27,7 +27,7 @@ class MyTJoinProductAdditions extends TwViewController {
         }
 
         const additions = this.convertAdditions(FormatHelper.isEmpty(resp.result) ? [] : resp.result.addProdList);
-        res.render('product/myt-join.product.additions.mobile.html', { svcInfo, additions, pageInfo });
+        res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, additions, pageInfo });
       });
     } else {
       this.apiService.request(API_CMD.BFF_05_0129, {}).subscribe(resp => {
@@ -44,7 +44,7 @@ class MyTJoinProductAdditions extends TwViewController {
           joinable: this.convertAdditions(resp.result.joinables || [])
         };
 
-        res.render('product/myt-join.product.additions.others.html', { svcInfo, additions, pageInfo });
+        res.render('myplanadd/myt-join.myplanadd.wire.html', { svcInfo, additions, pageInfo });
       });
     }
   }
@@ -60,4 +60,4 @@ class MyTJoinProductAdditions extends TwViewController {
   }
 }
 
-export default MyTJoinProductAdditions;
+export default MyTJoinMyPlanAdd;
