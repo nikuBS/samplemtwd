@@ -1,16 +1,14 @@
 export const URL = {
   '/home/postcode': { login: false, id: '00', title: '우편번호' },
 
-  // Common
-  '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
-  '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
-  '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
-  '/common/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
-  '/common/settings/notifications': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
-  '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
-  '/common/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
-
   // Main
+  '/main/menu/settings': { login: false, id: 'ST_01_01', title: '설정' },
+  '/main/menu/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
+  '/main/menu/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
+  '/main/menu/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
+  '/main/menu/settings/notification': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
+  '/main/menu/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
+  '/main/menu/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
   '/main/menu/refund': { login: false, id: 'MN_01_04_01_01', title: '미환급금 조회' },
 
   // MyT
@@ -90,12 +88,12 @@ export const URL = {
   '/product/find-my-best-plans': { login: true, id: 'MP_01', title: '내게 맞는 요금제 찾기' },
 
   // Customer
-  '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
-  '/customer/branch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
-  '/customer/branch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
-  '/customer/branch/repair': { login: false, id: 'CS_03_01', title: 'AS센터 찾기' },
-  '/customer/branch/repair-detail': { login: false, id: 'CS_03_02', title: 'AS센터 정보' },
-  '/customer/branch/repair-manufacturer': { login: false, id: 'CS_03_03', title: '제조사 별 AS센터' },
+  '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
+  '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
+  '/customer/agentsearch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
+  '/customer/agentsearch/repair': { login: false, id: 'CS_03_01', title: 'AS센터 찾기' },
+  '/customer/agentsearch/repair-detail': { login: false, id: 'CS_03_02', title: 'AS센터 정보' },
+  '/customer/agentsearch/repair-manufacturer': { login: false, id: 'CS_03_03', title: '제조사 별 AS센터' },
   '/customer/document': { login: false, id: 'CS_09_01', title: '구비서류' },
   '/customer/faq': { login: false, id: 'CS_05_01', title: '자주 찾는 질문' },
   '/customer/faq/search': { login: false, id: 'CS_05_04', title: 'FAQ' },
