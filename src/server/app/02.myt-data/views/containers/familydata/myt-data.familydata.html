@@ -1,7 +1,8 @@
 <%#
-* FileName: myt-data.family.main.html
-* Author: Jiman Park (jiman.park@sk.com)
+* FileName: myt-data.familydata.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.09.28
+* id: DC_02
 %>
 
 <% include ../../components/start.component.html %>
@@ -59,7 +60,7 @@
                     <% if ( svcInfo.svcMgmtNum === familyInfo.representation ) { %>
                     <ul class="bt-slice mt20">
                         <li class="bt-white2">
-                            <a href="/myt/data/family/share">공유 데이터 설정하기</a>
+                            <a href="/myt/data/familydata/share">공유 데이터 설정하기</a>
                         </li>
                     </ul>
                     <% } else { %>
@@ -73,7 +74,7 @@
 
             <hr class="cont-sp type1" aria-hidden="true">
 
-            <% include ../../components/family/myt-data.family.main-list.html %>
+            <% include ../../components/familydata/myt-data.family.list.html %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 				<!-- TBD -->
 			    <img src="/img/dummy/DC_02_TBD1.jpg" alt="이번달 공유내역/회수하기" style="width:100%;vertical-align: top;">
@@ -104,7 +105,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var oMyTDataFamilyMain = new Tw.MyTDataFamilyMain($('.container-wrap'));
+    new Tw.MyTDataFamily($('.container-wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>

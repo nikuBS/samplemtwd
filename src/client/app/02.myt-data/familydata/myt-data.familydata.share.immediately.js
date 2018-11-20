@@ -1,6 +1,6 @@
 /**
- * FileName: myt-data.family.setting-immediately.js
- * Author: Jiman Park (jiman.park@sk.com)
+ * FileName: myt-data.familydata.share.immediately.js
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.10.04
  */
 
@@ -16,7 +16,7 @@ Tw.MyTDataFamilyShareImmediately = function(rootEl) {
 
 Tw.MyTDataFamilyShareImmediately.prototype = {
   _init: function() {
-    this.MAIN_URL = '/myt/data/family';
+    this.MAIN_URL = '/myt/data/familydata';
     this._shareAmount = this.$amountInput.data('share-amount');
   },
 

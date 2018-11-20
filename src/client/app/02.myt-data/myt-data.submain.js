@@ -209,7 +209,7 @@ Tw.MyTDataSubMain.prototype = {
       this._historyService.goLoad('/product/detail/NA00006031');
     }
     else {
-      this._historyService.goLoad('/myt/data/family');
+      this._historyService.goLoad('/myt/data/familydata');
     }
   },
 
