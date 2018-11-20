@@ -47,7 +47,6 @@ Tw.CommonWithdrawalSurvey.prototype = {
     } else {
       this.$textAreaBox.hide();
     }
-    console.log(this.selected);
     this.$layer.find('.fe-withdraw').removeAttr('disabled');
   },
   _calCurrentByte: function () {

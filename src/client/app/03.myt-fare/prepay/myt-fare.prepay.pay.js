@@ -37,7 +37,7 @@ Tw.MyTFarePrepayPay.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
 
     this._historyUrl = '/myt-fare/bill' + this.$title + '/history';
-    this._mainUrl = '/myt/fare/bill' + this.$title;
+    this._mainUrl = '/myt-fare/bill' + this.$title;
     this._isPaySuccess = false;
   },
   _bindEvent: function () {
@@ -165,7 +165,7 @@ Tw.MyTFarePrepayPay.prototype = {
   },
   _getApiName: function () {
     var apiName = '';
-    if (this.$title === 'micro') {
+    if (this.$title === 'small') {
       apiName = Tw.API_CMD.BFF_07_0074;
     } else {
       apiName = Tw.API_CMD.BFF_07_0082;
