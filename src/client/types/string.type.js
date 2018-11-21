@@ -158,9 +158,9 @@ Tw.AMOUNT_INFO = {
 };
 
 Tw.REMNANT_OTHER_LINE = {
-  TITLE: '기준회선을 변경하시겠습니까?',
+  TITLE: '회선을 변경하시겠습니까?',
   BTNAME: '변경하기',
-  TOAST: '기준회선이 변경되었습니다.'
+  TOAST: '회선이 변경되었습니다.'
 };
 
 Tw.NON_PAYMENT = {

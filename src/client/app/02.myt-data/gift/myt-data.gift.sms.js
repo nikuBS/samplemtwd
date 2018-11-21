@@ -59,7 +59,7 @@ Tw.MyTDataGiftSms.prototype = {
 
   _onSuccessRequestSms: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data');
+      this._historyService.replaceURL('/myt-data/submain');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

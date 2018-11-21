@@ -7,7 +7,7 @@
 <div class="cont-box">
     <div class="mf-use">
         <div class="mf-box">
-            <p class="param-tit">고객님, 변함없이 <br/>저희와 함께해 주셔서 <br/>감사합니다.<span class="ico"></span></p>
+            <p class="param-tit"><%= data.svcInfo.nickNm =%>님, 변함없이 <br/>저희와 함께해 주셔서 <br/>감사합니다.<span class="ico"></span></p>
             <% if (data.type === 'UF') { %>
                 <dl class="cost-payment">
                     <dt><%= data.useMonth %> 사용요금</dt>
@@ -21,7 +21,7 @@
                 <p class="param-cont2">고객님은 현재 통합 청구 이용 중이며<br/>할인 금액을 제외한 사용요금으로 조회됩니다.</p>
             <% } else { %>
                 <% if(data.svcInfo.svcAttrCd === 'M2') { %>
-                <p class="param-cont"><em class="tx-bold">선불폰을 사용중</em>이십니다.</p>
+                <p class="param-cont"><em class="tx-bold">선불폰을 사용중</em>입니다.</p>
                 <% } else { %>
                 <dl class="cost-payment">
                     <dt><%= data.claimMonth %> 청구요금</dt>
