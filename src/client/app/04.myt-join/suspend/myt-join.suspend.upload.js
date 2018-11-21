@@ -14,8 +14,8 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._fileCount = fileCount || 1;
     this._fileInfo = fileInfo || new Array(this._fileCount);
     oldFiles = oldFiles || [];
-    this._fileInfo  = _.map(this._fileInfo, function(info,  idx){
-      return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, {oldFile: oldFiles[idx]});
+    this._fileInfo = _.map(this._fileInfo, function (info, idx) {
+      return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx] });
     });
   },
   _showUploadTip: function () {
@@ -65,7 +65,7 @@ Tw.MytJoinSuspendUpload.prototype = {
       if ( !this._validateFile(file[0]) ) {
         $(currentFile).val('');
         this._setFileButton($inputBox, true);
-      }else{
+      } else {
         this._setFileButton($inputBox, false);
       }
     }
@@ -96,20 +96,20 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._popupService.close();
   },
 
-  _onClickFileButton: function(e){
+  _onClickFileButton: function (e) {
     var $btFile = $(e.target);
     var $inputBox = $btFile.parents('.inputbox');
-    this._setFileButton($inputBox, true)
+    this._setFileButton($inputBox, true);
   },
 
-  _setFileButton($inputBox, addable){
-    if(addable){
+  _setFileButton($inputBox, addable) {
+    if ( addable ) {
       $inputBox.find('input.fileview').val('');
-      $inputBox.find('input.file').prop('files', null)
-      $inputBox.find('input.file').removeAttr( "disabled" ).css('pointer-events', 'all');
-      $inputBox.find('.fe-file-button').text( Tw.UPLOAD_FILE.BUTTON_ADD);
-    }else{
-      $inputBox.find('input.file').attr( "disabled" , '').css('pointer-events', 'none');
+      $inputBox.find('input.file').prop('files', null);
+      $inputBox.find('input.file').removeAttr('disabled').css('pointer-events', 'all');
+      $inputBox.find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_ADD);
+    } else {
+      $inputBox.find('input.file').attr('disabled', '').css('pointer-events', 'none');
       $inputBox.find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_DELETE);
     }
     this._checkEnableConfirm();
@@ -117,7 +117,7 @@ Tw.MytJoinSuspendUpload.prototype = {
 
   _checkEnableConfirm: function () {
     var self = this;
-    var disable = this.$inputFile.filter('[disabled]').length === this._fileCount ? false: true;
+    var disable = this.$inputFile.filter('[disabled]').length === this._fileCount ? false : true;
     self.$btUpload.attr('disabled', disable);
   }
 };
