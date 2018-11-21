@@ -39,6 +39,9 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.myPausedState && this.data.myPausedState.svcStSd ) {
         this.$pauseC = this.$container.find('[data-id=pause_c]');
       }
+      if ( this.data.isOldNumber) {
+        this.$oldNum = this.$container.find('[data-id=old_number]');
+      }
     }
     // 유선
     else if ( this.data.type === 2 ) {
@@ -88,6 +91,9 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.myPausedState && this.data.myPausedState.svcStSd ) {
         this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
       }
+      if ( this.data.isOldNumber) {
+        this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
+      }
     }
     // 유선
     else if ( this.data.type === 2 ) {
@@ -117,6 +123,11 @@ Tw.MyTJoinSubMain.prototype = {
 
   _initialize: function () {
   },
+  // 010 번호 전환 서비스
+  _onMoveOldNum: function () {
+    this._historyService.goLoad('/myt-join/submain/numchange');
+  },
+
   // 나의요금제
   _onMovedMyPlan: function () {
     this._historyService.goLoad('/myt-join/product/fee-plan');
