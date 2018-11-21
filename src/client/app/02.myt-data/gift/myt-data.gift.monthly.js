@@ -111,7 +111,7 @@ Tw.MyTDataGiftMonthly.prototype = {
 
   _onSuccessAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/gift/auto-complete?' + $.param(this.paramData));
+      this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

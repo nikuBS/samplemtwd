@@ -24,6 +24,7 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="email-details-box">
+                <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="details-top">
@@ -31,7 +32,7 @@
                         <p>
                             <em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
                             <% if ( inquiryInfo.answYn === 'Y' ) { %>
-                                <span class="state">답변완료</span>
+                            <span class="state">답변완료</span>
                             <% } %>
                         </p>
                     </div>
@@ -41,12 +42,12 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
                     <div class="details-btm">
-                        <ul class="details-info">
-                            <li>
+                        <div class="details-info">
+                            <div class="tit">
                                 <strong>답변 이메일</strong>
                                 <em><%-inquiryInfo.answEmailAddr%></em>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                         <div class="details-cont">
                             <%-inquiryInfo.contents%>
                         </div>
@@ -57,10 +58,14 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice item-two full">
                         <li class="bt-gray1">
-                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>" data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기</button>
+                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
+                            </button>
                         </li>
                         <li class="bt-red1">
-                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>" data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기</button>
+                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -70,11 +75,11 @@
     </div>
     <!-- // .container-wrap -->
 </div>
-    <% include ../../components/javascript.component.html %>
-    <script>
-      $(document).ready(function () {
-        new Tw.CustomerEmailHistoryDetail($('.wrap'));
-      });
-    </script>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerEmailHistoryDetail($('.wrap'));
+  });
+</script>
 </body>
 <% include ../../components/end.component.html %>

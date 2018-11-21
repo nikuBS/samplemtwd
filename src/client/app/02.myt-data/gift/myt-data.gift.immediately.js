@@ -112,7 +112,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this.paramData = $.extend({}, this.paramData, htParams);
 
-    this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramData));
+    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
 
     // TODO: Implemented API TEST
     // this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
@@ -121,7 +121,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _onSuccessSendingData: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramData));
+      this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

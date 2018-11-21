@@ -75,7 +75,7 @@
                                                                         <div class="acco-tit servicecenter-inqbox">
                                                                             <p class="title"><%-inquiryInfo.title%></p>
                                                                             <div class="date-state"><em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
-                                                                                <% if ( inquiry.answYn == 'Y' ) { %>
+                                                                                <% if ( inquiryInfo.answYn == 'Y' ) { %>
                                                                                 <span class="state">답변완료</span>
                                                                                 <% } else { %>
                                                                                 <span class="state">처리중</span>
