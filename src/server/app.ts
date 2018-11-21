@@ -151,7 +151,7 @@ class App {
       path.join(__dirname, 'app/06.benefit/views/containers'),
       path.join(__dirname, 'app/07.membership/views/containers'),
       path.join(__dirname, 'app/08.customer/views/containers'),
-      path.join(__dirname, 'app/09.tevent/vies/containers'),
+      path.join(__dirname, 'app/09.tevent/views/containers'),
       path.join(__dirname, 'app/08.auth/views/containers'),
 
       path.join(__dirname, 'app/901.myt/views/containers'),
