@@ -1,0 +1,199 @@
+<%#
+* FileName: product.roaming.planadd.html
+* Author: Eunjung Jung
+* Date: 2018.11.08
+* id: MV
+%>
+
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: '로밍 부가서비스', svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- 사용중인 상품 -->
+            <div class="cont-box gaps-style01">
+                <div class="submain-myfeeproducts-wrap">
+                    <!-- <a href="#" class="submain-myfeeproducts">
+                        <h3 class="title">사용중인 상품</h3>
+                        <p class="text">band 데이터 퍼펙트S</p>
+                    </a> -->
+                    <button type="button" class="submain-myfeeproducts">
+                        <h3 class="title">사용중인 상품</h3>
+                        <p class="text">T로밍 도착알리미 외 3건</p>
+                    </button>
+                </div>
+            </div>
+            <!--//사용중인 상품 -->
+
+            <div class="selecttitle-wrap">
+                <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
+                <span class="taglist">#로밍차단/허용, #인기 </span>
+                <button class="bt-select" title="조건 선택" aria-haspopup="true">
+                    외 2건
+                </button>
+            </div>
+
+            <!-- cont-box-->
+            <div class="cont-box nogaps-hoz">
+                <ul class="recommendedrate-list">
+                    <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
+                    <li class="type01">
+                        <button type="button" class="product-infolink">
+                            <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                            <div class="products-titleinfo">
+                                <h5 class="title">T로밍 음성수발신차단</h5>
+                                <p class="info">월<span class="money">25,000</span>원</p>
+                            </div>
+                            <div class="taglist-wrap">
+                                <span class="tag-text">#로밍차단/허용</span>
+                                <span class="tag-text">#인기</span>
+                            </div>
+                            <p class="products-detailinfo">해외에서 로밍음성수발신만 차단할 수 있는<br>서비스 입니다</p>
+                        </button>
+                    </li>
+                    <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
+                    <li class="type02">
+                        <button type="button" class="product-infolink">
+                            <div class="products-titleinfo">
+                                <h5 class="title">로밍오토다이얼</h5>
+                                <p class="info">월<span class="money">25,000</span>원</p>
+                            </div>
+                            <div class="taglist-wrap">
+                                <span class="tag-text">#로밍차단/허용</span>
+                                <span class="tag-text">#인기</span>
+                            </div>
+                            <p class="products-detailinfo">해외에서도 국내와 동일한 방법으로 편리하게<br>발신 할 수 있는 서비스</p>
+                        </button>
+                    </li>
+                    <li class="type01">
+                        <button type="button" class="product-infolink">
+                            <div class="products-titleinfo">
+                                <h5 class="title">데이터 로밍 일시허용</h5>
+                                <p class="info"><span class="money">무료</span></p>
+                            </div>
+                            <div class="taglist-wrap">
+                                <span class="tag-text">#로밍차단/허용</span>
+                                <span class="tag-text">#인기</span>
+                            </div>
+                            <p class="products-detailinfo">로밍이 불가한 기본요금제 고객도 지정된<br>기간 동안 데이터 로밍이 가능한 서비스</p>
+                        </button>
+                    </li>
+                </ul>
+                <div class="bt-more gap-style">
+                    <button>더보기(80)</button>
+                </div>
+            </div>
+            <!-- //cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="roaming-info-box">
+                <div class="submain-findyourplan-wrap">
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">로밍 안내</h3>
+                        <p class="text">출국 전 알아두면 유용한 로밍 정보</p>
+                    </button>
+                </div>
+                <div class="submain-findyourplan-wrap">
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">국가별 로밍 요금 조회</h3>
+                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을<br>입력하시고, 로밍 요금 관련 각종 정보를<br>한 번에 확인하세요.</p>
+                    </button>
+                </div>
+                <div class="submain-findyourplan-wrap">
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">분실 관련 안내 보러가기</h3>
+                        <p class="text">긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
+                    </button>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <ul class="shortcutslist-wrap">
+                <li class="category-type">
+                    <button class="link">공항 내 로밍센터 안내</button>
+                </li>
+                <li class="category-type">
+                    <button class="link">자주찾는 질문</button>
+                </li>
+            </ul>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- 다른상품 더보기 -->
+            <div class="cont-box">
+                <h3>다른상품 더보기</h3>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box horizontal">
+                        <div class="horizontal-slide">
+                            <ul class="horizontal-list add-prod">
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type1"></span>
+                                            <span>요금제</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type2"></span>
+                                            <span>부가서비스</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type3"></span>
+                                            <span>인터넷/전화/<br>TV</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type4"></span>
+                                            <span>혜택·할인</span>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .widget -->
+            </div>
+            <!-- //다른상품 더보기 -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingFee($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

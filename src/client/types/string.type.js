@@ -74,7 +74,9 @@ Tw.POPUP_TITLE = {
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
   SELECT_FAMILY_TYPE: '가족선택',
   HISTORY: '이용내역',
-  MEMBERSHIP_CORPORATE_LIST: '명의자 선택'
+  MEMBERSHIP_CORPORATE_LIST: '명의자 선택',
+  SELECT_COUNTRY: '방문 국가',
+  ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -477,6 +479,12 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A37: { TITLE: '알림', MSG: '이미 사용하고 있는 상품입니다.' },
   ALERT_3_A40: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
+
+Tw.ALERT_MSG_PRODUCT_ROAMING = {
+  ALERT_3_A23 : { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
+  ALERT_3_A24 : { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' }
+};
+
 
 Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',

@@ -31,6 +31,15 @@ import ProductSettingTargetDiscount from './controllers/setting/product.setting.
 import ProductJoinRemotePwd from './controllers/join/product.join.remote-pwd.controller';
 import ProductJoinMobileplan from './controllers/join/product.join.mobileplan.controller';
 import ProductJoinMobileplanAdd from './controllers/join/product.join.mobileplan-add.controller';
+import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
+import ProductRoamingSearchAfter from './controllers/roaming/product.roaming.do.search-after.controller';
+import ProductRoamingSearchResult from './controllers/roaming/product.roaming.search-result.controller';
+import ProductRoamingGuide from './controllers/roaming/product.roaming.info.guide.controller';
+import ProductRoamingLteGuide from './controllers/roaming/product.roaming.info.lte.controller';
+import ProductRoamingSecureTroaming from './controllers/roaming/product.roaming.info.secure-troaming.controller';
+import ProductRoamingDataRoaming from './controllers/roaming/product.roaming.info.data-roaming.controller';
+import ProductRoamingFee from './controllers/roaming/product.roaming.fee.controller';
+import ProductRoamingPlanAdd from './controllers/roaming/product.roaming.planadd.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -75,6 +84,16 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps(/:appId)?', controller: ProductApps });
 
     this.controllers.push({ url: '(/mobileplan|/mobileplan-add|/wireplan|/roaming)/callplan/:prodId', controller: ProductDetail });
+
+    this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
+    this.controllers.push({ url: '/roaming/do/search-after', controller: ProductRoamingSearchAfter });
+    this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult});
+    this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide});
+    this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide});
+    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming});
+    this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming});
+    this.controllers.push({ url: '/roaming/fee', controller: ProductRoamingFee});
+    this.controllers.push({ url: '/roaming/planadd', controller: ProductRoamingPlanAdd});
   }
 }
 
