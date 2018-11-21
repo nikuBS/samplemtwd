@@ -274,7 +274,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     if ( this._options.dataSharingJoined === 'Y' ) {
       this._historyService.goHash('data-share-popup');
     } else {
-      this._historyService.goLoad('/product/mobileplan/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
+      this._historyService.goLoad('/product/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
     }
   },
 

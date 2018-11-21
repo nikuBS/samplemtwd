@@ -113,7 +113,7 @@
                                 <ul class="representcharge-product">
                                     <% group.prodList.map(product => { %>
                                     <li>
-                                        <a class="product-infolink" href="/product/mobileplan/callplan/<%= product.prodId %>">
+                                        <a class="product-infolink" href="/product/callplan/<%= product.prodId %>">
                                             <div class="products-titleinfo">
                                                 <h5 class="title">
                                                     <%= product.prodNm %>
@@ -188,7 +188,7 @@
                         <% for (let i = 0; i < Math.min(recommendedPlans.length, PLANS_MAX_COUNT); i++) { %>
                         <% const plan = recommendedPlans[i]; %>
                         <li class="type01">
-                            <a class="product-infolink" href="/product/mobileplan/callplan/<%= plan.prodId %>">
+                            <a class="product-infolink" href="/product/callplan/<%= plan.prodId %>">
                                 <div class="products-titleinfo">
                                     <h5 class="title">
                                         <%= plan.prodNm %>

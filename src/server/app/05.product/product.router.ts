@@ -98,8 +98,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps(/:appId)?', controller: ProductApps });
 
-    this.controllers.push({ url: '(/mobileplan|/mobileplan-add|/wireplan|/roaming)/callplan/:prodId', controller: ProductCommonCallplan });
-
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/roaming/do/search-after', controller: ProductRoamingSearchAfter });
     this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult});
@@ -118,6 +116,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
     this.controllers.push({ url: '/roaming/fi/reservation3step', controller: ProductRoamingFiReservation3step });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
+
+    this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
   }
 }
 
