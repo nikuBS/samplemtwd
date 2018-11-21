@@ -38,7 +38,7 @@ class MyTFareInfoBill extends TwViewController {
 
       if (query.current === 'bill-tax') {
         this.apiService.request(API_CMD.BFF_07_0017, {}).subscribe((resp) => {
-
+          
           if (resp.code !== API_CODE.CODE_00) {
             return this.error.render(res, {
               code: resp.code,
