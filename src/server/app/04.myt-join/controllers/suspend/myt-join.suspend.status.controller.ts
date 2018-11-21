@@ -35,7 +35,7 @@ class MyTJoinSuspendStatus extends TwViewController {
       const options = {
         svcInfo,
         pageInfo,
-        phoneNum: StringHelper.phoneStringToDash(svcInfo.svcNum)
+        phoneNum: svcInfo ?  StringHelper.phoneStringToDash(svcInfo.svcNum) : ''
       };
 
       if ( suspendStatus.result.svcStCd === 'SP' ) {
@@ -56,7 +56,6 @@ class MyTJoinSuspendStatus extends TwViewController {
         }
         res.render('suspend/myt-join.suspend.status.html', options);
       } else {
-
         options['suspend'] = progress.result;
         options['suspend'].rgstDt = DateHelper.getShortDateWithFormat(options['suspend'].rgstDt, 'YYYY-MM-DD');
         options['suspend'].opDtm = DateHelper.getShortDateWithFormat(options['suspend'].opDtm, 'YYYY-MM-DD');

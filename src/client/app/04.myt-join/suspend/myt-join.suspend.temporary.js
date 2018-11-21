@@ -86,6 +86,11 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     }
   },
 
+  /**
+   * 일시정지 신청하기 버튼 활성화 여부 체크
+   * @param notice
+   * @private
+   */
   _checkSuspendable: function (notice) {
     if ( !notice ) {
       this.$btSuspend.removeAttr('disabled');
@@ -166,7 +171,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SUSPEND_TYPE}', type);
       this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, '신청', desc);
-    } else if ( res.code === 'MOD0022' ) {
+    } else if ( res.code === 'MOD0022' ) { // 월 5회 이상 신청 시
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {
       Tw.Error(res.code, res.msg).pop();

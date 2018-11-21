@@ -17,71 +17,75 @@ Tw.MyTJoinSuspendProgress = function (rootEl, params) {
 
 Tw.MyTJoinSuspendProgress.prototype = {
   _cachedElement: function () {
-
   },
 
   _bindEvent: function () {
     this.$container.on('click', '#fe-reattach-files', $.proxy(this._onClickAttachFiles, this));
   },
-  //
-  // _onClickAttachFiles: function () {
-  //   this._popupService.open({
-  //     hbs: 'MS_03_05_03_01_L01',
-  //     data: {}
-  //   }, $.proxy(this._onOpenUploadPopup, this), null, 'upload');
-  // },
-
-  // _onOpenUploadPopup: function ($popup) {
-  //   $popup.find('#fe-file-dialog').on('click', $.proxy(this._onClickAttachFiles, this, $popup));
-  // },
 
   // Open the suspend upload file popup
   _onClickAttachFiles: function () {
     // TODO reasonCd로 대체
     var data = {};
-    if(this._params.suspend.reason === '군입대') {
-      data.desc = Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.UPLOAD_DESC;
+    if ( this._params.suspend.reason === '군입대' ) {
       data.count = 2;
     } else {
-      data.desc = Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.UPLOAD_DESC;
       data.count = 1;
     }
-
-    this._popupService.open({
-      hbs: 'MS_03_05_03_01_L01',
-      data: data
-    }, $.proxy(this._onOpenReattachFilePopup, this), null, 'resuspend');
+    this._openCommonFileDialog(data.count);
   },
 
-  _onOpenReattachFilePopup: function ($popup) {
-    $popup.find('#fe-request-upload').on('click', $.proxy(this._requestUpload, this, $popup));
-    $popup.find('.fe-file-dialog').on('click', $.proxy(this._openCommonFileDialog, this));
-  },
-
-  _openCommonFileDialog: function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    if(!this._fileDialog) {
-      this._fileDialog = new Tw.MytJoinSuspendUpload($.proxy(this._onCommonFileDialogConfirmed, this), 2);
+  _openCommonFileDialog: function (count) {
+    if ( !this._fileDialog ) {
+      this._fileDialog = new Tw.MytJoinSuspendUpload();
     }
-    this._fileDialog.show();
+    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._params.suspend.attFileList);
   },
 
-  _onCommonFileDialogConfirmed: function(files){
+  _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
+    this._requestUpload(this._files);
   },
 
-  _requestUpload: function () {
+  _requestUpload: function (files) {
     var formData = new FormData();
-    _.map(this.$inputFile, $.proxy(function (file) {
-      if ( file.files.length !== 0 ) {
-        formData.append('file', file.files[0]);
-      }
+    _.map(files, $.proxy(function (file) {
+      formData.append('file', file);
     }, this));
 
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
-      .fail($.proxy(this._failUploadFile, this));
+      .fail($.proxy(this._onError, this));
+  },
+
+  _successUploadFile: function (res) {
+    // USCAN upload
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var convFileList = res.result.map(function (item) {
+        return {
+          fileSize: item.size,
+          fileName: item.name,
+          filePath: 'uploads/'
+        };
+      });
+
+      this._apiService.request(Tw.API_CMD.BFF_01_0046, {
+        recvFaxNum: 'skt257@sk.com',
+        proMemo: '', // TBD
+        scanFiles: convFileList
+      })
+        .done($.proxy(this._onSuccessUscanUpload, this))
+        .fail($.proxy(this._onError, this));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+  _onSuccessUscanUpload: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.reload();
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _onError: function (res) {
