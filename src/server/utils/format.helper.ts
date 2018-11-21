@@ -265,6 +265,18 @@ class FormatHelper {
     }
     return str;
   }
+
+  /**
+   * It's not working with mask number
+   * @param sNumber
+   * @returns {boolean}
+   */
+  static isCellPhone (sNumber) {
+    sNumber = sNumber.split('-').join('');
+    const regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+    return regPhone.test(sNumber);
+  }
 }
 
 export default FormatHelper;

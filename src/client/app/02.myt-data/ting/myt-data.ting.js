@@ -86,10 +86,14 @@ Tw.MyTDataTing.prototype = {
   },
 
   _getReceiveUserInfo: function () {
-    var befrSvcNum = this.$input_ting_receiver.val().match(/\d+/g).join('');
+    this.befrSvcNum = this.$input_ting_receiver.val().match(/\d+/g).join('');
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0022, { chrgSvcNum: befrSvcNum })
-      .done($.proxy(this._onSuccessReceiveUserInfo, this));
+    var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
+
+    if ( isValidPhone ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0022, { chrgSvcNum: this.befrSvcNum })
+        .done($.proxy(this._onSuccessReceiveUserInfo, this));
+    }
   },
 
   _onSuccessReceiveUserInfo: function (res) {
@@ -124,5 +128,19 @@ Tw.MyTDataTing.prototype = {
     } else {
       this.$btn_send_gift.attr('disabled', true);
     }
+  },
+
+  _validatePhoneNumber: function (sPhone) {
+    if ( sPhone.length < 10 ) {
+      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+      return false;
+    }
+
+    if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
+      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+      return false;
+    }
+
+    return true;
   }
 };
