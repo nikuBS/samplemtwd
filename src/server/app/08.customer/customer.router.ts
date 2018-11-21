@@ -33,8 +33,6 @@ class CustomerRouter extends TwRouter {
     // old IA
     this.controllers.push({ url: '/', controller: CustomerMain });
     this.controllers.push({ url: '/document', controller: CustomerDocument });
-    this.controllers.push({ url: '/faq', controller: CustomerFaq });
-    this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches });
@@ -61,6 +59,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/agentsearch/repair', controller: CustomerAgentsearchRepair });
     this.controllers.push({ url: '/agentsearch/repair-detail', controller: CustomerAgentsearchRepairDetail });
     this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });
+    this.controllers.push({ url: '/faq', controller: CustomerFaq });
+    this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/svc-info/researches(/:researchId)?', controller: CustomerResearches });
   }

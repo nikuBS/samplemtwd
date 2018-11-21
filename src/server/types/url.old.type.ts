@@ -192,7 +192,7 @@ export const URL = {
   '/common/member/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
   '/common/member/logout/route': { login: false, id: '', title: '' },
   '/common/member/manage': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
-  '/common/signup/guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
+  '/common/member/signup-guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
   '/common/tid/login': { login: false, id: '', title: '' },
   '/common/tid/account': { login: true, id: '', title: '' },
   '/common/tid/change-pw': { login: true, id: '', title: '' },
