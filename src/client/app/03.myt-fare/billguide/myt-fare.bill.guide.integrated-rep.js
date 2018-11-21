@@ -169,8 +169,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       line: this.paramLine
     };
     // Tw.Logger.info('[param]', param);
-    // Tw.Logger.info('[param]2', '/myt/fare/bill/guide?'+ $.param(param));
-    this._goLoad('/myt/fare/bill/guide?' + $.param(param));
+    // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
+    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
   },
 
   _conditionChangeEvt: function () {

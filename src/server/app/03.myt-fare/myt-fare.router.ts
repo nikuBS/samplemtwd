@@ -65,10 +65,6 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/billcontents/auto/change', controller: MyTFareBillcontentsAutoChange });
 
     //
-    this.controllers.push({ url: '/bill/guide', controller: MyTFareBillGuide });
-    this.controllers.push({ url: '/bill/guide/call-gift', controller: MyTFareBillGuideCallGift });
-    this.controllers.push({ url: '/bill/guide/roaming', controller: MyTFareBillGuideRoaming });
-    this.controllers.push({ url: '/bill/guide/donation', controller: MyTFareBillGuideDonation });
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
 
     // 소액결제, 컨텐츠 이용료 상세내역

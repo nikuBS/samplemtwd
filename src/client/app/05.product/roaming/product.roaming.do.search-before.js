@@ -94,7 +94,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   },
     _closeActionPopup : function () {
       // this._history.goLoad('/product/roaming/search-result');
-      // this._goLoad('/myt/fare/bill/guide?' + $.param(param));
+      // this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
       console.log('goLoad');
   },
   _goLoadSearchResult: function () {
