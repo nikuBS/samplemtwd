@@ -1,10 +1,10 @@
 /**
- * FileName: customer.protect.related.js
- * Author: Jihun Yang (jihun202@sk.com)
+ * FileName: customer.damage-info.related.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.25
  */
 
-Tw.CustomerProtectRelated = function(rootEl) {
+Tw.CustomerDamageInfoRelated = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
@@ -13,7 +13,7 @@ Tw.CustomerProtectRelated = function(rootEl) {
   this._bindEvent();
 };
 
-Tw.CustomerProtectRelated.prototype = {
+Tw.CustomerDamageInfoRelated.prototype = {
 
   _bindEvent: function() {
     if (Tw.BrowserHelper.isApp()) {

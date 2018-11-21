@@ -1,6 +1,6 @@
 /**
- * FileName: customer.protect.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
+ * FileName: customer.damage-info.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
 
@@ -10,7 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CustomerProtect extends TwViewController {
+class CustomerDamageInfo extends TwViewController {
   constructor() {
     super();
   }
@@ -39,7 +39,7 @@ class CustomerProtect extends TwViewController {
           });
         }
 
-        res.render('protect/customer.protect.html', {
+        res.render('damage-info/customer.damage-info.html', {
           warningList: this._convertWarningList(warningListInfo.result),
           svcInfo: svcInfo,
           pageInfo: pageInfo,
@@ -49,4 +49,4 @@ class CustomerProtect extends TwViewController {
   }
 }
 
-export default CustomerProtect;
+export default CustomerDamageInfo;

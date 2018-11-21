@@ -1,10 +1,10 @@
 /**
- * FileName: customer.protect.warning.js
- * Author: Jihun Yang (jihun202@sk.com)
+ * FileName: customer.damage-info.warning.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.07.26
  */
 
-Tw.CustomerProtectWarning = function(rootEl) {
+Tw.CustomerDamageInfoWarning = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._template = Handlebars.compile($('#tpl_warning_list_item').html());
@@ -14,7 +14,7 @@ Tw.CustomerProtectWarning = function(rootEl) {
   this._bindEvent();
 };
 
-Tw.CustomerProtectWarning.prototype = {
+Tw.CustomerDamageInfoWarning.prototype = {
   _cachedElement: function() {
     this.$list = this.$container.find('.fe-list');
     this.$btnMoreList = this.$container.find('.fe-btn_more_list');
