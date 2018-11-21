@@ -112,7 +112,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
     this.controllers.push({ url: '/roaming/fi/reservation3step', controller: ProductRoamingFiReservation3step });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
-
   }
 }
 
