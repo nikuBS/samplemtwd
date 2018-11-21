@@ -84,6 +84,10 @@ class BypassRouter {
     this.apiService.request(cmd, parameter, headers, ...(pathVariables))
       .subscribe((data) => {
         data.serverSession = this.loginService.getServerSession();
+        const svcInfo = this.loginService.getSvcInfo();
+        if ( !FormatHelper.isEmpty(svcInfo) ) {
+          data.loginType = svcInfo.loginType;
+        }
         return res.json(data);
       });
   }

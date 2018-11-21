@@ -65,8 +65,8 @@ Tw.NativeService.prototype = {
 
   _onBack: function (resp) {
     Tw.Logger.info('onBack', resp);
-    if ( /\/main\/home/.test(location.href)) {
-      if(this._popupService.isPopup()) {
+    if ( /\/main\/home/.test(location.href) ) {
+      if ( this._popupService.isPopup() ) {
         this._popupService.close();
       } else {
         this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.EXIT_APP, null, $.proxy(this._exitApp, this));
@@ -110,5 +110,4 @@ Tw.NativeService.prototype = {
   _exitApp: function () {
     this.send(Tw.NTV_CMD.EXIT, {});
   }
-
 };
