@@ -79,7 +79,7 @@ Tw.TidLandingComponent.prototype = {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
-        this._apiService.setSession();
+        this._apiService.setSession($.proxy(this._successSetSession, this));
       } else {
         this._historyService.reload();
         // this._historyService.goLoad('/main/home');
@@ -105,5 +105,8 @@ Tw.TidLandingComponent.prototype = {
     // if(resp.code === NTV_CODE.CODE_00) {
     this._historyService.goLoad('/common/member/logout/complete');
     // }
+  },
+  _successSetSession: function () {
+    this._historyService.reload();
   }
 };
