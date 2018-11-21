@@ -1,11 +1,11 @@
 /**
- * FileName: product.setting.location-search.js
+ * FileName: product.mobileplan.setting.location-search.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.11.13
  * Page ID: MP_02_02_03_09(hbs)
  * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역 변경 > 할인지역 검색
  */
-Tw.ProductSettingLocationSearch = function(rootEl, keyword, applyCallback) {
+Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallback) {
   this.$container = rootEl;
   this.$selectList = $('.select-list', this.$container);
   this._applyCallback = applyCallback;
@@ -17,7 +17,7 @@ Tw.ProductSettingLocationSearch = function(rootEl, keyword, applyCallback) {
   this.init(keyword);
 };
 
-Tw.ProductSettingLocationSearch.prototype = {
+Tw.ProductMobileplanSettingLocationSearch.prototype = {
 
   /**
    * search

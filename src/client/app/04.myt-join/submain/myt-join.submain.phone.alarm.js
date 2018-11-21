@@ -1,9 +1,9 @@
 /**
- * FileName: myt-join.mgmt.numchg-alarm.js
+ * FileName: myt-join.submain.phone.alarm.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.22
  */
-Tw.MyTJoinMgmtNumchgAlarm = function (rootEl, options) {
+Tw.MyTJoinPhoneNumChgAlarm = function (rootEl, options) {
   this.$container = rootEl;
   this._options = options;
   this._popupService = Tw.Popup;
@@ -17,7 +17,7 @@ Tw.MyTJoinMgmtNumchgAlarm = function (rootEl, options) {
   this._bindEvent();
 };
 
-Tw.MyTJoinMgmtNumchgAlarm.prototype = {
+Tw.MyTJoinPhoneNumChgAlarm.prototype = {
 
   /**
    * 이벤트 바인딩

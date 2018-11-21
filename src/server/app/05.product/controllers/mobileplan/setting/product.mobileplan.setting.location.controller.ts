@@ -5,13 +5,13 @@
  * Page ID: MP_02_02_03_08
  * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역,지정번호입력변경
  */
-import TwViewController from '../../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import FormatHelper from '../../../../utils/format.helper';
+import FormatHelper from '../../../../../utils/format.helper';
 
-class ProductSettingTargetDiscount extends TwViewController {
+class ProductMobileplanSettingLocation extends TwViewController {
   private readonly _allowedProdIdList = ['NA00000008', 'NA00002563', 'NA00002585'];
 
   constructor() {
@@ -88,7 +88,7 @@ class ProductSettingTargetDiscount extends TwViewController {
           resp['result']['snumSetInfoList'] = resp2['result']['snumSetInfoList'];
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
-          res.render('setting/product.setting.target-discount.html', option);
+          res.render('mobileplan/setting/product.mobileplan.setting.location.html', option);
 
         } else {
           return this.error.render(res, {
@@ -110,4 +110,4 @@ class ProductSettingTargetDiscount extends TwViewController {
   }
 }
 
-export default ProductSettingTargetDiscount;
+export default ProductMobileplanSettingLocation;

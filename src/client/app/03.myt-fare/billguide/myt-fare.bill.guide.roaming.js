@@ -51,7 +51,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
 
   },
   // _popupCloseBtEvt: function () {
-  //   this._goLoad('/myt/fare/bill/guide');
+  //   this._goLoad('/myt-fare/billguide/guide');
   // },
   //--------------------------------------------------------------------------[API]
   _getRoamingInfo: function (param) {

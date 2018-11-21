@@ -177,7 +177,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     var param = {
       date: this.paramDate
     };
-    this._goLoad('/myt/fare/bill/guide?' + $.param(param));
+    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]

@@ -1,11 +1,11 @@
 /**
- * FileName: product.setting.target-discount.js
+ * FileName: product.mobileplan.setting.location.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.11.13
  * Page ID: MP_02_02_03_08
  * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역,지정번호입력변경
  */
-Tw.ProductSettingTargetDiscount = function(rootEl, options) {
+Tw.ProductMobileplanSettingLocation = function(rootEl, options) {
   this.$container = rootEl;
   this._options = options;
   this._historyService = new Tw.HistoryService();
@@ -21,7 +21,7 @@ Tw.ProductSettingTargetDiscount = function(rootEl, options) {
   this._appendNumberLi(this._options.snumSetInfoList);
 };
 
-Tw.ProductSettingTargetDiscount.prototype = {
+Tw.ProductMobileplanSettingLocation.prototype = {
 
   /**
    * event binding
@@ -87,7 +87,7 @@ Tw.ProductSettingTargetDiscount.prototype = {
     this._popupService.open(
       { hbs: 'MP_02_02_03_09' },
       $.proxy(function ($root) {
-        new Tw.ProductSettingLocationSearch(
+        new Tw.ProductMobileplanSettingLocationSearch(
           $root,
           keyword,
           $.proxy(this._addLocation, this));
