@@ -56,8 +56,10 @@ class MyTJoinSubmainController extends TwViewController {
       this._getAddtionalProduct(),
       this._getContractPlanPoint(),
       this._getInstallmentInfo(),
-      this._getPausedState()
-    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps]) => {
+      this._getPausedState(),
+      this._getLongPausedState(),
+      this._getWireFreeCall()
+    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
         this.error.render(res, {
@@ -75,6 +77,9 @@ class MyTJoinSubmainController extends TwViewController {
         case 0:
         case 3:
           data.myInfo = myif;
+          if ( wirefree && wirefree.freeCallYn === 'Y' ) {
+            data.isWireFree = true;
+          }
           break;
         case 2:
           data.myInfo = this._convertWireInfo(myif);
@@ -85,6 +90,7 @@ class MyTJoinSubmainController extends TwViewController {
       data.myContractPlan = mycpp; // 무약정플랜
       data.myInstallement = myinsp; // 약정,할부 정보
       data.myPausedState = myps; // 일시정지
+      data.myLongPausedState = mylps; // 장기일시정지
 
       // 개통일자
       if ( data.myHistory && data.myHistory.length > 0 ) {
@@ -125,7 +131,13 @@ class MyTJoinSubmainController extends TwViewController {
         const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
         data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
         data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
+        data.myPausedState.state = true;
       }
+
+      if ( data.myLongPausedState ) {
+        data.myLongPausedState.state = true;
+      }
+
       res.render('myt-join.submain.html', { data });
     });
   }
@@ -245,6 +257,18 @@ class MyTJoinSubmainController extends TwViewController {
     });
   }
 
+  // 장기 일시정지
+  _getLongPausedState() {
+    return this.apiService.request(API_CMD.BFF_05_0194, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
+
   // 나의 가입 부가,결합 상품
   _getAddtionalProduct() {
     let API_URL = API_CMD.BFF_05_0161;
@@ -301,6 +325,24 @@ class MyTJoinSubmainController extends TwViewController {
       }
     });
   }
+
+  // B끼리 무료통화 조회
+  _getWireFreeCall() {
+    // dummy 전화번호 값으로 요청 하여 freeCallYn 값 체크
+    return this.apiService.request(API_CMD.BFF_05_0160, {
+      tel01: '012',
+      tel02: '345',
+      tel03: '6789'
+    }).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
 }
+
 
 export default MyTJoinSubmainController;

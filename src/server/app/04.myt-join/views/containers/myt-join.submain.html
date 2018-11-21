@@ -73,19 +73,21 @@
             <!--// .cont-box -->
             <%- include('../components/submain/myt-join.submain.prod-info.html', data) %>
             <% if (data.type === 0) { %>
-                <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
-                    <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
-                <% } %>
+                <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
             <% } else if (data.type === 2) { %>
                 <%- include('../components/submain/myt-join.submain.wire-more-info.html', data) %>
             <% } %>
+
+            <div class="banner-area">
+                <a href=""><img src="/img/dummy/MS-bn01.jpg" alt="T 건강걷기 X AIA Vitality 런칭 T멤버십 회원이라면 아메리카노 5잔 득템 기회!"/></a>
+            </div>
 
             <% if (data.type !== 1) { %>
                 <% if (data.otherLines.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps" data-id="other-lines">
-                    <p class="list-comp-title">나의 다른 회선 정보</p>
+                    <p class="list-comp-title">다른 회선 정보</p>
                     <ul class="list-comp-lineinfo">
                         <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
                         <% for (var i=0; i < length; i++) { %>
@@ -108,9 +110,9 @@
                     <li>
                         <div class="link-long">
                             <button>
-                                <span class="ico-thum"></span>페이지 바로가기 노출 영역
+                                <span class="ico-thum"></span>회원정보관리
                                 <span class="tx-sub">
-                                        <span class="ico"></span>
+                                        <span class="ico"><span class="blind">회원정보관리 자세히보기</span></span>
                                     </span>
                             </button>
                         </div>
@@ -118,25 +120,42 @@
                     <li>
                         <div class="link-long">
                             <button>
-                                <span class="ico-thum"></span>페이지 바로가기 노출 영역
+                                <span class="ico-thum"></span>공인인증 등록/변경
                                 <span class="tx-sub">
-                                        <span class="ico"></span>
+                                        <span class="ico"><span class="blind">공인인증 등록/변경 자세히보기</span></span>
                                     </span>
                             </button>
                         </div>
                     </li>
                     <li>
                         <div class="link-long">
-                            <button><span class="ico-thum"></span>페이지 바로가기 노출 영역
+                            <button><span class="ico-thum"></span>회선관리
                                 <span class="tx-sub">
-                                        <span class="ico"></span>
+                                        <span class="ico"><span class="blind">회선관리 자세히보기</span></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button><span class="ico-thum"></span>납부방법
+                                <span class="tx-sub">
+                                        <span class="ico"><span class="blind">납부방법 자세히보기</span></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button><span class="ico-thum"></span>나의 혜택
+                                <span class="tx-sub">
+                                        <span class="ico"><span class="blind">나의 혜택 자세히보기</span></span>
                                     </span>
                             </button>
                         </div>
                     </li>
                 </ul>
             </div>
-
         </div>
     </div>
     <!--// #contents -->

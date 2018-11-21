@@ -187,7 +187,7 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     else {
-      this._historyService.goLoad('/myt/data/gift');
+      this._historyService.goLoad('/myt-data/giftdata');
     }
   },
 

@@ -41,7 +41,7 @@ export const URL = {
   '/myt-fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
 
   '/myt/join': { login: true, id: 'MS', title: '나의 가입 정보' },
-  '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
+  '/myt-join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
   '/myt-join/myplanadd': { login: true, id: 'MS_06', title: '나의 부가상품' },
   '/myt-join/myplancombine': { login: true, id: 'MS_07', title: '나의 결합상품' },
   '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
