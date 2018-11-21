@@ -146,15 +146,15 @@ Tw.MyTDataRechargeCouponUse.prototype = {
 
     switch (type) {
       case 'data':
-        this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=data');
+        this._historyService.goLoad('/myt-data/recharge/coupon/complete?category=data');
         break;
       case 'voice':
-        this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=voice');
+        this._historyService.goLoad('/myt-data/recharge/coupon/complete?category=voice');
         break;
       case 'gift':
         var number = Tw.FormatHelper.getFormattedPhoneNumber(this.$numberInput.val());
         this._historyService.goLoad(
-          '/myt/data/recharge/coupon/complete?category=gift&number=' + number);
+          '/myt-data/recharge/coupon/complete?category=gift&number=' + number);
         break;
       default:
         break;
