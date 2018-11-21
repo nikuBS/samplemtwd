@@ -57,7 +57,9 @@ export const API_CMD = {
   BFF_01_0039: { path: '/v1/bpcp', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0040: { path: '/core-auth/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0042: { path: '/core-bill/v1/refund/cancel-refund-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_01_0044: { path: '/core-bill/v1/bill-pay/bank-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0043: { path: '/core-bill/v1/refund/refund-account-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0044: { path: '/core-bill/v1/refund/donation-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // AUTH
   BFF_03_0000: { path: '/v1/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
@@ -734,3 +736,7 @@ export const API_T_FAMILY_ERROR = {
 export const API_TAX_REPRINT_ERROR = {
   BIL0018: 'BIL0018' // 사업자 번호를 조회할 수 없습니다.
 };
+
+export const API_REFUND_ERROR = {
+  ZINVE8169: 'ZINVE8169'  // 환불대상금액 존재하지 않습니다.
+}

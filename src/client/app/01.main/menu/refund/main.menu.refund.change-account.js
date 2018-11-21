@@ -1,63 +1,41 @@
 /**
- * FileName: main.menu.refund.js
+ * FileName: main.menu.refund.change-account.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.15
+ * Date: 2018.11.21
  */
 
-Tw.MainMenuRefund = function (rootEl) {
+Tw.MainMenuRefundChangeAccount = function (rootEl, bankList, target, callback) {
   this.$container = rootEl;
+  this._bankList = bankList;
+  this._target = target;
+  this._callback = callback;
 
-  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
-
-  this._bankList = undefined;
+  this._popupService = Tw.Popup;
 
   this._cacheElements();
   this._bindEvents();
 };
 
-Tw.MainMenuRefund.prototype = {
+Tw.MainMenuRefundChangeAccount.prototype = {
   _cacheElements: function () {
-    this.$bankInput = this.$container.find('.fe-bank-input');
-    this.$accountInput = this.$container.find('.fe-account-input');
+    this.$bankInput = this.$container.find('#formInput01');
+    this.$accountInput = this.$container.find('#formInput02');
     this.$submitBtn = this.$container.find('#fe-submit');
   },
   _bindEvents: function () {
-    this.$container.on('click', '#fe-btn-detail', $.proxy(this._onDetail, this));
-    this.$container.on('click', '#fe-outlink-smartchoice', $.proxy(this._onOutToSmartChoice, this));
-    this.$container.on('click', '#fe-select-bank', $.proxy(this._onBankNeeded, this));
+    this.$container.on('click', '#fe-bank-select', $.proxy(this._onBankSelect, this));
     this.$accountInput.on('keyup', $.proxy(this._toggleSubmit, this));
+    this.$submitBtn.on('click', $.proxy(this._onSubmit, this));
   },
-  _onDetail: function () {
-    this._popupService.open({
-      hbs: 'actionsheet_link_b_type',
-      layer: true,
-      title: '해지환급금액 상세보기',
-      data: [{ list: [{value: '휴대폰', explain: '010-123-0231', text1: '25,000원'}, {value: '휴대폰', explain: '010-231-0231', text1: '5,000원'}]}]
-    }, function (root) {
-      root.find('.ico').hide();
-    });
-  },
-  _onOutToSmartChoice: function () {
-    var move = function () { Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.SMART_CHOICE); };
-
-    if (Tw.BrowserHelper.isApp()) {
-      Tw.CommonHelper.showDataCharge(function () {
-        move();
-      });
-      return;
-    }
-
-    move();
-  },
-  _onBankNeeded: function () {
-    var selectedBankCode = this.$bankInput.data('code');
+  _onBankSelect: function () {
+    var selectedBankCode = this.$bankInput.attr('data-code');
     if (!Tw.FormatHelper.isEmpty(this._bankList)) {
       this._showBankList(selectedBankCode);
       return;
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0044, {})
+    this._apiService.request(Tw.API_CMD.BFF_01_0045, {})
       .then($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
           this._bankList = _.map(res.result, function (bankInfo) {
@@ -80,7 +58,7 @@ Tw.MainMenuRefund.prototype = {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
       layer: true,
-      title: '환불신청계좌 은행 선택',
+      title: Tw.POPUP_TITLE.REFUND_BANK_SELECT,
       data: [{
         list: this._bankList
       }]
@@ -106,6 +84,33 @@ Tw.MainMenuRefund.prototype = {
     } else {
       this.$submitBtn.attr('disabled', 'disabled');
     }
-  }
+  },
+  _onSubmit: function () {
+    var param = {
+      opTyp: '1',
+      rfndBankCd: this.$bankInput.data('code'),
+      rfndBankNum: this.$accountInput.val(),
+      recCnt: '1',
+      refundAccount: [{
+        svcMgmtNum: this._target.svcMgmtNum,
+        acntNum: this._target.acntNum,
+        custNum: this._target.custNum,
+        bamtClCd: this._target.bamtClCd
+      }]
+    };
 
+    this._apiService.request(Tw.API_CMD.BFF_01_0043, param)
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          this._popupService.close();
+          this._callback();
+          return;
+        }
+
+        Tw.Error(res.code, res.msg).pop();
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  }
 };

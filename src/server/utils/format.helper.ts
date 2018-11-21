@@ -164,6 +164,10 @@ class FormatHelper {
   }
 
   static conTelFormatWithDash(tel: any): any {
+    if (this.isEmpty(tel)) {
+      return tel;
+    }
+
     const ret = tel.trim(),
       pattern = {
         9: [2, 3, 4],
