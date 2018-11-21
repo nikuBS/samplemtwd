@@ -313,7 +313,7 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _refundRequestSend: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0032, this.refundAPI_option)
+    this._apiService.request(Tw.API_CMD.BFF_07_0088, this.refundAPI_option)
         .done($.proxy(this._successRegisterAccount, this)).fail($.proxy(this._apiError, this));
   },
 

@@ -298,6 +298,7 @@ Tw.API_CMD = {
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-delete', method: Tw.API_METHOD.POST },
   BFF_07_0087: { path: '/core-bill/v1/ocb-point-pay', method: Tw.API_METHOD.POST },
+  BFF_07_0088: { path: '/core-bill/v1/payment/over-payment-refund-account', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
