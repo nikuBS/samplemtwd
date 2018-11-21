@@ -236,7 +236,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // 리필쿠폰
   _onRefillDetail: function () {
-    this._historyService.goLoad('/myt/data/recharge/coupon');
+    this._historyService.goLoad('/myt-data/recharge/coupon');
   },
 
   // 충전/선물내역 상세

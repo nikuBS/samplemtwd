@@ -43,7 +43,7 @@ Tw.MyTDataRechargeCoupon.prototype = {
     var period = evt.currentTarget.title.split('::')[1];
     var tab = evt.currentTarget.className.indexOf('refill') !== -1 ? 'refill' : 'gift';
     this._historyService.goLoad(
-      '/myt/data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' + name + '&period=' + period
+      '/myt-data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' + name + '&period=' + period
     );
   }
 };
