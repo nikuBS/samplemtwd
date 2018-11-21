@@ -118,8 +118,8 @@ Tw.MyTJoinSubMain.prototype = {
   _initialize: function () {
   },
   // 나의요금제
-  _onMovedMyPlan: function () {
-    this._historyService.goLoad('/myt-join/product/fee-plan');
+  _onMovedMyPlan: function() {
+    this._historyService.goLoad('/myt/join/myplan');
   },
   // 고객보호비밀번호 변경
   _onMovedChangePwd: function () {

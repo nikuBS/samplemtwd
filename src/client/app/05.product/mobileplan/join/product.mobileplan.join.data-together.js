@@ -158,7 +158,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-        mytPage: 'fee-plan',
+        mytPage: 'myplan',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
