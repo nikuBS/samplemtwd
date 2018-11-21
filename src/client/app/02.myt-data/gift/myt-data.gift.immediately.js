@@ -87,8 +87,11 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _getReceiveUserInfo: function () {
     this.befrSvcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
+    var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    if ( isValidPhone ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    }
   },
 
   _onSuccessReceiveUserInfo: function (res) {
@@ -113,7 +116,6 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.paramData = $.extend({}, this.paramData, htParams);
 
     this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
-
     // TODO: Implemented API TEST
     // this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
     //   .done($.proxy(this._onSuccessSendingData, this));
@@ -136,5 +138,19 @@ Tw.MyTDataGiftImmediately.prototype = {
     } else {
       this.$btnRequestSendingData.attr('disabled', true);
     }
+  },
+
+  _validatePhoneNumber: function (sPhone) {
+    if ( sPhone.length < 10 ) {
+      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+      return false;
+    }
+
+    if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
+      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+      return false;
+    }
+
+    return true;
   }
 };
