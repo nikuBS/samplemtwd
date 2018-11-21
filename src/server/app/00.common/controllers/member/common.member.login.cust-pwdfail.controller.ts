@@ -7,14 +7,14 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class CommonLoginCustomerPwdFail extends TwViewController {
+class CommonMemberLoginCustPwdFail extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('login/common.login.customer-pwd-fail.html', { svcInfo: svcInfo });
+    res.render('member/common.member.login.cust-pwdfail.html', { svcInfo: svcInfo });
   }
 }
 
-export default CommonLoginCustomerPwdFail;
+export default CommonMemberLoginCustPwdFail;

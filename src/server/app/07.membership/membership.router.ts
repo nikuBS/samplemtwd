@@ -12,12 +12,12 @@ class MembershipRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/membership/join', controller: MembershipJoin });
-    this.controllers.push({ url: '/membership_benefit/mbrs_0001', controller: MembershipBenefitBrand });
-    this.controllers.push({ url: '/membership_benefit/mbrs_0002', controller: MembershipBenefitBrandBenefit });
-    this.controllers.push({ url: '/membership_benefit/mbrs_0004', controller: MembershipBenefitBrandMap });
-    this.controllers.push({ url: '/membership_benefit/mbrs_0005', controller: MembershipBenefitBrandList });
-    this.controllers.push({ url: '/membership_benefit/mbrs_0007', controller: MembershipBenefitPlus });
-    this.controllers.push({ url: '/membership_benefit/mbrs_0010', controller: MembershipBenefitMovieculture });
+    this.controllers.push({ url: '/benefit/brand', controller: MembershipBenefitBrand });
+    this.controllers.push({ url: '/benefit/brand-benefit', controller: MembershipBenefitBrandBenefit });
+    this.controllers.push({ url: '/benefit/map', controller: MembershipBenefitBrandMap });
+    this.controllers.push({ url: '/benefit/brand/list', controller: MembershipBenefitBrandList });
+    this.controllers.push({ url: '/benefit/plus', controller: MembershipBenefitPlus });
+    this.controllers.push({ url: '/benefit/movieculture', controller: MembershipBenefitMovieculture });
     this.controllers.push({ url: '/membership_info/mbrs_0001', controller: MembershipInfoGrade });
   }
 }
