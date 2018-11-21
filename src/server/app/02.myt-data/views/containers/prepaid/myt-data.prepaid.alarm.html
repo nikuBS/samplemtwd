@@ -52,13 +52,13 @@
                             <label class="tit" for="formInput01">자동 알람 설정 정보</label>
                             <div class="option-box">
                                 <div>
-                                    <button id="formInput01" class="bt-dropdown big tx-bold fe-alarm-status" title="자동 알람 설정" aria-haspopup="true">기준 시간으로 알람</button>
+                                    <button class="bt-dropdown big tx-bold fe-alarm-status" title="자동 알람 설정" aria-haspopup="true" required>기준 시간으로 알람</button>
                                 </div>
                                 <div>
-                                    <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true">기준 항목 선택</button> 만료
+                                    <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true" required>기준 항목 선택</button> 만료
                                 </div>
                                 <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true">기준일 선택</button> 전 알람
+                                    <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" required>기준일 선택</button> 전 알람
                                 </div>
                             </div>
                         </li>
@@ -66,10 +66,10 @@
                             <label class="tit" for="formInput01">자동 알람 설정 정보</label>
                             <div class="option-box">
                                 <div>
-                                    <button id="formInput01" class="bt-dropdown big tx-bold fe-alarm-status" title="자동 알람 설정" aria-haspopup="true">잔액 기준으로 알람</button>
+                                    <button class="bt-dropdown big tx-bold fe-alarm-status" title="자동 알람 설정" aria-haspopup="true" required>잔액 기준으로 알람</button>
                                 </div>
                                 <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true">금액 선택</button>
+                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" required>금액 선택</button>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                             </div>
@@ -108,6 +108,7 @@
 
 <script>
   $(document).ready(function () {
+    new Tw.MyTDataPrepaidAlarm($('.wrap'));
   });
 </script>
 

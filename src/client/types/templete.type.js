@@ -636,6 +636,30 @@ Tw.MYT_PREPAID_DATE = {
   ]
 };
 
+Tw.MYT_PREPAID_ALARM = {
+  title: '선택',
+  status_list: [
+    { text: '기준 시간으로 알람', value: '1' },
+    { text: '잔액 기준으로 알람', value: '2' }
+  ],
+  category_list: [
+    { text: '발신기간', value: '1' },
+    { text: '수신기간', value: '2' },
+    { text: '번호유지기간', value: '3' }
+  ],
+  date_list: [
+    { text: '1일', value: '1' },
+    { text: '2일', value: '2' },
+    { text: '3일', value: '3' }
+  ],
+  price_list: [
+    { text: '5,000원', value: 5000 },
+    { text: '3,000원', value: 3000 },
+    { text: '2,000원', value: 2000 },
+    { text: '1,000원', value: 1000 }
+  ]
+};
+
 Tw.PRODUCT_APPS_ORDER = [
   { value: '최신순', attr: 'data-prop="storRgstDtm"' },
   { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
