@@ -669,7 +669,8 @@ export const API_CODE = {
   CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',
   CODE_400: '400',
-  CODE_404: '404'
+  CODE_404: '404',
+  CODE_500: '500'
 };
 
 export const API_SVC_PWD_ERROR = {

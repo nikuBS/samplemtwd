@@ -140,14 +140,17 @@ Tw.ApiService.prototype = {
     return [];
   },
 
-  setSession: function () {
+  setSession: function (callback) {
     this.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
-      .done($.proxy(this._successSession, this));
+      .done($.proxy(this._successSession, this, callback));
   },
 
-  _successSession: function (resp) {
+  _successSession: function (callback, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.sendNativeSession(resp.result.serverSession, resp.result.loginType);
+      if(!Tw.FormatHelper.isEmpty(callback)) {
+        callback();
+      }
     }
   },
   sendNativeSession: function (serverSession, loginType) {

@@ -145,7 +145,7 @@ class ApiService {
   }
 
   private handleError(observer, command, err) {
-    if ( !FormatHelper.isEmpty(err.response) ) {
+    if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       const error = err.response.data;
       const headers = err.response.headers;
       this.logger.error(this, '[API ERROR]', error);
@@ -155,14 +155,15 @@ class ApiService {
       }
       observer.next(error);
     } else {
-      observer.next(err);
+      this.logger.error(this, '[API ERROR] Exception', err);
+      observer.next({ code: API_CODE.CODE_500 });
     }
     observer.complete();
   }
 
   private handleErrorNative(observer, command, err) {
     let serverSession = null;
-    if ( !FormatHelper.isEmpty(err.response) ) {
+    if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       const error = err.response.data;
       const headers = err.response.headers;
       this.logger.error(this, '[API ERROR Native]', error);
@@ -170,10 +171,12 @@ class ApiService {
       if ( command.server === API_SERVER.BFF ) {
         serverSession = this.setServerSession(headers);
       }
+
       error.serverSession = serverSession;
       observer.next(error);
     } else {
-      observer.next(err);
+      this.logger.error(this, '[API ERROR Native] Exception', err);
+      observer.next({ code: API_CODE.CODE_500 });
     }
     observer.complete();
   }
