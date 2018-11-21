@@ -35,7 +35,7 @@ class MyTJoinSuspendStatus extends TwViewController {
       const options = {
         svcInfo,
         pageInfo,
-        phoneNum: StringHelper.phoneStringToDash(svcInfo.svcNum)
+        phoneNum: svcInfo ?  StringHelper.phoneStringToDash(svcInfo.svcNum) : ''
       };
 
       if ( suspendStatus.result.svcStCd === 'SP' ) {
@@ -56,6 +56,33 @@ class MyTJoinSuspendStatus extends TwViewController {
         }
         res.render('suspend/myt-join.suspend.status.html', options);
       } else {
+
+        /* tslint:disable */
+        progress = {
+          'code': '00',
+          'msg': '',
+          'result': {
+            'seq': '222',
+            'opStateCd': 'F',
+            'opState': '처리불가',
+            'opReasonCd': '30',
+            'opReason': '구비서류미비',
+            'opDtm': '20181001122000',
+            'reasonCd': '??',
+            'reason': '군입대',
+            'receiveCd': '??',
+            'receive': '걸기/받기 모두 정지',
+            'rgstDt': '20180901',
+            'attFileList': [
+              {
+                'seq': '001',
+                'fileName': 'adfads.gif',
+                'auditDtm': '20181011'
+              }
+            ]
+          }
+        };
+        /* tslint:enable */
 
         options['suspend'] = progress.result;
         options['suspend'].rgstDt = DateHelper.getShortDateWithFormat(options['suspend'].rgstDt, 'YYYY-MM-DD');
