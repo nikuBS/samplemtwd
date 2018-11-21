@@ -1,23 +1,23 @@
 /**
- * FileName: customer.protect.additions.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
+ * FileName: customer.damage-info.additions.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
-class CustomerProtectAdditions extends TwViewController {
+class CustomerDamageInfoAdditions extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('protect/customer.protect.additions.html', {
+    res.render('damage-info/customer.damage-info.additions.html', {
       svcInfo: svcInfo,
       pageInfo: pageInfo
     });
   }
 }
 
-export default CustomerProtectAdditions;
+export default CustomerDamageInfoAdditions;

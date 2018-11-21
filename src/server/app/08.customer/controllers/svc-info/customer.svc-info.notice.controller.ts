@@ -1,6 +1,6 @@
 /**
- * FileName: customer.notice.controller.ts
- * Author: Jihun Yang (jihun202@sk.com)
+ * FileName: customer.svc-info.notice.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.19
  */
 
@@ -31,7 +31,7 @@ const categorySwitchingData = {
   }
 };
 
-class CustomerNotice extends TwViewController {
+class CustomerSvcInfoNotice extends TwViewController {
   constructor() {
     super();
   }
@@ -83,7 +83,7 @@ class CustomerNotice extends TwViewController {
           return res.redirect('/customer');
         }
 
-        res.render('notice/customer.notice.html', {
+        res.render('svc-info/customer.notice.html', {
           category: category,
           categoryLabel: categorySwitchingData[category].LABEL,
           data: this._convertData(data),
@@ -94,4 +94,4 @@ class CustomerNotice extends TwViewController {
   }
 }
 
-export default CustomerNotice;
+export default CustomerSvcInfoNotice;

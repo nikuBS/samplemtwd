@@ -1,10 +1,10 @@
 /**
- * FileName: customer.notice.js
- * Author: Jihun Yang (jihun202@sk.com)
+ * FileName: customer.svc-info.notice.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.23
  */
 
-Tw.CustomerNotice = function(rootEl) {
+Tw.CustomerSvcInfoNotice = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -18,7 +18,7 @@ Tw.CustomerNotice = function(rootEl) {
   this._init();
 };
 
-Tw.CustomerNotice.prototype = {
+Tw.CustomerSvcInfoNotice.prototype = {
   API_CMD: {
     tworld: 'BFF_08_0029',
     directshop: 'BFF_08_0039',

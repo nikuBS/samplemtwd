@@ -1,6 +1,6 @@
 /**
- * FileName: customer.protect.warning-view.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
+ * FileName: customer.damage-info.warning-view.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
 
@@ -10,7 +10,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class CustomerProtectWarningView extends TwViewController {
+class CustomerDamageInfoWarningView extends TwViewController {
   constructor() {
     super();
   }
@@ -38,7 +38,7 @@ class CustomerProtectWarningView extends TwViewController {
           });
         }
 
-        res.render('protect/customer.protect.warning-view.html', {
+        res.render('damage-info/customer.damage-info.warning-view.html', {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           data: this._convertData(data.result)
@@ -47,4 +47,4 @@ class CustomerProtectWarningView extends TwViewController {
   }
 }
 
-export default CustomerProtectWarningView;
+export default CustomerDamageInfoWarningView;

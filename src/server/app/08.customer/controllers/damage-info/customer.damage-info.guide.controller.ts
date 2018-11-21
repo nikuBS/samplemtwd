@@ -1,6 +1,6 @@
 /**
- * FileName: customer.protect.guide.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
+ * FileName: customer.damage-info.guide.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
 
@@ -9,7 +9,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PROTECT_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PROTECT_GUIDE_VIDEO, CUSTOMER_PROTECT_GUIDE_LATEST } from '../../../../types/outlink.type';
 import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
-import FormatHelper from '../../../../utils/format.helper';
 
 const guideCategory = {
   video: {
@@ -26,7 +25,7 @@ const guideCategory = {
   }
 };
 
-class CustomerProtectGuide extends TwViewController {
+class CustomerDamagenfoGuide extends TwViewController {
   constructor() {
     super();
   }
@@ -48,7 +47,7 @@ class CustomerProtectGuide extends TwViewController {
     const category = req.params.category || 'video',
       listMaxSize = (category === 'webtoon') ? 20 : 30;
 
-    res.render('protect/customer.protect.guide.html', {
+    res.render('damage-info/customer.damage-info.guide.html', {
       category: category,
       categoryLabel: guideCategory[category].LABEL,
       svcInfo: svcInfo,
@@ -59,4 +58,4 @@ class CustomerProtectGuide extends TwViewController {
   }
 }
 
-export default CustomerProtectGuide;
+export default CustomerDamagenfoGuide;

@@ -1,10 +1,10 @@
 /**
- * FileName: customer.protect.guide.js
- * Author: Jihun Yang (jihun202@sk.com)
+ * FileName: customer.damage-info.guide.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
 
-Tw.CustomerProtectGuide = function(rootEl) {
+Tw.CustomerDamageInfoGuide = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
@@ -14,7 +14,7 @@ Tw.CustomerProtectGuide = function(rootEl) {
   this._bindEvent();
 };
 
-Tw.CustomerProtectGuide.prototype = {
+Tw.CustomerDamageInfoGuide.prototype = {
 
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category');
