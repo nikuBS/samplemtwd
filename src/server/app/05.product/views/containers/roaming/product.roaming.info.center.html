@@ -1,0 +1,168 @@
+<%#
+* FileName: product.roaming.info.center.html
+* Author: Seungkyu Kim (ksk4788@pineone.com)
+* Date: 2018.11.12
+* ID: RM_15_01_01 ~ RM_15_09
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '공항 로밍센터', svcInfo: svcInfo, option: { line: true, back: 'none', home: true } }) %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="widget">
+                    <div class="widget-box tube">
+                        <ul class="tube-list three" role="radiogroup">
+                            <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked title="인천공항 1터미널">인천공항 1터미널</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="인천공항 2터미널">인천공항 2터미널</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="김포공항">김포공항</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="제주공항">제주공항</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="김해공항">김해공항</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="대구공항">대구공항</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="인천항">인천항</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="부산항">부산항</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="제주신항">제주신항</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- 인천공항 1터미널 3층 -->
+            <% include ../../components/roaming/RM_15_01_01.html %>
+            <!--// 인천공항 1터미널 3층 -->
+
+            <!-- 인천공항 1터미널 1층 -->
+            <% include ../../components/roaming/RM_15_01_02.html %>
+            <!--// 인천공항 1터미널 1층 -->
+
+            <!-- 인천공항 2터미널 3층 -->
+            <% include ../../components/roaming/RM_15_02_01.html %>
+            <!--// 인천공항 2터미널 3층 -->
+
+            <!-- 인천공항 2터미널 1층 -->
+            <% include ../../components/roaming/RM_15_02_01.html %>
+            <!--// 인천공항 2터미널 1층 -->
+
+            <!-- 김포공항 로밍센터 -->
+            <% include ../../components/roaming/RM_15_03.html %>
+            <!--// 김포공항 로밍센터 -->
+
+            <!-- 제주공항 로밍센터 -->
+            <% include ../../components/roaming/RM_15_04.html %>
+            <!--// 김포공항 로밍센터 -->
+
+            <!-- 김해공항 3층 로밍센터 -->
+            <% include ../../components/roaming/RM_15_05_01.html %>
+            <!--// 김해공항 3층 로밍센터 -->
+
+            <!-- 김해공항 1층 로밍센터 -->
+            <% include ../../components/roaming/RM_15_05_02.html %>
+            <!--// 김해공항 1층 로밍센터 -->
+
+            <!-- 대구공항 로밍센터 -->
+            <% include ../../components/roaming/RM_15_06.html %>
+            <!--// 대구공항 로밍센터 -->
+
+            <!-- 인천항 국제1 여객터미널 -->
+            <% include ../../components/roaming/RM_15_07_01.html %>
+            <!--// 인천항 국제1 여객터미널 -->
+
+            <!-- 인천항 국제2 여객터미널 -->
+            <% include ../../components/roaming/RM_15_07_02.html %>
+            <!--// 인천항 국제2 여객터미널 -->
+
+            <!-- 부산항 국제 여객터미널 -->
+            <% include ../../components/roaming/RM_15_08.html %>
+            <!--// 부산항 국제 여객터미널 -->
+
+            <!-- 제주신항 국제 여객터미널 -->
+            <% include ../../components/roaming/RM_15_09.html %>
+            <!--// 제주신항 국제 여객터미널 -->
+
+
+            <div class="ti-caption-gray">
+                <span class="tit">로밍 업무는 각 지점에서도 이용하실 수 있습니다.</span>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box" id="center14">
+                <div class="place-list">
+                    <dl>
+                        <dt>강남, 강북, 수원, 보라매, 분당, 신촌, 안양, 영등포, 인천, 일산, 을지로, 의정부, 테크노마트 지점</dt>
+                        <dd class="time">AM 09:00 ~ PM 06:00</dd>
+                        <dd class="sub-tx">(토, 일, 공휴일 휴무)</dd>
+                        <dd>
+                            <ul class="ico-list">
+                                <li><span class="ico type1"></span>자동로밍</li>
+                                <li><span class="ico type2"></span>IB렌탈서비스</li>
+                                <li><span class="ico type3"></span>로밍 폰 임대</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>대구지점</dt>
+                        <dd class="time">AM 09:00 ~ PM 06:00</dd>
+                        <dd class="sub-tx">(토, 일, 공휴일 휴무)</dd>
+                        <dd>
+                            <ul class="ico-list">
+                                <li><span class="ico type1"></span>자동로밍</li>
+                                <li><span class="ico type2"></span>T파이 임대 (SKT 황금점)</li>
+                                <li><span class="ico type3"></span>로밍 폰 임대</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="announcement-box top-line">
+                    <p class="announcement-bullet type01">T파이 임대 업무는 온라인 또는 고객센터 사전 예약 후 SKT 황금점 매장에서만 수령이 가능합니다.<br />(주소 : 대구 수성구 동대구로 98 / 일요일 휴무)</p>
+                    <p class="announcement-bullet type01">I/B (Inbound) 렌탈서비스는 국내에 여행오신 분들, 단기 거주하시는 분들을 위해 국내에서 사용 가능한 휴대폰/Sim을 임대해 드리는 서비스입니다.</p>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>고객센터(로밍 폰 이용 시) <button id="RM_15_01_01_tip_01" type="button" class="tip-view">TIP</button></li>
+                    <li>고객센터(해외에서 일반/공중/호텔전화 이용시) <button id="RM_15_01_01_tip_02" type="button" class="tip-view">TIP</button></li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingInfoCenter($('.wrap'));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

@@ -1,0 +1,128 @@
+<%#
+* FileName: product.roaming.fi.inquire-edit.html
+* Author: Seungkyu Kim (ksk4788@pineone.com)
+* Date: 2018.11.16
+* ID: RM_14_03_02_01
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>T파이 예약정보</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="ti-caption-gray">
+                    <h3 class="tit">예약 정보 입력</h3>
+                    <span class="num tx-red" id="aria-required-01">* 필수</span>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box">
+
+                    <ul class="form-data-list">
+                        <li>
+                            <span class="tit pt0">방문국가<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></span>
+                            <div class="basic-text border">
+                                    <span class="top-tx-m">사우디아라비아, 남아프리카공화국, 리히텐슈타인, 아랍에미리트, 푸에르토리코<span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab01">국내 연락번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <div class="inputbox">
+                                    <span class="input">
+                                        <input id="flab01" type="number" value="01012342134" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력">
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab02">임대시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <div class="inputbox date-selcet mt0">
+                                <span class="date-type full"><input id="flab02" type="date" value="2018-08-29" min="2000-01-01" max="2018-12-31" title="임대시작 일자 선택"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab03">반납 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <div class="inputbox date-selcet mt0">
+                                <span class="date-type full"><input id="flab03" type="date" value="2018-09-09" min="2000-01-01" max="2018-12-31" title="반납 일자 선택"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab04">수령장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 로밍 센터(E-F 카운터)<span class="ico"></span></button>
+                            <div class="mapimg-area pt10"><img src="/img/dummy/place-img-01.jpg" alt="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"/></div>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab05">반납장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 로밍 센터<span class="ico"></span></button>
+                            <div class="mapimg-area pt10"><img src="/img/dummy/place-img-01-1.jpg" alt="인천공항 1터미널 1층 로밍 센터"/></div>
+                        </li>
+                    </ul>
+
+                    <div class="announcement-box mt20">
+                        <p class="announcement-bullet type01">청구기준은 한국시간 기준으로 임대일로부터 반납일까지 입니다. 단, 출국/귀국 비행시간을 고려하여 2일 이상 이용 시 전체 임대 기간에서 1일 이용요금이 무료 제공됩니다.</p>
+                        <p class="announcement-bullet type01">대구 SKT 황금점 매장은 매주 일요일 휴무이므로 임대 시작일/반납일자가 일요일인 경우 다른 장소를 선택해주시길 바랍니다.</p>
+                        <p class="announcement-bullet type01">로밍 센터별 근무시간이 상이하므로 사전에 업무시간을 확인하신 후 방문하셔야 합니다. <button class="bt-link-tx underline block">업무시간 상세보기</button></p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        <li>텍스트가 1줄인 Case입니다.</li>
+                        <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view">TIP</button></li>
+                        <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button>예약 수정</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+</div>
+</body>
+
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingFiInquireEdit($('.wrap'));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

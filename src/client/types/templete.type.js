@@ -337,6 +337,21 @@ Tw.POPUP_TPL = {
     '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html' },
     '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html' },
     '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' }
+  },
+  ROAMING_RETURN_PLACE: {
+    title: '반납 장소 선택',
+    data: [
+      {
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="00"', value: '인천공항 1터미널 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="01"', value: '인천공항 2터미널 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="02"', value: '김포공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="03"', value: '제주공항 국제선 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="04"', value: '김해공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="05"', value: '대구공항 2층 로밍 센터' }
+        ]
+      }
+    ]
   }
 };
 
