@@ -1,6 +1,6 @@
 /**
  * FileName: myt-fare.info.history.js
- * Author: Lee Sanghyoung (silion@sk.com)
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018. 9. 17
  */
 Tw.MyTFareInfoHistory = function (rootEl, data) {

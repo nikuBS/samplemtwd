@@ -1,6 +1,6 @@
 /**
  * FileName: myt-fare.info.bill.controller.ts
- * Author: Lee Sanghyoung (silion@sk.com)
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018.09.17
  */
 
