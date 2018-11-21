@@ -1,6 +1,6 @@
 /**
- * FileName: myt-fare.payment.history.detail.controller.ts
- * Author: Lee Sanghyoung (silion@sk.com)
+ * FileName: myt-fare.info.history.detail.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018.09.17
  */
 
@@ -19,7 +19,7 @@ interface Query {
 }
 
 
-class MyTFarePaymentHistoryDetail extends TwViewController {
+class MyTFareInfoHistoryDetail extends TwViewController {
 
   constructor() {
     super();
@@ -53,7 +53,7 @@ class MyTFarePaymentHistoryDetail extends TwViewController {
               requestType = req.query.type;
               break;
           }
-          res.render('history/myt-fare.payment.history.detail.html', {
+          res.render('info/myt-fare.info.history.detail.html', {
             svcInfo: svcInfo,
             pageInfo: pageInfo,
             data: {
@@ -68,7 +68,7 @@ class MyTFarePaymentHistoryDetail extends TwViewController {
       default:
         requestType = req.query.type;
 
-        res.render('history/myt-fare.payment.history.detail.html', {
+        res.render('info/myt-fare.info.history.detail.html', {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           data: {
@@ -81,4 +81,4 @@ class MyTFarePaymentHistoryDetail extends TwViewController {
   }
 }
 
-export default MyTFarePaymentHistoryDetail;
+export default MyTFareInfoHistoryDetail;

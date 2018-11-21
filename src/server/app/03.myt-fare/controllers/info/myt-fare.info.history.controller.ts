@@ -1,6 +1,6 @@
 /**
- * FileName: myt-fare.payment.history.controller.ts
- * Author: Lee Sanghyoung (silion@sk.com)
+ * FileName: myt-fare.info.history.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018.09.17
  */
 
@@ -44,7 +44,7 @@ interface PaymentList {
 interface Info {
   [key: string]: string;
 }
-class MyTFarePaymentHistory extends TwViewController {
+class MyTFareInfoHistory extends TwViewController {
   private paymentData: PaymentData = {};
 
   constructor() {
@@ -144,7 +144,7 @@ class MyTFarePaymentHistory extends TwViewController {
 
   private renderView(req: Request, res: Response, next: NextFunction, data: any) {
 
-    res.render('history/myt-fare.payment.history.html', {
+    res.render('info/myt-fare.info.history.html', {
       svcInfo: data.svcInfo,
       pageInfo: data.pageInfo,
       currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.all,
@@ -210,7 +210,7 @@ class MyTFarePaymentHistory extends TwViewController {
         this.getOnetimePointReserveData(),
         this.getPointAutoPaymentData()
     ).subscribe(histories => {
-      // this.logger.info(this, '-[MyTFarePaymentHistory] -------->');
+      // this.logger.info(this, '-[MyTFareInfoHistory] -------->');
 
       this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
     });
@@ -525,4 +525,4 @@ class MyTFarePaymentHistory extends TwViewController {
   }
 }
 
-export default MyTFarePaymentHistory;
+export default MyTFareInfoHistory;

@@ -1,9 +1,9 @@
 /**
  * FileName: myt-fare.overpay-refund.js
- * Author: Lee Sanghyoung (silion@sk.com)
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018. 9. 17
  */
-Tw.MyTFareOverpayRefund = function (rootEl, data) {
+Tw.MyTFareInfoOverpayRefund = function (rootEl, data) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService(rootEl);
@@ -13,7 +13,7 @@ Tw.MyTFareOverpayRefund = function (rootEl, data) {
   this._init();
 };
 
-Tw.MyTFareOverpayRefund.prototype = {
+Tw.MyTFareInfoOverpayRefund.prototype = {
   _init: function () {
     if (this.data.current !== 'detail') {
       this._cachedElement();

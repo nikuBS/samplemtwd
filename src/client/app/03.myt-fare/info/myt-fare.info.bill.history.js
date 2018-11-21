@@ -1,9 +1,9 @@
 /**
- * FileName: myt-fare.payment.bill.history.js
- * Author: Lee Sanghyoung (silion@sk.com)
+ * FileName: myt-fare.info.bill.history.js
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018. 9. 17
  */
-Tw.MyTFarePaymentBillHistory = function (rootEl, data) {
+Tw.MyTFareInfoBillHistory = function (rootEl, data) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -27,7 +27,7 @@ Tw.MyTFarePaymentBillHistory = function (rootEl, data) {
   }
 };
 
-Tw.MyTFarePaymentBillHistory.prototype = {
+Tw.MyTFareInfoBillHistory.prototype = {
   _initTax: function () {
     var initedListTemplate;
     var totalDataCounter = this.data.items.length;

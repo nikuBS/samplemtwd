@@ -1,6 +1,6 @@
 /**
- * FileName: myt-fare.bill-history.controller.ts
- * Author: Lee Sanghyoung (silion@sk.com)
+ * FileName: myt-fare.info.bill.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018.09.17
  */
 
@@ -19,7 +19,7 @@ interface Query {
   isQueryEmpty: boolean;
 }
 
-class MyTFareBillHistory extends TwViewController {
+class MyTFareInfoBill extends TwViewController {
 
   constructor() {
     super();
@@ -57,7 +57,7 @@ class MyTFareBillHistory extends TwViewController {
             o.totAmt = FormatHelper.addComma(o.totAmt.toString());
           });
 
-          res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, data: {
+          res.render('info/myt-fare.info.bill.html', {svcInfo: svcInfo, data: {
               isTax: query.current === 'bill-tax',
               current: query.current,
               items: resp.result.taxReprintList
@@ -97,7 +97,7 @@ class MyTFareBillHistory extends TwViewController {
             return prev;
           }, []);
 
-          res.render('history/myt-fare.bill-history.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
+          res.render('info/myt-fare.info.bill.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
               isTax: query.current === 'bill-tax',
               current: query.current,
               list: resp.result
@@ -112,4 +112,4 @@ class MyTFareBillHistory extends TwViewController {
 
 }
 
-export default MyTFareBillHistory;
+export default MyTFareInfoBill;
