@@ -29,7 +29,8 @@
                 <ul class="email-consult-list">
                     <% inquiryList.map( (inquiry) => { %>
                     <li>
-                        <button data-inqId="<%-inquiry.inqId%>" data-inqClCd="<%-inquiry.inqClCd%>" class="list-inner fe-btn_history_detail">
+                        <button data-inqId="<%-inquiry.inqId%>" data-inqClCd="<%-inquiry.inqClCd%>"
+                                class="list-inner fe-btn_history_detail">
                             <% if ( inquiry.supInqId !== '' ) { %>
                             <em class="again">재문의</em>
                             <% } %>
