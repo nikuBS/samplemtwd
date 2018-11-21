@@ -27,9 +27,9 @@ import MyTJoinWireGifts from './controllers/wire/myt-join.wire.gifts.controller'
 import MyTJoinWireHistory from './controllers/wire/myt-join.wire.history.controller';
 import MyTJoinWireHistoryDetail from './controllers/wire/myt-join.wire.history.detail.controller';
 import MyTJoinWireInetPhoneNumChange from './controllers/wire/myt-join.wire.netphone.change.controller';
-import MyTJoinMgmtNumChgAlarm from './controllers/management/myt-join.mgmt.numchg-alarm.controller';
-import MyTJoinMgmtNumChgAlarmExt from './controllers/management/myt-join.mgmt.numchg-alarm.ext.controller';
-import MyTJoinMgmtNumChg from './controllers/management/myt-join.mgmt.numchg.controller';
+import MyTJoinPhoneNumChgAlarm from './controllers/submain/myt-join.submain.phone.alarm.controller';
+import MyTJoinPhoneNumChgAlarmExt from './controllers/submain/myt-join.submain.phone.extalarm.controller';
+import MyTJoinNumChange from './controllers/submain/myt-join.submain.numchange.controller';
 import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.controller';
 
 class MyTJoinRouter extends TwRouter {
@@ -55,9 +55,9 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/wire/modify/product', controller: MyTJoinWireModifyProduct });
     this.controllers.push({ url: '/wire/set/wire-cancel-service', controller: MyTJoinWireSetWireCancelService });
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
-    this.controllers.push({ url: '/mgmt/numchg', controller: MyTJoinMgmtNumChg });
-    this.controllers.push({ url: '/mgmt/numchg/alarm', controller: MyTJoinMgmtNumChgAlarm });
-    this.controllers.push({ url: '/mgmt/numchg/alarm/ext', controller: MyTJoinMgmtNumChgAlarmExt });
+    this.controllers.push({ url: '/mgmt/numchg', controller: MyTJoinNumChange });
+    this.controllers.push({ url: '/mgmt/numchg/alarm', controller: MyTJoinPhoneNumChgAlarm });
+    this.controllers.push({ url: '/mgmt/numchg/alarm/ext', controller: MyTJoinPhoneNumChgAlarmExt });
 
     // new url
     this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
@@ -84,9 +84,9 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/wire/changeowner', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/submain/suspend', controller: MyTJoinSuspend });
     this.controllers.push({ url: '/submain/suspend/status', controller: MyTJoinSuspendStatus });
-    this.controllers.push({ url: '/submain/numchange', controller: MyTJoinMgmtNumChg });
-    this.controllers.push({ url: '/submain/phone/alarm', controller: MyTJoinMgmtNumChgAlarm });
-    this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinMgmtNumChgAlarmExt });
+    this.controllers.push({ url: '/submain/numchange', controller: MyTJoinNumChange });
+    this.controllers.push({ url: '/submain/phone/alarm', controller: MyTJoinPhoneNumChgAlarm });
+    this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinPhoneNumChgAlarmExt });
     this.controllers.push({ url: '/myplanadd', controller: MyTJoinMyPlanAdd });
     this.controllers.push({ url: '/myplancombine(/:combination)?', controller: MyTJoinMyPlanCombine });
   }

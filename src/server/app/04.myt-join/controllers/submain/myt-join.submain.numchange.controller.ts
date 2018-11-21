@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 
-class MyTJoinMgmtNumChg extends TwViewController {
+class MyTJoinPhoneNumChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
@@ -29,7 +29,7 @@ class MyTJoinMgmtNumChg extends TwViewController {
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
-          res.render('management/myt-join.mgmt.numchg.html', option );
+          res.render('submain/myt-join.submain.numchange.html', option );
 
         } else {
           return this.error.render(res, {
@@ -51,5 +51,5 @@ class MyTJoinMgmtNumChg extends TwViewController {
   }
 }
 
-export default MyTJoinMgmtNumChg;
+export default MyTJoinPhoneNumChange;
 
