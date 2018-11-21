@@ -76,7 +76,8 @@ Tw.POPUP_TITLE = {
   HISTORY: '이용내역',
   MEMBERSHIP_CORPORATE_LIST: '명의자 선택',
   SELECT_COUNTRY: '방문 국가',
-  ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가'
+  ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
+  REFUND_BANK_SELECT: '환불신청계좌 은행 선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -86,7 +87,8 @@ Tw.POPUP_CONTENTS = {
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
   RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
-  NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.'
+  NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.',
+  DONATION: '해지환급금 기부신청을 하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {

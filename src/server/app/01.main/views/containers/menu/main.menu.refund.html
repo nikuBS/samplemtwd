@@ -1,5 +1,5 @@
 <%#
-* FileName: main.menu.refund.html
+* FileName: main.menu.refund.html (MN_01_04**)
 * Author: Hakjoon Sim (hakjoon.sim@sk.com)
 * Date: 2018.11.14
 %>
@@ -24,14 +24,15 @@
             <h2 class="blind">내용</h2>
             <div class="container">
 
+                <% if (data.totalAmount > 0) { %>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
                     <div class="plan-pay-title">
                         <h3 class="tit">
-                            <span class="pay-name">휴대폰</span>
-                            <span class="pay-line mt4">010-12**-34** 외 2건</span>
+                            <span class="pay-name"><%= data.refundArr[0].svcCdNm %></span>
+                            <span class="pay-line mt4"><%= data.refundArr[0].svcNum %> 외 <%= data.refundArr.length - 1  %>건</span>
                             <span class="pay-sum">해지환급금액</span>
-                            <span class="pay-fee"><span class="mt4">45,000</span>원</span>
+                            <span class="pay-fee"><span class="mt4"><%= data.totalAmount %></span>원</span>
                         </h3>
                         <div class="bt-alone"><button class="bt-bg-blue1" id="fe-btn-detail">상세 보기</button></div>
                     </div>
@@ -50,7 +51,7 @@
                             <div class="widget-box radio">
                                 <ul class="select-list" role="group">
                                     <li class="radiobox type01" role="radio" aria-checked="true">
-                                        <input type="radio" name="radio" value="" title="계좌등록" aria-labelledby="aria-comp-radio1" checked="checked">
+                                        <input type="radio" name="radio" value="refund" title="계좌등록" aria-labelledby="aria-comp-radio1" checked="checked">
                                         <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                             <p class="layout-text">
                                                 <span class="mtext">계좌등록</span>
@@ -58,7 +59,7 @@
                                         </div>
                                     </li>
                                     <li class="radiobox type01" role="radio" aria-checked="false">
-                                        <input type="radio" name="radio" value="" title="기부신청" aria-labelledby="aria-comp-radio2">
+                                        <input type="radio" name="radio" value="donation" title="기부신청" aria-labelledby="aria-comp-radio2">
                                         <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
                                             <span class="ico ico-movie"></span>
                                             <p class="layout-text">
@@ -76,7 +77,7 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- cont-box -->
-                <div class="cont-box">
+                <div class="cont-box" id="fe-div-refund">
                     <ul class="form-data-list">
                         <li>
                             <label class="tit" for="formInput01">은행명</label>
@@ -106,7 +107,7 @@
                         <li>
                             <dl>
                                 <dt>예금주</dt>
-                                <dd>홍길동</dd>
+                                <dd><%= data.name %></dd>
                             </dl>
                         </li>
                         <li>
@@ -119,11 +120,94 @@
 
                     <ul class="bt-slice mt20">
                         <li class="bt-blue1">
-                            <button id="fe-submit" disabled="disabled">신청하기</button>
+                            <button id="fe-submit-refund" disabled="disabled">신청하기</button>
                         </li>
                     </ul>
                 </div>
                 <!-- //cont-box -->
+                <!-- cont-box -->
+                <div class="cont-box nogaps-top none" id="fe-div-donation">
+                        <ul class="detail-info-list">
+                            <li>
+                                <dl>
+                                    <dt>기부신청 가능 미환급금</dt>
+                                    <dd><%= data.totalAmount %> 원</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>처리결과</dt>
+                                    <dd>기부신청</dd>
+                                </dl>
+                            </li>
+                        </ul>
+
+                        <ul class="bt-slice mt20">
+                            <li class="bt-blue1">
+                                <button id="fe-submit-donation">기부 신청하기</button>
+                            </li>
+                        </ul>
+
+                        <div class="announcement-box mt20">
+                            <div class="announcement-bullet type02">미환급금에 대한 기부신청은 1,000원 미만 금액에 대해서만 가능하며, 신청 익익월에 지정기부단체(사랑의 열매)로 기부됩니다.</div>
+                        </div>
+                    </div>
+                    <!-- //cont-box -->
+                <% } else { %>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">환급가능 금액이 없습니다.</p>
+                    </div>
+                </div>
+                <!-- //cont-box -->
+                <% } %>
+
+                <% if (data.submittedArr.length > 0) { %>
+                <div class="ti-caption-gray">
+                    <span class="tit">신청내역</span>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="app-details-box">
+                        <% for (const item of data.submittedArr) { %>
+                        <div class="phone-num-box">
+                            <span class="phone-num"><strong class="phone"><%= item.svcCdNm %></strong> <em class="num"><%= item.svcNum %></em></span>
+                        </div>
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">신청일</span>
+                                    <span class="tx-cont"><%= item.donaReqYn === 'Y' ? item.donaReqDt : item.effStaDt %></span>
+                                </li>
+                                <li>
+                                    <span class="title">계좌번호</span>
+                                    <% if (item.donaReqYn !== 'Y') { %>
+                                    <span class="tx-cont"><%= item.rfndBankNm %><br><%= item.rfndBankNum %></span>
+                                    <% } else { %>
+                                    <span class="tx-cont">-</span>
+                                    <% } %>
+                                </li>
+                                <li>
+                                    <span class="title">처리결과</span>
+                                    <span class="tx-cont"><%= item.msg %></span>
+                                </li>
+                                <li>
+                                    <span class="title">기부신청여부</span>
+                                    <span class="tx-cont"><%= item.donaReqYn === 'Y' ? '기부' : '-' %></span>
+                                </li>
+                            </ul>
+                            <% if (item.isError) { %>
+                            <button class="bt-link-tx underline red" id="fe-change-account" value="<%= item.svcMgmtNum %>">계좌정보 수정하기</button>
+                            <% } %>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+                <!-- //cont-box -->
+                <% } %>
 
                 <!-- .cont-box -->
                 <div class="cont-box noborder bgnone">
@@ -155,9 +239,9 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
                     <ul class="noti-list">
-                        <li>텍스트가 1줄인 Case입니다.</li>
-                        <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                        <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>공공기관 사칭 주의! <button type="button" id="MN_01_04_01_01_tip_01" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>송금 오류가 난 경우! <button type="button"id="MN_01_04_01_01_tip_02"  class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>송금 기간 <button type="button" id="MN_01_04_01_01_tip_03" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
                     </ul>
                 </div>
                 <!-- //cont-box -->
@@ -173,7 +257,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MainMenuRefund($('.wrap'));
+    new Tw.MainMenuRefund($('.wrap'), '<%- JSON.stringify(data) %>');
   });
 </script>
 <% include ../../components/end.component.html %>
