@@ -1,9 +1,9 @@
 /**
- * FileName: myt-join.mgmt.numchg.js
+ * FileName: myt-join.submain.numchange.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.22
  */
-Tw.MyTJoinMgmtNumchg = function (rootEl, options) {
+Tw.MyTJoinPhoneNumChange = function (rootEl, options) {
   this.$container = rootEl;
   this._options = options;
   this._apiService = Tw.Api;
@@ -14,7 +14,7 @@ Tw.MyTJoinMgmtNumchg = function (rootEl, options) {
   this._bindEvent();
 };
 
-Tw.MyTJoinMgmtNumchg.prototype = {
+Tw.MyTJoinPhoneNumChange.prototype = {
 
   /**
    * 이벤트 바인딩

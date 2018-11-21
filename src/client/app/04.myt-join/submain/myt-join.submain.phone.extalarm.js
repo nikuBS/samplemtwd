@@ -1,9 +1,9 @@
 /**
- * FileName: myt-join.mgmt.numchg-alarm.ext.js
+ * FileName: myt-join.submain.phone.extalarm.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.22
  */
-Tw.MyTJoinMgmtNumchgAlarmExt = function (rootEl, options) {
+Tw.MyTJoinPhoneNumChgAlarmExt = function (rootEl, options) {
   this._SVC_TYPE = {
     EXT : 'E',    // 연장
     CAN : 'C'     // 해지
@@ -21,7 +21,7 @@ Tw.MyTJoinMgmtNumchgAlarmExt = function (rootEl, options) {
   this._onchangeUiCondition();
 };
 
-Tw.MyTJoinMgmtNumchgAlarmExt.prototype = {
+Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
 
   /**
    * 이벤트 바인딩

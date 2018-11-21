@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.mgmt.numchg-alarm.ext.controller.ts
+ * FileName: myt-join.submain.phone.extalarm.controller.ts
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.19
  */
@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
 
-class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
+class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
@@ -45,7 +45,7 @@ class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
           }
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result };
-          res.render('management/myt-join.mgmt.numchg-alarm.ext.html', option);
+          res.render('submain/myt-join.submain.phone.extalarm.html', option);
         } else {
           return this.error.render(res, {
             title: '번호변경 안내 서비스',
@@ -67,5 +67,5 @@ class MyTJoinMgmtNumChgAlarmExt extends TwViewController {
   }
 }
 
-export default MyTJoinMgmtNumChgAlarmExt;
+export default MyTJoinPhoneNumChgAlarmExt;
 
