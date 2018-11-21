@@ -83,10 +83,11 @@
             <li>
                 <div class="link-long">
                     <button data-id="wire-inq">
-                        인터넷/집전화/IPTV 신청내역 및 조회<span class="ico"></span>
+                        인터넷・집전화・IPTV 신청내역 및 조회<span class="ico"></span>
                     </button>
                 </div>
             </li>
+            <% if (data.isWireFree) { %>
             <li>
                 <div class="link-long">
                     <button data-id="B-target-inq">
@@ -94,6 +95,7 @@
                     </button>
                 </div>
             </li>
+            <% } %>
         <% } %>
     </ul>
 </div>

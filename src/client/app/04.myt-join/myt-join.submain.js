@@ -36,14 +36,16 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.isContractPlan ) {
         this.$contractPlan = this.$container.find('[data-id=contract-plan]');
       }
-      if (this.data.myPausedState && this.data.myPausedState.svcStSd) {
+      if ( this.data.myPausedState && this.data.myPausedState.svcStSd ) {
         this.$pauseC = this.$container.find('[data-id=pause_c]');
       }
     }
     // 유선
     else if ( this.data.type === 2 ) {
       this.$wireInq = this.$container.find('[data-id=wire-inq]');
-      this.$bTargetInq = this.$container.find('[data-id=B-target-inq]');
+      if ( this.data.isWireFree ) {
+        this.$bTargetInq = this.$container.find('[data-id=B-target-inq]');
+      }
       this.$addrChg = this.$container.find('[data-id=addr-chg]');
       this.$prodChg = this.$container.find('[data-id=prod-chg]');
       this.$instChg = this.$container.find('[data-id=inst-chg]');
@@ -83,18 +85,20 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.isContractPlan ) {
         this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
       }
-      if (this.data.myPausedState && this.data.myPausedState.svcStSd) {
+      if ( this.data.myPausedState && this.data.myPausedState.svcStSd ) {
         this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
       }
     }
     // 유선
     else if ( this.data.type === 2 ) {
       this.$wireInq.on('click', $.proxy(this._onMovedWireInquire, this));
-      this.$bTargetInq.on('click', $.proxy(this._onMovedBInquire, this));
+      if ( this.data.isWireFree ) {
+        this.$bTargetInq.on('click', $.proxy(this._onMovedBInquire, this));
+      }
       this.$addrChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$prodChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$instChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
-      this.$transferFee .on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$transferFee.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$svcCancel.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$wirePause.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$untillInfo.on('click', $.proxy(this._onMovedWireOtherSvc, this));
@@ -114,43 +118,43 @@ Tw.MyTJoinSubMain.prototype = {
   _initialize: function () {
   },
   // 나의요금제
-  _onMovedMyPlan: function() {
+  _onMovedMyPlan: function () {
     this._historyService.goLoad('/myt/join/product/fee-plan');
   },
   // 고객보호비밀번호 변경
-  _onMovedChangePwd: function() {
+  _onMovedChangePwd: function () {
     this._historyService.goLoad('/myt-join/custpassword');
   },
   // 부가 상품
-  _onMovedAddProduct: function() {
+  _onMovedAddProduct: function () {
     this._historyService.goLoad('/myt-join/myplanadd');
   },
   // 결합 상품
-  _onMovedComProduct: function() {
+  _onMovedComProduct: function () {
     this._historyService.goLoad('/myt-join/myplancombine');
   },
   // 약정 할인
-  _onMovedInstallement: function() {
+  _onMovedInstallement: function () {
     this._historyService.goLoad('/myt-join/myplancombine/infodiscount');
   },
   // 무약정플랜
-  _onMovedContractPlan: function() {
+  _onMovedContractPlan: function () {
     this._historyService.goLoad('/myt-join/myplancombine/noagreement');
   },
   // 모바일 일시정지/해제
-  _onMovedMobilePause: function() {
+  _onMovedMobilePause: function () {
     this._historyService.goLoad('/myt-join/submain/suspend#temporary');
   },
   // 인터넷/IPTV/집전화 신청 내역 및 조회
-  _onMovedWireInquire: function() {
+  _onMovedWireInquire: function () {
     this._historyService.goLoad('/myt-join/submain/wire');
   },
   // B끼리 무료통화 대상자 조회
-  _onMovedBInquire: function() {
+  _onMovedBInquire: function () {
     this._historyService.goLoad('/myt-join/submain/wire/freecallcheck');
   },
   // 유선기타서비스
-  _onMovedWireOtherSvc: function(event) {
+  _onMovedWireOtherSvc: function (event) {
     var $target = $(event.target);
     switch ( $target.attr('data-id') ) {
       case 'addr-chg':

@@ -13,15 +13,24 @@
         <li>
             <div class="link-long">
                 <!-- 장기일시정지 관련 API 기능 들어오면 처리 -->
-                <button data-id="pause_c">일시 정지/해제
-                    <% if (data.myPausedState.svcStCd === 'AC') { %>
-                    <span class="ico"></span>
-                    <% } else { %>
+                <button data-id="pause_c">일시정지
                     <span class="tx-sub">
+                    <% if (data.myPausedState.svcStCd === 'AC') { %>
+                        <% if (data.myLongPausedState.state) { %>
+                        <span class="normal">장기일시정지 <%= data.myLongPausedState.opState %></span>
+                        <span class="ico"><span class="blind">장기 일시 정지 신청</span></span>
+                        <% } else { %>
+                        <span class="normal">신청하기</span>
+                        <span class="ico"><span class="blind">일시 정지 신청하기</span></span>
+                        <% } %>
+                    <% } else { %>
                         <span class="normal">
-                            <%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
+                            <% if (data.myLongPausedState.state) { %>
+                            장기일시정지 <%= data.myLongPausedState.opState %>
+                            <% } %>
+                            일시정지 중/<%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
                         </span>
-                        <span class="ico"></span>
+                        <span class="ico">일시 정지 중</span>
                     </span>
                     <% } %>
                 </button>
