@@ -35,7 +35,7 @@ import ProductWireplanJoinReservation from './controllers/wireplan/join/product.
 import ProductWireplanJoinRequireDocumentApply from './controllers/wireplan/join/product.wireplan.join.require-document.apply.controller';
 import ProductWireplanJoinRequireDocumentHistory from './controllers/wireplan/join/product.wireplan.join.require-document.history.controller';
 
-import ProductSettingTargetDiscount from './controllers/setting/product.setting.target-discount.controller';
+import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 
 import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
 import ProductRoamingSearchAfter from './controllers/roaming/product.roaming.do.search-after.controller';
@@ -67,13 +67,12 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/join/data-together/:prodId', controller: ProductMobileplanJoinDataTogether });
     this.controllers.push({ url: '/mobileplan/join/:prodId', controller: ProductMobileplanJoin });
     this.controllers.push({ url: '/mobileplan/setting/tplan/:prodId', controller: ProductMobileplanSettingTplan });
-    this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductSettingTargetDiscount });
     this.controllers.push({ url: '/mobileplan/setting/0plan/:prodId', controller: ProductMobileplanSetting0plan });
     this.controllers.push({ url: '/mobileplan/setting/option/:prodId', controller: ProductMobileplanSettingOption });
     this.controllers.push({ url: '/mobileplan/setting/ting/:prodId', controller: ProductMobileplanSettingTing });
     this.controllers.push({ url: '/mobileplan/setting/number/:prodId', controller: ProductMobileplanSettingNumber });
     this.controllers.push({ url: '/mobileplan/setting/number-friend/:prodId', controller: ProductMobileplanSettingNumberFriend });
-    this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductSettingTargetDiscount });
+    this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductMobileplanSettingLocation });
     this.controllers.push({ url: '/mobileplan/lookup/tplan(/:prodId)?', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting/:prodId', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
