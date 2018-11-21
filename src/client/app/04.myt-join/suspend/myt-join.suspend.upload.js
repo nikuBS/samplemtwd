@@ -102,7 +102,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._setFileButton($inputBox, true);
   },
 
-  _setFileButton($inputBox, addable) {
+  _setFileButton: function($inputBox, addable) {
     if ( addable ) {
       $inputBox.find('input.fileview').val('');
       $inputBox.find('input.file').prop('files', null);
