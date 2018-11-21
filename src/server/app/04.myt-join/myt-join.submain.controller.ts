@@ -58,8 +58,9 @@ class MyTJoinSubmainController extends TwViewController {
       this._getInstallmentInfo(),
       this._getPausedState(),
       this._getLongPausedState(),
-      this._getWireFreeCall()
-    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree]) => {
+      this._getWireFreeCall(),
+      this._getOldNumberInfo()
+    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
         this.error.render(res, {
@@ -75,14 +76,17 @@ class MyTJoinSubmainController extends TwViewController {
       // 가입정보
       switch ( this.type ) {
         case 0:
-        case 3:
+          data.isOldNumber = !(!oldnum);
           data.myInfo = myif;
+          break;
+        case 2:
+          data.myInfo = this._convertWireInfo(myif);
           if ( wirefree && wirefree.freeCallYn === 'Y' ) {
             data.isWireFree = true;
           }
           break;
-        case 2:
-          data.myInfo = this._convertWireInfo(myif);
+        case 3:
+          data.myInfo = myif;
           break;
       }
       data.myHistory = myhs; // 개통/변경 이력
@@ -334,6 +338,18 @@ class MyTJoinSubmainController extends TwViewController {
       tel02: '345',
       tel03: '6789'
     }).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
+
+  // 010 번호 변경 가능 여부 확인
+  _getOldNumberInfo() {
+    return this.apiService.request(API_CMD.BFF_05_0186, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
