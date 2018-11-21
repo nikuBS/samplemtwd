@@ -389,7 +389,7 @@ Tw.MyTFareSubMain.prototype = {
   _onClickedSelBillGuide: function (/*event*/) {
     // 1. 통합청구, 2. 개별청구, 3. 보안솔루션
     // 선불폰, 사용요금
-    this._historyService.goLoad('/myt/fare/bill/guide');
+    this._historyService.goLoad('/myt-fare/billguide/guide');
   },
 
   // 요금납부 이동
