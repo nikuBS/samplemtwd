@@ -300,13 +300,13 @@ Tw.POPUP_TPL = {
     {
       list: [
         { value: '전체', option: 'checked' },
-        { value: '즉시 납부' },
-        { value: '자동 납부' },
-        { value: '자동 납부 통합 인출' },
+        { value: '즉시납부' },
+        { value: '자동납부' },
+        { value: '자동납부 통합인출' },
         { value: '소액결제 선결제' },
-        { value: '콘텐츠 이용료 선결제' },
+        { value: '콘텐츠 이용요금 선결제' },
         { value: '포인트 납부 예약' },
-        { value: '포인트 자동 납부' }
+        { value: '포인트 자동납부' }
       ]
     }
   ],

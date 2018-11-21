@@ -15,6 +15,7 @@ import MyTFareHistory from './controllers/history/myt-fare.history.controller';
 import MyTFareInfoHistory from './controllers/info/myt-fare.info.history.controller';
 import MyTFareInfoHistoryDetail from './controllers/info/myt-fare.info.history.detail.controller';
 import MyTFareInfoBill from './controllers/info/myt-fare.info.bill.controller';
+import MyTFareInfoBillTax from './controllers/info/myt-fare.info.bill-tax.controller';
 import MyTFareInfoOverpayRefund from './controllers/info/myt-fare.info.overpay-refund.controller';
 import MyTFareBillAccount from './controllers/bill/myt-fare.bill.account.controller';
 import MyTFareBillCard from './controllers/bill/myt-fare.bill.card.controller';
@@ -81,7 +82,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/info/history', controller: MyTFareInfoHistory });
     this.controllers.push({ url: '/info/history/detail', controller: MyTFareInfoHistoryDetail });
 
-    this.controllers.push({ url: '/info/bill-tax', controller: MyTFareInfoBill });
+    this.controllers.push({ url: '/info/bill-tax', controller: MyTFareInfoBillTax });
     this.controllers.push({ url: '/info/bill-cash', controller: MyTFareInfoBill });
     this.controllers.push({ url: '/info/overpay-refund', controller: MyTFareInfoOverpayRefund });
     this.controllers.push({ url: '/info/overpay-refund/detail', controller: MyTFareInfoOverpayRefund });

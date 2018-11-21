@@ -38,12 +38,12 @@ class MyTFareInfoBill extends TwViewController {
 
       if (query.current === 'bill-tax') {
         this.apiService.request(API_CMD.BFF_07_0017, {}).subscribe((resp) => {
-
+          
           if (resp.code !== API_CODE.CODE_00) {
             return this.error.render(res, {
               code: resp.code,
               msg: resp.msg,
-              svcInfo: svcInfo
+              svcInfo: svcInfo,
               // ,pageInfo: pageInfo
             });
           }
@@ -57,7 +57,7 @@ class MyTFareInfoBill extends TwViewController {
             o.totAmt = FormatHelper.addComma(o.totAmt.toString());
           });
 
-          res.render('info/myt-fare.info.bill.html', {svcInfo: svcInfo, data: {
+          res.render('info/myt-fare.info.bill.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
               isTax: query.current === 'bill-tax',
               current: query.current,
               items: resp.result.taxReprintList
