@@ -4,10 +4,12 @@
 * Date: 2018.10.10
 %>
 
+<% if (data.myPausedState || data.isOldNumber || data.isNotChangeNumber) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
 <div class="cont-box nogaps">
     <ul class="link-long-list">
+        <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
         <li>
             <div class="link-long">
                 <!-- 장기일시정지 관련 API 기능 들어오면 처리 -->
@@ -25,9 +27,43 @@
                 </button>
             </div>
         </li>
+        <% } %>
+        <% if (data.isOldNumber) { %>
+        <li>
+            <div class="link-long">
+                <button data-id="old_number">010 전환 번호변경
+                    <span class="tx-sub">
+                        <span class="normal">
+                            신청하기
+                        </span>
+                        <span class="ico"><span class="blind">010 전환 번호변경 신청하기</span></span>
+                    </span>
+                </button>
+            </div>
+        </li>
+        <% } %>
+        <% if (data.isNotChangeNumber) { %>
+        <li>
+            <div class="link-long">
+                <button data-id="change_number">번호변경 안내서비스
+                    <span class="tx-sub">
+                        <span class="normal">
+                            <% if (data.numberChanged) { %>
+                            신청하기
+                            <% } else { %>
+                            연장 및 해
+                            <% } %>
+                        </span>
+                        <span class="ico"><span class="blind">번호변경 안내서비스 신청하기</span></span>
+                    </span>
+                </button>
+            </div>
+        </li>
+        <% } %>
     </ul>
 </div>
 <!--// .cont-box -->
+<% } %>
 
 
 
