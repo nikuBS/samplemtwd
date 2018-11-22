@@ -91,7 +91,7 @@ class MyTFareInfoBillTax extends TwViewController {
   }
   
   private mergeList = (taxlist): TaxList[] => {
-    return [].concat.apply([], taxlist).map((tax, i) => {
+    return [].concat.apply([], taxlist).reverse().map((tax, i) => {
       tax.listId = i;
       return tax;
     });
