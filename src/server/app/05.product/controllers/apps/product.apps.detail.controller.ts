@@ -47,7 +47,15 @@ export default class ProductAppsDetail extends TwViewController {
       return resp;
     }
 
-    return resp.result;
+    const imgs: Array<string> = [];
+    return {
+      ...resp.result,
+      images: (resp.result.appsList || []).reduce((arr, img) => {
+        arr.push(img.scrshotImgUrl);
+
+        return arr;
+      }, imgs)
+    };
     // });
   }
 

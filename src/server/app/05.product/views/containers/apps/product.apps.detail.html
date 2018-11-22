@@ -52,7 +52,7 @@
                     <% } %>
                 <% } %>
 
-                <% if (app.appsList && app.appsList.length > 0 ) { %>
+                <% if (app.images && app.images.length > 0 ) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
                     <div class="slide-show">
@@ -60,10 +60,10 @@
                         <div class="widget">
                             <div class="widget-box slider1">
                                 <div class="slider-box">
-                                    <ul class="slider">
-                                        <% app.appsList.map(img => { %>
+                                    <ul id="fe-images" class="slider" data-images="<%- app.images %>">
+                                        <% app.images.map(img => { %>
                                         <li>
-                                            <div class="item"><img src="<%= img.scrshotImgUrl %>" alt="" class="thum" /></div>
+                                            <div class="item"><img src="<%= img %>" alt="" class="thum" /></div>
                                         </li>
                                         <% }); %>
                                     </ul>
