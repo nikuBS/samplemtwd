@@ -53,11 +53,12 @@ Tw.MyTFareInfoBillTax.prototype = {
     var target = $(e.currentTarget);
 
     this.isFax  = target.attr('class').search('fax') >= 0;
+    this.targetData = this.data.items[target.data('listId')];
 
     if (this.isFax) {
-      this._openResendByFax(this.data.items[target.data('listId')]);
+      this._openResendByFax(this.targetData);
     } else {
-      this._openResendByEmail(this.data.items[target.data('listId')]);
+      this._openResendByEmail(this.targetData);
     }
   },
 
@@ -126,7 +127,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
   },
   _sendRerequestByEmail: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0018, {eMail:this.$emailInput.val()})
+    this._apiService.request(Tw.API_CMD.BFF_07_0018, {eMail:this.$emailInput.val(), selType:'M', selSearch:this.targetData.taxBillYearMonth})
         .done($.proxy(this._resSendCallback, this)).fail();
   },
   _resSendCallback: function(res) {
