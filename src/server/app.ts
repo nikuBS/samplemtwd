@@ -39,6 +39,7 @@ import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
 import LoggerService from './services/logger.service';
 
+
 class App {
   public app: Application = express();
   public redisService = new RedisService();
@@ -98,7 +99,8 @@ class App {
   }
 
   private setClientMap() {
-    const version = String(process.env.NODE_ENV) === 'development' ? VERSION : 'dev';
+    const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
+
     this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
       Object.keys(manifest).map((key) => {
         if ( key.indexOf('.') !== -1 ) {

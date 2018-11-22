@@ -54,7 +54,7 @@ class ApiService {
   }
 
   public getServerUri(command: any): string {
-    const buildType = this.loginService.isGreen() === BUILD_TYPE.GREEN ? '_G' : '';
+    const buildType = (command.server === API_SERVER.BFF && this.loginService.isGreen() === BUILD_TYPE.GREEN) ? '_G' : '';
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
@@ -155,7 +155,7 @@ class ApiService {
       }
       observer.next(error);
     } else {
-      this.logger.error(this, '[API ERROR] Exception', err);
+      this.logger.error(this, '[API ERROR] Exception', err.response);
       observer.next({ code: API_CODE.CODE_500 });
     }
     observer.complete();
@@ -175,7 +175,7 @@ class ApiService {
       error.serverSession = serverSession;
       observer.next(error);
     } else {
-      this.logger.error(this, '[API ERROR Native] Exception', err);
+      this.logger.error(this, '[API ERROR Native] Exception', err.response);
       observer.next({ code: API_CODE.CODE_500 });
     }
     observer.complete();

@@ -8,7 +8,7 @@ export enum API_METHOD {
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
   TID = 'TID_SERVER',
-  CDN = 'CDN',
+  CDN = 'CDN_MANIFEST',
   TEST = 'TEST_SERVER'
 }
 
