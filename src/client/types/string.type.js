@@ -313,7 +313,8 @@ Tw.ALERT_MSG_COMMON = {
     TITLE:'T world App으로 이동하시겠습니까?',
     MSG: '선택하신 서비스는<br/>모바일 T world app에서만<br/>이용하실 수 있습니다.',
     BUTTON: '이동'
-  }
+  },
+  CHANGE: '변경하시겠습니까?'
 };
 
 Tw.ALERT_MSG_HOME = {};

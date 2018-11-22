@@ -1,0 +1,108 @@
+<%#
+* FileName: product.mobileplan.setting.bandYT.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.11.14
+%>
+<% include ../../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo: data.svcInfo, option: { line: false } }); %>
+        <!-- .container-wrap -->
+        <div class="container-wrap" data-id="bandyt-wrapper">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="ti-caption-gray">
+                    <h4 class="tit">데이터 옵션 선택 <button type="button" class="tip-view" title="데이터 옵션 선택 정보보기" aria-haspopup="true">TIP</button></h4>
+                    <p class="num"><%= data.svcInfo.svcNum %></p>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .list-comp-input -->
+                    <div class="list-comp-input">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list fe-radio-box" role="group">
+                                    <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" data-info="NA000001" name="radio" value="" title="캠퍼스 데이터 무제한" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-radio1">
+                                            <p class="layout-text">
+                                                <span class="mtext">캠퍼스 데이터 무제한</span>
+                                                <span class="stext">전국 약 350여 캠퍼스 내 전용 데이터 무제한</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" data-info="NA000002" name="radio" value="" title="매일 6시간 데이터 무제한" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-radio2">
+                                            <p class="layout-text">
+                                                <span class="mtext">매일 6시간 데이터 무제한</span>
+                                                <span class="stext">출퇴근 및 점심시간 (07~09시, 12~14시, 18~20시) 전용 데이터 무제한</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <% if (data.nonOption) { %>
+                                    <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" data-info="NA000003" name="radio" value="" title="매일 6시간 데이터 무제한" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-radio3">
+                                            <p class="layout-text">
+                                                <span class="mtext">안심옵션</span>
+                                                <span class="stext">기본 데이터를 모두 사용한 후 초과 요금 없이 데이터 지속 사용 가능 (단, 최대 400kpbs로 데이터 속도 제어)</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .list-comp-input -->
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1" data-id="ok">
+                            <button>변경완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+        </footer>
+        <!--// #footer -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  var data = '<%- JSON.stringify(data) %>';
+  $(document).ready(function () {
+    new Tw.ProductMobileplanSettingBandYT({
+      $element: $('[data-id=bandyt-wrapper]'),
+      data: data
+    });
+  });
+</script>
+<% include ../../../components/end.component.html %>
