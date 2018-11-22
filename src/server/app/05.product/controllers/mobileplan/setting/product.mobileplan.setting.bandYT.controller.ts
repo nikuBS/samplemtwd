@@ -23,7 +23,8 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     const data: any = {
       pageInfo: pageInfo,
       svcInfo: svcInfo,
-      title: PRODUCT_TYPE_NM.SETTING
+      title: PRODUCT_TYPE_NM.SETTING,
+      prodId: prodId
     };
 
     if ( FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1 ) {
