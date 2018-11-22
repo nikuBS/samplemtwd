@@ -43,19 +43,23 @@ Tw.MyTDataLimit.prototype = {
 
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
-        .done($.proxy(this._onSuccessBlockImmediately, this));
-      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+        .done($.proxy(this._onSuccessBlockImmediately, this, 'unblock'));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
-        .done($.proxy(this._onSuccessBlockImmediately, this));
-      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+        .done($.proxy(this._onSuccessBlockImmediately, this, 'block'));
     }
 
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
-  _onSuccessBlockImmediately: function (res) {
-    if ( res.code !== Tw.API_CODE.CODE_00 ) {
+  _onSuccessBlockImmediately: function (sCheckType, res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      if ( sCheckType === 'block' ) {
+        this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+      } else {
+        this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+      }
+    } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
@@ -65,19 +69,23 @@ Tw.MyTDataLimit.prototype = {
 
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
-        .done($.proxy(this._onSuccessBlockMonthly, this));
-      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+        .done($.proxy(this._onSuccessBlockMonthly, this, 'unblock'));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
-        .done($.proxy(this._onSuccessBlockMonthly, this));
-      this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+        .done($.proxy(this._onSuccessBlockMonthly, this, 'block'));
     }
 
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
-  _onSuccessBlockMonthly: function (res) {
-    if ( res.code !== Tw.API_CODE.CODE_00 ) {
+  _onSuccessBlockMonthly: function (sCheckType, res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      if ( sCheckType === 'block' ) {
+        this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+      } else {
+        this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+      }
+    } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },

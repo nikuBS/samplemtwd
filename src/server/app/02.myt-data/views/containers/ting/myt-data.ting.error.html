@@ -1,0 +1,42 @@
+<%#
+* FileName: myt-data.ting.error.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.09.20
+%>
+
+<% include ../../components/start.component.html %>
+
+<body style="height: 100%;">
+<div class="wrap" style="height: 100%; padding: 0px;">
+    <div class="popup tw-popup">
+        <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+            <div class="popup-header">
+                <span class="ico type2"></span>
+                <h5 class="popup-title " id="alertHeading">팅 요금 선물하기 차단 상태로 선물하실 수 없습니다.</h5>
+            </div>
+            <div class="popup-contents " id="alertText">
+                <div class="inner-contents">
+                    <p class="">
+                        선물 차단 해제는 지점/대리점/
+                        <br>
+                        고객센터(국번없이 1599-0011(유료),
+                        <br>
+                        휴대폰 114)에서만 가능합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="btn-box">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <button class="fe-common-back">확인</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="popup-blind"></div>
+    </div>
+</div>
+<% include ../../components/javascript.component.html %>
+
+</body>
+<% include ../../components/end.component.html %>

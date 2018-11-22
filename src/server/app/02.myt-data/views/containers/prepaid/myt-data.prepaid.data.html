@@ -34,20 +34,22 @@
                     <ul class="point-box mb0">
                         <li>
                             <dl>
-                                <dt>발신(사용) 기간</dt>
-                                <dd>2018.05.23</dd>
+                                <dt>발신(사용) 기간
+                                    <button class="tip-view">TIP</button>
+                                </dt>
+                                <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>수신(데이터 유지) 기간</dt>
-                                <dd>2018.05.23</dd>
+                                <dd><%-convertDate(PPSInfo.inbEndDt)%></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>번호 유지 기간</dt>
-                                <dd>2018.05.23</dd>
+                                <dd><%-convertDate(PPSInfo.numEndDt)%></dd>
                             </dl>
                         </li>
                     </ul>

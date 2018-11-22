@@ -10,6 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class MyTDataCookiz extends TwViewController {
   constructor() {
@@ -26,6 +27,17 @@ class MyTDataCookiz extends TwViewController {
     switch ( page ) {
       case 'complete':
         res.render('cookiz/myt-data.cookiz.complete.html', responseData);
+        break;
+      case 'auth':
+        this.getAuthChangeInfo().subscribe((authList) => {
+          console.log(authList);
+          res.render('cookiz/myt-data.cookiz.auth.html', Object.assign(
+            responseData,
+            { addComma: this.addComma },
+            { convertDate: this.convertDate },
+            { authList: authList }
+          ));
+        });
         break;
       default:
         Observable.combineLatest(
@@ -57,6 +69,18 @@ class MyTDataCookiz extends TwViewController {
         }
       });
   }
+
+  private getAuthChangeInfo = () => this.apiService.request(API_CMD.BFF_06_0033, {})
+    .map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result
+      } else {
+        return null;
+      }
+    });
+
+  public addComma = (sAmount) => FormatHelper.addComma(sAmount);
+  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
 }
 
 export default MyTDataCookiz;

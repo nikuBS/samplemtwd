@@ -717,6 +717,12 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
   BTN_NAME: '취소하기'
 };
 
+Tw.MYT_DATA_TING = {
+  A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
+  A81_CONTENT : '차단 시에는 팅요금 선물을 할 수 없습니다.',
+  A81_BTN_CONFIRM: '차단하기'
+}
+
 Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',
   A70_CONTENT : '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',

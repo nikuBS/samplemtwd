@@ -18,18 +18,17 @@ Tw.MyTDataTingBlock = function (rootEl) {
 
 Tw.MyTDataTingBlock.prototype = {
   _init: function () {
+    this._getBlockInfo();
   },
 
   _cachedElement: function () {
-    // $('.fe-ting-block')
-    // $('.fe-txt-block-status')
-    //$('.fe-wrap-ting-block')
+    this.tpl_block_item = Handlebars.compile($('#tpl-ting-block-item').html());
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-ting-block', $.proxy(this._openTingBlock, this));
     this.$container.on('click', '.fe-close-wrap-ting-block', $.proxy(this._hideTingBlock, this));
-
+    this.$container.on('click', '.fe-request-ting-block', $.proxy(this._onShowBlockPopup, this));
   },
 
   _getBlockInfo: function () {
@@ -38,17 +37,54 @@ Tw.MyTDataTingBlock.prototype = {
 
   _onSuccessBlockHistory: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // this._setAmountUI(Number(res.result.transferableAmt));
+      var blockList = res.result;
+
+      $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }))
+      if ( blockList.length !== 0 ) {
+        $('.fe-wrap-block-history').show();
+      } else {
+        $('.fe-wrap-block-history').hide();
+      }
+
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _openTingBlock: function (){
+  _onShowBlockPopup: function () {
+    this._popupService.openModalTypeA(
+      Tw.MYT_DATA_TING.A81_TITLE,
+      Tw.MYT_DATA_TING.A81_CONTENT,
+      Tw.MYT_DATA_TING.A81_BTN_CONFIRM,
+      null,
+      $.proxy(this._unsubscribeAutoRecharge, this),
+      $.proxy(this._closeUnsubscribeAutoRecharge, this)
+    );
+  },
+
+  _closeUnsubscribeAutoRecharge: function () {
+    this._popupService.close();
+  },
+
+  _unsubscribeAutoRecharge: function () {
+    this._popupService.close();
+    this._apiService.request(Tw.API_CMD.BFF_06_0021, {})
+      .done($.proxy(this._onSuccessTingBlock, this));
+  },
+
+  _onSuccessTingBlock: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.replaceURL('/myt-data');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _openTingBlock: function () {
     $('.fe-wrap-ting-block').show();
   },
 
-  _hideTingBlock: function (){
+  _hideTingBlock: function () {
     $('.fe-wrap-ting-block').hide();
   }
 };

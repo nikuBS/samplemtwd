@@ -42,8 +42,7 @@ Tw.MyTDataTing.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._setAmountUI(Number(res.result.transferableAmt));
     } else {
-      this._setAmountUI(0);
-      // Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 
