@@ -24,10 +24,10 @@ Tw.TeventCommon.prototype = {
     this.$standardNode = this.$contentList.find('li.fe-first:first');
     this.$moreBtn = this.$container .find('.fe-more-btn');
 
-    this._uri = 'ing';
+    this._uri = window.location.pathname.split('/')[2];
     this._isClicked = false;
     this._page = 0;
-    this._totalPage = this.$contentList.attr('data-page');
+    this._totalPage = this.$contentList.attr('data-page') - 1;
     this._totalCnt = this.$contentList.attr('data-cnt');
   },
   _bindEvent: function () {
@@ -67,9 +67,30 @@ Tw.TeventCommon.prototype = {
     }
   },
   _requestForList: function () {
-    this._apiService.request(this._apiName, { svcDvcClCd: 'M', page: this._page, size: Tw.DEFAULT_LIST_COUNT })
+    var $apiName = this._getApiName();
+    var $reqData = this._makeRequestData();
+
+    this._apiService.request($apiName, $reqData)
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
+  },
+  _getApiName: function () {
+    var $apiName = '';
+    if (this._uri === 'ing') {
+      $apiName = Tw.API_CMD.BFF_09_0001;
+    } else if (this._uri === 'last') {
+      $apiName = Tw.API_CMD.BFF_09_0003;
+    } else {
+      $apiName = Tw.API_CMD.BFF_09_0004;
+    }
+    return $apiName;
+  },
+  _makeRequestData: function () {
+    return {
+      svcDvcClCd: 'M',
+      page: this._page,
+      size: Tw.DEFAULT_LIST_COUNT
+    };
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -138,7 +159,7 @@ Tw.TeventCommon.prototype = {
     if (this._page === this._totalPage) {
       this.$moreBtn.hide();
     } else {
-      this.$moreBtn.find('.fe-more-length').text('(' + (this._totalCnt - (this._page * Tw.DEFAULT_LIST_COUNT)) + ')');
+      this.$moreBtn.find('.fe-more-length').text('(' + (this._totalCnt - ((this._page + 1) * Tw.DEFAULT_LIST_COUNT)) + ')');
       this.$moreBtn.show();
     }
   },
@@ -147,7 +168,13 @@ Tw.TeventCommon.prototype = {
       var event = id;
       id = $(event.currentTarget).attr('id');
     }
-    this._historyService.goLoad('/tevent/detail/' + id);
+
+    var url = '/tevent';
+    if (this._uri === 'win') {
+      url = url + '/win/detail/';
+    } else {
+      url = url + '/detail/';
+    }
+    this._historyService.goLoad(url + id);
   }
 };
-

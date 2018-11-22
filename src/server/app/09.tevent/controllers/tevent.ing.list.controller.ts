@@ -25,8 +25,8 @@ class TeventIngList extends TwViewController {
       size: DEFAULT_LIST_COUNT
     }).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        // const result = resp.result;
-        const result = teventMock.result;
+        const result = resp.result;
+        // const result = teventMock.result;
         res.render('tevent.ing.list.html', {
           content: this.parseData(result.content),
           totalPages: result.totalPages,

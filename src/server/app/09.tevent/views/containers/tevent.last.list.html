@@ -59,9 +59,9 @@
                         <% } %>
                     </div>
                 </div>
-                <% if (content.length > 20) { %>
+                <% if (totalElements > 20) { %>
                 <div class="bt-more bottomborder fe-more-btn">
-                    <button>더보기 <span class="fe-more-length">(<%= content.length - 20 %>)</span></button>
+                    <button>더보기 <span class="fe-more-length">(<%= totalElements - 20 %>)</span></button>
                 </div>
                 <% } %>
             </div>

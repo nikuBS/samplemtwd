@@ -16,7 +16,7 @@ class TeventWinDetail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void {
-    const id = req.url.split('/')[2];
+    const id = req.url.split('/')[3];
 
     this.apiService.request(API_CMD.BFF_09_0005, {}, {}, id).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
