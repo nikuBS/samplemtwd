@@ -31,6 +31,9 @@ class CustomerAgentsearch extends TwViewController {
       const optionsString = req.query.options;
       this.getQueryResult(type, storeType, keyword, optionsString, res, svcInfo).subscribe(
         (result) => {
+          if (FormatHelper.isEmpty(result)) {
+            return;
+          }
           res.render('agentsearch/customer.agentsearch.html', {
             isSearch: true,
             keyword,
