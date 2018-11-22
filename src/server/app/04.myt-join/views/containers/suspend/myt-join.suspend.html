@@ -16,75 +16,85 @@
 </div>
 <div id="fe-myt-join-suspend" class="wrap step">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html',
-    { title: '일시정지/해제', svcInfo: svcInfo, option: { back: 'step' } }); %>
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>일시정지/해제</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <!-- .component -->
-                <div class="component">
-                    <div class="component-box tabs">
-                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                            <div class="tab-linker">
-                                <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                        <a href="#temporary" <% if(suspend.status) { %> class="disabled" <% } %> >일시정지</a>
-                                    </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#long-term">장기일시정지</a></li>
-                                </ul>
-                            </div>
-                            <div class="tab-contents">
-                                <ul>
-                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-id="fe-tab-temporary">
-                                        <div class="cont-box" data-suspend-state=<%= suspend.status %> >
-                                            <div class="charge-guide-wrap">
-                                                <div class="charge-cont">
-                                                    <span class="sub-disc01">
-                                                        <span class="elem">회선번호</span>
-                                                    </span>
-                                                    <span class="tit-tgothic"><%= phoneNum %></span>
-                                                    <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                            <a href="#temporary" <% if(suspend.status) { %> class="disabled" <% } %> >일시정지</a>
+                                        </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#long-term">장기일시정지</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-id="fe-tab-temporary">
+                                            <div class="cont-box" data-suspend-state=<%= suspend.status %> >
+                                                <div class="charge-guide-wrap">
+                                                    <div class="charge-cont">
+                                                        <span class="sub-disc01">
+                                                            <span class="elem">회선번호</span>
+                                                        </span>
+                                                        <span class="tit-tgothic"><%= phoneNum %></span>
+                                                        <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <% if(suspend.status) { %>
-                                        일시정지 중
-                                        <% } else { %>
-                                        <%- include('../../components/suspend/myt-join.suspend.temporal.content.html',
-                                        {suspend, isApp}); %>
-                                        <% }  %>
-                                    </li>
-                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">
-                                        <div class="cont-box" data-suspend-state=<%= suspend.status %> >
-                                            <div class="charge-guide-wrap">
-                                                <div class="charge-cont">
-                                                    <span class="sub-disc01">
-                                                        <span class="elem">회선번호</span>
-                                                    </span>
-                                                    <span class="tit-tgothic"><%= phoneNum %></span>
-                                                    <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
+                                            <% if(suspend.status) { %>
+                                            일시정지 중
+                                            <% } else { %>
+                                            <%- include('../../components/suspend/myt-join.suspend.temporal.content.html',
+                                            {suspend, isApp}); %>
+                                            <% }  %>
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">
+                                            <div class="cont-box" data-suspend-state=<%= suspend.status %> >
+                                                <div class="charge-guide-wrap">
+                                                    <div class="charge-cont">
+                                                        <span class="sub-disc01">
+                                                            <span class="elem">회선번호</span>
+                                                        </span>
+                                                        <span class="tit-tgothic"><%= phoneNum %></span>
+                                                        <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                       <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {suspend, isApp}); %>
-                                    </li>
-                                </ul>
+                                           <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {suspend, isApp}); %>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!--// .component -->
+                    <footer id="fe-all-menu">
+                    </footer>
                 </div>
-                <!--// .component -->
-                <footer id="fe-all-menu">
-                </footer>
-            </div>
 
+            </div>
         </div>
-    </div>
+        <button class="prev-step fe-common-back">취소</button>
     <!--// #contents -->
+    </div>
 </div>
 
 <!--// #skip_navigation -->
