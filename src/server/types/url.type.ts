@@ -1,6 +1,4 @@
 export const URL = {
-  '/home/postcode': { login: false, id: '00', title: '우편번호' },
-
   // Main
   '/main/menu/settings': { login: false, id: 'ST_01_01', title: '설정' },
   '/main/menu/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
@@ -25,7 +23,8 @@ export const URL = {
   '/myt-fare/billguide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
   '/myt-fare/billguide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt-fare/bill/option': { login: true, id: 'MF_05_01', title: '납부방법' },
-  '/myt-fare/billauto': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
+  '/myt-fare/billauto': { login: true, id: 'MF_05_01', title: '납부방법' },
+  '/myt-fare/billauto/register': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
   '/myt-fare/billsmall': { login: true, id: 'MF_06', title: '소액결제' },
   '/myt-fare/billsmall/auto': { login: true, id: 'MF_06_04', title: '소액결제 자동선결제 신청' },
   '/myt-fare/billsmall/auto/info': { login: true, id: 'MF_06_05', title: '소액결제 자동선결제 변경 및 해지 정보' },
@@ -40,12 +39,12 @@ export const URL = {
   '/myt-fare/billsetup/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
   '/myt-fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
 
-  '/myt/join': { login: true, id: 'MS', title: '나의 가입 정보' },
-  '/myt-join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
+  '/myt-join': { login: true, id: 'MS', title: '나의 가입 정보' },
+  '/myt-join/myplan': { login: true, id: 'MS_05', title: '나의 요금제' },
   '/myt-join/myplanadd': { login: true, id: 'MS_06', title: '나의 부가상품' },
   '/myt-join/myplancombine': { login: true, id: 'MS_07', title: '나의 결합상품' },
-  '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
-  '/myt/join/product/fee-alarm/terminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
+  '/myt-join/myplan/alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
+  '/myt-join/myplan/alarmterminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt-join/myplancombine/infodiscount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
   '/myt-join/myplancombine/infodiscount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
   '/myt-join/myplancombine/noagreement': { login: true, id: 'MS_08', title: '무약정 플랜포인트 내역' },
@@ -131,5 +130,12 @@ export const URL = {
 
   // Membership
   '/membership_benefit/mbrs_0001': { login: false, id: 'BE_03_01', title: '제휴브랜드' },
-  '/membership/membership_info/mbrs_0001': { login: false, id: 'BE_04_01', title: '멤버십 카드 및 등급 안내' }
+  '/membership/membership_info/mbrs_0001': { login: false, id: 'BE_04_01', title: '멤버십 카드 및 등급 안내' },
+
+  // T Event
+  '/tevent/ing': { login: false, id: 'EV_01_01', title: '진행중 이벤트' },
+  '/tevent/last': { login: false, id: 'EV_01_01', title: '지난 이벤트' },
+  '/tevent/win': { login: false, id: 'EV_01_01', title: '당첨자 발표' },
+  '/tevent/detail': { login: false, id: 'EV_01_02', title: '진행중 이벤트/지난 이벤트 상세' },
+  '/tevent/win/detail': { login: false, id: 'EV_01_04', title: '당첨자 발표 상세' }
 };

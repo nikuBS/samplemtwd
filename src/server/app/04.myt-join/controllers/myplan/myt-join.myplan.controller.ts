@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.product.fee-plan.controller.ts
+ * FileName: myt-join.myplan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.19
  */
@@ -8,7 +8,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { SVC_CDNAME, SVC_CDGROUP, UNIT, VOICE_UNIT } from '../../../../types/bff.type';
 import {DATA_UNIT, MYT_FEEPLAN_BENEFIT} from '../../../../types/string.type';
-import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../05.product/helper/product.helper';
@@ -24,7 +23,7 @@ const FEE_PLAN_TIP = {
   S3: ['MS_05_tip_03'] // 집전화
 };
 
-class MyTJoinProductFeePlan extends TwViewController {
+class MyTJoinMyplan extends TwViewController {
   constructor() {
     super();
   }
@@ -214,7 +213,7 @@ class MyTJoinProductFeePlan extends TwViewController {
           return this.error.render(res, defaultOptions);
         }
 
-        res.render('product/myt-join.product.fee-plan.html', {
+        res.render('myplan/myt-join.myplan.html', {
           pageInfo: pageInfo,
           svcInfo: svcInfo,
           svcCdName: SVC_CDNAME,
@@ -227,4 +226,4 @@ class MyTJoinProductFeePlan extends TwViewController {
   }
 }
 
-export default MyTJoinProductFeePlan;
+export default MyTJoinMyplan;

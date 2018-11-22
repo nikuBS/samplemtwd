@@ -325,3 +325,8 @@ export enum RAINBOW_FARE_NAME {
   '데이터통화료' = '국내 데이터 통화료',
   '기본료 및 월정액' = '기본료 및 월정액'
 }
+
+export enum PROMOTION_TYPE {
+  N = '일반형',
+  E = '응모형'
+}

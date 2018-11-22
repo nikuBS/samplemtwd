@@ -349,6 +349,7 @@ gulp.task('build', shell.task([
   'gulp pre-clean-tmp --ver=' + version,
   'gulp task --ver=' + version,
   'gulp manifest --ver=' + version,
+  'gulp manifest-dev --ver=' + version,
   'gulp post-clean --ver=' + version
 ]));
 

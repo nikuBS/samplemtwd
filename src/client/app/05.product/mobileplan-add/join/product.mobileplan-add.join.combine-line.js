@@ -36,7 +36,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
 
-    this._combinationTemplate = Handlebars.compile($('#fe-templ-combination_item').html());
+    this._combinationTemplate = Handlebars.compile($('#fe-templ-line_item').html());
   },
 
   _bindEvent: function() {
@@ -229,7 +229,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        mytPage: 'additions',
+        mytPage: 'myplanadd',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

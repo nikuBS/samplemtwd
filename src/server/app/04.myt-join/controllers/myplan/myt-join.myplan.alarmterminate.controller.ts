@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.product.fee-alarm.terminate.controller.ts
+ * FileName: myt-join.myplan.alarmterminate.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.08.19
  */
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class MyTJoinProductFeeAlarmTerminate extends TwViewController {
+class MyTJoinMyplanAlarmterminate extends TwViewController {
   constructor() {
     super();
   }
@@ -75,7 +75,7 @@ class MyTJoinProductFeeAlarmTerminate extends TwViewController {
         });
       }
 
-      res.render('product/myt-join.product.fee-alarm.terminate.html', {
+      res.render('myplan/myt-join.myplan.alarmterminate.html', {
         svcInfo: svcInfo,
         pageInfo: pageInfo,
         feePlanInfo: this._convertFeePlanInfo(feePlan.result.feePlanProd),
@@ -85,4 +85,4 @@ class MyTJoinProductFeeAlarmTerminate extends TwViewController {
   }
 }
 
-export default MyTJoinProductFeeAlarmTerminate;
+export default MyTJoinMyplanAlarmterminate;

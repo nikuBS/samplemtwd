@@ -22,10 +22,6 @@ Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmO
 
 Tw.ProductMobileplanJoinShareLine.prototype = {
 
-  _data: {
-    addList: []
-  },
-
   _cachedElement: function() {
     this.$inputNumber = this.$container.find('.fe-num_input');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
@@ -157,7 +153,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-        mytPage: 'fee-plan',
+        mytPage: 'myplan',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

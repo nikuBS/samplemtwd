@@ -98,7 +98,7 @@ class App {
   }
 
   private setClientMap() {
-    const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
+    const version = String(process.env.NODE_ENV) === 'development' ? VERSION : 'dev';
     this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
       Object.keys(manifest).map((key) => {
         if ( key.indexOf('.') !== -1 ) {
@@ -151,7 +151,7 @@ class App {
       path.join(__dirname, 'app/06.benefit/views/containers'),
       path.join(__dirname, 'app/07.membership/views/containers'),
       path.join(__dirname, 'app/08.customer/views/containers'),
-      path.join(__dirname, 'app/09.tevent/vies/containers'),
+      path.join(__dirname, 'app/09.tevent/views/containers'),
       path.join(__dirname, 'app/08.auth/views/containers'),
 
       path.join(__dirname, 'app/901.myt/views/containers'),

@@ -352,7 +352,16 @@ Tw.POPUP_TPL = {
         ]
       }
     ]
-  }
+  },
+  TEVENT_LIST: [
+    {
+      'list': [
+        { 'option': 'event-type', 'attr': 'id="ing"', value: '진행중 이벤트' },
+        { 'option': 'event-type', 'attr': 'id="last"', value: '지난 이벤트' },
+        { 'option': 'event-type', 'attr': 'id="win"', value: '당첨자 발표' }
+      ]
+    }
+  ]
 };
 
 Tw.MYT_TPL = {

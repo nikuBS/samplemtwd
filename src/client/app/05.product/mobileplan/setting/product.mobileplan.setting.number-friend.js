@@ -66,7 +66,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     }
 
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(Tw.API_CMD.BFF_10_0074, {
+    this._apiService.request(Tw.API_CMD.BFF_10_0071, {
       opClCd: '1',
       asgnNum: number
     }, {}).done($.proxy(this._addDelNumRes, this));

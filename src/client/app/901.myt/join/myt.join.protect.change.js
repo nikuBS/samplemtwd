@@ -96,7 +96,7 @@ Tw.MyTJoinProtectChange.prototype = {
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
       // 해당페이지로 진입을 바로 하면 안되므로 replace
-      window.location.replace('/myt/join/join-info');
+      window.location.replace('/myt-join/join-info');
     }
     else {
       var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);

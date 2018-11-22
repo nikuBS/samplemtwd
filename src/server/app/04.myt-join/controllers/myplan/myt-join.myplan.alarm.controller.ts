@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.product.fee-alarm.controller.ts
+ * FileName: myt-join.myplan.alarm.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.19
  */
@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
-class MyTJoinProductFeeAlarm extends TwViewController {
+class MyTJoinMyplanAlarm extends TwViewController {
   constructor() {
     super();
   }
@@ -32,7 +32,7 @@ class MyTJoinProductFeeAlarm extends TwViewController {
           });
         }
 
-        res.render('product/myt-join.product.fee-alarm.html', {
+        res.render('product/myt-join.myplan.alarm.html', {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           alarmInfo: alarmInfo.result
@@ -41,4 +41,4 @@ class MyTJoinProductFeeAlarm extends TwViewController {
   }
 }
 
-export default MyTJoinProductFeeAlarm;
+export default MyTJoinMyplanAlarm;
