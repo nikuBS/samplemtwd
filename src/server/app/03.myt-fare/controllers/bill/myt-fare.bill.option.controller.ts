@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.billauto.controller.ts
+ * FileName: myt-fare.bill.option.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
  */
@@ -12,7 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
 import {MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
 
-class MyTFareBillauto extends TwViewController {
+class MyTFareBillOption extends TwViewController {
   constructor() {
     super();
   }
@@ -23,7 +23,7 @@ class MyTFareBillauto extends TwViewController {
       this.getAddrInfo()
     ).subscribe(([paymentOption, addrInfo]) => {
       if (paymentOption.code === API_CODE.CODE_00) {
-        res.render('billauto/myt-fare.billauto.html', {
+        res.render('bill/myt-fare.bill.option.html', {
           svcInfo: this.getSvcInfo(svcInfo),
           pageInfo: pageInfo,
           paymentOption: this.parseData(paymentOption.result),
@@ -47,7 +47,6 @@ class MyTFareBillauto extends TwViewController {
 
   private getAddrInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0146, {}).map((res) => {
-      console.log(res.result);
       return res;
     });
   }
@@ -90,4 +89,4 @@ class MyTFareBillauto extends TwViewController {
   }
 }
 
-export default MyTFareBillauto;
+export default MyTFareBillOption;

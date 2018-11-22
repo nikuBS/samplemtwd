@@ -4,7 +4,6 @@ import MyTFareBillGuide from './controllers/billguide/myt-fare.bill.guide.contro
 import MyTFareBillSet from './controllers/bill/myt-fare.bill.set.controller';
 import MyTFareBillSetReissue from './controllers/bill/myt-fare.bill.set.reissue.controller';
 import MyTFareBillSetReturnHistory from './controllers/bill/myt-fare.bill.set.return-history.controller';
-import MyTFareBillauto from './controllers/billauto/myt-fare.billauto.controller';
 import MytFareHotbill from './controllers/bill/myt-fare.bill.hotbill.controller';
 import MyTFareBillSetChange from './controllers/bill/myt-fare.bill.set.change.controller';
 import MyTFareBillGuideCallGift from './controllers/billguide/myt-fare.bill.guide.call-gift.controllers';
@@ -32,7 +31,8 @@ import MyTFareBillcontents from './controllers/billcontents/myt-fare.billcontent
 import MyTFareBillcontentsAuto from './controllers/billcontents/myt-fare.billcontents.auto.controller';
 import MyTFareBillcontentsAutoInfo from './controllers/billcontents/myt-fare.billcontents.auto.info.controller';
 import MyTFareBillcontentsAutoChange from './controllers/billcontents/myt-fare.billcontents.auto.change.controller';
-import MyTFareBillautoRegister from './controllers/billauto/myt-fare.billauto.register.controller';
+import MyTFareBillOption from './controllers/bill/myt-fare.bill.option.controller';
+import MyTFareBillAutoRegister from './controllers/bill/myt-fare.bill.auto.register.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -48,10 +48,8 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/cashbag', controller: MyTFareBillCashbag });
     this.controllers.push({ url: '/bill/tpoint', controller: MyTFareBillTPoint });
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
-
-    // 자동납부
-    this.controllers.push({ url: '/billauto', controller: MyTFareBillauto });
-    this.controllers.push({ url: '/billauto/register', controller: MyTFareBillautoRegister });
+    this.controllers.push({ url: '/bill/option', controller: MyTFareBillOption });
+    this.controllers.push({ url: '/bill/auto/register', controller: MyTFareBillAutoRegister });
 
     // 소액결제
     this.controllers.push({ url: '/billsmall', controller: MyTFareBillsmall });

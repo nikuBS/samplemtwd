@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.billauto.js
+ * FileName: myt-fare.bill.option.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
  */
 
-Tw.MyTFareBillauto = function (rootEl) {
+Tw.MyTFareBillOption = function (rootEl) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -15,7 +15,7 @@ Tw.MyTFareBillauto = function (rootEl) {
   this._init();
 };
 
-Tw.MyTFareBillauto.prototype = {
+Tw.MyTFareBillOption.prototype = {
   _init: function () {
     this._checkIsAfterChange();
     this._bindEvent();
@@ -44,7 +44,7 @@ Tw.MyTFareBillauto.prototype = {
     this.$container.on('click', '.fe-change-address', $.proxy(this._changeAddress, this));
   },
   _goAutoPayment: function () {
-    this._historyService.goLoad('/myt-fare/billauto/register');
+    this._historyService.goLoad('/myt-fare/bill/auto/register');
   },
   _openCancelAutoPayment: function () {
     this._popupService.open({
@@ -52,7 +52,7 @@ Tw.MyTFareBillauto.prototype = {
     }, $.proxy(this._cancelAutoPayment, this), null, 'cancel');
   },
   _cancelAutoPayment: function ($layer) {
-    new Tw.MyTFareBillautoCancel(this.$container, $layer);
+    new Tw.MyTFareBillAutoCancel(this.$container, $layer);
   },
   _changePaymentDate: function () {
     this._popupService.open({

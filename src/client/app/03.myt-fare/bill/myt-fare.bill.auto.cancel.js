@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.billauto.cancel.js
+ * FileName: myt-fare.bill.auto.cancel.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
  */
 
-Tw.MyTFareBillautoCancel = function (rootEl, $layer) {
+Tw.MyTFareBillAutoCancel = function (rootEl, $layer) {
   this.$container = rootEl;
   this.$layer = $layer;
   this.$bankList = [];
@@ -18,7 +18,7 @@ Tw.MyTFareBillautoCancel = function (rootEl, $layer) {
   this._bindEvent();
 };
 
-Tw.MyTFareBillautoCancel.prototype = {
+Tw.MyTFareBillAutoCancel.prototype = {
   _bindEvent: function () {
     this.$layer.on('click', '.fe-go-cancel', $.proxy(this._cancel, this));
   },
@@ -45,7 +45,7 @@ Tw.MyTFareBillautoCancel.prototype = {
         subMessage = Tw.MYT_FARE_PAYMENT_NAME.SMS_MESSAGE;
       }
 
-      this._popupService.afterRequestSuccess(link, '/myt-fare/billauto',
+      this._popupService.afterRequestSuccess(link, '/myt-fare/bill/option',
         linkText, Tw.MYT_FARE_PAYMENT_NAME.CANCEL, subMessage);
     } else {
       this._fail(res);
@@ -76,7 +76,7 @@ Tw.MyTFareBillautoCancel.prototype = {
   },
   _closeSmsInfo: function () {
     if (this.$isComplete) {
-      this._historyService.goLoad('/myt-fare/billauto?type=sms');
+      this._historyService.goLoad('/myt-fare/bill/option?type=sms');
     }
   },
   _setBankList: function (bankList, event) {
