@@ -30,7 +30,7 @@ class CustomerDamageInfoWarning extends TwViewController {
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
         return Object.assign(item, {
-          date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YY.MM.DD')
+          date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YY.M.DD')
         });
       }),
       last: data.result.last
