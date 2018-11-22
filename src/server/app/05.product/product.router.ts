@@ -56,6 +56,7 @@ import ProductRoamingFiReservation1step from './controllers/roaming/product.roam
 import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
 import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info.center.controller';
+import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -97,17 +98,17 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
-    this.controllers.push({ url: '/apps(/:appId)?', controller: ProductApps });
+    this.controllers.push({ url: '/apps/:appId', controller: ProductAppsDetail });
 
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/roaming/do/search-after', controller: ProductRoamingSearchAfter });
-    this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult});
-    this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide});
-    this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide});
-    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming});
-    this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming});
-    this.controllers.push({ url: '/roaming/fee', controller: ProductRoamingFee});
-    this.controllers.push({ url: '/roaming/planadd', controller: ProductRoamingPlanAdd});
+    this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult });
+    this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
+    this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
+    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
+    this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming });
+    this.controllers.push({ url: '/roaming/fee', controller: ProductRoamingFee });
+    this.controllers.push({ url: '/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
     this.controllers.push({ url: '/roaming/fi/inquire', controller: ProductRoamingFiInquire });
     this.controllers.push({ url: '/roaming/fi/inquire-auth', controller: ProductRoamingFiInquireAuth });

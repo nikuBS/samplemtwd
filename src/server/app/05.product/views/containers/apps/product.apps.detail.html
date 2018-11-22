@@ -29,12 +29,12 @@
                 <div class="cont-box">
                     <div class="t-apps">
                         <div class="t-apps-ico">
-                            <img src="/img/dummy/dmy-app01.png" alt="t전화" class="ico">
-                            <span class="name">T 전화</span>
+                            <img src="<%= app.appIconImgUrl %>" alt="<%= app.prodNm %>" class="ico">
+                            <span class="name"><%= app.prodNm %></span>
                         </div>
-                        <div class="txt mb20">스마트폰을 스마트폰답게 만드는 전화!<br /> 모르는 번호 검색부터 스팸차단, 요금제 잔여량 조회까지<br /> 편리한 전화! 산뜻하고 심플하게 바뀐 T 전화를 만나보세요.</div>
+                        <div class="txt mb20"><%= app.prodSmryDesc %></div>
                         <ul class="bt-slice">
-                            <li class="bt-blue1">
+                            <li class="bt-blue1"><!-- TODO: 서버 데이터 확정 후, 버튼 작업 필요 -->
                                 <button>앱실행하기</button>
                             </li>
                         </ul>
@@ -42,8 +42,17 @@
                     </div>
                 </div>
                 <!-- // .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="ad-banner"><img src="/img/dummy/img_ban01.png" class="w100" alt="" /></div>
+                <% const topBanner = prodInfo && prodInfo.banners && prodInfo.banners.top; %>
+                <% if (topBanner) { %>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <% if (topBanner.bnnrImgUrl) { %>
+                        <a class="ad-banner"><img src="<%= topBanner.bnnrImgUrl %>" class="w100" alt="" /></a>
+                    <% } else { %>
+                        <div class="ad-banner"><%- topBanner.bnnrDtlHtmlCtt %></div>
+                    <% } %>
+                <% } %>
+
+                <% if (app.appsList && app.appsList.length > 0 ) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
                     <div class="slide-show">
@@ -52,21 +61,11 @@
                             <div class="widget-box slider1">
                                 <div class="slider-box">
                                     <ul class="slider">
+                                        <% app.appsList.map(img => { %>
                                         <li>
-                                            <div class="item"><img src="/img/dummy/dmy-flipcard.png" alt="" class="thum" /></div>
+                                            <div class="item"><img src="<%= img.scrshotImgUrl %>" alt="" class="thum" /></div>
                                         </li>
-                                        <li>
-                                            <div class="item"><img src="/img/dummy/dmy-flipcard.png" alt="" class="thum" /></div>
-                                        </li>
-                                        <li>
-                                            <div class="item"><img src="/img/dummy/dmy-flipcard.png" alt="" class="thum" /></div>
-                                        </li>
-                                        <li>
-                                            <div class="item"><img src="/img/dummy/dmy-flipcard.png" alt="" class="thum" /></div>
-                                        </li>
-                                        <li>
-                                            <div class="item"><img src="/img/dummy/dmy-flipcard.png" alt="" class="thum" /></div>
-                                        </li>
+                                        <% }); %>
                                     </ul>
                                 </div>
                             </div>
@@ -74,12 +73,26 @@
                         <!--// .widget -->
                     </div>
                 </div>
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="ad-banner"><img src="/img/dummy/img_ban04.png" class="w100" alt="" /></div>
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="ad-banner"><img src="/img/dummy/img_ban02.png" class="w100" alt="" /></div>
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <% } %>
+
+                <% const contents = prodInfo && prodInfo.contents;
+                if (contents && contents.vslYn === 'Y') { %>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <%- contents.ledItmDesc %>
+                <% } %>
+
+                <% const centerBanner = prodInfo && prodInfo.banners && prodInfo.banners.center; 
+                if (centerBanner) { %>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <% if (centerBanner.bnnrImgUrl) { %>
+                        <a class="ad-banner"><img src="<%= centerBanner.bnnrImgUrl %>" class="w100" alt="" /></a>
+                    <% } else { %>
+                        <div class="ad-banner"><%- centerBanner.bnnrDtlHtmlCtt %></div>
+                    <% } %>
+                <% } %>
                 <!-- .cont-box -->
+                <% if (apps.length > 0) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box">
                     <h3>함께하면 더욱 스마트한 앱서비스</h3>
                     <!-- .widget -->
@@ -87,91 +100,29 @@
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list smart-app">
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type1"></span>
-                                                <span>T전화</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type2"></span>
-                                                <span>T map</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type3"></span>
-                                                <span>Oksusu</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type4"></span>
-                                                <span>Dummy</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type4"></span>
-                                                <span>Dummy</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type4"></span>
-                                                <span>Dummy</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type4"></span>
-                                                <span>Dummy</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type4"></span>
-                                                <span>Dummy</span>
-                                            </button>
-                                        </div>
-                                    </li>
+                                    <% apps.map(app => { %>
+                                        <li>
+                                            <div>
+                                                <a href="/product/apps/<%= app.prodId %>">
+                                                    <img src="<%= app.appImg %>" alt="<%= app.prodNm %>" class="ico">
+                                                    <span><%= app.prodNm %></span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    <% }); %>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!-- .widget -->
                 </div>
+                <% } %>
                 <!-- // .cont-box -->
-                <div class="pt20 pl50 pr50">
-                    <ul class="bt-slice">
-                        <li class="bt-white3">
-                            <button>공유하기</button>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
         <!--// #contents -->
     </div>
 </body>
-
-<% include ../../components/apps/product.apps.list.html %>
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
