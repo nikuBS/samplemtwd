@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.billauto.register.js
+ * FileName: myt-fare.bill.auto.register.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
  */
 
-Tw.MyTFareBillautoRegister = function (rootEl) {
+Tw.MyTFareBillAutoRegister = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.MyTFareBillautoRegister = function (rootEl) {
   this._init();
 };
 
-Tw.MyTFareBillautoRegister.prototype = {
+Tw.MyTFareBillAutoRegister.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
@@ -111,7 +111,7 @@ Tw.MyTFareBillautoRegister.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/billauto?type=' + this.$infoWrap.attr('id'));
+      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
     } else {
       this._fail(res);
     }
@@ -132,7 +132,7 @@ Tw.MyTFareBillautoRegister.prototype = {
     return this._validation.checkMoreLength(this.$accountPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
   },
   _isValidForCard: function () {
-    return (this._validation.checkMoreLength(this.$accountPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18) &&
+    return (this._validation.checkMoreLength(this.$cardPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18) &&
       this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
       this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
       this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&

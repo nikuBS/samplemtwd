@@ -147,7 +147,7 @@ Tw.MyTFareBill.prototype = {
     if (this.$uri !== null) {
       var fullUrl = '';
       if (this.$uri === 'auto') {
-        fullUrl = '/myt-fare/billauto/register';
+        fullUrl = '/myt-fare/bill/auto/register';
       } else {
         fullUrl = '/myt-fare/bill/' + this.$uri;
       }

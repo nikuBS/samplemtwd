@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-fare.billauto.html
+* FileName: myt-fare.bill.option.html
 * Author: Jayoon Kong (jayoon.kong@sk.com)
 * Date: 2018.10.02
 %>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-billauto" class="wrap">
+    <div id="myt-fare-bill-option" class="wrap">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html',
         { title: '납부방법', svcInfo: svcInfo, option:{ line: true } }); %>
@@ -192,7 +192,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillauto($('#myt-fare-billauto'));
+    new Tw.MyTFareBillOption($('#myt-fare-bill-option'));
   });
 </script>
 <% include ../../components/end.component.html %>

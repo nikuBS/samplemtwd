@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.billauto.register.controller.ts
+ * FileName: myt-fare.bill.auto.register.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
  */
@@ -10,7 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 
-class MyTFareBillautoRegister extends TwViewController {
+class MyTFareBillAutoRegister extends TwViewController {
   constructor() {
     super();
   }
@@ -20,7 +20,7 @@ class MyTFareBillautoRegister extends TwViewController {
       this.getPaymentOption()
     ).subscribe(([paymentOption]) => {
       if (paymentOption.code === API_CODE.CODE_00) {
-        res.render('billauto/myt-fare.billauto.register.html', {
+        res.render('bill/myt-fare.bill.auto.register.html', {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           paymentOption: this.parseData(paymentOption.result)
@@ -65,4 +65,4 @@ class MyTFareBillautoRegister extends TwViewController {
   }
 }
 
-export default MyTFareBillautoRegister;
+export default MyTFareBillAutoRegister;

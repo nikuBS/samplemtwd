@@ -414,7 +414,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    this._historyService.goLoad('/myt-fare/billauto');
+    this._historyService.goLoad('/myt-fare/bill/option');
   },
 
   // 소액결제 이동
