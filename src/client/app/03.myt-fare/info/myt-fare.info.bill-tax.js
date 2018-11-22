@@ -133,8 +133,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     if (res.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(res.code, res.msg).pop();
     }
-
-    this._popupService.openAlert(this.isFax ? Tw.POPUP_CONTENTS.RESEND_CONTENTS_FAX : Tw.POPUP_CONTENTS.RESEND_CONTENTS_EMAIL,
+    this._popupService.openAlert(this.isFax ? this.$faxNumberInput+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28 : this.$emailInput.val()+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
         Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
           this._popupService.close();
         }, this));
