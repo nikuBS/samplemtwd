@@ -32,7 +32,7 @@ class MyTJoinMyplanAlarm extends TwViewController {
           });
         }
 
-        res.render('product/myt-join.myplan.alarm.html', {
+        res.render('myplan/myt-join.myplan.alarm.html', {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           alarmInfo: alarmInfo.result

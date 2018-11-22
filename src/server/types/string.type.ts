@@ -412,6 +412,16 @@ export const MYT_SUSPEND_STATE = {
   C: '처리완료'
 };
 
+export const FEE_PLAN_TIP_TXT = {
+  MS_05_tip_01: '요금제 안내',
+  MS_05_tip_02: '선불 휴대폰 요금제 변경',
+  MS_05_tip_03: 'SK텔레콤을 통해 가입한 상품',
+  MS_05_tip_04: '요금제 변경',
+  MS_05_tip_05: '2009년 11월 2일 이후 신규가입 중단',
+  MS_05_tip_06: '2009년 11월 2일 이후 신규가입 중단',
+  MS_05_tip_07: '2009년 11월 2일 이후 신규가입 중단'
+};
+
 export const MAIN_MENU_REFUND_STATE = {
   APPLY: '신청'
 };
