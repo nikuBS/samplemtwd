@@ -49,7 +49,7 @@ class MyTFareInfoBillTax extends TwViewController {
     ).subscribe(taxlist => {
       res.render('info/myt-fare.info.bill-tax.html', {svcInfo, pageInfo, data: {
         limitMonth: monthPeriod,
-        items: this.mergeList(taxlist)
+        list: this.mergeList(taxlist)
       }});
     });
   }
