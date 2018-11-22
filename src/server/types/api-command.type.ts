@@ -629,6 +629,28 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0098: { path: '/core-product/v1/wire/additions/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0101: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks',
+    method: API_METHOD.GET, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0109: { path: '/core-product/v1/services/wire/addition/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0111: { path: '/v1/wire/additions/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0112: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0113: {
+    path: '/core-product/v1/services/combinations/:args0/terminations/prechecks',
+    method: API_METHOD.GET, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0114: {
+    path: '/core-product/v1/services/combinations/:args0/terminations/infos',
+    method: API_METHOD.GET, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0115: {},
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // ROAMING

@@ -133,9 +133,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
   _prodConfirmOk: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
+    // prodId: this._prodId,
+    //   prodProcTypeCd: 'JN',
+
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
-      prodId: this._prodId,
-      prodProcTypeCd: 'JN',
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
       optProdId: '',
       svcProdGrpId: ''

@@ -58,6 +58,8 @@ import ProductRoamingFiReservation1step from './controllers/roaming/product.roam
 import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
 import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info.center.controller';
+import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
+import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
 
 class ProductRouter extends TwRouter {
@@ -100,6 +102,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
     this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/wireplan/join/:prodId', controller: ProductWireplanJoin });
+    this.controllers.push({ url: '/wireplan/terminate/:prodId', controller: ProductWireplanTerminate });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/:appId', controller: ProductAppsDetail });

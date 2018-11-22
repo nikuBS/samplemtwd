@@ -156,6 +156,10 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
+      if (FormatHelper.isEmpty(item.titleNm)) {
+        return true;
+      }
+
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
       }));

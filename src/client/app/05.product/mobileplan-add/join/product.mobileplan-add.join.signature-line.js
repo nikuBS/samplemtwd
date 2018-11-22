@@ -206,9 +206,10 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   _prodConfirmOk: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
+    // prodId: this._prodId,
+    //   prodProcTypeCd: 'JN',
+
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
-      prodId: this._prodId,
-      prodProcTypeCd: 'JN',
       svcNumList: this._getSvcNumList()
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },

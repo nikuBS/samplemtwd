@@ -1,6 +1,6 @@
 /**
- * 상품 해지 - 모바일 부가상품
- * FileName: product.mobileplan-add.terminate.controller.ts
+ * 상품 해지 - 유선 부가서비스
+ * FileName: product.wireplan.terminate.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.13
  */
@@ -12,7 +12,7 @@ import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../helper/product.helper';
 
-class ProductMobileplanAddTerminate extends TwViewController {
+class ProductWireplanTerminate extends TwViewController {
   constructor() {
     super();
   }
@@ -31,21 +31,21 @@ class ProductMobileplanAddTerminate extends TwViewController {
       });
     }
 
-    this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId)
       .subscribe((joinTermInfo) => {
-      if (joinTermInfo.code !== API_CODE.CODE_00) {
-        return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: joinTermInfo.code,
-          msg: joinTermInfo.msg
-        }));
-      }
+        if (joinTermInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: joinTermInfo.code,
+            msg: joinTermInfo.msg
+          }));
+        }
 
-      res.render('mobileplan-add/product.mobileplan-add.terminate.html', Object.assign(renderCommonInfo, {
-        prodId: prodId,
-        joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
-      }));
-    });
+        res.render('mobileplan-add/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
+          prodId: prodId,
+          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+        }));
+      });
   }
 }
 
-export default ProductMobileplanAddTerminate;
+export default ProductWireplanTerminate;

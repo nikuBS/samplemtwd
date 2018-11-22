@@ -1,10 +1,11 @@
 /**
- * FileName: product.mobileplan-add.terminate.js
+ * 상품 가입 - 유선 부가서비스
+ * FileName: product.wireplan.join.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.13
+ * Date: 2018.10.01
  */
 
-Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
+Tw.ProductWireplanJoin = function(rootEl, prodId, confirmOptions) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -17,7 +18,7 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
   this._init();
 };
 
-Tw.ProductMobileplanAddTerminate.prototype = {
+Tw.ProductWireplanJoin.prototype = {
 
   _init: function() {
     this._convConfirmOptions();
@@ -38,10 +39,10 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      title: Tw.PRODUCT_TYPE_NM.TERMINATE,
-      applyBtnText: Tw.BUTTON_LABEL.TERMINATE,
+      title: Tw.PRODUCT_TYPE_NM.JOIN,
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
       isMobilePlan: false,
-      joinTypeText: Tw.PRODUCT_TYPE_NM.TERMINATE,
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
@@ -51,102 +52,56 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
-      isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 1)
     });
   },
 
   _callConfirmCommonJs: function() {
-    new Tw.ProductCommonConfirm(false, this.$container, {
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4
-    }, $.proxy(this._prodConfirmOk, this));
+    new Tw.ProductCommonConfirm(false, this.$container, {}, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     // prodId: this._prodId,
-    //   prodProcTypeCd: 'TM'
+    // prodProcTypeCd: 'JN',
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0036, {
-    }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0099, {
+      addCd: '2'
+    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },
 
-  _procTerminateRes: function(resp) {
+  _procJoinRes: function(resp) {
     skt_landing.action.loading.off({ ta: '.container' });
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId)
-      .done($.proxy(this._isVasTerm, this));
-  },
-
-  _isVasTerm: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      this._isResultPop = true;
-      return this._openSuccessPop();
-    }
-
-    this._openVasTermPopup(resp.result);
+    $.when(this._popupService.close())
+      .then($.proxy(this._openSuccessPop, this));
   },
 
   _openSuccessPop: function() {
-    if ( !this._isResultPop ) {
-      return;
-    }
-
     this._popupService.open({
       hbs: 'complete_product',
       data: {
+        prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
         mytPage: 'myplanadd',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-        typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
+        typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
         isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
         basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
           this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._openResPopupEvent, this), $.proxy(this._onClosePop, this), 'terminate_success');
+    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+
+    this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
-  _openResPopupEvent: function($popupContainer) {
+  _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
-  },
-
-  _openVasTermPopup: function(respResult) {
-    var popupOptions = {
-      hbs:'MV_01_02_02_01',
-      'bt': [{
-        style_class: 'bt-blue1 fe-btn_back',
-        txt: '닫기'
-      }]
-    };
-
-    if (respResult.prodTmsgTypCd === 'H') {
-      popupOptions = $.extend(popupOptions, {
-        editor_html: respResult.prodTmsgHtmlCtt
-      });
-    }
-
-    if (respResult.prodTmsgTypCd === 'I') {
-      popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : respResult.rgstImgUrl,
-        img_src: respResult.imgFilePathNm
-      });
-    }
-
-    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openTerminateResultPop, this), 'vasterm_pop');
-  },
-
-  _bindVasTermPopupEvent: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
-  },
-
-  _closeAndOpenResultPopup: function() {
-    this._isResultPop = true;
-    this._popupService.close();
   },
 
   _closePop: function() {
@@ -158,3 +113,4 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   }
 
 };
+
