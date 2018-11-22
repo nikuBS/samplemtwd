@@ -62,7 +62,7 @@ Tw.MyTDataTing.prototype = {
     };
 
     var elAmount = this.$wrap_amount_select_list.find('input').each(fnCheckedUI);
-    elAmount.not(':disabled').get(0).click();
+    // elAmount.not(':disabled').get(0).click();
   },
 
   _onClickBtnAddr: function () {

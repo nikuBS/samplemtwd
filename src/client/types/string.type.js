@@ -313,7 +313,8 @@ Tw.ALERT_MSG_COMMON = {
     TITLE:'T world App으로 이동하시겠습니까?',
     MSG: '선택하신 서비스는<br/>모바일 T world app에서만<br/>이용하실 수 있습니다.',
     BUTTON: '이동'
-  }
+  },
+  CHANGE: '변경하시겠습니까?'
 };
 
 Tw.ALERT_MSG_HOME = {};
@@ -712,6 +713,12 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
   BTN_NAME: '취소하기'
 };
 
+Tw.MYT_DATA_PREPAID = {
+  A70_TITLE: '자동 충전 해지하시겠습니까?',
+  A70_CONTENT : '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
+  A70_BTN_CONFIRM: '해지하기'
+}
+
 Tw.MYT_PAYMENT_HISTORY_HASH = {
   OVERPAY_REFUND: 'overpay-refund',
   AUTO_WITHDRAWAL: 'auto-withdrawal',
@@ -968,6 +975,12 @@ Tw.PRODUCT_RESERVATION = {
     subtext_applyer: '신청자 정보 : ',
     subtext_info: '상담예정일 : 신청일로부터 2일 이내(영업일 기준)'
   }
+};
+
+Tw.PRODUCT_REQUIRE_DOCUMENT = {
+  SUCCESS_TITLE: '구비서류 제출',
+  FILE_COUNT: '제출 파일 : ',
+  FILE_COUNT_UNIT: '개'
 };
 
 Tw.PRODUCT_COMBINE_PRODUCT = {

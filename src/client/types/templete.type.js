@@ -224,8 +224,8 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_MICRO_HISTORY_LIST: [
     {
       'list': [
-        { 'option': 'go-history', 'attr': 'data-link="/myt/fare/billsmall/history"', value: '소액결제 이용내역' },
-        { 'option': 'go-history', 'attr': 'data-link="/myt/fare/billsmall/block"', value: '자동결제 차단내역' }
+        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/billsmall/history"', value: '소액결제 이용내역' },
+        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/billsmall/block"', value: '자동결제 차단내역' }
       ]
     }
   ],
@@ -621,11 +621,11 @@ Tw.REGION_LIST_ITEM = {
 Tw.MYT_PREPAID_AMOUNT = {
   title: '충전 금액',
   list: [
-    { title: '50,000원', value: 50000 },
-    { title: '30,000원', value: 30000 },
-    { title: '20,000원', value: 20000 },
-    { title: '10,000원', value: 10000 },
-    { title: '5,000원', value: 5000 }
+    { text: '50,000원', value: 50000 },
+    { text: '30,000원', value: 30000 },
+    { text: '20,000원', value: 20000 },
+    { text: '10,000원', value: 10000 },
+    { text: '5,000원', value: 5000 }
   ]
 };
 

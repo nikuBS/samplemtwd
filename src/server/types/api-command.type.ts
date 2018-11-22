@@ -8,7 +8,7 @@ export enum API_METHOD {
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
   TID = 'TID_SERVER',
-  CDN = 'CDN',
+  CDN = 'CDN_MANIFEST',
   TEST = 'TEST_SERVER'
 }
 
@@ -587,6 +587,7 @@ export const API_CMD = {
   BFF_10_0039: { path: '/core-product/v1/combinations/discount-simulation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0040: { path: '/core-product/v1/mobiles/fee-plans/ting-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0041: { path: '/core-product/v1/mobiles/fee-plans/ting-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0042: { path: '/core-product/v1/mobiles/fee-plans/bandyt-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0043: { path: '/core-product/v1/mobiles/fee-plans/zone-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0044: { path: '/core-product/v1/mobiles/fee-plans/zones', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0045: { path: '/core-product/v1/mobiles/fee-plans/zone-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
@@ -624,6 +625,9 @@ export const API_CMD = {
   BFF_10_0000: {path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0055: {path: '/core-product/v1/services/roaming/count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
+  BFF_10_0097: { path: 'core-product/v1/ledger/:args0/apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

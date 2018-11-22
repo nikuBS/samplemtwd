@@ -149,6 +149,11 @@ export enum PRODUCT_RESERVATION_COMBINE_NM {
   ETC = '그 외 결합상품'
 }
 
+export enum PRODUCT_REQUIRE_DOCUMENT_TYPE_NM {
+  apply = '구비서류 제출/조회',
+  history = '가입신청 내역 조회'
+}
+
 export const MYT_FARE_BILL_REISSUE = {
   TITLE: '요금안내서 재발행'
 };
@@ -410,6 +415,16 @@ export const MYT_SUSPEND_STATE = {
   A: '서류재첨부필요',
   F: '처리불가',
   C: '처리완료'
+};
+
+export const FEE_PLAN_TIP_TXT = {
+  MS_05_tip_01: '요금제 안내',
+  MS_05_tip_02: '선불 휴대폰 요금제 변경',
+  MS_05_tip_03: 'SK텔레콤을 통해 가입한 상품',
+  MS_05_tip_04: '요금제 변경',
+  MS_05_tip_05: '2009년 11월 2일 이후 신규가입 중단',
+  MS_05_tip_06: '2009년 11월 2일 이후 신규가입 중단',
+  MS_05_tip_07: '2009년 11월 2일 이후 신규가입 중단'
 };
 
 export const MAIN_MENU_REFUND_STATE = {

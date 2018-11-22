@@ -55,7 +55,7 @@ class CustomerSvcInfoNotice extends TwViewController {
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
         return Object.assign(item, {
-          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YY.MM.DD'),
+          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YY.M.DD'),
           type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
           itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''),
           content: this._fixHtml(item.content)

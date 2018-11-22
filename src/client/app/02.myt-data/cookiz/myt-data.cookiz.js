@@ -37,15 +37,19 @@ Tw.MyTDataCookiz.prototype = {
   },
 
   _onSelectImmediatelyAmount: function () {
-    this.$btn_recharge_immediately.prop('disabled', false);
+    if ( this.$wrap_immediately_select_list.find('input:checked').size() !== 0 ) {
+      this.$btn_recharge_immediately.prop('disabled', false);
+    }
   },
 
   _onSelectMonthlyAmount: function () {
-    this.$btn_recharge_monthly.prop('disabled', false);
+    if ( this.$wrap_monthly_select_list.find('input:checked').size() !== 0 ) {
+      this.$btn_recharge_monthly.prop('disabled', false);
+    }
   },
 
   _getReceiveUserInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0028, {}).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0028, { childSvcMgmtNum: '' }).done($.proxy(this._onSuccessReceiveUserInfo, this));
   },
 
   _onSuccessReceiveUserInfo: function (res) {
@@ -111,13 +115,13 @@ Tw.MyTDataCookiz.prototype = {
   },
 
   _cancelMonthlyRecharge: function () {
-      this._popupService.openModalTypeA(
-        Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
-        Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
-        Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
-        null,
-        $.proxy(this._cancelMonthly, this)
-      );
+    this._popupService.openModalTypeA(
+      Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
+      Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
+      Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
+      null,
+      $.proxy(this._cancelMonthly, this)
+    );
   },
 
   _cancelMonthly: function () {

@@ -23,9 +23,6 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="ti-caption-gray">
-                    <h3 class="tit noti">고객님, 결합상품 가입을 신청해주셔서 감사합니다.</h3>
-                </div>
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <h3 class="tit-type2 tx-bold">가입신청 내역</h3>
@@ -33,17 +30,17 @@
                         <ul>
                             <li>
                                 <span class="title">신청상품</span>
-                                <span class="tx-cont">New 온가족플랜</span>
+                                <span class="tx-cont"><%= prodRedisInfo.summary.prodNm %></span>
                             </li>
                             <li>
                                 <span class="title">신청일</span>
-                                <span class="tx-cont">2018.08.09</span>
+                                <span class="tx-cont"><%= reqDocInfo.opDtm %></span>
                             </li>
                             <li>
                                 <span class="title">결과</span>
                                 <span class="tx-cont">
-                                    <span class="tx-bold">서류제출 대기중</span>
-                                    <span class="tx-noti"><span class="tx-red">2018-09-19</span>까지 서류를 첨부해 주세요</span>
+                                    <span class="tx-bold"><%- reqDocInfo.resultText.join('<br>') %></span>
+                                    <span class="tx-noti"><span class="tx-red"><%= reqDocInfo.nextDistbDt %></span>까지 서류를 첨부해 주세요</span>
                                 </span>
                             </li>
                         </ul>

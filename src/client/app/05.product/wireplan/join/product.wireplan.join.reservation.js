@@ -38,6 +38,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _initCombineProduct: function() {
     this.$combineWrap.show();
+    this._getIsExistsCombineReservation();
+
     if (Tw.FormatHelper.isEmpty(this._prodId)) {
       return;
     }
@@ -99,6 +101,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$combineWrap = this.$container.find('.fe-combine_wrap');
     this.$formData = this.$container.find('.fe-form_data');
     this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
+    this.$combineIsExists = this.$container.find('.fe-combine_is_exists');
 
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -139,6 +142,22 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     if (isApply) {
       this._procApplyCheck();
+    }
+  },
+
+  _getIsExistsCombineReservation: function() {
+    this._apiService.request(Tw.API_CMD.BFF_10_0078, {})
+      .done($.proxy(this._resCombineReservation, this));
+  },
+
+  _resCombineReservation: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      this.$combineIsExists.hide();
+      return;
+    }
+
+    if (!Tw.FormatHelper.isEmpty(resp.result.ciaInsptRsnCd)) {
+      this.$combineIsExists.show();
     }
   },
 
@@ -183,9 +202,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this._resetCombineWrap();
       this.$combineWrap.hide();
       this.$nonCombineTip.show();
+      this.$combineIsExists.hide();
     } else {
       this.$combineWrap.show();
       this.$nonCombineTip.hide();
+      this._getIsExistsCombineReservation();
     }
 
     this.$btnSelectTypeCd.text(Tw.PRODUCT_RESERVATION[this._typeCd]);
@@ -519,8 +540,10 @@ Tw.ProductWireplanJoinReservation.prototype = {
       };
 
     this._isCombineInfo = false;
+
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
       this._isCombineInfo = true;
+
       reqParams = $.extend(reqParams, {
         combGrpNewYn: combinationInfo.combGrpNewYn,
         combGrpInfo: (combinationInfo.familyList.map(function(item) {
@@ -529,7 +552,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
         combProdNm: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE
       });
 
-      this._sendUscan(combinationInfo.fileList);
+      return this._sendUscanAndApply(reqParams, combinationInfo.fileList);
     }
 
     if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(combinationInfo)) {
@@ -546,7 +569,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       .done($.proxy(this._procApplyResult, this));
   },
 
-  _sendUscan: function(fileList) {
+  _sendUscanAndApply: function(reqParams, fileList) {
     if (fileList.length < 1) {
       return;
     }
@@ -559,17 +582,43 @@ Tw.ProductWireplanJoinReservation.prototype = {
       };
     });
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
-      recvFaxNum: 'skt404@sk.com',
-      proMemo: Tw.PRODUCT_RESERVATION.combine,
-      scanFiles: convFileList
-    });
+    var apiList = [
+      {
+        command: Tw.API_CMD.BFF_01_0046,
+        params: {
+          recvFaxNum: 'skt404@sk.com',
+          proMemo: Tw.PRODUCT_RESERVATION.combine,
+          scanFiles: convFileList
+        }
+      },
+      {
+        command: Tw.API_CMD.BFF_01_0046,
+        params: {
+          recvFaxNum: 'skt219@sk.com',
+          proMemo: Tw.PRODUCT_RESERVATION.combine,
+          scanFiles: convFileList
+        }
+      },
+      {
+        command: Tw.API_CMD.BFF_10_0076,
+        params: reqParams
+      }
+    ];
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
-      recvFaxNum: 'skt219@sk.com',
-      proMemo: Tw.PRODUCT_RESERVATION.combine,
-      scanFiles: convFileList
-    });
+    this._apiService.requestArray(apiList)
+      .done($.proxy(this._resUscanAndApply, this));
+  },
+
+  _resUscanAndApply: function(uscan0, uscan1, apply) {
+    if (uscan0.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(uscan0.code, uscan0.msg).pop();
+    }
+
+    if (uscan1.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(uscan1.code, uscan1.msg).pop();
+    }
+
+    this._procApplyResult(apply);
   },
 
   _setGoLoginFlag: function() {

@@ -38,6 +38,8 @@ import RedisService from './services/redis.service';
 import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
 import LoggerService from './services/logger.service';
+import TestRouter from './app/99.test/test.router';
+
 
 class App {
   public app: Application = express();
@@ -98,7 +100,8 @@ class App {
   }
 
   private setClientMap() {
-    const version = String(process.env.NODE_ENV) === 'development' ? VERSION : 'dev';
+    const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
+
     this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
       Object.keys(manifest).map((key) => {
         if ( key.indexOf('.') !== -1 ) {
@@ -134,10 +137,7 @@ class App {
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/tevent', new AppRouter(TeventRouter.instance.controllers).router);
 
-    // new url
-    this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
-    this.app.use('/myt-fare', new AppRouter(MyTFareRouter.instance.controllers).router);
-    this.app.use('/myt-join', new AppRouter(MyTJoinRouter.instance.controllers).router);
+    this.app.use('/test', new AppRouter(TestRouter.instance.controllers).router);
   }
 
   private setViewPath() {
@@ -159,7 +159,9 @@ class App {
       path.join(__dirname, 'app/903.payment/views/containers'),
       path.join(__dirname, 'app/904.customer/views/containers'),
       path.join(__dirname, 'app/905.auth/views/containers'),
-      path.join(__dirname, 'common/views/containers')
+      path.join(__dirname, 'common/views/containers'),
+
+      path.join(__dirname, 'app/99.test/views/containers')
 
     ]);
   }

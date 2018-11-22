@@ -11,6 +11,9 @@
         <span class="subtitle3">#<%= feePlan.feePlanProd.prodFltNm %></span>
         <% } %>
       </div>
+      <div class="ico-wrap type01"><!-- 2018-11-02 추가 -->
+        <div class="bt-alone"><a href="/product/callplan/<%= feePlan.feePlanProd.prodId %>" class="bt-bg-blue1">상세보기</a></div>
+      </div>
       <div class="info-detail mt40">
       <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
         <div class="tb-type">
@@ -123,6 +126,11 @@
         <% } %>
       </ul>
     </div>
+    <ul class="bt-slice mb20 pt20"><!-- 2018-11-02 추가 -->
+      <li class="bt-blue1">
+        <a href="/product/mobileplan">요금제 변경하기</a>
+      </li>
+    </ul>
   </div>
   <!--// .cont-box -->
   <% } %>
@@ -134,7 +142,7 @@
     <h3 class="tx-bold">꼭 확인해주세요!</h3>
     <ul class="noti-list">
       <% for ( var i in tipList) { %>
-      <li><button type="button" class="icon-tip" id="<%= tipList[i] %>">TIP</button></li>
+      <li><%= tipList[i].title %> <button type="button" class="icon-tip" id="<%= tipList[i].code %>">TIP</button></li>
       <% } %>
     </ul>
   </div>

@@ -263,7 +263,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   _onClickBtnDataGift: function () {
     if ( this._dataGiftSum <= 0 ) { // 0이면 T끼리 데이터 선물하기 페이지
-      this._historyService.goLoad('/myt/data/gift');
+      this._historyService.goLoad('/myt-data/giftdata');
     }
     else {
       this._historyService.goLoad('/myt-data/datainfo?filter=data-gifts');
