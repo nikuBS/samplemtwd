@@ -20,12 +20,15 @@ Tw.BenefitDisPgmSelContract.prototype = {
   _render: function () {
     this.$radioGroup = this.$container.find('[data-id=radio-group]');
     this.$okBtn = this.$container.find('[data-id=btn-ok]');
+    this.$refundBtn = this.$container.find('[data-id=refund-info]');
   },
 
   _bindEvent: function () {
     this.$radioGroup.on('click', 'li', $.proxy(this._onRadioGroupClicked, this));
     this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
     // TODO: 할인반환금조회(#refund_info) 및 단말 위약금 조회(#cancel_fee) admin 작업처리
+    // 할인반환금 안내는 개별페이지가 존재
+    this.$refundBtn.on('click', $.proxy(this._onRefundBtnClicked, this));
   },
 
   _initialize: function () {
@@ -53,6 +56,13 @@ Tw.BenefitDisPgmSelContract.prototype = {
     }
   },
 
+  _onRefundBtnClicked: function() {
+    this._popupService.open({
+      hbs: 'BS_02_01_02_01',
+      layer: true
+    }, null, null, 'refund_info');
+  },
+
   _onOkBtnClicked: function () {
     new Tw.ProductCommonConfirm(true, this.$container, $.extend(this.joinInfoTerm, {
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
@@ -75,12 +85,9 @@ Tw.BenefitDisPgmSelContract.prototype = {
   },
 
   _joinCompleteConfirm: function() {
-    this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan/' + this.data.prodId,
-      Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
-      Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
-    /*this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
+    this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
       .done($.proxy(this._onSuccessSeldisSet, this))
-      .fail($.proxy(this._onErrorSeldisSet, this));*/
+      .fail($.proxy(this._onErrorSeldisSet, this));
   },
 
   _onSuccessSeldisSet: function (resp) {
