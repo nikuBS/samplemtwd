@@ -19,6 +19,7 @@ import ProductMobileplanSettingNumberFriend from './controllers/mobileplan/setti
 import ProductMobileplanSettingBandYT from './controllers/mobileplan/setting/product.mobileplan.setting.bandYT.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
+import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/product.mobileplan.lookup.couple.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -76,7 +77,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/setting/number/:prodId', controller: ProductMobileplanSettingNumber });
     this.controllers.push({ url: '/mobileplan/setting/number-friend/:prodId', controller: ProductMobileplanSettingNumberFriend });
     this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductMobileplanSettingLocation });
-    this.controllers.push({ url: '/mobileplan/setting/bandYT/:prodId', controller: ProductMobileplanSettingBandYT});
+    this.controllers.push({ url: '/mobileplan/setting/no-limit/:prodId', controller: ProductMobileplanSettingBandYT});
+    this.controllers.push({ url: '/mobileplan/lookup/couple/:prodId', controller: ProductMobileplanSettingCouple});
     this.controllers.push({ url: '/mobileplan/lookup/tplan(/:prodId)?', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting/:prodId', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
