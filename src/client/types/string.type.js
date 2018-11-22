@@ -976,6 +976,12 @@ Tw.PRODUCT_RESERVATION = {
   }
 };
 
+Tw.PRODUCT_REQUIRE_DOCUMENT = {
+  SUCCESS_TITLE: '구비서류 제출',
+  FILE_COUNT: '제출 파일 : ',
+  FILE_COUNT_UNIT: '개'
+};
+
 Tw.PRODUCT_COMBINE_PRODUCT = {
   GROUP_PERSONAL: '개인형 결합상품',
   GROUP_FAMILY: '가족형 결합상품',

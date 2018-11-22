@@ -149,6 +149,11 @@ export enum PRODUCT_RESERVATION_COMBINE_NM {
   ETC = '그 외 결합상품'
 }
 
+export enum PRODUCT_REQUIRE_DOCUMENT_TYPE_NM {
+  apply = '구비서류 제출/조회',
+  history = '가입신청 내역 조회'
+}
+
 export const MYT_FARE_BILL_REISSUE = {
   TITLE: '요금안내서 재발행'
 };
