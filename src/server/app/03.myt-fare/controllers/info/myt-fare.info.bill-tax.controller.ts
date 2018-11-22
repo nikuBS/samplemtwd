@@ -42,8 +42,8 @@ class MyTFareInfoBillTax extends TwViewController {
       isQueryEmpty: FormatHelper.isEmpty(req.query)
     };
 
-    // 몇 달 전까지의 기록만 가능
-    const monthPeriod = 10;
+    // 몇 달 전까지의 기록만 가능(6)
+    const monthPeriod = 6;
     // 더보기 구현 
 
     // 분기/반기로만 조회가 가능해 6번 호출
@@ -52,7 +52,7 @@ class MyTFareInfoBillTax extends TwViewController {
     ).subscribe(taxlist => {
       res.render('info/myt-fare.info.bill-tax.html', {svcInfo, pageInfo, data: {
         limitMonth: monthPeriod,
-        list: this.mergeList(taxlist),
+        items: this.mergeList(taxlist),
         noticeInfo: this.getNoticeInfo()
       }});
     });
@@ -84,7 +84,7 @@ class MyTFareInfoBillTax extends TwViewController {
     date.setMonth(date.getMonth() - monthPeriod);
     const list: any[] = [];
     for ( let i = 0; i < monthPeriod; i++) {
-      list.push(this.getBillTaxList(DateHelper.getYearMonth(new Date(date)), svcInfo));
+      list.push(this.getBillTaxList(DateHelper.getCurrentShortDate(new Date(date)).substring(0, 6), svcInfo));
       date.setMonth(date.getMonth() + 1);
     }
     return list; 

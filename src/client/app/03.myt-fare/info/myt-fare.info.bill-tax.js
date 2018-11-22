@@ -21,18 +21,18 @@ Tw.MyTFareInfoBillTax = function (rootEl, data) {
 Tw.MyTFareInfoBillTax.prototype = {
   _init: function () {
     var initedListTemplate;
-    var totalDataCounter = this.data.list.length;
+    var totalDataCounter = this.data.items.length;
     this.renderListData = {};
 
     if (!totalDataCounter) {
       initedListTemplate = this.$template.$emptyList();
     } else {
-      this.listRenderPerPage = 1;
+      this.listRenderPerPage = 20;
 
       this.listLastIndex = this.listRenderPerPage;
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
-      this.renderableListData = this.data.list.slice(0, this.listRenderPerPage);
+      this.renderableListData = this.data.items.slice(0, this.listRenderPerPage);
       this.renderListData.initialMoreData = this.listViewMoreHide;
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
       initedListTemplate = this.$template.$listTaxWrapper({
@@ -50,20 +50,20 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
     this.$listWrapper.on('click', '.myfare-result-wrap .bt-slice button', $.proxy(this._reRequestHandler, this));
   },
-  _updateTaxList: function () {
+  _updateTaxList: function (e) {
     this._updateTaxListData();
 
-    this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.list.length ? 'none' : ''});
+    this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.items.length ? 'none' : ''});
     this._updateViewMoreBtnRestCounter($(e.currentTarget));
 
-    var insertCompareData = this.data.list[this.listLastIndex - this.listRenderPerPage - 1],
+    var insertCompareData = this.data.items[this.listLastIndex - this.listRenderPerPage - 1],
         $domAppendTarget  = this.$appendListTarget;
 
     this.renderableListData.map($.proxy(function (o) {
       var renderedHTML;
       
       $domAppendTarget = $('.fe-list-inner div.myfare-result-wrap:last-child');
-      
+
       renderedHTML = this.$template.$templateTaxItem({renderableListData: [o]});
 
       $domAppendTarget.after(renderedHTML);
@@ -73,18 +73,18 @@ Tw.MyTFareInfoBillTax.prototype = {
 
   _updateTaxListData: function () {
     this.listNextIndex = this.listLastIndex + this.listRenderPerPage;
-    this.renderableListData = this.data.list.slice(this.listLastIndex, this.listNextIndex);
-    this.renderListData.restCount = this.data.list.length - this.listNextIndex;
+    this.renderableListData = this.data.items.slice(this.listLastIndex, this.listNextIndex);
+    this.renderListData.restCount = this.data.items.length - this.listNextIndex;
 
-    this.listLastIndex = this.listNextIndex >= this.data.list.length ?
-        this.data.list.length : this.listNextIndex;
+    this.listLastIndex = this.listNextIndex >= this.data.items.length ?
+        this.data.items.length : this.listNextIndex;
   },
 
   _reRequestHandler: function (e) {
     var target = $(e.currentTarget);
 
     this.isFax  = target.attr('class').search('fax') >= 0;
-    this.targetData = this.data.list[target.data('listId')];
+    this.targetData = this.data.items[target.data('listId')];
 
     if (this.isFax) {
       this._openResendByFax(this.targetData);
