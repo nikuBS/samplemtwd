@@ -28,7 +28,6 @@
                 <div class="ti-caption-gray">
                     <h4 class="tit">설정한 커플 번호</h4>
                 </div>
-
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz noborder">
                     <div class="charge-guide-wrap">
@@ -36,13 +35,17 @@
                             <li>
                                 <div class="charge-cont">
                                     <span class="sub-disc01">모번호(커플)</span>
-                                    <span class="tit pb0"><span class="charge-txt">010-12**-45**</span></span>
+                                    <span class="tit pb0">
+                                        <span class="charge-txt"><%= data.otherInfo.svcNumMask%></span>
+                                    </span>
                                 </div>
                             </li>
                             <li>
                                 <div class="charge-cont">
                                     <span class="sub-disc01">내번호</span>
-                                    <span class="tit pb0"><span class="charge-txt">010-12**-45**</span></span>
+                                    <span class="tit pb0">
+                                        <span class="charge-txt"><%= data.myInfo.svcNumMask%></span>
+                                    </span>
                                 </div>
                             </li>
                         </ul>
@@ -66,13 +69,4 @@
 </div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>
-  var data = '<%- JSON.stringify(data) %>';
-  $(document).ready(function () {
-    new Tw.ProductMobileplanSettingBandYT({
-      $element: $('[data-id=bandyt-wrapper]'),
-      data: data
-    });
-  });
-</script>
 <% include ../../../components/end.component.html %>

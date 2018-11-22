@@ -48,10 +48,10 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     this.apiService.request(API_CMD.BFF_10_0042, {}, {}, prodId)
       .subscribe((coupleInfo) => {
         if ( coupleInfo.code === API_CODE.CODE_00 ) {
-          data.coupleInfo = coupleInfo.result.coupleSetInfoList.length > 0 ? coupleInfo.result.coupleSetInfoList : null;
-          if ( !data.coupleInfo ) {
+          if ( coupleInfo.result.coupleSetInfoList.length === 0 ) {
             return this.error.render(res, data);
           }
+          data.coupleInfo = this._convertCoupleInfo(coupleInfo.result.coupleSetInfoList);
           res.render('mobileplan/lookup/product.mobileplan.lookup.couple.html', { data });
         } else {
           return this.error.render(res, Object.assign(data, {
@@ -60,6 +60,18 @@ class ProductMobileplanSettingBandYT extends TwViewController {
           }));
         }
       });
+  }
+
+  _convertCoupleInfo(list) {
+    const data: any = {};
+    list.filter((item) => {
+      if ( item.isMyNum ) {
+        data.myInfo = item;
+      } else {
+        data.otherInfo = item;
+      }
+    });
+    return data;
   }
 }
 
