@@ -98,7 +98,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        mytPage: 'additions',
+        mytPage: 'myplanadd',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,

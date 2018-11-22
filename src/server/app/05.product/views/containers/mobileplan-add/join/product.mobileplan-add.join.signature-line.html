@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="MV_02_02_02">
+<div class="wrap step">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -25,16 +25,14 @@
             <div class="container">
                 <div class="cont-box">
                     <div class="product-tit-wrap">
-                        <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
-                        <span class="tit-big">시그니처워치할인</span>
+                        <span class="tit-small">가입할 상품 옵션 설정하세요.</span>
+                        <span class="tit-big"><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></span>
                     </div>
                 </div>
 
                 <div class="ti-caption-gray">
                     <h4 class="tit">스마트워치 회선 설정
-                        <button type="button" class="tip-view" title="내폰끼리 결합 할 회선 정보보기" id="MV_02_02_02_tip_01"
-                                aria-haspopup="true">TIP
-                        </button>
+                        <button type="button" class="tip-view" title="스마트워치 회선 설정" id="MV_02_02_02_tip_01" aria-haspopup="true">TIP</button>
                     </h4>
                     <p class="num"><%= svcInfo.svcNum %></p>
                 </div>
@@ -46,7 +44,7 @@
                         <div class="form-box">
                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                   <span class="input">
-                    <input type="text" class="fe-num_input" title="데이터 함께쓰기를 설정할 회선번호를 입력하세요" placeholder="번호를 입력하세요."
+                    <input type="text" class="fe-num_input" title="스마트워치 결합 설정할 회선번호를 입력하세요" placeholder="번호를 입력하세요."
                            aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
                     <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
                   </span>
@@ -104,11 +102,11 @@
     <!-- // .popup hbs -->
 </div>
 </body>
-<% include ../../../components/join/product.join.combine-line.component.html %>
+<% include ../../../components/mobileplan-add/product.line.component.html %>
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- JSON.stringify(joinTermInfo) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

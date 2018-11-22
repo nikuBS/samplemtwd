@@ -26,6 +26,7 @@ import ProductMobileplanAddJoin from './controllers/mobileplan-add/join/product.
 import ProductMobileplanAddJoinCombineLine from './controllers/mobileplan-add/join/product.mobileplan-add.join.combine-line.controller';
 import ProductMobileplanAddJoinSignatureLine from './controllers/mobileplan-add/join/product.mobileplan-add.join.signature-line.controller';
 import ProductMobileplanAddJoinRemotePwd from './controllers/mobileplan-add/join/product.mobileplan-add.join.remote-pwd.controller';
+import ProductMobileplanAddJoinPayment from './controllers/mobileplan-add/join/product.mobileplan-add.join.payment.controller';
 import ProductMobileplanAddSettingCombineLine from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.combine-line.controller';
 import ProductMobileplanAddSettingSignatureLine from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.signature-line.controller';
 
@@ -82,6 +83,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/join/signature-line/:prodId', controller: ProductMobileplanAddJoinSignatureLine });
     this.controllers.push({ url: '/mobileplan-add/join/remote-pwd/:prodId', controller: ProductMobileplanAddJoinRemotePwd });
     this.controllers.push({ url: '/mobileplan-add/join/combine-line/:prodId', controller: ProductMobileplanAddJoinCombineLine });
+    this.controllers.push({ url: '/mobileplan-add/join/payment/:prodId', controller: ProductMobileplanAddJoinPayment });
     this.controllers.push({ url: '/mobileplan-add/join/:prodId', controller: ProductMobileplanAddJoin });
     this.controllers.push({ url: '/mobileplan-add/setting/signature-line/:prodId', controller: ProductMobileplanAddSettingSignatureLine });
     this.controllers.push({ url: '/mobileplan-add/setting/combine-line/:prodId', controller: ProductMobileplanAddSettingCombineLine });

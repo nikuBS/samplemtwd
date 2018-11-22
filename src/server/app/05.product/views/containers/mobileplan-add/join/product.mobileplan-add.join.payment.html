@@ -1,7 +1,7 @@
 <%#
-* FileName: product.mobileplan-add.join.combine-line.html
+* FileName: product.mobileplan-add.join.payment.html
 * Author: Ji Hun Yang (jihun202@sk.com)
-* Date: 2018.11.09
+* Date: 2018.11.21
 %>
 <% include ../../../components/start.component.html %>
 <body>
@@ -31,55 +31,48 @@
                 </div>
 
                 <div class="ti-caption-gray">
-                    <h4 class="tit">내폰끼리 결합 회선 설정
-                        <button type="button" class="tip-view" title="내폰끼리 결합 할 회선 정보보기" id="MV_02_02_01_tip_01" aria-haspopup="true">TIP
-                        </button>
-                    </h4>
+                    <h4 class="tit">보호자 회선 설정 <button type="button" class="tip-view" id="MV_02_02_04_tip_01" title="보호자 회선 설정 정보보기" aria-haspopup="true">TIP</button></h4>
                     <p class="num"><%= svcInfo.svcNum %></p>
                 </div>
 
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <div class="input-number-wrap">
-                        <h3 class="tit">내폰끼리 결합 할 회선</h3>
-                        <div class="form-box">
-                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
-                  <span class="input">
-                    <input type="text" class="fe-num_input" title="데이터 함께쓰기를 설정할 회선번호를 입력하세요" placeholder="번호를 입력하세요."
-                           aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
-                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
-                  </span>
-                  <% if (isApp) { %>
-                  <span class="bt-box">
-                    <button type="button" class="fe-btn_address_book">주소록</button>
-                  </span>
-                  <% } %>
-                </span>
-                            <span id="aria-phone-tx1" class="input-comment">band 데이터 / T시그니처 요금제에 가입된 동일명의 회선끼리 결합 하실 수 있습니다. (단, 법인명의, 데이터 함께쓰기 가입회선 불가)</span>
-                        </div>
-                    </div>
+                    <ul class="form-data-list">
+                        <li>
+                            <label class="tit">보호자(수신인) 회선</label>
+                            <span class="inputbox bt-add">
+                                <span class="input">
+                                    <input type="text" class="fe-num_input" placeholder="번호를 입력하세요." title="보호자(수신인) 회선번호를 입력하세요">
+                                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="bt-box disabled">
+                                    <button type="button" class="fe-btn_get_auth_code" disabled="disabled">인증번호 받기</button>
+                                </span>
+                            </span>
+                            <span class="inputbox pt20">
+                                <span class="input">
+                                    <input type="number" placeholder="인증번호 숫자 6자리" title="보호자(수신인) 회선 인증번호 숫자 6자리 입력하세요">
+                                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
                     <ul class="bt-slice pt26">
                         <li class="bt-blue1">
-                            <button class="fe-btn_add_num" disabled="">추가하기</button>
+                            <button class="fe-btn_validate" disabled="disabled">인증하기</button>
                         </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
 
-                <div class="fe-line_wrap" style="display: none">
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-
-                    <!-- .cont-box -->
-                    <div class="cont-box nogaps">
-                        <div class="input-number-wrap">
-                            <h3 class="tit type1">결합 신청된 회선</h3>
-                            <div class="list-comp-thumnail">
-                                <ul class="comp-box fe-line_list"></ul>
-                            </div>
-                        </div>
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder">
+                    <div class="announcement-box">
+                        <p class="announcement-bullet type01">등록한 보호자 휴대폰번호로 SMS 인증이 필요하며, 인증 후 서비스 가입이 완료됩니다.</p>
+                        <p class="announcement-bullet type01">인증번호는 3분 이내에 입력하셔야 하며, 입력시간 초과 시 인증번호를 다시 받아주시기 바랍니다. </p>
                     </div>
-                    <!--// .cont-box -->
                 </div>
+                <!--// .cont-box -->
 
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
@@ -103,9 +96,10 @@
     <!-- // .popup hbs -->
 </div>
 </body>
-<% include ../../../components/mobileplan-add/product.line.component.html %>
 <% include ../../../components/javascript.component.html %>
-<script>$(function () {
-  new Tw.ProductMobileplanAddJoinCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_01', '<%- JSON.stringify(joinTermInfo) %>');
-});</script>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddJoinPayment($('.wrap'), '<%= prodId %>', 'MV_02_02_04', '<%- JSON.stringify(joinTermInfo) %>');
+  });
+</script>
 <% include ../../../components/end.component.html %>

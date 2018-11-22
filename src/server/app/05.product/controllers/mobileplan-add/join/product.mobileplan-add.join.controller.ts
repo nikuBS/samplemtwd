@@ -53,7 +53,7 @@ class ProductMobileplanAddJoin extends TwViewController {
             }));
           }
 
-          res.render('mobileplan-add/join/product.mobileplan-add.join.mobileplan-add.html', Object.assign(renderCommonInfo, {
+          res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
             prodId: prodId,
             joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
           }));

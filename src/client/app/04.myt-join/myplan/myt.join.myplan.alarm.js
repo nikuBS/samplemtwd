@@ -1,10 +1,10 @@
 /**
- * FileName: myt.join.product.fee-alarm.js
- * Author: Jihun Yang (jihun202@sk.com)
+ * FileName: myt.join.myplan.alarm.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.10
  */
 
-Tw.MyTJoinProductFeeAlarm = function(rootEl) {
+Tw.MyTJoinMyplanAlarm = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
@@ -13,7 +13,7 @@ Tw.MyTJoinProductFeeAlarm = function(rootEl) {
   this._bindEvent();
 };
 
-Tw.MyTJoinProductFeeAlarm.prototype = {
+Tw.MyTJoinMyplanAlarm.prototype = {
 
   _cachedElement: function() {
     this.$btnAlarmApply = this.$container.find('.fe-btn_alarm_apply');
@@ -39,7 +39,7 @@ Tw.MyTJoinProductFeeAlarm.prototype = {
   },
 
   _goTerminate: function() {
-    this._historyService.replaceURL('/myt/join/product/fee-alarm/terminate');
+    this._historyService.replaceURL('/myt-join/myplan/alarmterminate');
   },
 
   _reload: function() {

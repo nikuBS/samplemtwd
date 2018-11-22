@@ -18,7 +18,7 @@ Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {
   this._init();
 };
 
-Tw.ProductMobileplanAddJoinMobileplanAdd.prototype = {
+Tw.ProductMobileplanAddJoin.prototype = {
 
   _init: function() {
     this._convConfirmOptions();
@@ -86,7 +86,7 @@ Tw.ProductMobileplanAddJoinMobileplanAdd.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        mytPage: 'additions',
+        mytPage: 'myplanadd',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

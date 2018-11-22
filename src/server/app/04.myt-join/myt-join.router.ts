@@ -1,10 +1,10 @@
 import TwRouter from '../../common/route/tw.router';
 import MyTJoinSubmainController from './myt-join.submain.controller';
-import MyTJoinProductFeePlan from './controllers/product/myt-join.product.fee-plan.controller';
+import MyTJoinMyplan from './controllers/myplan/myt-join.myplan.controller';
 import MyTJoinMyPlanAdd from './controllers/myplanadd/myt-join.myplanadd.controller';
 import MyTJoinMyPlanCombine from './controllers/myplancombine/myt-join.myplancombine.controller';
-import MyTJoinProductFeeAlarm from './controllers/product/myt-join.product.fee-alarm.controller';
-import MyTJoinProductFeeAlarmTerminate from './controllers/product/myt-join.product.fee-alarm.terminate.controller';
+import MyTJoinMyplanAlarm from './controllers/myplan/myt-join.myplan.alarm.controller';
+import MyTJoinMyplanAlarmterminate from './controllers/myplan/myt-join.myplan.alarmterminate.controller';
 import MyTJoinProtectChange from './controllers/protect/myt-join.protect.change.controller';
 import MytJoinInfoDiscount from './controllers/info/myt-join.info.discount.controller';
 import MyTJoinInfoDiscountMonth from './controllers/info/myt-join.info.discount.month.controller';
@@ -36,9 +36,6 @@ class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: MyTJoinSubmainController });
-    this.controllers.push({ url: '/product/fee-plan', controller: MyTJoinProductFeePlan });
-    this.controllers.push({ url: '/product/fee-alarm', controller: MyTJoinProductFeeAlarm });
-    this.controllers.push({ url: '/product/fee-alarm/terminate', controller: MyTJoinProductFeeAlarmTerminate });
     this.controllers.push({ url: '/protect/change', controller: MyTJoinProtectChange });
     this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
@@ -68,6 +65,9 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/wire/changeowner', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/submain/suspend', controller: MyTJoinSuspend });
     this.controllers.push({ url: '/submain/suspend/status', controller: MyTJoinSuspendStatus });
+    this.controllers.push({ url: '/myplan', controller: MyTJoinMyplan });
+    this.controllers.push({ url: '/myplan/alarm', controller: MyTJoinMyplanAlarm });
+    this.controllers.push({ url: '/myplan/alarmterminate', controller: MyTJoinMyplanAlarmterminate });
     this.controllers.push({ url: '/submain/numchange', controller: MyTJoinNumChange });
     this.controllers.push({ url: '/submain/phone/alarm', controller: MyTJoinPhoneNumChgAlarm });
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinPhoneNumChgAlarmExt });
