@@ -1,13 +1,6 @@
 /*
  * FileName:
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.
- *
- */
-
-/*
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.09.27
  *
  */
@@ -20,6 +13,7 @@ import DateHelper from '../../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR } from '../../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../../types/string.type';
+import { FARE_SUBMAIN_MOCK } from '../../../mock/server/test.submain.mock';
 
 class TestMyTFareSubmainController extends TwViewController {
   constructor() {
@@ -35,7 +29,7 @@ class TestMyTFareSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    if ( req && req.params.usagefee === 'usagefee') {
+    if ( req && req.params.usagefee === 'usagefee' ) {
       // 사용요금
       data.type = 'UF';
       this._requestUsageFee(req, res, data, svcInfo);
@@ -62,9 +56,33 @@ class TestMyTFareSubmainController extends TwViewController {
       this._getTaxInvoice(),
       this._getContribution(),
       this._getMicroPrepay(),
-      this._getContentPrepay()
-    ).subscribe(([claim, nonpayment, paymentInfo, totalPayment,
-                   taxInvoice, contribution, microPay, contentPay]) => {
+      this._getContentPrepay(),
+      this._getRecentList(data.type),
+      this._getRealTimePayment()
+    ).subscribe(([claiminfo, nonpayment, paymentInfo, totalPayment,
+                   taxInvoice, contribution, microPay, contentPay, recentList, realTime]) => {
+      const claim: any = claiminfo.result;
+      if ( claim.repSvcYn === 'N' ) {
+        // 대표청구번호 아님
+        claim.info = {
+          code: '',
+          msg: MYT_FARE_PAYMENT_ERROR.REP_SVC_N
+        };
+      }
+      if ( claim.coClCd === 'B' ) {
+        // 사업자 브로드밴드 경우
+        claim.info = {
+          code: '',
+          msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B
+        };
+      }
+      if ( claim.invDt.length === 0 ) {
+        // no data
+        claim.info = {
+          code: '',
+          msg: MYT_FARE_PAYMENT_ERROR.DEFAULT
+        };
+      }
       if ( claim.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -77,7 +95,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( microPay ) {
           data.microPay = microPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
             data.isMicroPrepay = true;
           }
         }
@@ -85,7 +103,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( contentPay ) {
           data.contentPay = contentPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
             data.isContentPrepay = true;
           }
         }
@@ -103,37 +121,40 @@ class TestMyTFareSubmainController extends TwViewController {
           data.claimPay = FormatHelper.addComma(usedAmt.toString());
         }
         // 미납내역
-        if ( nonpayment ) {
-          data.nonpayment = nonpayment;
-          data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
+        if ( nonpayment.result.unPaidTotSum !== '0' ) {
+          data.nonpayment = nonpayment.result;
+          data.unPaidTotSum = FormatHelper.addComma(nonpayment.result.unPaidTotSum);
         }
         // 납부/청구 정보
-        if ( paymentInfo ) {
-          data.paymentInfo = paymentInfo;
+        if ( paymentInfo.result ) {
+          data.paymentInfo = paymentInfo.result;
           // 자동납부인 경우
-          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+          if ( paymentInfo.result.payMthdCd === '01' || paymentInfo.result.payMthdCd === '02' || paymentInfo.result.payMthdCd === 'G1' ) {
             // 은행자동납부, 카드자동납부, 은행지로자동납부
             data.isNotAutoPayment = false;
           }
         }
         // 최근납부내역
-        if ( totalPayment ) {
-          data.totalPayment = totalPayment.paymentRecord;
+        if ( totalPayment.result ) {
+          data.totalPayment = totalPayment.result.paymentRecord;
         }
         // 세금계산서
-        if ( taxInvoice ) {
-          data.taxInvoice = taxInvoice;
+        if ( taxInvoice.code === API_TAX_REPRINT_ERROR.BIL0018 ) {
+          // 사업자 번호를 조회할 수 없는 상황
+          taxInvoice = null;
+        } else {
+          data.taxInvoice = taxInvoice.result;
         }
         // 기부금/후원금
-        if ( contribution ) {
-          data.contribution = contribution;
+        if ( contribution.result ) {
+          data.contribution = contribution.result;
         }
-
-        res.render('myt-fare.submain.html', { data });
+        data.recentList = recentList;
+        data.realTime = realTime;
+        res.render('test.myt-fare.submain.html', { data });
       }
     });
   }
-
   /**
    * 사용요금
    * @param req :Request
@@ -147,8 +168,32 @@ class TestMyTFareSubmainController extends TwViewController {
       this._getTypesFee(data.type),
       this._getPaymentInfo(),
       this._getMicroPrepay(),
-      this._getContentPrepay()
-    ).subscribe(([usage, paymentInfo, microPay, contentPay]) => {
+      this._getContentPrepay(),
+      this._getRecentList(data.type),
+      this._getRealTimePayment()
+    ).subscribe(([usageinfo, paymentInfo, microPay, contentPay, recentList, realTime]) => {
+      const usage: any = usageinfo.result;
+      if ( usage.repSvcYn === 'N' ) {
+        // 대표청구번호 아님
+        usage.info = {
+          code: '',
+          msg: MYT_FARE_PAYMENT_ERROR.REP_SVC_N
+        };
+      }
+      if ( usage.coClCd === 'B' ) {
+        // 사업자 브로드밴드 경우
+        usage.info = {
+          code: '',
+          msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B
+        };
+      }
+      if ( usage.invDt.length === 0 ) {
+        // no data
+        usage.info = {
+          code: '',
+          msg: MYT_FARE_PAYMENT_ERROR.DEFAULT
+        };
+      }
       if ( usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -167,9 +212,9 @@ class TestMyTFareSubmainController extends TwViewController {
         }
         // 납부/청구 정보
         if ( paymentInfo ) {
-          data.paymentInfo = paymentInfo;
+          data.paymentInfo = paymentInfo.result;
           // 자동납부인 경우
-          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+          if ( paymentInfo.result.payMthdCd === '01' || paymentInfo.result.payMthdCd === '02' || paymentInfo.result.payMthdCd === 'G1' ) {
             // 은행자동납부, 카드자동납부, 은행지로자동납부
             data.isNotAutoPayment = false;
           }
@@ -178,7 +223,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( microPay ) {
           data.microPay = microPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
             data.isMicroPrepay = true;
           }
         }
@@ -186,12 +231,13 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( contentPay ) {
           data.contentPay = contentPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
             data.isContentPrepay = true;
           }
         }
-
-        res.render('myt-fare.submain.html', { data });
+        data.recentList = recentList;
+        data.realTime = realTime;
+        res.render('test.myt-fare.submain.html', { data });
       }
     });
   }
@@ -212,148 +258,89 @@ class TestMyTFareSubmainController extends TwViewController {
     return list;
   }
 
-  _getTypesFee(type) {
-    let API_URL = API_CMD.BFF_05_0036;
+  _getTypesFee(type): Observable<any> {
     if ( type === 'UF' ) {
-      API_URL = API_CMD.BFF_05_0047;
+      return Observable.create((obs) => {
+        obs.next(FARE_SUBMAIN_MOCK.BFF_05_0047);
+        obs.complete();
+      });
+    } else {
+      return Observable.create((obs) => {
+        obs.next(FARE_SUBMAIN_MOCK.BFF_05_0036);
+        obs.complete();
+      });
     }
-    return this.apiService.request(API_URL, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        const result = resp.result;
-        if ( result.repSvcYn === 'N' ) {
-          // 대표청구번호 아님
-          return {
-            info: {
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.REP_SVC_N
-            }
-          };
-        }
-        if ( result.coClCd === 'B' ) {
-          // 사업자 브로드밴드 경우
-          return {
-            info: {
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B
-            }
-          };
-        }
-        if ( resp.result.invDt.length === 0 ) {
-          // no data
-          return {
-            info: {
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.DEFAULT
-            }
-          };
-        }
-        return resp.result;
-      } else {
-        return {
-          info: resp
-        };
-      }
+  }
+
+  _getNonPayment(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_05_0030);
+      obs.complete();
     });
   }
 
-  _getNonPayment() {
-    return this.apiService.request(API_CMD.BFF_05_0030, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.unPaidTotSum === '0' ) {
-          // no data
-          return null;
-        }
-        return resp.result;
-      } else {
-        return null;
-      }
+  _getPaymentInfo(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_05_0058);
+      obs.complete();
     });
   }
 
-  _getPaymentInfo() {
-    return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        return null;
-      }
+  _getTotalPayment(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_07_0030);
+      obs.complete();
     });
   }
 
-  _getTotalPayment() {
-    return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.paymentRecord.length === 0 ) {
-          return null;
-        }
-        return resp.result;
-      } else {
-        return null;
-      }
+  _getTaxInvoice(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_07_0017);
+      obs.complete();
     });
   }
 
-  _getTaxInvoice() {
-    return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else if ( resp.code === API_TAX_REPRINT_ERROR.BIL0018 ) {
-        // 사업자 번호를 조회할 수 없는 상황
-        return null;
-      } else {
-        return null;
-      }
-    });
-
-  }
-
-  _getContribution() {
-    return this.apiService.request(API_CMD.BFF_07_0038, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        return null;
-      }
+  _getContribution(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_05_0038);
+      obs.complete();
     });
   }
 
-  _getMicroPrepay() {
+  _getMicroPrepay(): Observable<any> {
     // 소액결제 확인
-    return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        resp.result.code = API_CODE.CODE_00;
-        return resp.result;
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0030 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0030 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0031 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0031 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0033 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0033 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0034 };
-      } else {
-        return null;
-      }
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_05_0038);
+      obs.complete();
     });
   }
 
-  _getContentPrepay() {
+  _getContentPrepay(): Observable<any> {
     // 콘텐츠이용 확인
-    return this.apiService.request(API_CMD.BFF_07_0080, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        resp.result.code = API_CODE.CODE_00;
-        return resp.result;
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0030 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0030 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0031 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0031 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0033 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0033 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0034 };
-      } else {
-        return null;
-      }
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_05_0038);
+      obs.complete();
+    });
+  }
+
+  _getRecentList(type): Observable<any> {
+    if ( type === 'UF' ) {
+      return Observable.create((obs) => {
+        obs.next(FARE_SUBMAIN_MOCK.BFF_05_0021);
+        obs.complete();
+      });
+    } else {
+      return Observable.create((obs) => {
+        obs.next(FARE_SUBMAIN_MOCK.BFF_05_0020);
+        obs.complete();
+      });
+    }
+  }
+
+  _getRealTimePayment(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(FARE_SUBMAIN_MOCK.BFF_05_0022);
+      obs.complete();
     });
   }
 }

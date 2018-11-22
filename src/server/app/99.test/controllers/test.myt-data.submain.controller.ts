@@ -1,13 +1,11 @@
-
-
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../../types/string.type';
-import { BFF_06_0044_familyInfo } from '../../../mock/server/myt.data.family.mock';
+import { DATA_SUBMAIN_MOCK } from '../../../mock/server/test.submain.mock';
 import { MYT_DATA_SUBMAIN_TITLE } from '../../../types/title.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
@@ -40,9 +38,18 @@ class TestMytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice(),
-      this._getFamilyMoa1()
-    ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, familyMock]) => {
+      this._getUsagePatternSevice()
+    ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+      family = family.result;
+      present = present.result;
+      refill = refill.result;
+      dcBkd = dcBkd.result;
+      dpBkd = dpBkd.result;
+      tpBkd = tpBkd.result;
+      etcBkd = etcBkd.result;
+      refpBkd = refpBkd.result;
+      refuBkd = refuBkd.result;
+      pattern = pattern.result;
       if ( !svcInfo.svcMgmtNum && present.info ) {
         // 비정상 진입 또는 API 호출 오류
         this.error.render(res, {
@@ -177,7 +184,7 @@ class TestMytDataSubmainController extends TwViewController {
         data.pattern = pattern;
       }
 
-      res.render('myt-data.submain.html', { data });
+      res.render('test.myt-data.submain.html', { data });
     });
   }
 
@@ -250,18 +257,9 @@ class TestMytDataSubmainController extends TwViewController {
 
   // T가족모아데이터 정보
   _getFamilyMoaData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0044, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else if ( resp.code === API_T_FAMILY_ERROR.BLN0010 ) {
-        // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-        return {
-          impossible: true
-        };
-      } else {
-        // error
-        return null;
-      }
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0044);
+      obs.complete();
     });
   }
 
@@ -277,13 +275,9 @@ class TestMytDataSubmainController extends TwViewController {
   }*/
   // 나의 리필 쿠폰
   _getRefillCoupon(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0001, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0001);
+      obs.complete();
     });
   }
 
@@ -293,121 +287,65 @@ class TestMytDataSubmainController extends TwViewController {
 
   }*/
   // T끼리 데이터 선물 버튼
-  _getDataPresent() {
-    return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return {
-          info: resp
-        };
-      }
+  _getDataPresent(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0015);
+      obs.complete();
     });
   }
 
   // T 끼리 선물하기 선물내역 (1년기준)
-  _getDataPresentBreakdown() {
-    const curDate = new Date();
-    const beforeDate = new Date();
-    beforeDate.setTime(curDate.getTime() - (365 * 24 * 60 * 60 * 1000));
-    return this.apiService.request(API_CMD.BFF_06_0018, {
-      fromDt: DateHelper.getCurrentShortDate(curDate),
-      toDt: DateHelper.getCurrentShortDate(beforeDate),
-      type: '0' // 0: all, 1: send, 2: receive
-    }).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+  _getDataPresentBreakdown(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0018);
+      obs.complete();
     });
   }
 
   // 팅요금 선물내역
-  _getTingPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0026, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+  _getTingPresentBreakdown(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0026);
+      obs.complete();
     });
   }
 
   // 데이터한도요금제 충전내역
-  _getDataChargeBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0042, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+  _getDataChargeBreakdown(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0042);
+      obs.complete();
     });
   }
 
   // 팅/쿠키즈/안심음성 충전내역
-  _getEtcChargeBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0032, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+  _getEtcChargeBreakdown(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0032);
+      obs.complete();
     });
   }
 
   // 리필쿠폰 사용이력조회
-  _getRefillUsedBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0002, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+  _getRefillUsedBreakdown(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0002);
+      obs.complete();
     });
   }
 
   // 리필쿠폰 선물내역
-  _getRefillPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0003, {
-      type: '0' // 받은내역, 보낸내역 동시 조회
-    }).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
+  _getRefillPresentBreakdown(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(DATA_SUBMAIN_MOCK.BFF_06_0003);
+      obs.complete();
     });
   }
 
   // 최근 사용패턴 사용량
-  _getUsagePatternSevice() {
-    const curDate = new Date().getDate();
-    return this.apiService.request(API_CMD.BFF_05_0091, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        if ( curDate < 5 ) {
-          return null;
-        } else {
-          return resp.result;
-        }
-      } else {
-        // error
-        return null;
-      }
-    });
-  }
-
-  // T가족모아 MOCK - 데이터 mig 작업 이후 제거
-  _getFamilyMoa1(): Observable<any> {
+  _getUsagePatternSevice(): Observable<any> {
     return Observable.create((obs) => {
-      obs.next(BFF_06_0044_familyInfo);
+      obs.next(DATA_SUBMAIN_MOCK.BFF_05_0091);
       obs.complete();
     });
   }

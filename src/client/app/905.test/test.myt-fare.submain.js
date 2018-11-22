@@ -213,9 +213,10 @@ Tw.TestMyTFareSubMain.prototype = {
 
   // 사용요금내역조회-1
   _usageFeeRequest: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
+    /*this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
       .done($.proxy(this._responseUsageFee, this))
-      .fail($.proxy(this._errorRequest, this));
+      .fail($.proxy(this._errorRequest, this));*/
+    this._responseUsageFee(this.data.recentList);
   },
 
   // 사용요금내역조회-2
@@ -252,9 +253,10 @@ Tw.TestMyTFareSubMain.prototype = {
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
+    /*this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
       .done($.proxy(this._responseClaimPayment, this))
-      .fail($.proxy(this._errorRequest, this));
+      .fail($.proxy(this._errorRequest, this));*/
+    this._responseClaimPayment(this.data.recentList);
   },
 
   // 최근청구요금내역조회-2
@@ -347,25 +349,27 @@ Tw.TestMyTFareSubMain.prototype = {
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
     // this.loadingView(true, 'button[data-id=realtime-pay]');
-    this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
+    // this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
+    this._onReceivedBillData(this.data.realTime);
   },
 
   // 실시간 사용요금 요청-2
   _getBillResponse: function () {
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { count: ++this._requestCount })
-      .done($.proxy(this._onReceivedBillData, this))
-      .fail($.proxy(this._onErrorReceivedBillData, this));
+    // this._apiService
+    //   .request(Tw.API_CMD.BFF_05_0022, { count: ++this._requestCount })
+    //   .done($.proxy(this._onReceivedBillData, this))
+    //   .fail($.proxy(this._onErrorReceivedBillData, this));
+    this._onReceivedBillData(this.data.realTime);
   },
 
   // 실시간 사용요금 요청-3
   _onReceivedBillData: function (resp) {
     // this.loadingView(false, 'button[data-id=realtime-pay]');
     if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( _.isEmpty(resp.result) ) {
-        this._realTimeBillRequest();
-      }
-      else {
+    //   if ( _.isEmpty(resp.result) ) {
+    //     this._realTimeBillRequest();
+    //   }
+    //   else {
         if ( this._resTimerID ) {
           this.__resetTimer();
         }
@@ -373,7 +377,7 @@ Tw.TestMyTFareSubMain.prototype = {
         var realtimeBillInfo = resp.result.hotBillInfo[0];
         this.$realTimePay.find('i').html(realtimeBillInfo.totOpenBal2);
         this.loadingView(false);
-      }
+      // }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
       // 요청을 하지 않은 경우

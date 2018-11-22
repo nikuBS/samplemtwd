@@ -1,3 +1,15 @@
+export const UnbillInfo = {
+  'code': '00',
+  'msg': 'success',
+  'result': {
+    'unPaidAmtMonthInfoList': {
+      'unPaidInvDt': '20170930',
+      'unPaidAmt': '590090'
+    },
+    'unPaidTotSum': '80000'
+  }
+};
+
 export const PossibleDay = {
   'code': '00',
   'msg': 'success',
