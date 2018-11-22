@@ -61,7 +61,7 @@
           <div class="fe-list-inner">
           {{>taxList}}
           </div>
-          {{#if initialMoreData}}
+          {{#if listViewMoreHide}}
           <div class="bt-more round gap-style2 btm-line round">
               <button>더보기</button>
           </div>
@@ -71,7 +71,7 @@
   </div>
 </script>
 <script id="fe-template-tax-items" type="text/x-handlebars-template">
-    {{#each items}}
+    {{#each renderableListData}}
     <div class="myfare-result-wrap">
         <div class="myfare-list">
             <ul>

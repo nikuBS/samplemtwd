@@ -13,9 +13,9 @@ Tw.MyTFareInfoBillTax = function (rootEl, data) {
   this.data = JSON.parse(data);
 
   this._cachedElement();
-  this._bindEvent();
-
+  
   this._init();
+  this._bindEvent();
 };
 
 Tw.MyTFareInfoBillTax.prototype = {
@@ -27,7 +27,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     if (!totalDataCounter) {
       initedListTemplate = this.$template.$emptyList();
     } else {
-      this.listRenderPerPage = 20;
+      this.listRenderPerPage = 1;
 
       this.listLastIndex = this.listRenderPerPage;
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
@@ -35,20 +35,51 @@ Tw.MyTFareInfoBillTax.prototype = {
       this.renderableListData = this.data.items.slice(0, this.listRenderPerPage);
       this.renderListData.initialMoreData = this.listViewMoreHide;
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
-      initedListTemplate = this.$template.$listTaxWrapper(this.data);
+      initedListTemplate = this.$template.$listTaxWrapper({
+        limitMonth:this.data.limitMonth,
+        listViewMoreHide:this.listViewMoreHide,
+        renderableListData:this.renderableListData,
+      });
     }
 
     this.$template.$domTaxListWrapper.append(initedListTemplate);
 
     this.$listWrapper = this.$container.find('#fe-tax-list-wrapper');
     this.$btnListViewMorewrapper = this.$listWrapper.find('.bt-more');
-    this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateTaxList, this));
+    this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateTaxList, this)); // 더보기버튼
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
     this.$listWrapper.on('click', '.myfare-result-wrap .bt-slice button', $.proxy(this._reRequestHandler, this));
   },
   _updateTaxList: function () {
+    console.log('update button click')
+    this._updateTaxListData();
 
+    this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.list.length ? 'none' : ''});
+    this._updateViewMoreBtnRestCounter($(e.currentTarget));
+
+    var insertCompareData = this.data.list[this.listLastIndex - this.listRenderPerPage - 1],
+        $domAppendTarget  = this.$appendListTarget;
+
+    this.renderableListData.map($.proxy(function (o) {
+      var renderedHTML;
+      
+      $domAppendTarget = $('.fe-list-inner li:last-child');
+      renderedHTML = this.$template.$templateTaxItem({items: [o]});
+
+      $domAppendTarget.append(renderedHTML);
+
+    }, this));
   },
+
+  _updateTaxListData(){
+    this.listNextIndex = this.listLastIndex + this.listRenderPerPage;
+    this.renderableListData = this.data.list.slice(this.listLastIndex, this.listNextIndex);
+    this.renderListData.restCount = this.data.list.length - this.listNextIndex;
+
+    this.listLastIndex = this.listNextIndex >= this.data.list.length ?
+        this.data.list.length : this.listNextIndex;
+  },
+
   _reRequestHandler: function (e) {
     var target = $(e.currentTarget);
 
@@ -97,13 +128,18 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$faxNumberInput.siblings('.cancel').on('click', $.proxy(function() {
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
+    this.$faxNumberInput.trigger('keyup');
   },
   _checkFaxNumber: function (e) {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
     this.$rerequestSendBtn.attr('disabled', ( $(e.currentTarget).val().length < 8 ));
   },
   _sendRerequestByFax: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0019, {fax:this.$faxNumberInput.val()})
+    this._apiService.request(Tw.API_CMD.BFF_07_0019, {
+        fax:this.$faxNumberInput.val(),
+        selSearch:this.targetData.taxBillYearMonth,
+        selType:'M'
+      })
         .done($.proxy(this._resSendCallback, this)).fail();
   },
   _openResendByEmail: function (data) {
@@ -122,13 +158,17 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$emailInput.siblings('.cancel').on('click', $.proxy(function() {
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
+    this.$emailInput.trigger('keyup');
   },
   _checkEmailValue: function (e) {
     this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
   },
   _sendRerequestByEmail: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0018, {eMail:this.$emailInput.val(), selType:'M', selSearch:this.targetData.taxBillYearMonth})
-        .done($.proxy(this._resSendCallback, this)).fail();
+    this._apiService.request(Tw.API_CMD.BFF_07_0018, {
+        eMail:this.$emailInput.val(), 
+        selType:'M', 
+        selSearch:this.targetData.taxBillYearMonth
+      }).done($.proxy(this._resSendCallback, this)).fail();
   },
   _resSendCallback: function(res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
