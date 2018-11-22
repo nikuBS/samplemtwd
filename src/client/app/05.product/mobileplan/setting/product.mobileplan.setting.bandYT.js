@@ -39,6 +39,6 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
 
   _onSetBandYT: function() {
     // TODO: 설정 API 미개발, 정상 동작 후 처리 필요
-    this._historyService.goBack();
+    this._historyService.go(-2);
   }
 };
