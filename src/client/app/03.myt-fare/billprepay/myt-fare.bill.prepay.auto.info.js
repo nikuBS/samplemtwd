@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.prepay.auto.info.js
+ * FileName: myt-fare.bill.prepay.auto.info.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.05
  */
 
-Tw.MyTFarePrepayAutoInfo = function (rootEl, title) {
+Tw.MyTFareBillPrepayAutoInfo = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
 
@@ -16,7 +16,7 @@ Tw.MyTFarePrepayAutoInfo = function (rootEl, title) {
   this._bindEvent();
 };
 
-Tw.MyTFarePrepayAutoInfo.prototype = {
+Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _init: function () {
     this._initVariables();
     this.$selectList.find('li').each($.proxy(this._setEventEachData, this));
@@ -37,7 +37,7 @@ Tw.MyTFarePrepayAutoInfo.prototype = {
     this.$container.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
   },
   _changeAutoPrepay: function () {
-    this._historyService.goLoad('/myt-fare/bill' + this.$title + '/auto/change');
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
   },
   _cancelAutoPrepay: function () {
     this._popupService.openModalTypeA(Tw.AUTO_PAY_CANCEL.TITLE, Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.BTN_NAME, null,
@@ -63,7 +63,7 @@ Tw.MyTFarePrepayAutoInfo.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill' + this.$title);
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title);
     } else {
       this._cancelFail(res);
     }

@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.billcontents.auto.change.controller.ts
+ * FileName: myt-fare.bill.contents.auto.change.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.08
  */
@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
-class MyTFareBillcontentsAutoChange extends TwViewController {
+class MyTFareBillContentsAutoChange extends TwViewController {
   constructor() {
     super();
   }
@@ -17,7 +17,7 @@ class MyTFareBillcontentsAutoChange extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.getAutoPrepayInfo().subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        res.render('billcontents/myt-fare.billcontents.auto.change.html', {
+        res.render('billcontents/myt-fare.bill.contents.auto.change.html', {
           autoPrepayInfo: this.parseData(resp.result),
           svcInfo: svcInfo,
           pageInfo: pageInfo
@@ -45,4 +45,4 @@ class MyTFareBillcontentsAutoChange extends TwViewController {
   }
 }
 
-export default MyTFareBillcontentsAutoChange;
+export default MyTFareBillContentsAutoChange;

@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.billsmall.auto.info.controller.ts
+ * FileName: myt-fare.bill.contents.auto.info.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.08
  */
@@ -11,7 +11,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
 import {MYT_FARE_PREPAY_NAME} from '../../../../types/bff.type';
 
-class MyTFareBillsmallAutoInfo extends TwViewController {
+class MyTFareBillContentsAutoInfo extends TwViewController {
   constructor() {
     super();
   }
@@ -22,7 +22,7 @@ class MyTFareBillsmallAutoInfo extends TwViewController {
       this.getAutoPrepayHistory()
     ).subscribe(([ autoCardInfo, autoPrepay ]) => {
       if (autoCardInfo.code === API_CODE.CODE_00 && autoPrepay.code === API_CODE.CODE_00) {
-        res.render('billsmall/myt-fare.billsmall.auto.info.html', {
+        res.render('billcontents/myt-fare.bill.contents.auto.info.html', {
           autoCardInfo: this.parseCardInfo(autoCardInfo.result),
           autoPrepay: this.parsePrepayData(autoPrepay.result),
           svcInfo: svcInfo,
@@ -40,11 +40,11 @@ class MyTFareBillsmallAutoInfo extends TwViewController {
   }
 
   private getAutoCardInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0072, {});
+    return this.apiService.request(API_CMD.BFF_07_0080, {});
   }
 
   private getAutoPrepayHistory(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0075, { pageNo: 1, listSize: 20 });
+    return this.apiService.request(API_CMD.BFF_07_0079, { pageNo: 1, listSize: 20 });
   }
 
   private parseCardInfo(result: any): any {
@@ -56,7 +56,7 @@ class MyTFareBillsmallAutoInfo extends TwViewController {
   }
 
   private parsePrepayData(result: any): any {
-    const record = result.microPrepayReqRecord;
+    const record = result.useContentsAutoPrepayRecord;
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
         data.name = MYT_FARE_PREPAY_NAME[data.autoChrgReqClCd];
@@ -71,4 +71,4 @@ class MyTFareBillsmallAutoInfo extends TwViewController {
   }
 }
 
-export default MyTFareBillsmallAutoInfo;
+export default MyTFareBillContentsAutoInfo;

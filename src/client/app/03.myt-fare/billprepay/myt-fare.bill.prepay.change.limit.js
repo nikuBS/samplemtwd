@@ -1,10 +1,10 @@
 /**
- * FileName: myt.fare.prepay.change.limit.js
+ * FileName: myt.fare.bill.prepay.change.limit.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.09
  */
 
-Tw.MyTFarePrepayChangeLimit = function (rootEl, title) {
+Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
   this.$isClicked = false;
@@ -17,7 +17,7 @@ Tw.MyTFarePrepayChangeLimit = function (rootEl, title) {
   this._init();
 };
 
-Tw.MyTFarePrepayChangeLimit.prototype = {
+Tw.MyTFareBillPrepayChangeLimit.prototype = {
   _init: function () {
     this._getLimit();
 

@@ -520,11 +520,11 @@ Tw.MyTFareSubMain.prototype = {
     var code, url;
     if ( type === 'M' ) {
       code = this.data.microPay.code;
-      url = '/myt-fare/billsmall';
+      url = '/myt-fare/bill/small';
     }
     else {
       code = this.data.contentPay.code;
-      url = '/myt-fare/billcontents';
+      url = '/myt-fare/bill/contents';
     }
     var title = '', content = '', more = '';
     switch ( code ) {

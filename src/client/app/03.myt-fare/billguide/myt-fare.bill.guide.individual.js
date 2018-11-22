@@ -98,11 +98,11 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
-      this._goLoad('/myt-fare/billcontents');
+      this._goLoad('/myt-fare/bill/contents');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
-      this._goLoad('/myt-fare/billsmall');
+      this._goLoad('/myt-fare/bill/small');
     }, this));
   },
   //--------------------------------------------------------------------------[EVENT]

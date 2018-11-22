@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.billsmall.set.use.js
+ * FileName: myt-fare.bill.small.set.use.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.09
  */
 
-Tw.MyTFareBillsmallSetUse = function (rootEl, $target) {
+Tw.MyTFareBillSmallSetUse = function (rootEl, $target) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -14,7 +14,7 @@ Tw.MyTFareBillsmallSetUse = function (rootEl, $target) {
   this._init($target);
 };
 
-Tw.MyTFareBillsmallSetUse.prototype = {
+Tw.MyTFareBillSmallSetUse.prototype = {
   _init: function ($target) {
     var id = $target.attr('id');
     var tx = $target.siblings('.fe-tx:visible').text();

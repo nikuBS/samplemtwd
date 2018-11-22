@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.billsmall.auto.change.controller.ts
+ * FileName: myt-fare.bill.small.auto.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.05
  */
@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
-class MyTFareBillsmallAutoChange extends TwViewController {
+class MyTFareBillSmallAuto extends TwViewController {
   constructor() {
     super();
   }
@@ -17,7 +17,7 @@ class MyTFareBillsmallAutoChange extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.getAutoPrepayInfo().subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        res.render('billsmall/myt-fare.billsmall.auto.change.html', {
+        res.render('billsmall/myt-fare.bill.small.auto.html', {
           autoPrepayInfo: this.parseData(resp.result),
           svcInfo: svcInfo,
           pageInfo: pageInfo
@@ -38,11 +38,11 @@ class MyTFareBillsmallAutoChange extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.comboStandardAmount = result.autoChrgStrdAmt / 10000;
-      result.comboChargeAmount = result.autoChrgAmt / 10000;
+      result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000;
+      result.comboChargeAmount = result.cmbAutoChrgAmt / 10000;
     }
     return result;
   }
 }
 
-export default MyTFareBillsmallAutoChange;
+export default MyTFareBillSmallAuto;

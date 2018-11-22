@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-fare.billcontents.auto.html
+* FileName: myt-fare.bill.small.auto.html
 * Author: Jayoon Kong (jayoon.kong@sk.com)
-* Date: 2018.10.08
+* Date: 2018.10.05
 %>
 
 <% include ../../components/start.component.html %>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-billcontents-auto" class="wrap">
+    <div id="myt-fare-bill-small-auto" class="wrap">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
             <div class="header-wrap">
@@ -27,7 +27,7 @@
             </div>
             <!--// #header -->
             <!-- #contents -->
-            <div id="contents" class="container-wrap">
+            <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
                     <!-- .cont-box -->
@@ -112,17 +112,17 @@
                         </ul>
                     </div>
                     <!--// .cont-box -->
-
                     <hr class="cont-sp type1" aria-hidden="true"/>
 
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해주세요!</h3>
                         <ul class="noti-list">
-                            <li>이용 안내 <button aria-haspopup="true" id="MF_07_04_tip_02" class="tip-view" title="정보보기">TIP</button></li>
+                            <li>이용 안내 <button aria-haspopup="true" id="MF_06_04_tip_02" class="tip-view" title="정보보기">TIP</button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
+
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
@@ -145,7 +145,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePrepayAuto($('#myt-fare-billcontents-auto'), 'contents', 'auto');
+    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-small-auto'), 'small', 'auto');
   });
 </script>
 <% include ../../components/end.component.html %>

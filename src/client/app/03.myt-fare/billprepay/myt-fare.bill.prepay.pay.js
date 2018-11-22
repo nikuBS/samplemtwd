@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.prepay.pay.js
+ * FileName: myt-fare.bill.prepay.pay.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
  */
 
-Tw.MyTFarePrepayPay = function (rootEl, title, amount, name) {
+Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
   this.$container = rootEl;
   this.$title = title;
   this._maxAmount = amount;
@@ -18,7 +18,7 @@ Tw.MyTFarePrepayPay = function (rootEl, title, amount, name) {
   this._init();
 };
 
-Tw.MyTFarePrepayPay.prototype = {
+Tw.MyTFareBillPrepayPay.prototype = {
   _init: function () {
     this._setInitValue();
     this._initVariables();
@@ -36,8 +36,8 @@ Tw.MyTFarePrepayPay.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
 
-    this._historyUrl = '/myt-fare/bill' + this.$title + '/history';
-    this._mainUrl = '/myt-fare/bill' + this.$title;
+    this._historyUrl = '/myt-fare/bill/' + this.$title + '/history';
+    this._mainUrl = '/myt-fare/bill/' + this.$title;
     this._isPaySuccess = false;
   },
   _bindEvent: function () {
@@ -150,7 +150,7 @@ Tw.MyTFarePrepayPay.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._historyService.replaceTarget('/myt-fare/bill' + this.$title + '#pay_P');
+      this._historyService.replaceTarget('/myt-fare/bill/' + this.$title + '#pay_P');
       this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl,
         Tw.MYT_FARE_PAYMENT_NAME.GO_PREPAY_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PREPAY);
     }
