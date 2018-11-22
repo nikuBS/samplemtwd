@@ -27,7 +27,6 @@ Tw.BenefitDisPgmSelContract.prototype = {
     this.$radioGroup.on('click', 'li', $.proxy(this._onRadioGroupClicked, this));
     this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
     // TODO: 할인반환금조회(#refund_info) 및 단말 위약금 조회(#cancel_fee) admin 작업처리
-    // 할인반환금 안내는 개별페이지가 존재
     this.$refundBtn.on('click', $.proxy(this._onRefundBtnClicked, this));
   },
 
@@ -57,10 +56,7 @@ Tw.BenefitDisPgmSelContract.prototype = {
   },
 
   _onRefundBtnClicked: function() {
-    this._popupService.open({
-      hbs: 'BS_02_01_02_01',
-      layer: true
-    }, null, null, 'refund_info');
+    this._popupService.openAlert('TBD_Tip');
   },
 
   _onOkBtnClicked: function () {
