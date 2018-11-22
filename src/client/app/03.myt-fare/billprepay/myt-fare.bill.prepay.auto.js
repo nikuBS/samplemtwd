@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.prepay.auto.js
+ * FileName: myt-fare.bill.prepay.auto.js
  * Author: 공자윤 (jayoon.kong@sk.com)
  * Date: 2018.08.06
  */
 
-Tw.MyTFarePrepayAuto = function (rootEl, title, type) {
+Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
   this.$container = rootEl;
   this.$title = title;
   this.$type = type;
@@ -16,7 +16,7 @@ Tw.MyTFarePrepayAuto = function (rootEl, title, type) {
   this._init();
 };
 
-Tw.MyTFarePrepayAuto.prototype = {
+Tw.MyTFareBillPrepayAuto.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
@@ -38,8 +38,8 @@ Tw.MyTFarePrepayAuto.prototype = {
     this.$changeCardInfo = this.$container.find('.fe-change-card-info');
     this.$changeType = 'A';
 
-    this._historyUrl = '/myt-fare/bill' + this.$title + '/auto/info';
-    this._mainUrl = '/myt-fare/bill' + this.$title;
+    this._historyUrl = '/myt-fare/bill/' + this.$title + '/auto/info';
+    this._mainUrl = '/myt-fare/bill/' + this.$title;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));

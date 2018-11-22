@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.billsmall.set.password.js
+ * FileName: myt-fare.bill.small.set.password.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.09
  */
 
-Tw.MyTFareBillsmallSetPassword = function (rootEl, $target) {
+Tw.MyTFareBillSmallSetPassword = function (rootEl, $target) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -15,7 +15,7 @@ Tw.MyTFareBillsmallSetPassword = function (rootEl, $target) {
   this._init($target);
 };
 
-Tw.MyTFareBillsmallSetPassword.prototype = {
+Tw.MyTFareBillSmallSetPassword.prototype = {
   _init: function ($target) {
     var code = $target.attr('data-code');
 

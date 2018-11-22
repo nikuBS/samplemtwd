@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-fare.billcontents.auto.info.html
+* FileName: myt-fare.bill.small.auto.info.html
 * Author: Jayoon Kong (jayoon.kong@sk.com)
 * Date: 2018.10.08
 %>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-billcontents-auto-info" class="wrap">
+    <div id="myt-fare-bill-small-auto-info" class="wrap">
         <div class="popup-page tw-popup">
             <!-- #header -->
             <div class="header-wrap">
@@ -27,7 +27,7 @@
             </div>
             <!--// #header -->
             <!-- #contents -->
-            <div id="contents" class="container-wrap">
+            <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
                     <!-- .cont-box -->
@@ -79,7 +79,7 @@
                                         <% if (autoPrepay[i].autoChrgReqClCd !== 'F') { %>
                                         <li class="fe-detail">
                                             <span class="title color-gray">카드정보</span>
-                                            <span class="tx-cont fe-card-info"><%= autoPrepay[i].prchsCardNm %><br /><%= autoPrepay[i].cardNum %></span>
+                                            <span class="tx-cont fe-card-info"><%= autoPrepay[i].cardNm %><br /><%= autoPrepay[i].cardNumH %></span>
                                         </li>
                                         <li class="fe-detail">
                                             <span class="title color-gray">선결제 금액</span>
@@ -111,7 +111,7 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해주세요!</h3>
                         <ul class="noti-list">
-                            <li>변경/해지 안내 <button aria-haspopup="true" id="MF_07_05_tip_01" class="tip-view" title="정보보기">TIP</button></li>
+                            <li>변경/해지 안내 <button aria-haspopup="true" id="MF_06_05_tip_01" class="tip-view" title="정보보기">TIP</button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
@@ -130,7 +130,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePrepayAutoInfo($('#myt-fare-billcontents-auto-info'), 'contents');
+    new Tw.MyTFareBillPrepayAutoInfo($('#myt-fare-bill-small-auto-info'), 'small');
   });
 </script>
 <% include ../../components/end.component.html %>

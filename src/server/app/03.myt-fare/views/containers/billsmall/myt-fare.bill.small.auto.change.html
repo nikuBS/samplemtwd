@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-fare.billsmall.auto.change.html
+* FileName: myt-fare.bill.small.auto.change.html
 * Author: Jayoon Kong (jayoon.kong@sk.com)
 * Date: 2018.10.08
 %>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-billsmall-auto-change" class="wrap">
+    <div id="myt-fare-bill-small-auto-change" class="wrap">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
             <div class="header-wrap">
@@ -184,7 +184,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePrepayAuto($('#myt-fare-billsmall-auto-change'), 'small', 'change');
+    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-small-auto-change'), 'small', 'change');
   });
 </script>
 <% include ../../components/end.component.html %>

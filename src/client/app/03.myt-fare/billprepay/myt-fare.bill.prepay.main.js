@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.prepay.main.js
+ * FileName: myt-fare.bill.prepay.main.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
  */
 
-Tw.MyTFarePrepayMain = function (rootEl, title) {
+Tw.MyTFareBillPrepayMain = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
 
@@ -19,7 +19,7 @@ Tw.MyTFarePrepayMain = function (rootEl, title) {
   this._bindEvent();
 };
 
-Tw.MyTFarePrepayMain.prototype = {
+Tw.MyTFareBillPrepayMain.prototype = {
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
@@ -51,7 +51,7 @@ Tw.MyTFarePrepayMain.prototype = {
     this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
   },
   _prepayHistoryMonth: function () {
-    this._historyService.goLoad('/myt-fare/bill' + this.$title + '/monthly');
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly');
   },
   _microHistory: function () {
     this._popupService.open({
@@ -72,13 +72,13 @@ Tw.MyTFarePrepayMain.prototype = {
     this._popupService.close();
   },
   _contentsHistory: function () {
-    this._historyService.goLoad('/myt-fare/billcontents/history');
+    this._historyService.goLoad('/myt-fare/bill/contents/history');
   },
   _goLoad: function () {
     this._historyService.goLoad(this.$microHistoryUri);
   },
   _changeLimit: function () {
-    new Tw.MyTFarePrepayChangeLimit(this.$container, this.$title);
+    new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
   },
   _prepay: function () {
     this._popupService.open({
@@ -89,21 +89,21 @@ Tw.MyTFarePrepayMain.prototype = {
       'pay');
   },
   _goPrepay: function ($layer) {
-    new Tw.MyTFarePrepayPay($layer, this.$title, this._maxAmount, this._name);
+    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
   _autoPrepay: function () {
-    this._historyService.goLoad('/myt-fare/bill' + this.$title + '/auto');
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
   },
   _autoPrepayInfo: function () {
-    this._historyService.goLoad('/myt-fare/bill' + this.$title + '/auto/info');
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');
   },
   _openAutoPayInfo: function () {
     this._popupService.openAlert(Tw.AUTO_PAY_INFO['CONTENTS_' + this.$title.toUpperCase()], Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
   },
   _changeUseStatus: function (event) {
-    new Tw.MyTFareBillsmallSetUse(this.$container, $(event.target));
+    new Tw.MyTFareBillSmallSetUse(this.$container, $(event.target));
   },
   _setPassword: function () {
-    new Tw.MyTFareBillsmallSetPassword(this.$container, this.$setPasswordBtn);
+    new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn);
   }
 };
