@@ -26,29 +26,29 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <hr class="cont-sp type1" aria-hidden="true">
-            <!--<div class="cont-box nogaps">-->
-                <!--<ul class="link-long-list">-->
-                    <!--<li>-->
-                        <!--<div class="link-long">-->
-                            <!--<button>팅 선물 조르기-->
-                                <!--<span class="tx-sub">-->
-                                            <!--<span class="ico"><span class="blind">팅 선물 조르기 자세히보기</span></span>-->
-                                        <!--</span>-->
-                            <!--</button>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="link-long">-->
-                            <!--<button>충전 권한 내역 변경-->
-                                <!--<span class="tx-sub">-->
-                                            <!--<span class="ico"><span class="blind">충전 권한 내역 변경 자세히보기</span></span>-->
-                                        <!--</span>-->
-                            <!--</button>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <!--<hr class="cont-sp type1" aria-hidden="true">-->
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-request-gift">팅 선물 조르기
+                                <span class="tx-sub">
+                                            <span class="ico"><span class="blind">팅 선물 조르기 자세히보기</span></span>
+                                        </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-auth-history">충전 권한 내역 변경
+                                <span class="tx-sub">
+                                            <span class="ico"><span class="blind">충전 권한 내역 변경 자세히보기</span></span>
+                                        </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
                 <div class="component">
@@ -85,6 +85,7 @@
 <script>
   $(document).ready(function () {
     var oMyTDataCookiz = new Tw.MyTDataCookiz($('.container-wrap'));
+    new Tw.MyTDataCookizOptions($('.wrap'));
   });
 </script>
 
