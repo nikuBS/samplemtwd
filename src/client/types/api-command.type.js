@@ -45,6 +45,7 @@ Tw.API_CMD = {
   BFF_01_0044: { path: '/core-bill/v1/refund/donation-insert', method: Tw.API_METHOD.POST },
   BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
+  BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: Tw.API_METHOD.POST },
 
   // AUTH
   BFF_03_0002: { path: '/v1/user/account-auth-sessions', method: Tw.API_METHOD.POST },

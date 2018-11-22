@@ -428,5 +428,15 @@ export const FEE_PLAN_TIP_TXT = {
 };
 
 export const MAIN_MENU_REFUND_STATE = {
-  APPLY: '신청'
+  ORIGIN_MSG_ING: '송금중',
+  ORIGIN_MSG_COMPLETE: '송금완료',
+  ORIGIN_MSG_ERROR: '송금오류',
+  APPLY: '신청',
+  COMPLTE: '완료',
+  ERROR: '송금오류'
+};
+
+export const MAIN_MENU_REFUND_SVC_TYPE = {
+  PHONE_TYPE_0: '이동전화',
+  PHONE_TYPE_1: '휴대폰'
 };
