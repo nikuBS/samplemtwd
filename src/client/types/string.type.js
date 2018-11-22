@@ -727,7 +727,7 @@ Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',
   A70_CONTENT : '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
   A70_BTN_CONFIRM: '해지하기'
-}
+};
 
 Tw.MYT_PAYMENT_HISTORY_HASH = {
   OVERPAY_REFUND: 'overpay-refund',
@@ -817,10 +817,16 @@ Tw.MYT_JOIN_SUSPEND = {
     BTNAME: '해제하기',
     MESSAGE: '일시정지가 즉시 해제됩니다.'
   },
+  CONFIRM_RESET_FILE: {
+    MESSAGE: '첨부된 파일이 있습니다. 일시정지사유를 변경하시면 구비서류를 재첨부해야합니다. 일시정지 사유를 변경하시겠습니까?',
+    BTNAME: '변경하기'
+  },
   RESUSPEND:'재신청',
   CANCEL_RESUSPEND:'재신청 취소',
   RESET: '해제',
-  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
+  APPLY: '신청',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />일시정지 기간 : {DURATION}',
+  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   TYPE: {
     ALL: '걸기/받기 모두 정지',
@@ -839,18 +845,14 @@ Tw.MYT_JOIN_SUSPEND = {
       TITLE: '구비서류 첨부 안내',
       TIP:
         '- 병적증명서(지방병무청, 시군구 읍면동 주민센터 등에서 발급), 입영 사실 기재 주민등록초본 or 입영통지서, 선발 통지서 등 병역법 시행규칙에서 정한 서식과 신분증 2종 필수 제출입니다.<br />' +
-        '- ‘교육소집 기간’이 확인되는 군입대 입증 서류 필요하며, 군입대 장기 일시정지 처리 시 구비서류에 기재된 ‘입대일자‘ 확인 후 장기 일시정지 신청이 가능합니다.<br />' +
-        '- 첨부파일은 최대 30MB 까지 등록 가능 합니다.<br />' +
-        '- MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf) 파일을 첨부할 수 있습니다.<br />',
+        '- ‘교육소집 기간’이 확인되는 군입대 입증 서류 필요하며, 군입대 장기 일시정지 처리 시 구비서류에 기재된 ‘입대일자‘ 확인 후 장기 일시정지 신청이 가능합니다.<br />' ,
       UPLOAD_DESC: '입영통지서 등 군입증명서류, 신분증 2종 제출'
     },
     ABROAD: {
       TITLE: '구비서류 첨부 안내',
       TIP:
-        '- 항공권 사본(편도, 왕복 모두 인정/전자항공권 인정), 출입국에 관한 사실 증명서(출입국 관리사무소, 인터넷 발급 인정) 등 해외체류입증 서류 필수 제출입니다.' +
-        '- 단, 항공권(편도, 왕복)의 경우 국내에서 국외로 출국하는 내용이 기재되어 있어야 인정됩니다.' +
-        '- 첨부파일은 최대 30MB 까지 등록 가능 합니다.' +
-        '- MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf) 파일을 첨부할 수 있습니다.',
+        '- 항공권 사본(편도, 왕복 모두 인정/전자항공권 인정), 출입국에 관한 사실 증명서(출입국 관리사무소, 인터넷 발급 인정) 등 해외체류입증 서류 필수 제출입니다.<br />' +
+        '- 단, 항공권(편도, 왕복)의 경우 국내에서 국외로 출국하는 내용이 기재되어 있어야 인정됩니다.<br />' ,
       UPLOAD_DESC: '항공권 사본 등 해외체류입증 서류 1종 제출'
     }
   }

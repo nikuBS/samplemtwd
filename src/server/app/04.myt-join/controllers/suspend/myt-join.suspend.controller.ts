@@ -47,7 +47,7 @@ class MyTJoinSuspend extends TwViewController {
             status: false,
             today: today,
             threeMonths: after3Months,
-            twoYear: after24Months
+            twoYears: after24Months
           };
         }
       } else {
