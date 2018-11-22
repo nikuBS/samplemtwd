@@ -301,7 +301,7 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   _getContribution() {
-    return this.apiService.request(API_CMD.BFF_07_0038, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0038, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
@@ -312,7 +312,7 @@ class MyTFareSubmainController extends TwViewController {
 
   _getMicroPrepay() {
     // 소액결제 확인
-    return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
+      return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         resp.result.code = API_CODE.CODE_00;
         return resp.result;

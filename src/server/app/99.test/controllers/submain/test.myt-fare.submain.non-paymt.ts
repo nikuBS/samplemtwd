@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { AutoPaySd_01, AutoPaySd_02, AutoPaySd_03, PaySuspension, PossibleDay } from '../../../../mock/server/myt.fare.nonpaymt.mock';
+import { AutoPaySd_01, AutoPaySd_02, AutoPaySd_03, PaySuspension, PossibleDay, UnbillInfo } from '../../../../mock/server/myt.fare.nonpaymt.mock';
 
 class TestMyTFarePaymentOver extends TwViewController {
   constructor() {
@@ -24,43 +24,22 @@ class TestMyTFarePaymentOver extends TwViewController {
       pageInfo: pageInfo
     };
     Observable.combineLatest(
-      this._getNonPayment(),
-      this._getPaymentPday(),
-      this._getPaymentClaimDate(),
-      this._getSuspension(),
+      this._createMockUnbill(),
       this._createMockPossibleDay(),
       this._createMockAutopaySd_01(),
       this._createMockAutopaySd_02(),
       this._createMockAutopaySd_03(),
       this._createMockSuspension()
-    ).subscribe(([nonpayment, possibleDay, claimDate, suspension, pd1, cm1, cm2, cm3, sp1]) => {
-      if ( nonpayment ) {
-        data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
-        data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
-      }
-      if ( possibleDay ) {
-        data.possibleDay = possibleDay;
-        data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
-      } /*else {
-        // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
-        data.possibleDay = pd1.result;
-        data.suspStaDt = DateHelper.getShortKoreanMonth(pd1.result.suspStaDt);
-      }*/
-      if ( claimDate ) {
-        data.claimDate = claimDate;
-      } /*else {
-        // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
-        data.claimDate = cm2.result;
-        data.claimDate2 = cm1.result;
-        data.claimDate3 = cm3.result;
-      }*/
-
-      if ( suspension ) {
-        data.suspension = suspension;
-      } /*else {
-        // FIXME:납부 이용정지해제 관련 테스트계정확인 후 mock data 삭제
-        data.suspension = sp1.result;
-      }*/
+    ).subscribe(([nonpayment, pd1, cm1, cm2, cm3, sp1]) => {
+      // FIXME: TEST 용 mock data
+      data.unPaidAmtList = nonpayment.result.unPaidAmtMonthInfoList;
+      data.unPaidTotSum = FormatHelper.addComma(nonpayment.result.unPaidTotSum);
+      data.possibleDay = pd1.result;
+      data.suspStaDt = DateHelper.getShortKoreanMonth(pd1.result.suspStaDt);
+      data.claimDate = cm2.result;
+      data.claimDate2 = cm1.result;
+      data.claimDate3 = cm3.result;
+      data.suspension = sp1.result;
       res.render('submain/myt-fare.submain.non-paymt.html', { data });
     });
   }
@@ -126,6 +105,13 @@ class TestMyTFarePaymentOver extends TwViewController {
         // error
         return null;
       }
+    });
+  }
+
+  _createMockUnbill(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(UnbillInfo);
+      obs.complete();
     });
   }
 

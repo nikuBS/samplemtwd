@@ -7,6 +7,7 @@
 Tw.ProductMobileplanSettingBandYT = function (params) {
   this.$container = params.$element;
   this.data = params.data;
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
@@ -33,12 +34,21 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
 
   _onChangeRadioBox: function (event) {
     var $target = $(event.target);
-    // TODO: 임시 상품 코드명 사용 중, API 정상 동작 후 처리 필요!
     this.info = $target.attr('data-info');
   },
 
   _onSetBandYT: function() {
-    // TODO: 설정 API 미개발, 정상 동작 후 처리 필요
+    // TODO: 서버 오류로 추후 기능 테스트 필요!
+    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: this.info }, {}, this.data.prodId)
+      .done($.proxy(this._onSuccessJoinAddition, this))
+      .fail($.proxy(this._onFailJoinAddtion, this));
+  },
+
+  _onSuccessJoinAddition: function() {
     this._historyService.go(-2);
+  },
+
+  _onFailJoinAddtion: function(resp) {
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };
