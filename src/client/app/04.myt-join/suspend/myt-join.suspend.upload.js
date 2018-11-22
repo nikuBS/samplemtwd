@@ -19,7 +19,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     if(tooltip){
       this._showUploadTip(tooltip);
     }else{
-      this._openUploadFile();
+      this._showUploadPopup();
     }
   },
   _showUploadTip: function (tooltip) {

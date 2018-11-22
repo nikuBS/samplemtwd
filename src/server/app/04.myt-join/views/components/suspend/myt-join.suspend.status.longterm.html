@@ -1,0 +1,63 @@
+<%#
+* FileName: myt-join.suspend.status.longterm.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 11. 22.
+%>
+<div class="ti-caption-gray">
+    <h3 class="tit">일시정지 신청정보</h3>
+</div>
+<!-- .cont-box -->
+<div class="cont-box nogaps-hoz">
+    <div class="info-list-type1 type01">
+        <div class="basic-list mt0">
+            <ul>
+                <li>
+                    <span class="title">상태</span>
+                    <span class="tx-cont">
+                        <span class="block tx-bold"><%= state %></span>
+                        <span class="block fs-13">구비서류 식별불가 <strong>18.10.11</strong> 까지 재첨부</span>
+                        <span class="block"><button class="bt-link-tx underline fs-12" id="fe-reattach-files">구비서류 재첨부하기</button></span>
+                    </span>
+                </li>
+                <li>
+                    <span class="title">접수일자</span>
+                    <span class="tx-cont"><%= rgstDt %></span>
+
+                    <span class="title">접수일자</span>
+                    <span class="tx-cont"><%= rgstDt %></span>
+                </li>
+                <li>
+                    <span class="title">장기일시정지 기간</span>
+                    <span class="tx-cont"><%= fromDt %> ~ <%= toDt %></span>
+                </li>
+                <li>
+                    <span class="title">사유</span>
+                    <span class="tx-cont"><%= reason %></span>
+                </li>
+                <li>
+                    <span class="title">구비서류</span>
+                    <span class="tx-cont"><%= opDtm %> 첨부</span>
+                </li>
+                <% if(locals.cntcNum) { %>
+                <li>
+                    <span class="title">추가 연락처</span>
+                    <span class="tx-cont">
+                        <span class="block"><%= cntcNum %></span>
+                        <% if(locals.cntcNumRelNm) { %>
+                        <span class="block">(관계 : <%= cntcNumRelNm %>)</span>
+                         <% } %>
+                    </span>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</div>
+<% if(opStateCd === 'F') { %>
+<ul class="bt-slice mt20 mb20">
+    <li class="bt-white2">
+        <a href="/myt-join/submain/suspend#long-term">다시 신청하기</a>
+    </li>
+</ul>
+<% } %>
+<!--// .cont-box -->

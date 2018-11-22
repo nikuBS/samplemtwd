@@ -1,0 +1,61 @@
+<%#
+* FileName: myt-join.suspend.status.temporal.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 11. 23.
+%>
+<div class="ti-caption-gray">
+    <h3 class="tit">일시정지 신청정보</h3>
+</div>
+<!-- .cont-box -->
+<div class="cont-box nogaps-hoz">
+    <div class="info-list-type1">
+        <div class="basic-list mt0">
+            <ul>
+                <li>
+                    <span class="title">상태</span>
+                    <span class="tx-cont tx-bold"><% if(type === 'long-term'){ %>장기<% } %>일시정지 중</span>
+                </li>
+                <li>
+                    <span class="title"><% if(type === 'long-term'){ %>장기<% } %>일시정지 기간</span>
+                    <span class="tx-cont"><%= period.from %> ~ <%= period.to %></span>
+                </li>
+                <% if(locals.resuspend){ %>
+                <li>
+                    <span class="title">재시작일자</span>
+                    <span class="tx-cont"><%= resuspend %></span>
+                </li>
+                <% } %>
+                <li>
+                    <span class="title">사유</span>
+                    <span class="tx-cont"><%= reason %></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <% if(locals.resuspend){ %>
+    <ul class="bt-slice mt20 mb20">
+        <li class="bt-white2">
+            <button id="bt-cancel-resuspend">재신청 취소하기</button>
+        </li>
+    </ul>
+    <% } else if(isProgressing && type === 'temporary'){ %>
+    <ul class="bt-slice mt20 mb20">
+        <li class="bt-white2">
+            <button id="bt-reset">해제하기</button>
+        </li>
+    </ul>
+    <% } else { %>
+    <ul class="bt-slice mt20 mb20 item-two">
+        <li class="bt-white2">
+            <% if(type === 'temporary' ){ %>
+            <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
+            <% } else { %>
+            <button id="bt-resuspend">재신청하기</button>
+             <% } %>
+        </li>
+        <li class="bt-white2">
+            <button id="bt-reset">해제하기</button>
+        </li>
+    </ul>
+    <% } %>
+</div>
