@@ -118,6 +118,13 @@
         </div>
     </div>
     <!-- //.widget -->
+    <% if (combination.combinationGroup.isRepresentation) { %>
+    <ul class="bt-slice">
+        <li class="bt-white2">
+            <a href="/product/callplan/<%= prodId %>">해지하기</a>
+        </li>
+    </ul>
+    <% } %>
 </div>
 <!--// .cont-box -->
 

@@ -140,7 +140,7 @@
                                                 <dt>관계</dt>
                                                 <dd>
                                                     <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
-                                                    <% if (combination.grpRelYn === 'Y' || groupInfo.mblSvcCnt < 2) { %><button class="bt-link-tx underline red">해지</button><% } %>
+                                                    <% if (combination.grpRelYn === 'Y' || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan/<%= prodId %>">해지</a><% } %>
                                                 </dd>
                                             </dl>
                                         </li>
