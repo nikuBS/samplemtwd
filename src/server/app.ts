@@ -98,7 +98,7 @@ class App {
   }
 
   private setClientMap() {
-    const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
+    const version = String(process.env.NODE_ENV) === 'development' ? VERSION : 'dev';
     this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
       Object.keys(manifest).map((key) => {
         if ( key.indexOf('.') !== -1 ) {
