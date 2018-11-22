@@ -60,10 +60,11 @@ class MyTFareBillTPoint extends TwViewController {
       return {
         isAuto: autoInfo.result.strRbpStatTxt === MYT_FARE_PAYMENT_NAME.IS_AUTO,
         endDate: FormatHelper.isEmpty(autoInfo.result.disOcbEffDate) ? DateHelper.getNextYearShortDate()
-          : DateHelper.getShortDateNoDot(autoInfo.result.disOcbEffDate),
+          : DateHelper.getShortDate(autoInfo.result.disOcbEffDate),
         ocbTermTodoAmt: FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt),
         amtId: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? null : autoInfo.result.ocbTermTodoAmt,
-        amtText: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt) + 'P'
+        amtText: FormatHelper.isEmpty(autoInfo.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT :
+          FormatHelper.addComma(autoInfo.result.ocbTermTodoAmt) + 'P'
       };
     }
     return null;

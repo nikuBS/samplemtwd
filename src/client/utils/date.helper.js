@@ -59,7 +59,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 201806
    */
   var getYearMonth = function (date) {
-    return moment(this.convDateFormat(date)).format('YYYYMM');
+    return moment(this.convDateFormat(date)).format('YYYYM');
   };
 
   /**
@@ -99,7 +99,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : currentDateTime + 1 year
    */
   var getNextYearShortDate = function () {
-    return moment().add(1, 'years').format('YYYY.MM.DD');
+    return moment().add(1, 'years').format('YYYY.M.DD.');
   };
 
   /**
@@ -133,7 +133,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.06.01.
    */
   var getShortDate = function (date) {
-    return moment(convDateFormat(date)).format('l');
+    return moment(convDateFormat(date)).format('YYYY.M.DD.');
   };
 
   /**
@@ -141,7 +141,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.06.01
    */
   var getShortDateNoDot = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.MM.DD');
+    return moment(convDateFormat(date)).format('YYYY.M.DD');
   };
 
   /**
@@ -159,7 +159,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 06.01
    */
   var getShortDateNoYear = function (date) {
-    return moment(convDateFormat(date)).format('MM.DD');
+    return moment(convDateFormat(date)).format('M.DD');
   };
 
   /**
@@ -167,7 +167,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.06.01 12:00
    */
   var getShortDateAndTime = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.MM.DD hh:mm');
+    return moment(convDateFormat(date)).format('YYYY.M.DD hh:mm');
   };
 
   /**
@@ -175,7 +175,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.06.01 12:00:00
    */
   var getFullDateAndTime = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.MM.DD hh:mm:ss');
+    return moment(convDateFormat(date)).format('YYYY.M.DD hh:mm:ss');
   };
 
   /**
@@ -217,7 +217,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018년 12월 31일
    */
   var getFullKoreanDate = function (date) {
-    return moment(convDateFormat(date)).format('YYYY년 MM월 DD일');
+    return moment(convDateFormat(date)).format('YYYY년 M월 DD일');
   };
 
   /**
@@ -225,7 +225,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 18년 12월 31일
    */
   var getShortKoreanDate = function (date) {
-    return moment(convDateFormat(date)).format('YY년 MM월 DD일');
+    return moment(convDateFormat(date)).format('YY년 M월 DD일');
   };
 
   /**
@@ -234,7 +234,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 11월
    */
   var getShortKoreanAfterMonth = function (date) {
-    return moment(convDateFormat(date)).add('1', 'months').format('MM월');
+    return moment(convDateFormat(date)).add('1', 'months').format('M월');
   };
 
   /**
@@ -242,7 +242,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 12월
    */
   var getShortKoreanMonth = function (date) {
-    return moment(convDateFormat(date)).format('MM월');
+    return moment(convDateFormat(date)).format('M월');
   };
 
   /**

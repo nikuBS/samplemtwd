@@ -49,7 +49,7 @@ class DateHelper {
    * @returns {string} : 201806
    */
   static getYearMonth(date) {
-    return moment(this.convDateFormat(date)).format('YYYYMM');
+    return moment(this.convDateFormat(date)).format('YYYYM');
   }
 
   /**
@@ -57,7 +57,7 @@ class DateHelper {
    * @returns {string} : 2018.06.01 12:00:00
    */
   static getCurrentDateTime = function (format) {
-    return moment().format(format || 'YYYY.MM.DD hh:mm:ss');
+    return moment().format(format || 'YYYY.M.DD hh:mm:ss');
   };
 
   /**
@@ -89,7 +89,7 @@ class DateHelper {
    * @returns {string} : currentDateTime + 1 year
    */
   static getNextYearShortDate = function () {
-    return moment().add(1, 'years').format('YYYY.MM.DD');
+    return moment().add(1, 'years').format('YYYY.M.DD.');
   };
 
   /**
@@ -97,7 +97,7 @@ class DateHelper {
    * @returns {string} : 18년 12월 31일
    */
   static getShortKoreanDate(date: any): string {
-    return moment(this.convDateFormat(date)).format('YY년 MM월 DD일');
+    return moment(this.convDateFormat(date)).format('YY년 M월 DD일');
   }
 
   /**
@@ -106,7 +106,7 @@ class DateHelper {
    * @returns {string} : 12월
    */
   static getShortKoreanAfterMonth(date: any): string {
-    return moment(this.convDateFormat(date)).add(1, 'months').format('MM월');
+    return moment(this.convDateFormat(date)).add(1, 'months').format('M월');
   }
 
   /**
@@ -114,7 +114,7 @@ class DateHelper {
    * @returns {string} : 12월
    */
   static getShortKoreanMonth(date: any): string {
-    return moment(this.convDateFormat(date)).format('MM월');
+    return moment(this.convDateFormat(date)).format('M월');
   }
 
   /**
@@ -146,7 +146,7 @@ class DateHelper {
    * @returns {string} : 2018.06.01.
    */
   static getShortDate(date: any): string {
-    return moment(this.convDateFormat(date)).format('l');
+    return moment(this.convDateFormat(date)).format('YYYY.M.DD.');
   }
 
   /**
@@ -154,7 +154,7 @@ class DateHelper {
    * @returns {string} : 2018.06.01
    */
   static getShortDateNoDot(date: any): string {
-    return moment(this.convDateFormat(date)).format('YYYY.MM.DD');
+    return moment(this.convDateFormat(date)).format('YYYY.M.DD');
   }
 
   /**
@@ -164,7 +164,7 @@ class DateHelper {
   static getShortFirstDateNoNot(date: any): string {
     const curDate = this.convDateFormat(date);
     const firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.MM.DD');
+    return moment(firstDate).format('YYYY.M.DD.');
   }
 
   /**
@@ -172,7 +172,7 @@ class DateHelper {
    * @returns {string} : 06.01
    */
   static getShortDateNoYear(date: any): string {
-    return moment(this.convDateFormat(date)).format('MM.DD');
+    return moment(this.convDateFormat(date)).format('M.DD');
   }
 
   /**
@@ -180,7 +180,7 @@ class DateHelper {
    * @returns {string} : 2018.06.01 12:00
    */
   static getShortDateAndTime(date) {
-    return moment(this.convDateFormat(date)).format('YYYY.MM.DD hh:mm');
+    return moment(this.convDateFormat(date)).format('YYYY.M.DD hh:mm');
   }
 
   /**
@@ -188,7 +188,7 @@ class DateHelper {
    * @returns {string} : 2018.06.01 12:00:00
    */
   static getFullDateAndTime(date) {
-    return moment(this.convDateFormat(date)).format('YYYY.MM.DD hh:mm:ss');
+    return moment(this.convDateFormat(date)).format('YYYY.M.DD hh:mm:ss');
   }
 
   /**
@@ -196,7 +196,7 @@ class DateHelper {
    * @param format
    * @returns {string} : 2018-06-02 11:59
    */
-  static getAddDay(date, format = 'YYYY.MM.DD hh:mm') {
+  static getAddDay(date, format = 'YYYY.M.DD hh:mm') {
     return moment(this.convDateFormat(date))
       .add(1, 'days')
       .subtract(1, 'minutes')

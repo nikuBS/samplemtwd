@@ -78,7 +78,8 @@
                                                             <label class="tit" for="formInput01">납부할 포인트</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="formInput01" class="fe-point required-input-field" inputmode="numeric" min="0" pattern="[0-9]*"
+																	<input id="formInput01" class="fe-point required-input-field fe-only-number"
+                                                                           inputmode="numeric" min="0" pattern="[0-9]*"
                                                                            type="text" maxlength="8" placeholder="최소 1,000포인트 이상" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
@@ -89,7 +90,7 @@
                                                             <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="formInput02" class="fe-point-card required-input-field" maxlength="16"
+																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number" maxlength="16"
                                                                            inputmode="numeric" min="0" pattern="[0-9]*" type="number" placeholder="숫자만 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
@@ -99,8 +100,8 @@
                                                             <label class="tit" for="formInput03">카드 비밀번호</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="formInput03" class="fe-point-pw required-input-field" inputmode="numeric" min="0" pattern="[0-9]*"
-                                                                           type="number" maxlength="4" style="-webkit-text-security: disc;" placeholder="비밀번호 입력" />
+																	<input id="formInput03" class="fe-point-pw required-input-field"
+                                                                           type="password" maxlength="16" placeholder="비밀번호 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
 																<p class="mt10"><button class="bt-link-tx underline fs-13 fe-find-password">OK캐쉬백 비밀번호 찾기</button></p>
@@ -130,7 +131,7 @@
                                                             <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field"
+																	<input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
                                                                            <% if (autoInfo.isAuto) { %>
                                                                                 value="<%= cashbag.cardNumber %>"
                                                                                 type="text" readOnly
