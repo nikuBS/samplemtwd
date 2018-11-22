@@ -58,8 +58,7 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
         return true;
       }
 
-      // @todo 미비사유코드 확인되는데로 업데이트
-      if (code === '05') {
+      if (code === '000') {
         resultText.push(PRODUCT_RESERVATION_REJECT['R' + insptCode]).replace('nextDistbDt', nextDistbDt);
         return true;
       }

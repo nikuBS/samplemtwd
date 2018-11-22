@@ -81,7 +81,7 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
         }));
       }
 
-      if (FormatHelper.isEmpty(reqDocInfo.ciaInsptRsnCd)) {
+      if (!FormatHelper.isEmpty(reqDocInfo.ciaInsptRsnCd)) {
         return this.error.render(res, renderCommonInfo);
       }
 
