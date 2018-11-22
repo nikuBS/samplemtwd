@@ -613,6 +613,7 @@ export const API_CMD = {
   BFF_10_0072: { path: '/core-product/v1/mobiles/fee-plans/num-zone-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0073: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0074: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0075: { path: 'core-product/v1/mobiles/fee-plans/couple-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0081: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -755,4 +756,4 @@ export const API_TAX_REPRINT_ERROR = {
 
 export const API_REFUND_ERROR = {
   ZINVE8169: 'ZINVE8169'  // 환불대상금액 존재하지 않습니다.
-}
+};
