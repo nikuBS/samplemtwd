@@ -146,19 +146,19 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   // DC_04 팝업내 아이템 선택시 이동
   _onImmDetailLimit: function (event) {
     var $target = $(event.target);
-    $target.attr('data-url', '/myt/data/limit');
+    $target.attr('data-url', '/myt-data/recharge/limit');
     this._popupService.close();
   },
 
   _onImmDetailEtc: function (event) {
     var $target = $(event.target);
-    $target.attr('data-url', '/myt/data/cookiz');
+    $target.attr('data-url', '/myt-data/recharge/cookiz');
     this._popupService.close();
   },
 
   _onImmDetailTing: function (event) {
     var $target = $(event.target);
-    $target.attr('data-url', '/myt/data/ting');
+    $target.attr('data-url', '/myt-data/recharge//ting');
     this._popupService.close();
   },
 
