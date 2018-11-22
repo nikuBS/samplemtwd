@@ -28,6 +28,9 @@ interface TaxList {
   vatAmt: string;
   totAmt: string;
 }
+interface Info {
+  [key: string]: string;
+}
 
 class MyTFareInfoBillTax extends TwViewController {
   constructor() {
@@ -49,7 +52,8 @@ class MyTFareInfoBillTax extends TwViewController {
     ).subscribe(taxlist => {
       res.render('info/myt-fare.info.bill-tax.html', {svcInfo, pageInfo, data: {
         limitMonth: monthPeriod,
-        list: this.mergeList(taxlist)
+        list: this.mergeList(taxlist),
+        noticeInfo: this.getNoticeInfo()
       }});
     });
   }
@@ -91,6 +95,15 @@ class MyTFareInfoBillTax extends TwViewController {
       tax.listId = i;
       return tax;
     });
+  }
+
+  // 꼭 확인해 주세요 팁 메뉴 정리
+  private getNoticeInfo(): Info[] {
+    return [
+      {link: 'MF_08_01_01_tip_01', title: '세금계산서 적용안내'},
+      {link: 'MF_08_01_01_tip_02', title: '납세금계산서 내역 조회'},
+      {link: 'MF_08_01_01_tip_03', title: '세금계산서 합산 및 재발행'}
+    ];
   }
 
 }
