@@ -83,12 +83,6 @@ Tw.HistoryService.prototype = {
         var historyLength = -(this._urlHistoryLength);
         Tw.UIService.setLocalStorage(this.storageName, '');
         this.resetHistory(historyLength);
-      } else {
-        var account = '/myt-fare/bill/account';
-        var card = '/myt-fare/bill/card';
-        if (this.pathname === account || this.pathname === card) {
-          this.goBack();
-        }
       }
     }
   },

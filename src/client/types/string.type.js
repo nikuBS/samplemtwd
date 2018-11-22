@@ -77,7 +77,8 @@ Tw.POPUP_TITLE = {
   MEMBERSHIP_CORPORATE_LIST: '명의자 선택',
   SELECT_COUNTRY: '방문 국가',
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
-  REFUND_BANK_SELECT: '환불신청계좌 은행 선택'
+  REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
+  EVENT: '이벤트'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -426,7 +427,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
   ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
-  ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
+  ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' }
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -1085,3 +1086,8 @@ Tw.PREPAID_VOICE = {
 
 Tw.ROAMING_CENTER =  ['인천공항 1터미널', '인천공항 1터미널 1층', '인천공항 2터미널', '인천공항 2터미널 1층', '김포공항',
   '제주공항', '김해공항', '김해공항 1층', '대구공항', '인천항', '인천항 국제2', '부산항', '제주신항'];
+
+Tw.EVENT_TYPE = {
+  E: '응모형',
+  N: '일반형'
+};
