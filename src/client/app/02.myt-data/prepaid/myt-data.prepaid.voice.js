@@ -143,7 +143,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $elButton = $(e.currentTarget);
     var fnSelectAmount = function (item) {
       return {
-        value: item.title,
+        value: item.text,
         option: false,
         attr: 'data-value=' + item.value
       };

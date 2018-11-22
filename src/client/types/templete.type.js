@@ -621,11 +621,11 @@ Tw.REGION_LIST_ITEM = {
 Tw.MYT_PREPAID_AMOUNT = {
   title: '충전 금액',
   list: [
-    { title: '50,000원', value: 50000 },
-    { title: '30,000원', value: 30000 },
-    { title: '20,000원', value: 20000 },
-    { title: '10,000원', value: 10000 },
-    { title: '5,000원', value: 5000 }
+    { text: '50,000원', value: 50000 },
+    { text: '30,000원', value: 30000 },
+    { text: '20,000원', value: 20000 },
+    { text: '10,000원', value: 10000 },
+    { text: '5,000원', value: 5000 }
   ]
 };
 

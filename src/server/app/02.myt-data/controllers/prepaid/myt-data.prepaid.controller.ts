@@ -36,7 +36,7 @@ class MyTDataPrepaid extends TwViewController {
         });
         break;
       case 'voice-auto':
-        this.getAutoPPSInfo().subscribe((result) => {
+        this.getPPSInfo().subscribe((result) => {
           res.render(
             'prepaid/myt-data.prepaid.voice-auto.html', Object.assign(responseData, {
               PPSInfo: result,

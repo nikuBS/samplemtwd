@@ -282,9 +282,9 @@ Tw.MainHome.prototype = {
   _onClickBtGift: function (sender) {
     if ( sender.code === Tw.API_CODE.CODE_00 ) {
       if ( sender.result.dataGiftCnt > 0 ) {
-        this._historyService.goLoad('/myt/data/gift');
+        this._historyService.goLoad('/myt-data/giftdata');
       } else if ( sender.result.familyDataGiftCnt > 0 ) {
-        this._historyService.goLoad('/myt/data/gift#auto');
+        this._historyService.goLoad('/myt-data/giftdata#auto');
       }
     }
 
