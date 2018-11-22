@@ -4,12 +4,13 @@
  * Date: 2018. 10. 15.
  */
 
-Tw.MyTJoinSuspend = function (rootEl) {
+Tw.MyTJoinSuspend = function (rootEl, params) {
   this.$container = rootEl;
   this.TYPE = {
     TEMPORARY: '#temporary',
     LONG_TERM: '#long-term'
   };
+  this._params = params;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
@@ -32,15 +33,26 @@ Tw.MyTJoinSuspend.prototype = {
   },
 
   _setInitialTab: function () {
-    var type = window.location.hash ||  this.TYPE.TEMPORARY;
-    if ( Object.values(this.TYPE).indexOf(type) < 0 ) {
-      type =  this.TYPE.TEMPORARY;
+    var type;
+    if ( this._params.suspend.status ) {
+      type = this.TYPE.LONG_TERM;
+    } else {
+      type = window.location.hash || this.TYPE.TEMPORARY;
+      if ( Object.values(this.TYPE).indexOf(type) < 0 ) {
+        type = this.TYPE.TEMPORARY;
+      }
     }
     this.$tabLinker.filter('[href="' + type + '"]').click();
   },
 
   _onTabChanged: function (e) {
     var hash = e.target.hash;
+    if ( this._params.suspend.status && hash === this.TYPE.TEMPORARY ) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }
     window.location.hash = hash;
     this._setActiveTab(hash);
   },

@@ -40,11 +40,14 @@ class MyTJoinSuspend extends TwViewController {
             period: { from, to }
           };
         } else {
-          const from = DateHelper.getCurrentDateTime('YYYY-MM-DD');
-          const to = DateHelper.getShortDateWithFormatAddByUnit(from, 3, 'months', 'YYYY-MM-DD');
+          const today = DateHelper.getCurrentDateTime('YYYY-MM-DD');
+          const after3Months = DateHelper.getShortDateWithFormatAddByUnit(today, 3, 'months', 'YYYY-MM-DD');
+          const after24Months = DateHelper.getShortDateWithFormatAddByUnit(today, 24, 'months', 'YYYY-MM-DD');
           options['suspend'] = {
             status: false,
-            period: { from, to }
+            today: today,
+            threeMonths: after3Months,
+            twoYear: after24Months
           };
         }
       } else {

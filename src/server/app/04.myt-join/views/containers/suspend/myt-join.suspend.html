@@ -52,10 +52,10 @@
                                             </div>
                                         </div>
                                         <% if(suspend.status) { %>
-                                        <%- include('../../components/suspend/myt-join.suspend.temporal.reset.html', suspend); %>
+                                        일시정지 중
                                         <% } else { %>
                                         <%- include('../../components/suspend/myt-join.suspend.temporal.content.html',
-                                        {period: suspend.period, isApp}); %>
+                                        {suspend, isApp}); %>
                                         <% }  %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">
@@ -70,7 +70,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {}); %>
+                                       <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {suspend, isApp}); %>
                                     </li>
                                 </ul>
                             </div>
@@ -90,7 +90,7 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend'));
+    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend'), <%- JSON.stringify({ suspend }) %> );
   });
 </script>
 <% include ../../components/end.component.html %>
