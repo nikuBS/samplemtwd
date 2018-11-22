@@ -59,7 +59,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _selectPopupCallback: function (sListName, $target, $layer) {
-
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, sListName, $target));
   },
 
