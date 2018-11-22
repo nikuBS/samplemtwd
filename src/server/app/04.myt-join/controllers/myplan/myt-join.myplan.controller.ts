@@ -6,8 +6,8 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { SVC_CDNAME, SVC_CDGROUP, UNIT, VOICE_UNIT } from '../../../../types/bff.type';
-import {DATA_UNIT, MYT_FEEPLAN_BENEFIT} from '../../../../types/string.type';
+import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
+import { DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../05.product/helper/product.helper';
@@ -179,7 +179,12 @@ class MyTJoinMyplan extends TwViewController {
       return [];
     }
 
-    return FEE_PLAN_TIP[svcAttrCd];
+    return FEE_PLAN_TIP[svcAttrCd].map((item) => {
+      return {
+        code: item,
+        title: FEE_PLAN_TIP_TXT[item]
+      };
+    });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

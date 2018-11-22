@@ -101,7 +101,7 @@
     <h3 class="tx-bold">꼭 확인해주세요!</h3>
     <ul class="noti-list">
       <% for ( var i in tipList) { %>
-      <li><button type="button" class="icon-tip" id="<%= tipList[i] %>">TIP</button></li>
+      <li><%= tipList[i].title %> <button type="button" class="icon-tip" id="<%= tipList[i].code %>">TIP</button></li>
       <% } %>
     </ul>
   </div>
