@@ -115,7 +115,7 @@ export const URL = {
   '/customer/damage-info/related': { login: false, id: 'CS_13_08', title: '이용자 피해예방 관련 사이트' },
 
   // Benefit
-  '/benefit/index': { login: false, id: 'BS', title: '혜택.할인 Index' },
+  '/benefit/submain': { login: false, id: 'BS', title: '혜택.할인 Index' },
   '/benefit/my-benefit': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
   '/benefit/my/rainbowpoint': { login: true, id: 'BS_01_01', title: '레인보우 포인트' },
   '/benefit/my/rainbowpoint/adjustment': { login: true, id: 'BS_01_01_03', title: '포인트 합산' },

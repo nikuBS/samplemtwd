@@ -502,7 +502,9 @@ Tw.ALERT_MSG_PASSWORD = {
   A19: '동일한 번호가 반복되는 숫자는 사용 불가합니다'
 };
 
-Tw.ALERT_MSG_BENEFIT = {};
+Tw.ALERT_MSG_BENEFIT = {
+  CONFIRM_3_A15 : '3G/LTE 망 사용시 데이터 요금이 발생됩니다'
+};
 
 Tw.ALERT_MSG_MEMBERSHIP = {
   NO_JOIN: {
