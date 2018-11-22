@@ -55,6 +55,9 @@ Tw.MainMenuRefund.prototype = {
     });
   },
   _onMethodChanged: function (e) {
+    if (!!$(e.currentTarget).attr('dsiabled')) {
+      return;
+    }
     var value = e.currentTarget.value;
     if (value.indexOf('refund') !== -1) {
       this.$divDonation.addClass('none');
