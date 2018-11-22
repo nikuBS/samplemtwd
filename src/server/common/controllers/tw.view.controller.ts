@@ -147,7 +147,7 @@ abstract class TwViewController {
       if ( !FormatHelper.isEmpty(loginYn) && loginYn === 'Y' ) {
         this._logger.info(this, '[Session expired]');
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        res.redirect('/common/logout/expire');
+        res.redirect('/common/member/logout/expire');
       } else {
         this._logger.info(this, '[Session empty]');
         this.renderPage(req, res, next, path);
@@ -193,7 +193,7 @@ abstract class TwViewController {
           //   } else {
           //     const loginType = svcInfo.loginType;
           //     if ( loginType === LOGIN_TYPE.EASY ) {
-          //       res.redirect('/common/login/easy-fail');
+          //       res.redirect('/common/member/slogin/fail');
           //     } else {
           //       this.errorAuth(req, res, next, svcInfo);
           //     }
@@ -247,9 +247,9 @@ abstract class TwViewController {
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
       res.redirect('/common/login/dormancy');
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
-      res.redirect('/common/login/exceed-fail');
+      res.redirect('/common/member/login/exceed-fail');
     } else {
-      res.redirect('/common/login/fail?errorCode=' + errorCode);
+      res.redirect('/common/member/login/fail?errorCode=' + errorCode);
     }
   }
 

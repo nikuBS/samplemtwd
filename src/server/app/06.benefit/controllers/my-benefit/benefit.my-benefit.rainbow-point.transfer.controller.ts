@@ -18,7 +18,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
   private _VIEW = {
     DEFAULT: 'my-benefit/benefit.my-benefit.rainbow-point.transfer.html'
   };
-  private _BASE_URL = '/benefit/my-benefit/rainbow-point/transfer';
+  private _BASE_URL = '/benefit/my/rainbowpoint/transfer';
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const curPage = req.query.curPage || 1;

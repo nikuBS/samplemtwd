@@ -1,4 +1,5 @@
 <!-- #header -->
+<!--
 <div id="header" class="header-wrap">
     <div class="header">
         <% if (!locals.option) { %>
@@ -33,17 +34,49 @@
         <% if (svcInfo.totalSvcCnt === '0') { %>
         <button class="bt-user-status">신규 개통</button>
         <% } else if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') { %>
-        <a class="bt-user-status" href="/common/line">회선 등록</a>
+        <a class="bt-user-status" href="/common/member/line">회선 등록</a>
         <% } else { %>
         <button id="fe-bt-line" class="bt-dropdown small <% if(svcInfo.expsSvcCnt === '1') { %>no-arrow<% } %>" title="회선 선택" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>">
             <%= svcInfo.svcNum %>
             <span class="ico"></span>
-        </button><!--팝업 호출된후 disabled부여-->
+        </button>
         <% } %>
         <% } else { %>
         <button class="bt-user-status fe-bt-login">로그인</button>
         <% } %>
         <% } %>
+    </div>
+</div>
+-->
+<!--// #header -->
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="h-belt">
+        <div class="h-default">
+            <div class="h-menu">
+                <a type="button" href="/main/menu" class="icon-gnb-menu"><span class="blind">메뉴열기</span></a>
+            </div>
+            <div class="h-tit"><%- title %></div>
+            <div class="h-serarch">
+                <!--<button class="icon-gnb-search"><span class="blind">검색</span></button>-->
+                <% if (locals.option && locals.option.line) { %>
+                <% if (svcInfo) { %>
+                <% if (svcInfo.totalSvcCnt === '0') { %>
+                <button class="bt-user-status">신규 개통</button>
+                <% } else if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') { %>
+                <a class="bt-user-status" href="/common/member/line">회선 등록</a>
+                <% } else { %>
+                <button id="fe-bt-line" class="bt-dropdown small <% if(svcInfo.expsSvcCnt === '1') { %>no-arrow<% } %>" title="회선 선택" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>">
+                    <%= svcInfo.svcNum %>
+                    <span class="ico"></span>
+                </button><!--팝업 호출된후 disabled부여-->
+                <% } %>
+                <% } else { %>
+                <button class="bt-user-status fe-bt-login">로그인</button>
+                <% } %>
+                <% } %>
+            </div>
+        </div>
     </div>
 </div>
 <!--// #header -->

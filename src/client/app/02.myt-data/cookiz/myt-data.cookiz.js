@@ -87,7 +87,7 @@ Tw.MyTDataCookiz.prototype = {
 
   _onSuccessRechargeImmediately: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/cookiz/complete');
+      this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -104,7 +104,7 @@ Tw.MyTDataCookiz.prototype = {
 
   _onSuccessRechargeMonthly: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/cookiz/complete');
+      this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -132,5 +132,19 @@ Tw.MyTDataCookiz.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _validatePhoneNumber: function (sPhone) {
+    if ( sPhone.length < 10 ) {
+      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+      return false;
+    }
+
+    if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
+      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+      return false;
+    }
+
+    return true;
   }
 };

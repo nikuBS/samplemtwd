@@ -14,15 +14,18 @@ class BenefitRouter extends TwRouter {
     // this.controllers.push({ url: '/', controller: HomeMain });
 
     this.controllers.push({ url: '/submain', controller: BenefitIndex });
-    this.controllers.push({ url: '/my-benefit/rainbow-point', controller: BenefitMyBenefitRainbowPoint });
-    this.controllers.push({ url: '/my-benefit/rainbow-point/adjustment', controller: BenefitMyBenefitRainbowPointAdjustment });
-    this.controllers.push({ url: '/my-benefit/rainbow-point/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
+    this.controllers.push({ url: '/my/rainbowpoint', controller: BenefitMyBenefitRainbowPoint });
+    this.controllers.push({ url: '/my/rainbowpoint/adjustment', controller: BenefitMyBenefitRainbowPointAdjustment });
+    this.controllers.push({ url: '/my/rainbowpoint/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
     this.controllers.push({ url: '/my-benefit/military', controller: BenefitMilitary });
     this.controllers.push({ url: '/my-benefit/cookiz', controller: BenefitCookiz });
     this.controllers.push({ url: '/my-benefit', controller: BenefitMyBenefit });
 
     // new IA
     this.controllers.push({ url: '/submain/detail/dis-pgm/:prodId', controller: BenefitDisPgm });
+    this.controllers.push({ url: '/my/military', controller: BenefitMilitary });
+    this.controllers.push({ url: '/my/cookiz', controller: BenefitCookiz });
+    this.controllers.push({ url: '/my', controller: BenefitMyBenefit });
   }
 }
 

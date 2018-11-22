@@ -54,7 +54,7 @@ Tw.CustomerEmailQualityRetry.prototype = {
 
   _request_inquiry: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer/email/complete?email=' + $('.fe-quality_email').val());
+      this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-quality_email').val());
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

@@ -94,23 +94,23 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     this.$container.on('click', '[data-target="donationBtn"]', $.proxy(this._donationBtnEvt, this)); // 기부금/후원금 사용요금
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
-      this._goLoad('/myt/fare/payment/contents');
+      this._goLoad('/myt-fare/billcontents');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
-      this._goLoad('/myt/fare/payment/micro');
+      this._goLoad('/myt-fare/billsmall');
     }, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
   _callGiftBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/call-gift');
+    this._goLoad('/myt-fare/billguide/callgift');
   },
   _roamingBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/roaming');
+    this._goLoad('/myt-fare/billguide/roaming');
   },
   _donationBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/donation');
+    this._goLoad('/myt-fare/billguide/donation');
   },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
@@ -165,7 +165,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var param = {
       date: this.paramDate
     };
-    this._goLoad('/myt/fare/bill/guide?' + $.param(param));
+    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]

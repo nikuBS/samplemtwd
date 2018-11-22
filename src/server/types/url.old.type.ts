@@ -152,7 +152,7 @@ export const URL = {
   '/customer/shop/repair-detail': { login: false, id: 'CI_03_03', title: 'AS센터 정보' }, // 매장 및 AS센터 > AS센터 자세히
   '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 제조사 별 AS센터
   '/customer/shop/search': { login: false, id: 'CI_02_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지점/대리점 찾기
-  '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
+  '/customer/svc-info/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   '/customer/faq': { login: false, id: 'CI_11_01', title: '자주 찾는 질문' }, // 자주 찾는 질문
   '/customer/faq/category': { login: false, id: 'CI_11_02', title: '자주 찾는 질문/Category' }, // 자주 찾는 질문(Category: 요금상품, 가입/변경/해지 ....)
@@ -164,35 +164,35 @@ export const URL = {
   '/customer/event': { login: false, id: 'CI_13_01', title: '이벤트' }, // 이벤트
   '/customer/event/detail': { login: false, id: 'CI_13_02', title: '이벤트 상세' }, // 이벤트 상세
   '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
-  '/customer/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
-  '/customer/branch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
-  '/customer/branch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
-  '/customer/branch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
+  '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
+  '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
+  '/customer/agentsearch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
+  '/customer/svc-info/praise': { login: false, id: 'CS_11_01', title: '칭찬합니다' },
 
   // common
   '/common/cert/motp': { login: false, id: 'CO_02_01_02_L02_L01', title: '모바일T안심인증' },
   '/common/cert/nice': { login: true, id: '', title: '' },
   '/common/cert/ipin': { login: true, id: '', title: '' },
   '/common/cert/complete': { login: true, id: '', title: '' },
-  '/common/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
-  '/common/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
-  '/common/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록
-  '/common/line/register/empty': { login: true, id: 'CO_01_05_02_02', title: '' }, // 가입된 회선 없음
-  '/common/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' }, // 로그인 횟수 초과
-  '/common/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' }, // 로그인 실패
+  '/common/member/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
+  '/common/member/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
+  '/common/member/line/biz-register': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록
+  '/common/member/line/empty': { login: true, id: 'CO_01_05_02_02', title: '' }, // 가입된 회선 없음
+  '/common/member/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' }, // 로그인 횟수 초과
+  '/common/member/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' }, // 로그인 실패
   '/common/login/dormancy': { login: false, id: 'CO_01_02_02', title: '휴면 해제' },
   '/common/member/tid-pwd': { login: false, id: 'CO_01_04', title: '아이디 찾기/비밀번호 재설정' },
   '/common/login/customer-pwd': { login: false, id: 'CO_01_02_03_01', title: '고객보호 비밀번호 서비스 로그인' },
   '/common/login/customer-pwd-fail': { login: false, id: 'CO_01_02_03_01_01', title: '로그인 실패' },
-  '/common/login/route': { login: false, id: '', title: '' },
-  '/common/login/easy-aos': { login: false, id: 'CO_01_02_06_01', title: '' }, // 간편로그인 안드로이드
-  '/common/login/easy-ios': { login: false, id: 'CO_01_02_06_02', title: '' }, // 간편로그인 IOS
-  '/common/login/easy-fail': { login: false, id: 'CO_01_02_06_03', title: '' }, // 간편로그인 이용불가
-  '/common/logout/complete': { login: false, id: 'CO_01_03_01', title: '' }, // 로그아웃 성공
-  '/common/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
-  '/common/logout/route': { login: false, id: '', title: '' },
+  '/common/member/login/route': { login: false, id: '', title: '' },
+  '/common/member/slogin/aos': { login: false, id: 'CO_01_02_06_01', title: '' }, // 간편로그인 안드로이드
+  '/common/member/slogin/ios': { login: false, id: 'CO_01_02_06_02', title: '' }, // 간편로그인 IOS
+  '/common/member/slogin/fail': { login: false, id: 'CO_01_02_06_03', title: '' }, // 간편로그인 이용불가
+  '/common/member/logout/complete': { login: false, id: 'CO_01_03_01', title: '' }, // 로그아웃 성공
+  '/common/member/logout/expire': { login: false, id: 'CO_01_03_02', title: '' }, // 세션 만료
+  '/common/member/logout/route': { login: false, id: '', title: '' },
   '/common/member/manage': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
-  '/common/signup/guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
+  '/common/member/signup-guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
   '/common/tid/login': { login: false, id: '', title: '' },
   '/common/tid/account': { login: true, id: '', title: '' },
   '/common/tid/change-pw': { login: true, id: '', title: '' },
@@ -206,12 +206,12 @@ export const URL = {
   '/common/withdrawal/guide': { login: true, id: 'CO_01_05_01_01', title: '회원탈퇴' },
   '/common/withdrawal/survey': { login: true, id: 'CO_01_05_01_03', title: '회원탈퇴' },
   '/common/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' },
-  '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
-  '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
-  '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
-  '/common/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
-  '/common/settings/notifications': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
-  '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
-  '/common/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
+  '/main/menu/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
+  '/main/menu/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
+  '/main/menu/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
+  '/main/menu/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
+  '/main/menu/settings/notifications': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
+  '/main/menu/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
+  '/main/menu/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
   '/common/error': { login: false, id: '', title: '' }
 };

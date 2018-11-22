@@ -140,7 +140,7 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessLimitRechargeImmediately: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/limit/complete');
+      this._historyService.replaceURL('/myt-data/recharge/limit/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -148,7 +148,7 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessLimitRechargeMonthly: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/limit/complete');
+      this._historyService.replaceURL('/myt-data/recharge/limit/complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

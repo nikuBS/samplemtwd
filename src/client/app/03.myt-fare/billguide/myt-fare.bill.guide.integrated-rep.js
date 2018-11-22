@@ -128,30 +128,30 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
-      this._goLoad('/myt/fare/payment/contents');
+      this._goLoad('/myt-fare/billcontents');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
-      this._goLoad('/myt/fare/payment/micro');
+      this._goLoad('/myt-fare/billsmall');
     }, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
-    Tw.Logger.info('[요금납부]', Tw.MyTFarePayment);
-    this.myTFarePayment = new Tw.MyTFarePayment(this.$container);
+    Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
+    this.myTFarePayment = new Tw.MyTFareBill(this.$container);
   },
   _payListBtnEvt: function () {
     Tw.Logger.info('[납부내역조회]');
     this._goLoad('/myt/fare/history/payment');
   },
   _callGiftBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/call-gift');
+    this._goLoad('/myt-fare/billguide/callgift');
   },
   _roamingBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/roaming');
+    this._goLoad('/myt-fare/billguide/roaming');
   },
   _donationBtnEvt: function () {
-    this._goLoad('/myt/fare/bill/guide/donation');
+    this._goLoad('/myt-fare/billguide/donation');
   },
   _hbDateRadioEvt: function (e) {
     Tw.Logger.info('[날짜 클릭]');
@@ -169,8 +169,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       line: this.paramLine
     };
     // Tw.Logger.info('[param]', param);
-    // Tw.Logger.info('[param]2', '/myt/fare/bill/guide?'+ $.param(param));
-    this._goLoad('/myt/fare/bill/guide?' + $.param(param));
+    // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
+    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
   },
 
   _conditionChangeEvt: function () {

@@ -43,9 +43,6 @@ class MyTDataGift extends TwViewController {
             },
             responseData
           );
-
-          console.log(response);
-
           res.render('gift/myt-data.gift.complete.html', response);
         });
         break;

@@ -52,7 +52,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     this._getCallGiftInfo(param);
   },
   // _popupCloseBtEvt: function () {
-  //   this._goLoad('/myt/fare/bill/guide');
+  //   this._goLoad('/myt-fare/billguide/guide');
   // },
   //--------------------------------------------------------------------------[API]
   _getCallGiftInfo: function (param) {

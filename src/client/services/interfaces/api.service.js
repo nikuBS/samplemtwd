@@ -49,11 +49,9 @@ Tw.ApiService.prototype = {
     var deferred = $.Deferred();
 
     if ( !Tw.FormatHelper.isEmpty(resp.serverSession) ) {
-      this._nativeService.send(Tw.NTV_CMD.SESSION, {
-        serverSession: resp.serverSession,
-        expired: 60 * 60 * 1000
-      });
+      this.sendNativeSession(resp.serverSession, resp.loginType);
       delete resp.serverSession;
+      delete resp.loginType;
     }
 
     if ( resp.code === Tw.API_CODE.CODE_03 ) {
@@ -73,7 +71,6 @@ Tw.ApiService.prototype = {
       return resp;
     }
   },
-
   _completeCert: function (resp, deferred, requestInfo) {
     if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
       this._setCert(requestInfo, deferred);
@@ -82,6 +79,7 @@ Tw.ApiService.prototype = {
       deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
     }
   },
+
   _setCert: function (requestInfo, deferred) {
     this.request(Tw.NODE_CMD.SET_CERT, { url: '/bypass' + requestInfo.command.path })
       .done($.proxy(this._successSetCert, this, requestInfo, deferred));
@@ -140,5 +138,26 @@ Tw.ApiService.prototype = {
       return arrArgs.slice(3, argsLen);
     }
     return [];
+  },
+
+  setSession: function (callback) {
+    this.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
+      .done($.proxy(this._successSession, this, callback));
+  },
+
+  _successSession: function (callback, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.sendNativeSession(resp.result.serverSession, resp.result.loginType);
+      if(!Tw.FormatHelper.isEmpty(callback)) {
+        callback();
+      }
+    }
+  },
+  sendNativeSession: function (serverSession, loginType) {
+    this._nativeService.send(Tw.NTV_CMD.SESSION, {
+      serverSession: serverSession,
+      expired: 60 * 60 * 1000,
+      loginType: loginType
+    });
   }
 };

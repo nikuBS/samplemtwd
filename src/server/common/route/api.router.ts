@@ -13,6 +13,7 @@ import AuthService from '../../services/auth.service';
 import EnvHelper from '../../utils/env.helper';
 import RedisService from '../../services/redis.service';
 import FormatHelper from '../../utils/format.helper';
+import VERSION from '../../config/version.config';
 
 class ApiRouter {
   public router: Router;
@@ -60,7 +61,7 @@ class ApiRouter {
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
     this.router.get('/serverSession', this.getServerSession.bind(this));
-    this.router.get('/version', this.getVersion.bind(this));
+    this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/service-notice', this.getServiceNotice.bind(this));
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
@@ -77,7 +78,8 @@ class ApiRouter {
     const resp = {
       code: API_CODE.CODE_00,
       result: {
-        environment: process.env.NODE_ENV
+        environment: process.env.NODE_ENV,
+        version: VERSION
       }
     };
     res.json(resp);
@@ -99,11 +101,14 @@ class ApiRouter {
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
-          result: null
+          result: {}
         };
 
         if ( !FormatHelper.isEmpty(result) ) {
-          resp.result = result.ver;
+          resp.result = {
+            ver: result.ver,
+            signGateGW: result.signGateGW
+          };
         } else {
           resp.code = API_CODE.CODE_404;
         }
@@ -210,9 +215,19 @@ class ApiRouter {
     this.logger.info(this, '[get serverSession]');
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
+
+    const svcInfo = this.loginService.getSvcInfo();
+    let loginType = '';
+    if ( !FormatHelper.isEmpty(svcInfo) ) {
+      loginType = svcInfo.loginType;
+    }
+
     res.json({
       code: API_CODE.CODE_00,
-      result: this.loginService.getServerSession()
+      result: {
+        serverSession: this.loginService.getServerSession(),
+        loginType: loginType
+      }
     });
   }
 

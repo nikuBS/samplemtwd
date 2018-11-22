@@ -14,7 +14,7 @@ Tw.MenuComponent = function () {
 
   // this._bindEvent();
   this._bindLogin();
-  Tw.Logger.info('[MainMenu] init complete', this._tidLanding);
+  Tw.Logger.info('[MainMenu] init complete');
 };
 Tw.MenuComponent.prototype = {
   _bindEvent: function () {

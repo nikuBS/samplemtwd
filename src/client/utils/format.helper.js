@@ -100,8 +100,8 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convProductSpecifications = function(basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
-    var isValid = function(value) {
+  var convProductSpecifications = function (basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
+    var isValid = function (value) {
       return !(Tw.FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
     };
 
@@ -113,7 +113,7 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convProductBasfeeInfo = function(basFeeInfo) {
+  var convProductBasfeeInfo = function (basFeeInfo) {
     var isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
 
     return {
@@ -122,7 +122,7 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convProductBasOfrDataQtyCtt = function(basOfrDataQtyCtt) {
+  var convProductBasOfrDataQtyCtt = function (basOfrDataQtyCtt) {
     var isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
 
     return {
@@ -131,7 +131,7 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convProductBasOfrVcallTmsCtt = function(basOfrVcallTmsCtt) {
+  var convProductBasOfrVcallTmsCtt = function (basOfrVcallTmsCtt) {
     var isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
 
     return {
@@ -140,7 +140,7 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convProductBasOfrCharCntCtt = function(basOfrCharCntCtt) {
+  var convProductBasOfrCharCntCtt = function (basOfrCharCntCtt) {
     var isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
 
     return {
@@ -186,7 +186,7 @@ Tw.FormatHelper = (function () {
 
   var convVoiceMinFormatWithUnit = function (data) {
     var hours = Math.floor(data / 60),
-      min = data - (hours * 60);
+        min   = data - (hours * 60);
 
     return (hours > 0 ? hours + Tw.VOICE_UNIT.HOURS : '') + min + Tw.VOICE_UNIT.MIN;
   };
@@ -324,37 +324,48 @@ Tw.FormatHelper = (function () {
   };
 
   var lpad = function (str, length, padStr) {
-    while(str.length < length)
+    while ( str.length < length )
       str = padStr + str;
     return str;
   };
 
   var appendDataUnit = function (data) {
-    if (/^[0-9\.]+$/.test(data)) {
+    if ( /^\d{1,3}\.?\d*$/.test(data) ) {
+      return data + Tw.DATA_UNIT.MB;
+    } else if ( /^\d{4,}\.?\d*$/.test(data) ) {
       return data + Tw.DATA_UNIT.GB;
     }
     return data;
   }
 
   var appendVoiceUnit = function (amount) {
-    if (/^[0-9\.]+$/.test(amount)) {
+    if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.PERIOD_UNIT.MINUTES;
     }
     return amount;
   }
 
   var appendSMSUnit = function (amount) {
-    if (/^[0-9\.]+$/.test(amount)) {
+    if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.SMS_UNIT;
     }
     return amount;
   }
 
   var getTemplateString = function (template, values) {
-    return template.replace(/{\w+}/g, function(x) {
+    return template.replace(/{\w+}/g, function (x) {
       return values[x.slice(1, x.length - 1)];
     });
   };
+
+  var isCellPhone = function (sNumber) {
+
+    // It's not working with mask number
+    sNumber = sNumber.split('-').join('');
+    var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+    return regPhone.test(sNumber);
+  }
 
   return {
     leadingZeros: leadingZeros,
@@ -392,6 +403,7 @@ Tw.FormatHelper = (function () {
     appendDataUnit: appendDataUnit,
     appendVoiceUnit: appendVoiceUnit,
     appendSMSUnit: appendSMSUnit,
-    getTemplateString: getTemplateString
+    getTemplateString: getTemplateString,
+    isCellPhone: isCellPhone
   };
 })();

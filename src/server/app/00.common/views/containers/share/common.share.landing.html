@@ -1,0 +1,15 @@
+<%#
+* FileName: common.share.landing.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.11.20
+%>
+
+<% include ../components/start.component.html %>
+<!-- body -->
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CommonShareLanding('<%= result.command %>', '<%= isLogin %>');
+  });
+</script>
+<% include ../components/end.component.html %>

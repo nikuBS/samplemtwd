@@ -40,7 +40,7 @@ Tw.TidLandingComponent.prototype = {
     this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
   },
   _onClickBtnAuthLine: function () {
-    this._historyService.goLoad('/common/line');
+    this._historyService.goLoad('/common/member/line');
   },
   _onClickBtAccount: function () {
     this._goLoad(Tw.NTV_CMD.ACCOUNT, '/common/tid/account', $.proxy(this._onNativeAccount, this));
@@ -79,7 +79,7 @@ Tw.TidLandingComponent.prototype = {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
-        this._getSession();
+        this._apiService.setSession($.proxy(this._successSetSession, this));
       } else {
         this._historyService.reload();
         // this._historyService.goLoad('/main/home');
@@ -91,9 +91,9 @@ Tw.TidLandingComponent.prototype = {
       // 휴면계정
       this._historyService.goLoad('/common/login/dormancy');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.goLoad('/common/login/exceed-fail');
+      this._historyService.goLoad('/common/member/login/exceed-fail');
     } else {
-      this._historyService.goLoad('/common/login/fail?errorCode=' + resp.code);
+      this._historyService.goLoad('/common/member/login/fail?errorCode=' + resp.code);
     }
   },
   _onNativeLogout: function () {
@@ -103,21 +103,10 @@ Tw.TidLandingComponent.prototype = {
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
     // if(resp.code === NTV_CODE.CODE_00) {
-    this._historyService.goLoad('/common/logout/complete');
+    this._historyService.goLoad('/common/member/logout/complete');
     // }
   },
-  _getSession: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
-      .done($.proxy(this._setSession, this));
-  },
-
-  _setSession: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._nativeService.send(Tw.NTV_CMD.SESSION, {
-        serverSession: resp.result,
-        expired: 60 * 60 * 1000
-      });
-      this._historyService.reload();
-    }
+  _successSetSession: function () {
+    this._historyService.reload();
   }
 };

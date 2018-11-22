@@ -164,6 +164,10 @@ class FormatHelper {
   }
 
   static conTelFormatWithDash(tel: any): any {
+    if (this.isEmpty(tel)) {
+      return tel;
+    }
+
     const ret = tel.trim(),
       pattern = {
         9: [2, 3, 4],
@@ -264,6 +268,18 @@ class FormatHelper {
       str = padStr + str;
     }
     return str;
+  }
+
+  /**
+   * It's not working with mask number
+   * @param sNumber
+   * @returns {boolean}
+   */
+  static isCellPhone (sNumber) {
+    sNumber = sNumber.split('-').join('');
+    const regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+    return regPhone.test(sNumber);
   }
 }
 

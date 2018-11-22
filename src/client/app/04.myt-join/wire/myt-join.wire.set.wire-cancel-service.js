@@ -185,7 +185,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       if ( Tw.FormatHelper.isEmpty( this.memberPhoneObj.hp ) ) { // 값이 없을 경우
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
           $.proxy(function(){
-            // this._goLoad('/myt/join/wire/history');
+            // this._goLoad('/myt-join/submain/wire/history');
           }, this));
       } else { // 값이 있을 경우
         this.dataModel.phoenNmStr = this.memberPhoneObj.hp;
@@ -197,7 +197,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       if ( Tw.FormatHelper.isEmpty( this.memberPhoneObj.tel ) ) { // 값이 없을 경우
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
           $.proxy(function(){
-            // this._goLoad('/myt/join/wire/history');
+            // this._goLoad('/myt-join/submain/wire/history');
           }, this));
       } else { // 값이 있을 경우
         this.dataModel.phoenNmStr = this.memberPhoneObj.tel;
@@ -458,7 +458,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
       //   $.proxy(function(){
-      //     this._goLoad('/myt/join/wire/history');
+      //     this._goLoad('/myt-join/submain/wire/history');
       //   }, this));
     }
   },

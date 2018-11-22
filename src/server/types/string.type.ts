@@ -411,3 +411,7 @@ export const MYT_SUSPEND_STATE = {
   F: '처리불가',
   C: '처리완료'
 };
+
+export const MAIN_MENU_REFUND_STATE = {
+  APPLY: '신청'
+};

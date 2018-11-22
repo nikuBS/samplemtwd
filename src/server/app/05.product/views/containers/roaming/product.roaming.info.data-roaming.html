@@ -1,0 +1,155 @@
+<%#
+* FileName: product.roaming.info.data-roaming.html
+* Author: Eunjung Jung
+* Date: 2018.11.08
+* id: MV
+%>
+
+
+<% include ../../components/start.component.html %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: 'SMS / DATA 로밍', svcInfo, option: { line: true } }); %>
+    <!--<div id="header" class="header-wrap">-->
+        <!--<div class="header">-->
+            <!--<div class="header-ti align-l">-->
+                <!--<h1>SMS / DATA 로밍</h1>-->
+            <!--</div>-->
+            <!--<button class="prev-step"><span class="blind">이전으로</span></button>-->
+            <!--<button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps-btm">
+                <h3 class="con-tit0 tx-bold mb12">SMS 로밍</h3>
+                <p class="article-type1">해외에서도 국내와 같이 문자메시지(SMS), 콜키퍼,<br />발신번호표시 서비스를 이용하실 수 있습니다.</p>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover">
+                            <div class="acco-style btn-hold bgnone2">
+                                <ul class="acco-list">
+                                    <!-- .on: 열기 -->
+                                    <li class="acco-box">
+                                        <div class="acco-tit">이용 방법<button role="button" aria-pressed="false" title="이용 방법 보기"></button></div>
+                                        <div class="acco-cont">
+                                            <ul class="cellphone-setting">
+                                                <li>
+                                                    <em class="bul-tit">로밍 SMS 발신</em>
+                                                    <p class="txt">메시지 작성 후 국내와 동일한 방법으로 상대방<br />휴대폰번호 입력 후 전송</p>
+                                                </li>
+                                                <li>
+                                                    <em class="bul-tit">국제 SMS 발신</em>
+                                                    <p class="txt">로밍 중 한국이동전화번호가 아닌 현지나 해외 휴대폰으로<br />국제 SMS 발송 &acute;+&acute; 또는 국제전화접속코드 입력 후 상대방<br />전화번호(0 제외한 국가번호부터 입력)</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit">이용 요금<button role="button" aria-pressed="false" title="이용 요금 보기"></button></div>
+                                        <div class="acco-cont">
+                                            <ul class="cellphone-setting">
+                                                <li>
+                                                    <em class="bul-tit">SMS 수신, 콜키퍼, 발신번호 표시<span class="value"><span class="str">무료</span></span></em>
+                                                </li>
+                                                <li>
+                                                    <em class="bul-tit">로밍 SMS 발신요금(건당, 부가세포함)</em>
+                                                    <p class="txt">아시아, 북미<span class="value"><span class="str">165</span>원</span></p>
+                                                    <p class="txt">유럽, 오세.아니아, 중남미,아프리카<span class="value"><span class="str">330</span>원</span></p>
+                                                </li>
+                                                <li>
+                                                    <em class="bul-tit">로밍 SMS 발신요금(건당, 부가세포함)</em>
+                                                    <p class="txt">1579, 001<span class="value"><span class="str">110</span>원</span></p>
+                                                    <p class="txt">00700, 00365, 002<span class="value"><span class="str">165</span>원</span></p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps-btm">
+                <h3 class="con-tit0 tx-bold mb12">DATA 로밍</h3>
+                <p class="article-type1">해외로밍 중에도 국내와 동일한 인터넷을 이용하실 수<br />있는 서비스입니다.</p>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover">
+                            <div class="acco-style btn-hold bgnone2">
+                                <ul class="acco-list">
+                                    <!-- .on: 열기 -->
+                                    <li class="acco-box">
+                                        <div class="acco-tit">이용 방법<button role="button" aria-pressed="false" title="이용 방법 보기"></button></div>
+                                        <div class="acco-cont">
+                                            <ul class="bul-list type3">
+                                                <li class="mt0">별도의 신청 없이 국내에서와 동일한 방법으로 인터넷<br />브라우저를 실행</li>
+                                                <li>휴대폰 기종 및 출시일에 따라 서비스 이용이 제한될 수<br />있으며, 일부 기종은 업그레이드 후 이용하실 수 있습니다.</li>
+                                                <li>자세한 사항은 T 로밍 고객센터 02-6343-9000(무료)로<br />문의 하시기 바랍니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit">이용 요금<button role="button" aria-pressed="false" title="이용 요금 보기"></button></div>
+                                        <div class="acco-cont">
+                                            <ul class="bul-list type3">
+                                                <li class="mt0">데이터 로밍 요금제 전세계 패킷당 0.275원!!<br />(부가세포함, 1패킷 = 512byte = 0.5kbyte)</li>
+                                                <li>시행일자: 2018년 3월 23일</li>
+                                                <li>대상 : 전체 데이터 로밍 이용 가능 국가, 전체 휴대폰 및<br />무선 인터넷 서비스 대상</li>
+                                                <li>T로밍 데이터 안심서비스!</li>
+                                            </ul>
+                                            <p class="article-type1 mt6">데이터 종량 과금이 5,000원 일 상한 도달 시, 원패스 제휴<br />사업자 접속의 경우 200kbps 속도제어, 비 제휴 사업자<br />접속의 경우 데이터 차단이 됩니다. (단, 2G 단말 이용 고객은<br />자동안심 T로밍 서비스 이용이 불가합니다.)</p>
+                                            <ul class="bt-slice ">
+                                                <li class="bt-white2">
+                                                    <button id="fe-rm-onepass">OnePass 사업자 보기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingDataRoaming($('.wrap'));
+  });
+
+</script>
+<% include ../../components/end.component.html %>

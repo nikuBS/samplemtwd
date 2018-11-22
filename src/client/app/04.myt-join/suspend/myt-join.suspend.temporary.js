@@ -86,6 +86,11 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     }
   },
 
+  /**
+   * 일시정지 신청하기 버튼 활성화 여부 체크
+   * @param notice
+   * @private
+   */
   _checkSuspendable: function (notice) {
     if ( !notice ) {
       this.$btSuspend.removeAttr('disabled');
@@ -165,8 +170,8 @@ Tw.MyTJoinSuspendTemporary.prototype = {
         Tw.MYT_JOIN_SUSPEND.TYPE.ALL : Tw.MYT_JOIN_SUSPEND.TYPE.CALL;
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SUSPEND_TYPE}', type);
-      this._popupService.afterRequestSuccess('/myt/join/suspend#temporary', '/myt/join', null, '신청', desc);
-    } else if ( res.code === 'MOD0022' ) {
+      this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, '신청', desc);
+    } else if ( res.code === 'MOD0022' ) { // 월 5회 이상 신청 시
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -175,7 +180,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _onSuccessRequestReset: function () {
     skt_landing.action.loading.off({ ta: 'body' });
-    this._popupService.afterRequestSuccess('/myt/join/suspend#temporary', '/myt/join', null, '해제');
+    this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, '해제');
   },
 
   _onError: function (res) {

@@ -74,7 +74,10 @@ Tw.POPUP_TITLE = {
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
   SELECT_FAMILY_TYPE: '가족선택',
   HISTORY: '이용내역',
-  MEMBERSHIP_CORPORATE_LIST: '명의자 선택'
+  MEMBERSHIP_CORPORATE_LIST: '명의자 선택',
+  SELECT_COUNTRY: '방문 국가',
+  ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
+  REFUND_BANK_SELECT: '환불신청계좌 은행 선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -84,7 +87,8 @@ Tw.POPUP_CONTENTS = {
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
   RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
-  NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.'
+  NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.',
+  DONATION: '해지환급금 기부신청을 하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
@@ -158,9 +162,9 @@ Tw.AMOUNT_INFO = {
 };
 
 Tw.REMNANT_OTHER_LINE = {
-  TITLE: '기준회선을 변경하시겠습니까?',
+  TITLE: '회선을 변경하시겠습니까?',
   BTNAME: '변경하기',
-  TOAST: '기준회선이 변경되었습니다.'
+  TOAST: '회선이 변경되었습니다.'
 };
 
 Tw.NON_PAYMENT = {
@@ -336,8 +340,10 @@ Tw.ALERT_MSG_MYT_DATA = {
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
+  V9: '휴대폰 번호가 올바르지 않습니다.',
   V16: '공유 가능 데이터를 초과했습니다.',
-  V17: '가족에게 공유할 데이터를 입력해주세요.'
+  V17: '가족에게 공유할 데이터를 입력해주세요.',
+  V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)'
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
@@ -414,7 +420,13 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V44: '휴대폰 번호가 올바르지 않습니다.',
   ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500점 부터 가능합니다.',
   ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000점 부터 가능합니다.',
-  ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.'
+  ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.',
+  ALERT_2_A85: { TITLE: 'T포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
+  ALERT_2_A86: { TITLE: '알림', MSG: 'T포인트 납부 예약이 취소되었습니다.' },
+  ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
+  ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
+  ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
+  ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -460,6 +472,9 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A10: { TITLE: '알림', MSG: '1회선만 결합된 경우, 회선 해지가 불가합니다.' },
   ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
   ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' },
+  ALERT_3_A26: { TITLE: '알림', MSG: '선택하신 로밍 예약 건을 취소하시겠습니까?', BUTTON: '확인'},
+  ALERT_3_A27: { TITLE: '알림', MSG: '수정되었습니다.' },
+  ALERT_3_A28: { TITLE: '알림', MSG: '예약이 취소되었습니다.' },
   ALERT_3_A29: { TITLE: '알림', MSG: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.' },
   ALERT_3_A30: { TITLE: '알림', MSG: '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.' },
   ALERT_3_A31: { TITLE: '알림', MSG: '결합상품명을 미선택하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?' },
@@ -471,6 +486,12 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A37: { TITLE: '알림', MSG: '이미 사용하고 있는 상품입니다.' },
   ALERT_3_A40: { TITLE: '알림', MSG: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?' }
 };
+
+Tw.ALERT_MSG_PRODUCT_ROAMING = {
+  ALERT_3_A23 : { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
+  ALERT_3_A24 : { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' }
+};
+
 
 Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',
@@ -928,7 +949,9 @@ Tw.UPLOAD_FILE = {
   WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
-  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.'
+  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
+  BUTTON_ADD: '파일찾기',
+  BUTTON_DELETE: '파일삭제'
 };
 
 Tw.PRODUCT_RESERVATION = {
@@ -1059,3 +1082,6 @@ Tw.PRODUCT_COMBINE_FAMILY_TYPE = {
 Tw.PREPAID_VOICE = {
   PREPAID_CARD: '선불폰 카드'
 };
+
+Tw.ROAMING_CENTER =  ['인천공항 1터미널', '인천공항 1터미널 1층', '인천공항 2터미널', '인천공항 2터미널 1층', '김포공항',
+  '제주공항', '김해공항', '김해공항 1층', '대구공항', '인천항', '인천항 국제2', '부산항', '제주신항'];

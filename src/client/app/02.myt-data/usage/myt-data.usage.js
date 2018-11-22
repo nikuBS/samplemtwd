@@ -29,12 +29,12 @@ Tw.MyTDataUsage.prototype = {
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
     this.$container.on('click', '#cont-discount .bt-slice button', $.proxy(function(){
-      this._historyService.goLoad('/myt/bill/hotbill');
+      this._historyService.goLoad('/myt-fare/hotbill');
     }, this));
 
     // 데이터 한도 요금제 - 충전 가능 금액 확인 버튼 - 데이터 한도 요금제로 이동
     this.$container.on('click', '#cont-data-limit .bt-slice button', $.proxy(function(){
-      this._historyService.goLoad('/myt/data/limit');
+      this._historyService.goLoad('/myt-data/recharge/limit');
     }, this));
 
     // 내폰끼리 결합 상세 조회
@@ -43,7 +43,7 @@ Tw.MyTDataUsage.prototype = {
 
     // 내폰끼리 결합 상세 조회
     this.$container.on('click', '.fe-btn-share', $.proxy(function() {
-      this._historyService.goLoad('/myt/data/usage/total-sharing-data');
+      this._historyService.goLoad('/myt-data/hotdata/total-sharing');
     }, this));
 
   },

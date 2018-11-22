@@ -19,7 +19,7 @@ class CommonTidLogout extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const target = req.query.target || '/common/logout/complete';
+    const target = req.query.target || '/common/member/logout/complete';
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_03_0007, {}),
       this.apiService.request(API_CMD.BFF_03_0001, {})
@@ -28,7 +28,7 @@ class CommonTidLogout extends TwViewController {
         const params = {
           client_id: key.result.clientId,
           redirect_uri: EnvHelper.getEnvironment('DOMAIN') +
-            '/common/logout/route?target=' + target,
+            '/common/member/logout/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
         };
         const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);

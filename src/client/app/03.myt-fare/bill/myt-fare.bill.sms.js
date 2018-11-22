@@ -91,7 +91,7 @@ Tw.MyTFareBillSms.prototype = {
   },
   _goSubmain: function () {
     if (this._isSubmain) {
-      this._historyService.goLoad('/myt/fare');
+      this._historyService.goLoad('/myt-fare/submain');
     }
   }
 };

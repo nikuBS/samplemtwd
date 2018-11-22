@@ -24,7 +24,7 @@ class CustomerMain extends TwViewController {
         svcInfo: svcInfo,
         banners: banners,
         noticeList: noticeList,
-        researchList: researchList
+        // researchList: researchList
       });
     });
   }

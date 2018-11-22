@@ -389,17 +389,17 @@ Tw.MyTFareSubMain.prototype = {
   _onClickedSelBillGuide: function (/*event*/) {
     // 1. 통합청구, 2. 개별청구, 3. 보안솔루션
     // 선불폰, 사용요금
-    this._historyService.goLoad('/myt/fare/bill/guide');
+    this._historyService.goLoad('/myt-fare/billguide/guide');
   },
 
   // 요금납부 이동
   _onClickedBillPym: function (/*event*/) {
-    new Tw.MyTFarePayment(this.$container);
+    new Tw.MyTFareBill(this.$container);
   },
 
   // 실시간요금 이동
   _onClickedRealTimePay: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/bill/hotbill');
+    this._historyService.goLoad('/myt-fare/hotbill');
   },
 
   // 미납요금버튼
@@ -414,7 +414,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/payment/option');
+    this._historyService.goLoad('/myt-fare/billauto');
   },
 
   // 소액결제 이동
@@ -459,7 +459,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 기부금/후원금
   _onClickedContribution: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/bill/guide/donation');
+    this._historyService.goLoad('/myt-fare/billguide/donation');
   },
 
   // 요금안내서 이동(chart)
@@ -520,11 +520,11 @@ Tw.MyTFareSubMain.prototype = {
     var code, url;
     if ( type === 'M' ) {
       code = this.data.microPay.code;
-      url = '/myt/fare/payment/micro';
+      url = '/myt-fare/billsmall';
     }
     else {
       code = this.data.contentPay.code;
-      url = '/myt/fare/payment/contents';
+      url = '/myt-fare/billcontents';
     }
     var title = '', content = '', more = '';
     switch ( code ) {
@@ -574,7 +574,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( $moreBtn.length > 0 ) {
       $moreBtn.on('click', $.proxy(function () {
         this._popupService.close();
-        this._historyService.goLoad('/product/detail/NA00004184');
+        this._historyService.goLoad('/product/callplan/NA00004184');
       }, this));
     }
     $closeBtn.on('click', $.proxy(function () {

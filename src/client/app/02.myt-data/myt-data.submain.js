@@ -160,7 +160,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // event callback funtion
   _onRemnantDetail: function () {
-    this._historyService.goLoad('/myt/data/usage');
+    this._historyService.goLoad('/myt-data/hotdata');
   },
 
   _onImmChargeDetail: function () {
@@ -187,7 +187,7 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     else {
-      this._historyService.goLoad('/myt/data/gift');
+      this._historyService.goLoad('/myt-data/giftdata');
     }
   },
 
@@ -206,10 +206,10 @@ Tw.MyTDataSubMain.prototype = {
   _onFamilyMoaDetail: function () {
     if ( this.data.family.possible ) {
       // TODO: 미가입 관련 상태 업데이트 후 처리
-      this._historyService.goLoad('/product/detail/NA00006031');
+      this._historyService.goLoad('/product/callplan/NA00006031');
     }
     else {
-      this._historyService.goLoad('/myt/data/family');
+      this._historyService.goLoad('/myt-data/familydata');
     }
   },
 
@@ -236,12 +236,12 @@ Tw.MyTDataSubMain.prototype = {
 
   // 리필쿠폰
   _onRefillDetail: function () {
-    this._historyService.goLoad('/myt/data/recharge/coupon');
+    this._historyService.goLoad('/myt-data/recharge/coupon');
   },
 
   // 충전/선물내역 상세
   _onBreakdownListDetail: function () {
-    this._historyService.goLoad('/myt/data/recharge/history');
+    this._historyService.goLoad('/myt-data/datainfo');
   },
 
   // 다른 회선 잔여량 상세
@@ -253,7 +253,7 @@ Tw.MyTDataSubMain.prototype = {
         isChild = ($target.find('.badge').length > 0);
     if ( isChild ) {
       // 자녀회선
-      this._historyService.goLoad('/myt/data/usage/child/' + mgmtNum);
+      this._historyService.goLoad('/myt-data/submain/child-hotdata/' + mgmtNum);
     }
     else {
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;

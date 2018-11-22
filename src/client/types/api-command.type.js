@@ -41,7 +41,9 @@ Tw.API_CMD = {
   BFF_01_0036: { paht: '/v1/cert/info', method: Tw.API_METHOD.POST },
   BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: Tw.API_METHOD.POST },
   BFF_01_0038: { path: '/deregistrationrequestfromfc', method: Tw.API_METHOD.POST },
-  BFF_01_0044: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
+  BFF_01_0043: { path: '/core-bill/v1/refund/refund-account-insert', method: Tw.API_METHOD.POST },
+  BFF_01_0044: { path: '/core-bill/v1/refund/donation-insert', method: Tw.API_METHOD.POST },
+  BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
 
   // AUTH
@@ -296,6 +298,7 @@ Tw.API_CMD = {
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-delete', method: Tw.API_METHOD.POST },
   BFF_07_0087: { path: '/core-bill/v1/ocb-point-pay', method: Tw.API_METHOD.POST },
+  BFF_07_0088: { path: '/core-bill/v1/payment/over-payment-refund-account', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -375,12 +378,16 @@ Tw.API_CMD = {
   BFF_10_0046: { path: '/v1/products/fee-plans/:args0/option-sets', method: Tw.API_METHOD.POST },
   BFF_10_0048: { path: '/core-modification/v1/wireJoin/listUseAddressService', method: Tw.API_METHOD.POST },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
+  BFF_10_0065: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.POST },
   BFF_10_0071: { path: '/core-product/v1/mobiles/fee-plans/num-couple-sets', method: Tw.API_METHOD.PUT },
   BFF_10_0073: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: Tw.API_METHOD.GET },
   BFF_10_0074: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: Tw.API_METHOD.PUT },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: Tw.API_METHOD.POST },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: Tw.API_METHOD.GET },
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
+
+  // ROAMING
+  BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: Tw.API_METHOD.GET },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
@@ -437,7 +444,7 @@ Tw.NODE_CMD = {
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
-  GET_VERSION: { path: '/version', method: Tw.API_METHOD.GET },
+  GET_VERSION: { path: '/app-version', method: Tw.API_METHOD.GET },
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
   GET_SERVICE_NOTICE: { path: '/service-notice', method: Tw.API_METHOD.GET },
 

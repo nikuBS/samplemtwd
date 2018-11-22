@@ -1,4 +1,6 @@
 // for APM
+import ApiService from './services/api.service';
+
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -11,8 +13,6 @@ import ejs from 'ejs';
 import cookie from 'cookie-parser';
 
 import environment from './config/environment.config';
-
-const manifest = require('./config/manifest.json');
 
 // Route Modules
 import AppRouter from './common/route/app.router';
@@ -35,11 +35,15 @@ import NativeRouter from './common/route/native.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-
+import { API_CMD } from './types/api-command.type';
+import VERSION from './config/version.config';
+import LoggerService from './services/logger.service';
 
 class App {
   public app: Application = express();
   public redisService = new RedisService();
+  private apiService = new ApiService();
+  private logger = new LoggerService();
 
 
   constructor() {
@@ -94,14 +98,18 @@ class App {
   }
 
   private setClientMap() {
-    Object.keys(manifest).map((key) => {
-      if ( key.indexOf('.') !== -1 ) {
-        let appName = key.split('.')[0];
-        if ( appName.indexOf('-') !== -1 ) {
-          appName = appName.replace('-', '');
+    const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
+    this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
+      Object.keys(manifest).map((key) => {
+        if ( key.indexOf('.') !== -1 ) {
+          let appName = key.split('.')[0];
+          if ( appName.indexOf('-') !== -1 ) {
+            appName = appName.replace('-', '');
+          }
+          this.app.locals[appName] = manifest[key];
+          this.logger.info(this, appName, manifest[key]);
         }
-        this.app.locals[appName] = manifest[key];
-      }
+      });
     });
   }
 
@@ -117,9 +125,9 @@ class App {
 
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
-    this.app.use('/myt/data', new AppRouter(MyTDataRouter.instance.controllers).router);
-    this.app.use('/myt/fare', new AppRouter(MyTFareRouter.instance.controllers).router);
-    this.app.use('/myt/join', new AppRouter(MyTJoinRouter.instance.controllers).router);
+    this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
+    this.app.use('/myt-fare', new AppRouter(MyTFareRouter.instance.controllers).router);
+    this.app.use('/myt-join', new AppRouter(MyTJoinRouter.instance.controllers).router);
     this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
     this.app.use('/benefit', new AppRouter(BenefitRouter.instance.controllers).router);
     this.app.use('/membership', new AppRouter(MembershipRouter.instance.controllers).router);

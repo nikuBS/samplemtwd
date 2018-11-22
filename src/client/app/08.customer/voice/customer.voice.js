@@ -38,7 +38,7 @@ Tw.CustomerVoice.prototype = {
 
   _onClickRegister: function () {
     if ( this.historiesYn === 'N' ) {
-      this._history.goLoad('/customer/voice/register');
+      this._history.goLoad('/customer/svc-info/voice/register');
     } else {
       this._popupService.openOneBtTypeB(
         Tw.CUSTOMER_VOICE.EXIST_PREVIOUS_INFO,

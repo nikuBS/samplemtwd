@@ -15,7 +15,7 @@ Tw.MyTDataUsageCancelTshare = function (rootEl, options) {
 
 Tw.MyTDataUsageCancelTshare.prototype = {
   _URL: {
-    MYT_DATA_USAGE: '/myt/data/usage'
+    MYT_DATA_USAGE: '/myt-data/hotdata'
   },
   _COMPLETE_POPUP_HBS: 'DC_01_01_end',
 

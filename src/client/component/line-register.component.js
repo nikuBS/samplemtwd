@@ -218,7 +218,7 @@ Tw.LineRegisterComponent.prototype = {
   },
   _onCloseCompletePopup: function () {
     if ( this._goAuth ) {
-      this._historyService.goLoad('/common/line');
+      this._historyService.goLoad('/common/member/line');
     }
   }
 };

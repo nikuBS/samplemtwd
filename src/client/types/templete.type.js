@@ -300,13 +300,13 @@ Tw.POPUP_TPL = {
     {
       list: [
         { value: '전체', option: 'checked' },
-        { value: '즉시 납부' },
-        { value: '자동 납부' },
-        { value: '자동 납부 통합 인출' },
+        { value: '즉시납부' },
+        { value: '자동납부' },
+        { value: '자동납부 통합인출' },
         { value: '소액결제 선결제' },
-        { value: '콘텐츠 이용료 선결제' },
+        { value: '콘텐츠 이용요금 선결제' },
         { value: '포인트 납부 예약' },
-        { value: '포인트 자동 납부' }
+        { value: '포인트 자동납부' }
       ]
     }
   ],
@@ -337,6 +337,21 @@ Tw.POPUP_TPL = {
     '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html' },
     '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html' },
     '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' }
+  },
+  ROAMING_RETURN_PLACE: {
+    title: '반납 장소 선택',
+    data: [
+      {
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="00"', value: '인천공항 1터미널 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="01"', value: '인천공항 2터미널 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="02"', value: '김포공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="03"', value: '제주공항 국제선 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="04"', value: '김해공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="05"', value: '대구공항 2층 로밍 센터' }
+        ]
+      }
+    ]
   }
 };
 
@@ -595,7 +610,6 @@ Tw.REGION_LIST_ITEM = {
 };
 
 Tw.MYT_PREPAID_AMOUNT = {
-
   title: '충전 금액',
   list: [
     { title: '50,000원', value: 50000 },
@@ -603,6 +617,46 @@ Tw.MYT_PREPAID_AMOUNT = {
     { title: '20,000원', value: 20000 },
     { title: '10,000원', value: 10000 },
     { title: '5,000원', value: 5000 }
+  ]
+};
+
+Tw.MYT_PREPAID_RECHARGE_AMOUNT = {
+  list: [
+    { text: '5,000원', value: 5000 },
+    { text: '3,000원', value: 3000 },
+    { text: '2,000원', value: 2000 },
+    { text: '1,000원', value: 1000 }
+  ]
+};
+
+Tw.MYT_PREPAID_DATE = {
+  list: [
+    { text: '15일', value: 15 },
+    { text: '26일', value: 26 }
+  ]
+};
+
+Tw.MYT_PREPAID_ALARM = {
+  title: '선택',
+  status_list: [
+    { text: '기준 시간으로 알람', value: '1' },
+    { text: '잔액 기준으로 알람', value: '2' }
+  ],
+  category_list: [
+    { text: '발신기간', value: '1' },
+    { text: '수신기간', value: '2' },
+    { text: '번호유지기간', value: '3' }
+  ],
+  date_list: [
+    { text: '1일', value: '1' },
+    { text: '2일', value: '2' },
+    { text: '3일', value: '3' }
+  ],
+  price_list: [
+    { text: '5,000원', value: 5000 },
+    { text: '3,000원', value: 3000 },
+    { text: '2,000원', value: 2000 },
+    { text: '1,000원', value: 1000 }
   ]
 };
 
