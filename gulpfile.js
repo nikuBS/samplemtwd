@@ -23,11 +23,10 @@ var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product',
 var dist_tmp = 'src/server/public/cdn/';
 var dist = 'dist/';
 
-var config = 'src/server/config';
 var manifest = {};
 var version = options.get('ver');
 var manifestFile = 'manifest.' + version + '.json';
-var manifestTemp = 'manifest.json';
+var manifestDev = 'manifest.dev.json';
 
 gulp.task('pre-clean', function () {
   return gulp.src(dist)
@@ -280,12 +279,11 @@ gulp.task('manifest', function () {
     .pipe(gulp.dest(dist));
 });
 
-gulp.task('manifest-temp', function () {
+gulp.task('manifest-dev', function () {
   return gulp.src([dist + 'tmp/*.json'])
-    .pipe(extend(manifestTemp))
+    .pipe(extend(manifestDev))
     .pipe(gulp.dest(dist))
-    .pipe(gulp.dest(dist_tmp))
-    .pipe(gulp.dest(config));
+    .pipe(gulp.dest(dist_tmp));
 });
 
 gulp.task('cab', function () {
@@ -308,7 +306,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('get-manifest', function () {
-  return remoteSrc('manifest.json', {
+  return remoteSrc('manifest.dev.json', {
     base: 'http://localhost:3001/'
   })
     .on('error', function (err) {
@@ -341,8 +339,7 @@ gulp.task('default', shell.task([
   'gulp pre-clean --ver=' + version,
   'gulp pre-clean-tmp --ver=' + version,
   'gulp task --ver=' + version,
-  'gulp manifest --ver=' + version,
-  'gulp manifest-temp --ver=' + version,
+  'gulp manifest-dev --ver=' + version,
   'gulp post-clean --ver=' + version,
   'gulp run --ver=' + version
 ]));
@@ -352,7 +349,6 @@ gulp.task('build', shell.task([
   'gulp pre-clean-tmp --ver=' + version,
   'gulp task --ver=' + version,
   'gulp manifest --ver=' + version,
-  'gulp manifest-temp --ver=' + version,
   'gulp post-clean --ver=' + version
 ]));
 
