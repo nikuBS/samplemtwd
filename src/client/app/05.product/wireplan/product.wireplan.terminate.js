@@ -1,10 +1,10 @@
 /**
- * FileName: product.mobileplan-add.terminate.js
+ * FileName: product.wireplan.terminate.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.13
+ * Date: 2018.11.22
  */
 
-Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
+Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -17,7 +17,7 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
   this._init();
 };
 
-Tw.ProductMobileplanAddTerminate.prototype = {
+Tw.ProductWireplanTerminate.prototype = {
 
   _init: function() {
     this._convConfirmOptions();
@@ -67,7 +67,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
     // prodId: this._prodId,
     //   prodProcTypeCd: 'TM'
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0036, {
+    this._apiService.request(Tw.API_CMD.BFF_10_0100, {
     }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
   },
 

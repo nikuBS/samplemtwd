@@ -207,6 +207,26 @@ class ProductHelper {
 
     return Object.keys(autoListConvertResult).map(key => autoListConvertResult[key]);
   }
+
+  static convWireplanJoinTermInfo(joinTermInfo): any {
+    return Object.assign(joinTermInfo, {
+      preinfo: ProductHelper.convWireplanPreInfo(joinTermInfo.preinfo),
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+    });
+  }
+
+  static convWireplanPreInfo(preInfo): any {
+    const isNumberBasFeeInfo = !isNaN(Number(preInfo.reqProdInfo.basFeeInfo));
+
+    return Object.assign(preInfo, {
+      reqProdInfo: Object.assign(preInfo.reqProdInfo, {
+        isNumberBasFeeInfo: isNumberBasFeeInfo,
+        basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
+      }),
+      autoJoinList: ProductHelper.convAutoJoinTermList(preInfo.autoJoinList),
+      autoTermList: ProductHelper.convAutoJoinTermList(preInfo.autoTermList)
+    });
+  }
 }
 
 export default ProductHelper;
