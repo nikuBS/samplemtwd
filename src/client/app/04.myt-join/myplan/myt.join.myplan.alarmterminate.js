@@ -38,7 +38,7 @@ Tw.MyTJoinMyplanAlarmterminate.prototype = {
   },
 
   _resultPopupClose: function() {
-    this._historyService.replaceURL('/myt/join/myplan/alarm');
+    this._historyService.replaceURL('/myt-join/myplan/alarm');
   }
 
 };

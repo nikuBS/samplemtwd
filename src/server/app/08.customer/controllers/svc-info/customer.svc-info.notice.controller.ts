@@ -83,7 +83,7 @@ class CustomerSvcInfoNotice extends TwViewController {
           return res.redirect('/customer');
         }
 
-        res.render('svc-info/customer.notice.html', {
+        res.render('svc-info/customer.svc-info.notice.html', {
           category: category,
           categoryLabel: categorySwitchingData[category].LABEL,
           data: this._convertData(data),

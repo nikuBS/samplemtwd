@@ -36,7 +36,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
 
-    this._combinationTemplate = Handlebars.compile($('#fe-templ-combination_item').html());
+    this._combinationTemplate = Handlebars.compile($('#fe-templ-line_item').html());
   },
 
   _bindEvent: function() {

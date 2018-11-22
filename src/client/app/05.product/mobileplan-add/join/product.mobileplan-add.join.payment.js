@@ -1,10 +1,10 @@
 /**
- * FileName: product.mobileplan.join.share-line.js
+ * FileName: product.mobileplan-add.join.payment.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.14
+ * Date: 2018.11.21
  */
 
-Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmOptions) {
+Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirmOptions) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -20,7 +20,7 @@ Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmO
   this._convConfirmOptions();
 };
 
-Tw.ProductMobileplanJoinShareLine.prototype = {
+Tw.ProductMobileplanAddJoinPayment.prototype = {
 
   _cachedElement: function() {
     this.$inputNumber = this.$container.find('.fe-num_input');
@@ -153,7 +153,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-        mytPage: 'myplan',
+        mytPage: 'fee-plan',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

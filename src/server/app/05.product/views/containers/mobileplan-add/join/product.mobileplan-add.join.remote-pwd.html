@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="MV_02_02_03">
+<div class="wrap step">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -25,8 +25,8 @@
             <div class="container">
                 <div class="cont-box">
                     <div class="product-tit-wrap">
-                        <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
-                        <span class="tit-big">리모콘</span>
+                        <span class="tit-small">가입할 상품 옵션 설정하세요.</span>
+                        <span class="tit-big"><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></span>
                     </div>
                 </div>
 
@@ -96,7 +96,6 @@
     <!-- // .popup hbs -->
 </div>
 </body>
-<% include ../../../components/setting/product.setting.combine-line.component.html %>
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

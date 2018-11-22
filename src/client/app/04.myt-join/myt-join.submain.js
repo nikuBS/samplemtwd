@@ -119,7 +119,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 나의요금제
   _onMovedMyPlan: function() {
-    this._historyService.goLoad('/myt/join/myplan');
+    this._historyService.goLoad('/myt-join/myplan');
   },
   // 고객보호비밀번호 변경
   _onMovedChangePwd: function () {

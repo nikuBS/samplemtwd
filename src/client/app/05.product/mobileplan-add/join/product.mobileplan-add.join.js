@@ -18,7 +18,7 @@ Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {
   this._init();
 };
 
-Tw.ProductMobileplanAddJoinMobileplanAdd.prototype = {
+Tw.ProductMobileplanAddJoin.prototype = {
 
   _init: function() {
     this._convConfirmOptions();

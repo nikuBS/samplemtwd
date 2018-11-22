@@ -39,7 +39,7 @@ Tw.MyTJoinMyplanAlarm.prototype = {
   },
 
   _goTerminate: function() {
-    this._historyService.replaceURL('/myt/join/myplan/alarmterminate');
+    this._historyService.replaceURL('/myt-join/myplan/alarmterminate');
   },
 
   _reload: function() {
