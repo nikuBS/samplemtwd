@@ -122,7 +122,73 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
   },
 
   _procApply: function() {
-    // do Appply
+    var convFileList = this._fileList.map(function(item) {
+      return {
+        fileSize: item.size,
+        fileName: item.name,
+        filePath: 'uploads/'
+      };
+    });
+
+    var apiList = [
+      {
+        command: Tw.API_CMD.BFF_01_0046,
+        params: {
+          recvFaxNum: 'skt404@sk.com',
+          proMemo: Tw.PRODUCT_RESERVATION.combine,
+          scanFiles: convFileList
+        }
+      },
+      {
+        command: Tw.API_CMD.BFF_01_0046,
+        params: {
+          recvFaxNum: 'skt219@sk.com',
+          proMemo: Tw.PRODUCT_RESERVATION.combine,
+          scanFiles: convFileList
+        }
+      }
+    ];
+
+    this._apiService.requestArray(apiList)
+      .done($.proxy(this._resApply, this));
+  },
+
+  _resApply: function(uscan0, uscan1) {
+    if (uscan0.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(uscan0.code, uscan0.msg).pop();
+    }
+
+    if (uscan1.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(uscan1.code, uscan1.msg).pop();
+    }
+
+    this._openSuccessPop();
+  },
+
+  _openSuccessPop: function() {
+    this._popupService.open({
+      hbs: 'complete_subtexts',
+      text: Tw.PRODUCT_REQUIRE_DOCUMENT.SUCCESS_TITLE,
+      subtexts: [
+        Tw.PRODUCT_REQUIRE_DOCUMENT.FILE_COUNT + this._fileList.length + Tw.PRODUCT_REQUIRE_DOCUMENT.FILE_COUNT_UNIT
+      ]
+    }, $.proxy(this._bindSuccessPop, this), $.proxy(this._backToParentPage, this), 'require_document_success');
+  },
+
+  _bindSuccessPop: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closeSuccessPop, this));
+  },
+
+  _closeSuccessPop: function() {
+    this._popupService.close();
+  },
+
+  _backToParentPage: function() {
+    if (this._isCombineInfo) {
+      return this._historyService.go(-2);
+    }
+
+    this._historyService.goBack();
   }
 
 };

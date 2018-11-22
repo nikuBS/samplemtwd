@@ -196,8 +196,20 @@ Tw.FormatHelper = (function () {
   };
 
   var conTelFormatWithDash = function (v) {
-    var ret = v.trim();
-    return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
+    if (Tw.FormatHelper.isEmpty(v)) {
+      return v;
+    }
+
+    var ret = v.trim(),
+      pattern = {
+        9: [2, 3, 4],
+        10: [3, 3, 4],
+        11: [3, 4, 4]
+      };
+
+    return ret.substring(0, pattern[ret.length][0]) + '-' +
+      ret.substring(pattern[ret.length][0], pattern[ret.length][0] + pattern[ret.length][1]) + '-' +
+      ret.substring(pattern[ret.length][0] + pattern[ret.length][1], ret.length);
   };
 
   var sortObjArrDesc = function (array, key) {
