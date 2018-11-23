@@ -8,7 +8,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
-import moment from 'moment';
 
 class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
 
