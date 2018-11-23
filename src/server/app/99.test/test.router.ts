@@ -3,6 +3,7 @@ import TestHome from './controllers/test.home.controller';
 import TestMyTDataSubmainController from './controllers/test.myt-data.submain.controller';
 import TestMyTFareSubmainController from './controllers/test.myt-fare.submain.controller';
 import TestMyTFareUnbill from './controllers/submain/test.myt-fare.submain.non-paymt';
+import TestMyTDataInfo from './controllers/test.myt-data.datainfo.controller';
 
 class TestRouter extends TwRouter {
   constructor() {
@@ -11,6 +12,7 @@ class TestRouter extends TwRouter {
     this.controllers.push({ url: '/myt-data/submain', controller: TestMyTDataSubmainController });
     this.controllers.push({ url: '/myt-fare/submain', controller: TestMyTFareSubmainController });
     this.controllers.push({ url: '/myt-fare/unbill', controller: TestMyTFareUnbill });
+    this.controllers.push({ url: '/myt-data/datainfo', controller: TestMyTDataInfo });
   }
 }
 
