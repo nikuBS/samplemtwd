@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class MyTDataPrepaid extends TwViewController {
+class MyTDataPrepaidAlarm extends TwViewController {
   constructor() {
     super();
   }
@@ -70,13 +70,7 @@ class MyTDataPrepaid extends TwViewController {
         break;
       case 'alarm':
         this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.alarm.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
+
         });
         break;
       case 'voice-complete':
@@ -148,4 +142,4 @@ class MyTDataPrepaid extends TwViewController {
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }
 
-export default MyTDataPrepaid;
+export default MyTDataPrepaidAlarm;
