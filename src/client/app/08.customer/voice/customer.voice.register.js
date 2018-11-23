@@ -37,6 +37,8 @@ Tw.CustomerVoiceRegister.prototype = {
   _onSuccessLineInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.userLineList = res.result.M;
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 
@@ -82,6 +84,8 @@ Tw.CustomerVoiceRegister.prototype = {
   _onSuccessRegister: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._history.replaceURL('/customer/svc-info/voice/complete?targetNum=' + this.$btn_select_phone.text().trim());
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   }
 };
