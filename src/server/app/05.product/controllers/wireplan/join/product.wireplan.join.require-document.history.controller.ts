@@ -12,6 +12,7 @@ import { PRODUCT_REQUIRE_DOCUMENT_TYPE_NM } from '../../../../../types/string.ty
 import { PRODUCT_RESERVATION_REJECT } from '../../../../../types/bff.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
+import {REDIS_PRODUCT_INFO} from '../../../../../types/common.type';
 
 class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   constructor() {
@@ -87,7 +88,7 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
         }));
       }
 
-      this.redisService.getData('ProductLedger:' + reqDocInfo.result.svcProdCd)
+      this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.svcProdCd)
         .subscribe((prodRedisInfo) => {
           res.render('wireplan/join/product.wireplan.join.require-document.history.html', Object.assign(renderCommonInfo, {
             reqDocInfo: this._convertReqDocInfo(reqDocInfo.result),
