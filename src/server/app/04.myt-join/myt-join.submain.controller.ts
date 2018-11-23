@@ -8,9 +8,10 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CMD, API_CODE, API_NEW_NUMBER_ERROR } from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
+import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 
 class MyTJoinSubmainController extends TwViewController {
@@ -59,8 +60,9 @@ class MyTJoinSubmainController extends TwViewController {
       this._getPausedState(),
       this._getLongPausedState(),
       this._getWireFreeCall(),
-      this._getOldNumberInfo()
-    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum]) => {
+      this._getOldNumberInfo(),
+      this._getChangeNumInfoService()
+    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
         this.error.render(res, {
@@ -142,6 +144,22 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.state = true;
       }
 
+      data.numberSvc = numSvc;
+      if ( data.numberSvc.code === API_CODE.CODE_00 ) {
+        data.isNotChangeNumber = true;
+        if ( data.numberSvc.extnsPsblYn === 'Y' ) {
+          data.numberChanged = true;
+        } else {
+          const curDate = new Date();
+          const endDate = DateHelper.convDateFormat(data.numberSvc.notiEndDt);
+          const betweenDay = this.daysBetween(curDate, endDate);
+          if (betweenDay > 28) {
+            // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
+            data.isNotChangeNumber = false;
+          }
+        }
+      }
+
       res.render('myt-join.submain.html', { data });
     });
   }
@@ -168,6 +186,19 @@ class MyTJoinSubmainController extends TwViewController {
         this.type = 3;
         break;
     }
+  }
+
+  daysBetween(date1, date2) {
+    // The number of milliseconds in one day
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+    // Convert both dates to milliseconds
+    const date1_ms = date1.getTime();
+    const date2_ms = date2.getTime();
+
+    // Calculate the difference in milliseconds
+    const difference_ms = Math.abs(date1_ms - date2_ms);
+    // Convert back to days and return
+    return Math.round(difference_ms / ONE_DAY);
   }
 
   isMasking(target): boolean {
@@ -355,6 +386,28 @@ class MyTJoinSubmainController extends TwViewController {
       } else {
         // error
         return null;
+      }
+    });
+  }
+
+  // 번호변경 안내 서비스
+  _getChangeNumInfoService() {
+    return this.apiService.request(API_CMD.BFF_05_0180, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp;
+      } else {
+        // error
+        if ( resp.code === API_NEW_NUMBER_ERROR.MOD0030 ) {
+          return {
+            code: API_NEW_NUMBER_ERROR.MOD0030,
+            msg: NEW_NUMBER_MSG.MOD0030
+          };
+        } else if ( resp.code === API_NEW_NUMBER_ERROR.MOD0031 ) {
+          return {
+            code: API_NEW_NUMBER_ERROR.MOD0031,
+            msg: NEW_NUMBER_MSG.MOD0031
+          };
+        }
       }
     });
   }
