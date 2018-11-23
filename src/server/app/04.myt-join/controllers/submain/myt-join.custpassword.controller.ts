@@ -1,5 +1,5 @@
 /**
- * FileName: myt-join.protect.change.controller.ts
+ * FileName: myt-join.custpassword.controller.ts
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.07.25
  */
@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { SVC_ATTR } from '../../../../types/bff.old.type';
 
 
-class MyTJoinProtectChange extends TwViewController {
+class MyTJoinCustpassword extends TwViewController {
   private _svcInfo: object = {};
   private _isNew: boolean = false;
 
@@ -55,11 +55,11 @@ class MyTJoinProtectChange extends TwViewController {
     // this.apiService.request('', {}).subscribe((responseData) => {
     // 화면 데이터 설정
     // const data = self.convertData(responseData);
-    res.render('protect/myt-join.protect.change.html', { data });
+    res.render('submain/myt-join.custpassword.html', { data });
 
     // });
   }
 }
 
-export default MyTJoinProtectChange;
+export default MyTJoinCustpassword;
 

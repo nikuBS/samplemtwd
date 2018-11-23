@@ -1,11 +1,11 @@
 /**
- * FileName: myt.join.protect.change.js
+ * FileName: myt-join.custpassword.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.09.28
  */
-Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
-  this._HASH_STEP_CHECK = '#contents-check';
-  this._HASH_STEP_CHANGE = '#contents-change';
+Tw.MytJoinCustpassword = function ($element, isNew) {
+  this._HASH_STEP_CHECK = '#check';
+  this._HASH_STEP_CHANGE = '#change';
   this.type = {
     SET: '20',
     CHANGE: '30'
@@ -21,7 +21,7 @@ Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
   this._chkedpwd = null; // checked password
 
   if( !this._new ){
-    this._pwdCheckService = new Tw.MyTJoinProtectCheckPwdService();
+    this._pwdCheckService = new Tw.MytJoinCustpasswordCheck();
     this._historyService.goHash(this._HASH_STEP_CHECK);
   } else {
     this._historyService.goHash(this._HASH_STEP_CHANGE);
@@ -29,7 +29,7 @@ Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
   this._bindEvent();
 };
 
-Tw.MyTJoinProtectPwdChange.prototype = {
+Tw.MytJoinCustpassword.prototype = {
   //element event bind
   _bindEvent: function () {
     $('input:password')
@@ -55,7 +55,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     this._chkedpwd = this._validatePwdInput('#pwd-input1');
     if(!this._chkedpwd) return;
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._pwdCheckService.check(
       this._chkedpwd,
@@ -77,12 +77,12 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     this._historyService.goHash(this._HASH_STEP_CHANGE);
 
     this._resetPwdInput('input:password');
-    skt_landing.action.loading.off({ ta: this.$container });
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
   _onCheckPwdFail : function(/*res, errCnt, unexpectedError*/){
     $('#pwd-input1').parents('.inputbox').addClass('error');
-    skt_landing.action.loading.off({ ta: this.$container });
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
   /**
@@ -222,7 +222,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     if ( orgPwd !== checkPwd ) {
       $('#pwd-input2').parents('.inputbox').addClass('error');
       $('#pwd-input3').parents('.inputbox').addClass('error');
-      this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.FAIL_PWD, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A63, Tw.POPUP_TITLE.NOTIFY);
       return;
     }
 
@@ -240,7 +240,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
       data.svcPwd = this._chkedpwd; // 변경
     }
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
@@ -264,7 +264,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
       //var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
       //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
       Tw.Error(params.code, params.msg).pop();
-      skt_landing.action.loading.off({ ta: this.$container });
+      skt_landing.action.loading.off({ ta: '.container' });
     }
   },
 
@@ -274,7 +274,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     //var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
     //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
     Tw.Error(params.code, params.msg).pop();
-    skt_landing.action.loading.off({ ta: this.$container });
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
   _onclickBtnCancel: function(){
