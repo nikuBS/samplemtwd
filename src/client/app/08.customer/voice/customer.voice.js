@@ -18,8 +18,6 @@ Tw.CustomerVoice = function (rootEl) {
 
 Tw.CustomerVoice.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
-      .done($.proxy(this._onSuccessVoiceStatus, this));
   },
 
   _cachedElement: function () {
@@ -27,12 +25,20 @@ Tw.CustomerVoice.prototype = {
   },
 
   _bindEvent: function () {
-    this.$btn_register.on('click', $.proxy(this._onClickRegister, this));
+    this.$btn_register.on('click', $.proxy(this._checkHistories, this));
+  },
+
+  _checkHistories: function () {
+    this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
+      .done($.proxy(this._onSuccessVoiceStatus, this));
   },
 
   _onSuccessVoiceStatus: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.historiesYn = res.result.hitoriesYn;
+      this._onClickRegister();
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 
