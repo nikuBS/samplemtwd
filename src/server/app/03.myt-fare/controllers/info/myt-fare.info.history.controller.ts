@@ -182,6 +182,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getAutoWithdrawalAccountInfo = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0070, {}).map((resp: { code: string; result: any }) => {
+      
       if (resp.code === 'BIL0021' || resp.code === 'BIL0022') {
         this.paymentData.isAutoWithdrawalUse = false;
         return null;
