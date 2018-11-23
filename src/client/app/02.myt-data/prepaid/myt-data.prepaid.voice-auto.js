@@ -18,6 +18,7 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
 
 Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _init: function () {
+    this.templateIndex = 0;
   },
 
   _cachedElement: function () {
@@ -27,10 +28,26 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', 'input[type="radio"]', $.proxy(this._changeRechargeType, this));
+    this.$container.on('click', 'li.fe-template-type', $.proxy(this._changeRechargeType, this));
+
   },
 
-  _changeRechargeType: function () {
-// TODO Template Change
+  _changeRechargeType: function (e) {
+    var $elTarget = $(e.currentTarget);
+    var currentTemplateIndex = $elTarget.parent().find('li').index($elTarget);
+
+    if ( this.templateIndex !== currentTemplateIndex ) {
+      this.templateIndex = currentTemplateIndex;
+
+      if ( currentTemplateIndex === 0 ) {
+        this.wrap_template.html(this.tpl_recharge_once());
+      } else {
+        this.wrap_template.html(this.tpl_recharge_amount());
+      }
+    }
+  },
+
+  _isValidForm: function (e) {
+
   }
 };

@@ -11,8 +11,10 @@ import MyTDataLimit from './controllers/limit/myt-data.limit.controller';
 import MyTDataCookiz from './controllers/cookiz/myt-data.cookiz.controller';
 import MyTDataInfo from './controllers/datainfo/myt-data.datainfo.controller';
 import MyTDataFamily from './controllers/familydata/myt-data.familydata.controller';
-import MyTDataPrepaid from './controllers/prepaid/myt-data.prepaid.controller';
 import MyTDataPrepaidHistory from './controllers/prepaid/myt-data.prepaid.history.controller';
+import MyTDataPrepaidVoice from './controllers/prepaid/myt-data.prepaid.voice.controller';
+import MyTDataPrepaidData from './controllers/prepaid/myt-data.prepaid.data.controller';
+import MyTDataPrepaidAlarm from './controllers/prepaid/myt-data.prepaid.data.alarm.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -32,7 +34,9 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/hotdata/total-sharing', controller: MyTDataUsageTotalSharingData });
     this.controllers.push({ url: '/hotdata/cancel-tshare', controller: MyTDataUsageCancelTshare });
     this.controllers.push({ url: '/recharge/prepaid/history', controller: MyTDataPrepaidHistory });
-    this.controllers.push({ url: '/recharge/prepaid(/:page)?', controller: MyTDataPrepaid });
+    this.controllers.push({ url: '/recharge/prepaid/voice(/:page)?', controller: MyTDataPrepaidVoice });
+    this.controllers.push({ url: '/recharge/prepaid/data(/:page)?', controller: MyTDataPrepaidData });
+    this.controllers.push({ url: '/recharge/prepaid/alarm', controller: MyTDataPrepaidAlarm });
   }
 }
 
