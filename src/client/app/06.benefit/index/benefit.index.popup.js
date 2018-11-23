@@ -40,5 +40,11 @@ Tw.BenefitIndexPopup.prototype = {
 
     $layer.on('click', 'a', $.proxy(openExternal,this));
 
+  },
+  
+  // 가입가능한 요금상품 팝업
+  openPopupJoinableProduct : function () {
+    this._popupService.open({ hbs: 'BS_03_01_01_02'}, null, null, 'joinable-product');
   }
+
 };
