@@ -100,8 +100,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
-    this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });
-    this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/wireplan/join/require-document/apply(/:prodId)?', controller: ProductWireplanJoinRequireDocumentApply });
+    this.controllers.push({ url: '/wireplan/join/require-document/history(/:prodId)?', controller: ProductWireplanJoinRequireDocumentHistory });
     this.controllers.push({ url: '/wireplan/join/:prodId', controller: ProductWireplanJoin });
     this.controllers.push({ url: '/wireplan/terminate/:prodId', controller: ProductWireplanTerminate });
 

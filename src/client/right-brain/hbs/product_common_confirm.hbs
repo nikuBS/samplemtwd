@@ -24,11 +24,11 @@
                                 <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
                                 <span class="elem">
                                     <span class="blind">월 이용요금</span>
-                                    {{#if svcProdBasFeeInfo.isNaN}}
-                                        {{svcProdBasFeeInfo.value}}
-                                    {{else}}
-                                        월 {{svcProdBasFeeInfo.value}} 원
-                                    {{/if}}
+                                      {{#if svcProdBasFeeInfo.isNaN}}
+                                          {{svcProdBasFeeInfo.value}}
+                                      {{else}}
+                                          월 {{svcProdBasFeeInfo.value}} 원
+                                      {{/if}}
                                 </span>
                             </span>
                         {{/if}}
@@ -79,7 +79,7 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <ul class="link-list {{{setInfo}}}">
+                    <ul class="link-list">
                         <li>
                             <dl>
                                 <dt>설정 정보</dt>
@@ -280,6 +280,7 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
+                                        {{#if stipulation.isAllAgree}}
                                         <li>
                                             <div class="checkbox type01 all" role="checkbox" aria-checked="false">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
@@ -293,6 +294,7 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        {{/if}}
                                         {{#if isInstallmentAgreement}}
                                             <li>
                                                 <div class="checkbox type01" role="checkbox" aria-checked="false">
@@ -361,7 +363,7 @@
                                                             <span class="mtext">{{stipulation.scrbStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    {{stipulation.scrbStplAgreeCttSummary}}
+                                                                {{stipulation.scrbStplAgreeCttSummary}}
                                                                 </span>
                                                             </span>
                                                         <div class="none fe-agree_full_html">{{{stipulation.scrbStplAgreeHtmlCtt}}}</div>
@@ -385,10 +387,10 @@
                                                             <span class="mtext">{{stipulation.psnlInfoCnsgAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    {{stipulation.psnlInfoCnsgCttSummary}}
+                                                                {{stipulation.psnlInfoCnsgCttSummary}}
                                                                 </span>
                                                             </span>
-                                                        <div class="none fe-agree_full_html">{{{stipulation.psnlInfoCnsgHtmlCtt}}}</div>
+                                                            <div class="none fe-agree_full_html">{{{stipulation.psnlInfoCnsgHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -409,7 +411,7 @@
                                                             <span class="mtext">{{stipulation.psnlInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    {{stipulation.psnlInfoOfrCttSummary}}
+                                                                {{stipulation.psnlInfoOfrCttSummary}}
                                                                 </span>
                                                             </span>
                                                         <div class="none fe-agree_full_html">{{{stipulation.psnlInfoOfrHtmlCtt}}}</div>
@@ -434,7 +436,7 @@
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">{{stipulation.adInfoOfrCttSummary}}</span>
                                                             </span>
-                                                        <div class="none fe-agree_full_html">{{{stipulation.psnlInfoCnsgHtmlCtt}}}</div>
+                                                            <div class="none fe-agree_full_html">{{{stipulation.psnlInfoCnsgHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>

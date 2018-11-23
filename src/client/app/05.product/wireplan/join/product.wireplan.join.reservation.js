@@ -10,6 +10,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000084'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._logged = false;
@@ -632,16 +633,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     this._isGoLogin = false;
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
-  },
-
-  _goLoad: function (nativeCommand, url, callback) {
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeService.send(nativeCommand, {}, callback);
-    } else {
-      this._setLocalStorage();
-      this._historyService.goLoad(url);
-    }
+    this._setLocalStorage();
+    this._tidLanding.goLogin();
   },
 
   _setLocalStorage: function() {
@@ -653,22 +646,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
       isExplain: this.$combineExplain.find('input[type=checkbox]').is(':checked'),
       expireTime: new Date().getTime() + (3600 * 10)
     }));
-  },
-
-  _onNativeLogin: function (resp) {
-    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
-      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this));
-    }
-  },
-
-  _successLogin: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
-      .done($.proxy(this._reqSvcMgmtNum, this, true));
   },
 
   _procApplyResult: function(resp) {

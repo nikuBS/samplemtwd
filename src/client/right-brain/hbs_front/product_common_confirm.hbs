@@ -280,6 +280,7 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
+                                        {{#if stipulation.isAllAgree}}
                                         <li>
                                             <div class="checkbox type01 all" role="checkbox" aria-checked="false">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
@@ -293,6 +294,7 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        {{/if}}
                                         {{#if isInstallmentAgreement}}
                                             <li>
                                                 <div class="checkbox type01" role="checkbox" aria-checked="false">
