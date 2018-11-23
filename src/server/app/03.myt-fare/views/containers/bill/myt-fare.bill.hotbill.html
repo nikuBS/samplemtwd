@@ -19,7 +19,7 @@
 <div id="fe-myt-fare-hotbill" class="wrap">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
-        { title: locals.child ? '자녀실시간 사용요금' : '실시간 사용요금', svcInfo: svcInfo, option: { line: true }  }); %>
+        { title: locals.child ? '자녀 실시간 이용요금' : '실시간 이용요금', svcInfo: svcInfo, option: { line: true }  }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -89,7 +89,7 @@
 
             <% if(lines.length > 0) { %>
             <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
-                <h4 class="tit">다른 회선 실시간 요금</h4>
+                <h4 class="tit">다른 회선 실시간 이요금</h4>
             </div>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -119,14 +119,19 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- TBD -->
-            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- TBD -->
-            <img src="/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
-
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요</h3>
+                <ul class="noti-list">
+                    <li>실시간 이용요금 안내 <button type="button" class="tip-view" id="MF_03_tip_01">TIP</button></li>
+                    <li>요금제 변경 및 일시정지하신 경우 <button type="button" class="tip-view" id="MF_03_tip_02">TIP</button></li>
+                    <li>시스템 점검 작업 시 <button type="button" class="tip-view" id="MF_03_tip_03">TIP</button></li>
+                    <li>가입비 등 일회성 납부 항목 <button type="button" class="tip-view" id="MF_03_tip_04">TIP</button></li>
+                    <li>분리납부 요금 사용내역 <button type="button" class="tip-view" id="MF_03_tip_05">TIP</button></li>
+                    <li>신규가입 및 명의변경하신 경우 <button type="button" class="tip-view" id="MF_03_tip_06">TIP</button></li>
+                    <li>타 유/무선 통신사 제공서비스 경우 <button type="button" class="tip-view" id="MF_03_tip_07">TIP</button></li>
+                    <li>해외로밍 시 이용요금 조회 <button type="button" class="tip-view" id="MF_03_tip_08">TIP</button></li>
+                </ul>
+            </div>
 
         </div>
     </div>
