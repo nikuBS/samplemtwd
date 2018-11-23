@@ -694,4 +694,17 @@ Tw.PRODUCT_JOIN_TYPE = [
   { value: '전화', attr: 'data-type-code="phone"' },
   { value: 'TV', attr: 'data-type-code="TV"' },
   { value: '결합상품', attr: 'data-type-code="combine"' },
-]
+];
+
+Tw.SUSPEND_RELATION = {
+  title: '추가연락처',
+  list: [
+    { 'option': '', 'attr': 'data-value="부모님"', value: '부모님' },
+    { 'option': '', 'attr': 'data-value="형제/자매"', value: '형제/자매' },
+    { 'option': '', 'attr': 'data-value="자녀"', value: '자녀' },
+    { 'option': '', 'attr': 'data-value="친구"', value: '친구' },
+    { 'option': '', 'attr': 'data-value="배우자"', value: '배우자' },
+    { 'option': '', 'attr': 'data-value="동료"', value: '동료' },
+    { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
+  ]
+};
