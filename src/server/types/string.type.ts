@@ -460,3 +460,14 @@ export const NEW_NUMBER_MSG = {
 export const MYT_SUSPEND_ERROR_MSG = {
   NOT_SUSPENDED: '일시정지 상태가 아닙니다.',
 };
+
+export const TERM_STRING = {
+  RESELL: '재판매 이용약관',
+  MEMBERSHIP: '멤버십 회원약관',
+  CHOCO: '초콜릿 이용약관',
+  ACTION_TITLE: {
+    102: '이용약관',
+    103: '개인정보처리방침',
+    104: '개인정보 수집 및 이용안내'
+  }
+};

@@ -6,40 +6,84 @@
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
+import FormatHelper from '../../../../../utils/format.helper';
+import { TERM_STRING } from '../../../../../types/string.type';
 
 export default class MainMenuSettingsTerms extends TwViewController {
+
+  private titleMap = {
+    46: TERM_STRING.RESELL,
+    49: TERM_STRING.RESELL,
+    50: TERM_STRING.RESELL,
+    101: TERM_STRING.MEMBERSHIP,
+    102: TERM_STRING.CHOCO,
+    103: TERM_STRING.CHOCO,
+    104: TERM_STRING.CHOCO,
+  };
+
+  private urlMap = {
+    101: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html', // 멤버십 회원약관
+    102: 'http://www.sktmembership.co.kr:90/terms/shoppingTerms.do', // 초콜릿 이용약관
+    103: 'http://www.sktmembership.co.kr:90/terms/shoppingTermsPersonalNow.do', // 초콜릿 개인정보
+    104: 'http://tmembership.tworld.co.kr/poc/html/policy/chocolate_agree3.html' // 초콜릿 개인정보 수집
+  };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
     if (req.query.id) {
-      // TODO: joon map id with popup type when api is ready
-
-      // Mock
-      let title = '';
-      let type = '';
-      switch (req.query.id) {
-        case '1':
-          title = '이동전화 이용약관';
-          type = 'b-btn';
-          break;
-        case '2':
-          title = 'WCDMA 이용약관';
-          type = 'a';
-          break;
-        case '3':
-          title = '재판매 이용약관';
-          type = 'c';
-          break;
-        case '4':
-          break;
-        default:
-          break;
+      const id = req.query.id;
+      const url = !!this.urlMap[id] ? this.urlMap[id] : undefined;
+      const viewId = req.query.viewId;
+      if (!!url) {
+        const title = this.titleMap[id];
+        const actionTitle = TERM_STRING.ACTION_TITLE[id];
+        res.render(`menu/settings/main.menu.settings.term-type-${req.query.type}.html`, {
+          svcInfo, pageInfo, id, title, url, actionTitle
+        });
+        return;
       }
-      res.render(`menu/settings/main.menu.settings.term-type-${type}.html`, {
-        svcInfo, pageInfo, title
-      });
-      return;
+
+      this.getTermContent(res, svcInfo, id).subscribe(
+        (resp) => {
+          if (!FormatHelper.isEmpty(resp)) {
+            const title = !!this.titleMap[id] ? this.titleMap[id] : resp.title;
+            const actionTitle = resp.title.includes('_') ? resp.title.split('_')[1] : resp.title;
+            res.render(`menu/settings/main.menu.settings.term-type-${req.query.type}.html`, {
+              svcInfo, pageInfo, title, content: resp.content, viewId, id, actionTitle
+            });
+          }
+        },
+        (err) => {
+          this.error.render(res, {
+            code: err.code,
+            msg: err.msg,
+            svcInfo
+          });
+        }
+      );
+    } else {
+      res.render('menu/settings/main.menu.settings.terms.html', { svcInfo, pageInfo });
     }
-    res.render('menu/settings/main.menu.settings.terms.html', { svcInfo, pageInfo });
+  }
+
+  private getTermContent(res: Response, svcInfo: any, id: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_08_0059, {
+      svcType: 'MM',
+      serNum: id
+    }).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        return resp.result;
+      }
+
+      this.error.render(res, {
+        code: resp.code,
+        msg: resp.msg,
+        svcInfo
+      });
+
+      return null;
+    });
   }
 }

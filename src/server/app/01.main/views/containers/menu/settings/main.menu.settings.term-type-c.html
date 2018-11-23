@@ -5,37 +5,38 @@
 %>
 
 <% include ../../../components/start.component.html %>
-<body>
+<body class="bg-white">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
+        <!-- #header -->
         <%- include('../../../../common/views/components/header.component.html', { title: title }); %>
+        <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-               <div class="cont-box">
-                  <button class="bt-dropdown big" title="재판매 이용약관 리스트" aria-haspopup="true">초고속인터넷 이용약관<span class="ico"></span></button>
-                   <ul class="bt-slice mt14">
-                        <li class="bt-white2">
-                            <button id="fe-btn-view">주요 내용 보기</button>
-                        </li>
-                    </ul>
-               </div>
-               <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps noborder">
-                    <img src="<%= CDN %>/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;">
+                    <div class="bt-agree-tit">
+                        <button class="bt-dropdown big" id="fe-btn-action" title="약관 리스트" aria-haspopup="true" value="<%= id %>"><%= actionTitle %><span class="ico"></span></button>
+                    </div>
                 </div>
-                <div class="bt-top">
+                <div class="cont-box noborder">
+                    <div class="btn-view-detail tr">
+                        <button class="bt-link-tx underline" id="fe-btn-view" value="<%= viewId %>">주요 내용보기</button>
+                    </div>
+                    <!-- <img src="/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;"> -->
+                    <%- content %>
+                </div>
+                <!--div class="bt-top">
                     <button><span class="blind">최상단으로 가기</span></button>
-                </div>
+                </div-->
             </div>
         </div>
         <!--// #contents -->
@@ -48,7 +49,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MainMenuSettingsTermTypeC($('.wrap'), '<%= title %>');
+    new Tw.MainMenuSettingsTermTypeCDE($('.wrap'));
   })
 </script>
 <% include ../../../components/end.component.html %>
