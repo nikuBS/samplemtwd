@@ -101,12 +101,12 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
       return;
     }
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     // 신청/변경 call api
     this._apiService.request(Tw.API_CMD.BFF_05_0182, param)
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           var option = {
@@ -130,11 +130,19 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
           return ;
         }
 
-        this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
+        // 완료화면 호출
+        Tw.Popup.afterRequestSuccess(
+          '/myt-join/submain/phone/alarm',
+          '/myt-join/submain',
+          null,
+          null,
+          Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
+
+        // this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
   }
