@@ -69,6 +69,13 @@ Tw.ProductWireServiceArea.prototype = {
       dtl_addr: result.detail,
       addr_id: result.addrId
     };
+
+    var $addr = this.$container.find('#fe-addr');
+    $addr.removeClass('none');
+    $addr.find('#fe-post').text('[' + result.zip + ']');
+    $addr.find('#fe-base-addr').text(result.main);
+    $addr.find('#fe-detail-addr').text(result.detail);
+
     this.$submitBtn.removeAttr('disabled');
   },
 
