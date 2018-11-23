@@ -38,6 +38,9 @@ export const URL = {
   '/myt-fare/billsetup/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
   '/myt-fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
 
+  '/myt-fare/info/bill-tax': { login: true, id: 'MF_08_01_01', title: '세금계산서 발급 내역' },
+  '/myt-fare/info/bill-cash': { login: true, id: 'MF_08_01_02', title: '현금 영수증 발행 내역' },
+
   '/myt-join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt-join/myplan': { login: true, id: 'MS_05', title: '나의 요금제' },
   '/myt-join/myplanadd': { login: true, id: 'MS_06', title: '나의 부가상품' },

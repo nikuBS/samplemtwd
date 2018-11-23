@@ -6,7 +6,7 @@
 Tw.MyTFareInfoHistory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
-
+console.log(this.data);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
@@ -345,8 +345,8 @@ Tw.MyTFareInfoHistory.prototype = {
     this._popupService.open(
         {
           hbs: 'MF_08_03',
-          bankName: this.data.withdrawalBankName,
-          bankAccount: this.data.withdrawalBankAccount
+          bankName: this.data.autoWithdrawalBankName,
+          bankAccount: this.data.autoWithdrawalBankNumber
         },
         $.proxy(this._autoWithdrawalOpenCallback, this), null, Tw.MYT_PAYMENT_HISTORY_HASH.AUTO_WITHDRAWAL
     );
