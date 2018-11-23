@@ -341,9 +341,11 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
+      
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
+
 
       resp.result.microPrepayRecord.map((o) => {
         o.sortDt = o.opDt;
@@ -364,7 +366,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
-
+      console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
