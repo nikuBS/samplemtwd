@@ -23,83 +23,15 @@ class MyTDataPrepaidAlarm extends TwViewController {
       isApp: BrowserHelper.isApp(req)
     };
 
-    switch ( page ) {
-      case 'voice':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.voice.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      case 'voice-auto':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.voice-auto.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      case 'data':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.data.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      case 'data-auto':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.data-auto.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      case 'alarm':
-        this.getPPSInfo().subscribe((result) => {
-
-        });
-        break;
-      case 'voice-complete':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.voice.complete.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      default:
-      // Observable.combineLatest(
-      //   this.getLimitUserInfo()
-      // ).subscribe(([limitUserInfo]) => {
-      //   const response = Object.assign(
-      //     { limitUserInfo: limitUserInfo },
-      //     responseData
-      //   );
-      //
-      //   if ( limitUserInfo ) {
-      //     res.render('limit/myt-data.limit.html', response);
-      //   } else {
-      //     res.render('limit/myt-data.limit.error.html', response);
-      //   }
-      // });
-    }
+    this.getPPSInfo().subscribe((result) => {
+      res.render(
+        'prepaid/myt-data.prepaid.alarm.html', Object.assign(responseData, {
+          PPSInfo: result,
+          convertDate: this.convertDate,
+          convertAmount: this.convertAmount
+        })
+      );
+    });
   }
 
   public getPPSInfo = () => this.apiService
@@ -130,10 +62,10 @@ class MyTDataPrepaidAlarm extends TwViewController {
       //   return null;
       // }
       return {
-        amt : '10000',
+        amt: '10000',
         amtCd: '01',
         endDt: '20181231',
-        cardNum : '****'
+        cardNum: '****'
       };
     })
 

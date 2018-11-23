@@ -35,17 +35,6 @@ class MyTDataPrepaidVoice extends TwViewController {
           );
         });
         break;
-      case 'alarm':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.alarm.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
       case 'voice-complete':
         this.getPPSInfo().subscribe((result) => {
           res.render(
