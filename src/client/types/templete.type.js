@@ -674,3 +674,11 @@ Tw.PRODUCT_APPS_ORDER = [
   { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
   { value: '가나다순', attr: 'data-prop="prodNm"' }
 ];
+
+Tw.PRODUCT_JOIN_TYPE = [
+  { value: '휴대폰', attr: 'data-type-code="cellphone"' },
+  { value: '인터넷', attr: 'data-type-code="internet"' },
+  { value: '전화', attr: 'data-type-code="phone"' },
+  { value: 'TV', attr: 'data-type-code="TV"' },
+  { value: '결합상품', attr: 'data-type-code="combine"' },
+]
