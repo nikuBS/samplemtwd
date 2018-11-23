@@ -68,7 +68,6 @@
                                     <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
                                     <p class="txt"><%= comb.prodBasBenfCtt %></p>
                                     <p class="date">신청일  <%= comb.scrbDt %></p>
-                                    <!-- TODO: admin 정리후 추가 <button class="bt-link-tx underline" type="button" aria-haspopup="true">구비서류 제출</button> -->
                                     <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
                                     <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합가족 보기</a>
                                     <% } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { %>
