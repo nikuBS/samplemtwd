@@ -20,11 +20,13 @@
 >
 <!-- .popup hbs -->
 <div id="fe-myt-join-wire-set-pause" class="popup-page nobg tw-popup fixed-btn wrap"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-
-    <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '일시 정지/해제', svcInfo: svcInfo }) %>
-    <!--// #header -->
-
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>일시 정지/해제</h1>
+            </div>
+        </div>
+    </div>
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -71,12 +73,17 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- TBD -->
-            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;">
-            <!--// TBD -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>일시정지 기간 안내 <button type="button" class="icon-tip" id="MS_04_03_tip_01">TIP</button></li>
+                    <li>인터넷 일시정지 안내 <button type="button" class="icon-tip" id="MS_04_03_tip_02">TIP</button></li>
+                    <li>인터넷 외 일시정지 안내 <button type="button" class="icon-tip" id="MS_04_03_tip_03">TIP</button></li>
+                    <li>일시정지 기간 기본료 <button type="button" class="icon-tip" id="MS_04_03_tip_04">TIP</button></li>
+                </ul>
+            </div>
 
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
@@ -93,7 +100,7 @@
     </div>
     <!-- // .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step fe-common-back">취소</button>
+    <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
     <!--// .popup-closeBtn -->
 </div>
 <!-- // .popup hbs -->
