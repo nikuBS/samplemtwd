@@ -7,6 +7,8 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
 
+  console.log(this.data);
+
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
@@ -271,10 +273,13 @@ Tw.MyTFareInfoHistory.prototype = {
     }
   },
 
+  // 납내역 환불받기
   _openAddRefundAccount: function () {
     this._popupService.open(
         {
-          hbs: 'MF_08_02'
+          hbs: 'MF_08_02',
+          overPayList:this.data.listData.overPaymentList,
+          totalOverAmt:this.data.refundTotalAmount
         },
         $.proxy(this._openAddRefundAccountCallback, this), $.proxy(this._closeAddRefundAccountCallback, this),
         Tw.MYT_PAYMENT_HISTORY_HASH.OVERPAY_REFUND,
@@ -284,10 +289,11 @@ Tw.MyTFareInfoHistory.prototype = {
 
   _openAddRefundAccountCallback: function ($container) {
     this.refundAPI_option = {
-      // recCnt: this.paramData.recCnt,
-      // sendSvcMgmtNum: this.paramData.svcMgmtNum,
-      // bamtClCd: this.paramData.bamtClCd
+      //rfndBankNum // 계좌번호
+      //svcMgmtNum: this.paramData.svcMgmtNum,
+      //rfndBankCd // 은행코드
     };
+
 
     this.$refundRequestBtn = $($container).find('.bt-fixed-area button');
     this.$bankList = $($container).find('.bt-dropdown.big');
@@ -328,12 +334,14 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _accountInputHandler: function (e) {
+    console.log('console.log handler')
     this.isBankAccountNumberSeted = ($(e.currentTarget).val().length > 0);
     this.refundAPI_option.rfndBankNum = $(e.currentTarget).val();
     this._refundAccountInfoUpdateCheck();
   },
 
   _refundAccountInfoUpdateCheck: function () {
+    console.log('bacnk name assss', this.isBankNameSeted, this.isBankAccountNumberSeted)
     if (this.isBankNameSeted && this.isBankAccountNumberSeted) {
       this.$refundRequestBtn.attr('disabled', false);
     } else {
@@ -357,17 +365,20 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _processAutoWithdrawalCancel: function () {
+    console.log(this.data.autoWithdrawalBankCode, this.data.autoWithdrawalBankSerNum)
     this._apiService.request(Tw.API_CMD.BFF_07_0069, {
-      bankCd: this.data.withdrawalBankCode,
-      bankSerNum: this.data.withdrawalBankSerNum
+      bankCd: this.data.autoWithdrawalBankCode,
+      bankSerNum: this.data.autoWithdrawalBankSerNum
     }).done($.proxy(this._successCancelAccount, this)).fail($.proxy(this._apiError, this));
   },
 
   _successCancelAccount: function (res) {
+    this._popupService.close();
     if (res.code === '00') {
       Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_PAYMENT.CANCEL_AUTO_WITHDRAWAL);
-      this._popupService.close();
       this.$openAutoPaymentLayerTrigger.hide();
+    } else {
+      $.proxy(this._apiError, this);
     }
   },
 

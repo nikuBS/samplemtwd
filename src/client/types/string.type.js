@@ -590,7 +590,7 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
 };
 
 Tw.MYT_FARE_HISTORY_PAYMENT = {
-  CANCEL_AUTO_WITHDRAWAL: '자동납부 통합 인출해지 신청 되었습니다.'
+  CANCEL_AUTO_WITHDRAWAL: '자동납부 통합인출 서비스가 해지되었습니다.'
 };
 
 Tw.INFO = {
