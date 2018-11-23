@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import ProductHelper from '../../../helper/product.helper';
+import ProductHelper from '../../../../../utils/product.helper';
 
 class ProductMobileplanAddJoinCombineLine extends TwViewController {
   constructor() {

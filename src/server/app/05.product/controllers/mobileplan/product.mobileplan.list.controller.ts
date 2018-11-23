@@ -10,7 +10,7 @@ import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductPlans extends TwViewController {
   private PLAN_CODE = 'F01100';

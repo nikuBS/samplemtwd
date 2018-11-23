@@ -4,12 +4,18 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, filterIds) {
   this.$container = rootEl;
-  this._template = Handlebars.compile($('#tpl_recommended_rate_item').html());
+
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
+
+  this._prodId = prodId;
+  this._prodTypCd = prodTypCd;
+  this._filterIds = filterIds;
+  this._template = Handlebars.compile($('#tpl_recommended_rate_item').html());
+
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -20,12 +26,7 @@ Tw.ProductCommonCallplan.prototype = {
   _settingBtnList: [],
 
   _init: function() {
-    this._prodId = this.$container.data('prod_id');
-    this._ctgCd = this.$container.data('ctg_cd');
-    this._ctgKey = this.$container.data('ctg_key');
-    this._filterIds = this.$container.data('filter_ids');
     this._contentsDetailList = [];
-
     this._setContentsDetailList();
     this._loadRecommendedrateList();
     this._setSettingBtnList();
@@ -242,7 +243,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _goRecommendRateMoreList: function() {
-    this._historyService.goLoad('/product/' + this._ctgKey + '?filters=' + this._filterIds);
+    // this._historyService.goLoad('/product/' + this._ctgKey + '?filters=' + this._filterIds);
   }
 
 };

@@ -1,0 +1,9 @@
+<!-- 상단 배너 -->
+<% if ( prodRedisInfo.banner.T ) { %>
+<% if ( prodRedisInfo.banner.T.bnnrImgUrl ) { %>
+<a href="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.T.bnnrImgUrl %>"></a>
+<% } else { %>
+<%- prodRedisInfo.banner.T.bnnrDtlHtmlCtt %>
+<% } %>
+<% } %>
+<!-- //상단 배너 -->

@@ -1,0 +1,12 @@
+<% if ( relateTags && relateTags.length > 0 ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+<!-- cont-box -->
+<div class="cont-box gaps-style02">
+    <h3 class="suggest-tag-title">추천태그</h3>
+    <ul class="suggest-tag-list openlist-wrap">
+        <% for (var i in relateTags) { %>
+        <li><a href="/product/<%= ctgKey %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+        <% } %>
+    </ul>
+</div>
+<% } %>

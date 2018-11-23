@@ -1,0 +1,7 @@
+<% if ( prodRedisInfo.banner.C ) { %>
+<% if ( prodRedisInfo.banner.C.bnnrImgUrl ) { %>
+<a href="<%= prodRedisInfo.banner.C.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.C.bnnrImgUrl %>"></a>
+<% } else { %>
+<%- prodRedisInfo.banner.C.bnnrDtlHtmlCtt %>
+<% } %>
+<% } %>

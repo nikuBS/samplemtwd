@@ -1,6 +1,6 @@
-import { DATA_UNIT } from '../../../types/string.type';
-import { UNIT } from '../../../types/bff.type';
-import FormatHelper from '../../../utils/format.helper';
+import { DATA_UNIT } from '../types/string.type';
+import { UNIT } from '../types/bff.type';
+import FormatHelper from './format.helper';
 
 class ProductHelper {
   static convStipulation(stipulation: any): any {

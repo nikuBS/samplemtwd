@@ -10,7 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import ProductHelper from '../../../05.product/helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
