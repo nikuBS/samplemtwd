@@ -780,3 +780,8 @@ export const API_TAX_REPRINT_ERROR = {
 export const API_REFUND_ERROR = {
   ZINVE8169: 'ZINVE8169'  // 환불대상금액 존재하지 않습니다.
 };
+
+export const API_NEW_NUMBER_ERROR = {
+  MOD0030: 'MOD0030', // 번호변경안내서비스 신청 가능한 번호변경 이력이 없습니다.
+  MOD0031: 'MOD0031' // 번호변경전 번호가 타사번호인 경우는 지점/대리점/고객센터를 통해 신청 가능합니다.
+};
