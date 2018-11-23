@@ -1054,6 +1054,13 @@ Tw.BENEFIT = {
         CONTENT: '상품 가입 완료',
         LINK_TITLE: '나의 가입정보 확인하기 >'
       }
+    },
+    TPLUS: {
+      FINISH: {
+        TITLE: 'T끼리 PLUS 할인',
+        CONTENT: '상품 가입 완료',
+        LINK_TITLE: '나의 가입정보 확인하기 >'
+      }
     }
   }
 };

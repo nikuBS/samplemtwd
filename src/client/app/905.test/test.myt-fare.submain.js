@@ -408,7 +408,7 @@ Tw.TestMyTFareSubMain.prototype = {
 
   // 미납요금버튼
   _onClickedNonPayment: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/nonpayment');
+    this._historyService.goLoad('/myt-fare/unbill');
   },
 
   // 요금안내서 설정 이동
@@ -433,7 +433,7 @@ Tw.TestMyTFareSubMain.prototype = {
 
   // 최근납부내역 이동
   _onClickedPaymentDetail: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/history/payment');
+    this._historyService.goLoad('/myt-fare/info/history');
   },
 
   // 다른회선조회
@@ -458,7 +458,7 @@ Tw.TestMyTFareSubMain.prototype = {
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
     // SB 상 납부내역상세로 진입하도록 정의되어있음
-    this._historyService.goLoad('/myt/fare/history/payment');
+    this._historyService.goLoad('/myt-fare/info/history');
   },
 
   // 기부금/후원금
