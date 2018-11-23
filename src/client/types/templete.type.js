@@ -361,7 +361,24 @@ Tw.POPUP_TPL = {
         { 'option': 'event-type', 'attr': 'id="win"', value: '당첨자 발표' }
       ]
     }
-  ]
+  ],
+  ROAMING_RECEIVE_PLACE: {
+    title: '수령 장소 선택',
+    data: [
+      {
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="06"', value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="07"', value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="08"', value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="09"', value: '김포공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '제주공항 국제선 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '김해공항 3층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="12"', value: '대구공항 2층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="13"', value: '대구 SKT 황금점 매장' }
+        ]
+      }
+    ]
+  }
 };
 
 Tw.MYT_TPL = {

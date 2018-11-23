@@ -11,6 +11,10 @@ import { Request, Response, NextFunction } from 'express';
 export default class ProductRoamingReservation2step extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    res.render('roaming/product.roaming.fi.reservation2step.html', { svcInfo : svcInfo });
+     const date = new Date();
+     date.setDate(date.getDate() + 2);
+     const formatDate = date.toISOString().substring(0, 10);
+
+     res.render('roaming/product.roaming.fi.reservation2step.html', { svcInfo : svcInfo , formatDate : formatDate });
   }
 }
