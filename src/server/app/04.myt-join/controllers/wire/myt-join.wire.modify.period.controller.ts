@@ -42,17 +42,50 @@ class MyTJoinWireModifyPeriod extends TwViewController {
       const options = {
         svcInfo: svcInfo || {},
         pageInfo: pageInfo || {},
-        wireAgreementsInfo: wireAgreementsInfo || {}
+        wireAgreementsInfo: wireAgreementsInfo || {},
+        isBroadbandJoined: 'N'
       };
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
+      if (resp.code === 'MOD0014') { // SK브로드밴드 가입자
+        return res.render(this._VIEW.DEFAULT, {
+          svcInfo,
+          pageInfo,
+          wireAgreementsInfo: {},
+          isBroadbandJoined: 'Y'
+        });
+      }
       return this.renderErr(res, resp, svcInfo);
     });
   }
 
   private reqWireAgreementsInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0140, {});
+    // return Observable.create((observer) => {
+    //   setTimeout(() => {
+    //     const resp = {
+    //       'code': 'MOD0014',
+    //       'msg': '오류 입니다. {0},{1}',
+    //       'traceId': 'a94a2b91d0094257',
+    //       'spanId': 'a94a2b91d0094257',
+    //       'clientDebugMessage': 'a94a2b91d0094257*',
+    //       'hostname': 'TD3P026952',
+    //       'appName': 'bff-spring-mobile',
+    //       'debugMessage': '200 ',
+    //       'orgSpanId': 'c17d941695ecfea5',
+    //       'orgHostname': 'TD3P026952',
+    //       'orgAppName': 'core-balance',
+    //       'orgDebugMessage': 'BLN0002'
+    //     };
+    //     if (resp.code === API_CODE.CODE_00) {
+    //       observer.next(resp);
+    //       observer.complete();
+    //     } else {
+    //       observer.error(resp);
+    //     }
+    //   }, 500);
+    // });
   }
 
   private getWireAgreementsInfo(resp: any): any {
