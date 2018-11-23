@@ -45,9 +45,9 @@ class MyTFareMicroHistory extends TwViewController {
   selectedMonth;
   isContents;
   URL = {
-    block: '/myt/fare/bill/small/block',
-    detailSmall: '/myt/fare/bill/small/detail',
-    detailContents: '/myt/fare/bill/contents/detail'
+    block: '/myt-fare/bill/small/block',
+    detailSmall: '/myt-fare/bill/small/detail',
+    detailContents: '/myt-fare/bill/contents/detail'
   };
 
   constructor() {
