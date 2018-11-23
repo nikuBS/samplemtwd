@@ -7,6 +7,7 @@ import BenefitMyBenefit from './controllers/my-benefit/benefit.myt-benefit.contr
 import BenefitMilitary from './controllers/my-benefit/benefit.myt-benefit.military';
 import BenefitCookiz from './controllers/my-benefit/benefit.myt-benefit.cookiz';
 import BenefitDisPgm from './controllers/program/benefit.dis-pgm';
+import BenefitSubmainCombinationPreview from './controllers/submain/benefit.submain.combination-preview.info.controller';
 
 class BenefitRouter extends TwRouter {
   constructor() {
@@ -14,18 +15,19 @@ class BenefitRouter extends TwRouter {
     // this.controllers.push({ url: '/', controller: HomeMain });
 
     this.controllers.push({ url: '/submain', controller: BenefitIndex });
-    this.controllers.push({ url: '/my/rainbowpoint', controller: BenefitMyBenefitRainbowPoint });
-    this.controllers.push({ url: '/my/rainbowpoint/adjustment', controller: BenefitMyBenefitRainbowPointAdjustment });
-    this.controllers.push({ url: '/my/rainbowpoint/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
     this.controllers.push({ url: '/my-benefit/military', controller: BenefitMilitary });
     this.controllers.push({ url: '/my-benefit/cookiz', controller: BenefitCookiz });
     this.controllers.push({ url: '/my-benefit', controller: BenefitMyBenefit });
 
     // new IA
     this.controllers.push({ url: '/submain/detail/dis-pgm/:prodId', controller: BenefitDisPgm });
+    this.controllers.push({ url: '/submain/combination-preview/info', controller: BenefitSubmainCombinationPreview });
+    this.controllers.push({ url: '/my', controller: BenefitMyBenefit });
     this.controllers.push({ url: '/my/military', controller: BenefitMilitary });
     this.controllers.push({ url: '/my/cookiz', controller: BenefitCookiz });
-    this.controllers.push({ url: '/my', controller: BenefitMyBenefit });
+    this.controllers.push({ url: '/my/rainbowpoint', controller: BenefitMyBenefitRainbowPoint });
+    this.controllers.push({ url: '/my/rainbowpoint/adjustment', controller: BenefitMyBenefitRainbowPointAdjustment });
+    this.controllers.push({ url: '/my/rainbowpoint/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
   }
 }
 

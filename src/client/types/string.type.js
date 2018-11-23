@@ -736,6 +736,15 @@ Tw.MYT_PAYMENT_HISTORY_HASH = {
   BILL_RESEND_BY_EMAIL: 'by-email'
 };
 
+Tw.MYT_JOIN = {
+  BROADBAND_ERROR: {
+    TITLE: 'SK브로드밴드 가입 회선입니다.',
+    CONTENTS: '전화 106 또는 SK브로드밴드 홈페이지를 이용해 주시기 바랍니다.',
+    LINK: 'http://www.skbroadband.com/Main.do',
+    LINK_TXT: 'SK브로드밴드 바로가기'
+  }
+};
+
 Tw.MYT_JOIN_CUSTPASS = {
   AUTO_A04: '비밀번호를 입력해 주세요.',
   EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
