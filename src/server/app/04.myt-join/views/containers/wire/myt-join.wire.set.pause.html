@@ -107,7 +107,8 @@
   $(document).ready(function () {
     new Tw.MytJoinWireSetPause($('#fe-myt-join-wire-set-pause'), {
       svcStCd: '<%= wirePauseInfo.svc_st_cd %>',
-      startDate: '<%= startDate.min %>'
+      startDateMin: '<%= startDate.min %>',
+      startDateMax: '<%= startDate.max %>'
     });
   });
 </script>

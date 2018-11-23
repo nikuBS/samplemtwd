@@ -50,16 +50,25 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _setStartDate: function () {
-    this._startDate = this._options.startDate;
+    this._startDate = this._options.startDateMin;
   },
 
-  _setEndDateRange: function () {
+  _getEndDateRange: function () {
     var maxDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._startDate, this._SELECTABLE_PAUSE_RANGE, 'days',
       this._DATE_FORMAT.INPUT, this._DATE_FORMAT.INPUT);
     var startDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._startDate, 1, 'days',
       this._DATE_FORMAT.INPUT, this._DATE_FORMAT.INPUT);
-    this._$inputEndDate.attr('min', startDate);
-    this._$inputEndDate.attr('max', maxDate);
+
+    return {
+      min: startDate,
+      max: maxDate
+    };
+  },
+
+  _setEndDateRange: function () {
+    var endDateRange = this._getEndDateRange();
+    this._$inputEndDate.attr('min', endDateRange.min);
+    this._$inputEndDate.attr('max', endDateRange.max);
     this._$inputEndDate.prop('disabled', false);
   },
 
@@ -89,9 +98,20 @@ Tw.MytJoinWireSetPause.prototype = {
     this._$btnSubmit.prop('disabled', disabled);
   },
 
+  _isValidDateInRange: function (val, min, max) {
+    return moment(val).isBetween(min, max, null, '[]');
+  },
+
   _onChangeInputStartDate: function (event) {
     var $currentTarget = $(event.currentTarget);
-    this._startDate = $currentTarget.val();
+    var currentTargetVal = $currentTarget.val();
+    if ( !this._isValidDateInRange(currentTargetVal, this._options.startDateMin, this._options.startDateMax) ) {
+      $currentTarget.val(this._options.startDateMin);
+      this._startDate = this._options.startDateMin;
+      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.DATE_SELECT_ERROR);
+    } else {
+      this._startDate = currentTargetVal;
+    }
     this._setEndDateRange();
     if ( this._endDate ) {
       this._showPauseRangeInfo();
@@ -101,7 +121,15 @@ Tw.MytJoinWireSetPause.prototype = {
 
   _onChangeInputEndDate: function (event) {
     var $currentTarget = $(event.currentTarget);
-    this._endDate = $currentTarget.val();
+    var currentTargetVal = $currentTarget.val();
+    var endDateRange = this._getEndDateRange();
+    if ( !this._isValidDateInRange(currentTargetVal, endDateRange.min, endDateRange.max) ) {
+      $currentTarget.val(endDateRange.min);
+      this._endDate = endDateRange.min;
+      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.DATE_SELECT_ERROR);
+    } else {
+      this._endDate = currentTargetVal;
+    }
     this._showPauseRangeInfo();
     this._setSubmitBtnStatus();
   },
