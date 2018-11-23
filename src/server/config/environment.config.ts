@@ -68,7 +68,7 @@ const environment = {
   production: {
     BFF_SERVER: 'http://bff-spring',
     BFF_SERVER_G: 'http://bff-spring-g',
-    CDN: '',
+    CDN: 'https://mcdn.tworld.co.kr',
     CDN_MANIFEST: 'http://61.250.20.69',
     REDIS: {
       host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
