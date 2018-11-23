@@ -30,74 +30,26 @@
                             <span class="sub-disc01">
                                 <span class="elem">회선번호</span>
                             </span>
-                        <span class="tit-tgothic"><%= svcInfo.svcNum %></span>
+                        <span class="tit-tgothic"><%= phoneNum %></span>
                         <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
                     </div>
                 </div>
             </div>
             <!--// .cont-box -->
-
-            <div class="ti-caption-gray">
-                <h3 class="tit">일시정지 신청정보</h3>
-            </div>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-hoz">
-                <div class="info-list-type1">
-                    <div class="basic-list mt0">
-                        <ul>
-                            <li>
-                                <span class="title">상태</span>
-                                <span class="tx-cont tx-bold"><% if(type === 'long-term'){ %>장기<% } %>일시정지 중</span>
-                            </li>
-                            <li>
-                                <span class="title"><% if(type === 'long-term'){ %>장기<% } %>일시정지 기간</span>
-                                <span class="tx-cont"><%= period.from %> ~ <%= period.to %></span>
-                            </li>
-                            <% if(locals.resuspend){ %>
-                            <li>
-                                <span class="title">재시작일자</span>
-                                <span class="tx-cont"><%= resuspend %></span>
-                            </li>
-                            <% } %>
-                            <li>
-                                <span class="title">사유</span>
-                                <span class="tx-cont"><%= reason %></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <% if(locals.resuspend){ %>
-                <ul class="bt-slice mt20 mb20">
-                    <li class="bt-white2">
-                        <button id="bt-cancel-resuspend">재신청 취소하기</button>
-                    </li>
-                </ul>
-                <% } else { %>
-                <ul class="bt-slice mt20 mb20 item-two">
-                    <li class="bt-white2">
-                        <% if(type === 'temporary'){ %>
-                        <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
-                        <% } else { %>
-                        <button id="bt-resuspend">재신청하기</button>
-                        <% } %>
-                    </li>
-                    <li class="bt-white2">
-                        <button id="bt-reset">해제하기</button>
-                    </li>
-                </ul>
-                <% } %>
-            </div>
+            <%- include('../../components/suspend/myt-join.suspend.status.temporal.html', status); %>
+            <%- include('../../components/suspend/myt-join.suspend.status.longterm.html', progress); %>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
+
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해주세요!</h3>
                 <ul class="noti-list">
-                    <% if(type === 'long-term') { %>
+                    <% if(status.type === 'long-term' || status.isProgressing) { %>
                     <li>장기일시정지 안내
-                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_03">TIP</button>
+                        <button type="button" class="tip-view" id="MS_03_05_03_tip_03">TIP</button>
                     </li>
                     <% } else { %>
                     <li>일시정지 기간안내
@@ -124,7 +76,7 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({period, reason, type, resuspend}) %> );
+    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({status, progress}) %> );
   });
 </script>
 <% include ../../components/end.component.html %>

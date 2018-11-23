@@ -31,14 +31,14 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0175, {}),
       this.apiService.request(API_CMD.BFF_05_0115, {}), // cookiz: BIL0070
       this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
-      this.apiService.request(API_CMD.BFF_05_0106, {}),
-      this.apiService.request(API_CMD.BFF_05_0094, {}),
-      this.apiService.request(API_CMD.BFF_06_0001, {}),
-      this.apiService.request(API_CMD.BFF_03_0004, {}),
-    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, long, lines]) => {
+      this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인
+      this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인
+      this.apiService.request(API_CMD.BFF_05_0196, {}),
+      this.apiService.request(API_CMD.BFF_03_0004, {})
+    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, lines]) => {
 
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
-        const apiError = this.error.apiError([/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, long]);
+        const apiError = this.error.apiError([/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty]);
         if ( !FormatHelper.isEmpty(apiError) ) {
           return this.error.render(res, {
             title: MY_BENEFIT.MAIN,
@@ -71,24 +71,43 @@ class BenefitMyBenefit extends TwViewController {
         options['total'] = FormatHelper.addComma(this._total + '');
 
         options['count'] = 0;
-        options['benefits'] = [];
-        bill.result.priceAgrmt.forEach(prod => {
-          options['benefits'].push({
-            name: prod.prodNm,
-            date: DateHelper.getShortDateNoDot(prod.agreeStartDate)
-          });
-          options['count']++;
-        });
 
+        // 요금할인
+        if ( bill.result.priceAgrmtList.length > 0 ) {
+          options['bill'] = {
+            total: bill.result.priceAgrmtList.length,
+            item: bill.result.priceAgrmtList[0].prodNm
+          };
+          options['count'] += bill.result.priceAgrmtList.length;
+        }
+        // 요금할인- 복지고객
+        if ( bill.result.wlfCustDcList.length > 0 ) {
+          options['welfare'] = {
+            total: bill.result.wlfCustDcList.length
+          };
+          options['count'] += bill.result.wlfCustDcList.length;
+        }
+
+        // 결합할인
         options['bond'] = {
           name: combination.prodNm,
           total: parseInt(combination.etcCnt, 10)
         };
         options['count'] += options['bond'].total;
-        const coupons = long.result.filter(coupon => {
-          return coupon.copnOperStCd === 'A10';
-        });
-        options['coupons'] = coupons.length;
+
+        // 장기가입 쿠폰
+        if ( loyalty.result.benefit.length > 0 ) {
+          options['coupons'] = loyalty.result.benefit.length;
+          options['count'] += loyalty.result.benefit.length;
+        }
+        // 장기가입 요금
+        if ( loyalty.result.discount ) {
+          const discount = loyalty.result.discount;
+          if ( discount.dcItmTypNm ) {
+            options['loyalty'] = `${discount.dcItmTypNm} ${discount.dcAmt}${discount.dcUnit}`;
+            options['count'] += 1;
+          }
+        }
 
         // gets the subscribe date
         let _lines = [];

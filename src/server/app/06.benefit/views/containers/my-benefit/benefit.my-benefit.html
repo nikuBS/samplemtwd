@@ -34,7 +34,7 @@
                         <div class="title-m">고객님은 SK와 함께한지<br /><span class="tx-bold tx-red"><%= days %></span>일째 입니다.</div>
                     </div>
                     <div class="ico-wrap">
-                        <button><span class="ico-ill-type3"></span></button>
+                        <a href="/membership/submain"><span class="ico-ill-type3"></span></a>
                     </div>
                 </div>
             </div>
@@ -120,14 +120,25 @@
             <div class="cont-box nogaps-hoz">
                 <div class="history-list type2">
                     <ul>
-                        <% for(var i=0; i < benefits.length; i++) { %>
+                        <% if(locals.bill) { %>
                         <li>
                             <div class="li-elem">
                                 <a href="/myt-join/myplancombine/infodiscount" class="bt-detail-top">
                                     <div class="title-box">
                                         <span class="sub-tit02">요금할인</span>
-                                        <span class="tit"><%= benefits[i].name %></span>
-                                        <span class="sub-tit">신청일 <%= benefits[i].date %></span>
+                                        <span class="tit"><%= bill.item %> <% if(bill.total > 1) { %> 외 <%= bill.total %>건 <% }%></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% if(locals.welfare) { %>
+                        <li>
+                            <div class="li-elem">
+                                <a href="/myt-join/myplancombine" class="bt-detail-top">
+                                    <div class="title-box">
+                                        <span class="sub-tit02">요금할인</span>
+                                        <span class="tit">복지고객할인 <% if(welfare.total > 1) { %> 외 <%= welfare.total %>건 <% }%></span>
                                     </div>
                                 </a>
                             </div>
@@ -152,6 +163,18 @@
                                     <div class="title-box">
                                         <span class="sub-tit02">장기가입 혜택</span>
                                         <span class="tit">데이터 리필쿠폰 <%= coupons %>장</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% if(locals.loyalty) { %>
+                        <li>
+                            <div class="li-elem">
+                                <a href="/myt-data/recharge/coupon" class="bt-detail-top">
+                                    <div class="title-box">
+                                        <span class="sub-tit02">장기고객 요금할인</span>
+                                        <span class="tit"><%= loyalty %></span>
                                     </div>
                                 </a>
                             </div>
