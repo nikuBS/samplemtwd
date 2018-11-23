@@ -15,6 +15,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { isNull } from 'util';
 import { runInThisContext } from 'vm';
+import { BoundCallbackObservable } from 'rxjs/observable/BoundCallbackObservable';
 
 interface Query {
   isQueryEmpty: boolean;
@@ -31,11 +32,18 @@ interface TaxList {
 interface Info {
   [key: string]: string;
 }
-
+interface ErrorInfo {
+  code: string;
+  msg: string;
+}
 class MyTFareInfoBillTax extends TwViewController {
+  private returnErrorInfo: ErrorInfo | any;
+
   constructor() {
     super();
+    this.returnErrorInfo = {};
   }  
+  
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const query: Query = {
@@ -49,19 +57,37 @@ class MyTFareInfoBillTax extends TwViewController {
     // 분기/반기로만 조회가 가능해 6번 호출
     Observable.combineLatest(
       this.getBillTaxLists(DateHelper.getCurrentDate(), monthPeriod, svcInfo)
-    ).subscribe(taxlist => {
-      res.render('info/myt-fare.info.bill-tax.html', {svcInfo, pageInfo, data: {
-        limitMonth: monthPeriod,
-        items: this.mergeList(taxlist),
-        noticeInfo: this.getNoticeInfo() || []
-      }});
+    ).subscribe(taxlist => {      
+      if (this.returnErrorInfo.code) {
+        this.error.render(res, {
+          code: this.returnErrorInfo.code,
+          msg: this.returnErrorInfo.msg,
+          svcInfo: svcInfo
+        });
+      } else {
+        res.render('info/myt-fare.info.bill-tax.html', {svcInfo, pageInfo, data: {
+          limitMonth: monthPeriod,
+          items: this.mergeList(taxlist),
+          noticeInfo: this.getNoticeInfo() || []
+        }});
+      }
+      
+      
     });
   }
 
+  
 
   private getBillTaxList = (date: string, svcInfo: any): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, result: any}) => {
+    return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
       if (resp.code !== API_CODE.CODE_00) {
+        // 처음발생한 코드를 우선적으로 저장
+        if (!this.returnErrorInfo.code) {
+          this.returnErrorInfo = {
+            code: resp.code,
+            msg: resp.msg
+          };
+        }
         return null;
       }
 
@@ -77,6 +103,8 @@ class MyTFareInfoBillTax extends TwViewController {
       return resp.result.taxReprintList;
     });
   }
+
+  
 
   private getBillTaxLists = (date: Date, monthPeriod: number, svcInfo: any) => {
     // monthPeriod 개월 전 구하기
