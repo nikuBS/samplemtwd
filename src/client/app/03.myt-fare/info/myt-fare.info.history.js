@@ -7,8 +7,6 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
 
-  console.log(this.data);
-
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
@@ -334,14 +332,12 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _accountInputHandler: function (e) {
-    console.log('console.log handler')
     this.isBankAccountNumberSeted = ($(e.currentTarget).val().length > 0);
     this.refundAPI_option.rfndBankNum = $(e.currentTarget).val();
     this._refundAccountInfoUpdateCheck();
   },
 
   _refundAccountInfoUpdateCheck: function () {
-    console.log('bacnk name assss', this.isBankNameSeted, this.isBankAccountNumberSeted)
     if (this.isBankNameSeted && this.isBankAccountNumberSeted) {
       this.$refundRequestBtn.attr('disabled', false);
     } else {
@@ -365,7 +361,6 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _processAutoWithdrawalCancel: function () {
-    console.log(this.data.autoWithdrawalBankCode, this.data.autoWithdrawalBankSerNum)
     this._apiService.request(Tw.API_CMD.BFF_07_0069, {
       bankCd: this.data.autoWithdrawalBankCode,
       bankSerNum: this.data.autoWithdrawalBankSerNum
