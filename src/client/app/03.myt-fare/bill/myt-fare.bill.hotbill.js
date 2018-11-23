@@ -3,7 +3,7 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 9. 20.
  */
-Tw.MyTFareHotBill = function (rootEl) {
+Tw.MyTFareHotBill = function (rootEl, preBill) {
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -14,6 +14,8 @@ Tw.MyTFareHotBill = function (rootEl) {
   this._cachedElement();
   this._bindEvent();
   this._sendBillRequest(this.childSvcMgmtNum);
+
+  this._preBill = preBill;
 
   if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
     this._billInfoAvailable = true;
@@ -28,12 +30,16 @@ Tw.MyTFareHotBill.prototype = {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
     this.$unpaid = this.$container.find('#fe-unpaid-bill');
+    this.$preBill = this.$container.find('#fe-pre-amount');
+
     this.$unpaidAmount = this.$container.find('#fe-unpaid-amount');
     this.$lineButton = this.$container.find('.list-comp-lineinfo button');
   },
 
   _bindEvent: function () {
     this.$lineButton.on('click', $.proxy(this._onClickLine, this));
+
+    this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
   },
 
   _getBillResponse: function (childSvcMgmtNum) {
@@ -75,9 +81,9 @@ Tw.MyTFareHotBill.prototype = {
 
       if ( this._billInfoAvailable ) {
         this.$amount.text(billData.totOpenBal2);
-        var fromDt =  Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD');
-        var toDt =  Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD')
-        this.$period.text(this.$period.text() + fromDt + ' ~ '+toDt);
+        var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD');
+        var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD');
+        this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
         var fieldInfo = {
           lcl: 'billItmLclNm',
           scl: 'billItmSclNm',
@@ -161,6 +167,10 @@ Tw.MyTFareHotBill.prototype = {
         this._confirmSwitchLine(targetSvc);
       }
     }
+  },
+
+  _onClickPreBill: function () {
+
   },
 
   _onClickChild: function (target) {

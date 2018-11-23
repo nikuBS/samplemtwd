@@ -87,32 +87,51 @@
                 </ul>
             </div>
 
-            <% if(lines.length > 0) { %>
+            <% if( preAmount !== '0') { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <button>전월요금보기
+                                <span class="tx-sub">
+                                    <span><i class="tx-bold" id="fe-pre-amount"><%= preAmount %></i> 원</span>
+                                    <span class="ico"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <% } %>
+            <% if( lines.length > 0) { %>
             <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
-                <h4 class="tit">다른 회선 실시간 이요금</h4>
+                <h4 class="tit">다른 회선 실시간 이용요금</h4>
             </div>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="list-comp-lineinfo">
                     <% for (let i = 0; i < lines.length; i++) { %>
-                    <li>
-                        <button data-idx=<%= i %>>
-                            <div class="lineinfo-user">
-                                <span class="info-title"><%= lines[i].eqpMdlNm %>
-                                    <% if (lines[i].child) { %>
-                                    <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
-                                    <% } %>
-                                </span>
-                                <span class="info-sub"><%= lines[i].svcNum %></span>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title"><%= lines[i].bill %><span class="unit ml4">원</span></span>
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
+                        <li>
+                            <button data-idx=<%= i %>>
+                                <div class="lineinfo-user">
+                                    <span class="info-title"><%= lines[i].eqpMdlNm %>
+                                        <% if (lines[i].child) { %>
+                                        <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
+                                        <% } %>
+                                    </span>
+                                    <span class="info-sub"><%= lines[i].svcNum %></span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><%= lines[i].bill %><span class="unit ml4">원</span></span>
+                                    <span class="ico"></span>
+                                </div>
+                            </button>
+                        </li>
                     <% } %>
                 </ul>
+
             </div>
             <% } %>
             <!--// .cont-box -->
@@ -145,7 +164,7 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareHotBill($('#fe-myt-fare-hotbill'));
+    new Tw.MyTFareHotBill($('#fe-myt-fare-hotbill'), <%- JSON.stringify({ preBill }) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
