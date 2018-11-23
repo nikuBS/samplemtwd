@@ -18,6 +18,10 @@ interface Query {
   isQueryEmpty: boolean;
 }
 
+interface Info {
+  [key: string]: string;
+}
+
 class MyTFareInfoBill extends TwViewController {
 
   constructor() {
@@ -63,12 +67,18 @@ class MyTFareInfoBill extends TwViewController {
         return prev;
       }, []);
 
-      res.render('info/myt-fare.info.bill.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
-          isTax: false,
-          current: 'bill-cash',
-          list: resp.result
+      res.render('info/myt-fare.info.bill-cash.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
+          list: resp.result,
+          noticeInfo: this.getNoticeInfo() || []
         }});
     });    
+  }
+
+   // 꼭 확인해 주세요 팁 메뉴 정리
+   private getNoticeInfo(): Info[] {
+    return [
+      {link: 'MF_08_01_02_tip_01', title: '현금영수증 발급내역 확인'}
+    ];
   }
 
 }
