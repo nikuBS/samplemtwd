@@ -25,7 +25,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _cachedElement: function () {
-
   },
 
   _bindEvent: function () {
