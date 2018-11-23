@@ -32,8 +32,14 @@ class ProductHelper {
       isPsnlInfoCnsgAgree = stipulation.stipulation.termStplAgreeYn === 'Y',
       isPsnlInfoOfrAgree = stipulation.stipulation.psnlInfoCnsgAgreeYn === 'Y',
       isAdInfoOfrAgree = stipulation.stipulation.adInfoOfrAgreeYn === 'Y',
-      isTermStplAgree = stipulation.stipulation.termStplAgreeYn === 'Y';
-
+      isTermStplAgree = stipulation.stipulation.termStplAgreeYn === 'Y',
+      existsCount = _getStipulationYnCnt([
+        stipulation.stipulation.scrbStplAgreeYn,
+        stipulation.stipulation.termStplAgreeYn,
+        stipulation.stipulation.psnlInfoCnsgAgreeYn,
+        stipulation.stipulation.psnlInfoOfrAgreeYn,
+        stipulation.stipulation.adInfoOfrAgreeYn
+      ]);
 
     return Object.assign(stipulation, {
       stipulation: Object.assign(stipulation.stipulation, {
@@ -42,18 +48,13 @@ class ProductHelper {
         isPsnlInfoOfrAgree: isPsnlInfoOfrAgree,
         isAdInfoOfrAgree: isAdInfoOfrAgree,
         isTermStplAgree: isTermStplAgree,
+        isAllAgree: existsCount > 1,
         scrbStplAgreeCttSummary: _getAgreementSummary(isScrbStplAgree, stipulation.stipulation.scrbStplAgreeHtmlCtt),
         termStplAgreeCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.stipulation.termStplAgreeHtmlCtt),
         psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.stipulation.psnlInfoCnsgHtmlCtt),
         psnlInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.stipulation.psnlInfoOfrHtmlCtt),
         adInfoOfrCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.stipulation.psnlInfoCnsgHtmlCtt),
-        existsCount: _getStipulationYnCnt([
-          stipulation.stipulation.scrbStplAgreeYn,
-          stipulation.stipulation.termStplAgreeYn,
-          stipulation.stipulation.psnlInfoCnsgAgreeYn,
-          stipulation.stipulation.psnlInfoOfrAgreeYn,
-          stipulation.stipulation.adInfoOfrAgreeYn
-        ])
+        existsCount: existsCount
       })
     });
   }

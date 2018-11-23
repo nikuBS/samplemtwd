@@ -7,23 +7,15 @@
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_REQUIRE_DOCUMENT_TYPE_NM } from '../../../../../types/string.type';
+import { PRODUCT_RESERVATION_REJECT } from '../../../../../types/bff.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import {PRODUCT_RESERVATION_REJECT} from '../../../../../types/bff.type';
 
 class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   constructor() {
     super();
-  }
-
-  /**
-   * @private
-   */
-  private _getApi(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0078, {});
   }
 
   /**
@@ -74,13 +66,20 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const renderCommonInfo = {
-      pageInfo: pageInfo,
-      svcInfo: svcInfo,
-      title: PRODUCT_REQUIRE_DOCUMENT_TYPE_NM.history
-    };
+    const prodId = req.params.prodId || null,
+      reqParams: any = {},
+      renderCommonInfo = {
+        pageInfo: pageInfo,
+        svcInfo: svcInfo,
+        title: PRODUCT_REQUIRE_DOCUMENT_TYPE_NM.history
+      };
 
-    this._getApi().subscribe((reqDocInfo) => {
+    if (FormatHelper.isEmpty(prodId)) {
+      reqParams.svcProdCd = prodId === 'NH00000083' ? 'NH00000084' : prodId;
+    }
+
+    this.apiService.request(API_CMD.BFF_10_0078, reqParams)
+      .subscribe((reqDocInfo) => {
       if (reqDocInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: reqDocInfo.code,
