@@ -39,6 +39,7 @@ import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
 import LoggerService from './services/logger.service';
 import TestRouter from './app/99.test/test.router';
+import NativeExRouter from './common/route/native-ex.router';
 
 
 class App {
@@ -89,6 +90,8 @@ class App {
 
   private setNative() {
     this.app.use('/native', new NativeRouter().router);
+    this.app.use('/native-ex', new NativeExRouter().router);
+
   }
 
   private setGlobalVariables() {
