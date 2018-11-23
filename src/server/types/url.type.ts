@@ -97,6 +97,7 @@ export const URL = {
 
   // Customer
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
+  '/customer/agentsearch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
   '/customer/agentsearch/near': { login: true, id: 'CS_02_03', title: '내 위치와 가까운 매장' },
   '/customer/agentsearch/repair': { login: false, id: 'CS_03_01', title: 'AS센터 찾기' },
