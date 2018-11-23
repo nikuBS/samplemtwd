@@ -30,25 +30,24 @@ class MyTJoinSuspend extends TwViewController {
       };
 
       if ( suspendState.code === API_CODE.CODE_00 ) {
+        const today = DateHelper.getCurrentDateTime('YYYY-MM-DD');
+        const after3Months = DateHelper.getShortDateWithFormatAddByUnit(today, 3, 'months', 'YYYY-MM-DD');
+        const after24Months = DateHelper.getShortDateWithFormatAddByUnit(today, 24, 'months', 'YYYY-MM-DD');
+        options['suspend'] = {
+          today: today,
+          threeMonths: after3Months,
+          twoYears: after24Months
+        };
+
         if ( suspendState.result.svcStCd === 'SP' ) {// suspended
           const result = suspendState.result;
           const from = DateHelper.getShortDateWithFormat(result.fromDt, 'YYYY-MM-DD');
           const to = DateHelper.getShortDateWithFormat(result.toDt, 'YYYY-MM-DD');
-          options['suspend'] = {
-            status: true,
-            reason: result.svcChgRsnNm,
-            period: { from, to }
-          };
+          options['suspend'].period = { from, to };
+          options['suspend'].reason = result.svcChgRsnNm;
+          options['suspend'].status = true;
         } else {
-          const today = DateHelper.getCurrentDateTime('YYYY-MM-DD');
-          const after3Months = DateHelper.getShortDateWithFormatAddByUnit(today, 3, 'months', 'YYYY-MM-DD');
-          const after24Months = DateHelper.getShortDateWithFormatAddByUnit(today, 24, 'months', 'YYYY-MM-DD');
-          options['suspend'] = {
-            status: false,
-            today: today,
-            threeMonths: after3Months,
-            twoYears: after24Months
-          };
+          options['suspend'].status = false;
         }
       } else {
         return this.error.render(res, {
