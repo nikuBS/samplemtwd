@@ -15,21 +15,21 @@ class MyTJoinPhoneNumChgAlarm extends TwViewController {
 
      this.apiService.request(API_CMD.BFF_05_0180, {})
        .subscribe((resp) => {
-     //    const resp = {
-     //      'code': '00',
-     //      'msg': '결과메세지',
-     //      'result':
-     //        {
-     //          'oldSvcNum': '01056**78**',
-     //          'newSvcNum': '01012**34**',
-     //          'notiType': 'S',
-     //          'freeOfrEndDt': '20191030',
-     //          'notiStaDt': '20181031',
-     //          'notiEndDt': '20181130',
-     //          'extnsPsblYn': 'N',
-     //          'orglSktYn': 'Y'
-     //        }
-     //    };
+        // const resp = {
+        //   'code': '00',
+        //   'msg': '결과메세지',
+        //   'result':
+        //     {
+        //       'oldSvcNum': '01056**78**',
+        //       'newSvcNum': '01012**34**',
+        //       'notiType': 'S',
+        //       'freeOfrEndDt': '20191030',
+        //       'notiStaDt': '20181031',
+        //       'notiEndDt': '20181101',
+        //       'extnsPsblYn': 'N',
+        //       'orglSktYn': 'Y'
+        //     }
+        // };
         
 
         if ( resp.code === API_CODE.CODE_00 ) {

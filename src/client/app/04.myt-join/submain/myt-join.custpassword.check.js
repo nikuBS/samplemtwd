@@ -1,9 +1,9 @@
 /**
- * FileName: myt.join.protect.pwd.js
- * Author: Kim Inhwan (skt.P132150@partner.sk.com)
- * Date: 2018.07.24
+ * FileName: myt-join.custpassword.check.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.09.28
  */
-Tw.MyTJoinProtectCheckPwdService = function() {
+Tw.MytJoinCustpasswordCheck = function() {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
@@ -24,7 +24,7 @@ Tw.MyTJoinProtectCheckPwdService = function() {
   };
 };
 
-Tw.MyTJoinProtectCheckPwdService.prototype = {
+Tw.MytJoinCustpasswordCheck.prototype = {
   /**
    * 에러팝업을 기본으로 보여줄지
    */

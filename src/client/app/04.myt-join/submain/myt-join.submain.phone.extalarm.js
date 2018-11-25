@@ -32,8 +32,8 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
     this.$radioAlarmType = $('#ul-alramtype input[type=radio]');
     this.$radioSvcType = $('#ul-svctype input[type=radio]');
 
-    this.$container.on('change', this.$radioAlarmType, $.proxy(this._onchangeUiCondition, this));
     this.$container.on('change', this.$radioSvcType, $.proxy(this._onchangeUiCondition, this));
+    this.$container.on('change', this.$radioAlarmType, $.proxy(this._onchangeUiCondition, this));
     this.$container.on('click', '#btn-ok', $.proxy(this._onclickBtnOk, this));
   },
 
@@ -43,7 +43,20 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
    * @private
    */
   _onchangeUiCondition: function(){
-    var btnDisabled = (!this.$radioSvcType.checkedVal() || !this.$radioAlarmType.checkedVal());
+
+    if(this.$radioSvcType.checkedVal() === this._SVC_TYPE.EXT){
+      $('#div-alarmtype').show();
+    }else{
+      $('#div-alarmtype').hide();
+    }
+
+    var btnDisabled = false;
+    if(this.$radioSvcType.checkedVal() === this._SVC_TYPE.EXT){
+      btnDisabled = (!this.$radioSvcType.checkedVal() || !this.$radioAlarmType.checkedVal());
+    }else if(this.$radioSvcType.checkedVal() === this._SVC_TYPE.CAN){
+      btnDisabled = (!this.$radioSvcType.checkedVal());
+    }
+
     $('#btn-ok').attr('disabled', btnDisabled);
   },
 
@@ -69,12 +82,12 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
       svcCmd = Tw.API_CMD.BFF_05_0183;
     }
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     // 연장/해지 call api
     this._apiService.request(svcCmd, param)
       .done($.proxy(function (resp) {
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           var option = {
@@ -98,15 +111,26 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
           return ;
         }
 
+        var compTxt = null;
         if(svcType === this._SVC_TYPE.EXT){    // 연장
-          this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_EXT);
+          // this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_EXT);
+          compTxt = Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_EXT;
         }else if(svcType === this._SVC_TYPE.CAN) {   // 해지
-          this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_CAN);
+          // this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_CAN);
+          compTxt = Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_CAN;
         }
 
-        }, this))
+        // 완료화면 호출
+        Tw.Popup.afterRequestSuccess(
+          '/myt-join/submain/phone/alarm',
+          '/myt-join/submain',
+          null,
+          null,
+          compTxt);
+
+      }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
   }
