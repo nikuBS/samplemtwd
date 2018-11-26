@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import BrowserHelper from '../../../../utils/browser.helper';
 import ProductHelper from '../../../../utils/product.helper';
+import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -86,15 +87,45 @@ export default class Product extends TwViewController {
               return {
                 ...plan,
                 basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-                basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
-                basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
-                basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
+                displayInfo: this.getDisplayData(plan.basOfrDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
               };
             })
           };
         })
       };
     });
+  }
+
+  private getDisplayData = (data?: string, voice?: string, char?: string) => {
+    const info: { icon?: string; value?: string; unit?: string } = {};
+
+    if (data && data !== '-') {
+      const nData = Number(data);
+      info.icon = 'type';
+      info.value = data;
+
+      if (!isNaN(nData)) {
+        info.unit = nData > 1000 ? DATA_UNIT.GB : DATA_UNIT.MB;
+      }
+    } else if (voice && voice !== '-') {
+      info.icon = 'money-type';
+      info.value = voice;
+
+      if (!isNaN(Number(voice))) {
+        info.unit = TIME_UNIT.MINUTE;
+      }
+    } else if (char && char !== '-') {
+      info.icon = 'sms';
+      info.value = char;
+
+      if (!isNaN(Number(char))) {
+        info.unit = UNIT.SMS;
+      }
+    } else {
+      return null;
+    }
+
+    return info;
   }
 
   private getMyFilters = isLogin => {
@@ -133,9 +164,7 @@ export default class Product extends TwViewController {
           return {
             ...plan,
             basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
-            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
-            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
+            displayInfo: this.getDisplayData(plan.basOfrDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
           };
         })
       };
