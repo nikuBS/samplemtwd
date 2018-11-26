@@ -46,7 +46,7 @@ Tw.TestHome.prototype = {
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
-    this._makeBarcode();
+    // this._makeBarcode();
   },
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));

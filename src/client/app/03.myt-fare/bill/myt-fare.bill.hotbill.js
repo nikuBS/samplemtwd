@@ -127,7 +127,7 @@ Tw.MyTFareHotBill.prototype = {
     Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
   },
 
-  _onErrorClosed() {
+  _onErrorClosed: function() {
     // this._historyService.goLoad('/myt-fare/submain');
   },
 
