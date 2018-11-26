@@ -136,14 +136,13 @@
             <div class="cont-box nogaps-ver">
                 <div class="main-faq-menu">
                     <ul>
-                        <li><a href="" class="menu-bt ico-type10"><span class="ico"></span>지점&middot;대리점 찾기</a></li>
-                        <li><a href="" class="menu-bt ico-type11"><span class="ico"></span>AS센터 찾기</a></li>
+                        <li><a href="/customer/agentsearch#name" class="menu-bt ico-type10"><span class="ico"></span>지점&middot;대리점 찾기</a></li>
+                        <li><a href="/customer/agentsearch/repair" class="menu-bt ico-type11"><span class="ico"></span>AS센터 찾기</a></li>
                         <li><a href="" class="menu-bt ico-type12"><span class="ico"></span>로밍센터 찾기</a></li>
                     </ul>
                 </div>
             </div>
             <!--// .cont-box -->
-
             <!-- .survey-box -->
             <!--<div class="survey-box">-->
                 <!--&lt;!&ndash; .widget &ndash;&gt;-->
@@ -294,7 +293,8 @@
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
-    <% include ../../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
+
     <script>
       $(document).ready(function () {
       });

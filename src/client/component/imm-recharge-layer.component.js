@@ -158,7 +158,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   _onImmDetailTing: function (event) {
     var $target = $(event.target);
-    $target.attr('data-url', '/myt-data/recharge//ting');
+    $target.attr('data-url', '/myt-data/recharge/ting');
     this._popupService.close();
   },
 

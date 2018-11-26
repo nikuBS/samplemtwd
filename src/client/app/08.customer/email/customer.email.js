@@ -18,9 +18,9 @@ Tw.CustomerEmail = function (rootEl) {
 Tw.CustomerEmail.prototype = {
   _init: function () {
     // If there is hash #auto, show second tab(auto gift)
-    // if ( window.location.hash === '#quailty' ) {
-    //   this._goQualityTab();
-    // }
+    if ( window.location.hash === '#quality' ) {
+      this._goQualityTab();
+    }
   },
 
   _cachedElement: function () {
