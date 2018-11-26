@@ -148,7 +148,8 @@ class ProductCommonCallplan extends TwViewController {
     const contentsResult: any = {
       LIST: [],
       LA: null,
-      REP: null
+      R: null,
+      PLM_FIRST: null
     };
 
     contentsInfo.forEach((item) => {
@@ -158,6 +159,11 @@ class ProductCommonCallplan extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(item.titleNm)) {
+        return true;
+      }
+
+      if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
+        contentsResult.PLM_FIRST = item.ledItmDesc;
         return true;
       }
 

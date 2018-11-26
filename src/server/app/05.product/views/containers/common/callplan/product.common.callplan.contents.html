@@ -1,11 +1,23 @@
 <% if ( prodRedisInfo.contents.LA || prodRedisInfo.contents.R ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
-<% if ( prodRedisInfo.contents.LA ) { %>
-<div class="product-visualization prCont"><%- prodRedisInfo.contents.LA %></div>
+
+<div class="cont-box nogaps noborder">
+    <div class="prCont">
+    <% if ( prodRedisInfo.contents.LA ) { %>
+    <%- prodRedisInfo.contents.LA %>
+    <% } %>
+    <% if ( prodRedisInfo.contents.R ) { %>
+    <%- prodRedisInfo.contents.R %>
+    <% } %>
+    </div>
+</div>
 <% } %>
-<% if ( prodRedisInfo.contents.R ) { %>
-<div class="product-visualization prCont"><%- prodRedisInfo.contents.R %></div>
-<% } %>
+<% if ( prodRedisInfo.contents.PLM_FIRST ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="cont-box">
+    <div class="plm"><%- prodRedisInfo.contents.PLM_FIRST %></div>
+</div>
 <% } %>
 
 <% if ( prodRedisInfo.contents.LIST && prodRedisInfo.contents.LIST.length > 0 ) { %>
@@ -20,8 +32,8 @@
                 <button class="fe-btn_contents_detail" data-contents="<%= i %>">
                     <%= prodRedisInfo.contents.LIST[i].titleNm %>
                     <span class="tx-sub">
-                    <span class="ico"><span class="blind">보기</span></span>
-                  </span>
+                        <span class="ico"><span class="blind">보기</span></span>
+                    </span>
                 </button>
             </div>
             <div class="none fe-contents_detail_item" aria-hidden="true"
