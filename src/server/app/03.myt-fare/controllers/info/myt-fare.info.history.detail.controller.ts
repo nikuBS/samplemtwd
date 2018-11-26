@@ -73,7 +73,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
           pageInfo: pageInfo,
           data: {
             current: query.current,
-            headerTitle: MYT_PAYMENT_DETAIL_TITLE[requestType]
+            headerTitle: MYT_PAYMENT_DETAIL_TITLE.DI // [requestType]
           }
         });
         break;

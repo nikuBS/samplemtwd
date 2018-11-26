@@ -393,6 +393,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 포인트 납부예약(1회 납부예약)
   private getOnetimePointReserveData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
       // console.log('\x1b[36m%s\x1b[0m', '------log 포인트납부예약 code', resp.code, resp.result);
@@ -408,7 +409,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.reqSt = o.reqSt;
         o.listTitle = o.pointNm;
         o.isPoint = true;
-        o.dataAmt = o.point;
+        o.dataAmt = FormatHelper.addComma(o.point);
         o.reserveCancelable = o.cancelYn === 'Y'; // 취소가능여부
         o.dataSubInfo = o.reqNm;
         o.rbpSerNum = o.rbpSerNum;
@@ -430,7 +431,7 @@ class MyTFareInfoHistory extends TwViewController {
       
       resp.result.usePointList.map((o) => {
         o.sortDt = o.opDt;
-        o.dataPayMethodCode = 'PN';
+        o.dataPayMethodCode = 'PN'; // 포인트자동납부
         o.reqSt = o.reqSt; // 상태
         o.noLink = this.isNoLink(o.reqSt); // === MYT_FARE_POINT_PAYMENT_STATUS.CLOSE); // 납부해지단계에서는 링크를 걸지 않음
         o.listTitle = o.pointNm; 
