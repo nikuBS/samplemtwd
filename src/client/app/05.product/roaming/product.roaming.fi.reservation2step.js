@@ -21,7 +21,6 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$btnCountryLink = this.$container.find('.link-area > .bt-link-tx');
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
-    //this.$inputTel = this.$container.find('#flab01'); //기존 공통 Dash
   },
 
   _bindEvent: function() {
@@ -34,7 +33,6 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$container.on('click', '#goLink', $.proxy(this._goRoamingCenter, this));
     this.$container.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
     this.$container.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
-    //this.$inputTel.on('change', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel)); //기존 공통 대쉬
   },
 
   _goRoamingGuide: function() {
@@ -42,24 +40,34 @@ Tw.ProductRoamingFiReservation2step.prototype = {
   },
 
   _handleFiReservation: function() {
-    var expbranchnm = 'ab';
-    var bootnm = 'ab';
-    var nationCode = ["BRA", "MNG", "USA", "GUM", "MYS"];
+    var expbranchnm = $('#flab05').text();
+    var boothcode = $('#flab04').attr('data-booth');
+    var boothnm = $('#flab04').text();
+    var impbranch = $('#flab04').attr('data-center');
+    var expbranch = $('#flab05').attr('data-center');
+    var nationCode = ['BRA', 'MNG', 'USA', 'GUM', 'MYS']; //데이터 처리 필요
+    var rentFrom = $('#flab02').val().replace(/\-/gi, '');
+    var rentTo = $('#flab03').val().replace(/\-/gi, '');
+    var contphonenum = $('#flab01').val().replace(/\-/gi, '');
+    var date = new Date();
+    var hsrsvrcvdtm = date.toISOString().substring(0,10).replace(/\-/gi, '');
+
     var params = {
-      'rentFrom': '20181225',
-      'rentTo': '20181227',
-      'impbranch': 'A100110000',
-      'expbranch': 'A100110000',
+      'rentFrom': rentFrom,
+      'rentTo': rentTo,
+      'impbranch': impbranch,
+      'expbranch': expbranch,
       'expbranchnm': expbranchnm,
-      'hsrsvrcvdtm': '20181224',
-      'boothcode': '1000004047',
-      'boothnm': bootnm,
+      'hsrsvrcvdtm': hsrsvrcvdtm,
+      'boothcode': boothcode,
+      'boothnm': boothnm,
       'phonemdlcd': 'A00B',
-      'contphonenum': '01220822349',
+      'contphonenum': contphonenum,
       'romingTypCd': '28',
       'nationcode': nationCode,
       'type': 'I'
     };
+    
     this._apiService.request(Tw.API_CMD.BFF_10_0065, params).done($.proxy(this._handleSuccessFiReservation, this));
   },
 
@@ -131,9 +139,13 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     }
     $(e.target).parents('li').find('button').addClass('checked');
     if(selected.id === 'flab04'){
-      $(selected).text($(e.target).parents('li').find('.info-value').text());
+      $(selected).text($(e.target).parents('li').find('.info-value').text()); //센터명 출력
+      $(selected).attr('data-center',$(e.target).parents('button').attr('data-center')); //부스코드를 data-code값에 넣기
+      $(selected).attr('data-booth',$(e.target).parents('button').attr('data-booth'));
+      console.log($(e.target).parents('button').attr('data-code'));
     }else{
       $(selected).text($(e.target).parents('li').find('.info-value').text());
+      $(selected).attr('data-center',$(e.target).parents('button').attr('data-center'));
     }
 
     this._popupService.close();
@@ -169,37 +181,10 @@ Tw.ProductRoamingFiReservation2step.prototype = {
   },
 
   _insertDashPhone: function() {
-    var phoneNum = $('#flab01').val().replace(/[^0-9]/gi, '');
-    var hypenPhoneNum = this._phoneHypen(phoneNum);
+    //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
+    var phoneNum = $('#flab01').val();
+    var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
     $('#flab01').val(hypenPhoneNum);
-  },
-
-  _phoneHypen: function(phoneNum) {
-    var tmp = '';
-
-    if( phoneNum.length < 4){
-      return phoneNum;
-    }else if(phoneNum.length < 7){
-      tmp += phoneNum.substr(0, 3);
-      tmp += '-';
-      tmp += phoneNum.substr(3);
-      return tmp;
-    }else if(phoneNum.length < 11){
-      tmp += phoneNum.substr(0, 3);
-      tmp += '-';
-      tmp += phoneNum.substr(3, 3);
-      tmp += '-';
-      tmp += phoneNum.substr(6);
-      return tmp;
-    }else{
-      tmp += phoneNum.substr(0, 3);
-      tmp += '-';
-      tmp += phoneNum.substr(3, 4);
-      tmp += '-';
-      tmp += phoneNum.substr(7);
-      return tmp.substr(0,13);
-    }
-    return phoneNum;
   },
 
   _removeDashPhone: function() {
