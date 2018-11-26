@@ -19,12 +19,15 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
 Tw.MyTDataPrepaidAlarm.prototype = {
   _init: function () {
     this.typeCd = 1; // 알람 기준(1 : 시간, 2 : 잔액)
-    this.term = 1; //시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
-    this.day = 1; //시간: 기준일(1:1일전, 2:2일전, 3:3일전)
-    this.amt = 1; //금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
+    this.term = 1; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
+    this.day = 1; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
+    this.amt = 1; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
   },
 
   _cachedElement: function () {
+    this.wrap_alarm = this.$container.find('.fe-wrap-alarm');
+    this.tpl_alarm_date = Handlebars.compile($('#tpl_alarm_date').html());
+    this.tpl_alarm_amount = Handlebars.compile($('#tpl_alarm_amount').html());
   },
 
   _bindEvent: function () {
@@ -66,16 +69,12 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       this.typeCd = $(e.currentTarget).data('value');
 
       if ( this.typeCd === 1 ) {
-        $('.tpl_time').show();
-        $('.tpl_amount').hide();
-        $('.tpl_default').hide();
+        this.wrap_alarm.html(this.tpl_alarm_amount());
       } else {
-        $('.tpl_amount').show();
-        $('.tpl_default').hide();
-        $('.tpl_time').hide();
+        this.wrap_alarm.html(this.tpl_alarm_date());
       }
 
-      $('.fe-alarm-status').text($.trim($(e.currentTarget).text()));
+      $('.fe-setting-alarm').prop('disabled', true);
       $('.fe-alarm-status').data($(e.currentTarget).data('value'));
     }
 
@@ -102,7 +101,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   _requestAlarmSetting: function () {
     var htParams = {};
 
-    if ( $('.tpl_time').is(':visible') ) {
+    if ( this.typeCd === 1 ) {
       htParams = $.extend(htParams, {
         typeCd: '1',
         term: this.term.toString(),
@@ -121,7 +120,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      //TODO Complete Page
+      // TODO after Self Authentication, go to submain
+      this._historyService.replaceURL('/myt-data');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
