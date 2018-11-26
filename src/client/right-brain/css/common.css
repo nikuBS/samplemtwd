@@ -32,7 +32,7 @@ body {
   line-height: 1.4;
   letter-spacing: -0.0625rem;
   word-break: keep-all;
-  background: #f5f5f5; }
+  background: #edeef0; }
 
 html, body {
   width: 100%; }
@@ -63,19 +63,19 @@ body {
   letter-spacing: 0; }
 
 .tx-normal {
-  font-weight: 300; }
+  font-weight: 300 !important; }
 
 .tx-regular {
-  font-weight: 400; }
+  font-weight: 400 !important; }
 
 .tx-medium {
-  font-weight: 500; }
+  font-weight: 500 !important; }
 
 .tx-bold {
-  font-weight: 700; }
+  font-weight: 700 !important; }
 
 .tx-bolder {
-  font-weight: 900; }
+  font-weight: 900 !important; }
 
 /*font tgothic*/
 .ff-tg-light {
@@ -157,6 +157,15 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     display: -ms-flexbox;
     display: flex;
     width: 100%; }
+    .inputbox .tx-box.type1 {
+      width: auto;
+      padding-left: 0.625rem;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
   .inputbox .input {
     display: block;
     position: relative; }
@@ -167,7 +176,6 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     .inputbox .input input[type=tel] {
       padding: 0 0.625rem;
       height: 2.375rem;
-      border: 1px solid #f5f5f5;
       border-radius: 0.25rem;
       background: #f5f5f5;
       font-size: 0.9375rem;
@@ -217,6 +225,49 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
         .inputbox .input input[type=tel]:disabled::-webkit-input-placeholder {
           color: #808698;
           font-weight: 300; }
+    .inputbox .input input[type=month], .inputbox .input input[type=date] {
+      position: relative;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      border-radius: 0.3125rem;
+      border: 1px solid #f5f5f5;
+      background: #f5f5f5;
+      text-align: left;
+      width: 100%;
+      height: 2.5rem;
+      padding-left: 0.9375rem;
+      padding-right: 0;
+      font-size: 0.9375rem;
+      line-height: 2.375rem;
+      -moz-appearance: none;
+           appearance: none;
+      -webkit-appearance: none;
+      opacity: 1; }
+      .inputbox .input input[type=month]:after, .inputbox .input input[type=date]:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0.75rem;
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        margin: -0.5rem 0 0 0;
+        background: url(/img/svg/icon_32px_calender.svg) no-repeat 0 0;
+        background-size: 100% 100%; }
+      .inputbox .input input[type=month]::-webkit-calendar-picker-indicator, .inputbox .input input[type=date]::-webkit-calendar-picker-indicator {
+        opacity: 0; }
+      .inputbox .input input[type=month]::-webkit-clear-button, .inputbox .input input[type=date]::-webkit-clear-button {
+        display: none; }
+      .inputbox .input input[type=month]:disabled, .inputbox .input input[type=date]:disabled {
+        background: #d1d1d1;
+        color: #b2b2b2; }
+        .inputbox .input input[type=month]:disabled:after, .inputbox .input input[type=date]:disabled:after {
+          display: none; }
+      .inputbox .input input[type=month].hidden, .inputbox .input input[type=date].hidden {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        opacity: 0; }
     .inputbox .input input[type=text][readonly],
     .inputbox .input input[type=password][readonly],
     .inputbox .input input[type=number][readonly],
@@ -792,15 +843,8 @@ button.bt-link-tx, a.bt-link-tx {
     display: inline-block;
     position: relative;
     font-size: inherit;
-    color: #3b98e6; }
-    button.bt-link-tx.underline:before, a.bt-link-tx.underline:before {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: #3b98e6; }
+    color: #3b98e6;
+    text-decoration: underline; }
   button.bt-link-tx.disabled, a.bt-link-tx.disabled {
     border-color: #d1d1d1;
     color: #757575; }
@@ -887,13 +931,13 @@ button.bt-link-tx, a.bt-link-tx {
   .link-long-list.nobg {
     background: #f5f5f5; }
     .link-long-list.nobg li:last-of-type .link-long {
-      border-bottom: 1px solid #e1e1e1; }
+      border-bottom: 1px solid #f2f2f2; }
   .link-long-list.nopd {
     padding: 0; }
 
 .link-long {
   position: relative;
-  border-bottom: 1px solid #e1e1e1; }
+  border-bottom: 1px solid #f7dede; }
   .link-long.last {
     border-bottom: 0; }
   .link-long a, .link-long button {
@@ -3824,24 +3868,24 @@ a.ui-button:active,
         vertical-align: baseline; }
     .bt-slice > li.bt-red1 button {
       color: #fff;
-      background: #e22f26; }
+      background: #f76252; }
       .bt-slice > li.bt-red1 button.selected {
         background: #f44333; }
       .bt-slice > li.bt-red1 button:hover {
-        background: #f44333; }
+        background: #d95648; }
       .bt-slice > li.bt-red1 button:disabled {
         color: #fff;
-        background: #d1d1d1; }
+        background: #dcdcdc; }
     .bt-slice > li.bt-red1 a {
       color: #fff;
-      background: #e22f26; }
+      background: #f76252; }
       .bt-slice > li.bt-red1 a.selected {
         background: #f44333; }
       .bt-slice > li.bt-red1 a:hover {
-        background: #f44333; }
+        background: #d95648; }
       .bt-slice > li.bt-red1 a.disabled {
         color: #fff;
-        background: #d1d1d1;
+        background: #dcdcdc;
         pointer-events: none;
         cursor: default; }
     .bt-slice > li.bt-blue1 button {
@@ -4497,10 +4541,10 @@ a.ui-button:active,
     height: 1rem;
     margin-left: 0.4375rem; }
   .badge.badge-allpay {
-    background-position: 0 -5rem;
+    background-position: 0 -4.9375rem;
     background-size: 4.6875rem;
-    width: 2.875rem;
-    height: 0.9375rem;
+    width: 2.5rem;
+    height: 1rem;
     margin-right: 0.3125rem; }
   .badge.badge-over {
     background-position: 0 -2.5rem;
