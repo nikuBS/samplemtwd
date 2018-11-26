@@ -174,6 +174,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).map((resp: { code: string; result: any; }) => {
+      console.log('처음도입');
 
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
@@ -189,8 +190,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getAutoWithdrawalAccountInfo = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0070, {}).map((resp: { code: string; result: any }) => {
-      
-      if (resp.code === 'BIL0021' || resp.code === 'BIL0022') {
+      if (resp.code === 'BIL0021' || resp.code === 'BIL0022' || !resp.result) {
         this.paymentData.isAutoWithdrawalUse = false;
         return null;
       }
