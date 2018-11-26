@@ -9,44 +9,27 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 import { API_CODE } from '../../../../types/api-command.type';
-import FormatHelper from '../../../../utils/format.helper';
 
 export default class ProductRoamingFiInquireAuth extends TwViewController {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    this.getReservaions().subscribe(reservations => {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_10_0067, { page: 1, rentfrom : 20180322 , rentto : 20181107 }).subscribe((resp) => {
-
-      const getTFiData = resp;
-      console.log('response : ' , JSON.stringify(resp));
-      res.render('roaming/product.roaming.fi.inquire-auth.html', {
-        getTFiData: getTFiData,
-        svcInfo: svcInfo
-      });
+      res.render('roaming/product.roaming.fi.inquire-auth.html', { svcInfo, pageInfo, reservations });
     });
   }
 
-  private getPlans(params) {
-    return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
+  private getReservaions = () => {
+    const date = new Date();
+    const rentfrom = date.toISOString().substring(0, 10).replace(/\-/gi, '');
+    date.setMonth(date.getMonth() + 6);
+    const rentto = date.toISOString().substring(0, 10).replace(/\-/gi, '');
+
+    return this.apiService.request(API_CMD.BFF_10_0067, { page: 1, rentfrom : rentfrom , rentto : rentto }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+        return resp;
       }
 
-      if (FormatHelper.isEmpty(resp.result)) {
-        return resp.result;
-      }
-
-      return {
-        ...resp.result,
-        products: resp.result.products.map(plan => {
-          return {
-            ...plan,
-            basFeeAmt: FormatHelper.getFeeContents(plan.basFeeAmt)
-          };
-        })
-      };
+      return resp.result;
     });
   }
 }

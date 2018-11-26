@@ -18,24 +18,13 @@ Tw.ProductRoamingFiGuide.prototype = {
   _cachedElement: function() {
     this.$btnInquire = this.$container.find('#inquire-btn');
     this.$btnReservation = this.$container.find('#reservation-btn');
+    this.$btnProduct = this.$container.find('.product-infolink');
   },
 
   _bindEvent: function() {
     this.$btnInquire.on('click', $.proxy(this._goInquire, this));
     this.$btnReservation.on('click', $.proxy(this._goReservation, this));
-  },
-
-  _alarmApply: function() {
-    this._apiService.request(Tw.API_CMD.BFF_05_0126, {})
-      .done($.proxy(this._applyResult, this));
-  },
-
-  _applyResult: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A39.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A39.TITLE, null, $.proxy(this._reload, this));
+    this.$btnProduct.on('click', $.proxy(this._goProductPage, this));
   },
 
   _goReservation: function() {
@@ -44,6 +33,13 @@ Tw.ProductRoamingFiGuide.prototype = {
 
   _goInquire: function() {
     this._historyService.replaceURL('/product/roaming/fi/inquire');
+  },
+
+  _goProductPage: function(e) {
+    //T파이 이용 가능 요금제 상세 페이지 이동
+    var productId = $(e.target).parents('button').attr('id');
+    console.log(productId);
+    this._historyService.goLoad('/product/roaming/detail/' + productId);
   },
 
   _reload: function() {
