@@ -81,8 +81,8 @@ Tw.MyTFareHotBill.prototype = {
 
       if ( this._billInfoAvailable ) {
         this.$amount.text(billData.totOpenBal2);
-        var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD');
-        var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD');
+        var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD.');
+        var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD.');
         this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
         var fieldInfo = {
           lcl: 'billItmLclNm',
