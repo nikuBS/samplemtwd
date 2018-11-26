@@ -31,58 +31,72 @@
                 </div>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <div class="my-product-list">
-                        <ul>
-                            <% const COMBINATION_PRODUCTS = [ 'TW20000012', 'NA00005055', 'TW20000009', 'NA00004211', 'NH00000084', 'TW20000008', 'NH00000059', 
-                                'TW20000007', 'NA00002040', 'TW20000010', 'NA00004728', 'TW20000011', 'NH00000114', 'TW20000013', 'NH00000133' ];
-                            const INTERNET_PRODUCTS = ['NH00000037','NH00000039','TW00000062','NH00000040','NH00000041','TW00000063'];
-                            const TIPS = {
-                                NA00005055: '02',
-                                TW20000012: '02',
-                                NA00002040: '03',
-                                TW20000010: '03',
-                                NA00004728: '04',
-                                TW20000011: '04',
-                                TW20000009: '05',
-                                NA00004211: '05',
-                                NH00000084: '06',
-                                TW20000008: '06',
-                                NH00000039: '07',
-                                TW00000062: '07',
-                                NH00000059: '08',
-                                TW20000007: '08',
-                                NH00000103: '09',
-                                TW00000009: '09',
-                                NH00000037: '10',
-                                TW00000062: '10',
-                                NH00000041: '10',
-                                TW00000063: '10',
-                                NH00000105: '11',
-                                TW00000016: '11'
-                            }
-                            combinations.map(comb => { %>
-                            <li>
-                                <div class="inner">
-                                    <% const tip = TIPS[comb.prodId]%>
-                                    <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
-                                    <p class="txt"><%= comb.prodBasBenfCtt %></p>
-                                    <p class="date">신청일  <%= comb.scrbDt %></p>
-                                    <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
-                                    <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합가족 보기</a>
-                                    <% } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { %>
-                                    <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합상품 보기</a>
-                                    <% } %>
-                                    <% if (comb.prodLinkYn === "Y") { %>
-                                    <a class="bt-link-tx underline" href="/product/callplan/<%= comb.prodId %>">상품정보 보기</a>
-                                    <% } %>
-                                    <span class="visual-area"><img src="<%= comb.prodIconImgUrl %>"></span>
-                                </div>
+                <% if (combinations.length > 0) { %>
+                    <div class="cont-box nogaps-hoz">
+                        <div class="my-product-list">
+                            <ul>
+                                <% const COMBINATION_PRODUCTS = [ 'TW20000012', 'NA00005055', 'TW20000009', 'NA00004211', 'NH00000084', 'TW20000008', 'NH00000059', 
+                                    'TW20000007', 'NA00002040', 'TW20000010', 'NA00004728', 'TW20000011', 'NH00000114', 'TW20000013', 'NH00000133' ];
+                                const INTERNET_PRODUCTS = ['NH00000037','NH00000039','TW00000062','NH00000040','NH00000041','TW00000063'];
+                                const TIPS = {
+                                    NA00005055: '02',
+                                    TW20000012: '02',
+                                    NA00002040: '03',
+                                    TW20000010: '03',
+                                    NA00004728: '04',
+                                    TW20000011: '04',
+                                    TW20000009: '05',
+                                    NA00004211: '05',
+                                    NH00000084: '06',
+                                    TW20000008: '06',
+                                    NH00000039: '07',
+                                    TW00000062: '07',
+                                    NH00000059: '08',
+                                    TW20000007: '08',
+                                    NH00000103: '09',
+                                    TW00000009: '09',
+                                    NH00000037: '10',
+                                    TW00000062: '10',
+                                    NH00000041: '10',
+                                    TW00000063: '10',
+                                    NH00000105: '11',
+                                    TW00000016: '11'
+                                }
+                                combinations.map(comb => { %>
+                                <li>
+                                    <div class="inner">
+                                        <% const tip = TIPS[comb.prodId]%>
+                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
+                                        <p class="txt"><%= comb.prodBasBenfCtt %></p>
+                                        <p class="date">신청일  <%= comb.scrbDt %></p>
+                                        <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
+                                        <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합가족 보기</a>
+                                        <% } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { %>
+                                        <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합상품 보기</a>
+                                        <% } %>
+                                        <% if (comb.prodLinkYn === "Y") { %>
+                                        <a class="bt-link-tx underline" href="/product/callplan/<%= comb.prodId %>">상품정보 보기</a>
+                                        <% } %>
+                                        <span class="visual-area"><img src="<%= comb.prodIconImgUrl %>"></span>
+                                    </div>
+                                </li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <div class="cont-box nogaps-top">
+                        <div class="contents-empty">
+                            <span class="ico type1"></span>
+                            <p class="desc">현재 가입중인<br>결합상품이 없습니다.</p>
+                        </div>
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>결합할인 보러가기</button><!-- TODO: 링크추가(BS_04_01) -->
                             </li>
-                            <% }); %>
                         </ul>
                     </div>
-                </div>
+                <% } %>
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1" aria-hidden="true" />
