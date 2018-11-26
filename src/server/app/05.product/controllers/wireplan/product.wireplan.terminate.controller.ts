@@ -9,12 +9,19 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
+import BFF_10_0115_mock from '../../../../mock/server/product.BFF_10_0115.mock';
 
 class ProductWireplanTerminate extends TwViewController {
   constructor() {
     super();
+  }
+
+  private _getApi(prodId: any): Observable<any> {
+    return Observable.of(BFF_10_0115_mock);
+    // return this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -26,13 +33,12 @@ class ProductWireplanTerminate extends TwViewController {
       };
 
     if (FormatHelper.isEmpty(prodId)) {
-      return this.error.render(res, {
-        svcInfo: svcInfo
-      });
+      return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId)
+    this._getApi(prodId)
       .subscribe((joinTermInfo) => {
+        console.log(joinTermInfo);
         if (joinTermInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: joinTermInfo.code,
