@@ -690,6 +690,7 @@ export const API_CMD = {
   MANIFEST: { path: '/manifest.:args0.json', method: API_METHOD.GET, server: API_SERVER.CDN, bypass: false},
 
   // TEST
+  BFF_08_0029_TEST: { path: '/core-modification/v1/notice-tworld-test', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   GET: { path: '/posts', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
   GET_PARAM: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
   GET_PATH_PARAM: { path: '/posts/:args0', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
