@@ -1,0 +1,87 @@
+<%#
+* FileName: main.menu.settings.family-sites.html (HO_04_03)
+* Author: Hakjoon Sim (hakjoon.sim@sk.com)
+* Date: 2018.11.26
+%>
+
+<% include ../../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '패밀리 사이트' }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <ul class="full-link-list type02">
+                         <li>
+                             <button href="" class="fe-outlink">
+                                 <span class="inner">
+                                     <span class="tit tx-medium">기업T월드</span>
+                                 </span>
+                             </button>
+                         </li>
+                         <li>
+                             <button href="" class="fe-outlink">
+                                 <span class="inner">
+                                     <span class="tit tx-medium">English</span>
+                                 </span>
+                             </button>
+                         </li>
+                         <li>
+                             <button href="http://www.nugu.co.kr" class="fe-outlink fe-charge">
+                                 <span class="inner">
+                                     <span class="tit tx-medium">NUGU</span>
+                                 </span>
+                             </button>
+                         </li>
+                         <li>
+                             <button href="http://www.skt0.co.kr/mobile/comm/1924MainView" class="fe-outlink fe-charge">
+                                 <span class="inner">
+                                     <span class="tit tx-medium">무엇이든 될 수 있는 O</span>
+                                 </span>
+                             </button>
+                         </li>
+                         <li>
+                             <button href="http://www.sktinsight.com/refresh" class="fe-outlink fe-charge">
+                                 <span class="inner">
+                                     <span class="tit tx-medium">하나부터 열까지 새로고침</span>
+                                 </span>
+                             </button>
+                         </li>
+                         <li>
+                             <button href="https://m.adtcaps.co.kr" class="fe-outlink fe-charge">
+                                 <span class="inner">
+                                     <span class="tit tx-medium">ADT캡스</span>
+                                 </span>
+                             </button>
+                         </li>
+                     </ul>
+                 </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MainMenuSettingsFamilySites($('.wrap'));
+  });
+</script>
+<% include ../../../components/end.component.html %>

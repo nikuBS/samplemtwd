@@ -28,7 +28,7 @@ class MyTFareSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    if ( req && req.params.usagefee === 'usagefee') {
+    if ( req && req.params[0] === '/usagefee') {
       // 사용요금
       data.type = 'UF';
       this._requestUsageFee(req, res, data, svcInfo);

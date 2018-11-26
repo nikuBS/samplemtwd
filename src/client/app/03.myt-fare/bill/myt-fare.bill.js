@@ -57,8 +57,8 @@ Tw.MyTFareBill.prototype = {
     this._popupService.open({
       hbs: 'MF_01',// hbs의 파일명
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_PAYMENT_OPTION,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA
+      data: Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA,
+      btnfloating: { 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._onOpenPopup, this),
       $.proxy(this._goLoad, this),
@@ -80,31 +80,21 @@ Tw.MyTFareBill.prototype = {
     }
   },
   _setPointInfo: function () {
-    var cashbag, tpoint, rainbow = '';
+    var $cashbagSelector = this.$layer.find('.fe-ok-cashbag');
+    var $tpointSelector = this.$layer.find('.fe-t-point');
+    var $rainbowSelector = this.$layer.find('.fe-rainbow-point');
+    var cashbagText = $.trim($cashbagSelector.text());
+    var tpointText = $.trim($tpointSelector.text());
+    var rainbowText = $.trim($rainbowSelector.text());
 
-    if (!this._isPointTarget) {
-      cashbag = Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
-      tpoint = Tw.MYT_FARE_PAYMENT_NAME.T_POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
-      rainbow = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE;
+    if (this._isPointTarget) {
+      $cashbagSelector.find('.spot').text(Tw.FormatHelper.addComma(this._okCashbag) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
+      $tpointSelector.find('.spot').text(Tw.FormatHelper.addComma(this._tPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
+      $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
     } else {
-      cashbag = Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG + ' (' +
-        Tw.FormatHelper.addComma(this._okCashbag) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT + ')';
-      tpoint = Tw.MYT_FARE_PAYMENT_NAME.T_POINT + ' (' +
-        Tw.FormatHelper.addComma(this._tPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT + ')';
-      rainbow = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + ' (' +
-        Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT + ')';
-
-      this._setPointClass(this._okCashbag, '.fe-ok-cashbag');
-      this._setPointClass(this._tPoint, '.fe-t-point');
-      this._setPointClass(this._rainbowPoint, '.fe-rainbow-point');
-    }
-    this.$layer.find('.fe-ok-cashbag').find('.fe-text').text(cashbag);
-    this.$layer.find('.fe-t-point').find('.fe-text').text(tpoint);
-    this.$layer.find('.fe-rainbow-point').find('.fe-text').text(rainbow);
-  },
-  _setPointClass: function (point, className) {
-    if (point < 500) {
-      this.$layer.find(className).addClass('fe-less');
+      $cashbagSelector.text(cashbagText + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE);
+      $tpointSelector.text(tpointText + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE);
+      $rainbowSelector.text(rainbowText + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE);
     }
   },
   _bindEvent: function () {
@@ -114,23 +104,13 @@ Tw.MyTFareBill.prototype = {
     this.$layer.on('click', '.fe-sms', $.proxy(this._setEvent, this, 'sms'));
 
     // point bind event
-    this.$layer.on('click', '.fe-ok-cashbag', $.proxy(this._setPointEvent, this, 'cashbag'));
-    this.$layer.on('click', '.fe-t-point', $.proxy(this._setPointEvent, this, 'tpoint'));
-    this.$layer.on('click', '.fe-rainbow-point', $.proxy(this._setPointEvent, this, 'rainbow'));
+    this.$layer.on('click', '.fe-ok-cashbag', $.proxy(this._setEvent, this, 'cashbag'));
+    this.$layer.on('click', '.fe-t-point', $.proxy(this._setEvent, this, 'tpoint'));
+    this.$layer.on('click', '.fe-rainbow-point', $.proxy(this._setEvent, this, 'rainbow'));
   },
   _setEvent: function (uri) {
     this.$uri = uri;
     this._popupService.close();
-  },
-  _setPointEvent: function (uri, event) {
-    var $target = $(event.currentTarget);
-    if ($target.hasClass('fe-less')) {
-      var messageName = this._getPointErrorMessage($target);
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE[messageName]);
-    } else {
-      this.$uri = uri;
-      this._popupService.close();
-    }
   },
   _getPointErrorMessage: function ($target) {
     var messageName = '';

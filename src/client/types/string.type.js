@@ -100,7 +100,7 @@ Tw.CHART_TYPE = {
 
 Tw.CHART_UNIT = {
   WON: '원',
-  GB: 'GB',
+  GB: 'gb',
   TIME: 'time'
 };
 
@@ -806,10 +806,15 @@ Tw.MYT_JOIN_WIRE_MODIFY_PERIOD = {
   },
   ALERT: {
     '2_A67': '스마트 다이렉트 사용고객의 경우 약정기간 변경이 불가합니다.',
-    '2_A37': '요청한 상품은 세트 상품으로 정기계약 변경 신청이 안됩니다. 자세한 문의는 전화 1600-2000(유료) 또는 080-816-2000(무료)로 확인 바랍니다.'
+    '2_A37': '요청한 상품은 세트 상품으로 정기계약 변경 신청이 안됩니다. 자세한 문의는 전화 1600-2000(유료) 또는 080-816-2000(무료)로 확인 바랍니다.',
+    TEL_NUM_ERROR: '전화 번호가 올바르지 않습니다.'
   },
   TOAST: '약정기간이 변경 신청이 완료 되었습니다.',
-  COMPLETE_TEXT: '약정기간 변경 신청'
+  COMPLETE_TEXT: '약정기간 변경 신청',
+  ACTION_SHEET_TITLE: {
+    CELL_PHONE: '휴대폰 번호 선택',
+    TEL: '전화 번호 선택'
+  }
 };
 
 Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {

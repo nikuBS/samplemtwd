@@ -13,6 +13,7 @@ Tw.ProductMobileplanSettingBandYT = function (params) {
 
   this._render();
   this._bindEvent();
+  this._initialize();
 };
 
 Tw.ProductMobileplanSettingBandYT.prototype = {
@@ -27,6 +28,15 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
     this.$radioBox.on('change', $.proxy(this._onChangeRadioBox, this));
   },
 
+  _initialize: function () {
+    if ( this.data.bandyt.useOptionProdId ) {
+      this.$radioBox.find('input[data-info=' + this.data.bandyt.useOptionProdId + ']').trigger('click');
+    }
+    else {
+      this.$radioBox.find('input').eq(0).trigger('click');
+    }
+  },
+
   _onClickOkBtn: function () {
     this._popupService.openModalTypeA(this.data.title, Tw.ALERT_MSG_COMMON.CHANGE, Tw.PRODUCT_TYPE_NM.CHANGE,
       null, $.proxy(this._onSetBandYT, this), null);
@@ -37,18 +47,18 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
     this.info = $target.attr('data-info');
   },
 
-  _onSetBandYT: function() {
+  _onSetBandYT: function () {
     // TODO: 서버 오류로 추후 기능 테스트 필요!
     this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: this.info }, {}, this.data.prodId)
       .done($.proxy(this._onSuccessJoinAddition, this))
       .fail($.proxy(this._onFailJoinAddtion, this));
   },
 
-  _onSuccessJoinAddition: function() {
+  _onSuccessJoinAddition: function () {
     this._historyService.go(-2);
   },
 
-  _onFailJoinAddtion: function(resp) {
+  _onFailJoinAddtion: function (resp) {
     Tw.Error(resp.code, resp.msg).pop();
   }
 };

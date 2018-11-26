@@ -354,7 +354,7 @@
                             <label class="tit" for="flab01">국내 연락번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" type="number" placeholder="휴대폰 번호 (숫자만 입력)" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력">
+                                        <input id="flab01" type="text" placeholder="휴대폰 번호 (숫자만 입력)" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                             </div>
@@ -362,13 +362,13 @@
                         <li>
                             <label class="tit" for="flab02">임대시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox date-selcet mt0">
-                                <span class="date-type full"><input id="flab02" type="date" value="2018-08-29" min="2000-01-01" max="2018-12-31" title="임대시작 일자 선택"></span>
+                                <span class="date-type full"><input id="flab02" type="date" value="<%= formatDate %>" min="2000-01-01" max="2018-12-31" title="임대시작 일자 선택"></span>
                             </div>
                         </li>
                         <li>
                             <label class="tit" for="flab03">반납 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox date-selcet mt0">
-                                <span class="date-type full"><input id="flab03" type="date" value="2018-09-09" min="2000-01-01" max="2018-12-31" title="반납 일자 선택"></span>
+                                <span class="date-type full"><input id="flab03" type="date" value="<%= formatDate %>" min="2018-11-22" max="2018-12-31" title="반납 일자 선택"></span>
                             </div>
                         </li>
                         <li>
@@ -423,7 +423,7 @@
                         <p class="announcement-bullet type01">이용약관 미동의 시 예약 신청이 되지 않습니다.</p>
                         <p class="announcement-bullet type01">청구기준은 한국시간 기준으로 임대일로부터 반납일까지 입니다. 단, 출국/귀국 비행시간을 고려하여 2일 이상 이용 시 전체 임대 기간에서 1일 이용요금이 무료 제공됩니다.</p>
                         <p class="announcement-bullet type01">대구 SKT 황금점 매장은 매주 일요일 휴무이므로 임대 시작일/반납일자가 일요일인 경우 다른 장소를 선택해주시길 바랍니다.</p>
-                        <p class="announcement-bullet type01">로밍 센터별 근무시간이 상이하므로 사전에 업무시간을 확인하신 후 방문하셔야 합니다. <button class="bt-link-tx underline block">업무시간 상세보기</button></p>
+                        <p class="announcement-bullet type01">로밍 센터별 근무시간이 상이하므로 사전에 업무시간을 확인하신 후 방문하셔야 합니다. <button id="goLink" class="bt-link-tx underline block">업무시간 상세보기</button></p>
                     </div>
 
                 </div>

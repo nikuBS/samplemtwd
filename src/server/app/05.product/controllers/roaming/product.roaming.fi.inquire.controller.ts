@@ -8,9 +8,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
-import { API_CODE } from '../../../../types/api-command.type';
-import FormatHelper from '../../../../utils/format.helper';
-import { PREPAY_TITLE } from '../../../../types/bff.old.type';
 
 export default class ProductRoamingFiInquire extends TwViewController {
 
@@ -23,31 +20,6 @@ export default class ProductRoamingFiInquire extends TwViewController {
         getTFiData: getTFiData,
         svcInfo: svcInfo
       });
-    });
-  }
-
-  private getPlans(params) {
-    return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
-      }
-
-      if (FormatHelper.isEmpty(resp.result)) {
-        return resp.result;
-      }
-
-      return {
-        ...resp.result,
-        products: resp.result.products.map(plan => {
-          return {
-            ...plan,
-            basFeeAmt: FormatHelper.getFeeContents(plan.basFeeAmt)
-          };
-        })
-      };
     });
   }
 }

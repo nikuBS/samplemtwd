@@ -230,23 +230,30 @@ Tw.FormatHelper = (function () {
 
   var getDashedCellPhoneNumber = function (phoneNumber) {
     var str = '';
-    var remainLen = phoneNumber.length;
-    var startIdx = 0;
-    var DEFAULT_COUNT = remainLen <= 10 && !/^010/.test(phoneNumber) ? 3 : 4;
-    var digit = DEFAULT_COUNT;
 
-    while ( remainLen !== 0 ) {
-      digit = str ? remainLen >= DEFAULT_COUNT ? DEFAULT_COUNT : remainLen : 3;
-      str += phoneNumber.substr(startIdx, digit);
-
-      if ( remainLen > DEFAULT_COUNT ) {
-        str += '-';
-      }
-      remainLen -= digit;
-      startIdx += digit;
+    if( phoneNumber.length < 4){
+      return phoneNumber;
+    }else if(phoneNumber.length < 7){
+      str += phoneNumber.substr(0, 3);
+      str += '-';
+      str += phoneNumber.substr(3);
+      return str;
+    }else if(phoneNumber.length < 11){
+      str += phoneNumber.substr(0, 3);
+      str += '-';
+      str += phoneNumber.substr(3, 3);
+      str += '-';
+      str += phoneNumber.substr(6);
+      return str;
+    }else{
+      str += phoneNumber.substr(0, 3);
+      str += '-';
+      str += phoneNumber.substr(3, 4);
+      str += '-';
+      str += phoneNumber.substr(7);
+      return str.substr(0,13);
     }
-
-    return str;
+    return phoneNumber;
   };
 
   var _getDashedTelephoneNumber = function (phoneNumber) {

@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-// import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductRoaming extends TwViewController {
     constructor() {
@@ -53,33 +53,21 @@ export default class ProductRoaming extends TwViewController {
         });
     }
 
-    private getRoamingPlanData(params): Observable<any> {
-        let roamingPlanData = null;
+    private getRoamingPlanData(params) {
+        // let roamingPlanData = null;
         return this.apiService.request(API_CMD.BFF_10_0000, params).map((resp) => {
+            this.logger.info(this, 'result ', resp.result);
             if ( resp.code === API_CODE.CODE_00 ) {
-                roamingPlanData = resp.result;
-                // return {
-                //     code: resp.code,
-                //     msg: resp.msg
-                // };
+                return {
+                    ...resp.result,
+                    products: resp.result.products.map(roamingPlan => {
+                        return {
+                            ...roamingPlan,
+                            basFeeAmt: ProductHelper.convProductBasfeeInfo(roamingPlan.basFeeAmt)
+                        };
+                    })
+                };
             }
-
-            return roamingPlanData;
-
-            // if (FormatHelper.isEmpty(resp.result)) {
-            //     return resp.result;
-            // }
-            // this.logger.info(this, 'roamingPlanData', roamingPlanData);
-
-            // return {
-            //     ...resp.result,
-            //     products: resp.result.products.map(plan => {
-            //         return {
-            //             ...plan,
-            //             basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt)
-            //         };
-            //     })
-            // };
         });
     }
 }

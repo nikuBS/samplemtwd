@@ -49,7 +49,6 @@ Tw.MyTFareBillAccount.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
-    this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
@@ -99,9 +98,6 @@ Tw.MyTFareBillAccount.prototype = {
     } else {
       $parentTarget.removeClass('on');
     }
-  },
-  _openRefundInfo: function () {
-    this._popupService.openAlert(Tw.REFUND_ACCOUNT_INFO.CONTENTS, Tw.REFUND_ACCOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
   },
   _selectBank: function (event) {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this));

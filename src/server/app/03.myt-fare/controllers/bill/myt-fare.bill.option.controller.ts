@@ -78,13 +78,23 @@ class MyTFareBillOption extends TwViewController {
     }
 
     if (info.address) {
-      let brCode = '<br>';
-      if (info.address.match('<br/>')) {
-        brCode = '<br/>';
-      }
-      info.addr1 = info.address.split(brCode)[0];
-      info.addr2 = info.address.split(brCode)[1];
+      Object.assign({}, info, this.removeBr(info, 'address', 'addr'));
     }
+
+    if (info.account) {
+      Object.assign({}, info, this.removeBr(info, 'account', 'accn'));
+    }
+    return info;
+  }
+
+  private removeBr(info: any, name: string, subName: string): any {
+    let brCode = '<br>';
+    if (info[name].match('<br/>')) {
+      brCode = '<br/>';
+    }
+    info[subName + '1'] = info[name].split(brCode)[0];
+    info[subName + '2'] = info[name].split(brCode)[1];
+
     return info;
   }
 }

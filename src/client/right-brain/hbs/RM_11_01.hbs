@@ -20,59 +20,21 @@
                 </div>
             </div>
             <!-- .cont-box -->
+            {{#each data.filters}}
             <div class="cont-box">
                 <div class="discount-look-ahead discount-type">
                     <div class="board-type">
-                        <p>국가</p>
+                        <p class="fe-rmfilter-title" data-title-id="{{prodFltId}}">{{prodFltNm}}</p>
                         <div>
                             <div class="widget">
-                                <div class="widget-box radio">
-                                    <ul class="select-list" role="radiogroup">
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio4" value="" title="글로벌" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
-                                            <span class="radio-txt">글로벌</span>
+                                <div class="widget-box check">
+                                    <ul class="select-list" role="group">
+                                        {{#each subFilters}}
+                                        <li class="radiobox btn-type01 {{#if checked}}checked{{/if}}" role="checkbox">
+                                            <input type="checkbox" name="checkbox" title="{{prodFltNm}}" {{#if checked}}checked="checked"{{/if}} data-rmfilter-id="{{prodFltId}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                            <span class="radio-txt">{{prodFltNm}}</span>
                                         </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio4" value="" title="아시아"/><!-- 체크상태일 경우 checked="false" -->
-                                            <span class="radio-txt">아시아</span>
-                                        </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio4" value="" title="중국"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-                                            <span class="radio-txt">중국</span>
-                                        </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio4" value="" title="일본"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-                                            <span class="radio-txt">일본</span>
-                                        </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio4" value="" title="미주"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-                                            <span class="radio-txt">미주</span>
-                                        </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio4" value="" title="유럽"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-                                            <span class="radio-txt">유럽</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <p>테마</p>
-                        <div>
-                            <div class="widget">
-                                <div class="widget-box radio">
-                                    <ul class="select-list" role="radiogroup">
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio5" value="" title="데이터" /><!-- 체크상태일 경우 checked="checked" -->
-                                            <span class="radio-txt">데이터</span>
-                                        </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio5" value="" title="음성" checked="checked" /><!-- 체크상태일 경우 checked="false" -->
-                                            <span class="radio-txt">음성</span>
-                                        </li>
-                                        <li class="radiobox btn-type01" role="radio">
-                                            <input type="radio" name="radio5" value="" title="SNS"/><!-- 체크상태일 경우 checked="false" -->
-                                            <span class="radio-txt">SNS</span>
-                                        </li>
+                                        {{/each}}
                                     </ul>
                                 </div>
                             </div>
@@ -80,6 +42,7 @@
                     </div>
                 </div>
             </div>
+            {{/each}}
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -89,13 +52,9 @@
                 <h3>#추천태그</h3>
                 <div class="suggest-tag-list openlist-wrap">
                     <ul>
-                        <li><a href="#" class="link">#중국 갈 때 좋은</a></li>
-                        <li><a href="#" class="link">#미국 갈 때 좋은</a></li>
-                        <li><a href="#" class="link">#무료</a></li>
-                        <li><a href="#" class="link">#해외에서 폰을 분실했을 때</a></li>
-                        <li><a href="#" class="link">#데이터 걱정 없는</a></li>
-                        <li><a href="#" class="link">#정액형 요금제</a></li>
-                        <li><button type="button" class="link">#SMS 발송 해주는</button></li>
+                        {{#each data.tags}}
+                            <li><button type="button" class="link" data-rmtag-id={{tagId}}>#{{prodTagNm}}</button></li>
+                        {{/each}}
                     </ul>
                 </div>
             </div>

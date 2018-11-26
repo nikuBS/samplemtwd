@@ -21,7 +21,7 @@ Tw.MyTDataSubMain.prototype = {
 
   _rendered: function () {
     // 실시간잔여 상세
-    this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
+    // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
     if ( this.data.immCharge ) {
       this.$immChargeBtn = this.$container.find('[data-id=immCharge]');
@@ -46,9 +46,9 @@ Tw.MyTDataSubMain.prototype = {
     if ( this.data.pattern ) {
       this.$patternChart = this.$container.find('[data-id=pattern_chart]');
     }
-    if ( this.data.breakdownList ) {
-      this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
-    }
+    // if ( this.data.breakdownList ) {
+    //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
+    // }
     if ( this.data.otherLines.length > 0 ) {
       this.$otherLines = this.$container.find('[data-id=other-lines] li');
       if ( this.data.otherLines.length > 20 ) {
@@ -56,10 +56,11 @@ Tw.MyTDataSubMain.prototype = {
         this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       }
     }
+    this.$otherPages = this.$container.find('[data-id=other-pages]');
   },
 
   _bindEvent: function () {
-    this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
+    // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
     if ( this.data.immCharge ) {
       this.$immChargeBtn.on('click', $.proxy(this._onImmChargeDetail, this));
     }
@@ -78,15 +79,16 @@ Tw.MyTDataSubMain.prototype = {
       this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
     }
 
-    if ( this.data.breakdownList ) {
-      this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
-    }
+    // if ( this.data.breakdownList ) {
+    //   this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
+    // }
     if ( this.data.otherLines.length > 0 ) {
       this.$otherLines.on('click', $.proxy(this._onOtherLinesItemDetail, this));
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
       }
     }
+    this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
   },
 
   _initialize: function () {
@@ -100,7 +102,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   __convertData: function (value) {
-    return (value / 1024 / 1024).toFixed(2);
+    return parseFloat((value / 1024 / 1024).toFixed(2));
   },
 
   __secToMS: function (seconds) {
@@ -115,19 +117,15 @@ Tw.MyTDataSubMain.prototype = {
   // chart create
   _initPatternChart: function () {
     if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
-      var unit = '', data, chart_data, idx;
+      var unit = '', data, chart_data = [], idx;
       if ( this.data.pattern.data.length > 0 ) {
         unit = Tw.CHART_UNIT.GB;
         data = this.data.pattern.data;
-        chart_data = {
-          co: '#3b98e6',// 색상
-          da_arr: []
-        };
         if ( data.length > 0 ) {
-          for ( idx = data.length - 1; idx >= 0; idx-- ) {
-            chart_data.da_arr.push({
-              na: this.__getPatternMonth(data[idx].invMth),// 각 항목 타이틀
-              data: [this.__convertData(parseInt(data[idx].totalUsage, 10))]// 배열 평균값으로 전달
+          for ( idx = 0; idx < data.length; idx++ ) {
+            chart_data.push({
+              t: this.__getPatternMonth(data[idx].invMth),// 각 항목 타이틀
+              v: this.__convertData(parseInt(data[idx].totalUsage, 10))// 배열 평균값으로 전달
             });
           }
         }
@@ -135,33 +133,28 @@ Tw.MyTDataSubMain.prototype = {
       else if ( this.data.pattern.voice.length > 0 ) {
         unit = Tw.CHART_UNIT.TIME;
         data = this.data.pattern.voice;
-        chart_data = {
-          co: '#3b98e6',// 색상
-          da_arr: []
-        };
-        for ( idx = data.length - 1; idx >= 0; idx-- ) {
-          chart_data.da_arr.push({
-            na: this.__getPatternMonth(data[idx].invMth),// 각 항목 타이틀
-            data: [this.__convertData(parseInt(data[idx].totalUsage, 10))]// 배열 평균값으로 전달
+        for ( idx = 0; idx < data.length; idx++ ) {
+          chart_data.push({
+            t: this.__getPatternMonth(data[idx].invMth),// 각 항목 타이틀
+            v: this.__convertData(parseInt(data[idx].totalUsage, 10))// 배열 평균값으로 전달
           });
         }
       }
 
-      this.$patternChart.chart({
-        type: Tw.CHART_TYPE.BAR, //bar
-        container: 'pattern', //클래스명 String
+      this.$patternChart.chart2({
+        type: Tw.CHART_TYPE.BAR_2, //bar
+        target: '.pattern', //클래스명 String
+        average: true,
         unit: unit, //x축 이름
-        guide_num: 1, //가이드 갯수
-        decimal: 2, //소숫점자리
-        data: chart_data //데이터 obj
+        data_arry: chart_data //데이터 obj
       });
     }
   },
 
   // event callback funtion
-  _onRemnantDetail: function () {
-    this._historyService.goLoad('/myt-data/hotdata');
-  },
+  // _onRemnantDetail: function () {
+  //   this._historyService.goLoad('/myt-data/hotdata');
+  // },
 
   _onImmChargeDetail: function () {
     if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
@@ -204,13 +197,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // T가족모아
   _onFamilyMoaDetail: function () {
-    if ( this.data.family.possible ) {
-      // TODO: 미가입 관련 상태 업데이트 후 처리
-      this._historyService.goLoad('/product/callplan/NA00006031');
-    }
-    else {
-      this._historyService.goLoad('/myt-data/familydata');
-    }
+    this._historyService.goLoad('/myt-data/familydata');
   },
 
   // 데이터 혜텍
@@ -221,9 +208,14 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 조르기
   _onDataPesterDetail: function () {
-    //  2_A17 Alert 호출
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.MSG,
-      Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+    if ( Tw.BrowserHelper.isApp() ) {
+      //  2_A17 Alert 호출
+      this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.MSG,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+    }
+    else {
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MOBILE_TWORLD);
+    }
   },
 
   _pesterDetailConfirm: function () {
@@ -240,9 +232,9 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   // 충전/선물내역 상세
-  _onBreakdownListDetail: function () {
-    this._historyService.goLoad('/myt-data/datainfo');
-  },
+  // _onBreakdownListDetail: function () {
+  //   this._historyService.goLoad('/myt-data/datainfo');
+  // },
 
   // 다른 회선 잔여량 상세
   _onOtherLinesItemDetail: function (event) {
@@ -293,5 +285,11 @@ Tw.MyTDataSubMain.prototype = {
         this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
       }, this), 500);
     }
+  },
+
+  _onOtherPages: function (event) {
+    var $target = $(event.target);
+    var href = $target.attr('data-href');
+    this._historyService.goLoad(href);
   }
 };

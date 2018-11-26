@@ -33,7 +33,7 @@ Tw.Init.prototype = {
       var result = resp.result;
       if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
         /* jshint undef: false */
-        alert(result.version);
+        // alert(result.version);
         /* jshint undef: false */
       }
       Tw.Logger.info('[Version]', Tw.environment.version);

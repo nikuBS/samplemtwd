@@ -83,32 +83,25 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_LAYER_DATA: [
     {
       'list': [
-        { 'value': '자동납부', 'option': 'fe-auto', 'text2': '신청' }
+        { 'button-attr': 'type="button"', 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
       ]
     },
     {
-      'type': '요금 납부',
+      'title': '요금 납부',
       'list': [
-        { 'value': '계좌이체 납부', 'option': 'fe-account' },
-        { 'value': '체크∙신용카드 납부', 'option': 'fe-card' },
-        { 'value': 'OK캐쉬백∙T포인트 납부', 'option': 'fe-point' }
-      ]
-    },
-    {
-      'list': [
-        {
-          'value': '입금전용계좌 문자 신청', 'option': 'fe-sms',
-          'explain': '입금전용계좌 정보를 문자로 전송합니다.' + '<br/>' +
-          '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.'
-        }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' },
+        { 'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청' }
       ]
     },
     {
       'type': '포인트 요금 납부',
       'list': [
-        { 'value': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
-        { 'value': 'T포인트', 'option': 'fe-t-point' },
-        { 'value': '레인보우 포인트', 'option': 'fe-rainbow-point' }
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
+        { 'button-attr': 'type="button"', 'txt': '레인보우 포인트', 'option': 'fe-rainbow-point' }
       ]
     }
   ],
@@ -343,12 +336,12 @@ Tw.POPUP_TPL = {
     data: [
       {
         'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="00"', value: '인천공항 1터미널 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="01"', value: '인천공항 2터미널 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="02"', value: '김포공항 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="03"', value: '제주공항 국제선 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="04"', value: '김해공항 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="05"', value: '대구공항 2층 로밍 센터' }
+          { 'option': 'hbs-card-type', 'attr': 'id="00" data-center="A100110000"', value: '인천공항 1터미널 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="01" data-center="1430456896"', value: '인천공항 2터미널 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="02" data-center="A100140000"', value: '김포공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="03" data-center="A900100000"', value: '제주공항 국제선 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="04" data-center="A200130000"', value: '김해공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="05" data-center="1000012532"', value: '대구공항 2층 로밍 센터' }
         ]
       }
     ]
@@ -361,7 +354,24 @@ Tw.POPUP_TPL = {
         { 'option': 'event-type', 'attr': 'id="win"', value: '당첨자 발표' }
       ]
     }
-  ]
+  ],
+  ROAMING_RECEIVE_PLACE: {
+    title: '수령 장소 선택',
+    data: [
+      {
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="06" data-center="A100110000" data-booth="1000004045"', value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="07" data-center="A100110000" data-booth="1000004047"', value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="08" data-center="1430456896" data-booth="1430456957"', value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="09" data-center="A100140000" data-booth="1000004055"', value: '김포공항 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="10" data-center="A900100000" data-booth="1000004057"', value: '제주공항 국제선 1층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="11" data-center="A200130000" data-booth="1000012532"', value: '김해공항 3층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="12" data-center="" data-booth=""', value: '대구공항 2층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="13" data-center="1430452300" data-booth="1430452300"', value: '대구 SKT 황금점 매장' }
+        ]
+      }
+    ]
+  }
 };
 
 Tw.MYT_TPL = {
@@ -369,15 +379,14 @@ Tw.MYT_TPL = {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
+    '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
+    '<span class="cont"><span class="info-title">{{nickNm}}'+
     '{{#if data.child}}' +
-    '<span class="badge badge-fam"><span class="blind">자녀회선</span></span>' +
+    '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>'+
     '{{/if}}' +
-    '</span><span class="info-sub">{{svcNum}}</span>' +
-    '</div><div class="lineinfo-data">' +
-    '<span class="info-title">{{data.data}}' +
-    '<span class="unit ml4">{{data.unit}}</span>' +
-    '</span><span class="ico"></span></div></button></li>'
+    '<span class="info-sub">{{svcNum}}</span>' +
+    '<span class="price">{{data.data}}{{data.unit}}</span>'+
+    '</span></span></button></li>'
   },
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
@@ -693,7 +702,7 @@ Tw.PRODUCT_JOIN_TYPE = [
   { value: '인터넷', attr: 'data-type-code="internet"' },
   { value: '전화', attr: 'data-type-code="phone"' },
   { value: 'TV', attr: 'data-type-code="TV"' },
-  { value: '결합상품', attr: 'data-type-code="combine"' },
+  { value: '결합상품', attr: 'data-type-code="combine"' }
 ];
 
 Tw.SUSPEND_RELATION = {
