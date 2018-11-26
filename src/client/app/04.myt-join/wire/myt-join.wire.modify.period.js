@@ -12,7 +12,7 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
 
-  if (this._options.isBroadbandJoined === 'Y') {
+  if ( this._options.isBroadbandJoined === 'Y' ) {
     this._openErrorAlert();
     return;
   }
@@ -28,16 +28,60 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   _LOADING_POPUP_HBS: 'MS_04_06_L01',
   _MAXSIMUM_INTERVAL_CNT: 2,          // 결과조회 최대 호출 카운트
   _REQUEST_INTERVAL_TIME: 5000,       // 호출 대기 시간(5초)
+  _PHONE_NUMS: [
+    {
+      list: [
+        { value: '010', attr: 'data-phone="010"' },
+        { value: '011', attr: 'data-phone="011"' },
+        { value: '012', attr: 'data-phone="012"' },
+        { value: '015', attr: 'data-phone="015"' },
+        { value: '016', attr: 'data-phone="016"' },
+        { value: '017', attr: 'data-phone="017"' },
+        { value: '018', attr: 'data-phone="018"' },
+        { value: '019', attr: 'data-phone="019"' }
+      ]
+    }
+  ],
+  _TEL_NUMS: [
+    {
+      list: [
+        { value: '02', attr: 'data-tel="02"' },
+        { value: '031', attr: 'data-tel="031"' },
+        { value: '032', attr: 'data-tel="032"' },
+        { value: '033', attr: 'data-tel="033"' },
+        { value: '041', attr: 'data-tel="041"' },
+        { value: '042', attr: 'data-tel="042"' },
+        { value: '043', attr: 'data-tel="043"' },
+        { value: '044', attr: 'data-tel="044"' },
+        { value: '051', attr: 'data-tel="051"' },
+        { value: '052', attr: 'data-tel="052"' },
+        { value: '053', attr: 'data-tel="053"' },
+        { value: '054', attr: 'data-tel="054"' },
+        { value: '055', attr: 'data-tel="055"' },
+        { value: '061', attr: 'data-tel="061"' },
+        { value: '062', attr: 'data-tel="062"' },
+        { value: '063', attr: 'data-tel="063"' },
+        { value: '064', attr: 'data-tel="064"' },
+        { value: '070', attr: 'data-tel="070"' },
+        { value: '0502', attr: 'data-tel="0502"' },
+        { value: '0504', attr: 'data-tel="0504"' },
+        { value: '0505', attr: 'data-tel="0505"' },
+        { value: '0506', attr: 'data-tel="0506"' }
+      ]
+    }
+  ],
   _intervalCnt: 0,
   _periodSelectPopupOpened: false,
   _loadingPopupOpened: false,
   _agreementsPenaltyError: false,
   _periodPopupTplList: null,
+  _phonePopupTplList: null,
+  _telPopupTplList: null,
   _clickedTerm: '',
   _selectedTerm: '',
   _phoneNum: '',
 
-  _openErrorAlert: function() {
+  _openErrorAlert: function () {
     Tw.Popup.openOneBtTypeB(
       Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
       Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
@@ -46,11 +90,11 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
         txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
       }],
       'type1',
-      $.proxy(function($layer) {
+      $.proxy(function ($layer) {
         $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      },this), $.proxy(function() {
+      }, this), $.proxy(function () {
         this._historyService.goBack();
-      },this)
+      }, this)
     );
   },
 
@@ -60,8 +104,12 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$agreementsPenaltyResult = this._$main.find('.fe-agreements-penalty-result');
     this._$useMthCnt = this._$agreementsPenaltyResult.find('.fe-use-mth-cnt');
     this._$termBrchAmt = this._$agreementsPenaltyResult.find('.fe-term-brch-amt');
-    this._$inputPhone = this._$main.find('.fe-input-phone');
-    this._$inputTel = this._$main.find('.fe-input-tel');
+    this._$fePhone1 = this._$main.find('.fe-phone1');
+    this._$fePhone2 = this._$main.find('.fe-phone2');
+    this._$fePhone3 = this._$main.find('.fe-phone3');
+    this._$feTel1 = this._$main.find('.fe-tel1');
+    this._$feTel2 = this._$main.find('.fe-tel2');
+    this._$feTel3 = this._$main.find('.fe-tel3');
     this._$btnRequest = this._$main.find('.fe-btn-request');
 
     this._$step1 = this.$container.find('#step1');
@@ -74,12 +122,17 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$btnSelectPeriod.on('click', $.proxy(this._onClickBtnSelectPeriod, this));
     this._$btnRequest.on('click', $.proxy(this._onClickBtnRequest, this));
     this._$btnSubmit.on('click', $.proxy(this._onClickBtnSubmit, this));
-    this._$inputPhone.on('keyup', $.proxy(this._onKeyupInputPhone, this));
+    this._$fePhone1.on('click', $.proxy(this._onClickPhone1, this));
+    this._$fePhone2.on('keyup', $.proxy(this._onKeyupInputPhone, this));
+    this._$fePhone3.on('keyup', $.proxy(this._onKeyupInputPhone, this));
+    this._$feTel1.on('click', $.proxy(this._onClickTel1, this));
   },
 
   _init: function () {
     this._periodPopupTplList = Tw.POPUP_TPL.MYT_JOIN_WIRE_MODIFY_PERIOD[0].list;
-    this._setPeriodSelectPopup(this._options.beforeTerm);
+    this._phonePopupTplList = this._PHONE_NUMS[0].list;
+
+    // this._setSelectPopup(this._periodPopupTplList, this._options.beforeTerm);
   },
 
   _getPeriodTermCnt: function (term) {
@@ -88,17 +141,21 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }).cnt;
   },
 
-  _setPeriodSelectPopup: function (term) {
-    _.each(this._periodPopupTplList, function (item) {
+  _setSelectPopup: function (list, term) {
+    _.each(list, function (item) {
       item.option = item.value === term ? 'checked' : '';
     });
   },
 
   _showPreview: function () {
-    var phoneWithDash = this._getFormattedNumber(this._$inputPhone.val());
-    var telWithDash = this._getFormattedNumber(this._$inputTel.val());
-    this._$labelPhone.text(phoneWithDash);
-    this._$labelTel.text(telWithDash);
+    var telNumber = this._getTelNumber();
+    if ( (this._$feTel1.data('tel') || this._$feTel2.val() || this._$feTel3.val()) &&
+      Tw.FormatHelper.isEmpty(telNumber) ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ALERT.TEL_NUM_ERROR);
+      return;
+    }
+    this._$labelPhone.text(this._getCellphoneNumber());
+    this._$labelTel.text(telNumber);
     this._go('step1');
   },
 
@@ -120,17 +177,17 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, $.proxy(this._loadingPopupOpenCallback, this), $.proxy(this._loadingPopupCloseCallback, this));
   },
 
-  _loadingPopupOpenCallback: function() {
+  _loadingPopupOpenCallback: function () {
     this._loadingPopupOpened = true;
   },
 
-  _loadingPopupCloseCallback: function() {
+  _loadingPopupCloseCallback: function () {
     if ( this._agreementsPenaltyError ) {
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.CONTENTS,
         Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.TITLE, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.BT_NAME); //에러
       this._agreementsPenaltyError = false;
     } else {
-      if (this._periodSelectPopupOpened) {
+      if ( this._periodSelectPopupOpened ) {
         this._popupService.close();
       }
     }
@@ -151,8 +208,31 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, this));
   },
 
-  _periodSelectPopupCloseCallback: function() {
+  _periodSelectPopupCloseCallback: function () {
     this._periodSelectPopupOpened = false;
+  },
+
+  _phoneSelectPopupOpenCallback: function ($container) {
+    $container.find('li button').click($.proxy(function (event) {
+      var $target = $(event.currentTarget);
+      var text = $.trim($target.text());
+      this._setSelectPopup(this._phonePopupTplList, text);
+      this._$fePhone1.text(text);
+      this._$fePhone1.data('phone', $target.data('phone'));
+      this._popupService.close();
+      this._setRequestBtnStatus();
+    }, this));
+  },
+
+  _telSelectPopupOpenCallback: function ($container) {
+    $container.find('li button').click($.proxy(function (event) {
+      var $target = $(event.currentTarget);
+      var text = $.trim($target.text());
+      this._setSelectPopup(this._telPopupTplList, text);
+      this._$feTel1.text(text);
+      this._$feTel1.data('tel', $target.data('tel'));
+      this._popupService.close();
+    }, this));
   },
 
   _reqAgreementsPenalty: function () {
@@ -191,7 +271,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
-  _openAlertCloseCallback: function() {
+  _openAlertCloseCallback: function () {
     this._hideLoadingPopup();
   },
 
@@ -202,7 +282,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   },
 
   _reqAgreementsPenaltySuccess: function (agreementsPenalty) {
-    this._setPeriodSelectPopup(this._clickedTerm);
+    this._setSelectPopup(this._periodPopupTplList, this._clickedTerm);
     this._selectPeriod(this._clickedTerm);
     var beforeCnt = this._getPeriodTermCnt(this._options.beforeTerm);
     var selectedCnt = this._getPeriodTermCnt(this._selectedTerm);
@@ -215,12 +295,19 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._setRequestBtnStatus();
   },
 
-  _getFormattedNumber: function (tel) {
-    return tel.replace(/(^02.{0}|^01.{1}|[0-9*]{3})([0-9*]+)([0-9*]{4})/, '$1-$2-$3');
+  _getCellphoneNumber: function () {
+    return this._$fePhone1.data('phone') + '-' + this._$fePhone2.val() + '-' + this._$fePhone3.val();
+  },
+
+  _getTelNumber: function () {
+    var tel = this._$feTel1.data('tel') + '-' + this._$feTel2.val() + '-' + this._$feTel3.val();
+    var isValidTel = Tw.ValidationHelper.isTelephone(tel);
+    return isValidTel ? tel : '';
   },
 
   _setRequestBtnStatus: function () {
-    var propDisabled = (!!this._selectedTerm && !!this._phoneNum) ? false : true;
+    var isValidCellPhone = Tw.ValidationHelper.isCellPhone(this._getCellphoneNumber());
+    var propDisabled = (!!this._selectedTerm && isValidCellPhone) ? false : true;
     this._$btnRequest.prop('disabled', propDisabled);
   },
 
@@ -265,6 +352,24 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       .fail($.proxy(this._reqFail, this));
   },
 
+  _onClickPhone1: function () {
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ACTION_SHEET_TITLE.CELL_PHONE,
+      data: this._PHONE_NUMS
+    }, $.proxy(this._phoneSelectPopupOpenCallback, this));
+  },
+
+  _onClickTel1: function () {
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ACTION_SHEET_TITLE.TEL,
+      data: this._TEL_NUMS
+    }, $.proxy(this._telSelectPopupOpenCallback, this));
+  },
+
   _onKeyupInputPhone: function (event) {
     this._phoneNum = $(event.currentTarget).val();
     this._setRequestBtnStatus();
@@ -272,7 +377,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
 
   _reqAgreementsSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.Popup.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, Tw.BUTTON_LABEL.CONFIRM, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.COMPLETE_TEXT);
+      Tw.Popup.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, null, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.COMPLETE_TEXT);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
