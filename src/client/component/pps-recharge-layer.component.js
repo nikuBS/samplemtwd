@@ -51,23 +51,23 @@ Tw.PPSRechargeLayer.prototype = {
   _openPopup: function () {
     var data = [];
     data.push({
-      type: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
+      title: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
       list: [{
         option: 'once-voice',
-        value: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
+        txt: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
       }, {
         option: this.data.autoVoice ? 'auto-voice' : 'auto-change-voice',
-        value: this.data.autoVoice ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
+        txt: this.data.autoVoice ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
       }]
     });
     data.push({
-      type: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
+      title: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
       list: [{
         option: 'once-data',
-        value: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
+        txt: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
       }, {
         option: this.data.autoData ? 'auto-data' : 'auto-change-data',
-        value: this.data.autoData ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
+        txt: this.data.autoData ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
       }]
     });
 
@@ -108,6 +108,9 @@ Tw.PPSRechargeLayer.prototype = {
           break;
       }
     }
+    this.$popupContainer.find('.fe-common-back').on('click', function() {
+      window.history.back();
+    });
   },
 
   // DC_09 팝업 close 이후 처리 부분

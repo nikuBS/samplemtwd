@@ -28,6 +28,7 @@ class MytDataSubmainController extends TwViewController {
       immCharge: true,
       present: false,
       isPrepayment: false,
+      isDataInfo: true,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc),
       isApp: BrowserHelper.isApp(req)
@@ -56,6 +57,7 @@ class MytDataSubmainController extends TwViewController {
         });
         return false;
       }
+      // TODO: remnant 정보가 있는 경우 isDataInfo 설정 가능(서버 API 개발중)
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
