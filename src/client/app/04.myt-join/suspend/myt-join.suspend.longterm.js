@@ -4,18 +4,20 @@
  * Date: 2018. 10. 18.
  */
 Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
-  this.$container = tabEl;
-  this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
-  this._nativeService = Tw.Native;
-  this._cachedElement();
-  this._bindEvent();
   this.TYPE = {
     MILITARY: 1,
     ABROAD: 2
   };
 
+  this.$container = tabEl;
   this._params = params;
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
+  this._fileDialog = null;
+
+  this._cachedElement();
+  this._requestSvcInfo();
 };
 
 Tw.MyTJoinSuspendLongTerm.prototype = {
@@ -36,6 +38,18 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
     this.$btSuspend.on('click', $.proxy(this._onClickSuspend, this));
     this._changeSuspendType('military');
+  },
+
+  _requestSvcInfo: function(){
+    Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function (resp) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          this._svcInfo = resp.result;
+          this._bindEvent();
+        } else {
+          Tw.Error(resp.code, resp.msg).pop();
+        }
+      }, this));
   },
 
   /**
@@ -134,7 +148,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
 
   _onSuccessUscanUpload: function (res) {
     // 현재 USCAN 테스트 불가
-    this._requestSuspend()
+    this._requestSuspend();
     return;
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -236,7 +250,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var duration = Tw.DateHelper.getFullKoreanDate(this._suspendOptions.fromDt) + ' - ' +
         Tw.DateHelper.getFullKoreanDate(this._suspendOptions.toDt);
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC.replace('{DURATION}', duration)
-        .replace('{SVC_INFO}', this._params.phoneNum);
+        .replace('{SVC_INFO}', this._svcInfo.svcNum);
       this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.APPLY, desc);
 
     } else {

@@ -4,7 +4,7 @@
  * Date: 2018. 11. 15.
  */
 Tw.MytJoinSuspendUpload = function () {
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
 };
 Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' };
 Tw.MytJoinSuspendUpload.prototype = {
@@ -22,6 +22,7 @@ Tw.MytJoinSuspendUpload.prototype = {
       this._showUploadPopup();
     }
   },
+
   _showUploadTip: function (tooltip) {
     // this._popupService.openConfirm(tooltip.title, tooltip.content, $.proxy(this._showUploadPopup, this), null);
     this._popupService.open({

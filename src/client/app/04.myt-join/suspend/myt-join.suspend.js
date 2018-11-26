@@ -67,7 +67,7 @@ Tw.MyTJoinSuspend.prototype = {
         break;
       case this.TYPE.LONG_TERM:
         if ( !this._long ) {
-          this._long = new Tw.MyTJoinSuspendLongTerm(this.$tabLong);
+          this._long = new Tw.MyTJoinSuspendLongTerm(this.$tabLong, this._params);
         }
         break;
     }
