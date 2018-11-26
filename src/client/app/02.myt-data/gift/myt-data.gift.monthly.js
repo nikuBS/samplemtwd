@@ -24,7 +24,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$btn_add_contact = this.$container.find('.fe-btn_add_contact');
     this.$input_auto_gift = this.$container.find('.fe-input_auto_gift');
     this.$btn_auto_contact = this.$container.find('.fe-btn_auto_contact');
-    this.$btn_send_auto_gift = this.$container.find('.fe-btn_send_auto_gift');
+    this.$btnRequestSendingAuto = this.$container.find('.fe-request_sending_auto');
     this.$btn_wrap_add_contact = this.$container.find('.fe-wrap_add_contact');
     this.$wrap_auto_select_list = this.$container.find('.fe-auto_select_list');
     this.$btn_unsubscribe_auto_gift = this.$container.find('.fe-btn_unsubscribe');
@@ -33,7 +33,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   _bindEvent: function () {
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$btn_send_auto_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
+    this.$btnRequestSendingAuto.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$input_auto_gift.on('keyup', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
     this.$wrap_auto_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
@@ -136,9 +136,9 @@ Tw.MyTDataGiftMonthly.prototype = {
     var isValidPhone = this.$input_auto_gift.val().length !== 0;
 
     if ( isValidQty && isValidPhone ) {
-      this.$btn_send_auto_gift.attr('disabled', false);
+      this.$btnRequestSendingAuto.attr('disabled', false);
     } else {
-      this.$btn_send_auto_gift.attr('disabled', true);
+      this.$btnRequestSendingAuto.attr('disabled', true);
     }
   },
 
