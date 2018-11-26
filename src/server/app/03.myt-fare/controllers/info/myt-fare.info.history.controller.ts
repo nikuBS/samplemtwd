@@ -6,7 +6,8 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import {MYT_FARE_PAYMENT_HISTORY_TYPE, MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
+import {MYT_FARE_PAYMENT_HISTORY_TYPE, MYT_FARE_PAYMENT_NAME } from '../../../../types/string.type';
+import {MYT_FARE_PAYMENT_CODE, MYT_FARE_POINT_PAYMENT_STATUS } from '../../../../types/bff.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {
@@ -44,13 +45,17 @@ interface PaymentList {
 interface Info {
   [key: string]: string;
 }
+interface ErrorInfo {
+  code: string;
+  msg: string;
+}
 class MyTFareInfoHistory extends TwViewController {
   private paymentData: PaymentData = {};
+  private returnErrorInfo: ErrorInfo | any;
 
   constructor() {
     super();
-
-    
+    this.returnErrorInfo = {}; 
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
@@ -221,6 +226,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getOverAndRefundPaymentData = (current?: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp: { code: string; result: any }) => {
+      // console.log('\x1b[36m%s\x1b[0m', '------log 과납 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -254,6 +260,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; result: any }) => {
+      // console.log('\x1b[36m%s\x1b[0m', '------log 즉시납부내역 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -264,8 +271,8 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataPayMethodCode = 'DI';
         o.hasTip = true;
         o.dataTitle = o.cardCdNm;
-        o.dataIsBankOrCard = this.isBankOrCard(o.dataTitle);
-        o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
+        o.dataIsBankOrCard = this.isBankOrCard(o.dataTitle) || this.isBankOrCard(o.settleWayCd) ;
+        o.listTitle = o.dataIsBankOrCard ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
         o.sortDt = o.opDt;
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
         o.dataAmt = FormatHelper.addComma(o.cardAmt);
@@ -283,6 +290,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; result: any }) => {
+      // console.log('\x1b[36m%s\x1b[0m', '------log 자동납부 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -314,6 +322,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; result: any }) => {
+      // console.log('\x1b[36m%s\x1b[0m', '------log 자동납부 통합 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -341,24 +350,22 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
-      
+      // console.log('\x1b[36m%s\x1b[0m', '------log 소액결제 code', resp.code, resp.result);
+
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
-
       resp.result.microPrepayRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'MP';
-        o.dataIsBank = this.isBankOrCard(o.dataTitle);
-        o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
+        o.dataIsBank = this.isBankOrCard(o.settlWayNm);
+        o.listTitle = o.settlWayNm;
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.microPrepay;
         o.dataSubInfo2 = o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : null;
       });
-
-      // this.logger.info(this, 'micropayment : .................>> ', resp.result);
 
       return resp.result;
     });
@@ -366,7 +373,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
-      console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
+      // console.log('\x1b[36m%s\x1b[0m', '------log 컨텐츠 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -388,6 +395,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getOnetimePointReserveData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
+      console.log('\x1b[36m%s\x1b[0m', '------log 포인트납부예약 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -413,7 +421,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
-
+      console.log('\x1b[36m%s\x1b[0m', '------log 포인트자동납부 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -424,7 +432,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'PN';
         o.reqSt = o.reqSt; // 상태
-        o.noLink = (o.reqSt === '납부신청'); // 납부신청단계에서는 링크를 걸지 않음
+        o.noLink = this.isNoLink(o.reqSt); // === MYT_FARE_POINT_PAYMENT_STATUS.CLOSE); // 납부해지단계에서는 링크를 걸지 않음
         o.listTitle = o.pointNm; 
         o.isPoint = true;
         o.dataAmt = FormatHelper.addComma(o.point);
@@ -495,18 +503,23 @@ class MyTFareInfoHistory extends TwViewController {
     return data;
   }
 
+  private isNoLink(o: string): boolean {
+    return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o);
+  }
   private isBank(o: string) {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK2) > 0)
-        || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK3) > 0);
+        || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK3) > 0 || (o === MYT_FARE_PAYMENT_CODE.BANK) || (o === MYT_FARE_PAYMENT_CODE.BANK2));
   }
 
   private isCard(o: string) {
-    return (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD2) > 0);
+    return (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD2) > 0
+        || (o === MYT_FARE_PAYMENT_CODE.CARD));
   }
 
   private isBankOrCard(o: string) {
     return this.isBank(o) || this.isCard(o);
   }
+ 
 
   private getKorStringWithQuery(current: string): any {
     return MYT_FARE_PAYMENT_HISTORY_TYPE[this.getKeyWithQuery(current)];
@@ -520,6 +533,15 @@ class MyTFareInfoHistory extends TwViewController {
       }
       return elem;
     }).join('');
+  }
+
+  private setErrorInfo(resp: {code: string, msg: string, result: any}): void {
+    if (!this.returnErrorInfo.code) {
+      this.returnErrorInfo = {
+        code: resp.code,
+        msg: resp.msg
+      };
+    }
   }
 
   // 꼭 확인해 주세요 팁 메뉴 정리

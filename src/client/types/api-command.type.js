@@ -289,7 +289,7 @@ Tw.API_CMD = {
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/:args0', method: Tw.API_METHOD.GET },
   BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.GET },
-  BFF_07_0071: { path: '/core-bill/v1/microPrepay/microPrepay-hist-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0071: { path: '/core-bill/v1/micro-prepay/hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: Tw.API_METHOD.POST },

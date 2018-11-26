@@ -388,7 +388,7 @@ export const API_CMD = {
   BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0070: { path: '/core-bill/v1/payment/auto-integrated-payment/account', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0071: {
-    path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
+    path: '/core-bill/v1/micro-prepay/hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: true
