@@ -337,7 +337,7 @@ Tw.ALERT_MSG_MYT_DATA = {
   },
   DATA_PESTER: {
     TITLE: '[SKT] ',
-    CONTENT: '님이<br/>"T끼리 데이터 선물 조르기"를 요청하셨습니다.<br/>데이터 선물 하러가기'
+    CONTENT: '님이\n"T끼리 데이터 선물 조르기"를 요청하셨습니다.\n데이터 선물 하러가기\n'
   }
 };
 
