@@ -17,13 +17,12 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가상품', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo, option: { line: true } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <% const hasNone = !joined.length && !joinable.length; %>
                 <div class="add-prd-top-wrap">
                     <span class="select">
                         <button class="on fe-all-btn">전체</button>
@@ -35,98 +34,153 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="add-prd-wrap">
-                        <% if (hasNone) { %>
-                            <div class="contents-empty">
-                                <span class="ico type1"></span>
-                                <p class="desc">현재 사용중인 부가상품 및<br />가입 가능한 부가상품이 없습니다.</p>
-                            </div>
-                        <% } else if (joined.length > 0) { %>
-                            <ul class="list-comp-lineinfo">
-                                <% joined.map(addition => { %>
-                                    <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
-                                        <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
-                                        <button>
-                                            <div class="lineinfo-user">
-                                                <span class="info-title"><%= addition.prodNm %></span>
-                                                <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
-                                            </div>
-                                            <div class="lineinfo-data">
-                                                <% if (addition.prodLinkYn === "Y") { %>
-                                                    <a href="/product/callplan/<%= addition.prodId %>">
-                                                        <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
-                                                        <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
-                                                        <% } else { %>
-                                                        <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
-                                                        <% } %>
-                                                        <span class="ico"></span>
-                                                    </a>
-                                                <% } else { %>
+                        <ul class="list-comp-lineinfo">
+                            <% joined.map(addition => { %>
+                                <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
+                                    <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
+                                    <button>
+                                        <div class="lineinfo-user">
+                                            <span class="info-title"><%= addition.prodNm %></span>
+                                            <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
+                                        </div>
+                                        <div class="lineinfo-data">
+                                            <% if (addition.prodLinkYn === "Y") { %>
+                                                <a href="/product/callplan/<%= addition.prodId %>">
                                                     <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
-                                                        <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                                    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                                     <% } else { %>
-                                                        <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+                                                    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                                     <% } %>
+                                                    <span class="ico"></span>
+                                                </a>
+                                            <% } else { %>
+                                                <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                                <% } else { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                                 <% } %>
-                                            </div>
-                                        </button>
-                                        <% if (addition.btnList && addition.btnList.length > 0) { %>
-                                            <span class="bt-wrap">
-                                                <% addition.btnList.map(btn => { %>
-                                                    <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
-                                                <% }); %>
-                                            </span>
-                                        <% } %>
-                                    </li>
-                                <% }); %>
-                            </ul>
-                        <% } %>
-                        <div class="contents-empty fe-empty <%= hasNone || joined.length > 0 ? 'none' : '' %>">
+                                            <% } %>
+                                        </div>
+                                    </button>
+                                    <% if (addition.btnList && addition.btnList.length > 0) { %>
+                                        <span class="bt-wrap">
+                                            <% addition.btnList.map(btn => { %>
+                                                <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                            <% }); %>
+                                        </span>
+                                    <% } %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                        <div class="contents-empty fe-empty <%= joined.length > 0 ? 'none' : '' %>">
                             <span class="ico type1"></span>
-                            <p class="desc">현재 사용중인 부가상품이 없습니다.</p>
+                            <p class="desc">현재 사용중인 부가서비스가 없습니다.</p>
                         </div>
                     </div>
                 </div>
                 <!--// .cont-box -->
-                
-                <% if (!hasNone) { %>
-                    <div class="ti-caption-gray">
-                        <h3 class="tit">가입 가능한 부가상품</h3>
-                    </div>
 
-                    <% if (joinable.length > 0) { %>
-                        <!-- .cont-box -->
-                        <div class="cont-box nogaps-hoz">
-                            <ul class="add-product-list">
-                                <% joinable.map(addition => { %>
-                                <li>
-                                    <% if (addition.prodLinkYn === "Y") { %>
-                                    <a href="/product/callplan/<%= addition.prodId %>">
-                                        <span class="tit"><%= addition.prodNm %></span>
-                                        <span class="txt">자세히 보기</span>
-                                    </a>
-                                    <% } else { %>
+                <div class="ti-caption-gray">
+                    <h3 class="tit">신청 접수 중인 부가서비스</h3>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="add-prd-wrap">
+                        <% if (reserved.length > 0) { %>
+                            <ul class="list-comp-lineinfo">
+                                <% reserved.map(addition => { %>
+                                <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
+                                    <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
                                     <button>
-                                        <span class="tit"><%= addition.prodNm %></span>
+                                        <div class="lineinfo-user">
+                                            <span class="info-title"><%= addition.prodNm %></span>
+                                            <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
+                                        </div>
+                                        <div class="lineinfo-data">
+                                            <% if (addition.prodLinkYn === "Y") { %>
+                                                <a href="/product/callplan/<%= addition.prodId %>">
+                                                    <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                                    <% } else { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+                                                    <% } %>
+                                                    <span class="ico"></span>
+                                                </a>
+                                            <% } else { %>
+                                                <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                                <% } else { %>
+                                                    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+                                                <% } %>
+                                            <% } %>
+                                        </div>
                                     </button>
+                                    <% if (addition.btnList && addition.btnList.length > 0) { %>
+                                        <span class="bt-wrap">
+                                            <% addition.btnList.map(btn => { %>
+                                                <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                            <% }); %>
+                                        </span>
                                     <% } %>
                                 </li>
                                 <% }); %>
                             </ul>
-                        </div>
-                        <!--// .cont-box -->
-                    <% } else { %>
-                        <!-- .cont-box -->
-                        <div class="cont-box nogaps">
-                            <div class="add-prd-wrap">
-                                <div class="contents-empty">
-                                    <span class="ico type1"></span>
-                                    <p class="desc">현재 가입 가능한 부가상품이 없습니다.</p>
-                                </div>
+                        <% } else { %>
+                            <div class="contents-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">현재 신청 접수 중인 부가서비스가 없습니다.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                
+                <div class="ti-caption-gray">
+                    <h3 class="tit">가입 가능한 부가서비스</h3>
+                </div>
+
+                <% if (joinable.length > 0) { %>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <ul class="add-product-list">
+                            <% joinable.map(addition => { %>
+                            <li>
+                                <% if (addition.prodLinkYn === "Y") { %>
+                                <a href="/product/callplan/<%= addition.prodId %>">
+                                    <span class="tit"><%= addition.prodNm %></span>
+                                    <span class="txt">자세히 보기</span>
+                                </a>
+                                <% } else { %>
+                                <button>
+                                    <span class="tit"><%= addition.prodNm %></span>
+                                </button>
+                                <% } %>
+                                <% if (addition.btnList && addition.btnList.length > 0) { %>
+                                    <span class="bt-wrap">
+                                        <% addition.btnList.map(btn => { %>
+                                            <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                        <% }); %>
+                                    </span>
+                                <% } %>
+                            </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                <% } else { %>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <div class="add-prd-wrap">
+                            <div class="contents-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">현재 가입 가능한 부가서비스가 없습니다.</p>
                             </div>
                         </div>
-                        <!--// .cont-box -->
-                    <% } %>
+                    </div>
+                    <!--// .cont-box -->
                 <% } %>
+
                 <hr class="cont-sp type1" aria-hidden="true" />
                 <!-- 꼭 확인해주세요! 2018.11.02 추가 -->   
 				<div class="cont-box nogaps-btm">

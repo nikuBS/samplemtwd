@@ -64,8 +64,9 @@ class MyTJoinMyPlanAdd extends TwViewController {
       }
 
       return {
-        joined: resp.result.pays.map(this.convertAdditions),
-        joinable: resp.result.joinables.map(this.convertAdditions)
+        joined: (resp.result.pays || []).concat(resp.result.frees || []).map(this.convertAdditions),
+        joinable: resp.result.joinables.map(this.convertAdditions),
+        reserved: resp.result.reserveds.map(this.convertAdditions)
       };
     });
   }
