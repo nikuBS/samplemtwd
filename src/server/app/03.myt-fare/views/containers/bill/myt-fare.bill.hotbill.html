@@ -19,38 +19,46 @@
 <div id="fe-myt-fare-hotbill" class="wrap">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
-        { title: locals.child ? '자녀 실시간 이용요금' : '실시간 이용요금', svcInfo: svcInfo, option: { line: true }  }); %>
+        { title: locals.child ? '자녀 실시간 이용요금' : '실시간 이용요금', svcInfo: svcInfo, option: { }  }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
-                <h3 class="tit"><%= svcInfo.prodNm %></h3>
-                <a class="detail-view" href="/product/callplan/<%= svcInfo.prodId %>" >
-                    <span class="blind">자세히보기</span>
-                </a>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps">
+                <div class="calling-plan">
+                    <a class="wrap-link" href="/product/callplan/<%= svcInfo.prodId %>">
+                        <% if(locals.child) { %>
+                        <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
+                        <% } else {%>
+                        <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
+                        <% } %>
+                        <span class="stit"><%= svcInfo.prodNm %></span>
+                    </a>
+                </div>
             </div>
             <!-- .cont-box -->
             <% if(billAvailable){ %>
-            <div class="cont-box pt10">
-                <div class="charge-guide-wrap">
-                    <div class="charge-cont">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="user-month-bill mt0">
+                    <div class="this-month-bill">
                         <% if(locals.child) { %>
-                        <span class="sub-disc01">
-                            <span class="elem"><%= locals.child %><span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
-                        </span>
+                        <p class="stit"><%= locals.child %></p>
                         <% } %>
-                        <span class="tit"><span class="charge-txt" id="fe-total"></span>원</span>
-                        <span class="sub-disc01"id="fe-period">사용기간 : </span>
+                        <p class="price tx-bold mt0" id="fe-total">원</p>
+                        <p class="term" id="fe-period"></p>
                     </div>
                 </div>
             </div>
+            <!--// .cont-box -->
             <% } else { %>
             <div class="cont-box">
-                <p class="cont-msg-big">
-                    <span class="tx-bold vbl">매월 2일</span>부터 실시간 <br />
-                    사용요금 조회가 가능합니다.
+                <p class="msg-type1">
+                    <span class="tx-bold">매월 2일</span>부터 실시간 이용요금을<br>조회하실 수 있습니다.
                 </p>
             </div>
             <% } %>
@@ -59,8 +67,8 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
-                <div class="statement-cont">
-                    <div class="statement-detail type2" data-role="fe-bill-menu">
+                <div class="statement-cont type2">
+                    <div class="statement-detail" data-role="fe-bill-menu">>
                         <div class="cont-loading-area fe-loading-bill">
                         </div>
                         <!-- .widget -->
@@ -69,64 +77,41 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <div class="cont-box nogaps" id="fe-unpaid-bill" style="display:none;">
-                <ul class="link-long-list">
-                    <li>
-                        <div class="link-long">
-                            <button>미납요금
-                                <span class="tx-sub">
-											<span class="normal"><i class="tx-bold" id="fe-unpaid-amount">8,000</i> 원</span>
-											<span class="ico"></span>
-										</span>
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
             <% if( preAmount !== '0') { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <div class="cont-box nogaps">
-                <ul class="link-long-list">
+                <ul class="full-link-list">
                     <li>
-                        <div class="link-long">
-                            <button>전월요금보기
-                                <span class="tx-sub">
-                                    <span><i class="tx-bold" id="fe-pre-amount"><%= preAmount %></i> 원</span>
-                                    <span class="ico"></span>
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">전월요금 보기</span>
+                                    <span class="text type2" id="fe-pre-amount"><%= preAmount %> 원</span>
                                 </span>
-                            </button>
-                        </div>
+                        </button>
                     </li>
                 </ul>
             </div>
             <% } %>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <% if( lines.length > 0) { %>
-            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
-                <h4 class="tit">다른 회선 실시간 이용요금</h4>
-            </div>
+            <div class="cont-box nogaps-btm">
+                <h3 class="tit-type6">다른 회선 실시간 이용요금</h3>
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="list-comp-lineinfo">
+                <ul class="my-line-info">
                     <% for (let i = 0; i < lines.length; i++) { %>
                         <li>
-                            <button data-idx=<%= i %>>
-                                <div class="lineinfo-user">
-                                    <span class="info-title"><%= lines[i].eqpMdlNm %>
-                                        <% if (lines[i].child) { %>
-                                        <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
-                                        <% } %>
-                                    </span>
+                            <button data-idx=<%= i %> id="fe-other-line">
+                                <span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i></span>
+                                <span class="cont">
+                                    <span class="info-title"><%= lines[i].eqpMdlNm %><i class="icon-children ml6">
+                                         <% if (lines[i].child) { %>
+                                        <span class="blind">자녀</span></i></span>
+                                         <% } %>
                                     <span class="info-sub"><%= lines[i].svcNum %></span>
-                                </div>
-                                <div class="lineinfo-data">
-                                    <span class="info-title"><%= lines[i].bill %><span class="unit ml4">원</span></span>
-                                    <span class="ico"></span>
-                                </div>
+                                    <span class="price"><%= lines[i].bill %>원</span>
+                                </span>
                             </button>
                         </li>
                     <% } %>
@@ -135,20 +120,17 @@
             </div>
             <% } %>
             <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해주세요</h3>
-                <ul class="noti-list">
-                    <li>실시간 이용요금 안내 <button type="button" class="tip-view" id="MF_03_tip_01">TIP</button></li>
-                    <li>요금제 변경 및 일시정지하신 경우 <button type="button" class="tip-view" id="MF_03_tip_02">TIP</button></li>
-                    <li>시스템 점검 작업 시 <button type="button" class="tip-view" id="MF_03_tip_03">TIP</button></li>
-                    <li>가입비 등 일회성 납부 항목 <button type="button" class="tip-view" id="MF_03_tip_04">TIP</button></li>
-                    <li>분리납부 요금 사용내역 <button type="button" class="tip-view" id="MF_03_tip_05">TIP</button></li>
-                    <li>신규가입 및 명의변경하신 경우 <button type="button" class="tip-view" id="MF_03_tip_06">TIP</button></li>
-                    <li>타 유/무선 통신사 제공서비스 경우 <button type="button" class="tip-view" id="MF_03_tip_07">TIP</button></li>
-                    <li>해외로밍 시 이용요금 조회 <button type="button" class="tip-view" id="MF_03_tip_08">TIP</button></li>
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list">
+                    <li>실시간 이용요금 안내<button class="btn-tip" id="MF_03_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>요금제 변경 및 일시정지하신 경우<button class="btn-tip" id="MF_03_tip_02"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>시스템 점검 작업 시<button class="btn-tip" id="MF_03_tip_03"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>가입비 등 일회성 납부 항목<button class="btn-tip" id="MF_03_tip_04"<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>분리납부 요금 사용내역<button class="btn-tip" id="MF_03_tip_05"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>신규가입 및 명의변경하신 경우<button class="btn-tip" id="MF_03_tip_06"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>타 유/무선 통신사 제공서비스 경우<button class="btn-tip" id="MF_03_tip_07"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>해외로밍 시 이용요금 조회<button class="btn-tip" id="MF_03_tip_08"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                 </ul>
             </div>
 

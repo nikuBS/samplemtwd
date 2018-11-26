@@ -29,28 +29,28 @@ Tw.MyTFareHotBill.prototype = {
   _cachedElement: function () {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
-    this.$unpaid = this.$container.find('#fe-unpaid-bill');
     this.$preBill = this.$container.find('#fe-pre-amount');
-
-    this.$unpaidAmount = this.$container.find('#fe-unpaid-amount');
-    this.$lineButton = this.$container.find('.list-comp-lineinfo button');
+    this.$lineButton = this.$container.find('#fe-other-line');
   },
 
   _bindEvent: function () {
     this.$lineButton.on('click', $.proxy(this._onClickLine, this));
-
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
   },
 
-  _getBillResponse: function (childSvcMgmtNum) {
-    var params = { count: this._requestCount++ };
-    if ( childSvcMgmtNum ) {
-      params.childSvcMgmtNum = childSvcMgmtNum;
+  _getBillResponse: function (childSvcMgmtNum, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var params = { count: this._requestCount++ };
+      if ( childSvcMgmtNum ) {
+        params.childSvcMgmtNum = childSvcMgmtNum;
+      }
+      this._apiService
+        .request(Tw.API_CMD.BFF_05_0022, params)
+        .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
+        .fail($.proxy(this._onErrorReceivedBillData, this));
+    } else {
+      this._onErrorReceivedBillData(resp);
     }
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, params)
-      .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
-      .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
   _sendBillRequest: function (child) {
@@ -91,11 +91,11 @@ Tw.MyTFareHotBill.prototype = {
           value: 'invAmt2'
         };
         var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
-        if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
-          this.$unpaid.show();
-          this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
-          delete group[Tw.HOTBILL_UNPAID_TITLE];
-        }
+        // if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
+        //   this.$unpaid.show();
+        //   this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
+        //   delete group[Tw.HOTBILL_UNPAID_TITLE];
+        // }
         skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
         this._renderBillGroup(group, false, this.$container);
       }
@@ -124,7 +124,11 @@ Tw.MyTFareHotBill.prototype = {
 
   _onErrorReceivedBillData: function (resp) {
     skt_landing.action.loading.off({ ta: '.container' });
-    Tw.Error(resp.code, resp.msg).pop();
+    Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
+  },
+
+  _onErrorClosed() {
+    // this._historyService.goLoad('/myt-fare/submain');
   },
 
   _onClickLine: function (e) {
