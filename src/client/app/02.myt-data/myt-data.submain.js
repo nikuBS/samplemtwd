@@ -21,7 +21,7 @@ Tw.MyTDataSubMain.prototype = {
 
   _rendered: function () {
     // 실시간잔여 상세
-    this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
+    // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
     if ( this.data.immCharge ) {
       this.$immChargeBtn = this.$container.find('[data-id=immCharge]');
@@ -59,7 +59,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _bindEvent: function () {
-    this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
+    // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
     if ( this.data.immCharge ) {
       this.$immChargeBtn.on('click', $.proxy(this._onImmChargeDetail, this));
     }
@@ -159,9 +159,9 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   // event callback funtion
-  _onRemnantDetail: function () {
-    this._historyService.goLoad('/myt-data/hotdata');
-  },
+  // _onRemnantDetail: function () {
+  //   this._historyService.goLoad('/myt-data/hotdata');
+  // },
 
   _onImmChargeDetail: function () {
     if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
