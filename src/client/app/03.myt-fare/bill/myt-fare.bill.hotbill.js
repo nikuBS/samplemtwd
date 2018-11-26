@@ -3,18 +3,19 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 9. 20.
  */
-Tw.MyTFareHotBill = function (rootEl) {
+Tw.MyTFareHotBill = function (rootEl, preBill) {
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
-
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._cachedElement();
   this._bindEvent();
-  this._sendBillRequest(this.childSvcNm);
+  this._sendBillRequest(this.childSvcMgmtNum);
+
+  this._preBill = preBill;
 
   if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
     this._billInfoAvailable = true;
@@ -29,22 +30,26 @@ Tw.MyTFareHotBill.prototype = {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
     this.$unpaid = this.$container.find('#fe-unpaid-bill');
+    this.$preBill = this.$container.find('#fe-pre-amount');
+
     this.$unpaidAmount = this.$container.find('#fe-unpaid-amount');
     this.$lineButton = this.$container.find('.list-comp-lineinfo button');
   },
 
   _bindEvent: function () {
     this.$lineButton.on('click', $.proxy(this._onClickLine, this));
+
+    this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
   },
 
-  _getBillResponse: function (child) {
+  _getBillResponse: function (childSvcMgmtNum) {
     var params = { count: this._requestCount++ };
-    if ( child ) {
-      params.childSvcMgmtNum = child.svcMgmtNum;
+    if ( childSvcMgmtNum ) {
+      params.childSvcMgmtNum = childSvcMgmtNum;
     }
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, params)
-      .done($.proxy(this._onReceivedBillData, this, child))
+      .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
@@ -73,29 +78,26 @@ Tw.MyTFareHotBill.prototype = {
         return;
       }
       var billData = resp.result.hotBillInfo[0];
-      if ( !child ) {
-        if ( this._billInfoAvailable ) {
-          this.$amount.text(billData.totOpenBal2);
-          this.$period.text(this.$period.text() + resp.result.term);
-          var fieldInfo = {
-            lcl: 'billItmLclNm',
-            scl: 'billItmSclNm',
-            name: 'billItmNm',
-            value: 'invAmt2'
-          };
-          var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
-          if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
-            this.$unpaid.show();
-            this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
-            delete group[Tw.HOTBILL_UNPAID_TITLE];
-          }
-          skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
-          this._renderBillGroup(group, false, this.$container);
-        }
-      } else {
 
+      if ( this._billInfoAvailable ) {
+        this.$amount.text(billData.totOpenBal2);
+        var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD.');
+        var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD.');
+        this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
+        var fieldInfo = {
+          lcl: 'billItmLclNm',
+          scl: 'billItmSclNm',
+          name: 'billItmNm',
+          value: 'invAmt2'
+        };
+        var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
+        if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
+          this.$unpaid.show();
+          this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
+          delete group[Tw.HOTBILL_UNPAID_TITLE];
+        }
         skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
-        this._openChildbBill(child, resp);
+        this._renderBillGroup(group, false, this.$container);
       }
     } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
@@ -165,6 +167,10 @@ Tw.MyTFareHotBill.prototype = {
         this._confirmSwitchLine(targetSvc);
       }
     }
+  },
+
+  _onClickPreBill: function () {
+
   },
 
   _onClickChild: function (target) {

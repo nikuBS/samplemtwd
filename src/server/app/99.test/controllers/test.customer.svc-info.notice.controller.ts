@@ -15,19 +15,23 @@ import sanitizeHtml from 'sanitize-html';
 const categorySwitchingData = {
   tworld: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.TWORLD,
-    API: API_CMD.BFF_08_0029
+    API: API_CMD.BFF_08_0029_TEST,
+    PARAMS: { expsChnlCd: 'M' }
   },
   directshop: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
-    API: API_CMD.BFF_08_0039
+    API: API_CMD.BFF_08_0039,
+    PARAMS: {}
   },
   membership: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
-    API: API_CMD.BFF_08_0031
+    API: API_CMD.BFF_08_0031,
+    PARAMS: {}
   },
   roaming: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.ROAMING,
-    API: API_CMD.BFF_08_0040
+    API: API_CMD.BFF_08_0040,
+    PARAMS: {}
   }
 };
 
@@ -77,7 +81,7 @@ class TestCustomerSvcInfoNotice extends TwViewController {
       return res.redirect('/customer/svc-info/notice');
     }
 
-    this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})
+    this.apiService.request(categorySwitchingData[category].API, Object.assign(categorySwitchingData[category].PARAMS, {page: 0, size: 20}))
       .subscribe((data) => {
         if (FormatHelper.isEmpty(data)) {
           return res.redirect('/customer');

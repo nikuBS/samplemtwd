@@ -1,6 +1,6 @@
 /**
- * FileName: myt-join.product.additions.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
+ * FileName: myt-join.myplanadd.controller.ts
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.09.19
  */
 
@@ -9,6 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { Observable } from 'rxjs/Observable';
 
 class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
@@ -17,46 +18,65 @@ class MyTJoinMyPlanAdd extends TwViewController {
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (svcInfo.svcAttrCd.includes('M')) {
-      this.apiService.request(API_CMD.BFF_05_0137, {}).subscribe(resp => {
-        if (resp.code !== API_CODE.CODE_00) {
+      this.getMobileAdditions().subscribe(mobile => {
+        if (mobile.code) {
           return this.error.render(res, {
-            ...resp,
+            ...mobile,
             svcInfo: svcInfo,
             title: '나의 부가상품'
           });
         }
 
-        const additions = this.convertAdditions(FormatHelper.isEmpty(resp.result) ? [] : resp.result.addProdList);
-        res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, additions, pageInfo });
+        res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, pageInfo, ...mobile });
       });
     } else {
-      this.apiService.request(API_CMD.BFF_05_0129, {}).subscribe(resp => {
-        if (resp.code !== API_CODE.CODE_00) {
+      this.getWireAdditions().subscribe(wire => {
+        if (wire.code) {
           return this.error.render(res, {
-            ...resp,
+            ...wire,
             svcInfo: svcInfo,
             title: '나의 부가상품'
           });
         }
 
-        const additions = {
-          joined: this.convertAdditions(resp.result.pays || []).concat(resp.result.frees || []),
-          joinable: this.convertAdditions(resp.result.joinables || [])
-        };
-
-        res.render('myplanadd/myt-join.myplanadd.wire.html', { svcInfo, additions, pageInfo });
+        res.render('myplanadd/myt-join.myplanadd.wire.html', { svcInfo, pageInfo, ...wire });
       });
     }
   }
 
-  private convertAdditions = (additions: any[]) => {
-    return additions.map(addition => {
+  private getMobileAdditions = () => {
+    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+
       return {
-        ...addition,
-        basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
-        scrbDt: DateHelper.getShortDateNoDot(addition.scrbDt)
+        additions: (resp.result.addProdList || []).map(this.convertAdditions),
+        roaming: resp.result.roamingProd
       };
     });
+  }
+
+  private getWireAdditions = () => {
+    return this.apiService.request(API_CMD.BFF_05_0129, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+
+      return {
+        joined: (resp.result.pays || []).concat(resp.result.frees || []).map(this.convertAdditions),
+        joinable: resp.result.joinables.map(this.convertAdditions),
+        reserved: resp.result.reserveds.map(this.convertAdditions)
+      };
+    });
+  }
+
+  private convertAdditions = (addition: any) => {
+    return {
+      ...addition,
+      basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
+      scrbDt: DateHelper.getShortDateNoDot(addition.scrbDt)
+    };
   }
 }
 

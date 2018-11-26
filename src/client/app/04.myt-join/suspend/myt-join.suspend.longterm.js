@@ -29,7 +29,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
 
   _bindEvent: function () {
     this.$btUpload.on('click', $.proxy(this._openCommonFileDialog, this));
-    this.$optionType.on('change', $.proxy(this._onSuspendTypeChanged, this));
+    this.$optionType.on('change', $.proxy(this._changeSuspendType, this));
     this.$inputTel.on('keyup', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel));
     this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
     this.$btSuspend.on('click', $.proxy(this._onClickSuspend, this));
@@ -40,6 +40,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     if ( this._files ) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
         Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, null, $.proxy(this._changeSuspendType, this, e.target.value), null);
+    }else{
+      this._changeSuspendType();
     }
   },
 

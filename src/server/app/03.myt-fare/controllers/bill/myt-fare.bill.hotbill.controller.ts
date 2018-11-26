@@ -17,11 +17,22 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 class MyTFareBillHotbill extends TwViewController {
+  _svcInfo: any;
+  _preBillAvailable: boolean = true;
+
   constructor() {
+
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any ) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
+    this._svcInfo = svcInfo;
+    if ( !req.query.child && new Date().getDate() > 7 ) { // 전월요금 7일까지 보이기
+      this._preBillAvailable = false;
+    }
+    // debuging
+    this._preBillAvailable = true;
+
     // 2일부터 조회 가능
     if ( new Date().getDate() === 1 ) {
       res.render('bill/myt-fare.bill.hotbill.html', {
@@ -31,8 +42,10 @@ class MyTFareBillHotbill extends TwViewController {
         billAvailable: false
       });
     } else {
-      const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
+      let svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
       if ( !req.query.child && svcs && svcs.length > 0 ) {
+        let preAmount = '0';
+        let preBill: any;
         Observable.from(svcs)
           .pipe(
             mergeMap(svc => this._requestHotbillInfo(svc))
@@ -41,6 +54,13 @@ class MyTFareBillHotbill extends TwViewController {
             if ( data ) {
               data.svc.svcNum = FormatHelper.conTelFormatWithDash(data.svc.svcNum);
               data.svc.bill = data.resp.result.hotBillInfo[0].totOpenBal2;
+              if ( this._preBillAvailable && data.svc.svcMgmtNum === this._svcInfo.svcMgmtNum ) {
+                data.previous = true;
+                preAmount = data.resp.result.hotBillInfo[0].totOpenBal1;
+                preBill = data.resp.result.hotBillInfo[0];
+                // preAmount = preAmount.replace(/,/g, '');
+                data.svc.preBill = true;
+              }
             }
           },
           err => {
@@ -51,11 +71,19 @@ class MyTFareBillHotbill extends TwViewController {
             });
           },
           () => {
+            if ( this._preBillAvailable ) {
+              svcs = svcs.filter((svc) => {
+                return svc.svcMgmtNum !== svcInfo['svcMgmtNum'];
+              });
+            }
+
             res.render('bill/myt-fare.bill.hotbill.html', {
               svcInfo,
               pageInfo,
               lines: svcs,
-              billAvailable: true
+              billAvailable: true,
+              preAmount: preAmount,
+              preBill: preBill
             });
           });
       } else {
@@ -63,7 +91,9 @@ class MyTFareBillHotbill extends TwViewController {
           svcInfo: svcInfo,
           pageInfo,
           lines: [],
-          billAvailable: true
+          billAvailable: true,
+          preAmount: 0,
+          preBill: null
         };
 
         if ( req.query.child ) {
@@ -85,9 +115,12 @@ class MyTFareBillHotbill extends TwViewController {
     const otherSvc = allSvc || [];
     if ( otherSvc && otherSvc[LINE_NAME.MOBILE] ) {
       svcs = svcs.concat(otherSvc[LINE_NAME.MOBILE]
-        .filter(svc => (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 &&
-          svc.svcMgmtNum !== svcInfo['svcMgmtNum'])));
+        .filter(svc => (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1) &&  // 지원 회선 필터링
+          (this._preBillAvailable || svc.svcMgmtNum !== svcInfo['svcMgmtNum']))); // 전월요금 필요할 경우 본인 회선도 조회(gubun: Q)
+      // .filter(svc => (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 &&
+      //   svc.svcMgmtNum !== svcInfo['svcMgmtNum'])));
     }
+
     return svcs.map(svc => {
       return JSON.parse(JSON.stringify(svc));
     });
@@ -99,9 +132,12 @@ class MyTFareBillHotbill extends TwViewController {
     const headers: {} = {};
     if ( svc['child'] ) {
       params['childSvcMgmtNum'] = svc['svcMgmtNum'];
-    } else {
-      headers['T-SvcMgmtNum'] = parseInt(svc['svcMgmtNum'], 10);
+    } else if ( this._preBillAvailable && svc['svcMgmtNum'] === this._svcInfo.svcMgmtNum ) { // 전월요금 조회
+      params['gubun'] = 'Q';
     }
+    // else {
+    //   headers['T-SvcMgmtNum'] = parseInt(svc['svcMgmtNum'], 10);
+    // }
     return self.apiService.request(API_CMD.BFF_05_0022, params, headers)
       .pipe(
         delay(2500),
@@ -125,9 +161,12 @@ class MyTFareBillHotbill extends TwViewController {
     const headers: {} = {};
     if ( svc['child'] ) {
       params['childSvcMgmtNum'] = svc['svcMgmtNum'];
-    } else {
-      headers['T-SvcMgmtNum'] = parseInt(svc['svcMgmtNum'], 10);
+    } else if ( this._preBillAvailable && svc['svcMgmtNum'] === this._svcInfo.svcMgmtNum ) { // 전월요금 조회
+      params['gubun'] = 'Q';
     }
+    // else {
+    //   headers['T-SvcMgmtNum'] = parseInt(svc['svcMgmtNum'], 10);
+    // }
     return self.apiService.request(API_CMD.BFF_05_0022, params, headers)
       .map(resp => {
         if ( resp.code !== '00' ) {

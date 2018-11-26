@@ -29,7 +29,23 @@ Tw.MyTDataCookizOptions.prototype = {
   },
 
   _getRequestGift: function () {
+    this._onDataPesterDetail();
   },
+
+  // 데이터 조르기
+  _onDataPesterDetail: function () {
+    //  2_A17 Alert 호출
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.MSG,
+      Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+  },
+
+  _pesterDetailConfirm: function () {
+    this._popupService.close();
+    // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
+    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
+    Tw.CommonHelper.share(content);
+  },
+
 
   _goToAuthHistory: function () {
     this._historyService.goLoad('/myt-data/recharge/cookiz/auth');

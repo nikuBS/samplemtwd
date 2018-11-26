@@ -26,3 +26,7 @@ export const REDIS_APP_VERSION = 'AppVersion:appLoad';
 
 export const REDIS_PRODUCT_INFO = 'ProductLedger:';
 export const REDIS_PRODUCT_FILTER = 'ProductFilter:';
+
+export const UPLOAD_TYPE = {
+  EMAIL: 'email'
+};

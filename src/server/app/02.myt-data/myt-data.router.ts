@@ -14,7 +14,7 @@ import MyTDataFamily from './controllers/familydata/myt-data.familydata.controll
 import MyTDataPrepaidHistory from './controllers/prepaid/myt-data.prepaid.history.controller';
 import MyTDataPrepaidVoice from './controllers/prepaid/myt-data.prepaid.voice.controller';
 import MyTDataPrepaidData from './controllers/prepaid/myt-data.prepaid.data.controller';
-import MyTDataPrepaidAlarm from './controllers/prepaid/myt-data.prepaid.data.alarm.controller';
+import MyTDataPrepaidAlarm from './controllers/prepaid/myt-data.prepaid.alarm.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {

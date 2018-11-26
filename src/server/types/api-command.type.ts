@@ -72,6 +72,7 @@ export const API_CMD = {
   BFF_01_0054: { path: '/v1/captcha/audio', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0055: { path: '/v1/captcha/answer', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // AUTH
+  BFF_03_0000_TEST: { path: '/v1/load-test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0000: { path: '/v1/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0001: { path: '/v1/logout', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0002: { path: '/v1/user/account-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -388,7 +389,7 @@ export const API_CMD = {
   BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0070: { path: '/core-bill/v1/payment/auto-integrated-payment/account', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0071: {
-    path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
+    path: '/core-bill/v1/micro-prepay/hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: true
@@ -405,7 +406,7 @@ export const API_CMD = {
   BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0077: { path: '/core-bill/v1/microPrepay/microPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0078: {
-    path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-hist-requests',
+    path: '/core-bill/v1/use-contents-prepay/hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: true
@@ -690,6 +691,7 @@ export const API_CMD = {
   MANIFEST: { path: '/manifest.:args0.json', method: API_METHOD.GET, server: API_SERVER.CDN, bypass: false},
 
   // TEST
+  BFF_08_0029_TEST: { path: '/core-modification/v1/notice-tworld-test', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   GET: { path: '/posts', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
   GET_PARAM: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
   GET_PATH_PARAM: { path: '/posts/:args0', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },

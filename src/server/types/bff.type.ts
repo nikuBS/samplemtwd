@@ -99,6 +99,18 @@ export enum MYT_FARE_PAYMENT_TYPE {
   VIRTUAL = '04'
 }
 
+export enum MYT_FARE_PAYMENT_CODE {
+  BANK = '41',
+  BANK2 = '40',
+  CARD = '02'
+}
+
+export enum MYT_FARE_POINT_PAYMENT_STATUS {
+  CLOSE = '납부해지',
+  OPEN = '납부신청', 
+  CHANGE = '납부변경',
+}
+
 export enum MYT_FARE_PAYMENT_TITLE {
   ACCOUNT = '계좌이체',
   CARD = '체크/신용카드',
@@ -310,6 +322,13 @@ export enum PRODUCT_RESERVATION_REJECT {
   R176 = '서류에서 신청하신 가족 정보를 확인할 수 없습니다.\n가족관계 입증이 가능한 서류를 제출해주세요.',
   R173 = '가족간 명의변경 및 주민(법인,외국인)등록번호 정정내용 \n확인이 가능한 서류(행정기관 발급용)를 제출해주세요.',
   R999 = '상세 신청결과는 SK텔레콤 전문 상담원(114)에게 문의해주세요.'
+}
+
+export enum CUSTOMER_NOTICE_CTG_CD {
+  A01 = '안내',
+  A02 = '개인정보보호',
+  A04 = '이벤트',
+  A05 = '시스템'
 }
 
 export enum RAINBOW_POINT_REL_CD {
