@@ -219,6 +219,10 @@ export const API_CMD = {
   BFF_05_0141: { path: '/core-modification/v1/wire-agreements-penalty', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0142: { path: '/core-modification/v1/wire-agreements', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0143: { path: '/core-modification/v1/wire-agreements-changes', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0144: {
+    path: '/core-product/v1/services/combinations/:args0/terminations',
+    method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true
+  },
   BFF_05_0146: { path: '/core-bill/v1/bill-address', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0147: { path: '/core-bill/v1/bill-address-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

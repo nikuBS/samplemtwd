@@ -119,7 +119,7 @@ Tw.ProductWireplanTerminate.prototype = {
       hbs:'MV_01_02_02_01',
       'bt': [{
         style_class: 'bt-blue1 fe-btn_back',
-        txt: '닫기'
+        txt: Tw.BUTTON_LABEL.CLOSE
       }]
     };
 
