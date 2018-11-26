@@ -22178,7 +22178,8 @@ a.bt-link-tx.underline.small {
       display: inline-block;
       font-size: 1.0625rem;
       vertical-align: middle;
-      line-height: 1.2; }
+      line-height: 1.2;
+      color: #000000; }
 
 .device_ios .calling-plan .wrap-link .stit {
   padding-top: 0.0625rem; }
