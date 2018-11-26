@@ -395,7 +395,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getOnetimePointReserveData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
-      console.log('\x1b[36m%s\x1b[0m', '------log 포인트납부예약 code', resp.code, resp.result);
+      // console.log('\x1b[36m%s\x1b[0m', '------log 포인트납부예약 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -421,7 +421,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
-      console.log('\x1b[36m%s\x1b[0m', '------log 포인트자동납부 code', resp.code, resp.result);
+      // console.log('\x1b[36m%s\x1b[0m', '------log 포인트자동납부 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
