@@ -12,7 +12,6 @@ import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.t
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
-import { BFF_06_0044_familyInfo } from '../../mock/server/myt.data.family.mock';
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 
@@ -45,9 +44,8 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice(),
-      this._getFamilyMoa1()
-    ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, familyMock]) => {
+      this._getUsagePatternSevice()
+    ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
       if ( !svcInfo.svcMgmtNum && present.info ) {
         // 비정상 진입 또는 API 호출 오류
         this.error.render(res, {
@@ -406,14 +404,6 @@ class MytDataSubmainController extends TwViewController {
         // error
         return null;
       }
-    });
-  }
-
-  // T가족모아 MOCK - 데이터 mig 작업 이후 제거
-  _getFamilyMoa1(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(BFF_06_0044_familyInfo);
-      obs.complete();
     });
   }
 }

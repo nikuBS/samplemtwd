@@ -10,7 +10,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
-import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 class ProductMobileplanAddTerminate extends TwViewController {
   constructor() {
@@ -40,7 +40,7 @@ class ProductMobileplanAddTerminate extends TwViewController {
         }));
       }
 
-      res.render('mobileplan-add/terminate/product.mobileplan-add.terminate.html', Object.assign(renderCommonInfo, {
+      res.render('mobileplan-add/product.mobileplan-add.terminate.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
       }));

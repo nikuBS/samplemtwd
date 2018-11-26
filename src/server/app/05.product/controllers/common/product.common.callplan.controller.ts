@@ -6,12 +6,13 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { PROD_CTG_CD_CODE } from '../../../../types/bff.type';
-import {DATA_UNIT, PRODUCT_CTG_NAME} from '../../../../types/string.type';
-import ProductHelper from '../../helper/product.helper';
+import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO } from '../../../../types/common.type';
+import { DATA_UNIT, PRODUCT_CTG_NAME } from '../../../../types/string.type';
+import FormatHelper from '../../../../utils/format.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -156,6 +157,10 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
+      if (FormatHelper.isEmpty(item.titleNm)) {
+        return true;
+      }
+
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
       }));
@@ -276,8 +281,8 @@ class ProductCommonCallplan extends TwViewController {
           this._getApi('series', basicInfo.result.ctgCd),
           this._getApi('recommands'),
           this._getApi('additions'),
-          this.redisService.getData('ProductLedger:' + this._prodId),
-          this.redisService.getData('ProductFilter:F01230')
+          this.redisService.getData(REDIS_PRODUCT_INFO + this._prodId),
+          this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230')
         ).subscribe(([
           relateTagsInfo, seriesInfo, recommendsInfo, additionsInfo, prodRedisInfo, prodFilterInfo
         ]) => {
@@ -299,7 +304,7 @@ class ProductCommonCallplan extends TwViewController {
             });
           }
 
-          res.render('common/product.common.callplan.html', {
+          res.render('common/callplan/product.common.callplan.html', {
             pathCategory: req.path.split('/')[1],
             pageInfo: pageInfo,
             svcInfo: svcInfo,

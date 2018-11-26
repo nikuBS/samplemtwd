@@ -208,7 +208,7 @@ Tw.CustomerAgentsearch.prototype = {
     }
   },
   _onSearchRequested: function (e) {
-    var url = '/customer/agentsearch?type=';
+    var url = '/customer/agentsearch/search?type=';
     var hash = '#name';
 
     switch (e.currentTarget.id) {

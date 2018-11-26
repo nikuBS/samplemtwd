@@ -5,15 +5,15 @@ const UnpaidList = {
     'recCnt': 10,
     'settleUnPaidList': [
       {
-        'invDt': '20170930',
+        'invDt': '20171130',
         'svcMgmtNum': '7264473703',
         'billAcntNum': '6174673780',
         'svcCd': 'C',
-        'svcNum': '010-52**-59**',
+        'svcNum': '01052**59**',
         'invAmt': '60710'
       },
       {
-        'invDt': '20170930',
+        'invDt': '20171130',
         'svcMgmtNum': '7270581529',
         'billAcntNum': '6174673780',
         'svcCd': 'I',
@@ -29,7 +29,7 @@ const UnpaidList = {
         'invAmt': '3300'
       },
       {
-        'invDt': '20160930',
+        'invDt': '20161230',
         'svcMgmtNum': '7264473703',
         'billAcntNum': '6174673780',
         'svcCd': 'C',

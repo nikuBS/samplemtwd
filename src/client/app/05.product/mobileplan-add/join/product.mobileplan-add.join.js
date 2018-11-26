@@ -52,7 +52,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 1)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 0)
     });
   },
 
@@ -63,9 +63,10 @@ Tw.ProductMobileplanAddJoin.prototype = {
   _prodConfirmOk: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
+    // prodId: this._prodId,
+    //   prodProcTypeCd: 'JN',
+
     this._apiService.request(Tw.API_CMD.BFF_10_0035, {
-      prodId: this._prodId,
-      prodProcTypeCd: 'JN',
       addCd: '2'
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },

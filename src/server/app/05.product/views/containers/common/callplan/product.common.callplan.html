@@ -1,0 +1,95 @@
+<%#
+* FileName: product.common.callplan.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2018.09.11
+%>
+
+<% include ../../../components/start.component.html %>
+<body class="bg-productdetail">
+<% include ../../../components/common/callplan/product.common.callplan.header-style.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<!-- #contents -->
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '상품상세', svcInfo, option: { line: false } }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <%# 상품원장 상단 %>
+            <% include product.common.callplan.header.html %>
+            <%# // 상품원장 상단 %>
+
+            <%# SKT만의 혜택 %>
+            <% include product.common.callplan.sktprodbenefit.html %>
+            <%# // SKT만의 혜택 %>
+
+            <%# 상단 배너 %>
+            <% include product.common.callplan.banner.top.html %>
+            <%# // 상단 배너 %>
+
+            <%# 콘텐츠 상단 넛지(예약, 요금제 찾기) %>
+            <% include product.common.callplan.nudge.top.html %>
+            <%# // 콘텐츠 상단 넛지(예약, 요금제 찾기) %>
+
+            <%# 설정 버튼 %>
+            <% include product.common.callplan.setting-btn.html %>
+            <%# // 설정 버튼 %>
+
+            <%# 콘텐츠 %>
+            <% include product.common.callplan.contents.html %>
+            <%# // 콘텐츠 %>
+
+            <%# 중단 배너 %>
+            <% include product.common.callplan.banner.middle.html %>
+            <%# // 중단 배너 %>
+
+            <%# 시리즈 %>
+            <% include product.common.callplan.series.html %>
+            <%# // 시리즈 %>
+
+            <%# 유사한 요금제 찾기 %>
+            <% include product.common.callplan.recommended.html %>
+            <%# // 유사한 요금제 찾기 %>
+
+            <%# 다른 부가상품 더보기 %>
+            <% include product.common.callplan.additions-more.html %>
+            <%# // 다른 부가상품 더보기 %>
+
+            <%# 함께하면 더욱 유용한 상품 %>
+            <% include product.common.callplan.recommend-prod.html %>
+            <%# // 함께하면 더욱 유용한 상품 %>
+
+            <%# 함께하면 더욱 스마트한 앱서비스 %>
+            <% include product.common.callplan.apps.html %>
+            <%# // 함께하면 더욱 스마트한 앱서비스 %>
+
+            <%# 하단 배너 %>
+            <% include product.common.callplan.banner.bottom.html %>
+            <%# // 하단 배너 %>
+
+            <%# 추천 태그 %>
+            <% include product.common.callplan.relate-tags.html %>
+            <%# // 추천 태그 %>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- #footer -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+    <!--// #footer -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<% include ../../../components/common/callplan/product.common.callplan.recommended.component.html %>
+<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>', '<%= filterIds %>'); });</script>
+<% include ../../../components/end.component.html %>

@@ -19,39 +19,23 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="list-comp-lineinfo type2 no-bt">
+                    {{#each overPayList}}
                     <li>
                         <div class="lineinfo-user">
                             <span class="info-title">과납금액</span>
-                            <span class="info-sub">2018.05.23</span>
+                            <span class="info-sub">{{dataDt}}</span>
                         </div>
                         <div class="lineinfo-data">
-                            <span class="info-title"><span class="num ff-tg-black">27,000</span><span class="ff-tg-medium">원</span></span>
+                            <span class="info-title"><span class="num ff-tg-black">{{svcBamt}}</span><span class="ff-tg-medium">원</span></span>
                         </div>
                     </li>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">과납금액</span>
-                            <span class="info-sub">2018.05.23</span>
-                        </div>
-                        <div class="lineinfo-data">
-                            <span class="info-title"><span class="num ff-tg-black">27,000</span><span class="ff-tg-medium">원</span></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title">과납금액</span>
-                            <span class="info-sub">2018.05.23</span>
-                        </div>
-                        <div class="lineinfo-data">
-                            <span class="info-title"><span class="num ff-tg-black">27,000</span><span class="ff-tg-medium">원</span></span>
-                        </div>
-                    </li>
+                    {{/each}}
                     <li>
                         <div class="lineinfo-user">
                             <span class="info-title tx-bold">환불 총 금액</span>
                         </div>
                         <div class="lineinfo-data">
-                            <span class="info-title point-color"><span class="num ff-tg-black">81,000</span><span class="ff-tg-medium">원</span></span>
+                            <span class="info-title point-color"><span class="num ff-tg-black">{{totalOverAmt}}</span><span class="ff-tg-medium">원</span></span>
                         </div>
                     </li>
                 </ul>
@@ -68,7 +52,7 @@
                     <button class="bt-dropdown big" title="은행선택">은행선택<span class="ico"></span></button>
                     <div class="inputbox bt-add mt6">
                         <span class="input">
-                            <input type="number" placeholder="계좌번호(숫자만 입력)" title="계좌번호(숫자만 입력)" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                            <input type="number" placeholder="계좌번호(숫자만 입력)" title="계좌번호(숫자만 입력)" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" id="fe-bank-account">
                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                         </span>
                     </div>

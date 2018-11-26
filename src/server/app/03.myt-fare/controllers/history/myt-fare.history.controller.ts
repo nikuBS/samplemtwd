@@ -45,9 +45,9 @@ class MyTFareMicroHistory extends TwViewController {
   selectedMonth;
   isContents;
   URL = {
-    block: '/myt/fare/billsmall/block',
-    detailSmall: '/myt/fare/billsmall/detail',
-    detailContents: '/myt/fare/billcontents/detail'
+    block: '/myt-fare/bill/small/block',
+    detailSmall: '/myt-fare/bill/small/detail',
+    detailContents: '/myt-fare/bill/contents/detail'
   };
 
   constructor() {
@@ -69,7 +69,7 @@ class MyTFareMicroHistory extends TwViewController {
           req.path.split('/').splice(-2)[0] : req.path.split('/').splice(-3)[0]
     };
 
-    this.isContents = query.parent === 'billcontents';
+    this.isContents = query.parent === 'bill/contents';
 
     if (!this.isContents) {
       switch (query.current) {
@@ -214,7 +214,7 @@ class MyTFareMicroHistory extends TwViewController {
       gubun: 'Request',
       requestCnt: 0
     };
-    const API_CMD_NAME = (parentPath === 'billsmall') ? API_CMD.BFF_07_0073 : API_CMD.BFF_07_0081;
+    const API_CMD_NAME = (parentPath === 'bill/small') ? API_CMD.BFF_07_0073 : API_CMD.BFF_07_0081;
 
     this.apiService.request(API_CMD_NAME, apiOption).subscribe(() => {
       apiOption.gubun = 'Done';

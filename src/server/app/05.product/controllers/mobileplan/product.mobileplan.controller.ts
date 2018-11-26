@@ -11,7 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import BrowserHelper from '../../../../utils/browser.helper';
-import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';

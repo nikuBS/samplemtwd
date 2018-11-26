@@ -23,7 +23,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         });
       }
 
-      this.getCombination(prodId).subscribe(combination => {
+      this.getCombination(prodId, svcInfo).subscribe(combination => {
         if (combination.code) {
           return this.error.render(res, {
             ...combination,
@@ -69,7 +69,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
     });
   }
 
-  private getCombination = id => {
+  private getCombination = (id, svcInfo) => {
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, id).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -91,7 +91,8 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         combinationGroup: {
           ...resp.result.combinationGroup,
           totBasFeeDcTx: FormatHelper.addComma(String(resp.result.combinationGroup.totBasFeeDcTx)),
-          combStaDt: DateHelper.getShortDateNoDot(resp.result.combinationGroup.combStaDt)
+          combStaDt: DateHelper.getShortDateNoDot(resp.result.combinationGroup.combStaDt),
+          isRepresentation: resp.result.combinationGroup.svcMgmtNum === svcInfo.svcMgmtNum
         },
         combinationWirelessMemberList: (resp.result.combinationWirelessMemberList || []).map(member => {
           return {

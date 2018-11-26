@@ -31,6 +31,16 @@
                 {{/notice_list}}
             </ul>
             {{/if}}
+            {{#if infocopy}}
+            <div class="infocopy">
+                {{#infocopy}}
+                <div>{{info_contents}}</div>
+                <div class="{{bt_class}}">
+                    <button>더 알아보기</button>
+                </div>
+                {{/infocopy}}
+            </div>
+            {{/if}}
         </div>
         {{#if bt}}
         <div class="btn-box">

@@ -18,56 +18,41 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
 
 Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0064, {})
-      .done($.proxy(this._onCompleteAlarm, this));
+    this.templateIndex = 0;
   },
 
   _cachedElement: function () {
-    this.$cardNumber = this.$container.find('.fe-card-number');
-    this.$cardY = this.$container.find('.fe-card-y');
-    this.$cardM = this.$container.find('.fe-card-m');
-    this.$cardPw = this.$container.find('.fe-card-pw');
-    this.$btn_request = $('.fe-request-recharge');
+    this.wrap_template = $('.fe-wrap-template');
+    this.tpl_recharge_once = Handlebars.compile($('#tpl_recharge_once').html());
+    this.tpl_recharge_amount = Handlebars.compile($('#tpl_recharge_amount').html());
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.fe-unsubscribe-auto-recharge', $.proxy(this._onClickUnsubscribeAutoRecharge, this));
-    this.$container.on('click', '.fe-select-amount', $.proxy(this._onClickSelectAmount, this));
-    this.$container.on('click', '.fe-select-date', $.proxy(this._onClickSelectDate, this));
-    this.$container.on('click', '.fe-select-expire', $.proxy(this._onClickSelectExpire, this));
-    this.$container.on('click', '.fe-request-recharge', $.proxy(this._onClickSelectAmount, this));
-    this.$container.on('change input blur click', '[required]', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', 'li.fe-template-type', $.proxy(this._changeRechargeType, this));
+    this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowAmount, this));
+    this.$container.on('click', '.fe-select-date', $.proxy(this._onShowDate, this));
+    this.$container.on('click', '.fe-select-remain-amount', $.proxy(this._onShowRemainAmount, this));
+    this.$container.on('change input blur click', '.fe-wrap-template [required]', $.proxy(this._validateForm, this));
   },
 
-  _checkIsAbled: function () {
-    if ( this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '' ) {
-      this.$btn_request.prop('disabled', false);
-    } else {
-      this.$btn_request.prop('disabled', true);
+  _changeRechargeType: function (e) {
+    var $elTarget = $(e.currentTarget);
+    var currentTemplateIndex = $elTarget.parent().find('li').index($elTarget);
+
+    if ( this.templateIndex !== currentTemplateIndex ) {
+      this.templateIndex = currentTemplateIndex;
+
+      if ( currentTemplateIndex === 0 ) {
+        this.wrap_template.html(this.tpl_recharge_once());
+      } else {
+        this.wrap_template.html(this.tpl_recharge_amount());
+      }
     }
   },
 
-  _validateCreditCard: function () {
-    var isValid = this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkLength(this.$cardPw.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
-
-    if ( isValid ) {
-      var htParams = {
-        cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)
-      };
-
-      this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
-        .done($.proxy(this._getCreditCardInfo, this));
-    }
-  },
-
-  _onClickSelectDate: function (e) {
+  _onShowDate: function (e) {
     var $elButton = $(e.currentTarget);
-    var fnSelectAmount = function (item) {
+    var fnSelectDate = function (item) {
       return {
         value: item.text,
         option: false,
@@ -78,19 +63,36 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',
         layer: true,
-        title: Tw.MYT_PREPAID_ALARM.title,
-        data: [{ list: Tw.MYT_PREPAID_DATE.list.map($.proxy(fnSelectAmount, this)) }]
+        title: Tw.MYT_PREPAID_AMOUNT.title,
+        data: [{ list: Tw.MYT_PREPAID_DATE.list.map($.proxy(fnSelectDate, this)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
       null
     );
   },
 
-  _onClickSelectExpire: function () {
+  _onShowRemainAmount: function (e) {
+    var $elButton = $(e.currentTarget);
+    var fnSelectDate = function (item) {
+      return {
+        value: item.text,
+        option: false,
+        attr: 'data-value=' + item.value
+      };
+    };
 
+    this._popupService.open({
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.MYT_PREPAID_AMOUNT.title,
+        data: [{ list: Tw.MYT_PREPAID_RECHARGE_AMOUNT.list.map($.proxy(fnSelectDate, this)) }]
+      },
+      $.proxy(this._selectPopupCallback, this, $elButton),
+      null
+    );
   },
 
-  _onClickSelectAmount: function (e) {
+  _onShowAmount: function (e) {
     var $elButton = $(e.currentTarget);
     var fnSelectAmount = function (item) {
       return {
@@ -121,32 +123,15 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     $target.data('amount', $(e.currentTarget).data('value'));
   },
 
-  _onClickUnsubscribeAutoRecharge: function () {
-    this._popupService.openModalTypeA(
-      Tw.MYT_DATA_PREPAID.A70_TITLE,
-      Tw.MYT_DATA_PREPAID.A70_CONTENT,
-      Tw.MYT_DATA_PREPAID.A70_BTN_CONFIRM,
-      null,
-      $.proxy(this._unsubscribeAutoRecharge, this),
-      $.proxy(this._closeUnsubscribeAutoRecharge, this)
-    );
+  _validateForm: function (e) {
+    // this._checkIsAbled();
   },
 
-  _closeUnsubscribeAutoRecharge: function () {
-    this._popupService.close();
-  },
-
-  _unsubscribeAutoRecharge: function () {
-    this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_06_0057, {})
-      .done($.proxy(this._onSuccessUnsubscribe, this));
-  },
-
-  _onSuccessUnsubscribe: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      //TODO Complete Page
+  _checkIsAbled: function () {
+    if ( this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '' ) {
+      this.$btnRequestCreditCard.prop('disabled', false);
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this.$btnRequestCreditCard.prop('disabled', true);
     }
   }
 };

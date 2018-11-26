@@ -341,7 +341,8 @@ skt_landing.widgets = {
         }
         $(this).closest('.acco-cover').toggleClass('on');
       });
-      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button').on('click', function (event) {
+      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button:not(".btn-tip")').on('click', function (event) {
+        
         if(_this.find('> .acco-cover').hasClass('toggle')){
           $(this).closest('.acco-box').siblings().removeClass('on');
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
@@ -475,7 +476,11 @@ skt_landing.widgets = {
           tabCont = _this.find('.tab-contents');
       initLinkSlide(tabList);
       tabListOnChk();
+
       tabList.find('button:not(".tip-view"), a:not(".tip-view")').on('click',function(){
+        if($(this).hasClass('disabled')){ // .disabled시 비활성화
+          return false;
+        }
         $(this).closest('li').attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         tabListOnChk();
         initLinkSlide(tabList);

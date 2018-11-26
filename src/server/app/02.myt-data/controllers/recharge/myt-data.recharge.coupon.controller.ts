@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, TIME_UNIT } from '../../../../types/string.type';
+import {REDIS_PRODUCT_INFO} from '../../../../types/common.type';
 
 interface Coupon {
   copnIsueNum: string;
@@ -86,7 +87,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     this.getCouponUsageOptions().subscribe(
       (resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          this.redisService.getData('ProductLedger:' + svcInfo.prodId).subscribe(
+          this.redisService.getData(REDIS_PRODUCT_INFO + svcInfo.prodId).subscribe(
             (productInfo) => {
               if (!FormatHelper.isEmpty(productInfo)) {
                 const purifiedOptions =

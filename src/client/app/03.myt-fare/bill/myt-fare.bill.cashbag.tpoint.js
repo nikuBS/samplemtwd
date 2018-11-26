@@ -38,7 +38,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
-    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
+    this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.fe-agree', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));

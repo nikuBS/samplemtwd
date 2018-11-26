@@ -8,6 +8,11 @@ Tw.MyTDataUsage = function (rootEl, options) {
   this._bindEvent();
   this._registerHelper();
   this._requestServices();
+
+
+
+  // 클라이언트 파일 변경 테스트 코드
+  // this.$container.find('.fe-test').css({backgroundColor: 'red'});
 };
 
 Tw.MyTDataUsage.prototype = {

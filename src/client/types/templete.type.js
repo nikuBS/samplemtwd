@@ -224,8 +224,8 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_MICRO_HISTORY_LIST: [
     {
       'list': [
-        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/billsmall/history"', value: '소액결제 이용내역' },
-        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/billsmall/block"', value: '자동결제 차단내역' }
+        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/bill/small/history"', value: '소액결제 이용내역' },
+        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/bill/small/block"', value: '자동결제 차단내역' }
       ]
     }
   ],
@@ -674,3 +674,37 @@ Tw.PRODUCT_APPS_ORDER = [
   { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
   { value: '가나다순', attr: 'data-prop="prodNm"' }
 ];
+
+Tw.SUSPEND_RELATION = {
+  title: '추가연락처',
+  list: [
+    { 'option': '', 'attr': 'data-value="부모님"', value: '부모님' },
+    { 'option': '', 'attr': 'data-value="형제/자매"', value: '형제/자매' },
+    { 'option': '', 'attr': 'data-value="자녀"', value: '자녀' },
+    { 'option': '', 'attr': 'data-value="친구"', value: '친구' },
+    { 'option': '', 'attr': 'data-value="배우자"', value: '배우자' },
+    { 'option': '', 'attr': 'data-value="동료"', value: '동료' },
+    { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
+  ]
+};
+
+Tw.PRODUCT_JOIN_TYPE = [
+  { value: '휴대폰', attr: 'data-type-code="cellphone"' },
+  { value: '인터넷', attr: 'data-type-code="internet"' },
+  { value: '전화', attr: 'data-type-code="phone"' },
+  { value: 'TV', attr: 'data-type-code="TV"' },
+  { value: '결합상품', attr: 'data-type-code="combine"' },
+];
+
+Tw.SUSPEND_RELATION = {
+  title: '추가연락처',
+  list: [
+    { 'option': '', 'attr': 'data-value="부모님"', value: '부모님' },
+    { 'option': '', 'attr': 'data-value="형제/자매"', value: '형제/자매' },
+    { 'option': '', 'attr': 'data-value="자녀"', value: '자녀' },
+    { 'option': '', 'attr': 'data-value="친구"', value: '친구' },
+    { 'option': '', 'attr': 'data-value="배우자"', value: '배우자' },
+    { 'option': '', 'attr': 'data-value="동료"', value: '동료' },
+    { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
+  ]
+};

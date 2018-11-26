@@ -24,7 +24,7 @@ class MyTFareBillSms extends TwViewController {
           unpaidList: this.parseData(unpaidList.result, svcInfo),
           virtualBankList: accountList,
           title: MYT_FARE_PAYMENT_TITLE.SMS,
-          svcInfo: svcInfo,
+          svcInfo: this.getSvcInfo(svcInfo),
           pageInfo: pageInfo
         });
       } else {
@@ -63,10 +63,11 @@ class MyTFareBillSms extends TwViewController {
       list.defaultIndex = 0;
 
       list.map((data, index) => {
-        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
+        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
+        data.svcNumber = data.svcCd === 'C' ? FormatHelper.conTelFormatWithDash(data.svcNum) : data.svcNum;
 
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
@@ -88,6 +89,14 @@ class MyTFareBillSms extends TwViewController {
       }
     }
     return input;
+  }
+
+  private getSvcInfo(svcInfo: any): any {
+    if (svcInfo) {
+      svcInfo.svcNumber = svcInfo.svcAttrCd === 'M1' ? FormatHelper.conTelFormatWithDash(svcInfo.svcNum) :
+        svcInfo.svcNum;
+    }
+    return svcInfo;
   }
 
 }

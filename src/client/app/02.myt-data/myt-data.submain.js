@@ -230,7 +230,7 @@ Tw.MyTDataSubMain.prototype = {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
     var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE +
-      this.data.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
+      this.data.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.MOBILE_TWORLD;
     Tw.CommonHelper.share(content);
   },
 

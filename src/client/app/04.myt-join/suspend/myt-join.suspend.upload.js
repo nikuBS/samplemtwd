@@ -8,8 +8,7 @@ Tw.MytJoinSuspendUpload = function () {
 };
 Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' };
 Tw.MytJoinSuspendUpload.prototype = {
-  show: function (callback, fileCount, oldFiles, fileInfo) {
-    this._showUploadTip();
+  show: function (callback, fileCount, oldFiles, fileInfo, tooltip) {
     this._callback = callback;
     this._fileCount = fileCount || 1;
     this._fileInfo = fileInfo || new Array(this._fileCount);
@@ -17,14 +16,18 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._fileInfo = _.map(this._fileInfo, function (info, idx) {
       return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx] });
     });
+    if(tooltip){
+      this._showUploadTip(tooltip);
+    }else{
+      this._showUploadPopup();
+    }
   },
-  _showUploadTip: function () {
-    this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP, Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE, null,
+  _showUploadTip: function (tooltip) {
+    this._popupService.openAlert(tooltip.title, tooltip.content, null,
       $.proxy(this._showUploadPopup, this));
   },
 
   _showUploadPopup: function () {
-    console.log(this._fileInfo);
     this._popupService.open({
       hbs: 'CS_04_01_L02',
       inputfile_num: this._fileInfo,

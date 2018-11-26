@@ -3,7 +3,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>장기일시정지 해제</h1>
+                <h1>{{#if data.longterm}}장기{{/if}}일시정지 해제</h1>
             </div>
         </div>
     </div>
@@ -29,12 +29,12 @@
 
             <!-- .cont-box -->
             <div class="cont-box pb0">
-                <h3>장기일시정지 정보</h3>
+                <h3>{{#if data.longterm}}장기{{/if}}일시정지 정보</h3>
                 <div class="info-list-type1 type01">
                     <div class="basic-list mt0">
                         <ul>
                             <li>
-                                <span class="title">장기일시정지 기간</span>
+                                <span class="title">{{#if data.longterm}}장기{{/if}}일시정지 기간</span>
                                 <span class="tx-cont">{{ data.period.from }} ~ {{ data.period.to }}</span>
                             </li>
                             <li>
@@ -53,7 +53,13 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해주세요!</h3>
                 <ul class="noti-list">
-                    <li>장기일시정지 안내 <button type="button" class="tip-view" id="MS_03_05_05_tip_01">TIP</button></li>
+                    {{#if data.longterm}}
+                        <li>장기일시정지 안내 <button type="button" class="tip-view" id="MS_03_05_05_tip_01">TIP</button></li>
+                    {{else}}
+                        <li>일시정지 신청안내 <button type="button" class="tip-view" id="MS_03_05_02_tip_01">TIP</button></li>
+                        <li>일시정지 기간안내 <button type="button" class="tip-view" id="MS_03_05_02_tip_02">TIP</button></li>
+                        <li>일시정지 요금안내 <button type="button" class="tip-view" id="MS_03_05_02_tip_03">TIP</button></li>
+                    {{/if}}
                 </ul>
             </div>
             <!--// .cont-box -->

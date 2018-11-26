@@ -19,6 +19,7 @@ import ProductMobileplanSettingNumberFriend from './controllers/mobileplan/setti
 import ProductMobileplanSettingBandYT from './controllers/mobileplan/setting/product.mobileplan.setting.bandYT.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
+import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/product.mobileplan.lookup.couple.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -57,6 +58,8 @@ import ProductRoamingFiReservation1step from './controllers/roaming/product.roam
 import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
 import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info.center.controller';
+import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
+import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
 
 class ProductRouter extends TwRouter {
@@ -76,7 +79,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/setting/number/:prodId', controller: ProductMobileplanSettingNumber });
     this.controllers.push({ url: '/mobileplan/setting/number-friend/:prodId', controller: ProductMobileplanSettingNumberFriend });
     this.controllers.push({ url: '/mobileplan/setting/location/:prodId', controller: ProductMobileplanSettingLocation });
-    this.controllers.push({ url: '/mobileplan/setting/bandYT/:prodId', controller: ProductMobileplanSettingBandYT});
+    this.controllers.push({ url: '/mobileplan/setting/no-limit/:prodId', controller: ProductMobileplanSettingBandYT});
+    this.controllers.push({ url: '/mobileplan/lookup/couple/:prodId', controller: ProductMobileplanSettingCouple});
     this.controllers.push({ url: '/mobileplan/lookup/tplan(/:prodId)?', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting/:prodId', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
@@ -96,8 +100,10 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
-    this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });
-    this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/wireplan/join/require-document/apply(/:prodId)?', controller: ProductWireplanJoinRequireDocumentApply });
+    this.controllers.push({ url: '/wireplan/join/require-document/history(/:prodId)?', controller: ProductWireplanJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/wireplan/join/:prodId', controller: ProductWireplanJoin });
+    this.controllers.push({ url: '/wireplan/terminate/:prodId', controller: ProductWireplanTerminate });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/:appId', controller: ProductAppsDetail });

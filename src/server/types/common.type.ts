@@ -23,3 +23,6 @@ export enum BUILD_TYPE {
 
 export const REDIS_URL_META = 'UrlMetaNode:';
 export const REDIS_APP_VERSION = 'AppVersion:appLoad';
+
+export const REDIS_PRODUCT_INFO = 'ProductLedger:';
+export const REDIS_PRODUCT_FILTER = 'ProductFilter:';

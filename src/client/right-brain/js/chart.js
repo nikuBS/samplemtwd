@@ -1,40 +1,386 @@
 $.fn.chart2 = function(o){
   /*
-    target : draw 대상
-    type : 차트 유형
-    tit : 차트 제목
+    target : 대상
+    type : 차트 유형 (circle, bar1, bar2, bar3, bar4)
     legend : 범례
-    data_type : 데이터 타입
     data_arry : 데이터
     unlimited : 데이터에 무제한이 있는지 여부
-    max : 최대값
+    max : 최대값r
     prdname : 상품명 // circle 타입에서 사용
+    link : dt영역 링크 여부
   */
-  var d = {target:null,type:null,tit:null,legend:null,average:null,unit:null,data_arry:null,unlimited:false,prdname:null}
-  var max = 0;
+  var d = {target:null,type:null,tit:null,legend:null,average:null,unit:null,data_arry:null,unlimited:false,prdname:null,link:null}
+  var max = 0, // 최대값
+    max2 = 0, // 최대값2
+    text_pattern = [], // 노출 텍스트
+    text2_pattern = [], // 노출 텍스트2
+    style_pattern = [], // 높이 설정
+    style2_pattern = [], // 높이 설정2
+    throw_arry = [], // 평균값 연산시 사용하는 배열
+    throw2_arry = [], // 평균값 연산시 사용하는 배열2
+    class_pattern = ['patten1', 'red', 'blue']; // 서클 타입에서 사용되는 class명
   $.extend(d,o);
   if(d.target == null) return;
-  
   $(d.target).addClass(d.type);
 
   if(d.type == 'bar1'){ // bar1
-    
+    $(d.target).append($('<ul>'));
+    for(var i=0; i < d.data_arry.length; i++){
+      d.unlimited = false;
+      style_pattern = [];
+      max = 0;
+      if(typeof d.data_arry[i].v == 'number'){
+        text_pattern.push(d.data_arry[i].v + d.data_arry[i].u);
+        max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
+      }else{
+        text_pattern.push(d.data_arry[i].v);
+        d.unlimited = true;
+      }
+      if(typeof d.data_arry[i].v2 == 'number'){
+        text2_pattern.push(d.data_arry[i].v2 + d.data_arry[i].u);
+        max = (max > d.data_arry[i].v2) ? max : d.data_arry[i].v2;
+      }else{
+        text2_pattern.push(d.data_arry[i].v2);
+        d.unlimited = true;
+      }
+      if(d.unlimited){
+        if(typeof d.data_arry[i].v == 'number'){
+          style_pattern.push(50);
+          style_pattern.push(100);
+        }else{
+          style_pattern.push(100);
+          style_pattern.push(50);
+        }
+      }else{
+        style_pattern.push((d.data_arry[i].v/max) * 100);
+        style_pattern.push((d.data_arry[i].v2/max) * 100);
+      }
+      $(d.target).find('ul')
+        .append(
+          $('<li>')
+            .append(
+              $('<dl>')
+                .append(
+                  $('<dt>').text(d.prdname[i])
+                )
+                .append(
+                  $('<dd>').addClass('first')
+                    .append(
+                      $('<span>').addClass('shapes').css('height', style_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('blind').text(d.prdname[i] + ' : ' + d.legend[0])
+                    )
+                    .append(
+                      $('<span>').addClass('data').text(text_pattern[i]).css('bottom', style_pattern[0])
+                    )
+                )
+                .append(
+                  $('<dd>').addClass('second')
+                    .append(
+                      $('<span>').addClass('shapes').css('height', style_pattern[1])
+                    )
+                    .append(
+                      $('<span>').addClass('blind').text(d.prdname[i] + ' : ' + d.legend[1])
+                    )
+                    .append(
+                      $('<span>').addClass('data').text(text2_pattern[i]).css('bottom', style_pattern[1])
+                    )
+                )
+            )
+        )
+    }
+    $(d.target)
+      .append(
+        $('<div>').addClass('legend')
+          .append(
+            $('<span>').addClass('category0')
+              .append(
+                $('<span>').text(d.legend[0])
+              )
+          )
+          .append(
+            $('<span>').addClass('category1')
+              .append(
+                $('<span>').text(d.legend[1])
+              )
+          )
+      )
+  }
+  if(d.type == 'bar2'){ // bar2
+    $(d.target).append($('<div>').addClass('data-arry').append($('<div>').addClass('data-belt').append($('<ul>').addClass('data-ul'))));
+    for(var i=0; i < d.data_arry.length; i++){
+      throw_arry.push(d.data_arry[i].v);
+    }
+    average(throw_arry, d.unit);
+    if(d.legend){// 범례
+      $(d.target).append($('<div>').addClass('legend'));
+      for(var i=0; i < d.legend.length; i++){
+        $(d.target).find('.legend')
+          .append(
+            $('<span>').addClass('category' + i)
+            .append(
+              $('<span>').text(d.legend[i])
+            )
+          )
+      }
+    }
 
+    if(d.average){ // 평균
+      $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>').addClass('average').data('value', average)
+            .append(
+              $('<dl>')
+                .append(
+                  $('<dt>').text('평균')
+                )
+                .append(
+                  $('<dd>')
+                    
+                    .append(
+                      $('<span>').addClass('v').css('bottom', style_pattern[0]+'%').text(text_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar').css('height', style_pattern[0]+'%')
+                    )
+                )
+            )
+        )
+    }
+
+    for(var i=0; i < d.data_arry.length; i++){
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>')
+          .append(
+            $('<dl>')
+              .append($('<dt>')
+                .text(d.data_arry[i].t)
+              )
+              .append(
+                $('<dd>')
+                  .append(
+                    $('<span>').addClass('v').css('bottom', style_pattern[i+1]+'%').text(text_pattern[i+1])
+                  )
+                .append(
+                  $('<span>').addClass('bar').css('height', style_pattern[i+1]+'%')
+                )
+              )
+          )
+        )
+    }
+
+    $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+    if($(d.target).find('.data-ul > li').length > 4){
+      $(d.target).addClass('over');
+      $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+      $(d.target).find('.data-ul').css('width', (21.5 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+    }
+    if(d.link){
+      $(d.target).find('.data-ul > li:not(".average")').each(function(i){
+        var temp = $(this).find('dt').text();
+        $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+      })
+    }
+  }
+  if(d.type == 'bar3'){ // bar3 - bar2와 차이점은 범례1개 추가된것밖에 없음
+    $(d.target).append($('<div>').addClass('data-arry').append($('<div>').addClass('data-belt').append($('<ul>').addClass('data-ul'))));
+    for(var i=0; i < d.data_arry.length; i++){
+      throw_arry.push(d.data_arry[i].v);
+    }
+    average(throw_arry, d.unit);
+    if(d.legend){// 범례
+      $(d.target).append($('<div>').addClass('legend'));
+      for(var i=0; i < d.legend.length; i++){
+        $(d.target).find('.legend')
+          .append(
+            $('<span>').addClass('category' + i)
+            .append(
+              $('<span>').text(d.legend[i])
+            )
+          )
+      }
+    }
+
+    if(d.average){ // 평균
+      $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>').addClass('average').data('value', average)
+            .append(
+              $('<dl>')
+                .append(
+                  $('<dt>').text('평균')
+                )
+                .append(
+                  $('<dd>')
+                    .append(
+                      $('<span>').addClass('blind').text(d.legend[0])
+                    )
+                    .append(
+                      $('<span>').addClass('v').css('bottom', style_pattern[0]+'%').text(text_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar').css('height', style_pattern[0]+'%')
+                    )
+                )
+            )
+        )
+    }
+
+    for(var i=0; i < d.data_arry.length; i++){
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>')
+          .append(
+            $('<dl>')
+              .append($('<dt>')
+                .text(d.data_arry[i].t)
+              )
+              .append(
+                $('<dd>')
+                  .append(
+                    $('<span>').addClass('blind').text(d.legend[0])
+                  )
+                  .append(
+                    $('<span>').addClass('v').css('bottom', style_pattern[i+1]+'%').text(text_pattern[i+1])
+                  )
+                .append(
+                  $('<span>').addClass('bar').css('height', style_pattern[i+1]+'%')
+                )
+              )
+          )
+        )
+    }
+
+    $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+    if($(d.target).find('.data-ul > li').length > 4){
+      $(d.target).addClass('over');
+      $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+      $(d.target).find('.data-ul').css('width', (21.5 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+    }
+    if(d.link){
+      $(d.target).find('.data-ul > li:not(".average")').each(function(i){
+        var temp = $(this).find('dt').text();
+        $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+      })
+    }
+  }
+  if(d.type == 'bar4'){ // bar4
+    $(d.target).append($('<div>').addClass('data-arry').append($('<div>').addClass('data-belt').append($('<ul>').addClass('data-ul'))));
+    for(var i=0; i < d.data_arry.length; i++){
+      throw_arry.push(d.data_arry[i].v);
+      throw2_arry.push(d.data_arry[i].v2);
+    }
+    average2(throw_arry, throw2_arry, d.unit);
+
+    if(d.legend){// 범례
+      $(d.target).append($('<div>').addClass('legend'));
+      for(var i=0; i < d.legend.length; i++){
+        $(d.target).find('.legend')
+          .append(
+            $('<span>').addClass('category' + i)
+            .append(
+              $('<span>').text(d.legend[i])
+            )
+          )
+      }
+    }
+
+    if(d.average){ // 평균
+      $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>').addClass('average').data('value', average)
+            .append(
+              $('<dl>')
+                .append(
+                  $('<dt>').text('평균')
+                )
+                .append(
+                  $('<dd>')
+                    .append(
+                      $('<span>').addClass('blind').text(d.legend[0])
+                    )
+                    .append(
+                      $('<span>').addClass('v').css('bottom', style_pattern[0]+'%').text(text_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar').css('height', style_pattern[0]+'%')
+                    )
+                    .append(
+                      $('<span>').addClass('blind').text(d.legend[1])
+                    )
+                    .append(
+                      $('<span>').addClass('blind').text(text2_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar2').css('height', style2_pattern[0]+'%')
+                    )
+                )
+            )
+        )
+    }
+
+    for(var i=0; i < d.data_arry.length; i++){
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>')
+          .append(
+            $('<dl>')
+              .append($('<dt>')
+                .text(d.data_arry[i].t)
+              )
+              .append(
+                $('<dd>').addClass('first')
+                  .append(
+                    $('<span>').addClass('blind').text(d.legend[0])
+                  )
+                  .append(
+                    $('<span>').addClass('v').css('bottom', style_pattern[i+1]+'%').text(text_pattern[i+1])
+                  )
+                  .append(
+                    $('<span>').addClass('bar').css('height', style_pattern[i+1]+'%')
+                  )
+                  .append(
+                    $('<span>').addClass('blind').text(d.legend[1])
+                  )
+                  .append(
+                    $('<span>').addClass('blind').text(text2_pattern[i+1])
+                  )
+                  .append(
+                    $('<span>').addClass('bar2').css('height', style2_pattern[i+1]+'%')
+                  )
+              )
+          )
+        )
+    }
+
+    $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+    if($(d.target).find('.data-ul > li').length > 4){
+      $(d.target).addClass('over');
+      $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+      $(d.target).find('.data-ul').css('width', (21.5 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+    }
+    if(d.link){
+      $(d.target).find('.data-ul > li:not(".average")').each(function(i){
+        var temp = $(this).find('dt').text();
+        $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+      })
+    }
   }
 
   if(d.type == 'circle'){ // circle - min 50% ~ max 100%
-    var capa_pattern= [];
-    var style_pattern = [];
-    var text_pattern = [];
-    var class_pattern = ['patten1', 'red', 'blue'];
     for(var i=0; i < d.data_arry.length; i++){
       if(typeof d.data_arry[i].v == 'number'){
         max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
-        capa_pattern.push(d.data_arry[i].v + d.unit)
+        text_pattern.push(d.data_arry[i].v + d.unit)
       }else if(d.data_arry[i].v == '사용안함'){
-        capa_pattern.push(d.data_arry[i].v);
+        text_pattern.push(d.data_arry[i].v);
       }else if(d.data_arry[i].v == '무제한'){
-        capa_pattern.push(d.data_arry[i].v);
+        text_pattern.push(d.data_arry[i].v);
         d.unlimited = true;
       }
     }
@@ -78,7 +424,7 @@ $.fn.chart2 = function(o){
                     $('<span>').addClass('shapes').addClass(class_pattern[0]).css('width', style_pattern[0] + '%').css('height', style_pattern[0] + '%')
                   )
                   .append(
-                    $('<span>').addClass('data').text(capa_pattern[0])
+                    $('<span>').addClass('data').text(text_pattern[0])
                     .prepend(
                       $('<span>').addClass('blind').text(d.data_arry[0].t)
                     )
@@ -87,7 +433,7 @@ $.fn.chart2 = function(o){
                     $('<span>').addClass('shapes').addClass(class_pattern[1]).css('width', style_pattern[1] + '%').css('height', style_pattern[1] + '%')
                   )
                   .append(
-                    $('<span>').addClass('blind').text(d.data_arry[0].t + capa_pattern[1])
+                    $('<span>').addClass('blind').text(d.data_arry[0].t + text_pattern[1])
                   )
               )
               .append(
@@ -95,13 +441,19 @@ $.fn.chart2 = function(o){
                 .append(
                   $('<span>').addClass('first')
                   .append(
-                    $('<strong>').text(d.data_arry[0].t)
+                    $('<span>').text(d.data_arry[0].t)
+                  )
+                  .append(
+                    $('<strong>').text(text_pattern[0])
                   )
                 )
                 .append(
                   $('<span>').addClass('second')
                   .append(
-                    $('<strong>').text(d.data_arry[1].t)
+                    $('<span>').text(d.data_arry[1].t)
+                  )
+                  .append(
+                    $('<strong>').text(text_pattern[1])
                   )
                 )
               )
@@ -117,7 +469,7 @@ $.fn.chart2 = function(o){
                   $('<span>').addClass('shapes').addClass(class_pattern[2]).css('width', style_pattern[2] + '%').css('height', style_pattern[2] + '%')
                 )
                 .append(
-                  $('<span>').addClass('data').text(capa_pattern[2])
+                  $('<span>').addClass('data').text(text_pattern[2])
                   .prepend(
                     $('<span>').addClass('blind').text(d.data_arry[2].t)
                   )
@@ -127,153 +479,144 @@ $.fn.chart2 = function(o){
       )
   }
 
-  
 
-
-  if(d.type == 'type1'){ // type1
-    if(d.tit){
-      $(d.target).append(
-        $('<div>').addClass('tit').text(d.tit)
-      )
+  function average(arry, type){
+    var sum = 0,
+      average = 0;
+      max = 0;
+    if(type == 'gb'){ // gb
+      for(var i=0; i<arry.length; i++){
+        sum += arry[i];
+        max = (max > arry[i]) ? max : arry[i];
+      }
+      average = (sum / arry.length).toFixed(2);
+    }else if(type == 'time'){ // time
+      for(var i=0; i<arry.length; i++){
+        sum += operation_minutes(arry[i])
+        max = (max > operation_minutes(arry[i])) ? max : operation_minutes(arry[i]);
+      }
+      average = (sum / arry.length).toFixed(0);
+    }else if(type == '원'){ // 원
+      for(var i=0; i<arry.length; i++){
+        sum += arry[i];
+        max = (max > arry[i]) ? max : arry[i];
+      }
+      average = (sum / arry.length).toFixed(0);
     }
-    if(d.legend){
-      $(d.target).append($('<div>').addClass('legend'));
-      for(var i=0; i < d.legend.length; i++){
-        $(d.target).find('.legend').append($('<div>').text(d.legend[i]))
+    if(type == 'gb'){ // gb
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(arry[i] + 'GB');
+        style_pattern.push((arry[i]/max*100).toFixed(0));
       }
-    }
-    if(d.data_arry){
-      /* dom append */
-      $(d.target).append($('<div>').addClass('data-arry').append($('<div>').addClass('data-belt').append($('<ul>').addClass('data-ul'))));
-      if(d.average){ // 평균
-        var sum = 0;
-        var average = 0;
-        for(var i=0; i < d.data_arry.length; i++){
-          if(d.data_arry[i].v !== '무제한'){
-            sum += d.data_arry[i].v;
-          }
-        }
-        average = sum/d.data_arry.length;
-        $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>')));
-        $(d.target).find('.data-ul')
-          .append($('<li>').addClass('average').data('value', average)
-            .append($('<dl>')
-              .append($('<dt>')
-                .text('평균')
-              )
-              .append($('<dd>')
-                .append($('<span>')
-                  .addClass('v')
-                  .text(average + d.unit)
-                )
-                .append($('<span>')
-                  .addClass('bar')
-                )
-              )
-            )
-          )
+      text_pattern.unshift(average + 'GB');
+      style_pattern.unshift((average/max*100).toFixed(0));
+    }else if(type == 'time'){ // time
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(operation_time(operation_minutes(arry[i])));
+        style_pattern.push(((operation_minutes(arry[i]))/max*100).toFixed(0));
       }
-      for(var i=0; i < d.data_arry.length; i++){
-        if(d.data_arry[i].v !== '무제한'){
-          max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
-        }else{
-          d.unlimited = true;
-        }
-        $(d.target).find('.data-ul')
-          .append($('<li>').data('value', d.data_arry[i].v)
-            .append($('<dl>')
-              .append($('<dt>')
-                .text(d.data_arry[i].t)
-              )
-              .append($('<dd>')
-                .append($('<span>')
-                  .addClass('v')
-                  .text((d.data_arry[i].v !== '무제한') ? d.data_arry[i].v + d.unit : d.data_arry[i].v)
-                )
-                .append($('<span>')
-                  .addClass('bar')
-                )
-              )
-            )
-          )
+      text_pattern.unshift(operation_time(average));
+      style_pattern.unshift(((average)/max*100).toFixed(0));
+    }else if(type == '원'){ // 원
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(add_comma(arry[i]) + '원');
+        style_pattern.push((arry[i]/max*100).toFixed(0));
       }
-      /* style */
-      $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
-      if($(d.target).find('.data-ul > li').length > 4){
-        $(d.target).find('.data-ul').css('width', 25 * $(d.target).find('.data-ul > li').length + '%');
-      }
-
-      if(!d.unlimited){
-        $(d.target).find('.data-ul > li').each(function(){
-          if($(this).hasClass('average')){
-            $(d.target).find('.dash span').css('bottom', ($(this).data('value') / max) * 100 + '%').show();
-          }
-          $(this).find('.bar').css('height', ($(this).data('value') / max) * 100 + '%');
-          $(this).find('.v').css('bottom', ($(this).data('value') / max) * 100 + '%');
-        })
-      }else{
-       
-      }
-
-      /*
-      1. 단위 처리 : GB, MB, 원, 분초, 통, *무제한
-      2. 범례 : 
-      3. 스킨 : 
-      4. BAR가 여러개인경우
-      5. 평균을 각 항목별로 할 경우
-      6. 2개만 노출될경우
-      7. 무제한 처리
-      */
-
-
-
-
-      /* fx */
-      function sum_aver(arr,decimal,sale){//각 배열합 평균
-        var num = 0,
-          total = arr.length;
-        for(var i = 0; i < total; ++i){
-          if(sale){
-            num += arr[i].sale*1;
-          }else{
-            if(option.unit == 'time'){
-              num += operation_minutes(arr[i].data[0]);
-            }else{
-              num += arr[i].data*1;
-            }
-          }
-        }
-        if(decimal == 'won'){
-          return add_comma(Math.round((num/total)));
-        }else if(typeof decimal == Number){
-          return Math.round((num/total)*Math.pow(10,decimal))/Math.pow(10,decimal);
-        }else{
-          return Math.round((num/total));
-        }
-      }
-      function operation_minutes(num){
-        return (num.split(':')[0]*1*60)+num.split(':')[1]*1;
-      }
-      function operation_time(num){
-        var min = Math.floor(num/60),
-            sec = num%60;
-        if(min == 0){
-          return sec+'초';
-        }else{
-          return min+'분 '+sec+'초';
-        }
-      }
-      function add_comma(num) {
-        var regexp = /\B(?=(\d{3})+(?!\d))/g;
-        return num.toString().replace(regexp, ',');
-      }
-      /* // fx */
+      text_pattern.unshift(add_comma(average) + '원');
+      style_pattern.unshift((average/max*100).toFixed(0));
     }
   }
+
+  function average2(arry, arry2, type){
+    var sum = 0,
+      sum2 =0,
+      average = 0,
+      average2 = 0,
+      max = 0;
+      max2 = 0;
+
+    if(type == 'gb'){ // gb
+      for(var i=0; i<arry.length; i++){
+        sum += arry[i];
+        sum2 += arry2[i];
+        max = (max > arry[i]) ? max : arry[i];
+        max2 = (max2 > arry2[i]) ? max2 : arry2[i];
+      }
+      average = (sum / arry.length).toFixed(2);
+      average2 = (sum2 / arry2.length).toFixed(2);
+    }else if(type == 'time'){ // time
+      for(var i=0; i<arry.length; i++){
+        sum += operation_minutes(arry[i]);
+        sum2 += operation_minutes(arry2[i]);
+        max = (max > operation_minutes(arry[i])) ? max : operation_minutes(arry[i]);
+        max2 = (max2 > operation_minutes(arry2[i])) ? max2 : operation_minutes(arry2[i]);
+      }
+      average = (sum / arry.length).toFixed(0);
+      average2 = (sum2 / arry2.length).toFixed(0);
+    }else if(type == '원'){ // 원
+      for(var i=0; i<arry.length; i++){
+        sum += arry[i];
+        sum2 += arry2[i];
+        max = (max > arry[i]) ? max : arry[i];
+        max2 = (max2 > arry2[i]) ? max2 : arry2[i];
+      }
+      average = (sum / arry.length).toFixed(0);
+      average2 = (sum2 / arry2.length).toFixed(0);
+    }
+
+    if(type == 'gb'){ // gb
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(arry[i] + 'GB');
+        text2_pattern.push(arry2[i] + 'GB');
+        style_pattern.push((arry[i]/max*100).toFixed(0));
+        style2_pattern.push((arry2[i]/max*100).toFixed(0));
+      }
+      text_pattern.unshift(average + 'GB');
+      text2_pattern.unshift(average2 + 'GB');
+      style_pattern.unshift((average/max*100).toFixed(0));
+      style2_pattern.unshift((average2/max*100).toFixed(0));
+    }else if(type == 'time'){ // time
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(operation_time(operation_minutes(arry[i])));
+        text2_pattern.push(operation_time(operation_minutes(arry2[i])));
+        style_pattern.push(((operation_minutes(arry[i]))/max*100).toFixed(0));
+        style2_pattern.push(((operation_minutes(arry2[i]))/max*100).toFixed(0));
+      }
+      text_pattern.unshift(operation_time(average));
+      text2_pattern.unshift(operation_time(average2));
+      style_pattern.unshift(((average)/max*100).toFixed(0));
+      style2_pattern.unshift(((average2)/max*100).toFixed(0));
+    }else if(type == '원'){ // 원
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(add_comma(arry[i]) + '원');
+        text2_pattern.push(add_comma(arry2[i]) + '원');
+        style_pattern.push((arry[i]/max*100).toFixed(0));
+        style2_pattern.push((arry2[i]/max*100).toFixed(0));
+      }
+      text_pattern.unshift(add_comma(average) + '원');
+      text2_pattern.unshift(add_comma(average2) + '원');
+      style_pattern.unshift((average/max*100).toFixed(0));
+      style2_pattern.unshift((average2/max*100).toFixed(0));
+    }
+  }
+
+  function operation_minutes(num){
+    return (num.split(':')[0]*1*60)+num.split(':')[1]*1;
+  }
+  function operation_time(num){
+    var min = Math.floor(num/60),
+        sec = num%60;
+    if(min == 0){
+      return sec+'초';
+    }else{
+      return min+'분 '+sec+'초';
+    }
+  }
+  function add_comma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ',');
+  }
 }
-
-
-
 
 $.fn.chart = function(option){
   var chart_data = {caption:'표제목',tf_txt:'평균값',td_txt:'각항목값',da_arr:[]};

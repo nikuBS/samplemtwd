@@ -47,10 +47,10 @@ export const API_CMD = {
   BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0029: { path: '/v1/auth/secure/client-key', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0030: { path: '/v1/auth/secure/server-key', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_01_0031: { path: '/registrationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_01_0032: { path: '/registrationresponsefromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_01_0033: { path: '/authenticationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_01_0034: { path: '/authenticationresponsefromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_01_0031: { path: '/registrationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true, nativeEx: true },
+  BFF_01_0032: { path: '/registrationresponsefromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true, nativeEx: true },
+  BFF_01_0033: { path: '/authenticationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true, nativeEx: true },
+  BFF_01_0034: { path: '/authenticationresponsefromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true, nativeEx: true },
   BFF_01_0035: { path: '/v1/cert/app', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0036: { path: '/v1/cert/info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -62,6 +62,15 @@ export const API_CMD = {
   BFF_01_0044: { path: '/core-bill/v1/refund/donation-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0047: { path: '/core-auth/v1/anonymous/ipin/apply', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0048: { path: '/v1/auth/anonymous/ipin/result', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0050: { path: '/v1/auth/anonymous/exsms/result', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0051: { path: '/core-auth/v1/refund/skt-auth-sms/send', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0052: { path: '/core-auth/v1/refund/skt-auth-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0053: { path: '/v1/captcha/image', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0054: { path: '/v1/captcha/audio', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0055: { path: '/v1/captcha/answer', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // AUTH
   BFF_03_0000: { path: '/v1/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0001: { path: '/v1/logout', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -249,6 +258,8 @@ export const API_CMD = {
   BFF_05_0185: { path: '/core-modification/v1/numberChange', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0186: { path: '/core-modification/v1/numberChangeInit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0194: { path: '/core-modification/v1/longterm-phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0196: { path: '/core-modification/v1/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0197: { path: '/core-modification/v1/longterm-phone-pause', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -340,7 +351,6 @@ export const API_CMD = {
   BFF_07_0035: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0036: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0038: { path: '/core-bill/v1/bill-pay/donation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0039: {
     path: '/core-bill/v1/payment/auto-integrated-account-payment',
     method: API_METHOD.GET,
@@ -375,6 +385,7 @@ export const API_CMD = {
   BFF_07_0064: { path: '/core-bill/v1/autopay/db-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0070: { path: '/core-bill/v1/payment/auto-integrated-payment/account', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0071: {
     path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
@@ -604,6 +615,7 @@ export const API_CMD = {
   BFF_10_0072: { path: '/core-product/v1/mobiles/fee-plans/num-zone-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0073: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0074: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0075: { path: 'core-product/v1/mobiles/fee-plans/couple-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0081: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -619,6 +631,28 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0098: { path: '/core-product/v1/wire/additions/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0101: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks',
+    method: API_METHOD.GET, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0109: { path: '/core-product/v1/services/wire/addition/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0111: { path: '/v1/wire/additions/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0112: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0113: {
+    path: '/core-product/v1/services/combinations/:args0/terminations/prechecks',
+    method: API_METHOD.GET, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0114: {
+    path: '/core-product/v1/services/combinations/:args0/terminations/infos',
+    method: API_METHOD.GET, server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0115: {},
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // ROAMING
@@ -746,4 +780,9 @@ export const API_TAX_REPRINT_ERROR = {
 
 export const API_REFUND_ERROR = {
   ZINVE8169: 'ZINVE8169'  // 환불대상금액 존재하지 않습니다.
-}
+};
+
+export const API_NEW_NUMBER_ERROR = {
+  MOD0030: 'MOD0030', // 번호변경안내서비스 신청 가능한 번호변경 이력이 없습니다.
+  MOD0031: 'MOD0031' // 번호변경전 번호가 타사번호인 경우는 지점/대리점/고객센터를 통해 신청 가능합니다.
+};

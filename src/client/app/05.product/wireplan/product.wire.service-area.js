@@ -8,14 +8,21 @@ Tw.ProductWireServiceArea = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService(rootEl);
 
+  this._cachedElement();
   this._bindEvent();
 };
 
 Tw.ProductWireServiceArea.prototype = {
   _bindEvent: function() {
-    this.$container.on('click', '.fe-submit', $.proxy(this._handleSearchArea, this));
-    this.$container.on('click', '.fe-post', $.proxy(this._openPostcode, this));
+    this.$submitBtn.on('click', $.proxy(this._handleSearchArea, this));
+    this.$container.on('click', '#fe-reservation', $.proxy(this._openProductType, this));
+    this.$container.on('click', '#fe-post', $.proxy(this._openPostcode, this));
+  },
+
+  _cachedElement: function() {
+    this.$submitBtn = this.$container.find('#fe-submit');
   },
 
   _handleSearchArea: function() {
@@ -62,5 +69,41 @@ Tw.ProductWireServiceArea.prototype = {
       dtl_addr: result.detail,
       addr_id: result.addrId
     };
+
+    var $addr = this.$container.find('#fe-addr');
+    $addr.removeClass('none');
+    $addr.find('#fe-post').text('[' + result.zip + ']');
+    $addr.find('#fe-base-addr').text(result.main);
+    $addr.find('#fe-detail-addr').text(result.detail);
+
+    this.$submitBtn.removeAttr('disabled');
+  },
+
+  _openProductType: function() {
+    this._popupService.open(
+      {
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        data: [{ list: Tw.PRODUCT_JOIN_TYPE }],
+        title: ''
+      },
+      $.proxy(this._handleOpenProductType, this),
+      $.proxy(this._closeProductType, this)
+    );
+  },
+
+  _handleOpenProductType: function($layer) {
+    $layer.on('click', 'li > button', $.proxy(this._goToReservation, this));
+  },
+
+  _goToReservation: function(e) {
+    this._typeCode = e.currentTarget.getAttribute('data-type-code');
+    this._popupService.close();
+  },
+
+  _closeProductType: function() {
+    if (this._typeCode) {
+      this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=' + this._typeCode);
+    }
   }
 };

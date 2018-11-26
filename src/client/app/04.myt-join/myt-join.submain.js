@@ -42,6 +42,10 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.isOldNumber) {
         this.$oldNum = this.$container.find('[data-id=old_number]');
       }
+
+      if (this.data.isNotChangeNumber) {
+        this.$chgNumSvc = this.$container.find('[data-id=change_number]');
+      }
     }
     // 유선
     else if ( this.data.type === 2 ) {
@@ -94,6 +98,9 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.isOldNumber) {
         this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
       }
+      if (this.data.isNotChangeNumber) {
+        this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
+      }
     }
     // 유선
     else if ( this.data.type === 2 ) {
@@ -126,6 +133,18 @@ Tw.MyTJoinSubMain.prototype = {
   // 010 번호 전환 서비스
   _onMoveOldNum: function () {
     this._historyService.goLoad('/myt-join/submain/numchange');
+  },
+
+  // 번호안내서비스
+  _onMoveChgNumSvc: function () {
+    if(this.data.numberChanged) {
+      // 연장 & 해지
+      this._historyService.goLoad('/myt-join/submain/phone/extalarm');
+    }
+    else {
+      // 신청
+      this._historyService.goLoad('/myt-join/submain/phone/alarm');
+    }
   },
 
   // 나의요금제

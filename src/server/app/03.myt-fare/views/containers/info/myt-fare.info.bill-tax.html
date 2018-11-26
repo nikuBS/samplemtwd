@@ -28,10 +28,11 @@
         <hr class="cont-sp type1" aria-hidden="true"/>
         <!-- .cont-box -->
         <div class="cont-box nogaps-btm">
-            <h3 class="tx-bold">꼭 확인해주세요!</h3>
+            <h3 class="tx-bold">꼭 확인해 주세요</h3>
             <ul class="noti-list">
-                <li>텍스트가 1줄인 Case입니다. <button aria-haspopup="true" class="tip-view" title="정보보기">TIP</button></li>
-                <li>텍스트가 2줄이상인<br>Case입니다. <button aria-haspopup="true" class="tip-view" title="정보보기">TIP</button></li>
+                <% data.noticeInfo.forEach(function(info){ %>
+                    <li data-list-id="<%=info.link%>"><%=info.title%><button aria-haspopup="true" class="tip-view" title="정보보기" >TIP</button></li>
+                <% }); %>
             </ul>
         </div>
         <!--// .cont-box -->
@@ -56,12 +57,12 @@
       <!-- .cont-box -->
       <div class="cont-box noborder nogaps bgnone">
           <div class="myt-note-wrap">
-              <span class="tit">6개월간의 발행 내역만 확인 가능합니다.</span>
+              <span class="tit">{{limitMonth}}개월간의 발행 내역만 확인 가능합니다.</span>
           </div>
           <div class="fe-list-inner">
           {{>taxList}}
           </div>
-          {{#if initialMoreData}}
+          {{#if listViewMoreHide}}
           <div class="bt-more round gap-style2 btm-line round">
               <button>더보기</button>
           </div>
@@ -71,7 +72,7 @@
   </div>
 </script>
 <script id="fe-template-tax-items" type="text/x-handlebars-template">
-    {{#each items}}
+    {{#each renderableListData}}
     <div class="myfare-result-wrap">
         <div class="myfare-list">
             <ul>

@@ -428,5 +428,20 @@ export const FEE_PLAN_TIP_TXT = {
 };
 
 export const MAIN_MENU_REFUND_STATE = {
-  APPLY: '신청'
+  ORIGIN_MSG_ING: '송금중',
+  ORIGIN_MSG_COMPLETE: '송금완료',
+  ORIGIN_MSG_ERROR: '송금오류',
+  APPLY: '신청',
+  COMPLTE: '완료',
+  ERROR: '송금오류'
+};
+
+export const MAIN_MENU_REFUND_SVC_TYPE = {
+  PHONE_TYPE_0: '이동전화',
+  PHONE_TYPE_1: '휴대폰'
+};
+
+export const NEW_NUMBER_MSG = {
+  MOD0030: '번호변경안내서비스 신청 가능한 번호변경 이력이 없습니다.',
+  MOD0031: '번호변경전 번호가 타사번호인 경우는 지점/대리점/고객센터를 통해 신청 가능합니다.'
 };

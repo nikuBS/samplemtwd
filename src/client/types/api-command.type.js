@@ -45,6 +45,7 @@ Tw.API_CMD = {
   BFF_01_0044: { path: '/core-bill/v1/refund/donation-insert', method: Tw.API_METHOD.POST },
   BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
+  BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: Tw.API_METHOD.POST },
 
   // AUTH
   BFF_03_0002: { path: '/v1/user/account-auth-sessions', method: Tw.API_METHOD.POST },
@@ -175,6 +176,8 @@ Tw.API_CMD = {
   BFF_05_0183: { path: '/core-modification/v1/new-number-notifications', method: Tw.API_METHOD.DELETE },
   BFF_05_0184: { path: '/core-modification/v1/numberSearch', method: Tw.API_METHOD.GET },
   BFF_05_0185: { path: '/core-modification/v1/numberChange', method: Tw.API_METHOD.POST },
+  BFF_05_0196: { path: '/core-modification/v1/loyalty-benefits', method: Tw.API_METHOD.GET },
+  BFF_05_0197: { path: '/core-modification/v1/longterm-phone-pause', method: Tw.API_METHOD.POST },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -285,7 +288,7 @@ Tw.API_CMD = {
   BFF_07_0064: { path: '/core-bill/v1/autopay/db-req', method: Tw.API_METHOD.POST },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/:args0', method: Tw.API_METHOD.GET },
-  BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.POST },
+  BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.GET },
   BFF_07_0071: { path: '/core-bill/v1/microPrepay/microPrepay-hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: Tw.API_METHOD.POST },
@@ -384,6 +387,7 @@ Tw.API_CMD = {
   BFF_10_0074: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: Tw.API_METHOD.PUT },
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: Tw.API_METHOD.POST },
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: Tw.API_METHOD.GET },
+  BFF_10_0082: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: Tw.API_METHOD.POST },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: Tw.API_METHOD.GET },
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
 

@@ -414,7 +414,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    this._historyService.goLoad('/myt-fare/billauto');
+    this._historyService.goLoad('/myt-fare/bill/option');
   },
 
   // 소액결제 이동
@@ -429,7 +429,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 최근납부내역 이동
   _onClickedPaymentDetail: function (/*event*/) {
-    this._historyService.goLoad('/myt/fare/history/payment');
+    this._historyService.goLoad('/myt-fare/info/history');
   },
 
   // 다른회선조회
@@ -454,7 +454,7 @@ Tw.MyTFareSubMain.prototype = {
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
     // SB 상 납부내역상세로 진입하도록 정의되어있음
-    this._historyService.goLoad('/myt/fare/history/payment');
+    this._historyService.goLoad('/myt-fare/info/history');
   },
 
   // 기부금/후원금
@@ -466,7 +466,7 @@ Tw.MyTFareSubMain.prototype = {
   _onClickedBillReport: function (event) {
     var clsName = event.target.className;
     var month = clsName.replace(this._chartDefaultClass, '');
-    this._historyService.goLoad('/myt/fare/bill/guide?date=' + month);
+    this._historyService.goLoad('/myt-fare/billguide/guide?date=' + month);
   },
 
   _onErrorReceivedBillData: function (resp) {
@@ -520,11 +520,11 @@ Tw.MyTFareSubMain.prototype = {
     var code, url;
     if ( type === 'M' ) {
       code = this.data.microPay.code;
-      url = '/myt-fare/billsmall';
+      url = '/myt-fare/bill/small';
     }
     else {
       code = this.data.contentPay.code;
-      url = '/myt-fare/billcontents';
+      url = '/myt-fare/bill/contents';
     }
     var title = '', content = '', more = '';
     switch ( code ) {

@@ -5,7 +5,7 @@ import MyTJoinMyPlanAdd from './controllers/myplanadd/myt-join.myplanadd.control
 import MyTJoinMyPlanCombine from './controllers/myplancombine/myt-join.myplancombine.controller';
 import MyTJoinMyplanAlarm from './controllers/myplan/myt-join.myplan.alarm.controller';
 import MyTJoinMyplanAlarmterminate from './controllers/myplan/myt-join.myplan.alarmterminate.controller';
-import MyTJoinProtectChange from './controllers/protect/myt-join.protect.change.controller';
+import MyTJoinCustpassword from './controllers/submain/myt-join.custpassword.controller';
 import MytJoinInfoDiscount from './controllers/info/myt-join.info.discount.controller';
 import MyTJoinInfoDiscountMonth from './controllers/info/myt-join.info.discount.month.controller';
 import MyTJoinInfoNoAgreement from './controllers/info/myt-join.info.no-agreement.controller';
@@ -36,13 +36,12 @@ class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: MyTJoinSubmainController });
-    this.controllers.push({ url: '/protect/change', controller: MyTJoinProtectChange });
     this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
 
     // new url
     this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
-    this.controllers.push({ url: '/custpassword', controller: MyTJoinProtectChange });
+    this.controllers.push({ url: '/custpassword', controller: MyTJoinCustpassword });
     this.controllers.push({ url: '/myplancombine/infodiscount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/myplancombine/infodiscount/month', controller: MyTJoinInfoDiscountMonth });
     this.controllers.push({ url: '/myplancombine/noagreement', controller: MyTJoinInfoNoAgreement });

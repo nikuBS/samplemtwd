@@ -108,7 +108,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
       autoTermBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 1)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 0)
     });
   },
 
@@ -133,9 +133,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
   _prodConfirmOk: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
+    // prodId: this._prodId,
+    //   prodProcTypeCd: 'JN',
+
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
-      prodId: this._prodId,
-      prodProcTypeCd: 'JN',
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
       optProdId: '',
       svcProdGrpId: ''

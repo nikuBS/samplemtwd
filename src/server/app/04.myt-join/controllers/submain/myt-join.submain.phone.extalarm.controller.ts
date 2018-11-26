@@ -26,7 +26,7 @@ class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
     //           'freeOfrEndDt': '20191030',
     //           'notiStaDt': '20181031',
     //           'notiEndDt': '20181130',
-    //           'extnsPsblYn': 'N',
+    //           'extnsPsblYn': 'Y',
     //           'orglSktYn': 'Y'
     //         }
     //     };
@@ -37,6 +37,8 @@ class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
           result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
           result['notiStaDt'] = DateHelper.getShortDateNoDot(result['notiStaDt']);
           result['notiEndDt'] = DateHelper.getShortDateNoDot(result['notiEndDt']);
+          result['freeOfrEndNextDt'] = DateHelper.getShortDateNoDot(DateHelper.getAddDay(result['freeOfrEndDt'] + '235959', 'YYYYMMDD'));
+          result['freeOfrEndDt'] = DateHelper.getShortDateNoDot(result['freeOfrEndDt']);
 
           // 서비스 종료 후 면 신청으로 이동
           const today = DateHelper.getShortDateNoDot(new Date());

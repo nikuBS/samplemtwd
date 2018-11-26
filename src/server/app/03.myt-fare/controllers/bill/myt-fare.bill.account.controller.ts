@@ -59,10 +59,11 @@ class MyTFareBillAccount extends TwViewController {
       list.defaultIndex = 0;
 
       list.map((data, index) => {
-        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
+        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
+        data.svcNumber = data.svcCd === 'C' ? FormatHelper.conTelFormatWithDash(data.svcNum) : data.svcNum;
 
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;

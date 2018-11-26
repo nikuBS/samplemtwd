@@ -10,8 +10,9 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
-import ProductHelper from '../../../helper/product.helper';
+import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
+import {REDIS_PRODUCT_INFO} from '../../../../../types/common.type';
 
 class ProductMobileplanJoin extends TwViewController {
   constructor() {
@@ -28,7 +29,7 @@ class ProductMobileplanJoin extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
-      this.redisService.getData('ProductLedger:' + prodId)
+      this.redisService.getData(REDIS_PRODUCT_INFO + prodId)
     ).subscribe(([ basicInfo, prodRedisInfo ]) => {
       if (basicInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {

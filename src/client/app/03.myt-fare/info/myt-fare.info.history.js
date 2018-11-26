@@ -271,10 +271,13 @@ Tw.MyTFareInfoHistory.prototype = {
     }
   },
 
+  // 납내역 환불받기
   _openAddRefundAccount: function () {
     this._popupService.open(
         {
-          hbs: 'MF_08_02'
+          hbs: 'MF_08_02',
+          overPayList:this.data.listData.overPaymentList,
+          totalOverAmt:this.data.refundTotalAmount
         },
         $.proxy(this._openAddRefundAccountCallback, this), $.proxy(this._closeAddRefundAccountCallback, this),
         Tw.MYT_PAYMENT_HISTORY_HASH.OVERPAY_REFUND,
@@ -284,10 +287,11 @@ Tw.MyTFareInfoHistory.prototype = {
 
   _openAddRefundAccountCallback: function ($container) {
     this.refundAPI_option = {
-      // recCnt: this.paramData.recCnt,
-      // sendSvcMgmtNum: this.paramData.svcMgmtNum,
-      // bamtClCd: this.paramData.bamtClCd
+      //rfndBankNum // 계좌번호
+      //svcMgmtNum: this.paramData.svcMgmtNum,
+      //rfndBankCd // 은행코드
     };
+
 
     this.$refundRequestBtn = $($container).find('.bt-fixed-area button');
     this.$bankList = $($container).find('.bt-dropdown.big');
@@ -345,8 +349,8 @@ Tw.MyTFareInfoHistory.prototype = {
     this._popupService.open(
         {
           hbs: 'MF_08_03',
-          bankName: this.data.withdrawalBankName,
-          bankAccount: this.data.withdrawalBankAccount
+          bankName: this.data.autoWithdrawalBankName,
+          bankAccount: this.data.autoWithdrawalBankNumber
         },
         $.proxy(this._autoWithdrawalOpenCallback, this), null, Tw.MYT_PAYMENT_HISTORY_HASH.AUTO_WITHDRAWAL
     );
@@ -358,16 +362,18 @@ Tw.MyTFareInfoHistory.prototype = {
 
   _processAutoWithdrawalCancel: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0069, {
-      bankCd: this.data.withdrawalBankCode,
-      bankSerNum: this.data.withdrawalBankSerNum
+      bankCd: this.data.autoWithdrawalBankCode,
+      bankSerNum: this.data.autoWithdrawalBankSerNum
     }).done($.proxy(this._successCancelAccount, this)).fail($.proxy(this._apiError, this));
   },
 
   _successCancelAccount: function (res) {
+    this._popupService.close();
     if (res.code === '00') {
       Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_PAYMENT.CANCEL_AUTO_WITHDRAWAL);
-      this._popupService.close();
       this.$openAutoPaymentLayerTrigger.hide();
+    } else {
+      $.proxy(this._apiError, this);
     }
   },
 
