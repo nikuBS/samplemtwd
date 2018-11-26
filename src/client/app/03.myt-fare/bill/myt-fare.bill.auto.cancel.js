@@ -34,10 +34,10 @@ Tw.MyTFareBillAutoCancel.prototype = {
       var linkText = null;
       var subMessage = null;
 
-      if (res.result.mobileMYn === 'Y') {
+      if (!(Tw.FormatHelper.isEmpty(res.result.depositBankList))) {
         link = {
           hbs: 'MF_05_01_03',
-          open: $.proxy(this._openSmsInfo, this, res.result.bankList),
+          open: $.proxy(this._openSmsInfo, this, res.result.depositBankList),
           close: $.proxy(this._closeSmsInfo, this),
           name: 'sms'
         };
