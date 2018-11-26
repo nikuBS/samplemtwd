@@ -79,65 +79,62 @@
     </script>
     <script id="fe-payment-detail-ocb-card" type="text/x-handlebars-template">
         <!-- .cont-box -->
-        <div class="cont-box noborder nogaps bgnone">
-            <div class="myfare-result-wrap">
-                <div class="myfare-list">
-                    <ul>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부금액</dt>
-                                <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부내용</dt>
-                                <dd class="tx-bold"><span class="number">2018.05</span>월 청구분</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>요청내역</dt>
-                                <dd></dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>요청결과</dt>
-                                <dd>{{dataProcCode}}</dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>요청일시</dt>
-                                <dd><span class="number">2018.05.23</span></dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>승인일시</dt>
-                                <dd><span class="number">{{dataDt}}</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                {{#if dataIsBankOrCard}}
-                                <dt>카드 종류</dt>
-                                <dd class="tx-bold">{{dataTitle}}</dd>
-                                {{else}}
-                                <dt>포인트 종류</dt>
-                                <dd class="tx-bold">{{dataSettleWayCode}}</dd>
-                                {{/if}}
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>카드번호</dt>
-                                <dd class="tx-bold"><span class="number">O12312*********</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>승인번호</dt>
-                                <dd class="tx-bold"><span class="number">1234566</span></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+        <div class="cont-box nogaps-hoz bg-payment">
+            <div class="user-bill-detail">                
+                <ul>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">납부금액</span>
+                            <span class="val">{{dataAmt}} {{#if dataIsBankOrCard}}원{{else}}점{{/if}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">납부내용</span>
+                            <span class="val">{{invYearMonth}}월 청구분</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">요청내역</span>
+                        </div>
+                        <div class="sub-text">
+                            <span class="tit">요청 결과</span>
+                            <span class="val">{{dataProcCode}}</span>
+                        </div>
+                        <div class="sub-text">
+                            <span class="tit">요청 일시</span>
+                            <span class="val">{{reqDate}}</span>
+                        </div>
+                        <div class="sub-text">
+                            <span class="tit">승인 일시</span>
+                            <span class="val">{{dataDt}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            {{#if dataIsBankOrCard}}
+                            <span class="tit">카드 종류</span>
+                            <span class="val">{{dataTitle}}</span>
+                            {{else}}
+                            <span class="tit">포인트 종류</span>
+                            <span class="val">{{dataSettleWayCode}}</span>
+                            {{/if}}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">카드번호</span>
+                            <span class="val">{{cardNum}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">승인번호</span>
+                            <span class="val">{{aprvNum}}</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         <!--// .cont-box -->
@@ -219,7 +216,7 @@
         </div>
     </script>
     <script id="fe-payment-detail-auto" type="text/x-handlebars-template">
-        <!-- .cont-box -->
+        <!-- 자동납부내역 -->
         <div class="cont-box nogaps-hoz bg-payment">
             <div class="user-bill-detail">
                 <ul>
@@ -295,8 +292,7 @@
             </ul>
             {{/if}}
         </div>
-        <!--// .cont-box -->
-
+        <!--// 자동납부내역 -->
     </script>
     <script id="fe-payment-detail-micro-contents" type="text/x-handlebars-template">
         <!-- .cont-box -->

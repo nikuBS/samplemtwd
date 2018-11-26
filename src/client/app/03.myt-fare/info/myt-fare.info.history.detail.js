@@ -41,15 +41,20 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
     switch (this.queryParams.type) {
       case 'DI':
         this.detailData.dataUseTermStart = this.detailData.dataDt.substr(0, 8) + '01';
-        this.detailData.cardNum = this.data.cardNum;
-        this.detailData.aprvNum = this.data.aprvNum;
-        switch (this.queryParams.settleWayCd) {
-          case '02':
-          case '10':
-          case '11':
+        this.detailData = Object.assign(this.detailData, this.data.data, {
+          invYearMonth:Tw.DateHelper.getShortDateNoDate(this.data.data.invDt),
+          reqDate:Tw.DateHelper.getShortDate(this.data.data.reqDtm)
+        });
+        console.log('내역', this.detailData)
+        // this.detailData.invYearMonth = Tw.DateHelper.getFullKoreanDate(this.detailData.invDt)
+        /*this.detailData.cardNum = this.data.data.cardNum;
+        this.detailData.aprvNum = this.data.data.aprvNum;*/
+        switch (this.detailData.dataPayType) {
+          case 'CARD':
+          case 'POINT':
             this.$templateWrapper.append(this.$template.$directOCBandCard(this.detailData));
             break;
-          case '41':
+          case 'BANK':
             this.$templateWrapper.append(this.$template.$directBank(this.detailData));
             break;
           default:
@@ -60,7 +65,6 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
       case 'AT':
       case 'AU':
         // 자동납부 카드/계좌
-        console.log("자동납부", this.detailData);
         this.detailData.dataUseTermStart = this.detailData.dataLastInvDt.substr(0, 8) + '01';
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;

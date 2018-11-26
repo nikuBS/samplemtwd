@@ -128,8 +128,12 @@ Tw.MyTFareInfoHistory.prototype = {
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
     Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
-    this._historyService.goLoad(this._historyService.pathname + '/detail?type=' + detailData.dataPayMethodCode +
-        '&isBank=' + detailData.dataIsBank + '&settleWayCd=' + (detailData.settleWayCd || ''));
+    this._historyService.goLoad(this._historyService.pathname + "/detail?type=" + detailData.dataPayMethodCode + 
+      (detailData.dataIsBank? "&isBank=" + detailData.dataIsBank:'') +
+      (detailData.settleWayCd? "&settleWayCd=" + detailData.settleWayCd:"") +
+      (detailData.dataPayType? "&paytype=" + detailData.dataPayType:"") +
+      (detailData.dataPayMethodCode === "DI"? "&opDt=" + detailData.opDt + "&payOpTm=" + detailData.payOpTm: "")
+    );
   },
 
   _reserveCancelHandler: function(e) {
