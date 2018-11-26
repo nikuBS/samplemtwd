@@ -100,7 +100,7 @@ Tw.CHART_TYPE = {
 
 Tw.CHART_UNIT = {
   WON: '원',
-  GB: 'GB',
+  GB: 'gb',
   TIME: 'time'
 };
 

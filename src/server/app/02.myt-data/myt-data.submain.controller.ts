@@ -99,7 +99,7 @@ class MytDataSubmainController extends TwViewController {
       if ( dcBkd && dcBkd.length > 0 ) {
         // 데이터한도요금제 충전내역
         dcBkd.map((item) => {
-          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'receive';
+          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
           item['u_title'] = item.opTypNm;
           item['u_sub'] = item.opOrgNm;
           item['d_title'] = item.amt;
@@ -110,9 +110,9 @@ class MytDataSubmainController extends TwViewController {
       }
       if ( dpBkd && dpBkd.length > 0 ) {
         // T끼리 선물하기 내역
-        // type: 1 send, 2 receive
+        // type: 1 send, 2 recharge
         dpBkd.map((item) => {
-          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['class'] = (item.type === '1' ? 'send' : 'recharge');
           item['u_title'] = item.custNm;
           item['u_sub'] = MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + item.svcNum;
           item['d_title'] = item.dataQty;
@@ -123,9 +123,9 @@ class MytDataSubmainController extends TwViewController {
       }
       if ( tpBkd && tpBkd.length > 0 ) {
         // 팅요금 선물하기 내역
-        // opTypCd: 1 send, 2 receive
+        // opTypCd: 1 send, 2 recharge
         tpBkd.map((item) => {
-          item['class'] = (item.opTypCd === '1' ? 'send' : 'receive');
+          item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
           item['u_title'] = item.opTypNm;
           item['u_sub'] = item.custNm + ' | ' + item.svcNum;
           item['d_title'] = item.amt;
@@ -137,7 +137,7 @@ class MytDataSubmainController extends TwViewController {
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
         etcBkd.map((item) => {
-          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'receive';
+          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
           item['u_title'] = item.opTypNm;
           item['u_sub'] = '';
           item['d_title'] = item.amt;
@@ -150,7 +150,7 @@ class MytDataSubmainController extends TwViewController {
         // 리필쿠폰 선물 내역
         refpBkd.map((item) => {
           item['opDt'] = item.copnOpDt;
-          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['class'] = (item.type === '1' ? 'send' : 'recharge');
           item['u_title'] = item.opTypNm;
           item['u_sub'] = item.copnNm + ' | ' + item.svcNum;
           item['d_title'] = ''; // API response 값에 정의되어있지 않음
@@ -163,7 +163,7 @@ class MytDataSubmainController extends TwViewController {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
           item['opDt'] = item.copnUseDt;
-          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['class'] = (item.type === '1' ? 'send' : 'recharge');
           item['u_title'] = item.copnNm;
           item['u_sub'] = '';
           item['d_title'] = item.copnDtlClNm; // API response 값에 정의되어있지 않음
@@ -317,7 +317,7 @@ class MytDataSubmainController extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0018, {
       fromDt: DateHelper.getCurrentShortDate(curDate),
       toDt: DateHelper.getCurrentShortDate(beforeDate),
-      type: '0' // 0: all, 1: send, 2: receive
+      type: '0' // 0: all, 1: send, 2: recharge
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;

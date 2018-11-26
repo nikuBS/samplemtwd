@@ -2,23 +2,23 @@
 * FileName: myt-data.submain.other-line.html
 * Author: Kim InHwan (skt.p132150@partner.sk.com)
 * Date: 2018.09.17
+* Update: 2018.11.26
 %>
 
 <li data-svc-mgmt-num="<%= data.svcMgmtNum %>"  data-name="<%= data.nickNm %>"  data-num="<%= data.svcNum %>">
     <button>
-        <div class="lineinfo-user">
-            <span class="info-title"><%= data.nickNm %>
+        <span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>
+        <span class="cont">
+            <span class="info-title">
+                <%= data.nickNm %>
                 <% if (data.child) { %>
-                <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
+                <span class="badge-type1">
+                    <i class="icon-children"><span class="blind">자녀</span></i>
+                </span>
                 <% } %>
-            </span>
             <span class="info-sub"><%= data.svcNum %></span>
-        </div>
-        <div class="lineinfo-data">
-            <span class="info-title"><%= data.data %>
-                <span class="unit ml4"><%= data.unit %></span>
+            <span class="price"><%= data.data %><%= data.unit %></span>
             </span>
-            <span class="ico"></span>
-        </div>
+        </span>
     </button>
 </li>

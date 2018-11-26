@@ -675,7 +675,7 @@ input.radio, input.check, fieldset {
 input, button, select, a + button, .selectBox, .calendar {
   *margin-right: 4px; }
 
-input[type='radio'], input[type='text'], input[type='password'], input[type='number'], input[type='checkbox'], textarea, button, select {
+input[type='radio'], input[type='text'], input[type='password'], input[type='number'], input[type='tel'], input[type='checkbox'], textarea, button, select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

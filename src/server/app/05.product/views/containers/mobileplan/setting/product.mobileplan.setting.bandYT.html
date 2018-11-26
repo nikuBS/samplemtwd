@@ -36,8 +36,8 @@
                         <div class="widget">
                             <div class="widget-box radio">
                                 <ul class="select-list fe-radio-box" role="group">
-                                    <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" data-info="NA00005246" name="radio" value="" title="캠퍼스 데이터 무제한" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" data-info="NA00005246" name="radio" value="" title="캠퍼스 데이터 무제한" aria-labelledby="aria-comp-radio1" /><!-- 체크상태일 경우 checked="checked" -->
                                         <div class="comp-list-layout" id="aria-comp-radio1">
                                             <p class="layout-text">
                                                 <span class="mtext">캠퍼스 데이터 무제한</span>
@@ -45,7 +45,7 @@
                                             </p>
                                         </div>
                                     </li>
-                                    <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                         <input type="radio" data-info="NA00005306" name="radio" value="" title="매일 6시간 데이터 무제한" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
                                         <div class="comp-list-layout" id="aria-comp-radio2">
                                             <p class="layout-text">
@@ -55,7 +55,7 @@
                                         </div>
                                     </li>
                                     <% if (data.nonOption) { %>
-                                    <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                         <input type="radio" data-info="NA00005420" name="radio" value="" title="매일 6시간 데이터 무제한" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="checked" -->
                                         <div class="comp-list-layout" id="aria-comp-radio3">
                                             <p class="layout-text">
@@ -101,7 +101,7 @@
   $(document).ready(function () {
     new Tw.ProductMobileplanSettingBandYT({
       $element: $('[data-id=bandyt-wrapper]'),
-      data: data
+      data: JSON.parse(data)
     });
   });
 </script>
