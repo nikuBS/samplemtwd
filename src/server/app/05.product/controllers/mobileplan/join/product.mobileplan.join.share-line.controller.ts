@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import ProductHelper from '../../../helper/product.helper';
+import ProductHelper from '../../../../../utils/product.helper';
 
 class ProductMobileplanJoinShareLine extends TwViewController {
   constructor() {

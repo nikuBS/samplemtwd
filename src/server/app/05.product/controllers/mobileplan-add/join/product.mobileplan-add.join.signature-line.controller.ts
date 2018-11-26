@@ -8,7 +8,7 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import ProductHelper from '../../../helper/product.helper';
+import ProductHelper from '../../../../../utils/product.helper';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';

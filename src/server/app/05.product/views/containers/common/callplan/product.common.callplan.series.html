@@ -1,0 +1,70 @@
+<% if ( series && series.seriesProdList.length > 0 ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- 상품 -->
+<div class="cont-box nogaps-hoz">
+    <div class="widget-box">
+        <ul class="representcharge-list">
+            <li class="on">
+                <button role="button" aria-pressed="false" class="representcharge-info">
+                    <h4 class="title"><%= series.prodGrpNm %></h4>
+                    <div class="img-box"><% if ( series.prodImg ) { %><img class="lte"
+                                                                           src="<%= series.prodImg %>"
+                                                                           alt="<%= series.prodGrpnm %>"><%
+                        } %>
+                    </div>
+                    <p class="text"><%= series.prodGrpDesc %></p>
+                </button>
+                <ul class="representcharge-product">
+                    <% for (var i in series.seriesProdList) { %>
+                    <li>
+                        <a href="/product/callplan/<%= series.seriesProdList[i].prodId %>"
+                           class="product-infolink">
+                            <div class="products-titleinfo">
+                                <h5 class="title"><%= series.seriesProdList[i].prodNm %></h5>
+                                <% if ( series.seriesProdList[i].basFeeInfo.isNaN ) { %>
+                                <p class="info"><span class="money"><%= series.seriesProdList[i].basFeeInfo.value %></span>
+                                </p>
+                                <% } else { %>
+                                <p class="info">월<span class="money"><%= series.seriesProdList[i].basFeeInfo.value %></span>원
+                                </p>
+                                <% } %>
+                            </div>
+                            <dl class="products-additionalinfo">
+                                <% if ( series.seriesProdList[i].basOfrDataQtyCtt ) { %>
+                                <dt>데이터</dt>
+                                <% if (series.seriesProdList[i].basOfrDataQtyCtt.isNaN) { %>
+                                <dd>
+                                    <span class="point"><%= series.seriesProdList[i].basOfrDataQtyCtt.value %></span>
+                                </dd>
+                                <% } else { %>
+                                <dd>
+                                    <span class="point"><%= series.seriesProdList[i].basOfrDataQtyCtt.value.data + series.seriesProdList[i].basOfrDataQtyCtt.value.unit %></span>
+                                </dd>
+                                <% } %>
+                                <% } %>
+                                <% if ( series.seriesProdList[i].basOfrVcallTmsCtt ) { %>
+                                <dt>음성</dt>
+                                <dd><%= series.seriesProdList[i].basOfrVcallTmsCtt.value %></dd>
+                                <% } %>
+                                <% if ( series.seriesProdList[i].basOfrCharCntCtt ) { %>
+                                <dt>문자</dt>
+                                <% if (series.seriesProdList[i].basOfrVcallTmsCtt.isNaN) { %>
+                                <dd><%= series.seriesProdList[i].basOfrCharCntCtt.value %></dd>
+                                <% } else { %>
+                                <dd><%= series.seriesProdList[i].basOfrCharCntCtt.value +
+                                    series.seriesProdList[i].basOfrCharCntCtt.unit %>
+                                </dd>
+                                <% } %>
+                                <% } %>
+                            </dl>
+                        </a>
+                    </li>
+                    <% } %>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- //상품 -->
+<% } %>

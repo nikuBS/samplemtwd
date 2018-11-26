@@ -1,0 +1,32 @@
+<% if ( recommends.recommendAppList && recommends.recommendAppList.length > 0 ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- 함께하면 더욱 스마트한 앱서비스 -->
+<div class="cont-box">
+    <h3>함께하면 더욱 스마트한 앱서비스</h3>
+    <!-- .widget -->
+    <div class="widget">
+        <div class="widget-box horizontal">
+            <div class="horizontal-slide">
+                <ul class="horizontal-list smart-app">
+                    <% for ( var i in recommends.recommendAppList ) { %>
+                    <li>
+                        <div>
+                            <button class="fe-btn_recommend_prod"
+                                    data-prod_id="<%= recommends.recommendAppList[i].prodId %>">
+                                <% if ( recommends.recommendAppList[i].appImg ) { %>
+                                <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
+                                <% } %>
+                                <span><%= recommends.recommendAppList[i].prodNm %></span>
+                            </button>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- .widget -->
+</div>
+<!-- // 함께하면 더욱 스마트한 앱서비스 -->
+<% } %>

@@ -1,20 +1,23 @@
 /**
- * 상품 해지 - 유선 부가서비스
- * FileName: product.wireplan.terminate.controller.ts
+ * 상품 해지 - T+B결합상품
+ * FileName: benefit.combination-product.terminate.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.13
+ * Date: 2018.11.23
  */
 
-import TwViewController from '../../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
-import FormatHelper from '../../../../utils/format.helper';
-import ProductHelper from '../../../../utils/product.helper';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { PRODUCT_TYPE_NM } from '../../../types/string.type';
+import FormatHelper from '../../../utils/format.helper';
 
-class ProductWireplanTerminate extends TwViewController {
+class BenefitCombinationProductTerminate extends TwViewController {
   constructor() {
     super();
+  }
+
+  private _convertTermInfo(termInfo: any): any {
+    return {};
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -31,7 +34,7 @@ class ProductWireplanTerminate extends TwViewController {
       });
     }
 
-    this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0114, {}, {}, prodId)
       .subscribe((joinTermInfo) => {
         if (joinTermInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -40,12 +43,12 @@ class ProductWireplanTerminate extends TwViewController {
           }));
         }
 
-        res.render('mobileplan-add/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
+        res.render('benefit.combination-product.terminate.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+          joinTermInfo: this._convertTermInfo(joinTermInfo.result)
         }));
       });
   }
 }
 
-export default ProductWireplanTerminate;
+export default BenefitCombinationProductTerminate;

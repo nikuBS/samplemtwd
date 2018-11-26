@@ -10,7 +10,7 @@ import { API_CODE, API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductAdditions extends TwViewController {
   private ADDITION_CODE = 'F01200';

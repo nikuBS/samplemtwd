@@ -12,7 +12,7 @@ import { PROD_CTG_CD_CODE } from '../../../../types/bff.type';
 import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO } from '../../../../types/common.type';
 import { DATA_UNIT, PRODUCT_CTG_NAME } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
-import ProductHelper from '../../helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -304,7 +304,7 @@ class ProductCommonCallplan extends TwViewController {
             });
           }
 
-          res.render('common/product.common.callplan.html', {
+          res.render('common/callplan/product.common.callplan.html', {
             pathCategory: req.path.split('/')[1],
             pageInfo: pageInfo,
             svcInfo: svcInfo,

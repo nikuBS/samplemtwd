@@ -10,7 +10,7 @@ import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
 import { DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import ProductHelper from '../../../05.product/helper/product.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 const FEE_PLAN_TIP = {
   M1: ['MS_05_tip_01'], // 휴대폰
