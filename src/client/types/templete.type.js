@@ -369,15 +369,14 @@ Tw.MYT_TPL = {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
+    '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
+    '<span class="cont"><span class="info-title">{{nickNm}}'+
     '{{#if data.child}}' +
-    '<span class="badge badge-fam"><span class="blind">자녀회선</span></span>' +
+    '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>'+
     '{{/if}}' +
-    '</span><span class="info-sub">{{svcNum}}</span>' +
-    '</div><div class="lineinfo-data">' +
-    '<span class="info-title">{{data.data}}' +
-    '<span class="unit ml4">{{data.unit}}</span>' +
-    '</span><span class="ico"></span></div></button></li>'
+    '<span class="info-sub">{{svcNum}}</span>' +
+    '<span class="price">{{data.data}}{{data.unit}}</span>'+
+    '</span></span></button></li>'
   },
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
@@ -693,7 +692,7 @@ Tw.PRODUCT_JOIN_TYPE = [
   { value: '인터넷', attr: 'data-type-code="internet"' },
   { value: '전화', attr: 'data-type-code="phone"' },
   { value: 'TV', attr: 'data-type-code="TV"' },
-  { value: '결합상품', attr: 'data-type-code="combine"' },
+  { value: '결합상품', attr: 'data-type-code="combine"' }
 ];
 
 Tw.SUSPEND_RELATION = {

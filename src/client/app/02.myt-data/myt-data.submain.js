@@ -197,13 +197,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // T가족모아
   _onFamilyMoaDetail: function () {
-    if ( this.data.family.possible ) {
-      // TODO: 미가입 관련 상태 업데이트 후 처리
-      this._historyService.goLoad('/product/callplan/NA00006031');
-    }
-    else {
-      this._historyService.goLoad('/myt-data/familydata');
-    }
+    this._historyService.goLoad('/myt-data/familydata');
   },
 
   // 데이터 혜텍
