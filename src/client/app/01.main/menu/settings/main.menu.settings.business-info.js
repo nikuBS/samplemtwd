@@ -5,10 +5,6 @@
  */
 
 Tw.MainMenuSettingsBusinessInfo = function (rootEl) {
-  if (!Tw.BrowserHelper.isApp()) {
-    return;
-  }
-
   this.$container = rootEl;
 
   this._nativeService = Tw.Native;
@@ -18,13 +14,11 @@ Tw.MainMenuSettingsBusinessInfo = function (rootEl) {
 
 Tw.MainMenuSettingsBusinessInfo.prototype = {
   _bindEvents: function () {
-    this.$container.on('click', 'a', $.proxy(this._onLink, this));
+    this.$container.on('click', '.fe-outlink', $.proxy(this._onLink, this));
   },
   _onLink: function (e) {
-    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-      type: Tw.NTV_BROWSER.EXTERNAL,
-      href: e.currentTarget.href
-    });
+    var url = $(e.currentTarget).attr('href');
+    Tw.CommonHelper.openUrlExternal(url);
     return false;
   }
 };
