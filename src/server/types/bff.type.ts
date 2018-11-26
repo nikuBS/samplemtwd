@@ -99,6 +99,18 @@ export enum MYT_FARE_PAYMENT_TYPE {
   VIRTUAL = '04'
 }
 
+export enum MYT_FARE_PAYMENT_CODE {
+  BANK = '41',
+  BANK2 = '40',
+  CARD = '02'
+}
+
+export enum MYT_FARE_POINT_PAYMENT_STATUS {
+  CLOSE = '납부해지',
+  OPEN = '납부신청', 
+  CHANGE = '납부변경',
+}
+
 export enum MYT_FARE_PAYMENT_TITLE {
   ACCOUNT = '계좌이체',
   CARD = '체크/신용카드',

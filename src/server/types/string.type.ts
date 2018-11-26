@@ -192,13 +192,13 @@ export enum PRODUCT_CTG_NAME {
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
-  direct: '즉시 납부',
-  auto: '자동 납부',
-  autoAll: '자동 납부 통합 인출',
-  microPrepay: '소액결제 선결제',
-  contentPrepay: '콘텐츠 이용료 선결제',
+  direct: '즉시납부',
+  auto: '자동납부',
+  autoAll: '자동납부 통합 인출',
+  microPrepay: '소액 선결제',
+  contentPrepay: '콘텐츠 선결제',
   pointReserve: '포인트 납부 예약',
-  pointAuto: '포인트 자동 납부',
+  pointAuto: '포인트 자동납부',
   PAY_KOR_TITLE: '납부',
   CANCEL_KOR_TITLE: '취소',
   AUTO_KOR_TITLE: '자동'
