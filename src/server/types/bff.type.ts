@@ -324,6 +324,13 @@ export enum PRODUCT_RESERVATION_REJECT {
   R999 = '상세 신청결과는 SK텔레콤 전문 상담원(114)에게 문의해주세요.'
 }
 
+export enum CUSTOMER_NOTICE_CTG_CD {
+  A01 = '안내',
+  A02 = '개인정보보호',
+  A04 = '이벤트',
+  A05 = '시스템'
+}
+
 export enum RAINBOW_POINT_REL_CD {
   C = 'C',
   P = 'P'
