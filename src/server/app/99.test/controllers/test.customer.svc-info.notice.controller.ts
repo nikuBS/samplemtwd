@@ -15,7 +15,7 @@ import sanitizeHtml from 'sanitize-html';
 const categorySwitchingData = {
   tworld: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.TWORLD,
-    API: API_CMD.BFF_08_0029
+    API: API_CMD.BFF_08_0029_TEST
   },
   directshop: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
