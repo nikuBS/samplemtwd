@@ -12,11 +12,10 @@ import MainMenuSettingsTerms from './controllers/menu/settings/main.menu.setting
 import MainMenuSettingsLocation from './controllers/menu/settings/main.menu.settings.location.controller';
 import MainMenuSettingsCertificates from './controllers/menu/settings/main.menu.settings.certificates.controller';
 import MainMenuSettingsBiometrics from './controllers/menu/settings/main.menu.settings.biometrics.cotroller';
-import MainMenuSettingsBiometricsTerms
-  from './controllers/menu/settings/main.menu.settings.biometrics.terms.controller';
+import MainMenuSettingsBiometricsTerms from './controllers/menu/settings/main.menu.settings.biometrics.terms.controller';
 import MainMenuSettingsBiometricsCert from './controllers/menu/settings/main.menu.settings.biometircs.cert.controller';
-import MainMenuSettingsBiometricsRegister
-  from './controllers/menu/settings/main.menu.settings.bometrics.register.controller';
+import MainMenuSettingsBiometricsRegister from './controllers/menu/settings/main.menu.settings.bometrics.register.controller';
+import MainMenuSettingsFamilySites from './controllers/menu/settings/main.menu.settings.family-sites.controller';
 
 class MainRouter extends TwRouter {
   constructor() {
@@ -36,6 +35,7 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings/certificates', controller: MainMenuSettingsCertificates });
     this.controllers.push({ url: '/menu/settings/terms', controller: MainMenuSettingsTerms });
     this.controllers.push({ url: '/menu/settings/location', controller: MainMenuSettingsLocation });
+    this.controllers.push({ url: '/menu/settings/family-sites', controller: MainMenuSettingsFamilySites });
     this.controllers.push({ url: '/menu/refund', controller: MainMenuRefund });
     this.controllers.push({ url: '/search', controller: MainSearch });
   }
