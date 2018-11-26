@@ -1,0 +1,9 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "reqCnt": "1",
+    "giftRequestAgainYn": "Y",
+    "dataRemQty": "500"
+  }
+}

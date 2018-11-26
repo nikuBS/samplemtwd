@@ -126,11 +126,19 @@ abstract class TwViewController {
         this.failLogin(req, res, next, error.code);
       });
     } else {
-      this.apiService.requestLoginTest(userId).subscribe((resp) => {
-        this.renderPage(req, res, next, path); // noticeTpyCd
-      }, (error) => {
-        this.failLogin(req, res, next, error.code);
-      });
+      if ( /\/test/i.test(req.baseUrl) && /\/home/i.test(req.path) ) {
+        this.apiService.requestLoginLoadTest(userId).subscribe((resp) => {
+          this.renderPage(req, res, next, path); // noticeTpyCd
+        }, (error) => {
+          this.failLogin(req, res, next, error.code);
+        });
+      } else {
+        this.apiService.requestLoginTest(userId).subscribe((resp) => {
+          this.renderPage(req, res, next, path); // noticeTpyCd
+        }, (error) => {
+          this.failLogin(req, res, next, error.code);
+        });
+      }
     }
   }
 

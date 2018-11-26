@@ -1,0 +1,61 @@
+<%#
+* FileName: micro-pay.component..html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.10.06
+%>
+<script id="fe-smart-micro-pay" type="text/x-handlebars-template">
+    {{#if showMicro}}
+    <!-- .cont-box -->
+        <div class="shadow-box mt30">
+            <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                <a href="/myt-fare/bill/small">
+                    <span class="card-ti-txt">소액결제 이용내역 </span>
+                    <span class="ico"></span>
+                </a>
+            </div>
+            <div class="fee-info-box">
+                <div class="fee-card-info0 pt6">
+                    <p class="tit"><em class="tx-bold">{{ invMonth }}월 사용금액</em></p>
+                    <p class="fee-tx ff-tg-black pt2">{{ usedAmtTot }}<span class="ff-tg-light"> 원</span></p>
+                    <p class="date pt6">사용기간  {{ invStartDt }}~{{ invEndDt }}</p>
+                </div>
+                <div class="fee-card-info1 mt24">
+                    <p class="con-b-txt1 pt26">최근 결제내역</p>
+                    <ul class="list0 pt14">
+                        {{#each detailList}}
+                        {{#if showDetail}}
+                        <li>
+                            <div class="con-tx">{{ name }}<br/><span class="txt"><span>{{ payMethod }}</span><span>{{ payTime }}</span></span></div>
+                            <div class="price"><em class="tx-bold">{{ charge }}</em>원</div>
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <ul class="bt-slice">
+                <li class="bt-white1">
+                    <a href="/myt/fare/history/micro">소액결제 이용내역 더보기</a>
+                </li>
+            </ul>
+        </div>
+    <!--// .cont-box -->
+    {{else}}
+    <!-- .cont-box -->
+        <div class="shadow-box mt30">
+            <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                <a href="/myt-fare/bill/small">
+                    <span class="card-ti-txt">소액결제 이용내역 </span>
+                    <span class="ico"></span>
+                </a>
+            </div>
+            <div class="fee-info-box">
+                <div class="fee-card-info0">
+                    <p class="con-txt1 pb16">{{ invMonth }}월 소액결제 <br/>내역이 없습니다.</p>
+                    <p class="con-txt3 pb20">소액결제하시면,<br/>이곳에서 알려드려요</p>
+                </div>
+            </div>
+        </div>
+    <!--// .cont-box -->
+    {{/if}}
+</script>
