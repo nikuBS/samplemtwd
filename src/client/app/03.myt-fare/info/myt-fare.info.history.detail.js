@@ -45,8 +45,6 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
           invYearMonth:Tw.DateHelper.getShortDateNoDate(this.data.data.invDt),
           reqDate:Tw.DateHelper.getShortDate(this.data.data.reqDtm)
         });
-        console.log('내역', this.detailData)
-        // this.detailData.invYearMonth = Tw.DateHelper.getFullKoreanDate(this.detailData.invDt)
         /*this.detailData.cardNum = this.data.data.cardNum;
         this.detailData.aprvNum = this.data.data.aprvNum;*/
         switch (this.detailData.dataPayType) {
@@ -65,7 +63,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
       case 'AT':
       case 'AU':
         // 자동납부 카드/계좌
-        this.detailData.dataUseTermStart = this.detailData.dataLastInvDt.substr(0, 8) + '01';
+        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoNot(this.detailData.dataLastInvDt));
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;
       case 'RP':
@@ -74,6 +72,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         break;
       case 'PN': 
         // 포인트 자동납부
+        console.log("자동납부", this.detailData)
         this.$templateWrapper.append(this.$template.$autoPoint(this.detailData));
         break;
       default:

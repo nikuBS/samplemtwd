@@ -305,9 +305,10 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataRequestAmt = FormatHelper.addComma(o.drwReqAmt);
         o.dataIsBank = !this.isCard(o.dataTitle);
         o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
-        o.dataDt = DateHelper.getShortDateWithFormat(o.drwDt, 'YYYY.MM.DD.');
+        o.dataDt = DateHelper.getShortDate(o.drwDt);
         o.dataCardBankNum = o.bankCardNum;
-        o.dataLastInvDt = DateHelper.getShortDateWithFormat(o.lastInvDt, 'YYYY.MM.DD');
+        o.dataReqYearMonth = DateHelper.getShortDateWithFormat(o.lastInvDt, 'YYYY.M.');
+        o.dataLastInvDt = DateHelper.getShortDate(o.lastInvDt);
         o.dataSubInfo = o.drwErrCdNm;
         o.dataSubInfo2 = MYT_FARE_PAYMENT_HISTORY_TYPE.auto;
         o.dataTmthColClCd = MYT_PAYMENT_HISTORY_AUTO_TYPE[o.tmthColClCd];
@@ -432,6 +433,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'PN'; // 포인트자동납부
         o.reqSt = o.reqSt; // 상태
+        o.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === o.reqSt);
         o.noLink = this.isNoLink(o.reqSt); // === MYT_FARE_POINT_PAYMENT_STATUS.CLOSE); // 납부해지단계에서는 링크를 걸지 않음
         o.listTitle = o.pointNm; 
         o.isPoint = true;
