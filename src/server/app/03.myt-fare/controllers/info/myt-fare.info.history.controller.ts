@@ -152,6 +152,8 @@ class MyTFareInfoHistory extends TwViewController {
         isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse,
         autoWithdrawalBankName: this.paymentData.withdrawalBankName,
         autoWithdrawalBankNumber: this.paymentData.withdrawalBankAccount,
+        autoWithdrawalBankCode: this.paymentData.withdrawalBankCode,
+        autoWithdrawalBankSerNum: this.paymentData.withdrawalBankSerNum,
         refundPaymentCount: this.paymentData.refundPaymentCount,
         overPaymentCount: this.paymentData.overPaymentCount,
         refundTotalAmount: this.paymentData.refundTotalAmount,
@@ -223,11 +225,12 @@ class MyTFareInfoHistory extends TwViewController {
         return null;
       }
 
-      this.paymentData.overPaymentCount = parseInt(resp.result.ovrPayCnt, 10);
-      this.paymentData.refundPaymentCount = parseInt(resp.result.rfndTotAmt, 10);
+      this.paymentData.overPaymentCount = parseInt(resp.result.ovrPayCnt, 10); // 과납건수
+      this.paymentData.refundPaymentCount = parseInt(resp.result.rfndTotAmt, 10); // 환불받을 총 금액
       // this.logger.info(this, resp.result.rfndTotAmt, FormatHelper.addComma(resp.result.rfndTotAmt.toString()));
       this.paymentData.refundTotalAmount = FormatHelper.addComma(resp.result.rfndTotAmt.toString());
 
+      // 환불신청내역
       resp.result.refundPaymentRecord.map((o) => {
         o.sortDt = o.rfndReqDt;
         o.dataDt = DateHelper.getShortDateWithFormat(o.rfndReqDt, 'YYYY.MM.DD');
@@ -235,7 +238,10 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataRefundObjAmt = FormatHelper.addComma(o.rfndObjAmt);
         o.dataSumAmt = FormatHelper.addComma(o.sumAmt);
         o.dataRefundState = MYT_PAYMENT_HISTORY_REFUND_TYPE[o.rfndStat];
+        o.rfndStat = o.rfndStat;
       });
+
+      // 과납내역
       resp.result.overPaymentRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
