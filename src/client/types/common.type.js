@@ -8,5 +8,6 @@ Tw.FIDO_TYPE = {
 };
 
 Tw.UPLOAD_TYPE = {
-  EMAIL: 'email'
+  EMAIL: 'email',
+  RESERVATION: 'reservation'
 };

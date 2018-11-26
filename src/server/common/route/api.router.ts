@@ -14,10 +14,11 @@ import EnvHelper from '../../utils/env.helper';
 import RedisService from '../../services/redis.service';
 import FormatHelper from '../../utils/format.helper';
 import VERSION from '../../config/version.config';
+import * as fs from 'fs';
+import dateHelper from '../../utils/date.helper';
 
 class ApiRouter {
   public router: Router;
-  private upload;
   private logger: LoggerService = new LoggerService();
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
@@ -26,17 +27,6 @@ class ApiRouter {
 
   constructor() {
     this.router = express.Router();
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, __dirname + '../../../../../uploads/');
-      },
-      filename: (req, file, cb) => {
-        cb(null, new Date().valueOf() + path.extname(file.originalname));
-      },
-      limits: { fileSize: 5 * 1024 * 1024 }
-    });
-    this.upload = multer({ storage: storage }).array('file');
-
     this.setApi();
   }
 
@@ -161,7 +151,7 @@ class ApiRouter {
         res.json({
           code: API_CODE.CODE_00,
           result: resp
-        })
+        });
       });
 
   }
@@ -177,13 +167,53 @@ class ApiRouter {
   //   res.json(resp);
   // }
 
+  private upload() {
+    let returnPath = 'uploads/';
+    const currentDate = new Date(),
+      storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+          let storagePath = path.resolve(__dirname, '../../../../', returnPath);
+
+          if (!FormatHelper.isEmpty(req.body.dest)) {
+            const dateFormat = dateHelper.getShortDateWithFormat(currentDate, 'YYMMDD');
+
+            storagePath += req.body.dest + '/';
+            if (!fs.existsSync(storagePath)) {
+              fs.mkdirSync(storagePath);
+            }
+
+            storagePath += dateFormat + '/';
+            if (!fs.existsSync(storagePath)) {
+              fs.mkdirSync(storagePath);
+            }
+
+            returnPath += req.body.dest + '/' + dateFormat + '/';
+          }
+
+          cb(null, storagePath);
+        },
+        filename: (req, file, cb) => {
+          cb(null, currentDate.valueOf() + path.extname(file.originalname));
+        },
+        limits: { fileSize: 5 * 1024 * 1024 }
+      });
+
+    return {
+      path: returnPath,
+      component: multer({ storage: storage }).array('file')
+    };
+  }
+
   private uploadFile(req: Request, res: Response, next: NextFunction) {
-    this.upload(req, res, (err) => {
+    const upload = this.upload();
+
+    upload.component(req, res, (err) => {
       if ( err ) {
         this.logger.error(this, err);
         res.json({ code: err.errno, msg: err.code });
         return;
       }
+
       this.logger.info(this, req['files']);
       const files = req['files'];
 
@@ -193,10 +223,12 @@ class ApiRouter {
           return {
             name: file.filename,
             size: file.size,
+            path: upload.path,
             originalName: file.originalname
           };
         })
       };
+
       res.json(resp);
     });
   }
