@@ -11,7 +11,8 @@ $(document).on('ready', function () {
   if($('#common-menu').length > 0){
     skt_landing.action.gnb();
   }
-  
+  skt_landing.action.header_shadow(); // 헤더 그림자 효과 (페이지)
+  skt_landing.action.header_shadow_popup(); // 헤드 그림자 효과 (팝업)
 });
 $(window).on('resize', function () {
 
@@ -56,6 +57,9 @@ skt_landing.util = {
       switch (true) {
         case /iphone/.test(userAgent):
           browser_name = 'ios';
+          break;
+        case /android/.test(userAgent):
+          browser_name = 'android';
           break;
         case /naver/.test(userAgent):
           browser_name = 'naver';
@@ -364,6 +368,7 @@ skt_landing.action = {
           e.stopPropagation();
         });
         _this.scroll_chk();
+        skt_landing.action.header_shadow_popup();
         if(createdTarget.hasClass('popup-page')){
           skt_landing.widgets.widget_init('.popup-page:last');
         }else{
@@ -508,6 +513,29 @@ skt_landing.action = {
         }
     })
   },
+  header_shadow : function(){
+    $(window).bind('scroll', function(){
+      if(skt_landing.util.win_info.get_scrollT() == 0){
+          $('body').removeClass('scroll');
+      }else{
+          $('body').addClass('scroll');
+      }
+    })
+  },
+  header_shadow_popup : function(){
+    $('.popup-page').each(function(){
+      if($(this).data('scroll') == undefined){
+        $(this).data('scroll', true);
+        $(this).find('.container-wrap').on('scroll', function(){
+          if($(this).scrollTop() > 0){
+            $(this).closest('.popup-page').addClass('scroll')
+          }else{
+            $(this).closest('.popup-page').removeClass('scroll')
+          }
+        })
+      }
+    })
+  },
   gnb : function(){
     $('.icon-gnb-menu').bind('click', function(){
       $('#common-menu').addClass('on');
@@ -526,9 +554,9 @@ skt_landing.action = {
         $('.userinfo').find('.bt').prop('disabled', false);
       }
     });
-    $('.section-gnb .bt, .section-guide .bt').on('click', function(e){
-        if($(this).next().is('.depth2')){
-          $(this).parent().toggleClass('open');
+    $('.bt-depth1 .more').on('click', function(e){
+        if($(this).parent().next().is('.depth2')){
+          $(this).parent().parent().toggleClass('open');
         }
     });
   }
