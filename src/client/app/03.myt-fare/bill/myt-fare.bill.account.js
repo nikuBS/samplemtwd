@@ -36,13 +36,16 @@ Tw.MyTFareBillAccount.prototype = {
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
 
+    this._bankAutoYn = 'N';
+    this._refundAutoYn = 'N';
     this._isPaySuccess = false;
     this._historyUrl = '/myt-fare/info/history';
     this._mainUrl = '/myt-fare/submain';
   },
   _bindEvent: function () {
+    this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
-    this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
@@ -63,12 +66,38 @@ Tw.MyTFareBillAccount.prototype = {
       this._checkPay();
     }
   },
-  _showAndHideAccount: function (event) {
-    var $target = $(event.target);
-    if ($target.is(':checked')) {
-      this.$refundBox.show();
+  _onChangeOption: function (event) {
+    var $target = $(event.currentTarget);
+    var $bankTarget = null;
+    var $numberTarget = null;
+    var $isAccountInfo = $target.parent().hasClass('fe-account-info');
+
+    if ($isAccountInfo) {
+      $bankTarget = this.$selectBank;
+      $numberTarget = this.$accountNumber;
     } else {
-      this.$refundBox.hide();
+      $bankTarget = this.$refundBank;
+      $numberTarget = this.$refundNumber;
+    }
+
+    if ($target.hasClass('fe-manual-input')) {
+      $target.addClass('checked');
+      $bankTarget.removeAttr('disabled');
+      $numberTarget.removeAttr('disabled');
+    } else {
+      $target.siblings().removeClass('checked');
+      $bankTarget.attr('disabled', 'disabled');
+      $numberTarget.attr('disabled', 'disabled');
+    }
+  },
+  _showAndHideAccount: function (event) {
+    var $target = $(event.currentTarget);
+    var $parentTarget = $target.parents('.fe-refund-check-btn');
+
+    if ($target.is(':checked')) {
+      $parentTarget.addClass('on');
+    } else {
+      $parentTarget.removeClass('on');
     }
   },
   _openRefundInfo: function () {
@@ -134,28 +163,32 @@ Tw.MyTFareBillAccount.prototype = {
       .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
   },
   _getData: function () {
-    var isAccountAuto = this.$accountInputBox.hasClass('checked');
-    var isRefundAuto = this.$refundInputBox.hasClass('checked');
+    var isAccountInput = this.$accountInputBox.hasClass('checked');
+    var isRefundInput = this.$refundInputBox.hasClass('checked');
 
     var data = {};
-    if (isAccountAuto) {
+    if (isAccountInput) {
       data.bankCd = this.$selectBank.attr('id');
       data.bankNm = this.$selectBank.text();
       data.accountNum = this.$accountNumber.val();
+      this._bankAutoYn = 'N';
     } else {
       data.bankCd = this.$container.find('.fe-auto-account-bank').attr('data-code');
       data.bankNm = this.$container.find('.fe-auto-account-bank').attr('data-name');
       data.accountNum = this.$container.find('.fe-auto-account-number').text();
+      this._bankAutoYn  = 'Y';
     }
 
-    if (isRefundAuto) {
+    if (isRefundInput) {
       data.refundCd = this.$refundBank.attr('id');
       data.refundNm = this.$refundBank.text();
       data.refundNum = this.$refundNumber.val();
+      this._refundAutoYn = 'N';
     } else {
       data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
       data.refundNm = this.$container.find('.fe-auto-refund-bank').attr('data-name');
       data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+      this._refundAutoYn = 'Y';
     }
     return data;
   },
@@ -185,11 +218,13 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _makeRequestData: function () {
     var reqData = {
-      payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
-      payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
-      payovrCustNm: this.$container.find('.fe-name').val(),
+      payOvrAutoYn: this._refundAutoYn,
+      payOvrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
+      payOvrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
+      payOvrCustNm: $.trim(this.$container.find('.fe-name').text()),
+      bankAutoYn: this._bankAutoYn,
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
-      bankOrCardName: this.$container.find('.fe-payment-option-name').text(),
+      bankOrCardName: $.trim(this.$container.find('.fe-payment-option-name').text()),
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };
