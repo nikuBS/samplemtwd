@@ -16,18 +16,28 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._fileInfo = _.map(this._fileInfo, function (info, idx) {
       return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx] });
     });
-    if(tooltip){
+    if ( tooltip ) {
       this._showUploadTip(tooltip);
-    }else{
+    } else {
       this._showUploadPopup();
     }
   },
   _showUploadTip: function (tooltip) {
-    this._popupService.openAlert(tooltip.title, tooltip.content, null,
-      $.proxy(this._showUploadPopup, this));
+    // this._popupService.openConfirm(tooltip.title, tooltip.content, $.proxy(this._showUploadPopup, this), null);
+    this._popupService.open({
+      title: tooltip.title,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: tooltip.content,
+      bt_b: [{
+        style_class: 'bt-blue1 pos-right tw-popup-confirm',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, null, $.proxy(this._showUploadPopup, this), tooltip.hash);
   },
 
   _showUploadPopup: function () {
+    this._popupService.close();
     this._popupService.open({
       hbs: 'CS_04_01_L02',
       inputfile_num: this._fileInfo,
@@ -105,7 +115,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._setFileButton($inputBox, true);
   },
 
-  _setFileButton: function($inputBox, addable) {
+  _setFileButton: function ($inputBox, addable) {
     if ( addable ) {
       $inputBox.find('input.fileview').val('');
       $inputBox.find('input.file').prop('files', null);

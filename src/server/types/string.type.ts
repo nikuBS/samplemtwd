@@ -445,3 +445,7 @@ export const NEW_NUMBER_MSG = {
   MOD0030: '번호변경안내서비스 신청 가능한 번호변경 이력이 없습니다.',
   MOD0031: '번호변경전 번호가 타사번호인 경우는 지점/대리점/고객센터를 통해 신청 가능합니다.'
 };
+
+export const MYT_SUSPEND_ERROR_MSG = {
+  NOT_SUSPENDED: '일시정지 상태가 아닙니다.',
+};

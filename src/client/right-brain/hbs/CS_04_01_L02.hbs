@@ -20,16 +20,16 @@
                         <div class="widget-box file">
                             <span class="inputbox bt-add">
                                 <span class="input">
-                                    <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요" style="pointer-events: none;" value={{oldFile.fileName}} >
+                                    <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요" style="pointer-events: none;" value={{oldFile.name}} >
                                 </span>
                                 <span class="space"></span>
                                 <span class="bt-box">
-                                    {{#if oldFile.fileName}}
+                                    {{#if oldFile.name}}
                                         <button type="button" class="fe-file-button" >파일삭제</button>
-                                        <input class="file" type="file" value="파일찾기" disabled  style="pointer-events: none;" {{attrs}} />
+                                        <input class="file" type="file" value="파일찾기" disabled  style="pointer-events: none;" {{attr}} />
                                     {{else}}
                                         <button type="button" class="fe-file-button">파일찾기</button>
-                                        <input class="file" type="file" value="파일찾기" {{attrs}} />
+                                        <input class="file" type="file" value="파일찾기" {{attr}} />
                                     {{/if}}
 
                                 </span>
