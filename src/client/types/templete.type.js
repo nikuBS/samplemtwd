@@ -83,32 +83,25 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_LAYER_DATA: [
     {
       'list': [
-        { 'value': '자동납부', 'option': 'fe-auto', 'text2': '신청' }
+        { 'button-attr': 'type="button"', 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
       ]
     },
     {
-      'type': '요금 납부',
+      'title': '요금 납부',
       'list': [
-        { 'value': '계좌이체 납부', 'option': 'fe-account' },
-        { 'value': '체크∙신용카드 납부', 'option': 'fe-card' },
-        { 'value': 'OK캐쉬백∙T포인트 납부', 'option': 'fe-point' }
-      ]
-    },
-    {
-      'list': [
-        {
-          'value': '입금전용계좌 문자 신청', 'option': 'fe-sms',
-          'explain': '입금전용계좌 정보를 문자로 전송합니다.' + '<br/>' +
-          '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.'
-        }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' },
+        { 'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청' }
       ]
     },
     {
       'type': '포인트 요금 납부',
       'list': [
-        { 'value': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
-        { 'value': 'T포인트', 'option': 'fe-t-point' },
-        { 'value': '레인보우 포인트', 'option': 'fe-rainbow-point' }
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
+        { 'button-attr': 'type="button"', 'txt': '레인보우 포인트', 'option': 'fe-rainbow-point' }
       ]
     }
   ],
