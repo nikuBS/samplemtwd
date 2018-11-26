@@ -304,7 +304,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.drwDt;
         o.dataAmt = FormatHelper.addComma(o.drwAmt);
         o.dataRequestAmt = FormatHelper.addComma(o.drwReqAmt);
-        o.dataIsBank = this.isBank(o.dataTitle);
+        o.dataIsBank = !this.isCard(o.dataTitle);
         o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
         o.dataDt = DateHelper.getShortDateWithFormat(o.drwDt, 'YYYY.MM.DD');
         o.dataCardBankNum = o.bankCardNum;
@@ -334,7 +334,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataTitle = o.bankNm;
         o.hasTip = true;
         o.dataPayMethodCode = 'AU';
-        o.dataIsBank = this.isBank(o.dataTitle);
+        o.dataIsBank = !this.isCard(o.dataTitle);
         o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
         o.dataAmt = FormatHelper.addComma(o.drwAmt);
         o.dataDt = DateHelper.getShortDateWithFormat(o.drwDt, 'YYYY.MM.DD');
@@ -420,6 +420,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 포인트 자동납부
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
       // console.log('\x1b[36m%s\x1b[0m', '------log 포인트자동납부 code', resp.code, resp.result);

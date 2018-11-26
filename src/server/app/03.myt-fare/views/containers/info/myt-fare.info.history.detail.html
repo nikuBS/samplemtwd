@@ -220,82 +220,80 @@
     </script>
     <script id="fe-payment-detail-auto" type="text/x-handlebars-template">
         <!-- .cont-box -->
-        <div class="cont-box noborder nogaps bgnone">
-            <div class="myfare-result-wrap">
-                <div class="myfare-list">
-                    <ul>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부일자</dt>
-                                <dd class="tx-bold"><span class="number">{{dataDt}}</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부금액</dt>
-                                <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>청구금액</dt>
-                                <dd><span class="number">{{dataRequestAmt}}</span>원</dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>청구년월</dt>
-                                <dd><span class="number">{{dataLastInvDt}}</span></dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>사용기간</dt>
-                                <dd><span class="number">{{dataUseTermStart}} ~ {{dataLastInvDt}}</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                {{#if dataIsBank}}
-                                <dt>은행명</dt>
-                                {{else}}
-                                <dt>카드사명</dt>
-                                {{/if}}
-                                <dd class="tx-bold">{{dataTitle}}</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                {{#if dataIsBank}}
-                                <dt>계좌번호</dt>
-                                {{else}}
-                                <dt>카드번호</dt>
-                                {{/if}}
-                                <dd class="tx-bold"><span class="number">{{dataCardBankNum}}</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>사유</dt>
-                                <dd class="tx-bold">{{drwErrCdNm}}</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>구분</dt>
-                                <dd class="tx-bold">{{dataTmthColClCd}}</dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
-                {{#if dataIsBank}}
-                <ul class="bt-slice mt20">
-                    {{#if isPersonalBiz}}
-                    <li class="bt-white1">
-                        <a href="/myt-fare/info/bill-tax">세금계산서 발행내역</a>
+        <div class="cont-box nogaps-hoz bg-payment">
+            <div class="user-bill-detail">
+                <ul>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">납부일자</span>
+                            <span class="val">{{dataDt}}</span>
+                        </div>
                     </li>
-                    {{else}}
-                    <li class="bt-white1">
-                        <a href="/myt-fare/info/bill-cash">현금영수증 발행내역</a>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">납부금액</span>
+                            <span class="val">{{dataAmt}} 원</span>
+                        </div>                        
+                        <div class="sub-text">
+                            <span class="tit">청구금액</span>
+                            <span class="val">{{dataRequestAmt}} 원</span>
+                        </dl>
+                        <div class="sub-text">
+                            <span class="tit">청구년월</span>
+                            <span class="val">{{dataLastInvDt}}</span>
+                        </dl>
+                        <div class="sub-text">
+                            <span class="tit">사용기간</span>
+                            <span class="val">{{dataUseTermStart}} ~ {{dataLastInvDt}}</span>
+                        </dl>
                     </li>
-                    {{/if}}
+                    <li>
+                        <div class="head-text">
+                            {{#if dataIsBank}}
+                            <span class="tit">은행명</span>
+                            {{else}}
+                            <span class="tit">카드사명</span>
+                            {{/if}}
+                            <span class="val">{{dataTitle}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            {{#if dataIsBank}}
+                            <span class="tit">계좌번호</span>
+                            {{else}}
+                            <span class="tit">카드번호</span>
+                            {{/if}}
+                            <span class="val"><span class="number">{{dataCardBankNum}}</span></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">사유</span>
+                            <span class="val">{{drwErrCdNm}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">구분</span>
+                            <span class="val">{{dataTmthColClCd}}</span>
+                        </div>
+                    </li>
                 </ul>
-                {{/if}}
             </div>
+            {{#if dataIsBank}}
+            <ul class="bt-slice solid mt20">
+                {{#if isPersonalBiz}}
+                <li>
+                    <a class="btn-round1 btn-style4" href="/myt-fare/info/bill-tax">세금계산서 발행내역</a>
+                </li>
+                {{else}}
+                <li>
+                    <a class="btn-round1 btn-style4" href="/myt-fare/info/bill-cash">현금영수증 발행내역</a>
+                </li>
+                {{/if}}
+            </ul>
+            {{/if}}
         </div>
         <!--// .cont-box -->
 

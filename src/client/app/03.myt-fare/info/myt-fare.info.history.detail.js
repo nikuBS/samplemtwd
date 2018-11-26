@@ -59,12 +59,13 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         break;
       case 'AT':
       case 'AU':
+        // 자동납부 카드/계좌
+        console.log("자동납부", this.detailData);
         this.detailData.dataUseTermStart = this.detailData.dataLastInvDt.substr(0, 8) + '01';
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;
       case 'RP':
         // 포인트 납부예약
-        console.log("포인트납부예약", this.detailData);
         this.$templateWrapper.append(this.$template.$reservePoint(this.detailData));
         break;
       case 'PN': 
