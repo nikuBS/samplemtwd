@@ -1,6 +1,4 @@
 // for APM
-import ApiService from './services/api.service';
-
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -32,15 +30,15 @@ import TeventRouter from './app/09.tevent/tevent.router';
 import BypassRouter from './common/route/bypass.router';
 import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
+import NativeExRouter from './common/route/native-ex.router';
+import TestRouter from './app/99.test/test.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
+import LoggerService from './services/logger.service';
+import ApiService from './services/api.service';
 import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
-import LoggerService from './services/logger.service';
-import TestRouter from './app/99.test/test.router';
-import NativeExRouter from './common/route/native-ex.router';
-
 
 class App {
   public app: Application = express();
