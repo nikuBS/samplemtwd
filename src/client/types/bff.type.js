@@ -115,6 +115,13 @@ Tw.PAYMENT_REQUEST_TYPE = {
   F: '해지'
 };
 
+Tw.CUSTOMER_NOTICE_CTG_CD = {
+  A01: '안내',
+  A02: '개인정보보호',
+  A04: '이벤트',
+  A05: '시스템'
+};
+
 Tw.SVC_CATEGORY = {
   M: '모바일',
   S: '인터넷/집전화/IPTV',
