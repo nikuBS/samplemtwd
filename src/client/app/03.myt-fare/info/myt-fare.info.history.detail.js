@@ -72,7 +72,6 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         break;
       case 'PN': 
         // 포인트 자동납부
-        console.log("자동납부", this.detailData)
         this.$templateWrapper.append(this.$template.$autoPoint(this.detailData));
         break;
       default:

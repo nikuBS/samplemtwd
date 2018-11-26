@@ -174,7 +174,6 @@ class MyTFareInfoHistory extends TwViewController {
 
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).map((resp: { code: string; result: any; }) => {
-      console.log('처음도입');
 
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
@@ -260,7 +259,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; result: any }) => {
-       console.log('\x1b[36m%s\x1b[0m', '------log 즉시납부내역 code', resp.code, resp.result);
+       // console.log('\x1b[36m%s\x1b[0m', '------log 즉시납부내역 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
