@@ -18,6 +18,7 @@ Tw.PPSRechargeLayer = function ($element) {
 Tw.PPSRechargeLayer.prototype = {
 
   _initialize: function () {
+    this.defaultUrl = 'recharge/prepaid';
     this._ppsChargeRequest();
   },
   // api request
@@ -29,19 +30,19 @@ Tw.PPSRechargeLayer.prototype = {
     this._apiService.requestArray(apiList)
       .done($.proxy(function (autoVoice, autoData) {
         if ( autoVoice.code === Tw.API_CODE.CODE_00 ) {
-          if ( !_.isEmpty(autoVoice.result) ) {
-            this.data.autoVoice = autoVoice.result;
+          if ( _.isEmpty(autoVoice.result) ) {
+            this.data.autoVoice = null;
           }
           else {
-            this.data.autoVoice = null;
+            this.data.autoVoice = autoVoice.result;
           }
         }
         if ( autoData.code === Tw.API_CODE.CODE_00 ) {
-          if ( !_.isEmpty(autoVoice.result) ) {
-            this.data.autoData = autoData.result;
+          if ( _.isEmpty(autoData.result) ) {
+            this.data.autoData = null;
           }
           else {
-            this.data.autoData = null;
+            this.data.autoData = autoData.result;
           }
         }
         this._openPopup();
@@ -51,23 +52,23 @@ Tw.PPSRechargeLayer.prototype = {
   _openPopup: function () {
     var data = [];
     data.push({
-      type: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
+      title: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
       list: [{
         option: 'once-voice',
-        value: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
+        txt: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
       }, {
-        option: this.data.autoVoice ? 'auto-voice' : 'auto-change-voice',
-        value: this.data.autoVoice ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
+        option: !this.data.autoVoice ? 'auto-voice' : 'auto-change-voice',
+        txt: !this.data.autoVoice ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
       }]
     });
     data.push({
-      type: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
+      title: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
       list: [{
         option: 'once-data',
-        value: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
+        txt: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE
       }, {
-        option: this.data.autoData ? 'auto-data' : 'auto-change-data',
-        value: this.data.autoData ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
+        option: !this.data.autoData ? 'auto-data' : 'auto-change-data',
+        txt: !this.data.autoData ? Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO : Tw.POPUP_TPL.PPS_CHARGE_DATA.AUTO_CHANGE
       }]
     });
 
@@ -77,7 +78,7 @@ Tw.PPSRechargeLayer.prototype = {
         title: Tw.POPUP_TPL.PPS_CHARGE_DATA.TITLE,
         data: data
       }, $.proxy(this._onPopupOpened, this),
-      $.proxy(this._onPopupClosed, this), 'DC_09');
+      $.proxy(this._onPopupClosed, this), 'prepaid');
   },
 
   // DC_O9 팝업 호출 후
@@ -86,7 +87,7 @@ Tw.PPSRechargeLayer.prototype = {
     var items = $container.find('li');
     for ( var i = 0; i < items.length; i++ ) {
       var item = items.eq(i);
-      var classNm = item.attr('class');
+      var classNm = item.attr('class').replace('type1', '').trim();
       switch ( classNm ) {
         case 'once-voice':
           item.on('click', $.proxy(this._onClickOnce, this, classNm));
@@ -108,42 +109,46 @@ Tw.PPSRechargeLayer.prototype = {
           break;
       }
     }
+    this.$popupContainer.find('.fe-common-back').on('click', function () {
+      window.history.back();
+    });
   },
 
   // DC_09 팝업 close 이후 처리 부분
   _onPopupClosed: function () {
     var $target = this.$popupContainer.find('[data-url]');
     if ( $target.length > 0 ) {
+      this.$popupContainer.off('click');
       this._historyService.goLoad($target.attr('data-url'));
     }
   },
 
   // DC_09 팝업내 아이템 선택시 이동
-  _onClickOnce: function (event, name) {
+  _onClickOnce: function (name, event) {
     var $target = $(event.target);
-    var url = ''; // default - data
+    var url = this.defaultUrl + '/data'; // default - data
     if ( name === 'once-voice' ) {
-
+      url = this.defaultUrl + '/voice';
     }
     $target.attr('data-url', url);
     this._popupService.close();
   },
 
-  _onClickAuto: function (event) {
+  _onClickAuto: function (name, event) {
     var $target = $(event.target);
-    var url = ''; // default - data
+    var url = this.defaultUrl + '/data/auto'; // default - data
     if ( name === 'auto-voice' ) {
-
+      url = this.defaultUrl + '/voice/auto';
     }
     $target.attr('data-url', url);
     this._popupService.close();
   },
 
-  _onClickAutoChange: function (event) {
+  _onClickAutoChange: function (name, event) {
     var $target = $(event.target);
-    var url = ''; // default - data
+    var url = this.defaultUrl + '/data/auto'; // default - data
     if ( name === 'auto-change-voice' ) {
-
+      url = this.defaultUrl + '/voice/auto';
     }
     $target.attr('data-url', url);
     this._popupService.close();
