@@ -46,4 +46,3 @@ spec:
       - name: upload-volume
         persistentVolumeClaim:
           claimName: upload-pvc
-      replicas: 2
