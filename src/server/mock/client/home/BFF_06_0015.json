@@ -1,0 +1,10 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "dataGiftCnt": "2",
+    "familyMemberYn": "Y",
+    "familyDataGiftCnt": "2",
+    "goodFamilyMemberYn": "Y"
+  }
+}

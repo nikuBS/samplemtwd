@@ -240,6 +240,10 @@ class ApiService {
       });
   }
 
+  public requestLoginLoadTest(userId: string): Observable<any> {
+    return this.requestLogin(API_CMD.BFF_03_0000_TEST, { id: userId }, LOGIN_TYPE.TID);
+  }
+
   public requestLoginTest(userId: string): Observable<any> {
     return this.requestLogin(API_CMD.BFF_03_0000, { id: userId }, LOGIN_TYPE.TID);
   }
