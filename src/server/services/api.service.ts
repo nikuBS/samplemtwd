@@ -241,7 +241,36 @@ class ApiService {
   }
 
   public requestLoginLoadTest(userId: string): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0000_TEST, { id: userId }, LOGIN_TYPE.TID);
+    let result = null;
+    return this.request(API_CMD.BFF_03_0000_TEST, { id: userId })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          result = resp.result;
+          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          resp.result.loginType = LOGIN_TYPE.TID;
+          return this.loginService.setSvcInfo(resp.result);
+        } else {
+          return this.loginService.setSvcInfo(null);
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setAllSvcInfo(resp.result);
+        } else {
+          return this.loginService.setAllSvcInfo(null);
+        }
+      })
+      .map((resp) => {
+        return { code: API_CODE.CODE_00, result: result };
+      });
   }
 
   public requestLoginTest(userId: string): Observable<any> {
