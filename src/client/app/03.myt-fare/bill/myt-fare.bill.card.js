@@ -37,19 +37,20 @@ Tw.MyTFareBillCard.prototype = {
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
 
+    this._refundAutoYn = 'N';
     this._isPaySuccess = false;
     this._historyUrl = '/myt-fare/info/history';
     this._mainUrl = '/myt-fare/submain';
   },
   _bindEvent: function () {
+    this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
-    this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
-    this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -67,16 +68,28 @@ Tw.MyTFareBillCard.prototype = {
       this._checkPay();
     }
   },
-  _showAndHideAccount: function (event) {
-    var $target = $(event.target);
-    if ($target.is(':checked')) {
-      this.$refundBox.show();
+  _onChangeOption: function (event) {
+    var $target = $(event.currentTarget);
+
+    if ($target.hasClass('fe-manual-input')) {
+      $target.addClass('checked');
+      this.$refundBank.removeAttr('disabled');
+      this.$refundNumber.removeAttr('disabled');
     } else {
-      this.$refundBox.hide();
+      $target.siblings().removeClass('checked');
+      this.$refundBank.attr('disabled', 'disabled');
+      this.$refundNumber.attr('disabled', 'disabled');
     }
   },
-  _openRefundInfo: function () {
-    this._popupService.openAlert(Tw.REFUND_ACCOUNT_INFO.CONTENTS, Tw.REFUND_ACCOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
+  _showAndHideAccount: function (event) {
+    var $target = $(event.currentTarget);
+    var $parentTarget = $target.parents('.fe-refund-check-btn');
+
+    if ($target.is(':checked')) {
+      $parentTarget.addClass('on');
+    } else {
+      $parentTarget.removeClass('on');
+    }
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -179,19 +192,21 @@ Tw.MyTFareBillCard.prototype = {
       .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
   },
   _getData: function () {
-    var isRefundAuto = this.$refundInputBox.hasClass('checked');
+    var isRefundInput = this.$refundInputBox.hasClass('checked');
 
     var data = {};
     data.cardNum = $.trim(this.$cardNumber.val());
 
-    if (isRefundAuto) {
+    if (isRefundInput) {
       data.refundCd = this.$refundBank.attr('id');
       data.refundNm = this.$refundBank.text();
       data.refundNum = this.$refundNumber.val();
+      this._refundAutoYn = 'N';
     } else {
       data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
       data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
       data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+      this._refundAutoYn = 'Y';
     }
     return data;
   },
@@ -226,9 +241,10 @@ Tw.MyTFareBillCard.prototype = {
   },
   _makeRequestData: function () {
     var reqData = {
-      payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
-      payovrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
-      payovrCustNm: this.$container.find('.fe-name').val(),
+      payOvrAutoYn: this._refundAutoYn,
+      payOvrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
+      payOvrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
+      payOvrCustNm: $.trim(this.$container.find('.fe-name').text()),
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
       bankOrCardName: this.$container.find('.fe-payment-option-name').text(),
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
