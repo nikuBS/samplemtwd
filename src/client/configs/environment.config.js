@@ -1,3 +1,3 @@
 Tw.environment = {
-  version: 'v11.0.2'
+  version: 'v11.0.5'
 };
