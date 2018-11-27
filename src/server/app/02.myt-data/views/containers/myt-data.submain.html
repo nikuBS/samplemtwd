@@ -186,7 +186,7 @@
             <% if (data.otherLines.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
-                <div class="cont-box noborder nogaps-btm b-line1">
+                <div class="cont-box noborder nogaps-btm b-line1" data-id="other-lines">
                     <div class="ti-caption-type01 pb0">
                         <h2 class="tit">다른 회선의 실시간 잔여량</h2>
                         <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
@@ -202,7 +202,7 @@
                     </div>
                     <% if (length === 20) { %>
                     <!-- 다른 회선(자녀포함)이 총 20개 이상인 경우 -->
-                    <div class="bt-more">
+                    <div class="btn-more">
                         <button>더 보기</button>
                     </div>
                     <% } %>

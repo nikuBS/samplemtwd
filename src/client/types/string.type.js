@@ -95,7 +95,8 @@ Tw.POPUP_CONTENTS = {
 Tw.CHART_TYPE = {
   BAR: 'bar',
   BAR_1: 'bar1',
-  BAR_2: 'bar2'
+  BAR_2: 'bar2',
+  BAR_4: 'bar4'
 };
 
 Tw.CHART_UNIT = {
@@ -103,6 +104,8 @@ Tw.CHART_UNIT = {
   GB: 'gb',
   TIME: 'time'
 };
+
+Tw.FARE_CHART_LEGEND = ['청구', '할인'];
 
 Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
@@ -723,7 +726,7 @@ Tw.MYT_DATA_TING = {
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
   A81_CONTENT : '차단 시에는 팅요금 선물을 할 수 없습니다.',
   A81_BTN_CONFIRM: '차단하기'
-}
+};
 
 Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',

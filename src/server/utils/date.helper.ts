@@ -277,6 +277,22 @@ class DateHelper {
   static getDiffByUnit(endDate: string, startDate: string, unit: any): number {
     return moment(endDate).diff(startDate, unit);
   }
+
+  /**
+   * @param {any} date
+   * @returns {string} : yyyy-mm-01
+   */
+  static getMonthFirstDay( date: any): any {
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.DD.');
+  }
+
+  /**
+   * @param {any} date
+   * @returns {string} : yyyy-mm-30 or 31
+   */
+  static getMonthLastDay( date: any): any {
+    return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.DD.');
+  }
 }
 
 export default DateHelper;
