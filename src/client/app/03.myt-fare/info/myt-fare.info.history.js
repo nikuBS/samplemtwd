@@ -22,58 +22,14 @@ Tw.MyTFareInfoHistory.prototype = {
 
     this.rootPathName = this._historyService.pathname;
 
-    if (this.data && this.data.current !== 'detail') {
+    if(this.data){
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
         if (this.data.current === cur) {
           prev = index;
         }
         return prev;
       }, this), 0);
-
       this._initPaymentList();
-    } else {
-      this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
-      this.queryParams = Tw.UrlHelper.getQueryParams();
-
-      this.$templateWrapper = this.$container.find('#fe-detail-wrapper');
-
-      this.$template = {
-        $directBase : Handlebars.compile($('#fe-payment-detail-dt').html()),
-        $directOCBandCard : Handlebars.compile($('#fe-payment-detail-ocb-card').html()),
-        $directBank : Handlebars.compile($('#fe-payment-detail-bank').html()),
-        $auto : Handlebars.compile($('#fe-payment-detail-auto').html()),
-        $microContents : Handlebars.compile($('#fe-payment-detail-micro-contents').html())
-      };
-
-      switch (this.queryParams.type) {
-        case 'DI':
-          this.detailData.dataUseTermStart = this.detailData.dataDt.substr(0, 8) + '01';
-          this.detailData.cardNum = this.data.cardNum;
-          this.detailData.aprvNum = this.data.aprvNum;
-          switch (this.queryParams.settleWayCd) {
-            case '02':
-            case '10':
-            case '11':
-              this.$templateWrapper.append(this.$template.$directOCBandCard(this.detailData));
-              break;
-            case '41':
-              this.$templateWrapper.append(this.$template.$directBank(this.detailData));
-              break;
-            default:
-              this.$templateWrapper.append(this.$template.$directBase(this.detailData));
-              break;
-          }
-          break;
-        case 'AT':
-        case 'AU':
-          this.detailData.dataUseTermStart = this.detailData.dataLastInvDt.substr(0, 8) + '01';
-          this.$templateWrapper.append(this.$template.$auto(this.detailData));
-          break;
-        default:
-          this.$templateWrapper.append(this.$template.$microContents(this.detailData));
-          break;
-
-      }
     }
   },
 
@@ -383,14 +339,6 @@ Tw.MyTFareInfoHistory.prototype = {
 
   _moveRefundList: function () {
     this._historyService.goLoad(this.data.refundURL);
-  },
-
-  _getAllData: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0030, {}).done($.proxy(this._setData, this)).fail($.proxy(this._apiError, this));
-  },
-
-  _setData: function (data) {
-    // console.log(data);
   },
 
   _typeActionSheetOpen: function () {

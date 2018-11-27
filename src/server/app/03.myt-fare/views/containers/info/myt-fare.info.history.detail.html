@@ -41,38 +41,36 @@
     </script>
     <script id="fe-payment-detail-dt" type="text/x-handlebars-template">
         <!-- .cont-box -->
-        <div class="cont-box noborder nogaps bgnone">
-            <div class="myfare-result-wrap">
-                <div class="myfare-list">
-                    <ul>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부일자</dt>
-                                <dd class="tx-bold"><span class="number">{{dataDt}}</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부금액</dt>
-                                <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>청구금액</dt>
-                                <dd><span class="number">27,000</span>원</dd>
-                            </dl>
-                            <dl class="show-data detail">
-                                <dt>청구년월<br />(이용기간)</dt>
-                                <dd><span class="number">2018.04<br />(2018.03.01 ~ 2018.03.31)</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>납부방법</dt>
-                                <dd class="tx-bold">{{dataSettleWayCode}}</dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+         <div class="cont-box nogaps-hoz bg-payment">
+            <div class="user-bill-detail">
+                <ul>
+                    <li>
+                        <dl class="show-data">
+                            <dt>납부일자</dt>
+                            <dd class="tx-bold"><span class="number">{{dataDt}}</span></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl class="show-data">
+                            <dt>납부금액</dt>
+                            <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
+                        </dl>
+                        <dl class="show-data detail">
+                            <dt>청구금액</dt>
+                            <dd><span class="number">{{dataAmt}}</span>원</dd>
+                        </dl>
+                        <dl class="show-data detail">
+                            <dt>청구년월</dt>
+                            <dd><span class="number">{{invYearMonth}}</span></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl class="show-data">
+                            <dt>납부방법</dt>
+                            <dd class="tx-bold">{{dataSettleWayCode}}</dd>
+                        </dl>
+                    </li>
+                </ul>
             </div>
         </div>
         <!--// .cont-box -->
