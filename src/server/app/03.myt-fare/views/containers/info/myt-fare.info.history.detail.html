@@ -293,48 +293,40 @@
         <!--// 자동납부내역 -->
     </script>
     <script id="fe-payment-detail-micro-contents" type="text/x-handlebars-template">
-        <!-- .cont-box -->
-        <div class="cont-box noborder nogaps bgnone">
-            <div class="myfare-result-wrap">
-                <div class="myfare-list">
-                    <ul>
-                        <li>
-                            <dl class="show-data">
-                                <dt>결제 일자</dt>
-                                <dd class="tx-bold"><span class="number">{{dataDt}} {{payOpTm}}</span></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>선결제금액</dt>
-                                <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
-                            </dl>
-                        </li>
-                        {{#if dataSubInfo2}}
-                        <li>
-                            <dl class="show-data">
-                                <dt>기준 금액</dt>
-                                <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
-                            </dl>
-                        </li>
-                        {{/if}}
-                        <li>
-                            <dl class="show-data">
-                                <dt>카드주</dt>
-                                <dd class="tx-bold">홍길동</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="show-data">
-                                <dt>승인번호</dt>
-                                <dd class="tx-bold"><span class="number">12306548</span></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+        <!-- 소액 / 콘텐츠 선결제 -->
+        <div class="cont-box nogaps-hoz bg-payment">
+            <div class="user-bill-detail">
+                <ul>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">결제일자</span>
+                            <span class="val">{{dataFullDt}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">선결제금액</span>
+                            <span class="val">{{dataAmt}}원</span>
+                        </div>
+                    </li>
+                    {{#if isAutoCharg}}
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">기준 금액</span>
+                            <span class="val">{{dataAmt}}원</span>
+                        </div>
+                    </li>
+                    {{/if}}
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">결제수단</span>
+                            <span class="val">{{settlWayNm}}</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!--// .cont-box -->
+        <!--// 소액 / 콘텐츠 선결제 -->
     </script>
     <script id="fe-payment-detail-reserve-point" type="text/x-handlebars-template">
         <!-- 포인트납부예약 -->

@@ -193,6 +193,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00:00
+   */
+  static getFullDateAndTimeWithDot(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.M.DD. hh:mm:ss');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @param format
    * @returns {string} : 2018-06-02 11:59
    */

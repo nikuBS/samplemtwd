@@ -107,9 +107,13 @@ export enum MYT_FARE_PAYMENT_CODE {
 
 export enum MYT_FARE_POINT_PAYMENT_STATUS {
   CLOSE = '납부해지',
+  CLOSE2 = '해지',
   OPEN = '납부신청', 
+  OPEN2 = '신청', 
   CHANGE = '납부변경',
-  COMPLETE = '납부완료'
+  CHANGE2 = '변경',
+  COMPLETE = '납부완료',
+  COMPLETE2 = '완료'
 }
 
 export enum MYT_FARE_PAYMENT_TITLE {

@@ -361,6 +361,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.listTitle = o.settlWayNm;
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.microPrepay;
         o.isAutoCharg = (o.autoChrgYn === 'Y');
       });
@@ -383,6 +384,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataIsBank = !this.isCard(o.settlWayNm);
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.contentPrepay;
       });
 
@@ -431,7 +433,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'PN'; // 포인트자동납부
         o.reqSt = o.reqSt; // 상태
-        o.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === o.reqSt);
+        o.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === o.reqSt || MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE2 === o.reqSt);
         o.noLink = this.isNoLink(o.reqSt); // === MYT_FARE_POINT_PAYMENT_STATUS.CLOSE); // 납부해지단계에서는 링크를 걸지 않음
         o.listTitle = o.pointNm; 
         o.isPoint = true;
@@ -504,8 +506,8 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private isNoLink(o: string): boolean {
-    return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
-       MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o);
+    return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.OPEN2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
+       MYT_FARE_POINT_PAYMENT_STATUS.CHANGE2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE2 === o);
   }
   private isBank(o: string) {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK2) > 0)

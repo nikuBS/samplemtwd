@@ -55,7 +55,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
           case 'BANK':
             this.$templateWrapper.append(this.$template.$directBank(this.detailData));
             break;
-          default:
+          default: 
             this.$templateWrapper.append(this.$template.$directBase(this.detailData));
             break;
         }
@@ -74,7 +74,9 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         // 포인트 자동납부
         this.$templateWrapper.append(this.$template.$autoPoint(this.detailData));
         break;
-      default:
+      default: 
+        // case : MP, CP (소액/콘텐츠)
+        console.log('내역', this.detailData);
         this.$templateWrapper.append(this.$template.$microContents(this.detailData));
         break;
 
