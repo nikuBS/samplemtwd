@@ -43,18 +43,19 @@ Tw.CustomerVoice.prototype = {
   },
 
   _onClickRegister: function () {
-    if ( this.historiesYn === 'N' ) {
-      this._history.goLoad('/customer/svc-info/voice/register');
-    } else {
-      this._popupService.openOneBtTypeB(
-        Tw.CUSTOMER_VOICE.EXIST_PREVIOUS_INFO,
-        Tw.CUSTOMER_VOICE.CALL_TO_CUSTOMER_CENTER,
-        [{
-          style_class: 'fe-call-customer-center',
-          txt: Tw.ALERT_MSG_MYT_DATA.CALL_CUSTOMER_CENTER
-        }],
-        'type1'
-      );
-    }
+    this._history.goLoad('/customer/svc-info/voice/register');
+    // if ( this.historiesYn === 'N' ) {
+    //   this._history.goLoad('/customer/svc-info/voice/register');
+    // } else {
+    //   this._popupService.openOneBtTypeB(
+    //     Tw.CUSTOMER_VOICE.EXIST_PREVIOUS_INFO,
+    //     Tw.CUSTOMER_VOICE.CALL_TO_CUSTOMER_CENTER,
+    //     [{
+    //       style_class: 'fe-call-customer-center',
+    //       txt: Tw.ALERT_MSG_MYT_DATA.CALL_CUSTOMER_CENTER
+    //     }],
+    //     'type1'
+    //   );
+    // }
   }
 };

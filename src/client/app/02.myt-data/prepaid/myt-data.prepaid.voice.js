@@ -198,6 +198,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _onCompleteRechargeByCreditCard: function (res) {
+
     this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
     // if ( res.code === Tw.API_CODE.CODE_00 ) {
     //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');

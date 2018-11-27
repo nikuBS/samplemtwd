@@ -38,7 +38,7 @@ class ProductWireplanTerminate extends TwViewController {
 
     this._getApi(prodId)
       .subscribe((joinTermInfo) => {
-        console.log(joinTermInfo);
+        // console.log(joinTermInfo);
         if (joinTermInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: joinTermInfo.code,
