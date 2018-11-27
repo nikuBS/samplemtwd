@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.limit.js
+ * FileName: myt-data.limit.immediately.js
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.09.10
  */
 
-Tw.MyTDataLimit = function (rootEl) {
+Tw.MyTDataLimitImmediately = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,19 +15,15 @@ Tw.MyTDataLimit = function (rootEl) {
   this._init();
 };
 
-Tw.MyTDataLimit.prototype = {
+Tw.MyTDataLimitImmediately.prototype = {
   _init: function () {
     this._getRemainDataInfo();
   },
 
   _cachedElement: function () {
-    this.$btn_monthly_recharge = $('.fe-monthly_recharge');
     this.$btn_immediately_recharge = $('.fe-immediately_recharge');
-    this.$wrap_monthly_select_list = $('.fe-limit_monthly_select_list');
-    this.$input_block_monthly = this.$container.find('#input_block_monthly');
     this.$wrap_immediately_select_list = $('.fe-limit_immediately_select_list');
     this.$input_block_immediately = this.$container.find('#input_block_immediately');
-    this.$btn_cancel_monthly_recharge = this.$container.find('.fe-cancel_limit_monthly');
   },
 
   _bindEvent: function () {
@@ -104,7 +100,6 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      debugger;
       this._setAmountUI(Number(res.result.currentTopUpLimit));
     } else {
       Tw.Error(res.code, res.msg).pop();

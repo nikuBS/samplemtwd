@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.limit.js
+ * FileName: myt-data.limit.monthly.js
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.09.10
  */
 
-Tw.MyTDataLimit = function (rootEl) {
+Tw.MyTDataLimitMonthly = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.MyTDataLimit = function (rootEl) {
   this._init();
 };
 
-Tw.MyTDataLimit.prototype = {
+Tw.MyTDataLimitMonthly.prototype = {
   _init: function () {
     this._getRemainDataInfo();
   },
@@ -104,7 +104,6 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      debugger;
       this._setAmountUI(Number(res.result.currentTopUpLimit));
     } else {
       Tw.Error(res.code, res.msg).pop();
