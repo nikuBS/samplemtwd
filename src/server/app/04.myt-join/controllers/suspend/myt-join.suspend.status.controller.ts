@@ -24,6 +24,23 @@ class MyTJoinSuspendStatus extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0194, {})
     ).subscribe(([suspendStatus, progress]) => {
 
+      /* tslint:disable */
+/*      suspendStatus = {
+        'code': '00',
+        'msg': '',
+        'result': {
+          'svcStCd': 'SP',
+          'reservedYn': 'N',
+          'fromDt': '20180523',
+          'toDt': '20180923',
+          'reFormDt': '20180909',
+          'svcChgRsnCd': '21',
+          'svcChgRsnNm': '분실정지',
+          'reason': '고객요청'
+        }
+      };*/
+      /* tslint:enable */
+
       const apiError = this.error.apiError([suspendStatus]);
       if ( !FormatHelper.isEmpty(apiError) ) {
         return this.error.render(res, {
@@ -47,8 +64,9 @@ class MyTJoinSuspendStatus extends TwViewController {
         status['period'] = { from, to };
         status['reason'] = suspendStatus.result.svcChgRsnNm;
         status['resuspend'] = null;
-        if ( suspendStatus.result.svcChgRsnCd === 21
-          || suspendStatus.result.svcChgRsnCd === 22 ) { // 장기일시정지(case 6)
+
+        if ( suspendStatus.result.svcChgRsnCd === '21'
+          || suspendStatus.result.svcChgRsnCd === '22' ) { // 장기일시정지(case 6)
           status['type'] = 'long-term';
           if ( suspendStatus.result.reFormDt ) { // 장기일시정지(case 7)
             status['resuspend'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.MM.DD.');
@@ -62,22 +80,21 @@ class MyTJoinSuspendStatus extends TwViewController {
       }
 
       /* tslint:disable */
-
-      progress = {
+  /*    progress = {
         'code': '00',
         'msg': '',
         'result': {
           'seq': '222',
           // 'opStateCd': 'R',
           // 'opState: '접수중',
-          // 'opStateCd': 'D',
-          // 'opState': '서류확인',
+          'opStateCd': 'D',
+          'opState': '서류확인',
           // 'opStateCd': 'A',
           // 'opState':'서류확인중',
           // 'opStateCd': 'F',
           // 'opState': '서류확인중',
-          'opStateCd': 'C',
-          'opState': '처리완료',
+          // 'opStateCd': 'C',
+          // 'opState': '처리완료',
           'opReasonCd': '30',
           'opReason': '구비서류미비',
           'opDtm': '20181001122000',
@@ -103,8 +120,7 @@ class MyTJoinSuspendStatus extends TwViewController {
           'cntcNumRelNm': '친구',
           'cntcNum': '222'
         }
-      };
-
+      };*/
       /* tslint:enable */
       if ( progress.code === API_CODE.CODE_00 ) { //  현재 장기일시 정지 미신청 상태에 대한 코드가 없음
         const _progress = progress.result;
@@ -128,10 +144,14 @@ class MyTJoinSuspendStatus extends TwViewController {
             break;
         }
         options['progress'] = _progress;
-        options['status'].isProgressing = true;
+        if ( options['status'] ) {
+          options['status']['isProgressing'] = true;
+        }
       } else if ( progress.debugMessage.trim() === '404' ) {
         options['progress'] = null;
-        options['status'].isProgressing = false;
+        if ( options['status'] ) {
+          options['status']['isProgressing'] = false;
+        }
       } else {
         this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,

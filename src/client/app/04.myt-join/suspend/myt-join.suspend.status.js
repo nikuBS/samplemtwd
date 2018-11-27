@@ -69,7 +69,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     }
   },
 
-  // Cancel resuspend
+  // Cancel resuspend(재신청 취소)
   _onClickCancelResuspend: function () {
     this._popupService.open({
       hbs: 'MS_03_05_06',
@@ -78,7 +78,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         period: this._params.status.period,
         resuspend: this._params.status.resuspend
       }
-    }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelReset');
+    }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelResuspend');
   },
 
   _onOpenCancelResuspendPopup: function ($popup) {
@@ -105,7 +105,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     }
   },
 
-  // Reset
+  // Reset(해제하기)
   _onClickReset: function () {
     this._popupService.open({
       hbs: 'MS_03_05_05',
@@ -254,5 +254,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onError: function (res) {
     Tw.Error(res.code, res.msg).pop();
+
   }
 };
