@@ -56,10 +56,10 @@
                                                 <% } else { %>
                                                     <span class="stext-b"><i class="badge badge-one"><span class="blind">자동</span></i> 음성 충전</span>
                                                 <% } %>
-                                                <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="gray-tx"><%= history.rfndPsblSt %></span></span>
+                                                <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="gray-tx"><%= history.payNm %></span></span>
                                             </p>
                                             <div class="list-data">
-                                                <a href="#" class="bt-link data-tx blue-tx"><%= history.amt %>원</a>
+                                                <button class="bt-link data-tx <%= history.payCd === '5' || history.payCd === '9' ? 'gray-tx' : 'blue-tx'%>"><%= history.amt %>원</a>
                                                 <% if (history.rfndPsblYn === 'Y') { %><button class="bt-link-tx underline red">취소</button><% } %>
                                             </div>
                                         </li>
@@ -87,10 +87,10 @@
                                                 <% } else { %>
                                                     <span class="stext-b"><i class="badge badge-one"><span class="blind">자동</span></i> 데이터 충전 <span class="data"><%= history.data %></span></span>
                                                 <% } %>
-                                                <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="black-tx"><%= history.rfndPsblSt %></span></span>
+                                                <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="black-tx"><%= history.payNm %></span></span>
                                             </p>
                                             <div class="list-data">
-                                                <button class="bt-link data-tx gray-tx"><%= history.amt %>원</button>
+                                                <button class="bt-link data-tx <%= history.payCd === '5' || history.payCd === '9' ? 'gray-tx' : 'blue-tx'%>""><%= history.amt %>원</button>
                                                 <% if (history.rfndPsblYn === 'Y') { %><button class="bt-link-tx underline red">취소</button><% } %>
                                             </div>
                                         </li>
