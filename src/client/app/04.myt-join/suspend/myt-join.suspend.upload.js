@@ -4,7 +4,7 @@
  * Date: 2018. 11. 15.
  */
 Tw.MytJoinSuspendUpload = function () {
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
 };
 Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' };
 Tw.MytJoinSuspendUpload.prototype = {
@@ -16,15 +16,25 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._fileInfo = _.map(this._fileInfo, function (info, idx) {
       return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx] });
     });
-    if(tooltip){
+    if ( tooltip ) {
       this._showUploadTip(tooltip);
-    }else{
+    } else {
       this._showUploadPopup();
     }
   },
+
   _showUploadTip: function (tooltip) {
-    this._popupService.openAlert(tooltip.title, tooltip.content, null,
-      $.proxy(this._showUploadPopup, this));
+    // this._popupService.openConfirm(tooltip.title, tooltip.content, $.proxy(this._showUploadPopup, this), null);
+    this._popupService.open({
+      title: tooltip.title,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: tooltip.content,
+      bt_b: [{
+        style_class: 'bt-blue1 pos-right tw-popup-confirm',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, null, $.proxy(this._showUploadPopup, this), tooltip.hash);
   },
 
   _showUploadPopup: function () {
@@ -58,6 +68,8 @@ Tw.MytJoinSuspendUpload.prototype = {
     this.$btUpload = null;
     this.$inputFile = null;
     this.$popupContainer = null;
+    // tooltip popup이 남아있는 경우가 있음
+    this._popupService.close();
   },
 
   _onChangeFile: function (event) {
@@ -72,7 +84,6 @@ Tw.MytJoinSuspendUpload.prototype = {
         this._setFileButton($inputBox, false);
       }
     }
-
   },
   _validateFile: function (file) {
     if ( file.size > Tw.MAX_FILE_SIZE ) {
@@ -105,7 +116,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._setFileButton($inputBox, true);
   },
 
-  _setFileButton: function($inputBox, addable) {
+  _setFileButton: function ($inputBox, addable) {
     if ( addable ) {
       $inputBox.find('input.fileview').val('');
       $inputBox.find('input.file').prop('files', null);

@@ -20,18 +20,18 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '#bt-reset', $.proxy(this._onClickReset, this));
+    this.$container.on('click', '[data-id="bt-reset"]', $.proxy(this._onClickReset, this));
     this.$container.on('click', '#bt-resuspend', $.proxy(this._onClickResuspend, this));
     this.$container.on('click', '#bt-cancel-resuspend', $.proxy(this._onClickCancelResuspend, this));
   },
 
-  // Resuspend
+  // Resuspend(장기일시정지 재신청)
   _onClickResuspend: function () {
     this._popupService.open({
       hbs: 'MS_03_05_04',
       data: {
         svcInfo: this._svcInfo,
-        period: this._params.period,
+        period: this._params.status.period,
         reason: this._params.reason
       }
     }, $.proxy(this._onOpenResuspendPopup, this), null, 'resuspend');
@@ -69,7 +69,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     }
   },
 
-  // Cancel resuspend
+  // Cancel resuspend(재신청 취소)
   _onClickCancelResuspend: function () {
     this._popupService.open({
       hbs: 'MS_03_05_06',
@@ -78,7 +78,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         period: this._params.status.period,
         resuspend: this._params.status.resuspend
       }
-    }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelReset');
+    }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelResuspend');
   },
 
   _onOpenCancelResuspendPopup: function ($popup) {
@@ -105,7 +105,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     }
   },
 
-  // Reset
+  // Reset(해제하기)
   _onClickReset: function () {
     this._popupService.open({
       hbs: 'MS_03_05_05',
@@ -113,7 +113,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         svcInfo: this._svcInfo,
         period: this._params.status.period,
         reason: this._params.status.reason,
-        longterm: this._params.status.type == 'long-term'
+        longterm: this._params.status.type === 'long-term'
       }
     }, $.proxy(this._onOpenResetPopup, this), null, 'reset');
   },
@@ -153,28 +153,37 @@ Tw.MyTJoinSuspendStatus.prototype = {
     }
   },
 
-  _onError: function (res) {
-    Tw.Error(res.code, res.msg).pop();
-  },
-
   ///// file uploading
   // Open the suspend upload file popup
   _onClickAttachFiles: function () {
     // TODO reasonCd로 대체
-    var data = {};
+    var popup = {};
+    var count = 0;
+
     if ( this._params.progress.reason === '군입대' ) {
-      data.count = 2;
+      popup = {
+        content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
+        title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
+        hash: 'tip'
+      };
+      count = 2;
     } else {
-      data.count = 1;
+      popup = {
+        content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
+        title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
+        hash: 'tip'
+      };
+      count = 1;
     }
-    this._openCommonFileDialog(data.count);
+    this._openCommonFileDialog(count, popup);
   },
 
-  _openCommonFileDialog: function (count) {
+  _openCommonFileDialog: function (count, popup) {
     if ( !this._fileDialog ) {
       this._fileDialog = new Tw.MytJoinSuspendUpload();
     }
-    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._params.progress.attFileList);
+
+    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._files, null, popup);
   },
 
   _onCommonFileDialogConfirmed: function (files) {
@@ -187,20 +196,24 @@ Tw.MyTJoinSuspendStatus.prototype = {
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
-
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._onError, this));
   },
 
   _successUploadFile: function (res) {
+    // TODO uscan 정상동작시 삭제
+    // this._requestReupload();
+    // return;
+
     // USCAN upload
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var convFileList = res.result.map(function (item) {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: 'uploads/'
+          filePath: res.path
         };
       });
 
@@ -217,6 +230,22 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
   _onSuccessUscanUpload: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._requestReupload();
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  // 파일 재첨부
+  _requestReupload: function(){
+    this._apiService.request(Tw.API_CMD.BFF_05_0195, {
+      seq: this._params.progress.seq
+    })
+      .done($.proxy(this._onSuccessReupload, this))
+      .fail($.proxy(this._onError, this));
+  },
+  _onSuccessReupload: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.reload();
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -225,7 +254,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onError: function (res) {
     Tw.Error(res.code, res.msg).pop();
+
   }
-
-
 };

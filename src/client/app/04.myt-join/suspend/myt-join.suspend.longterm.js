@@ -3,17 +3,21 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 10. 18.
  */
-Tw.MyTJoinSuspendLongTerm = function (tabEl) {
-  this.$container = tabEl;
-  this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
-  this._nativeService = Tw.Native;
-  this._cachedElement();
-  this._bindEvent();
+Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
   this.TYPE = {
     MILITARY: 1,
     ABROAD: 2
   };
+
+  this.$container = tabEl;
+  this._params = params;
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
+  this._fileDialog = null;
+
+  this._cachedElement();
+  this._requestSvcInfo();
 };
 
 Tw.MyTJoinSuspendLongTerm.prototype = {
@@ -29,18 +33,36 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
 
   _bindEvent: function () {
     this.$btUpload.on('click', $.proxy(this._openCommonFileDialog, this));
-    this.$optionType.on('change', $.proxy(this._changeSuspendType, this));
+    this.$optionType.on('change', $.proxy(this._onSuspendTypeChanged, this));
     this.$inputTel.on('keyup', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel));
     this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
     this.$btSuspend.on('click', $.proxy(this._onClickSuspend, this));
     this._changeSuspendType('military');
   },
 
+  _requestSvcInfo: function(){
+    Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function (resp) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          this._svcInfo = resp.result;
+          this._bindEvent();
+        } else {
+          Tw.Error(resp.code, resp.msg).pop();
+        }
+      }, this));
+  },
+
+  /**
+   * 신청 사유(군입대/해외체류) 변경 시 호출
+   * 기존에 파일 선택이 되어 있으면 파일 삭제 alert 표시
+   * @param e
+   * @private
+   */
   _onSuspendTypeChanged: function (e) {
     if ( this._files ) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
-        Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, null, $.proxy(this._changeSuspendType, this, e.target.value), null);
-    }else{
+        Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, null, $.proxy(this._onSuspendTypeChanged, this, e.target.value), null);
+    } else {
       this._changeSuspendType();
     }
   },
@@ -57,19 +79,32 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$btSuspend.prop('disabled', true);
   },
 
+  /**
+   * 파일 업로드 다이얼로그 open
+   * @param e
+   * @private
+   */
   _openCommonFileDialog: function (e) {
     var count, popup;
     if ( !this._fileDialog ) {
       this._fileDialog = new Tw.MytJoinSuspendUpload();
     }
     if ( $(e.target).data('type') === 'fe-military' ) {
-      popup = { title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP, content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE };
+      popup = {
+        content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
+        title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
+        hash: 'tip'
+      };
       count = 2;
     } else {
-      popup = { title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP, content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE };
+      popup = {
+        content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
+        title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
+        hash: 'tip'
+      };
       count = 1;
     }
-    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, null, null, popup);
+    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._files, null, popup);
   },
 
   _onCommonFileDialogConfirmed: function (files) {
@@ -82,7 +117,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
-
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._onError, this));
@@ -95,7 +130,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: 'uploads/'
+          filePath: res.path
         };
       });
 
@@ -110,7 +145,12 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       Tw.Error(res.code, res.msg).pop();
     }
   },
+
   _onSuccessUscanUpload: function (res) {
+    // 현재 USCAN 테스트 불가
+    // this._requestSuspend();
+    // return;
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestSuspend();
     } else {
@@ -185,18 +225,18 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     option.icallPhbYn = this.$optionSuspendAll.attr('checked') ? 'Y' : 'N';
 
     // 추가연락처
-    if ( _.isEmpty(this.$inputTel.val()) ) {
+    if ( !_.isEmpty(this.$inputTel.val()) ) {
       option.cntcNum = this.$inputTel.val();
       option.cntcNumRelNm = this.$btRelation.val();
     }
 
-    if ( _.isEmpty(this.$inputEmail.val()) ) {
+    if ( !_.isEmpty(this.$inputEmail.val()) ) {
       option.email = this.$inputEmail.val();
     }
     this._suspendOptions = option;
     this._requestUpload(this._files);
-
   },
+
   _requestSuspend: function () {
     skt_landing.action.loading.on({ ta: 'body' });
     this._apiService.request(Tw.API_CMD.BFF_05_0197, this._suspendOptions)
@@ -210,7 +250,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var duration = Tw.DateHelper.getFullKoreanDate(this._suspendOptions.fromDt) + ' - ' +
         Tw.DateHelper.getFullKoreanDate(this._suspendOptions.toDt);
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC.replace('{DURATION}', duration)
-        .replace('{SVC_INFO}', this._params.phoneNum);
+        .replace('{SVC_INFO}', this._svcInfo.svcNum);
       this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.APPLY, desc);
 
     } else {
