@@ -109,6 +109,7 @@ export enum MYT_FARE_POINT_PAYMENT_STATUS {
   CLOSE = '납부해지',
   OPEN = '납부신청', 
   CHANGE = '납부변경',
+  COMPLETE = '납부완료'
 }
 
 export enum MYT_FARE_PAYMENT_TITLE {
@@ -281,6 +282,13 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
   Y: '결제완료',
   N: '결제취소',
   A: '결제완료'
+};
+
+export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING = {
+  '02': 'CARD',
+  '10': 'POINT',
+  '11': 'POINT',
+  '41': 'BANK',
 };
 
 export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {

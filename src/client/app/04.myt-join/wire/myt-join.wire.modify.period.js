@@ -112,10 +112,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$feTel3 = this._$main.find('.fe-tel3');
     this._$btnRequest = this._$main.find('.fe-btn-request');
 
-    this._$step1 = this.$container.find('#step1');
-    this._$labelPhone = this._$step1.find('.fe-label-phone');
-    this._$labelTel = this._$step1.find('.fe-label-tel');
-    this._$btnSubmit = this._$step1.find('.fe-btn-submit');
+    this._$confirm = this.$container.find('#confirm');
+    this._$labelPhone = this._$confirm.find('.fe-label-phone');
+    this._$labelTel = this._$confirm.find('.fe-label-tel');
+    this._$btnSubmit = this._$confirm.find('.fe-btn-submit');
   },
 
   _bindEvent: function () {
@@ -156,7 +156,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
     this._$labelPhone.text(this._getCellphoneNumber());
     this._$labelTel.text(telNumber);
-    this._go('step1');
+    this._go('confirm');
   },
 
   _selectPeriod: function (term) {
@@ -174,7 +174,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       layer: true,
       title: Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.LOADING_POPUP.TITLE,
       contents: Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.LOADING_POPUP.CONTENTS
-    }, $.proxy(this._loadingPopupOpenCallback, this), $.proxy(this._loadingPopupCloseCallback, this));
+    }, $.proxy(this._loadingPopupOpenCallback, this), $.proxy(this._loadingPopupCloseCallback, this), 'inquiring');
   },
 
   _loadingPopupOpenCallback: function () {
@@ -321,7 +321,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       layer: true,
       title: Tw.POPUP_TITLE.AGREED_PERIOD,
       data: Tw.POPUP_TPL.MYT_JOIN_WIRE_MODIFY_PERIOD
-    }, $.proxy(this._periodSelectPopupOpenCallback, this), $.proxy(this._periodSelectPopupCloseCallback, this));
+    }, $.proxy(this._periodSelectPopupOpenCallback, this), $.proxy(this._periodSelectPopupCloseCallback, this), 'selectperiod');
   },
 
   _onClickBtnRequest: function () {

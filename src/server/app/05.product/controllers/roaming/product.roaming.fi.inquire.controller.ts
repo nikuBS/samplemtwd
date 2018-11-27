@@ -15,7 +15,7 @@ export default class ProductRoamingFiInquire extends TwViewController {
     this.apiService.request(API_CMD.BFF_10_0067, { page: 1, rentfrom : 20180322 , rentto : 20181107 }).subscribe((resp) => {
 
       const getTFiData = resp;
-      console.log('response : ' , JSON.stringify(resp));
+      // console.log('response : ' , JSON.stringify(resp));
       res.render('roaming/product.roaming.fi.inquire.html', {
         getTFiData: getTFiData,
         svcInfo: svcInfo

@@ -19,6 +19,7 @@ class CustomerMain extends TwViewController {
       this.getBanners(),
       this.getNotice()
     ).subscribe(([banners, noticeList]) => {
+
       res.render('main/customer.main.html', {
         svcInfo: svcInfo,
         banners: banners,
@@ -37,7 +38,7 @@ class CustomerMain extends TwViewController {
   }
 
   private getNotice() {
-    return this.apiService.request(API_CMD.BFF_08_0028, {});
+    return this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M' });
   }
 }
 

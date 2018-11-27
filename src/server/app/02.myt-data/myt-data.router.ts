@@ -29,7 +29,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/familydata(/share)?', controller: MyTDataFamily });
     this.controllers.push({ url: '/datainfo', controller: MyTDataInfo });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
-    this.controllers.push({ url: '/submain/child-hotdata(/:childSvcMgmtNum)?', controller: MyTDataUsageChild });
+    this.controllers.push({ url: '/submain/child-hotdata', controller: MyTDataUsageChild });
     this.controllers.push({ url: '/hotdata', controller: MyTDataUsage });
     this.controllers.push({ url: '/hotdata/total-sharing', controller: MyTDataUsageTotalSharingData });
     this.controllers.push({ url: '/hotdata/cancel-tshare', controller: MyTDataUsageCancelTshare });

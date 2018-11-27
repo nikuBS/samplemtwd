@@ -55,6 +55,10 @@ export const MYT_DATA_USAGE_CANCEL_TSHARE = {
   TITLE: 'T데이터 셰어링 USIM 해지'
 };
 
+export const MYT_DATA_CHILD_USAGE = {
+  TITLE: '자녀 실시간 잔여량'
+};
+
 export const MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 MM월'
@@ -279,7 +283,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
 
 export const MYT_PAYMENT_DETAIL_TITLE = {
   DI: '납부 상세 내역',
-  TPOINT: 'T포인트 납부 상세 내역',
+  TPOINT: 'T포인트 납부 상세내역',
   OCB: 'OK캐쉬백 납부 상세 내역',
   BANK: '계좌이체 납부 상세 내역',
   CARD: '신용카드 납부 상세 내역',

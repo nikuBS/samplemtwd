@@ -25,10 +25,10 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
-            <div class="cont-box nogaps noborder">
+            <div class="cont-box nogaps">
                 <div class="component">
                     <div class="component-box tabs">
-                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                        <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
@@ -37,7 +37,7 @@
                                     <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <% if ( autoList ) { %>
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                        <a class="fe-replace-history" href="#auto">자동 선물<span class="count"><%-autoList.length%></span></a>
+                                        <a class="fe-replace-history" href="#auto">자동 선물 (<span><%-autoList.length%></span>)</a>
                                     </li>
                                     <% } %>
                                 </ul>

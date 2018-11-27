@@ -30,7 +30,6 @@ class MyTDataCookiz extends TwViewController {
         break;
       case 'auth':
         this.getAuthChangeInfo().subscribe((authList) => {
-          console.log(authList);
           res.render('cookiz/myt-data.cookiz.auth.html', Object.assign(
             responseData,
             { addComma: this.addComma },

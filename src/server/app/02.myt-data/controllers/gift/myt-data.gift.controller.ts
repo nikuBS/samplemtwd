@@ -21,7 +21,8 @@ class MyTDataGift extends TwViewController {
     const page = req.params.page;
     const responseData = {
       svcInfo: svcInfo,
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      convertTDataSet: this.convertTDataSet
     };
 
     switch ( page ) {
@@ -51,7 +52,6 @@ class MyTDataGift extends TwViewController {
           this.getGiftAutoList()
         ).subscribe(([autoList]) => {
           const response = Object.assign(
-            {},
             { autoList: autoList },
             responseData
           );
@@ -100,7 +100,7 @@ class MyTDataGift extends TwViewController {
       });
   }
 
-  private convertTFamilyDataSet(sQty) {
+  public convertTDataSet(sQty) {
     return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
   }
 }

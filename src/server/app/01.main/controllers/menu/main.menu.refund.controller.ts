@@ -81,7 +81,7 @@ class MainMenuRefund extends TwViewController {
 
   private getRefundInfo(res: Response, svcInfo: any, ): Observable<any> {
     return this.apiService.request(API_CMD.BFF_01_0042, {}).map((resp) => {
-      console.log(resp.result);
+      // console.log(resp.result);
       if (resp.code === API_CODE.CODE_00) {
         return this.purifyRefundInfo(resp.result);
       }
