@@ -1,10 +1,10 @@
 /**
- * FileName: common.biometrics.cert.js
+ * FileName: main.menu.settings.biometrics.cert.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.13
  */
 
-Tw.CommonBiometricsCert = function (rootEl, target) {
+Tw.MainMenuSettingsBiometricsCert = function (rootEl, target) {
   this.$container = rootEl;
   this._target = target;
   this._apiService = Tw.Api;
@@ -23,7 +23,7 @@ Tw.CommonBiometricsCert = function (rootEl, target) {
   this._getSvcInfo();
 };
 
-Tw.CommonBiometricsCert.prototype = {
+Tw.MainMenuSettingsBiometricsCert.prototype = {
   _bindEvent: function () {
     this.$btNext = this.$container.find('#fe-bt-next');
 

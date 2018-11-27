@@ -1,10 +1,10 @@
 /**
- * FileName: common.biometrics.menu.js
+ * FileName: main.menu.settings.biometrics.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.10
  */
 
-Tw.CommonBiometricsMenu = function (rootEl, target) {
+Tw.MainMenuSettingsBiometrics = function (rootEl, target) {
   this.$container = rootEl;
   this._target = target;
 
@@ -19,7 +19,7 @@ Tw.CommonBiometricsMenu = function (rootEl, target) {
   this._bindEvent();
 };
 
-Tw.CommonBiometricsMenu.prototype = {
+Tw.MainMenuSettingsBiometrics.prototype = {
   _bindEvent: function () {
     this.$txtFido = this.$container.find('#fe-txt-' + this._target);
     this.$btCancel = this.$container.find('#fe-bt-cancel-' + this._target);

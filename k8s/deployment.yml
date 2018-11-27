@@ -24,7 +24,7 @@ spec:
           requests:
             memory: "768Mi"
           limits:
-            memory: "1024Mi"
+            memory: "2048Mi"
         volumeMounts:
         - mountPath: /tworld/uploads                  # (root)/uploads 에 volume mount
           name: upload-volume                            # volumes 의 name과 동일하게 설정

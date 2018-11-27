@@ -1,10 +1,10 @@
 /**
- * FileName: common.login.easy-ios.js
+ * FileName: common.member.slogin.ios.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.07.26
  */
 
-Tw.CommonLoginEasyIos = function (rootEl) {
+Tw.CommonMemberSloginIos = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -22,7 +22,7 @@ Tw.CommonLoginEasyIos = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.CommonLoginEasyIos.prototype = {
+Tw.CommonMemberSloginIos.prototype = {
   GENDER_CODE: {
     '1': 'MALE',
     '2': 'FEMALE'

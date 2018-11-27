@@ -1,10 +1,10 @@
 /**
- * FileName: common.line.edit.js
+ * FileName: common.member.line.edit.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.01
  */
 
-Tw.CommonLineEdit = function (rootEl, category) {
+Tw.CommonMemberLineEdit = function (rootEl, category) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -18,7 +18,7 @@ Tw.CommonLineEdit = function (rootEl, category) {
   this._bindEvent();
 };
 
-Tw.CommonLineEdit.prototype = {
+Tw.CommonMemberLineEdit.prototype = {
   _init: function () {
     skt_landing.dev.sortableInit({
       axis: 'y'
