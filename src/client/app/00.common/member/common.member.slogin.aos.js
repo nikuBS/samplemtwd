@@ -1,10 +1,10 @@
 /**
- * FileName: common.login.easy-aos.js
+ * FileName: common.member.slogin.aos.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.07.26
  */
 
-Tw.CommonLoginEasyAos = function (rootEl) {
+Tw.CommonMemberSloginAos = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -19,7 +19,7 @@ Tw.CommonLoginEasyAos = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.CommonLoginEasyAos.prototype = {
+Tw.CommonMemberSloginAos.prototype = {
   ERROR_CODE: {
     ATH1004: 'ATH1004',   // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
     ATH1005: 'ATH1005'    // 휴대폰번호 입력오류
