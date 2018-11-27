@@ -21,7 +21,6 @@ class MyTFareBillHotbill extends TwViewController {
   _preBillAvailable: boolean = true;
 
   constructor() {
-
     super();
   }
 

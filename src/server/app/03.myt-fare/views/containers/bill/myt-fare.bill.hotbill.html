@@ -68,7 +68,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="statement-cont type2">
-                    <div class="statement-detail" data-role="fe-bill-menu">>
+                    <div class="statement-detail" data-role="fe-bill-menu">
                         <div class="cont-loading-area fe-loading-bill">
                         </div>
                         <!-- .widget -->
@@ -94,8 +94,8 @@
             </div>
             <% } %>
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <% if( lines.length > 0) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type6">다른 회선 실시간 이용요금</h3>
             <!-- .cont-box -->
@@ -103,11 +103,17 @@
                     <% for (let i = 0; i < lines.length; i++) { %>
                         <li>
                             <button data-idx=<%= i %> id="fe-other-line">
-                                <span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i></span>
+                                <span class="ico-wrap">
+                                    <% if (!lines[i].svcAttrCd || lines[i].svcAttrCd === 'M1') { %>
+                                    <i class="icon-cellphone-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i>                                 </i>
+                                     <% } else {%>
+                                    <i class="icon-tablet-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i>
+                                     <% } %>
+                                </span>
                                 <span class="cont">
-                                    <span class="info-title"><%= lines[i].eqpMdlNm %><i class="icon-children ml6">
+                                    <span class="info-title"><%= lines[i].eqpMdlNm %>
                                          <% if (lines[i].child) { %>
-                                        <span class="blind">자녀</span></i></span>
+                                        <i class="icon-children ml6"><span class="blind">자녀</span></i></span>
                                          <% } %>
                                     <span class="info-sub"><%= lines[i].svcNum %></span>
                                     <span class="price"><%= lines[i].bill %>원</span>
@@ -121,7 +127,7 @@
             <% } %>
             <!--// .cont-box -->
             <div class="cont-box noborder bgnone">
-                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <h3 class="pg-chk-tit">꼭 확인해주세요!</h3>
                 <ul class="pg-chk-list">
                     <li>실시간 이용요금 안내<button class="btn-tip" id="MF_03_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li>요금제 변경 및 일시정지하신 경우<button class="btn-tip" id="MF_03_tip_02"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
