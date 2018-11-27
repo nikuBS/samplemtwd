@@ -111,7 +111,7 @@ class App {
             appName = appName.replace('-', '');
           }
           this.app.locals[appName] = manifest[key];
-          this.logger.info(this, appName, manifest[key]);
+          this.logger.error(this, appName, manifest[key]);
         }
       });
     });
@@ -170,17 +170,17 @@ class App {
   private exceptionHandler() {
     process
       .on('unhandledRejection', (reason, p) => {
-        console.log(reason, 'Unhandled Rejection at Promise', p);
+        // console.log(reason, 'Unhandled Rejection at Promise', p);
       })
       .on('uncaughtException', (err) => {
-        console.log(err, 'Uncaught Exception thrown');
+        // console.log(err, 'Uncaught Exception thrown');
       });
 
   }
 
 
   private handleNotFoundError(req, res, next) {
-    console.log('[Error] 404 Error', req.baseUrl + req.path);
+    // console.log('[Error] 404 Error', req.baseUrl + req.path);
 
     if ( req.accepts('html') ) {
       return res.status(404).render('error.page-not-found.html', { svcInfo: null });
@@ -189,7 +189,7 @@ class App {
   }
 
   private handleInternalServerError(err, req, res, next) {
-    console.log('[Error] 500 Error', err);
+    // console.log('[Error] 500 Error', err);
 
     // if ( req.accepts('html') ) {
     //   return res.status(404).render('error.page-not-found.html', { svcInfo: null });

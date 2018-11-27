@@ -39,7 +39,7 @@ class MyTJoinWireDiscountRefund extends TwViewController {
           });
         }
       }, (resp) => {
-        console.log('======== api error!! ==========');
+        //console.log('======== api error!! ==========');
         return this.error.render(res, {
           title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
           code: resp.code,

@@ -147,7 +147,7 @@ class ApiRouter {
     const url = req.query.url;
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
-        console.log(resp);
+        // console.log(resp);
         res.json({
           code: API_CODE.CODE_00,
           result: resp

@@ -192,8 +192,8 @@ class MyTBenefitRecommend extends TwViewController {
         // });
 
       }, function (err) {
-        console.log('[ 에러 ]');
-        console.dir(err);
+        // console.log('[ 에러 ]');
+        // console.dir(err);
 
         return thisMain.error.render(res, {
           title: 'title',
@@ -378,11 +378,11 @@ class MyTBenefitRecommend extends TwViewController {
             case 'RCG0005':
             case 'RCG0013':
             case API_CODE.CODE_00:
-              console.log('p3 : 성공');
+              //console.log('p3 : 성공');
               resolve(resp[0]);
               break;
             default:
-              console.log('p3 : 실패');
+              //console.log('p3 : 실패');
               reject(resp[0]);
           }
         } else if ( msg === 'p4') {
@@ -390,11 +390,11 @@ class MyTBenefitRecommend extends TwViewController {
           switch ( resp[0].code ) {
             case 'BIL0071':
             case API_CODE.CODE_00:
-              console.log('p4 : 성공');
+              //console.log('p4 : 성공');
               resolve(resp[0]);
               break;
             default:
-              console.log('p4 : 실패');
+              //console.log('p4 : 실패');
               reject(resp[0]);
           }
 
@@ -418,7 +418,7 @@ class MyTBenefitRecommend extends TwViewController {
     return new Promise((resolve, reject) => {
       const ms: number = Math.floor(Math.random() * 1000) + 1;
       setTimeout(function () {
-        console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
+        //console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
 
         if ( msg === 'p3') {
 
@@ -430,11 +430,11 @@ class MyTBenefitRecommend extends TwViewController {
             case 'RCG0005':
             case 'RCG0013':
             case API_CODE.CODE_00:
-              console.log('p3 : 성공');
+              //console.log('p3 : 성공');
               resolve(mockData);
               break;
             default:
-              console.log('p3 : 실패');
+              //console.log('p3 : 실패');
               reject(mockData);
           }
 
