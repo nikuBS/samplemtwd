@@ -213,7 +213,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: 'uploads/'
+          filePath: res.path
         };
       });
 

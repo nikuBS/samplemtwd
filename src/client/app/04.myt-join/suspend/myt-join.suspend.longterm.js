@@ -130,7 +130,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: 'uploads/'
+          filePath: res.path
         };
       });
 
