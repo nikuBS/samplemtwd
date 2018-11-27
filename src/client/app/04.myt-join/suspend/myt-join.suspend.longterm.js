@@ -117,7 +117,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
-
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._onError, this));
@@ -148,8 +148,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
 
   _onSuccessUscanUpload: function (res) {
     // 현재 USCAN 테스트 불가
-    this._requestSuspend();
-    return;
+    // this._requestSuspend();
+    // return;
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestSuspend();

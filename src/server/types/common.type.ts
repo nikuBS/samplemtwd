@@ -29,5 +29,6 @@ export const REDIS_PRODUCT_FILTER = 'ProductFilter:';
 
 export const UPLOAD_TYPE = {
   EMAIL: 'email',
-  RESERVATION: 'reservation'
+  RESERVATION: 'reservation',
+  SUSPEND: 'suspend'
 };

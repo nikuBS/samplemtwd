@@ -196,7 +196,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
-
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._onError, this));
@@ -204,8 +204,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _successUploadFile: function (res) {
     // TODO uscan 정상동작시 삭제
-    this._requestReupload();
-    return;
+    // this._requestReupload();
+    // return;
 
     // USCAN upload
     if ( res.code === Tw.API_CODE.CODE_00 ) {
