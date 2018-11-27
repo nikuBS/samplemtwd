@@ -274,6 +274,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.listTitle = o.dataIsBankOrCard ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
         o.sortDt = o.opDt;
         o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataAmt = FormatHelper.addComma(o.cardAmt);
         // o.dataReqAmt = FormatHelper.addComma(o.drwReqAmt);
         o.dataProcCode = MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE[o.cardProcCd];
@@ -308,8 +309,8 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataCardBankNum = o.bankCardNum;
         o.dataReqYearMonth = DateHelper.getShortDateWithFormat(o.lastInvDt, 'YYYY.M.');
         o.dataLastInvDt = DateHelper.getShortDate(o.lastInvDt);
-        o.dataSubInfo = o.drwErrCdNm;
-        o.dataSubInfo2 = MYT_FARE_PAYMENT_HISTORY_TYPE.auto;
+        o.dataSubInfo2 = o.drwErrCdNm;
+        o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.auto;
         o.dataTmthColClCd = MYT_PAYMENT_HISTORY_AUTO_TYPE[o.tmthColClCd];
       });
 
@@ -361,8 +362,10 @@ class MyTFareInfoHistory extends TwViewController {
         o.listTitle = o.settlWayNm;
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.microPrepay;
-        o.isAutoCharg = (o.autoChrgYn === 'Y');
+        o.dataSubInfo3 = (o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : '');
+        o.isAutoCharg = (o.autoChrgYn === 'Y'); // 상세내역에서 기준납부 영역 노출여부를 결정
       });
 
       return resp.result;
@@ -371,7 +374,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 컨텐츠 code', resp.code, resp.result);
+      // console.log('\x1b[36m%s\x1b[0m', '------log 콘텐츠 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -383,7 +386,9 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataIsBank = !this.isCard(o.settlWayNm);
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.contentPrepay;
+        o.dataSubInfo3 = (o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : '');
       });
 
       return resp.result;
@@ -403,14 +408,15 @@ class MyTFareInfoHistory extends TwViewController {
       resp.result.reservePointList.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'RP'; // 포인트예약
-        o.reqSt = o.reqSt;
         o.listTitle = o.pointNm;
         o.isPoint = true;
         o.dataAmt = FormatHelper.addComma(o.point);
         o.reserveCancelable = o.cancelYn === 'Y'; // 취소가능여부
         o.dataSubInfo = o.reqNm;
+        o.dataSubInfo2 = o.reqSt;
         o.rbpSerNum = o.rbpSerNum;
-        o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD.');
+        o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opTm);
       });
 
       return resp.result;
@@ -430,14 +436,14 @@ class MyTFareInfoHistory extends TwViewController {
       resp.result.usePointList.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = 'PN'; // 포인트자동납부
-        o.reqSt = o.reqSt; // 상태
-        o.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === o.reqSt);
+        o.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === o.reqSt || MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE2 === o.reqSt);
         o.noLink = this.isNoLink(o.reqSt); // === MYT_FARE_POINT_PAYMENT_STATUS.CLOSE); // 납부해지단계에서는 링크를 걸지 않음
         o.listTitle = o.pointNm; 
         o.isPoint = true;
         o.dataAmt = FormatHelper.addComma(o.point);
         o.dataDt = DateHelper.getShortDate(o.opDt);
         o.dataSubInfo = o.reqNm;
+        o.dataSubInfo2 = o.reqSt;
       });
 
       return resp.result;
@@ -504,8 +510,8 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private isNoLink(o: string): boolean {
-    return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
-       MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o);
+    return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.OPEN2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
+       MYT_FARE_POINT_PAYMENT_STATUS.CHANGE2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE2 === o);
   }
   private isBank(o: string) {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK2) > 0)
