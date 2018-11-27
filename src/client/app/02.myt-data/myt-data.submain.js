@@ -244,7 +244,7 @@ Tw.MyTDataSubMain.prototype = {
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
         name    = $target.attr('data-name'),
-        isChild = ($target.find('.icon-children ').length > 0);
+        isChild = ($target.find('.icon-children').length > 0);
     if ( isChild ) {
       // 자녀회선
       this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
