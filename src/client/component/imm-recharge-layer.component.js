@@ -180,6 +180,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   },
 
   _onPrepayCoupon: function () {
+    // TODO: BPCP페이지 미개발 상태로 개발 완료 후 처리
     this._popupService.openAlert('TBD');
   }
 };
