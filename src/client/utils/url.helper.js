@@ -12,7 +12,13 @@ Tw.UrlHelper = (function () {
     return params;
   };
 
+  var getLastPath = function () {
+    var seg = document.location.pathname.substr(document.location.pathname.lastIndexOf('/') + 1);
+    return seg;
+  };
+
   return {
     getQueryParams: getQueryParams,
+    getLastPath: getLastPath
   };
 })();
