@@ -61,7 +61,7 @@ Tw.MyTDataGiftImmediately.prototype = {
       var $input = $(elInput);
       if ( Number($input.val()) > nLimitMount ) {
         $input.prop('disabled', true);
-        $input.parent().addClass('disabled');
+        $input.parent().parent().addClass('disabled');
       }
     };
 

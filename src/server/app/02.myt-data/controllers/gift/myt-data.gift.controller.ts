@@ -44,6 +44,7 @@ class MyTDataGift extends TwViewController {
             },
             responseData
           );
+
           res.render('gift/myt-data.gift.complete.html', response);
         });
         break;
@@ -55,7 +56,6 @@ class MyTDataGift extends TwViewController {
             { autoList: autoList },
             responseData
           );
-
           res.render('gift/myt-data.gift.html', response);
         });
     }
