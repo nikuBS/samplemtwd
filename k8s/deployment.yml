@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "768Mi"
+            memory: "2048Mi"
           limits:
             memory: "2048Mi"
         volumeMounts:
