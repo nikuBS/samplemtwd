@@ -53,7 +53,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     }
   },
   _onOptionSelected: function () {
-    var checked = this.$container.find('input[type=radio][checked="checked"]');
+    var checked = this.$container.find('input[type=radio]:checked');
     if (checked.length === 0) {
       this.$btnUse.attr('disabled', true);
     } else {
@@ -82,13 +82,22 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _onSubmitClicked: function () {
     switch (this._currentTab) {
       case 'refill':
-        this._popupService.openConfirm(
-          Tw.REFILL_COUPON_CONFIRM.CONTENTS, Tw.REFILL_COUPON_CONFIRM.TITLE,
+        this._popupService.openModalTypeA(
+          Tw.REFILL_COUPON_CONFIRM.TITLE_REFILL,
+          Tw.REFILL_COUPON_CONFIRM.CONTENTS_REFILL,
+          Tw.REFILL_COUPON_CONFIRM.CONFIRM_REFILL,
+          null,
           $.proxy(this._refill, this)
         );
         break;
       case 'gift':
-        this._gift();
+        this._popupService.openModalTypeA(
+          Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
+          Tw.REFILL_COUPON_CONFIRM.CONTENTS_GIFT,
+          Tw.REFILL_COUPON_CONFIRM.CONFIRM_GIFT,
+          null,
+          $.proxy(this._gift, this)
+        );
         break;
       default:
         break;
@@ -96,18 +105,19 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _refill: function () {
     this._popupService.close();
-    var desc = this.$container.find('input[type=radio][checked="checked"]')[0].value;
+    var desc = this.$container.find('input[type=radio]:checked')[0].value;
     var reqData = {
       copnIsueNum: this._couponNo,
       ofrRt: desc.split('::')[0],
       copnDtlClCd: desc.split('::')[1]
     };
-    var type = 'voice';
+    var type = desc.split('::')[2] === 'D' ? 'data' : 'voice';
     this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData)
       .done($.proxy(this._success, this, type))
       .fail($.proxy(this._fail, this));
   },
   _gift: function () {
+    this._popupService.close();
     var reqData = {
       copnIsueNum: this._couponNo,
       befrSvcNum: this.$numberInput.val()
@@ -146,14 +156,14 @@ Tw.MyTDataRechargeCouponUse.prototype = {
 
     switch (type) {
       case 'data':
-        this._historyService.goLoad('/myt-data/recharge/coupon/complete?category=data');
+        this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=data');
         break;
       case 'voice':
-        this._historyService.goLoad('/myt-data/recharge/coupon/complete?category=voice');
+        this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=voice');
         break;
       case 'gift':
         var number = Tw.FormatHelper.getFormattedPhoneNumber(this.$numberInput.val());
-        this._historyService.goLoad(
+        this._historyService.replaceURL(
           '/myt-data/recharge/coupon/complete?category=gift&number=' + number);
         break;
       default:

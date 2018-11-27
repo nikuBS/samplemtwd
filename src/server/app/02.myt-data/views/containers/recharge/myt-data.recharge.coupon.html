@@ -9,53 +9,73 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
+        <!-- #header -->
         <%- include('../../../../common/views/components/header.component.html', { title: '나의 리필쿠폰', svcInfo: svcInfo, line: true }); %>
+        <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
-                <div class="cont-box bgnone noborder">
-                    <div class="refill-coupon-box">
-                        <ul class="coupon-list">
-                            <% for (let i = 0; i < (list.length > 20 ? 20 : list.length); i++) { %>
-                            <li class="coupon-paper">
-                                <div class="coupon-text">
-                                    <dl class="coupon-name">
-                                        <dt id="aria-coupon-name1">쿠폰명</dt>
-                                        <dd aria-describedby="aria-coupon-name1"><%= list[i].copnNm %></dd>
-                                    </dl>
-                                    <dl class="expiration-date">
-                                        <dt id="aria-coupon-expiration-date1">유효기간</dt>
-                                        <dd aria-describedby="aria-coupon-expiration-date1"><%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %></dd>
-                                    </dl>
-                                    <ul class="coupon-btn">
-                                        <li><button class="fe-btn-refill" id="<%= list[i].copnIsueNum %>" title="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>">리필하기</button></li>
-                                        <% if (list[i].copnOperStCd !== 'A20') { %>
-                                        <li><button class="fe-btn-gift" id="<%= list[i].copnIsueNum %>" title="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>">선물하기</button></li>
-                                        <% } %>
-                                    </ul>
-                                </div>
-                                <div class="dotted-line"><div class="line"></div></div>
-                                <div class="coupon-icon"><div class="ico type1"></div></div>
-                            </li>
-                            <% } %>
-                        </ul>
+                <% if (available !== 'ALL') { %>
+				<hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box">
+                    <div class="refill-except">
+                        <% if (available === 'NONE') { %>
+                        <p><%= name %>님이 사용하시는 <%= product %> 요금제는 리필쿠폰을  사용할 수 없는 요금제입니다.</p>
+                        <% } else if (available === 'DATA') { %>
+                        <p><%= name %>님은 데이터 리필쿠폰만 사용 가능합니다.</p>
+                        <% } else { %>
+                        <p><%= name %>님은 음성 리필쿠폰만 사용 가능합니다.</p>
+                        <% } %>
+                        <span class="btn-area">
+                            <button type="button" id="fe-btn-plans" class="btn-round1 btn-style4">대상 요금제 확인</button>
+                        </span>
                     </div>
+                </div>
+                <% } %>
+                <div class="cont-box bgnone pb0">
+                    <ul class="coupon-list-wrap">
+                        <% for (let i = 0; i < (list.length > 20 ? 20 : list.length); i++) { %>
+                        <li>
+                            <span class="icon"><i class="<%= list[i].isGift ? 'icon-gift-80' : 'icon-discount1-80' %>"><span class="blind"><%= list[i].isGift ? 'gift' : 'discount' %></span></i></span>
+                            <div class="cont">
+                                <h2 class="tit"><%= list[i].copnNm %></h2>
+                                <span class="txt1"><%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %></span>
+                            </div>
+                            <% if (available !== 'NONE') { %>
+                            <div class="btn-wrap two">
+                                <% if (!list[i].isGift) { %>
+                                <button class="btn fe-btn-gift" id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::N">선물하기</button>
+                                <% } %>
+                                <button class="btn fe-btn-refill" id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::<%= list[i].isGift ? 'Y' : 'N' %>">리필하기</button>
+                            </div>
+                            <% } %>
+                        </li>
+                        <% } %>
+                    </ul>
                     <% if (list.length > 20) { %>
-                    <div class="bt-more round mt10">
-                        <button class="fe-btn-more">더보기</button>
+                    <div class="bt-more bg-none font-type1">
+                        <button>더 보기</button>
                     </div>
                     <% } %>
                 </div>
                 <!--// .cont-box -->
+
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list">
+                        <li>리필하기 이용안내<button class="btn-tip" id="DC_05_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li>유효기간 내 미사용 시 자동 소멸 안내<button class="btn-tip" id="DC_05_tip02"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li>가입기간별 제공 쿠폰 안내<button class="btn-tip" id="DC_05_tip_03"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li>요금제별 유의사항<button class="btn-tip" id="DC_05_tip_04"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
         <!--// #contents -->
@@ -68,26 +88,19 @@
 <% include ../../components/javascript.component.html %>
 <script type="text/template" id="tpl_coupon_item">
   {{#list}}
-  <li class="coupon-paper">
-      <div class="coupon-text">
-          <dl class="coupon-name">
-              <dt id="aria-coupon-name1">쿠폰명</dt>
-              <dd aria-describedby="aria-coupon-name1">{{copnNm}}</dd>
-          </dl>
-          <dl class="expiration-date">
-              <dt id="aria-coupon-expiration-date1">유효기간</dt>
-              <dd aria-describedby="aria-coupon-expiration-date1">{{usePsblStaDt}}~{{usePsblEndDt}}</dd>
-          </dl>
-          <ul class="coupon-btn">
-              <li><button>리필하기</button></li>
-              {{#ifCond copnOperStCd '!==' 'A20'}}
-              <li><button>선물하기</button></li>
-              {{/ifCond}}
-          </ul>
-      </div>
-      <div class="dotted-line"><div class="line"></div></div>
-      <div class="coupon-icon"><div class="ico type1"></div></div>
-  </li>
+  <li>
+        <span class="icon"><i class="icon-discount1-80"><span class="blind">discount</span></i></span>
+        <div class="cont">
+            <h2 class="tit">{{copnNm</h2>
+            <span class="txt1">{{usePsblStaDt}}~{{usePsblEndDt}}</span>
+        </div>
+        <div class="btn-wrap two">
+            {{#ifCond copnOperStCd '!==' 'A20'}}
+            <button class="btn fe-btn-gift">선물하기</button>
+            {{/ifCond}}
+            <button class="btn fe-btn-refill">리필하기</button>
+        </div>
+    </li>
   {{/list}}
 </script>
 <script>

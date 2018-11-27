@@ -5,46 +5,74 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap complete">
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <div class="container">
-				<h1 class="complete-title">
-					<img src="/img/dummy/dmy-complete.jpg" alt=""/>
-					<span><strong>쿠폰 선물</strong> 완료</span>
-				</h1>
-           		<div class="complete-info">
-           			<dl>
-						<dt>받으시는 분</dt>
-						<dd><%= number %></dd>
-           			</dl>
-					<dl>
-						<dt>남은쿠폰</dt>
-						<dd><%= coupons %>장</dd>
-					</dl>
-           		</div>
-           		<div class="complete-btn-box pt40">
-					<ul class="bt-slice">
-						<li class="bt-blue1">
-							<a href="/myt-data/datainfo">선물내역 보기</a>
-						</li>
-					</ul>
-           		</div>
-				<a href="/myt-data/recharge/coupon" class="complete-closeBtn"><span class="blind">페이지 닫기</span></a>
             </div>
         </div>
         <!--// #contents -->
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <div class="container">
+                    <div class="complete-wrap">
+                        <div class="title-box">
+                            <i class="icon-information-120"><span class="blind">information</span></i>
+                            <p class="tx-tit">
+                                <span class="tx-highlight">쿠폰 선물 완료</span><br />
+                                <span class="pt10">(<%= number %>)</span>
+                            </p>
+                        </div>
+                        <div class="tx-contents">
+                            <div class="basic-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">남은 쿠폰</span>
+                                        <span class="tx-red1"><%= coupons %>장</span></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="bt-slice item-one">
+                                <li><button type="button" class="btn-round2 btn-style3" id="fe-btn-go-history">선물내역 보기</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
+                </ul>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    $('.wrap').on('click', '#fe-btn-go-history', function () {
+      (new Tw.HistoryService()).replaceURL('/myt-data/datainfo');
+    })
+  })
+</script>
 <% include ../../components/end.component.html %>
