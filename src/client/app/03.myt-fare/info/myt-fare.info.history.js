@@ -53,7 +53,8 @@ Tw.MyTFareInfoHistory.prototype = {
       this.renderListData.initialMoreData = this.listViewMoreHide;
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
       this.renderListData.records = this.renderableListData.reduce($.proxy(function(prev, cur) {
-        if (prev.length) {
+        prev.push({items: [cur], date:cur.listDt});
+        /*if (prev.length) {
           if (prev.slice(-1)[0].date === cur.listDt) {
             prev.slice(-1)[0].items.push(cur);
           } else {
@@ -61,7 +62,7 @@ Tw.MyTFareInfoHistory.prototype = {
           }
         } else {
           prev.push({items: [cur], date:cur.listDt});
-        }
+        }*/
 
         return prev;
       }, this), []);
@@ -111,13 +112,14 @@ Tw.MyTFareInfoHistory.prototype = {
 
   _afterList: function() {
     this.$btnListViewMorewrapper = this.$domListWrapper.find('.bt-more');
-    this.$appendListTarget = this.$domListWrapper.find('.fe-list-inner');
+    this.$appendListTarget = this.$domListWrapper.find('.inner');
 
     // 더 보기 버튼
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
     // 리스트 내 클릭 이벤트 정의
     // - 상세보기
-    this.$appendListTarget.on('click', 'button.bt-detail', $.proxy(this._listViewDetailHandler, this));
+    this.$domListWrapper.on('click', '.inner', $.proxy(this._listViewDetailHandler, this));
+    this.$domListWrapper.on('click', '.btn', $.proxy(this._listViewDetailHandler, this));
     // - 예약취소(포인트 예약)
     this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this));
   },
@@ -211,18 +213,18 @@ Tw.MyTFareInfoHistory.prototype = {
     this._updateViewMoreBtnRestCounter($(e.currentTarget));
 
     var insertCompareData = this.data.listData.mergedListData[this.listLastIndex - this.listRenderPerPage - 1],
-        $domAppendTarget = this.$appendListTarget;
+        $domAppendTarget = this.$domListWrapper.find('.inquire-link-list ul');
 
     this.renderableListData.map($.proxy(function(o) {
       var renderedHTML;
-      if (insertCompareData.listDt === o.listDt) {
+      /* if (insertCompareData.listDt === o.listDt) {
         $domAppendTarget = $('.fe-list-inner li:last-child');
         renderedHTML = this.$template.$templateItem({items:[o], date: o.listDt});
-      } else {
-        insertCompareData = o;
-        $domAppendTarget = this.$appendListTarget;
+      } else {*/
+        // insertCompareData = o;
+        // $domAppendTarget = this.$appendListTarget;
         renderedHTML = this.$template.$templateItemDay({records:[{items:[o], date:o.listDt, yearHeader:o.yearHeader}]});
-      }
+      // }
 
       $domAppendTarget.append(renderedHTML);
 
@@ -388,7 +390,7 @@ Tw.MyTFareInfoHistory.prototype = {
   _moveRefundList: function () {
     this._historyService.goLoad(this.data.refundURL);
   },
-  
+
   _apiError: function (err) {
     Tw.Logger.error(err.code, err.msg);
     this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
