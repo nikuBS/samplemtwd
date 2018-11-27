@@ -245,7 +245,7 @@ Tw.MyTDataSubMain.prototype = {
         isChild = ($target.find('.badge').length > 0);
     if ( isChild ) {
       // 자녀회선
-      this._historyService.goLoad('/myt-data/submain/child-hotdata/' + mgmtNum);
+      this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
     }
     else {
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;

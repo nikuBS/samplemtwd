@@ -13,7 +13,7 @@ Tw.BenefitMyBenefitRainbowPointCommon = function (rootEl) {
 
 Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   _URL: {
-    MAIN: '/benefit/my-benefit'
+    MAIN: '/benefit/my'
   },
   _LINE_SELECT_ACTIONSHEET_HBS: 'actionsheet_select_a_type',
 
@@ -68,7 +68,7 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
 
   _submitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, Tw.BUTTON_LABEL.CONFIRM,
+      this._popupService.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, null,
         Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.COMPLETE_MSG);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
@@ -90,7 +90,7 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
     Tw.Popup.open(_.extend({}, option, previewData), $.proxy(function ($layer) {
       var $btnSubmit = $layer.find('.fe-btn-submit');
       $btnSubmit.click($.proxy(this._submit, this));
-    }, this), null, this._PREVIEW_POPUP_HBS);
+    }, this), null, 'confirm');
   },
 
   _onClickBtnLineToReceive: function () {
