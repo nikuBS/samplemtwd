@@ -56,7 +56,6 @@ Tw.MyTDataSubMain.prototype = {
         this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       }
     }
-    this.$otherPages = this.$container.find('[data-id=other-pages]');
   },
 
   _bindEvent: function () {
@@ -267,7 +266,7 @@ Tw.MyTDataSubMain.prototype = {
       var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
       for ( var i = 0; i < length; i++ ) {
         var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$otherLines.parents('ul.list-comp-lineinfo').append(result);
+        this.$otherLines.find('ul.my-line-info').append(result);
       }
     }
   },

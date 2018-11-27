@@ -93,6 +93,9 @@ Tw.MyTFareSubMain.prototype = {
       // 다른회선 요금 조회
       this.$otherLines = this.$container.find('[data-id=other-line]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
+      if ( this.data.otherLines.length > 20 ) {
+        this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
+      }
     }
     // 세금계산서
     if ( this.data.taxInvoice ) {
@@ -102,6 +105,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( this.data.contribution ) {
       this.$contribution = this.$container.find('[data-id=contbt]');
     }
+    this.$otherPages = this.$container.find('[data-id=other-pages]');
   },
 
   _bindEvent: function () {
@@ -153,6 +157,9 @@ Tw.MyTFareSubMain.prototype = {
     // 다른회선 요금 조회
     if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
       this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
+      if ( this.data.otherLines.length > 20 ) {
+        this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
+      }
     }
     // 세금계산서
     if ( this.data.taxInvoice ) {
@@ -162,20 +169,22 @@ Tw.MyTFareSubMain.prototype = {
     if ( this.data.contribution ) {
       this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
     }
+    this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
   },
 
   // chart create
   _initPatternChart: function (data) {
-    this.$billChart.chart({
-      type: Tw.CHART_TYPE.BAR_2, //bar
-      container: 'chart4', //클래스명 String
-      unit: Tw.CHART_UNIT.WON, //x축 이름
-      sale: true, // 할인
-      decimal: 'won', //소숫점자리
-      data: data //데이터 obj
+    this.$billChart.chart2({
+      target: '.chart4', //클래스명 String
+      type: Tw.CHART_TYPE.BAR_4, //bar
+      average: true, // 평균
+      legend: Tw.FARE_CHART_LEGEND, // 범례
+      link: true,
+      unit: Tw.CHART_UNIT.WON, // 표기
+      data_arry: data //데이터 obj,
     });
     // chart 생성 후 event bind 처리
-    this.$billChart.on('click', 'button.chart_link', $.proxy(this._onClickedBillReport, this));
+    this.$billChart.on('click', 'button', $.proxy(this._onClickedBillReport, this));
   },
 
   // 다른회선내역 리스트
@@ -194,6 +203,7 @@ Tw.MyTFareSubMain.prototype = {
     this._requestCount = -1;
     this._resTimerID = null;
     this._svcMgmtNumList = [];
+    this._feeChartInfo = [];
     /**
      * /청구요금인 경우
      * 1. 최근요금내역
@@ -224,10 +234,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
-        var chart_data = {
-          co: '#3b98e6', //색상
-          da_arr: []
-        };
+        var chart_data = [];
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
@@ -236,12 +243,12 @@ Tw.MyTFareSubMain.prototype = {
           // --------------------
           amt = parseInt(amt, 10);
           absDeduck = Math.abs(parseInt(absDeduck, 10));
-          chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
-            'class': this._chartDefaultClass + date,
-            'data': [amt], // 사용금액
-            'sale': [absDeduck] // 할인금액
+          chart_data.push({
+            't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            'v': amt, // 사용금액
+            'v2': absDeduck // 할인금액
           });
+          this._feeChartInfo.push(date);
         }
         this._initPatternChart(chart_data);
       }
@@ -263,10 +270,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
-        var chart_data = {
-          co: '#3b98e6', //색상
-          da_arr: []
-        };
+        var chart_data = [];
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
@@ -275,12 +279,12 @@ Tw.MyTFareSubMain.prototype = {
           // --------------------
           amt = parseInt(amt, 10);
           absDeduck = Math.abs(parseInt(absDeduck, 10));
-          chart_data.da_arr.push({
-            'na': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
-            'class': this._chartDefaultClass + date,
-            'data': [amt], // 사용금액
-            'sale': [absDeduck] // 할인금액
+          chart_data.push({
+            't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            'v': amt, // 사용금액
+            'v2': absDeduck // 할인금액
           });
+          this._feeChartInfo.push(date);
         }
         this._initPatternChart(chart_data);
       }
@@ -327,7 +331,8 @@ Tw.MyTFareSubMain.prototype = {
           var data = _.extend({
             combine: isCombine,
             repSvc: repSvc,
-            amt: Tw.FormatHelper.addComma(amt.toString())
+            amt: Tw.FormatHelper.addComma(amt.toString()),
+            svcType: this.__selectSvcType(selectLine.svcAttrCd)
           }, selectLine);
           if ( isCombine ) {
             combinList.push(data);
@@ -451,6 +456,19 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+  // 다른 회선 더보기
+  _onOtherLinesMore: function () {
+    var totalCount = this.data.otherLines.length - this.$otherLines.length;
+    if ( totalCount > 0 ) {
+      this.data.otherLines.splice(0, totalCount);
+      var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
+      for ( var i = 0; i < length; i++ ) {
+        var result = this.$moreTempleate(this.data.otherLines[i]);
+        this.$otherLines.find('ul.my-line-info').append(result);
+      }
+    }
+  },
+
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
     // SB 상 납부내역상세로 진입하도록 정의되어있음
@@ -465,8 +483,8 @@ Tw.MyTFareSubMain.prototype = {
   // 요금안내서 이동(chart)
   _onClickedBillReport: function (event) {
     var clsName = event.target.className;
-    var month = clsName.replace(this._chartDefaultClass, '');
-    this._historyService.goLoad('/myt-fare/billguide/guide?date=' + month);
+    var index = clsName.replace('link', '');
+    this._historyService.goLoad('/myt-fare/billguide/guide?date=' + this._feeChartInfo[index]);
   },
 
   _onErrorReceivedBillData: function (resp) {
@@ -505,6 +523,14 @@ Tw.MyTFareSubMain.prototype = {
     clearTimeout(this._resTimerID);
     this._requestCount = -1;
     this._resTimerID = null;
+  },
+
+  __selectSvcType: function (attrCd) {
+    var clsNm = 'cellphone';
+    if ( attrCd.indexOf('S') > -1 ) {
+      clsNm = 'pc';
+    }
+    return clsNm;
   },
 
   __selectOtherLine: function (number) {
@@ -580,5 +606,12 @@ Tw.MyTFareSubMain.prototype = {
     $closeBtn.on('click', $.proxy(function () {
       this._popupService.close();
     }, this));
+  },
+
+  _onOtherPages: function (event) {
+    // TODO: 페이지 관련 URL 미비된 부분이 있어 확정후 완료 처리 필요!
+    var $target = $(event.target);
+    var href = $target.attr('data-href');
+    this._historyService.goLoad(href);
   }
 };
