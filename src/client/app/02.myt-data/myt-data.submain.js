@@ -68,7 +68,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$presentBtn.on('click', $.proxy(this._onTPresentDetail, this));
     }
     // T가족모아 배너
-    if ( this.data.family ) {
+    if ( this.$familymoaBanner.length > 0 ) {
       this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
     if ( this.data.refill ) {
@@ -203,7 +203,9 @@ Tw.MyTDataSubMain.prototype = {
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
     // 혜택 할인 페이지 BPCP 페이지
-    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_FACTORY);
+    //Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_FACTORY);
+    // TODO: BP 페이지 미개발 상태로 개발 완료 후 처리
+    this._popupService.openAlert('TBD');
   },
 
   // 데이터 조르기
