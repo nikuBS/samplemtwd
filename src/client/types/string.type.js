@@ -267,9 +267,9 @@ Tw.MYT_FARE_BILL_SET = {
     }
   },
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
-  COMPLETE_TEXT_REISSUE : '안내서 재발행',
-  COMPLETE_TEXT_CHANGE : '안내서 변경',
-  GUIDE_CONFIRM_TEXT : '요금안내서 확인'
+  COMPLETE_TEXT_REISSUE: '안내서 재발행',
+  COMPLETE_TEXT_CHANGE: '안내서 변경',
+  GUIDE_CONFIRM_TEXT: '요금안내서 확인'
 };
 
 Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
@@ -313,7 +313,7 @@ Tw.ALERT_MSG_COMMON = {
   ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.',
   ALERT_MORE_TWO: '2자 이상 입력해 주세요.',
   T_WORLD_APP_MOVED: {
-    TITLE:'T world App으로 이동하시겠습니까?',
+    TITLE: 'T world App으로 이동하시겠습니까?',
     MSG: '선택하신 서비스는<br/>모바일 T world app에서만<br/>이용하실 수 있습니다.',
     BUTTON: '이동'
   },
@@ -480,7 +480,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A10: { TITLE: '알림', MSG: '1회선만 결합된 경우, 회선 해지가 불가합니다.' },
   ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
   ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' },
-  ALERT_3_A26: { TITLE: '알림', MSG: '선택하신 로밍 예약 건을 취소하시겠습니까?', BUTTON: '확인'},
+  ALERT_3_A26: { TITLE: '알림', MSG: '선택하신 로밍 예약 건을 취소하시겠습니까?', BUTTON: '확인' },
   ALERT_3_A27: { TITLE: '알림', MSG: '수정되었습니다.' },
   ALERT_3_A28: { TITLE: '알림', MSG: '예약이 취소되었습니다.' },
   ALERT_3_A29: { TITLE: '알림', MSG: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.' },
@@ -496,10 +496,9 @@ Tw.ALERT_MSG_PRODUCT = {
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
-  ALERT_3_A23 : { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
-  ALERT_3_A24 : { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' }
+  ALERT_3_A23: { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
+  ALERT_3_A24: { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' }
 };
-
 
 Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',
@@ -509,7 +508,7 @@ Tw.ALERT_MSG_PASSWORD = {
 };
 
 Tw.ALERT_MSG_BENEFIT = {
-  CONFIRM_3_A15 : '3G/LTE 망 사용시 데이터 요금이 발생됩니다'
+  CONFIRM_3_A15: '3G/LTE 망 사용시 데이터 요금이 발생됩니다'
 };
 
 Tw.ALERT_MSG_MEMBERSHIP = {
@@ -724,13 +723,13 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
 
 Tw.MYT_DATA_TING = {
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
-  A81_CONTENT : '차단 시에는 팅요금 선물을 할 수 없습니다.',
+  A81_CONTENT: '차단 시에는 팅요금 선물을 할 수 없습니다.',
   A81_BTN_CONFIRM: '차단하기'
 };
 
 Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',
-  A70_CONTENT : '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
+  A70_CONTENT: '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
   A70_BTN_CONFIRM: '해지하기'
 };
 
@@ -841,8 +840,8 @@ Tw.MYT_JOIN_SUSPEND = {
     MESSAGE: '첨부된 파일이 있습니다. 일시정지사유를 변경하시면 구비서류를 재첨부해야합니다. 일시정지 사유를 변경하시겠습니까?',
     BTNAME: '변경하기'
   },
-  RESUSPEND:'재신청',
-  CANCEL_RESUSPEND:'재신청 취소',
+  RESUSPEND: '재신청',
+  CANCEL_RESUSPEND: '재신청 취소',
   RESET: '해제',
   APPLY: '신청',
   SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />일시정지 기간 : {DURATION}',
@@ -863,7 +862,8 @@ Tw.MYT_JOIN_SUSPEND = {
   LONG: {
     MILITARY: {
       TITLE: '구비서류 첨부 안내',
-      TIP: '<ul class="round-dot-list">' +
+      TIP:
+        '<ul class="round-dot-list">' +
         '<li>병적증명서(지방병무청, 시군구 읍면동 주민센터 등에서 발급), 입영 사실 기재 주민등록초본 or 입영통지서, 선발 통지서 등 병역법 시행규칙에서 정한 서식과 신분증 2종 필수 제출입니다.</li>' +
         '<li>‘교육소집 기간’이 확인되는 군입대 입증 서류 필요하며, 군입대 장기 일시정지 처리 시 구비서류에 기재된 ‘입대일자‘ 확인 후 장기 일시정지 신청이 가능합니다.</li>' +
         '</ul>',
@@ -871,7 +871,8 @@ Tw.MYT_JOIN_SUSPEND = {
     },
     ABROAD: {
       TITLE: '구비서류 첨부 안내',
-      TIP: '<ul class="round-dot-list">' +
+      TIP:
+        '<ul class="round-dot-list">' +
         '<li>항공권 사본(편도, 왕복 모두 인정/전자항공권 인정), 출입국에 관한 사실 증명서(출입국 관리사무소, 인터넷 발급 인정) 등 해외체류입증 서류 필수 제출입니다.</li>' +
         '<li>단, 항공권(편도, 왕복)의 경우 국내에서 국외로 출국하는 내용이 기재되어 있어야 인정됩니다.</li>' +
         '</ul>',
@@ -1138,10 +1139,28 @@ Tw.PREPAID_VOICE = {
   PREPAID_CARD: '선불폰 카드'
 };
 
-Tw.ROAMING_CENTER =  ['인천공항 1터미널', '인천공항 1터미널 1층', '인천공항 2터미널', '인천공항 2터미널 1층', '김포공항',
-  '제주공항', '김해공항', '김해공항 1층', '대구공항', '인천항', '인천항 국제2', '부산항', '제주신항'];
+Tw.ROAMING_CENTER = [
+  '인천공항 1터미널',
+  '인천공항 1터미널 1층',
+  '인천공항 2터미널',
+  '인천공항 2터미널 1층',
+  '김포공항',
+  '제주공항',
+  '김해공항',
+  '김해공항 1층',
+  '대구공항',
+  '인천항',
+  '인천항 국제2',
+  '부산항',
+  '제주신항'
+];
 
 Tw.EVENT_TYPE = {
   E: '응모형',
   N: '일반형'
+};
+
+Tw.PREPAID_TYPES = {
+  VOICE: '음성',
+  DATA: '데이터'
 };

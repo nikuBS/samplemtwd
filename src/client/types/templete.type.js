@@ -717,3 +717,5 @@ Tw.SUSPEND_RELATION = {
     { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
   ]
 };
+
+Tw.PREPAID_HISTORIES = [{ value: '음성 충전', attr: 'data-type="voice"' }, { value: '데이터 충전', attr: 'data-type="data"' }];
