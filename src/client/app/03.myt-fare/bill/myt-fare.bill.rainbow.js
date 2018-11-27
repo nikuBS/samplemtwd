@@ -104,15 +104,18 @@ Tw.MyTFareBillRainbow.prototype = {
     this._checkIsAbled();
     this._popupService.close();
   },
-  _isValid: function () {
+  _isValidForOne: function () {
     return (this._validation.checkIsAvailablePoint(this.$point.val(),
       parseInt(this.$standardPoint.attr('id'), 10),
       Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
       this._validation.checkIsMore(this.$point.val(), 1, Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE) &&
       this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT));
   },
+  _isValidForAuto: function () {
+    return this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000, Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
+  },
   _onePay: function () {
-    if (this._isValid()) {
+    if (this._isValidForOne()) {
       var reqData = this._makeRequestDataForOne();
 
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
@@ -121,11 +124,13 @@ Tw.MyTFareBillRainbow.prototype = {
     }
   },
   _autoPay: function () {
-    var reqData = this._makeRequestDataForAuto();
+    if (this._isValidForAuto()) {
+      var reqData = this._makeRequestDataForAuto();
 
-    this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._fail, this));
+      this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
+        .done($.proxy(this._paySuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {

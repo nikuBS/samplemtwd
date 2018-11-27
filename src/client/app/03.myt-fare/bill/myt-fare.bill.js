@@ -145,26 +145,26 @@ Tw.MyTFareBill.prototype = {
     }
   },
   _pointSuccess: function (res) {
+    this._pointComplete = true;
+    var svcYn = 'N';
+
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._setPointTarget(res.result.svcYN);
-      this._pointComplete = true;
       this._okCashbag = res.result.availPt;
       this._tPoint = res.result.availTPt;
-
-      this._isAllComplete();
-    } else {
-      this._fail(res);
+      svcYn = res.result.svcYN;
     }
+    this._setPointTarget(svcYn);
+    this._isAllComplete();
   },
   _rainbowSuccess: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      this._rainbowComplete = true;
-      this._rainbowPoint = res.result.usableRbpPt;
+    this._rainbowComplete = true;
 
-      this._isAllComplete();
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._rainbowPoint = res.result.usableRbpPt;
     } else {
       this._fail(res);
     }
+    this._isAllComplete();
   },
   _setAutoPaymentTarget: function (code) {
     if (code !== '01' && code !== '02') {
