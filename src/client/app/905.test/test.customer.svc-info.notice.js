@@ -1,7 +1,7 @@
 /**
  * FileName: test.customer.svc-info.notice.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.23
+ * Date: 2018.10.23
  */
 
 Tw.TestCustomerSvcInfoNotice = function(rootEl) {
@@ -11,6 +11,7 @@ Tw.TestCustomerSvcInfoNotice = function(rootEl) {
   this._history = new Tw.HistoryService();
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
   this._category = this.$container.data('category');
+  this._setContentsList = [];
   this._page = 1;
 
   this._cachedElement();
@@ -33,8 +34,17 @@ Tw.TestCustomerSvcInfoNotice.prototype = {
   },
 
   _bindEvent: function() {
+    this.$list.on('cssClassChanged', 'li.acco-box', $.proxy(this._setContentsReq, this));
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
+
+    var originalAddClassMethod = $.fn.addClass;
+
+    $.fn.addClass = function() {
+      $(this).trigger('cssClassChanged');
+
+      return originalAddClassMethod.apply( this, arguments );
+    };
   },
 
   _init: function() {
@@ -52,6 +62,27 @@ Tw.TestCustomerSvcInfoNotice.prototype = {
 
     this._history.pathname += this._history.search;
     this._history.replace();
+  },
+
+  _setContentsReq: function(e) {
+    var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
+    if (this._category !== 'tworld' || this._setContentsList.indexOf(ntcId) !== -1) {
+      return;
+    }
+
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: 'M', ntcId: ntcId })
+      .done($.proxy(this._setContentsRes, this));
+  },
+
+  _setContentsRes: function(resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._setContentsList.push(parseInt(resp.result.ntcId, 10));
+    this.$list.find('[data-ntc_id="' + resp.result.ntcId + '"] .notice-txt').html(this._fixHtml(resp.result.ntcCtt));
   },
 
   _getApi: function() {
@@ -93,7 +124,14 @@ Tw.TestCustomerSvcInfoNotice.prototype = {
 
   _loadMoreList: function() {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService.request(this._getApi(), {page: this._page, size: 20}).done($.proxy(this._appendMoreList, this));
+
+    var customParams = {};
+    if (this._category === 'tworld') {
+      customParams.expsChnlCd = 'M';
+    }
+
+    this._apiService.request(this._getApi(), $.extend(customParams, { page: this._page, size: 20 }))
+      .done($.proxy(this._appendMoreList, this));
   },
 
   _getRemainCount: function(param) {
@@ -125,11 +163,28 @@ Tw.TestCustomerSvcInfoNotice.prototype = {
 
   _convertItem: function(item) {
     return $.extend(item, {
-      type: Tw.FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
-      date: Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YY.MM.DD'),
-      itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''),
-      content: this._fixHtml(item.content)
+      title: this._category === 'tworld' ? item.ntcTitNm : item.title,
+      type: this._setItemType(item),
+      date: Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD'),
+      itemClass: this._setItemClass(item),
+      content: Tw.FormatHelper.isEmpty(item.content)? null : this._fixHtml(item.content)
     });
+  },
+
+  _setItemType: function(item) {
+    if (this._category === 'tworld') {
+      return Tw.FormatHelper.isEmpty(Tw.CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? null : Tw.CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd];
+    }
+
+    return Tw.FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm;
+  },
+
+  _setItemClass: function(item) {
+    if (this._category === 'tworld') {
+      return (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '');
+    }
+
+    return (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');
   },
 
   _fixHtml: function(html) {
