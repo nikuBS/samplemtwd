@@ -39,7 +39,7 @@
             <% if(locals.status) { %>
             <%- include('../../components/suspend/myt-join.suspend.status.temporal.html', status); %>
             <% } %>
-            <% if(locals.status.isProgressing) { %>
+            <% if(locals.progress) { %>
             <%- include('../../components/suspend/myt-join.suspend.status.longterm.html', progress); %>
             <% } %>
             <!--// .cont-box -->
@@ -51,7 +51,7 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해주세요!</h3>
                 <ul class="noti-list">
-                    <% if(status.type === 'long-term' || status.isProgressing) { %>
+                    <% if(!status || status.type === 'long-term' || status.isProgressing) { %>
                     <li>장기일시정지 안내
                         <button type="button" class="tip-view" id="MS_03_05_03_tip_03">TIP</button>
                     </li>

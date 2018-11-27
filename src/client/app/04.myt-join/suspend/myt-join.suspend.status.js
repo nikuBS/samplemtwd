@@ -25,13 +25,13 @@ Tw.MyTJoinSuspendStatus.prototype = {
     this.$container.on('click', '#bt-cancel-resuspend', $.proxy(this._onClickCancelResuspend, this));
   },
 
-  // Resuspend
+  // Resuspend(장기일시정지 재신청)
   _onClickResuspend: function () {
     this._popupService.open({
       hbs: 'MS_03_05_04',
       data: {
         svcInfo: this._svcInfo,
-        period: this._params.period,
+        period: this._params.status.period,
         reason: this._params.reason
       }
     }, $.proxy(this._onOpenResuspendPopup, this), null, 'resuspend');
