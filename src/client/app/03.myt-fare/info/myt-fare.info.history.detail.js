@@ -3,7 +3,7 @@
  * Author: Lee Kirim (kirim@sk.com)
  * Date: 2018. 9. 17
  */
-Tw.MyTFareInfoHistory = function (rootEl, data) {
+Tw.MyTFareInfoHistoryDetail = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
 
@@ -17,189 +17,70 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
   this._init();
 };
 
-Tw.MyTFareInfoHistory.prototype = {
+Tw.MyTFareInfoHistoryDetail.prototype = {
   _init: function () {
 
     this.rootPathName = this._historyService.pathname;
 
-    if (this.data && this.data.current !== 'detail') {
-      this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
-        if (this.data.current === cur) {
-          prev = index;
+  
+    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.queryParams = Tw.UrlHelper.getQueryParams();
+
+    this.$templateWrapper = this.$container.find('#fe-detail-wrapper');
+
+    this.$template = {
+      $directBase : Handlebars.compile($('#fe-payment-detail-dt').html()),
+      $directOCBandCard : Handlebars.compile($('#fe-payment-detail-ocb-card').html()),
+      $directBank : Handlebars.compile($('#fe-payment-detail-bank').html()),
+      $auto : Handlebars.compile($('#fe-payment-detail-auto').html()),
+      $microContents : Handlebars.compile($('#fe-payment-detail-micro-contents').html()),
+      $reservePoint: Handlebars.compile($('#fe-payment-detail-reserve-point').html()),
+      $autoPoint: Handlebars.compile($('#fe-payment-detail-auto-point').html())
+    };
+
+    switch (this.queryParams.type) {
+      case 'DI':
+        this.detailData.dataUseTermStart = this.detailData.dataDt.substr(0, 8) + '01';
+        this.detailData = Object.assign(this.detailData, this.data.data, {
+          invYearMonth:Tw.DateHelper.getShortDateNoDate(this.data.data.invDt),
+          reqDate:Tw.DateHelper.getShortDate(this.data.data.reqDtm)
+        });
+        /*this.detailData.cardNum = this.data.data.cardNum;
+        this.detailData.aprvNum = this.data.data.aprvNum;*/
+        switch (this.detailData.dataPayType) {
+          case 'CARD':
+          case 'POINT':
+            this.$templateWrapper.append(this.$template.$directOCBandCard(this.detailData));
+            break;
+          case 'BANK':
+            this.$templateWrapper.append(this.$template.$directBank(this.detailData));
+            break;
+          default:
+            this.$templateWrapper.append(this.$template.$directBase(this.detailData));
+            break;
         }
-        return prev;
-      }, this), 0);
+        break;
+      case 'AT':
+      case 'AU':
+        // 자동납부 카드/계좌
+        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoNot(this.detailData.dataLastInvDt));
+        this.$templateWrapper.append(this.$template.$auto(this.detailData));
+        break;
+      case 'RP':
+        // 포인트 납부예약
+        this.$templateWrapper.append(this.$template.$reservePoint(this.detailData));
+        break;
+      case 'PN': 
+        // 포인트 자동납부
+        this.$templateWrapper.append(this.$template.$autoPoint(this.detailData));
+        break;
+      default:
+        this.$templateWrapper.append(this.$template.$microContents(this.detailData));
+        break;
 
-      this._initPaymentList();
-    } else {
-      this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
-      this.queryParams = Tw.UrlHelper.getQueryParams();
-
-      this.$templateWrapper = this.$container.find('#fe-detail-wrapper');
-
-      this.$template = {
-        $directBase : Handlebars.compile($('#fe-payment-detail-dt').html()),
-        $directOCBandCard : Handlebars.compile($('#fe-payment-detail-ocb-card').html()),
-        $directBank : Handlebars.compile($('#fe-payment-detail-bank').html()),
-        $auto : Handlebars.compile($('#fe-payment-detail-auto').html()),
-        $microContents : Handlebars.compile($('#fe-payment-detail-micro-contents').html())
-      };
-
-      switch (this.queryParams.type) {
-        case 'DI':
-          this.detailData.dataUseTermStart = this.detailData.dataDt.substr(0, 8) + '01';
-          this.detailData.cardNum = this.data.cardNum;
-          this.detailData.aprvNum = this.data.aprvNum;
-          switch (this.queryParams.settleWayCd) {
-            case '02':
-            case '10':
-            case '11':
-              this.$templateWrapper.append(this.$template.$directOCBandCard(this.detailData));
-              break;
-            case '41':
-              this.$templateWrapper.append(this.$template.$directBank(this.detailData));
-              break;
-            default:
-              this.$templateWrapper.append(this.$template.$directBase(this.detailData));
-              break;
-          }
-          break;
-        case 'AT':
-        case 'AU':
-          this.detailData.dataUseTermStart = this.detailData.dataLastInvDt.substr(0, 8) + '01';
-          this.$templateWrapper.append(this.$template.$auto(this.detailData));
-          break;
-        default:
-          this.$templateWrapper.append(this.$template.$microContents(this.detailData));
-          break;
-
-      }
     }
-  },
-
-  _initPaymentList: function() {
-    var initedListTemplate;
-    var totalDataCounter = this.data.listData.mergedListData.length;
-    this.renderListData = {};
-
-    if (!totalDataCounter) {
-      initedListTemplate = this.$template.$emptyList();
-    } else {
-      this.listRenderPerPage = 20;
-
-      this.listLastIndex = this.listRenderPerPage;
-      this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
-
-      this.renderableListData = this.data.listData.mergedListData.slice(0, this.listRenderPerPage);
-
-      this.renderListData.initialMoreData = this.listViewMoreHide;
-      this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
-      this.renderListData.records = this.renderableListData.reduce($.proxy(function(prev, cur) {
-        if (prev.length) {
-          if (prev.slice(-1)[0].date === cur.listDt) {
-            prev.slice(-1)[0].items.push(cur);
-          } else {
-            prev.push({items: [cur], date:cur.listDt});
-          }
-        } else {
-          prev.push({items: [cur], date:cur.listDt});
-        }
-
-        return prev;
-      }, this), []);
-
-      initedListTemplate = this.$template.$listWrapper(this.renderListData);
-    }
-
-    this.$template.$domListWrapper.append(initedListTemplate);
-    this.$listWrapper = this.$container.find('#fe-list-wrapper');
-    this.$btnListViewMorewrapper = this.$container.find('#fe-list-wrapper .bt-more');
-    this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
-    this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-    this.$appendListTarget.on('click', 'button.bt-detail', $.proxy(this._listViewDetailHandler, this));
-    //예약취소버튼
-    this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this))
-    //TIP버튼의 클릭이동에 대한 정의 추가 필요
-  },
-
-  _listViewDetailHandler: function(e) {
-    var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
-
-    detailData.isPersonalBiz = this.data.isPersonalBiz;
-
-    Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
-    this._historyService.goLoad(this._historyService.pathname + "/detail?type=" + detailData.dataPayMethodCode + 
-      (detailData.dataIsBank? "&isBank=" + detailData.dataIsBank:'') +
-      (detailData.settleWayCd? "&settleWayCd=" + detailData.settleWayCd:"") +
-      (detailData.dataPayType? "&paytype=" + detailData.dataPayType:"") +
-      (detailData.dataPayMethodCode === "DI"? "&opDt=" + detailData.opDt + "&payOpTm=" + detailData.payOpTm: "")
-    );
-  },
-
-  _reserveCancelHandler: function(e) {
-    this.reserveCancelData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
-    var alertCode, alertType;
-
-    // alertCode 설정
-    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A85';
-    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A87';
-    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A92';
-
-    if(alertCode) alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
-
-    if(alertType) this._popupService.openConfirm(alertType.MSG,alertType.TITLE,$.proxy(this._execReserveCancel,this),$.proxy(this._popupService.close,this));
     
   },
-
-  // 포인트 1회 납부예약 취소 실행
-  _execReserveCancel: function(){
-    this._popupService.close();
-
-    var apiCode, apiBody={};
-
-    //apiCode,apiBody 설정
-    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0||this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0){ 
-      apiCode='BFF_07_0047';
-      apiBody={
-        ptClCd:this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0?'TPT':'CPT',
-        opDt:this.reserveCancelData.opDt,
-        payOpTm:this.reserveCancelData.opTm,//.substring(8),
-        rbpSerNum:this.reserveCancelData.rbpSerNum
-      }
-    }
-    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0){ 
-      apiCode='BFF_07_0050';
-      apiBody={
-        rbpSerNum:this.reserveCancelData.rbpSerNum
-      }
-    }
-
-    if(apiCode){
-      this._apiService.request(Tw.API_CMD[apiCode], apiBody)
-        .done($.proxy(this._successReserveCancel, this)).fail($.proxy(this._apiError, this));
-    }
-  },
-
-  // 포인트 1회 납부예약 취소 res
-  _successReserveCancel: function(res){
-    var alertCode, alertType;
-    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A86';
-    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A88';
-    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A93';
-
-    alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
-
-    if(res.code === '00') {
-      this._popupService.openAlert(alertType.MSG, alertType.TITLE, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
-        this._popupService.close();
-      }, this));
-    } else {
-      this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
-        this._popupService.close();
-      }, this));
-    }
-  },
-
   _updatePaymentList: function(e) {
     this._updatePaymentListData();
 

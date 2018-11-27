@@ -36,30 +36,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     switch (req.query.type) {
       case 'DI':
         this.apiService.request(API_CMD.BFF_07_0091, {opDt: req.query.opDt, payOpTm: req.query.payOpTm}).subscribe((resp) => {
-          switch (req.query.settleWayCd) {
-            case '02':
-              requestType = 'CARD';
-              break;
-            case '10':
-              requestType = 'OCB';
-              break;
-            case '11':
-              requestType = 'TPOINT';
-              break;
-            case '41':
-              requestType = 'BANK';
-              break;
-            default:
-              requestType = req.query.type;
-              break;
-          }
           res.render('info/myt-fare.info.history.detail.html', {
             svcInfo: svcInfo,
             pageInfo: pageInfo,
             data: {
               current: query.current,
-              headerTitle: MYT_PAYMENT_DETAIL_TITLE[requestType],
-              data: resp
+              headerTitle: MYT_PAYMENT_DETAIL_TITLE.DI,
+              data: resp.result
             }
           });
 
@@ -73,7 +56,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
           pageInfo: pageInfo,
           data: {
             current: query.current,
-            headerTitle: MYT_PAYMENT_DETAIL_TITLE[requestType]
+            headerTitle: MYT_PAYMENT_DETAIL_TITLE.DI // [requestType]
           }
         });
         break;

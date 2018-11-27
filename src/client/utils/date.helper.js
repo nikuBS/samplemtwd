@@ -156,6 +156,14 @@ Tw.DateHelper = (function () {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.05
+   */
+  var getShortDateNoDate = function (date) {
+    return moment(convDateFormat(date)).format('YYYY.M');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 06.01
    */
   var getShortDateNoYear = function (date) {
@@ -307,6 +315,7 @@ Tw.DateHelper = (function () {
     getShortDate: getShortDate,
     getShortDateNoDot: getShortDateNoDot,
     getShortFirstDateNoNot: getShortFirstDateNoNot,
+    getShortDateNoDate: getShortDateNoDate,
     getShortDateNoYear: getShortDateNoYear,
     getShortDateAndTime: getShortDateAndTime,
     getFullDateAndTime: getFullDateAndTime,
