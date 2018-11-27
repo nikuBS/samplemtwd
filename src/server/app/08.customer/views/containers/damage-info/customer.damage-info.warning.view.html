@@ -1,5 +1,5 @@
 <%#
-* FileName: customer.damage-info.guide-view.html
+* FileName: customer.damage-info.warning.view.html
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2018.10.24
 %>
@@ -15,7 +15,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 가이드', svcInfo, option: { line: true } }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '최신 이용자 피해예방 주의보', svcInfo, option: { line: true } }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -23,8 +23,8 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="view-tit-box">
-                    <strong class="v-tit"><%= data.TITLE %></strong>
-                    <em class="v-txt">등록일 <%= data.DATE %></em>
+                    <strong class="v-tit"><%= data.bltnTitleNm %></strong>
+                    <em class="v-txt"><%= data.date %></em>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -34,27 +34,10 @@
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <div class="view-cont-box">
-                    <% for (var i in data.IMG_LIST) { %>
-                    <% if (i < 4) { %>
-                    <img src="/resource/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe">
-                    <% } else { %>
-                    <img src="" data-src="/resource/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe" style="display: none">
-                    <% } %>
-                    <div id="aria-cartoon-describe" class="blind" aria-hidden="true">
-                        <p><%- data.IMG_LIST[i].HIDDEN_TEXT %></p>
-                    </div>
-                    <% } %>
+                    <%- data.bltnHtmlCtt %>
                 </div>
             </div>
             <!--// .cont-box -->
-
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button class="fe-common-back">목록으로</button>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
     <!--// #contents -->

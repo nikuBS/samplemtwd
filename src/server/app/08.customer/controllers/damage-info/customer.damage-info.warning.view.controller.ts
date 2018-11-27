@@ -1,5 +1,5 @@
 /**
- * FileName: customer.damage-info.warning-view.controller.ts
+ * FileName: customer.damage-info.warning.view.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
@@ -17,12 +17,13 @@ class CustomerDamageInfoWarningView extends TwViewController {
 
   private _convertData(data): any {
     return Object.assign(data, {
-      date: DateHelper.getShortDateWithFormat(data.auditDtm, 'YY.M.DD')
+      date: DateHelper.getShortDateWithFormat(data.auditDtm, 'YYYY.M.DD.')
     });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const idx = req.params.idx || '';
+    const idx = req.query.idx || '';
+
     if (FormatHelper.isEmpty(idx)) {
       return res.redirect('/customer/damage-info/warning');
     }
@@ -38,7 +39,7 @@ class CustomerDamageInfoWarningView extends TwViewController {
           });
         }
 
-        res.render('damage-info/customer.damage-info.warning-view.html', {
+        res.render('damage-info/customer.damage-info.warning.view.html', {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           data: this._convertData(data.result)
