@@ -39,7 +39,7 @@
             <% if(locals.status) { %>
             <%- include('../../components/suspend/myt-join.suspend.status.temporal.html', status); %>
             <% } %>
-            <% if(locals.progress) { %>
+            <% if(locals.status.isProgressing) { %>
             <%- include('../../components/suspend/myt-join.suspend.status.longterm.html', progress); %>
             <% } %>
             <!--// .cont-box -->

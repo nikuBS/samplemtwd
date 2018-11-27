@@ -56,14 +56,56 @@ class MyTJoinSuspendStatus extends TwViewController {
         } else { // 일시정지(case 1)
           status['type'] = 'temporary';
         }
-
-        // TODO progress 여부
-        status['isProgressing'] = true;
         options['status'] = status;
       } else {
         options['status'] = null;
       }
 
+      /* tslint:disable */
+
+      progress = {
+        'code': '00',
+        'msg': '',
+        'result': {
+          'seq': '222',
+          // 'opStateCd': 'R',
+          // 'opState: '접수중',
+          // 'opStateCd': 'D',
+          // 'opState': '서류확인',
+          // 'opStateCd': 'A',
+          // 'opState':'서류확인중',
+          // 'opStateCd': 'F',
+          // 'opState': '서류확인중',
+          'opStateCd': 'C',
+          'opState': '처리완료',
+          'opReasonCd': '30',
+          'opReason': '구비서류미비',
+          'opDtm': '20181001122000',
+          'reasonCd': '??',
+          'reason': '군입대',
+          'receiveCd': '??',
+          'receive': '걸기/받기 모두 정지',
+          'rgstDt': '20180901',
+          'fromDt': '20181231',
+          'toDt': '20201231',
+          'attFileList': [
+            {
+              'seq': '001',
+              'fileName': 'adfads.gif',
+              'auditDtm': '20181011'
+            },
+            {
+              'seq': '001',
+              'fileName': 'adfads.gif',
+              'auditDtm': '20181011'
+            }
+          ],
+          'cntcNumRelNm': '친구',
+          'cntcNum': '222'
+        }
+      };
+
+      /* tslint:enable */
       if ( progress.code === API_CODE.CODE_00 ) { //  현재 장기일시 정지 미신청 상태에 대한 코드가 없음
         const _progress = progress.result;
         _progress.rgstDt = DateHelper.getShortDateWithFormat(_progress.rgstDt, 'YYYY.MM.DD.');
@@ -86,8 +128,10 @@ class MyTJoinSuspendStatus extends TwViewController {
             break;
         }
         options['progress'] = _progress;
+        options['status'].isProgressing = true;
       } else if ( progress.debugMessage.trim() === '404' ) {
         options['progress'] = null;
+        options['status'].isProgressing = false;
       } else {
         this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,
@@ -106,6 +150,7 @@ class MyTJoinSuspendStatus extends TwViewController {
         return;
       }
       res.render('suspend/myt-join.suspend.status.html', options);
+
     });
   }
 }
