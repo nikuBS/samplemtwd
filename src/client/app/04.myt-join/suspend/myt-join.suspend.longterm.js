@@ -93,14 +93,14 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       popup = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
-        hash: 'help'
+        hash: 'tip'
       };
       count = 2;
     } else {
       popup = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
-        hash: 'help'
+        hash: 'tip'
       };
       count = 1;
     }

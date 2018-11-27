@@ -38,7 +38,6 @@ Tw.MytJoinSuspendUpload.prototype = {
   },
 
   _showUploadPopup: function () {
-    this._popupService.close();
     this._popupService.open({
       hbs: 'CS_04_01_L02',
       inputfile_num: this._fileInfo,
@@ -69,6 +68,8 @@ Tw.MytJoinSuspendUpload.prototype = {
     this.$btUpload = null;
     this.$inputFile = null;
     this.$popupContainer = null;
+    // tooltip popup이 남아있는 경우가 있음
+    this._popupService.close();
   },
 
   _onChangeFile: function (event) {
@@ -83,7 +84,6 @@ Tw.MytJoinSuspendUpload.prototype = {
         this._setFileButton($inputBox, false);
       }
     }
-
   },
   _validateFile: function (file) {
     if ( file.size > Tw.MAX_FILE_SIZE ) {
