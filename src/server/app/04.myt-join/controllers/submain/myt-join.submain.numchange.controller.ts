@@ -23,13 +23,24 @@ class MyTJoinPhoneNumChange extends TwViewController {
         //     'coCd' : 'SKT',
         //     'objSvcNum' : '01094411895',
         //     'chgTyp' : '1',
-        //     'npCd' : ''
+        //     'npCd' : '',
+        //     'numChgTarget' : true
         //   }
         // };
 
         if ( resp.code === API_CODE.CODE_00 ) {
-          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
-          res.render('submain/myt-join.submain.numchange.html', option );
+          // numChgTarget : 010전환번호 대상자 여부
+          if ( resp.result['numChgTarget'] ) {
+            resp.result['svcNum'] = StringHelper.phoneStringToDash(resp.result['svcNum']);
+            resp.result['objSvcNum'] = StringHelper.phoneStringToDash(resp.result['objSvcNum']);
+            const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
+            res.render('submain/myt-join.submain.numchange.html', option );
+
+          } else {
+            const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: false };
+            res.render('submain/myt-join.submain.numchange.html', option );
+          }
+
 
         } else {
           return this.error.render(res, {
