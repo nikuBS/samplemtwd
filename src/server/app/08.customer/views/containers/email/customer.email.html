@@ -137,65 +137,47 @@
                     <ul class="link-long-list">
                         <li>
                             <div class="link-long">
-                                <button>무엇이 궁금합니다
+                                <a>요금제 변경하고 싶어요.
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="link-long">
-                                <button>무엇이 궁금합니다
+                                <a>이번달 실시간 요금 확인 하고 싶어요.
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="link-long">
-                                <button>무엇이 궁금합니다
+                                <a>휴대폰 일시정지하고 싶어요.
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="link-long">
-                                <button>무엇이 궁금합니다
+                                <a>소액결제 이용내역 확인 하고 싶어요.
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                         <li>
                             <div class="link-long">
-                                <button>무엇이 궁금합니다
+                                <a>소액결제 한도 상향(하향) 하고 싶어요.
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>무엇이 궁금합니다
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>무엇이 궁금합니다
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -217,7 +199,7 @@
     new Tw.CustomerEmailServiceOption($('.wrap'));
     new Tw.CustomerEmailQuality($('.wrap'));
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
-    new Tw.CustomerEmailTemplate($('.wrap'));
+    new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailCategory($('.wrap'));
     new Tw.CustomerEmailUpload($('.wrap'));
   });

@@ -4,7 +4,8 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerEmailTemplate = function (rootEl) {
+Tw.CustomerEmailTemplate = function (rootEl, allSvc) {
+  this.allSvc = allSvc.allSvc;
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -17,13 +18,14 @@ Tw.CustomerEmailTemplate = function (rootEl) {
 
 Tw.CustomerEmailTemplate.prototype = {
   _init: function () {
-    this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
-    this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
+    // this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
+    // this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
   },
 
   _cachedElement: function () {
     this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
     this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
+    this.$wrap_tpl_faq = $('.fe-btn_faq');
 
     // service, quality template
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').html());
@@ -42,20 +44,20 @@ Tw.CustomerEmailTemplate.prototype = {
 
   _changeServiceTemplate: function (e, serviceCategory) {
     switch ( serviceCategory.depth1 ) {
-      case 'cell':
+      case 'CELL':
         this.$wrap_tpl_service.html(this.tpl_service_cell());
         break;
-      case 'internet':
+      case 'INTERNET':
         this.$wrap_tpl_service.html(this.tpl_service_internet());
         break;
-      case 'direct':
+      case 'DIRECT':
         if ( serviceCategory.depth2 === '08' || serviceCategory.depth2 === '09' || serviceCategory.depth2 === '12' ) {
           this.$wrap_tpl_service.html(this.tpl_service_direct());
         } else {
           this.$wrap_tpl_service.html(this.tpl_service_direct_brand());
         }
         break;
-      case 'chocolate':
+      case 'CHOCO':
         this.$wrap_tpl_service.html(this.tpl_service_chocolate());
         break;
       default:

@@ -104,7 +104,6 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      debugger;
       this._setAmountUI(Number(res.result.currentTopUpLimit));
     } else {
       Tw.Error(res.code, res.msg).pop();

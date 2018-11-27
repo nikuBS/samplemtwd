@@ -520,7 +520,7 @@ Tw.CUSTOMER_PRAISE_AREAS = [
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   {
     title: '휴대폰',
-    category: 'cell',
+    category: 'CELL',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000273' },
       { title: '단말기 관련', ofrCtgSeq: '5000274' },
@@ -533,7 +533,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: '인터넷/집전화/TV',
-    category: 'internet',
+    category: 'INTERNET',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000141' },
       { title: '장애/고장신고', ofrCtgSeq: '5000143' },
@@ -546,7 +546,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: '다이렉트샵',
-    category: 'direct',
+    category: 'DIRECT',
     list: [
       { title: '휴대폰 구매', ofrCtgSeq: '07' },
       { title: '기타 문의', ofrCtgSeq: '10' },
@@ -557,7 +557,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: '초코렛',
-    category: 'chocolate',
+    category: 'CHOCO',
     list: [
       { title: '상품문의', ofrCtgSeq: '010700' },
       { title: '교환/반품', ofrCtgSeq: '010600' },
