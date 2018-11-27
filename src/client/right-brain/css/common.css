@@ -4818,7 +4818,8 @@ a.ui-button:active,
   color: #3583e3;
   font-size: 0.8125rem;
   font-weight: 700;
-  line-height: 2.5rem; }
+  line-height: 2.5rem;
+  text-align: center; }
   .bt-white1.selected {
     background: #f44333; }
   .bt-white1:disabled {
