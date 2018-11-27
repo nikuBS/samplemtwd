@@ -202,8 +202,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       .inputbox .input input[type=password]:focus,
       .inputbox .input input[type=number]:focus,
       .inputbox .input input[type=tel]:focus {
-        border-color: #7b7b7b;
-        background: none; }
+        border-color: #7b7b7b; }
         .inputbox .input input[type=text]:focus::-webkit-input-placeholder,
         .inputbox .input input[type=file]:focus::-webkit-input-placeholder,
         .inputbox .input input[type=password]:focus::-webkit-input-placeholder,
