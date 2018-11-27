@@ -9,5 +9,6 @@ Tw.FIDO_TYPE = {
 
 Tw.UPLOAD_TYPE = {
   EMAIL: 'email',
-  RESERVATION: 'reservation'
+  RESERVATION: 'reservation',
+  SUSPEND: 'suspend'
 };

@@ -15,16 +15,13 @@
                     <span class="title">상태</span>
                     <span class="tx-cont">
                         <span class="block tx-bold"><%= state %></span>
-                        <% if(opStateCd === 'A' { %>
-                        <span class="block fs-13"><%= opReason %> 까지 재첨부</span>
+                        <% if(opStateCd === 'A') { %>
+                        <span class="block fs-13"><%= opReason %></span>
                         <span class="block"><button class="bt-link-tx underline fs-12" id="fe-reattach-files">구비서류 재첨부하기</button></span>
                         <% } %>
                     </span>
                 </li>
                 <li>
-                    <span class="title">접수일자</span>
-                    <span class="tx-cont"><%= rgstDt %></span>
-
                     <span class="title">접수일자</span>
                     <span class="tx-cont"><%= rgstDt %></span>
                 </li>
@@ -38,7 +35,7 @@
                 </li>
                 <li>
                     <span class="title">구비서류</span>
-                    <% if(opStateCd === 'E' { %>
+                    <% if(opStateCd === 'E') { %>
                     <span class="tx-cont"><%= opDtm %> 첨부</span>
                     <% } else { %>
                     <span class="tx-cont"><%= opDtm %> 재첨부</span>

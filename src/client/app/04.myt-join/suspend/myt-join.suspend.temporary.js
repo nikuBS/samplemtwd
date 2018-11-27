@@ -3,7 +3,7 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 10. 18.
  */
-Tw.MyTJoinSuspendTemporary = function (tabEl) {
+Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
   this.$container = tabEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -12,6 +12,7 @@ Tw.MyTJoinSuspendTemporary = function (tabEl) {
 
   this._cachedElement();
   this._bindEvent();
+  this._params = params;
 };
 
 Tw.MyTJoinSuspendTemporary.prototype = {

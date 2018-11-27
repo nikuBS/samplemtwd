@@ -168,7 +168,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   },
   {
     TEXT: '무선 공유기 해킹 주의보!',
-    LINK: 'https://www.krcert.or.kr/cyber/internetModem.do'
+    LINK: 'https://www.sktinsight.com/10867'
   },
   {
     TEXT: 'PC타고 스마트폰까지 침투하는 악성코드 주의보',
@@ -222,7 +222,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
 
 export const CUSTOMER_PROTECT_REPORT_ORG = [
   {
-    TEXT: '개인정보 침해 신고센터',
+    TEXT: 'KISA 개인정보침해 신고센터',
     LINK: 'http://privacy.kisa.or.kr/kor/main.jsp'
   },
   {
@@ -234,12 +234,20 @@ export const CUSTOMER_PROTECT_REPORT_ORG = [
     LINK: 'https://www.krcert.or.kr/main.do'
   },
   {
-    TEXT: '명의도용 방지 서비스',
-    LINK: 'https://www.msafer.or.kr/index.do'
+    TEXT: 'KAIT 명의도용방지 서비스',
+    LINK: 'http://m.msafer.or.kr/'
   },
   {
-    TEXT: '휴대폰 A/S 결제 중재센터',
-    LINK: 'http://www.spayment.org/'
+    TEXT: '휴대폰/ARS결제 중재센터',
+    LINK: 'http://m.spayment.org/svc/'
+  },
+  {
+    TEXT: 'KAIT 이동전화 불공정행위 신고센터',
+    LINK: 'https://www.cleanmobile.or.kr/indexs.html'
+  },
+  {
+    TEXT: 'OPA 개인정보보호 자율감시 센터',
+    LINK: 'https://www.notm.or.kr/index'
   }
 ];
 

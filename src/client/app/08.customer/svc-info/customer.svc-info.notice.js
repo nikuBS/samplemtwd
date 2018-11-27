@@ -65,7 +65,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _setContentsReq: function(e) {
-    var ntcId = parseInt($(e.currentTarget).data('ntc_id'));
+    var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
     if (this._category !== 'tworld' || this._setContentsList.indexOf(ntcId) !== -1) {
       return;
     }
@@ -81,7 +81,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._setContentsList.push(parseInt(resp.result.ntcId));
+    this._setContentsList.push(parseInt(resp.result.ntcId, 10));
     this.$list.find('[data-ntc_id="' + resp.result.ntcId + '"] .notice-txt').html(this._fixHtml(resp.result.ntcCtt));
   },
 
@@ -165,10 +165,18 @@ Tw.CustomerSvcInfoNotice.prototype = {
     return $.extend(item, {
       title: this._category === 'tworld' ? item.ntcTitNm : item.title,
       type: this._setItemType(item),
-      date: Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD'),
+      date: this._setDate(item),
       itemClass: this._setItemClass(item),
       content: Tw.FormatHelper.isEmpty(item.content)? null : this._fixHtml(item.content)
     });
+  },
+
+  _setDate: function(item) {
+    if (this._category === 'tworld') {
+      return Tw.DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.DD.');
+    }
+
+    return Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD.');
   },
 
   _setItemType: function(item) {
