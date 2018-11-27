@@ -11,6 +11,7 @@ Tw.MyTFareHotBill = function (rootEl, preBill) {
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
+  this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
   this._cachedElement();
   this._bindEvent();
   this._sendBillRequest(this.childSvcMgmtNum);
@@ -29,8 +30,8 @@ Tw.MyTFareHotBill.prototype = {
   _cachedElement: function () {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
-    this.$preBill = this.$container.find('#fe-pre-amount');
-    this.$lineButton = this.$container.find('#fe-other-line');
+    this.$preBill = this.$container.find('#fe-bt-prev');
+    this.$lineButton = this.$container.find('[data-id="fe-other-line"]');
   },
 
   _bindEvent: function () {
@@ -41,7 +42,9 @@ Tw.MyTFareHotBill.prototype = {
   _getBillResponse: function (childSvcMgmtNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var params = { count: this._requestCount++ };
-      if ( childSvcMgmtNum ) {
+      if ( this._isPrev ) {
+        params.gubun = 'Q';
+      } else if ( childSvcMgmtNum ) {
         params.childSvcMgmtNum = childSvcMgmtNum;
       }
       this._apiService
@@ -61,7 +64,10 @@ Tw.MyTFareHotBill.prototype = {
     });
     this._requestCount = 0;
     var params = { count: this._requestCount++ };
-    if ( child ) {
+
+    if ( this._isPrev ) {
+      params.gubun = 'Q';
+    } else if ( child ) {
       params.childSvcMgmtNum = child.svcMgmtNum;
     }
     this._apiService
@@ -80,7 +86,8 @@ Tw.MyTFareHotBill.prototype = {
       var billData = resp.result.hotBillInfo[0];
 
       if ( this._billInfoAvailable ) {
-        this.$amount.text(billData.totOpenBal2);
+        var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
+        this.$amount.text(total);
         var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD.');
         var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD.');
         this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
@@ -88,7 +95,7 @@ Tw.MyTFareHotBill.prototype = {
           lcl: 'billItmLclNm',
           scl: 'billItmSclNm',
           name: 'billItmNm',
-          value: 'invAmt2'
+          value: this._isPrev ? 'invAmt1' : 'invAmt2'
         };
         var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
         // if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
@@ -127,7 +134,7 @@ Tw.MyTFareHotBill.prototype = {
     Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
   },
 
-  _onErrorClosed: function() {
+  _onErrorClosed: function () {
     // this._historyService.goLoad('/myt-fare/submain');
   },
 
@@ -174,7 +181,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onClickPreBill: function () {
-
+    this._historyService.goLoad('/myt-fare/hotbill/prev');
   },
 
   _onClickChild: function (target) {

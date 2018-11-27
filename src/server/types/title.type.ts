@@ -18,6 +18,8 @@ export const MYT_JOIN_SUBMAIN_TITLE = {
 
 export const MYT_FARE_HOTBILL_TITLE = {
   MAIN: '실시간 사용요금',
+  CHILD: '자녀 실시간 이용요금',
+  PREV: '지난달 요금 보기',
   ERROR: {
     BIL0063: '시스템이 정상적으로 작동하지 않아 서비스를 이용 하실 수 없습니다.'
   }

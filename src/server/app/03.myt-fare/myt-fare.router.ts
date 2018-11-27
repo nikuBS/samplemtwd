@@ -98,6 +98,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/billsetup/change', controller: MyTFareBillSetChange });
     this.controllers.push({ url: '/hotbill', controller: MytFareHotbill });
     this.controllers.push({ url: '/hotbill/child', controller: MytFareHotbill });
+    this.controllers.push({ url: '/hotbill/prev', controller: MytFareHotbill });
   }
 }
 

@@ -19,7 +19,7 @@
 <div id="fe-myt-fare-hotbill" class="wrap">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
-        { title: locals.child ? '자녀 실시간 이용요금' : '실시간 이용요금', svcInfo: svcInfo, option: { }  }); %>
+        { title: locals.title, svcInfo: svcInfo, option: { }  }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -83,7 +83,7 @@
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
                     <li>
-                        <button>
+                        <button id="fe-bt-prev">
                                 <span class="inner">
                                     <span class="tit">전월요금 보기</span>
                                     <span class="text type2" id="fe-pre-amount"><%= preAmount %> 원</span>
@@ -102,7 +102,7 @@
                 <ul class="my-line-info">
                     <% for (let i = 0; i < lines.length; i++) { %>
                         <li>
-                            <button data-idx=<%= i %> id="fe-other-line">
+                            <button data-idx=<%= i %> data-id="fe-other-line">
                                 <span class="ico-wrap">
                                     <% if (!lines[i].svcAttrCd || lines[i].svcAttrCd === 'M1') { %>
                                     <i class="icon-cellphone-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i>                                 </i>

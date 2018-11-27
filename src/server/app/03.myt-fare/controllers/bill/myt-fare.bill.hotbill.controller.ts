@@ -19,6 +19,7 @@ import 'rxjs/add/observable/throw';
 class MyTFareBillHotbill extends TwViewController {
   _svcInfo: any;
   _preBillAvailable: boolean = true;
+  _isPrev: boolean = false;
 
   constructor() {
     super();
@@ -43,7 +44,8 @@ class MyTFareBillHotbill extends TwViewController {
     } else {
       let svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
       let preAmount = '0';
-      if ( !req.query.child && svcs && svcs.length > 0 ) {
+      this._isPrev = req.url.endsWith('/prev');
+      if ( !this._isPrev && !req.query.child && svcs && svcs.length > 0 ) {
         let preBill: any;
         Observable.from(svcs)
           .pipe(
@@ -95,9 +97,15 @@ class MyTFareBillHotbill extends TwViewController {
           preBill: null
         };
 
-        if ( req.query.child ) {
+        if ( this._isPrev ) {
+          options['isPrev'] = 'true';
+          options['title'] = MYT_FARE_HOTBILL_TITLE.PREV;
+        } else if ( req.query.child ) {
           const child = childInfo.find(svc => svc.svcMgmtNum === req.query.child);
+          options['title'] = MYT_FARE_HOTBILL_TITLE.CHILD;
           options['child'] = StringHelper.phoneStringToDash(child.svcNum);
+        } else {
+          options['title'] = MYT_FARE_HOTBILL_TITLE.MAIN;
         }
         res.render('bill/myt-fare.bill.hotbill.html', options);
       }
@@ -127,7 +135,9 @@ class MyTFareBillHotbill extends TwViewController {
     const self = this;
     const params = { count: 0 };
     const headers: {} = {};
-    if ( svc['child'] ) {
+    if ( this._isPrev ) {
+      params['gubun'] = 'Q';
+    } else if ( svc['child'] ) {
       params['childSvcMgmtNum'] = svc['svcMgmtNum'];
     } else if ( this._preBillAvailable && svc['svcMgmtNum'] === this._svcInfo.svcMgmtNum ) { // 전월요금 조회
       params['gubun'] = 'Q';
@@ -156,7 +166,9 @@ class MyTFareBillHotbill extends TwViewController {
     const self = this;
     const params = { count: !isRetry ? 1 : 2 };
     const headers: {} = {};
-    if ( svc['child'] ) {
+    if ( this._isPrev ) {
+      params['gubun'] = 'Q';
+    } else if ( svc['child'] ) {
       params['childSvcMgmtNum'] = svc['svcMgmtNum'];
     } else if ( this._preBillAvailable && svc['svcMgmtNum'] === this._svcInfo.svcMgmtNum ) { // 전월요금 조회
       params['gubun'] = 'Q';
