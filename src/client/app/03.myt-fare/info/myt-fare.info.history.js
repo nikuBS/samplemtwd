@@ -21,6 +21,7 @@ Tw.MyTFareInfoHistory.prototype = {
   _init: function () {
 
     this.rootPathName = this._historyService.pathname;
+    console.log(this.rootPathName);
 
     if(this.data){
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
@@ -40,7 +41,8 @@ Tw.MyTFareInfoHistory.prototype = {
 
     if (!totalDataCounter) {
       initedListTemplate = this.$template.$emptyList();
-    } else {
+    } 
+    else {
       this.listRenderPerPage = 20;
 
       this.listLastIndex = this.listRenderPerPage;
@@ -67,17 +69,60 @@ Tw.MyTFareInfoHistory.prototype = {
       initedListTemplate = this.$template.$listWrapper(this.renderListData);
     }
 
-    this.$template.$domListWrapper.append(initedListTemplate);
-    this.$listWrapper = this.$container.find('#fe-list-wrapper');
-    this.$btnListViewMorewrapper = this.$container.find('#fe-list-wrapper .bt-more');
-    this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
-    this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-    this.$appendListTarget.on('click', 'button.bt-detail', $.proxy(this._listViewDetailHandler, this));
-    //예약취소버튼
-    this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this))
-    //TIP버튼의 클릭이동에 대한 정의 추가 필요
+    this.$domListWrapper.append(initedListTemplate);
+    this._afterList();
+    
   },
 
+  _cachedElement: function () {
+    this.$domListWrapper = this.$container.find('#fe-list-wrapper');
+    this.$actionSheetTrigger = this.$container.find('#fe-type-trigger');
+    this.$addRefundAccountTrigger = this.$container.find('#fe-refund-add-account');
+    this.$openAutoPaymentLayerTrigger = this.$container.find('#fe-go-refund-quit');
+    this.$moveRefundListTrigger = this.$container.find('#fe-go-refund-list');
+
+    this.$template = {
+      // $list: this.$container.find('#list-default'),
+
+      $templateItem: Handlebars.compile($('#fe-template-items').html()),
+      $templateItemDay: Handlebars.compile($('#fe-template-day').html()),
+      $templateYear: Handlebars.compile($('#fe-template-year').html()),
+
+      $listWrapper: Handlebars.compile($('#list-template-wrapper').html()),
+      $emptyList: Handlebars.compile($('#list-empty').html())
+    };
+
+    Handlebars.registerPartial('chargeItems', $('#fe-template-items').html());
+    Handlebars.registerPartial('list', $('#fe-template-day').html());
+    Handlebars.registerPartial('year', $('#fe-template-year').html());
+  },
+
+  _bindEvent: function () {
+    // 분류 선택 버튼 (셀렉트 버튼 노출)
+    this.$actionSheetTrigger.on('click', $.proxy(this._typeActionSheetOpen, this));
+    // 과납내역 환불받기 
+    this.$addRefundAccountTrigger.on('click', $.proxy(this._openAddRefundAccount, this));
+    // 자동납부 통합인출 해지 버튼
+    this.$openAutoPaymentLayerTrigger.on('click', $.proxy(this._openAutoPaymentLayer, this));
+    // 환불 처리 내역
+    this.$moveRefundListTrigger.on('click', $.proxy(this._moveRefundList, this));
+    // - TIP버튼의 클릭이동에 대한 정의 추가 필요
+  },
+
+  _afterList: function() {
+    this.$btnListViewMorewrapper = this.$domListWrapper.find('.bt-more');
+    this.$appendListTarget = this.$domListWrapper.find('.fe-list-inner');
+
+    // 더 보기 버튼
+    this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
+    // 리스트 내 클릭 이벤트 정의
+    // - 상세보기
+    this.$appendListTarget.on('click', 'button.bt-detail', $.proxy(this._listViewDetailHandler, this));
+    // - 예약취소(포인트 예약)
+    this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this));
+  },
+
+  // 상세보기 이동
   _listViewDetailHandler: function(e) {
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
 
@@ -92,6 +137,7 @@ Tw.MyTFareInfoHistory.prototype = {
     );
   },
 
+  // 예약 취소
   _reserveCancelHandler: function(e) {
     this.reserveCancelData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     var alertCode, alertType;
@@ -155,7 +201,9 @@ Tw.MyTFareInfoHistory.prototype = {
       }, this));
     }
   },
+  // 포인트 예약 취소 end
 
+  // 더 보기
   _updatePaymentList: function(e) {
     this._updatePaymentListData();
 
@@ -193,45 +241,9 @@ Tw.MyTFareInfoHistory.prototype = {
   _updateViewMoreBtnRestCounter: function(e) {
     e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
   },
+  // 더 보기 end
 
-  _cachedElement: function () {
-
-    if (this.data && this.data.current !== 'detail') {
-      this.$actionSheetTrigger = this.$container.find('#fe-type-trigger');
-
-      this.$addRefundAccountTrigger = this.$container.find('#fe-refund-add-account');
-
-      this.$openAutoPaymentLayerTrigger = this.$container.find('#fe-go-refund-quit');
-      this.$moveRefundListTrigger = this.$container.find('#fe-go-refund-list');
-
-      this.$template = {
-        $domListWrapper: this.$container.find('#fe-list-wrapper'),
-        // $list: this.$container.find('#list-default'),
-
-        $templateItem: Handlebars.compile($('#fe-template-items').html()),
-        $templateItemDay: Handlebars.compile($('#fe-template-day').html()),
-        $templateYear: Handlebars.compile($('#fe-template-year').html()),
-
-        $listWrapper: Handlebars.compile($('#list-template-wrapper').html()),
-        $emptyList: Handlebars.compile($('#list-empty').html())
-      };
-      Handlebars.registerPartial('chargeItems', $('#fe-template-items').html());
-      Handlebars.registerPartial('list', $('#fe-template-day').html());
-      Handlebars.registerPartial('year', $('#fe-template-year').html());
-    }
-  },
-
-  _bindEvent: function () {
-    if (this.data && this.data.current !== 'detail') {
-      this.$actionSheetTrigger.on('click', $.proxy(this._typeActionSheetOpen, this));
-      this.$addRefundAccountTrigger.on('click', $.proxy(this._openAddRefundAccount, this));
-
-      this.$openAutoPaymentLayerTrigger.on('click', $.proxy(this._openAutoPaymentLayer, this));
-      this.$moveRefundListTrigger.on('click', $.proxy(this._moveRefundList, this));
-    }
-  },
-
-  // 납내역 환불받기
+  // 과납내역 환불받기
   _openAddRefundAccount: function () {
     this._popupService.open(
         {
@@ -251,8 +263,6 @@ Tw.MyTFareInfoHistory.prototype = {
       //svcMgmtNum: this.paramData.svcMgmtNum,
       //rfndBankCd // 은행코드
     };
-
-
     this.$refundRequestBtn = $($container).find('.bt-fixed-area button');
     this.$bankList = $($container).find('.bt-dropdown.big');
 
@@ -304,7 +314,9 @@ Tw.MyTFareInfoHistory.prototype = {
       this.$refundRequestBtn.attr('disabled', true);
     }
   },
+  // 과납내역 환불받기 end
 
+  // 자동납부 통합인출 해지
   _openAutoPaymentLayer: function () {
     this._popupService.open(
         {
@@ -336,11 +348,9 @@ Tw.MyTFareInfoHistory.prototype = {
       $.proxy(this._apiError, this);
     }
   },
+  // 자동납부 통합인출 해지 end
 
-  _moveRefundList: function () {
-    this._historyService.goLoad(this.data.refundURL);
-  },
-
+  // 분류선택 
   _typeActionSheetOpen: function () {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',// hbs의 파일명
@@ -356,10 +366,6 @@ Tw.MyTFareInfoHistory.prototype = {
     $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).addClass('checked');
     this.$typeSelectActionsheetButtons.on('click', $.proxy(this._moveByPaymentType, this));
   },
-
-  _closeTypeSelect: function () {
-  },
-
   _moveByPaymentType: function (e) {
     var target    = $(e.currentTarget),
         targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName
@@ -373,6 +379,16 @@ Tw.MyTFareInfoHistory.prototype = {
     }
   },
 
+  _closeTypeSelect: function () {
+    this._popupService.close();
+  },
+  // 분류선택 end
+
+  // 과납 환불 처리 내역으로 이동
+  _moveRefundList: function () {
+    this._historyService.goLoad(this.data.refundURL);
+  },
+  
   _apiError: function (err) {
     Tw.Logger.error(err.code, err.msg);
     this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
