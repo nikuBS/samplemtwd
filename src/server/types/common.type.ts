@@ -28,5 +28,6 @@ export const REDIS_PRODUCT_INFO = 'ProductLedger:';
 export const REDIS_PRODUCT_FILTER = 'ProductFilter:';
 
 export const UPLOAD_TYPE = {
-  EMAIL: 'email'
+  EMAIL: 'email',
+  RESERVATION: 'reservation'
 };

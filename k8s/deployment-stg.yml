@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bff-nodejs-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: bff-nodejs-service
@@ -22,9 +22,9 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "768Mi"
+            memory: "2048Mi"
           limits:
-            memory: "1024Mi"
+            memory: "2048Mi"
         volumeMounts:
         - mountPath: /tworld/uploads                  # (root)/uploads 에 volume mount
           name: upload-volume                            # volumes 의 name과 동일하게 설정

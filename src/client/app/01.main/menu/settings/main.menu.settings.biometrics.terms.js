@@ -1,10 +1,10 @@
 /**
- * FileName: common.biometrics.terms.js
+ * FileName: main.menu.settings.biometrics.terms.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.13
  */
 
-Tw.CommonBiometricsTerms = function (rootEl, target) {
+Tw.MainMenuSettingsBiometricsTerms = function (rootEl, target) {
   this.$container = rootEl;
   this._target = target;
 
@@ -13,7 +13,7 @@ Tw.CommonBiometricsTerms = function (rootEl, target) {
   this._bindEvent();
 };
 
-Tw.CommonBiometricsTerms.prototype = {
+Tw.MainMenuSettingsBiometricsTerms.prototype = {
   _bindEvent: function () {
     this.$allCheck = this.$container.find('#fe-check-all');
     this.$childChecks = this.$container.find('.fe-check-child');

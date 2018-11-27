@@ -353,6 +353,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   TEN_POINT: '10포인트 단위로 입력해 주세요.',
   TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   UP_TO_ONE: '1점 이상 입력해주세요.',
+  UP_TO_TEN: '1,000점 이상 보유 시 자동납부 신청이 가능합니다.',
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
@@ -572,7 +573,8 @@ Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
 Tw.PRODUCT_CTG_NM = {
   PLANS: '요금제',
   ADDITIONS: '부가서비스',
-  DISCOUNT_PROGRAM: '할인프로그램'
+  DISCOUNT_PROGRAM: '할인프로그램',
+  COMBINATIONS: '결합상품'
 };
 
 Tw.PRODUCT_TYPE_NM = {

@@ -1,10 +1,10 @@
 /**
- * FileName: common.line.cop-register.js
+ * FileName: common.member.line.biz-register.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.09.27
  */
 
-Tw.CommonLineCopRegister = function (rootEl) {
+Tw.CommonMemberLineBizRegister = function (rootEl) {
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -21,7 +21,7 @@ Tw.CommonLineCopRegister = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.CommonLineCopRegister.prototype = {
+Tw.CommonMemberLineBizRegister.prototype = {
   ERROR_CODE: {
     ATH0020: 'ATH0020',     // 법인회선아님
     ATH0021: 'ATH0021',     // SWING 법인실사용자 등록 회선 (수동등록 불가)

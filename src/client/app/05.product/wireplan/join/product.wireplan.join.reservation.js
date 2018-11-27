@@ -579,7 +579,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return {
         fileSize: item.size,
         fileName: item.name,
-        filePath: 'uploads/'
+        filePath: item.path
       };
     });
 

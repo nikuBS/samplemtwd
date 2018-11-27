@@ -45,7 +45,7 @@ Tw.ApiService.prototype = {
   },
 
   _checkAuth: function (command, params, headers, pathVariables, resp) {
-    Tw.Logger.info('[API RESP]', resp, JSON.stringify(resp));
+    Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
 
     if ( !Tw.FormatHelper.isEmpty(resp.serverSession) ) {

@@ -102,6 +102,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
         mytPage: 'myplanadd',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
+        prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
         typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
         isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
         basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
@@ -119,7 +120,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       hbs:'MV_01_02_02_01',
       'bt': [{
         style_class: 'bt-blue1 fe-btn_back',
-        txt: '닫기'
+        txt: Tw.BUTTON_LABEL.CLOSE
       }]
     };
 

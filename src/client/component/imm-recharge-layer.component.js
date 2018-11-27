@@ -64,11 +64,13 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     if ( this.immChargeData ) {
       if ( !_.isEmpty(this.immChargeData.refill) ) {
         data.push({
-          'type': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.TYPE,
-          'list': [{
+          title: Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.TYPE,
+          list: [{
             'option': 'refill',
-            'value': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.VALUE,
-            'text2': this.immChargeData.refill.length + Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.UNIT
+            'button-attr': 'type="button"',
+            'icon': 'ico1',
+            'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.VALUE,
+            'spot': this.immChargeData.refill.length + Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.UNIT
           }]
         });
       }
@@ -78,30 +80,35 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         subList.push({
           'option': 'limit',
-          'value': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.LIMIT
+          'button-attr': 'type="button"',
+          'icon': 'ico4',
+          'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.LIMIT
         });
       }
       if ( !_.isEmpty(this.immChargeData.etc) ) {
         subList.push({
           'option': 'etc',
-          'value': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.ETC
+          'button-attr': 'type="button"',
+          'icon': 'ico5',
+          'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.ETC
         });
       }
       if ( !_.isEmpty(this.immChargeData.ting) ) {
         subList.push({
           'option': 'ting',
-          'value': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.TING
+          'button-attr': 'type="button"',
+          'icon': 'ico6',
+          'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.TING
         });
       }
       data.push({
-        'type': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.TYPE,
-        'list': subList
+        title: Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.TYPE,
+        list: subList
       });
     }
     this._popupService.open({
         hbs: 'DC_04',// hbs의 파일명
         layer: true,
-        title: Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.TITLE,
         data: data
       }, $.proxy(this._onImmediatelyPopupOpened, this),
       $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04');
@@ -113,7 +120,8 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     var items = $container.find('li');
     for ( var i = 0; i < items.length; i++ ) {
       var item = items.eq(i);
-      switch ( item.attr('class') ) {
+      var classNm = item.attr('class').replace('type1', '').trim();
+      switch ( classNm ) {
         case 'limit':
           item.on('click', $.proxy(this._onImmDetailLimit, this));
           break;
@@ -133,6 +141,9 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           break;
       }
     }
+    this.$popupContainer.find('.fe-common-back').on('click', function () {
+      window.history.back();
+    });
   },
 
   // DC_04 팝업 close 이후 처리 부분

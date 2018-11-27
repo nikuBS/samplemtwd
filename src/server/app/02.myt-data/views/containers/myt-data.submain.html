@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터・통화 관리', svcInfo: data.svcInfo }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터&middot;통화', svcInfo: data.svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">
@@ -149,8 +149,8 @@
             </div>
             <% } %>
 
+            <% if (data.svcInfo.svcAttrCd === 'M1') { %>
             <hr class="cont-sp type1" aria-hidden="true" />
-
             <div class="cont-box nogaps noborder">
                 <div class="main-slide-banner slide-pagingtype pg-rtop">
                     <!-- .widget -->
@@ -181,6 +181,7 @@
                 </div>
             </div>
             <!-- //.cont-box -->
+            <% } %>
 
             <% if (data.otherLines.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>

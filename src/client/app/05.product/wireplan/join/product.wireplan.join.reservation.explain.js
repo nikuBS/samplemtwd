@@ -239,6 +239,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
     }
 
+    formData.append('dest', Tw.UPLOAD_TYPE.RESERVATION);
     formData.append('file', this.$explainFile.get(0).files[0]);
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 

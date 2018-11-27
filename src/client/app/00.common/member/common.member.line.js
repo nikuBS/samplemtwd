@@ -1,10 +1,10 @@
 /**
- * FileName: common.line.js
+ * FileName: common.member.line.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.09.27
  */
 
-Tw.CommonLine = function (rootEl) {
+Tw.CommonMemberLine = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -19,7 +19,7 @@ Tw.CommonLine = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.CommonLine.prototype = {
+Tw.CommonMemberLine.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-bt-nickname', $.proxy(this._openNickname, this));
     // this.$container.on('click', '#cop-password', $.proxy(this._openCopPassword, this));
