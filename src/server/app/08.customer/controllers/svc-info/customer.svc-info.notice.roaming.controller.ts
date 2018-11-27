@@ -27,7 +27,7 @@ class CustomerSvcInfoNoticeRoaming extends TwViewController {
       remain: this._getRemainCount(resultData.totalElements, resultData.pageable.pageNumber, resultData.pageable.pageSize),
       list: resultData.content.map(item => {
         return Object.assign(item, {
-          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD'),
+          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD.'),
           type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
           itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''),
           content: sanitizeHtml(item.content)

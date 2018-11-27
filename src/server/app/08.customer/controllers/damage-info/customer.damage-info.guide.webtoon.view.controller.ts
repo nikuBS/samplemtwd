@@ -1,5 +1,5 @@
 /**
- * FileName: customer.damage-info.guide-view.controller.ts
+ * FileName: customer.damage-info.guide.webtoon.view.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.24
  */
@@ -9,19 +9,19 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CustomerDamageInfoGuideView extends TwViewController {
+class CustomerDamageInfoGuideWebtoonView extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const idx = req.params.idx || '';
+    const idx = req.query.idx || '';
 
     if (FormatHelper.isEmpty(idx) || FormatHelper.isEmpty(CUSTOMER_PROTECT_GUIDE_WEBTOON[idx])) {
       return res.redirect('/customer/damage-info/guide/webtoon');
     }
 
-    res.render('damage-info/customer.damage-info.guide-view.html', {
+    res.render('damage-info/customer.damage-info.guide.webtoon.view.html', {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       data: CUSTOMER_PROTECT_GUIDE_WEBTOON[idx]
@@ -29,4 +29,4 @@ class CustomerDamageInfoGuideView extends TwViewController {
   }
 }
 
-export default CustomerDamageInfoGuideView;
+export default CustomerDamageInfoGuideWebtoonView;

@@ -15,6 +15,10 @@ class CustomerDamageInfoWarning extends TwViewController {
     super();
   }
 
+  /**
+   * @param data
+   * @private
+   */
   private _convertData(data): any {
     if (data.code !== API_CODE.CODE_00) {
       return {
@@ -30,13 +34,19 @@ class CustomerDamageInfoWarning extends TwViewController {
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
         return Object.assign(item, {
-          date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YY.M.DD')
+          date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.DD.')
         });
       }),
       last: data.result.last
     };
   }
 
+  /**
+   * @param total
+   * @param page
+   * @param pageSize
+   * @private
+   */
   private _getRemainCount(total, page, pageSize): any {
     const count = total - ((++page) * pageSize);
     return count < 0 ? 0 : count;
