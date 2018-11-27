@@ -11,9 +11,7 @@ Tw.MyTFareSubMain = function (params) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
-  this._chartDefaultClass = 'chart_link item';
   this.data = params.data;
-  this.loadingView(true);
   this._rendered();
   this._bindEvent();
   this._initialize();
@@ -26,7 +24,7 @@ Tw.MyTFareSubMain.prototype = {
     }
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: selector, co: 'grey', size: true
+        ta: selector, co: 'white', size: false
       });
     }
     else {
@@ -202,6 +200,7 @@ Tw.MyTFareSubMain.prototype = {
   _initialize: function () {
     this._requestCount = -1;
     this._resTimerID = null;
+    this._chartDefaultClass = 'chart_link item';
     this._svcMgmtNumList = [];
     this._feeChartInfo = [];
     /**
@@ -230,7 +229,6 @@ Tw.MyTFareSubMain.prototype = {
 
   // 사용요금내역조회-2
   _responseUsageFee: function (resp) {
-    // this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
@@ -266,7 +264,6 @@ Tw.MyTFareSubMain.prototype = {
 
   // 최근청구요금내역조회-2
   _responseClaimPayment: function (resp) {
-    // this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
@@ -351,7 +348,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
-    // this.loadingView(true, 'button[data-id=realtime-pay]');
+    this.loadingView(true, 'button[data-id=realtime-pay]');
     this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
   },
 
@@ -365,7 +362,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-3
   _onReceivedBillData: function (resp) {
-    // this.loadingView(false, 'button[data-id=realtime-pay]');
+    this.loadingView(false, 'button[data-id=realtime-pay]');
     if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
       if ( _.isEmpty(resp.result) ) {
         this._realTimeBillRequest();
@@ -377,7 +374,6 @@ Tw.MyTFareSubMain.prototype = {
         // 당월 기준으로 실시간 요금 노출
         var realtimeBillInfo = resp.result.hotBillInfo[0];
         this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2);
-        this.loadingView(false);
       }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
@@ -509,7 +505,6 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _errorRequest: function (resp) {
-    this.loadingView(false);
     if ( !resp ) {
       resp = {
         code: '',
