@@ -5,7 +5,6 @@
 %>
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -16,85 +15,78 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- .popup hbs -->
-    <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>번호변경</h1>
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: '010 전환 번호변경', svcInfo, option: { line: true } }); %>
+<!--    <div id="header" class="header-wrap">
+        <div class="h-belt">
+            <div class="h-default">
+                <div class="h-menu">
+                    <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                </div>
+                <div class="h-tit">010 전환 번호변경</div>
+                <div class="h-serarch">
+                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
                 </div>
             </div>
         </div>
-        <!--// #header -->
-        <!-- .container-wrap -->
-        <div class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <p class="con-txt1">고객님은 <span class="tx-bold">타사번호(016/018/019)</span>를<br>이용 중 입니다.</p>
-                    <ul class="bt-slice mt20">
-                        <li class="bt-blue1">
-                            <button id="btnNumSearch">변경할 010 번호 찾기</button>
-                        </li>
-                    </ul>
+    </div>-->
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <p class="con-txt1">고객님은 <span class="tx-bold">타사번호(016/018/019)</span>를<br />이용 중 입니다. </p>
+                <div class="data-result mt30">
+                    <p class="tit">현재 번호</p>
+                    <p class="data"><em><%= data.svcNum %></em><span></span></p>
+                    <span class="result-arrow mt20"></span>
+                    <p class="tit mt20">변경 후 번호</p>
+                    <p class="data"><em id="emChgNum"><%= data.objSvcNum %></em><span></span></p>
+                    <p class="tit"><a id="btnOthNumSearch" class="bt-link-tx underline">다른 번호 조회하기</a></p>
                 </div>
-                <!--// .cont-box -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps" id="divNumList" style="display: none;">
-                    <div class="wrap-gaps-top">
-                        <h3>변경 가능한 번호</h3>
-                    </div>
-                    <div class="list-comp-input">
-                        <div class="widget">
-                            <div class="widget-box radio">
-                                <ul class="select-list" role="group">
-                                    <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
-                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" name="radio" value="n{{ phonenum svc_num }}" title="{{ svc_num }}" aria-labelledby="aria-comp-radio1"/><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout">
-                                            <p class="layout-text">
-                                                <span class="mtext">{{ phonenum svc_num }}</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    </script>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bt-more" style="display: none;">
-                        <button id="btnMore">더보기</button>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- TBD -->
-                <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
-                <!--// TBD -->
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button id="btnOk" disabled="disabled">변경하기</button>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="bt-slice mt20">
+                    <li id="btnGoConfirm" class="bt-blue1">
+                        <button>번호 변경하기</button>
+                    </li>
+                </ul>
             </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <ul class="noti-list">
+                    <li>이용시간 안내<button id="MS_03_03_tip_03" type="button" class="tip-view">TIP</button></li>
+                    <li>변경 안내<button id="MS_03_03_tip_02" type="button" class="tip-view">TIP</button></li>
+                    <li>번호변경 시 확인사항<button id="MS_03_03_tip_01" type="button" class="tip-view">TIP</button></li>
+                    <li>번호변경 시 서비스 안내<button id="MS_03_03_tip_04" type="button" class="tip-view">TIP</button></li>
+                    <li>부가서비스 안내<button id="MS_03_03_tip_05" type="button" class="tip-view">TIP</button></li>
+                    <li>단말기 안내<button id="MS_03_03_tip_06" type="button" class="tip-view">TIP</button></li>
+                    <li>번호변경 제한사항 안내<button id="MS_03_03_tip_07" type="button" class="tip-view">TIP</button></li>
+                    <li>USIM 제한사항 안내<button id="MS_03_03_tip_08" type="button" class="tip-view">TIP</button></li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
         </div>
-        <!-- // .container-wrap -->
-        <!-- .popup-closeBtn -->
-        <button class="prev-step">취소</button>
-        <!--// .popup-closeBtn -->
     </div>
-    <!-- // .popup hbs -->
+    <!--// #contents -->
 </div>
-<!-- // .popup hbs -->
+<script id="list-cont-item-tmplt" type="text/x-handlebars-template">
+    <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+        <input type="radio" name="radio" value="{{ phonenum svc_num }}" title="{{ phonenum svc_num }}" aria-labelledby="aria-comp-radio1" /><!-- 체크상태일 경우 checked="checked" -->
+        <div class="comp-list-layout" id="aria-comp-radio1">
+            <p class="layout-text">
+                <span class="mtext">{{ phonenum svc_num }}</span>
+            </p>
+        </div>
+    </li>
+</script>
+
 <footer id="fe-all-menu">
     <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
 </footer>
