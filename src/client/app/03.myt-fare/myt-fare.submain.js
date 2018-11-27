@@ -371,7 +371,7 @@ Tw.MyTFareSubMain.prototype = {
         }
         // 당월 기준으로 실시간 요금 노출
         var realtimeBillInfo = resp.result.hotBillInfo[0];
-        this.$realTimePay.find('i').html(realtimeBillInfo.totOpenBal2);
+        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2);
         this.loadingView(false);
       }
     }

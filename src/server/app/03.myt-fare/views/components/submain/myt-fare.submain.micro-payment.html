@@ -2,23 +2,23 @@
 * FileName: myt-fare.submain.micro-payment.html
 * Author: Kim InHwan (skt.p132150@partner.sk.com)
 * Date: 2018.09.27
+* Update: 2018.11.27
 %>
 
+<% if (data.isMicroPrepay && data.isContentPrepay) { %>
+<!-- //.cont-box -->
 <hr class="cont-sp type1" aria-hidden="true"/>
+
 <!-- .cont-box -->
-<% var itemTwo = data.isMicroPrepay && data.isContentPrepay; %>
-<div class="cont-box noborder">
-    <ul class="bt-slice <%= itemTwo? 'item-two':'' %>">
-        <% if (data.isMicroPrepay) { %>
-        <li class="bt-blue1">
+<div class="cont-box nogaps">
+    <ul class="btn-link-list">
+        <li class="last-line">
             <button data-id="micro-bill">소액결제</button>
         </li>
-        <% } %>
-        <% if (data.isContentPrepay) { %>
-        <li class="bt-blue1">
+        <li class="last-line">
             <button data-id="content-bill">콘텐츠 이용요금</button>
         </li>
-        <% } %>
     </ul>
 </div>
-<!-- //.cont-box -->
+<!--// .cont-box -->
+<% } %>
