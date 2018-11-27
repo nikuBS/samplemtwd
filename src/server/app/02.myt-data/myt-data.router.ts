@@ -5,6 +5,7 @@ import MyTDataUsageChild from './controllers/usage/myt-data.usage.child.controll
 import MyTDataUsageTotalSharingData from './controllers/usage/myt-data.usage.total-sharing-data.controller';
 import MyTDataUsageCancelTshare from './controllers/usage/myt-data.usage.cancel-tshare.controller';
 import MyTDataRechargeCoupon from './controllers/recharge/myt-data.recharge.coupon.controller';
+import MyTDataRechargeCouponUse from './controllers/recharge/myt-data.recharge.coupon.use.controller';
 import MyTDataTing from './controllers/ting/myt-data.ting.controller';
 import MyTDataGift from './controllers/gift/myt-data.gift.controller';
 import MyTDataLimit from './controllers/limit/myt-data.limit.controller';
@@ -15,6 +16,7 @@ import MyTDataPrepaidHistory from './controllers/prepaid/myt-data.prepaid.histor
 import MyTDataPrepaidVoice from './controllers/prepaid/myt-data.prepaid.voice.controller';
 import MyTDataPrepaidData from './controllers/prepaid/myt-data.prepaid.data.controller';
 import MyTDataPrepaidAlarm from './controllers/prepaid/myt-data.prepaid.alarm.controller';
+import MyTDataRechargeCouponComplete from './controllers/recharge/myt-data.recharge.coupon.complete.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -25,7 +27,9 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/ting(/:page)?', controller: MyTDataTing });
     this.controllers.push({ url: '/recharge/limit(/:page)?', controller: MyTDataLimit });
     this.controllers.push({ url: '/recharge/cookiz(/:page)?', controller: MyTDataCookiz });
-    this.controllers.push({ url: '/recharge/coupon(/:page)?', controller: MyTDataRechargeCoupon });
+    this.controllers.push({ url: '/recharge/coupon', controller: MyTDataRechargeCoupon });
+    this.controllers.push({ url: '/recharge/coupon/use', controller: MyTDataRechargeCouponUse });
+    this.controllers.push({ url: '/recharge/coupon/complete', controller: MyTDataRechargeCouponComplete });
     this.controllers.push({ url: '/familydata(/share)?', controller: MyTDataFamily });
     this.controllers.push({ url: '/datainfo', controller: MyTDataInfo });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });

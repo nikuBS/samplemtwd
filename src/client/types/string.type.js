@@ -59,7 +59,7 @@ Tw.POPUP_TITLE = {
   CHANGE_PAYMENT_DATE: '요금납부일 변경',
   SELECT_PAYMENT_TYPE: '납부 유형',
   // SELECT_CARD_TYPE: '일시불',
-  NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
+  NOT_FAMILY: '리필쿠폰을 선물할 수 있는 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형',
   SELECT_ORDER: '정렬 기준을 선택해주세요',
   CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
@@ -83,7 +83,7 @@ Tw.POPUP_TITLE = {
 
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
-  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
+  REFILL_COUPON_FAMILY: 'SK텔레콤 결합상품으로 묶으시면 리필쿠폰을 선물하실 수 있습니다.',
   CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
@@ -125,8 +125,12 @@ Tw.PERIOD_UNIT = {
 Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 Tw.REFILL_COUPON_CONFIRM = {
-  TITLE: '리필 하시겠습니까?',
-  CONTENTS: '리필 음성/데이터량은 이번 달까지만 사용 가능합니다.'
+  TITLE_REFILL: '리필 하시겠습니까?',
+  CONTENTS_REFILL: '리필 음성/데이터는 이번 달까지만 사용 가능합니다.',
+  CONFIRM_REFILL: '리필하기',
+  TITLE_GIFT: '가족에게 선물하시겠습니까?',
+  CONTENTS_GIFT: '가족에게 선물하시려면 문자 인증을 해야하며, 인증하고 나면 선물을 취소할 수 없습니다.',
+  CONFIRM_GIFT: '선물하기'
 };
 
 Tw.REFUND_ACCOUNT_INFO = {
