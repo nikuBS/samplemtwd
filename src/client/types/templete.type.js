@@ -470,15 +470,27 @@ Tw.PRODUCT_LIST_DEVICE_FILTERS = {
   ]
 };
 
-Tw.RESELL_TERMS = {
-  title: '재판매 이용약관',
-  data: [{
-    'list': [
-      { 'value': '초고속인터넷 이용약관', 'option': 'fe-action' },
-      { 'value': '인터넷전화 이용약관', 'option': 'fe-action' },
-      { 'value': '시내전화 이용약관', 'option': 'fe-action' }
-    ]
-  }]
+Tw.TERMS_ACTION = {
+  46: {
+    title: '재판매 이용약관',
+    data: [{
+      list: [
+        { value: '초고속인터넷 이용약관', option: 'fe-action', attr: 'value="46:c:43"' },
+        { value: '인터넷전화 이용약관', option: 'fe-action', attr: 'value="49:d"' },
+        { value: '시내전화 이용약관', option: 'fe-action', attr: 'value="50:d"' }
+      ]
+    }]
+  },
+  102: {
+    title: '초콜릿 이용약관',
+    data: [{
+      list: [
+        { value: '이용약관', option: 'fe-action', attr: 'value="102:e"' },
+        { value: '개인정보처리방침', option: 'fe-action', attr: 'value="103:e"' },
+        { value: '개인벙보 수집 및 이용안내', option: 'fe-action', attr: 'value="104:e"' }
+      ]
+    }]
+  },
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {

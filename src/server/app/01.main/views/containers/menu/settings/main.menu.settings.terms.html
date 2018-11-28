@@ -9,138 +9,165 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '이용약관' }); %>
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '이용약관' }); %>
+        <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="cont-box nogaps noborder">
-                    <!-- .component -->
-                    <div class="component">
-                        <div class="component-box tabs">
-                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                                <div class="tab-linker">
-                                    <ul role="tablist">
-                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a id="fe-tworld-sk" class="fe-replace-history" href="#sk">SK텔레콤 이용약관</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a id="fe-tworld-tab" class="fe-replace-history" href="#tworld">T world 웹회원 이용약관</a></li>
-                                    </ul>
-                                </div>
-                                <div class="tab-contents">
-                                    <ul>
-                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                            <hr class="cont-sp type1" aria-hidden="true"/>
-                                            <div class="cont-box nogaps inborder">
-                                                <ul class="link-long-list">
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <a href="/main/menu/settings/terms?id=1">이동전화 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <a href="/main/menu/settings/terms?id=2">WCDMA 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <a href="/main/menu/settings/terms?id=3">재판매 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <button>결합상품 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <button>WiBro 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <button>위치기반서비스 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <button>위치정보사업 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="link-long">
-                                                            <button>통신과금서비스 이용약관
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"></span>
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <div class="bt-more none">
-                                                    <button>더보기</button>
-                                                </div>
-                                            </div>
-
-                                        </li>
-                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                            <hr class="cont-sp type1" aria-hidden="true"/>
-                                            <div class="cont-box">
-                                                <ul class="bt-slice">
-                                                    <li class="bt-white2">
-                                                        <button>이용약관 확인</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <hr class="cont-sp type1" aria-hidden="true"/>
-                                            <div class="cont-box nogaps noborder">
-                                                <img src="/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;">
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <ul class="full-link-list type02">
+                        <li>
+                            <a href="/main/menu/settings/terms?id=&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">책임의 한계와 법적고지</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <button class="fe-outlink" value="https://www.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=ANDROID&stplTypCd=01">
+                                <span class="inner">
+                                    <span class="tit tx-medium">T월드 웹회원 이용약관</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=30&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">약관 주요내용 설명서</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=32&type=b&viewId=30">
+                                <span class="inner">
+                                    <span class="tit tx-medium">이동전화 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=52&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">WCDMA 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=46&type=c&viewId=43">
+                                <span class="inner">
+                                    <span class="tit tx-medium">재판매 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=53&type=b&viewId=54">
+                                <span class="inner">
+                                    <span class="tit tx-medium">결합상품 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit tx-medium">와이브로 이용약관</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=33&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">위치기반서비스 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=34&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">위치정보사업 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=35&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">통신과금서비스 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=101&type=ai">
+                                <span class="inner">
+                                    <span class="tit tx-medium">멤버십 회원약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <button class="fe-outlink" value="http://privacy.sktelecom.com/view.do?ctg=policy&name=policy">
+                                <span class="inner">
+                                    <span class="tit tx-medium">멤버십 개인정보처리방침</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit tx-medium">본인확인 서비스 이용약관</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit tx-medium">상품구매약관</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=102&type=e">
+                                <span class="inner">
+                                    <span class="tit tx-medium">초콜릿 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <button>
+                            <a href="/main/menu/settings/terms?id=55&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">이동전화 고객혜택 제공을 위한<br />개인정보 수집이용동의</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit tx-medium">이동전화광고성 정보 수신동의</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=48&type=b">
+                                <span class="inner">
+                                    <span class="tit tx-medium">트래픽 관리 정보 공개양식(KFI)</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/main/menu/settings/terms?id=57&type=a">
+                                <span class="inner">
+                                    <span class="tit tx-medium">LPWA 이용약관</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <!--// .component -->
-            </div>
-           <div class="bt-top">
-                <button><span class="blind">최상단으로 가기</span></button>
+                <!--// .cont-box -->
             </div>
         </div>
         <!--// #contents -->
@@ -152,8 +179,8 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    new Tw.MainMenuSettingsTerms($('.wrap'));
-  });
+    $(document).ready(function () {
+        new Tw.MainMenuSettingsTerms($('.wrap'));
+    });
 </script>
 <% include ../../../components/end.component.html %>
