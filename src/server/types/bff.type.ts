@@ -242,12 +242,13 @@ export enum PROD_SCRB_E {
 }
 
 export enum PROD_CTG_CD_CODE {
-  F01100 = 'mobileplan',
-  F01200 = 'mobileplan-add',
-  F01300 = 'wireplan',
-  F01400 = 'benefit',
-  F01500 = 'roaming',
-  F01600 = 'roaming'
+  AB = 'mobileplan',
+  C = 'mobileplan-add',
+  D = 'wireplan',
+  E = 'wireplan',
+  F = 'benefit',
+  G = 'benefit',
+  H = 'roaming'
 }
 
 export enum PROD_TTAB_BASIC_DATA_PLUS {

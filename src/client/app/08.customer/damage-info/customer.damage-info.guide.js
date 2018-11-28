@@ -51,7 +51,7 @@ Tw.CustomerDamageInfoGuide.prototype = {
       return;
     }
 
-    this._history.goLoad('/customer/damage-info/guide/' + this._category);
+    this._history.goLoad('/customer/damage-info/guide?category=' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {
