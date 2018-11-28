@@ -33,9 +33,8 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
       this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인
-      this.apiService.request(API_CMD.BFF_05_0196, {}),
-      this.apiService.request(API_CMD.BFF_03_0004, {})
-    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, lines]) => {
+      this.apiService.request(API_CMD.BFF_05_0196, {})
+    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty]) => {
 
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
         const apiError = this.error.apiError([/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty]);
@@ -111,20 +110,9 @@ class BenefitMyBenefit extends TwViewController {
           }
         }
 
-        // gets the subscribe date
-        let _lines = [];
-        Object['values'](lines.result).forEach(type => _lines = _lines.concat(type));
-        const line = _lines.find((item, idx) => {
-          return item['svcMgmtNum'] === svcInfo.svcMgmtNum;
-        });
-        if ( line ) {
-          options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), line['svcScrbDt'], 'days');
-        } else {
-          this.error.render(res, {
-            title: MY_BENEFIT.MAIN,
-            svcInfo: svcInfo
-          });
-        }
+        options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), svcInfo.svcScrbDt, 'days');
+        options['days'] = FormatHelper.addComma(options['days'].toString());
+
         res.render('my-benefit/benefit.my-benefit.html', options);
       }
     );
