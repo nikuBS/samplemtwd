@@ -11,11 +11,21 @@ import { CUSTOMER_NOTICE_CTG_CD } from '../../../../types/bff.type';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import sanitizeHtml from 'sanitize-html';
 
 class CustomerSvcInfoNoticeTworld extends TwViewController {
   constructor() {
     super();
   }
+
+  private _category;
+  private _allowedCategoryList = ['tworld', 'directshop', 'membership', 'roaming'];
+  private _categoryApis = {
+    tworld: API_CMD.BFF_08_0029,
+    directshop: API_CMD.BFF_08_0039,
+    membership: API_CMD.BFF_08_0031,
+    roaming: API_CMD.BFF_08_0040
+  };
 
   /**
    * @param resultData
@@ -23,18 +33,46 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
    */
   private _convertData(resultData): any {
     return {
-      total: resultData.total,
       remain: this._getRemainCount(resultData.totalElements, resultData.pageable.pageNumber, resultData.pageable.pageSize),
-      list: resultData.content.map(item => {
+      list: this._convertListItem(resultData.content)
+    };
+  }
+
+  /**
+   * @param content
+   * @private
+   */
+  private _convertListItem(content) {
+    return content.map(item => {
+      if (this._category === 'tworld') {
         return Object.assign(item, {
           title: item.ntcTitNm,
           date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.DD'),
           type: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd],
           itemClass: (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '')
         });
-      }),
-      last: resultData.last
-    };
+      }
+
+      return Object.assign(item, {
+        date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD.'),
+        type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
+        itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''),
+        content: sanitizeHtml(item.content)
+      });
+    });
+  }
+
+  /**
+   * @private
+   */
+  private _getReqParams(): any {
+    let params = { page: 0, size: 20 };
+
+    if (this._category === 'tworld') {
+      params = Object.assign({ expsChnlCd: 'M' }, params);
+    }
+
+    return params;
   }
 
   /**
@@ -55,15 +93,20 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
       title: CUSTOMER_NOTICE_CATEGORY.TWORLD
     };
 
-    this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M', page: 0, size: 20 })
+    this._category = req.query.category || 'tworld';
+    if (FormatHelper.isEmpty(this._category) || this._allowedCategoryList.indexOf(this._category) === -1) {
+      return this.error.render(res, renderCommonInfo);
+    }
+
+    this.apiService.request(this._categoryApis[this._category], this._getReqParams())
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
           return this.error.render(res, renderCommonInfo);
         }
 
-        res.render('svc-info/customer.svc-info.notice.tworld.html', Object.assign(renderCommonInfo, {
-          category: 'tworld',
-          categoryLabel: CUSTOMER_NOTICE_CATEGORY.TWORLD,
+        res.render('svc-info/customer.svc-info.notice.html', Object.assign(renderCommonInfo, {
+          category: this._category,
+          categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
           data: this._convertData(data.result)
         }));
       });

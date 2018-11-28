@@ -24,57 +24,55 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
-                <div class="cont-box noborder nogaps bgnone">
-                    <div class="myfare-result-wrap">
-                        <div class="myfare-list">
-                            <ul>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>신청 일자</dt>
-                                        <dd class="tx-bold"><span class="number" id="fe-detail-date"></span></dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>신청 금액</dt>
-                                        <dd class="tx-bold"><span class="number" id="fe-detail-req-amt"></span>원</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>과납 금액</dt>
-                                        <dd><span class="number" id="fe-detail-over-amt"></span>원</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>채권보존료</dt>
-                                        <dd><span class="number" id="fe-detail-bond-amt"></span>원</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>합계금액</dt>
-                                        <dd><span class="number" id="fe-detail-total"></span>원</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>처리결과</dt>
-                                        <dd class="tx-bold" id="fe-detail-ing"><span class="fe-detail-status"></span></dd>
-                                        <dd class="tx-bold" id="fe-detail-etc"><span class="fe-detail-status"></span> ( <span class="number" id="fe-detail-refund-total"></span>원 )</dd>
-                                    </dl>
-                                    <div id="fe-detail-overpay-refund-result">
-                                        <dl class="show-data detail">
-                                            <dt>은행</dt>
-                                            <dd id="fe-detail-bank-name"></dd>
-                                        </dl>
-                                        <dl class="show-data detail">
-                                            <dt>계좌번호</dt>
-                                            <dd><span class="number" id="fe-detail-bank-num"></span></dd>
-                                        </dl>
-                                        <dl class="show-data detail">
-                                            <dt>처리일자</dt>
-                                            <dd><span class="number" id="fe-detail-proc-date"></span></dd>
-                                        </dl>
+                 <div class="cont-box nogaps-hoz bg-payment">
+                    <div class="user-bill-detail">
+                        <ul>
+                            <!--<li>
+                                <div class="head-text">
+                                    <span class="tit">신청 일자</span>
+                                    <span class="val" id="fe-detail-date"></span>
+                                </div>
+                            </li> 현재 신청일자 조회안됨-->
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">신청 금액</span>
+                                    <span class="val"><span id="fe-detail-req-amt"></span> 원</span>
+                                </div>
+                                <div class="sub-text">
+                                    <span class="tit">과납 금액</span>
+                                    <span class="val"><span id="fe-detail-over-amt"></span> 원</span>
+                                </div>
+                                <div class="sub-text">
+                                    <span class="tit">채권보존료</span>
+                                    <span class="val"><span id="fe-detail-bond-amt"></span> 원</span>
+                                </div>
+                                <div class="sub-text">
+                                    <span class="tit">합계금액</span>
+                                    <span class="val"><span id="fe-detail-total"></span> 원</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">처리결과</span>
+                                    <span class="val" id="fe-detail-ing"><span class="fe-detail-status"></span></span>
+                                    <span class="val" id="fe-detail-etc"><span class="fe-detail-status"></span> ( <span id="fe-detail-refund-total"></span>원 )</span>
+                                </div>
+                                <div id="fe-detail-overpay-refund-result">
+                                    <div class="sub-text">
+                                        <span class="tit">은행</span>
+                                        <span class="val" id="fe-detail-bank-name"></span>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
+                                    <div class="sub-text">
+                                        <span class="tit">계좌번호</span>
+                                        <span class="val"><span class="number" id="fe-detail-bank-num"></span></span>
+                                    </div>
+                                    <div class="sub-text">
+                                        <span class="tit">처리일자</span>
+                                        <span class="val"><span class="number" id="fe-detail-proc-date"></span></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -91,7 +89,7 @@
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
-        new Tw.MyTFareInfoOverpayRefund($(document), '<%- JSON.stringify(data)%>');
+        new Tw.MyTFareInfoOverpayRefundDetail($(document), '<%- JSON.stringify(data)%>');
       });
     </script>
 </body>

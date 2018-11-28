@@ -7,11 +7,36 @@ Tw.MyTJoinPhoneNumChange = function (rootEl, options) {
   this.$container = rootEl;
   this._options = options;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
-  this._listItemTmpl = Handlebars.compile($('#list-cont-item-tmplt').html());
+  if(this._options === false){
+    var option = {
+      title: Tw.MYT_JOIN_MGMT_NUMCHG.ALERT_NO_TARGET.TITLE,
+      contents: Tw.MYT_JOIN_MGMT_NUMCHG.ALERT_NO_TARGET.CONTENTS,
+      title_type: 'sub',
+      cont_align: 'tl',
+      bt_b: [{
+        style_class: 'bt-blue1 pos-right tw-popup-confirm',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+
+    this._popupService.open(
+      option,
+      null,
+      $.proxy(function(){
+        this._historyService.goLoad('/myt-join/submain');
+      }, this),
+      'disable-service'
+      );
+
+    return;
+  }
+
   this._registHelper();
   this._bindEvent();
+  this._listItemTmpl = Handlebars.compile($('#list-cont-item-tmplt').html());
 };
 
 Tw.MyTJoinPhoneNumChange.prototype = {
@@ -21,10 +46,9 @@ Tw.MyTJoinPhoneNumChange.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '#btnNumSearch', $.proxy(this._onclickSchNums, this));
+    this.$container.on('click', '#btnOthNumSearch', $.proxy(this._onclickOthSchNums, this));
+    this.$container.on('click', '#btnGoConfirm', $.proxy(this._onclickBtnGoConfirm, this));
     this.$container.on('click', '#btnOk', $.proxy(this._onclickBtnOk, this));
-    this.$container.on('click', '#btnMore', $.proxy(this._showMorePhoneNum, this));
-    this.$container.on('click', '.select-list .radiobox', $.proxy(this._onchangeUiCondition, this));
   },
 
   /**
@@ -36,68 +60,58 @@ Tw.MyTJoinPhoneNumChange.prototype = {
   },
 
   /**
-   * 010번호찾기 클릭시
+   * 다른 번호 조회하기 클릭시
    * @private
    */
-  _onclickSchNums: function(){
-    // $('#divNumList').hide();
-
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
-
-    // 변경할 번호 search
-    this._apiService.request(Tw.API_CMD.BFF_05_0184, {})
-      .done($.proxy(function (resp) {
-
-        skt_landing.action.loading.off({ ta: this.$container });
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          Tw.Error(resp.code, resp.msg).pop();
-          return ;
-        }
-
-        this._list = resp.result.numSearchInfoList;
-        if( this._list && this._list.length > 0 ){
-          $('#divNumList').show();
-        }
-
-        this._showMorePhoneNum();
-
-      }, this))
-      .fail(function(err){
-        Tw.Error(err.status, err.statusText).pop();
-        skt_landing.action.loading.off({ ta: this.$container });
-      });
+  _onclickOthSchNums: function(){
+    this._popupService.open(
+      { hbs: 'MS_03_02' },
+      $.proxy(function ($root) {
+        new Tw.MyTJoinPhoneNumChangeSearch(
+          $root, this._listItemTmpl, $.proxy(this._onselectNum, this)
+        );
+      }, this),
+      null,
+      'search'
+    );
   },
 
   /**
-   * 목록 더 보기
+   * 팝업에서 번호 선택 완료시
+   * @param num
    * @private
    */
-  _showMorePhoneNum: function(){
-
-    this._lastSeq = this._lastSeq || 0;
-    var listLimit = 20;
-    var sttNo = this._lastSeq;
-    var endNo = this._lastSeq + listLimit;
-    if(endNo > this._list.length){
-      endNo = this._list.length;
-    }
-
-    $('.radiobox').unbind('click');
-
-    var html = '';
-    for(var i = sttNo; i < endNo; i++){
-      html += this._listItemTmpl(this._list[i]);
-    }
-    $('.select-list').append(html);
-
-    skt_landing.widgets.widget_radio('.select-list');
-
-    this._lastSeq = endNo;
-    this._showOrHideMoreBtn();
+  _onselectNum: function(num){
+    this._popupService.close();
+    this._options.objSvcNum = num;
+    $('#emChgNum').text(this._options.objSvcNum);
   },
 
   /**
-   * 번경버튼 클릭시
+   * 번경하기 버튼 클릭시 -> 확인 화면으로 이동
+   * @private
+   */
+  _onclickBtnGoConfirm: function(){
+
+    this._popupService.open(
+      {
+        hbs: 'MS_03_04',
+        layer: true,
+        data: this._options
+      },
+      $.proxy(function ($root){
+        $root.on('click', '.prev-step', function(){
+          Tw.Popup.close();
+        });
+      }, this),
+      null,
+      'confirm'
+    );
+  },
+
+
+  /**
+   * 번경완료 버튼 클릭시
    * @private
    */
   _onclickBtnOk: function(){
@@ -105,11 +119,11 @@ Tw.MyTJoinPhoneNumChange.prototype = {
     // coCd	변경전번호원사업자코드	O
     // num1	전환할 가운데 전화번호	O
     // num2	전환할 뒷 전화번호	O
-    var selectedNum = $('.select-list input[type=radio]:checked').val();
+    var chgNum = this._options.objSvcNum;
 
     var numArr = null;
-    if(selectedNum){
-      numArr = selectedNum.split('-');
+    if(chgNum){
+      numArr = chgNum.split('-');
       if(numArr.length < 3){
         return ;
       }
@@ -121,14 +135,15 @@ Tw.MyTJoinPhoneNumChange.prototype = {
       num2 : numArr[2]
     };
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_05_0185, param)
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-          Tw.Error(resp.code, resp.msg).pop();
+          // Tw.Error(resp.code, resp.msg).pop();
+          this._popupService.openAlert(Tw.MYT_JOIN_MGMT_NUMCHG.ALERT_SVC_FAIL);
           return ;
         }
 
@@ -137,34 +152,13 @@ Tw.MyTJoinPhoneNumChange.prototype = {
           '/myt-join/submain',
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
           Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
-          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + selectedNum.replace('n',''));
+          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + chgNum);
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
-  },
-
-  /**
-   * 신청 조건 변경시(기간선택, 알람유형 선택시)
-   * @private
-   */
-  _onchangeUiCondition: function(){
-    var btnDisabled = ($('.select-list .radiobox .checked').length !== 0);
-    $('.bt-red1 button').attr('disabled', btnDisabled);
-  },
-
-
-  /**
-   * 더보기 버튼 보이김/숨기기
-   * @private
-   */
-  _showOrHideMoreBtn: function(){
-    if( !this._list || this._list.length === 0 || !this._lastSeq || this._lastSeq >= this._list.length){
-      $('.bt-more').hide();
-    } else {
-      $('.bt-more').show();
-    }
   }
+
 };

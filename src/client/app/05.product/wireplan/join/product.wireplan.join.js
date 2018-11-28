@@ -38,6 +38,7 @@ Tw.ProductWireplanJoin.prototype = {
   },
 
   _convConfirmOptions: function() {
+    console.log(this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo);
     this._confirmOptions = $.extend(this._confirmOptions, {
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
@@ -52,7 +53,7 @@ Tw.ProductWireplanJoin.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.stipulation.existsCount > 0)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },
 

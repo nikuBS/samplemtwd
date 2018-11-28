@@ -1,0 +1,52 @@
+<%#
+* FileName: main.menu.settings.terms-type-d.html (GU_02_03)
+* Author: Hakjoon Sim (hakjoon.sim@sk.com)
+* Date: 2018.11.27
+%>
+
+<% include ../../../components/start.component.html %>
+<body class="bg-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: title }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box nogaps noborder">
+                <div class="bt-agree-tit">
+                    <button class="bt-dropdown big" id="fe-btn-action" title="약관 리스트" aria-haspopup="true" value="<%= id %>"><%= actionTitle %><span class="ico"></span></button>
+                </div>
+                </div>
+                <div class="cont-box noborder">
+                    <!-- <img src="/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;"> -->
+                    <%- content %>
+                </div>
+                <!--div class="bt-top">
+                    <button><span class="blind">최상단으로 가기</span></button>
+                </div-->
+            </div>
+        </div>
+        <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MainMenuSettingsTermTypeCDE($('.wrap'));
+  })
+</script>
+<% include ../../../components/end.component.html %>

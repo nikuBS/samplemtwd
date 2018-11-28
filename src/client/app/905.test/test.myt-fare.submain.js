@@ -13,7 +13,8 @@ Tw.TestMyTFareSubMain = function (params) {
   this._historyService.init('hash');
   this._chartDefaultClass = 'chart_link item';
   this.data = params.data;
-  this.loadingView(true);
+  // FIXME: 로딩뷰 테스트 부분
+  // this.loadingView(true);
   this._rendered();
   this._bindEvent();
   this._initialize();
@@ -366,17 +367,18 @@ Tw.TestMyTFareSubMain.prototype = {
   _onReceivedBillData: function (resp) {
     // this.loadingView(false, 'button[data-id=realtime-pay]');
     if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
-    //   if ( _.isEmpty(resp.result) ) {
-    //     this._realTimeBillRequest();
-    //   }
-    //   else {
-        if ( this._resTimerID ) {
-          this.__resetTimer();
-        }
-        // 당월 기준으로 실시간 요금 노출
-        var realtimeBillInfo = resp.result.hotBillInfo[0];
-        this.$realTimePay.find('i').html(realtimeBillInfo.totOpenBal2);
-        this.loadingView(false);
+      //   if ( _.isEmpty(resp.result) ) {
+      //     this._realTimeBillRequest();
+      //   }
+      //   else {
+      if ( this._resTimerID ) {
+        this.__resetTimer();
+      }
+      // 당월 기준으로 실시간 요금 노출
+      var realtimeBillInfo = resp.result.hotBillInfo[0];
+      this.$realTimePay.find('i').html(realtimeBillInfo.totOpenBal2);
+      // FIXME: 로딩뷰 테스트 부분
+      // this.loadingView(false);
       // }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
@@ -495,7 +497,8 @@ Tw.TestMyTFareSubMain.prototype = {
   },
 
   _errorRequest: function (resp) {
-    this.loadingView(false);
+    // FIXME: 로딩뷰 테스트 부분
+    // this.loadingView(false);
     if ( !resp ) {
       resp = {
         code: '',

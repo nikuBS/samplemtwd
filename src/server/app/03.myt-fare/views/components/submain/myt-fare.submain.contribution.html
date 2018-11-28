@@ -2,33 +2,24 @@
 * FileName: myt-fare.submain.contribution.html
 * Author: Kim InHwan (skt.p132150@partner.sk.com)
 * Date: 2018.09.28
+* Update: 2018.11.27
 %>
 
+<hr class="cont-sp type1" aria-hidden="true"/>
+
 <!-- .cont-box -->
-<div class="cont-box nogaps noborder">
-    <ul class="link-long-list">
+<div class="cont-box nogaps">
+    <ul class="btn-link-list">
         <% if (data.taxInvoice) { %>
-        <li data-id="taxinv">
-            <div class="link-long">
-                <button>세금계산서 재발행
-                    <span class="tx-sub">
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
+        <li class="last-line" data-id="taxinv">
+            <button>세금계산서 재발행</button>
         </li>
         <% } %>
         <% if (data.contribution) { %>
-        <li data-id="contbt">
-            <div class="link-long">
-                <button>기부금・후원금 납부내역
-                    <span class="tx-sub">
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
+        <li class="last-line" data-id="contbt">
+            <button>기부금 &middot; 후원금 납부내역</button>
         </li>
         <% } %>
     </ul>
 </div>
-<!-- //.cont-box -->
+<!--// .cont-box -->

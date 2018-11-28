@@ -11,13 +11,33 @@ Tw.CommonMemberSloginIos = function (rootEl) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
 
+  this.mdn = '';
+  this.certSeq = '';
+
   this.$inputName = null;
   this.$inputBirth = null;
   this.$inputGender = null;
   this.$inputMdn = null;
   this.$inputCert = null;
   this.$btCert = null;
+  this.$btCertAdd = null;
   this.$btLogin = null;
+
+  this.$inputboxName = null;
+  this.$inputboxBirth = null;
+  this.$inputboxGender = null;
+  this.$errorName = null;
+  this.$errorNameMismatch = null;
+  this.$errorBirth = null;
+  this.$errorBirthLen = null;
+  this.$errorGender = null;
+
+  this.$validSendCert = null;
+  this.$validAddCert = null;
+  this.$errorCertTime = null;
+  this.$errorCertCount = null;
+  this.$errorLoginCert = null;
+  this.$errorLoginTime = null;
 
   this._bindEvent();
 };
@@ -44,9 +64,27 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$inputMdn = this.$container.find('#fe-input-mdn');
     this.$inputCert = this.$container.find('#fe-input-cert');
     this.$btCert = this.$container.find('#fe-bt-cert');
+    this.$btCertAdd = this.$container.find('#fe-bt-cert-add');
     this.$btLogin = this.$container.find('#fe-bt-login');
 
+    this.$inputboxName = this.$container.find('#fe-inputbox-name');
+    this.$inputboxBirth = this.$container.find('#fe-inputbox-birth');
+    this.$inputboxGender = this.$container.find('#fe-inputbox-gender');
+    this.$errorName = this.$container.find('#aria-phone-tx1');
+    this.$errorNameMismatch = this.$container.find('#aria-phone-tx2');
+    this.$errorBirth = this.$container.find('#aria-birth-tx1');
+    this.$errorBirthLen = this.$container.find('#aria-birth-tx2');
+    this.$errorGender = this.$container.find('#aria-gender-tx');
+
+    this.$validSendCert = this.$container.find('#aria-cert-num2');
+    this.$validAddCert = this.$container.find('#aria-cert-num1');
+    this.$errorCertTime = this.$container.find('#aria-cert-num3');
+    this.$errorCertCount = this.$container.find('#aria-cert-num4');
+    this.$errorLoginCert = this.$container.find('#aria-phone-err1');
+    this.$errorLoginTime = this.$container.find('#aria-phone-err2');
+
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
+    this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
     this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
@@ -84,30 +122,56 @@ Tw.CommonMemberSloginIos.prototype = {
   },
   _onClickCert: function () {
     if ( this._checkCertValidation() ) {
-      var mdn = this.$inputMdn.val();
+      this.mdn = this.$inputMdn.val();
       var params = {
         mbrNm: this.$inputName.val(),
         birthDt: this.$inputBirth.val(),
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
-      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, mdn)
+      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, this.mdn)
         .done($.proxy(this._successRequestCert, this));
     }
   },
+  _onClickCertAdd: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq }, null, this.mdn)
+      .done($.proxy(this._successRequestCertAdd, this));
+  },
   _successRequestCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.certSeq = resp.result.seqNo;
       this.$btLogin.attr('disabled', false);
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L04);
-    } else if ( resp.code === this.ERROR_CODE.SMS2003 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L51);
-    } else if ( resp.code === this.ERROR_CODE.SMS2006 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L52);
-    } else if ( resp.code === this.ERROR_CODE.ATH1004 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L03);
+      this.$btCert.addClass('none');
+      this.$btCertAdd.removeClass('none');
+      this.$validSendCert.removeClass('none');
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      this._checkCertError(resp.code);
     }
   },
+  _successRequestCertAdd: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
+      this.$btCertAdd.addClass('none');
+      this.$btCert.text(Tw.BUTTON_LABEL.RETRY);
+      this.$btCert.removeClass('none');
+      this.$validAddCert.removeClass('none');
+    } else {
+      this._checkCertError(resp.code, resp.msg);
+    }
+  },
+  _checkCertError: function (errorCode, errorMsg) {
+    if ( errorCode === this.ERROR_CODE.SMS2003 ) {
+      this._clearCertError();
+      this.$errorCertTime.removeClass('none');
+    } else if ( errorCode === this.ERROR_CODE.SMS2006 ) {
+      this._clearCertError();
+      this.$errorCertCount.removeClass('none');
+    } else if ( errorCode === this.ERROR_CODE.ATH1004 ) {
+      this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
+    } else {
+      Tw.Error(errorCode, errorMsg).pop();
+    }
+  },
+
   _onClickLogin: function () {
     var inputCert = this.$inputCert.val();
     if ( this._checkLoginValidation(inputCert) ) {
@@ -126,37 +190,67 @@ Tw.CommonMemberSloginIos.prototype = {
       .done($.proxy(this._successRequestLogin, this));
   },
   _successRequestLogin: function (resp) {
+    this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
     } else if ( resp.code === this.ERROR_CODE.SMS2007 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L62);
+      this.$errorLoginCert.removeClass('none');
     } else if ( resp.code === this.ERROR_CODE.SMS2008 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L63);
-    } else if ( resp.code === this.ERROR_CODE.ATH1004 || resp.code === this.ERROR_CODE.ATH1005 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L03);
+      this.$errorLoginTime.removeClass('none');
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
 
   },
   _checkCertValidation: function () {
     var inputName = this.$inputName.val();
     var inputBirth = this.$inputBirth.val();
+    var result = true;
+    this._clearAllError();
     if ( Tw.FormatHelper.isEmpty(inputName) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L11);
-      return false;
-    } else if ( Tw.FormatHelper.isEmpty(inputBirth) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L12);
-      return false;
-    } else if ( this.$inputGender.filter(':checked').length === 0 ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L13);
-      return false;
-    } else if ( inputBirth.length !== Tw.BIRTH_LEN ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L02);
-      return false;
+      result = false;
+      this._showError(this.$inputboxName, this.$inputName, this.$errorName, 'aria-phone-tx1');
     }
-    return true;
+    if ( Tw.FormatHelper.isEmpty(inputBirth) ) {
+      result = false;
+      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth, 'aria-birth-tx1');
+    } else if ( inputBirth.length !== Tw.BIRTH_LEN ) {
+      result = false;
+      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen, 'aria-birth-tx2');
+    }
+    if ( this.$inputGender.filter(':checked').length === 0 ) {
+      result = false;
+      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender, 'aria-gender-tx1');
+    }
+    return result;
+  },
+  _showError: function (inputBox, input, error, ariaName) {
+    inputBox.addClass('error');
+    input.attr('aria-describedby', ariaName);
+    error.removeClass('none');
+  },
+  _clearError: function (inputBox, input, error) {
+    inputBox.removeClass('error');
+    input.attr('aria-describedby', '');
+    error.addClass('none');
+  },
+  _clearAllError: function () {
+    this._clearError(this.$inputboxName, this.$inputName, this.$errorName);
+    this._clearError(this.$inputboxName, this.$inputName, this.$errorNameMismatch);
+    this._clearError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth);
+    this._clearError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen);
+    this._clearError(this.$inputboxGender, this.$inputGender, this.$errorGender);
+  },
+  _clearCertError: function () {
+    this.$validSendCert.addClass('none');
+    this.$validAddCert.addClass('none');
+    this.$errorCertTime.addClass('none');
+    this.$errorCertCount.addClass('none');
+  },
+  _clearLoginError: function () {
+    this.$errorLoginCert.addClass('none');
+    this.$errorLoginTime.addClass('none');
   },
   _checkLoginValidation: function (inputCert) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {

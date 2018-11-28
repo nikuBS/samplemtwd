@@ -1,0 +1,39 @@
+/**
+ * FileName: main.menu.settings.term-type-b-btn.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.11
+ */
+
+Tw.MainMenuSettingsTermTypeB = function (rootEl) {
+  this.$container = rootEl;
+
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+
+  this._bindEvents();
+};
+
+Tw.MainMenuSettingsTermTypeB.prototype = {
+  _bindEvents: function () {
+    this.$container.on('click', '#fe-btn-view', $.proxy(this._onViewClicked, this));
+  },
+  _onViewClicked: function (e) {
+    var viewId = e.currentTarget.value;
+    this._apiService.request(Tw.API_CMD.BFF_08_0059, {
+      svcType: 'MM',
+      serNum: viewId
+    }).done($.proxy(function (res) {
+      if (res.code === Tw.API_CODE.CODE_00) {
+        this._popupService.open({
+          hbs: 'HO_04_05_01_02_01',
+          title: res.result.title,
+          content: res.result.content
+        });
+      } else {
+        Tw.Error(res.code, res.msg).pop();
+      }
+    }, this)).fail(function (err) {
+      Tw.Error(err.code, err.msg).pop();
+    });
+  }
+};

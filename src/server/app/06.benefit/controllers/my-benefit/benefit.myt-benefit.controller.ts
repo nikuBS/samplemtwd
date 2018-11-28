@@ -89,16 +89,18 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 결합할인
-        options['bond'] = {
-          name: combination.prodNm,
-          total: parseInt(combination.etcCnt, 10)
-        };
-        options['count'] += options['bond'].total;
+        if ( parseInt(combination.result.etcCnt, 10) > 0 ) {
+          options['bond'] = {
+            name: combination.result.prodNm,
+            total: parseInt(combination.result.etcCnt, 10)
+          };
+          options['count'] += options['bond'].total;
+        }
 
         // 장기가입 쿠폰
-        if ( loyalty.result.benefit.length > 0 ) {
-          options['coupons'] = loyalty.result.benefit.length;
-          options['count'] += loyalty.result.benefit.length;
+        if ( loyalty.result.benfList.length > 0 ) {
+          options['coupons'] = loyalty.result.benfList.length;
+          options['count'] += loyalty.result.benfList.length;
         }
         // 장기가입 요금
         if ( loyalty.result.discount ) {

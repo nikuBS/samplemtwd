@@ -193,6 +193,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00:00
+   */
+  static getFullDateAndTimeWithDot(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.M.DD. hh:mm:ss');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @param format
    * @returns {string} : 2018-06-02 11:59
    */
@@ -276,6 +284,22 @@ class DateHelper {
    */
   static getDiffByUnit(endDate: string, startDate: string, unit: any): number {
     return moment(endDate).diff(startDate, unit);
+  }
+
+  /**
+   * @param {any} date
+   * @returns {string} : yyyy-mm-01
+   */
+  static getMonthFirstDay( date: any): any {
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.DD.');
+  }
+
+  /**
+   * @param {any} date
+   * @returns {string} : yyyy-mm-30 or 31
+   */
+  static getMonthLastDay( date: any): any {
+    return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.DD.');
   }
 }
 

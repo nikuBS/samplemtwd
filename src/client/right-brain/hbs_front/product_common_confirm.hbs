@@ -24,11 +24,11 @@
                                 <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
                                 <span class="elem">
                                     <span class="blind">월 이용요금</span>
-                                      {{#if svcProdBasFeeInfo.isNaN}}
-                                          {{svcProdBasFeeInfo.value}}
-                                      {{else}}
-                                          월 {{svcProdBasFeeInfo.value}} 원
-                                      {{/if}}
+                                    {{#if svcProdBasFeeInfo.isNaN}}
+                                        {{svcProdBasFeeInfo.value}}
+                                    {{else}}
+                                        월 {{svcProdBasFeeInfo.value}} 원
+                                    {{/if}}
                                 </span>
                             </span>
                         {{/if}}
@@ -102,74 +102,78 @@
                 <div class="cont-box nogaps-top">
                     <div class="info-list">
                         <ul>
-                            <li>
-                                <div class="tit-area">
-                                    <span class="tit">자동 가입</span>
-                                    <span class="sub-tit">서비스 및 혜택</span>
-                                </div>
-                                <div class="cont-area">
-                                    {{#autoJoinList}}
-                                        <dl>
-                                            <dt>{{svcProdNm}}</dt>
-                                            {{#each svcProdList}}
-                                                <dd>{{{this}}}</dd>
-                                            {{/each}}
-                                        </dl>
-                                    {{/autoJoinList}}
-                                    {{#if isMobilePlan}}
-                                        <dl>
-                                            <dt>혜택</dt>
-                                            {{#if autoJoinBenefitList}}
-                                                <dd>
-                                                    <ul>
-                                                        {{{autoJoinBenefitList}}}
-                                                    </ul>
-                                                </dd>
-                                            {{else}}
-                                                <dd class="list-none">
-                                                    <ul>
-                                                        <li>자동가입 혜택이 없습니다.</li>
-                                                    </ul>
-                                                </dd>
-                                            {{/if}}
-                                        </dl>
-                                    {{/if}}
-                                </div>
-                            </li>
-                            <li>
-                                <div class="tit-area">
-                                    <span class="tit">자동 해지</span>
-                                    <span class="sub-tit">서비스 및 혜택</span>
-                                </div>
-                                <div class="cont-area">
-                                    {{#autoTermList}}
-                                        <dl>
-                                            <dt>{{svcProdNm}}</dt>
-                                            {{#each svcProdList}}
-                                                <dd>{{{this}}}</dd>
-                                            {{/each}}
-                                        </dl>
-                                    {{/autoTermList}}
-                                    {{#if isMobilePlan}}
-                                        <dl>
-                                            <dt>혜택</dt>
-                                            {{#if autoTermBenefitList}}
-                                                <dd>
-                                                    <ul>
-                                                        {{{autoTermBenefitList}}}
-                                                    </ul>
-                                                </dd>
-                                            {{else}}
-                                                <dd class="list-none">
-                                                    <ul>
-                                                        <li>자동해지 혜택이 없습니다.</li>
-                                                    </ul>
-                                                </dd>
-                                            {{/if}}
-                                        </dl>
-                                    {{/if}}
-                                </div>
-                            </li>
+                            {{#if autoJoinList}}
+                                <li>
+                                    <div class="tit-area">
+                                        <span class="tit">자동 가입</span>
+                                        <span class="sub-tit">서비스 및 혜택</span>
+                                    </div>
+                                    <div class="cont-area">
+                                        {{#autoJoinList}}
+                                            <dl>
+                                                <dt>{{svcProdNm}}</dt>
+                                                {{#each svcProdList}}
+                                                    <dd>{{{this}}}</dd>
+                                                {{/each}}
+                                            </dl>
+                                        {{/autoJoinList}}
+                                        {{#if isMobilePlan}}
+                                            <dl>
+                                                <dt>혜택</dt>
+                                                {{#if autoJoinBenefitList}}
+                                                    <dd>
+                                                        <ul>
+                                                            {{{autoJoinBenefitList}}}
+                                                        </ul>
+                                                    </dd>
+                                                {{else}}
+                                                    <dd class="list-none">
+                                                        <ul>
+                                                            <li>자동가입 혜택이 없습니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                {{/if}}
+                                            </dl>
+                                        {{/if}}
+                                    </div>
+                                </li>
+                            {{/if}}
+                            {{#if autoTermList}}
+                                <li>
+                                    <div class="tit-area">
+                                        <span class="tit">자동 해지</span>
+                                        <span class="sub-tit">서비스 및 혜택</span>
+                                    </div>
+                                    <div class="cont-area">
+                                        {{#autoTermList}}
+                                            <dl>
+                                                <dt>{{svcProdNm}}</dt>
+                                                {{#each svcProdList}}
+                                                    <dd>{{{this}}}</dd>
+                                                {{/each}}
+                                            </dl>
+                                        {{/autoTermList}}
+                                        {{#if isMobilePlan}}
+                                            <dl>
+                                                <dt>혜택</dt>
+                                                {{#if autoTermBenefitList}}
+                                                    <dd>
+                                                        <ul>
+                                                            {{{autoTermBenefitList}}}
+                                                        </ul>
+                                                    </dd>
+                                                {{else}}
+                                                    <dd class="list-none">
+                                                        <ul>
+                                                            <li>자동해지 혜택이 없습니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                {{/if}}
+                                            </dl>
+                                        {{/if}}
+                                    </div>
+                                </li>
+                            {{/if}}
                         </ul>
                     </div>
                     {{#if isDowngradePremTermMsg}}
@@ -280,26 +284,27 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
-                                        {{#if stipulation.isAllAgree}}
-                                        <li>
-                                            <div class="checkbox type01 all" role="checkbox" aria-checked="false">
-                                                <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox"
-                                                       value="" title="모두동의" aria-labelledby="aria-comp-checkbox-all"/>
-                                                <!-- 체크상태일 경우 checked="checked" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox-all">
-                                                    <p class="layout-text all-chk">
-                                                        <span class="mtext">모두동의</span>
-                                                    </p>
+                                        {{#if stipulationInfo.isAllAgree}}
+                                            <li>
+                                                <div class="checkbox type01 all fe-checkbox_style" role="checkbox" aria-checked="false">
+                                                    <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox"
+                                                           value="" title="모두동의" aria-labelledby="aria-comp-checkbox-all"/>
+                                                    <!-- 체크상태일 경우 checked="checked" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox-all">
+                                                        <p class="layout-text all-chk">
+                                                            <span class="mtext">모두동의</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
                                         {{/if}}
                                         {{#if isInstallmentAgreement}}
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
+                                                           class="fe-checkbox_agree_item fe-checkbox_agree_need"
                                                            title="할부지원금 차액 동의 (필수)"
                                                            aria-labelledby="aria-comp-checkbox-install"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
@@ -349,116 +354,116 @@
                                                 </div>
                                             </li>
                                         {{/if}}
-                                        {{#if stipulation.isScrbStplAgree}}
+                                        {{#if stipulationInfo.isScrbStplAgree}}
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulation.scrbStplAgreeTitNm}}"
+                                                           title="{{stipulationInfo.scrbStplAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-0"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-0">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulation.scrbStplAgreeTitNm}}</span>
+                                                            <span class="mtext">{{stipulationInfo.scrbStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                {{stipulation.scrbStplAgreeCttSummary}}
+                                                                    {{stipulationInfo.scrbStplAgreeCttSummary}}
                                                                 </span>
                                                             </span>
-                                                        <div class="none fe-agree_full_html">{{{stipulation.scrbStplAgreeHtmlCtt}}}</div>
+                                                        <div class="none fe-agree_full_html">{{{stipulationInfo.scrbStplAgreeHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
                                             </li>
                                         {{/if}}
-                                        {{#if stipulation.isPsnlInfoCnsgAgree}}
+                                        {{#if stipulationInfo.isPsnlInfoCnsgAgree}}
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulation.psnlInfoCnsgAgreeTitNm}}"
+                                                           title="{{stipulationInfo.psnlInfoCnsgAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-1"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-1">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulation.psnlInfoCnsgAgreeTitNm}}</span>
+                                                            <span class="mtext">{{stipulationInfo.psnlInfoCnsgAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                {{stipulation.psnlInfoCnsgCttSummary}}
+                                                                    {{stipulationInfo.psnlInfoCnsgCttSummary}}
                                                                 </span>
                                                             </span>
-                                                            <div class="none fe-agree_full_html">{{{stipulation.psnlInfoCnsgHtmlCtt}}}</div>
+                                                        <div class="none fe-agree_full_html">{{{stipulationInfo.psnlInfoCnsgHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
                                             </li>
                                         {{/if}}
-                                        {{#if stipulation.isPsnlInfoOfrAgree}}
+                                        {{#if stipulationInfo.isPsnlInfoOfrAgree}}
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulation.psnlInfoOfrAgreeTitNm}}"
+                                                           title="{{stipulationInfo.psnlInfoOfrAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-2"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-2">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulation.psnlInfoOfrAgreeTitNm}}</span>
+                                                            <span class="mtext">{{stipulationInfo.psnlInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                {{stipulation.psnlInfoOfrCttSummary}}
+                                                                    {{stipulationInfo.psnlInfoOfrCttSummary}}
                                                                 </span>
                                                             </span>
-                                                        <div class="none fe-agree_full_html">{{{stipulation.psnlInfoOfrHtmlCtt}}}</div>
+                                                        <div class="none fe-agree_full_html">{{{stipulationInfo.psnlInfoOfrHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
                                             </li>
                                         {{/if}}
-                                        {{#if stipulation.isAdInfoOfrAgree}}
+                                        {{#if stipulationInfo.isAdInfoOfrAgree}}
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulation.adInfoOfrAgreeTitNm}}"
+                                                           title="{{stipulationInfo.adInfoOfrAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-3"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-3">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulation.adInfoOfrAgreeTitNm}}</span>
+                                                            <span class="mtext">{{stipulationInfo.adInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
-                                                                <span class="stext-c">{{stipulation.adInfoOfrCttSummary}}</span>
+                                                                <span class="stext-c">{{stipulationInfo.adInfoOfrCttSummary}}</span>
                                                             </span>
-                                                            <div class="none fe-agree_full_html">{{{stipulation.psnlInfoCnsgHtmlCtt}}}</div>
+                                                        <div class="none fe-agree_full_html">{{{stipulationInfo.psnlInfoCnsgHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
                                             </li>
                                         {{/if}}
-                                        {{#if stipulation.isTermStplAgree}}
+                                        {{#if stipulationInfo.isTermStplAgree}}
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                                <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulation.termStplAgreeTitNm}}"
+                                                           title="{{stipulationInfo.termStplAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-4"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-4">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulation.termStplAgreeTitNm}}</span>
+                                                            <span class="mtext">{{stipulationInfo.termStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
-                                                                <span class="stext-c">{{stipulation.termStplAgreeCttSummary}}</span>
+                                                                <span class="stext-c">{{stipulationInfo.termStplAgreeCttSummary}}</span>
                                                             </span>
-                                                        <div class="none fe-agree_full_html">{{{stipulation.termStplAgreeHtmlCtt}}}</div>
+                                                        <div class="none fe-agree_full_html">{{{stipulationInfo.termStplAgreeHtmlCtt}}}</div>
                                                         </p>
                                                     </div>
                                                 </div>

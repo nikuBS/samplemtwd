@@ -107,9 +107,13 @@ export enum MYT_FARE_PAYMENT_CODE {
 
 export enum MYT_FARE_POINT_PAYMENT_STATUS {
   CLOSE = '납부해지',
+  CLOSE2 = '해지',
   OPEN = '납부신청', 
+  OPEN2 = '신청', 
   CHANGE = '납부변경',
-  COMPLETE = '납부완료'
+  CHANGE2 = '변경',
+  COMPLETE = '납부완료',
+  COMPLETE2 = '완료'
 }
 
 export enum MYT_FARE_PAYMENT_TITLE {
@@ -238,12 +242,13 @@ export enum PROD_SCRB_E {
 }
 
 export enum PROD_CTG_CD_CODE {
-  F01100 = 'mobileplan',
-  F01200 = 'mobileplan-add',
-  F01300 = 'wireplan',
-  F01400 = 'benefit',
-  F01500 = 'roaming',
-  F01600 = 'roaming'
+  AB = 'mobileplan',
+  C = 'mobileplan-add',
+  D = 'wireplan',
+  E = 'wireplan',
+  F = 'benefit',
+  G = 'benefit',
+  H = 'roaming'
 }
 
 export enum PROD_TTAB_BASIC_DATA_PLUS {
@@ -342,6 +347,16 @@ export enum CUSTOMER_NOTICE_CTG_CD {
 export enum RAINBOW_POINT_REL_CD {
   C = 'C',
   P = 'P'
+}
+
+export enum RAINBOW_FARE {
+  CCBBAE0 = '국내 음성 통화료',
+  CCBCOE0 = '부가서비스(컬러링)',
+  CCRMRBE = '로밍사용요금',
+  CCPCRBE = '부가서비스(퍼펙트콜)',
+  CCPLRBE = '부가서비스(퍼펙트콜 라이트)',
+  CCRPDDC = '국내 데이터 통화료',
+  CCRPGDC = '기본료 및 월정액'
 }
 
 export enum RAINBOW_FARE_CODE {

@@ -391,19 +391,18 @@ Tw.MYT_TPL = {
   },
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
-    'data-name="{{nickNm}}" data-num="{{svcNum}}">' +
-    '<button><div class="lineinfo-user d-table"><div class="ico"><i></i></div><div class="cont">' +
-    '{{#if combine}}' +
-    '{{else}}' + '<span class="ico"></span>' +
-    '{{/if}}' +
-    '<span class="info-title">{{nickNm}}' +
-    '{{#if combine}}' +
-    '<span class="badge badge-merge"><span class="blind">통합</span></span>' +
-    '{{/if}}' +
-    '</span>' +
-    '<span class="info-sub">{{svcNum}}</span></div></div><div class="lineinfo-data">' +
-    '<span class="info-title">{{amt}} 원</span><span class="ico"></span></div>' +
-    '</button></li>'
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
+      '<span class="ico-wrap">' +
+      '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
+      '</span>' +
+      '<span class="cont">' +
+      '<span class="info-title">{{nickNm}}'+
+      '{{#if combine}}' +
+      '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>'+
+      '{{/if}}' +
+      '</span><span class="info-sub">{{svcNum}}</span>' +
+      '<span class="price">{{amt}} 원</span>'+
+      '</span></button></li>'
   },
   JOIN_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
@@ -471,15 +470,27 @@ Tw.PRODUCT_LIST_DEVICE_FILTERS = {
   ]
 };
 
-Tw.RESELL_TERMS = {
-  title: '재판매 이용약관',
-  data: [{
-    'list': [
-      { 'value': '초고속인터넷 이용약관', 'option': 'fe-action' },
-      { 'value': '인터넷전화 이용약관', 'option': 'fe-action' },
-      { 'value': '시내전화 이용약관', 'option': 'fe-action' }
-    ]
-  }]
+Tw.TERMS_ACTION = {
+  46: {
+    title: '재판매 이용약관',
+    data: [{
+      list: [
+        { value: '초고속인터넷 이용약관', option: 'fe-action', attr: 'value="46:c:43"' },
+        { value: '인터넷전화 이용약관', option: 'fe-action', attr: 'value="49:d"' },
+        { value: '시내전화 이용약관', option: 'fe-action', attr: 'value="50:d"' }
+      ]
+    }]
+  },
+  102: {
+    title: '초콜릿 이용약관',
+    data: [{
+      list: [
+        { value: '이용약관', option: 'fe-action', attr: 'value="102:e"' },
+        { value: '개인정보처리방침', option: 'fe-action', attr: 'value="103:e"' },
+        { value: '개인벙보 수집 및 이용안내', option: 'fe-action', attr: 'value="104:e"' }
+      ]
+    }]
+  },
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
@@ -521,7 +532,7 @@ Tw.CUSTOMER_PRAISE_AREAS = [
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   {
     title: '휴대폰',
-    category: 'cell',
+    category: 'CELL',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000273' },
       { title: '단말기 관련', ofrCtgSeq: '5000274' },
@@ -534,7 +545,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: '인터넷/집전화/TV',
-    category: 'internet',
+    category: 'INTERNET',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000141' },
       { title: '장애/고장신고', ofrCtgSeq: '5000143' },
@@ -547,7 +558,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: '다이렉트샵',
-    category: 'direct',
+    category: 'DIRECT',
     list: [
       { title: '휴대폰 구매', ofrCtgSeq: '07' },
       { title: '기타 문의', ofrCtgSeq: '10' },
@@ -558,7 +569,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: '초코렛',
-    category: 'chocolate',
+    category: 'CHOCO',
     list: [
       { title: '상품문의', ofrCtgSeq: '010700' },
       { title: '교환/반품', ofrCtgSeq: '010600' },
@@ -718,3 +729,16 @@ Tw.SUSPEND_RELATION = {
     { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
   ]
 };
+
+Tw.PREPAID_HISTORIES = [{ value: '음성 충전', attr: 'data-type="voice"' }, { value: '데이터 충전', attr: 'data-type="data"' }];
+
+Tw.PREPAID_ICONS = {
+  IMMEDIATELY: {
+    name: '1회',
+    type: 'auto'
+  },
+  MONTHLY: {
+    name: '자동',
+    type: 'one'
+  }
+} 

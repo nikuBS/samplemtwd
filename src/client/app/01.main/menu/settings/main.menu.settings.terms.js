@@ -7,23 +7,14 @@
 Tw.MainMenuSettingsTerms = function (rootEl) {
   this.$container = rootEl;
 
-  this._init();
   this._bindEvents();
 };
 
 Tw.MainMenuSettingsTerms.prototype = {
-  _init: function () {
-    if (window.location.hash === '#tworld') {
-      var tab = this.$container.find('#fe-tworld-sk').eq(0);
-      setTimeout(function () {
-        tab.click();
-      }, 0);
-    }
-  },
   _bindEvents: function () {
-    this.$container.on('click', 'a', $.proxy(this._onLink, this));
+    this.$container.on('click', '.fe-outlink', $.proxy(this._onOutLink, this));
   },
-  _onLink: function (e) {
-
+  _onOutLink: function (e) {
+    Tw.CommonHelper.openUrlExternal(e.currentTarget.value);
   }
 };

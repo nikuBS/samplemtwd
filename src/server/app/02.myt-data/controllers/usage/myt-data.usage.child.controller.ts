@@ -52,6 +52,7 @@ class MyTDataUsageChild extends TwViewController {
         return _child.svcMgmtNum === childSvcMgmtNum;
       });
       fomattedData['childSvcNum'] = child.svcNum;
+      fomattedData['childSvcMgmtNum'] = child.svcMgmtNum;
       fomattedData['childProdId'] = baseFeePlan.prodId;
       fomattedData['childProdNm'] = baseFeePlan.prodName;
       res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo, pageInfo });

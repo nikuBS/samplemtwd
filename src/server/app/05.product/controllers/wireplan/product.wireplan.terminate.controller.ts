@@ -12,7 +12,7 @@ import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
-import BFF_10_0115_mock from '../../../../mock/server/product.BFF_10_0115.mock';
+import BFF_10_0111_mock from '../../../../mock/server/product.BFF_10_0111.mock';
 
 class ProductWireplanTerminate extends TwViewController {
   constructor() {
@@ -20,12 +20,12 @@ class ProductWireplanTerminate extends TwViewController {
   }
 
   private _getApi(prodId: any): Observable<any> {
-    return Observable.of(BFF_10_0115_mock);
+    return Observable.of(BFF_10_0111_mock);
     // return this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = req.params.prodId || null,
+    const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,

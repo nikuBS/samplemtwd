@@ -13,7 +13,7 @@ class CommonMemberSloginIos extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/common.member.login.ios.html', { svcInfo });
+    res.render('member/common.member.slogin.ios.html', { svcInfo });
   }
 }
 

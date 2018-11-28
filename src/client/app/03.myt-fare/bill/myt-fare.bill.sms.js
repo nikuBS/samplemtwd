@@ -69,29 +69,16 @@ Tw.MyTFareBillSms.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._popupService.open({
-          'hbs': 'complete-sms',
-          'svcNum': Tw.FormatHelper.conTelFormatWithDash(res.result.svcNum)
-        },
-        $.proxy(this._onComplete, this),
-        $.proxy(this._goSubmain, this),
-        'complete-sms');
+      var svcNum = '';
+      if (!Tw.FormatHelper.isEmpty(res.result.svcNum)) {
+        svcNum = Tw.FormatHelper.conTelFormatWithDash(res.result.svcNum);
+      }
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=sms&svcNum=' + svcNum);
     } else {
       this._payFail(res);
     }
   },
   _payFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
-  _onComplete: function ($layer) {
-    $layer.on('click', '.fe-submain', $.proxy(this._setIsLink, this));
-  },
-  _setIsLink: function () {
-    this._isSubmain = true;
-  },
-  _goSubmain: function () {
-    if (this._isSubmain) {
-      this._historyService.goLoad('/myt-fare/submain');
-    }
   }
 };

@@ -30,7 +30,7 @@
         <p class="productdetails-text02"><%= prodRedisInfo.summary.prodSmryDesc %></p>
         <% } %>
         <% } %>
-        <% if ( basicInfo.ctgCd === 'F01200' && basicInfo.svcOfrCoNm ) { %>
+        <% if ( basicInfo.prodTypCd === 'C' && basicInfo.svcOfrCoNm ) { %>
         <p class="productdetails-text03">서비스 제공 : <%= basicInfo.svcOfrCoNm %></p>
         <% } %>
     </div>

@@ -334,6 +334,7 @@ export const API_CMD = {
   BFF_06_0065: { path: '/core-bill/v1/credit-cards', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0066: { path: '/core-product/v1/gift-refill-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0067: { path: '/core-bill/v1/pp-cards', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0068: { path: '/core-recharge/v1/ting-permissions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -393,7 +394,7 @@ export const API_CMD = {
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0069: { path: '/core-bill/v1/payment/auto-integrated-payment/cancel', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0070: { path: '/core-bill/v1/payment/auto-integrated-payment/account', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0071: { path: '/core-bill/v1/micro-prepay/hist-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0071: { path: '/core-bill/v1/micro-prepay/hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0072: { path: '/core-bill/v1/micro-prepay/auto-prepay-status', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0073: { path: '/core-bill/v1/micro-prepay/requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0074: { path: '/core-bill/v1/micro-prepay/process', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -464,6 +465,7 @@ export const API_CMD = {
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0058: { path: '/core-modification/v1/praise/savePraiseInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0059: { path: '/core-modification/v1/term/access-terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0060: { path: '/core-modification/v1/email-inquiry-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0061: { path: '/core-modification/v1/email-inquiry-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0062: { path: '/core-modification/v1/email-inquiry', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },

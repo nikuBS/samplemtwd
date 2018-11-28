@@ -234,11 +234,11 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param ctgCd
+   * @param prodTypCd
    * @private
    */
-  private _getCtgKey (ctgCd): any {
-    return PROD_CTG_CD_CODE[ctgCd];
+  private _getCtgKey (prodTypCd): any {
+    return PROD_CTG_CD_CODE[prodTypCd];
   }
 
   /**
@@ -320,7 +320,7 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result),
             series: this._convertSeriesInfo(seriesInfo.result),
             recommends: recommendsInfo.result,
-            ctgKey: this._getCtgKey(basicInfo.result.ctgCd),
+            ctgKey: this._getCtgKey(basicInfo.result.prodTypCd),
             ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
             isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
             filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),

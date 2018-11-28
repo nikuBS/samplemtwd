@@ -22,12 +22,16 @@ Tw.CustomerEmailCategory.prototype = {
   _init: function () {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
+      .done($.proxy(this._onLoadQuestionList, this));
   },
 
   _cachedElement: function () {
     this.$select_service_depth1 = $('.fe-service_depth1');
     this.$select_service_depth2 = $('.fe-service_depth2');
     this.$select_quality_depth1 = $('.fe-quality_depth1');
+    this.$wrap_tpl_faq = $('.fe-btn_faq');
   },
 
   _bindEvent: function () {
@@ -37,6 +41,14 @@ Tw.CustomerEmailCategory.prototype = {
     this.$container.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
     this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
     this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
+  },
+
+  _onLoadQuestionList: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this.category = res.result;
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _onClickService1Depth: function () {
@@ -63,18 +75,19 @@ Tw.CustomerEmailCategory.prototype = {
     var sDepth1Category = this.$select_service_depth1.data('service-depth1');
 
     if ( sDepth1Category ) {
-      var fnSelectItem = function (item) {
-        if ( item.category === sDepth1Category ) {
-          return true;
-        }
-        return false;
-      };
+      // var fnSelectItem = function (item) {
+      //   if ( item.category === sDepth1Category ) {
+      //     return true;
+      //   }
+      //   return false;
+      // };
 
-      var service2DepthList = $(this.service_category.filter($.proxy(fnSelectItem, this))).get(0).list;
+      // var service2DepthList = $(this.service_category.filter($.proxy(fnSelectItem, this))).get(0).list;
+      var service2DepthList = this.category[sDepth1Category];
 
       var fnSelectLine = function (item) {
         return {
-          value: item.title,
+          value: item.ctgNm,
           option: false,
           attr: 'data-service-depth2="' + item.ofrCtgSeq + '"'
         };
@@ -123,6 +136,12 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth1.text(sDepth1Text);
     this.$select_service_depth1.data('service-depth1', sDepth1Value);
     this.service.depth1 = sDepth1Value;
+
+    if ( sDepth1Value === 'CELL' || sDepth1Value === 'INTERNET' ) {
+      this.$wrap_tpl_faq.show();
+    } else {
+      this.$wrap_tpl_faq.hide();
+    }
 
     var sDepth2Category = this.$select_service_depth2.data('service-depth2');
 

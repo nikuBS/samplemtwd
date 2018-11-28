@@ -12,6 +12,7 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._init();
 };
@@ -37,9 +38,6 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$changeMoneyInfo = this.$container.find('.fe-change-money-info');
     this.$changeCardInfo = this.$container.find('.fe-change-card-info');
     this.$changeType = 'A';
-
-    this._historyUrl = '/myt-fare/bill/' + this.$title + '/auto/info';
-    this._mainUrl = '/myt-fare/bill/' + this.$title;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
@@ -280,19 +278,8 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     return apiName;
   },
   _paySuccess: function (res) {
-    var linkName = null;
-    var textName = null;
-
-    if (this.$type === 'auto') {
-      this._historyUrl = null;
-      textName = Tw.MYT_FARE_PAYMENT_NAME.REQUEST;
-    } else {
-      linkName = Tw.MYT_FARE_PAYMENT_NAME.GO_CHANGE_HISTORY;
-      textName = Tw.MYT_FARE_PAYMENT_NAME.CHANGE;
-    }
-
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl, linkName, textName);
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=' + this.$type);
     } else {
       this._payFail(res);
     }

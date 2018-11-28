@@ -19,7 +19,7 @@ class ProductMobileplanSettingBandYT extends TwViewController {
   private readonly _allowedProdIdList = ['NA00005012', 'NA00005013', 'NA00005014', 'NA00005016', 'NA00005017'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = req.params.prodId || null;
+    const prodId = req.query.prod_id || null;
     const data: any = {
       pageInfo: pageInfo,
       svcInfo: svcInfo,

@@ -181,7 +181,11 @@ $.fn.chart2 = function(o){
     if(d.link){
       $(d.target).find('.data-ul > li:not(".average")').each(function(i){
         var temp = $(this).find('dt').text();
-        $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+        if(d.data_arry[i].class !== undefined){
+          $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass(d.data_arry[i].class));
+        }else{
+          $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+        }
       })
     }
   }
@@ -264,7 +268,11 @@ $.fn.chart2 = function(o){
     if(d.link){
       $(d.target).find('.data-ul > li:not(".average")').each(function(i){
         var temp = $(this).find('dt').text();
-        $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+        if(d.data_arry[i].class !== undefined){
+          $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass(d.data_arry[i].class));
+        }else{
+          $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+        }
       })
     }
   }
@@ -367,7 +375,11 @@ $.fn.chart2 = function(o){
     if(d.link){
       $(d.target).find('.data-ul > li:not(".average")').each(function(i){
         var temp = $(this).find('dt').text();
-        $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+        if(d.data_arry[i].class !== undefined){
+          $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass(d.data_arry[i].class));
+        }else{
+          $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+        }
       })
     }
   }

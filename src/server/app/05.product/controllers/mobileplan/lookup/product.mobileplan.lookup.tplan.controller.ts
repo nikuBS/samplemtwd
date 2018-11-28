@@ -95,7 +95,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const tDiyGrCd = req.params.prodId || null,
+    const tDiyGrCd = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,

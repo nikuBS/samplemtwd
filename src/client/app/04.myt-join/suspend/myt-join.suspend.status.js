@@ -7,7 +7,7 @@ Tw.MyTJoinSuspendStatus = function (rootEl, params) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._params = params;
   this._getSvcInfo();

@@ -33,6 +33,8 @@ import MyTFareBillContents from './controllers/billcontents/myt-fare.bill.conten
 import MyTFareBillContentsAuto from './controllers/billcontents/myt-fare.bill.contents.auto.controller';
 import MyTFareBillContentsAutoInfo from './controllers/billcontents/myt-fare.bill.contents.auto.info.controller';
 import MyTFareBillContentsAutoChange from './controllers/billcontents/myt-fare.bill.contents.auto.change.controller';
+import MyTFareBillPayComplete from './controllers/bill/myt-fare.bill.pay-complete.controller';
+import MyTFareBillPointComplete from './controllers/bill/myt-fare.bill.point-complete.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -50,6 +52,8 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
     this.controllers.push({ url: '/bill/option', controller: MyTFareBillOption });
     this.controllers.push({ url: '/bill/auto/register', controller: MyTFareBillAutoRegister });
+    this.controllers.push({ url: '/bill/pay-complete', controller: MyTFareBillPayComplete });
+    this.controllers.push({ url: '/bill/point-complete', controller: MyTFareBillPointComplete });
 
     // 소액결제
     this.controllers.push({ url: '/bill/small', controller: MyTFareBillSmall });
@@ -63,7 +67,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/contents/auto/info', controller: MyTFareBillContentsAutoInfo });
     this.controllers.push({ url: '/bill/contents/auto/change', controller: MyTFareBillContentsAutoChange });
 
-    //
+    // 실시간 이용요금
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
 
     // 소액결제, 컨텐츠 이용료 상세내역
@@ -97,6 +101,8 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/billsetup/historyreturn', controller: MyTFareBillSetReturnHistory });
     this.controllers.push({ url: '/billsetup/change', controller: MyTFareBillSetChange });
     this.controllers.push({ url: '/hotbill', controller: MytFareHotbill });
+    this.controllers.push({ url: '/hotbill/child', controller: MytFareHotbill });
+    this.controllers.push({ url: '/hotbill/prev', controller: MytFareHotbill });
   }
 }
 

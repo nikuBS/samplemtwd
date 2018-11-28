@@ -336,7 +336,7 @@ skt_landing.action = {
     open: function (popup_info,callback_open) {
       var _this = this;
       popup_info.hbs = popup_info.hbs ? popup_info.hbs : 'popup';
-      $.get(hbsURL+popup_info.hbs+'.hbs', function (text) {
+      $.get(popup_info.url+popup_info.hbs+'.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);
         /*
@@ -433,7 +433,7 @@ skt_landing.action = {
         popup_info.wrap = true;
       }
 
-      $.get(hbsURL+'toast.hbs', function (text) {
+      $.get(popup_info.url+'toast.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);
         if(popup_info.wrap){

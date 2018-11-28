@@ -15,7 +15,7 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
-    this.$window.on('pageshow', $.proxy(this._checkIsComplete, this));
+    // this.$window.on('pageshow', $.proxy(this._checkIsComplete, this));
   },
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -95,6 +95,11 @@ Tw.PopupService.prototype = {
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback, hashName);
+    $.extend(option, {
+      url: Tw.Environment.cdn + '/hbs/',
+      cdn: Tw.Environment.cdn
+    });
+    console.log(option);
     this._open(option);
   },
   openAlert: function (contents, title, btName, closeCallback) {
@@ -209,6 +214,7 @@ Tw.PopupService.prototype = {
   },
   openTypeD: function (title, contents, btName, icoType, openCallback, confirmCallback, closeCallback) {
     var option = {
+      url: Tw.Environment.cdn + '/hbs/',
       ico: icoType || 'type2',
       title: title || Tw.POPUP_TITLE.NOTIFY,
       contents: contents,
@@ -275,7 +281,7 @@ Tw.PopupService.prototype = {
   },
   closeAll: function () {
     var hashLength = this._prevHashList.length;
-    if (hashLength > 0) {
+    if ( hashLength > 0 ) {
       this._prevHashList = [];
       history.go(-hashLength);
     }
@@ -288,14 +294,14 @@ Tw.PopupService.prototype = {
   },
   afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
     this.open({
-        'hbs': 'complete',
-        'link_class': 'fe-payment-history',
-        'link_text': linkText,
-        'text': text,
-        'sub_text': subText
+        hbs: 'complete',
+        link_class: 'fe-payment-history',
+        link_text: linkText,
+        text: text,
+        sub_text: subText
       },
       $.proxy(this._onComplete, this, historyUrl, mainUrl),
-      null,
+      $.proxy(this._goBack, this),
       'complete'
     );
   },
@@ -304,7 +310,7 @@ Tw.PopupService.prototype = {
     $layer.on('click', '.fe-submain', $.proxy(this._goLink, this, mainUrl));
   },
   _goLink: function (url) {
-    if (typeof(url) === 'object') {
+    if ( typeof(url) === 'object' ) {
       this.open({
         'hbs': url.hbs
       }, url.open, url.close, url.name);
@@ -312,9 +318,12 @@ Tw.PopupService.prototype = {
       location.href = url;
     }
   },
+  _goBack: function () {
+    history.back();
+  },
   _checkIsComplete: function (event) {
-    if (location.hash.match('complete')) {
-      if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
+    if ( location.hash.match('complete') ) {
+      if ( event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2 ) {
         history.back();
       }
     }
