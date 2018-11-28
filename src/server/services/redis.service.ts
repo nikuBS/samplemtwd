@@ -29,7 +29,7 @@ class RedisService {
     const client = redis.createClient(this.envRedis);
 
     client.set(key, value);
-    client.end(true);
+    client.quit();
   }
 
   public getData(key): Observable<any> {
@@ -45,7 +45,7 @@ class RedisService {
           result = null;
         }
 
-        client.end(true);
+        client.quit();
         observer.next(result);
         observer.complete();
       });
