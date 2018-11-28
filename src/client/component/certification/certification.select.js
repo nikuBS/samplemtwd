@@ -52,7 +52,7 @@ Tw.CertificationSelect.prototype = {
       this._openOpCert();
     } else if ( this._urlMeta.auth.cert.maskAuthYn === 'Y' ) {
       // 마스킹 인증
-      this._authKind = Tw.AUTH_CERTIFICATION_KIND.A
+      this._authKind = Tw.AUTH_CERTIFICATION_KIND.A;
       // this._openMaskingCert();
       this._openOpCert();
     } else {
