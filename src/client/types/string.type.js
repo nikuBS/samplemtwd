@@ -40,7 +40,8 @@ Tw.BUTTON_LABEL = {
   APPLY: '신청하기',
   JOIN: '가입하기',
   TERMINATE: '해지하기',
-  NEXT: '다음'
+  NEXT: '다음',
+  RETRY: '다시 받기'
 };
 
 Tw.POPUP_TITLE = {

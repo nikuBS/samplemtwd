@@ -16,6 +16,9 @@ class CommonMemberSloginAos extends TwViewController {
   render(req: Request, res:
     Response, next: NextFunction, svcInfo: any) {
     const query = req.query;
+    if ( FormatHelper.isEmpty(query) ) {
+      res.redirect('/common/member/slogin/fail');
+    }
     const mdn = {
       original: query.mdn,
       show: FormatHelper.conTelFormatWithDash(query.mdn)
