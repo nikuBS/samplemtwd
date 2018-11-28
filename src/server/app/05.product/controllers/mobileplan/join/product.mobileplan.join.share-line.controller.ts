@@ -23,7 +23,7 @@ class ProductMobileplanJoinShareLine extends TwViewController {
     'NA00003958', 'NA00003557', 'NA00003558', 'NA00003556', 'NA00005057'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = req.params.prodId || null,
+    const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
