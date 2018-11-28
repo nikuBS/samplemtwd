@@ -33,7 +33,7 @@ class MyTFareInfoOverpayRefund extends TwViewController {
 
     if (query.current === 'overpay-refund') {
       this.apiService.request(API_CMD.BFF_07_0030, {}).subscribe((resData) => {
-
+        console.log('\x1b[36m%s\x1b[0m', '------log refund code', resData);
         if (resData.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             code: resData.code,
@@ -41,16 +41,17 @@ class MyTFareInfoOverpayRefund extends TwViewController {
             svcInfo: svcInfo
           //  ,pageInfo: pageInfo
           });
-        }
+        }        
 
         resData.result.refundPaymentRecord = resData.result.refundPaymentRecord.reduce((prev, cur, index) => {
           cur.listId = index;
-          cur.dataDt = DateHelper.getShortDate(cur.rfndReqDt);
+          cur.reqDt = DateHelper.getShortDate(cur.effStaDt); // 신청일자
+          cur.dataDt = cur.rfndReqDt ? DateHelper.getShortDate(cur.rfndReqDt) : ''; // 처리일자 
           cur.listDt = cur.dataDt.slice(5);
           cur.dataAmt = FormatHelper.addComma(cur.sumAmt);
           cur.dataOverAmt = FormatHelper.addComma(cur.ovrPay);
           cur.dataBondAmt = FormatHelper.addComma(cur.rfndObjAmt);
-          cur.sortDt = cur.rfndReqDt;
+          cur.sortDt = cur.effStaDt;
           cur.dataStatus = MYT_PAYMENT_HISTORY_REFUND_TYPE[cur.rfndStat];
 
           if (prev.length) {
