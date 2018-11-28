@@ -334,6 +334,7 @@ export const API_CMD = {
   BFF_06_0065: { path: '/core-bill/v1/credit-cards', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0066: { path: '/core-product/v1/gift-refill-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0067: { path: '/core-bill/v1/pp-cards', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0068: { path: '/core-recharge/v1/ting-permissions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
