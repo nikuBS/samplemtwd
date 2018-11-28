@@ -719,3 +719,14 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PREPAID_HISTORIES = [{ value: '음성 충전', attr: 'data-type="voice"' }, { value: '데이터 충전', attr: 'data-type="data"' }];
+
+Tw.PREPAID_ICONS = {
+  IMMEDIATELY: {
+    name: '1회',
+    type: 'auto'
+  },
+  MONTHLY: {
+    name: '자동',
+    type: 'one'
+  }
+} 

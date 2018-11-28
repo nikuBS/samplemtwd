@@ -1,6 +1,7 @@
 Tw.MyTDataPrepaidHistory = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._apiService = Tw.Api;
 
   this._cachedElement();
   this._bindEvent();
@@ -8,22 +9,48 @@ Tw.MyTDataPrepaidHistory = function(rootEl) {
 };
 
 Tw.MyTDataPrepaidHistory.prototype = {
+  DEFAULT_COUNT: 20,
   _init: function() {
     this._currentType = this.$selectBtn.data('type');
     this._leftCount = {
-      data: Number(this.$totalCount.data('data')) - 20,
-      voice: Number(this.$totalCount.data('voice')) - 20
+      data: Number(this.$totalCount.data('data')) - this.DEFAULT_COUNT,
+      voice: Number(this.$totalCount.data('voice')) - this.DEFAULT_COUNT
     };
+
+    this._pageCount = {
+      data: 1,
+      voice: 1
+    };
+
+    this._displayedYear = {
+      data:
+        this.$container
+          .find('.year-tx[data-type="data"]')
+          .last()
+          .text() || new Date().getFullYear().toString(),
+      voice:
+        this.$container
+          .find('.year-tx[data-type="voice"]')
+          .last()
+          .text() || new Date().getFullYear().toString()
+    };
+
+    this._itemsTmpl = Handlebars.compile($('#fe-tmpl-charge-items').html());
+    this._dayTmpl = Handlebars.compile($('#fe-tmpl-charge-day').html());
+    this._yearTmpl = Handlebars.compile($('#fe-tmpl-charge-year').html());
+    Handlebars.registerPartial('chargeItems', $('#fe-tmpl-charge-items').html());
   },
 
   _bindEvent: function() {
     this.$selectBtn.on('click', $.proxy(this._openChangeHistories, this));
+    this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
   },
 
   _cachedElement: function() {
     this.$moreBtn = this.$container.find('.bt-more > button');
     this.$selectBtn = this.$container.find('.bt-select');
     this.$totalCount = this.$container.find('.num > em');
+    this.$list = this.$container.find('ul.comp-box');
   },
 
   _openChangeHistories: function(e) {
@@ -75,5 +102,93 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     this._currentType = type;
     this._popupService.close();
+  },
+
+  _handleLoadMore: function() {
+    var type = this._currentType;
+    if (this._leftCount[type] <= 0) {
+      return;
+    }
+
+    this._pageCount[type]++;
+
+    this._apiService
+      .request(type === 'voice' ? Tw.API_CMD.BFF_06_0062 : Tw.API_CMD.BFF_06_0063, {
+        pageNum: this._pageCount[type],
+        rowNum: this.DEFAULT_COUNT
+      })
+      .done($.proxy(this._handleSuccessLoadMore, this));
+  },
+
+  _handleSuccessLoadMore: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      this._pageCount[this._currentType]--;
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var histories = _.reduce(resp.result.history, this._sortHistory, {});
+    this._leftCount[this._currentType] -= resp.result.history.length || 0;
+
+    this._renderHistories(histories);
+  },
+
+  _renderHistories: function(histories) {
+    var type = this._currentType,
+      keys = Object.keys(histories),
+      idx = keys.length - 1,
+      key = keys[idx],
+      contents = '',
+      itemYear = '',
+      typeName = Tw.PREPAID_TYPES[type.toUpperCase()],
+      $exist = this.$container.find('.list-box[data-type="' + type + '"][data-key="' + key + '"]');
+
+    if ($exist.length > 0) {
+      $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName }));
+      idx--;
+    }
+
+    for (; idx >= 0; idx--) {
+      key = keys[idx];
+      itemYear = keys[idx].substring(0, 4);
+      if (this._displayedYear[type] !== itemYear) {
+        contents += this._yearTmpl({ year: itemYear, type: type });
+        this._displayedYear[type] = itemYear;
+      }
+
+      contents += this._dayTmpl({
+        items: histories[key],
+        date: histories[key][0].date,
+        type: type,
+        key: key,
+        typeName: typeName
+      });
+    }
+
+    if (contents.length > 0) {
+      this.$list.append(contents);
+    }
+
+    if (this._leftCount[type] > 0) {
+      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount[type] + ')'));
+    } else {
+      this.$moreBtn.addClass('none');
+    }
+  },
+
+  _sortHistory: function(histories, history) {
+    var key = history.chargeDt;
+
+    if (!histories[key]) {
+      histories[key] = [];
+    }
+    history.date = Tw.DateHelper.getShortDateNoYear(key);
+    history.icon = history.chargeTp === '1' ? Tw.PREPAID_ICONS.IMMEDIATELY : Tw.PREPAID_ICONS.MONTHLY;
+    history.isCanceled = history.payCd === '5' || history.payCd === '9';
+    history.isRefundable = history.rfndPsblYn === 'Y';
+    history.amt = Tw.FormatHelper.addComma(history.amt);
+
+    histories[key].push(history);
+
+    return histories;
   }
 };

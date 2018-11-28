@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PREPAID_VOICE, PREPAID_DATA } from '../../../../mock/server/myt-data.prepaid.history.mock';
 import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 export default class MyTDataPrepaidHistory extends TwViewController {
   private DEFAULT_PARAMS = {
@@ -82,7 +83,8 @@ export default class MyTDataPrepaidHistory extends TwViewController {
 
     histories[key].push({
       ...history,
-      date: DateHelper.getShortDateNoYear(key)
+      date: DateHelper.getShortDateNoYear(key),
+      amt: FormatHelper.addComma(history.amt)
     });
     return histories;
   }
