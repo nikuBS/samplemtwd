@@ -76,6 +76,7 @@ export const URL = {
   '/myt-data/submain': { login: true, id: 'DC', title: '데이터/통화 관리' },
   '/myt-data/hotdata': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
   '/myt-data/submain/child-hotdata': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
+  '/myt-data/submain/child-hotdata/recharge': { login: true, id: 'DC_08_02', title: '충전허용금액' },
   '/myt-data/hotdata/total-sharing': { login: true, id: 'DC_01_01_01', title: '통합공유 데이터' },
   '/myt-data/hotdata/cancel-tshare': { login: true, id: 'DC_01_01_02', title: 'T데이터 셰어링 USIM 해지' },
   '/myt-data/familydata': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },

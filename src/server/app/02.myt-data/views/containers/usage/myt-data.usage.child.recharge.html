@@ -1,0 +1,98 @@
+<%#
+* FileName: myt-data.usage.child.recharge.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.11.27
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!-- .popup hbs -->
+<div class="wrap">
+    <div id="myt-data-usage-child-recharge" class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>충전허용금액</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box pb0">
+                    <div class="charge-guide-wrap new">
+                        <div class="charge-cont">
+                            <span class="sub-disc05">현재 충전 허용금액</span>
+                            <span class="tit"><span class="charge-txt"><%= tingSubscriptions.showCurrentTopUpLimit %>원</span></span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box pb0">
+                    <div class="form-data-list">
+                        <span class="tit pt0 pb20">변경하실 충전 허용금액</span>
+                        <div class="discount-look-ahead type01">
+                            <div class="widget">
+                                <div class="widget-box radio">
+                                    <div class="fe-amts-container" style="display: none;overflow: hidden;margin-bottom: 1.25em;">
+                                        <ul class="select-list pb20" role="radiogroup" style="margin-bottom: 0;">
+                                            <script id="fe-amt-item" type="text/x-handlebars-template">
+                                                <li class="radiobox btn-type02" role="radio"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                                                    <input type="radio" name="radio4" value="{{ amt }}" title="{{ amtWithComma }}원" />
+                                                    <span class="radio-txt ff-tb">{{ amtWithComma }}원</span>
+                                                </li>
+                                            </script>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-more">
+                            <button class="fe-btn-more">더 보기</button>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn-submit">변경하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+
+    </div>
+</div>
+<!--// .popup hbs -->
+<!--// #skip_navigation -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTDataUsageChildRecharge($('#myt-data-usage-child-recharge'), {
+      childSvcMgmtNum: '<%= childSvcMgmtNum %>'
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

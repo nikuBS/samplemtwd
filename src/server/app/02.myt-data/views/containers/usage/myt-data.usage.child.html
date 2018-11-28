@@ -34,6 +34,21 @@
                 </div>
                 <!--// .cont-box -->
 
+                <!-- .cont-box -->
+                <!-- 임시 적용 -->
+                <div class="cont-box nogaps">
+                    <div class="recharge-sum">
+                        <%= usageData.childSvcNum %>
+                    </div>
+                    <div class="recharge-sum-change">
+                        <span>충전 허용금액<button class="btn-tip" id="DC_08_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                        <a href="/myt-data/submain/child-hotdata/recharge?childSvcMgmtNum=<%= usageData.childSvcMgmtNum %>" class="change type1">변경</a>
+                    </div>
+                </div>
+                <!-- 임시 적용 -->
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true" />
+
                 <% if (usageData.data && usageData.data.length > 0) { %>
                 <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'data', typeStr: '데이터', items: usageData.data }); %>
                 <% } %>

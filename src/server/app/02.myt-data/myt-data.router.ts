@@ -2,6 +2,7 @@ import TwRouter from '../../common/route/tw.router';
 import MyTDataSubMain from './myt-data.submain.controller';
 import MyTDataUsage from './controllers/usage/myt-data.usage.controller';
 import MyTDataUsageChild from './controllers/usage/myt-data.usage.child.controller';
+import MyTDataUsageChildRecharge from './controllers/usage/myt-data.usage.child.recharge.controller';
 import MyTDataUsageTotalSharingData from './controllers/usage/myt-data.usage.total-sharing-data.controller';
 import MyTDataUsageCancelTshare from './controllers/usage/myt-data.usage.cancel-tshare.controller';
 import MyTDataRechargeCoupon from './controllers/recharge/myt-data.recharge.coupon.controller';
@@ -34,6 +35,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/datainfo', controller: MyTDataInfo });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
     this.controllers.push({ url: '/submain/child-hotdata', controller: MyTDataUsageChild });
+    this.controllers.push({ url: '/submain/child-hotdata/recharge', controller: MyTDataUsageChildRecharge });
     this.controllers.push({ url: '/hotdata', controller: MyTDataUsage });
     this.controllers.push({ url: '/hotdata/total-sharing', controller: MyTDataUsageTotalSharingData });
     this.controllers.push({ url: '/hotdata/cancel-tshare', controller: MyTDataUsageCancelTshare });

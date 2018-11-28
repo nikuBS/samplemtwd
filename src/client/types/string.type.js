@@ -199,6 +199,15 @@ Tw.NON_PAYMENT = {
   }
 };
 
+Tw.MYT_DATA_USAGE_CHILD_RECHARGE = {
+  ALERT: {
+    '2_A5': {
+      TITLE: '변경 불가',
+      CONTENTS: '변경 정보가 없습니다.'
+    }
+  }
+};
+
 Tw.MYT_DATA_CANCEL_TSHARE = {
   TITLE: 'T데이터 셰어링 USIM 해지'
 };
