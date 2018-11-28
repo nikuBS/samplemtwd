@@ -1,10 +1,10 @@
-import { DATA_UNIT } from '../types/string.type';
+import {DATA_UNIT, PRODUCT_CTG_NM} from '../types/string.type';
 import { UNIT } from '../types/bff.type';
 import FormatHelper from './format.helper';
 
 class ProductHelper {
   static convStipulation(stipulation: any): any {
-    if (FormatHelper.isEmpty(stipulation) || FormatHelper.isEmpty(stipulation.stipulation)) {
+    if (FormatHelper.isEmpty(stipulation)) {
       return null;
     }
 
@@ -28,34 +28,32 @@ class ProductHelper {
       return FormatHelper.stripTags(htmlContext);
     }
 
-    const isScrbStplAgree = stipulation.stipulation.scrbStplAgreeYn === 'Y',
-      isPsnlInfoCnsgAgree = stipulation.stipulation.termStplAgreeYn === 'Y',
-      isPsnlInfoOfrAgree = stipulation.stipulation.psnlInfoCnsgAgreeYn === 'Y',
-      isAdInfoOfrAgree = stipulation.stipulation.adInfoOfrAgreeYn === 'Y',
-      isTermStplAgree = stipulation.stipulation.termStplAgreeYn === 'Y',
+    const isScrbStplAgree = stipulation.scrbStplAgreeYn === 'Y',
+      isPsnlInfoCnsgAgree = stipulation.termStplAgreeYn === 'Y',
+      isPsnlInfoOfrAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
+      isAdInfoOfrAgree = stipulation.adInfoOfrAgreeYn === 'Y',
+      isTermStplAgree = stipulation.termStplAgreeYn === 'Y',
       existsCount = _getStipulationYnCnt([
-        stipulation.stipulation.scrbStplAgreeYn,
-        stipulation.stipulation.termStplAgreeYn,
-        stipulation.stipulation.psnlInfoCnsgAgreeYn,
-        stipulation.stipulation.psnlInfoOfrAgreeYn,
-        stipulation.stipulation.adInfoOfrAgreeYn
+        stipulation.scrbStplAgreeYn,
+        stipulation.termStplAgreeYn,
+        stipulation.psnlInfoCnsgAgreeYn,
+        stipulation.psnlInfoOfrAgreeYn,
+        stipulation.adInfoOfrAgreeYn
       ]);
 
     return Object.assign(stipulation, {
-      stipulation: Object.assign(stipulation.stipulation, {
-        isScrbStplAgree: isScrbStplAgree,
-        isPsnlInfoCnsgAgree: isPsnlInfoCnsgAgree,
-        isPsnlInfoOfrAgree: isPsnlInfoOfrAgree,
-        isAdInfoOfrAgree: isAdInfoOfrAgree,
-        isTermStplAgree: isTermStplAgree,
-        isAllAgree: existsCount > 1,
-        scrbStplAgreeCttSummary: _getAgreementSummary(isScrbStplAgree, stipulation.stipulation.scrbStplAgreeHtmlCtt),
-        termStplAgreeCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.stipulation.termStplAgreeHtmlCtt),
-        psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.stipulation.psnlInfoCnsgHtmlCtt),
-        psnlInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.stipulation.psnlInfoOfrHtmlCtt),
-        adInfoOfrCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.stipulation.psnlInfoCnsgHtmlCtt),
-        existsCount: existsCount
-      })
+      isScrbStplAgree: isScrbStplAgree,
+      isPsnlInfoCnsgAgree: isPsnlInfoCnsgAgree,
+      isPsnlInfoOfrAgree: isPsnlInfoOfrAgree,
+      isAdInfoOfrAgree: isAdInfoOfrAgree,
+      isTermStplAgree: isTermStplAgree,
+      isAllAgree: existsCount > 1,
+      scrbStplAgreeCttSummary: _getAgreementSummary(isScrbStplAgree, stipulation.scrbStplAgreeHtmlCtt),
+      termStplAgreeCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.termStplAgreeHtmlCtt),
+      psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.psnlInfoCnsgHtmlCtt),
+      psnlInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.psnlInfoOfrHtmlCtt),
+      adInfoOfrCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.psnlInfoCnsgHtmlCtt),
+      existsCount: existsCount
     });
   }
 
@@ -115,7 +113,9 @@ class ProductHelper {
     };
   }
 
-  static convPlansJoinTermInfo(joinTermInfo): any {
+  static convPlansJoinTermInfo(_joinTermInfo): any {
+    const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
+
     return Object.assign(joinTermInfo, {
       preinfo: ProductHelper.convPlanPreInfo(joinTermInfo.preinfo),
       installmentAgreement: ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement),
@@ -172,7 +172,9 @@ class ProductHelper {
     return days / 30.4;
   }
 
-  static convAdditionsJoinTermInfo(joinTermInfo): any {
+  static convAdditionsJoinTermInfo(_joinTermInfo): any {
+    const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
+
     return Object.assign(joinTermInfo, {
       preinfo: ProductHelper.convAdditionsPreInfo(joinTermInfo.preinfo),
       stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
@@ -194,6 +196,9 @@ class ProductHelper {
 
   static convAutoJoinTermList(autoList): any {
     const autoListConvertResult: any = {};
+    if (FormatHelper.isEmpty(autoList)) {
+      return [];
+    }
 
     autoList.forEach(item => {
       if (FormatHelper.isEmpty(autoListConvertResult[item.svcProdCd])) {
@@ -209,14 +214,16 @@ class ProductHelper {
     return Object.keys(autoListConvertResult).map(key => autoListConvertResult[key]);
   }
 
-  static convWireplanJoinTermInfo(joinTermInfo): any {
+  static convWireplanJoinTermInfo(_joinTermInfo, isJoin): any {
+    const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
+
     return Object.assign(joinTermInfo, {
-      preinfo: ProductHelper.convWireplanPreInfo(joinTermInfo.preinfo),
+      preinfo: ProductHelper.convWireplanPreInfo(joinTermInfo.preinfo, isJoin),
       stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
     });
   }
 
-  static convWireplanPreInfo(preInfo): any {
+  static convWireplanPreInfo(preInfo, isJoin): any {
     const isNumberBasFeeInfo = !isNaN(Number(preInfo.reqProdInfo.basFeeInfo));
 
     return Object.assign(preInfo, {
@@ -224,9 +231,18 @@ class ProductHelper {
         isNumberBasFeeInfo: isNumberBasFeeInfo,
         basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
       }),
-      autoJoinList: ProductHelper.convAutoJoinTermList(preInfo.autoJoinList),
-      autoTermList: ProductHelper.convAutoJoinTermList(preInfo.autoTermList)
+      autoJoinList: isJoin ? ProductHelper.convWireplanAutoJoinTermList(preInfo.autoJoinTermList) : null,
+      autoTermList: !isJoin ? ProductHelper.convWireplanAutoJoinTermList(preInfo.autoJoinTermList) : null
     });
+  }
+
+  static convWireplanAutoJoinTermList(autoJoinTermList) {
+    return [{
+      svcProdNm: PRODUCT_CTG_NM.ADDITIONS,
+      svcProdList: autoJoinTermList.map((item) => {
+        return item.prodNm;
+      })
+    }];
   }
 }
 
