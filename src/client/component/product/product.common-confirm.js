@@ -17,7 +17,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   if (isPopup) {
     this._openPop();
   } else {
-    this._setContainer(rootEl);
+    this._setContainer(false, rootEl);
     this._getOverpay();
   }
 };
@@ -73,12 +73,13 @@ Tw.ProductCommonConfirm.prototype = {
       layer: true,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN
-    }), $.proxy(this._setContainer, this), $.proxy(this._closePop, this), 'join_confirm');
+    }), $.proxy(this._setContainer, this, true), $.proxy(this._closePop, this), 'join_confirm');
   },
 
-  _setContainer: function($container) {
+  _setContainer: function(isPopup, $container) {
     this.$container = $container;
     this._cachedElement();
+    skt_landing.widgets.widget_init();
   },
 
   _joinCancel: function() {
@@ -133,6 +134,26 @@ Tw.ProductCommonConfirm.prototype = {
     })));
 
     this.$overpayWrap.show();
+  },
+
+  _agreeAllToggle: function() {
+    var isAllCheckboxChecked = this.$checkboxAgreeAll.is(':checked');
+
+    this.$checkboxAgreeItem.prop('checked', isAllCheckboxChecked);
+    this.$checkboxAgreeItem.parents('.fe-checkbox_style').toggleClass('checked', isAllCheckboxChecked)
+      .attr('aria-checked', isAllCheckboxChecked);
+
+    this._toggleApplyBtn(this.$container.find('.fe-checkbox_agree_need:not(:checked)').length < 1);
+  },
+
+  _agreeItemToggle: function() {
+    var isCheckboxItemChecked = this.$container.find('.fe-checkbox_agree_item:not(:checked)').length < 1;
+
+    this.$checkboxAgreeAll.prop('checked', isCheckboxItemChecked);
+    this.$checkboxAgreeAll.parents('.fe-checkbox_style').toggleClass('checked', isCheckboxItemChecked)
+      .attr('aria-checked', isCheckboxItemChecked);
+
+    this._toggleApplyBtn(this.$container.find('.fe-checkbox_agree_need:not(:checked)').length < 1);
   },
 
   _openAgreePop: function(e) {

@@ -3,7 +3,6 @@
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2018.09.11
 %>
-
 <% include ../../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
@@ -18,9 +17,5 @@
 <div class="wrap"></div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>
-  $(function () {
-    new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>');
-  });
-</script>
+<script>$(function () { new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>'); });</script>
 <% include ../../../components/end.component.html %>

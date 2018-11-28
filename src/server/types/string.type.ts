@@ -412,6 +412,13 @@ export const PRODUCT_TYPE_NM = {
   SETTING: '설정'
 };
 
+export const PRODUCT_CTG_NM = {
+  PLANS: '요금제',
+  ADDITIONS: '부가서비스',
+  DISCOUNT_PROGRAM: '할인프로그램',
+  COMBINATIONS: '결합상품'
+};
+
 export const MYT_SUSPEND_STATE = {
   R: '접수중',
   D: '서류확인 중',
