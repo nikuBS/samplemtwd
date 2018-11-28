@@ -36,16 +36,16 @@ Tw.CustomerEmailService.prototype = {
     var serviceCategory = this.$service_depth1.data('service-depth1');
 
     switch ( serviceCategory ) {
-      case 'cell':
+      case 'CELL':
         this._requestCell();
         break;
-      case 'internet':
+      case 'INTERNET':
         this._requestInternet();
         break;
-      case 'direct':
+      case 'DIRECT':
         this._requestDirect();
         break;
-      case 'chocolate':
+      case 'CHOCO':
         this._requestChocolate();
         break;
       default:

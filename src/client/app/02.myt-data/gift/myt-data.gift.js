@@ -19,12 +19,20 @@ Tw.MyTDataGift.prototype = {
 
     this.$container.on('click', '.fe-available_product', $.proxy(this._onClickShowAvailableProduct, this));
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._onHideAvailableProduct, this));
+    this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
   },
   _goAutoGiftTab: function () {
     var $tab1 = this.$container.find('#tab1');
     var $tab2 = this.$container.find('#tab2');
     $tab1.attr('aria-selected', false);
     $tab2.attr('aria-selected', true);
+  },
+
+  _onShowMoreData: function (e) {
+    var $btn_show_data = $(e.currentTarget);
+
+    $btn_show_data.closest('.data-gift-wrap').find('li').show();
+    $btn_show_data.remove();
   },
 
   _onClickShowAvailableProduct: function () {
