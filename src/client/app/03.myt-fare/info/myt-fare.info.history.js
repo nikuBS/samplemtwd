@@ -45,7 +45,7 @@ Tw.MyTFareInfoHistory.prototype = {
     else {
       this.listRenderPerPage = 20;
 
-      this.listLastIndex = this.listRenderPerPage;
+      this.listLastIndex = Tw.UIService.getLocalStorage('listLastIndex') || this.listRenderPerPage;
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
       this.renderableListData = this.data.listData.mergedListData.slice(0, this.listRenderPerPage);
@@ -63,6 +63,8 @@ Tw.MyTFareInfoHistory.prototype = {
         } else {
           prev.push({items: [cur], date:cur.listDt});
         }*/
+
+        localStorage.removeItem('listLastIndex'); // 예약취소시 사용되는 로컬스토리지
 
         return prev;
       }, this), []);
@@ -121,13 +123,15 @@ Tw.MyTFareInfoHistory.prototype = {
     this.$domListWrapper.on('click', '.inner', $.proxy(this._listViewDetailHandler, this));
     this.$domListWrapper.on('click', '.btn', $.proxy(this._listViewDetailHandler, this));
     // - 예약취소(포인트 예약)
-    this.$appendListTarget.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this));
+    this.$domListWrapper.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this));
   },
 
   // 상세보기 이동
   _listViewDetailHandler: function(e) {
-    var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
+    // 링크가 없다면 return ;
+    if(!$(e.currentTarget).data('listId')) return ;
 
+    var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
     Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
@@ -141,6 +145,7 @@ Tw.MyTFareInfoHistory.prototype = {
 
   // 예약 취소
   _reserveCancelHandler: function(e) {
+    e.stopPropagation();
     this.reserveCancelData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     var alertCode, alertType;
 
@@ -194,15 +199,23 @@ Tw.MyTFareInfoHistory.prototype = {
     alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
 
     if(res.code === '00') {
-      this._popupService.openAlert(alertType.MSG, alertType.TITLE, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
-        this._popupService.close();
-      }, this));
+      this._popupService.openAlert(alertType.MSG, alertType.TITLE, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._reLoading, this));
     } else {
       this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
         this._popupService.close();
       }, this));
     }
   },
+
+  // 예약 취소 성공 후 리로딩
+  _reLoading: function(){
+    // 예약 취소 시 오픈된 리스트 기억
+    Tw.UIService.setLocalStorage('listLastIndex', this.listLastIndex);
+    this._historyService.reload();
+  },
+  /*function() {
+        this._popupService.close();
+      }*/
   // 포인트 예약 취소 end
 
   // 더 보기
@@ -275,6 +288,7 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _closeAddRefundAccountCallback: function() {
+    
     this._historyService.reload();
   },
 

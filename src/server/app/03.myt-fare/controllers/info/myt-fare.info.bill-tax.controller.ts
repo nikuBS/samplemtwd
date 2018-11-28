@@ -94,7 +94,7 @@ class MyTFareInfoBillTax extends TwViewController {
       resp.result.taxReprintList.map((o) => {
         o.ctzBizName = svcInfo.eqpMdlNm;
         o.taxBillYearMonth = DateHelper.getYearMonth(o.taxBillIsueDt); // 발행시 구분자(selSearch)
-        o.taxBillIsueDt = DateHelper.getShortDateWithFormat(o.taxBillIsueDt, 'YYYY.MM.DD');
+        o.taxBillIsueDt = DateHelper.getShortDate(o.taxBillIsueDt);
         o.splyPrc = FormatHelper.addComma(o.splyPrc.toString());
         o.vatAmt = FormatHelper.addComma(o.vatAmt.toString());
         o.totAmt = FormatHelper.addComma(o.totAmt.toString());

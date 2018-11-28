@@ -46,7 +46,7 @@ class MyTFareInfoBill extends TwViewController {
       }
 
       resp.result.map((o) => {
-        o.dataDt = DateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD');
+        o.dataDt = DateHelper.getShortDate(o.opDt);
         o.dataAmt = FormatHelper.addComma(o.opAmt);
         o.sortDt = o.opDt;
         o.dataPhoneNumber = FormatHelper.conTelFormatWithDash(o.svcNum);
