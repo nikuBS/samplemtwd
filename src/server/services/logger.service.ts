@@ -17,15 +17,15 @@ class LoggerService {
   }
 
   public debug(target, ...args) {
-    // this.logger.debug(`[${target.constructor.name}]`, ...args);
+    this.logger.debug(`[${target.constructor.name}]`, ...args);
   }
 
   public info(target, ...args) {
-    // this.logger.info(`[${target.constructor.name}]`, ...args);
+    this.logger.info(`[${target.constructor.name}]`, ...args);
   }
 
   public warn(target, ...args) {
-    // this.logger.warn(`[${target.constructor.name}]`, ...args);
+    this.logger.warn(`[${target.constructor.name}]`, ...args);
   }
 
   public error(target, ...args) {
@@ -33,7 +33,7 @@ class LoggerService {
   }
 
   private log(...args) {
-    // this.logger.log(...args);
+    this.logger.log(...args);
   }
 
   private initDir() {

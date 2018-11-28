@@ -60,11 +60,12 @@ Tw.CommonMemberSloginAos.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
-    } else if ( resp.code === this.ERROR_CODE.ATH1005 ) {
+    } else if ( resp.code === this.ERROR_CODE.ATH1004 ) {
       this.$errorTxt.removeClass('none');
       this.$inputBox.addClass('error');
+      this.$inputBirth.attr('aria-describedby', 'aria-id-num');
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _onClickDel: function () {

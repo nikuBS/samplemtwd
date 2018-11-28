@@ -20,7 +20,7 @@ var gulp       = require('gulp'),
 var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'test'];
 var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'membership', 'customer', 'tevent'];
 // for docker (dev env)
-var dist_tmp = 'src/server/public/cdn/';
+// var dist_tmp = 'src/server/public/cdn/';
 var dist = 'dist/';
 
 var manifest = {};
@@ -33,10 +33,10 @@ gulp.task('pre-clean', function () {
     .pipe(clean());
 });
 
-gulp.task('pre-clean-tmp', function () {
-  return gulp.src(dist_tmp)
-    .pipe(clean());
-});
+// gulp.task('pre-clean-tmp', function () {
+//   return gulp.src(dist_tmp)
+//     .pipe(clean());
+// });
 
 gulp.task('server', function () {
   return gulp.src(dist)
@@ -44,7 +44,12 @@ gulp.task('server', function () {
       host: '0.0.0.0',
       port: 3001,
       livereload: true,
-      auto: false
+      auto: false,
+      middleware: function (req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Headers', '*');
+        next();
+      }
     }));
 });
 
@@ -62,7 +67,7 @@ gulp.task('js-vendor', function () {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'));
 
 
@@ -79,7 +84,7 @@ gulp.task('js-util', function () {
     'src/client/component/**/*.js',
     'src/client/common/**/*.js'])
     .pipe(concat('util.js'))
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
     .on('error', function (err) {
@@ -87,7 +92,7 @@ gulp.task('js-util', function () {
     })
     .pipe(rename('util.min.js'))
     .pipe(rev())
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/util-manifest.json'))
     .pipe(gulp.dest('.'));
@@ -104,7 +109,7 @@ gulp.task('js-util-client', function () {
     'src/client/component/**/*.js',
     'src/client/common/**/*.js'])
     .pipe(concat('util.js'))
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
     .on('error', function (err) {
@@ -115,7 +120,7 @@ gulp.task('js-util-client', function () {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
       console.log(manifest);
     })
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'));
 });
 
@@ -125,7 +130,7 @@ oldAppNames.map(function (app, index) {
       .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + 'old.js'))
-      .pipe(gulp.dest(dist_tmp + 'js'))
+      // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
       .on('error', function (err) {
@@ -133,7 +138,7 @@ oldAppNames.map(function (app, index) {
       })
       .pipe(rename(app + 'old.min.js'))
       .pipe(rev())
-      .pipe(gulp.dest(dist_tmp + 'js'))
+      // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(rev.manifest(dist + 'tmp/' + app + 'old-manifest.json', {
         merge: true
@@ -148,7 +153,7 @@ appNames.map(function (app, index) {
       .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
-      .pipe(gulp.dest(dist_tmp + 'js'))
+      // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
       .on('error', function (err) {
@@ -156,7 +161,7 @@ appNames.map(function (app, index) {
       })
       .pipe(rename(app + '.min.js'))
       .pipe(rev())
-      .pipe(gulp.dest(dist_tmp + 'js'))
+      // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(rev.manifest(dist + 'tmp/' + app + '-manifest.json', {
         merge: true
@@ -171,14 +176,14 @@ appNames.map(function (app, index) {
       .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
-      .pipe(gulp.dest(dist_tmp + 'js'))
+      // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
       .pipe(rename(manifest[app + '.min.js']))
-      .pipe(gulp.dest(dist_tmp + 'js'))
+      // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'));
   });
 });
@@ -187,7 +192,7 @@ gulp.task('css-vendor', function () {
   return gulp.src([
     'node_modules/slick-carousel/slick/slick.css'])
     .pipe(concat('vendor.css'))
-    .pipe(gulp.dest(dist_tmp + 'css'))
+    // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'));
 });
 
@@ -201,7 +206,7 @@ gulp.task('js-rb', function () {
     'src/client/right-brain/js/**/*.js', '!src/client/right-brain/js/**/*.min.js'
   ])
     .pipe(concat('script.js'))
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
     .on('error', function (err) {
@@ -209,7 +214,7 @@ gulp.task('js-rb', function () {
     })
     .pipe(rename('script.min.js'))
     .pipe(rev())
-    .pipe(gulp.dest(dist_tmp + 'js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/js-manifest.json', {
       merge: true
@@ -234,14 +239,14 @@ gulp.task('css-rb', function () {
     .pipe(concat('style.css'))
     // .pipe(imagehash())
     // .pipe(uglify())
-    .pipe(gulp.dest(dist_tmp + 'css'))
+    // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(rename('style.min.css'))
     .pipe(rev())
-    .pipe(gulp.dest(dist_tmp + 'css'))
+    // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
     .pipe(rev.manifest(dist + 'tmp/css-manifest.json', {
       merge: true
@@ -251,25 +256,25 @@ gulp.task('css-rb', function () {
 
 gulp.task('img', function () {
   return gulp.src('src/client/right-brain/img/**/*')
-    .pipe(gulp.dest(dist_tmp + 'img'))
+  // .pipe(gulp.dest(dist_tmp + 'img'))
     .pipe(gulp.dest(dist + 'img'));
 });
 
 gulp.task('hbs', function () {
   return gulp.src('src/client/right-brain/hbs/**/*')
-    .pipe(gulp.dest(dist_tmp + 'hbs'))
+  // .pipe(gulp.dest(dist_tmp + 'hbs'))
     .pipe(gulp.dest(dist + 'hbs'));
 });
 
 gulp.task('font', function () {
   return gulp.src('src/client/right-brain/font/**/*')
-    .pipe(gulp.dest(dist_tmp + 'font'))
+  // .pipe(gulp.dest(dist_tmp + 'font'))
     .pipe(gulp.dest(dist + 'font'));
 });
 
 gulp.task('resource', function () {
   return gulp.src('src/client/right-brain/resource/**/*')
-    .pipe(gulp.dest(dist_tmp + 'resource'))
+  // .pipe(gulp.dest(dist_tmp + 'resource'))
     .pipe(gulp.dest(dist + 'resource'));
 });
 
@@ -282,13 +287,13 @@ gulp.task('manifest', function () {
 gulp.task('manifest-dev', function () {
   return gulp.src([dist + 'tmp/*.json'])
     .pipe(extend(manifestDev))
-    .pipe(gulp.dest(dist))
-    .pipe(gulp.dest(dist_tmp));
+    // .pipe(gulp.dest(dist_tmp))
+    .pipe(gulp.dest(dist));
 });
 
 gulp.task('cab', function () {
   return gulp.src('src/client/right-brain/cab/**/*')
-    .pipe(gulp.dest(dist_tmp + 'cab'))
+  // .pipe(gulp.dest(dist_tmp + 'cab'))
     .pipe(gulp.dest(dist + 'cab'));
 });
 
@@ -337,7 +342,7 @@ gulp.task('run', ['server', 'watch']);
 
 gulp.task('default', shell.task([
   'gulp pre-clean --ver=' + version,
-  'gulp pre-clean-tmp --ver=' + version,
+  // 'gulp pre-clean-tmp --ver=' + version,
   'gulp task --ver=' + version,
   'gulp manifest-dev --ver=' + version,
   'gulp post-clean --ver=' + version,
@@ -346,7 +351,7 @@ gulp.task('default', shell.task([
 
 gulp.task('build', shell.task([
   'gulp pre-clean --ver=' + version,
-  'gulp pre-clean-tmp --ver=' + version,
+  // 'gulp pre-clean-tmp --ver=' + version,
   'gulp task --ver=' + version,
   'gulp manifest --ver=' + version,
   'gulp manifest-dev --ver=' + version,

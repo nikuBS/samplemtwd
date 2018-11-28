@@ -16,6 +16,7 @@ import FormatHelper from '../../utils/format.helper';
 import VERSION from '../../config/version.config';
 import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
+import environment from '../../config/environment.config';
 
 class ApiRouter {
   public router: Router;
@@ -65,11 +66,13 @@ class ApiRouter {
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
+    const env = String(process.env.NODE_ENV);
     const resp = {
       code: API_CODE.CODE_00,
       result: {
-        environment: process.env.NODE_ENV,
-        version: VERSION
+        environment: env,
+        version: VERSION,
+        cdn: environment[env].CDN
       }
     };
     res.json(resp);

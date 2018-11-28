@@ -15,18 +15,20 @@
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <div class="file-wrap type1 ">
-                   {{#each inputfile_num}}
-                    <div class="widget mt10">
-                        <div class="widget-box file">
+                    {{#each inputfile_num}}
+                        <div class="widget mt10">
+                            <div class="widget-box file">
                             <span class="inputbox bt-add">
                                 <span class="input">
-                                    <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요" style="pointer-events: none;" value={{oldFile.name}} >
+                                    <input class="fileview" type="text" placeholder="서류를 등록해주세요"
+                                           title="서류를 등록해주세요" style="pointer-events: none;" value={{oldFile.name}} >
                                 </span>
                                 <span class="space"></span>
                                 <span class="bt-box">
                                     {{#if oldFile.name}}
                                         <button type="button" class="fe-file-button" >파일삭제</button>
-                                        <input class="file" type="file" value="파일찾기" disabled  style="pointer-events: none;" {{attr}} />
+                                        <input class="file" type="file" value="파일찾기" disabled
+                                               style="pointer-events: none;" {{attr}} />
                                     {{else}}
                                         <button type="button" class="fe-file-button">파일찾기</button>
                                         <input class="file" type="file" value="파일찾기" {{attr}} />
@@ -34,15 +36,15 @@
 
                                 </span>
                             </span>
+                            </div>
                         </div>
-                    </div>
                     {{/each}}
 
                 </div>
                 <div class="cont-noti mt20">
                     <ul class="bullet-type">
                         {{#warning_msg}}
-                        <li class="{{point}}">{{{txt}}}</li>
+                            <li class="{{point}}">{{{txt}}}</li>
                         {{/warning_msg}}
                     </ul>
                 </div>

@@ -1,3 +1,4 @@
+Tw.Environment = { cdn: '' };
 Tw.Init = function () {
   this._apiService = null;
   this._nativeService = null;
@@ -31,12 +32,14 @@ Tw.Init.prototype = {
   _logVersion: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
+      Tw.Environment = result;
+      Tw.Logger.info('[Version]', result.version);
+      Tw.Popup = new Tw.PopupService();
       if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
         /* jshint undef: false */
         // alert(result.version);
         /* jshint undef: false */
       }
-      Tw.Logger.info('[Version]', Tw.environment.version);
     }
   },
 
