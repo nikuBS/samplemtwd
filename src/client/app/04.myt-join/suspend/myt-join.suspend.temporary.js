@@ -53,7 +53,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
       var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
-      this.$inputImmediatelyGift.val(formatted);
+      this.$inputTel.val(formatted);
     }
   },
 
