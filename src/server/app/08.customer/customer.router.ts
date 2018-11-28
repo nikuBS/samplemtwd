@@ -6,10 +6,8 @@ import CustomerGuideSiteUse from './controllers/useguide/customer.useguide.site.
 import CustomerGuideServiceUse from './controllers/useguide/customer.useguide.service.controller';
 import CustomerPraise from './controllers/praise/customer.praise.controller';
 import CustomerDamageInfo from './controllers/damage-info/customer.damage-info.controller';
-import CustomerDamageInfoGuideVideo from './controllers/damage-info/customer.damage-info.guide.video.controller';
-import CustomerDamageInfoGuideLatest from './controllers/damage-info/customer.damage-info.guide.latest.controller';
-import CustomerDamageInfoGuideWebtoon from './controllers/damage-info/customer.damage-info.guide.webtoon.controller';
-import CustomerDamageInfoGuideWebtoonView from './controllers/damage-info/customer.damage-info.guide.webtoon.view.controller';
+import CustomerDamageInfoGuide from './controllers/damage-info/customer.damage-info.guide.controller';
+import CustomerDamageInfoGuideWebtoonView from './controllers/damage-info/customer.damage-info.guide.webtoon-view.controller';
 import CustomerDamageInfoAdditions from './controllers/damage-info/customer.damage-info.additions.controller';
 import CustomerDamageInfoRelated from './controllers/damage-info/customer.damage-info.related.controller';
 import CustomerDamageInfoWarning from './controllers/damage-info/customer.damage-info.warning.controller';
@@ -49,10 +47,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/svc-info/voice(/:page)?', controller: CustomerVoice });
     this.controllers.push({ url: '/svc-info/notice', controller: CustomerSvcInfoNotice });
     this.controllers.push({ url: '/damage-info', controller: CustomerDamageInfo });
-    this.controllers.push({ url: '/damage-info/guide(/video)?', controller: CustomerDamageInfoGuideVideo });
-    this.controllers.push({ url: '/damage-info/guide/latest', controller: CustomerDamageInfoGuideLatest });
-    this.controllers.push({ url: '/damage-info/guide/webtoon', controller: CustomerDamageInfoGuideWebtoon });
-    this.controllers.push({ url: '/damage-info/guide/webtoon/view', controller: CustomerDamageInfoGuideWebtoonView });
+    this.controllers.push({ url: '/damage-info/guide', controller: CustomerDamageInfoGuide });
+    this.controllers.push({ url: '/damage-info/guide/webtoon-view', controller: CustomerDamageInfoGuideWebtoonView });
     this.controllers.push({ url: '/damage-info/warning', controller: CustomerDamageInfoWarning });
     this.controllers.push({ url: '/damage-info/warning/view', controller: CustomerDamageInfoWarningView });
     this.controllers.push({ url: '/damage-info/additions', controller: CustomerDamageInfoAdditions });

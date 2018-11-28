@@ -45,7 +45,7 @@
                 <div class="webtoon-box">
                     <ul class="webtoon-list fe-list" data-size="20">
                         <% for (var i in list) { %>
-                        <li class="<%= list[i].itemClass %>"><a href="/customer/damage-info/guide/webtoon/view?idx=<%= list[i].idx %>" class="webtoon-bt"><img src="/resource/webtoon/<%= list[i].THUMB %>" alt="<%= list[i].TITLE %>"></a></li>
+                        <li class="<%= list[i].itemClass %>"><a href="/customer/damage-info/guide/webtoon-view?idx=<%= list[i].idx %>" class="webtoon-bt"><img src="/resource/webtoon/<%= list[i].THUMB %>" alt="<%= list[i].TITLE %>"></a></li>
                         <% } %>
                     </ul>
                     <p class="data-services">* 자료제공 : 방송통신이용자포털(<a href="http://www.wiswuser.go.kr" class="fe-outlink" title="새창열림" target="_blank">http://www.wiswuser.go.kr</a>)</p>

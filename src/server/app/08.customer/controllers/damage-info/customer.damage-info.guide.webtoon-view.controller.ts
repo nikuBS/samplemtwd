@@ -21,7 +21,7 @@ class CustomerDamageInfoGuideWebtoonView extends TwViewController {
       return res.redirect('/customer/damage-info/guide/webtoon');
     }
 
-    res.render('damage-info/customer.damage-info.guide.webtoon.view.html', {
+    res.render('damage-info/customer.damage-info.guide.webtoon-view.html', {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       data: CUSTOMER_PROTECT_GUIDE_WEBTOON[idx]
