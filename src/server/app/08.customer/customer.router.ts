@@ -26,10 +26,7 @@ import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsea
 import CustomerAgentsearchRepair from './controllers/agentsearch/customer.agentsearch.repair.controller';
 import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.agentsearch.repair-detail.controller';
 import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
-import CustomerSvcInfoNoticeTworld from './controllers/svc-info/customer.svc-info.notice.tworld.controller';
-import CustomerSvcInfoNoticeDirectshop from './controllers/svc-info/customer.svc-info.notice.directshop.controller';
-import CustomerSvcInfoNoticeMembership from './controllers/svc-info/customer.svc-info.notice.membership.controller';
-import CustomerSvcInfoNoticeRoaming from './controllers/svc-info/customer.svc-info.notice.roaming.controller';
+import CustomerSvcInfoNotice from './controllers/svc-info/customer.svc-info.notice.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -50,10 +47,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/svc-info/site', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerGuideSiteUse });
     this.controllers.push({ url: '/svc-info/voice(/:page)?', controller: CustomerVoice });
-    this.controllers.push({ url: '/svc-info/notice(/tworld)?', controller: CustomerSvcInfoNoticeTworld });
-    this.controllers.push({ url: '/svc-info/notice/directshop', controller: CustomerSvcInfoNoticeDirectshop });
-    this.controllers.push({ url: '/svc-info/notice/membership', controller: CustomerSvcInfoNoticeMembership });
-    this.controllers.push({ url: '/svc-info/notice/roaming', controller: CustomerSvcInfoNoticeRoaming });
+    this.controllers.push({ url: '/svc-info/notice', controller: CustomerSvcInfoNotice });
     this.controllers.push({ url: '/damage-info', controller: CustomerDamageInfo });
     this.controllers.push({ url: '/damage-info/guide(/video)?', controller: CustomerDamageInfoGuideVideo });
     this.controllers.push({ url: '/damage-info/guide/latest', controller: CustomerDamageInfoGuideLatest });

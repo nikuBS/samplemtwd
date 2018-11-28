@@ -110,7 +110,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
       return;
     }
 
-    this._history.goLoad('/customer/svc-info/notice/' + this._category);
+    this._history.goLoad('/customer/svc-info/notice?category=' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {
