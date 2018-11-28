@@ -45,7 +45,7 @@ class MyTFareInfoOverpayRefund extends TwViewController {
 
         resData.result.refundPaymentRecord = resData.result.refundPaymentRecord.reduce((prev, cur, index) => {
           cur.listId = index;
-          cur.dataDt = DateHelper.getShortDateWithFormat(cur.rfndReqDt, 'YYYY.MM.DD');
+          cur.dataDt = DateHelper.getShortDate(cur.rfndReqDt);
           cur.listDt = cur.dataDt.slice(5);
           cur.dataAmt = FormatHelper.addComma(cur.sumAmt);
           cur.dataOverAmt = FormatHelper.addComma(cur.ovrPay);
@@ -75,16 +75,12 @@ class MyTFareInfoOverpayRefund extends TwViewController {
   renderListView(res: Response, svcInfo: any, pageInfo: any, query: Query, data: any) {
 
     res.render('info/myt-fare.info.overpay-refund.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
-      current: query.current,
         data: data
     }});
   }
 
   renderDetailView(res: Response, svcInfo: any, pageInfo: any, query: Query) {
-
-    res.render('info/myt-fare.info.overpay-refund.detail.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
-        current: query.current
-      }});
+    res.render('info/myt-fare.info.overpay-refund.detail.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {}});
   }
 
 }
