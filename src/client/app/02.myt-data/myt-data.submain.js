@@ -51,11 +51,12 @@ Tw.MyTDataSubMain.prototype = {
     // }
     if ( this.data.otherLines.length > 0 ) {
       this.$otherLines = this.$container.find('[data-id=other-lines] li');
+      this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
-        this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       }
     }
+    this.$otherPages = this.$container.find('[data-id=other-pages]');
   },
 
   _bindEvent: function () {
@@ -148,6 +149,63 @@ Tw.MyTDataSubMain.prototype = {
         data_arry: chart_data //데이터 obj
       });
     }
+    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
+  },
+
+  _initOtherLinesInfo: function() {
+    var otherLineLength = this.data.otherLines.length;
+    if ( otherLineLength > 0 ) {
+      var requestCommand = [];
+      for ( var idx = 0; idx < otherLineLength; idx++ ) {
+        this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
+        requestCommand.push({
+          command: Tw.API_CMD.BFF_05_0001,
+          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+          headers: {
+            'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
+          }
+        });
+      }
+      this._apiService.requestArray(requestCommand)
+        .done($.proxy(this._responseOtherLine, this))
+        .fail($.proxy(this._errorRequest, this));
+    }
+  },
+
+
+  _responseOtherLine: function () {
+    var combinList = [];
+    var individualList = [];
+    if ( arguments.length > 0 ) {
+      for ( var idx = 0; idx < arguments.length; idx++ ) {
+        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+          var item = arguments[idx].result;
+          var amt = parseInt(item.useAmtTot, 10);
+          var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
+          var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
+          var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
+          var data = _.extend({
+            combine: isCombine,
+            repSvc: repSvc,
+            amt: Tw.FormatHelper.addComma(amt.toString()),
+            svcType: this.__selectSvcType(selectLine.svcAttrCd)
+          }, selectLine);
+          if ( isCombine ) {
+            combinList.push(data);
+          }
+          else {
+            individualList.push(data);
+          }
+        }
+      }
+    }
+    this._svcMgmtNumList = [];
+    // 통합청구리스트, 개별청구리스트
+    this._initOtherLineList(combinList.concat(individualList));
+  },
+
+  _initOtherLineList: function() {
+
   },
 
   // event callback funtion
@@ -292,5 +350,15 @@ Tw.MyTDataSubMain.prototype = {
     var $target = $(event.target);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
+  },
+
+  _errorRequest: function (resp) {
+    if ( !resp ) {
+      resp = {
+        code: '',
+        msg: Tw.ALERT_MSG_COMMON.SERVER_ERROR
+      };
+    }
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };
