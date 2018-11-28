@@ -14,7 +14,6 @@ Tw.MyTFareBillAccount = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._historyService.init();
 
   this._init();
 };
@@ -39,8 +38,6 @@ Tw.MyTFareBillAccount.prototype = {
     this._bankAutoYn = 'N';
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
-    this._historyUrl = '/myt-fare/info/history';
-    this._mainUrl = '/myt-fare/submain';
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
@@ -190,8 +187,7 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl,
-        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PAYMENT);
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
   },
   _isValid: function () {

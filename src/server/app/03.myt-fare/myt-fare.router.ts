@@ -33,6 +33,8 @@ import MyTFareBillContents from './controllers/billcontents/myt-fare.bill.conten
 import MyTFareBillContentsAuto from './controllers/billcontents/myt-fare.bill.contents.auto.controller';
 import MyTFareBillContentsAutoInfo from './controllers/billcontents/myt-fare.bill.contents.auto.info.controller';
 import MyTFareBillContentsAutoChange from './controllers/billcontents/myt-fare.bill.contents.auto.change.controller';
+import MyTFareBillPayComplete from './controllers/bill/myt-fare.bill.pay-complete.controller';
+import MyTFareBillPointComplete from './controllers/bill/myt-fare.bill.point-complete.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -50,6 +52,8 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
     this.controllers.push({ url: '/bill/option', controller: MyTFareBillOption });
     this.controllers.push({ url: '/bill/auto/register', controller: MyTFareBillAutoRegister });
+    this.controllers.push({ url: '/bill/pay-complete', controller: MyTFareBillPayComplete });
+    this.controllers.push({ url: '/bill/point-complete', controller: MyTFareBillPointComplete });
 
     // 소액결제
     this.controllers.push({ url: '/bill/small', controller: MyTFareBillSmall });
