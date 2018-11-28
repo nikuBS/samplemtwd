@@ -14,17 +14,20 @@ class ParamsHelper {
   }
 
   static getQueryParams = (url: string) => {
-    const queryString = url.split('?')[1].split('#')[0];
-    const arrParams = queryString.split('&');
-    const obj = {};
+    if (url.includes('?')) {
+      const queryString = url.split('?')[1].split('#')[0];
+      const arrParams = queryString.split('&');
+      const obj = {};
 
-    const arrLength = arrParams.length;
-    for ( let i = 0; i < arrLength; i++ ) {
-      const item = arrParams[i].split('=');
-      obj[item[0]] = item[1];
+      const arrLength = arrParams.length;
+      for (let i = 0; i < arrLength; i++) {
+        const item = arrParams[i].split('=');
+        obj[item[0]] = item[1];
+      }
+
+      return obj;
     }
-
-    return obj;
+    return null;
   }
 }
 

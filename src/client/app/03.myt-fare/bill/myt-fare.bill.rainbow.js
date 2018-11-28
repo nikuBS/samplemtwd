@@ -75,10 +75,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var message = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT + '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.AUTO_CANCEL;
-
-      this._popupService.afterRequestSuccess('/myt-fare/info/history', '/myt-fare/submain',
-        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message);
+      this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=cancel');
     } else {
       this._fail(res);
     }
@@ -117,53 +114,33 @@ Tw.MyTFareBillRainbow.prototype = {
   _onePay: function () {
     if (this._isValidForOne()) {
       var reqData = this._makeRequestDataForOne();
-
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
-        .done($.proxy(this._paySuccess, this))
+        .done($.proxy(this._paySuccess, this, ''))
         .fail($.proxy(this._fail, this));
     }
   },
   _autoPay: function () {
     if (this._isValidForAuto()) {
       var reqData = this._makeRequestDataForAuto();
-
       this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
-        .done($.proxy(this._paySuccess, this))
+        .done($.proxy(this._paySuccess, this, 'auto'))
         .fail($.proxy(this._fail, this));
     }
   },
-  _paySuccess: function (res) {
+  _paySuccess: function (type, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var message = this._getCompleteMessage();
-      var subMessage = this._getSubMessage();
-
-      this._popupService.afterRequestSuccess('/myt-fare/info/history', '/myt-fare/submain',
-        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, message, subMessage);
+      this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=' + type +
+        '&point=' + this._getPointValue(type) + '&add=' + this.$fareSelector.attr('id'));
     } else {
       this._fail(res);
     }
   },
-  _getCompleteMessage: function () {
-    var message = Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_POINT;
-
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      message += ' ' + Tw.MYT_FARE_PAYMENT_NAME.RESERVATION;
-    } else {
-      message += '<br/>' + Tw.MYT_FARE_PAYMENT_NAME.AUTO;
+  _getPointValue: function (type) {
+    var point = $.trim(this.$point.val());
+    if (type === 'auto') {
+      point = '';
     }
-    return message;
-  },
-  _getSubMessage: function () {
-    var message = '';
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      message += Tw.MYT_FARE_PAYMENT_NAME.RESERVATION + ' ' + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' +
-        '<strong>' + Tw.FormatHelper.addComma($.trim(this.$point.val())) + 'P' + '</strong>' + '<br/>' +
-        $.trim(this.$fareSelector.text());
-    } else {
-      message += Tw.MYT_FARE_PAYMENT_NAME.RAINBOW_MESSAGE + '<br/>' +
-        $.trim(this.$fareSelector.text());
-    }
-    return message;
+    return point;
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();

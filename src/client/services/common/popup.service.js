@@ -15,7 +15,7 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
-    this.$window.on('pageshow', $.proxy(this._checkIsComplete, this));
+    // this.$window.on('pageshow', $.proxy(this._checkIsComplete, this));
   },
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -295,7 +295,7 @@ Tw.PopupService.prototype = {
         'sub_text': subText
       },
       $.proxy(this._onComplete, this, historyUrl, mainUrl),
-      null,
+      $.proxy(this._goBack, this),
       'complete'
     );
   },
@@ -311,6 +311,9 @@ Tw.PopupService.prototype = {
     } else {
       location.href = url;
     }
+  },
+  _goBack: function () {
+    history.back();
   },
   _checkIsComplete: function (event) {
     if (location.hash.match('complete')) {

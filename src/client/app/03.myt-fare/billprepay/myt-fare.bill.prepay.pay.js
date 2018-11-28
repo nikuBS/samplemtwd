@@ -36,8 +36,6 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
 
-    this._historyUrl = '/myt-fare/bill/' + this.$title + '/history';
-    this._mainUrl = '/myt-fare/bill/' + this.$title;
     this._isPaySuccess = false;
   },
   _bindEvent: function () {
@@ -150,9 +148,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._historyService.replaceTarget('/myt-fare/bill/' + this.$title + '#pay_P');
-      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl,
-        Tw.MYT_FARE_PAYMENT_NAME.GO_PREPAY_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PREPAY);
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=' + this.$title);
     }
   },
   _pay: function ($layer) {

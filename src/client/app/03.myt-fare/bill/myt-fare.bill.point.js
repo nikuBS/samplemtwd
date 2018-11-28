@@ -31,8 +31,6 @@ Tw.MyTFareBillPoint.prototype = {
 
     this._pointCardNumber = null;
     this._isPaySuccess = false;
-    this._historyUrl = '/myt-fare/info/history';
-    this._mainUrl = '/myt-fare/submain';
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
@@ -168,8 +166,7 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._popupService.afterRequestSuccess(this._historyUrl, this._mainUrl,
-        Tw.MYT_FARE_PAYMENT_NAME.GO_PAYMENT_HISTORY, Tw.MYT_FARE_PAYMENT_NAME.PAYMENT);
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
   },
   _isValid: function () {

@@ -299,6 +299,32 @@ export const MYT_FARE_PAYMENT_ERROR = {
   COM_CODE_B: '사업자가 브로드밴드 입니다.'
 };
 
+export const MYT_FARE_POINT_MSG = {
+  CASHBAG: 'OK캐쉬백 포인트',
+  TPOINT: 'T포인트',
+  RAINBOW: '레인보우포인트',
+  RESERVATION: '납부 예약 완료',
+  AUTO: '자동납부 신청 완료',
+  CHANGE: '자동납부 변경 완료',
+  CANCEL: '자동납부 해지 완료',
+  REGISTER_POINT: '납부 신청 포인트',
+  RESERVATION_POINT: '납부 예약 포인트',
+  RAINBOW_MSG: '1,000점 이상 보유 시 매월 자동 차감'
+};
+
+export const MYT_FARE_COMPLETE_MSG = {
+  PAYMENT: '납부 완료',
+  HISTORY: '납부내역 보기',
+  PREPAY: '선결제 완료',
+  PREPAY_HISTORY: '선결제내역 보기',
+  REGISTER: '신청완료',
+  CHANGE: '변경완료',
+  CHANGE_HISTORY: '변경내역 보기',
+  NUMBER: '번호로',
+  SMS: 'SMS 전송 완료',
+  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면\n즉시 수납이 반영됩니다.'
+};
+
 export const MYT_JOIN_WIRE_SVCATTRCD = {
   M1: '휴대폰',
   M2: '선불폰',
