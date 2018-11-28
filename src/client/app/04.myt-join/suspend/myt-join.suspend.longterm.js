@@ -29,6 +29,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$btRelation = this.$container.find('[data-id="fe-relation"]');
     this.$btSuspend = this.$container.find('[data-id="fe-bt-suspend"]');
     this.$inputEmail = this.$container.find('[data-id="fe-input-email"]');
+    this.$btnNativeContactList = this.$container.find('.fe-btn_native_contact');
   },
 
   _bindEvent: function () {
@@ -37,6 +38,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$inputTel.on('keyup', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel));
     this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
     this.$btSuspend.on('click', $.proxy(this._onClickSuspend, this));
+    this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this._changeSuspendType('military');
   },
 
@@ -59,15 +61,17 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @private
    */
   _onSuspendTypeChanged: function (e) {
+    var type = e.target.value;
     if ( this._files ) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
-        Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, null, $.proxy(this._onSuspendTypeChanged, this, e.target.value), null);
+        Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, null, $.proxy(this._changeSuspendType, this, type), null);
     } else {
-      this._changeSuspendType();
+      this._changeSuspendType(type);
     }
   },
 
   _changeSuspendType: function (type) {
+    this._files = null;
     this._popupService.close();
     if ( type === 'military' ) {
       this.$container.find('.fe-military').show();
@@ -196,8 +200,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     if ( this.$optionType.filter('[checked]').val() === 'military' ) {
       //validation check
       var $period = this.$container.find('.fe-military.fe-period');
-      from = $period.find('[data-role="fe-from-dt"]').val();
-      to = $period.find('[data-role="fe-to-dt"]').val();
+      from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
+      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
       if ( diff < 0 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PERIOD);
@@ -206,21 +210,20 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PERIOD);
         return;
       }
-
       option.svcChgRsnCd = '21';
-      option.fromDt = from.replace(/-/gi, '');
-      option.toDt = to.replace(/-/gi, '');
+      option.fromDt = from;
+      option.toDt = to;
     } else {
       //validation check
       from = Tw.DateHelper.getCurrentShortDate();
-      to = this.$container.find('.fe-abroad > [data-role="fe-from-dt"]').val();
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
-      if ( diff <= 0 ) {
+      var $period = this.$container.find('.fe-abroad.fe-date');
+      to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
+      diff = Tw.DateHelper.getDiffByUnit(from, to, 'days') ;
+      if ( diff < 0 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
         return;
       }
       option.svcChgRsnCd = '22';
-      option.fromDt = to.replace(/-/gi, '');
     }
     option.icallPhbYn = this.$optionSuspendAll.attr('checked') ? 'Y' : 'N';
 
@@ -256,5 +259,18 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
-  }
+  },
+
+  _onClickBtnAddr: function(e){
+    e.stopPropagation();
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (response) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      var params = response.params;
+      var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
+      this.$inputTel.val(formatted);
+    }
+  },
 };
