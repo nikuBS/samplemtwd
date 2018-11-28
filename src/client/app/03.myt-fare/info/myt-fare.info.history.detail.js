@@ -26,7 +26,8 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         this.detailData.dataUseTermStart = this.detailData.dataDt.substr(0, 8) + '01';
         this.detailData = Object.assign(this.detailData, this.data.data, {
           invYearMonth:Tw.DateHelper.getShortDateNoDate(this.data.data.invDt),
-          reqDate:Tw.DateHelper.getShortDate(this.data.data.reqDtm)
+          reqDate:Tw.DateHelper.getShortDate(this.data.data.reqDtm),
+          comDate:Tw.DateHelper.getShortDate(this.data.data.opDt)
         });
         /*this.detailData.cardNum = this.data.data.cardNum;
         this.detailData.aprvNum = this.data.data.aprvNum;*/
