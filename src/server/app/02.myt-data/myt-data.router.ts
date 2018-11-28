@@ -18,6 +18,8 @@ import MyTDataPrepaidVoice from './controllers/prepaid/myt-data.prepaid.voice.co
 import MyTDataPrepaidData from './controllers/prepaid/myt-data.prepaid.data.controller';
 import MyTDataPrepaidAlarm from './controllers/prepaid/myt-data.prepaid.alarm.controller';
 import MyTDataRechargeCouponComplete from './controllers/recharge/myt-data.recharge.coupon.complete.controller';
+import MyTDataPrepaidDataAuto from './controllers/prepaid/myt-data.prepaid.data-auto.controller';
+import MyTDataPrepaidDataComplete from './controllers/prepaid/myt-data.prepaid.data-complete.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -41,7 +43,9 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/hotdata/cancel-tshare', controller: MyTDataUsageCancelTshare });
     this.controllers.push({ url: '/recharge/prepaid/history', controller: MyTDataPrepaidHistory });
     this.controllers.push({ url: '/recharge/prepaid/voice(/:page)?', controller: MyTDataPrepaidVoice });
-    this.controllers.push({ url: '/recharge/prepaid/data(/:page)?', controller: MyTDataPrepaidData });
+    this.controllers.push({ url: '/recharge/prepaid/data', controller: MyTDataPrepaidData });
+    this.controllers.push({ url: '/recharge/prepaid/data/auto', controller: MyTDataPrepaidDataAuto });
+    this.controllers.push({ url: '/recharge/prepaid/data/complete', controller: MyTDataPrepaidDataComplete });
     this.controllers.push({ url: '/recharge/prepaid/alarm', controller: MyTDataPrepaidAlarm });
   }
 }

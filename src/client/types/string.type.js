@@ -358,7 +358,8 @@ Tw.ALERT_MSG_MYT_DATA = {
   DATA_PESTER: {
     TITLE: '[SKT] ',
     CONTENT: '님이\n"T끼리 데이터 선물 조르기"를 요청하셨습니다.\n데이터 선물 하러가기\n'
-  }
+  },
+  V56: '충전 금액을 선택해 주세요.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
@@ -750,7 +751,8 @@ Tw.MYT_DATA_TING = {
 Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',
   A70_CONTENT: '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
-  A70_BTN_CONFIRM: '해지하기'
+  A70_BTN_CONFIRM: '해지하기',
+  DATA_TITLE: '데이터 1회 충전 내역 확인'
 };
 
 Tw.MYT_PAYMENT_HISTORY_HASH = {

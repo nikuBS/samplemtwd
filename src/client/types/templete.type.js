@@ -659,6 +659,31 @@ Tw.MYT_PREPAID_RECHARGE_AMOUNT = {
   ]
 };
 
+Tw.MYT_PREPAID_RECHARGE_DATA_ADD = [
+  {
+    list: [
+      { 'option': 'data-type', 'attr': 'id="005G12S" data-value="5120" data-amount="33000"', value: '5GB (33,000원)' },
+      { 'option': 'data-type', 'attr': 'id="002G12S" data-value="2048" data-amount="19000"', value: '2GB (19,000원)' },
+      { 'option': 'data-type', 'attr': 'id="001G12S" data-value="1024" data-amount="15000"', value: '1GB (15,000원)' },
+      { 'option': 'data-type', 'attr': 'id="500M12S" data-value="500" data-amount="10000"', value: '500MB (10,000원)' },
+      { 'option': 'data-type', 'attr': 'id="100M12S" data-value="100" data-amount="2000"', value: '100MB (2,000원)' }
+    ]
+  }
+];
+
+Tw.MYT_PREPAID_RECHARGE_DATA = [
+  {
+    list: [
+      { 'option': 'data-type', 'attr': 'id="004G090" data-value="4096" data-amount="33000"', value: '4GB / 90일 (33,000원)' },
+      { 'option': 'data-type', 'attr': 'id="002G090" data-value="2048" data-amount="27500"', value: '2GB / 90일 (27,500원)' },
+      { 'option': 'data-type', 'attr': 'id="002G030" data-value="2048" data-amount="24200"', value: '2GB / 30일 (24,200원)' },
+      { 'option': 'data-type', 'attr': 'id="001G090" data-value="1024" data-amount="22000"', value: '1GB / 90일 (22,000원)' },
+      { 'option': 'data-type', 'attr': 'id="001G030" data-value="1024" data-amount="18700"', value: '1GB / 30일 (18,700원)' },
+      { 'option': 'data-type', 'attr': 'id="300M030" data-value="300" data-amount="8800"', value: '300MB / 30일 (8,800원)' }
+    ]
+  }
+];
+
 Tw.MYT_PREPAID_DATE = {
   list: [
     { text: '15일', value: 15 },
