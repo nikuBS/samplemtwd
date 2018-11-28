@@ -33,8 +33,6 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       list: [
         { value: '010', attr: 'data-phone="010"' },
         { value: '011', attr: 'data-phone="011"' },
-        { value: '012', attr: 'data-phone="012"' },
-        { value: '015', attr: 'data-phone="015"' },
         { value: '016', attr: 'data-phone="016"' },
         { value: '017', attr: 'data-phone="017"' },
         { value: '018', attr: 'data-phone="018"' },
@@ -111,6 +109,8 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$feTel2 = this._$main.find('.fe-tel2');
     this._$feTel3 = this._$main.find('.fe-tel3');
     this._$btnRequest = this._$main.find('.fe-btn-request');
+    this._$selectPeriodErr = this._$main.find('.fe-select-period-err');
+    this._$selectPhoneErr = this._$main.find('.fe-select-phone-err');
 
     this._$confirm = this.$container.find('#confirm');
     this._$labelPhone = this._$confirm.find('.fe-label-phone');
@@ -123,8 +123,8 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$btnRequest.on('click', $.proxy(this._onClickBtnRequest, this));
     this._$btnSubmit.on('click', $.proxy(this._onClickBtnSubmit, this));
     this._$fePhone1.on('click', $.proxy(this._onClickPhone1, this));
-    this._$fePhone2.on('keyup', $.proxy(this._onKeyupInputPhone, this));
-    this._$fePhone3.on('keyup', $.proxy(this._onKeyupInputPhone, this));
+    this._$fePhone2.on('input', $.proxy(this._onKeyupInputPhone, this));
+    this._$fePhone3.on('input', $.proxy(this._onKeyupInputPhone, this));
     this._$feTel1.on('click', $.proxy(this._onClickTel1, this));
   },
 
@@ -309,6 +309,20 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     var isValidCellPhone = Tw.ValidationHelper.isCellPhone(this._getCellphoneNumber());
     var propDisabled = (!!this._selectedTerm && isValidCellPhone) ? false : true;
     this._$btnRequest.prop('disabled', propDisabled);
+    this._setErrTxtStatus(isValidCellPhone);
+  },
+
+  _setErrTxtStatus: function(isValidCellPhone) {
+    if (isValidCellPhone) {
+      this._$selectPhoneErr.hide();
+    } else {
+      this._$selectPhoneErr.show();
+    }
+    if (this._selectedTerm) {
+      this._$selectPeriodErr.hide();
+    } else {
+      this._$selectPeriodErr.show();
+    }
   },
 
   _onClickBtnSelectPeriod: function () {
