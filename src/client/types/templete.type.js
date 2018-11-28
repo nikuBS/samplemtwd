@@ -480,17 +480,7 @@ Tw.TERMS_ACTION = {
         { value: '시내전화 이용약관', option: 'fe-action', attr: 'value="50:d"' }
       ]
     }]
-  },
-  102: {
-    title: '초콜릿 이용약관',
-    data: [{
-      list: [
-        { value: '이용약관', option: 'fe-action', attr: 'value="102:e"' },
-        { value: '개인정보처리방침', option: 'fe-action', attr: 'value="103:e"' },
-        { value: '개인벙보 수집 및 이용안내', option: 'fe-action', attr: 'value="104:e"' }
-      ]
-    }]
-  },
+  }
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
@@ -741,4 +731,4 @@ Tw.PREPAID_ICONS = {
     name: '자동',
     type: 'one'
   }
-} 
+}
