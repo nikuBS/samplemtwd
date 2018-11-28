@@ -205,6 +205,9 @@ Tw.MYT_DATA_USAGE_CHILD_RECHARGE = {
       TITLE: '변경 불가',
       CONTENTS: '변경 정보가 없습니다.'
     }
+  },
+  MSG: {
+    CHANGE: '변경'
   }
 };
 

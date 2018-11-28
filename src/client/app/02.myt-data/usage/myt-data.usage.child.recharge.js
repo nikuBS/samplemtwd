@@ -82,7 +82,8 @@ Tw.MyTDataUsageChildRecharge.prototype = {
 
   _reqSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess(this._URL.MYT_DATA_SUBMAIN, this._URL.MYT_DATA_SUBMAIN, null, '변경');
+      this._popupService.afterRequestSuccess(this._URL.MYT_DATA_SUBMAIN, this._URL.MYT_DATA_SUBMAIN, null,
+        Tw.MYT_DATA_USAGE_CHILD_RECHARGE.MSG.CHANGE);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
