@@ -453,7 +453,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
       this.cancelFeeInfo = res.result;
 
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null,
+      this._popupService.afterRequestSuccess('/myt-join/submain_w', '/myt-join/submain_w', null,
         Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE, null);
 
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,

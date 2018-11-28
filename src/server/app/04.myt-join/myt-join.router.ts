@@ -35,13 +35,11 @@ import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.
 class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
 
     // new url
-    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
-    this.controllers.push({ url: '/submain_w', controller: MyTJoinSubmainController });
+    this.controllers.push({ url: '(/:submain)', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/custpassword', controller: MyTJoinCustpassword });
     this.controllers.push({ url: '/myplancombine/infodiscount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/myplancombine/infodiscount/month', controller: MyTJoinInfoDiscountMonth });

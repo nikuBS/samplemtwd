@@ -23,7 +23,7 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
 
 Tw.MyTJoinWireModifyPeriod.prototype = {
   _URL: {
-    MAIN: '/myt-join/submain'
+    MAIN: '/myt-join/submain_w'
   },
   _LOADING_POPUP_HBS: 'MS_04_06_L01',
   _MAXSIMUM_INTERVAL_CNT: 2,          // 결과조회 최대 호출 카운트
