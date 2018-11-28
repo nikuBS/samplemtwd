@@ -31,7 +31,7 @@ class BenefitRouter extends TwRouter {
     this.controllers.push({ url: '/my/rainbowpoint', controller: BenefitMyBenefitRainbowPoint });
     this.controllers.push({ url: '/my/rainbowpoint/adjustment', controller: BenefitMyBenefitRainbowPointAdjustment });
     this.controllers.push({ url: '/my/rainbowpoint/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
-    this.controllers.push({ url: '/terminate/tb-combination/:prodId', controller: BenefitTerminateTbCombination });
+    this.controllers.push({ url: '/terminate/tb-combination', controller: BenefitTerminateTbCombination });
   }
 }
 

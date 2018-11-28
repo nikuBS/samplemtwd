@@ -1,17 +1,3 @@
-/*
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.
- *
- */
-
-/*
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.
- *
- */
-
 /**
  * 모바일 요금제 > Couple 요금제
  * FileName: product.mobileplan.lookup.couple.controller.ts
@@ -34,7 +20,7 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     'NA00002562', 'NA00000010', 'NA00000011', 'NA00000060', 'NA00000061', 'NA00000062', 'NA00000063'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = req.params.prodId || null;
+    const prodId = req.query.prod_id || null;
     const data: any = {
       pageInfo: pageInfo,
       svcInfo: svcInfo,

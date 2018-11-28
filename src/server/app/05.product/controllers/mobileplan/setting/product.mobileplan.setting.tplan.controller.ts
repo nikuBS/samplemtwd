@@ -18,7 +18,7 @@ class ProductMobileplanSettingTplan extends TwViewController {
   private readonly _allowedProdIdList = ['NA00005959'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = req.params.prodId || null,
+    const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
