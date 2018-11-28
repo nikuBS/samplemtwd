@@ -168,16 +168,15 @@ class ApiRouter {
   // }
 
   private upload() {
-    let returnPath = 'uploads/';
     const currentDate = new Date(),
       storage = multer.diskStorage({
         destination: (req, file, cb) => {
-          let storagePath = path.resolve(__dirname, '../../../../', returnPath);
+          let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
 
           if (!FormatHelper.isEmpty(req.body.dest)) {
             const dateFormat = dateHelper.getShortDateWithFormat(currentDate, 'YYMMDD');
 
-            storagePath += req.body.dest + '/';
+            storagePath += '/' + req.body.dest + '/';
             if (!fs.existsSync(storagePath)) {
               fs.mkdirSync(storagePath);
             }
@@ -186,8 +185,6 @@ class ApiRouter {
             if (!fs.existsSync(storagePath)) {
               fs.mkdirSync(storagePath);
             }
-
-            returnPath += req.body.dest + '/' + dateFormat + '/';
           }
 
           cb(null, storagePath);
@@ -198,16 +195,11 @@ class ApiRouter {
         limits: { fileSize: 5 * 1024 * 1024 }
       });
 
-    return {
-      path: returnPath,
-      component: multer({ storage: storage }).array('file')
-    };
+    return multer({ storage: storage }).array('file');
   }
 
   private uploadFile(req: Request, res: Response, next: NextFunction) {
-    const upload = this.upload();
-
-    upload.component(req, res, (err) => {
+    this.upload()(req, res, (err) => {
       if ( err ) {
         this.logger.error(this, err);
         res.json({ code: err.errno, msg: err.code });
@@ -223,7 +215,7 @@ class ApiRouter {
           return {
             name: file.filename,
             size: file.size,
-            path: upload.path,
+            path: file.destination.match(/uploads\/(.+)?/)[0],
             originalName: file.originalname
           };
         })
