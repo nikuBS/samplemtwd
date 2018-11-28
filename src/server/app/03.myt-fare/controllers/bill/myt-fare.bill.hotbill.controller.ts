@@ -123,9 +123,9 @@ class MyTFareBillHotbill extends TwViewController {
     if ( otherSvc && otherSvc[LINE_NAME.MOBILE] ) {
       svcs = svcs.concat(otherSvc[LINE_NAME.MOBILE]
         .filter(svc => (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1) &&  // 지원 회선 필터링
-          (this._preBillAvailable || svc.svcMgmtNum !== svcInfo['svcMgmtNum']))); // 전월요금 필요할 경우 본인 회선도 조회(gubun: Q)
+          ( svc.svcMgmtNum !== svcInfo['svcMgmtNum'])));
+          // (this._preBillAvailable || svc.svcMgmtNum !== svcInfo['svcMgmtNum']))); // 전월요금 필요할 경우 본인 회선도 조회(gubun: Q)
     }
-
     return svcs.map(svc => {
       return JSON.parse(JSON.stringify(svc));
     });
