@@ -63,7 +63,11 @@
 
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
-                <li><button type="button" class="btn-floating btn-style2 fe-common-back">닫기</button></li>
+                <% if (code === 403) { %>
+                <li><a href="/main/home" type="button" class="btn-floating btn-style2">홈으로</a></li>
+                <% } else { %>
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">돌아가기</button></li>
+                <% } %>
             </ul>
         </div>
         <!--// .container-wrap -->
