@@ -217,7 +217,7 @@ export default class TestMyTDataInfo extends TwViewController {
           text: ChargeTypeNames.CHARGE
         },
         refundable: item.refundableYn === 'Y',
-        bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
+        bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCEL] : [item.opTypNm]
       });
 
       return nData;
@@ -257,7 +257,7 @@ export default class TestMyTDataInfo extends TwViewController {
           icon: BadgeTypes.GIFT,
           text: ChargeTypeNames.GIFT
         },
-        bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
+        bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCEL] : [item.opTypNm]
       });
 
       return nData;
