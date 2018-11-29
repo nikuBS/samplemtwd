@@ -47,15 +47,13 @@ class MyTDataCookiz extends TwViewController {
             { subscriptions: subscriptions }
           );
 
-          res.render('cookiz/myt-data.cookiz.html', response);
-
-          // if ( subscriptions && subscriptions.currentTopUpLimit === '0' ) {
-          //   res.render('cookiz/myt-data.cookiz.blocked.html', response);
-          // } else if ( subscriptions ) {
-          //   res.render('cookiz/myt-data.cookiz.html', response);
-          // } else {
-          //   res.render('cookiz/myt-data.cookiz.error.html', response);
-          // }
+          if ( subscriptions && subscriptions.topUpLimit === '0' ) {
+            res.render('cookiz/myt-data.cookiz.blocked.html', response);
+          } else if ( subscriptions ) {
+            res.render('cookiz/myt-data.cookiz.html', response);
+          } else {
+            res.render('cookiz/myt-data.cookiz.error.html', response);
+          }
         });
     }
   }
