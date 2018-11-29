@@ -28,7 +28,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
-    this.$cancelBtn.on('click', $.proxy(this._openCancel, this));
+    this.$cancelBtn.on('click', $.proxy(this._cancel, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
@@ -36,8 +36,18 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$rechargeBtn.on('click', $.proxy(this._recharge, this));
   },
-  _openCancel: function () {
-    this._popupService.openAlert('');
+  _cancel: function () {
+    // this._apiService.request(Tw.API_CMD.BFF_06_0061, {})
+    //   .done($.proxy(this._cancelSuccess, this))
+    //   .fail($.proxy(this._fail, this));
+    this._cancelSuccess({ code: Tw.API_CODE.CODE_00 });
+  },
+  _cancelSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/data/complete?type=cancel');
+    } else {
+      this._fail(res);
+    }
   },
   _openSelectPop: function (event) {
     var $target = $(event.currentTarget);
@@ -125,7 +135,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this._rechargeSuccess({ code: Tw.API_CODE.CODE_00 });
     // this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
     //   .done($.proxy(this._rechargeSuccess, this))
-    //   .fail($.proxy(this._rechargeFail, this));
+    //   .fail($.proxy(this._fail, this));
   },
   _makeRequestData: function () {
     return {
@@ -141,13 +151,13 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     if (this.$isAuto) type = 'change';
 
     if (res.code === Tw.API_CODE.CODE_00) {
-      var data = Tw.FormatHelper.customDataFormat(this._getAfterData(), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
-      this._historyService.replaceURL('/myt-data/recharge/prepaid/data/complete?data=' + data.data + '&type=' + type);
+      var code = this.$dataSelector.attr('id');
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/data/complete?data=' + code + '&type=' + type);
     } else {
-      this._rechargeFail(res);
+      this._fail(res);
     }
   },
-  _rechargeFail: function (err) {
+  _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
   _getAfterData: function () {

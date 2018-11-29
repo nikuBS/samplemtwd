@@ -33,24 +33,29 @@
                         <div class="title-box">
                             <i class="icon-complete-120"><span class="blind">complete</span></i>
                             <p class="tx-tit">
-                                <% if (type === 'auto') { %><%- description %><br /><% } %>
+                                <% if (type === 'auto' || type === 'change') { %>
+                                <%- description %><br />
+                                <% } %>
                                 <span class="tx-highlight pt10"><%= mainTitle %></span>
                             </p>
                         </div>
                         <div class="tx-contents">
+                            <% if (data !== undefined) { %>
                             <div class="basic-list">
                                 <ul>
                                     <li>
                                         <span class="title">
-                                            <%= if (type === 'auto') { %>
+                                            <% if (type === undefined) { %>
                                             충전 후 데이터
                                             <% } else { %>
                                             충전 신청 데이터
+                                            <% } %>
                                         </span>
                                         <span class="tx-cont"><%= data %></span>
                                     </li>
                                 </ul>
                             </div>
+                            <% } %>
                             <ul class="bt-slice item-one">
                                 <li><a href="<%= centerUrl %>" type="button" class="btn-round2 btn-style3"><%= centerName %></a></li>
                             </ul>
