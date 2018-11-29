@@ -23,15 +23,24 @@ Tw.MyTFareBillContentsHitstoryDetail.prototype = {
   _init: function() {
     var renderedHTML;
     this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
-    console.log(this.detailData);
-    renderedHTML = this.$template.$detailWrap(this.detailData);
-    this.$domWrapper.append(renderedHTML);
+    
+    if(this.detailData){
+      renderedHTML = this.$template.$detailWrap(this.detailData);
+      this.$domWrapper.append(renderedHTML);
+    }
+    // 곧바로 상세 url를 치고 들어와서 조회된 데이터가 없을 시 
+    else{
+      renderedHTML = this.$template.$emptyContent({});
+      this.$domWrapper.after(renderedHTML);
+      this.$domWrapper.hide();
+    }
   },
 
   _cachedElement: function() {
     this.$domWrapper = this.$container.find('#fe-detail-wrap'); 
     this.$template = {
-      $detailWrap: Handlebars.compile($('#fe-detail-contents').html())
+      $detailWrap: Handlebars.compile($('#fe-detail-contents').html()),
+      $emptyContent: Handlebars.compile($('#fe-empty-contents').html())
     };
   },
 
