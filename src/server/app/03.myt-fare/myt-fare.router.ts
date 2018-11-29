@@ -11,6 +11,8 @@ import MyTFareBillGuideRoaming from './controllers/billguide/myt-fare.bill.guide
 import MyTFareBillGuideDonation from './controllers/billguide/myt-fare.bill.guide.donation.controllers';
 import MyTFareSubMainNonBill from './controllers/submain/myt-fare.submain.non-paymt';
 import MyTFareHistory from './controllers/history/myt-fare.history.controller';
+import MyTFareBillContentsHistory from './controllers/billcontents/myt-fare.bill.contents.history.controller';
+import MyTFareBillContentsHistortDetail from './controllers/billcontents/myt-fare.bill.contents.history.detail.controller';
 import MyTFareInfoHistory from './controllers/info/myt-fare.info.history.controller';
 import MyTFareInfoHistoryDetail from './controllers/info/myt-fare.info.history.detail.controller';
 import MyTFareInfoBillCash from './controllers/info/myt-fare.info.bill-cash.controller';
@@ -76,9 +78,9 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/small/block', controller: MyTFareHistory });
     this.controllers.push({ url: '/bill/small/history/detail', controller: MyTFareHistory });
 
-    this.controllers.push({ url: '/bill/contents/history', controller: MyTFareHistory });
+    this.controllers.push({ url: '/bill/contents/history', controller: MyTFareBillContentsHistory });
     this.controllers.push({ url: '/bill/contents/monthly', controller: MyTFareHistory });
-    this.controllers.push({ url: '/bill/contents/detail', controller: MyTFareHistory });
+    this.controllers.push({ url: '/bill/contents/history/detail', controller: MyTFareBillContentsHistortDetail });
 
     // 납부내역
     this.controllers.push({ url: '/info/history', controller: MyTFareInfoHistory });

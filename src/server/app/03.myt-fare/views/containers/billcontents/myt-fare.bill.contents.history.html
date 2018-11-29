@@ -31,24 +31,22 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps" id="fe-list-wrapper">
-
- <div class="cont-use-detail">
-            <ul class="list-inner">
-            </ul>
-            </div>
-
-
+                    <div class="cont-use-detail">
+                        <ul class="list-inner">
+                        </ul>
+                    </div>
                 </div>
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                    <ul class="noti-list">
-                        <li>텍스트가 1줄인 Case입니다.</li>
-                        <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
-                        <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list">
+                        <% data.noticeInfo.forEach(function(info){ %>
+                            <li data-list-id="<%=info.link%>"><%=info.title%><button class="btn-tip" title="정보보기" ><i class="icon-badge-tip"><span class=
+                            "blind">TIP</span></i></button></li>
+                        <% }); %>
                     </ul>
                 </div>
                 <!--// .cont-box -->
@@ -69,22 +67,17 @@
           new Tw.MyTFareBillContentsHitstory($(document), '<%- JSON.stringify(data)%>');
       });
     </script>
-    <script id="list-wrapper" type="text/x-handlebars-template">
-        <div class="cont-use-detail">
-            <ul class="list-inner">
-            {{> list billList=billList}}
-            </ul>
-        </div>
+    <script id="btn-more-wrapper" type="text/x-handlebars-template">
         {{#if initialMoreData}}
         <div class="bt-more">
-            <button>더보기<span>(<em>{{restCount}}</em>)</span></button>
+            <button>더 보기</button>
         </div>
         {{/if}}
     </script>
     <script id="list-default" type="text/x-handlebars-template">
         {{#each billList}}
         <li>
-            <a href="<%=detailURL%>" title="상세내역 보기" data-list-id="{{listId}}">
+            <button title="상세내역 보기" class="fe-detail-link" data-list-id="{{listId}}">
                 <dl>
                     <dt>
                         <p class="sv-name"><span class="blind">서비스명</span>{{useServiceNm}}</p>
@@ -92,7 +85,7 @@
                     </dt>
                     <dd><span class="blind">결제금액</span><span class="str">{{useAmt}}</span>원</dd>
                 </dl>
-            </a>
+            </button>
         </li>
         {{/each}}
     </script>
