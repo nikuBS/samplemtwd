@@ -459,6 +459,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A11: { TITLE: '알림', MSG: '기존과 동일한 혜택입니다. 다시 선택해 주세요.' },
   ALERT_2_A12: { TITLE: '알림', MSG: '변경되었습니다.' },
   ALERT_2_A13: { TITLE: '알림', MSG: '기존과 동일한 혜택입니다. 다시 입력해 주세요.' },
+  ALERT_2_A33: { TITLE: '알림', MSG: '입력하신 전화번호에 대한 번호이동 진행 현황이 없습니다. 입력 번호를 확인해 주시기 바랍니다.' },
   ALERT_2_A34_CONF: { TITLE: '접수취소', MSG: '장애 A/S 신청을 취소하시겠습니까?' },
   ALERT_2_A34: { TITLE: '알림', MSG: '장애 A/S 신청이 취소되었습니다.' },
   ALERT_2_A35: {
@@ -476,6 +477,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A66: { TITLE: '알림', MSG: '망 작업 SMS 알림 수신번호가 변경 되었습니다.' },
   ALERT_2_A68: { TITLE: '알림', MSG: '등록된 연락처가 없습니다.' },
   ALERT_2_A80: { TITLE: '알림', MSG: 'T_B끼리 통화 무제한에 가입하신 사용자가 아닙니다.' },
+  ALERT_2_A201: { TITLE: '알림', MSG: 'B끼리 무료통화 대상자입니다.' },
 
   ALERT_2_V9: '휴대폰 번호가 올바르지 않습니다.',
   ALERT_2_V13: '번호 조회범위는 100을 넘을 수 없습니다.',
