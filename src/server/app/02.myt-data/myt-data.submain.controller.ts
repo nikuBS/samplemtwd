@@ -50,12 +50,12 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
     ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
-      if ( !svcInfo.svcMgmtNum && present.info ) {
+      if ( !svcInfo.svcMgmtNum || remnant.info ) {
         // 비정상 진입 또는 API 호출 오류
         this.error.render(res, {
           title: MYT_DATA_SUBMAIN_TITLE.MAIN,
-          code: present.info.code,
-          msg: present.info.msg,
+          code: remnant.info.code,
+          msg: remnant.info.msg,
           svcInfo: svcInfo
         });
         return false;
@@ -348,12 +348,17 @@ class MytDataSubmainController extends TwViewController {
   }
 
   /**
-   * 실시간 잔여량 - publishing 상태로 화면만 노출
+   * 실시간 잔여량 (합산 언제쯤..)
    */
   _getRemnantData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
+      } else {
+        // error
+        return {
+          info: resp
+        };
       }
     });
   }
