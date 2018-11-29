@@ -45,7 +45,7 @@ Tw.ApiService.prototype = {
   },
 
   _checkAuth: function (command, params, headers, pathVariables, resp) {
-    Tw.Logger.info('[API RESP]', resp);
+    Tw.Logger.info('[API RESP]', resp.code, resp);
     var deferred = $.Deferred();
 
     if ( !Tw.FormatHelper.isEmpty(resp.serverSession) ) {
@@ -54,7 +54,8 @@ Tw.ApiService.prototype = {
       delete resp.loginType;
     }
 
-    if ( resp.code === Tw.API_CODE.CODE_03 ) {
+    if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 || resp.code === Tw.API_CODE.BFF_0010 ) {
+      Tw.Logger.info('[API Cert]', command);
       this._cert = new Tw.CertificationSelect();
       setTimeout($.proxy(function () {
         var requestInfo = {
@@ -73,19 +74,6 @@ Tw.ApiService.prototype = {
   },
   _completeCert: function (resp, deferred, requestInfo) {
     if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
-      this._setCert(requestInfo, deferred);
-      // deferred.resolve({ code: Tw.API_CODE.CERT_SUCCESS });
-    } else {
-      deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
-    }
-  },
-
-  _setCert: function (requestInfo, deferred) {
-    this.request(Tw.NODE_CMD.SET_CERT, { url: '/bypass' + requestInfo.command.path })
-      .done($.proxy(this._successSetCert, this, requestInfo, deferred));
-  },
-  _successSetCert: function (requestInfo, deferred, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var arrParams = [];
       arrParams.push(requestInfo.command);
       arrParams.push(requestInfo.params);
@@ -94,6 +82,8 @@ Tw.ApiService.prototype = {
 
       this.request.apply(this, arrParams)
         .done($.proxy(this._successRequestAfterCert, this, deferred));
+    } else {
+      deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
     }
   },
   _successRequestAfterCert: function (deferred, resp) {

@@ -16,75 +16,39 @@
                 <!-- .cont-box -->
                 <div class="cont-box bgnone">
                     <div class="box-certifi-card">
-                        {{#if data.tidLogin}}
-                        <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
-                        {{else}}
-                        <p class="certifi-ti-big pt8">간편 로그인으로는 이용하실 수 없는 서비스 입니다.<br />서비스를 이용하시려면 아래 인증방법 중 하나를 선택해 주세요.</p>
-                        {{/if}}
-                        <ul class="certifi-card-list mt28 {{data.cntClass}}"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
-                            {{#if data.skSms}}
+                        <p class="certifi-ti-big pt8">본인 확인 후 미환급금을 조회하실 수 있습니다.<br />환급 신청은 고객보호를 위해 로그인 후 이용하실 수 있습니다.</p>
+                        <ul class="certifi-card-list mt28 three"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
                             <li>
-                                <button id="fe-bt-sk">
+                                <button id="fe-bt-sk-refund">
                                     <span class="ico-certifi-card type1" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">SKT 텔레콤<br />SMS 인증</span></span>
                                 </button>
                             </li>
-                            {{/if}}
-                            {{#if data.otherSms}}
                             <li>
-                                <button id="fe-bt-kt">
+                                <button id="fe-bt-kt-refund">
                                     <span class="ico-certifi-card type2" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">KT 인증</span></span>
                                 </button>
                             </li>
                             <li>
-                                <button id="fe-bt-lg">
+                                <button id="fe-bt-lg-refund">
                                     <span class="ico-certifi-card type3" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">LG U+ 인증</span></span>
                                 </button>
                             </li>
-                            {{/if}}
-                            {{#if data.save}}
                             <li>
-                                <button id="fe-bt-save">
+                                <button id="fe-bt-save-refund">
                                     <span class="ico-certifi-card type4" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">알뜰폰 SMS<br />인증</span></span>
                                 </button>
                             </li>
-                            {{/if}}
-                            {{#if data.publicCert}}
+
                             <li>
-                                <button id="fe-bt-public">
-                                    <span class="ico-certifi-card type5" aria-hidden="true"></span>
-                                    <span class="certifi-card-tx"><span class="tx">공인인증서<br />인증</span></span>
-                                </button>
-                            </li>
-                            {{/if}}
-                            {{#if data.ipin}}
-                            <li>
-                                <button id="fe-bt-ipin">
+                                <button id="fe-bt-ipin-refund">
                                     <span class="ico-certifi-card type6" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">아이핀 인증</span></span>
                                 </button>
                             </li>
-                            {{/if}}
-                            {{#if data.bio}}
-                            <li>
-                                <button id="fe-bt-bio">
-                                    <span class="ico-certifi-card type7" aria-hidden="true"></span>
-                                    <span class="certifi-card-tx"><span class="tx">생체인증</span></span>
-                                </button>
-                            </li>
-                            {{/if}}
-                            {{#if data.skSmsRefund}}
-
-                            {{/if}}
-                            {{#if data.otherSmsRefund}}
-
-                            {{/if}}
-                            {{#if data.ipinRefund}}
-
-                            {{/if}}
                         </ul>
                     </div>
                 </div>

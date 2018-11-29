@@ -40,11 +40,11 @@ class MainMenu extends TwViewController {
   }
 
   private getUsageData(): Observable<any> {
-    let usageData = {};
+    const usageData = {};
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        usageData = this.parseUsageData(resp.result);
-      }
+      // if ( resp.code === API_CODE.CODE_00 ) {
+      //   usageData = this.parseUsageData(resp.result);
+      // }
       return usageData;
     });
   }

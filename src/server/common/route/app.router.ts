@@ -1,10 +1,10 @@
 import express from 'express';
 import { Router } from 'express';
-import Controller from '../controllers/tw.view.controller';
 
 export interface IRouterMap {
   url: string;
   controller: any;
+  post?: boolean;
 }
 
 class AppRouter {
@@ -18,10 +18,13 @@ class AppRouter {
         const inst = new routerMap.controller();
         inst.initPage(req, res, next);
       });
-      this.router.post(routerMap.url, (req, res, next) => {
-        const inst = new routerMap.controller();
-        inst.certPage(req, res, next);
-      });
+      if ( routerMap.post ) {
+        this.router.post(routerMap.url, (req, res, next) => {
+          const inst = new routerMap.controller();
+          inst.initPage(req, res, next);
+        });
+      }
+
     });
   }
 }

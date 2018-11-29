@@ -241,14 +241,14 @@ class MainHome extends TwViewController {
 
   // 사용량 조회
   private getUsageData(): Observable<any> {
-    let usageData = {
+    const usageData = {
       code: null
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        usageData = this.parseUsageData(resp.result);
-      }
-      usageData.code = resp.code;
+      // if ( resp.code === API_CODE.CODE_00 ) {
+      //   usageData = this.parseUsageData(resp.result);
+      // }
+      // usageData.code = resp.code;
       return usageData;
     });
   }
