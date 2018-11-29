@@ -10,7 +10,7 @@ import { API_CODE } from '../types/api-command.type';
 
 class AuthService {
   private loginService: LoginService = new LoginService();
-  private redisService: RedisService = new RedisService();
+  private redisService: RedisService = RedisService.getInstance();
   private logger: LoggerService = new LoggerService();
 
   constructor() {
