@@ -382,11 +382,11 @@ Tw.MYT_TPL = {
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
     '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
     '<span class="cont"><span class="info-title">{{nickNm}}'+
-    '{{#if data.child}}' +
+    '{{#if child}}' +
     '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>'+
     '{{/if}}' +
     '<span class="info-sub">{{svcNum}}</span>' +
-    '<span class="price">{{data.data}}{{data.unit}}</span>'+
+    '<span class="price">{{data}}{{unit}}</span>'+
     '</span></span></button></li>'
   },
   FARE_SUBMAIN: {

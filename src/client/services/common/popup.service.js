@@ -228,7 +228,7 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback);
     this._open(option);
   },
-  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
+  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
       title_type: 'sub-c',
@@ -244,7 +244,7 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
-    this._addHash(closeCallback);
+    this._addHash(closeCallback, hashName);
     this._open(option);
   },
   openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {

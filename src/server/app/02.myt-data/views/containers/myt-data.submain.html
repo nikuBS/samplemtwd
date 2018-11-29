@@ -184,6 +184,7 @@
             <% } %>
 
             <% if (data.otherLines.length > 0) { %>
+            <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box noborder nogaps-btm b-line1" data-id="other-lines">
@@ -194,10 +195,6 @@
 
                     <div class="my-line-info-wrap">
                         <ul class="my-line-info">
-                            <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
-                            <% for (var i=0; i < length; i++) { %>
-                            <%- include('../components/submain/myt-data.submain.other-line.html', { data: data.otherLines[i] }); %>
-                            <% } %>
                         </ul>
                     </div>
                     <% if (length === 20) { %>

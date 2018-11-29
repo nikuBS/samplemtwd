@@ -56,7 +56,13 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-ver pb0" data-id="bill-chart">
-                <h3 class="graph-tit">최근 청구요금내역</h3>
+                <h3 class="graph-tit">
+                    <% if(data.type === 'UF') { %>
+                    최근 이용요금내역
+                    <% } else { %>
+                    최근 청구요금내역
+                    <% } %>
+                </h3>
                 <div class="chart-wrap chart4"></div>
             </div>
             <!--// .cont-box -->
