@@ -81,18 +81,23 @@ Tw.MyTFareBillPrepayMain.prototype = {
     new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
   },
   _prepay: function () {
-    this._popupService.open({
-      'hbs': 'MF_06_03'
-    },
-      $.proxy(this._goPrepay, this),
-      null,
-      'pay');
+    if (Tw.BrowserHelper.isApp()) {
+      this._popupService.open({
+        'hbs': 'MF_06_03'
+      }, $.proxy(this._goPrepay, this), null, 'pay');
+    } else {
+      this._goAppInfo();
+    }
   },
   _goPrepay: function ($layer) {
     new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
   _autoPrepay: function () {
-    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
+    if (Tw.BrowserHelper.isApp()) {
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
+    } else {
+      this._goAppInfo();
+    }
   },
   _autoPrepayInfo: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');
@@ -105,5 +110,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _setPassword: function () {
     new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn);
+  },
+  _goAppInfo: function () {
+    
   }
 };

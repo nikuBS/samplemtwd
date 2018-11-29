@@ -12,7 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
-import UnpaidList from '../../../../mock/server/payment/payment.realtime.unpaid.list.mock';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MyTFareBillAccount extends TwViewController {
   constructor() {
@@ -20,26 +20,34 @@ class MyTFareBillAccount extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      this.getUnpaidList(),
-      this.getAutoInfo()
-    ).subscribe(([unpaidList, autoInfo]) => {
-      if (unpaidList.code === API_CODE.CODE_00) {
-        res.render('bill/myt-fare.bill.account.html', {
-          unpaidList: this.parseData(unpaidList.result, svcInfo),
-          autoInfo: this.parseInfo(autoInfo),
-          title: MYT_FARE_PAYMENT_TITLE.ACCOUNT,
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
-        });
-      } else {
-        this.error.render(res, {
-          code: unpaidList.code,
-          msg: unpaidList.msg,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    const data = {
+      title: MYT_FARE_PAYMENT_TITLE.ACCOUNT,
+      svcInfo: svcInfo,
+      pageInfo: pageInfo
+    };
+
+    if (BrowserHelper.isApp(req)) {
+      Observable.combineLatest(
+        this.getUnpaidList(),
+        this.getAutoInfo()
+      ).subscribe(([unpaidList, autoInfo]) => {
+        if (unpaidList.code === API_CODE.CODE_00) {
+          res.render('bill/myt-fare.bill.account.html', {
+            ...data,
+            unpaidList: this.parseData(unpaidList.result, svcInfo),
+            autoInfo: this.parseInfo(autoInfo)
+          });
+        } else {
+          this.error.render(res, {
+            code: unpaidList.code, msg: unpaidList.msg, svcInfo: svcInfo
+          });
+        }
+      });
+    } else {
+      res.render('only.app.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
   private getUnpaidList(): Observable<any> {

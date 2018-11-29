@@ -6,44 +6,43 @@
 
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_TITLE, SVC_CD} from '../../../../types/bff.type';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MyTFareBillPoint extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      this.getUnpaidList(),
-      this.getPoint()
-    ).subscribe(([unpaidList, point]) => {
-      if (unpaidList.code === API_CODE.CODE_00) {
-        res.render('bill/myt-fare.bill.point.html', {
-          unpaidList: this.parseData(unpaidList.result, svcInfo),
-          title: MYT_FARE_PAYMENT_TITLE.OKCASHBAG,
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
-        });
-      } else {
-        this.error.render(res, {
-          code: unpaidList.code,
-          msg: unpaidList.msg,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    const data = {
+      title: MYT_FARE_PAYMENT_TITLE.OKCASHBAG,
+      svcInfo: svcInfo,
+      pageInfo: pageInfo
+    };
+
+    if (BrowserHelper.isApp(req)) {
+      this.getUnpaidList().subscribe((unpaidList) => {
+        if (unpaidList.code === API_CODE.CODE_00) {
+          res.render('bill/myt-fare.bill.point.html', {
+            ...data,
+            unpaidList: this.parseData(unpaidList.result, svcInfo)
+          });
+        } else {
+          this.error.render(res, {
+            code: unpaidList.code, msg: unpaidList.msg, svcInfo: svcInfo
+          });
+        }
+      });
+    } else {
+      res.render('only.app.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
-  private getUnpaidList(): Observable<any> {
+  private getUnpaidList(): any {
     return this.apiService.request(API_CMD.BFF_07_0021, {}).map((res) => {
-      return res;
-    });
-  }
-
-  private getPoint(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0041, {}).map((res) => {
       return res;
     });
   }
