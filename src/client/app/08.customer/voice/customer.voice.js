@@ -34,12 +34,13 @@ Tw.CustomerVoice.prototype = {
   },
 
   _onSuccessVoiceStatus: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.historiesYn = res.result.hitoriesYn;
-      this._onClickRegister();
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
+    this._history.goLoad('/customer/svc-info/voice/register');
+    // if ( res.code === Tw.API_CODE.CODE_00 ) {
+    //   this.historiesYn = res.result.hitoriesYn;
+    //   this._onClickRegister();
+    // } else {
+    //   Tw.Error(res.code, res.msg).pop();
+    // }
   },
 
   _onClickRegister: function () {
