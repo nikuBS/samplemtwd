@@ -41,7 +41,7 @@ Tw.MyTFareInfoOverpayRefundDetail.prototype = {
     this.$template.$statusIng.css({'display': this.detailData.rfndStat !== 'ING' ? 'none' : ''});
     this.$template.$statusEtc.css({'display': this.detailData.rfndStat !== 'ING' ? '' : 'none'});
 
-    this.$template.$reqDate.text(this.detailData.dataDt);
+    this.$template.$reqDate.text(this.detailData.reqDt);
     this.$template.$reqAmt.text(this.detailData.dataAmt);
     this.$template.$overAmt.text(this.detailData.dataOverAmt);
     this.$template.$bondAmt.text(this.detailData.dataBondAmt);

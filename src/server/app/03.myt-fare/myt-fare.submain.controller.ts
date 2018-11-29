@@ -154,7 +154,8 @@ class MyTFareSubmainController extends TwViewController {
         // 사용요금
         if ( usage ) {
           data.usage = usage;
-          data.useMonth = DateHelper.getShortKoreanAfterMonth(usage.invDt);
+          data.usageFirstDay = DateHelper.getMonthFirstDay(usage.invDt);
+          data.usageLastDay = DateHelper.getMonthLastDay(usage.invDt);
           // 사용요금
           const usedAmt = parseInt(usage.useAmtTot, 10);
           data.useAmtTot = FormatHelper.addComma(usedAmt.toString());

@@ -4,6 +4,7 @@
  * Date: 2018.09.17
  *
  */
+var skipIdList = ['POT10', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
 Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
@@ -50,12 +51,13 @@ Tw.MyTDataSubMain.prototype = {
     //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     // }
     if ( this.data.otherLines.length > 0 ) {
-      this.$otherLines = this.$container.find('[data-id=other-lines] li');
+      this.$otherLines = this.$container.find('[data-id=other-lines]');
+      this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
-        this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       }
     }
+    this.$otherPages = this.$container.find('[data-id=other-pages]');
   },
 
   _bindEvent: function () {
@@ -91,6 +93,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initialize: function () {
+    this._svcMgmtNumList = [];
     if ( this.data.pattern ) {
       setTimeout($.proxy(this._initPatternChart, this), 300);
     }
@@ -104,13 +107,76 @@ Tw.MyTDataSubMain.prototype = {
     return parseFloat((value / 1024 / 1024).toFixed(2));
   },
 
-  __secToMS: function (seconds) {
-    var time = parseInt(seconds, 10);
-    var h_min = (time / 3600) * 60;
-    var min = Math.round(h_min + ((time % 3600) / 60));
-    var sec = time % 60;
+  __convShowData: function (data) {
+    data.isUnlimit = !_.isFinite(data.total);
+    data.remainedRatio = 100;
+    data.showUsed = this.__convFormat(data.used, data.unit);
+    if ( !data.isUnlimit ) {
+      data.showTotal = this.__convFormat(data.total, data.unit);
+      data.showRemained = this.__convFormat(data.remained, data.unit);
+      data.remainedRatio = Math.round(data.remained / data.total * 100);
+    }
+  },
 
-    return min + ':' + sec;
+  __convFormat: function (data, unit) {
+    switch ( unit ) {
+      case Tw.UNIT_E.DATA:
+        return Tw.FormatHelper.convDataFormat(data, Tw.UNIT[unit]);
+      case Tw.UNIT_E.VOICE:
+        return Tw.FormatHelper.convVoiceFormat(data);
+      case Tw.UNIT_E.SMS:
+      case Tw.UNIT_E.SMS_2:
+        return Tw.FormatHelper.addComma(data);
+      default:
+    }
+    return '';
+  },
+
+  __parseRemnantData: function (remnant) {
+    var DATA = remnant.data || [];
+    var VOICE = remnant.voice || [];
+    var SMS = remnant.sms || [];
+    var result = {
+      data: [],
+      voice: [],
+      sms: [],
+      tmoa: []
+    };
+    if ( DATA.length > 0 ) {
+      _.filter(DATA, $.proxy(function (item) {
+        this.__convShowData(item);
+        if ( skipIdList.indexOf(item.skipId) === -1 ) {
+          result.data.push(item);
+        }
+        else {
+          if ( item.skipId === 'POT10' ) {
+            result.tmoa.push(item);
+          }
+        }
+      }, this));
+    }
+    if ( VOICE.length > 0 ) {
+      _.filter(VOICE, $.proxy(function (item) {
+        this.__convShowData(item);
+        result.voice.push(item);
+      }, this));
+    }
+    if ( SMS.length > 0 ) {
+      _.filter(SMS, $.proxy(function (item) {
+        this.__convShowData(item);
+        result.sms.push(item);
+      }, this));
+    }
+    return result;
+  },
+
+  __selectOtherLine: function (number) {
+    var select = _.find(this.data.otherLines, function (item) {
+      if ( item.svcMgmtNum === number ) {
+        return item;
+      }
+    });
+    return select;
   },
 
   // chart create
@@ -147,6 +213,73 @@ Tw.MyTDataSubMain.prototype = {
         unit: unit, //x축 이름
         data_arry: chart_data //데이터 obj
       });
+    }
+    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
+  },
+
+  _initOtherLinesInfo: function () {
+    var otherLineLength = this.data.otherLines.length;
+    if ( otherLineLength > 0 ) {
+      var requestCommand = [];
+      for ( var idx = 0; idx < otherLineLength; idx++ ) {
+        this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
+        requestCommand.push({
+          command: Tw.API_CMD.BFF_05_0001,
+          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+          params: {
+            'childSvcMgmtNum': this.data.otherLines[idx].svcMgmtNum
+          }
+        });
+      }
+      this._apiService.requestArray(requestCommand)
+        .done($.proxy(this._responseOtherLine, this))
+        .fail($.proxy(this._errorRequest, this));
+    }
+  },
+
+
+  _responseOtherLine: function () {
+    var list = [];
+    if ( arguments.length > 0 ) {
+      for ( var idx = 0; idx < arguments.length; idx++ ) {
+        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+          var item = this.__parseRemnantData(arguments[idx].result);
+          var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
+          var data = {};
+          if ( item.data.length > 0 ) {
+            data = {
+              data: item.data[0].showRemained.data,
+              unit: item.data[0].showRemained.unit
+            };
+          }
+          else if ( item.voice.length > 0 ) {
+            data = {
+              data: item.voice[0].showRemained.hours + '시간' + item.voice[0].showRemained.min + '분',
+              unit: ''
+            };
+          }
+          else if ( item.sms.length > 0 ) {
+            data = {
+              data: (item.sms[0].isUnlimit ? item.sms[0].total : item.sms[0].showRemained),
+              unit: Tw.SMS_UNIT
+            };
+          }
+          data = _.extend(selectLine, data);
+          list.push(data);
+        }
+      }
+    }
+    this._svcMgmtNumList = [];
+    this._initOtherLineList(list);
+  },
+
+  _initOtherLineList: function (list) {
+    if ( list.length > 0 ) {
+      for ( var i = 0; i < list.length; i++ ) {
+        var $ul = this.$otherLines.find('ul.my-line-info');
+        var result = this.$moreTempleate(list[i]);
+        $ul.append(result);
+      }
     }
   },
 
@@ -292,5 +425,15 @@ Tw.MyTDataSubMain.prototype = {
     var $target = $(event.target);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
+  },
+
+  _errorRequest: function (resp) {
+    if ( !resp ) {
+      resp = {
+        code: '',
+        msg: Tw.ALERT_MSG_COMMON.SERVER_ERROR
+      };
+    }
+    Tw.Error(resp.code, resp.msg).pop();
   }
 };

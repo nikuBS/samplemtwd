@@ -3,7 +3,7 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 9. 20.
  */
-Tw.MyTFareHotBill = function (rootEl, preBill) {
+Tw.MyTFareHotBill = function (rootEl) {
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -15,8 +15,6 @@ Tw.MyTFareHotBill = function (rootEl, preBill) {
   this._cachedElement();
   this._bindEvent();
   this._sendBillRequest(this.childSvcMgmtNum);
-
-  this._preBill = preBill;
 
   if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
     this._billInfoAvailable = true;

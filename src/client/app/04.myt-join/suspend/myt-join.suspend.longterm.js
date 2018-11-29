@@ -3,6 +3,12 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 10. 18.
  */
+/**
+ * 일시정지 내 장기일시정지 탭 관리
+ * @param tabEl tab content wrapper
+ * @param params
+ * @constructor
+ */
 Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
   this.TYPE = {
     MILITARY: 1,
@@ -70,6 +76,11 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     }
   },
 
+  /**
+   * 선택 된 타입 별 입력항목 노출 상태를 변경
+   * @param type 군입대: 'military', 해외출국: 'abroad'
+   * @private
+   */
   _changeSuspendType: function (type) {
     this._files = null;
     this._popupService.close();
@@ -84,7 +95,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   },
 
   /**
-   * 파일 업로드 다이얼로그 open
+   * 파일 업로드 다이얼로그(CS_04_01_L02) open
    * @param e
    * @private
    */
@@ -111,11 +122,21 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._files, null, popup);
   },
 
+  /**
+   * 파일 첨부 완료 시 일시정지 버튼 활성화
+   * @param files
+   * @private
+   */
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
     this.$btSuspend.prop('disabled', false);
   },
 
+  /**
+   * Node server로 파일 업로드 요청
+   * @param files
+   * @private
+   */
   _requestUpload: function (files) {
     var formData = new FormData();
     _.map(files, $.proxy(function (file) {
@@ -166,6 +187,10 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     Tw.Error(res.code, res.msg).pop();
   },
 
+  /**
+   * 관계 입력항목 선택 시 actionsheet  보임
+   * @private
+   */
   _onClickRelation: function () {
     var options = $.extend(true, [], Tw.SUSPEND_RELATION.list);
     var selected = _.find(options, { value: this.$btRelation.val() });
@@ -194,6 +219,13 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * 장기일시정지 버튼 클릭시
+   *  1. Node server로 파일 전송(Tw.NODE_CMD.UPLOAD_FILE)
+   *  2. USCAN 전송(BFF_01_0046)
+   *  3. 장기일시정지 신청(BFF_01_0046)
+   * @private
+   */
   _onClickSuspend: function () {
     var option = {};
     var from, to, diff;

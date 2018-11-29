@@ -52,8 +52,9 @@ class LoggerService {
   }
 
   private getConsoleTransport() {
+    const level = String(process.env.NODE_ENV) === 'production' ? 'error' : 'debug';
     const option = {
-      level: 'error',
+      level: level,
       showLevel: true,
       timestamp: this.tsFormat(),
       handleExceptions: true,

@@ -19,10 +19,6 @@ class MyTDataFamily extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const page = req.url.replace('/familydata', '');
-    let responseData: any = {
-      svcInfo: svcInfo,
-      isApp: BrowserHelper.isApp(req)
-    };
 
     switch (page) {
       case '/share':
@@ -39,35 +35,30 @@ class MyTDataFamily extends TwViewController {
             });
           }
 
-          responseData = {
-            ...responseData,
+          res.render('familydata/myt-data.familydata.share.html', {
+            svcInfo,
+            pageInfo,
             immediatelyInfo,
-            monthlyInfo
-          };
-
-          res.render('familydata/myt-data.familydata.share.html', responseData);
+            monthlyInfo,
+            isApp: BrowserHelper.isApp(req)
+          });
         });
         break;
       default:
-        this.getRemainDataInfo().subscribe(familyInfo => {
+        this.getRemainDataInfo(svcInfo).subscribe(familyInfo => {
           if (familyInfo.msg) {
             return this.error.render(res, {
               ...familyInfo,
               svcInfo
             });
           }
-          responseData = {
-            ...responseData,
-            familyInfo,
-            pageInfo
-          };
 
-          res.render('familydata/myt-data.familydata.html', responseData);
+          res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo, isApp: BrowserHelper.isApp(req) });
         });
     }
   }
 
-  private getRemainDataInfo() {
+  private getRemainDataInfo(svcInfo) {
     return this.apiService.request(API_CMD.BFF_06_0044, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -77,13 +68,16 @@ class MyTDataFamily extends TwViewController {
       }
 
       const representation = resp.result.mbrList.find(member => member.repYn === 'Y');
+      // const mine = resp.result.mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
+      const mine = resp.result.mbrList.find(member => member.svcMgmtNum === '7226057315');
 
       return {
         ...resp.result,
-        total: this.convertTFamilyDataSet(resp.result.total),
-        used: this.convertTFamilyDataSet(resp.result.used),
-        remained: this.convertTFamilyDataSet(resp.result.remained),
-        representation: representation ? representation.svcMgmtNum : ''
+        total: FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.GB),
+        used: FormatHelper.convDataFormat(resp.result.used, DATA_UNIT.MB),
+        remained: FormatHelper.convDataFormat(resp.result.remained, DATA_UNIT.MB),
+        isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
+        mine
       };
     });
   }
@@ -110,10 +104,6 @@ class MyTDataFamily extends TwViewController {
       }
       return resp.result;
     });
-  }
-
-  private convertTFamilyDataSet(sQty) {
-    return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
   }
 }
 

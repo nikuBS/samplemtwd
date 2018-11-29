@@ -382,11 +382,11 @@ Tw.MYT_TPL = {
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
     '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
     '<span class="cont"><span class="info-title">{{nickNm}}'+
-    '{{#if data.child}}' +
+    '{{#if child}}' +
     '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>'+
     '{{/if}}' +
     '<span class="info-sub">{{svcNum}}</span>' +
-    '<span class="price">{{data.data}}{{data.unit}}</span>'+
+    '<span class="price">{{data}}{{unit}}</span>'+
     '</span></span></button></li>'
   },
   FARE_SUBMAIN: {
@@ -416,12 +416,12 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  { value: '전체' },
-  { value: 'T끼리 데이터 선물' },
-  { value: '데이터 한도 충전' },
-  { value: '팅/쿠키즈/안심요금' },
-  { value: '팅 요금 선물' },
-  { value: '데이터 음성 리필' }
+  { value: '전체', attr: 'data-type="5"' },
+  { value: 'T끼리 데이터 선물', attr: 'data-type="0"' },
+  { value: '데이터 한도 충전', attr: 'data-type="1"' },
+  { value: '팅/쿠키즈/안심요금', attr: 'data-type="2"' },
+  { value: '팅 요금 선물', attr: 'data-type="3"' },
+  { value: '데이터 음성 리필', attr: 'data-type="4"' }
 ];
 
 Tw.PRODUCT_PLANS_ORDER = [
@@ -480,17 +480,7 @@ Tw.TERMS_ACTION = {
         { value: '시내전화 이용약관', option: 'fe-action', attr: 'value="50:d"' }
       ]
     }]
-  },
-  102: {
-    title: '초콜릿 이용약관',
-    data: [{
-      list: [
-        { value: '이용약관', option: 'fe-action', attr: 'value="102:e"' },
-        { value: '개인정보처리방침', option: 'fe-action', attr: 'value="103:e"' },
-        { value: '개인벙보 수집 및 이용안내', option: 'fe-action', attr: 'value="104:e"' }
-      ]
-    }]
-  },
+  }
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
@@ -659,6 +649,31 @@ Tw.MYT_PREPAID_RECHARGE_AMOUNT = {
   ]
 };
 
+Tw.MYT_PREPAID_RECHARGE_DATA_ADD = [
+  {
+    list: [
+      { 'option': 'data-type', 'attr': 'id="005G12S" data-value="5120" data-amount="33000"', value: '5GB (33,000원)' },
+      { 'option': 'data-type', 'attr': 'id="002G12S" data-value="2048" data-amount="19000"', value: '2GB (19,000원)' },
+      { 'option': 'data-type', 'attr': 'id="001G12S" data-value="1024" data-amount="15000"', value: '1GB (15,000원)' },
+      { 'option': 'data-type', 'attr': 'id="500M12S" data-value="500" data-amount="10000"', value: '500MB (10,000원)' },
+      { 'option': 'data-type', 'attr': 'id="100M12S" data-value="100" data-amount="2000"', value: '100MB (2,000원)' }
+    ]
+  }
+];
+
+Tw.MYT_PREPAID_RECHARGE_DATA = [
+  {
+    list: [
+      { 'option': 'data-type', 'attr': 'id="004G090" data-value="4096" data-amount="33000"', value: '4GB / 90일 (33,000원)' },
+      { 'option': 'data-type', 'attr': 'id="002G090" data-value="2048" data-amount="27500"', value: '2GB / 90일 (27,500원)' },
+      { 'option': 'data-type', 'attr': 'id="002G030" data-value="2048" data-amount="24200"', value: '2GB / 30일 (24,200원)' },
+      { 'option': 'data-type', 'attr': 'id="001G090" data-value="1024" data-amount="22000"', value: '1GB / 90일 (22,000원)' },
+      { 'option': 'data-type', 'attr': 'id="001G030" data-value="1024" data-amount="18700"', value: '1GB / 30일 (18,700원)' },
+      { 'option': 'data-type', 'attr': 'id="300M030" data-value="300" data-amount="8800"', value: '300MB / 30일 (8,800원)' }
+    ]
+  }
+];
+
 Tw.MYT_PREPAID_DATE = {
   list: [
     { text: '15일', value: 15 },
@@ -741,4 +756,4 @@ Tw.PREPAID_ICONS = {
     name: '자동',
     type: 'one'
   }
-} 
+}

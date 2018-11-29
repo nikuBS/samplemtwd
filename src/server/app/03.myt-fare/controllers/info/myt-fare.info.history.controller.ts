@@ -250,7 +250,7 @@ class MyTFareInfoHistory extends TwViewController {
       resp.result.overPaymentRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataDt = DateHelper.getShortDate(o.opDt);
-        o.dataAmt = FormatHelper.addComma(o.cardAmt);
+        o.dataAmt = FormatHelper.addComma(o.svcBamt);
       });
 
       return resp.result;

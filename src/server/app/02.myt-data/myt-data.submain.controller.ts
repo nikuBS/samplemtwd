@@ -14,6 +14,9 @@ import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
+import { UNIT, UNIT_E } from '../../types/bff.type';
+
+const skipIdList: any = ['POT10', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -28,14 +31,14 @@ class MytDataSubmainController extends TwViewController {
       immCharge: true,
       present: false,
       isPrepayment: false,
-      isDataInfo: true,
+      isDataInfo: false,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc),
       isApp: BrowserHelper.isApp(req)
     };
     Observable.combineLatest(
       this._getFamilyMoaData(),
-      // this._getRemnantData(),
+      this._getRemnantData(),
       this._getDataPresent(),
       this._getRefillCoupon(),
       // this._getPrepayCoupon(),
@@ -46,7 +49,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
-    ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+    ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
       if ( !svcInfo.svcMgmtNum && present.info ) {
         // 비정상 진입 또는 API 호출 오류
         this.error.render(res, {
@@ -57,7 +60,19 @@ class MytDataSubmainController extends TwViewController {
         });
         return false;
       }
-      // TODO: remnant 정보가 있는 경우 isDataInfo 설정 가능(서버 API 개발중)
+      // TODO: 실시간 잔여량 합산 API 정상 동작 후 재확인 필요
+      if ( remnant ) {
+        data.remnantData = this.parseRemnantData(remnant);
+        if ( data.remnantData.data ) {
+          data.isDataInfo = true;
+        }
+        // TODO: 잔여량 합산 API 정상 동작 후 재확인 필요
+        // if ( data.remnantData.tmoa.length > 0 ) {
+        //   data.family = data.remnantData.tmoa[0];
+        //   data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
+        // }
+      }
+
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
@@ -186,6 +201,68 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  convShowData(data: any) {
+    data.isUnlimit = !isFinite(data.total);
+    data.remainedRatio = 100;
+    data.showUsed = this.convFormat(data.used, data.unit);
+    if ( !data.isUnlimit ) {
+      data.showTotal = this.convFormat(data.total, data.unit);
+      data.showRemained = this.convFormat(data.remained, data.unit);
+      data.remainedRatio = Math.round(data.remained / data.total * 100);
+    }
+  }
+
+  convFormat(data: string, unit: string): string {
+    switch ( unit ) {
+      case UNIT_E.DATA:
+        return FormatHelper.convDataFormat(data, UNIT[unit]);
+      case UNIT_E.VOICE:
+        return FormatHelper.convVoiceFormat(data);
+      case UNIT_E.SMS:
+      case UNIT_E.SMS_2:
+        return FormatHelper.addComma(data);
+      default:
+    }
+    return '';
+  }
+
+  parseRemnantData(remnant: any): any {
+    const DATA = remnant['data'] || [];
+    const VOICE = remnant['voice'] || [];
+    const SMS = remnant['sms'] || [];
+    const result: any = {
+      data: [],
+      voice: [],
+      sms: [],
+      tmoa: []
+    };
+    if ( DATA.length > 0 ) {
+      DATA.filter((item) => {
+        this.convShowData(item);
+        if ( skipIdList.indexOf(item.skipId) === -1 ) {
+          result['data'].push(item);
+        } else {
+          if ( item.skipId === 'POT10' ) {
+            result['tmoa'].push(item);
+          }
+        }
+      });
+    }
+    if ( VOICE.length > 0 ) {
+      VOICE.filter((item) => {
+        this.convShowData(item);
+        result['voice'].push(item);
+      });
+    }
+    if ( SMS.length > 0 ) {
+      SMS.filter((item) => {
+        this.convShowData(item);
+        result['sms'].push(item);
+      });
+    }
+    return result;
+  }
+
   convertChildLines(items): any {
     const list: any = [];
     items.filter((item) => {
@@ -272,14 +349,15 @@ class MytDataSubmainController extends TwViewController {
 
   /**
    * 실시간 잔여량 - publishing 상태로 화면만 노출
-   * 8-1 개발되지 않은 상태로 scope out
-   _getRemnantData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0094, {}).map((resp) => {
+   */
+  _getRemnantData(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-
+        return resp.result;
       }
     });
-  }*/
+  }
+
   // 나의 리필 쿠폰
   _getRefillCoupon(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0001, {}).map((resp) => {

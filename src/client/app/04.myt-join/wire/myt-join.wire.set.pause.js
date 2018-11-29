@@ -17,7 +17,7 @@ Tw.MytJoinWireSetPause = function (rootEl, options) {
 
 Tw.MytJoinWireSetPause.prototype = {
   _URL: {
-    MAIN: '/myt-join/submain'
+    MAIN: '/myt-join/submain_w'
   },
   _DATE_FORMAT: {
     INPUT: 'YYYY-MM-DD',
