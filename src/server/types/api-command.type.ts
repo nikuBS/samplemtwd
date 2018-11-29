@@ -559,6 +559,8 @@ export const API_CMD = {
   BFF_10_0048: { path: '/core-modification/v1/wireJoin/listUseAddressService', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0050: { path: '/core-product/v1/submain/banners', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0056: { path: '/core-product/v1/services/roaming/fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0057: { path: '/core-product/v1/services/roaming/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0062: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0063: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0065: { path: '/core-product/v1/roaming/tpie-reservation', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -583,6 +585,9 @@ export const API_CMD = {
     server: API_SERVER.BFF,
     bypass: true
   },
+  BFF_10_0088: { path: '/core-product/v1/roaming/submain/promBannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0089: { path: '/core-product/v1/roaming/submain/alpaList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0090: { path: '/core-product/v1//roaming/submain/bannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0098: { path: '/core-product/v1/wire/additions/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },

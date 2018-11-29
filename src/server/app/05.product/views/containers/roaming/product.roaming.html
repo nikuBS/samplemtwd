@@ -1,0 +1,335 @@
+<%#
+* FileName: product.
+* Author: Juho Kim (jhkim@pineone.com)
+* Date: 2018.11.20
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="productRoaming" class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '로밍', svcInfo: svcInfo, option: { line: true } }) %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- 사용중인 상품 -->
+            <% if (isLogin && roamingCount.prodInfoTxt) { %>
+            <div class="cont-box gaps-style01">
+                <div class="submain-myfeeproducts-wrap">
+                    <a href="/product/roaming/my-use" class="submain-myfeeproducts">
+                        <h3 class="title">사용중인 상품</h3>
+                        <p class="text"><%= roamingCount.prodInfoTxt %></p>
+                    </a>
+                </div>
+            </div>
+            <% } %>
+            <!--//사용중인 상품 -->
+
+            <!-- cont-box -->
+            <div class="cont-box nogaps">
+                <div class="main-slide-banner dot-btm slide-pagingtype">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box slider1">
+                            <div class="slider-box">
+                                <ul class="slider">
+                                    <li>
+                                        <button>
+                                            <img src="/img/dummy/img_MP.png" alt="">
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <img src="/img/dummy/img_MP.png" alt="">
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <img src="/img/dummy/img_MP.png" alt="">
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+
+                <div class="wrap-gaps-top">
+                    <h3>고객님을 위한 '폼'나는 정보</h3>
+                </div>
+
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box horizontal">
+                        <div class="horizontal-slide">
+                            <ul class="horizontal-list info-link-box">
+                                <li>
+                                    <button class="info-link-inner">
+                                        <em class="mark">“</em><strong class="tit">아시아 여행</strong>을<br>계획 중이신가요?
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="info-link-inner">
+                                        <em class="mark">“</em><strong class="tit">중국/일본</strong>으로<br>떠나시나요?
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="info-link-inner">
+                                        <em class="mark">“</em><strong class="tit">미주 여행</strong>을<br>계획 중이신가요?
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="info-link-inner">
+                                        <em class="mark">“</em><strong class="tit">유럽 여행</strong>을<br>계획 중이신가요?
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="info-link-inner">
+                                        <em class="mark">“</em><strong class="tit">짧게</strong><br>여행 가시나요?
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="info-link-inner">
+                                        <em class="mark">“</em><strong class="tit">길게</strong><br>여행 가시나요?
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .widget -->
+            </div>
+            <!-- //cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <ul class="category-infoarealist">
+                    <li class="category-type">
+                        <div class="category-typetitle">
+                            <h3 class="title">로밍 카드/쿠폰</h3>
+                            <div class="more"><button class="link">더보기</button></div>
+                        </div>
+                        <div class="category-infobox type-internet">
+                            <h4 class="title">로밍 요금제 이용 및 선물!</h4>
+                            <p class="text">T로밍 OnePass 요금제(기간형 포함) 1일 이용 가능</p>
+                        </div>
+                    </li>
+                    <li class="category-type">
+                        <div class="category-typetitle">
+                            <h3 class="title">T파이 임대</h3>
+                            <div class="more"><button class="link">더보기</button></div>
+                        </div>
+                        <div class="category-infobox type-tel">
+                            <h4 class="title">70여개국 무선인터넷 가능!</h4>
+                            <p class="text">전 세계 70여개국에서 무선인터넷이 가능한 T로밍 전용 Wi-Fi 기기 임대</p>
+                        </div>
+                    </li>
+                    <li class="category-type">
+                        <div class="category-typetitle">
+                            <h3 class="title">인기 무료 로밍 부가서비스</h3>
+                            <div class="more"><button class="link">더보기</button></div>
+                        </div>
+                        <div class="category-infobox type-tv">
+                            <h4 class="title">로밍 부가서비스를 무료로!</h4>
+                            <p class="text">신청하면 유용한 로밍 부가서비스를 무료로 이용해보세요.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- cont-box-->
+            <div class="cont-box nogaps-hoz">
+                <div class="roaming-product">
+                    <h3><strong>SKT의 인기 로밍상품을</strong> 만나보세요.</h3>
+                    <ul class="recommendedrate-list">
+                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우, 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                                <div class="products-titleinfo">
+                                    <h5 class="title">T로밍 아시아패스</h5>
+                                    <p class="info">월<span class="money">25,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#추천하는</span>
+                                    <span class="tag-text">##데이터</span>
+                                </div>
+                                <p class="products-detailinfo">아시아 26개국에서 5일 동안 25,000원으로<br>데이터(2GB)를 부담 없이 이용 가능한 요금제!</p>
+                            </button>
+                        </li>
+                    </ul>
+                    <a href="#" class="b-more">전체 로밍 요금제</a>
+                </div>
+            </div>
+            <!-- //cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="roaming-info-box">
+                <div class="submain-findyourplan-wrap">
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">로밍 안내</h3>
+                        <p class="text">출국 전 알아두면 유용한 로밍 정보</p>
+                    </button>
+                </div>
+                <div class="submain-findyourplan-wrap">
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">국가별 로밍 요금 조회</h3>
+                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을<br>입력하시고, 로밍 요금 관련 각종 정보를<br>한 번에 확인하세요.</p>
+                    </button>
+                </div>
+                <div class="submain-findyourplan-wrap">
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">분실 관련 안내 보러가기</h3>
+                        <p class="text">긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
+                    </button>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <ul class="shortcutslist-wrap">
+                <li class="category-type">
+                    <button class="link">공항 내 로밍센터 안내</button>
+                </li>
+                <li class="category-type">
+                    <button class="link">자주찾는 질문</button>
+                </li>
+            </ul>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- 다른상품 더보기 -->
+            <div class="cont-box">
+                <h3>다른상품 더보기</h3>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box horizontal">
+                        <div class="horizontal-slide">
+                            <ul class="horizontal-list add-prod">
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type1"></span>
+                                            <span>요금제</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type2"></span>
+                                            <span>부가서비스</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type3"></span>
+                                            <span>인터넷/전화/<br>TV</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <button>
+                                            <span class="ico type4"></span>
+                                            <span>혜택·할인</span>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .widget -->
+            </div>
+            <!-- //다른상품 더보기 -->
+
+            <!-- 하단 link영역 -->
+            <div class="cont-box nogaps noborder">
+                <ul class="link-long-list nobg">
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>나의 요금제
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>요금할인 혜택
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>결합 할인
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>실시간 사용요금
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>나의 혜택
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //하단 link영역 -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+  };
+</script>
+<% include ../../components/end.component.html %>
