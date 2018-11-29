@@ -39,7 +39,8 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
 
     // new url
-    this.controllers.push({ url: '(/:submain)', controller: MyTJoinSubmainController });
+    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
+    this.controllers.push({ url: '/submain_w', controller: MyTJoinSubmainController });
     this.controllers.push({ url: '/custpassword', controller: MyTJoinCustpassword });
     this.controllers.push({ url: '/myplancombine/infodiscount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/myplancombine/infodiscount/month', controller: MyTJoinInfoDiscountMonth });
