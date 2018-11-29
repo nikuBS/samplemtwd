@@ -55,7 +55,7 @@ class MyTJoinCustpassword extends TwViewController {
     // this.apiService.request('', {}).subscribe((responseData) => {
     // 화면 데이터 설정
     // const data = self.convertData(responseData);
-    res.render('submain/myt-join.custpassword.html', { svcInfo: svcInfo, data: data });
+    res.render('submain/myt-join.custpassword.html', { svcInfo: svcInfo, data: data, pageInfo: pageInfo });
 
     // });
   }
