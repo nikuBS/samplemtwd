@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.nice.controller.ts
+ * FileName: common.cert.nice.refund.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.08.23
+ * Date: 2018.11.29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,23 +9,17 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import EnvHelper from '../../../../utils/env.helper';
 
-class CommonCertNice extends TwViewController {
+class CommonCertNiceRefund extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const mobileco = req.query.niceType;
-    const authUrl = req.query.authUrl;
-    const authKind = req.query.authKind;
-    const prodAuthKey = req.query.prodAuthKey; // 상품인증이 있는 경우
-    this.apiService.request(API_CMD.BFF_01_0024, {
+    this.apiService.request(API_CMD.BFF_01_0049, {
       mobileco,
-      authUrl,
-      resultUrl:  EnvHelper.getEnvironment('DOMAIN') + '/common/cert/result?type=nice&kind=second',
-      // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=second',
-      authKind,
-      prodAuthKey
+      resultUrl:  EnvHelper.getEnvironment('DOMAIN') + '/common/cert/result?type=nice&kind=refund'
+      // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=refund'
     }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/common.cert.nice.html', { data: resp.result });
@@ -34,4 +28,4 @@ class CommonCertNice extends TwViewController {
   }
 }
 
-export default CommonCertNice;
+export default CommonCertNiceRefund;

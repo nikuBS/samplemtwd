@@ -525,6 +525,9 @@ Tw.MyTFareSubMain.prototype = {
     if ( attrCd.indexOf('S') > -1 ) {
       clsNm = 'pc';
     }
+    else if ( ['M3', 'M4'].indexOf(attrCd) > -1) {
+      clsNm = 'tablet';
+    }
     return clsNm;
   },
 

@@ -29,6 +29,8 @@ $.fn.chart2 = function(o){
       d.unlimited = false;
       style_pattern = [];
       max = 0;
+
+
       if(typeof d.data_arry[i].v == 'number'){
         text_pattern.push(d.data_arry[i].v + d.data_arry[i].u);
         max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
@@ -43,18 +45,24 @@ $.fn.chart2 = function(o){
         text2_pattern.push(d.data_arry[i].v2);
         d.unlimited = true;
       }
+
       if(d.unlimited){
         if(typeof d.data_arry[i].v == 'number'){
-          style_pattern.push(50);
-          style_pattern.push(100);
+          style_pattern.push((d.data_arry[i].v/max) * 50);
         }else{
           style_pattern.push(100);
-          style_pattern.push(50);
+        }
+        if(typeof d.data_arry[i].v2 == 'number'){
+          style_pattern.push((d.data_arry[i].v2/max) * 50);
+        }else{
+          style_pattern.push(100);
         }
       }else{
         style_pattern.push((d.data_arry[i].v/max) * 100);
         style_pattern.push((d.data_arry[i].v2/max) * 100);
       }
+
+
       $(d.target).find('ul')
         .append(
           $('<li>')

@@ -4,7 +4,7 @@
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti align-l">
-                    <h1>본인인증 수단 선택</h1>
+                    <h1>인증방식 선택</h1>
                 </div>
             </div>
         </div>
@@ -16,24 +16,36 @@
                 <!-- .cont-box -->
                 <div class="cont-box bgnone">
                     <div class="box-certifi-card">
-                        <p class="certifi-ti-big">간편 로그인으로는 이용하실 수 없는 서비스 입니다.</p>
-                        <p class="certifi-card-ti pt8">서비스를 이용하시려면 아래 인증방법 중 하나를 선택하여 본인확인을 해주세요.</p>
+                        <p class="certifi-ti-big pt8">본인 확인 후 미환급금을 조회하실 수 있습니다.<br />환급 신청은 고객보호를 위해 로그인 후 이용하실 수 있습니다.</p>
                         <ul class="certifi-card-list mt28 three"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
                             <li>
-                                <button>
+                                <button id="fe-bt-sk-refund">
                                     <span class="ico-certifi-card type1" aria-hidden="true"></span>
-                                    <span class="certifi-card-tx"><span class="tx">SK텔레콤<br />SMS 인증</span></span>
+                                    <span class="certifi-card-tx"><span class="tx">SKT 텔레콤<br />SMS 인증</span></span>
                                 </button>
                             </li>
                             <li>
-                                <button>
-                                    <span class="ico-certifi-card type9" aria-hidden="true"></span>
-                                    <span class="certifi-card-tx"><span class="tx">공인인증서<br />인증</span></span>
+                                <button id="fe-bt-kt-refund">
+                                    <span class="ico-certifi-card type2" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">KT 인증</span></span>
                                 </button>
                             </li>
                             <li>
-                                <button>
-                                    <span class="ico-certifi-card type5" aria-hidden="true"></span>
+                                <button id="fe-bt-lg-refund">
+                                    <span class="ico-certifi-card type3" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">LG U+ 인증</span></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="fe-bt-save-refund">
+                                    <span class="ico-certifi-card type4" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">알뜰폰 SMS<br />인증</span></span>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button id="fe-bt-ipin-refund">
+                                    <span class="ico-certifi-card type6" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">아이핀 인증</span></span>
                                 </button>
                             </li>

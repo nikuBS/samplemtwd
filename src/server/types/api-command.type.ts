@@ -43,7 +43,7 @@ export const API_CMD = {
   BFF_01_0024: { path: '/v1/auth/nice/sms/apply', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_01_0025: { path: '/v1/auth/nice/sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_01_0026: { path: '/v1/cert/success', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_01_0027: { path: '/v1/pwd-cert-chk ', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0027: { path: '/v1/pwd-cert-chk', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0029: { path: '/v1/auth/secure/client-key', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0030: { path: '/v1/auth/secure/server-key', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
@@ -657,13 +657,19 @@ export const API_CMD = {
 
 export const API_CODE = {
   CODE_00: '00', // success
-  CODE_01: 'RDT0001', // 화면 차단
-  CODE_02: 'RDT0002', // API 차단
-  CODE_03: 'RDT0003', // 2차 인증
-  CODE_04: 'RDT0004', // 로그인 필요
-  CODE_05: 'RDT0005', // 접근 불가 (권한)
+  BFF_0003: 'BFF0003', // 로그인 필요
+  BFF_0004: 'BFF0004', // 접근 권한 필요
+  BFF_0006: 'BFF0006', // BFF API 차단
+  BFF_0007: 'BFF0007', // MS API 차단
+  BFF_0008: 'BFF0008', // 업무인증 필요
+  BFF_0009: 'BFF0009', // 마스킹&업무 인증 필요
+  BFF_0010: 'BFF0010', // 상품인증 필요
+  BFF_0011: 'BFF0011', // 서비스 자동 차단 (Circuit open 대체 화면)
+  BFF_0012: 'BFF0012', // 고객비밀번호 인증 필요
+  BFF_0013: 'BFF0013', // 고객비밀번호 인증 필요
+  BFF_0014: 'BFF0014', // 고객비밀번호 재설정 필요
+  BFF_0015: 'BFF0015', // 비밀번호 인증 필요 (업무인증에 옵션으로 추가되는 인증)
 
-  CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',
   CODE_400: '400',
   CODE_404: '404',

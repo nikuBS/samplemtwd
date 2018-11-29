@@ -27,7 +27,7 @@ Tw.MyTJoinWire.prototype = {
       this._historyService.goLoad('/myt-join/submain/wire/history');
     },this));
     $('#btnAs').click($.proxy(function(){
-      this._historyService.goLoad('/myt/join/submain/wire/as');
+      this._historyService.goLoad('/myt-join/submain/wire/as');
     },this));
     $('#btnNetphone').click($.proxy(function(){
       this._historyService.goLoad('/myt-join/submain/wire/inetphone');

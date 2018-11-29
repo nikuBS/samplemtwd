@@ -1324,12 +1324,7 @@ body.bg-gray {
       .popup-page.focusin .setting-share:before {
         display: none; }
 
-.device_ios .popup-page .page-header .header-ti {
-  height: 3.1875rem;
-  overflow: hidden; }
-  .device_ios .popup-page .page-header .header-ti h1 {
-    line-height: 3.4375rem; }
-
+/* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다 11.28 김재성 */
 /* 페이지 사이즈 100% */
 .fixed-wrap {
   position: fixed;

@@ -63,17 +63,18 @@ Tw.AUTH_LOGIN_TYPE = {
 
 Tw.AUTH_CERTIFICATION_METHOD = {
   SK_SMS: 'S',
+  SK_SMS_RE: 'R',
   OTHER_SMS: 'T',
-  SMS_PASSWORD: 'Z',
-  SMS_KEYIN: 'J',
-  PUBLIC_AUTH: 'P',
-  FINANCE_AUTH: 'B',
-  IPIN: 'I',
-  EMAIL: 'E',
-  PASSWORD: 'W',
-  BIO: 'F',
   SAVE: 'A',
-  SK_MOTP: 'M'
+  PUBLIC_AUTH: 'P',
+  IPIN: 'I',
+  BIO: 'O',
+  FINANCE_AUTH: 'B',
+  SMS_KEYIN: 'K',
+  PASSWORD: 'W',
+  SMS_REFUND: 'SF',
+  IPIN_REFUND: 'IF',
+  OTHER_REFUND: 'TF'
 };
 
 Tw.AUTH_CERTIFICATION_NICE = {
@@ -83,10 +84,11 @@ Tw.AUTH_CERTIFICATION_NICE = {
 };
 
 Tw.AUTH_CERTIFICATION_KIND = {
-  P: 'P',
-  A: 'A',
-  O: 'O',
-  R: 'R'
+  P: 'P', // 업무 인증
+  A: 'A', // 마스킹
+  O: 'O', // 업무 & 마스킹
+  R: 'R', // 상품
+  F: 'F' // 미환급금
 };
 
 Tw.PRODUCT_RESERVATION_VALUE = {

@@ -43,6 +43,9 @@ import CommonMemberManage from './controllers/member/common.member.manage.contro
 import CommonMemberTidPwd from './controllers/member/common.member.tid-pwd.controller';
 import CommonShareLanding from './controllers/share/common.share.landing.controller';
 import CommonShareBridge from './controllers/share/common.share.bridge.controller';
+import CommonCertIpinRefund from './controllers/cert/common.cert.ipin.refund.controller';
+import CommonCertResult from './controllers/cert/common.cert.result.controller';
+import CommonCertNiceRefund from './controllers/cert/common.cert.nice.refund.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -52,8 +55,11 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/cert/motp/fail', controller: CommonCertMotpFail });
     this.controllers.push({ url: '/cert/public/export', controller: CommonCertPublicExport });
     this.controllers.push({ url: '/cert/nice', controller: CommonCertNice });
+    this.controllers.push({ url: '/cert/nice/refund', controller: CommonCertNiceRefund });
     this.controllers.push({ url: '/cert/ipin', controller: CommonCertIpin });
+    this.controllers.push({ url: '/cert/ipin/refund', controller: CommonCertIpinRefund });
     this.controllers.push({ url: '/cert/complete', controller: CommonCertComplete });
+    this.controllers.push( {url: '/cert/result', controller: CommonCertResult, post: true});
 
     // member - login
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
