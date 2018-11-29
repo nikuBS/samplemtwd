@@ -9,33 +9,11 @@ import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-// import {Observable} from 'rxjs/Observable';
-
-// import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
-// import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
 import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
-import {MYT_FARE_HISTORY_MICRO_TYPE} from '../../../../types/bff.type';
 
-
-// import MyTFareHistoryPaymentMock from '../../../../mock/server/myt.fare.history.micro-payment';
-
-// import MyTFareHistoryContentsMock from '../../../../mock/server/myt.fare.history.contents';
-
-interface Query {
-  current: string;
-  isQueryEmpty: boolean;
-  type: string;
-  parent: string;
+interface Info {
+  [key: string]: string;
 }
-
-interface Histories {
-  [key: string]: History;
-}
-
-interface History {
-  [key: string]: any;
-}
-
 
 class MyTFareBillContentsHistory extends TwViewController {
 
@@ -58,17 +36,7 @@ class MyTFareBillContentsHistory extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     // 조회할 달 수 구하기
     this.setDatePeriod(req);
-    
-    const query: Query = {
-      isQueryEmpty: FormatHelper.isEmpty(req.query),
-      current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0],
-      type: req.query.type,
-      parent: req.path.split('/').splice(-1)[0] ?
-          req.path.split('/').splice(-2)[0] : req.path.split('/').splice(-3)[0]
-    };
-    
-    
-
+  
     this.apiService.request(API_CMD.BFF_05_0064, {fromDt: this.fromDt, toDt: this.toDt}).subscribe((resp) => {
       console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.result);
       this.logger.info(this, resp.code !== API_CODE.CODE_00, resp);
@@ -107,7 +75,8 @@ class MyTFareBillContentsHistory extends TwViewController {
           curYear: this.curYear,
           curMonth: this.curMonth,
           selectedYear: DateHelper.getCurrentYear(this.fromDt),
-          selectedMonth: DateHelper.getCurrentMonth(this.fromDt)
+          selectedMonth: DateHelper.getCurrentMonth(this.fromDt),
+          noticeInfo: this.getNoticeInfo()
         }
       });
       //
@@ -146,6 +115,13 @@ class MyTFareBillContentsHistory extends TwViewController {
     }
 
     this.toDt = DateHelper.getEndOfMonth(this.fromDt, 'YYYYMMDD', 'YYYYMMDD');
+  }
+
+  // 꼭 확인해 주세요 팁 메뉴 정리
+  private getNoticeInfo(): Info[] {
+    return [
+      {link: 'MF_07_01_tip_01', title: '조회 안내'}
+    ];
   }
 }
 
