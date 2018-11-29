@@ -26,73 +26,100 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
-            <div class="cont-box nogaps-top">
-                <div class="data-famliy-group-summary">
-                    <div class="dc-use small type2">
-                        <dl class="real-remaining">
-                            <dt>T가족모아 남은 데이터<button id="DC_02_tip_01" type="button" class="tip-view" title="T가족모아 남은 데이터 정보보기" aria-haspopup="true">TIP</button></dt>
-                            <dd>
-                                <% if ( familyInfo.remained.unit === 'GB' ) { %>
-                                <div class="remaining-amount"><span class="num ff-tg-black"><%=familyInfo.remained.data%></span><span class="dingbat gb"><span class="blind">GB</span></span></div>
-                                <% } else { %>
-                                <div class="remaining-amount"><span class="num ff-tg-black"><%=familyInfo.remained.data%></span><span class="dingbat mb"><span class="blind">MB</span></span></div>
-                                <% } %>
-                            </dd>
-                        </dl>
-                        <span class="ico"></span>
-                    </div>
-                    <div class="data-info-list">
-                        <ul>
+            <div class="cont-box nogaps">
+                <ul class="data-realtime-wrap">
+                    <li>
+                        <div class="graph">
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= familyInfo.remained.data / familyInfo.total.data * 100 %>"><!-- .p+(0~100) // -->
+                                        <div class="blue"><!-- red, yellow, green, blue // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cont">
+                            <span class="stit">나의 T가족모아데이터<button id="DC_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                            <span class="txt1"><span class="ff-type1"><%= familyInfo.remained.data + familyInfo.remained.unit %></span>남음</span>
+                        </div>
+                        <% if ( familyInfo.mine.shrblYn === "Y" ) { %>
+                        <span class="btn-r">
+                            <a href="/myt-data/familydata/share" class="btn-round2 btn-style3">공유</a>
+                        </span>
+                        <% } %>
+                    </li>
+                </ul>
+                <div class="total-data">
+                    <span class="stit">총 가족 공유 데이터</span>
+                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.remained.data + familyInfo.remained.unit %></span>남음</span>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box">
+                <div class="ti-caption-type01">
+                    <h2 class="tit">이용현황</h2>
+                </div>
+                <div class="use-state-wrap">
+                    <ul>
+                        <% familyInfo.mbrList.map(member => { %>
                             <li>
-                                <dl>
-                                    <dt>총 공유 데이터</dt>
-                                    <dd><span class=""><%=familyInfo.total.data%> <%=familyInfo.total.unit%></span></dd>
-                                </dl>
+                                <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                                <div class="info">
+                                    <span class="stit"><%=member.custNm%><% if( member.repYn === 'Y' ) { %><span class="sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span><% } %></span>
+                                    <span class="r-txt"><span class="ff-type1"><%= member.used %>MB</span>이용</span>
+                                    <p><%= member.svcNum %></p>
+                                </div>
+                                <div class="detail">
+                                    <dl>
+                                        <dt>이용요금제</dt>
+                                        <dd><%= member.prodNm %></dd>
+                                        <dt>공유한 데이터</dt>
+                                        <dd><%= member.shared %>GB</dd>
+                                        <% if (member.limitedYn === 'Y' || familyInfo.isRepresentation) { %>
+                                        <dt>이용한도</dt>
+                                        <dd>
+                                            <% if ((member.limitation || '').length > 0) { %><%= member.limitation %>GB<% } %>
+                                            <% if (familyInfo.isRepresentation) { %><button class="bt-link-tx underline" href="">설정</button><% } %>
+                                        </dd>
+                                        <% } %>
+                                    </dl>
+                                </div>
                             </li>
-                            <li>
-                                <dl>
-                                    <dt>총 이용 데이터</dt>
-                                    <dd><span class=""><%=familyInfo.used.data%> <%=familyInfo.used.unit%></span></dd>
-                                </dl>
-                            </li>
-                        </ul>
-                    </div>
-                    <% if ( svcInfo.svcMgmtNum === familyInfo.representation ) { %>
-                    <ul class="bt-slice mt20">
-                        <li class="bt-white2">
-                            <a href="/myt-data/familydata/share">공유 데이터 설정하기</a>
-                        </li>
+                        <% }); %>
                     </ul>
-                    <% } else { %>
-                    <div class="msg-family-member">
-                        <p><span class="ico"></span><%=familyInfo.mbrList.length%>명이 열심히 공유하고 있어요!</p>
-                    </div>
-                    <% } %>
                 </div>
             </div>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true">
 
-            <% include ../../components/familydata/myt-data.family.list.html %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-				<!-- TBD -->
-			    <img src="/img/dummy/DC_02_TBD1.jpg" alt="이번달 공유내역/회수하기" style="width:100%;vertical-align: top;">
-			    
-				<hr class="cont-sp type1" aria-hidden="true"/>
-				<!-- 2018.11.02 삭제
-				<img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
-				//2018.11.02 삭제 -->
+            <!-- .cont-box -->
+            <!-- 범위 제외 -->
+            <!-- <div class="cont-box nogaps">
+                <div class="calling-plan type3">
+                    <button class="wrap-link fs-type01">
+                        <span class="left">이번달 공유내역 / 회수하기</span>
+                        <span class="right fc-type01"><strong class="fs-type03">28건</strong></span>
+                    </button>
+                </div>
+            </div> -->
+            <!--// .cont-box -->
 
-				<!-- 꼭 확인해주세요! 2018.11.02 추가 -->    
-				<div class="cont-box nogaps-btm">
-					<h3 class="tx-bold">꼭 확인해주세요!</h3>
-					<ul class="noti-list">
-						<li>T가족모아 데이터 유의사항 <button id="DC_02_tip_02" type="button" class="tip-view" title="T가족모아 데이터 유의사항 TIP보기" aria-haspopup="true">TIP</button></li>
-						<li>T가족모아 데이터 이용한도 설정 안내 <button id="DC_02_tip_03" type="button" class="tip-view" title="T가족모아 데이터 이용한도 설정 안내 TIP보기" aria-haspopup="true">TIP</button></li>
-					</ul>
-				</div>
-				<!-- //꼭 확인해주세요! -->
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list">
+                    <li>T가족모아데이터 유의사항<button id="DC_02_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>T가족모아데이터 이용한도 설정 안내<button id="DC_02_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                </ul>
+            </div>
         </div>
     </div>
     <!--// #contents -->
