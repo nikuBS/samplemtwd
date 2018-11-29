@@ -46,7 +46,7 @@ class MyTDataPrepaidData extends TwViewController {
 
   private parseData(result: any): any {
     result.dataObj = FormatHelper.customDataFormat(result.remained, DATA_UNIT.KB, DATA_UNIT.MB);
-    result.dataObj.dataValue = result.dataObj.data.replace(',','');
+    result.dataObj.dataValue = result.dataObj.data.replace(',', '');
     result.fromDate = DateHelper.getShortDate(result.obEndDt);
     result.toDate = DateHelper.getShortDate(result.inbEndDt);
     result.remainDate = DateHelper.getShortDate(result.numEndDt);

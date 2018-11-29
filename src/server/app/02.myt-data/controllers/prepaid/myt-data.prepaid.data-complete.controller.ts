@@ -21,15 +21,26 @@ class MyTDataPrepaidDataComplete extends TwViewController {
   }
 
   private _getData(queryObject: any): any {
+    const type = queryObject.type;
     return {
-      mainTitle: MYT_DATA_COMPLETE_MSG.DATA_RECHARGE,
-      description: '',
-      txt: MYT_DATA_COMPLETE_MSG.AFTER_DATA,
+      type: type,
+      mainTitle: this._getMainTitle(type),
+      description: MYT_DATA_COMPLETE_MSG.DESCRIPTION,
       data: queryObject.data + DATA_UNIT.GB,
       centerName: MYT_DATA_COMPLETE_MSG.HISTORY,
       centerUrl: '/myt-data/recharge/prepaid/history',
       confirmUrl: '/myt-data/submain'
     };
+  }
+
+  private _getMainTitle(type: string): string {
+    let mainTitle = MYT_DATA_COMPLETE_MSG.DATA_RECHARGE;
+    if (type === 'auto') {
+      mainTitle = MYT_DATA_COMPLETE_MSG.DATA_RECHARGE_AUTO;
+    } else if (type === 'change') {
+      mainTitle = MYT_DATA_COMPLETE_MSG.DATA_RECHARGE_CHANGE;
+    }
+    return mainTitle;
   }
 }
 
