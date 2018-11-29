@@ -6,37 +6,50 @@ import { COOKIE_KEY } from '../types/common.type';
 import { Observable } from 'rxjs/Observable';
 
 class RedisService {
-  private envRedis = EnvHelper.getEnvironment('REDIS');
-  private RedisStore = connect(session);
-  private redisOption = Object.assign(this.envRedis, {
-    prefix: 'session:'
-  });
+  private static instance: RedisService;
+  private envRedis: EnvHelper;
+  private RedisStore;
+  private redisOption;
+  private middleWare;
+  private client;
 
-  constructor() {
+  private constructor() {
+    this.envRedis = EnvHelper.getEnvironment('REDIS');
+    this.RedisStore = connect(session);
+    this.redisOption = Object.assign(this.envRedis, {
+      prefix: 'session:'
+    });
+
+    this.client = redis.createClient(this.envRedis);
   }
 
-  public middleware = session({
-    key: COOKIE_KEY.TWM,
-    store: new this.RedisStore(this.redisOption),
-    cookie: { maxAge: 60 * 60 * 1000 }, // 1hours
-    secret: 'sktechx',
-    saveUninitialized: false, // don't create session until something stored,
-    resave: false, // don't save session if unmodified
-    rolling: true
-  });
+  static getInstance() {
+    if (!RedisService.instance) {
+      RedisService.instance = new RedisService();
+    }
+    return RedisService.instance;
+  }
+
+  public getMiddleWare() {
+    this.middleWare = session({
+      key: COOKIE_KEY.TWM,
+      store: new this.RedisStore(this.redisOption),
+      cookie: { maxAge: 60 * 60 * 1000 }, // 1hours
+      secret: 'sktechx',
+      saveUninitialized: false, // don't create session until something stored,
+      resave: false, // don't save session if unmodified
+      rolling: true
+    });
+    return this.middleWare;
+  }
 
   public setData(key, value) {
-    const client = redis.createClient(this.envRedis);
-
-    client.set(key, value);
-    client.quit();
+    this.client.set(key, value);
   }
 
   public getData(key): Observable<any> {
-    const client = redis.createClient(this.envRedis);
-
     return Observable.create((observer) => {
-      client.get(key, (err, reply) => {
+      this.client.get(key, (err, reply) => {
         let result;
 
         try {
@@ -45,7 +58,6 @@ class RedisService {
           result = null;
         }
 
-        client.quit();
         observer.next(result);
         observer.complete();
       });

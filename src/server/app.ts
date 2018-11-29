@@ -42,12 +42,13 @@ import VERSION from './config/version.config';
 
 class App {
   public app: Application = express();
-  public redisService = new RedisService();
+  public redisService: RedisService;
   private apiService = new ApiService();
   private logger = new LoggerService();
 
 
   constructor() {
+    this.redisService = RedisService.getInstance();
     this.config();
   }
 
@@ -60,7 +61,7 @@ class App {
     this.app.engine('html', ejs.renderFile);
     this.app.use(express.json());       // to support JSON-encoded bodies
     this.app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
-    this.app.use(this.redisService.middleware);
+    this.app.use(this.redisService.getMiddleWare());
     this.app.use(UA.express()); // req.useragent
     this.app.use(cookie());
     // development env

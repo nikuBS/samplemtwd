@@ -24,7 +24,7 @@ class ApiRouter {
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
   private authService: AuthService = new AuthService();
-  private redisService: RedisService = new RedisService();
+  private redisService: RedisService = RedisService.getInstance();
 
   constructor() {
     this.router = express.Router();

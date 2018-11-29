@@ -26,7 +26,7 @@ abstract class TwViewController {
     this._apiService = new ApiService();
     this._loginService = new LoginService();
     this._logger = new LoggerService();
-    this._redisService = new RedisService();
+    this._redisService = RedisService.getInstance();
     this._error = new ErrorService();
   }
 
