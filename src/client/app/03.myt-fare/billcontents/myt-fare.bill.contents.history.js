@@ -58,7 +58,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.renderListData = {};
 
     //리스트 갯수 제한 
-    this.listRenderPerPage = 5; //더보기 갯수
+    this.listRenderPerPage = 20; //더보기 갯수
     this.listLastIndex = this.listRenderPerPage; 
     this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
