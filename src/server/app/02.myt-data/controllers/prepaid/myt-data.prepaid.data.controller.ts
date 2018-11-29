@@ -22,9 +22,8 @@ class MyTDataPrepaidData extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     this.getPPSInfo().subscribe((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
-        // const result = resp.result;
-        const result = PrepaidDataInfo.result;
+      if (resp.code === API_CODE.CODE_00) {
+        const result = resp.result;
         res.render('prepaid/myt-data.prepaid.data.html', {
           ppsInfo: this.parseData(result),
           svcInfo: svcInfo,
@@ -45,8 +44,13 @@ class MyTDataPrepaidData extends TwViewController {
   }
 
   private parseData(result: any): any {
-    result.dataObj = FormatHelper.customDataFormat(result.remained, DATA_UNIT.KB, DATA_UNIT.MB);
-    result.dataObj.dataValue = result.dataObj.data.replace(',','');
+    if (!FormatHelper.isEmpty(result.remained)) {
+      result.dataObj = FormatHelper.customDataFormat(result.remained, DATA_UNIT.KB, DATA_UNIT.MB);
+      result.dataObj.dataValue = result.dataObj.data.replace(',', '');
+    } else {
+      result.dataObj.data = 0;
+      result.dataObj.dataValue = 0;
+    }
     result.fromDate = DateHelper.getShortDate(result.obEndDt);
     result.toDate = DateHelper.getShortDate(result.inbEndDt);
     result.remainDate = DateHelper.getShortDate(result.numEndDt);
