@@ -10,6 +10,7 @@ export enum TID_SVC_TYPE {
   CHANGE_PW = 24,
   TERM = 25,
   SECURITY = 26,
+  CERT = 40,
   GUIDE = 50
 }
 

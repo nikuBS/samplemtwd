@@ -25,8 +25,16 @@ Tw.CertificationPassword.prototype = {
     this._callback = callback;
     this._authKind = authKind;
 
-    this._nativeService.send(Tw.NTV_CMD.CERT_PW, {}, $.proxy(this._onCertResult, this));
+    this._openCertPassword();
   },
+  _openCertPassword: function () {
+    if(Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.CERT_PW, {}, $.proxy(this._onCertResult, this));
+    } else {
+      this._historyService.goLoad('/common/tid/cert-pw');
+    }
+  },
+
   _onCertResult: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._confirmPasswordCert();
