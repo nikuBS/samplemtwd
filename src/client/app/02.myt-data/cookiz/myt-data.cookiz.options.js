@@ -4,8 +4,9 @@
  * Date: 2018.09.10
  */
 
-Tw.MyTDataCookizOptions = function (rootEl) {
+Tw.MyTDataCookizOptions = function (rootEl, svcInfo) {
   this.$container = rootEl;
+  this.svcInfo = svcInfo;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -34,15 +35,21 @@ Tw.MyTDataCookizOptions.prototype = {
 
   // 데이터 조르기
   _onDataPesterDetail: function () {
-    //  2_A17 Alert 호출
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.MSG,
-      Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+    if ( Tw.BrowserHelper.isApp() ) {
+      //  2_A17 Alert 호출
+      this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.MSG,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+    }
+    else {
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MOBILE_TWORLD);
+    }
   },
 
   _pesterDetailConfirm: function () {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
-    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
+    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE +
+      this.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.MOBILE_TWORLD;
     Tw.CommonHelper.share(content);
   },
 

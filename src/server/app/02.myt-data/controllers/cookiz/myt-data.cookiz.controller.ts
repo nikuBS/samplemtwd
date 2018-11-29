@@ -47,15 +47,13 @@ class MyTDataCookiz extends TwViewController {
             { subscriptions: subscriptions }
           );
 
-          res.render('cookiz/myt-data.cookiz.html', response);
-
-          // if ( subscriptions && subscriptions.currentTopUpLimit === '0' ) {
-          //   res.render('cookiz/myt-data.cookiz.blocked.html', response);
-          // } else if ( subscriptions ) {
-          //   res.render('cookiz/myt-data.cookiz.html', response);
-          // } else {
-          //   res.render('cookiz/myt-data.cookiz.error.html', response);
-          // }
+          if ( subscriptions && subscriptions.topUpLimit === '0' ) {
+            res.render('cookiz/myt-data.cookiz.blocked.html', response);
+          } else if ( subscriptions ) {
+            res.render('cookiz/myt-data.cookiz.html', response);
+          } else {
+            res.render('cookiz/myt-data.cookiz.error.html', response);
+          }
         });
     }
   }
@@ -74,11 +72,11 @@ class MyTDataCookiz extends TwViewController {
   private getAuthChangeInfo = () => this.apiService.request(API_CMD.BFF_06_0033, {})
     .map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result
+        return resp.result;
       } else {
         return null;
       }
-    });
+    })
 
   public addComma = (sAmount) => FormatHelper.addComma(sAmount);
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);

@@ -7,23 +7,61 @@
 Tw.MyTDataGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+
+  this._cachedElement();
+  this._bindEvent();
   this._init();
 };
 
 Tw.MyTDataGift.prototype = {
   _init: function () {
-    this.wrap_tpl_available_product = $('.fe-layer_available_product');
-    this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
-
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
       this._goAutoGiftTab();
     }
+  },
 
+  _cachedElement: function () {
+    this.wrap_tpl_available_product = $('.fe-layer_available_product');
+    this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
+    this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
+    this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
+    this.$recent_tel = this.$container.find('.recently-tel');
+  },
+
+  _bindEvent: function () {
     this.$container.on('click', '.fe-available_product', $.proxy(this._onClickShowAvailableProduct, this));
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._onHideAvailableProduct, this));
     this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
+    this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
   },
+
+  _onLoadRecently: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+      fromDt: Tw.DateHelper.getPastYearShortDate(),
+      toDt: Tw.DateHelper.getCurrentShortDate(),
+      giftType: 'G1'
+    }).done($.proxy(this._onSuccessRecently, this));
+  },
+
+  _onSuccessRecently: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var contactList = res.result.slice(0, 3);
+      contactList = contactList.map(function(item){
+        return $.extend(item, {svcNum: Tw.FormatHelper.conTelFormatWithDash(item.svcNum)});
+      });
+
+      this.$recent_tel.html(this.tpl_recently_gift({ contactList: contactList }));
+      this.$recent_tel.show();
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _hideRecently: function () {
+    this.$recent_tel.hide();
+  },
+
   _goAutoGiftTab: function () {
     var $tab1 = this.$container.find('#tab1');
     var $tab2 = this.$container.find('#tab2');
@@ -49,7 +87,9 @@ Tw.MyTDataGift.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var sortedList = this._purifyPlansData(res.result);
 
-      this.wrap_tpl_available_product.html(this.tpl_available_product({sortedList:sortedList}));
+      this.wrap_tpl_available_product.html(
+        this.tpl_available_product({ sortedList: sortedList })
+      );
       this.wrap_tpl_available_product.show();
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -68,29 +108,29 @@ Tw.MyTDataGift.prototype = {
       var patternHangul = /[ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ]/;
 
       var order = function (a, b) {
-        if (a < b) {
+        if ( a < b ) {
           return -1;
-        } else if (a > b) {
+        } else if ( a > b ) {
           return 1;
         }
         return 0;
       };
 
-      if (ia.match(patternHangul) && ib.match(patternHangul)) {
+      if ( ia.match(patternHangul) && ib.match(patternHangul) ) {
         return order(ia, ib);
       }
 
-      if (ia.match(/[a-zA-Z]/) && ib.match(/[a-zA-Z]/)) {
+      if ( ia.match(/[a-zA-Z]/) && ib.match(/[a-zA-Z]/) ) {
         return order(ia, ib);
       }
 
-      if (ia.match(/[0-9]/) && ib.match(/[0-9]i/)) {
+      if ( ia.match(/[0-9]/) && ib.match(/[0-9]i/) ) {
         return order(ia, ib);
       }
 
-      if (ia < ib) {
+      if ( ia < ib ) {
         return 1;
-      } else if (ia > ib) {
+      } else if ( ia > ib ) {
         return -1;
       }
       return 0;

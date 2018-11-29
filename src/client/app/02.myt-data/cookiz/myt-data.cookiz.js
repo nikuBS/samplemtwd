@@ -75,11 +75,6 @@ Tw.MyTDataCookiz.prototype = {
     this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
   },
 
-  _onCancelMonthlyRecharge: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0031, {})
-      .done($.proxy(this._onSuccessCancelAutoRefill, this));
-  },
-
   _rechargeImmediately: function () {
     var htParams = {
       amt: this.$wrap_immediately_select_list.find('li.checked input').val()

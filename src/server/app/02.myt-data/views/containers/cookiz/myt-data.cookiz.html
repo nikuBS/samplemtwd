@@ -86,8 +86,10 @@
 
 <script>
   $(document).ready(function () {
+    var svcInfo = '<%- JSON.stringify(svcInfo) %>';
     var oMyTDataCookiz = new Tw.MyTDataCookiz($('.container-wrap'));
-    new Tw.MyTDataCookizOptions($('.wrap'));
+
+    new Tw.MyTDataCookizOptions($('.wrap'), JSON.parse(svcInfo));
   });
 </script>
 
