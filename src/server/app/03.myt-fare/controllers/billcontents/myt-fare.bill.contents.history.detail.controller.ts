@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.history.controller.ts
- * Author: Lee Sanghyoung (silion@sk.com)
- * Date: 2018.09.17
+ * FileName: myt-fare.bill.contents.history.detail.controller.ts
+ * Author: Lee kirim (kirim@sk.com)
+ * Date: 2018. 11. 29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

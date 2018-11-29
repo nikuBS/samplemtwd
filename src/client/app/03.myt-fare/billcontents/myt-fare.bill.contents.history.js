@@ -1,13 +1,11 @@
 /**
  * FileName: myt-fare.bill.contents.history.js
  * Author: Lee kirim (kirim@sk.com)
- * Date: 2018. 9. 17
+ * Date: 2018. 11. 29
  */
 Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
-  console.log(this.data)
-  
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(rootEl);
   this._popupService = Tw.Popup;
@@ -17,8 +15,8 @@ Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
   this._params = this._urlHelper.getQueryParams();
 
   this._cachedElement();
-  this._bindEvent();
   this._init(data);
+  this._bindEvent();
 };
 
 Tw.MyTFareBillContentsHitstory.prototype = {
@@ -26,37 +24,41 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.current = this._getLastPathname();
 
     this._initBillList(data);
+    this.monthActionSheetListData = $.proxy(this._setMonthActionSheetData, this)(); //현재로부터 지난 6개월 구하기 
   },
 
   _cachedElement: function () {
     this.$domListWrapper = this.$container.find('#fe-list-wrapper'); 
     this.$listWrapper = this.$domListWrapper.find('.list-inner');
+    this.$selectMonth = this.$container.find('#fe-month-selector');
 
     this.$template = {
-      $listWrapper: Handlebars.compile($('#list-wrapper').html()),
+      $btnMoreWrapper: Handlebars.compile($('#btn-more-wrapper').html()),
       $list: Handlebars.compile($('#list-default').html()),
       $emptyList: Handlebars.compile($('#list-empty').html())
     };
 
     Handlebars.registerPartial('billList', $('#list-default').html());
-    /*this.$autopaymentSwitcher = this.$container.find('.switch-wrap .btn-switch input');
-    this.$microPayMonthSelector = this.$container.find('#fe-month-selector');*/
   },
 
   _bindEvent: function () {
-    /*if (this.$autopaymentSwitcher) {
-      this.$autopaymentSwitcher.on('change', $.proxy(this._autoPaymentBlockToggle, this));
-    }*/
+    // 링크 이동
+    this.$domListWrapper.find('.fe-detail-link').on('click', $.proxy(this._moveDetailPage,this));
+    // 월 선택 
+    this.$selectMonth.on('click', $.proxy(this._typeActionSheetOpen, this));
+    // 더 보기
+    this.$domListWrapper.on('click', '.bt-more', $.proxy(this._updateBillList, this));
   },
 
   _initBillList: function (data) {
     //리스트 갯수
     var totalDataCounter = this.data.billList.length; 
+    var BtnMoreList;
     var initedListTemplate;
     this.renderListData = {};
 
     //리스트 갯수 제한 
-    this.listRenderPerPage = 20; //더보기 갯수
+    this.listRenderPerPage = 5; //더보기 갯수
     this.listLastIndex = this.listRenderPerPage; 
     this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
@@ -66,162 +68,102 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
     this.renderListData.billList = this.renderableListData; 
     
-    console.log(this.renderListData)
+    BtnMoreList = this.$template.$btnMoreWrapper(this.renderListData);
+    this.$listWrapper.after(BtnMoreList);
     initedListTemplate = this.$template.$list(this.renderListData);
     this.$listWrapper.append(initedListTemplate);
-    /*var date = new Date();
-    this.monthTermValue = JSON.parse(data).termSelectValue;
-
-    this.boardListWithTemplate = new Tw.MyTFareHistoryCommonBoard(this.$container);
-
-    this.dateInfo = {
-      year: this._dateHelper.getShortDateWithFormat(date, 'YYYY'),
-      month: this._dateHelper.getCurrentMonth(date)
-    };
-
-    this.monthActionSheetListData = $.proxy(this._setMonthActionSheetData, this)();
-
-    this.$microPayMonthSelector.on('click', $.proxy(this._typeActionSheetOpen, this, Tw.POPUP_TITLE.SELECT, this.monthActionSheetListData,
-        $.proxy(this._openMonthSelectHandler, this), $.proxy(this._closeMonthSelect, this)));
-
-    this.$container.on('click', '.list-inner li a', $.proxy(this._moveDetailPage, this));
-
-    this.$template = {
-      $domListWrapper: this.$container.find('#fe-list-wrapper'),
-      $list: this.$container.find('#list-default'),
-      $listWrapper: this.$container.find('#list-wrapper'),
-      $emptyList: this.$container.find('#list-empty')
-    };*/
   },
 
-  _moveDetailPage: function (e) {
-    Tw.UIService.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.currentMonthData[$(e.currentTarget).data('listId')]));
-  },
-
- 
-  /*_setMicroPaymentContentsData: function (res) {
-    this.historyData = JSON.parse(res);
-
-    this.currentMonthData = (this.historyData[this.dateInfo.year] && this.historyData[this.dateInfo.year][this.dateInfo.month]) ?
-        this.historyData[this.dateInfo.year][this.dateInfo.month] : [];
-
-    this._setCurrentMonthDataIndex();
-    this._renderMicroPayContentsList();
-  },*/
-  _openMonthSelectHandler: function (root) {
-    this.$monthSelectActionsheetButtons = root.find('.chk-link-list button');
-    $(this.$monthSelectActionsheetButtons[this.dateInfo.currentIndex || 0]).addClass('checked');
-    this.monthActionSheetListData[0].list[this.dateInfo.currentIndex || 0].option = 'checked';
-    this.$monthSelectActionsheetButtons.on('click', $.proxy(this._updateMicroPayContentsList, this));
-  },
-
-  _closeMonthSelect: function () {
-  },
-
-  _updateMicroPayContentsList: function (e) {
-    this.monthActionSheetListData[0].list[this.dateInfo.currentIndex || 0].option = '';
-    this.dateInfo.currentIndex = $(e.currentTarget).data('index');
-    this.dateInfo.currentYear = $(e.currentTarget).data('year');
-    this.dateInfo.currentMonth = $(e.currentTarget).data('month');
-    this.$monthSelectActionsheetButtons.removeClass('checked');
-    this._popupService.close();
-    this.$microPayMonthSelector.text($(e.target).text());
-
-    this.currentMonthData = (this.historyData[this.dateInfo.currentYear] && this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth]) ?
-        this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth] : [];
-
-    this._setCurrentMonthDataIndex();
-
-    this._renderMicroPayContentsList();
-  },
-
-  _setCurrentMonthDataIndex: function () {
-    this.currentMonthData.map($.proxy(function (o, i) {
-      o.listId = i;
-    }, this));
-  },
-
-  _renderMicroPayContentsList: function () {
-
-    this.$template.$domListWrapper.html('');
-
-    this.boardListWithTemplate._init({result: this.currentMonthData}, this.$template.$domListWrapper, {
-      list: this.$template.$list,
-      wrapper: this.$template.$listWrapper,
-      empty: this.$template.$emptyList
-    }, {
-      setIndex: function (option) {
-        return option.fn(this);
-      }
-    }, {
-      list: 'listElement',
-      restButton: 'restCount'
-    }, 20, '.bt-more button', '.list-inner', $.proxy(this._appendListCallBack, this));
-  },
-
-  _appendListCallBack: function () {
-  },
-
-
-
-  
-  _setMonthActionSheetData: function () {
-    var tempArr = [];
-    var yearText = ''
-    console.log(this.dateInfo, this.monthTermValue);
-    for (var i = this.monthTermValue, month = this.dateInfo.month; i > 0; i--) {
-      if (month === 0) {
-        month = 12;
-        yearText = (this.dateInfo.year - 1) + Tw.PERIOD_UNIT.YEAR + ' ';
-      }
-      if (month-- <= 0) {
-        tempArr.push({
-          value: yearText + Math.abs(month) + Tw.PERIOD_UNIT.MONTH,
-          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + (this.dateInfo.year - 1) + '\'' + ' data-month=\'' + Math.abs(month) + '\''
-        });
-      } else {
-        tempArr.push({
-          value: yearText + (month + 1) + Tw.PERIOD_UNIT.MONTH,
-          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + this.dateInfo.year + '\'' + ' data-month=\'' + (month + 1) + '\''
-        });
-      }
-    }
-    return [{
-      list: tempArr
-    }];
-  },
-
-  _typeActionSheetOpen: function (title, data, openCallback, closeCallback) {
+  // 월 선택
+  _typeActionSheetOpen: function () {
+    /*Tw.POPUP_TITLE.SELECT, ,
+      */
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',// hbs의 파일명
       layer: true,
-      title: title,
-      data: data
-    }, openCallback, closeCallback);
+      title: Tw.POPUP_TITLE.SELECT,
+      data: this.monthActionSheetListData
+    }, $.proxy(this._openMonthSelectHandler, this), $.proxy(this._closeMonthSelect, this));
   },
 
-  _autoPaymentBlockToggle: function (e) {
-    var wrapper = $(e.target).parents('li');
+  // 셀렉트 콤보박스
+  _setMonthActionSheetData: function () {
+    var tempArr = [],
+      year = this.data.beforeYear, 
+      month = this.data.beforeMonth, 
+      month_limit = 12; 
 
-    this.detailData = {
-      idpg: wrapper.data('feIdpg'),
-      tySvc: wrapper.data('feTysvc'),
-      cpCode: wrapper.data('feCpcode'),
-      state: 'C'
-    };
-    this._appendAutoPaymentBlockHandler(this._blockHistoryBlockToggleHandler);
-  },
-
-  _blockHistoryBlockToggleHandler: function (res) {
-    if (res.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(res.code, res.msg).page();
+    // 6개월 리스트 만들기
+    for(var i = 1; i<=6; i++){
+      month = parseFloat(this.data.beforeMonth)+i;
+      if(month>= month_limit){ 
+        year = this.data.curYear;
+        month -= month_limit;
+      }
+      tempArr.push({
+        value:month + Tw.PERIOD_UNIT.MONTH,
+        attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\'',
+        option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? "checked" : ""
+      })
     }
-
-    Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.REVOCATION);
-    window.setTimeout($.proxy(function () {
-      this._historyService.reload();
-    }, this), 2000);
+    return [{
+      list: tempArr.reverse()
+    }];
   },
+
+  // 선택 시트
+  _openMonthSelectHandler: function (root) {
+    root.find('.chk-link-list button').on('click', $.proxy(this._updateMicroPayContentsList, this));
+  },
+
+  _updateMicroPayContentsList: function (e) {
+    var year = $(e.currentTarget).data('year') || this.data.curYear;
+    var month = $(e.currentTarget).data('month') || this.data.curMonth; 
+    //선택표기
+    $(e.currentTarget).addClass('checked').parent().siblings().find('button').removeClass('checked');
+    //이동
+    this._historyService.goLoad(this._historyService.pathname + "?year=" + year + "&month=" + month);
+  },
+
+  _closeMonthSelect: function () {
+    this._popupService.close();
+  },
+
+  // 월 선택 end
+
+  // 디테일 페이지
+  _moveDetailPage: function (e) {
+    Tw.UIService.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
+    this._historyService.goLoad(this._historyService.pathname+'/detail');
+  },  
+
+  // 더 보기
+  _updateBillList: function() {
+    var $virtualDom = $('<div />');
+    var $domAppendTarget = this.$domListWrapper.find('.cont-use-detail ul.list-inner');
+    
+    this._updateBillListDate();
+    this.$domListWrapper.find('.bt-more').css({display: this.listLastIndex >= this.data.billList.length ? 'none':''});
+
+    this.renderableListData.map($.proxy(function(o) {
+      var renderedHTML;  
+      renderedHTML = this.$template.$list({billList:[o]});
+
+      $virtualDom.append(renderedHTML);
+    }, this));
+    $virtualDom.find('.fe-detail-link').on('click', $.proxy(this._moveDetailPage,this));
+    $domAppendTarget.append($virtualDom.children().unwrap());
+  },
+
+  _updateBillListDate: function() {
+    this.listNextIndex = this.listLastIndex + this.listRenderPerPage;
+    this.renderableListData = this.data.billList.slice(this.listLastIndex, this.listNextIndex);
+    this.renderListData.restCount = this.data.billList.length - this.listNextIndex;
+
+    this.listLastIndex = this.listNextIndex >= this.data.billList.length ?
+        this.data.billList.length : this.listNextIndex;
+  },
+  // 더 보기 end
 
   _getLastPathname: function () {
     return _.last(this._historyService.pathname.split('/')) || this._historyService.pathname.split('/').splice(-2)[0];

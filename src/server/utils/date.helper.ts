@@ -35,6 +35,22 @@ class DateHelper {
     const remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
     return remain;
   }
+  
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 6
+   */
+  static getFromCurrentPrevMonth(date: any, before: number ): string {
+    return moment(this.convDateFormat(date)).add(-before, 'months').format('M');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 6
+   */
+  static getFromCurrentPrevYear(date: any, before: number ): string {
+    return moment(this.convDateFormat(date)).add(-before, 'months').format('YYYY');
+  }
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss

@@ -117,6 +117,12 @@ export enum MYT_DATA_CHARGE_TYPES {
   CANCEL = '취소'
 }
 
+export enum MYT_DATA_RECHARGE_MSG {
+  SELECT_DATA = '데이터 선택',
+  REGISTER = '충전 신청하기',
+  CHANGE = '변경하기'
+}
+
 export enum PRODUCT_INFINITY_BENEFIT {
   NA00006114 = 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
   NA00006115 = '무료영화예매 2회 / 1개월',
@@ -327,7 +333,10 @@ export const MYT_FARE_COMPLETE_MSG = {
 
 export const MYT_DATA_COMPLETE_MSG = {
   DATA_RECHARGE: '데이터 충전 완료',
-  AFTER_DATA: '충전 후 데이터',
+  DATA_RECHARGE_AUTO: '데이터 자동 충전 신청 완료',
+  DATA_RECHARGE_CHANGE: '데이터 자동 충전 변경 완료',
+  DATA_RECHARGE_CANCEL: '데이터 자동 충전 해지 완료',
+  DESCRIPTION: '데이터 1MB 이하 또는<br />사용기간 만료 1일 전일 때 자동 충전됩니다.',
   HISTORY: '충전내역 보기'
 };
 

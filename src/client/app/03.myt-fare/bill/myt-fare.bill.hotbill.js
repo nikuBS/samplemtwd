@@ -44,6 +44,8 @@ Tw.MyTFareHotBill.prototype = {
         params.gubun = 'Q';
       } else if ( childSvcMgmtNum ) {
         params.childSvcMgmtNum = childSvcMgmtNum;
+      } else {
+        params.gubun = '9';
       }
       this._apiService
         .request(Tw.API_CMD.BFF_05_0022, params)
@@ -67,6 +69,8 @@ Tw.MyTFareHotBill.prototype = {
       params.gubun = 'Q';
     } else if ( child ) {
       params.childSvcMgmtNum = child.svcMgmtNum;
+    } else {
+      params.gubun = '9';
     }
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, params)
@@ -103,6 +107,14 @@ Tw.MyTFareHotBill.prototype = {
         // }
         skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
         this._renderBillGroup(group, false, this.$container);
+
+        // 전월요금 보이기
+        if ( !this._isPrev && !this.childSvcMgmtNum ) {
+          if ( parseInt(billData.totOpenBal1, 10) > 0 ) {
+            this.$container.find('.fe-prev-wrapper').show();
+            this.$container.find('#fe-pre-amount').text(billData.totOpenBal1 + Tw.CURRENCY_UNIT.WON);
+          }
+        }
       }
     } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {

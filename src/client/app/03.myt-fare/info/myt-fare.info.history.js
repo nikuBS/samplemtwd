@@ -21,7 +21,6 @@ Tw.MyTFareInfoHistory.prototype = {
   _init: function () {
 
     this.rootPathName = this._historyService.pathname;
-    console.log(this.rootPathName);
 
     if(this.data){
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {

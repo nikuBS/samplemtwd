@@ -165,10 +165,9 @@ Tw.MyTDataPrepaidData.prototype = {
       reqData.emailYn = 'Y';
     }
 
-    this._rechargeSuccess({ code: Tw.API_CODE.CODE_00 });
-    // this._apiService.request(Tw.API_CMD.BFF_06_0058, reqData)
-    //   .done($.proxy(this._rechargeSuccess, this))
-    //   .fail($.proxy(this._rechargeFail, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0058, reqData)
+      .done($.proxy(this._rechargeSuccess, this))
+      .fail($.proxy(this._rechargeFail, this));
   },
   _makeRequestData: function () {
     return {
