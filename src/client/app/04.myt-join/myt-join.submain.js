@@ -36,7 +36,7 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.isContractPlan ) {
         this.$contractPlan = this.$container.find('[data-id=contract-plan]');
       }
-      if ( this.data.myPausedState && this.data.myPausedState.svcStSd ) {
+      if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
         this.$pauseC = this.$container.find('[data-id=pause_c]');
       }
       if ( this.data.isOldNumber) {
@@ -92,7 +92,7 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.isContractPlan ) {
         this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
       }
-      if ( this.data.myPausedState && this.data.myPausedState.svcStSd ) {
+      if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
         this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
       }
       if ( this.data.isOldNumber) {

@@ -54,7 +54,7 @@
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
-                    <% if (data.remnantData.data && data.remnantData.data.length > 0) { %>
+                    <% if (data.remnantData && data.remnantData.data.length > 0) { %>
                     <% var rdata = data.remnantData.data[0]; %>
                     <li>
                         <span class="tit"><%= rdata.skipName %></span>
@@ -117,7 +117,7 @@
     <% } %>
     <div class="cont-box nogaps-hoz">
         <ul class="date-graph-list">
-            <% if (data.remnantData.voice && data.remnantData.voice.length > 0) { %>
+            <% if (data.remnantData && data.remnantData.voice.length > 0) { %>
             <% var rvoice = data.remnantData.voice[0]; %>
             <li>
                 <div class="left">
@@ -156,7 +156,7 @@
                 <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
             </li>
             <% } %>
-            <% if (data.remnantData.sms && data.remnantData.sms.length > 0) { %>
+            <% if (data.remnantData && data.remnantData.sms.length > 0) { %>
             <% var rsms = data.remnantData.sms[0]; %>
             <li>
                 <div class="left">
@@ -242,7 +242,7 @@
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
-                    <% if (data.remnantData.data && data.remnantData.data.length > 0) { %>
+                    <% if (data.remnantData && data.remnantData.data.length > 0) { %>
                     <% var rdata = data.remnantData.data[0]; %>
                     <li>
                         <span class="tit"><%= rdata.skipName %></span>
@@ -267,7 +267,7 @@
     <% } %>
     <div class="cont-box nogaps-hoz">
     <ul class="date-graph-list">
-        <% if (data.remnantData.voice && data.remnantData.voice.length > 0) { %>
+        <% if (data.remnantData && data.remnantData.voice.length > 0) { %>
         <% var rvoice = data.remnantData.voice[0]; %>
         <li>
             <div class="left">
@@ -306,7 +306,7 @@
             <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
         </li>
         <% } %>
-        <% if (data.remnantData.sms && data.remnantData.sms.length > 0) { %>
+        <% if (data.remnantData && data.remnantData.sms.length > 0) { %>
         <% var rsms = data.remnantData.sms[0]; %>
         <li>
             <div class="left">
@@ -391,7 +391,7 @@
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
-                    <% if (data.remnantData.data && data.remnantData.data.length > 0) { %>
+                    <% if (data.remnantData && data.remnantData.data.length > 0) { %>
                     <% var rdata = data.remnantData.data[0]; %>
                     <li>
                         <span class="tit"><%= rdata.skipName %></span>

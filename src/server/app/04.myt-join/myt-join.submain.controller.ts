@@ -78,7 +78,7 @@ class MyTJoinSubmainController extends TwViewController {
       // 가입정보
       switch ( this.type ) {
         case 0:
-          data.isOldNumber = !(!oldnum);
+          data.isOldNumber = (oldnum.numChgTarget || oldnum.numChgTarget === 'true');
           data.myInfo = myif;
           break;
         case 2:
@@ -219,6 +219,13 @@ class MyTJoinSubmainController extends TwViewController {
       const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          let clsNm = 'cellphone';
+          if ( item.svcAttrCd.indexOf('S') > -1 ) {
+            clsNm = 'pc';
+          } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1) {
+            clsNm = 'tablet';
+          }
+          item.className = clsNm;
           list.push(item);
         }
       });
