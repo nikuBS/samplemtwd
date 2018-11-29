@@ -11,6 +11,7 @@ import MyTFareBillGuideRoaming from './controllers/billguide/myt-fare.bill.guide
 import MyTFareBillGuideDonation from './controllers/billguide/myt-fare.bill.guide.donation.controllers';
 import MyTFareSubMainNonBill from './controllers/submain/myt-fare.submain.non-paymt';
 import MyTFareHistory from './controllers/history/myt-fare.history.controller';
+import MyTFareBillSmallMonthly from './controllers/billsmall/myt-fare.bill.small.monthly.controller';
 import MyTFareBillContentsHistory from './controllers/billcontents/myt-fare.bill.contents.history.controller';
 import MyTFareBillContentsHistoryDetail from './controllers/billcontents/myt-fare.bill.contents.history.detail.controller';
 import MyTFareBillContentsMonthly from './controllers/billcontents/myt-fare.bill.contents.monthly.controller';
@@ -75,7 +76,7 @@ class MytFareRouter extends TwRouter {
 
     // 소액결제, 컨텐츠 이용료 상세내역
     this.controllers.push({ url: '/bill/small/history', controller: MyTFareHistory });
-    this.controllers.push({ url: '/bill/small/monthly', controller: MyTFareHistory });
+    this.controllers.push({ url: '/bill/small/monthly', controller: MyTFareBillSmallMonthly });
     this.controllers.push({ url: '/bill/small/block', controller: MyTFareHistory });
     this.controllers.push({ url: '/bill/small/history/detail', controller: MyTFareHistory });
 

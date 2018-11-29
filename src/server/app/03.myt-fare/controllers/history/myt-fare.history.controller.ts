@@ -182,6 +182,7 @@ class MyTFareMicroHistory extends TwViewController {
   renderMicroBlockHistory(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resData) => {
+      // console.log('\x1b[36m%s\x1b[0m', '------log auto code', resData.code, resData.result);
       const currentDate = DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
 
       if (resData.code !== API_CODE.CODE_00) {
