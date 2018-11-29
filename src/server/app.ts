@@ -184,7 +184,7 @@ class App {
     // console.log('[Error] 404 Error', req.baseUrl + req.path);
 
     if ( req.accepts('html') ) {
-      return res.status(404).render('error.page-not-found.html', { svcInfo: null });
+      return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
     next();
   }
@@ -195,7 +195,7 @@ class App {
     // if ( req.accepts('html') ) {
     //   return res.status(404).render('error.page-not-found.html', { svcInfo: null });
     // }
-    return res.status(500).send(err.message);
+    return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
   }
 }
 
