@@ -141,7 +141,8 @@ Tw.MyTFareHotBill.prototype = {
 
   _onErrorReceivedBillData: function (resp) {
     skt_landing.action.loading.off({ ta: '.container' });
-    Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
+    Tw.Error(resp.code, resp.msg).pop();
+    //Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
   },
 
   _onErrorClosed: function () {

@@ -89,7 +89,7 @@ Tw.MyTFareSubMain.prototype = {
     this.$billChart = this.$container.find('[data-id=bill-chart]');
     if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
       // 다른회선 요금 조회
-      this.$otherLines = this.$container.find('[data-id=other-line]');
+      this.$otherLines = this.$container.find('[data-id=other-line] li');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
@@ -189,7 +189,7 @@ Tw.MyTFareSubMain.prototype = {
   _initOtherLineList: function (list) {
     if ( list.length > 0 ) {
       for ( var i = 0; i < list.length; i++ ) {
-        var $ul = this.$otherLines.find('ul');
+        var $ul = this.$container.find('ul.my-line-info');
         var result = this.$moreTempleate(list[i]);
         $ul.append(result);
       }
@@ -460,7 +460,7 @@ Tw.MyTFareSubMain.prototype = {
       var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
       for ( var i = 0; i < length; i++ ) {
         var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$otherLines.find('ul.my-line-info').append(result);
+        this.$container.find('ul.my-line-info').append(result);
       }
     }
   },

@@ -2,6 +2,7 @@
 * FileName: myt-join.submain.prod-info.html
 * Author: Kim InHwan (skt.P132150@partner.sk.com)
 * Date: 2018.10.11
+* Update: 2018.11.29
 %>
 
 
@@ -9,94 +10,96 @@
 
 <!-- .cont-box -->
 <div class="cont-box nogaps">
-    <ul class="link-long-list">
-        <% if (data.isAddProduct) { %>
+    <ul class="full-link-list">
         <li>
-            <div class="link-long">
+            <button data-id="my-plan">
+                <span class="inner">
+                    <span class="tit">
+                        나의 요금제
+                    </span>
+                    <span class="text"><%= data.svcInfo.prodNm %></span>
+                </span>
+            </button>
+        </li>
+        <% if (data.isAddProduct) { %>
+            <li>
                 <button data-id="add-prod">
-                    <% if (data.type === 2 || data.type === 3) { %>
-                    나의 부가 서비스
-                    <% } else { %>
-                    나의 부가 상품
-                    <% } %>
-                    <span class="tx-sub">
-                        <span class="normal">
-                        <% if (data.type === 2 || data.type === 3) { %>
-                            <%= data.myAddProduct.addTotCnt %>개
-                        <% } else { %>
-                            유료 <%= data.myAddProduct.addProdPayCnt %>개 /
-                            무료 <%= data.myAddProduct.addProdPayFreeCnt %>개
-                        <% } %>
+                    <span class="inner">
+                        <span class="tit">
+                            <% if (data.type === 2 || data.type === 3) { %>
+                            나의 부가서비스
+                            <% } else { %>
+                            나의 부가 상품
+                            <% } %>
                         </span>
-                        <span class="ico"></span>
+                        <span class="text">
+                            <% if (data.type === 2 || data.type === 3) { %>
+                                <%= data.myAddProduct.addTotCnt %>개
+                            <% } else { %>
+                                유료 <%= data.myAddProduct.addProdPayCnt %>개 /
+                                무료 <%= data.myAddProduct.addProdPayFreeCnt %>개
+                            <% } %>
+                        </span>
                     </span>
                 </button>
-            </div>
-        </li>
-        <% if (data.type === 0) { %>
-            <% if (data.myAddProduct.comProdCnt > 0) { %>
-            <li>
-                <div class="link-long">
-                    <button data-id="com-prod">나의 결합상품
-                        <span class="tx-sub">
-                                <span class="normal">
-                                    <%= data.myAddProduct.comProdCnt %>개
-                                </span>
-                                <span class="ico"></span>
-                            </span>
-                    </button>
-                </div>
             </li>
+            <% if (data.type === 0) { %>
+                <% if (data.myAddProduct.comProdCnt > 0) { %>
+                <li>
+                    <button data-id="com-prod">
+                        <span class="inner">
+                            <span class="tit">나의 결합상품</span>
+                            <span class="text"><%= data.myAddProduct.comProdCnt %>개</span>
+                        </span>
+                    </button>
+                </li>
+                <% } %>
             <% } %>
-        <% } %>
         <% } %>
         <% if (data.type === 0) { %>
             <% if (data.isInstallement) { %>
             <li>
-                <div class="link-long">
-                    <button data-id="installement">약정할인·기기상환 정보
-                        <span class="tx-sub">
-                            <span class="normal">
-                                <%= data.myInstallement.disProdNm %> / <%= data.myInstallement.disMthCnt %>개월
-                            </span>
-                            <span class="ico"></span>
-                        </span>
-                    </button>
-                </div>
+                <button data-id="installement">
+                    <span class="inner">
+                        <span class="tit">약정할인 &middot; 기기상환 정보</span>
+                        <span class="text"><%= data.myInstallement.disProdNm %> <br/> <%= data.myInstallement.disMthCnt %>개월</span>
+                    </span>
+                </button>
             </li>
             <% } %>
             <% if (data.isContractPlan) { %>
             <li>
-                <div class="link-long">
-                    <button data-id="contract-plan">무약정 플랜
-                        <span class="tx-sub">
-                            <span class="normal">
-                                <%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건
-                            </span>
-                            <span class="ico"></span>
-                        </span>
-                    </button>
-                </div>
+                <button data-id="contract-plan">
+                    <span class="inner">
+                        <span class="tit">무약정 플랜 포인트</span>
+                        <span class="text"><%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건</span>
+                    </span>
+                </button>
             </li>
             <% } %>
         <% } else if (data.type === 2) { %>
             <li>
-                <div class="link-long">
-                    <button data-id="wire-inq">
-                        인터넷・집전화・IPTV 신청내역 및 조회<span class="ico"></span>
-                    </button>
-                </div>
+                <button data-id="wire-inq">
+                    <span class="inner">
+                        <span class="tit">인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회</span>
+                    </span>
+                </button>
             </li>
             <% if (data.isWireFree) { %>
             <li>
-                <div class="link-long">
-                    <button data-id="B-target-inq">
-                        B끼리 무료통화 대상자 조회<span class="ico"></span>
-                    </button>
-                </div>
+                <button data-id="B-target-inq">
+                    <span class="tit">B끼리 무료통화 대상자 조회</span>
+                </button>
             </li>
             <% } %>
         <% } %>
+        <li>
+            <button data-id="join-svc">
+                <span class="inner">
+                    <span class="tit">가입상담예약 신청 및 조회</span>
+                </span>
+            </button>
+        </li>
     </ul>
 </div>
 <!--// .cont-box -->

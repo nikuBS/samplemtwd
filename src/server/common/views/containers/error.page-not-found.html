@@ -1,71 +1,90 @@
 <%#
 * FileName: error.page-not-found.html
-* Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.08.08
-* CO_99_06_01_01
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.11.29
 %>
 
 <% include ../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>서비스 이용 안내</h1>
-            </div>
-            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-        </div>
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="box-suggest">
-                    <div class="suggest-info">
-                        <p class="suggest-ti">요청하신 페이지를 <em class="tx-bold">찾을 수 없습니다.</em> 확인 후 다시 이용해주시기 바랍니다.</p>
-                        <ul class="suggest-list nodot">
-                            <li>자세한 사항은 고객센터로 문의하시면 도움을 드리겠습니다. 휴대폰 국번없이 114(무료) 또는 국번없이 1599-0111(유료)</li>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-warning-120"><span class="blind">warning</span></i>
+                        <p class="tx-tit"><span class="tx-highlight">이용에 불편을 드려서 죄송합니다.</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <% if (code === 401) { %>
+                        <p class="basic-txt">연결하려는 페이지에 장애로 인하여<br />일시적으로 페이지를 불러올 수 없습니다.
+                            <br /><br />새로고침을 하시거나 잠시 후 이용해 주시기 바랍니다.
+                        </p>
+                        <% } else if (code === 403) { %>
+                        <p class="basic-txt">비정상적인 접근으로 페이지 로딩에 실패하였습니다.<br />정상적인 경로를 이용하여 주십시오.</p>
+                        <% } else if (code === 404) { %>
+                        <p class="basic-txt">요청하신 페이지를 찾을 수 없습니다.
+                            <br /><br />찾으시는 페이지가 삭제되었거나<br />이름이 변경된 경우 사용할 수 없습니다.
+                        </p>
+                        <% } else { %>
+                        <p class="basic-txt">
+                            서버 사용량이 폭주하거나, 내부 오류가 발생하였습니다.<br /><br />
+                            이에 요청된 요구사항의 처리가 불가능하여<br />현재 사용할 수 없습니다.<br />
+                            새로고침을 하시거나 잠시 후 이용해 주시기 바랍니다.
+                        </p>
+                        <% } %>
+                        <% if (!(code === 403 || code === 404)) { %>
+                        <ul class="bt-slice item-one">
+                            <li><button type="button" class="btn-round2 btn-style3 fe-reload">새로고침</button></li>
                         </ul>
+                        <% } %>
                     </div>
                 </div>
             </div>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <h3 class="blind">고객센터 링크</h3>
-                <p class="cont-tit">도와드릴까요?</p>
-                <ul class="customer-link">
-                    <li>
-                        <div class="link-long">
-                            <button title="온라인 상담/문의 바로가기">온라인 상담/문의 바로가기<span class="ico"></span></button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long bb0">
-                            <button title="T월드 고객센터 바로가기">T월드 고객센터 바로가기<span class="ico"></span></button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!-- //.cont-box -->
         </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <% if (code === 403) { %>
+                <li><a href="/main/home" type="button" class="btn-floating btn-style2">홈으로</a></li>
+                <% } else { %>
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">돌아가기</button></li>
+                <% } %>
+            </ul>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+        <!--// .popup-closeBtn -->
     </div>
+    <!--// .popup hbs -->
     <!--// #contents -->
     <%- include('../components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    $('.fe-reload', '.wrap').on('click', function () {
+      location.reload();
+    });
+  });
+</script>
 <% include ../components/end.component.html %>

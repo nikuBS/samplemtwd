@@ -27,12 +27,10 @@
         <div class="container" data-id="submain-container">
             <!-- .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box <% data.svcInfo.svcAttrCd === 'M2'? '' : 'nogaps-top' %>" data-id="remnant-container">
+            <div class="cont-box nogaps-top" data-id="remnant-container">
             <%- include('../components/submain/test.myt-data.submain.remnant.html', data) %>
             </div>
             <!--// .cont-box -->
-
-            <% if (data.svcInfo.svcAttrCd === 'M1') { %>
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <ul class="liststyle-type01">
@@ -63,7 +61,6 @@
                     <% } %>
                 </ul>
             </div>
-            <% } %>
             <!-- //.cont-box -->
 
             <% if (data.isPrepayment) { %>
@@ -118,11 +115,7 @@
             <% if (data.breakdownList) { %>
                 <div class="cont-box nogaps" data-id="bd-container">
                     <p class="list-comp-title">
-                        <% if (data.svcInfo.svcAttrCd === 'M2') { %>
-                        충전 내역
-                        <% } else { %>
                         최근 충전・선물 내역
-                        <% } %>
                         <button class="bt">더보기</button>
                     </p>
                     <div class="contents-info-list">
@@ -223,7 +216,6 @@
     </div>
     <!--// #contents -->
     <footer id="fe-all-menu">
-        <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
         <%- include('../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
     </footer>
 </div>

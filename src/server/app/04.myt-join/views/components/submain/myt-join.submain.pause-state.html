@@ -8,65 +8,59 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
 <div class="cont-box nogaps">
-    <ul class="link-long-list">
-        <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
+    <ul class="full-link-list">
+        <% if (data.myPausedState && data.myPausedState.svcStCd) { %>
         <li>
-            <div class="link-long">
-                <!-- 장기일시정지 관련 API 기능 들어오면 처리 -->
-                <button data-id="pause_c">일시정지
-                    <span class="tx-sub">
-                    <% if (data.myPausedState.svcStCd === 'AC') { %>
-                        <% if (data.myLongPausedState.state) { %>
-                        <span class="normal">장기일시정지 <%= data.myLongPausedState.opState %></span>
-                        <span class="ico"><span class="blind">장기 일시 정지 신청</span></span>
-                        <% } else { %>
-                        <span class="normal">신청하기</span>
-                        <span class="ico"><span class="blind">일시 정지 신청하기</span></span>
-                        <% } %>
+            <button data-id="pause_c">
+                <span class="inner">
+                <% if (data.myPausedState.svcStCd === 'AC') { %>
+                    <% if (data.myLongPausedState && data.myLongPausedState.state) { %>
+                    <span class="tit">일시정지 현황</span>
+                    <span class="text"><%= data.myLongPausedState.opState %></span>
                     <% } else { %>
-                        <span class="normal">
-                            <% if (data.myLongPausedState.state) { %>
-                            장기일시정지 <%= data.myLongPausedState.opState %>
-                            <% } %>
-                            일시정지 중/<%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
-                        </span>
-                        <span class="ico">일시 정지 중</span>
-                    </span>
+                    <span class="tit">일시정지</span>
+                    <span class="text">신청하기</span>
                     <% } %>
-                </button>
-            </div>
+                <% } else { %>
+                    <span class="tit">일시정지 현황
+                        <span class="sub"><%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %></span>
+                    </span>
+                    <span class="text">
+                        <% if (data.myLongPausedState && data.myLongPausedState.state) { %>
+                        장기일시정지 <%= data.myLongPausedState.opState %>
+                        <% } else {%>
+                        일시정지 중
+                        <% } %>
+                    </span>
+                </span>
+                <% } %>
+            </button>
         </li>
         <% } %>
         <% if (data.isOldNumber) { %>
         <li>
-            <div class="link-long">
-                <button data-id="old_number">010 전환 번호변경
-                    <span class="tx-sub">
-                        <span class="normal">
-                            신청하기
-                        </span>
-                        <span class="ico"><span class="blind">010 전환 번호변경 신청하기</span></span>
-                    </span>
-                </button>
-            </div>
+            <button data-id="old_number">
+                <span class="inner">
+                    <span class="tit">010 전환 번호변경</span>
+                    <span class="text">신청하기</span>
+                </span>
+            </button>
         </li>
         <% } %>
         <% if (data.isNotChangeNumber) { %>
         <li>
-            <div class="link-long">
-                <button data-id="change_number">번호변경 안내서비스
-                    <span class="tx-sub">
-                        <span class="normal">
-                            <% if (data.numberChanged) { %>
-                            연장 및 해지
-                            <% } else { %>
-                            신청하기
-                            <% } %>
-                        </span>
-                        <span class="ico"><span class="blind">번호변경 안내서비스 신청하기</span></span>
+            <button data-id="change_number">
+                <span class="inner">
+                    <span class="tit">번호변경 안내서비스</span>
+                    <span class="text">
+                        <% if (data.numberChanged) { %>
+                        연장 및 해지
+                        <% } else { %>
+                        신청하기
+                        <% } %>
                     </span>
-                </button>
-            </div>
+                </span>
+            </button>
         </li>
         <% } %>
     </ul>

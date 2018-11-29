@@ -17,14 +17,28 @@ Tw.ErrorService.prototype = {
     return this;
   },
 
-  pop: function(confirmCallback, closeCallback) {
-    var message = this._data.msg;
+  pop: function() {
+    this._popupService.open({
+      hbs: 'error_common',
+      data: this._data
+    },
+      $.proxy(this._request, this),
+      $.proxy(this._close, this));
+  },
 
-    if (!Tw.FormatHelper.isEmpty(this._data.code)) {
-      message = '[' + this._data.code + '] ' + message;
+  _request: function ($layer) {
+    $layer.on('click', '.fe-request', $.proxy(this._goLoad, this));
+  },
+
+  _goLoad: function () {
+    this._isRequest = true;
+    this._popupService.close();
+  },
+
+  _close: function () {
+    if (this._isRequest) {
+      location.href = '/customer/email';
     }
-
-    this._popupService.openAlert(message, null, confirmCallback, closeCallback);
   },
 
   page: function() {

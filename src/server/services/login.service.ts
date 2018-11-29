@@ -207,7 +207,11 @@ class LoginService {
     if ( !FormatHelper.isEmpty(this.request) ) {
       const url = this.request.baseUrl + this.request.path;
       if ( url.indexOf('bypass') !== -1 ) {
-        return (this.request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
+        let path = (this.request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
+        if ( path.indexOf('?') !== -1 ) {
+          path = path.split('?')[0];
+        }
+        return path;
       } else {
         // console.log('path', url);
         return this.request.baseUrl + this.request.path;

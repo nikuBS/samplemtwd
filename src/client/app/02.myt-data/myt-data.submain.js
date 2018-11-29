@@ -51,7 +51,7 @@ Tw.MyTDataSubMain.prototype = {
     //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     // }
     if ( this.data.otherLines.length > 0 ) {
-      this.$otherLines = this.$container.find('[data-id=other-lines]');
+      this.$otherLines = this.$container.find('[data-id=other-lines] li');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
@@ -276,7 +276,7 @@ Tw.MyTDataSubMain.prototype = {
   _initOtherLineList: function (list) {
     if ( list.length > 0 ) {
       for ( var i = 0; i < list.length; i++ ) {
-        var $ul = this.$otherLines.find('ul.my-line-info');
+        var $ul = this.$container.find('ul.my-line-info');
         var result = this.$moreTempleate(list[i]);
         $ul.append(result);
       }
@@ -399,7 +399,7 @@ Tw.MyTDataSubMain.prototype = {
       var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
       for ( var i = 0; i < length; i++ ) {
         var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$otherLines.find('ul.my-line-info').append(result);
+        this.$container.find('ul.my-line-info').append(result);
       }
     }
   },

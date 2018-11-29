@@ -69,7 +69,7 @@ class MyTDataFamily extends TwViewController {
 
       const representation = resp.result.mbrList.find(member => member.repYn === 'Y');
       // const mine = resp.result.mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
-      const mine = resp.result.mbrList.find(member => member.svcMgmtNum === '7226057315');
+      const mine = resp.result.mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
 
       return {
         ...resp.result,

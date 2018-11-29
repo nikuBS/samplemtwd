@@ -48,18 +48,18 @@ Tw.TestMyTFareSubMain.prototype = {
       this.$usedDetail = this.$container.find('button[data-id=used-detail]');
     }
     else {
-      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-        // 사용내역확인버튼
-        this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
-      }
-      else {
+      // if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      //   // 사용내역확인버튼
+      //   this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+      // }
+      // else {
         // 요금안내서버튼
         this.$billReport = this.$container.find('button[data-id=bill-report]');
         if ( this.data.isNotAutoPayment ) {
           // 요금납부버튼
           this.$billPym = this.$container.find('button[data-id=bill-pym]');
         }
-      }
+      // }
     }
     // 실시간요금버튼
     this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
@@ -111,18 +111,18 @@ Tw.TestMyTFareSubMain.prototype = {
       this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
     }
     else {
-      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-        // 사용내역확인버튼
-        this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
-      }
-      else {
+      // if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      //   // 사용내역확인버튼
+      //   this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      // }
+      // else {
         // 요금안내서버튼
         this.$billReport.on('click', $.proxy(this._onClickedSelBillGuide, this));
         if ( this.data.isNotAutoPayment ) {
           // 요금납부버튼
           this.$billPym.on('click', $.proxy(this._onClickedBillPym, this));
         }
-      }
+      // }
     }
     // 실시간요금버튼
     this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
