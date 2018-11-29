@@ -57,8 +57,13 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     var initedListTemplate;
     this.renderListData = {};
 
+    if(!totalDataCounter){
+      this.$domListWrapper.append(this.$template.$emptyList());
+      return ;
+    }
+
     //리스트 갯수 제한 
-    this.listRenderPerPage = 5; //더보기 갯수
+    this.listRenderPerPage = 20; //더보기 갯수
     this.listLastIndex = this.listRenderPerPage; 
     this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
