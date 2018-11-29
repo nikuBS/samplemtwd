@@ -69,15 +69,10 @@
           new Tw.MyTFareBillContentsHitstory($(document), '<%- JSON.stringify(data)%>');
       });
     </script>
-    <script id="list-wrapper" type="text/x-handlebars-template">
-        <div class="cont-use-detail">
-            <ul class="list-inner">
-            {{> list billList=billList}}
-            </ul>
-        </div>
+    <script id="btn-more-wrapper" type="text/x-handlebars-template">
         {{#if initialMoreData}}
         <div class="bt-more">
-            <button>더보기<span>(<em>{{restCount}}</em>)</span></button>
+            <button>더 보기</button>
         </div>
         {{/if}}
     </script>

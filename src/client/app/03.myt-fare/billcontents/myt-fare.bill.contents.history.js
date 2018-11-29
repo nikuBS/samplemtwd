@@ -33,7 +33,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.$selectMonth = this.$container.find('#fe-month-selector');
 
     this.$template = {
-      $listWrapper: Handlebars.compile($('#list-wrapper').html()),
+      $btnMoreWrapper: Handlebars.compile($('#btn-more-wrapper').html()),
       $list: Handlebars.compile($('#list-default').html()),
       $emptyList: Handlebars.compile($('#list-empty').html())
     };
@@ -42,18 +42,23 @@ Tw.MyTFareBillContentsHitstory.prototype = {
   },
 
   _bindEvent: function () {
+    // 링크 이동
     this.$domListWrapper.find('.fe-detail-link').on('click', $.proxy(this._moveDetailPage,this));
+    // 월 선택 
     this.$selectMonth.on('click', $.proxy(this._typeActionSheetOpen, this));
+    // 더 보기
+    this.$domListWrapper.on('click', '.bt-more', $.proxy(this._updateBillList, this));
   },
 
   _initBillList: function (data) {
     //리스트 갯수
     var totalDataCounter = this.data.billList.length; 
+    var BtnMoreList;
     var initedListTemplate;
     this.renderListData = {};
 
     //리스트 갯수 제한 
-    this.listRenderPerPage = 20; //더보기 갯수
+    this.listRenderPerPage = 5; //더보기 갯수
     this.listLastIndex = this.listRenderPerPage; 
     this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
@@ -63,6 +68,8 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
     this.renderListData.billList = this.renderableListData; 
     
+    BtnMoreList = this.$template.$btnMoreWrapper(this.renderListData);
+    this.$listWrapper.after(BtnMoreList);
     initedListTemplate = this.$template.$list(this.renderListData);
     this.$listWrapper.append(initedListTemplate);
   },
@@ -127,78 +134,36 @@ Tw.MyTFareBillContentsHitstory.prototype = {
   // 디테일 페이지
   _moveDetailPage: function (e) {
     Tw.UIService.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
-    console.log(this.data)
     this._historyService.goLoad(this._historyService.pathname+'/detail');
-  },
+  },  
 
-  
- 
-  /*_setMicroPaymentContentsData: function (res) {
-    this.historyData = JSON.parse(res);
+  // 더 보기
+  _updateBillList: function() {
+    var $virtualDom = $('<div />');
+    var $domAppendTarget = this.$domListWrapper.find('.cont-use-detail ul.list-inner');
+    
+    this._updateBillListDate();
+    this.$domListWrapper.find('.bt-more').css({display: this.listLastIndex >= this.data.billList.length ? 'none':''});
 
-    this.currentMonthData = (this.historyData[this.dateInfo.year] && this.historyData[this.dateInfo.year][this.dateInfo.month]) ?
-        this.historyData[this.dateInfo.year][this.dateInfo.month] : [];
+    this.renderableListData.map($.proxy(function(o) {
+      var renderedHTML;  
+      renderedHTML = this.$template.$list({billList:[o]});
 
-    this._setCurrentMonthDataIndex();
-    this._renderMicroPayContentsList();
-  },*/
-  
-
-  
-
-  _setCurrentMonthDataIndex: function () {
-    this.currentMonthData.map($.proxy(function (o, i) {
-      o.listId = i;
+      $virtualDom.append(renderedHTML);
     }, this));
+    $virtualDom.find('.fe-detail-link').on('click', $.proxy(this._moveDetailPage,this));
+    $domAppendTarget.append($virtualDom.children().unwrap());
   },
 
-  _renderMicroPayContentsList: function () {
+  _updateBillListDate: function() {
+    this.listNextIndex = this.listLastIndex + this.listRenderPerPage;
+    this.renderableListData = this.data.billList.slice(this.listLastIndex, this.listNextIndex);
+    this.renderListData.restCount = this.data.billList.length - this.listNextIndex;
 
-    this.$template.$domListWrapper.html('');
-
-    this.boardListWithTemplate._init({result: this.currentMonthData}, this.$template.$domListWrapper, {
-      list: this.$template.$list,
-      wrapper: this.$template.$listWrapper,
-      empty: this.$template.$emptyList
-    }, {
-      setIndex: function (option) {
-        return option.fn(this);
-      }
-    }, {
-      list: 'listElement',
-      restButton: 'restCount'
-    }, 20, '.bt-more button', '.list-inner', $.proxy(this._appendListCallBack, this));
+    this.listLastIndex = this.listNextIndex >= this.data.billList.length ?
+        this.data.billList.length : this.listNextIndex;
   },
-
-  _appendListCallBack: function () {
-  },
-
-
-
-  
-
-  _autoPaymentBlockToggle: function (e) {
-    var wrapper = $(e.target).parents('li');
-
-    this.detailData = {
-      idpg: wrapper.data('feIdpg'),
-      tySvc: wrapper.data('feTysvc'),
-      cpCode: wrapper.data('feCpcode'),
-      state: 'C'
-    };
-    this._appendAutoPaymentBlockHandler(this._blockHistoryBlockToggleHandler);
-  },
-
-  _blockHistoryBlockToggleHandler: function (res) {
-    if (res.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(res.code, res.msg).page();
-    }
-
-    Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.REVOCATION);
-    window.setTimeout($.proxy(function () {
-      this._historyService.reload();
-    }, this), 2000);
-  },
+  // 더 보기 end
 
   _getLastPathname: function () {
     return _.last(this._historyService.pathname.split('/')) || this._historyService.pathname.split('/').splice(-2)[0];
