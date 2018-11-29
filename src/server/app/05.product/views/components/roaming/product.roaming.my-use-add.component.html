@@ -1,0 +1,72 @@
+<%#
+* FileName: product.roaming.my-use-add.component.html
+* Author: Juho Kim (jhkim@pineone.com)
+* Date: 2018.11.20
+%>
+
+<% if (isLogin && roamingAdd.roamingProdList.length !== 0) { %>
+<!-- #부가서비스 있을 때 -->
+<div class="cont-box nogaps-top">
+    <div class="status-list-box">
+        <ul class="list-comp-lineinfo type5">
+            <% var prodList = roamingAdd.roamingProdList %>
+            <% for (var keyProd in prodList) { %>
+            <li>
+                <a class="btn-type" href="/product/callplan/<%= prodList[keyProd].prodId %>">
+                        <span class="lineinfo-user">
+                            <span class="info-title"><%= prodList[keyProd].prodNm %></span>
+                            <span class="info-sub">가입일 <%= prodList[keyProd].scrbDt %></span>
+                        </span>
+                    <span class="lineinfo-data">
+                        <span class="info-title">
+                            <% if (prodList[keyProd].basFeeTxt === '0') { %>
+                            무료
+                            <% } else { %>
+                            <span class="ff-tg-black"><%= prodList[keyProd].basFeeTxt %></span><span class="unit ff-tg-medium">원</span>
+                            <% } %>
+                        </span>
+                    </span>
+                </a>
+                <div class="btn-area">
+                    <% var btnList = prodList[keyProd].btnList %>
+                    <% for (var keyBtn in btnList) { %>
+                    <a class="bt-link-tx underline" href="<%= btnList[keyBtn].btnLinkUrl %>"><%= btnList[keyBtn].btnNm %></a>
+                    <% } %>
+                </div>
+            </li>
+            <% } %>
+        </ul>
+
+        <% if (roamingFeePlan.roamingProdList.length !== 0) { %>
+        <div class="arrival-noti">
+            <a href="/product/callplan/NA00003200" style="text-decoration:none; color:#000000;">
+            <span class="tit">T로밍 도착알리미를 신청해보세요!</span>
+            <span class="txt">해외 도착시 지인에게<br>도착알림 SMS가 발송됩니다</span>
+            </a>
+        </div>
+        <% } %>
+
+        <ul class="bt-slice">
+            <li class="bt-blue1">
+                <a href="/product/roaming/planadd">로밍 부가서비스 보러 가기</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--// #부가서비스 있을 때 -->
+<% } else { %>
+<!-- #부가서비스 없을 때 -->
+<div class="cont-box nogaps-top">
+    <div class="contents-empty">
+        <span class="ico type1"></span>
+        <p class="desc">현재 사용중인 로밍<br>부가서비스가 없습니다.</p>
+    </div>
+
+    <ul class="bt-slice">
+        <li class="bt-blue1">
+            <a href="/product/roaming/planadd">로밍 부가서비스 보러 가기</a>
+        </li>
+    </ul>
+</div>
+<!--// #부가서비스 없을 때 -->
+<% } %>

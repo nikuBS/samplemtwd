@@ -40,6 +40,8 @@ import ProductWireplanJoinRequireDocumentHistory from './controllers/wireplan/jo
 
 import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 
+import ProductRoaming from './controllers/roaming/product.roaming.controller';
+import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
 import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
 import ProductRoamingSearchAfter from './controllers/roaming/product.roaming.do.search-after.controller';
 import ProductRoamingSearchResult from './controllers/roaming/product.roaming.search-result.controller';
@@ -126,6 +128,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
     this.controllers.push({ url: '/roaming/fi/reservation3step', controller: ProductRoamingFiReservation3step });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
+    this.controllers.push({ url: '/roaming', controller: ProductRoaming });
+    this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
 
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
   }
