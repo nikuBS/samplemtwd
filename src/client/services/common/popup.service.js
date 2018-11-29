@@ -90,15 +90,15 @@ Tw.PopupService.prototype = {
     this._openCallback = null;
   },
   _open: function (option) {
+    $.extend(option, {
+      url: Tw.Environment.cdn + '/hbs/',
+      cdn: Tw.Environment.cdn
+    });
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback, hashName);
-    $.extend(option, {
-      url: Tw.Environment.cdn + '/hbs/',
-      cdn: Tw.Environment.cdn
-    });
     console.log(option);
     this._open(option);
   },
