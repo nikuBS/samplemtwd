@@ -15150,9 +15150,12 @@ a.bt-link-tx.underline.small {
     background: #fff; }
     .chart-wrap.bar1 > ul {
       width: 100%;
-      overflow: hidden;
       position: relative;
       padding-top: 1.875rem; }
+      .chart-wrap.bar1 > ul::after {
+        content: "";
+        clear: both;
+        display: table; }
       .chart-wrap.bar1 > ul > li {
         float: left;
         width: 50%;
@@ -15181,13 +15184,13 @@ a.bt-link-tx.underline.small {
             height: 8.125rem;
             width: 2.75rem; }
             .chart-wrap.bar1 > ul > li > dl dd.first {
-              left: 0.75rem; }
+              left: 0.5625rem; }
               .chart-wrap.bar1 > ul > li > dl dd.first .shapes {
                 background: #f76252; }
               .chart-wrap.bar1 > ul > li > dl dd.first .data {
                 color: #f76252; }
             .chart-wrap.bar1 > ul > li > dl dd.second {
-              right: 0.75rem; }
+              right: 0.5625rem; }
               .chart-wrap.bar1 > ul > li > dl dd.second .shapes {
                 background: #3583e3; }
               .chart-wrap.bar1 > ul > li > dl dd.second .data {
@@ -19313,12 +19316,12 @@ a.bt-link-tx.underline.small {
 
 .membership-card-box {
   position: relative;
-  height: 16.25rem;
+  height: 16.875rem;
   padding: 1.875rem 1.875rem 0;
   background: #fff;
-  border-radius: 0.4375rem;
-  -webkit-box-shadow: 0 0.625rem 0.9375rem #dedede;
-          box-shadow: 0 0.625rem 0.9375rem #dedede;
+  border-radius: 0.9375rem;
+  -webkit-box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
+          box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
   .membership-card-box .card-img {
@@ -19344,8 +19347,31 @@ a.bt-link-tx.underline.small {
     line-height: 1rem;
     text-align: center; }
   .membership-card-box .card-tit {
-    font-size: 0.9375rem;
-    font-weight: 700; }
+    display: block;
+    width: 5.8125rem;
+    height: 1.0625rem;
+    background: url(/img/benefit/tit_membership.png) no-repeat;
+    background-size: 100%;
+    font-size: 0;
+    line-height: 0; }
+  .membership-card-box .rating {
+    display: block;
+    height: 1.125rem;
+    margin-top: 0.375rem;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    color: transparent;
+    font-size: 0;
+    line-height: 0; }
+    .membership-card-box .rating.silver {
+      width: 3.75rem;
+      background-image: url(/img/main/silver.png); }
+    .membership-card-box .rating.gold {
+      width: 3.25rem;
+      background-image: url(/img/main/gold.png); }
+    .membership-card-box .rating.vip {
+      width: 2.4375rem;
+      background-image: url(/img/main/vip.png); }
   .membership-card-box .card-name {
     position: relative;
     margin-left: 0.4375rem;
@@ -19360,22 +19386,19 @@ a.bt-link-tx.underline.small {
       height: 0.5625rem;
       background: #e1e1e1; }
   .membership-card-box .accrue {
-    margin-top: 0.3125rem;
+    margin-top: 0.8125rem;
     font-size: 0.6875rem;
     line-height: 1.375rem; }
     .membership-card-box .accrue p {
-      font-family: "TgothicMedium", Roboto, sans-serif; }
-      .membership-card-box .accrue p strong {
-        font-size: 1.25rem;
-        font-family: "TgothicBlack", Roboto, sans-serif; }
+      font-size: 1.25rem;
+      font-weight: 700; }
   .membership-card-box .bar-code {
     position: absolute;
-    top: 9.6875rem;
+    top: 10.3125rem;
     left: 1.875rem;
     right: 1.875rem;
     max-width: 16.75rem;
-    height: 4.6875rem;
-    margin: 0 auto; }
+    height: 4.6875rem; }
     .membership-card-box .bar-code img {
       width: 100%;
       height: 100%;
@@ -19384,14 +19407,30 @@ a.bt-link-tx.underline.small {
 .membership-event-box {
   position: relative;
   overflow: hidden;
+  margin-top: 0.625rem;
   background: #fff;
-  border-radius: 0.4375rem;
-  -webkit-box-shadow: 0 0.625rem 0.9375rem #dedede;
-          box-shadow: 0 0.625rem 0.9375rem #dedede;
+  border-radius: 0.9375rem;
+  -webkit-box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
+          box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
   z-index: 1; }
   .membership-event-box .slider-box .slick-dots {
-    top: 1.875rem;
-    left: 1.875rem; }
+    overflow: initial;
+    top: 1.5625rem;
+    left: auto;
+    right: 1.5625rem; }
+    .membership-event-box .slider-box .slick-dots li {
+      width: 0.3125rem;
+      height: 0.3125rem;
+      border: 1px solid #fff; }
+      .membership-event-box .slider-box .slick-dots li span {
+        width: 0.25rem;
+        height: 0.25rem;
+        background: none; }
+      .membership-event-box .slider-box .slick-dots li.slick-active {
+        width: 0.375rem;
+        height: 0.375rem;
+        margin-top: -0.0625rem;
+        background: #fff; }
 
 .fixed-b {
   position: fixed;
@@ -22427,23 +22466,13 @@ input[type="radio"].formradio-small:checked:disabled + label {
     padding-top: 0.625rem; }
   .base-list > ul > li:first-of-type {
     border-top: none; }
+  .base-list > ul > li.thin {
+    padding: 1rem 0 0.875rem; }
 
 .base-list.in-form > ul > li {
   border-top: none;
   padding: 0.625rem 0 0 0;
   height: 2.625rem; }
-
-.base-list > ul > li.thin {
-  padding: 1rem 0 0.875rem; }
-
-.device_android .base-list > ul > li.thin {
-  padding: 0.9375rem 0 1rem; }
-
-.device_android .base-list > ul > li .title-type1 .btn-tip {
-  margin-top: -0.25rem; }
-
-.device_android .simple-form .btn-tip {
-  margin-top: -0.1875rem; }
 
 .input-list > ul > li {
   padding: 1.0625rem 0;
@@ -22685,6 +22714,15 @@ input[type="radio"].formradio-small:checked:disabled + label {
 .check-acco.on .acco-cont {
   border-top: 1px solid #f2f2f2;
   display: block; }
+
+.device_android .base-list ul li .title-type1 .btn-tip {
+  margin-top: -0.25rem; }
+
+.device_android .base-list ul li.thin {
+  padding: 0.9375rem 0 1rem; }
+
+.device_android .simple-form .btn-tip {
+  margin-top: -0.1875rem; }
 
 /* 김연주 */
 /* 공통 시작 */
@@ -24741,6 +24779,10 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 body.apphome {
   background: #f4f4f4; }
+  body.apphome .popup-page {
+    background: none; }
+    body.apphome .popup-page .cont-box {
+      background: none; }
   body.apphome .main-top-group {
     z-index: 2; }
     body.apphome .main-top-group::before {
@@ -26458,7 +26500,8 @@ body.apphome {
   margin: 0 0 0.625rem 0.5625rem !important; }
 
 .discount-look-ahead.round {
-  padding-bottom: 0.9375rem !important; }
+  padding-bottom: 0.9375rem !important;
+  text-align: center; }
   .discount-look-ahead.round:after {
     content: '';
     display: block;
@@ -26467,9 +26510,8 @@ body.apphome {
     overflow: hidden; }
   .discount-look-ahead.round .select-list {
     width: 100%;
-    height: 4.375rem;
-    margin-left: -0.9375rem;
-    overflow: inherit !important; }
+    overflow: inherit !important;
+    text-align: center; }
     .discount-look-ahead.round .select-list:after {
       content: '';
       display: block;
@@ -26478,10 +26520,11 @@ body.apphome {
       overflow: hidden; }
     .discount-look-ahead.round .select-list li {
       float: left;
-      width: 4.375rem !important;
-      height: 4.375rem !important;
-      margin: 0 0 0.9375rem 0.9375rem !important;
-      border: 0; }
+      width: 25% !important;
+      height: auto !important;
+      margin: 0 0 0.9375rem 0 !important;
+      border: 0;
+      text-align: center; }
       .discount-look-ahead.round .select-list li:first-child {
         margin-left: 0; }
       .discount-look-ahead.round .select-list li .light {
@@ -26514,7 +26557,8 @@ body.apphome {
       height: 4.375rem;
       border-radius: 100%;
       background: #fff !important;
-      border: 1px solid #e5e5e5; }
+      border: 1px solid #e5e5e5;
+      margin: 0 auto; }
     .discount-look-ahead.round .select-list .radio-txt {
       padding-top: 15px;
       width: 4.375rem !important;

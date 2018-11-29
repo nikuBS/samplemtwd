@@ -1,5 +1,5 @@
 <div class="popup tw-popup">
-    <div class="popup-page nobg layer actionsheet has-floating"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <div class="popup-page nobg layer actionsheet has-floating"><!-- actionsheet, has-floating, has-header // -->
         <!-- .container-wrap -->
         <div class="container-wrap">
             <div class="container">
@@ -14,12 +14,12 @@
                             {{#if title}}<div class="ac-tit">{{title}}</div>{{/if}}
                             <ul class="ac-list">
                                 {{#each list}}
-                                    <li class="type3 {{option}}">
+                                     <li class="type3">
                                         <button>
                                             <span class="table">
                                                 <span class="table-row">
                                                     <span class="table-cell">
-                                                        <span class="txt">{{txt}}{{#if add}}<span class="add">{{add}}</span>{{/if}}</span>
+                                                        <span class="txt">{{txt}}<span class="add">{{add}}</span></span>
                                                     </span>
                                                     <span class="table-cell right">
                                                         <span class="spot">{{{spot}}}</span>
@@ -33,7 +33,7 @@
                             </ul>
                         {{/each}}
                         {{#btnfloating}}
-                            <button type="button" class="btn-floating btn-style3 tw-popup-closeBtn">{{{txt}}}</button>
+                            <button {{{attr}}} class="btn-floating btn-style3">{{{txt}}}</button>
                         {{/btnfloating}}
                     </div>
                     <!-- // .cont-actionsheet -->
