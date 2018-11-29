@@ -1,0 +1,66 @@
+<%#
+* FileName: main.menu.settings.terms.choco.html (GU_02)
+* Author: Hakjoon Sim (hakjoon.sim@sk.com)
+* Date: 2018.11.28
+%>
+
+<% include ../../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '초콜릿 이용약관' }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <ul class="full-link-list type02">
+                        <li>
+                            <button class="fe-outlink" value="http://www.sktmembership.co.kr:90/terms/shoppingTerms.do">
+                                <span class="inner">
+                                    <span class="tit tx-medium">이용약관</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="fe-outlink" value="http://www.sktmembership.co.kr:90/terms/shoppingTermsPersonalNow.do">
+                                <span class="inner">
+                                    <span class="tit tx-medium">개인정보처리방침</span>
+                                </span>
+                            </button>
+                        </li>
+                         <li>
+                            <button class="fe-outlink" value="http://tmembership.tworld.co.kr/poc/html/policy/chocolate_agree3.html">
+                                <span class="inner">
+                                    <span class="tit tx-medium">개인정보 수집 및 이용안내</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.MainMenuSettingsTerms($('.wrap'));
+    });
+</script>
+<% include ../../../components/end.component.html %>

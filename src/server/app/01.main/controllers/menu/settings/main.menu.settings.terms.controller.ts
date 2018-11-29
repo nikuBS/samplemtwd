@@ -17,23 +17,22 @@ export default class MainMenuSettingsTerms extends TwViewController {
     46: TERM_STRING.RESELL,
     49: TERM_STRING.RESELL,
     50: TERM_STRING.RESELL,
-    101: TERM_STRING.MEMBERSHIP,
-    102: TERM_STRING.CHOCO,
-    103: TERM_STRING.CHOCO,
-    104: TERM_STRING.CHOCO,
+    101: TERM_STRING.MEMBERSHIP
   };
 
   private urlMap = {
-    101: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html', // 멤버십 회원약관
-    102: 'http://www.sktmembership.co.kr:90/terms/shoppingTerms.do', // 초콜릿 이용약관
-    103: 'http://www.sktmembership.co.kr:90/terms/shoppingTermsPersonalNow.do', // 초콜릿 개인정보
-    104: 'http://tmembership.tworld.co.kr/poc/html/policy/chocolate_agree3.html' // 초콜릿 개인정보 수집
+    101: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html' // 멤버십 회원약관
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
     if (req.query.id) {
       const id = req.query.id;
+      if (id === '102') { // 초콜릿 이용약관
+        res.render('menu/settings/main.menu.settings.terms.choco.html', {
+          svcInfo, pageInfo
+        });
+      }
       const url = !!this.urlMap[id] ? this.urlMap[id] : undefined;
       const viewId = req.query.viewId;
       if (!!url) {
