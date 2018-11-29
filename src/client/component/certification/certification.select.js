@@ -112,7 +112,7 @@ Tw.CertificationSelect.prototype = {
   _openRefundCert: function () {
     this._popupService.open({
       hbs: 'CO_CE_02_01_refund',
-      layer: true,
+      layer: true
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
 
   },

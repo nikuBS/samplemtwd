@@ -46,6 +46,7 @@ import CommonShareBridge from './controllers/share/common.share.bridge.controlle
 import CommonCertIpinRefund from './controllers/cert/common.cert.ipin.refund.controller';
 import CommonCertResult from './controllers/cert/common.cert.result.controller';
 import CommonCertNiceRefund from './controllers/cert/common.cert.nice.refund.controller';
+import CommonTidCertPw from './controllers/tid/common.tid.cert-pw.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -97,6 +98,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/tid/signup-foreigner', controller: CommonTidSignUpForeigner });
     this.controllers.push({ url: '/tid/guide', controller: CommonTidGuide });
     this.controllers.push({ url: '/tid/route', controller: CommonTidRoute });
+    this.controllers.push( {url: '/tid/cert-pw', controller: CommonTidCertPw });
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
     // share
