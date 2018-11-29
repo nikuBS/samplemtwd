@@ -95,7 +95,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( microPay ) {
           data.microPay = microPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( microPay.code !== API_ADD_SVC_ERROR.BIL0031 ) {
             data.isMicroPrepay = true;
           }
         }
@@ -103,7 +103,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( contentPay ) {
           data.contentPay = contentPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( contentPay.code !== API_ADD_SVC_ERROR.BIL0031 ) {
             data.isContentPrepay = true;
           }
         }
@@ -223,7 +223,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( microPay ) {
           data.microPay = microPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( microPay.code !== API_ADD_SVC_ERROR.BIL0031) {
             data.isMicroPrepay = true;
           }
         }
@@ -231,7 +231,7 @@ class TestMyTFareSubmainController extends TwViewController {
         if ( contentPay ) {
           data.contentPay = contentPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( contentPay.code !== API_ADD_SVC_ERROR.BIL0031) {
             data.isContentPrepay = true;
           }
         }
@@ -243,18 +243,18 @@ class TestMyTFareSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const MOBILE = items['M'] || [];
-    const OTHER = items['O'] || [];
-    const SPC = items['S'] || [];
+    // const MOBILE = items['M'] || [];
+    // const OTHER = items['O'] || [];
+    // const SPC = items['S'] || [];
     const list: any = [];
-    if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
-      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
-      nOthers.filter((item) => {
-        if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-          list.push(item);
-        }
-      });
-    }
+    // if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
+    //   const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+    //   nOthers.filter((item) => {
+    //     if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+    //       list.push(item);
+    //     }
+    //   });
+    // }
     return list;
   }
 

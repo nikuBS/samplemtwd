@@ -4,7 +4,6 @@
 * Date: 2018.09.17
 %>
 
-<% if (data.svcInfo.svcAttrCd === 'M1') { %>
 <!-- Phone -->
 <div class="dc-use">
     <dl class="real-remaining">
@@ -105,77 +104,3 @@
     </div>
 <% } %>
 <!-- Phone -->
-<% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
-<!-- PPS -->
-<div class="dc-use">
-    <dl class="real-remaining">
-        <dt>실시간 잔여량
-            <button class="ico" data-id="remnant-detail"></button>
-        </dt>
-        <dd>
-            <div class="remaining-amount"><span class="endless ff-tg-medium">무제한</span></div>
-            <ul class="remaining-list">
-                <li class="only">SKT 고객간 음성</li>
-            </ul>
-            <ul class="remaining-tm">
-                <li>
-                    <dl>
-                        <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
-                        <dd>무제한</dd>
-                    </dl>
-                </li>
-            </ul>
-        </dd>
-    </dl>
-</div>
-<% var twoItem = data.immCharge && data.present; %>
-<% if(data.immCharge || data.present) { %>
-<ul class="bt-slice <%= twoItem? 'item-two': '' %>">
-    <% if(data.immCharge) { %>
-    <li class="bt-white2" data-id="immCharge">
-        <button>즉시 충전</button>
-    </li>
-    <% } %>
-    <% if(data.present) { %>
-    <li class="bt-white2" data-id="present">
-        <button>자동알람 서비스</button>
-    </li>
-    <% } %>
-</ul>
-<% } %>
-<!-- PPS -->
-<% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
-<!-- T-PocketFi & T-Login -->
-<div class="dc-use small">
-    <dl class="real-remaining">
-        <dt>실시간 잔여량
-            <button class="ico" data-id="remnant-detail"></button>
-        </dt>
-        <dd>
-            <div class="remaining-amount"><span class="num ff-tg-black">79.0</span><span class="dingbat gb"><span
-                class="blind">GB</span></span></div>
-        </dd>
-    </dl>
-    <div class="graph-area-type1">
-        <span class="graph-max" aria-hidden="true">79 GB</span>
-        <span class="graph-min" aria-hidden="true">0 GB</span>
-        <span class="graph-bar1" style="height:9%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-        <span class="graph-bar2" style="height:91%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-    </div>
-</div>
-<% var twoItem = data.immCharge && data.present; %>
-<% if(data.immCharge || data.present) { %>
-<ul class="bt-slice <%= twoItem? 'item-two': '' %>">
-    <% if(data.immCharge) { %>
-    <li class="bt-white2" data-id="immCharge">
-        <button>즉시 충전</button>
-    </li>
-    <% } %>
-</ul>
-<% } %>
-<!-- T-PocketFi & T-Login -->
-<% } %>

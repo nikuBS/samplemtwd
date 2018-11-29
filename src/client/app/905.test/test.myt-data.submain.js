@@ -117,7 +117,7 @@ Tw.TestMyTDataSubMain.prototype = {
     if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
       var unit = '', data, chart_data, idx;
       if ( this.data.pattern.data.length > 0 ) {
-        unit = Tw.CHART_UNIT.GB;
+        unit = 'GB';
         data = this.data.pattern.data;
         chart_data = {
           co: '#3b98e6',// 색상
@@ -164,31 +164,31 @@ Tw.TestMyTDataSubMain.prototype = {
   },
 
   _onImmChargeDetail: function () {
-    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-      new Tw.PPSRechargeLayer(this.$container);
-    }
-    else {
+    // if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+    //   new Tw.PPSRechargeLayer(this.$container);
+    // }
+    // else {
       new Tw.ImmediatelyRechargeLayer(this.$container);
-    }
+    // }
   },
 
   _onTPresentDetail: function () {
-    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-      // PPS 인 경우 자동알람서비스
-      if ( Tw.BrowserHelper.isApp() ) {
-        // TODO: 금융거래 본인인증 작업이 완료되면 이후 처리 우선은 페이지 이동으로만 처리하고 완료 후 [DC_09_05] 이동
-        this._popupService.openAlert('TBD');
-      }
-      else {
-        // 웹인 경우 모바일 앱으로 유도 (설치/미설치)
-        this._popupService.openModalTypeA(Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.TITLE,
-          Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.MSG, Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.BUTTON,
-          $.proxy(this._onOpenTworldMovedAlert, this), $.proxy(this._onConfirmTworldMovedAlert, this), this);
-      }
-    }
-    else {
+    // if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+    //   // PPS 인 경우 자동알람서비스
+    //   if ( Tw.BrowserHelper.isApp() ) {
+    //     // TODO: 금융거래 본인인증 작업이 완료되면 이후 처리 우선은 페이지 이동으로만 처리하고 완료 후 [DC_09_05] 이동
+    //     this._popupService.openAlert('TBD');
+    //   }
+    //   else {
+    //     // 웹인 경우 모바일 앱으로 유도 (설치/미설치)
+    //     this._popupService.openModalTypeA(Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.TITLE,
+    //       Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.MSG, Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.BUTTON,
+    //       $.proxy(this._onOpenTworldMovedAlert, this), $.proxy(this._onConfirmTworldMovedAlert, this), this);
+    //   }
+    // }
+    // else {
       this._historyService.goLoad('/myt-data/giftdata');
-    }
+    // }
   },
 
   _onOpenTworldMovedAlert: function ($layer) {
@@ -230,7 +230,7 @@ Tw.TestMyTDataSubMain.prototype = {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
     var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE +
-      this.data.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
+      '010-****-***2' + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT;
     Tw.CommonHelper.share(content);
   },
 

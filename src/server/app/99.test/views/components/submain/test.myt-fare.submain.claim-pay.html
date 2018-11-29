@@ -7,7 +7,7 @@
 <div class="cont-box">
     <div class="mf-use">
         <div class="mf-box">
-            <p class="param-tit"><%= data.svcInfo.mbrNm %>님, 변함없이 <br/>저희와 함께해 주셔서 <br/>감사합니다.<span class="ico"></span></p>
+            <p class="param-tit">홍*동님, 변함없이 <br/>저희와 함께해 주셔서 <br/>감사합니다.<span class="ico"></span></p>
             <% if (data.type === 'UF') { %>
                 <dl class="cost-payment">
                     <dt><%= data.useMonth %> 사용요금</dt>
@@ -20,9 +20,6 @@
                 </dl>
                 <p class="param-cont2">고객님은 현재 통합 청구 이용 중이며<br/>할인 금액을 제외한 사용요금으로 조회됩니다.</p>
             <% } else { %>
-                <% if(data.svcInfo.svcAttrCd === 'M2') { %>
-                <p class="param-cont"><em class="tx-bold">선불폰을 사용중</em>입니다.</p>
-                <% } else { %>
                 <dl class="cost-payment">
                     <dt><%= data.claimMonth %> 청구요금</dt>
                     <dd>
@@ -51,7 +48,6 @@
                         </dl>
                     </li>
                 </ul>
-                <% } %>
             <% } %>
         </div>
     </div>
@@ -61,20 +57,14 @@
             <button data-id="used-detail">사용요금 자세히보기</button>
         </li>
         <% } else { %>
-            <% if (data.svcInfo.svcAttrCd === 'M2') { %>
+            <% if (data.isNotAutoPayment) { %>
             <li class="bt-white2">
-                <button data-id="used-brkd">사용내역 확인</button>
+                <button data-id="bill-pym">요금 납부</button>
             </li>
-            <% } else { %>
-                <% if (data.isNotAutoPayment) { %>
-                <li class="bt-white2">
-                    <button data-id="bill-pym">요금 납부</button>
-                </li>
-                <% } %>
-                <li class="bt-white2">
-                    <button data-id="bill-report">요금안내서</button>
-                </li>
             <% } %>
+            <li class="bt-white2">
+                <button data-id="bill-report">요금안내서</button>
+            </li>
         <% } %>
     </ul>
 </div>
