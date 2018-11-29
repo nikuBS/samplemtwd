@@ -306,9 +306,11 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     color: #666;
     font-size: 0.75rem; }
   .inputbox.readonly.placeholder .input input {
-    color: #8f8f8f; }
+    color: #000000;
+    background: #dedede; }
   .inputbox.readonly .input input {
-    color: #000; }
+    color: #000000;
+    background: #dedede !important; }
   .inputbox.validation .input {
     /*input[type=text],
             input[type=password],
@@ -4644,6 +4646,11 @@ a.ui-button:active,
     background-size: 4.6875rem;
     width: 1.875rem;
     height: 1rem; }
+  .badge.badge-succession {
+    background-position: 0 -24.0625rem;
+    background-size: 4.6875rem;
+    width: 2.75rem;
+    height: 0.9375rem; }
 
 .bar-chart-hoz {
   position: relative;
