@@ -37,13 +37,10 @@ class MyTDataGift extends TwViewController {
           this.getSenderInfo(),
           this.getRemainInfo()
         ).subscribe(([senderInfo, remainInfo]) => {
-          const response = Object.assign(
-            {
-              remainInfo: remainInfo,
-              senderInfo: senderInfo
-            },
-            responseData
-          );
+          const response = Object.assign({
+            remainInfo: remainInfo,
+            senderInfo: senderInfo
+          }, responseData);
 
           res.render('gift/myt-data.gift.complete.html', response);
         });

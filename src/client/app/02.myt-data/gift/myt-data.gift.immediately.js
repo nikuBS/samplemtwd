@@ -23,6 +23,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _cachedElement: function () {
     this.$remainQty = $('.fe-remain_data');
+    this.$recent_tel = this.$container.find('.recently-tel');
     this.$btnNativeContactList = $('.fe-btn_native_contact');
     this.$btnRequestSendingData = $('.fe-request_sending_data');
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
@@ -32,6 +33,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
+    this.$container.on('click', '[data-opdtm]', $.proxy(this._onSelectRecentContact, this));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
@@ -48,9 +50,10 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._setAmountUI(Number(900));
-      var dataQty = Tw.FormatHelper.convDataFormat(900, 'MB');
+      var mockDataQty = 900;
+      var dataQty = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
       this.$remainQty.text(dataQty.data + dataQty.unit);
+      this._setAmountUI(Number(mockDataQty));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -85,12 +88,28 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.val(this._convertDashNumber(this.$inputImmediatelyGift.val()));
   },
 
-  _getReceiveUserInfo: function () {
-    this.befrSvcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
-    var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
+  _onSelectRecentContact: function (e) {
+    var opdtm = $(e.currentTarget).data('opdtm');
+    var sNumber = $(e.currentTarget).find('.tel-select').text();
 
-    if ( isValidPhone ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    this.$inputImmediatelyGift.val(sNumber);
+    this.$inputImmediatelyGift.data('opdtm', opdtm);
+    this.$recent_tel.hide();
+  },
+
+  _getReceiveUserInfo: function () {
+    this.befrSvcNum = this.$inputImmediatelyGift.val();
+    this.opDtm = this.$inputImmediatelyGift.data('opdtm');
+
+    var svcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
+    var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
+
+    if ( isCellPhone ) {
+      if ( this._validatePhoneNumber(svcNum) ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+      }
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm }).done($.proxy(this._onSuccessReceiveUserInfo, this));
     }
   },
 
@@ -109,7 +128,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _requestSendingData: function () {
     var htParams = {
-      befrSvcNum: this.$inputImmediatelyGift.val().match(/\d+/g).join(''),
+      befrSvcNum: this.$inputImmediatelyGift.val(),
       dataQty: this.$wrap_data_select_list.find('li.checked input').val()
     };
 
@@ -117,7 +136,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     // TODO: Implemented API TEST
-    // this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
+    // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
     //   .done($.proxy(this._onSuccessSendingData, this));
   },
 

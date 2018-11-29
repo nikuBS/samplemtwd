@@ -72,11 +72,11 @@ class MyTDataCookiz extends TwViewController {
   private getAuthChangeInfo = () => this.apiService.request(API_CMD.BFF_06_0033, {})
     .map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result
+        return resp.result;
       } else {
         return null;
       }
-    });
+    })
 
   public addComma = (sAmount) => FormatHelper.addComma(sAmount);
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
