@@ -22,6 +22,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$cancelBtn = this.$container.find('.fe-cancel');
     this.$isAuto = this.$cancelBtn.is(':visible');
     this.$cardNumber = this.$container.find('.fe-card-number');
+    this.$hiddenNumber = this.$container.find('.fe-hidden');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$rechargeBtn = this.$container.find('.fe-recharge');
@@ -130,7 +131,11 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
   },
   _recharge: function () {
     var reqData = this._makeRequestData();
-
+    if (this.$isAuto) {
+      if ($.trim(this.$cardNumber.val()) === this.$hiddenNumber.val()) {
+        reqData.maskedYn = 'Y';
+      }
+    }
     this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
       .done($.proxy(this._rechargeSuccess, this))
       .fail($.proxy(this._fail, this));
