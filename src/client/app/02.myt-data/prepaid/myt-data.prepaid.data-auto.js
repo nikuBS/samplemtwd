@@ -37,10 +37,9 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$rechargeBtn.on('click', $.proxy(this._recharge, this));
   },
   _cancel: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0061, {})
-    //   .done($.proxy(this._cancelSuccess, this))
-    //   .fail($.proxy(this._fail, this));
-    this._cancelSuccess({ code: Tw.API_CODE.CODE_00 });
+    this._apiService.request(Tw.API_CMD.BFF_06_0061, {})
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._fail, this));
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -132,10 +131,9 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
   _recharge: function () {
     var reqData = this._makeRequestData();
 
-    this._rechargeSuccess({ code: Tw.API_CODE.CODE_00 });
-    // this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
-    //   .done($.proxy(this._rechargeSuccess, this))
-    //   .fail($.proxy(this._fail, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
+      .done($.proxy(this._rechargeSuccess, this))
+      .fail($.proxy(this._fail, this));
   },
   _makeRequestData: function () {
     return {

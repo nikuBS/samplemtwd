@@ -26,11 +26,10 @@ class MyTDataPrepaidDataAuto extends TwViewController {
       this.getPPSInfo(),
       this.getAutoInfo()
     ).subscribe(([ppsInfo, autoInfo]) => {
-      if (ppsInfo.code !== API_CODE.CODE_00 && autoInfo.code !== API_CODE.CODE_00) {
-        // const ppsResult = ppsInfo.result;
-        // const autoResult = autoInfo.result;
-        const ppsResult = PrepaidDataInfo.result;
-        const autoResult = PrepaidAutoInfo.result;
+      if (ppsInfo.code === API_CODE.CODE_00 && autoInfo.code === API_CODE.CODE_00) {
+        const ppsResult = ppsInfo.result;
+        const autoResult = autoInfo.result;
+
         res.render('prepaid/myt-data.prepaid.data-auto.html', {
           ppsInfo: this.parseData(ppsResult),
           autoInfo: this.parseAuto(autoResult),
@@ -56,8 +55,13 @@ class MyTDataPrepaidDataAuto extends TwViewController {
   }
 
   private parseData(result: any): any {
-    result.dataObj = FormatHelper.customDataFormat(result.remained, DATA_UNIT.KB, DATA_UNIT.MB);
-    result.dataObj.dataValue = result.dataObj.data.replace(',', '');
+    if (!FormatHelper.isEmpty(result.remained)) {
+      result.dataObj = FormatHelper.customDataFormat(result.remained, DATA_UNIT.KB, DATA_UNIT.MB);
+      result.dataObj.dataValue = result.dataObj.data.replace(',', '');
+    } else {
+      result.dataObj.data = 0;
+      result.dataObj.dataValue = 0;
+    }
     result.fromDate = DateHelper.getShortDate(result.obEndDt);
     result.toDate = DateHelper.getShortDate(result.inbEndDt);
     result.remainDate = DateHelper.getShortDate(result.numEndDt);
