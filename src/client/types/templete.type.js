@@ -416,12 +416,12 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  { value: '전체' },
-  { value: 'T끼리 데이터 선물' },
-  { value: '데이터 한도 충전' },
-  { value: '팅/쿠키즈/안심요금' },
-  { value: '팅 요금 선물' },
-  { value: '데이터 음성 리필' }
+  { value: '전체', attr: 'data-type="5"' },
+  { value: 'T끼리 데이터 선물', attr: 'data-type="0"' },
+  { value: '데이터 한도 충전', attr: 'data-type="1"' },
+  { value: '팅/쿠키즈/안심요금', attr: 'data-type="2"' },
+  { value: '팅 요금 선물', attr: 'data-type="3"' },
+  { value: '데이터 음성 리필', attr: 'data-type="4"' }
 ];
 
 Tw.PRODUCT_PLANS_ORDER = [

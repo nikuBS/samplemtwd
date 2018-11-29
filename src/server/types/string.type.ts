@@ -114,7 +114,7 @@ export enum MYT_DATA_CHARGE_TYPES {
   GIFT = '선물',
   CHARGE = '충전',
   FIXED = '자동',
-  CANCLE = '취소'
+  CANCEL = '취소'
 }
 
 export enum PRODUCT_INFINITY_BENEFIT {
@@ -484,7 +484,7 @@ export const NEW_NUMBER_MSG = {
 };
 
 export const MYT_SUSPEND_ERROR_MSG = {
-  NOT_SUSPENDED: '일시정지 상태가 아닙니다.',
+  NOT_SUSPENDED: '일시정지 상태가 아닙니다.'
 };
 
 export const TERM_STRING = {
@@ -494,3 +494,5 @@ export const TERM_STRING = {
     102: '이용약관'
   }
 };
+
+export const ETC_CENTER = '기타';

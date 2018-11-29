@@ -24,66 +24,49 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <% const list = chargeData.display || chargeData.all; %>
+                <% const TYPE_NAMES = ['T끼리 데이터 선물', '데이터 한도 요금', '팅 쿠키즈 안심요금', '팅 요금 선물', '데이터 음성 리필', '전체']; 
+                const list = filterIdx === 5 ? chargeData.all : chargeData.display, DEFALUT_LIST_COUNT = 20; %>
                 <div class="cont-box nogaps">
-                    <div class="ti-caption-gray">
-                        <button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true"><%= list.typeName %><span class="ico"></span></button>
-                        <div class="num">총 <em><%= list.count %></em>건</div>
+                    <div class="ti-caption-blue">
+                        <div class="num">총 <em><%= list.length %></em>건</div>
+                        <button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true"><%= TYPE_NAMES[filterIdx] %></button>
                     </div>
 
-                    <div class="list-comp-history">
-                        <ul class="comp-box" data-filter-index="<%= chargeData.filterIdx %>">
-                            <% let displayCount = 0, dIdx = 0, iIdx, displayedYear = (new Date()).getFullYear().toString(); %>
-                            <% const keys = Object.keys(list.data).reverse(), DEFAULT_LIST_COUNT = 20; %>
-                            <% for (;dIdx < keys.length; dIdx++) { %>
-                                <% const key = keys[dIdx], items = list.data[key], itemYear = key.substring(0, 4); %>
-                                <% if (itemYear !== displayedYear) { %>
-                                    <li class="year-tx" data-year="<%= itemYear %>"><%= itemYear %></li>
-                                <% displayedYear = itemYear;
-                                } %>
-                                <li class="list-box">
-                                    <p class="list-date">
-                                        <span class="date-tx"><%= items[0].date %></span>
-                                    </p>
-                                    <ul class="list-con">
-                                        <% for (iIdx = 0; iIdx < items.length && displayCount < DEFAULT_LIST_COUNT; iIdx++) { %>
-                                            <% const item = items[iIdx]; %>
+                    <div class="cont-box pt0 pb0">
+                        <div class="list-comp-history type01">
+                            <ul class="comp-box" data-filter-index="<%= filterIdx %>">
+                                <% const length = Math.min(list.length, DEFALUT_LIST_COUNT);
+                                for (let i = 0; i < length; i++) { 
+                                    const item = list[i]; %>
+                                    <li class="list-box">
+                                        <span class="badge"><i class="icon-<%= item.badge %>-88"><span class="blind"><%= item.badge %></span></i></span>
+                                        <ul class="list-con">
                                             <li>
                                                 <p class="list-text">
-                                                    <span class="stext-b"><i class="badge badge-<%= item.badge.icon %>"><span class="blind"><%= item.badge.text %></span></i> <%= item.typeName %></span>
+                                                    <span class="stext-b"><%= item.typeName %></span>
                                                     <span class="stext">
-                                                        <% for (let i = 0; item.bottom && i < item.bottom.length; i++) { %>
-                                                        <span class="gray-tx"><%= item.bottom[i] %></span>
-                                                        <% } %>
+                                                        <% item.bottom.map(data => { %><span class="gray-tx"><%= data%></span><% }); %>
+                                                        <% if (item.refundable) { %><button class="bt-link-tx underline">취소</button><% } %>
                                                     </span>
                                                 </p>
-                                                <% if (item.right) { %>
                                                 <div class="list-data">
-                                                    <p class="data-tx ff-tg-black <%= item.right.color %>-tx"><span class="ff-tg-medium"><%= item.right.type %></span><%= item.right.amount %><span class="ff-tg-medium"><%= item.right.unit %></span></p>
-                                                    <% if (item.refundable) { %>
-                                                        <button class="bt-link-tx underline red">취소</button>
-                                                    <% } %>
+                                                    <p class="data-tx ff-tg-black"><%= item.right %></p>
+                                                    <span class="date"><%= item.date %></span>
                                                 </div>
-                                                <% } %>
                                             </li>
-                                            <% displayCount ++; %>
-                                        <% } %>
-                                    </ul>
-                                </li>
-                                <% if (displayCount === DEFAULT_LIST_COUNT) { 
-                                    iIdx = items.length === iIdx ? 0 : iIdx;
-                                    break;
-                                } %>                               
-                            <% } %>
-                        </ul>
+                                        </ul>
+                                    </li>                       
+                                <% } %>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="contents-empty <%= keys.length > 0 ? 'none': '' %>">
+                    <div class="contents-empty <%= list.length > 0 ? 'none': '' %>">
                         <span class="ico type1"></span>
                         <p class="desc">충전/선물 내역이 없습니다.</p>
                     </div>
-                    <% const leftCount = list.count - displayCount; %>
-                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기 (<%= leftCount %>)</button></div>  
+                    <% const leftCount = list.length - DEFALUT_LIST_COUNT; %>
+                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기 (<%= leftCount %>)</button></div>
                 </div>
                 <!--// .cont-box -->
 
@@ -110,11 +93,11 @@
         </footer>
     </div>
 </body>
-<%- include ../../components/recharge/myt-data.recharge.history.list.html %>
+<%- include ../../components/datainfo/myt-data.datainfo.list.html %>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataInfo($('.wrap'), <%- JSON.stringify({ ...chargeData.all, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
+    new Tw.MyTDataInfo($('.wrap'), <%- JSON.stringify(chargeData) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
