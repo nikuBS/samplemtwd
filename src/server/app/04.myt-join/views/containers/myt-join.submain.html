@@ -116,56 +116,56 @@
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                 <ul class="pg-link-list">
                     <li>
-                        <button>
+                        <a href="/common/member/manage">
                             <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <button data-id="certify-popup">
                             <i class="icon-certify-40"><span class="blind">certify</span></i>공인인증 등록 &middot; 변경
                         </button>
                     </li>
                     <% if (data.type === 2) { %>
                     <li>
-                        <button>
+                        <a href="/myt-join/myplancombine">
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 결합할인
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/myt-fare/bill/option">
                             <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 &gt; 납부방법
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/product/wireplan/service-area">
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 서비스 가능지역 조회
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/myt-join/submain/wire/discountrefund">
                             <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 &gt; 할인 반환금 조회
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a data-href="/myt-join/submain/wire/gifts">
                             <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 &gt; 사은품 조회
-                        </button>
+                        </a>
                     </li>
                     <% } else { %>
                     <li>
-                        <button>
+                        <a href="/common/member/line">
                             <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 &gt; 회선관리
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/myt-fare/bill/option">
                             <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 &gt; 납부방법
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/benefit/my-benefit">
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 혜택
-                        </button>
+                        </a>
                     </li>
                     <% } %>
                 </ul>

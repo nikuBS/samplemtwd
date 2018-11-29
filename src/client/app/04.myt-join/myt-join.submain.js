@@ -39,11 +39,11 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
         this.$pauseC = this.$container.find('[data-id=pause_c]');
       }
-      if ( this.data.isOldNumber) {
+      if ( this.data.isOldNumber ) {
         this.$oldNum = this.$container.find('[data-id=old_number]');
       }
 
-      if (this.data.isNotChangeNumber) {
+      if ( this.data.isNotChangeNumber ) {
         this.$chgNumSvc = this.$container.find('[data-id=change_number]');
       }
     }
@@ -72,6 +72,7 @@ Tw.MyTJoinSubMain.prototype = {
         }
       }
     }
+    this.$joinService = this.$container.find('[data-id=join-svc]');
   },
 
   _bindEvent: function () {
@@ -95,10 +96,10 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
         this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
       }
-      if ( this.data.isOldNumber) {
+      if ( this.data.isOldNumber ) {
         this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
       }
-      if (this.data.isNotChangeNumber) {
+      if ( this.data.isNotChangeNumber ) {
         this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
       }
     }
@@ -126,10 +127,29 @@ Tw.MyTJoinSubMain.prototype = {
         }
       }
     }
+    this.$joinService.on('click', $.proxy(this._onMovedJoinService, this));
   },
 
   _initialize: function () {
   },
+
+  //
+  _onMovedJoinService: function () {
+    var type = 'cellphone';
+    switch ( this.data.svcInfo.svcAttrCd ) {
+      case 'S1':
+        type = 'internet';
+        break;
+      case 'S2':
+        type = 'tv';
+        break;
+      case 'S3':
+        type = 'phone';
+        break;
+    }
+    this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=' + type);
+  },
+
   // 010 번호 전환 서비스
   _onMoveOldNum: function () {
     this._historyService.goLoad('/myt-join/submain/numchange');
@@ -137,7 +157,7 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 번호안내서비스
   _onMoveChgNumSvc: function () {
-    if(this.data.numberChanged) {
+    if ( this.data.numberChanged ) {
       // 연장 & 해지
       this._historyService.goLoad('/myt-join/submain/phone/extalarm');
     }
@@ -148,7 +168,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   // 나의요금제
-  _onMovedMyPlan: function() {
+  _onMovedMyPlan: function () {
     this._historyService.goLoad('/myt-join/myplan');
   },
   // 고객보호비밀번호 변경
@@ -254,7 +274,7 @@ Tw.MyTJoinSubMain.prototype = {
       var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
       for ( var i = 0; i < length; i++ ) {
         var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$otherLines.parents('ul.list-comp-lineinfo').append(result);
+        this.$container.parents('ul.my-line-info').append(result);
       }
     }
   }

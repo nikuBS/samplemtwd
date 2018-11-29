@@ -50,7 +50,7 @@ Tw.TestMyTDataSubMain.prototype = {
       this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     }
     if ( this.data.otherLines.length > 0 ) {
-      this.$otherLines = this.$container.find('[data-id=other-lines] li');
+      this.$otherLines = this.$container.find('[data-id=other-lines]');
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
         this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
@@ -267,7 +267,7 @@ Tw.TestMyTDataSubMain.prototype = {
 
   // 다른 회선 더보기
   _onOtherLinesMore: function () {
-    var totalCount = this.data.otherLines.length - this.$otherLines.length;
+    var totalCount = this.data.otherLines.length - this.$otherLines.find('li').length;
     if ( totalCount > 0 ) {
       this.data.otherLines.splice(0, totalCount);
       var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
