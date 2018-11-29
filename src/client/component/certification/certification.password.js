@@ -18,7 +18,7 @@ Tw.CertificationPassword = function () {
 
 
 Tw.CertificationPassword.prototype = {
-  open: function (svcInfo, authUrl, command, deferred, callback, authKind ) {
+  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
@@ -44,7 +44,7 @@ Tw.CertificationPassword.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._callback({ code: Tw.API_CODE.CODE_00 }, this._deferred, this._command);
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   }
 
