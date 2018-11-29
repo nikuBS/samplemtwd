@@ -1,11 +1,11 @@
 <%#
 * FileName: myt-data.prepaid.data.html
-* Author: Jiman Park (jiman.park@sk.com)
-* Date: 2018.11.19
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.11.28
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -15,129 +15,147 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html',
-    { title: '데이터 1회 충전', svcInfo: svcInfo, option: { back: 'step' } }); %>
-    <!--// #header -->
-    <!-- #contents -->
-    <div class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="unpaid-charges">
-                    <dl class="total-box">
-                        <dt>남은 데이터 량 <button class="tip-view">TIP</button></dt>
-                        <dd class="t-point"><span class="num ff-tg-black">100</span><span class="ff-tg-medium">MB</span></dd>
-                    </dl>
-                    <ul class="point-box mb0">
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>데이터 1회 충전</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="unpaid-charges">
+                        <dl class="total-box">
+                            <dt>남은 데이터 량 <button id="DC_09_03_tip_02" class="tip-view">TIP</button></dt>
+                            <dd class="t-point"><span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.dataObj.dataValue %>">
+                                <%= ppsInfo.dataObj.data %></span><span class="ff-tg-medium">MB</span>
+                            </dd>
+                        </dl>
+                        <ul class="point-box mb0">
+                            <li>
+                                <dl>
+                                    <dt>발신(사용) 기간</dt>
+                                    <dd><%= ppsInfo.fromDate %></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>수신(데이터 유지) 기간</dt>
+                                    <dd><%= ppsInfo.toDate %></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>번호 유지 기간</dt>
+                                    <dd><%= ppsInfo.remainDate %></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <p class="fe-email-address none"></p>
+                    <ul class="form-data-list">
                         <li>
-                            <dl>
-                                <dt>발신(사용) 기간
-                                    <button class="tip-view">TIP</button>
-                                </dt>
-                                <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
-                            </dl>
+                            <label class="tit" for="formInput01">충전 데이터</label>
+                            <span class="inputbox">
+                                <button data-code="<%= ppsInfo.dataYn %>" class="bt-dropdown big fe-select-data" title="충전 데이터 선택" aria-haspopup="true">
+                                    데이터 선택<span class="ico"></span>
+                                </button>
+                            </span>
                         </li>
                         <li>
-                            <dl>
-                                <dt>수신(데이터 유지) 기간</dt>
-                                <dd><%-convertDate(PPSInfo.inbEndDt)%></dd>
-                            </dl>
+                            <label class="tit" for="formInput02">카드번호</label>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="formInput02" type="number" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
+                                           placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1" class="fe-card-number required-input-field">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
                         </li>
                         <li>
-                            <dl>
-                                <dt>번호 유지 기간</dt>
-                                <dd><%-convertDate(PPSInfo.numEndDt)%></dd>
-                            </dl>
+                            <label class="tit" for="formInput03">유효기간</label>
+                            <div class="input-wrap-half">
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
+                                               placeholder="YYYY" title="유효 년" maxlength="4">
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field"
+                                               placeholder="MM" title="유효 월" maxlength="2">
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="tit" for="formInput04">카드 비밀번호</label>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="formInput04" type="number" style="-webkit-text-security: disc;" class="fe-card-pw required-input-field"  inputmode="numeric" min="0" pattern="[0-9]*"
+                                           placeholder="앞 2자리" title="카드 비밀번호 입력란" value="" aria-labelledby="aria-exp-label4" maxlength="2">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
+                    <p id="aria-exp-desc1" class="ctext">* 본인명의의 카드로만 충전 가능하며 BC카드, 신한카드만 사용 가능합니다.</p>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        <li>공인인증서 인증 안내 <button type="button" id="DC_09_01_tip_01" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-check-recharge" disabled="disabled">충전하기</button>
                         </li>
                     </ul>
                 </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true">
-
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <ul class="form-data-list">
-                    <li>
-                        <label class="tit" for="formInput01">충전 데이터</label>
-                        <span class="inputbox">
-                                    <button class="bt-dropdown big" title="충전 데이터 선택" aria-haspopup="true">데이터 선택<span class="ico"></span></button>
-                                </span>
-                    </li>
-                    <li>
-                        <label class="tit" for="formInput02">카드번호</label>
-                        <span class="inputbox">
-                                    <span class="input">
-                                        <input id="formInput02" type="number" placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
-                    </li>
-                    <li>
-                        <label class="tit" for="formInput03">유효기간</label>
-                        <div class="input-wrap-half">
-                                    <span class="inputbox">
-                                        <span class="input">
-                                            <input id="formInput03" type="number" placeholder="YYYY" title="유효 년" maxlength="4">
-                                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                        </span>
-                                    </span>
-                            <span class="inputbox">
-                                        <span class="input">
-                                            <input type="number" placeholder="MM" title="유효 월" maxlength="2">
-                                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                        </span>
-                                    </span>
-                        </div>
-                    </li>
-                    <li>
-                        <label class="tit" for="formInput04">카드 비밀번호</label>
-                        <span class="inputbox">
-                                    <span class="input">
-                                        <input id="formInput04" type="number" placeholder="앞 2자리" title="카드 비밀번호 입력란" value="" aria-labelledby="aria-exp-label4" maxlength="2">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
-                    </li>
-                </ul>
-                <p id="aria-exp-desc1" class="ctext">* 본인명의의 카드로만 충전 가능하며 BC카드, 신한카드만 사용 가능합니다.</p>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true">
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                <ul class="noti-list">
-                    <li>텍스트가 1줄인 Case입니다.</li>
-                    <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                    <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button disabled="disabled">충전하기</button>
-                    </li>
-                </ul>
-            </div>
-            <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
         </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step">취소</button>
+        <!--// .popup-closeBtn -->
     </div>
-    <!--// #contents -->
+    <!-- // .popup hbs -->
 </div>
 <% include ../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
+    new Tw.MyTDataPrepaidData($('.wrap'));
   });
 </script>
 

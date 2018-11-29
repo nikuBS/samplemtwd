@@ -325,6 +325,12 @@ export const MYT_FARE_COMPLETE_MSG = {
   SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면\n즉시 수납이 반영됩니다.'
 };
 
+export const MYT_DATA_COMPLETE_MSG = {
+  DATA_RECHARGE: '데이터 충전 완료',
+  AFTER_DATA: '충전 후 데이터',
+  HISTORY: '충전내역 보기'
+};
+
 export const MYT_JOIN_WIRE_SVCATTRCD = {
   M1: '휴대폰',
   M2: '선불폰',
