@@ -1,13 +1,11 @@
 /**
  * FileName: myt-fare.bill.contents.history.js
  * Author: Lee kirim (kirim@sk.com)
- * Date: 2018. 9. 17
+ * Date: 2018. 11. 29
  */
 Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
-  console.log(this.data)
-  
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(rootEl);
   this._popupService = Tw.Popup;
@@ -17,8 +15,8 @@ Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
   this._params = this._urlHelper.getQueryParams();
 
   this._cachedElement();
-  this._bindEvent();
   this._init(data);
+  this._bindEvent();
 };
 
 Tw.MyTFareBillContentsHitstory.prototype = {
@@ -26,11 +24,13 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.current = this._getLastPathname();
 
     this._initBillList(data);
+    this.monthActionSheetListData = $.proxy(this._setMonthActionSheetData, this)(); //현재로부터 지난 6개월 구하기 
   },
 
   _cachedElement: function () {
     this.$domListWrapper = this.$container.find('#fe-list-wrapper'); 
     this.$listWrapper = this.$domListWrapper.find('.list-inner');
+    this.$selectMonth = this.$container.find('#fe-month-selector');
 
     this.$template = {
       $listWrapper: Handlebars.compile($('#list-wrapper').html()),
@@ -39,14 +39,11 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     };
 
     Handlebars.registerPartial('billList', $('#list-default').html());
-    /*this.$autopaymentSwitcher = this.$container.find('.switch-wrap .btn-switch input');
-    this.$microPayMonthSelector = this.$container.find('#fe-month-selector');*/
   },
 
   _bindEvent: function () {
-    /*if (this.$autopaymentSwitcher) {
-      this.$autopaymentSwitcher.on('change', $.proxy(this._autoPaymentBlockToggle, this));
-    }*/
+    this.$domListWrapper.find('.fe-detail-link').on('click', $.proxy(this._moveDetailPage,this));
+    this.$selectMonth.on('click', $.proxy(this._typeActionSheetOpen, this));
   },
 
   _initBillList: function (data) {
@@ -66,38 +63,75 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
     this.renderListData.billList = this.renderableListData; 
     
-    console.log(this.renderListData)
     initedListTemplate = this.$template.$list(this.renderListData);
     this.$listWrapper.append(initedListTemplate);
-    /*var date = new Date();
-    this.monthTermValue = JSON.parse(data).termSelectValue;
-
-    this.boardListWithTemplate = new Tw.MyTFareHistoryCommonBoard(this.$container);
-
-    this.dateInfo = {
-      year: this._dateHelper.getShortDateWithFormat(date, 'YYYY'),
-      month: this._dateHelper.getCurrentMonth(date)
-    };
-
-    this.monthActionSheetListData = $.proxy(this._setMonthActionSheetData, this)();
-
-    this.$microPayMonthSelector.on('click', $.proxy(this._typeActionSheetOpen, this, Tw.POPUP_TITLE.SELECT, this.monthActionSheetListData,
-        $.proxy(this._openMonthSelectHandler, this), $.proxy(this._closeMonthSelect, this)));
-
-    this.$container.on('click', '.list-inner li a', $.proxy(this._moveDetailPage, this));
-
-    this.$template = {
-      $domListWrapper: this.$container.find('#fe-list-wrapper'),
-      $list: this.$container.find('#list-default'),
-      $listWrapper: this.$container.find('#list-wrapper'),
-      $emptyList: this.$container.find('#list-empty')
-    };*/
   },
 
+  // 월 선택
+  _typeActionSheetOpen: function () {
+    /*Tw.POPUP_TITLE.SELECT, ,
+      */
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',// hbs의 파일명
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT,
+      data: this.monthActionSheetListData
+    }, $.proxy(this._openMonthSelectHandler, this), $.proxy(this._closeMonthSelect, this));
+  },
+
+  // 셀렉트 콤보박스
+  _setMonthActionSheetData: function () {
+    var tempArr = [],
+      year = this.data.beforeYear, 
+      month = this.data.beforeMonth, 
+      month_limit = 12; 
+
+    // 6개월 리스트 만들기
+    for(var i = 1; i<=6; i++){
+      month = parseFloat(this.data.beforeMonth)+i;
+      if(month>= month_limit){ 
+        year = this.data.curYear;
+        month -= month_limit;
+      }
+      tempArr.push({
+        value:month + Tw.PERIOD_UNIT.MONTH,
+        attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\'',
+        option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? "checked" : ""
+      })
+    }
+    return [{
+      list: tempArr.reverse()
+    }];
+  },
+
+  // 선택 시트
+  _openMonthSelectHandler: function (root) {
+    root.find('.chk-link-list button').on('click', $.proxy(this._updateMicroPayContentsList, this));
+  },
+
+  _updateMicroPayContentsList: function (e) {
+    var year = $(e.currentTarget).data('year') || this.data.curYear;
+    var month = $(e.currentTarget).data('month') || this.data.curMonth; 
+    //선택표기
+    $(e.currentTarget).addClass('checked').parent().siblings().find('button').removeClass('checked');
+    //이동
+    this._historyService.goLoad(this._historyService.pathname + "?year=" + year + "&month=" + month);
+  },
+
+  _closeMonthSelect: function () {
+    this._popupService.close();
+  },
+
+  // 월 선택 end
+
+  // 디테일 페이지
   _moveDetailPage: function (e) {
-    Tw.UIService.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.currentMonthData[$(e.currentTarget).data('listId')]));
+    Tw.UIService.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
+    console.log(this.data)
+    this._historyService.goLoad(this._historyService.pathname+'/detail');
   },
 
+  
  
   /*_setMicroPaymentContentsData: function (res) {
     this.historyData = JSON.parse(res);
@@ -108,32 +142,9 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this._setCurrentMonthDataIndex();
     this._renderMicroPayContentsList();
   },*/
-  _openMonthSelectHandler: function (root) {
-    this.$monthSelectActionsheetButtons = root.find('.chk-link-list button');
-    $(this.$monthSelectActionsheetButtons[this.dateInfo.currentIndex || 0]).addClass('checked');
-    this.monthActionSheetListData[0].list[this.dateInfo.currentIndex || 0].option = 'checked';
-    this.$monthSelectActionsheetButtons.on('click', $.proxy(this._updateMicroPayContentsList, this));
-  },
+  
 
-  _closeMonthSelect: function () {
-  },
-
-  _updateMicroPayContentsList: function (e) {
-    this.monthActionSheetListData[0].list[this.dateInfo.currentIndex || 0].option = '';
-    this.dateInfo.currentIndex = $(e.currentTarget).data('index');
-    this.dateInfo.currentYear = $(e.currentTarget).data('year');
-    this.dateInfo.currentMonth = $(e.currentTarget).data('month');
-    this.$monthSelectActionsheetButtons.removeClass('checked');
-    this._popupService.close();
-    this.$microPayMonthSelector.text($(e.target).text());
-
-    this.currentMonthData = (this.historyData[this.dateInfo.currentYear] && this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth]) ?
-        this.historyData[this.dateInfo.currentYear][this.dateInfo.currentMonth] : [];
-
-    this._setCurrentMonthDataIndex();
-
-    this._renderMicroPayContentsList();
-  },
+  
 
   _setCurrentMonthDataIndex: function () {
     this.currentMonthData.map($.proxy(function (o, i) {
@@ -165,40 +176,6 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
 
   
-  _setMonthActionSheetData: function () {
-    var tempArr = [];
-    var yearText = ''
-    console.log(this.dateInfo, this.monthTermValue);
-    for (var i = this.monthTermValue, month = this.dateInfo.month; i > 0; i--) {
-      if (month === 0) {
-        month = 12;
-        yearText = (this.dateInfo.year - 1) + Tw.PERIOD_UNIT.YEAR + ' ';
-      }
-      if (month-- <= 0) {
-        tempArr.push({
-          value: yearText + Math.abs(month) + Tw.PERIOD_UNIT.MONTH,
-          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + (this.dateInfo.year - 1) + '\'' + ' data-month=\'' + Math.abs(month) + '\''
-        });
-      } else {
-        tempArr.push({
-          value: yearText + (month + 1) + Tw.PERIOD_UNIT.MONTH,
-          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + this.dateInfo.year + '\'' + ' data-month=\'' + (month + 1) + '\''
-        });
-      }
-    }
-    return [{
-      list: tempArr
-    }];
-  },
-
-  _typeActionSheetOpen: function (title, data, openCallback, closeCallback) {
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',// hbs의 파일명
-      layer: true,
-      title: title,
-      data: data
-    }, openCallback, closeCallback);
-  },
 
   _autoPaymentBlockToggle: function (e) {
     var wrapper = $(e.target).parents('li');

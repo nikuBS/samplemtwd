@@ -84,7 +84,7 @@
     <script id="list-default" type="text/x-handlebars-template">
         {{#each billList}}
         <li>
-            <a href="<%=detailURL%>" title="상세내역 보기" data-list-id="{{listId}}">
+            <button title="상세내역 보기" class="fe-detail-link" data-list-id="{{listId}}">
                 <dl>
                     <dt>
                         <p class="sv-name"><span class="blind">서비스명</span>{{useServiceNm}}</p>
@@ -92,7 +92,7 @@
                     </dt>
                     <dd><span class="blind">결제금액</span><span class="str">{{useAmt}}</span>원</dd>
                 </dl>
-            </a>
+            </button>
         </li>
         {{/each}}
     </script>

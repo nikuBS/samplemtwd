@@ -69,6 +69,7 @@ Tw.MyTFareInfoHistory.prototype = {
         return prev;
       }, this), []);
 
+      console.log("listData", this.renderListData)
       initedListTemplate = this.$template.$listWrapper(this.renderListData);
     }
 
