@@ -302,7 +302,7 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
 export const MYT_FARE_PAYMENT_ERROR = {
   DEFAULT: '청구된 요금이 없습니다.',
   REP_SVC_N: '대표청구번호가 아닙니다.',
-  COM_CODE_B: '사업자가 브로드밴드 입니다.'
+  COM_CODE_B: ' SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다. <br> 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주시기 바랍니다.'
 };
 
 export const MYT_FARE_POINT_MSG = {

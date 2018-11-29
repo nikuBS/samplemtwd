@@ -10,7 +10,7 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
+import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 
@@ -28,14 +28,75 @@ class MyTFareSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    if ( req && req.params[0] === '/usagefee') {
-      // 사용요금
+
+    if ( req.params && req.params[0] === '/usagefee' ) {
       data.type = 'UF';
-      this._requestUsageFee(req, res, data, svcInfo);
-    } else {
-      // 청구요금
-      this._requestClaim(req, res, data, svcInfo);
+      if ( req.query && req.query.count ) {
+        data.svcCount = parseInt(req.query.count, 10);
+      }
     }
+    this.apiService.request(API_CMD.BFF_05_0036, {}).subscribe((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        const claim = resp.result;
+        if ( claim.repSvcYn === 'N' ) {
+          // 청구요금화면에서 대표청구번호 아닌 경우 사용요금으로 조회
+          if ( data.type !== 'UF' ) {
+            res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
+          }
+        } else {
+          if ( data.type === 'UF' ) {
+            // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
+            res.redirect('/myt-fare/submain');
+          }
+          if ( claim.coClCd === 'B' ) {
+            // 사업자 브로드밴드 경우
+            this.error.render(res, {
+              title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+              code: API_MYT_ERROR.BIL0011,
+              msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B,
+              svcInfo: svcInfo
+            });
+          }
+          if ( claim.invDt.length === 0 ) {
+            // no data
+            this.error.render(res, {
+              title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+              code: '',
+              msg: MYT_FARE_PAYMENT_ERROR.DEFAULT,
+              svcInfo: svcInfo
+            });
+          }
+        }
+
+        if ( data.type === 'UF' ) {
+          this._requestUsageFee(req, res, data, svcInfo);
+        } else {
+          // 청구요금
+          if ( claim ) {
+            data.claim = claim;
+            data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
+            data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
+            // 사용요금
+            const usedAmt = parseInt(claim.useAmtTot, 10);
+            data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
+            // 할인요금
+            const disAmt = Math.abs(claim.deduckTotInvAmt);
+            data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
+            // Total
+            data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
+          }
+          this._requestClaim(req, res, data, svcInfo);
+        }
+
+      } else {
+        this.error.render(res, {
+          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
+      }
+    });
   }
 
   /**
@@ -48,7 +109,6 @@ class MyTFareSubmainController extends TwViewController {
    */
   _requestClaim(req, res, data, svcInfo) {
     Observable.combineLatest(
-      this._getTypesFee(data.type),
       this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
@@ -56,75 +116,52 @@ class MyTFareSubmainController extends TwViewController {
       this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay()
-    ).subscribe(([claim, nonpayment, paymentInfo, totalPayment,
+    ).subscribe(([nonpayment, paymentInfo, totalPayment,
                    taxInvoice, contribution, microPay, contentPay]) => {
-      if ( claim.info ) {
-        this.error.render(res, {
-          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-          code: claim.info.code,
-          msg: claim.info.msg,
-          svcInfo: svcInfo
-        });
-      } else {
-        // 소액결제
-        if ( microPay ) {
-          data.microPay = microPay;
-          // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
-            data.isMicroPrepay = true;
-          }
+      // 소액결제
+      if ( microPay ) {
+        data.microPay = microPay;
+        // 휴대폰이면서 미성년자가 아닌경우
+        if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          data.isMicroPrepay = true;
         }
-        // 콘텐츠
-        if ( contentPay ) {
-          data.contentPay = contentPay;
-          // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
-            data.isContentPrepay = true;
-          }
-        }
-        // 청구요금
-        if ( claim ) {
-          data.claim = claim;
-          data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
-          data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
-          // 사용요금
-          const usedAmt = parseInt(claim.useAmtTot, 10);
-          data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
-          // 할인요금
-          const disAmt = Math.abs(claim.deduckTotInvAmt);
-          data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
-          // Total
-          data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
-        }
-        // 미납내역
-        if ( nonpayment ) {
-          data.nonpayment = nonpayment;
-          data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
-        }
-        // 납부/청구 정보
-        if ( paymentInfo ) {
-          data.paymentInfo = paymentInfo;
-          // 자동납부인 경우
-          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-            // 은행자동납부, 카드자동납부, 은행지로자동납부
-            data.isNotAutoPayment = false;
-          }
-        }
-        // 최근납부내역
-        if ( totalPayment ) {
-          data.totalPayment = totalPayment.paymentRecord;
-        }
-        // 세금계산서
-        if ( taxInvoice ) {
-          data.taxInvoice = taxInvoice;
-        }
-        // 기부금/후원금
-        if ( contribution ) {
-          data.contribution = contribution;
-        }
-
-        res.render('myt-fare.submain.html', { data });
       }
+      // 콘텐츠
+      if ( contentPay ) {
+        data.contentPay = contentPay;
+        // 휴대폰이면서 미성년자가 아닌경우
+        if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          data.isContentPrepay = true;
+        }
+      }
+      // 미납내역
+      if ( nonpayment ) {
+        data.nonpayment = nonpayment;
+        data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
+      }
+      // 납부/청구 정보
+      if ( paymentInfo ) {
+        data.paymentInfo = paymentInfo;
+        // 자동납부인 경우
+        if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+          // 은행자동납부, 카드자동납부, 은행지로자동납부
+          data.isNotAutoPayment = false;
+        }
+      }
+      // 최근납부내역
+      if ( totalPayment ) {
+        data.totalPayment = totalPayment.paymentRecord;
+      }
+      // 세금계산서
+      if ( taxInvoice ) {
+        data.taxInvoice = taxInvoice;
+      }
+      // 기부금/후원금
+      if ( contribution ) {
+        data.contribution = contribution;
+      }
+
+      res.render('myt-fare.submain.html', { data });
     });
   }
 
@@ -138,7 +175,7 @@ class MyTFareSubmainController extends TwViewController {
    */
   _requestUsageFee(req, res, data, svcInfo) {
     Observable.combineLatest(
-      this._getTypesFee(data.type),
+      this._getUsageFee(),
       this._getPaymentInfo(),
       this._getMicroPrepay(),
       this._getContentPrepay()
@@ -207,32 +244,9 @@ class MyTFareSubmainController extends TwViewController {
     return list;
   }
 
-  _getTypesFee(type) {
-    let API_URL = API_CMD.BFF_05_0036;
-    if ( type === 'UF' ) {
-      API_URL = API_CMD.BFF_05_0047;
-    }
-    return this.apiService.request(API_URL, {}).map((resp) => {
+  _getUsageFee() {
+    return this.apiService.request(API_CMD.BFF_05_0047, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        const result = resp.result;
-        if ( result.repSvcYn === 'N' ) {
-          // 대표청구번호 아님
-          return {
-            info: {
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.REP_SVC_N
-            }
-          };
-        }
-        if ( result.coClCd === 'B' ) {
-          // 사업자 브로드밴드 경우
-          return {
-            info: {
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B
-            }
-          };
-        }
         if ( resp.result.invDt.length === 0 ) {
           // no data
           return {
@@ -314,7 +328,7 @@ class MyTFareSubmainController extends TwViewController {
 
   _getMicroPrepay() {
     // 소액결제 확인
-      return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         resp.result.code = API_CODE.CODE_00;
         return resp.result;

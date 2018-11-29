@@ -51,7 +51,7 @@ Tw.MyTDataSubMain.prototype = {
     //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     // }
     if ( this.data.otherLines.length > 0 ) {
-      this.$otherLines = this.$container.find('[data-id=other-lines] li');
+      this.$otherLines = this.$container.find('[data-id=other-lines]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
@@ -377,17 +377,19 @@ Tw.MyTDataSubMain.prototype = {
         number  = $target.attr('data-num'),
         name    = $target.attr('data-name'),
         isChild = ($target.find('.icon-children').length > 0);
-    if ( isChild ) {
-      // 자녀회선
-      this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
-    }
-    else {
-      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
-      var selectLineInfo = number + ' ' + name;
-      this.changeLineMgmtNum = mgmtNum;
-      this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-        defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+    if ( mgmtNum ) {
+      if ( isChild ) {
+        // 자녀회선
+        this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
+      }
+      else {
+        var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+        var selectLineInfo = number + ' ' + name;
+        this.changeLineMgmtNum = mgmtNum;
+        this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
+          defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
+          Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+      }
     }
   },
 
