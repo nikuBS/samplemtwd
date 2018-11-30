@@ -15,15 +15,15 @@ class CommonCertNice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const mobileco = req.query.niceType;
+    const mobileco = req.query.niceKind;
     const authUrl = req.query.authUrl;
     const authKind = req.query.authKind;
     const prodAuthKey = req.query.prodAuthKey; // 상품인증이 있는 경우
     this.apiService.request(API_CMD.BFF_01_0024, {
       mobileco,
       authUrl,
-      resultUrl:  EnvHelper.getEnvironment('DOMAIN') + '/common/cert/result?type=nice&kind=second',
-      // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=second',
+      resultUrl:  EnvHelper.getEnvironment('DOMAIN') + '/common/cert/result?type=nice&kind=' + authKind,
+      // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + + authKind,
       authKind,
       prodAuthKey
     }).subscribe((resp) => {

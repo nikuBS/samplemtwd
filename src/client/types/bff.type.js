@@ -91,6 +91,11 @@ Tw.AUTH_CERTIFICATION_KIND = {
   F: 'F' // 미환급금
 };
 
+Tw.NICE_TYPE = {
+  NICE: 'nice',
+  IPIN: 'ipin'
+};
+
 Tw.PRODUCT_RESERVATION_VALUE = {
   cellphone: '19',
   internet: '07',

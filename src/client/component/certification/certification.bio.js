@@ -10,5 +10,7 @@ Tw.CertificationBio = function () {
 
 
 Tw.CertificationBio.prototype = {
+  open: function(svcInfo, authUrl, authKind, command, callback) {
 
+  }
 };

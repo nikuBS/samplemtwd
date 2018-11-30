@@ -7,9 +7,9 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { AUTH_CERTIFICATION_KIND, NICE_TYPE } from '../../../../types/bff.type';
 
 class CommonCertResult extends TwViewController {
-
   constructor() {
     super();
   }
@@ -22,33 +22,18 @@ class CommonCertResult extends TwViewController {
   }
 
   private checkCertKind(req, res, certType, certKind) {
-    enum TYPE {
-      NICE = 'nice',
-      IPIN = 'ipin'
-    }
 
-    enum KIND {
-      SECOND = 'second',
-      REFUND = 'refund'
-    }
-
-    if ( certType === TYPE.IPIN ) {
-      // IPIN
-      if ( certKind === KIND.SECOND ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0023, { enc_data: req.body.enc_data });
-      } else if ( certKind === KIND.REFUND ) {
+    if ( certType === NICE_TYPE.IPIN ) {
+      if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
         this.sendResult(req, res, API_CMD.BFF_01_0048, { enc_data: req.body.enc_data });
       } else {
-        // error
+        this.sendResult(req, res, API_CMD.BFF_01_0023, { enc_data: req.body.enc_data });
       }
-    } else if ( certType === TYPE.NICE ) {
-      // NICE
-      if ( certKind === KIND.SECOND ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0023, { encodeData: req.body.encodeData });
-      } else if ( certKind === KIND.REFUND ) {
+    } else if ( certType === NICE_TYPE.NICE ) {
+      if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
         this.sendResult(req, res, API_CMD.BFF_01_0050, { encodeData: req.body.encodeData });
       } else {
-
+        this.sendResult(req, res, API_CMD.BFF_01_0023, { encodeData: req.body.encodeData });
       }
     } else {
       // error
