@@ -23,6 +23,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
+    this._isAndroid = Tw.BrowserHelper.isAndroid();
 
     this._monthAmountList = [];
     this._dayAmountList = [];
@@ -81,18 +82,23 @@ Tw.MyTFareBillPrepayMain.prototype = {
     new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
   },
   _prepay: function () {
-    this._popupService.open({
-      'hbs': 'MF_06_03'
-    },
-      $.proxy(this._goPrepay, this),
-      null,
-      'pay');
+    if (Tw.BrowserHelper.isApp()) {
+      this._popupService.open({
+        'hbs': 'MF_06_03'
+      }, $.proxy(this._goPrepay, this), null, 'pay');
+    } else {
+      this._goAppInfo();
+    }
   },
   _goPrepay: function ($layer) {
     new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
   _autoPrepay: function () {
-    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
+    if (Tw.BrowserHelper.isApp()) {
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
+    } else {
+      this._goAppInfo();
+    }
   },
   _autoPrepayInfo: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');
@@ -105,5 +111,18 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _setPassword: function () {
     new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn);
+  },
+  _goAppInfo: function () {
+    var isAndroid = Tw.BrowserHelper.isAndroid();
+    this._popupService.open({
+      'hbs': 'open_app_info',
+      'isAndroid': isAndroid
+    }, $.proxy(this._onOpenTworld, this));
+  },
+  _onOpenTworld: function ($layer) {
+    $layer.on('click', '.fe-tworld', $.proxy(this._goTworld, this));
+  },
+  _goTworld: function () {
+    new Tw.LoadTworldApp(this.$container);
   }
 };
