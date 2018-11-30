@@ -8,7 +8,7 @@ Tw.ProductRoamingFiReservation2step = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._cachedElement();
   this._bindEvent();
 };
@@ -17,14 +17,14 @@ Tw.ProductRoamingFiReservation2step.prototype = {
   countryArr : [],
 
   _cachedElement: function() {
-    this.$btnPopupClose = this.$container.find('.bt-slice');
+    this.$btnRegister = this.$container.find('#fe-register');
     this.$btnCountryLink = this.$container.find('.link-area > .bt-link-tx');
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
   },
 
   _bindEvent: function() {
-    this.$btnPopupClose.on('click', $.proxy(this._handleFiReservation, this));
+    this.$btnRegister.on('click', $.proxy(this._searchCountryCode, this));
     this.$btnCountryLink.on('click', $.proxy(this._addVisitCountry, this));
     this.$container.on('click', '#visitList .bt-alone', $.proxy(this._removeVisitCountry, this));
     this.$container.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
@@ -33,24 +33,55 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$container.on('click', '#goLink', $.proxy(this._goRoamingCenter, this));
     this.$container.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
     this.$container.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
+    this.$container.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
+    this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
   },
 
-  _goRoamingGuide: function() {
-    this._historyService.replaceURL('/product/roaming/fi/guide');
+  _searchCountryCode: function(){
+    this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''}).done($.proxy(this._handleSuccessSearchCountry, this));
   },
 
-  _handleFiReservation: function() {
+  _handleSuccessSearchCountry: function(res){
+    //한글로된 국가 배열 -> 코드 배열로 교체
+    if(res.code === Tw.API_CODE.CODE_00) {
+      var allCountryCode = res.result;
+      var countyArr = this.countryArr.map(function(x){return x});
+
+      allCountryCode.forEach(function(key){
+        if(countyArr.indexOf(key.countryNm) >= 0){
+          countyArr.splice(countyArr.lastIndexOf(key.countryNm),1,key.countryCode);
+        }
+      });
+
+      this._handleFiReservation(countyArr);
+    }
+  },
+
+  _handleFiReservation: function(countryArr) {
+    console.log('req');
     var expbranchnm = $('#flab05').text();
     var boothcode = $('#flab04').attr('data-booth');
     var boothnm = $('#flab04').text();
     var impbranch = $('#flab04').attr('data-center');
     var expbranch = $('#flab05').attr('data-center');
-    var nationCode = ['BRA', 'MNG', 'USA', 'GUM', 'MYS']; //데이터 처리 필요
+    var nationCode = countryArr;
     var rentFrom = $('#flab02').val().replace(/\-/gi, '');
     var rentTo = $('#flab03').val().replace(/\-/gi, '');
     var contphonenum = $('#flab01').val().replace(/\-/gi, '');
     var date = new Date();
     var hsrsvrcvdtm = date.toISOString().substring(0,10).replace(/\-/gi, '');
+
+    //수령장소 기본 값 세팅
+    if(boothcode === null || boothcode === undefined){
+      boothcode = '1000004045';
+      impbranch = 'A100110000';
+      this.selectIdx = 0;
+    }
+
+    //반납장소 기본 값 세팅
+    if(expbranch === null || expbranch === undefined){
+      expbranch = 'A100110000';
+    }
 
     var params = {
       'rentFrom': rentFrom,
@@ -67,16 +98,18 @@ Tw.ProductRoamingFiReservation2step.prototype = {
       'nationcode': nationCode,
       'type': 'I'
     };
-    
+
     this._apiService.request(Tw.API_CMD.BFF_10_0065, params).done($.proxy(this._handleSuccessFiReservation, this));
   },
 
-  _handleSuccessFiReservation: function() {
-    this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.TITLE);
+  _handleSuccessFiReservation: function(res){
+    if(res.code === Tw.API_CODE.CODE_00) {
+      console.log(this.selectIdx);
+      this._historyService.goLoad('/product/roaming/fi/reservation3step?selectIdx=' + this.selectIdx);
+    }
   },
-  _addVisitCountry: function(e){
-    //console.log(e.target.innerText);
 
+  _addVisitCountry: function(e){
     //추가된 국가가 5개이상이면 리턴처리
     if(this.countryArr.length > 4){
       return;
@@ -96,14 +129,15 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
     this._changeCheck();
   },
+
   _removeVisitCountry : function(e){
-    //console.log($(e.target).parents('.tx-cont').siblings('.title').text());
     var removeName = $(e.target).parents('.tx-cont').siblings('.title').text();
     this.countryArr.splice(this.countryArr.indexOf(removeName),1);
     $(e.target).parents('li').remove();
 
     this._changeCheck();
   },
+
   _openLocationPop : function(e){
     var selected = e.target;
     var title = '';
@@ -142,7 +176,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
       $(selected).text($(e.target).parents('li').find('.info-value').text()); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('button').attr('data-center')); //부스코드를 data-code값에 넣기
       $(selected).attr('data-booth',$(e.target).parents('button').attr('data-booth'));
-      console.log($(e.target).parents('button').attr('data-code'));
+      this.selectIdx = Number($(e.target).parents('button').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
     }else{
       $(selected).text($(e.target).parents('li').find('.info-value').text());
       $(selected).attr('data-center',$(e.target).parents('button').attr('data-center'));
@@ -167,13 +201,23 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     if(this.countryArr.length > 0){
       var countryCheck = true;
     }
+
     setTimeout(function(){
-      if($('#check1').hasClass('checked') && $('#check2').hasClass('checked') && countryCheck ){
+      console.log('change check ' , $('#flab01').val().length);
+      var inputPhoneCheck = '';
+
+      if($('#flab01').val().length > 0){
+        inputPhoneCheck = true;
+      }else{
+        inputPhoneCheck = false;
+      }
+
+      if($('#check1').hasClass('checked') && $('#check2').hasClass('checked') && countryCheck && inputPhoneCheck){
         $('.bt-red1 button').removeAttr('disabled');
       }else{
         $('.bt-red1 button').attr('disabled','disabled');
       }
-    });
+    },0);
   },
 
   _goRoamingCenter: function() {
