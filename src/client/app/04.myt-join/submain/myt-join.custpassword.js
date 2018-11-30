@@ -17,14 +17,18 @@ Tw.MytJoinCustpassword = function ($element, isNew) {
   this._popupService = Tw.Popup;
   this._inputHelper = Tw.InputHelper;
   this._historyService = new Tw.HistoryService($element);
+  this._tidLanding = new Tw.TidLandingComponent();
   this._historyService.init('hash');
   this._chkedpwd = null; // checked password
+  this._currentHash = '';
 
   if( !this._new ){
     this._pwdCheckService = new Tw.MytJoinCustpasswordCheck();
     this._historyService.goHash(this._HASH_STEP_CHECK);
+    this._currentHash = this._HASH_STEP_CHECK;
   } else {
     this._historyService.goHash(this._HASH_STEP_CHANGE);
+    this._currentHash = this._HASH_STEP_CHANGE;
   }
   this._bindEvent();
 };
@@ -75,6 +79,7 @@ Tw.MytJoinCustpassword.prototype = {
     // step2 ui로 변경
     this._historyService.setHistory(event);
     this._historyService.goHash(this._HASH_STEP_CHANGE);
+    this._currentHash = this._HASH_STEP_CHANGE;
 
     this._resetPwdInput('input:password');
     skt_landing.action.loading.off({ ta: '.container' });
@@ -155,12 +160,12 @@ Tw.MytJoinCustpassword.prototype = {
   _onPwdInput: function (event){
     this._onKeyUp(event);
 
-    if( location.hash === '' || location.hash === this._HASH_STEP_CHECK ){
+    if( this._currentHash === '' || this._currentHash === this._HASH_STEP_CHECK ){
 
       var pwd1 = $('#pwd-input1').val();
       $('#btn-check').prop('disabled', (pwd1.length < 6));
 
-    } else if( location.hash === this._HASH_STEP_CHANGE ){
+    } else if( this._currentHash === this._HASH_STEP_CHANGE ){
       if( !this._new && !this._chkedpwd ){  // 변경이고, 기존비번이 확인되지 않은 경우 버튼 비활성
         $('#btn-change').prop('disabled', true);
         return;
@@ -210,6 +215,7 @@ Tw.MytJoinCustpassword.prototype = {
     if( !this._new && !this._chkedpwd ){
       this._historyService.setHistory(event);
       this._historyService.goHash(this._HASH_STEP_CHECK);
+      this._currentHash = this._HASH_STEP_CHECK;
       return;
     }
 
@@ -222,7 +228,9 @@ Tw.MytJoinCustpassword.prototype = {
     if ( orgPwd !== checkPwd ) {
       $('#pwd-input2').parents('.inputbox').addClass('error');
       $('#pwd-input3').parents('.inputbox').addClass('error');
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A63, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A63.MSG,
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A63.TITLE);
       return;
     }
 
@@ -253,32 +261,69 @@ Tw.MytJoinCustpassword.prototype = {
    * @private
    */
   _onApiSuccess: function (params) {
+    skt_landing.action.loading.off({ ta: '.container' });
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
       var msgObj = this._new ? Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A64 : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A62;
       this._popupService.openAlert(msgObj.MSG, msgObj.TITLE, null, $.proxy(function(){
+        // 완료 후 MS페이지로 이동
         this._historyService.goLoad('/myt-join/submain/');
       }, this));
     }
     else {
-      //var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
-      //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
-      Tw.Error(params.code, params.msg).pop();
-      skt_landing.action.loading.off({ ta: '.container' });
+      // ICAS3215	고객보호비밀번호 오입력 5회(잠김 예정)
+      // ICAS3216	고객보호비밀번호 기 잠김 (지점 내점 안내 노출)
+      if ( params.code === 'ICAS3216' ) {
+        Tw.Error(params.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD).pop();
+      } else {
+        Tw.Error(params.code, params.msg).pop();
+      }
     }
   },
 
   _onApiError: function (params) {
-    // API 호출 오류
-    //Tw.Logger.warn(params);
-    //var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
-    //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
-    Tw.Error(params.code, params.msg).pop();
     skt_landing.action.loading.off({ ta: '.container' });
+    Tw.Error(params.code, params.msg).pop();
   },
 
+  /**
+   * 닫기(X) 버튼 클릭시
+   * @private
+   */
   _onclickBtnCancel: function(){
-    this._historyService.goLoad('/myt-join/submain');
+
+
+    if( this._new ){
+      // 2_A200
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A200.MSG,
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A200.TITLE,
+        $.proxy(function(){
+          // logout and home(HO)으로 이동
+          this._tidLanding.goLogout();
+          //this._historyService.goLoad('/main/home');
+
+          /*if ( Tw.BrowserHelper.isApp() ) {
+            Tw.Native.send(Tw.NTV_CMD.LOGOUT, {}, $.proxy(function(){
+              this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
+                .done($.proxy(function(){
+                  this._historyService.goLoad('/main/home');
+                }, this));
+            }, this));
+          } else {
+            this._historyService.goLoad(url);
+          }*/
+        }, this));
+    } else {
+
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          // main(MS)으로 이동
+          this._historyService.goLoad('/myt-join/submain');
+        }, this));
+    }
   }
 
 

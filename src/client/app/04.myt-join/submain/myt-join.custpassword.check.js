@@ -89,10 +89,21 @@ Tw.MytJoinCustpasswordCheck.prototype = {
   },
 
   _defaultErrorHandler : function(res, unexpectedError){
-    //var errorMsg = unexpectedError ? res.code + ' ' + res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61;
-    //this._popupService.openAlert(errorMsg);
-    var errorMsg = unexpectedError ? res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61;
-    Tw.Error(res.code, errorMsg).pop();
+    var errorMsg = unexpectedError ? res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG;
+
+    // blocked
+    if(this.errCount >= 5){
+      Tw.Error(res.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD).pop();
+      return;
+    }
+
+    if(this.errCount > 0){
+      errorMsg = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A209.MSG;
+      errorMsg = errorMsg.replace('N', this.errCount);
+      Tw.Error(res.code, errorMsg).pop();
+    } else {
+      Tw.Error(res.code, errorMsg).pop();
+    }
   }
 
 };
