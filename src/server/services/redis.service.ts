@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 class RedisService {
   private static instance: RedisService;
-  private envRedis: EnvHelper;
+  private envRedis;
   private RedisStore;
   private redisOption;
   private middleWare;
@@ -20,7 +20,7 @@ class RedisService {
       prefix: 'session:'
     });
 
-    this.client = redis.createClient(this.envRedis);
+    this.client = redis.createClient(this.envRedis.port, this.envRedis.host);
   }
 
   static getInstance() {
