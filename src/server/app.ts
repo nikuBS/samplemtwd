@@ -181,8 +181,6 @@ class App {
 
 
   private handleNotFoundError(req, res, next) {
-    // console.log('[Error] 404 Error', req.baseUrl + req.path);
-
     if ( req.accepts('html') ) {
       return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
@@ -190,12 +188,11 @@ class App {
   }
 
   private handleInternalServerError(err, req, res, next) {
-    // console.log('[Error] 500 Error', err);
-
-    // if ( req.accepts('html') ) {
-    //   return res.status(404).render('error.page-not-found.html', { svcInfo: null });
-    // }
-    return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+    if ( req.accepts('html') ) {
+      return res.status(500).send(err.message);
+      // return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+    }
+    next();
   }
 }
 

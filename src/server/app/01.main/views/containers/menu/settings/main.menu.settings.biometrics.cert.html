@@ -5,7 +5,7 @@
 * MA_03_01_02_01_02
 %>
 
-<% include ../../components/start.component.html %>
+<% include ../../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -120,7 +120,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button id="fe-bt-next">다음</button>
+                            <button id="fe-bt-next" disabled>다음</button>
                         </li>
                     </ul>
                 </div>
@@ -133,10 +133,10 @@
     </div>
     <!-- // .popup hbs -->
 </div>
-<% include ../../components/javascript.component.html %>
+<% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.MainMenuSettingsBiometricsCert($('#commonBiometricsCert'), '<%= target %>');
   });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../../../components/end.component.html %>

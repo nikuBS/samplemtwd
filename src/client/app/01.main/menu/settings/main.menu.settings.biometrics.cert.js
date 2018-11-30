@@ -4,40 +4,43 @@
  * Date: 2018.10.13
  */
 
-Tw.MainMenuSettingsBiometricsCert = function (rootEl, target) {
-  this.$container = rootEl;
+Tw.MainMenuSettingsBiometricsCert = function (target) {
   this._target = target;
   this._apiService = Tw.Api;
 
   this._historyService = new Tw.HistoryService();
+  this._popupService = Tw.Popup;
 
-  this.$btNext = null;
-
+  this._biometiricsRegister = new Tw.MainMenuSettingsBiometricsRegister(this._target);
   this._certSk = new Tw.CertificationSk();
   this._certPublic = new Tw.CertificationPublic();
+  this._certNice = new Tw.CertificationNice();
 
   this._svcInfo = null;
-  this._authUrl = null;
-  this._resultUrl = null;
-  this._bindEvent();
+  this._authUrl = 'GET|/v1/dummy/auth';
+  this._authKind = Tw.AUTH_CERTIFICATION_KIND.P;
+
   this._getSvcInfo();
 };
 
 Tw.MainMenuSettingsBiometricsCert.prototype = {
-  _bindEvent: function () {
-    this.$btNext = this.$container.find('#fe-bt-next');
-
-    this.$container.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
-    this.$container.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
-    this.$container.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
-    this.$container.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
-    this.$container.on('click', '#fe-bt-public', $.proxy(this._onClickPublic, this));
-
-    this.$btNext.on('click', $.proxy(this._onClickNext, this));
+  open: function () {
+    this._popupService.open({
+      hbs: 'MA_03_01_02_01_02',
+      layer: true,
+      data: {
+        isFinger: this._target === Tw.FIDO_TYPE.FINGER
+      }
+    }, $.proxy(this._onOpenBioCert, this), null, 'cert');
+  },
+  _onOpenBioCert: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
+    $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
+    $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
+    $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
+    $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickPublic, this));
   },
   _getSvcInfo: function () {
-    this._resultUrl = '/common/cert/complete';
-
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._successSvcInfo, this))
       .fail($.proxy(this._failSvcInfo, this));
@@ -52,36 +55,23 @@ Tw.MainMenuSettingsBiometricsCert.prototype = {
   },
   _onClickSkSms: function () {
     this._certSk.open(
-      this._svcInfo, this._authUrl, null, null, $.proxy(this._completeIdentification, this), Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
+      this._svcInfo, this._authUrl, this._authKind, null, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS, $.proxy(this._completeIdentification, this));
   },
   _onClickKtSms: function () {
-    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
+    this._certNice.open(
+      this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, null, $.proxy(this._completeIdentification, this));
   },
   _onClickLgSms: function () {
-    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.LG);
+    this._certNice.open(
+      this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, null, $.proxy(this._completeIdentification, this));
   },
   _onClickIpin: function () {
-    this._openCertBrowser('/common/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, null, $.proxy(this._completeIdentification, this));
   },
   _onClickPublic: function () {
-    this._certPublic.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+    this._certPublic.open(this._svcInfo, this._authUrl, this._authKind, null, $.proxy(this._completeIdentification, this));
   },
-  _openCertBrowser: function (path) {
-    this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
-      .done($.proxy(this._successGetDomain, this, path));
-  },
-  _successGetDomain: function (path, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.openUrlInApp(resp.result.domain + path, 'status=1,toolbar=1');
-      // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
-    }
-  },
-  _completeIdentification: function (result, deferred, command) {
-    if ( result.code === Tw.API_CODE.CODE_00 ) {
-      this.$btNext.attr('disabled', false);
-    }
-  },
-  _onClickNext: function () {
-    this._historyService.goLoad('/main/menu/settings/biometrics/register?target=' + this._target);
+  _completeIdentification: function (resp) {
+    this._biometiricsRegister.open();
   }
 };

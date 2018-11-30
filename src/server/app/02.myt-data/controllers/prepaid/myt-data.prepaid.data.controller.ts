@@ -21,22 +21,28 @@ class MyTDataPrepaidData extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    this.getPPSInfo().subscribe((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        const result = resp.result;
-        res.render('prepaid/myt-data.prepaid.data.html', {
-          ppsInfo: this.parseData(result),
-          svcInfo: svcInfo,
-          isApp: BrowserHelper.isApp(req)
-        });
-      } else {
-        this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    if (BrowserHelper.isApp(req)) {
+      this.getPPSInfo().subscribe((resp) => {
+        if (resp.code === API_CODE.CODE_00) {
+          const result = resp.result;
+          res.render('prepaid/myt-data.prepaid.data.html', {
+            ppsInfo: this.parseData(result),
+            svcInfo: svcInfo,
+            isApp: BrowserHelper.isApp(req)
+          });
+        } else {
+          this.error.render(res, {
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
+        }
+      });
+    } else {
+      res.render('only.app.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
   private getPPSInfo(): any {

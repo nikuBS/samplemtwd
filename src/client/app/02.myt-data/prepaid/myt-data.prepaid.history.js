@@ -195,6 +195,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     history.isCanceled = history.payCd === '5' || history.payCd === '9';
     history.isRefundable = history.rfndPsblYn === 'Y';
     history.amt = Tw.FormatHelper.addComma(history.amt);
+    history.cardNm = history.cardNm || Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
 
     histories[key].push(history);
 
@@ -203,11 +204,13 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   _handleShowDetail: function(e) {
     var index = e.currentTarget.getAttribute('data-origin-idx'),
-      data = this._histories[this._currentType][index];
-    var detail = Object.assign(data, {
+      history = this._histories[this._currentType][index];
+
+    var detail = Object.assign(history, {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
-      chargeType: Tw.PREPAID_RECHARGE_TYPE[data.chargeTp],
-      date: Tw.DateHelper.getShortDate(data.chargeDt)
+      chargeType: Tw.PREPAID_RECHARGE_TYPE[history.chargeTp],
+      date: Tw.DateHelper.getShortDate(history.chargeDt),
+      payment: history.cardNm ? Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 
     this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });

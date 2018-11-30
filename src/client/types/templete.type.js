@@ -791,4 +791,16 @@ Tw.PREPAID_ICONS = {
     name: '자동',
     type: 'one'
   }
-}
+};
+
+Tw.ANDROID_STORE = [
+  {
+    'list':[
+      {'attr': 'type="button" id="google"', 'img': { src: '/img/common/icon-app-play-store.png', alt: 'google play store' }, 'value': 'Play 스토어'},
+      {'attr': 'type="button" id="one"', 'img': { src: '/img/common/icon-app-one-store.png', alt: 'one store' }, 'value':'원스토어'}
+    ],
+    'btn-floating':[
+      {'attr':'type="button"', 'txt':'닫기'}
+    ]
+  }
+];

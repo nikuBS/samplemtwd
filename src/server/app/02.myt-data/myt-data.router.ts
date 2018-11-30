@@ -13,6 +13,7 @@ import MyTDataLimit from './controllers/limit/myt-data.limit.controller';
 import MyTDataCookiz from './controllers/cookiz/myt-data.cookiz.controller';
 import MyTDataInfo from './controllers/datainfo/myt-data.datainfo.controller';
 import MyTDataFamily from './controllers/familydata/myt-data.familydata.controller';
+import MyTDataFamilyShare from './controllers/familydata/myt-data.familydata.share.controller';
 import MyTDataPrepaidHistory from './controllers/prepaid/myt-data.prepaid.history.controller';
 import MyTDataPrepaidVoice from './controllers/prepaid/myt-data.prepaid.voice.controller';
 import MyTDataPrepaidData from './controllers/prepaid/myt-data.prepaid.data.controller';
@@ -33,7 +34,8 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/coupon', controller: MyTDataRechargeCoupon });
     this.controllers.push({ url: '/recharge/coupon/use', controller: MyTDataRechargeCouponUse });
     this.controllers.push({ url: '/recharge/coupon/complete', controller: MyTDataRechargeCouponComplete });
-    this.controllers.push({ url: '/familydata(/share)?', controller: MyTDataFamily });
+    this.controllers.push({ url: '/familydata', controller: MyTDataFamily });
+    this.controllers.push({ url: '/familydata/share', controller: MyTDataFamilyShare });
     this.controllers.push({ url: '/datainfo', controller: MyTDataInfo });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
     this.controllers.push({ url: '/submain/child-hotdata', controller: MyTDataUsageChild });

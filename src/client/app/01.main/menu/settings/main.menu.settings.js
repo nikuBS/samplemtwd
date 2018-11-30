@@ -33,7 +33,7 @@ Tw.MainMenuSettings.prototype = {
       if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
         this.$container.find('#fe-bio-link').attr('href', '/main/menu/settings/biometrics?target=finger');
       } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
-        this.$container.find('#fe-bio-link').attr('href', '/main/menu/settings/common/biometrics?target=face');
+        this.$container.find('#fe-bio-link').attr('href', '/main/menu/settings/biometrics?target=face');
       } else {
         this.$container.find('#fe-bio').addClass('none');
       }
