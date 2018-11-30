@@ -16,7 +16,7 @@ import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
 
-const skipIdList: any = ['POT10', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
+const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -63,14 +63,14 @@ class MytDataSubmainController extends TwViewController {
       // TODO: 실시간 잔여량 합산 API 정상 동작 후 재확인 필요
       if ( remnant ) {
         data.remnantData = this.parseRemnantData(remnant);
-        if ( data.remnantData.data ) {
+        if ( data.remnantData.gdata ) {
           data.isDataInfo = true;
         }
         // TODO: 잔여량 합산 API 정상 동작 후 재확인 필요
-        // if ( data.remnantData.tmoa.length > 0 ) {
-        //   data.family = data.remnantData.tmoa[0];
-        //   data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
-        // }
+        if ( data.remnantData.tmoa.length > 0 ) {
+          data.family = data.remnantData.tmoa[0];
+          data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
+        }
       }
 
       if ( child && child.length > 0 ) {
@@ -201,6 +201,7 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+
   convShowData(data: any) {
     data.isUnlimit = !isFinite(data.total);
     data.remainedRatio = 100;
@@ -210,6 +211,20 @@ class MytDataSubmainController extends TwViewController {
       data.showRemained = this.convFormat(data.remained, data.unit);
       data.remainedRatio = Math.round(data.remained / data.total * 100);
     }
+  }
+
+  calculationData(tmoaremained: number, tmoatotal: number, etcremained: number, etctotal: number): any {
+    const result: any = {};
+    const total = tmoatotal + etctotal;
+    const totalRemained = tmoaremained + etcremained;
+    result.showTotal = this.convFormat(total.toString(), UNIT_E.DATA);
+    result.showRemained = this.convFormat(totalRemained.toString(), UNIT_E.DATA);
+    result.showTmoaRemained = this.convFormat(tmoaremained.toString(), UNIT_E.DATA);
+    result.showEtcmoaRemained = this.convFormat(etcremained.toString(), UNIT_E.DATA);
+    result.tmoaRemainedRatio = Math.round(tmoaremained / total * 100);
+    result.etcRemainedRatio = Math.round(etcremained / total * 100);
+    result.totalRemainedRatio = Math.round(totalRemained / total * 100);
+    return result;
   }
 
   convFormat(data: string, unit: string): string {
@@ -227,25 +242,51 @@ class MytDataSubmainController extends TwViewController {
   }
 
   parseRemnantData(remnant: any): any {
-    const DATA = remnant['data'] || [];
+    const GDATA = remnant['gnrlData'] || [];
+    const SDATA = remnant['spclData'] || [];
     const VOICE = remnant['voice'] || [];
     const SMS = remnant['sms'] || [];
+    let tmoaRemained = 0;
+    let tmoaTotal = 0;
+    let etcRemained = 0;
+    let etcTotal = 0;
     const result: any = {
-      data: [],
+      gdata: [],
+      sdata: [],
       voice: [],
       sms: [],
-      tmoa: []
+      tmoa: [],
+      totalLimit: false,
+      total: null
     };
-    if ( DATA.length > 0 ) {
-      DATA.filter((item) => {
-        this.convShowData(item);
-        if ( skipIdList.indexOf(item.skipId) === -1 ) {
-          result['data'].push(item);
-        } else {
-          if ( item.skipId === 'POT10' ) {
-            result['tmoa'].push(item);
-          }
+    if ( GDATA.length > 0 ) {
+      GDATA.filter((item) => {
+        if ( item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
+          result.totalLimit = true;
         }
+        this.convShowData(item);
+        // if ( skipIdList.indexOf(item.skipId) === -1 ) {
+        result['gdata'].push(item);
+        // } else {
+        // POT10, POT20
+        if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
+          result['tmoa'].push(item);
+          tmoaRemained += parseInt(item.remained, 10);
+          tmoaTotal += parseInt(item.total, 10);
+        } else {
+          etcRemained += parseInt(item.remained, 10);
+          etcTotal += parseInt(item.total, 10);
+        }
+        // }
+      });
+      result.total = this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
+    }
+    if ( SDATA.length > 0 ) {
+      SDATA.filter((item) => {
+        this.convShowData(item);
+        // if ( skipIdList.indexOf(item.skipId) === -1 ) {
+        result['sdata'].push(item);
+        // }
       });
     }
     if ( VOICE.length > 0 ) {

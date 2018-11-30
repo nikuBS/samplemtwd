@@ -41,7 +41,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       this.$wrapHbPaidAmtSvcCdListArea.hide();
       this._getUseBillsInfo();
       this._searchNmSvcTypeFun();
-    } else {
+    }
+    else {
       // 서비스 전체
       this._getBillsDetailInfo();
       this._svcHbDetailList(this.resData.commDataInfo.joinSvcList, this.$hbPaidAmtSvcCdListArea, this.$entryTplPaidAmtSvcCdList);
@@ -51,7 +52,9 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _onHashChange: function (hash) {
     Tw.Logger.info('[hash]', hash);
 
-    if ( !hash.raw ) { return; }
+    if ( !hash.raw ) {
+      return;
+    }
 
     switch ( hash.raw ) {
       case 'conditionChange_P' :
@@ -75,25 +78,24 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     Handlebars.registerHelper('if_contents', function (strVal, searchName) {
       // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1) {
+      if ( strVal.indexOf(searchName) > -1 ) {
         return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.CONTENTS;
       }
     });
 
     Handlebars.registerHelper('if_micro', function (strVal, searchName) {
       // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1) {
+      if ( strVal.indexOf(searchName) > -1 ) {
         return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.MICRO;
       }
     });
 
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
       // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1) {
+      if ( strVal.indexOf(searchName) > -1 ) {
         return Tw.MYT_FARE_BILL_GUIDE.THIRD_PARTY_TPL;
       }
     });
-
 
 
   },
@@ -127,11 +129,11 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="feePayBtn"]', $.proxy(this._feePayBtnEvt, this)); // 요금납부
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
 
-    this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
+    this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function () { // 콘텐츠 이용료 최초화면 바로가기
       this._goLoad('/myt-fare/bill/contents');
     }, this));
 
-    this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
+    this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function () { // 소액결재 최초화면 바로가기
       this._goLoad('/myt-fare/bill/small');
     }, this));
   },
@@ -236,7 +238,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
         _.each(arguments, function (element, index) {
           // Tw.Logger.info('[element, index, list]', element, index, list);
-          if ( childLineInfo[index].svcMgmtNum === element.result.svcMgmtNum ) {
+          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {
             childLineInfo[index].detailInfo = element.result;
           }
 
@@ -372,7 +374,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
       textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
-    } else {
+    }
+    else {
       textVal = selectSvcType.svcType + '(' + selectSvcType.dtlAddr + ')';
     }
 
