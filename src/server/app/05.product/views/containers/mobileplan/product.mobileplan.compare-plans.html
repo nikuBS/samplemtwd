@@ -1,0 +1,68 @@
+<%#
+* FileName: product.mobileplan.compare-plans.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.11.23
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page nobg tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div id="header" class="header-wrap noborder">
+            <div class="page-header">
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+
+                <!-- 컨텐츠-->
+                <%- contents%>
+                <!-- //컨텐츠-->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>요금제 가입하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+</div>
+</body>
+
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobilePlanComparePlans(JSON.parse('<%- JSON.stringify(data)%>'));
+  });
+</script>
+<% include ../../components/end.component.html %>
