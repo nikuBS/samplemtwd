@@ -176,15 +176,12 @@
                             {{/if}}
                         </ul>
                     </div>
-                    {{#if isDowngradePremTermMsg}}
+                    {{#if downgrade.guidMsgCtt}}
                         <div class="cont-noti pt20">
                             {{#if downgrade.isHtml}}
                                 <span class="type2">{{downgrade.guidMsgCtt}}</span>
                             {{else}}
                                 {{{downgrade.guidMsgCtt}}}
-                            {{/if}}
-                            {{#if isPremTermMsg}}
-                                <span class="type2 mt10">{{{premTermMsg}}}</span>
                             {{/if}}
                         </div>
                     {{/if}}
@@ -250,23 +247,18 @@
                     <div class="cont-box">
                         <div class="cont-txt-type01">
                             <div class="announcement-box">
-                                <div class="announcement-txt fs-13">요금제의 기본제공 음성/문자/데이터 혜택은 월 중 요금제 변경 시 실제 이용기간을 기준으로
-                                    일할계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.
-                                </div>
+                                <div class="announcement-txt fs-13">요금제의 기본제공 음성/문자/데이터 혜택은 월 중 요금제 변경 시 실제 이용기간을 기준으로 일할계산하며 초과 사용량에 대해서는 다음달 청구요금에 반영됩니다.</div>
                             </div>
                             <h3 class="tit mt30">초과 과금 예시</h3>
                             <div class="announcement-box mt10">
-                                <div class="announcement-txt c-black">band 데이터 1.2G 사용 고객이 총 900MB의 데이터 사용 후 16일에 요금제 변경
-                                    시(30일 기준)
-                                </div>
+                                <div class="announcement-txt c-black">band 데이터 1.2G 사용 고객이 총 900MB의 데이터 사용 후 16일에 요금제 변경 시(30일 기준)</div>
                             </div>
                             <ul class="round-dot-list mt12">
-                                <li>변경 전 사용일 (1~15일) 기준 일할 제공량 : 약 600MB <br>(= 1.2GB X 15일/30일)</li>
-                                <li>초과사용량 : 300MB <br>
-                                    (= 사용량 900MB - 일할 제공량 600MB)<br>
-                                    → 초과 사용한 데이터(약 300MB)에 대해 종량 요율<br>
-                                    (22.528원/MB)로 과금 (단, 최대 19,800원)
-                                </li>
+                                <li>변경 전 사용일 (1~15일) 기준 일할 제공량 : 약 600MB <br/>(= 1.2GB X 15일/30일)</li>
+                                <li>초과사용량 : 300MB <br/>
+                                    (= 사용량 900MB - 일할 제공량 600MB)<br/>
+                                    → 초과 사용한 데이터(약 300MB)에 대해 종량 요율<br/>
+                                    (22.528원/MB)로 과금 (단, 최대 19,800원)</li>
                             </ul>
                         </div>
                     </div>
@@ -305,50 +297,53 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="할부지원금 차액 동의 (필수)"
+                                                           title="지원금 차액 정산금 동의 (필수)"
                                                            aria-labelledby="aria-comp-checkbox-install"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-install">
                                                         <div class="layout-text">
-                                                            <span class="mtext">할부지원금 차액 동의 (필수)</span>
+                                                            <span class="mtext">지원금 차액 정산금 동의 (필수)</span>
+                                                            <span class="stext mt10">요금제를 변경하실 경우 지원금 차액이 다음달 청구요금에 반영(지원금의 반환 혹은 추가지원)되어 정산됩니다.</span>
                                                             <div class="basic-list">
                                                                 <ul>
                                                                     <li>
                                                                         <div class="inner-top">
-                                                                            <span class="title">실 지원금액 <span
-                                                                                class="sub-tx">(익월 청구 예정금액)</span></span>
+                                                                            <span class="title">지원금 차액 청구 예상금액 <span class="sub-tx">(일할계산)</span></span>
                                                                             <span class="tx-cont">
-                                                                                {{#if installmentAgreement.isNumberPenAmt}}
-                                                                                    <span class="tx-bold vbl">{{installmentAgreement.penAmt}}</span>원
-                                                                                {{else}}
-                                                                                    <span class="tx-bold vbl">{{installmentAgreement.penAmt}}</span>
-                                                                                {{/if}}
+                                                                                <span class="tx-bold vbl">{{installmentAgreement.gapDcCd}}{{installmentAgreement.gapDcAmt}}</span>원
                                                                             </span>
                                                                         </div>
                                                                         <div class="inner-row top-line">
                                                                             <ul>
                                                                                 <li>
-                                                                                    <span class="title">현재 할부지원금</span>
+                                                                                    <span class="title">현재 지원금</span>
                                                                                     <span class="tx-cont">{{installmentAgreement.frDcAmt}}</span>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <span class="title">변경 후 할부지원금</span>
+                                                                                    <span class="title">변경 후 지원금</span>
                                                                                     <span class="tx-cont">{{installmentAgreement.toDcAmt}}</span>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <span class="title">할부지원금 차액</span>
+                                                                                    <span class="title">지원금 차액</span>
                                                                                     <span class="tx-cont">{{installmentAgreement.gapDcCd}}{{installmentAgreement.gapDcAmt}}</span>
                                                                                 </li>
                                                                                 <li>
                                                                                     <span class="title">사용기간/약정기간</span>
-                                                                                    <span class="tx-cont">{{installmentAgreement.agrmtUseCnt}}개월/{{installmentAgreement.agrmtDayCnt}}개월</span>
+                                                                                    <span class="tx-cont">{{installmentAgreement.agrmtUseCnt}}일/{{installmentAgreement.agrmtDayCnt}}일</span>
                                                                                 </li>
                                                                             </ul>
                                                                         </div>
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                            <span class="stext mt20">고객님의 약정잔여기간(약정기간-사용기간)을 고려하여, 보조금 차액 정산 부과액 또는 환급액이 결정됩니다.</span>
+                                                            <div class="cont-noti mt20">
+                                                                <ul class="bullet-type">
+                                                                    <li>고객님의 약정잔여기간(약정기간-사용기간)을 고려하여, 보조금 차액 정산 부과액 또는 환급액이 결정됩니다.</li>
+                                                                    {{#if installmentAgreement.isPremTerm}}
+                                                                    <li>{{{installmentAgreement.premTermMsg}}}</li>
+                                                                    {{/if}}
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -487,9 +482,41 @@
                     <ul class="noti-list">
                         {{#tipList}}
                             <li>
-                                <button type="button" class="tip-view" id="{{this}}" aria-haspopup="true">TIP</button>
+                                {{text}} <button type="button" class="tip-view" id="{{code}}" aria-haspopup="true">TIP</button>
                             </li>
                         {{/tipList}}
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            {{/if}}
+            {{#if preinfo.joinNoticeList}}
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        {{#preinfo.joinNoticeList}}
+                            <li>
+                                {{{noticeTxt}}}
+                            </li>
+                        {{/preinfo.joinNoticeList}}
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            {{/if}}
+            {{#if preinfo.termNoticeList}}
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        {{#preinfo.termNoticeList}}
+                            <li>
+                                {{{noticeTxt}}}
+                            </li>
+                        {{/preinfo.termNoticeList}}
                     </ul>
                 </div>
                 <!--// .cont-box -->

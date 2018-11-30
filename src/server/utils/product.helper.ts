@@ -152,7 +152,8 @@ class ProductHelper {
     const isNumberPenAmt = !isNaN(Number(installmentAgreement.penAmt)),
       isNumberFrDcAmt = !isNaN(Number(installmentAgreement.frDcAmt)),
       isNumberToDcAmt = !isNaN(Number(installmentAgreement.toDcAmt)),
-      isNumberGapDcAmt = !isNaN(Number(installmentAgreement.gapDcAmt));
+      isNumberGapDcAmt = !isNaN(Number(installmentAgreement.gapDcAmt)),
+      isPremTerm = installmentAgreement.premTermYn === 'Y';
 
     return Object.assign(installmentAgreement, {
       isNumberPenAmt: isNumberPenAmt,
@@ -163,13 +164,8 @@ class ProductHelper {
       toDcAmt: isNumberToDcAmt ? FormatHelper.addComma(installmentAgreement.toDcAmt) + UNIT['110'] : installmentAgreement.toDcAmt,
       isNumberGapDcAmt: isNumberGapDcAmt,
       gapDcAmt: isNumberGapDcAmt ? FormatHelper.addComma(installmentAgreement.gapDcAmt) + UNIT['110'] : installmentAgreement.gapDcAmt,
-      agrmtDayCnt: ProductHelper.calcAgrmtMonth(installmentAgreement.agrmtDayCnt),
-      agrmtUseCnt: ProductHelper.calcAgrmtMonth(installmentAgreement.agrmtUseCnt)
+      isPremTerm: isPremTerm
     });
-  }
-
-  static calcAgrmtMonth(days): any {
-    return days / 30.4;
   }
 
   static convAdditionsJoinTermInfo(_joinTermInfo): any {
