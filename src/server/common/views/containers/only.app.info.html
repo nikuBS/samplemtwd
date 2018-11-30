@@ -69,4 +69,11 @@
     <%- include('../components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    $('.fe-tworld, .wrap').on('click', function () {
+      new Tw.LoadTworldApp();
+    });
+  });
+</script>
 <% include ../components/end.component.html %>

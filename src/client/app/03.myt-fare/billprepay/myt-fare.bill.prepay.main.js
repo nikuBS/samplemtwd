@@ -23,6 +23,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
+    this._isAndroid = Tw.BrowserHelper.isAndroid();
 
     this._monthAmountList = [];
     this._dayAmountList = [];
@@ -112,6 +113,16 @@ Tw.MyTFareBillPrepayMain.prototype = {
     new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn);
   },
   _goAppInfo: function () {
-    
+    var isAndroid = Tw.BrowserHelper.isAndroid();
+    this._popupService.open({
+      'hbs': 'open_app_info',
+      'isAndroid': isAndroid
+    }, $.proxy(this._onOpenTworld, this));
+  },
+  _onOpenTworld: function ($layer) {
+    $layer.on('click', '.fe-tworld', $.proxy(this._goTworld, this));
+  },
+  _goTworld: function () {
+    new Tw.LoadTworldApp(this.$container);
   }
 };

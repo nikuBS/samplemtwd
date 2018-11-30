@@ -22,28 +22,35 @@ class MyTDataPrepaidDataAuto extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    Observable.combineLatest(
-      this.getPPSInfo(),
-      this.getAutoInfo()
-    ).subscribe(([ppsInfo, autoInfo]) => {
-      if (ppsInfo.code === API_CODE.CODE_00 && autoInfo.code === API_CODE.CODE_00) {
-        const ppsResult = ppsInfo.result;
-        const autoResult = autoInfo.result;
 
-        res.render('prepaid/myt-data.prepaid.data-auto.html', {
-          ppsInfo: this.parseData(ppsResult),
-          autoInfo: this.parseAuto(autoResult),
-          svcInfo: svcInfo,
-          isApp: BrowserHelper.isApp(req)
-        });
-      } else {
-        this.error.render(res, {
-          code: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.code : ppsInfo.code,
-          msg: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.msg : ppsInfo.msg,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    if (BrowserHelper.isApp(req)) {
+      Observable.combineLatest(
+        this.getPPSInfo(),
+        this.getAutoInfo()
+      ).subscribe(([ppsInfo, autoInfo]) => {
+        if (ppsInfo.code === API_CODE.CODE_00 && autoInfo.code === API_CODE.CODE_00) {
+          const ppsResult = ppsInfo.result;
+          const autoResult = autoInfo.result;
+
+          res.render('prepaid/myt-data.prepaid.data-auto.html', {
+            ppsInfo: this.parseData(ppsResult),
+            autoInfo: this.parseAuto(autoResult),
+            svcInfo: svcInfo,
+            isApp: BrowserHelper.isApp(req)
+          });
+        } else {
+          this.error.render(res, {
+            code: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.code : ppsInfo.code,
+            msg: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.msg : ppsInfo.msg,
+            svcInfo: svcInfo
+          });
+        }
+      });
+    } else {
+      res.render('only.app.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
   private getPPSInfo(): Observable<any> {
