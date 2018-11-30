@@ -1,0 +1,37 @@
+<%#
+* FileName: product.roaming.planadd.component.html
+* Author: Eunjung Jung
+* Date: 2018.11.21
+%>
+
+<script id="fe-rmtmpl-add" type="text/x-handlebars-template">
+    {{#each items}}
+        <li class="type01">
+            <a href="/product/mobileplan/callplan/{{prodId}}" class="product-infolink">
+                <div class="products-titleinfo">
+                    <h5 class="title">{{prodNm}}</h5>
+                      <p class="info"><span class="money">{{basFeeAmt}}</span></p>
+                </div>
+                {{#if filters}}
+                <div class="taglist-wrap">
+                    {{#each filters}}
+                        <button class="tag-text">#{{prodFltNm}}</button>
+                    {{/each}}
+                </div>
+                {{/if}}
+                <p class="products-detailinfo">{{prodSmryDesc}}</p>
+            </a>
+        </li>
+    {{/each}}
+</script>
+
+<script id="fe-rmtmpl-addfilter" type="text/x-handlebars-template">
+    {{#if filters}}
+    {{#each filters}}
+    #<span class="vbl tx-bold">{{this}}</span>
+    {{/each}}
+    {{#if leftCount}} 외 {{leftCount}}건 {{/if}}
+    {{else}}
+    #<span class="vbl tx-bold">전체 요금제</span>
+    {{/if}}
+</script>
