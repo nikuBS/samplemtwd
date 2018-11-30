@@ -108,8 +108,8 @@ export enum MYT_FARE_PAYMENT_CODE {
 export enum MYT_FARE_POINT_PAYMENT_STATUS {
   CLOSE = '납부해지',
   CLOSE2 = '해지',
-  OPEN = '납부신청', 
-  OPEN2 = '신청', 
+  OPEN = '납부신청',
+  OPEN2 = '신청',
   CHANGE = '납부변경',
   CHANGE2 = '변경',
   COMPLETE = '납부완료',
@@ -293,7 +293,7 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING = {
   '02': 'CARD',
   '10': 'POINT',
   '11': 'POINT',
-  '41': 'BANK',
+  '41': 'BANK'
 };
 
 export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
@@ -410,3 +410,15 @@ export enum AUTH_CERTIFICATION_KIND {
   R = 'R', // 상품
   F = 'F' // 미환급금
 }
+
+export const PREPAID_PAYMENT_TYPE = {
+  '01': '현금',
+  '02': '신용카드',
+  '03': '카드상품권',
+  '08': '통화상품권',
+  '10': 'OCB포인트',
+  '11': 'T-POINT',
+  '41': '은행이체',
+  '51': '후납',
+  '99': '선불카드(PPS카드)'
+};
