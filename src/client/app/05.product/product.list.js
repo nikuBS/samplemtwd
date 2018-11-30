@@ -38,14 +38,15 @@ Tw.ProductList.prototype = {
   },
 
   bindEvent: function() {
-    this.$container.on('click', '.bt-more > button', $.proxy(this._handleLoadMore, this));
+    this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.fe-select-order', $.proxy(this._openOrderPopup, this));
     this.$container.on('click', '.fe-select-filter', $.proxy(this._handleClickChangeFilters, this));
   },
 
   cachedElement: function() {
-    this.$moreBtn = this.$container.find('.bt-more > button');
-    this.$list = this.$container.find('ul.recommendedrate-list');
+    this.$total = this.$container.find('.number-text');
+    this.$moreBtn = this.$container.find('.extraservice-more > button');
+    this.$list = this.$container.find('ul.extraservice-list');
   },
 
   _handleLoadMore: function() {
@@ -270,6 +271,10 @@ Tw.ProductList.prototype = {
       delete this._params.searchLastProdId;
       delete this._leftCount;
       this.$list.empty();
+
+      if (this.$total.length > 0) {
+        this.$total.text(resp.result.productCount);
+      }
 
       if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
         var filters = resp.result.searchOption.searchFltIds;

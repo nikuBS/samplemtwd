@@ -25,60 +25,62 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <!-- 사용중인 상품 -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- my -->
                 <% if (svcInfo && additionData.myAdditions) { %>
-                <div class="cont-box noborder gaps-style01">
-                    <div class="submain-myfeeproducts-wrap">
-                        <!-- <a href="#" class="submain-myfeeproducts">
-                          <h3 class="title">사용중인 상품</h3>
-                          <p class="text">band 데이터 퍼펙트S</p>
-                      </a> -->
-                        <a href="/myt-join/myplanadd" class="submain-myfeeproducts">
-                            <h3 class="title">사용중인 상품</h3>
-                            <p class="text"><span class="tx-bold"><%= additionData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= additionData.myAdditions.addProdCnt %>건</p>
+				<div class="cont-box nogaps">
+                    <div class="calling-plan">
+                        <a class="wrap-link" href="/myt-join/myplanadd">
+                            <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                            <span class="stit"><%= additionData.myAdditions.recentlyJoinsProdNm %> 외 <%= additionData.myAdditions.addProdCnt %>건</span>
                         </a>
                     </div>
                 </div>
                 <% } %>
-                <!--//사용중인 상품 -->
+                <!--//my -->
 
-                <div class="ti-caption-gray">
-                    <button class="bt-select fe-select-order" title="정렬 선택" aria-haspopup="true">추천순</button>
-                    <div class="num">
-                        <button class="bt-select fe-select-filter" title="조건 선택" aria-haspopup="true">
-                            <% const searchOption = additionData.additions.searchOption; %>
-                            <% const filters = searchOption && searchOption.searchFltIds %>
-                            <% if (filters) { %>
-                                <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
-                                    <% if (i > 0) { %>,<% } %>
-                                    #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
+                <!-- 필터옵션영역 -->
+				<div class="cont-box bgnone noborder gaps-style03">
+                    <div class="contheader-box">
+                        <div class="totalfilter-wrap">
+                            <span class="total">총 <span class="number-text"><%= additionData.additions.productCount %></span>개</span>
+                            <!-- <button type="button" class="filter-btn">필터</button> -->
+                            <button type="button" class="filter-btn date-in fe-select-filter">
+                                <% const searchOption = additionData.additions.searchOption, filters = searchOption && searchOption.searchFltIds;
+                                if (filters) {
+                                    for (let i = 0; i < Math.min(2, filters.length); i++) {
+                                        if (i > 0) { %>,<% } %>
+                                        <span class="datebox"><%= filters[i].prodFltNm %></span>
+                                    <% } 
+                                    if (filters.length > 2) { %>
+                                        <span class="text">외</span>
+                                        <span class="number"><%= filters.length - 2 %></span>
+                                        <span class="text">건</span> <% }
+                                } else if (searchOption && searchOption.searchProdTagNm) { %>
+                                    <span class="datebox"><%= searchOption.searchProdTagNm %></span>
+                                <% } else { %>
+                                    <span class="datebox">전체 부가서비스</span>
                                 <% } %>
-                                <% if (filters.length > 2) { %> 외<%= filters.length - 2 %>건 <% } %>
-                            <% } else if (searchOption && searchOption.searchProdTagNm) { %>
-                                #<span class="vbl tx-bold"><%= searchOption.searchProdTagNm %></span>
-                            <% } else { %>
-                                #<span class="vbl tx-bold">전체 부가서비스</span>
-                            <% } %>
-                        </button>
+                            </button>
+                        </div>
+                        <div class="filter-select">
+                            <button type="button" class="filterselect-btn fe-select-order">최신순</button>
+                        </div>
                     </div>
                 </div>
+                <!-- //필터옵션영역 -->
 
-                <!-- 이런 요금제는 어떠세요? -->
-                <% const additions = additionData.additions.products; %>
-                <% if (additions) { %>
-                <div class="cont-box nogaps-hoz">
-                    <ul class="recommendedrate-list">
-                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
-                        <% for (let i = 0; i < additions.length; i++) { %>
-                        <% const addition = additions[i]; %>
-                        <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
-                        <li class="type01">
-                            <a href="/product/callplan/<%= addition.prodId %>" class="product-infolink">
-                                <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="명칭"></div>
+                <!-- 부가서비스 목록 -->
+                <% const additions = additionData.additions.products;
+                if (additions) { %>
+                <div class="cont-box bgnone nogaps-hoz">
+                    <ul class="extraservice-list">
+                        <% additions.map(addition => { %>
+                        <li class="category-type">
+                            <a class="link" href="/product/callplan/<%= addition.prodId %>">
                                 <div class="products-titleinfo">
-                                    <h5 class="title">
-                                        <%= addition.prodNm %>
-                                    </h5>
+                                    <p class="title"><%= addition.prodNm %></p>
                                     <% if (addition.basFeeAmt.isNaN) { %>
                                         <p class="info"><span class="money"><%= addition.basFeeAmt.value %></span></p>
                                     <% } else { %>
@@ -87,75 +89,64 @@
                                 </div>
                                 <% if (addition.filters && addition.filters.length > 0) { %>
                                 <div class="taglist-wrap">
-                                    <% for (let j = 0; j < addition.filters.length; j++) { %>
-                                    <span class="tag-text">#<%= addition.filters[j].prodFltNm %></span>
-                                    <% } %>
+                                    <% addition.filters.map(filter => { %>
+                                        <span class="tag-text">#<%= filter.prodFltNm %></span>
+                                    <% }); %>
                                 </div>
-                                <% } %> 
-                                <% if (addition.prodSmryDesc) { %>
-                                    <p class="products-detailinfo"><%= addition.prodSmryDesc %></p>
                                 <% } %>
+                                <p class="products-detailinfo"><%= addition.prodSmryDesc || ''%></p>
                             </a>
                         </li>
-                        <% } %>
+                        <% }); %>
                     </ul>
-                    <% const leftCount = additionData.additions.productCount - additions.length; %>
-                    <% if (leftCount > 0) { %>
-                    <div class="bt-more gap-style">
-                        <button data-last-product="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">더보기(<%= leftCount %>)</button>
+                    <% const leftCount = additionData.additions.productCount - additions.length;
+                    if (leftCount > 0) { %>
+                    <div class="extraservice-more">
+                        <button class="btn" data-last-product="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">더보기(<%= leftCount %>)</button>
                     </div>
                     <% } %>
                 </div>
                 <% } %>
-                <!-- //이런 요금제는 어떠세요? -->
-                <hr class="cont-sp type1" aria-hidden="true" />
-                <!-- cont-box -->
-                <div class="cont-box">
-                    <h3>다른상품 더보기</h3>
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide">
-                                <ul class="horizontal-list add-prod">
-                                    <li>
-                                        <div>
-                                            <a href="/product/mobileplan">
-                                                <span class="ico type1"></span>
-                                                <span>모바일<br />요금제</span>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <a href="/product/wireplan">
-                                                <span class="ico type4"></span>
-                                                <span>인터넷/전화/IPTV</span>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button>
-                                                <span class="ico type3"></span>
-                                                <span>T 로밍</span><!--TODO: 링크 이동 추가 필요(ID: TR)-->
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <a href="/benefit/submain">
-                                                <span class="ico type2"></span>
-                                                <span>혜택&middot;할인</span>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- .widget -->
+
+                <!-- 다른 페이지를 찾고 계신가요? -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+                        <li>
+                            <a href="/product/mobileplan">
+                                <i class="icon-price-plan-40"><span class="blind">price plan</span></i>
+                                요금제
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/product/wireplan">
+                                <i class="icon-internet-40"><span class="blind">internet</span></i>
+                                인터넷 · 전화 ·  IPTV
+                            </a>
+                        </li>
+                        <li>
+                            <!-- TODO: 화면 링크 이동 필요: TR -->
+                            <button>
+                                <i class="icon-roaming-40"><span class="blind">my</span></i>
+                                T로밍
+                            </button>
+                        </li>
+                        <li>
+                            <a href="/benefit/submain">
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>
+                                혜택 &middot; 할인 &gt; 요금 할인
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/benefit/submain">
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>
+                                혜택 &middot; 할인 &gt; 결합 할인  
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <!-- // cont-box -->
+                <!-- //다른 페이지를 찾고 계신가요? -->
+
             </div>
         </div>
         <!--// #contents -->
