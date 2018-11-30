@@ -1,0 +1,78 @@
+<div class="popup-page tw-popup">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>충전 상세 내역</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="details-list-box">
+                <ul class="detail-info-list">
+                    <li>
+                        <dl>
+                            <dt>충전 유형</dt>
+                            <dd><p class="value">{{detail.typeName}} 충전</p></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>충전 일자</dt>
+                            <dd><p class="value">{{detail.date}}</p></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>충전 금액</dt>
+                            <dd><p class="value">{{detail.amt}}원</p></dd>
+                        </dl>
+                    </li>
+                    {{#if data}}
+                    <li>
+                        <dl>
+                            <dt>충전 데이터</dt>
+                            <dd><p class="value">{{detail.data}}</p></dd>
+                        </dl>
+                    </li>
+                    {{/if}}
+                    <li>
+                        <dl>
+                            <dt>카드사명</dt>
+                            <dd><p class="value">{{detail.cardNm}}</p></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>충전유형</dt>
+                            <dd><p class="value">{{detail.chargeType}}</p></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>처리 영업장</dt>
+                            <dd><p class="value">{{detail.saleOrgNm}}</p></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>구분</dt>
+                            <dd><p class="value">{{detail.payNm}}</p></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step tw-popup-closeBtn">취소</button>
+    <!--// .popup-closeBtn -->
+</div>

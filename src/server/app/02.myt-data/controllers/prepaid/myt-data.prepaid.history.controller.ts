@@ -54,7 +54,8 @@ export default class MyTDataPrepaidHistory extends TwViewController {
 
       return {
         histories: resp.result.history.reduce(this.sortHistory, {}),
-        count: resp.result.totCnt
+        count: resp.result.totCnt,
+        origin: resp.result.history
       };
     });
   }
@@ -68,12 +69,13 @@ export default class MyTDataPrepaidHistory extends TwViewController {
 
       return {
         histories: resp.result.history.reduce(this.sortHistory, {}),
-        count: resp.result.totCnt
+        count: resp.result.totCnt,
+        origin: resp.result.history
       };
     });
   }
 
-  private sortHistory = (histories, history) => {
+  private sortHistory = (histories, history, idx) => {
     const key = history.chargeDt;
     if (!histories[key]) {
       histories[key] = [];
@@ -83,8 +85,10 @@ export default class MyTDataPrepaidHistory extends TwViewController {
 
     histories[key].push({
       ...history,
+      idx,
       date: DateHelper.getShortDateNoYear(key),
-      amt: FormatHelper.addComma(history.amt)
+      amt: FormatHelper.addComma(history.amt),
+      isCanceled: history.payCd === '5' || history.payCd === '9'
     });
     return histories;
   }
