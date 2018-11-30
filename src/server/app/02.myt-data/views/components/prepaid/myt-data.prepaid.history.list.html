@@ -17,11 +17,7 @@
                 <span class="stext"><span class="gray-tx">{{cardNm}}</span><span class="black-tx">{{payNm}}</span></span>
             </p>
             <div class="list-data">
-                {{#if isCanceled}}
-                    <button class="bt-link data-tx gray-tx">{{amt}}원</button>
-                {{else}}
-                    <button class="bt-link data-tx blue-tx">{{amt}}원</button>
-                {{/if}}
+                <button class="bt-link data-tx {{#if isCanceled}}gray-tx{{else}}blue-tx{{/if}}" data-origin-idx={{idx}}>{{amt}}원</button>
                 {{#if isRefundable}}<button class="bt-link-tx underline red">취소</button>{{/if}}
             </div>
         </li>

@@ -102,6 +102,15 @@
     <!--// .popup-closeBtn -->
 </script>
 
+<script type="text/x-handlebars-template" id="tpl_recently_gift">
+    {{#each contactList}}
+    <li data-opdtm="{{opDtm}}">
+        <button class="tel-select">{{svcNum}}</button>
+        <button class="del-bt">삭제</button>
+    </li>
+    {{/each}}
+</script>
+
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

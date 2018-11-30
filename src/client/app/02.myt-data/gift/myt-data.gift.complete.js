@@ -35,8 +35,8 @@ Tw.MyTDataGiftComplete.prototype = {
   },
 
   _setReceiverInfo: function () {
-    if ( this.paramData.custName ) {
-      this.$name.text(this.paramData.custName);
+    if ( this.paramData.custNm ) {
+      this.$name.text(this.paramData.custNm);
     }
 
     if ( this.paramData.befrSvcNum ) {

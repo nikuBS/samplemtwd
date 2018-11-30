@@ -65,7 +65,7 @@ Tw.MyTJoinSubMain.prototype = {
 
     if ( this.data.type !== 1 ) {
       if ( this.data.otherLines.length > 0 ) {
-        this.$otherLines = this.$container.find('[data-id=other-lines] li');
+        this.$otherLines = this.$container.find('[data-id=other-lines]');
         if ( this.data.otherLines.length > 20 ) {
           this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
           this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.JOIN_SUBMAIN.MORE_LINE_TEMP);
@@ -241,13 +241,15 @@ Tw.MyTJoinSubMain.prototype = {
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
         name    = $target.attr('data-name');
-    // 기준회선변경
-    var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
-    var selectLineInfo = number + ' ' + name;
-    this.changeLineMgmtNum = mgmtNum;
-    this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-      defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+    if ( mgmtNum ) {
+      // 기준회선변경
+      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+      var selectLineInfo = number + ' ' + name;
+      this.changeLineMgmtNum = mgmtNum;
+      this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
+        defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
+        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+    }
   },
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우

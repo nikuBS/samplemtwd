@@ -36,7 +36,7 @@ export default class ProductRoaming extends TwViewController {
         });
     }
 
-      private isLogin(svcInfo: any): boolean {
+    private isLogin(svcInfo: any): boolean {
         if (FormatHelper.isEmpty(svcInfo)) {
             return false;
         }

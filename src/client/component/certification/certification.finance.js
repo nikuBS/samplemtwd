@@ -14,7 +14,6 @@ Tw.CertificationFinance = function () {
   this._svcInfo = null;
   this._authUrl = null;
   this._command = null;
-  this._deferred = null;
   this._callback = null;
   this._authKind = null;
   this._resultUrl = null;
@@ -27,11 +26,10 @@ Tw.CertificationFinance = function () {
 
 Tw.CertificationFinance.prototype = {
 
-  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
+  open: function (svcInfo, authUrl, authKind, command, callback) {
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._command = command;
-    this._deferred = deferred;
     this._callback = callback;
     this._authKind = authKind;
     this._resultUrl = '/common/cert/complete';
@@ -55,16 +53,16 @@ Tw.CertificationFinance.prototype = {
   },
   _onClickSkSms: function () {
     this._certSk.open(
-      this._svcInfo, this._authUrl, this._command, this._deferred, $.proxy(this._completeIdentification, this), this._authKind, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
+      this._svcInfo, this._authUrl,  this._authKind, this._command,  Tw.AUTH_CERTIFICATION_METHOD.SK_SMS, $.proxy(this._completeIdentification, this));
   },
   _onClickKtSms: function () {
-    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.KT);
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, this._command, $.proxy(this._completeIdentification, this));
   },
   _onClickLgSms: function () {
-    this._openCertBrowser('/common/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + Tw.AUTH_CERTIFICATION_NICE.LG);
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, this._command, $.proxy(this._completeIdentification, this));
   },
   _onClickIpin: function () {
-    this._openCertBrowser('/common/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, null, this._command, $.proxy(this._completeIdentification, this));
   },
   _onClickBio: function () {
   },
@@ -78,10 +76,13 @@ Tw.CertificationFinance.prototype = {
       // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
   },
-  _completeIdentification: function (result, deferred, command) {
+  _completeIdentification: function (result) {
     if ( result.code === Tw.API_CODE.CODE_00 ) {
       this._isCompleteIden = true;
       this._popupService.close();
+    } else {
+      // TODO: 인증 에러
+      Tw.Error(result.code, result.msg).pop();
     }
   },
   _openPublic: function () {
@@ -100,7 +101,7 @@ Tw.CertificationFinance.prototype = {
   },
   _onClosePublicPopup: function () {
     if ( this._isCheckTerm ) {
-      this._certPublic.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, this._authKind);
+      this._certPublic.open(this._svcInfo, this._authUrl, this._authKind, this._command, this._callback);
     }
   },
   _onChangePrivacy: function () {

@@ -11,23 +11,21 @@ Tw.CertificationPublic = function () {
   this._authUrl = null;
   this._command = null;
   this._callback = null;
-  this._deferred = null;
   this._authKind = null;
 };
 
 
 Tw.CertificationPublic.prototype = {
-  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
+  open: function (svcInfo, authUrl, authKind, command, callback) {
     this._authUrl = authUrl;
     this._command = command;
     this._callback = callback;
-    this._deferred = deferred;
     this._authKind = authKind;
-    this._requestAppMessage(authUrl, command);
+    this._requestAppMessage(authUrl);
   },
-  _requestAppMessage: function (authUrl, command) {
+  _requestAppMessage: function (authUrl) {
     this._apiService.request(Tw.API_CMD.BFF_01_0035, {
-      authUrl: command.command.method + '|' + authUrl
+      authUrl: authUrl
     }).done($.proxy(this._successAppMessage, this));
   },
   _successAppMessage: function (resp) {
@@ -40,7 +38,7 @@ Tw.CertificationPublic.prototype = {
   _openPublicCert: function (message) {
     this._nativeService.send(Tw.NTV_CMD.AUTH_CERT, {
       message: message,
-      authUrl: this._command.command.method + '|' + this._authUrl
+      authUrl: this._authUrl
     }, $.proxy(this._onPublicCert, this));
   },
   _onPublicCert: function (resp) {
@@ -63,7 +61,7 @@ Tw.CertificationPublic.prototype = {
     return result.custName + ',' + result.birthDate;
   },
   _needAccountInfo: function (path) {
-    if ( path === '/core-bill/v1/bill-pay/settle-pay-bank' ||
+    if ( path === '/bypass/core-bill/v1/bill-pay/settle-pay-bank' ||
       path === '/bypass/core-bill/v1/bill-pay/settle-pay-card' ) {
       return true;
     }
@@ -72,12 +70,12 @@ Tw.CertificationPublic.prototype = {
   _setComplete: function () {
     // TODO: 상품인경우 prodAuthKey 추가
     this._apiService.request(Tw.API_CMD.BFF_01_0026, {
-      authUrl: this._command.command.method + '|' + this._authUrl,
+      authUrl: this._authUrl,
       authKind: this._authKind,
       prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
     }).done($.proxy(this._successComplete, this));
   },
   _successComplete: function (resp) {
-    this._callback(resp, this._deferred, this._command);
+    this._callback(resp);
   }
 };

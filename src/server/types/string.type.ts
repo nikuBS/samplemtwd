@@ -302,7 +302,7 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
 export const MYT_FARE_PAYMENT_ERROR = {
   DEFAULT: '청구된 요금이 없습니다.',
   REP_SVC_N: '대표청구번호가 아닙니다.',
-  COM_CODE_B: '사업자가 브로드밴드 입니다.'
+  COM_CODE_B: ' SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다. <br> 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주시기 바랍니다.'
 };
 
 export const MYT_FARE_POINT_MSG = {
@@ -511,3 +511,22 @@ export const TERM_STRING = {
 };
 
 export const ETC_CENTER = '기타';
+
+export const PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
+  MY_DATA_TXT: '나의 데이터',
+  USAGE_TXT: '사용량',
+  MONTH_TXT: '{0}개월',
+  RECENT_AVG_TXT: '최근 {0} 평균',
+  RECENT_MAX_TXT: '최근 {0} 최대',
+};
+
+export const ROAMING_RECEIVE_CENTER = {
+  '0': '인천공항 1터미널 3층 로밍 센터(E-F 카운터)',
+  '1': '인천공항 2터미널 3층 로밍 센터(D-E 카운터)',
+  '2': '인천공항 1터미널 3층 로밍 센터(G-H 카운터)',
+  '3': '김포공항 1층 로밍 센터',
+  '4': '제주공항 국제선 1층 로밍 센터',
+  '5': '김해공항 3층 로밍 센터',
+  '6': '대구공항 2층 로밍 센터',
+  '7': '대구 SKT 황금점 매장'
+};

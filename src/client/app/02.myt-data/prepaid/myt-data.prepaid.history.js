@@ -1,7 +1,9 @@
-Tw.MyTDataPrepaidHistory = function(rootEl) {
+Tw.MyTDataPrepaidHistory = function(rootEl, histories) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+
+  this._histories = histories;
 
   this._cachedElement();
   this._bindEvent();
@@ -44,6 +46,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   _bindEvent: function() {
     this.$selectBtn.on('click', $.proxy(this._openChangeHistories, this));
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
+    this.$container.on('click', '.data-tx', $.proxy(this._handleShowDetail, this));
   },
 
   _cachedElement: function() {
@@ -121,13 +124,16 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _handleSuccessLoadMore: function(resp) {
+    var type = this._currentType;
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._pageCount[this._currentType]--;
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var histories = _.reduce(resp.result.history, this._sortHistory, {});
-    this._leftCount[this._currentType] -= resp.result.history.length || 0;
+    var histories = _.reduce(resp.result.history, this._sortHistory, { idx: this._histories[type].length });
+    delete histories.idx;
+    this._histories[type] = this._histories[type].concat(resp.result.history);
+    this._leftCount[type] -= resp.result.history.length || 0;
 
     this._renderHistories(histories);
   },
@@ -149,6 +155,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     for (; idx >= 0; idx--) {
       key = keys[idx];
+
       itemYear = keys[idx].substring(0, 4);
       if (this._displayedYear[type] !== itemYear) {
         contents += this._yearTmpl({ year: itemYear, type: type });
@@ -175,12 +182,14 @@ Tw.MyTDataPrepaidHistory.prototype = {
     }
   },
 
-  _sortHistory: function(histories, history) {
+  _sortHistory: function(histories, history, idx) {
     var key = history.chargeDt;
 
     if (!histories[key]) {
       histories[key] = [];
     }
+
+    history.idx = histories.idx + idx;
     history.date = Tw.DateHelper.getShortDateNoYear(key);
     history.icon = history.chargeTp === '1' ? Tw.PREPAID_ICONS.IMMEDIATELY : Tw.PREPAID_ICONS.MONTHLY;
     history.isCanceled = history.payCd === '5' || history.payCd === '9';
@@ -190,5 +199,17 @@ Tw.MyTDataPrepaidHistory.prototype = {
     histories[key].push(history);
 
     return histories;
+  },
+
+  _handleShowDetail: function(e) {
+    var index = e.currentTarget.getAttribute('data-origin-idx'),
+      data = this._histories[this._currentType][index];
+    var detail = Object.assign(data, {
+      typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
+      chargeType: Tw.PREPAID_RECHARGE_TYPE[data.chargeTp],
+      date: Tw.DateHelper.getShortDate(data.chargeDt)
+    });
+
+    this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });
   }
 };

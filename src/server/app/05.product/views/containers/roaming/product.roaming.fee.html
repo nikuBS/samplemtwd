@@ -2,7 +2,6 @@
 * FileName: product.roaming.fee.html
 * Author: Eunjung Jung
 * Date: 2018.11.08
-* id: MV
 %>
 
 
@@ -25,9 +24,9 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <% const roamingPlanTxt = roamingData.prodInfoTxt; %>
-            <% if (svcInfo && roamingPlanTxt) { %>
+            <% if (isLogin && roamingData) { %>
             <!-- 사용중인 상품 -->
+            <% const roamingPlanTxt = roamingData.prodInfoTxt; %>
             <div class="cont-box gaps-style01">
                 <div class="submain-myfeeproducts-wrap">
                     <button type="button" class="submain-myfeeproducts">
@@ -116,10 +115,10 @@
                     </a>
                 </div>
                 <div class="submain-findyourplan-wrap">
-                    <button type="button" class="submain-findyourplan">
+                    <a type="button" class="submain-findyourplan" href="/product/roaming/info/guide?reqItem=lost">
                         <h3 class="title">분실 관련 안내 보러가기</h3>
                         <p class="text">긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -127,7 +126,7 @@
 
             <ul class="shortcutslist-wrap">
                 <li class="category-type">
-                    <button class="link">공항 내 로밍센터 안내</button>
+                    <a class="link" href="/product/roaming/info/center">공항 내 로밍센터 안내</a>
                 </li>
                 <li class="category-type">
                     <a class="link" href="/customer/faq">자주찾는 질문</a>

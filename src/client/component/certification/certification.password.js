@@ -11,24 +11,22 @@ Tw.CertificationPassword = function () {
 
   this._authUrl = null;
   this._command = null;
-  this._deferred = null;
   this._callback = null;
   this._authKind = null;
 };
 
 
 Tw.CertificationPassword.prototype = {
-  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
+  open: function (svcInfo, authUrl, authKind, command, callback) {
     this._authUrl = authUrl;
     this._command = command;
-    this._deferred = deferred;
     this._callback = callback;
     this._authKind = authKind;
 
     this._openCertPassword();
   },
   _openCertPassword: function () {
-    if(Tw.BrowserHelper.isApp()) {
+    if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(Tw.NTV_CMD.CERT_PW, {}, $.proxy(this._onCertResult, this));
     } else {
       this._historyService.goLoad('/common/tid/cert-pw');
@@ -49,11 +47,7 @@ Tw.CertificationPassword.prototype = {
     }).done($.proxy(this._successConfirmPasswordCert, this));
   },
   _successConfirmPasswordCert: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._callback({ code: Tw.API_CODE.CODE_00 }, this._deferred, this._command);
-    } else {
-      Tw.Error(resp.code, resp.msg).pop();
-    }
+    this._callback(resp);
   }
 
 };

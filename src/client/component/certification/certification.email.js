@@ -21,7 +21,6 @@ Tw.CertificationEmail = function () {
 
   this._authUrl = null;
   this._command = null;
-  this._deferred = null;
   this._callback = null;
   this._authKind = null;
   this._certResult = null;
@@ -38,10 +37,9 @@ Tw.CertificationEmail.prototype = {
     ATH8005: 'ATH8005'
   },
 
-  open: function (svcInfo, authUrl, command, deferred, callback, authKind) {
+  open: function (svcInfo, authUrl, authKind, command, callback) {
     this._authUrl = authUrl;
     this._command = command;
-    this._deferred = deferred;
     this._callback = callback;
     this._authKind = authKind;
 

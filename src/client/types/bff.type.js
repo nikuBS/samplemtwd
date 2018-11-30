@@ -91,6 +91,11 @@ Tw.AUTH_CERTIFICATION_KIND = {
   F: 'F' // 미환급금
 };
 
+Tw.NICE_TYPE = {
+  NICE: 'nice',
+  IPIN: 'ipin'
+};
+
 Tw.PRODUCT_RESERVATION_VALUE = {
   cellphone: '19',
   internet: '07',
@@ -164,4 +169,10 @@ Tw.UNIT_E = {
   VOICE_2: '910',
   SMS: '310',
   SMS_2: '320'
+};
+
+Tw.PREPAID_RECHARGE_TYPE = {
+  '1': '1회충전',
+  '2': '자동충전',
+  '4': '잔액승계'
 };

@@ -397,3 +397,16 @@ export enum RECHARGE_DATA_CODE {
   '001G030' = '1GB / 30일 (18,700원)',
   '300M030' = '300MB / 30일 (8,800원)'
 }
+
+export enum NICE_TYPE {
+  NICE = 'nice',
+  IPIN = 'ipin'
+}
+
+export enum AUTH_CERTIFICATION_KIND {
+  P = 'P', // 업무 인증
+  A = 'A', // 마스킹
+  O = 'O', // 업무 & 마스킹
+  R = 'R', // 상품
+  F = 'F' // 미환급금
+}

@@ -63,6 +63,7 @@ import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info
 import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
+import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -86,6 +87,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/lookup/tplan', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
+    this.controllers.push({ url: '/mobileplan/compare-plans', controller: ProductMobileplanComparePlans });
 
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });

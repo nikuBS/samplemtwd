@@ -18,7 +18,6 @@ Tw.CertificationSkSms = function () {
 
   this._authUrl = null;
   this._command = null;
-  this._deferred = null;
   this._callback = null;
   this._authKind = null;
   this._certResult = null;
@@ -44,10 +43,9 @@ Tw.CertificationSkSms.prototype = {
     SMS3001: 'SMS3001'
   },
 
-  openSmsPopup: function (svcInfo, authUrl, command, deferred, callback, authKind) {
+  openSmsPopup: function (svcInfo, authUrl, authKind, command, callback) {
     this._authUrl = authUrl;
     this._command = command;
-    this._deferred = deferred;
     this._callback = callback;
     this._authKind = authKind;
 

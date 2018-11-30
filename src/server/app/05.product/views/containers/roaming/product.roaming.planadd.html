@@ -25,95 +25,94 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <% if (isLogin && roamingAddCntData) { %>
             <!-- 사용중인 상품 -->
+            <% const roamingPlanAddTxt = roamingAddCntData.prodInfoTxt; %>
             <div class="cont-box gaps-style01">
                 <div class="submain-myfeeproducts-wrap">
-                    <!-- <a href="#" class="submain-myfeeproducts">
+                   <button type="button" class="submain-myfeeproducts">
                         <h3 class="title">사용중인 상품</h3>
-                        <p class="text">band 데이터 퍼펙트S</p>
-                    </a> -->
-                    <button type="button" class="submain-myfeeproducts">
-                        <h3 class="title">사용중인 상품</h3>
-                        <p class="text">T로밍 도착알리미 외 3건</p>
+                        <p class="text"><%= roamingPlanAddTxt %></p>
                     </button>
                 </div>
             </div>
+            <% } %>
             <!--//사용중인 상품 -->
-
-            <div class="selecttitle-wrap">
-                <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
-                <span class="taglist">#로밍차단/허용, #인기 </span>
-                <button class="bt-select" title="조건 선택" aria-haspopup="true">
-                    외 2건
-                </button>
-            </div>
-
-            <!-- cont-box-->
-            <div class="cont-box nogaps-hoz">
-                <ul class="recommendedrate-list">
-                    <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
-                    <li class="type01">
-                        <button type="button" class="product-infolink">
-                            <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
-                            <div class="products-titleinfo">
-                                <h5 class="title">T로밍 음성수발신차단</h5>
-                                <p class="info">월<span class="money">25,000</span>원</p>
-                            </div>
-                            <div class="taglist-wrap">
-                                <span class="tag-text">#로밍차단/허용</span>
-                                <span class="tag-text">#인기</span>
-                            </div>
-                            <p class="products-detailinfo">해외에서 로밍음성수발신만 차단할 수 있는<br>서비스 입니다</p>
-                        </button>
-                    </li>
-                    <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
-                    <li class="type02">
-                        <button type="button" class="product-infolink">
-                            <div class="products-titleinfo">
-                                <h5 class="title">로밍오토다이얼</h5>
-                                <p class="info">월<span class="money">25,000</span>원</p>
-                            </div>
-                            <div class="taglist-wrap">
-                                <span class="tag-text">#로밍차단/허용</span>
-                                <span class="tag-text">#인기</span>
-                            </div>
-                            <p class="products-detailinfo">해외에서도 국내와 동일한 방법으로 편리하게<br>발신 할 수 있는 서비스</p>
-                        </button>
-                    </li>
-                    <li class="type01">
-                        <button type="button" class="product-infolink">
-                            <div class="products-titleinfo">
-                                <h5 class="title">데이터 로밍 일시허용</h5>
-                                <p class="info"><span class="money">무료</span></p>
-                            </div>
-                            <div class="taglist-wrap">
-                                <span class="tag-text">#로밍차단/허용</span>
-                                <span class="tag-text">#인기</span>
-                            </div>
-                            <p class="products-detailinfo">로밍이 불가한 기본요금제 고객도 지정된<br>기간 동안 데이터 로밍이 가능한 서비스</p>
-                        </button>
-                    </li>
-                </ul>
-                <div class="bt-more gap-style">
-                    <button>더보기(80)</button>
+            <!-- 정렬 및 필터 -->
+            <div class="ti-caption-gray">
+                <button class="bt-select fe-rmadd-order" title="정렬 선택" aria-haspopup="true">추천순</button>
+                <div class="num">
+                    <button class="bt-select fe-rmadd-filter" title="조건 선택" aria-haspopup="true">
+                        <% const filters = roamingAddData.searchOption && roamingAddData.searchOption.searchFltIds; %>
+                        <% if (filters) { %>
+                        <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
+                        <% if (i > 0) { %>, <% } %>
+                        #<span class="vbl tx-bold"><%= filters[i].prodFltNm %></span>
+                        <% } %>
+                        <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
+                        <% } else if (roamingAddData.searchOption && roamingAddData.searchOption.searchProdTagNm) { %>
+                        #<span class="vbl tx-bold"><%= roamingAddData.searchOption.searchProdTagNm %></span>
+                        <% } else { %>
+                        #<span class="vbl tx-bold">전체 요금제</span>
+                        <% } %>
+                    </button>
                 </div>
             </div>
+            <!--//정렬 및 필터 -->
+            <!-- cont-box-->
+            <% const products = roamingAddData.products; %>
+            <% if (products) { %>
+            <div class="cont-box nogaps-hoz">
+                <ul class="recommendedrate-list" id="fe-roaming-list">
+                    <% products.map(plan => { %>
+                    <li class="type01">
+                        <a href="/product/callplan/<%= plan.prodId %>" class="product-infolink">
+                            <div class="products-titleinfo">
+                                <h5 class="title"><%= plan.prodNm %></h5>
+                                <% if (plan.basFeeAmt.isNaN) { %>
+                                <p class="info"><span class="money"><%= plan.basFeeAmt.value %></span></p>
+                                <% } else { %>
+                                <p class="info">월<span class="money"><%= plan.basFeeAmt.value %></span>원</p>
+                                <% } %>
+                            </div>
+                            <% if (plan.filters) { %>
+                            <div class="taglist-wrap">
+                                <% for (let j = 0; j < plan.filters.length; j++) { %>
+                                <button class="tag-text">#<%= plan.filters[j].prodFltNm %></button>
+                                <% } %>
+                            </div>
+                            <% } %>
+                            <% if (plan.prodSmryDesc) { %>
+                            <p class="products-detailinfo"><%= plan.prodSmryDesc %></p>
+                            <% } %>
+                        </a>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% const moreCount = roamingAddData.productCount - products.length; %>
+                <div class="bt-more gap-style">
+                    <button class="<%= moreCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= moreCount %>">
+                        더보기(<%= moreCount %>)
+                    </button>
+                </div>
+            </div>
+            <% } %>
             <!-- //cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <div class="roaming-info-box">
                 <div class="submain-findyourplan-wrap">
-                    <button type="button" class="submain-findyourplan">
+                    <a type="button" class="submain-findyourplan" href="/product/roaming/info/guide">
                         <h3 class="title">로밍 안내</h3>
                         <p class="text">출국 전 알아두면 유용한 로밍 정보</p>
-                    </button>
+                    </a>
                 </div>
                 <div class="submain-findyourplan-wrap">
-                    <button type="button" class="submain-findyourplan">
+                    <a type="button" class="submain-findyourplan" href="/product/roaming/do/search-before">
                         <h3 class="title">국가별 로밍 요금 조회</h3>
                         <p class="text">사용 중인 휴대폰 정보와 출국 국가명을<br>입력하시고, 로밍 요금 관련 각종 정보를<br>한 번에 확인하세요.</p>
-                    </button>
+                    </a>
                 </div>
                 <div class="submain-findyourplan-wrap">
                     <button type="button" class="submain-findyourplan">
@@ -127,10 +126,10 @@
 
             <ul class="shortcutslist-wrap">
                 <li class="category-type">
-                    <button class="link">공항 내 로밍센터 안내</button>
+                    <a class="link" href="/product/roaming/info/center">공항 내 로밍센터 안내</a>
                 </li>
                 <li class="category-type">
-                    <button class="link">자주찾는 질문</button>
+                    <a class="link" href="/customer/faq">자주찾는 질문</a>
                 </li>
             </ul>
 
@@ -193,7 +192,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFee($('.wrap'));
+    new Tw.ProductRoamingPlanAdd($('.wrap'), { code: 'F01600' });
   });
 </script>
+<% include ../../components/roaming/product.roaming.planadd.component.html %>
 <% include ../../components/end.component.html %>

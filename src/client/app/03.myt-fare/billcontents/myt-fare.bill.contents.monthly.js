@@ -8,7 +8,6 @@ Tw.MyTFareBillContentsMonthly = function (rootEl, data) {
   this.data = data ? JSON.parse(data) : '';
   
   this._apiService = Tw.Api;
-  this._urlHelper = Tw.UrlHelper;
 
   this._cachedElement();
   this._init();

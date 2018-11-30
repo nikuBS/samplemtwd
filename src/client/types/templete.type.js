@@ -372,7 +372,42 @@ Tw.POPUP_TPL = {
         ]
       }
     ]
-  }
+  },
+  ROAMING_INFO_CENTER: [
+    {
+      title: '',
+      data: [{
+          'list': [
+            { 'option': 'hbs-card-type', 'attr': 'id="1"', value: '인천공항 1터미널 3층' },
+            { 'option': 'hbs-card-type', 'attr': 'id="2"', value: '인천공항 1터미널 1층' }
+          ]
+        }]
+    },
+    {
+      data: [{
+          'list': [
+            { 'option': 'hbs-card-type', 'attr': 'id="3"', value: '인천공항 2터미널 3층' },
+            { 'option': 'hbs-card-type', 'attr': 'id="4"', value: '인천공항 2터미널 1층' }
+          ]
+        }]
+    },
+    {
+      data: [{
+          'list': [
+            { 'option': 'hbs-card-type', 'attr': 'id="7"', value: '김해공항 3층 국제선 청사' },
+            { 'option': 'hbs-card-type', 'attr': 'id="8"', value: '김해공항 1층 국제선 청사' }
+          ]
+        }]
+    },
+    {
+      data: [{
+          'list': [
+            { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '국제1 여객터미널' },
+            { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '국제2 여객터미널' }
+          ]
+        }]
+    }
+  ]
 };
 
 Tw.MYT_TPL = {

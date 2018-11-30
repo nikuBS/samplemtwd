@@ -12,20 +12,20 @@ Tw.CertificationSk = function () {
 
 
 Tw.CertificationSk.prototype = {
-  open: function (svcInfo, authUrl, command, deferred, callback, authKind, type) {
+  open: function (svcInfo, authUrl, authKind, command, type, callback) {
     if ( type === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
       if ( svcInfo.smsUsableYn === 'Y' ) {
-        this._certSms.openSmsPopup(svcInfo, authUrl, command, deferred, callback, authKind);
+        this._certSms.openSmsPopup(svcInfo, authUrl, authKind, command, callback);
       } else {
-        this._certKeyin.openKeyinPopup(svcInfo, authUrl, command, deferred, callback, authKind);
+        this._certKeyin.openKeyinPopup(svcInfo, authUrl, authKind, command, callback);
       }
     } else {
       if ( svcInfo.motpUsableYn === 'Y' ) {
-        this._certMotp.openMotpPopup(svcInfo, authUrl, command, deferred, callback, authKind);
+        this._certMotp.openMotpPopup(svcInfo, authUrl, authKind, command, callback);
       } else if ( svcInfo.smsUsableYn === 'Y' ) {
-        this._certSms.openSmsPopup(svcInfo, authUrl, command, deferred, callback, authKind);
+        this._certSms.openSmsPopup(svcInfo, authUrl, authKind, command, callback);
       } else {
-        this._certKeyin.openKeyinPopup(svcInfo, authUrl, command, deferred, callback, authKind);
+        this._certKeyin.openKeyinPopup(svcInfo, authUrl, authKind, command, callback);
       }
     }
   }
