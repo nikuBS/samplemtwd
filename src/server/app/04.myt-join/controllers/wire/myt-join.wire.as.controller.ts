@@ -26,50 +26,48 @@ class MyTJoinWireAS extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_05_0156, { page: '1', size: '20' })
       .subscribe((resp) => {
-/*
-        resp = {
-          'code': '00',
-          'msg': 'success',
-          'result': {
-            'totalCnt': '8',
-            'history': [
-              {
-                'troubleDt': '20181201',
-                'troubleNum': '20181201',
-                'stNm': '신청중',
-                'svcNm': '인터넷(스마트광랜Test) 1',
-                'troubleDetail': '스마트 광랜 접속 오류1'
-              },
-              {
-                'troubleDt': '20181101',
-                'troubleNum': '20181101',
-                'stNm': '장애접수',
-                'svcNm': '인터넷(스마트광랜Test) 2',
-                'troubleDetail': '스마트 광랜 접속 오류2'
-              },
-              {
-                'troubleDt': '20181001',
-                'troubleNum': '20181001',
-                'stNm': '장애복구완료',
-                'svcNm': '인터넷(스마트광랜Test) 3',
-                'troubleDetail': '스마트 광랜 접속 오류3'
-              },
-              {
-                'troubleDt': '20180901',
-                'troubleNum': '20180901',
-                'stNm': '장애복구완료',
-                'svcNm': '인터넷(스마트광랜Test) 4',
-                'troubleDetail': '스마트 광랜 접속 오류4'
-              },
-              {
-                'troubleDt': '20180801',
-                'troubleNum': '20180801',
-                'stNm': '장애복구완료',
-                'svcNm': '인터넷(스마트광랜Test) 5',
-                'troubleDetail': '스마트 광랜 접속 오류5'
-              }
 
-
+    /*const resp = {
+      'code': '00',
+      'msg': 'success',
+      'result': {
+        'totalCnt': '0',
+        'history': [
+          {
+            'troubleDt': '20181201',
+            'troubleNum': '20181201',
+            'stNm': '신청중',
+            'svcNm': '인터넷(스마트광랜Test) 1',
+            'troubleDetail': '스마트 광랜 접속 오류1'
+          },
+          {
+            'troubleDt': '20181101',
+            'troubleNum': '20181101',
+            'stNm': '장애접수',
+            'svcNm': '인터넷(스마트광랜Test) 2',
+            'troubleDetail': '스마트 광랜 접속 오류2'
+          },
+          {
+            'troubleDt': '20181001',
+            'troubleNum': '20181001',
+            'stNm': '장애복구완료',
+            'svcNm': '인터넷(스마트광랜Test) 3',
+            'troubleDetail': '스마트 광랜 접속 오류3'
+          },
+          {
+            'troubleDt': '20180901',
+            'troubleNum': '20180901',
+            'stNm': '장애복구완료',
+            'svcNm': '인터넷(스마트광랜Test) 4',
+            'troubleDetail': '스마트 광랜 접속 오류4'
+          },
+          {
+            'troubleDt': '20180801',
+            'troubleNum': '20180801',
+            'stNm': '장애복구완료',
+            'svcNm': '인터넷(스마트광랜Test) 5',
+            'troubleDetail': '스마트 광랜 접속 오류5'
+          }
             ]
           }
         };*/

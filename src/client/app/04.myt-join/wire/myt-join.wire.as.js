@@ -53,11 +53,15 @@ Tw.MyTJoinWireAS.prototype = {
     // init templates
     this._listContBox = $('#list-cont-box-tmplt').html();
     this._listMoreBtn = $('#bt-more-tmplt').html();
+    this._listNoData = $('#no-data-tmplt').html();
     this._listItemTmplt = Handlebars.compile($('#list-cont-item-tmplt').html());
     this._listYearDivTmplt = Handlebars.compile($('#list-year-div-tmplt').html());
 
     this._listTotCnt = initData.totalCnt;
     this._printList(initData.history);
+    if(!initData.history || initData.history.length === 0){
+      $('#cont-boxes').html(this._listNoData);
+    }
   },
 
   /**
@@ -142,7 +146,6 @@ Tw.MyTJoinWireAS.prototype = {
         skt_landing.action.loading.off({ ta: '.container' });
       }, this))
       .fail($.proxy(this._requestFail, this));
-    // 결과물 출력
   },
 
   _showErrorAlert: function(code, msg){
@@ -201,7 +204,7 @@ Tw.MyTJoinWireAS.prototype = {
       'troubleDt='+item.troubleDt+'&' +
       'svcNm='+item.svcNm+'&' +
       'troubleDetail='+item.troubleDetail+'&' +
-      'stNm';
+      'stNm='+item.stNm;
     this._historyService.goLoad(url);
   }
 

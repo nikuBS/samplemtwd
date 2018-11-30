@@ -19,7 +19,7 @@
     <%- include('../../../../../common/views/components/header.component.html', { title: title, svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
 
@@ -59,7 +59,7 @@
                         </ul>
                     </div>
                     <% if ( data.wireRegistOss && data.wireRegistOss.happyOperNm ) { %>
-                    <div class="engineer-list" style="display: none;">
+                    <div class="engineer-list">
                         <ul>
                             <li>
                                 <div class="img-area">
@@ -130,32 +130,77 @@
                                     <dt>고객명</dt>
                                     <dd><%= data.reqrNm %></dd>
                                 </dl>
-                                <dl class="show-data detail">
-                                    <dt>희망일시</dt>
-                                    <dd><span class="number"><%= data.setPrefrDt %></span></dd>
-                                </dl>
-                                <dl class="show-data detail">
-                                    <dt>신청 서비스</dt>
-                                    <dd><%= data.svcNm %></dd>
-                                </dl>
-                                <dl class="show-data detail">
-                                    <dt>설치 장소</dt>
-                                    <dd><%= data.oldBasAddr %> <%= data.oldDtlAddr %></dd>
-                                </dl>
-                                <dl class="show-data detail">
-                                    <dt>변경 장소</dt>
-                                    <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
-                                </dl>
-                                <% if ( data.ossOut && data.ossOut.operCoPhonNum ) { %>
-                                <dl class="show-data detail">
-                                    <dt>관리 고객센터</dt>
-                                    <dd><%= data.ossOut.operCoNm %> <%= data.ossOut.operCoPhonNum %></dd>
-                                </dl>
+
+                                <% if ( data.onOff === '02' ) { %>
+                                    <% if ( data.stNm === '진행중' || data.stNm === '완료' ) { %>
+                                        <dl class="show-data detail">
+                                            <dt>변경 예정일</dt>
+                                            <dd><span class="number">
+                                                <% if ( data.ossOut && data.ossOut.adjPrefrSvsetDtm ) { %>
+                                                <%= data.ossOut.adjPrefrSvsetDtm %>
+                                                <% } %>
+                                            </span></dd>
+                                        </dl>
+                                    <% } else { %>
+                                        <dl class="show-data detail">
+                                            <dt>희망일시</dt>
+                                            <dd><span class="number"><%= data.setPrefrDt %></span></dd>
+                                        </dl>
+                                    <% } %>
+
+                                    <dl class="show-data detail">
+                                        <dt>신청 서비스</dt>
+                                        <dd><%= data.svcNm %></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>설치 장소</dt>
+                                        <dd><%= data.oldBasAddr %> <%= data.oldDtlAddr %></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>변경 장소</dt>
+                                        <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
+                                    </dl>
+                                    <% if ( data.ossOut && data.ossOut.operCoPhonNum ) { %>
+                                    <dl class="show-data detail">
+                                        <dt>관리 고객센터</dt>
+                                        <dd><%= data.ossOut.operCoNm %> (<%= data.ossOut.operCoPhonNum %>)</dd>
+                                    </dl>
+                                    <% } %>
+
+                                <% } else { %>
+                                    <dl class="show-data detail">
+                                        <dt>이사날짜</dt>
+                                        <dd><span class="number"><%= data.mvDt %></span></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>이사날짜</dt>
+                                        <dd><span class="number"><%= data.setPrefrDt %></span></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>중단 희망일자</dt>
+                                        <dd><span class="number"><%= data.stopPrefrDt %></span></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>설치 희망일자</dt>
+                                        <dd><span class="number"><%= data.setPrefrDt %></span></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>일반전화</dt>
+                                        <dd><span class="number"><%= data.cntcPrefrPhonNum %></span></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>휴대폰</dt>
+                                        <dd><span class="number"><%= data.cntcPrefrMblPhonNum %></span></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>신청 서비스</dt>
+                                        <dd><%= data.svcNm %></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>설치 장소<br />(변경후)</dt>
+                                        <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
+                                    </dl>
                                 <% } %>
-                                <dl class="show-data detail">
-                                    <dt>설치 장소<br />(변경후)</dt>
-                                    <dd><%= data.basAddr %> <%= data.dtlAddr %></dd>
-                                </dl>
                             </li>
                         </ul>
                     </div>

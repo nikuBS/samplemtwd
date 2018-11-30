@@ -53,27 +53,31 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
           return;
         }
 
-        $('.info-list-type1').show();
+        skt_landing.action.loading.off({ ta: '.container' });
 
         var data = resp.result;
 
-        if( data.chargeInfo ) {
-          $('#tot-div').html(this._totTmpl(data.chargeInfo));
-        }
-        if( data.penaltyInfo ) {
+        if( data.penaltyInfo && data.penaltyInfo.length > 0 ) {
           var list = data.penaltyInfo;
           var html = '';
           for ( var i = 0; i < list.length ; i++ ) {
             html += this._listTmpl( list[i] );
           }
-
+          $('.info-list-type1').show();
+          $('.contents-empty').hide();
           $('#refund-list').html(html);
+        }else{
+          $('.info-list-type1').hide();
+          $('.contents-empty').show();
+          return;
         }
-        skt_landing.action.loading.off({ ta: '.container' });
+        if( data.chargeInfo ) {
+          $('#tot-div').html(this._totTmpl(data.chargeInfo));
+        }
       }, this))
       .fail(function (err) {
-        Tw.Error(err.status, err.statusText);
         skt_landing.action.loading.off({ ta: '.container' });
+        Tw.Error(err.status, err.statusText);
       });
 
   }

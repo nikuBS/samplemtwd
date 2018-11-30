@@ -40,7 +40,7 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
-            <div class="cont-box nogaps-hoz">
+            <div class="cont-box nogaps-hoz" id="divListBox">
                 <div class="history-list type2">
                     <ul>
                         <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
@@ -71,11 +71,23 @@
             </div>
             <!--// .cont-box -->
 
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz" id="divNoListBox" style="display: none;">
+                <div class="contents-empty">
+                    <span class="ico type1"></span>
+                    <p class="desc">사은품 조회 내역이 없습니다.</p>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- TBD -->
-            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
-            <!--// TBD -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list">
+                    <li>사은품 조회 안내 <button id="MS_04_01_04_tip_01" type="button" class="tip-view" title="사은품 조회 안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                </ul>
+            </div>
 
         </div>
     </div>
@@ -87,7 +99,7 @@
 </div>
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinWireGifts($('.wrap'), decodeURIComponent('<%= JSON.stringify(data) %>').replace(/&#34;/g, '"'));
+    new Tw.MyTJoinWireGifts($('.wrap'), '<%- JSON.stringify(data) %>');
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -43,11 +43,10 @@ Tw.MyTJoinWireASDetail.prototype = {
 
       this._apiService.request(Tw.API_CMD.BFF_05_0150, { troubleNum: this._troubleNum })
         .done($.proxy(function (resp) {
-          this._nowPageNum += 1;
 
           if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-            Tw.Error(resp.code, resp.msg).pop();
             skt_landing.action.loading.off({ ta: '.container' });
+            Tw.Error(resp.code, resp.msg).pop();
             return ;
           }
 
@@ -64,8 +63,8 @@ Tw.MyTJoinWireASDetail.prototype = {
           );
         }, this))
         .fail(function(err){
-          Tw.Error(err.status, err.statusText).pop();
           skt_landing.action.loading.off({ ta: '.container' });
+          Tw.Error(err.status, err.statusText).pop();
         });
     },this));
 
