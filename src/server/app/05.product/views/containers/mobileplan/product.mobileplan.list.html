@@ -65,7 +65,7 @@
                 <% const products = plans.products; %>
                 <% if (products) { %>
                 <div class="cont-box nogaps-hoz">
-                    <ul class="recommendedrate-list">
+                    <ul class="extraservice-list">
                         <% products.map(plan => { %>
                             <li class="type01">
                                 <a href="/product/callplan/<%= plan.prodId %>" class="product-infolink">
@@ -98,8 +98,8 @@
                     </ul>
 
                     <% const leftCount = plans.productCount - products.length; %>
-                    <div class="bt-more gap-style">
-                        <button class="<%= leftCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                    <div class="extraservice-more">
+                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
                             더보기(<%= leftCount %>)
                         </button>
                     </div>
