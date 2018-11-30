@@ -88,6 +88,16 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     // 차단완료
     this._popupService.close();
     Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.BLOCK);
+    // 
+    $.extend(this.detailData,{
+      cpState:"A1",
+      blockState:Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE.A1,
+      isBlocked:true
+    });
+    Tw.UIService.setLocalStorage('detailData',JSON.stringify(this.detailData));
+
+    this.$domWrapper.empty().append(this.$template.$detailWrap(this.detailData));
+    this._bindEvent();
   },
 
   _failBillBlock: function(e) {
