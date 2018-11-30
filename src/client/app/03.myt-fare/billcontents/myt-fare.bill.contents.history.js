@@ -9,10 +9,8 @@ Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(rootEl);
   this._popupService = Tw.Popup;
-  this._dateHelper = Tw.DateHelper;
-  this._urlHelper = Tw.UrlHelper;
 
-  this._params = this._urlHelper.getQueryParams();
+  this._params = Tw.UrlHelper.getQueryParams();
 
   this._cachedElement();
   this._init(data);
