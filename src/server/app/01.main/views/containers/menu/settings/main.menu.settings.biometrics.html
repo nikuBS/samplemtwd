@@ -5,7 +5,7 @@
 * MA_03_01_02
 %>
 
-<% include ../../components/start.component.html %>
+<% include ../../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -19,11 +19,16 @@
 <div id="commonBiometricsMenu" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>생체인증 설정</h1>
+        <div class="h-belt">
+            <div class="h-default">
+                <div class="h-menu">
+                    <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                </div>
+                <div class="h-tit">생체인증 설정</div>
+                <div class="h-serarch">
+                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                </div>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
         </div>
     </div>
     <!--// #header -->
@@ -90,12 +95,13 @@
             <!--// .cont-box -->
         </div>
     </div>
+    <!--// #contents -->
 </div>
 </body>
-<% include ../../components/javascript.component.html %>
+<% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>');
   });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../../../components/end.component.html %>
