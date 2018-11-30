@@ -4,8 +4,7 @@
  * Date: 2018.11.30
  */
 
-Tw.LoadTworldApp = function (rootEl) {
-  this.$container = rootEl;
+Tw.LoadTworldApp = function () {
   this._popupService = Tw.Popup;
 
   this._isAndroid = Tw.BrowserHelper.isAndroid();
@@ -17,11 +16,10 @@ Tw.LoadTworldApp = function (rootEl) {
 
 Tw.LoadTworldApp.prototype = {
   _init: function () {
-    setTimeout(function () {
-      this._openStore();
-    }, 1000);
+    var appCustomScheme = 'mtworldapp2://tworld?login_yn=Y&app_url=A013';
+    setTimeout($.proxy(this._openStore, this), 500);
 
-    window.location = 'mtworldapp2://tworld?login_yn=Y&app_url=A013';
+    window.location.href = appCustomScheme;
   },
   _openStore: function () {
     if (this._isAndroid) {
