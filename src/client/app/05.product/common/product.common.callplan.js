@@ -54,6 +54,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
     this.$btnRecommendProd.on('click', $.proxy(this._goRecommendProd, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
+    this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
   },
 
   _getJoinTermCd: function(typcd) {
@@ -151,6 +152,10 @@ Tw.ProductCommonCallplan.prototype = {
   _openContentsDetailPop: function(e) {
     var $item = $(e.currentTarget),
       contentsIndex = $item.data('contents');
+
+    if (Tw.FormatHelper.isEmpty(this._contentsDetailList[contentsIndex])) {
+      return;
+    }
 
     this._popupService.open({
       hbs: 'MP_02_02_06',
