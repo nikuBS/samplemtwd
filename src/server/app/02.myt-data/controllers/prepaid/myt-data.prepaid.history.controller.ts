@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { PREPAID_VOICE, PREPAID_DATA } from '../../../../mock/server/myt-data.prepaid.history.mock';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import { PREPAID_PAYMENT_TYPE } from '../../../../types/bff.type';
 
 export default class MyTDataPrepaidHistory extends TwViewController {
   private DEFAULT_PARAMS = {
@@ -88,7 +89,8 @@ export default class MyTDataPrepaidHistory extends TwViewController {
       idx,
       date: DateHelper.getShortDateNoYear(key),
       amt: FormatHelper.addComma(history.amt),
-      isCanceled: history.payCd === '5' || history.payCd === '9'
+      isCanceled: history.payCd === '5' || history.payCd === '9',
+      cardNm: history.cardNm || PREPAID_PAYMENT_TYPE[history.wayCd]
     });
     return histories;
   }
