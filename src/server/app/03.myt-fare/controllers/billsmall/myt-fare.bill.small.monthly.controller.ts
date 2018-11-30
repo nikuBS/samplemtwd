@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.bill.contents.monthly.controller.ts
+ * FileName: myt-fare.bill.small.monthly.controller.ts
  * Author: Lee kirim (kirim@sk.com)
  * Date: 2018. 11. 29
  */
@@ -17,7 +17,7 @@ interface Query {
 interface Result {
   [key: string]: string;
 }
-class MyTFareBillContentsMonthly extends TwViewController {
+class MyTFareBillSmallMonthly extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
     const query: Query = {
@@ -25,7 +25,8 @@ class MyTFareBillContentsMonthly extends TwViewController {
       requestCnt: 1
     };
 
-    this.apiService.request(API_CMD.BFF_07_0081, query).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_07_0073, query).subscribe((resp) => {
+      console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
       this.logger.info(this, resp.code !== API_CODE.CODE_00, resp);      
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
@@ -39,13 +40,13 @@ class MyTFareBillContentsMonthly extends TwViewController {
       const data: Result | any = resp.result;
       if (data) {
         data.useAmt = FormatHelper.addComma(data.tmthUseAmt);
-        data.limiitAmt = FormatHelper.addComma(data.useContentsLimitAmt);
+        data.limiitAmt = FormatHelper.addComma(data.microPayLimitAmt);
         data.remainAmt = FormatHelper.addComma(data.remainUseLimit);
         data.payAmt = FormatHelper.addComma(data.tmthChrgAmt);
         data.ableAmt = FormatHelper.addComma(data.tmthChrgPsblAmt);
       }
       
-      res.render('billcontents/myt-fare.bill.contents.monthly.html', {
+      res.render('billsmall/myt-fare.bill.small.monthly.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
         data,
@@ -58,4 +59,4 @@ class MyTFareBillContentsMonthly extends TwViewController {
 
 }
 
-export default MyTFareBillContentsMonthly;
+export default MyTFareBillSmallMonthly;

@@ -3,7 +3,7 @@
  * Author: Lee kirim (kirim@sk.com)
  * Date: 2018. 11. 29
  */
-Tw.MyTFareBillContentsMonthly = function (rootEl, data) {
+Tw.MyTFareBillSmallMonthly = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
   
@@ -14,13 +14,13 @@ Tw.MyTFareBillContentsMonthly = function (rootEl, data) {
   this._bindEvent();
 };
 
-Tw.MyTFareBillContentsMonthly.prototype = {
+Tw.MyTFareBillSmallMonthly.prototype = {
   _init: function() {
     var renderedHTML;
     
     renderedHTML = this.$template.$monthContent(
       Object.assign(this.data,{
-        useTipLink:'MF_07_01_02_tip_01' // 팁
+        useTipLink:'MF_06_01_03_tip_01' // 팁
       })
     );
     this.$domWrapper.append(renderedHTML);
