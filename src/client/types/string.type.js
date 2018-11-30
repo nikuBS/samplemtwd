@@ -531,6 +531,7 @@ Tw.ALERT_MSG_PRODUCT = {
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
+  ALERT_3_A22: { TITLE: '알림', BUTTON: '확인' },
   ALERT_3_A23: { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
   ALERT_3_A24: { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' }
 };

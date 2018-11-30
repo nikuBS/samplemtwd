@@ -20,6 +20,7 @@ Tw.ProductRoamingFee = function (rootEl, pageInfo) {
 
 Tw.ProductRoamingFee.prototype = {
   DEFAULT_ORDER: 'recommand',
+  CURRENT_ORDER : '',
   ORDER: {
       recommand: 0,
       highprice: 1,
@@ -42,9 +43,6 @@ Tw.ProductRoamingFee.prototype = {
 
       this._rmListTmpl = Handlebars.compile($('#fe-rmtmpl-plan').html());
       this._rmFilterTmpl = Handlebars.compile($('#fe-rmtmpl-filter').html());
-
-      console.log('params ==== ' + JSON.stringify(this._params));
-      console.log(' leftCount : ' + this._leftCount);
   },
   _bindRoamingPlanBtnEvents: function () {
     this.$container.on('click', '.bt-more > button', $.proxy(this._handleMoreRoamingPlan, this));
@@ -72,7 +70,6 @@ Tw.ProductRoamingFee.prototype = {
       this._openRoamingFiltersPopup();
   },
   _openRoamingFiltersPopup: function () {
-
     var rmFilters = _.chain(this._roamingFilters.filters)
         .map(
             $.proxy(function(filter) {
@@ -97,8 +94,6 @@ Tw.ProductRoamingFee.prototype = {
             }, this)
           )
         .value();
-
-    console.log('rmFilters == ' + JSON.stringify(rmFilters));
 
     this._popupService.open(
         {
@@ -136,9 +131,9 @@ Tw.ProductRoamingFee.prototype = {
 
     },
   _handleResetBtn: function ($layer) {
-    $layer.find('.btn-type01').removeClass('checked');
-    $layer.find('input').removeAttr('checked');
-  },
+        $layer.find('.btn-type01').removeClass('checked');
+        $layer.find('input').removeAttr('checked');
+    },
   _bindFilterBtnEvent: function ($layer, e) {
     this.$filterBtn = $(e.currentTarget);
     this.$selectBtn =  $(e.currentTarget).find('input');
@@ -169,16 +164,17 @@ Tw.ProductRoamingFee.prototype = {
     }
 
   },
-    _handleRoamingSelectFilters: function ($layer){
+  _handleRoamingSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
           return input.getAttribute('data-rmfilter-id');
       }).join(',');
 
-      console.log(searchRmFltIds);
-
       this._params = { idxCtgCd: this.RM_CODE };
       this._params.searchFltIds = searchRmFltIds;
-      console.log(this._params);
+      this._params.searchOrder = this.CURRENT_ORDER;
+
+      Tw.Logger.info('[this._params]', this._params);
+
       this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
           .done($.proxy(this._handleLoadNewFilters, this));
   },
@@ -230,6 +226,10 @@ Tw.ProductRoamingFee.prototype = {
           item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
           return item;
       });
+
+      var srchOrder = resp.result.searchOption.searchOrder;
+
+      this.CURRENT_ORDER = srchOrder;
 
       this._params.searchLastProdId = items[items.length - 1].prodId;
       this._leftCount = (this._leftCount || resp.result.productCount) - items.length;

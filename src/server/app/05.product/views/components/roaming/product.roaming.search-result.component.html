@@ -1,0 +1,90 @@
+<%#
+* FileName: product.roaming.search-result.component.html
+* Author: Eunjung Jung
+* Date: 2018.11.21
+%>
+
+<script id="fe-roaming-rate" type="text/x-handlebars-template">
+    <div class="roaming-info-wrap">
+        <h4 class="txt">데이터(정보이용료 별도)<button class="tip-view">TIP</button></h4>
+        <div class="unpaid-charges mt12">
+            <ul class="point-box mb0">
+                <li>
+                    <dl>
+                        <dt>데이터</dt>
+                        <dd>{{items.dMoChargeMin}}원/패킷</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <ul class="round-dot-list mt20 pb20">
+            <li>임대로밍의 경우 일임대료는 2,200원(부가세포함)입니다.상기 요금은 3G/GSM 기준의 요율이며, 대여 받으시는 임대폰의 기종에 따라 요금은 상이할 수 있습니다.</li>
+            <li><strong>LTE 자동로밍</strong>을 이용하셔도 <strong>음성 로밍은 3G/GSM망으로 연결되어 3G 자동로밍 요율</strong>이 적용됩니다.<br/>자세한 사항은 3G 자동로밍을 선택해서 확인하세요.</li>
+            <li>선택하신 국가는 통화버튼을 누른 시점부터 로밍 요금이 부과되오니 유의하시기 바랍니다.</li>
+            <li><strong>T로밍 데이터 안심서비스!</strong><br />데이터 종량 과금이 5,000원 일 상한 도달 시, 원패스 제휴 사업자 접속의 경우 200kbps 속도제어, 비 제휴 사업자 접속의 경우 데이터 차단이 됩니다.</li>
+            <li>3/23부터는 음성 통화 요금이 분당 과금에서 초당 과금으로 변경됩니다.</li>
+        </ul>
+
+        <h4 class="txt tline">음성</h4>
+        <div class="unpaid-charges mt12 pb20">
+            <ul class="point-box mb0">
+                <li>
+                    <dl>
+                        <dt>방문국에서 방문국으로</dt>
+                        <dd>20.1원/초</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>방문국에서 한국/해외로</dt>
+                        <dd>40.3원/초</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>수신</dt>
+                        <dd>21.8원/초</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <h3 class="txt tline">문자</h3>
+        <div class="unpaid-charges mt12">
+            <ul class="point-box mb0">
+                <li>
+                    <dl>
+                        <dt>SMS 발신</dt>
+                        <dd>165원/건</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>SMS 수신</dt>
+                        <dd>무료</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>MMS 텍스트 발신</dt>
+                        <dd>330원/건</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>MMS 멀티미디어 발신</dt>
+                        <dd>440원/건</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>MMS 수신</dt>
+                        <dd>무료</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</script>
+
