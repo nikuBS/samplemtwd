@@ -11,6 +11,8 @@ Tw.MainMenuSettingsBiometrics = function (rootEl, target) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
 
+  this._biometricsTerm = new Tw.MainMenuSettingsBiometricsTerms(this._target);
+
   this.$inputFido = null;
   this.$txtFido = null;
   this.$btCancel = null;
@@ -51,10 +53,11 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     }
   },
   _onFidoDeRegister: function (resp) {
-    console.log(resp);
   },
   _onClickRegisterFido: function () {
-    this._historyService.goLoad('/main/menu/settings/biometrics/terms?target=' + this._target);
+    // this._historyService.goLoad('/main/menu/settings/biometrics/terms?target=' + this._target);
+    this._biometricsTerm.open();
+
   },
   _setEnableStatus: function(str) {
     this.$txtFido.text(str);
