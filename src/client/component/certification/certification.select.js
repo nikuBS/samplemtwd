@@ -28,9 +28,6 @@ Tw.CertificationSelect = function () {
   this._callback = null;
 
   this._optionCert = false;
-
-  window.onPopupCallback = $.proxy(this._onPopupCallback, this);
-  window.onCloseInApp = $.proxy(this._onPopupCallback, this);
 };
 
 

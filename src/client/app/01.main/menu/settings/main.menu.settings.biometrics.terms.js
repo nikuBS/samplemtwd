@@ -4,24 +4,35 @@
  * Date: 2018.10.13
  */
 
-Tw.MainMenuSettingsBiometricsTerms = function (rootEl, target) {
-  this.$container = rootEl;
+Tw.MainMenuSettingsBiometricsTerms = function (target) {
   this._target = target;
 
   this._historyService = new Tw.HistoryService();
+  this._popupService = Tw.Popup;
 
-  this._bindEvent();
+  this._biometiricsCert = new Tw.MainMenuSettingsBiometricsCert(this._target);
 };
 
 Tw.MainMenuSettingsBiometricsTerms.prototype = {
-  _bindEvent: function () {
-    this.$allCheck = this.$container.find('#fe-check-all');
-    this.$childChecks = this.$container.find('.fe-check-child');
-    this.$btConfirm = this.$container.find('#fe-bt-confirm');
+  open: function () {
+    this._popupService.open({
+      hbs: 'MA_03_01_02_01_01',
+      layer: true,
+      data: {
+        isFinger: this._target === Tw.FIDO_TYPE.FINGER
+      }
+    }, $.proxy(this._onOpenBioTerms, this), null, 'terms');
+  },
+  _onOpenBioTerms: function ($popupContainer) {
+    this.$allCheck = $popupContainer.find('#fe-check-all');
+    this.$childChecks = $popupContainer.find('.fe-check-child');
+    this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
 
     this.$allCheck.on('change', $.proxy(this._onClickAllCheck, this));
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
     this.$btConfirm.on('click', $.proxy(this.onClickConfirm, this));
+
+    this._enableBtns();
   },
   _onClickAllCheck: function ($event) {
     var $currentTarget = $($event.currentTarget);
@@ -37,7 +48,8 @@ Tw.MainMenuSettingsBiometricsTerms.prototype = {
     this._enableBtns();
   },
   onClickConfirm: function () {
-    this._historyService.goLoad('/main/menu/settings/biometrics/cert?target=' + this._target);
+    this._biometiricsCert.open();
+    // this._historyService.goLoad('/main/menu/settings/biometrics/cert?target=' + this._target);
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);

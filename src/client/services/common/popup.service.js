@@ -282,7 +282,13 @@ Tw.PopupService.prototype = {
   closeAll: function () {
     var hashLength = this._prevHashList.length;
     if ( hashLength > 0 ) {
+      _.map(this._prevHashList, $.proxy(function (prevHash) {
+        if ( !Tw.FormatHelper.isEmpty(prevHash.closeCallback) ) {
+          prevHash.closeCallback();
+        }
+      }, this));
       this._prevHashList = [];
+      // skt_landing.action.popup.allClose();
       history.go(-hashLength);
     }
   },

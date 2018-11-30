@@ -189,8 +189,8 @@ class App {
 
   private handleInternalServerError(err, req, res, next) {
     if ( req.accepts('html') ) {
-      // return res.status(500).send(err.message);
-      return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      return res.status(500).send(err.message);
+      // return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
     next();
   }
