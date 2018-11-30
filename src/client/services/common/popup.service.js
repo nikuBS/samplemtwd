@@ -268,6 +268,7 @@ Tw.PopupService.prototype = {
   },
   toast: function (message) {
     skt_landing.action.popup.toast({
+      url: Tw.Environment.cdn + '/hbs/',
       text: message,
       second: 5
     });
