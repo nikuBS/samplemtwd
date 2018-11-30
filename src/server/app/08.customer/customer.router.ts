@@ -12,6 +12,7 @@ import CustomerDamageInfoAdditions from './controllers/damage-info/customer.dama
 import CustomerDamageInfoRelated from './controllers/damage-info/customer.damage-info.related.controller';
 import CustomerDamageInfoWarning from './controllers/damage-info/customer.damage-info.warning.controller';
 import CustomerDamageInfoWarningView from './controllers/damage-info/customer.damage-info.warning.view.controller';
+import CustomerDamageInfoContents from './controllers/damage-info/customer.damage-info.contents.controller';
 import CustomerMain from './controllers/main/customer.main.controller';
 import CustomerVoice from './controllers/voice/customer.voice.controller';
 import CustomerEmail from './controllers/email/customer.email.controller';
@@ -53,6 +54,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/damage-info/warning/view', controller: CustomerDamageInfoWarningView });
     this.controllers.push({ url: '/damage-info/additions', controller: CustomerDamageInfoAdditions });
     this.controllers.push({ url: '/damage-info/related', controller: CustomerDamageInfoRelated });
+    this.controllers.push({ url: '/damage-info/contents/:pageNo', controller: CustomerDamageInfoContents });
     this.controllers.push({ url: '/agentsearch', controller: CustomerAgentsearch });
     this.controllers.push({ url: '/agentsearch/search', controller: CustomerAgentsearch });
     this.controllers.push({ url: '/agentsearch/detail', controller: CustomerAgentsearchDetail });
