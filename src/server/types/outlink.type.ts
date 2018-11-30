@@ -52,7 +52,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   },
   {
     TEXT: '꼭 지켜야 할 정보보호 실천수칙 10가지',
-    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.6.html'
+    LINK: '/customer/damage-info/contents/page012'
   },
   {
     TEXT: '무심코 스쳐간 광고! "악성코드에 감염되셨습니다"',
@@ -152,19 +152,19 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   },
   {
     TEXT: '명의도용 피해예방법',
-    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.1.html' // TODO 추후 기획 예정
+    LINK: '/customer/damage-info/contents/page013'
   },
   {
     TEXT: '소액결제 피해예방법',
-    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.2.html' // TODO 추후 기획 예정
+    LINK: '/customer/damage-info/contents/page014'
   },
   {
     TEXT: '결합상품 피해예방법',
-    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.3.html' // TODO 추후 기획 예정
+    LINK: '/customer/damage-info/contents/page015'
   },
   {
     TEXT: '해외 로밍 피해예방법',
-    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.4.html' // TODO 추후 기획 예정
+    LINK: '/customer/damage-info/contents/page016'
   },
   {
     TEXT: '무선 공유기 해킹 주의보!',
@@ -176,7 +176,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   },
   {
     TEXT: '스미싱 피해예방 안내',
-    LINK: 'http://m.tworld.co.kr/mnormal.do?serviceId=S_WITH0020&viewId=V_CENT6023&seqNo=3761'  // TODO 이럴 땐 이렇게 하세요 > 개인정보 보호 편 > 스미싱 예방편
+    LINK: '/customer/damage-info/contents/page001'
   },
   {
     TEXT: '메모리 해킹 주의보',

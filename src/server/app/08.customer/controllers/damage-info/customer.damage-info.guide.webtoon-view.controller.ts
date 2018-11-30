@@ -18,7 +18,7 @@ class CustomerDamageInfoGuideWebtoonView extends TwViewController {
     const idx = req.query.idx || '';
 
     if (FormatHelper.isEmpty(idx) || FormatHelper.isEmpty(CUSTOMER_PROTECT_GUIDE_WEBTOON[idx])) {
-      return res.redirect('/customer/damage-info/guide/webtoon');
+      return res.redirect('/customer/damage-info/guide?category=webtoon');
     }
 
     res.render('damage-info/customer.damage-info.guide.webtoon-view.html', {

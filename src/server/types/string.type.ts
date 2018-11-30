@@ -520,6 +520,25 @@ export const PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
   RECENT_MAX_TXT: '최근 {0} 최대',
 };
 
+export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
+  page001: '스미싱 피해예방 안내',
+  page002: '메모리 해킹 주의보',
+  page003: '파밍 피해 예방법',
+  page004: '클라우드 보안 방법',
+  page005: '스마트폰 보안 수칙',
+  page006: '스팸 메시지 대응 방법',
+  page007: '로그인 제한 제도',
+  page008: '휴면 고객 제도',
+  page009: 'Tworld 비밀번호 관리',
+  page010: '개인정보 유효기간',
+  page011: '가려진 정보보기(마스킹)',
+  page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',
+  page013: '명의도용 피해예방법',
+  page014: '결합상품 피해예방법',
+  page015: '소액결제 피해예방법',
+  page016: '해외 로밍 피해예방법'
+};
+
 export const ROAMING_RECEIVE_CENTER = {
   '0': '인천공항 1터미널 3층 로밍 센터(E-F 카운터)',
   '1': '인천공항 2터미널 3층 로밍 센터(D-E 카운터)',
