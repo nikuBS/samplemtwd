@@ -120,9 +120,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }, $.proxy(this._onOpenTworld, this));
   },
   _onOpenTworld: function ($layer) {
-    $layer.on('click', '.fe-tworld', $.proxy(this._goTworld, this));
-  },
-  _goTworld: function () {
-    new Tw.LoadTworldApp(this.$container);
+    new Tw.LoadTworldApp($layer);
   }
 };

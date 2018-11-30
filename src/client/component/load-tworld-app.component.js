@@ -12,16 +12,18 @@ Tw.LoadTworldApp = function (rootEl) {
   this._isIos = Tw.BrowserHelper.isIos();
   this._isLink = false;
 
-  this._init();
+  this._bindEvent();
 };
 
 Tw.LoadTworldApp.prototype = {
-  _init: function () {
-    setTimeout(function () {
-      this._openStore();
-    }, 1000);
+  _bindEvent: function () {
+    this.$container.on('click', '.fe-tworld', $.proxy(this._onClickTworld, this));
+  },
+  _onClickTworld: function () {
+    var appCustomScheme = 'mtworldapp2://tworld?login_yn=Y&app_url=A013';
+    setTimeout($.proxy(this._openStore, this), 500);
 
-    window.location = 'mtworldapp2://tworld?login_yn=Y&app_url=A013';
+    window.location.href = appCustomScheme;
   },
   _openStore: function () {
     if (this._isAndroid) {
@@ -46,6 +48,7 @@ Tw.LoadTworldApp.prototype = {
   },
   _onSelectStore: function ($layer) {
     $layer.on('click', 'li', $.proxy(this._setStoreUrl, this));
+    $layer.on('click', '.fe-close', $.proxy(this._onlyClose, this));
   },
   _setStoreUrl: function (event) {
     var $target = $(event.currentTarget);
@@ -54,6 +57,10 @@ Tw.LoadTworldApp.prototype = {
     this._href = Tw.OUTLINK[$id + '_STORE'];
     this._isLink = true;
 
+    this._popupService.close();
+  },
+  _onlyClose: function () {
+    this._isLink = false;
     this._popupService.close();
   },
   _goStore: function (isLink) {

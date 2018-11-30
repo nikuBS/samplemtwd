@@ -53,7 +53,7 @@
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
-                                <button>T world App 바로가기</button>
+                                <button class="fe-tworld">T world App 바로가기</button>
                             </li>
                         </ul>
                     </div>
@@ -62,7 +62,7 @@
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
@@ -71,9 +71,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    $('.fe-tworld, .wrap').on('click', function () {
-      new Tw.LoadTworldApp();
-    });
+    new Tw.LoadTworldApp($('.wrap'));
   });
 </script>
 <% include ../components/end.component.html %>
