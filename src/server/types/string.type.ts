@@ -519,3 +519,14 @@ export const PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
   RECENT_AVG_TXT: '최근 {0} 평균',
   RECENT_MAX_TXT: '최근 {0} 최대',
 };
+
+export const ROAMING_RECEIVE_CENTER = {
+  '0': '인천공항 1터미널 3층 로밍 센터(E-F 카운터)',
+  '1': '인천공항 2터미널 3층 로밍 센터(D-E 카운터)',
+  '2': '인천공항 1터미널 3층 로밍 센터(G-H 카운터)',
+  '3': '김포공항 1층 로밍 센터',
+  '4': '제주공항 국제선 1층 로밍 센터',
+  '5': '김해공항 3층 로밍 센터',
+  '6': '대구공항 2층 로밍 센터',
+  '7': '대구 SKT 황금점 매장'
+};

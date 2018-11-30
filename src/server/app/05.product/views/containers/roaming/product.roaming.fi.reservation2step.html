@@ -323,28 +323,7 @@
                         </div>
                         <div class="basic-list li-line2 one-line pt10">
                             <ul id="visitList">
-                                <!--
-                                <li>
-                                <span class="title">말레이시아</span>
-                                <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
-                                </li>
-
-                                <li>
-                                    <span class="title">푸에르토리코</span>
-                                    <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
-                                </li>
-                                <li>
-                                    <span class="title">일본</span>
-                                    <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
-                                </li>
-                                <li>
-                                    <span class="title">사우디아라비아</span>
-                                    <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
-                                </li>
-                                <li>
-                                    <span class="title">홍콩</span>
-                                    <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
-                                </li>-->
+                                <!-- 국가 리스트 영역 -->
                             </ul>
                         </div>
                     </div>
@@ -374,12 +353,12 @@
                         <li>
                             <label class="tit" for="flab04">수령장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 로밍 센터(E-F 카운터)<span class="ico"></span></button>
-                            <div class="mapimg-area pt10"><img src="/img/dummy/place-img-01.jpg" alt="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"/></div>
+                            <div class="mapimg-area pt10"><img id="fe-receive-img" src="<%= CDN %>/img/dummy/place-img-01.jpg" alt="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"/></div>
                         </li>
                         <li>
                             <label class="tit" for="flab05">반납장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 로밍 센터<span class="ico"></span></button>
-                            <div class="mapimg-area pt10"><img src="/img/dummy/place-img-01-1.jpg" alt="인천공항 1터미널 1층 로밍 센터"/></div>
+                            <div class="mapimg-area pt10"><img src="<%= CDN %>/img/dummy/place-img-01-1.jpg" alt="인천공항 1터미널 1층 로밍 센터"/></div>
                         </li>
                     </ul>
 
@@ -433,14 +412,14 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list">
                         <li>T파이 임대 이용 안내 <button id="RM_14_02_01_tip_01" type="button" class="tip-view">TIP</button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
 
-                <ul class="bt-slice full">
+                <ul id="fe-register" class="bt-slice full">
                     <li class="bt-red1">
                         <button disabled>신청하기</button>
                     </li>
@@ -464,3 +443,5 @@
 </script>
 
 <% include ../../components/end.component.html %>
+
+

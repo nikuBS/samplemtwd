@@ -14,19 +14,15 @@ Tw.ProductRoamingFiReservation3step = function(rootEl) {
 Tw.ProductRoamingFiReservation3step.prototype = {
 
   _cachedElement: function() {
-    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
+    this.$btnGoInquire = this.$container.find('#fe-go-inquire');
   },
 
   _bindEvent: function() {
-    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
+    this.$btnGoInquire.on('click', $.proxy(this._goRoamingFiInquire, this));
   },
 
-  _goRoamingGuide: function() {
-    this._historyService.replaceURL('/product/roaming/fi/guide');
-  },
-
-  _reload: function() {
-    this._historyService.reload();
+  _goRoamingFiInquire: function() {
+    this._historyService.goLoad('/product/roaming/fi/inquire');
   }
 
 };
