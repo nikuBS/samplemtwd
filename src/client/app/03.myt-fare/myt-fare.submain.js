@@ -87,9 +87,9 @@ Tw.MyTFareSubMain.prototype = {
     }
     // 최근요금내역
     this.$billChart = this.$container.find('[data-id=bill-chart]');
-    if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
+    if ( this.data.otherLines.length > 0 ) {
       // 다른회선 요금 조회
-      this.$otherLines = this.$container.find('[data-id=other-line] li');
+      this.$otherLines = this.$container.find('[data-id=other-line]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
@@ -153,7 +153,7 @@ Tw.MyTFareSubMain.prototype = {
       this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
     }
     // 다른회선 요금 조회
-    if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
+    if ( this.data.otherLines.length > 0 ) {
       this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
@@ -236,11 +236,11 @@ Tw.MyTFareSubMain.prototype = {
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
-          var amt = item.invAmt.replace(',', '');
-          var absDeduck = item.deduckInvAmt.replace(',', '');
+          var amtStr = item.invAmt.replace(',', '');
+          var absDeduckStr = item.deduckInvAmt.replace(',', '');
           // --------------------
-          amt = parseInt(amt, 10);
-          absDeduck = Math.abs(parseInt(absDeduck, 10));
+          var amt = parseInt(amtStr, 10);
+          var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
           chart_data.push({
             't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
             'v': amt, // 사용금액
@@ -252,7 +252,8 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 실시간요금
-    setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+    setTimeout($.proxy(this._otherLineBills, this), 300);
+    // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
   // 최근청구요금내역조회-1
@@ -271,11 +272,11 @@ Tw.MyTFareSubMain.prototype = {
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
-          var amt = item.invAmt.replace(',', '');
-          var absDeduck = item.deduckInvAmt.replace(',', '');
+          var amtStr = item.invAmt.replace(',', '');
+          var absDeduckStr = item.deduckInvAmt.replace(',', '');
           // --------------------
-          amt = parseInt(amt, 10);
-          absDeduck = Math.abs(parseInt(absDeduck, 10));
+          var amt = parseInt(amtStr, 10);
+          var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
           chart_data.push({
             't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
             'v': amt, // 사용금액
@@ -297,7 +298,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < otherLineLength; idx++ ) {
         this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
         requestCommand.push({
-          command: Tw.API_CMD.BFF_05_0036,
+          command: this.data.type === 'UF'? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
           // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
           headers: {
             'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
@@ -321,7 +322,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < arguments.length; idx++ ) {
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = arguments[idx].result;
-          var amt = parseInt(item.useAmtTot, 10);
+          var amt = parseInt(item.useAmtTot || 0, 10);
           var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
           var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
           var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
@@ -439,9 +440,8 @@ Tw.MyTFareSubMain.prototype = {
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
-        name    = $target.attr('data-name'),
-        repSvc  = ($target.attr('data-rep-svc') === 'true');
-    if ( repSvc ) {
+        name    = $target.attr('data-name');
+    if ( mgmtNum ) {
       // 기준회선변경
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
       var selectLineInfo = number + ' ' + name;
