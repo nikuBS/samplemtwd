@@ -46,6 +46,8 @@ Tw.API_CMD = {
   BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
   BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: Tw.API_METHOD.POST },
+  BFF_01_0058: { path: '/v1/auth/skt-sms/legal-agent', method: Tw.API_METHOD.POST },
+  BFF_01_0063: { path: '/v1/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
 
   // AUTH
   BFF_03_0002: { path: '/v1/user/account-auth-sessions', method: Tw.API_METHOD.POST },

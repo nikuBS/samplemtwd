@@ -44,6 +44,14 @@ Tw.BUTTON_LABEL = {
   RETRY: '다시 받기'
 };
 
+Tw.SMS_VALIDATION = {
+  SUCCESS_SEND: '정상적으로 발송되었습니다.',
+  WAIT_NEXT_TIME: '재전송 제한시간(1분)이 지난 후에 이용해주세요.',
+  EXPIRE_NEXT_TIME: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.',
+  NOT_MATCH_CODE: '인증번호가 일치하지 않습니다',
+  EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.'
+};
+
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',

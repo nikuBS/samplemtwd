@@ -14,6 +14,10 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._displayId = displayId;
   this._confirmOptions = JSON.parse(confirmOptions);
 
+  this._sendCount = 0;
+  this._isSend = false;
+  this._isFirstSend = false;
+
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
@@ -23,49 +27,122 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
 Tw.ProductMobileplanAddJoinPayment.prototype = {
 
   _cachedElement: function() {
-    this.$inputNumber = this.$container.find('.fe-num_input');
+    this.$inputNumber = this.$container.find('.fe-input_num');
+    this.$inputAuthCode = this.$container.find('.fe-input_auth_code');
+
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
-    this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
+    this.$btnGetAuthCode = this.$container.find('.fe-btn_get_auth_code');
+    this.$btnValidate = this.$container.find('.fe-btn_validate');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
+
+    this.$sendMsgResult = this.$container.find('.fe-send_msg_result');
+    this.$validateResult = this.$container.find('.fe-validate_result');
   },
 
   _bindEvent: function() {
-    this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
-    this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
+    this.$inputAuthCode.on('keyup input', $.proxy(this._detectInputAuthCode, this));
 
+    this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
+    this.$btnGetAuthCode.on('click', $.proxy(this._getAuthCode, this));
+    this.$btnValidate.on('click', $.proxy(this._reqValidateAuthCode, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
 
-  _openAppAddressBook: function() {
-    this._nativeService.send('getContact', {}, $.proxy(this._setAppAddressBook, this));
-  },
-
-  _setAppAddressBook: function(res) {
-    if (Tw.FormatHelper.isEmpty(res.params.phoneNumber)) {
-      return;
-    }
-
-    this.$inputNumber.val(res.params.phoneNumber);
-  },
-
-  _detectInputNumber: function() {
+  _detectInputNumber: function(e) {
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
 
-    this._toggleSetupButton(this.$inputNumber.val().length > 0);
-    this._toggleClearBtn();
+    this._toggleClearBtn($(e.currentTarget));
+    this._toggleButton(this.$btnGetAuthCode, this.$inputNumber.val() > 0);
   },
 
-  _toggleSetupButton: function(isEnable) {
+  _getAuthCode: function() {
+    var number = this.$inputNumber.val().replace(/-/gi, '');
+
+    if (!Tw.ValidationHelper.isCellPhone(number)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+    }
+
+    if (this._isFirstSend && (new Date().getTime() > this._expireSendTime) && this._sendCount > 4) {
+      return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
+    }
+
+    this.$sendMsgResult.hide();
+
+    $.get('/mock/BFF_01_0058.json')
+      .done($.proxy(this._resAuthCode, this));
+
+    // this._apiService.request(Tw.API_CMD.BFF_01_0058, {
+    //   receiverNum: number
+    // }).done($.proxy(this._resAuthCode, this));
+  },
+
+  _setSendResultText: function(isError, text) {
+    this.$sendMsgResult.html($('<span\>').addClass(isError ? 'error-txt' : 'validation-txt').text(text));
+    this.$container.find('.fe-send_result_msg').remove();
+    this.$sendMsgResult.show();
+  },
+
+  _resAuthCode: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return this._setSendResultText(true, resp.msg);
+    }
+
+    this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
+
+    this._sendCount++;
+    if (!this._isFirstSend) {
+      this._isSend = true;
+      this._isFirstSend = true;
+      this._expireSendTime = new Date().getTime() + (3600 * 5);
+    }
+  },
+
+  _detectInputAuthCode: function(e) {
+    if (!this._isSend) {
+      return;
+    }
+
+    this.$inputAuthCode.val(this.$inputAuthCode.val().replace(/[^0-9.]/g, ''));
+    if (this.$inputAuthCode.val().length > 6) {
+      this.$inputAuthCode.val(this.$inputAuthCode.val().substr(0, 6));
+    }
+
+    this._toggleClearBtn($(e.currentTarget));
+    this._toggleButton(this.$btnValidate, this.$inputAuthCode.val() > 0);
+  },
+
+  _reqValidateAuthCode: function() {
+    this._apiService.request(Tw.API_CMD.BFF_01_0063, {
+      authNum: this.$inputAuthCode.val()
+    }).done($.proxy(this._resValidateAuthCode, this));
+  },
+
+  _resValidateAuthCode: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return this._setValidateResultText(true, resp.msg);
+    }
+
+    // @todo 인증 성공 후 동작 확인 중
+  },
+
+  _setValidateResultText: function(isError, text) {
+    this.$validateResult.html($('<span\>').addClass(isError ? 'error-txt' : 'validation-txt').text(text));
+    this.$container.find('.fe-send_result_msg').remove();
+    this.$validateResult.show();
+  },
+
+  _toggleButton: function($button, isEnable) {
     if (isEnable) {
-      this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
+      $button.removeAttr('disabled').prop('disabled', false);
     } else {
-      this.$btnSetupOk.attr('disabled', 'disabled').prop('disabled', true);
+      $button.attr('disabled', 'disabled').prop('disabled', true);
     }
   },
 
@@ -77,33 +154,46 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
-  _clearNum: function() {
-    this.$inputNumber.val('');
-    this.$btnClearNum.hide();
+  _clearNum: function(e) {
+    var $btnClear = $(e.currentTarget),
+      $input = $btnClear.parent().find('input');
+
+    if ($input.hasClass('fe-input_num')) {
+      this._toggleButton(this.$btnGetAuthCode, false);
+    }
+
+    if ($input.hasClass('fe-input_auth_code')) {
+      this._toggleButton(this.$btnValidate, false);
+    }
+
+    $input.val('');
+    $btnClear.hide();
   },
 
-  _toggleClearBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
-      this.$btnClearNum.show();
+  _toggleClearBtn: function($input) {
+    var $btnClear = $input.parent().find('.fe-btn_clear_num');
+    if ($input.val().length > 0) {
+      $btnClear.show();
     } else {
-      this.$btnClearNum.hide();
+      $btnClear.hide();
     }
   },
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
+      title: Tw.PRODUCT_TYPE_NM.JOIN,
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
+      isMobilePlan: false,
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
+      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
+      toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
+      toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
+      isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
       svcNumMask: this._confirmOptions.preinfo.svcNumMask,
-      svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
-      svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
-      toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
-      isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
-      toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
-      toProdDesc: this._confirmOptions.sktProdBenfCtt,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
-      autoJoinBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      autoTermBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
+      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },
