@@ -117,8 +117,9 @@ Tw.BenefitTerminateTbCombination.prototype = {
       });
     }
 
+    this._isResultPop = true;
     this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openTerminateResultPop, this), 'vasterm_pop');
+      $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {

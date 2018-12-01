@@ -1,4 +1,5 @@
 /**
+ * @todo Mock-data 로 작업 한 상태, 테스트 계정 찾는중
  * 상품 해지 - 유선 부가서비스
  * FileName: product.wireplan.terminate.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
@@ -7,21 +8,27 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
-import BFF_10_0111_mock from '../../../../mock/server/product.BFF_10_0111.mock';
 
 class ProductWireplanTerminate extends TwViewController {
   constructor() {
     super();
   }
 
-  private _getApi(prodId: any): Observable<any> {
-    return Observable.of(BFF_10_0111_mock);
-    // return this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId);
+  /**
+   * @param currentAdditionsInfo
+   * @private
+   */
+  private _getBtnData(currentAdditionsInfo: any): any {
+    if (FormatHelper.isEmpty(currentAdditionsInfo.btnData)) {
+      return null;
+    }
+
+    return currentAdditionsInfo.btnData;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -36,19 +43,23 @@ class ProductWireplanTerminate extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this._getApi(prodId)
-      .subscribe((joinTermInfo) => {
-        // console.log(joinTermInfo);
-        if (joinTermInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: joinTermInfo.code,
-            msg: joinTermInfo.msg
-          }));
-        }
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0101, { joinTermCd: '03' }, {}, prodId)
+    ).subscribe(([joinTermInfo, currentAdditionsInfo]) => {
+      const apiError = this.error.apiError([joinTermInfo, currentAdditionsInfo]);
 
-        res.render('mobileplan-add/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
+      if (!FormatHelper.isEmpty(apiError)) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: apiError.code,
+          msg: apiError.msg
+        }));
+      }
+
+        res.render('wireplan/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+          joinTermInfo: ProductHelper.convWireplanJoinTermInfo(joinTermInfo.result, false),
+          btnData: this._getBtnData(currentAdditionsInfo.result)
         }));
       });
   }

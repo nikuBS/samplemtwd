@@ -7,28 +7,27 @@
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
+import { API_CMD } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import BFF_10_0111_mock from '../../../../../mock/server/product.BFF_10_0111.mock';
 
 class ProductWireplanJoin extends TwViewController {
   constructor() {
     super();
   }
 
-  // @todo mock
-  private _getApi(prodId: any): Observable<any> {
-    return Observable.of(BFF_10_0111_mock);
-    // return this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, prodId);
-  }
-
-  private _getAddSvcAddYn(currentAdditionsInfo: any): any {
-    if (FormatHelper.isEmpty(currentAdditionsInfo.pays) || FormatHelper.isEmpty(currentAdditionsInfo.pays)) {
-      return 'N';
+  /**
+   * @param currentAdditionsInfo
+   * @private
+   */
+  private _getBtnData(currentAdditionsInfo: any): any {
+    if (FormatHelper.isEmpty(currentAdditionsInfo.btnData)) {
+      return null;
     }
+
+    return currentAdditionsInfo.btnData;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -40,8 +39,8 @@ class ProductWireplanJoin extends TwViewController {
       };
 
     Observable.combineLatest(
-      this._getApi(prodId),
-      this.apiService.request(API_CMD.BFF_05_0129, {})
+      this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '01' }, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0101, { joinTermCd: '01' }, {}, prodId)
     ).subscribe(([joinTermInfo, currentAdditionsInfo]) => {
       const apiError = this.error.apiError([joinTermInfo, currentAdditionsInfo]);
 
@@ -55,7 +54,7 @@ class ProductWireplanJoin extends TwViewController {
       res.render('wireplan/join/product.wireplan.join.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         joinTermInfo: ProductHelper.convWireplanJoinTermInfo(joinTermInfo.result, true),
-        addSvcAddYn: this._getAddSvcAddYn(currentAdditionsInfo.result)
+        btnData: this._getBtnData(currentAdditionsInfo.result)
       }));
     });
   }

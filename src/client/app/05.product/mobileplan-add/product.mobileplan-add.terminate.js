@@ -21,11 +21,11 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
   _init: function() {
     this._convConfirmOptions();
-    this._getJoinConfirmContext();
+    this._bindEvent();
   },
 
-  _getJoinConfirmContext: function() {
-    $.get('/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
+  _bindEvent: function() {
+    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
   },
 
   _setConfirmBodyIntoContainer: function(context) {
@@ -137,8 +137,9 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       });
     }
 
+    this._isResultPop = true;
     this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openTerminateResultPop, this), 'vasterm_pop');
+      $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {

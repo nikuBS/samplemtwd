@@ -1163,6 +1163,18 @@ Tw.FAMILY_TYPE = {
   ME: '본인'
 };
 
+Tw.WIREPLAN_TERMINATE_CAUSE = {
+  CS00: '불필요',
+  CS01: '사용빈도 적음',
+  CS02: '서비스품질불만',
+  CS03: '이용요금부담',
+  CS04: '서비스사용불편',
+  CS05: '사용불가능-타상품사용',
+  CS06: '유사상품으로 변경',
+  CS07: '기타',
+  CS08: '기타(변경, 해지)'
+};
+
 Tw.CUSTOMER_EMAIL.ACTION_TYPE = {
   SELECT_BRAND: '브랜드 선택',
   SELECT_DEVICE: '기종 선택',

@@ -4,6 +4,7 @@ import FormatHelper from './format.helper';
 
 class ProductHelper {
   static convStipulation(stipulation: any): any {
+    console.log(stipulation);
     if (FormatHelper.isEmpty(stipulation)) {
       return null;
     }
@@ -226,19 +227,8 @@ class ProductHelper {
       reqProdInfo: Object.assign(preInfo.reqProdInfo, {
         isNumberBasFeeInfo: isNumberBasFeeInfo,
         basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
-      }),
-      autoJoinList: isJoin ? ProductHelper.convWireplanAutoJoinTermList(preInfo.autoJoinTermList) : null,
-      autoTermList: !isJoin ? ProductHelper.convWireplanAutoJoinTermList(preInfo.autoJoinTermList) : null
-    });
-  }
-
-  static convWireplanAutoJoinTermList(autoJoinTermList) {
-    return [{
-      svcProdNm: PRODUCT_CTG_NM.ADDITIONS,
-      svcProdList: autoJoinTermList.map((item) => {
-        return item.prodNm;
       })
-    }];
+    });
   }
 }
 

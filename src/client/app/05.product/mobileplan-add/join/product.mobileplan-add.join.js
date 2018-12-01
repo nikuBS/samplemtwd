@@ -22,11 +22,15 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
   _init: function() {
     this._convConfirmOptions();
-    this._getJoinConfirmContext();
+    this._bindEvent();
+  },
+
+  _bindEvent: function() {
+    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function() {
-    $.get('/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
+    $.get(Tw.Environment.cdn + '/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
   },
 
   _setConfirmBodyIntoContainer: function(context) {
