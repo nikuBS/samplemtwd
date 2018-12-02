@@ -411,6 +411,13 @@ skt_landing.action = {
         skt_landing.action.auto_scroll();
       }
     },
+    allClose : function (){
+      var popups = $('.wrap > .popup,.wrap > .popup-page');
+      popups.empty().remove();
+      if($('.wrap > .popup,.wrap > .popup-page').length == 0){
+        skt_landing.action.auto_scroll();
+      }
+    },
     scroll_chk: function () {
       var pop_h = $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-contents').height();
       if (pop_h > 290) {
