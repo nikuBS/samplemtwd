@@ -12,13 +12,12 @@
                     <% for ( var i in recommends.recommendAppList ) { %>
                     <li>
                         <div>
-                            <button class="fe-btn_recommend_prod"
-                                    data-prod_id="<%= recommends.recommendAppList[i].prodId %>">
+                            <a href="/product/callplan/<%= recommends.recommendAppList[i].prodId %>">
                                 <% if ( recommends.recommendAppList[i].appImg ) { %>
                                 <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
                                 <% } %>
                                 <span><%= recommends.recommendAppList[i].prodNm %></span>
-                            </button>
+                            </a>
                         </div>
                     </li>
                     <% } %>

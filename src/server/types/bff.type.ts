@@ -241,16 +241,6 @@ export enum PROD_SCRB_E {
   TERMINATE = 'I'
 }
 
-export enum PROD_CTG_CD_CODE {
-  AB = 'mobileplan',
-  C = 'mobileplan-add',
-  D = 'wireplan',
-  E = 'wireplan',
-  F = 'benefit',
-  G = 'benefit',
-  H = 'roaming'
-}
-
 export enum PROD_TTAB_BASIC_DATA_PLUS {
   NA00005069 = '600MB',
   NA00005058 = '600MB',
@@ -421,4 +411,38 @@ export const PREPAID_PAYMENT_TYPE = {
   '41': '은행이체',
   '51': '후납',
   '99': '선불카드(PPS카드)'
+};
+
+export const PRODUCT_TYP_CD_LIST = {
+  AB: 'mobileplan',
+  C: 'mobileplan-add',
+  D: 'wireplan',
+  E: 'wireplan'
+};
+
+export const PRODUCT_CALLPLAN_FLICK = {
+  SEE_CONTENTS: '상세참조'
+};
+
+export const PRODUCT_REPLACED_RULE = {
+  CHAR: [{
+    TARGET: ['999999999', '999,999,999', '무제한', '기본제공'],
+    RESULT: '기본제공'
+  }],
+  VCALL: [{
+    TARGET: ['999999999', '999,999,999', '무제한'],
+    RESULT: '무제한'
+  }, {
+    TARGET: ['999999995', '999,999,995'],
+    RESULT: 'SKT 지정회선 무제한'
+  }, {
+    TARGET: ['999999996', '999,999,996'],
+    RESULT: 'SKT 고객간 무제한'
+  }, {
+    TARGET: ['999999997', '999,999,997'],
+    RESULT: '이동전화 무제한'
+  }, {
+    TARGET: ['999999998', '999,999,998'],
+    RESULT: '집전화·이동전화 무제한'
+  }]
 };

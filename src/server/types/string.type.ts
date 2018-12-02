@@ -186,18 +186,14 @@ export const MYT_INFO_DISCOUNT_MONTH = {
   TITLE: '월별 상세 할인 내역'
 };
 
-export enum PRODUCT_TYPE {
-  FEE_INFO_ETC = '상세참조'
-}
-
-export enum PRODUCT_CTG_NAME {
-  F01100 = '요금제',
-  F01200 = '부가서비스',
-  F01300 = '인터넷/전화/IPTV',
-  F01400 = '혜택ㆍ할인',
-  F01500 = 'T로밍 요금제',
-  F01600 = 'T로밍 부가서비스',
-  F01700 = 'T apps'
+export enum PRODUCT_TYP_CD_NAME {
+  AB = '요금제',
+  C = '부가서비스',
+  D = '인터넷/전화/IPTV',
+  E = '인터넷/전화/IPTV 부가서비스',
+  F = '결합상품',
+  G = '할인프로그램',
+  H = '로밍'
 }
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
@@ -447,6 +443,7 @@ export const BRANCH_SEARCH_OPTIONS = {
 };
 
 export const PRODUCT_TYPE_NM = {
+  CALLPLAN: '상품 상세 정보',
   JOIN: '가입',
   CHANGE: '변경',
   TERMINATE: '해지',

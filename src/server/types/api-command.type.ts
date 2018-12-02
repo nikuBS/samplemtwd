@@ -567,6 +567,7 @@ export const API_CMD = {
   BFF_10_0063: { path: '/core-product/v1/mobiles/additions-sets/:args0/seldis-sets', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0065: { path: '/core-product/v1/roaming/tpie-reservation', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0067: { path: '/core-product/v1/roaming/tpie', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0069: { path: '/v1/products/:args0/auth/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0070: { path: '/core-product/v1/mobiles/fee-plans/num-couple-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0071: { path: '/core-product/v1/mobiles/fee-plans/num-couple-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_10_0072: { path: '/core-product/v1/mobiles/fee-plans/num-zone-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -612,8 +613,8 @@ export const API_CMD = {
     method: API_METHOD.GET, server: API_SERVER.BFF,
     bypass: true
   },
-  BFF_10_0115: {},
-  BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0116: { path: '/core-product/v1/ledger/:args0/preview', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

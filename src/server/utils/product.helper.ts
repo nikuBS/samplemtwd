@@ -1,5 +1,5 @@
-import {DATA_UNIT, PRODUCT_CTG_NM} from '../types/string.type';
-import { UNIT } from '../types/bff.type';
+import { DATA_UNIT, PRODUCT_CTG_NM } from '../types/string.type';
+import { PRODUCT_REPLACED_RULE, UNIT } from '../types/bff.type';
 import FormatHelper from './format.helper';
 
 class ProductHelper {
@@ -97,6 +97,22 @@ class ProductHelper {
 
   static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt): any {
     const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
+    let replacedResult: any = null;
+
+    PRODUCT_REPLACED_RULE.VCALL.forEach((ruleInfo) => {
+      if (ruleInfo.TARGET.indexOf(basOfrVcallTmsCtt) !== -1) {
+        replacedResult = {
+          isNaN: true,
+          value: ruleInfo.RESULT
+        };
+
+        return false;
+      }
+    });
+
+    if (!FormatHelper.isEmpty(replacedResult)) {
+      return replacedResult;
+    }
 
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
@@ -106,6 +122,23 @@ class ProductHelper {
 
   static convProductBasOfrCharCntCtt(basOfrCharCntCtt): any {
     const isNaNbasOfrCharCntCtt = isNaN(Number(basOfrCharCntCtt));
+    let replacedResult: any = null;
+
+    PRODUCT_REPLACED_RULE.CHAR.forEach((ruleInfo) => {
+      if (ruleInfo.TARGET.indexOf(basOfrCharCntCtt) !== -1) {
+        replacedResult = {
+          isNaN: true,
+          value: ruleInfo.RESULT,
+          unit: null
+        };
+
+        return false;
+      }
+    });
+
+    if (!FormatHelper.isEmpty(replacedResult)) {
+      return replacedResult;
+    }
 
     return {
       isNaN: isNaNbasOfrCharCntCtt,
