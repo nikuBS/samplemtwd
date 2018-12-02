@@ -57,7 +57,8 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
+      isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 

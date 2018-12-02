@@ -60,7 +60,8 @@ Tw.ProductWireplanJoin.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      isWireplan: true
+      isWireplan: true,
+      isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 

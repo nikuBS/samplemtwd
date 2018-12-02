@@ -62,7 +62,8 @@ Tw.ProductWireplanTerminate.prototype = {
     new Tw.ProductCommonConfirm(false, this.$container, {
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
       isWireplan: true,
-      isTerm: true
+      isTerm: true,
+      isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 
