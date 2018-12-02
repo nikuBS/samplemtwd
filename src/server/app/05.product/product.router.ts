@@ -63,6 +63,7 @@ import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info
 import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
+import ProductRoamingJoinRoamingSetup from './controllers/roaming/join/product.roaming.join.roaming-setup.controller';
 import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans';
 
 class ProductRouter extends TwRouter {
@@ -130,6 +131,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
     this.controllers.push({ url: '/roaming/fi/reservation3step', controller: ProductRoamingFiReservation3step });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
+    this.controllers.push({ url: '/roaming/join/roaming-setup', controller: ProductRoamingJoinRoamingSetup });
     this.controllers.push({ url: '/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
 
