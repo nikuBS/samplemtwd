@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import ProductHelper from '../../../../../utils/product.helper';
+import BFF_10_0017_mock from '../../../../../mock/server/product.BFF_10_0017.mock';
 
 class ProductMobileplanAddJoinPayment extends TwViewController {
   constructor() {
@@ -19,6 +20,11 @@ class ProductMobileplanAddJoinPayment extends TwViewController {
   }
 
   private readonly _allowedProdIdList = ['NA00005872'];
+
+  private _getApi(): Observable<any> {
+    return Observable.of(BFF_10_0017_mock);
+    // this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+  }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
@@ -34,7 +40,7 @@ class ProductMobileplanAddJoinPayment extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
-      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+      this._getApi()
     ).subscribe(([ basicInfo, joinTermInfo ]) => {
       const apiError = this.error.apiError([basicInfo, joinTermInfo]);
 
