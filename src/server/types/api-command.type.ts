@@ -600,7 +600,7 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0109: { path: '/core-product/v1/services/wire/addition/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0111: { path: '/v1/wire/additions/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0111: { path: '/v1/products/wire/additions/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0112: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0113: {
     path: '/core-product/v1/services/combinations/:args0/terminations/prechecks',
@@ -621,7 +621,7 @@ export const API_CMD = {
   BFF_10_0058: { path: '/core-product/v1/roaming/country-rate', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0061: { path: '/core-product/v1/roaming/ManageType-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0097: { path: 'core-product/v1/ledger/:args0/apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0097: { path: '/core-product/v1/ledger/:args0/apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
 
   // MEMBERSHIP

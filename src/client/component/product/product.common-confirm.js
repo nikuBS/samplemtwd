@@ -39,6 +39,10 @@ Tw.ProductCommonConfirm.prototype = {
     this.$overpayResult = this.$container.find('.fe-overpay_result');
     this.$overPayTmpl = this.$container.find('#fe-templ-plans-overpay');
 
+    if (this._data.isWireplan) {
+      this.$btnSelectTerminateCause = this.$container.find('.fe-btn_select_terminate_cause');
+    }
+
     this._bindEvent();
   },
 
@@ -48,6 +52,7 @@ Tw.ProductCommonConfirm.prototype = {
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
     this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));
     this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
+    this.$btnSelectTerminateCause.on('click', $.proxy(this._openSelectTerminateCause, this));
 
     this.$checkboxAgreeAll.on('change', $.proxy(this._agreeAllToggle, this));
     this.$checkboxAgreeItem.on('change', $.proxy(this._agreeItemToggle, this));
@@ -56,6 +61,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _init: function() {
+    if (this._data.isWirePlan) {
+      this._termRsnCd = null;
+    }
+
     if (this.$agreeWrap.length < 1) {
       this._toggleApplyBtn(true);
     }
@@ -139,6 +148,40 @@ Tw.ProductCommonConfirm.prototype = {
     this.$overpayWrap.show();
   },
 
+  _openSelectTerminateCause: function() {
+    this._popupService.open({
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
+      data: [{
+        'list': [
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS00, option: (this._termRsnCd === 'CS00') ? 'checked' : '', attr: 'data-term_rsn_cd="CS00"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS01, option: (this._termRsnCd === 'CS01') ? 'checked' : '', attr: 'data-term_rsn_cd="CS01"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS02, option: (this._termRsnCd === 'CS02') ? 'checked' : '', attr: 'data-term_rsn_cd="CS02"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS03, option: (this._termRsnCd === 'CS03') ? 'checked' : '', attr: 'data-term_rsn_cd="CS03"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS04, option: (this._termRsnCd === 'CS04') ? 'checked' : '', attr: 'data-term_rsn_cd="CS04"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS05, option: (this._termRsnCd === 'CS05') ? 'checked' : '', attr: 'data-term_rsn_cd="CS05"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS06, option: (this._termRsnCd === 'CS06') ? 'checked' : '', attr: 'data-term_rsn_cd="CS06"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS07, option: (this._termRsnCd === 'CS07') ? 'checked' : '', attr: 'data-term_rsn_cd="CS07"' },
+          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS08, option: (this._termRsnCd === 'CS08') ? 'checked' : '', attr: 'data-term_rsn_cd="CS08"' }
+        ]
+      }]
+    }, $.proxy(this._bindSelectTerminateCause, this), null, 'select_term_rsn_cd');
+  },
+
+  _bindSelectTerminateCause: function($popupContainer) {
+    $popupContainer.on('click', '[data-term_rsn_cd]', $.proxy(this._setTermRsnCd, this));
+  },
+
+  _setTermRsnCd: function(e) {
+    this._termRsnCd = $(e.currentTarget).data('term_rsn_cd');
+    this.$btnSelectTerminateCause.html(Tw.WIREPLAN_TERMINATE_CAUSE[this._termRsnCd] +
+      $('<div\>').append(this.$btnSelectTerminateCause.find('.ico')).html());
+    this._procApplyBtnActivate();
+
+    this._popupService.close();
+  },
+
   _agreeAllToggle: function() {
     var isAllCheckboxChecked = this.$checkboxAgreeAll.is(':checked');
 
@@ -146,7 +189,7 @@ Tw.ProductCommonConfirm.prototype = {
     this.$checkboxAgreeItem.parents('.fe-checkbox_style').toggleClass('checked', isAllCheckboxChecked)
       .attr('aria-checked', isAllCheckboxChecked);
 
-    this._toggleApplyBtn(this.$container.find('.fe-checkbox_agree_need:not(:checked)').length < 1);
+    this._procApplyBtnActivate();
   },
 
   _agreeItemToggle: function() {
@@ -156,6 +199,10 @@ Tw.ProductCommonConfirm.prototype = {
     this.$checkboxAgreeAll.parents('.fe-checkbox_style').toggleClass('checked', isCheckboxItemChecked)
       .attr('aria-checked', isCheckboxItemChecked);
 
+    this._procApplyBtnActivate();
+  },
+
+  _procApplyBtnActivate: function() {
     this._toggleApplyBtn(this.$container.find('.fe-checkbox_agree_need:not(:checked)').length < 1);
   },
 
@@ -211,6 +258,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _toggleApplyBtn: function(toggle) {
+    if (this._data.isWireplan && this._data.isTerm) {
+      toggle = !Tw.FormatHelper.isEmpty(this._termRsnCd);
+    }
+
     if (toggle) {
       this.$btnApply.removeAttr('disabled').prop('disabled', false);
     } else {
@@ -219,7 +270,13 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _doCallback: function() {
-    this._applyCallback();
+    var callbackParams = {};
+
+    if (this._data.isWireplan && this._data.isTerm) {
+      callbackParams.termRsnCd = this._termRsnCd;
+    }
+
+    this._applyCallback(callbackParams);
   }
 
 };

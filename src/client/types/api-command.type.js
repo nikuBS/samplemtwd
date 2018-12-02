@@ -396,6 +396,8 @@ Tw.API_CMD = {
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: Tw.API_METHOD.GET },
   BFF_10_0082: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: Tw.API_METHOD.POST },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: Tw.API_METHOD.GET },
+  BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.POST },
+  BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
   BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
 
   // ROAMING

@@ -35,6 +35,8 @@ Tw.Init.prototype = {
       Tw.Environment = result;
       Tw.Logger.info('[Version]', result.version);
       Tw.Popup = new Tw.PopupService();
+      $(window).trigger('env');
+
       if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
         /* jshint undef: false */
         // alert(result.version);
