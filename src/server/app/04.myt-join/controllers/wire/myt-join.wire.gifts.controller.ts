@@ -34,11 +34,11 @@ class MyTJoinWireGifts extends TwViewController {
             'result': {
               'hasSKTWire': 'Y',    // SK브로드밴드 가입여부(N:미가입)
               'resultValue': 'Y',   // 사은품여부(N:미존재)
-              'nextPage': '2',
-              'totalCnt': '12',
-              'deliveryCnt': '1',
-              'returnCnt': '2',
-              'redeliveryCnt': '3',
+              'totalCnt': '0',      // 총건수
+              'restCnt': '0',       // 남은건수
+              'deliveryCnt': '1',   // 배송건수
+              'returnCnt': '0',     // 반송건수
+              'redeliveryCnt': '0', // 재배송건수
               'giftProvideList': [
                 {
                   'giftNm': 'SK상품권 1만원',

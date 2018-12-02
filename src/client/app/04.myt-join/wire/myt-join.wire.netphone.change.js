@@ -96,22 +96,25 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
       return;
     }
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_05_0164, {phoneNum: phNum})
       .done(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+          skt_landing.action.loading.off({ ta: '.container' });
           Tw.Error(resp.code, resp.msg).pop();
-          skt_landing.action.loading.off({ ta: this.$container });
           return;
         }
+        skt_landing.action.loading.off({ ta: '.container' });
+
         var code = resp.result.wnpOperStCd;
 
         // 번호에 대한 결과를 찾을 수 없는 경우
         if( code === 'NA' ) {
-          skt_landing.action.loading.off({ ta: this.$container });
-          this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
+          this._popupService.openAlert(
+            Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A33.MSG,
+            Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A33.TITLE);
           return;
         }
 
@@ -127,9 +130,9 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
         if( code === '01' ){
           compIdx = 0;
         } else if( code === '10' ){
+          compIdx = 1;
+        } else if( code === '00' || code === '90' || code === '20' ){
           compIdx = 2;
-        } else if( code === '00' ){
-          compIdx = 3;
         }
         if ( compIdx >= 0 ) {
           $('.process-list').show();
@@ -139,11 +142,10 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
             }
           });
         }
-        skt_landing.action.loading.off({ ta: this.$container });
       })
       .fail(function (err) {
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText);
-        skt_landing.action.loading.off({ ta: this.$container });
       });
 
   }

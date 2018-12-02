@@ -54,7 +54,14 @@ Tw.MyTJoinWireGifts.prototype = {
     this._listItemTmplt = Handlebars.compile($('#list-cont-item-tmplt').html());
 
     this._listTotCnt = initData.totalCnt;
-    this._printList(initData.giftProvideList);
+    if(this._listTotCnt <= 0){
+      $('#divListBox').hide();
+      $('#divNoListBox').show();
+    }else{
+      $('#divListBox').show();
+      $('#divNoListBox').hide();
+      this._printList(initData.giftProvideList);
+    }
   },
 
   /**
@@ -107,7 +114,7 @@ Tw.MyTJoinWireGifts.prototype = {
   _requestNextData: function () {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0159, { page: String(this._nowPageNum+1) })
+    this._apiService.request(Tw.API_CMD.BFF_05_0159, { requestPage: String(this._nowPageNum+1) })
       .done($.proxy(function (resp) {
         this._nowPageNum += 1;
 

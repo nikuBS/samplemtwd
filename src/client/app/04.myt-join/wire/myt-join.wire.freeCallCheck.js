@@ -74,6 +74,9 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
       if (res.result.freeCallYn === 'N' || res.result.noChargeYn === 'N') {
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A80.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A80.TITLE);
 
+      } else {
+
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A201.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A201.TITLE);
       }
     }
   },
@@ -85,7 +88,7 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   _vdPhoneNm:function( $phoneNm ) {
     Tw.Logger.info('[휴대폰 유효성 체크]', $phoneNm);
     var phoneNm = $phoneNm;
-    Tw.ValidationHelper.checkMoreLength(phoneNm, 10, Tw.ALERT_MSG_MYT_FARE.V18);
+    Tw.ValidationHelper.checkMoreLength(phoneNm, 10, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V9);
     // phoneNm = this._noDash( phoneNm ); // 대시 삭제
     Tw.Logger.info('[휴대폰 유효성 체크 결과]', phoneNm);
     return phoneNm;
