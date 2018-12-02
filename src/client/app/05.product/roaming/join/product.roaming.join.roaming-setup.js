@@ -4,7 +4,7 @@
  * Date: 2018.11.28
  */
 
-Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo) {
+Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
@@ -12,7 +12,7 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,s
   this._prodRedisInfo = prodRedisInfo;
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
-
+  this._prodId = prodId;
 };
 
 Tw.ProductRoamingJoinRoamingSetup.prototype = {
@@ -86,10 +86,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         var dateValue = $selectedTarget.text().trim().substr(0,10);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
-
         changeTarget.text(dateValue);
         changeTarget.removeClass('placeholder');
         changeTarget.attr('data-number',dateValue.replace(/-/g, ''));
+        changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
     },
     _validateDateValue : function(){
@@ -154,28 +154,51 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           null,
           'select_date');
     },
+    _doJoin : function(data,apiService,historyService){
+        // apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
+        // done($.proxy(function (res) {
+        //     console.log('success');
+        //     console.log(res);
+        // }, this)).fail($.proxy(function (err) {
+        //     console.log('fail');
+        //     console.log(err);
+        // }, this));
+        if(true){
+
+        }else{
+
+        }
+
+
+    },
     _confirmInformationSetting : function () {
+        var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
+        var endDtIdx = parseInt(this.$container.find('#end_date').attr('data-idx'),10);
 
+        var userJoinInfo = {
+            'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
+            'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
+            'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
+            'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
+            'startEndTerm' : endDtIdx - startDtIdx
+        };
 
-        this._prodApiInfo.stipulationInfo.scrbStplAgreeYn = 'Y';
-        this._prodApiInfo.stipulationInfo.scrbStplAgreeTitNm = 'String	가입약관동의제목명';
-        this._prodApiInfo.stipulationInfo.scrbStplAgreeHtmlCtt = 'String	가입약관동의HTML내용';
         var data = {
-                            popupTitle : '가입',
-                            svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
-                            processNm : '가입',
-                            prodType : '로밍 요금제',
-                            svcType : '부가서비스',
-                            prodNm : this._prodRedisInfo.prodNm,
-                            prodFee : this._prodRedisInfo.basFeeInfo,
-                            description : this._prodRedisInfo.prodSmryDesc,
-                            autoInfo : this._prodApiInfo,
-                            showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
-                        };
+                        popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
+                        userJoinInfo : userJoinInfo,
+                        prodId : this._prodId,
+                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
+                        processNm : Tw.PRODUCT_TYPE_NM.JOIN,
+                        prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
+                        svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
+                        prodNm : this._prodRedisInfo.prodNm,
+                        prodFee : this._prodRedisInfo.basFeeInfo,
+                        description : this._prodRedisInfo.prodSmryDesc,
+                        autoInfo : this._prodApiInfo,
+                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                   };
 
-        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,function () {
-
-        },null,'test');
+        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');
 
     }
 

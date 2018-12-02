@@ -31,7 +31,7 @@
                 <div class="charge-guide-wrap">
                     <div class="charge-cont">
 								<span class="sub-disc01">
-									<span class="elem">{{data.processNm}}할 {{data.prodType}}({{data.svcType}})</span>
+									<span class="elem">{{data.processNm}}할 {{data.prodType}} ({{data.svcType}})</span>
 								</span>
                         <span class="tit-tx">{{data.prodNm}}</span>
                         <span class="sub-disc03"><span class="tx-bold vbl">월 {{data.prodFee}}원</span> 부가세포함</span>
@@ -140,7 +140,7 @@
                                     </li>
                                     {{#ifCond data.autoInfo.stipulationInfo.scrbStplAgreeYn '===' 'Y'}}
                                     <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.scrbStplAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                 <p class="layout-text">
@@ -158,7 +158,7 @@
                                     {{/ifCond}}
                                     {{#ifCond data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeYn '===' 'Y'}}
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
@@ -176,7 +176,7 @@
                                     {{/ifCond}}
                                     {{#ifCond data.autoInfo.stipulationInfo.psnlInfoOfrAgreeYn '===' 'Y'}}
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
@@ -194,7 +194,7 @@
                                     {{/ifCond}}
                                     {{#ifCond data.autoInfo.stipulationInfo.adInfoOfrAgreeYn '===' 'Y'}}
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
@@ -237,7 +237,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button id="do_join">가입하기</button>
+                        <button id="do_join" disabled="disabled">가입하기</button>
                     </li>
                 </ul>
             </div>

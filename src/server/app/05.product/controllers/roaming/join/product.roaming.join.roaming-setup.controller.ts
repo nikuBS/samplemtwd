@@ -46,7 +46,8 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
             res.render('roaming/join/product.roaming.join.roaming-setup.html', {
                 svcInfo : this.loginService.getSvcInfo(),
                 prodRedisInfo : prodRedisInfo.summary,
-                prodApiInfo : prodApiInfo.result
+                prodApiInfo : prodApiInfo.result,
+                prodId : prodId
             });
         });
 

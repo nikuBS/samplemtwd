@@ -112,7 +112,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button  id="do_confirm">설정완료</button><!-- 활성화시 disabled 속성 삭제 -->
+                            <button disabled="disabled" id="do_confirm">설정완료</button><!-- 활성화시 disabled 속성 삭제 -->
                         </li>
                     </ul>
                 </div>
@@ -132,7 +132,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>);
+    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
 
   });
 </script>
