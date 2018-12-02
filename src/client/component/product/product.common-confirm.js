@@ -79,7 +79,6 @@ Tw.ProductCommonConfirm.prototype = {
   _setContainer: function(isPopup, $container) {
     this.$container = $container;
     this._cachedElement();
-    skt_landing.widgets.widget_init();
   },
 
   _joinCancel: function() {

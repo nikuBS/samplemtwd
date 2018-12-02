@@ -17,6 +17,8 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._sendCount = 0;
   this._isSend = false;
   this._isFirstSend = false;
+  this._nextEnableSendTime = null;
+  this._validatedNumber = null;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -58,7 +60,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     this._toggleClearBtn($(e.currentTarget));
-    this._toggleButton(this.$btnGetAuthCode, this.$inputNumber.val() > 0);
+    this._toggleButton(this.$btnGetAuthCode, this.$inputNumber.val() > 9);
+    this.$btnGetAuthCode.parent().toggleClass('disabled', this.$inputNumber.val() < 10);
   },
 
   _getAuthCode: function() {
@@ -71,6 +74,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
     if (this._isFirstSend && (new Date().getTime() > this._expireSendTime) && this._sendCount > 4) {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
+    }
+
+    if (!Tw.FormatHelper.isEmpty(this._nextEnableSendTime) && (this._nextEnableSendTime > new Date().getTime())) {
+      return this._setSendResultText(true, Tw.SMS_VALIDATION.WAIT_NEXT_TIME);
     }
 
     this.$sendMsgResult.hide();
@@ -97,10 +104,12 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
 
     this._sendCount++;
+    this._nextEnableSendTime = new Date().getTime() + 60000;
+
     if (!this._isFirstSend) {
       this._isSend = true;
       this._isFirstSend = true;
-      this._expireSendTime = new Date().getTime() + (3600 * 5);
+      this._expireSendTime = new Date().getTime() + (60000 * 5);
     }
   },
 
@@ -119,17 +128,40 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _reqValidateAuthCode: function() {
-    this._apiService.request(Tw.API_CMD.BFF_01_0063, {
-      authNum: this.$inputAuthCode.val()
-    }).done($.proxy(this._resValidateAuthCode, this));
+    // this._apiService.request(Tw.API_CMD.BFF_01_0063, {
+    //   authNum: this.$inputAuthCode.val()
+    // }).done($.proxy(this._resValidateAuthCode, this));
+
+    this._resValidateAuthCode({
+      'code': '00',
+      'msg': 'success',
+      'result': null
+    });
   },
 
   _resValidateAuthCode: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return this._setValidateResultText(true, resp.msg);
+      return this._setValidateResultText(true, this._replaceErrMsg(resp.code, resp.msg));
     }
 
     // @todo 인증 성공 후 동작 확인 중
+    this._isSend = false;
+    this._validatedNumber = this.$inputNumber.val().replace(/-/gi, '');
+
+    this._toggleButton(this.$btnValidate, false);
+    this._toggleButton(this.$btnSetupOk, true);
+  },
+
+  _replaceErrMsg: function(code, msg) {
+    if (code === 'SMS2007') {
+      return Tw.SMS_VALIDATION.NOT_MATCH_CODE;
+    }
+
+    if (code === 'SMS2008') {
+      return Tw.SMS_VALIDATION.EXPIRE_AUTH_TIME;
+    }
+
+    return msg;
   },
 
   _setValidateResultText: function(isError, text) {
@@ -199,19 +231,14 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _procConfirm: function() {
-    if (!Tw.ValidationHelper.isCellPhone(this.$inputNumber.val())) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
-    }
-
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
-      isMobilePlan: true,
+      isMobilePlan: false,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.PLANS,
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A3,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' 1' + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + Tw.FormatHelper.getFormattedPhoneNumber(this._validatedNumber)
       }]
     }), $.proxy(this._prodConfirmOk, this));
   },
@@ -222,10 +249,25 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     // prodId: this._prodId,
     //   prodProcTypeCd: 'JN',
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0012, {
-      asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
-      svcProdGrpId: Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.svcProdGrpId) ? '' : this._confirmOptions.preinfo.svcProdGrpId
+    this._apiService.request(Tw.API_CMD.BFF_10_0018, {
+      svcNumList: [this._getServiceNumberFormat(this._validatedNumber)]
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+  },
+
+  _getServiceNumberFormat: function(number) {
+    if (number.length === 10) {
+      return {
+        serviceNumber1: number.substr(0, 3),
+        serviceNumber2: number.substr(3, 3),
+        serviceNumber3: number.substr(6, 4)
+      };
+    }
+
+    return {
+      serviceNumber1: number.substr(0, 3),
+      serviceNumber2: number.substr(3, 4),
+      serviceNumber3: number.substr(7, 4)
+    };
   },
 
   _procJoinRes: function(resp) {
@@ -243,18 +285,16 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-        mytPage: 'fee-plan',
+        prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+        mytPage: 'additions',
         prodId: this._prodId,
-        prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
+        prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.toProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.toProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
+        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
+          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
-
-    this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
   _bindJoinResPopup: function($popupContainer) {
