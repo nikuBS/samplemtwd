@@ -134,9 +134,16 @@ Tw.ProductRoamingSearchBefore.prototype = {
       this._popupService.close();
       this.$container.find('.fe-roaming-mfactCd').text(cdName);
 
-      this._apiService.request(Tw.API_CMD.BFF_10_0059, { mfactCd: cdValue })
-          .done($.proxy(this._handleSuccessSearchModelResult, this))
-          .fail($.proxy(this._handleFailModelSearch, this));
+      this._onSearchModel(cdValue);
+  },
+  _onSearchModel: function (val) {
+    console.log('on search model info : params = ' + val);
+    var _param = {
+        mfactCd : val
+    };
+    this._apiService.request(Tw.API_CMD.BFF_10_0059, _param)
+        .done($.proxy(this._handleSuccessSearchModelResult, this))
+        .fail($.proxy(this._handleFailModelSearch, this));
   },
   _handleSuccessSearchModelResult : function (resp) {
     var _result = resp.result;

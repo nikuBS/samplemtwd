@@ -48,6 +48,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
   _findAddElement: function () {
       this.$rmAddBtn = this.$container.find('.bt-more > button');
       this.$rmPlanAddlist = this.$container.find('ul.recommendedrate-list');
+      this.$roamingAddItemCnt = this.$container.find('.fe-planadd-cnt');
   },
   _bindRoamingAddBtnEvents: function () {
       this.$container.on('click', '.bt-more > button', $.proxy(this._handleMoreRoamingAdd, this));
@@ -261,6 +262,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
           this.$rmAddBtn.addClass('none');
       }
       this.$rmPlanAddlist.append(this._rmListTmpl({ items: items }));
+      this.$roamingAddItemCnt.text(resp.result.productCount);
     },
     _getRmAddOrderType: function(idx) {
         var keys = Object.keys(this.ORDER),
