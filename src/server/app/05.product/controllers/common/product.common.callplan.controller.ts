@@ -2,15 +2,16 @@
  * FileName: product.common.callplan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.11
+ * @see prodTypCd (AB: 모바일 요금제, C: 모바일 부가서비스, D: 인터넷/TV/전화, E: 인터넷/TV/전화 부가서비스, F: 결합상품, G: 할인프로그램, H: 로밍)
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO } from '../../../../types/common.type';
+import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/common.type';
 import { DATA_UNIT, PRODUCT_TYP_CD_NAME, PRODUCT_TYPE_NM } from '../../../../types/string.type';
-import {PRODUCT_CALLPLAN_FLICK, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
+import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -21,6 +22,21 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * 요금제 비교하기 Redis 정보 호출
+   * @param prodTypCd
+   * @param compareIds
+   * @private
+   */
+  private _getMobilePlanCompareInfo(prodTypCd: any, compareIds: any): Observable<any> {
+    if (prodTypCd !== 'AB') {
+      return Observable.of({});
+    }
+
+    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + compareIds.join('/'));
+  }
+
+  /**
+   * 유사한 요금제 찾기
    * @param prodTypCd
    * @param prodId
    * @private
@@ -34,16 +50,17 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * 가입여부 확인
    * @param prodTypCd
    * @param prodId
    * @private
    */
   private _getIsJoined(prodTypCd: any, prodId: any): Observable<any> {
-    if (['C', 'E', 'F'].indexOf(prodTypCd) === -1) {
+    if (['C', 'E', 'F', 'G', 'H'].indexOf(prodTypCd) === -1) {
       return Observable.of({});
     }
 
-    if (prodTypCd === 'C') {
+    if (['C', 'G', 'H'].indexOf(prodTypCd) !== -1) {
       return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, prodId);
     }
 
@@ -55,6 +72,7 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * 모바일 부가서비스 카테고리 필터 리스트 Redis 호출
    * @param prodTypCd
    * @param prodId
    * @private
@@ -68,6 +86,7 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * 인터넷/TV/전화, 결합상품 구비서류 심사내역 조회
    * @param prodTypCd
    * @param prodId
    * @private
@@ -254,7 +273,7 @@ class ProductCommonCallplan extends TwViewController {
       return false;
     }
 
-    if (prodTypCd === 'C') {
+    if (['C', 'G', 'H'].indexOf(prodTypCd) !== -1) {
       return isJoinedInfo.result.isAdditionUse === 'Y';
     }
 
@@ -279,7 +298,7 @@ class ProductCommonCallplan extends TwViewController {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
         const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
           item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
-          isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN_FLICK.SEE_CONTENTS;
+          isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
         return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
           .reduce((a, b) => {
@@ -338,7 +357,7 @@ class ProductCommonCallplan extends TwViewController {
       currentTime = new Date().getTime() / 1000;
 
     return Object.assign(latestItem, {
-      isNeedDocument: nextSchdDtTime && (latestItem.abnSaleOpClCd === '000' && currentTime < nextSchdDtTime),
+      isNeedDocument: nextSchdDtTime && (latestItem.ciaInsptRslt === PRODUCT_CALLPLAN.CIA_INSPT_RSLT && currentTime < nextSchdDtTime),
       isExpired: nextSchdDtTime && (latestItem.abnSaleOpClCd === '000' && currentTime > nextSchdDtTime),
       isProcess: nextSchdDtTime && (FormatHelper.isEmpty(latestItem.abnSaleOpClCd) && currentTime < nextSchdDtTime)
     });
@@ -375,13 +394,15 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
           this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+          this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, [svcInfo.prodId, prodId]),
           this._getMobilePlanSimilarProducts(basicInfo.result.prodTypCd, prodId),
           this._getIsJoined(basicInfo.result.prodTypCd, prodId),
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
           this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([
           relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo,
-          mobilePlanSimilarProductInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
+          mobilePlanCompareInfo, mobilePlanSimilarProductInfo,
+          isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
@@ -403,6 +424,7 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             series: this._convertSeriesInfo(basicInfo.result.prodTypCd, seriesInfo.result), // 시리즈 상품
             recommends: recommendsInfo.result,  // 함께하면 유용한 상품
+            mobilePlanCompareInfo: mobilePlanCompareInfo, // 요금제 비교하기
             mobilePlanSimilarProductInfo: this._convertSimilarProduct(mobilePlanSimilarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
             additionsProdFilterInfo: additionsProdFilterInfo,  // 부가서비스 카테고리 필터 리스트
