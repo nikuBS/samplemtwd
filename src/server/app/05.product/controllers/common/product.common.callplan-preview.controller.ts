@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO } from '../../../../types/common.type';
 import { DATA_UNIT, PRODUCT_TYP_CD_NAME, PRODUCT_TYPE_NM } from '../../../../types/string.type';
-import {PRODUCT_CALLPLAN_FLICK, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
+import {PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -262,7 +262,7 @@ class ProductCommonCallplanPreview extends TwViewController {
       seriesProdList: seriesInfo.seriesProdList.map((item) => {
         const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
           item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
-          isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN_FLICK.SEE_CONTENTS;
+          isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
         return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
           .reduce((a, b) => {
