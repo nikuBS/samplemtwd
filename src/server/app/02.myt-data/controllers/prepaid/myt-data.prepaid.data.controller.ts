@@ -21,7 +21,7 @@ class MyTDataPrepaidData extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    //if (BrowserHelper.isApp(req)) {
+    if (BrowserHelper.isApp(req)) {
       Observable.combineLatest(
         this.getPPSInfo(),
         this.getEmailAddress()
@@ -42,11 +42,11 @@ class MyTDataPrepaidData extends TwViewController {
           });
         }
       });
-    // } else {
-    //   res.render('only.app.info.html', {
-    //     svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
-    //   });
-    // }
+    } else {
+      res.render('only.app.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
   private getPPSInfo(): Observable<any> {
