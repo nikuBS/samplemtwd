@@ -26,8 +26,8 @@ class MyTFareBillSmallMonthly extends TwViewController {
     };
 
     this.apiService.request(API_CMD.BFF_07_0073, query).subscribe((resp) => {
-      console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
-      this.logger.info(this, resp.code !== API_CODE.CODE_00, resp);      
+      // console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
+      this.logger.info(this, resp.code !== API_CODE.CODE_00, resp);
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           code: resp.code,

@@ -89,7 +89,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         if(this.searchKeyword === ''){
             this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
         }else {
-
             this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
                 .done($.proxy(this._handleSuccessSearchResult, this))
                 .fail($.proxy(this._handleFailSearchResult, this));

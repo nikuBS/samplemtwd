@@ -66,6 +66,11 @@ Tw.MyTJoinWireHistory.prototype = {
    * @private
    */
   _initListUi: function(initData) {
+    if(!initData || initData.length === 0){
+      this._listNoData = $('#no-data-tmplt').html();
+      $('#cont-boxes').html(this._listNoData);
+      return;
+    }
 
     // init templates
     this._listContBox = $('#list-cont-box-tmplt').html();

@@ -143,6 +143,7 @@ export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
 }
 
 export enum PRODUCT_RESERVATION_TYPE_NM {
+  title = '가입 상담 예약',
   cellphone = '휴대폰',
   internet = '인터넷',
   phone = '전화',
@@ -185,20 +186,6 @@ export const MYT_FARE_BILL_REISSUE_TYPE = {
 export const MYT_INFO_DISCOUNT_MONTH = {
   TITLE: '월별 상세 할인 내역'
 };
-
-export enum PRODUCT_TYPE {
-  FEE_INFO_ETC = '상세참조'
-}
-
-export enum PRODUCT_CTG_NAME {
-  F01100 = '요금제',
-  F01200 = '부가서비스',
-  F01300 = '인터넷/전화/IPTV',
-  F01400 = '혜택ㆍ할인',
-  F01500 = 'T로밍 요금제',
-  F01600 = 'T로밍 부가서비스',
-  F01700 = 'T apps'
-}
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
@@ -336,6 +323,10 @@ export const MYT_DATA_COMPLETE_MSG = {
   DATA_RECHARGE_AUTO: '데이터 자동 충전 신청 완료',
   DATA_RECHARGE_CHANGE: '데이터 자동 충전 변경 완료',
   DATA_RECHARGE_CANCEL: '데이터 자동 충전 해지 완료',
+  VOICE_RECHARGE: '음성 충전 완료',
+  VOICE_RECHARGE_AUTO: '음성 자동 충전 신청 완료',
+  VOICE_RECHARGE_CHANGE: '음성 자동 충전 변경 완료',
+  VOICE_RECHARGE_CANCEL: '음성 자동 충전 해지 완료',
   DESCRIPTION: '데이터 1MB 이하 또는<br />사용기간 만료 1일 전일 때 자동 충전됩니다.',
   HISTORY: '충전내역 보기'
 };
@@ -447,17 +438,29 @@ export const BRANCH_SEARCH_OPTIONS = {
 };
 
 export const PRODUCT_TYPE_NM = {
+  CALLPLAN: '상품 상세 정보',
   JOIN: '가입',
   CHANGE: '변경',
   TERMINATE: '해지',
-  SETTING: '설정'
+  SETTING: '설정',
+  LOOKUP: {
+    TPLAN: '혜택이용내역'
+  }
 };
+
+export const PRODUCT_CALLPLAN_FEEPLAN = '부가세포함';
 
 export const PRODUCT_CTG_NM = {
   PLANS: '요금제',
   ADDITIONS: '부가서비스',
   DISCOUNT_PROGRAM: '할인프로그램',
   COMBINATIONS: '결합상품'
+};
+
+export const PRODUCT_SIMILAR_PRODUCT = {
+  PRODUCT: '상품을',
+  PLANS: '요금제를',
+  ADDITIONS: '부가서비스를'
 };
 
 export const MYT_SUSPEND_STATE = {
@@ -518,6 +521,25 @@ export const PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
   MONTH_TXT: '{0}개월',
   RECENT_AVG_TXT: '최근 {0} 평균',
   RECENT_MAX_TXT: '최근 {0} 최대',
+};
+
+export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
+  page001: '스미싱 피해예방 안내',
+  page002: '메모리 해킹 주의보',
+  page003: '파밍 피해 예방법',
+  page004: '클라우드 보안 방법',
+  page005: '스마트폰 보안 수칙',
+  page006: '스팸 메시지 대응 방법',
+  page007: '로그인 제한 제도',
+  page008: '휴면 고객 제도',
+  page009: 'Tworld 비밀번호 관리',
+  page010: '개인정보 유효기간',
+  page011: '가려진 정보보기(마스킹)',
+  page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',
+  page013: '명의도용 피해예방법',
+  page014: '결합상품 피해예방법',
+  page015: '소액결제 피해예방법',
+  page016: '해외 로밍 피해예방법'
 };
 
 export const ROAMING_RECEIVE_CENTER = {

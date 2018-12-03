@@ -8,6 +8,7 @@ Tw.Init = function () {
   // this._getDeviceInfo();
   this._getEnvironment();
   this._apiService.setSession();
+  this._setXtvid();
 };
 
 Tw.Init.prototype = {
@@ -35,6 +36,8 @@ Tw.Init.prototype = {
       Tw.Environment = result;
       Tw.Logger.info('[Version]', result.version);
       Tw.Popup = new Tw.PopupService();
+      $(window).trigger('env');
+
       if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
         /* jshint undef: false */
         // alert(result.version);
@@ -65,6 +68,25 @@ Tw.Init.prototype = {
   },
   _successSetDevice: function (resp) {
     console.log(resp);
+  },
+
+  _setXtvid: function() {
+    if (Tw.FormatHelper.isEmpty(document.cookie) || !Tw.BrowserHelper.isApp()) {
+      return;
+    }
+
+    var XTVID = null;
+    _.each(document.cookie.split(';'), function(cookieItem) {
+      var cookieItemToken = cookieItem.split('=');
+      if (cookieItemToken[0] === 'XTVID') {
+        XTVID = cookieItemToken[1];
+        return false;
+      }
+    });
+
+    if (!Tw.FormatHelper.isEmpty(XTVID)) {
+      this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: XTVID });
+    }
   }
 
 };

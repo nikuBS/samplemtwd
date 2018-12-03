@@ -69,7 +69,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$presentBtn.on('click', $.proxy(this._onTPresentDetail, this));
     }
     // T가족모아 배너
-    if ( this.$familymoaBanner.length > 0 ) {
+    if ( this.data.family ) {
       this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
     if ( this.data.refill ) {
@@ -120,6 +120,8 @@ Tw.MyTDataSubMain.prototype = {
 
   __convFormat: function (data, unit) {
     switch ( unit ) {
+      case Tw.UNIT_E.FEE:
+        return Tw.FormatHelper.convSpDataFormat(data, Tw.UNIT[unit]);
       case Tw.UNIT_E.DATA:
         return Tw.FormatHelper.convDataFormat(data, Tw.UNIT[unit]);
       case Tw.UNIT_E.VOICE:

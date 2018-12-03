@@ -47,6 +47,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$selectBtn.on('click', $.proxy(this._openChangeHistories, this));
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.data-tx', $.proxy(this._handleShowDetail, this));
+    this.$container.on('click', '.bt-link-tx.red', $.proxy(this._openCancel, this));
   },
 
   _cachedElement: function() {
@@ -149,7 +150,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       $exist = this.$container.find('.list-box[data-type="' + type + '"][data-key="' + key + '"]');
 
     if ($exist.length > 0) {
-      $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName }));
+      $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName, pageNum: this._pageCount[type] }));
       idx--;
     }
 
@@ -167,6 +168,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
         date: histories[key][0].date,
         type: type,
         key: key,
+        pageNum: this._pageCount[type],
         typeName: typeName
       });
     }
@@ -214,5 +216,30 @@ Tw.MyTDataPrepaidHistory.prototype = {
     });
 
     this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });
+  },
+
+  _openCancel: function(e) {
+    var code = e.currentTarget.getAttribute('data-charge-code'),
+      id = e.currentTarget.getAttribute('data-cancel-id'),
+      pageNum = e.currentTarget.getAttribute('data-page-number');
+
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, id, pageNum, code));
+  },
+
+  _handleCancel: function(id, pageNum, code) {
+    if (Tw.FormatHelper.isEmpty(code)) {
+      this._apiService
+        .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: this.DEFAULT_COUNT })
+        .done($.proxy(this._handleSuccessCancel, this));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code }).done($.proxy(this._handleSuccessCancel, this));
+    }
+    this._popupService.close();
+  },
+
+  _handleSuccessCancel: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   }
 };

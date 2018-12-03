@@ -157,7 +157,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    if (!Tw.FormatHelper.isEmpty(resp.result.ciaInsptRsnCd)) {
+    if (!Tw.FormatHelper.isEmpty(resp.result.necessaryDocumentInspectInfoList)) {
       this.$combineIsExists.show();
     }
   },

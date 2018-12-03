@@ -59,7 +59,9 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 실시간요금버튼
-    this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
+    if (this.data.isNotFirstDate) {
+      this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
+    }
     if ( this.data.nonpayment ) {
       // 미납요금버튼
       this.$nonPayment = this.$container.find('button[data-id=non-payment]');
@@ -126,7 +128,9 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 실시간요금버튼
-    this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
+    if (this.data.isNotFirstDate) {
+      this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
+    }
     if ( this.data.nonpayment ) {
       // 미납요금버튼
       this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
@@ -349,8 +353,11 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
-    this.loadingView(true, 'button[data-id=realtime-pay]');
-    this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
+    // 매월 1일은 비노출
+    if ( this.data.isNotFirstDate ) {
+      this.loadingView(true, 'button[data-id=realtime-pay]');
+      this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
+    }
   },
 
   // 실시간 사용요금 요청-2

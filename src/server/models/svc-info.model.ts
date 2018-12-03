@@ -1,5 +1,6 @@
 export interface ISvcInfo {
   svcMgmtNum: string;       // 서비스 관리번호
+  xtSvcMgmtNum: string;     // xtractor 암호화 서비스 관리번호
   svcNum: string;           // 서비스 번호
   svcGr: string;            // 서비스 등급
   svcAttrCd: string;        // 서비스 속석
@@ -14,6 +15,10 @@ export interface ISvcInfo {
   motpUsableYn: string;     // MOTP 사용가능 여부
   totalSvcCnt: string;      // 전체 회선수
   expsSvcCnt: string;       // 등록된 회선수
+  svcStCd: string;          // 현재서비스의 서비스상태코드
+  eqpMdlNm: string;         // 펫네임
+  svcScrbDt: string;        // 가입일자
+  svcLastUpdDtm: string;    // 최종변경일시
   mbrNm: string;            // 고객명
   loginType: string;        // 로그인 형태  E: 간편로그인 T: TID 로그인
   noticeType: string;
@@ -21,6 +26,7 @@ export interface ISvcInfo {
 
 export class SvcInfoModel implements ISvcInfo {
   svcMgmtNum: string = '';
+  xtSvcMgmtNum: string = '';
   svcNum: string = '';
   svcGr: string = '';
   svcAttrCd: string = '';
@@ -35,12 +41,17 @@ export class SvcInfoModel implements ISvcInfo {
   motpUsableYn: string = '';
   totalSvcCnt: string = '';
   expsSvcCnt: string = '';
+  svcStCd: string = '';
+  eqpMdlNm: string = '';
+  svcScrbDt: string = '';
+  svcLastUpdDtm: string = '';
   mbrNm: string = '';
   loginType: string = '';
   noticeType: string = '';
 
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
+    this.xtSvcMgmtNum = object.xtSvcMgmtNum || this.xtSvcMgmtNum;
     this.svcNum = object.svcNum || this.svcNum;
     this.svcGr = object.svcGr || this.svcGr;
     this.svcAttrCd = object.svcAttrCd || this.svcAttrCd;
@@ -55,6 +66,10 @@ export class SvcInfoModel implements ISvcInfo {
     this.motpUsableYn = object.motpUsableYn || this.motpUsableYn;
     this.totalSvcCnt = object.totalSvcCnt || this.totalSvcCnt;
     this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
+    this.svcStCd = object.svcStCd || this.svcStCd;
+    this.eqpMdlNm = object.eqpMdlNm || this.eqpMdlNm;
+    this.svcScrbDt = object.svcScrbDt || this.svcScrbDt;
+    this.svcLastUpdDtm = object.svcLastUpdDtm || this.svcLastUpdDtm;
     this.mbrNm = object.mbrNm || this.mbrNm;
     this.loginType = object.loginType || this.loginType;
     this.noticeType = object.noticeType || this.noticeType;

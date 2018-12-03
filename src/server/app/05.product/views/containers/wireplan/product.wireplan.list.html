@@ -28,18 +28,18 @@
             <div class="container">
                 <!-- 사용중인 상품 -->
                 <% if (myWire) { %>
-                <div class="cont-box noborder gaps-style01">
-                    <div class="submain-myfeeproducts-wrap">
-                        <!-- <a href="#" class="submain-myfeeproducts">
-                                <h3 class="title">사용중인 상품</h3>
-                                <p class="text">band 데이터 퍼펙트S</p>
-                            </a> -->
-                        <a type="button" class="submain-myfeeproducts" href="/myt-join/myplan">
-                            <h3 class="title">사용중인 상품</h3>
-                            <p class="text"><span class="tx-bold"><%= myWire.productJoinsInfo.recentlyJoinsProdNm %></span><% if (myWire.productJoinsInfo.productCount > 0) { %> 외 <%= myWire.productJoinsInfo.productCount %>건<% } %></p>
-                        </a>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- my -->
+                <div class="cont-box nogaps">
+                    <div class="calling-plan">
+                        <button class="wrap-link">
+                            <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                            <span class="stit"><%= myWire.productJoinsInfo.recentlyJoinsProdNm %><% if (myWire.productJoinsInfo.productCount > 0) { %> 외 <%= myWire.productJoinsInfo.productCount %>건<% } %></span>
+                        </button>
                     </div>
                 </div>
+                <!--//my -->
                 <% } %>
                 <!--//사용중인 상품 -->
 
@@ -106,6 +106,46 @@
                 </div>
                 <% } %>
                 <!-- //인터넷 요금제  -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                
+                <!-- 다른 페이지를 찾고 계신가요? -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+                        <li>
+                            <a href="/product/mobileplan">
+                                <i class="icon-price-plan-40"><span class="blind">price plan</span></i>
+                                요금제
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/product/mobileplan-add">
+                                <i class="icon-price-plan-40"><span class="blind">price plan</span></i>
+                                부가서비스
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/product/roaming">
+                                <i class="icon-roaming-40"><span class="blind">my</span></i>
+                                T로밍
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/benefit/submain">
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>
+                                혜택 &middot; 할인 &gt; 요금 할인
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/benefit/submain">
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>
+                                혜택 &middot; 할인 &gt; 결합 할인  
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //다른 페이지를 찾고 계신가요? -->
 
                 <!-- cont-box -->
                 <div class="cont-box">

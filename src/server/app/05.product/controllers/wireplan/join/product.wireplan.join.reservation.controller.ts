@@ -16,13 +16,13 @@ class ProductWireplanJoinReservation extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const typeCd = req.query.type_cd || null,
+    const typeCd = req.query.type_cd || 'internet',
       prodId = req.query.prod_id || null;
 
     if (FormatHelper.isEmpty(typeCd) || FormatHelper.isEmpty(PRODUCT_RESERVATION_TYPE_NM[typeCd])) {
       return this.error.render(res, {
         svcInfo: svcInfo,
-        title: '가입 상담 예약'
+        title: PRODUCT_RESERVATION_TYPE_NM.title
       });
     }
 

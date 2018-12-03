@@ -38,14 +38,15 @@ Tw.ProductList.prototype = {
   },
 
   bindEvent: function() {
-    this.$container.on('click', '.bt-more > button', $.proxy(this._handleLoadMore, this));
+    this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.fe-select-order', $.proxy(this._openOrderPopup, this));
     this.$container.on('click', '.fe-select-filter', $.proxy(this._handleClickChangeFilters, this));
   },
 
   cachedElement: function() {
-    this.$moreBtn = this.$container.find('.bt-more > button');
-    this.$list = this.$container.find('ul.recommendedrate-list');
+    this.$total = this.$container.find('.number-text');
+    this.$moreBtn = this.$container.find('.extraservice-more > button');
+    this.$list = this.$container.find('ul.extraservice-list');
   },
 
   _handleLoadMore: function() {
@@ -58,21 +59,7 @@ Tw.ProductList.prototype = {
       return;
     }
 
-    var items = _.map(resp.result.products, function(item) {
-      if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
-        item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
-        item.isMonthly = true;
-      } else if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
-        item.basFeeInfo = Tw.FormatHelper.addComma(item.basFeeInfo);
-        item.isMonthly = true;
-      }
-
-      item.basOfrDataQtyCtt = item.basOfrDataQtyCtt ? Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt) : '-';
-      item.basOfrVcallTmsCtt = item.basOfrVcallTmsCtt ? Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt) : '-';
-      item.basOfrCharCntCtt = item.basOfrCharCntCtt ? Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt) : '-';
-
-      return item;
-    });
+    var items = _.map(resp.result.products, $.proxy(this._mapProperData, this));
 
     this._params.searchLastProdId = items[items.length - 1].prodId;
     this._leftCount = (this._leftCount || resp.result.productCount) - items.length;
@@ -87,6 +74,22 @@ Tw.ProductList.prototype = {
     }
 
     this.$list.append(this._listTmpl({ items: items }));
+  },
+
+  _mapProperData: function(item) {
+    if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
+      item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
+      item.isMonthly = true;
+    } else if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
+      item.basFeeInfo = Tw.FormatHelper.addComma(item.basFeeInfo);
+      item.isMonthly = true;
+    }
+
+    item.basOfrDataQtyCtt = this._isEmptyAmount(item.basOfrDataQtyCtt) ? null : Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt);
+    item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
+    item.basOfrCharCntCtt = this._isEmptyAmount(item.basOfrCharCntCtt) ? null : Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
+
+    return item;
   },
 
   _openOrderPopup: function() {
@@ -271,6 +274,10 @@ Tw.ProductList.prototype = {
       delete this._leftCount;
       this.$list.empty();
 
+      if (this.$total.length > 0) {
+        this.$total.text(resp.result.productCount);
+      }
+
       if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
         var filters = resp.result.searchOption.searchFltIds;
         var $filters = this.$container.find('.fe-select-filter');
@@ -302,5 +309,9 @@ Tw.ProductList.prototype = {
     }
 
     this._history.goLoad('/product/' + this.TYPE + '?tag=' + selectedTag);
+  },
+
+  _isEmptyAmount: function(value) {
+    return !value || value === '' || value === '-';
   }
 };

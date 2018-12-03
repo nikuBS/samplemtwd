@@ -2,7 +2,7 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box nogaps noborder">
-    <div class="prCont">
+    <div class="prCont fe-contents">
     <% if ( prodRedisInfo.contents.LA ) { %>
     <%- prodRedisInfo.contents.LA %>
     <% } %>
@@ -16,7 +16,7 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box">
-    <div class="plm"><%- prodRedisInfo.contents.PLM_FIRST %></div>
+    <div class="plm fe-contents"><%- prodRedisInfo.contents.PLM_FIRST %></div>
 </div>
 <% } %>
 
@@ -29,7 +29,7 @@
         <% for (var i in prodRedisInfo.contents.LIST) { %>
         <li>
             <div class="link-long">
-                <button class="fe-btn_contents_detail" data-contents="<%= i %>">
+                <button class="fe-btn_contents_detail" data-contents_idx="<%= i %>">
                     <%= prodRedisInfo.contents.LIST[i].titleNm %>
                     <span class="tx-sub">
                         <span class="ico"><span class="blind">보기</span></span>

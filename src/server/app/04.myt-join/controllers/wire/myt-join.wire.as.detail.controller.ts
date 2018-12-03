@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_JOIN_WIRE } from '../../../../types/string.type';
+import StringHelper from '../../../../utils/string.helper';
 
 
 class MyTJoinWireASDetail extends TwViewController {
@@ -31,22 +32,25 @@ class MyTJoinWireASDetail extends TwViewController {
     const troubleDetail = req.query.troubleDetail;
 
     if ( !troubleNum ) {
-      console.log(' troubleNum is not defined');
+      this.error.render(res, {
+        title: MYT_JOIN_WIRE.AS_DETAIL.TITLE,
+        svcInfo: svcInfo
+      });
       return;
     }
 
     this.apiService.request(API_CMD.BFF_05_0157, { troubleNum : troubleNum })
       .subscribe((resp) => {
-        /*resp = {
+        /*const resp = {
           'code': '00',
           'msg': 'success',
           'result': {
             'custNm': '고객명',
-            'cntcNum': '연락전화번호',
+            'cntcNum': '01011112222',
             'addrNm': '설치주소',
             'mvotOperCoId': '출동작업업체ID',
             'mvotOperCoNm': '출동작업업체명',
-            'coPhonNum': '출동작업업체전화번호',
+            'coPhonNum': '03151514848',
             'mvotCoFnshOpertrId': '행복기사사번',
             'mvotCoFnshOpertrNm': '행복기사명',
             'opertrPhonNum': '행복기사전화번호',
@@ -62,6 +66,7 @@ class MyTJoinWireASDetail extends TwViewController {
           data['stNm'] = stNm;
           data['troubleDetail'] = troubleDetail;
           data['operSchdDtm'] = DateHelper.getFullDateAndTime(data['operSchdDtm']);
+          data['cntcNum'] = StringHelper.phoneStringToDash(data['cntcNum']);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: data};
 

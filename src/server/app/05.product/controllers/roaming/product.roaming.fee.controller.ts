@@ -60,6 +60,7 @@ export default class ProductRoaming extends TwViewController {
             if ( resp.code === API_CODE.CODE_00 ) {
                 return {
                     ...resp.result,
+                    productCount : resp.result.productCount,
                     products: resp.result.products.map(roamingPlan => {
                         return {
                             ...roamingPlan,

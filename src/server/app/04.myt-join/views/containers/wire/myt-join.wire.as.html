@@ -20,7 +20,7 @@
     <%- include('../../../../../common/views/components/header.component.html', { title: '장애 A/S신청 현황', svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
 
@@ -70,13 +70,26 @@
                     <button>더보기</button>
                 </div>
             </script>
+
+            <script id="no-data-tmplt" type="text/x-handlebars-template">
+                <div class="cont-box nogaps">
+                    <div class="contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">장애 A/S 신청 내역이 없습니다.</p>
+                    </div>
+                </div>
+            </script>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- TBD -->
-            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
-            <!--// TBD -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list">
+                    <li>장애 A/S 방문 취소 <button id="MS_04_01_03_tip_01" type="button" class="tip-view" title="장애 A/S 방문 취소" aria-haspopup="true">TIP</button></li>
+                    <li>106을 통해 장애 A/S 신청한 경우 <button id="MS_04_01_03_tip_02" type="button" class="tip-view" title="106을 통해 장애 A/S 신청한 경우" aria-haspopup="true">TIP</button></li>
+                </ul>
+            </div>
         </div>
     </div>
     <!--// #contents -->
@@ -87,7 +100,7 @@
 </div>
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinWireAS($('#contents'), decodeURIComponent('<%= JSON.stringify(data) %>').replace(/&#34;/g, '"'));
+    new Tw.MyTJoinWireAS($('.wrap'), '<%- JSON.stringify(data) %>');
   });
 </script>
 

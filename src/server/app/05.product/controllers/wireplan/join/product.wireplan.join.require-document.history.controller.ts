@@ -88,10 +88,18 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
         }));
       }
 
-      this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.svcProdCd)
+      if (reqDocInfo.result.necessaryDocumentInspectInfoList.length < 1) {
+        return this.error.render(res, renderCommonInfo);
+      }
+
+      this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd)
         .subscribe((prodRedisInfo) => {
+          if (FormatHelper.isEmpty(prodRedisInfo)) {
+            return this.error.render(res, renderCommonInfo);
+          }
+
           res.render('wireplan/join/product.wireplan.join.require-document.history.html', Object.assign(renderCommonInfo, {
-            reqDocInfo: this._convertReqDocInfo(reqDocInfo.result),
+            reqDocInfo: this._convertReqDocInfo(reqDocInfo.result.necessaryDocumentInspectInfoList[0]),
             prodRedisInfo: prodRedisInfo
           }));
         });

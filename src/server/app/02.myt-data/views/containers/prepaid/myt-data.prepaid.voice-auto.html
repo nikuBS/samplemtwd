@@ -26,47 +26,50 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
-            <!--<div class="cont-box">-->
-            <!--<div class="unpaid-charges">-->
-            <!--<dl class="total-box">-->
-            <!--<dt>현재 카드 잔액</dt>-->
-            <!--<dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span-->
-            <!--class="ff-tg-medium">원</span></dd>-->
-            <!--</dl>-->
-            <!--<p class="ctext3 mb20">매월 15일 자동 충전</p>-->
-            <!--<ul class="point-box mb20">-->
-            <!--<li>-->
-            <!--<dl>-->
-            <!--<dt>발신 기간-->
-            <!--<button class="tip-view">TIP</button>-->
-            <!--</dt>-->
-            <!--<dd><%-convertDate(PPSInfo.obEndDt)%></dd>-->
-            <!--</dl>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<dl>-->
-            <!--<dt>수신 기간</dt>-->
-            <!--<dd><%-convertDate(PPSInfo.inbEndDt)%></dd>-->
-            <!--</dl>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<dl>-->
-            <!--<dt>번호 유지 기간</dt>-->
-            <!--<dd><%-convertDate(PPSInfo.numEndDt)%></dd>-->
-            <!--</dl>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--<ul class="bt-slice">-->
-            <!--<li class="bt-blue1">-->
-            <!--<button class="fe-unsubscribe-auto-recharge">자동 충전 해지</button>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</div>-->
+            <div class="cont-box">
+                <div class="unpaid-charges">
+                    <dl class="total-box">
+                        <dt>현재 카드 잔액</dt>
+                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span
+                            class="ff-tg-medium">원</span></dd>
+                    </dl>
+                    <% if ( AutoInfo ) { %>
+                    <p class="ctext3 mb20">매월 15일 자동 충전</p>
+                    <% } %>
+                    <ul class="point-box mb20">
+                        <li>
+                            <dl>
+                                <dt>발신 기간
+                                    <button class="tip-view">TIP</button>
+                                </dt>
+                                <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>수신 기간</dt>
+                                <dd><%-convertDate(PPSInfo.inbEndDt)%></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>번호 유지 기간</dt>
+                                <dd><%-convertDate(PPSInfo.numEndDt)%></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% if ( AutoInfo ) { %>
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button class="fe-unsubscribe-auto-recharge">자동 충전 해지</button>
+                        </li>
+                    </ul>
+                    <% } %>
+                </div>
+            </div>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true">
-
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <!-- .list-comp-input -->
@@ -110,7 +113,8 @@
                         <li>
                             <label class="tit" for="formInput01">충전금액</label>
                             <span class="inputbox">
-                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span
+                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true"
+                                            required>금액 선택<span
                                         class="ico"></span></button>
                                 </span>
                         </li>
@@ -119,7 +123,9 @@
                             <div class="option-box">
                                 <div>
                                     매월
-                                    <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date" title="날짜 선택" aria-haspopup="true" required>날짜 선택</button>
+                                    <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date" title="날짜 선택"
+                                            aria-haspopup="true" required>날짜 선택
+                                    </button>
                                     마다 충전
                                 </div>
                             </div>
@@ -128,7 +134,7 @@
                             <label class="tit" for="formInput03">자동 충전 유효기간</label>
                             <span class="inputbox">
                     <span class="input">
-                        <input class="fe-select-expire"  type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
+                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
                     </span>
                 </span>
                         </li>
@@ -157,16 +163,6 @@
                         </span>
                     </span>
                             </div>
-                        </li>
-                        <li>
-                            <label class="tit" for="formInput06">카드 비밀번호</label>
-                            <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-card-pw" id="formInput06" type="number" placeholder="앞 2자리" title="카드 비밀번호 입력란" value=""
-                               aria-labelledby="aria-exp-label4" maxlength="2">
-                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                    </span>
-                </span>
                         </li>
                     </ul>
                 </div>
@@ -200,7 +196,8 @@
             <li>
                 <label class="tit" for="formInput01">충전금액</label>
                 <span class="inputbox">
-                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span
+                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true"
+                                            required>금액 선택<span
                                         class="ico"></span></button>
                                 </span>
             </li>
@@ -209,7 +206,9 @@
                 <div class="option-box">
                     <div>
                         매월
-                        <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date" title="날짜 선택" aria-haspopup="true" required>날짜 선택</button>
+                        <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date" title="날짜 선택" aria-haspopup="true"
+                                required>날짜 선택
+                        </button>
                         마다 충전
                     </div>
                 </div>
@@ -218,45 +217,43 @@
                 <label class="tit" for="formInput03">자동 충전 유효기간</label>
                 <span class="inputbox">
                     <span class="input">
-                        <input class="fe-select-expire"  type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
+                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
                     </span>
                 </span>
             </li>
             <li>
-                <label class="tit" for="formInput04">카드번호</label>
+                <label class="tit" for="formInput02">카드번호</label>
                 <span class="inputbox">
                     <span class="input">
-                        <input class="fe-card-number" id="formInput04" type="number" placeholder="숫자만 입력" title="카드번호 입력" requried>
-                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        <input class="fe-card-number" id="formInput02" type="number"
+                               placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
+                               value="" required>
+                        <button class="cancel" style="display: none;">
+                            <span class="blind">삭제</span>
+                        </button>
                     </span>
                 </span>
             </li>
             <li>
-                <label class="tit" for="formInput05">유효기간</label>
+                <label class="tit" for="formInput03">유효기간</label>
                 <div class="input-wrap-half">
                     <span class="inputbox">
                         <span class="input">
-                            <input class="fe-card-y" id="formInput05" type="number" placeholder="YYYY" title="유효 년" maxlength="4">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            <input class="fe-card-y" id="formInput03" type="number" placeholder="YYYY"
+                                   title="유효 년" maxlength="4" value="" required>
+                            <button class="cancel" style="display: none;"><span
+                                class="blind">삭제</span></button>
                         </span>
                     </span>
                     <span class="inputbox">
                         <span class="input">
-                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월" maxlength="2">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월"
+                                   maxlength="2" value="" required>
+                            <button class="cancel" style="display: none;"><span
+                                class="blind">삭제</span></button>
                         </span>
                     </span>
                 </div>
-            </li>
-            <li>
-                <label class="tit" for="formInput06">카드 비밀번호</label>
-                <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-card-pw" id="formInput06" type="number" placeholder="앞 2자리" title="카드 비밀번호 입력란" value=""
-                               aria-labelledby="aria-exp-label4" maxlength="2">
-                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                    </span>
-                </span>
             </li>
         </ul>
     </div>
@@ -268,16 +265,18 @@
             <li>
                 <label class="tit" for="formInput01">충전금액</label>
                 <span class="inputbox">
-                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true">금액 선택<span
-                                        class="ico"></span></button>
-                                </span>
+                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true">금액 선택<span
+                        class="ico"></span></button>
+                </span>
             </li>
             <li>
                 <label class="tit" for="formInput02">충전 방식</label>
                 <div class="option-box">
                     <div>
                         잔액이
-                        <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount" title="금액 선택" aria-haspopup="true">금액 선택</button>
+                        <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount" title="금액 선택"
+                                aria-haspopup="true">금액 선택
+                        </button>
                         이하 시 충전
                     </div>
                 </div>
@@ -285,46 +284,44 @@
             <li>
                 <label class="tit" for="formInput03">자동 충전 유효기간</label>
                 <span class="inputbox">
-                                    <span class="input">
-                                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03">
-                                    </span>
-                                </span>
+                    <span class="input">
+                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03">
+                    </span>
+                </span>
             </li>
             <li>
-                <label class="tit" for="formInput04">카드번호</label>
+                <label class="tit" for="formInput02">카드번호</label>
                 <span class="inputbox">
-                                    <span class="input">
-                                        <input class="fe-card-number" id="formInput04" type="number" placeholder="숫자만 입력" title="카드번호 입력">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
+                    <span class="input">
+                        <input class="fe-card-number" id="formInput02" type="number"
+                               placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
+                               value="" required>
+                        <button class="cancel" style="display: none;">
+                            <span class="blind">삭제</span>
+                        </button>
+                    </span>
+                </span>
             </li>
             <li>
-                <label class="tit" for="formInput05">유효기간</label>
+                <label class="tit" for="formInput03">유효기간</label>
                 <div class="input-wrap-half">
-                                    <span class="inputbox">
-                                        <span class="input">
-                                            <input class="fe-card-y" id="formInput05" type="number" placeholder="YYYY" title="유효 년" maxlength="4">
-                                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                        </span>
-                                    </span>
                     <span class="inputbox">
-                                        <span class="input">
-                                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월" maxlength="2">
-                                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                        </span>
-                                    </span>
+                        <span class="input">
+                            <input class="fe-card-y" id="formInput03" type="number" placeholder="YYYY"
+                                   title="유효 년" maxlength="4" value="" required>
+                            <button class="cancel" style="display: none;"><span
+                                class="blind">삭제</span></button>
+                        </span>
+                    </span>
+                    <span class="inputbox">
+                        <span class="input">
+                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월"
+                                   maxlength="2" value="" required>
+                            <button class="cancel" style="display: none;"><span
+                                class="blind">삭제</span></button>
+                        </span>
+                    </span>
                 </div>
-            </li>
-            <li>
-                <label class="tit" for="formInput06">카드 비밀번호</label>
-                <span class="inputbox">
-                                    <span class="input">
-                                        <input class="fe-card-pw" id="formInput06" type="number" placeholder="앞 2자리" title="카드 비밀번호 입력란" value=""
-                                               aria-labelledby="aria-exp-label4" maxlength="2">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
             </li>
         </ul>
     </div>

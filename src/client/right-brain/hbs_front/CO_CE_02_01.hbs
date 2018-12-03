@@ -16,10 +16,20 @@
                 <!-- .cont-box -->
                 <div class="cont-box bgnone">
                     <div class="box-certifi-card">
-                        {{#if data.tidLogin}}
-                        <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
+                        {{#if data.isWelcome}}
+                            {{#if data.sLogin}}
+                                <p class="certifi-ti-big pt8">간편 로그인으로는 이용하실 수 없는 서비스 입니다.<br />서비스를 이용하시려면 아래 인증방법 중 하나를 선택해 주세요.</p>
+                            {{else if data.masking}}
+                                <p class="certifi-ti-big pt8">
+                                    고객님의 정보 보호를 위해 본인인증을 하셔야 가려진 정보를 조회하실 수 있습니다.<br />
+                                    한번만 인증하시면 로그아웃 전까지 가려진 정보들을 모두 보실 수 있습니다.<br />
+                                    서비스를 이용하시려면 아래 인증방법 중 하나를 선택해 주세요.
+                                </p>
+                            {{else}}
+                                <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
+                            {{/if}}
                         {{else}}
-                        <p class="certifi-ti-big pt8">간편 로그인으로는 이용하실 수 없는 서비스 입니다.<br />서비스를 이용하시려면 아래 인증방법 중 하나를 선택해 주세요.</p>
+                            <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
                         {{/if}}
                         <ul class="certifi-card-list mt28 {{data.cntClass}}"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
                             {{#if data.skSms}}

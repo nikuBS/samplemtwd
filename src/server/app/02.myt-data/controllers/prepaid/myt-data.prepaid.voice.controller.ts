@@ -17,97 +17,38 @@ class MyTDataPrepaidVoice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const page = req.params.page;
-    const responseData = {
-      svcInfo: svcInfo,
-      isApp: BrowserHelper.isApp(req)
-    };
-
-    switch ( page ) {
-      case 'auto':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.voice-auto.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      case 'voice-complete':
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.voice.complete.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      default:
-        this.getPPSInfo().subscribe((result) => {
-          res.render(
-            'prepaid/myt-data.prepaid.voice.html', Object.assign(responseData, {
-              PPSInfo: result,
-              convertDate: this.convertDate,
-              convertAmount: this.convertAmount
-            })
-          );
-        });
-        break;
-      // Observable.combineLatest(
-      //   this.getLimitUserInfo()
-      // ).subscribe(([limitUserInfo]) => {
-      //   const response = Object.assign(
-      //     { limitUserInfo: limitUserInfo },
-      //     responseData
-      //   );
-      //
-      //   if ( limitUserInfo ) {
-      //     res.render('limit/myt-data.limit.html', response);
-      //   } else {
-      //     res.render('limit/myt-data.limit.error.html', response);
-      //   }
-      // });
-    }
+    // if ( BrowserHelper.isApp(req) ) {
+    //   this.renderPrepaidVocie(req, res, next, svcInfo);
+    // } else {
+    //   res.render('only.app.info.html', {
+    //     svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+    //   });
+    // }
+    this.renderPrepaidVoice(req, res, next, svcInfo);
   }
 
-  public getPPSInfo = () => this.apiService
-    .request(API_CMD.BFF_05_0013, {})
-    .map((res) => {
-      // if ( res.code === API_CODE.CODE_00 ) {
-      //   return res.result;
-      // } else {
-      //   return null;
-      // }
-      return {
-        'prodAmt': '50000',
-        'remained': '100',
-        'obEndDt': '20190820',
-        'inbEndDt': '20190830',
-        'numEndDt': '20210421',
-        'dataYn': 'Y',
-        'dataOnlyYn': 'N'
-      };
-    })
+  public renderPrepaidVoice = (req: Request, res: Response, next: NextFunction, svcInfo: any) => this.getPPSInfo().subscribe((resp) => {
+    if ( resp.code === API_CODE.CODE_00 ) {
+      const result = resp.result;
+      res.render('prepaid/myt-data.prepaid.voice.html', {
+        PPSInfo: result,
+        svcInfo: svcInfo,
+        isApp: BrowserHelper.isApp(req),
+        convertDate: this.convertDate,
+        convertAmount: this.convertAmount
+      });
+    } else {
+      this.error.render(res, {
+        code: resp.code,
+        msg: resp.msg,
+        svcInfo: svcInfo
+      });
+    }
+  }, (err) => {
+    this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+  })
 
-  public getAutoPPSInfo = () => this.apiService
-    .request(API_CMD.BFF_06_0055, {})
-    .map((res) => {
-      // if ( res.code === API_CODE.CODE_00 ) {
-      //   return res.result;
-      // } else {
-      //   return null;
-      // }
-      return {
-        amt : '10000',
-        amtCd: '01',
-        endDt: '20181231',
-        cardNum : '****'
-      };
-    })
+  public getPPSInfo = () => this.apiService.request(API_CMD.BFF_05_0013, {});
 
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
 

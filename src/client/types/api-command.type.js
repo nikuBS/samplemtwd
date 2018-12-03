@@ -30,7 +30,7 @@ Tw.API_CMD = {
   BFF_01_0021: { path: '/core-auth/v1/auth/motp', method: Tw.API_METHOD.GET },
   BFF_01_0026: { path: '/v1/cert/success', method: Tw.API_METHOD.POST },
   BFF_01_0027: { path: '/v1/pwd-cert-chk', method: Tw.API_METHOD.POST },
-  BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: Tw.API_METHOD.POST },
+  BFF_01_0028: { path: '/core-auth/v1/auth-sms-finance', method: Tw.API_METHOD.POST },
   BFF_01_0029: { path: '/v1/auth/secure/client-key', method: Tw.API_METHOD.POST },
   BFF_01_0030: { path: '/v1/auth/secure/server-key', method: Tw.API_METHOD.POST },
   BFF_01_0031: { path: '/registrationrequestfromfc', method: Tw.API_METHOD.POST },
@@ -46,6 +46,10 @@ Tw.API_CMD = {
   BFF_01_0045: { path: '/core-bill/v1/bill-pay/bank-list', method: Tw.API_METHOD.GET },
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
   BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: Tw.API_METHOD.POST },
+  BFF_01_0057: { path: '/v1/auth/skt-sms/representative', method: Tw.API_METHOD.POST },
+  BFF_01_0058: { path: '/v1/auth/skt-sms/legal-agent', method: Tw.API_METHOD.POST },
+  BFF_01_0061: { path: '/core-auth/v1/user-email', method: Tw.API_METHOD.GET },
+  BFF_01_0063: { path: '/v1/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
 
   // AUTH
   BFF_03_0002: { path: '/v1/user/account-auth-sessions', method: Tw.API_METHOD.POST },
@@ -247,7 +251,9 @@ Tw.API_CMD = {
   BFF_06_0065: { path: '/core-bill/v1/credit-cards', method: Tw.API_METHOD.GET },
   BFF_06_0066: { path: '/core-product/v1/gift-refill-products', method: Tw.API_METHOD.GET },
   BFF_06_0067: { path: '/core-bill/v1/pp-cards', method: Tw.API_METHOD.GET },
-  BFF_06_0068: { path: '/core-recharge/v1/ting-permissions', method:Tw.API_METHOD.POST },
+  BFF_06_0068: { path: '/core-recharge/v1/ting-permissions', method: Tw.API_METHOD.POST },
+  BFF_06_0069: { path: '/core-bill/v1/pps-recharges', method: Tw.API_METHOD.DELETE },
+  BFF_06_0070: { path: '/core-bill/v1/pps-data-recharges', method: Tw.API_METHOD.DELETE },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
@@ -386,7 +392,10 @@ Tw.API_CMD = {
   BFF_10_0048: { path: '/core-modification/v1/wireJoin/listUseAddressService', method: Tw.API_METHOD.POST },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
   BFF_10_0065: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.POST },
+  BFF_10_0066: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.POST },
   BFF_10_0067: { path: '/core-product/v1/roaming/tpie', method: Tw.API_METHOD.GET },
+  BFF_10_0068: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.GET },
+  BFF_10_0069: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
   BFF_10_0071: { path: '/core-product/v1/mobiles/fee-plans/num-couple-sets', method: Tw.API_METHOD.PUT },
   BFF_10_0073: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: Tw.API_METHOD.GET },
   BFF_10_0074: { path: '/core-product/v1/mobiles/fee-plans/snum-sets', method: Tw.API_METHOD.PUT },
@@ -394,12 +403,15 @@ Tw.API_CMD = {
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: Tw.API_METHOD.GET },
   BFF_10_0082: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: Tw.API_METHOD.POST },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: Tw.API_METHOD.GET },
-  BFF_10_9001: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
+  BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.POST },
+  BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
   BFF_10_0058: { path: '/core-product/v1/roaming/country-rate', method: Tw.API_METHOD.GET },
+  BFF_10_0059: { path: '/core-product/v1/roaming/modelCode-srch', method: Tw.API_METHOD.GET },
   BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: Tw.API_METHOD.GET },
+  BFF_10_0084: { path: '/core-product/v1/roaming/fee-plans/:args0/joins', method: Tw.API_METHOD.POST },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
@@ -490,7 +502,7 @@ Tw.AJAX_CMD = {
 };
 
 Tw.API_CODE = {
-  CODE_00: '00',    // success
+  CODE_00: '00', // success
   BFF_0003: 'BFF0003', // 로그인 필요
   BFF_0004: 'BFF0004', // 접근 권한 필요
   BFF_0006: 'BFF0006', // BFF API 차단
@@ -507,7 +519,7 @@ Tw.API_CODE = {
   CERT_SUCCESS: 'TWM0001',
   CERT_FAIL: 'TWM0002',
 
-  CODE_99: 'RDT0099',    // Circuit Open
+  CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',
   CODE_400: '400',
 
@@ -515,21 +527,21 @@ Tw.API_CODE = {
 };
 
 Tw.API_SVC_PWD_ERROR = {
-  ATH3000: 'ATH3000',     // 변경할 회선 고객보호비밀번호 입력 필요
-  BFF9000: 'BFF9000',     // 변경할 회선 고객보호비밀번호 입력 필요
-  ICAS3481: 'ICAS3481',   // 고객보호비밀번호 입력 오류 1회
-  ICAS3482: 'ICAS3482',   // 고객보호비밀번호 입력 오류 2회
-  ICAS3483: 'ICAS3483',   // 고객보호비밀번호 입력 오류 3회
-  ICAS3484: 'ICAS3484',   // 고객보호비밀번호 입력 오류 4회
-  ICAS3215: 'ICAS3215',   // 고객보호비밀번호 입력 오류 5회 (잠김예정)
-  ICAS3216: 'ICAS3216'    // 고객보호비밀번호 기 잠김
+  ATH3000: 'ATH3000', // 변경할 회선 고객보호비밀번호 입력 필요
+  BFF9000: 'BFF9000', // 변경할 회선 고객보호비밀번호 입력 필요
+  ICAS3481: 'ICAS3481', // 고객보호비밀번호 입력 오류 1회
+  ICAS3482: 'ICAS3482', // 고객보호비밀번호 입력 오류 2회
+  ICAS3483: 'ICAS3483', // 고객보호비밀번호 입력 오류 3회
+  ICAS3484: 'ICAS3484', // 고객보호비밀번호 입력 오류 4회
+  ICAS3215: 'ICAS3215', // 고객보호비밀번호 입력 오류 5회 (잠김예정)
+  ICAS3216: 'ICAS3216' // 고객보호비밀번호 기 잠김
 };
 
 Tw.API_LOGIN_ERROR = {
-  ATH1003: 'ATH1003',     // 로그인 30회 초과
-  ATH3236: 'ATH3236',     // 분실정지(대표회선)
-  ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
-  ICAS3235: 'ICAS3235'    // 휴면계정
+  ATH1003: 'ATH1003', // 로그인 30회 초과
+  ATH3236: 'ATH3236', // 분실정지(대표회선)
+  ICAS3228: 'ICAS3228', // 고객보호비밀번호(대표회선) 입력 필요
+  ICAS3235: 'ICAS3235' // 휴면계정
 };
 
 Tw.API_ADD_SVC_ERROR = {

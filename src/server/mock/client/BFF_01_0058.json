@@ -1,0 +1,10 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+
+    "seqNo" : "1234567",
+    "rjctAuthTm" : "5"
+
+  }
+}

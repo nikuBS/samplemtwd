@@ -200,9 +200,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var childListData = $.extend(true, {}, thisMain.resData.childLineInfo);
 
     childListData = _.map(childListData, function (item) {
-      item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
-      item.svcNum = thisMain._phoneStrToDash(item.svcNum);
-      return item;
+      if ( item.detailInfo ) {
+        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
+        item.svcNum = thisMain._phoneStrToDash(item.svcNum);
+        return item;
+      }
     });
 
     Tw.Logger.info('childListData', childListData);

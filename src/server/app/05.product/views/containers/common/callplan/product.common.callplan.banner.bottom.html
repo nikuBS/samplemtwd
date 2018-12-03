@@ -1,7 +1,5 @@
-<% if ( prodRedisInfo.banner.B ) { %>
-<% if ( prodRedisInfo.banner.B.bnnrImgUrl ) { %>
+<% if ( prodRedisInfo.banner.B && prodRedisInfo.banner.B.bnnrImgUrl ) { %>
 <a href="<%= prodRedisInfo.banner.B.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.B.bnnrImgUrl %>"></a>
-<% } else { %>
+<% } else if ( prodRedisInfo.banner.B && prodRedisInfo.banner.B.bnnrDtlHtmlCtt ) { %>
 <%- prodRedisInfo.banner.B.bnnrDtlHtmlCtt %>
-<% } %>
 <% } %>

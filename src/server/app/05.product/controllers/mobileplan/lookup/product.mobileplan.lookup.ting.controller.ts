@@ -7,6 +7,7 @@
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
 class ProductMobileplanLookupTing extends TwViewController {
@@ -21,7 +22,7 @@ class ProductMobileplanLookupTing extends TwViewController {
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '혜택 이용내역'
+        title: PRODUCT_TYPE_NM.SETTING
       };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {

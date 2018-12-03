@@ -4,9 +4,10 @@
  * Date: 2018.11.30
  */
 
-Tw.MainMenuSettingsBiometricsComplete = function () {
+Tw.MainMenuSettingsBiometricsComplete = function (target) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+  this._target = target;
 };
 
 Tw.MainMenuSettingsBiometricsComplete.prototype = {
@@ -20,5 +21,9 @@ Tw.MainMenuSettingsBiometricsComplete.prototype = {
     }, $.proxy(this._onOpenBioComplete, this), $.proxy(this._onCloseBioCert, this), 'complete');
   },
   _onOpenBioComplete: function ($popupContainer) {
+  },
+  _onCloseBioCert: function () {
+
   }
+
 };

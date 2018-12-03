@@ -12,12 +12,14 @@ import CustomerDamageInfoAdditions from './controllers/damage-info/customer.dama
 import CustomerDamageInfoRelated from './controllers/damage-info/customer.damage-info.related.controller';
 import CustomerDamageInfoWarning from './controllers/damage-info/customer.damage-info.warning.controller';
 import CustomerDamageInfoWarningView from './controllers/damage-info/customer.damage-info.warning.view.controller';
+import CustomerDamageInfoContents from './controllers/damage-info/customer.damage-info.contents.controller';
 import CustomerMain from './controllers/main/customer.main.controller';
 import CustomerVoice from './controllers/voice/customer.voice.controller';
 import CustomerEmail from './controllers/email/customer.email.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
 import CustomerFaq from '../904.customer/controllers/faq/customer.faq.controller';
 import CustomerFaqSearch from './controllers/faq/customer.faq.search.controller';
+import CustomerFaqCategory from './controllers/faq/customer.faq.category.controller';
 import CustomerAgentsearch from './controllers/agentsearch/customer.agentsearch.controller';
 import CustomerAgentsearchDetail from './controllers/agentsearch/customer.agentsearch.detail.controller';
 import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsearch.near.controller';
@@ -53,6 +55,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/damage-info/warning/view', controller: CustomerDamageInfoWarningView });
     this.controllers.push({ url: '/damage-info/additions', controller: CustomerDamageInfoAdditions });
     this.controllers.push({ url: '/damage-info/related', controller: CustomerDamageInfoRelated });
+    this.controllers.push({ url: '/damage-info/contents/:pageNo', controller: CustomerDamageInfoContents });
     this.controllers.push({ url: '/agentsearch', controller: CustomerAgentsearch });
     this.controllers.push({ url: '/agentsearch/search', controller: CustomerAgentsearch });
     this.controllers.push({ url: '/agentsearch/detail', controller: CustomerAgentsearchDetail });
@@ -62,6 +65,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
+    this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/svc-info/researches(/:researchId)?', controller: CustomerResearches });
   }

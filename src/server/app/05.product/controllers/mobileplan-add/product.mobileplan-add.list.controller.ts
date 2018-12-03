@@ -72,12 +72,22 @@ export default class ProductAdditions extends TwViewController {
           return {
             ...addition,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(addition.basFeeAmt),
-            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt || '-'),
-            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt || '-'),
-            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt || '-')
+            basOfrDataQtyCtt: this.isEmptyAmount(addition.basOfrDataQtyCtt)
+              ? null
+              : ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt),
+            basOfrVcallTmsCtt: this.isEmptyAmount(addition.basOfrVcallTmsCtt)
+              ? null
+              : ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt),
+            basOfrCharCntCtt: this.isEmptyAmount(addition.basOfrCharCntCtt)
+              ? null
+              : ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt)
           };
         })
       };
     });
+  }
+
+  private isEmptyAmount(value: string) {
+    return !value || value === '' || value === '-';
   }
 }

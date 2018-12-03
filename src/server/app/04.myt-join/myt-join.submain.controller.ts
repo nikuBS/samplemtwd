@@ -78,7 +78,7 @@ class MyTJoinSubmainController extends TwViewController {
       // 가입정보
       switch ( this.type ) {
         case 0:
-          data.isOldNumber = (oldnum.numChgTarget || oldnum.numChgTarget === 'true');
+          data.isOldNumber = oldnum && (oldnum.numChgTarget || oldnum.numChgTarget === 'true');
           data.myInfo = myif;
           break;
         case 2:
@@ -138,6 +138,12 @@ class MyTJoinSubmainController extends TwViewController {
         data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
         data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
         data.myPausedState.state = true;
+        if ( data.myPausedState.svcChgRsnCd === '21' || data.myPausedState.svcChgRsnCd === '22' ) {
+          data.myLongPausedState = {
+            state: true,
+            opState: data.myPausedState.svcChgRsnNm
+          };
+        }
       }
 
       if ( data.myLongPausedState ) {
@@ -153,7 +159,7 @@ class MyTJoinSubmainController extends TwViewController {
           const curDate = new Date();
           const endDate = DateHelper.convDateFormat(data.numberSvc.notiEndDt);
           const betweenDay = this.daysBetween(curDate, endDate);
-          if (betweenDay > 28) {
+          if ( betweenDay > 28 ) {
             // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
             data.isNotChangeNumber = false;
           }
@@ -211,9 +217,9 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const MOBILE = items['M'] || [];
-    const OTHER = items['O'] || [];
-    const SPC = items['S'] || [];
+    const MOBILE = (items && items['M']) || [];
+    const OTHER = (items && items['O']) || [];
+    const SPC = (items && items['S']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
@@ -222,7 +228,7 @@ class MyTJoinSubmainController extends TwViewController {
           let clsNm = 'cellphone';
           if ( item.svcAttrCd.indexOf('S') > -1 ) {
             clsNm = 'pc';
-          } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1) {
+          } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
             clsNm = 'tablet';
           }
           item.className = clsNm;

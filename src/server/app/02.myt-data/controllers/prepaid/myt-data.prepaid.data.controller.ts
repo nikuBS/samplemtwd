@@ -22,18 +22,22 @@ class MyTDataPrepaidData extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     if (BrowserHelper.isApp(req)) {
-      this.getPPSInfo().subscribe((resp) => {
-        if (resp.code === API_CODE.CODE_00) {
-          const result = resp.result;
+      Observable.combineLatest(
+        this.getPPSInfo(),
+        this.getEmailAddress()
+      ).subscribe(([ppsInfo, email]) => {
+        if (ppsInfo.code === API_CODE.CODE_00) {
+          const result = ppsInfo.result;
           res.render('prepaid/myt-data.prepaid.data.html', {
             ppsInfo: this.parseData(result),
+            emailAddress: this.parseMail(email),
             svcInfo: svcInfo,
             isApp: BrowserHelper.isApp(req)
           });
         } else {
           this.error.render(res, {
-            code: resp.code,
-            msg: resp.msg,
+            code: ppsInfo.code,
+            msg: ppsInfo.msg,
             svcInfo: svcInfo
           });
         }
@@ -45,8 +49,12 @@ class MyTDataPrepaidData extends TwViewController {
     }
   }
 
-  private getPPSInfo(): any {
+  private getPPSInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0013, {});
+  }
+
+  private getEmailAddress(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_01_0061, {});
   }
 
   private parseData(result: any): any {
@@ -62,6 +70,13 @@ class MyTDataPrepaidData extends TwViewController {
     result.remainDate = DateHelper.getShortDate(result.numEndDt);
 
     return result;
+  }
+
+  private parseMail(email: any): any {
+    if (email.code === API_CODE.CODE_00) {
+      return email.result.email;
+    }
+    return '';
   }
 }
 

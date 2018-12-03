@@ -1,0 +1,81 @@
+<% if ( isWireplan || isCombine ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="joinconsulting-wrap">
+    <p class="text">가입상담을 받아보시겠어요?</p>
+    <div class="btn">
+        <a href="/product/wireplan/join/reservation?type_cd=<%= isWireplan ? 'internet' : 'combine' %>" class="btn-round3 btn-style3">예약</a>
+    </div>
+</div>
+<% } %>
+
+<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isNeedDocument) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="joinconsulting-wrap">
+    <p class="text">가입서류를 제출해주세요.</p>
+    <div class="btn">
+        <a href="/product/wireplan/join/require-document/apply" class="btn-round3 btn-style3">제출</a>
+    </div>
+</div>
+<% } %>
+
+<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isExpired) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="joinconsulting-wrap">
+    <p class="text">서류제출기한이 종료되었습니다.</p>
+    <div class="btn">
+        <a href="/product/wireplan/join/require-document/apply" class="btn-round3 btn-style3">제출</a>
+    </div>
+</div>
+<% } %>
+
+<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isProcess) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="joinconsulting-wrap">
+    <p class="text">제출한 서류를 검토 중입니다.</p>
+    <div class="btn">
+        <a href="/product/wireplan/join/require-document/history" class="btn-round3 btn-style3">조회</a>
+    </div>
+</div>
+<% } %>
+
+<% // 설정 버튼 영역
+if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
+    ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && isJoined ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="joinconsulting-wrap">
+    <p class="text">이용중인 상품 입니다.</p>
+    <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
+    <div class="btn">
+        <div class="bt-alone">
+            <button class="fe-btn_setting bt-line-blue1">
+                <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
+                설정
+                <% } else { %>
+                <%= basicInfo.linkBtnList.setting[0].linkNm %>
+                <% } %>
+            </button>
+        </div>
+        <ul class="fe-setting_btn_list" style="display: none">
+            <% for (var i in basicInfo.linkBtnList.setting) { %>
+            <li data-url="<%= basicInfo.linkBtnList.setting[i].linkUrl %>"><%= basicInfo.linkBtnList.setting[i].linkNm %></li>
+            <% } %>
+        </ul>
+    </div>
+    <% } %>
+</div>
+<% } %>
+
+<% if ( isWireplan && mobilePlanCompareInfo ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<div class="plansaving-wrap">
+    <a href="/product/mobileplan/compare-plans" class="link">
+        <p class="text02"><%= mobilePlanCompareInfo.titleNm %></p>
+    </a>
+</div>
+<% } %>

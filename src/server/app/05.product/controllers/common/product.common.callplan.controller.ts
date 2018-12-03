@@ -2,49 +2,98 @@
  * FileName: product.common.callplan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.11
+ * @see prodTypCd (AB: 모바일 요금제, C: 모바일 부가서비스, D: 인터넷/TV/전화, E: 인터넷/TV/전화 부가서비스, F: 결합상품, G: 할인프로그램, H: 로밍)
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { PROD_CTG_CD_CODE } from '../../../../types/bff.type';
-import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO } from '../../../../types/common.type';
-import { DATA_UNIT, PRODUCT_CTG_NAME } from '../../../../types/string.type';
+import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/common.type';
+import {
+  DATA_UNIT,
+  PRODUCT_CALLPLAN_FEEPLAN,
+  PRODUCT_SIMILAR_PRODUCT,
+  PRODUCT_TYPE_NM
+} from '../../../../types/string.type';
+import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
-
-const productApiCmd = {
-  'basic': API_CMD.BFF_10_0001,
-  'relatetags': API_CMD.BFF_10_0003,
-  'series': API_CMD.BFF_10_0005,
-  'recommands': API_CMD.BFF_10_0006,
-  'additions': API_CMD.BFF_05_0040
-};
+import DateHelper from '../../../../utils/date.helper';
 
 class ProductCommonCallplan extends TwViewController {
   constructor() {
     super();
   }
 
-  private _prodId;
-
   /**
-   * @param key
-   * @param optionKey
+   * 요금제 비교하기 Redis 정보 호출
+   * @param prodTypCd
+   * @param svcInfoProdId
+   * @param prodId
    * @private
    */
-  private _getApi (key: string, optionKey?: any): Observable<any> {
-    let params = {};
-    if (key === 'basic') {
-      params = { prodExpsTypCd: 'P' };
+  private _getMobilePlanCompareInfo(prodTypCd: any, svcInfoProdId: any, prodId: any): Observable<any> {
+    if (prodTypCd !== 'AB' || FormatHelper.isEmpty(svcInfoProdId)) {
+      return Observable.of({});
     }
 
-    if (key === 'series' && optionKey !== 'F01100') {
-      return Observable.of({ code: API_CODE.CODE_00, result: null });
+    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
+  }
+
+  /**
+   * 가입여부 확인
+   * @param prodTypCd
+   * @param prodId
+   * @private
+   */
+  private _getIsJoined(prodTypCd: any, prodId: any): Observable<any> {
+    if (['C', 'E', 'F', 'G', 'H'].indexOf(prodTypCd) === -1) {
+      return Observable.of({});
     }
 
-    return this.apiService.request(productApiCmd[key], params, {}, this._prodId);
+    if (['C', 'G', 'H'].indexOf(prodTypCd) !== -1) {
+      return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, prodId);
+    }
+
+    if (prodTypCd === 'E') {
+      return this.apiService.request(API_CMD.BFF_10_0109, {}, {}, prodId);
+    }
+
+    return this.apiService.request(API_CMD.BFF_10_0119, {}, {}, prodId);
+  }
+
+  /**
+   * 모바일 부가서비스 카테고리 필터 리스트 Redis 호출
+   * @param prodTypCd
+   * @param prodId
+   * @private
+   */
+  private _getAdditionsFilterListByRedis(prodTypCd: any, prodId: any): Observable<any> {
+    if (prodTypCd !== 'C') {
+      return Observable.of({});
+    }
+
+    return this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230');
+  }
+
+  /**
+   * 인터넷/TV/전화, 결합상품 구비서류 심사내역 조회
+   * @param prodTypCd
+   * @param prodId
+   * @private
+   */
+  private _getCombineRequireDocumentStatus(prodTypCd: any, prodId: any): Observable<any> {
+    if (['D', 'F'].indexOf(prodTypCd) === -1) {
+      return Observable.of({});
+    }
+
+    const reqParams: any = {};
+    if (FormatHelper.isEmpty(prodId)) {
+      reqParams.svcProdCd = prodId === 'NH00000083' ? 'NH00000084' : prodId;
+    }
+
+    return this.apiService.request(API_CMD.BFF_10_0078, reqParams);
   }
 
   /**
@@ -71,6 +120,7 @@ class ProductCommonCallplan extends TwViewController {
     });
 
     return Object.assign(basicInfo, {
+      prodTypListPath: PRODUCT_TYP_CD_LIST[basicInfo.prodTypCd],
       linkBtnList: {
         join: joinBtnList,
         setting: settingBtnList,
@@ -205,31 +255,113 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param additionsUseInfo
+   * @param prodTypCd
+   * @param isJoinedInfo
    * @private
    */
-  private _isAdditionsJoined (additionsUseInfo): boolean {
-    if (additionsUseInfo.code !== API_CODE.CODE_00) {
+  private _isJoined (prodTypCd, isJoinedInfo): boolean {
+    if (FormatHelper.isEmpty(isJoinedInfo) || isJoinedInfo.code !== API_CODE.CODE_00) {
       return false;
     }
 
-    return additionsUseInfo.result.isAdditionUse === 'Y';
+    if (['C', 'G', 'H'].indexOf(prodTypCd) !== -1) {
+      return isJoinedInfo.result.isAdditionUse === 'Y';
+    }
+
+    if (prodTypCd === 'E') {
+      return isJoinedInfo.result.wiredSuplSvcScrbYn === 'Y';
+    }
+
+    return isJoinedInfo.result.combiProdScrbYn === 'Y';
   }
 
   /**
-   * @param seriesInfo
+   * @param prodTypCd
+   * @param apiInfo
+   * @param isSeries
    * @private
    */
-  private _convertSeriesInfo (seriesInfo): any {
-    if (FormatHelper.isEmpty(seriesInfo)) {
+  private _convertSeriesAndRecommendInfo (prodTypCd, apiInfo, isSeries): any {
+    if (FormatHelper.isEmpty(apiInfo)) {
       return null;
     }
 
-    return Object.assign(seriesInfo, {
-      seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        return Object.assign(item, ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
-          item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
-      })
+    const list = isSeries ? apiInfo.seriesProdList : apiInfo.recommendProdList;
+    return list.map((item) => {
+      const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
+        item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
+        isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
+
+      return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
+        .reduce((a, b) => {
+          return Object.assign(a, b);
+        });
+    });
+  }
+
+  /**
+   * @param prodTypCd
+   * @param isSeeContents
+   * @param convResult
+   * @private
+   */
+  private _getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult): any {
+    if (prodTypCd !== 'AB') {
+      return { isDisplayData: false, isDisplayVcall: false, isDisplayChar: false };
+    }
+
+    return {
+      isDisplayData: !isSeeContents,
+      isDisplayVcall: !isSeeContents && FormatHelper.isEmpty(convResult.basOfrDataQtyCtt),
+      isDisplayChar: !isSeeContents && FormatHelper.isEmpty(convResult.basOfrDataQtyCtt) && FormatHelper.isEmpty(convResult.basOfrVcallTmsCtt)
+    };
+  }
+
+  /**
+   * @param prodTypCd
+   * @param similarProductInfo
+   * @private
+   */
+  private _convertSimilarProduct (prodTypCd: any, similarProductInfo: any) {
+    if (similarProductInfo.code !== API_CODE.CODE_00) {
+      return null;
+    }
+
+    let titleNm: any = PRODUCT_SIMILAR_PRODUCT.PRODUCT;
+    if (prodTypCd === 'AB') {
+      titleNm = PRODUCT_SIMILAR_PRODUCT.PLANS;
+    }
+
+    if (prodTypCd === 'C') {
+      titleNm = PRODUCT_SIMILAR_PRODUCT.ADDITIONS;
+    }
+
+    return Object.assign(similarProductInfo.result, {
+      titleNm: titleNm,
+      prodFltIds: FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.map((item) => {
+        return item.prodFltId;
+      }).join(',')
+    });
+  }
+
+  /**
+   * @param requireDocumentInfo
+   * @private
+   */
+  private _convertRequireDocument (requireDocumentInfo: any) {
+    if (requireDocumentInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(requireDocumentInfo.result.necessaryDocumentInspectInfoList)) {
+      return null;
+    }
+
+    const latestItem = requireDocumentInfo.result.necessaryDocumentInspectInfoList[0],
+      nextSchdDtTime = FormatHelper.isEmpty(latestItem.nextSchddt) ? null :
+        DateHelper.getUnixTimeStamp(new Date(DateHelper.getAddDay(latestItem.nextSchddt))),
+      currentTime = new Date().getTime() / 1000;
+
+    return Object.assign(latestItem, {
+      isNeedDocument: nextSchdDtTime && (latestItem.ciaInsptRslt === PRODUCT_CALLPLAN.CIA_INSPT_RSLT && currentTime < nextSchdDtTime),
+      isExpired: nextSchdDtTime && (latestItem.abnSaleOpClCd === '000' && currentTime > nextSchdDtTime),
+      isProcess: nextSchdDtTime && (FormatHelper.isEmpty(latestItem.abnSaleOpClCd) && currentTime < nextSchdDtTime)
     });
   }
 
@@ -237,95 +369,92 @@ class ProductCommonCallplan extends TwViewController {
    * @param prodTypCd
    * @private
    */
-  private _getCtgKey (prodTypCd): any {
-    return PROD_CTG_CD_CODE[prodTypCd];
-  }
-
-  /**
-   * @param filtersList
-   * @private
-   */
-  private _getFilterIds (filtersList): any {
-    if (FormatHelper.isEmpty(filtersList)) {
-      return [];
-    }
-
-    return filtersList.map((item) => {
-      return item.prodFltId;
-    });
+  private _getIsCategory (prodTypCd: any): any {
+    return {
+      isMobileplan: prodTypCd === 'AB',
+      isMobileplanAdd: prodTypCd === 'C',
+      isWireplan: ['D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1,
+      isWireplanAdd: ['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1,
+      isRoaming: ['H_P', 'H_A'].indexOf(prodTypCd) !== -1,
+      isCombine: prodTypCd === 'F',
+      isDiscount: prodTypCd === 'G'
+    };
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this._prodId = req.params.prodId || null;
+    const prodId = req.params.prodId || null,
+      svcInfoProdId = svcInfo ? svcInfo.prodId : null,
+      renderCommonInfo = {
+        svcInfo: svcInfo,
+        pageInfo: pageInfo,
+        title: PRODUCT_TYPE_NM.CALLPLAN
+      };
 
-    if (FormatHelper.isEmpty(this._prodId)) {
-      return this.error.render(res, {
-        title: '상품 상세 정보',
-        svcInfo: svcInfo
-      });
+    if (FormatHelper.isEmpty(prodId)) {
+      return this.error.render(res, renderCommonInfo);
     }
 
-    this._getApi('basic').subscribe((basicInfo) => {
+    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+      .subscribe((basicInfo) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, {
-            title: '상품 상세 정보',
+          return this.error.render(res, Object.assign(renderCommonInfo, {
             code: basicInfo.code,
-            msg: basicInfo.msg,
-            svcInfo: svcInfo
-          });
+            msg: basicInfo.msg
+          }));
         }
 
+        // 상품 퇴출 상태 (G1000)
         if (basicInfo.result.prodStCd === 'G1000') {
-          return this.error.render(res, {
-            title: '상품 상세 정보',
-            svcInfo: svcInfo
-          });
+          return this.error.render(res, renderCommonInfo);
         }
 
         Observable.combineLatest(
-          this._getApi('relatetags'),
-          this._getApi('series', basicInfo.result.ctgCd),
-          this._getApi('recommands'),
-          this._getApi('additions'),
-          this.redisService.getData(REDIS_PRODUCT_INFO + this._prodId),
-          this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230')
+          this.apiService.request(API_CMD.BFF_10_0003, {}, {}, prodId),
+          this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
+          this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
+          this.apiService.request(API_CMD.BFF_10_0112, { prodId: prodId }),
+          this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+          this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
+          this._getIsJoined(basicInfo.result.prodTypCd, prodId),
+          this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
+          this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, additionsInfo, prodRedisInfo, prodFilterInfo
+          relateTagsInfo, seriesInfo, recommendsInfo, similarProductInfo, prodRedisInfo,
+          mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
           if (!FormatHelper.isEmpty(apiError)) {
-            return this.error.render(res, {
-              title: '상품 상세 정보',
-              svcInfo: svcInfo,
+            return this.error.render(res, Object.assign(renderCommonInfo, {
               msg: apiError.msg,
               code: apiError.code
-            });
+            }));
           }
 
           if (FormatHelper.isEmpty(prodRedisInfo)) {
-            return this.error.render(res, {
-              title: '상품 상세 정보',
-              svcInfo: svcInfo
-            });
+            return this.error.render(res, renderCommonInfo);
           }
 
-          res.render('common/callplan/product.common.callplan.html', {
-            pathCategory: req.path.split('/')[1],
-            pageInfo: pageInfo,
-            svcInfo: svcInfo,
-            prodId: this._prodId,
-            basicInfo: this._convertBasicInfo(basicInfo.result),
-            prodRedisInfo: this._convertRedisInfo(prodRedisInfo),
-            relateTags: this._convertRelateTags(relateTagsInfo.result),
-            series: this._convertSeriesInfo(seriesInfo.result),
-            recommends: recommendsInfo.result,
-            ctgKey: this._getCtgKey(basicInfo.result.prodTypCd),
-            ctgName: PRODUCT_CTG_NAME[basicInfo.result.ctgCd],
-            isAdditionsJoined: this._isAdditionsJoined(additionsInfo),
-            filterIds: this._getFilterIds(basicInfo.result.prodFilterFlagList).join(','),
-            prodFilterInfo: prodFilterInfo
-          });
+          const isCategory = this._getIsCategory(basicInfo.result.prodTypCd),
+            basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.summary.feeManlSetTitNm) ?
+              prodRedisInfo.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
+
+          res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
+            prodId: prodId,
+            basFeeSubText: basFeeSubText,
+            basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
+            prodRedisInfo: this._convertRedisInfo(prodRedisInfo), // 상품 정보 by Redis
+            relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
+            series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
+            recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
+            mobilePlanCompareInfo: FormatHelper.isEmpty(mobilePlanCompareInfo) ? null : mobilePlanCompareInfo, // 요금제 비교하기
+            similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
+            isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
+            additionsProdFilterInfo: additionsProdFilterInfo,  // 부가서비스 카테고리 필터 리스트
+            combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo)  // 구비서류 제출 심사내역
+          }].reduce((a, b) => {
+            return Object.assign(a, b);
+          }));
         });
       });
   }

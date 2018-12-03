@@ -8,6 +8,7 @@ Tw.CertificationPassword = function () {
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._authUrl = null;
   this._command = null;
@@ -17,7 +18,7 @@ Tw.CertificationPassword = function () {
 
 
 Tw.CertificationPassword.prototype = {
-  open: function (svcInfo, authUrl, authKind, command, callback) {
+  open: function (authUrl, authKind, command, callback) {
     this._authUrl = authUrl;
     this._command = command;
     this._callback = callback;

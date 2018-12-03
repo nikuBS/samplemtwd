@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <!-- #contents -->
 <div class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '상품상세', svcInfo, option: { line: false } }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '', svcInfo, option: { line: false } }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -35,13 +35,9 @@
             <% include product.common.callplan.banner.top.html %>
             <%# // 상단 배너 %>
 
-            <%# 콘텐츠 상단 넛지(예약, 요금제 찾기) %>
-            <% include product.common.callplan.nudge.top.html %>
-            <%# // 콘텐츠 상단 넛지(예약, 요금제 찾기) %>
-
-            <%# 설정 버튼 %>
-            <% include product.common.callplan.setting-btn.html %>
-            <%# // 설정 버튼 %>
+            <%# 콘텐츠 상단 넛지 %>
+            <% include product.common.callplan.top-nudge.html %>
+            <%# // 콘텐츠 상단 넛지 %>
 
             <%# 콘텐츠 %>
             <% include product.common.callplan.contents.html %>
@@ -51,21 +47,17 @@
             <% include product.common.callplan.banner.middle.html %>
             <%# // 중단 배너 %>
 
-            <%# 시리즈 %>
-            <% include product.common.callplan.series.html %>
+            <%# 시리즈, 함께하면 유용한 상품 %>
+            <% include product.common.callplan.series-and-recommend.html %>
             <%# // 시리즈 %>
 
-            <%# 유사한 요금제 찾기 %>
-            <% include product.common.callplan.recommended.html %>
-            <%# // 유사한 요금제 찾기 %>
-
-            <%# 다른 부가상품 더보기 %>
+            <%# 다른 부가서비스를 찾고 계신가요? %>
             <% include product.common.callplan.additions-more.html %>
-            <%# // 다른 부가상품 더보기 %>
+            <%# // 다른 부가서비스를 찾고 계신가요? %>
 
-            <%# 함께하면 더욱 유용한 상품 %>
-            <% include product.common.callplan.recommend-prod.html %>
-            <%# // 함께하면 더욱 유용한 상품 %>
+            <%# 추천 태그 %>
+            <% include product.common.callplan.relate-tags.html %>
+            <%# // 추천 태그 %>
 
             <%# 함께하면 더욱 스마트한 앱서비스 %>
             <% include product.common.callplan.apps.html %>
@@ -74,10 +66,6 @@
             <%# 하단 배너 %>
             <% include product.common.callplan.banner.bottom.html %>
             <%# // 하단 배너 %>
-
-            <%# 추천 태그 %>
-            <% include product.common.callplan.relate-tags.html %>
-            <%# // 추천 태그 %>
         </div>
     </div>
     <!--// #contents -->
@@ -90,6 +78,5 @@
 </div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<% include ../../../components/common/callplan/product.common.callplan.recommended.component.html %>
-<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>', '<%= filterIds %>'); });</script>
+<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>'); });</script>
 <% include ../../../components/end.component.html %>

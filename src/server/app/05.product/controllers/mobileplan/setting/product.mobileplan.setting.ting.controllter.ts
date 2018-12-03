@@ -8,6 +8,7 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
+import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
 class ProductMobileplanSettingTing extends TwViewController {
@@ -33,7 +34,7 @@ class ProductMobileplanSettingTing extends TwViewController {
         renderCommonInfo = {
           pageInfo: pageInfo,
           svcInfo: svcInfo,
-          title: '설정'
+          title: PRODUCT_TYPE_NM.SETTING
         };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {

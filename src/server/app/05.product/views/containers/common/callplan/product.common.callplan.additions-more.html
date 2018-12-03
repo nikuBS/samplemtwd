@@ -1,29 +1,12 @@
-<% if ( ctgKey === 'mobileplan-add' && prodFilterInfo ) { %>
+<% if ( isMobileplanAdd && additionsProdFilterInfo ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
-<!-- 다른 부가상품 더보기-->
-<div class="cont-box">
-    <h3>다른 부가상품 더보기</h3>
-    <!-- .widget -->
-    <div class="widget">
-        <div class="widget-box horizontal">
-            <div class="horizontal-slide">
-                <ul class="horizontal-list add-prod">
-                    <% for( var i in prodFilterInfo.filters ) { %>
-                    <li>
-                        <div>
-                            <a href="/product/mobileplan-add/list?filters=<%= prodFilterInfo.filters[i].prodFltId %>">
-                                <span class="ico type1"></span>
-                                <span><%= prodFilterInfo.filters[i].prodFltNm %></span>
-                            </a>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
-            </div>
-        </div>
+<div class="cont-box nogaps-btm">
+    <h3 class="suggest-tag-title">다른 부가서비스를 찾고 계신가요?</h3>
+    <div class="extra-servicebox">
+        <% for( var i in additionsProdFilterInfo.filters ) { %>
+        <a href="/product/mobileplan-add/list?filters=<%= additionsProdFilterInfo.filters[i].prodFltId %>" class="btn-round2 btn-style3"><%= additionsProdFilterInfo.filters[i].prodFltNm %></a>
+        <% } %>
     </div>
-    <!-- .widget -->
 </div>
-<!-- //다른 부가상품 더보기 -->
 <% } %>

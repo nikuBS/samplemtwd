@@ -54,12 +54,16 @@ export default class ProductPlans extends TwViewController {
           return {
             ...plan,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
-            basOfrDataQtyCtt: ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt || '-'),
-            basOfrVcallTmsCtt: ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt || '-'),
-            basOfrCharCntCtt: ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt || '-')
+            basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt) ? null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt),
+            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt) ? null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt),
+            basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt)
           };
         })
       };
     });
+  }
+
+  private isEmptyAmount(value: string) {
+    return !value || value === '' || value === '-';
   }
 }

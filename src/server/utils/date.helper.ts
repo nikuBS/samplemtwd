@@ -35,6 +35,14 @@ class DateHelper {
     const remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
     return remain;
   }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns Unix timestamp
+   */
+  static getUnixTimeStamp(date: any) {
+    return moment(date).unix();
+  }
   
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss

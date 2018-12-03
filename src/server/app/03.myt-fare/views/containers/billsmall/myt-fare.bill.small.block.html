@@ -1,0 +1,103 @@
+<%#
+* FileName: myt-fare.bill.small.history.html
+* Author: Lee kirim (kirim@sk.com)
+* Date: 2018. 11. 29
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+
+    <div class="wrap">
+        <%- include('../../../../../common/views/components/header.component.html', { title: '상세내역', svcInfo: svcInfo}); %>
+
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box-->
+                <div class="cont-box nogaps">
+                   <div class="payment-switch-wrap">
+						<div class="ti-caption-gray">
+							<p class="tit noti2">해제 시 다음달 1일에 적용 됩니다.</p>
+							<span class="num">총 <em><%=data.payHistoryCnt %></em>건</span>
+						</div>
+						<div class="payment-switch-list" id="fe-block-list">
+							
+						</div>
+					</div>
+                </div>
+                <!--// .cont-box-->
+                
+                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list">
+                        <% noticeInfo.forEach(function(info){ %>
+                            <li data-list-id="<%=info.link%>"><%=info.title%><button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            </div>
+
+        </div>
+
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+
+    <% include ../../components/javascript.component.html %>
+    <script>
+      $(document).ready(function () {
+          new Tw.MyTFareBillSmallBlock($(document), '<%- JSON.stringify(data)%>');
+      });
+    </script>
+    <script id="fe-block-contents" type="text/x-handlebars-template">
+            <ul>	
+             {{#each cpHistories}}			
+                <li data-list-id="{{listId}}">
+                    <div class="use-info-wrap">
+                        <span class="name1">{{cpNm}}</span>
+                        <span class="name2">{{pgNm}}</span>
+                        <span class="date">{{FullDate}}</span>
+                        {{#if blockState}}
+                        <span class="due-date">{{blockState}}</span>
+                        {{/if}}
+                    </div>
+                    <div class="switch-wrap">
+                        <span class="widget">
+                            <span class="widget-box switch">
+                                <span class="btn-switch type1 on">
+                                    <span class="switch-style" role="checkbox" >
+                                        <span class="on-tx" data-list-id="{{listId}}">해제</span>
+                                        <span class="off-tx" data-list-id="{{listId}}">차단</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </div>
+                </li>
+        {{/each}}
+            </ul>
+    </script>
+
+    <script id="list-empty" type="text/x-handlebars-template">
+        <div class="no-data">
+            <span>차단내역이 없습니다.</span>
+        </div>
+    </script>
+    
+</body>
+<% include ../../components/end.component.html %>

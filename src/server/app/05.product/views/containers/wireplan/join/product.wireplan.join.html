@@ -17,5 +17,5 @@
 <div class="wrap"></div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>'); });</script>
+<script>$(function () { new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%- JSON.stringify(btnData) %>'); });</script>
 <% include ../../../components/end.component.html %>

@@ -15,6 +15,10 @@ interface Info {
   [key: string]: string;
 }
 
+interface Query {
+  fromDt: string;
+  toDt: string;
+}
 class MyTFareBillContentsHistory extends TwViewController {
 
   fromDt;
@@ -31,9 +35,14 @@ class MyTFareBillContentsHistory extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     // 조회할 달 수 구하기
     this.setDatePeriod(req);
+
+    const query: Query = {
+      fromDt: this.fromDt,
+      toDt: this.toDt
+    };
   
-    this.apiService.request(API_CMD.BFF_05_0064, {fromDt: this.fromDt, toDt: this.toDt}).subscribe((resp) => {
-      console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
+    this.apiService.request(API_CMD.BFF_05_0064, query).subscribe((resp) => {
+
       this.logger.info(this, resp.code !== API_CODE.CODE_00, resp);
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {

@@ -1,9 +1,10 @@
-import {DATA_UNIT, PRODUCT_CTG_NM} from '../types/string.type';
-import { UNIT } from '../types/bff.type';
+import { DATA_UNIT, PRODUCT_CTG_NM } from '../types/string.type';
+import { PRODUCT_REPLACED_RULE, UNIT } from '../types/bff.type';
 import FormatHelper from './format.helper';
 
 class ProductHelper {
   static convStipulation(stipulation: any): any {
+    console.log(stipulation);
     if (FormatHelper.isEmpty(stipulation)) {
       return null;
     }
@@ -96,6 +97,22 @@ class ProductHelper {
 
   static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt): any {
     const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
+    let replacedResult: any = null;
+
+    PRODUCT_REPLACED_RULE.VCALL.forEach((ruleInfo) => {
+      if (ruleInfo.TARGET.indexOf(basOfrVcallTmsCtt) !== -1) {
+        replacedResult = {
+          isNaN: true,
+          value: ruleInfo.RESULT
+        };
+
+        return false;
+      }
+    });
+
+    if (!FormatHelper.isEmpty(replacedResult)) {
+      return replacedResult;
+    }
 
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
@@ -105,6 +122,23 @@ class ProductHelper {
 
   static convProductBasOfrCharCntCtt(basOfrCharCntCtt): any {
     const isNaNbasOfrCharCntCtt = isNaN(Number(basOfrCharCntCtt));
+    let replacedResult: any = null;
+
+    PRODUCT_REPLACED_RULE.CHAR.forEach((ruleInfo) => {
+      if (ruleInfo.TARGET.indexOf(basOfrCharCntCtt) !== -1) {
+        replacedResult = {
+          isNaN: true,
+          value: ruleInfo.RESULT,
+          unit: null
+        };
+
+        return false;
+      }
+    });
+
+    if (!FormatHelper.isEmpty(replacedResult)) {
+      return replacedResult;
+    }
 
     return {
       isNaN: isNaNbasOfrCharCntCtt,
@@ -226,19 +260,8 @@ class ProductHelper {
       reqProdInfo: Object.assign(preInfo.reqProdInfo, {
         isNumberBasFeeInfo: isNumberBasFeeInfo,
         basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
-      }),
-      autoJoinList: isJoin ? ProductHelper.convWireplanAutoJoinTermList(preInfo.autoJoinTermList) : null,
-      autoTermList: !isJoin ? ProductHelper.convWireplanAutoJoinTermList(preInfo.autoJoinTermList) : null
-    });
-  }
-
-  static convWireplanAutoJoinTermList(autoJoinTermList) {
-    return [{
-      svcProdNm: PRODUCT_CTG_NM.ADDITIONS,
-      svcProdList: autoJoinTermList.map((item) => {
-        return item.prodNm;
       })
-    }];
+    });
   }
 }
 
