@@ -55,7 +55,8 @@ Tw.ProductRoamingInfoCenter.prototype = {
 
   },
 
-  _openActionsheet: function () {
+  _openActionsheet: function (e) {
+    var selected = e.target;
     var data = '';
 
     if(this.presentId === 1 || this.presentId === 2){
@@ -66,6 +67,13 @@ Tw.ProductRoamingInfoCenter.prototype = {
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[2].data;
     }else if(this.presentId === 10 || this.presentId === 11){
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[3].data;
+    }
+
+    for(var x in data[0].list){
+      data[0].list[x].option = 'hbs-card-type';
+      if(data[0].list[x].value === $(selected).text()){
+        data[0].list[x].option = 'checked';
+      }
     }
 
     this._popupService.open({

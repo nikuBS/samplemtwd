@@ -7,7 +7,7 @@
 Tw.ProductRoamingFiGuide = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.Popup;
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._cachedElement();
   this._bindEvent();
@@ -38,7 +38,6 @@ Tw.ProductRoamingFiGuide.prototype = {
   _goProductPage: function(e) {
     //T파이 이용 가능 요금제 상세 페이지 이동
     var productId = $(e.target).parents('button').attr('id');
-    console.log(productId);
     this._historyService.goLoad('/product/callplan/' + productId);
   },
 

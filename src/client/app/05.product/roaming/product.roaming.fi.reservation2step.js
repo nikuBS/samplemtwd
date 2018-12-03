@@ -58,7 +58,6 @@ Tw.ProductRoamingFiReservation2step.prototype = {
   },
 
   _handleFiReservation: function(countryArr) {
-    console.log('req');
     var expbranchnm = $('#flab05').text();
     var boothcode = $('#flab04').attr('data-booth');
     var boothnm = $('#flab04').text();
@@ -104,7 +103,6 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
   _handleSuccessFiReservation: function(res){
     if(res.code === Tw.API_CODE.CODE_00) {
-      console.log(this.selectIdx);
       this._historyService.goLoad('/product/roaming/fi/reservation3step?selectIdx=' + this.selectIdx);
     }
   },
@@ -151,6 +149,13 @@ Tw.ProductRoamingFiReservation2step.prototype = {
       //반납 장소 선택
       title = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.title;
       data = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.data;
+    }
+
+    for(var x in data[0].list){
+      data[0].list[x].option = 'hbs-card-type';
+      if(data[0].list[x].value === $(selected).text()){
+        data[0].list[x].option = 'checked';
+      }
     }
 
     this._popupService.open({
@@ -203,7 +208,6 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     }
 
     setTimeout(function(){
-      console.log('change check ' , $('#flab01').val().length);
       var inputPhoneCheck = '';
 
       if($('#flab01').val().length > 0){

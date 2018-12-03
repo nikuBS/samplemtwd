@@ -11,25 +11,16 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { API_CODE } from '../../../../types/api-command.type';
 
 export default class ProductRoamingFiInquireAuth extends TwViewController {
-  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    this.getReservaions().subscribe(reservations => {
 
-      res.render('roaming/product.roaming.fi.inquire-auth.html', { svcInfo, pageInfo, reservations });
-    });
-  }
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-  private getReservaions = () => {
-    const date = new Date();
-    const rentfrom = date.toISOString().substring(0, 10).replace(/\-/gi, '');
-    date.setMonth(date.getMonth() + 6);
-    const rentto = date.toISOString().substring(0, 10).replace(/\-/gi, '');
+    this.apiService.request(API_CMD.BFF_10_0060, {keyword : ''}).subscribe((resp) => {
+      const countryCode = resp.result;
 
-    return this.apiService.request(API_CMD.BFF_10_0067, { page: 1, rentfrom : rentfrom , rentto : rentto }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
-      }
-
-      return resp.result;
+      res.render('roaming/product.roaming.fi.inquire-auth.html', {
+        countryCode: countryCode,
+        svcInfo: svcInfo
+      });
     });
   }
 }
