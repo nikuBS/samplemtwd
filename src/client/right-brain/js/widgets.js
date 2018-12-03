@@ -529,12 +529,12 @@ skt_landing.widgets = {
     $(widget).each(function(){
       var _this = $(this);
       var _list = _this.find('> .suggest-tag-list');
-      var _btn  = _this.find('.suggest-tag-morewrap button');
+      var _btn  = _this.find('.suggest-tag-morewrap button, .suggest-tag-morewrap a');
       var _ul = _this.find('ul:eq(0)');
       if(_list.height() >= _ul.height()){
         _btn.remove();
       }else{
-        widget.on('click','> .suggest-tag-morewrap button',function(){
+        widget.on('click','> .suggest-tag-morewrap button, .suggest-tag-morewrap a',function(){
           if ( _btn.attr('aria-pressed') === 'true' ) {
             $(_list).removeClass('openlist-wrap');
             $(_btn).removeClass('openbtn');

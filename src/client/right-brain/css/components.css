@@ -16411,8 +16411,19 @@ a.bt-link-tx.underline.small {
   margin-top: 1.25rem; }
   .smart-app > li {
     margin-right: 2.8125rem; }
+    .smart-app > li a, .smart-app > li button {
+      display: block;
+      color: #000;
+      font-size: 0.8125rem;
+      text-align: center;
+      width: 3.125rem; }
     .smart-app > li:last-child {
       margin-right: 0; }
+  .smart-app img {
+    display: block;
+    width: 3.125rem;
+    height: 3.125rem;
+    margin-bottom: 0.75rem; }
   .smart-app .ico {
     display: inline-block;
     display: block;
@@ -23338,11 +23349,11 @@ input[type="radio"].formradio-small:checked:disabled + label {
       color: #959595;
       font-size: 0.875rem; }
   .plan-compact-wrap .plan-compact-info {
+    display: block;
+    width: calc(100% - 32px);
     margin-bottom: 0.6875rem; }
 
 .plan-compact-info {
-  display: block;
-  width: calc(100% - 32px);
   padding: 0.9375rem 1rem 0.625rem;
   margin: 0.5625rem 1rem;
   background: #fff;
@@ -23387,6 +23398,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
     border-top: 1px solid #f2f2f2; }
     .plan-compact-info .service-wrap .service {
       display: table;
+      width: 100%;
       padding-top: 0.6875rem;
       font-size: 0; }
       .plan-compact-info .service-wrap .service span {
@@ -23405,13 +23417,14 @@ input[type="radio"].formradio-small:checked:disabled + label {
       .plan-compact-info .service-wrap .service .sv-spec {
         display: table-cell;
         position: relative;
+        width: 27%;
         padding-left: 1.25rem;
         font-size: 0.75rem;
         color: #666666;
         line-height: 1.0625rem;
         /*font-weight:$fw-medium;*/ }
-        .plan-compact-info .service-wrap .service .sv-spec:not(:last-child) {
-          padding-right: 1.8125rem; }
+        .plan-compact-info .service-wrap .service .sv-spec:nth-child(2) {
+          width: 46%; }
         .plan-compact-info .service-wrap .service .sv-spec.data {
           font-size: 0.75rem;
           color: #178bce; }
@@ -24229,8 +24242,9 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .extra-servicebox {
   padding: 0.9375rem 0 0.4375rem; }
-  .extra-servicebox button {
-    margin: 0 0.4375rem 0.625rem 0; }
+  .extra-servicebox button, .extra-servicebox a {
+    margin: 0 0.4375rem 0.625rem 0;
+    color: #000; }
 
 .plansaving-wrap .link {
   position: relative;
