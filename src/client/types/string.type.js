@@ -1231,3 +1231,5 @@ Tw.PREPAID_TYPES = {
   VOICE: '음성',
   DATA: '데이터'
 };
+
+Tw.HISTORY_UNIT = '건';
