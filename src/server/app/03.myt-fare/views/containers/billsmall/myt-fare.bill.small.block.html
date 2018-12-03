@@ -27,7 +27,7 @@
                 <div class="cont-box nogaps">
                    <div class="payment-switch-wrap">
 						<div class="ti-caption-gray">
-							<p class="tit noti2">차단 및 해제 시 다음달 1일에 적용 됩니다.</p>
+							<p class="tit noti2">해제 시 다음달 1일에 적용 됩니다.</p>
 							<span class="num">총 <em><%=data.payHistoryCnt %></em>건</span>
 						</div>
 						<div class="payment-switch-list" id="fe-block-list">
@@ -79,14 +79,9 @@
                     <div class="switch-wrap">
                         <span class="widget">
                             <span class="widget-box switch">
-                                {{#if isBlock}}
                                 <span class="btn-switch type1 on">
-                                {{else}}
-                                <span class="btn-switch type1 ">
-                                {{/if}}
                                     <span class="switch-style" role="checkbox" >
                                         <span class="on-tx" data-list-id="{{listId}}">해제</span>
-                                        
                                         <span class="off-tx" data-list-id="{{listId}}">차단</span>
                                     </span>
                                 </span>

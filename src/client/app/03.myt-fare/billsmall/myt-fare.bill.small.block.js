@@ -6,7 +6,6 @@
 Tw.MyTFareBillSmallBlock = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
-  console.log(this.data);
   
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -25,7 +24,6 @@ Tw.MyTFareBillSmallBlock.prototype = {
       renderedHTML = this.$template.$blockContents(this.data);
     }
     this.$domWrapper.append(renderedHTML);
-    
   },
 
   _cachedElement: function() {
@@ -37,9 +35,8 @@ Tw.MyTFareBillSmallBlock.prototype = {
   },
 
   _bindEvent: function() {
-    // this.$domWrapper.find('.fe-block-check').on('click',$.proxy(this._UnBlockThis,this)); // 해제하기
-    // this.$domWrapper.find('.on-tx').on('click',$.proxy(this._UnBlockThis,this)); // 해제하기
-    this.$domWrapper.find('.off-tx').on('click',$.proxy(this._BlockThis,this)); // 차단하기
+    this.$domWrapper.find('.on-tx').on('click',$.proxy(this._UnBlockThis,this)); // 해제하기
+    // 차단하기는 리스트에서 해제된 내역 불러와 지지 않으므로 토글 할 수 없음
   },
 
   _UnBlockThis: function(e) {
@@ -55,56 +52,16 @@ Tw.MyTFareBillSmallBlock.prototype = {
       $.proxy(this._execUnBlock,this),
       $.proxy(this._cancelBlock,this),
       'confirmBlock'
-    )
-
-    // 차단해제
-    // console.log(e.currentTarget.value, "해제")
-    // this._execBlock(this.data[e.currentTarget.value], 'C');
-  },
-
-  _BlockThis: function(e) {
-    e.stopPropagation();
-    this.$li = this.$domWrapper.find('li').filter(function(){ return $(this).data('listId') === $(e.currentTarget).data('listId'); });
-    this.blockData = this.data.cpHistories[$(e.currentTarget).data('listId')];
-    // 차단하기
-    this._popupService.openModalTypeA(
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_A94.TITLE,
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_A94.MSG,
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_A94.BUTTON,
-      $.proxy(function(){},this),
-      $.proxy(this._execBlock,this),
-      $.proxy(this._cancelBlock,this),
-      'confirmBlock'
-    )
-    // this._execBlock(this.data[$(e.currentTarget).data('listId')], 'A');
+    );
   },
 
   _cancelBlock: function() {
     this._popupService.close();
   },
-
-  _execBlock: function() {
-    console.log('clickclick')
-    this.$li.find('.btn-switch.type1').addClass('on');
-    this._apiService.request(Tw.API_CMD.BFF_05_0082, {
-      idpg: this.blockData.idpg,
-      tySvc: this.blockData.tySvc,
-      cpCode: this.blockData.cpCode,
-      state: 'A'
-    })
-        .done($.proxy(this._successBlock, this))
-        .fail($.proxy(this._failBlock,this));
-  },
-
-  _successBlock: function() {
-    // 차단완료
-    this._popupService.close();
-    Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.BLOCK);
-  },
-
+  
   _execUnBlock: function() {
-    console.log('uclickuclick')
     this.$li.find('.btn-switch.type1').removeClass('on');
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
       idpg: this.blockData.idpg,
       tySvc: this.blockData.tySvc,
@@ -115,10 +72,23 @@ Tw.MyTFareBillSmallBlock.prototype = {
         .fail($.proxy(this._failBlock,this));
   },
 
-  _successUnBlock: function() {
-    // 해제완료
-    this._popupService.close();
-    Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.REVOCATION);
+  _successUnBlock: function(resq) {
+    if(resq.code !== Tw.API_CODE.CODE_00) {
+      this._failBlock(resq);
+      Tw.Error(resq.code, resq.msg).pop();
+      this.$li.find('.btn-switch.type1').addClass('on');
+    } else {
+      // 해제완료
+      Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.REVOCATION);
+      this.$li.remove();
+      //  데이터 변경
+      this.data.payHistoryCnt = parseFloat(this.data.payHistoryCnt) - 1;
+      this.$container.find('.ti-caption-gray .num em').text(this.data.payHistoryCnt);
+      // 0건이 되면
+      if(!this.data.payHistoryCnt) {
+        this.$domWrapper.append(this.$template.$emptyList());
+      }
+    }
   },
 
   _failBlock: function(e) {
