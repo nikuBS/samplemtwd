@@ -150,7 +150,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       $exist = this.$container.find('.list-box[data-type="' + type + '"][data-key="' + key + '"]');
 
     if ($exist.length > 0) {
-      $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName }));
+      $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName, pageNum: this._pageCount[type] }));
       idx--;
     }
 
@@ -168,6 +168,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
         date: histories[key][0].date,
         type: type,
         key: key,
+        pageNum: this._pageCount[type],
         typeName: typeName
       });
     }
@@ -218,15 +219,18 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _openCancel: function(e) {
-    var code = e.target.getAttribute('data-charge-code');
-    var id = e.target.getAttribute('data-cancel-id');
+    var code = e.currentTarget.getAttribute('data-charge-code'),
+      id = e.currentTarget.getAttribute('data-cancel-id'),
+      pageNum = e.currentTarget.getAttribute('data-page-number');
 
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, id, code));
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, id, pageNum, code));
   },
 
-  _handleCancel: function(id, code) {
+  _handleCancel: function(id, pageNum, code) {
     if (Tw.FormatHelper.isEmpty(code)) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id }).done($.proxy(this._handleSuccessCancel, this));
+      this._apiService
+        .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: this.DEFAULT_COUNT })
+        .done($.proxy(this._handleSuccessCancel, this));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code }).done($.proxy(this._handleSuccessCancel, this));
     }
