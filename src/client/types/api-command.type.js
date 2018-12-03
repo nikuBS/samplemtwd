@@ -250,7 +250,9 @@ Tw.API_CMD = {
   BFF_06_0065: { path: '/core-bill/v1/credit-cards', method: Tw.API_METHOD.GET },
   BFF_06_0066: { path: '/core-product/v1/gift-refill-products', method: Tw.API_METHOD.GET },
   BFF_06_0067: { path: '/core-bill/v1/pp-cards', method: Tw.API_METHOD.GET },
-  BFF_06_0068: { path: '/core-recharge/v1/ting-permissions', method:Tw.API_METHOD.POST },
+  BFF_06_0068: { path: '/core-recharge/v1/ting-permissions', method: Tw.API_METHOD.POST },
+  BFF_06_0069: { path: '/core-bill/v1/pps-recharges', method: Tw.API_METHOD.DELETE },
+  BFF_06_0070: { path: '/core-bill/v1/pps-data-recharges', method: Tw.API_METHOD.DELETE },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
@@ -499,7 +501,7 @@ Tw.AJAX_CMD = {
 };
 
 Tw.API_CODE = {
-  CODE_00: '00',    // success
+  CODE_00: '00', // success
   BFF_0003: 'BFF0003', // 로그인 필요
   BFF_0004: 'BFF0004', // 접근 권한 필요
   BFF_0006: 'BFF0006', // BFF API 차단
@@ -516,7 +518,7 @@ Tw.API_CODE = {
   CERT_SUCCESS: 'TWM0001',
   CERT_FAIL: 'TWM0002',
 
-  CODE_99: 'RDT0099',    // Circuit Open
+  CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',
   CODE_400: '400',
 
@@ -524,21 +526,21 @@ Tw.API_CODE = {
 };
 
 Tw.API_SVC_PWD_ERROR = {
-  ATH3000: 'ATH3000',     // 변경할 회선 고객보호비밀번호 입력 필요
-  BFF9000: 'BFF9000',     // 변경할 회선 고객보호비밀번호 입력 필요
-  ICAS3481: 'ICAS3481',   // 고객보호비밀번호 입력 오류 1회
-  ICAS3482: 'ICAS3482',   // 고객보호비밀번호 입력 오류 2회
-  ICAS3483: 'ICAS3483',   // 고객보호비밀번호 입력 오류 3회
-  ICAS3484: 'ICAS3484',   // 고객보호비밀번호 입력 오류 4회
-  ICAS3215: 'ICAS3215',   // 고객보호비밀번호 입력 오류 5회 (잠김예정)
-  ICAS3216: 'ICAS3216'    // 고객보호비밀번호 기 잠김
+  ATH3000: 'ATH3000', // 변경할 회선 고객보호비밀번호 입력 필요
+  BFF9000: 'BFF9000', // 변경할 회선 고객보호비밀번호 입력 필요
+  ICAS3481: 'ICAS3481', // 고객보호비밀번호 입력 오류 1회
+  ICAS3482: 'ICAS3482', // 고객보호비밀번호 입력 오류 2회
+  ICAS3483: 'ICAS3483', // 고객보호비밀번호 입력 오류 3회
+  ICAS3484: 'ICAS3484', // 고객보호비밀번호 입력 오류 4회
+  ICAS3215: 'ICAS3215', // 고객보호비밀번호 입력 오류 5회 (잠김예정)
+  ICAS3216: 'ICAS3216' // 고객보호비밀번호 기 잠김
 };
 
 Tw.API_LOGIN_ERROR = {
-  ATH1003: 'ATH1003',     // 로그인 30회 초과
-  ATH3236: 'ATH3236',     // 분실정지(대표회선)
-  ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
-  ICAS3235: 'ICAS3235'    // 휴면계정
+  ATH1003: 'ATH1003', // 로그인 30회 초과
+  ATH3236: 'ATH3236', // 분실정지(대표회선)
+  ICAS3228: 'ICAS3228', // 고객보호비밀번호(대표회선) 입력 필요
+  ICAS3235: 'ICAS3235' // 휴면계정
 };
 
 Tw.API_ADD_SVC_ERROR = {
