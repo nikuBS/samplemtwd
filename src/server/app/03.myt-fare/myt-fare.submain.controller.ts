@@ -26,7 +26,9 @@ class MyTFareSubmainController extends TwViewController {
       isMicroPayment: false,
       isNotAutoPayment: true,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(svcInfo, allSvc)
+      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      // 1일 기준
+      isNotFirstDate: (new Date().getDate() > 1)
     };
 
     if ( req.params && req.params[0] === '/usagefee' ) {

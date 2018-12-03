@@ -349,8 +349,11 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
-    this.loadingView(true, 'button[data-id=realtime-pay]');
-    this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
+    // 매월 1일은 비노출
+    if ( this.data.isNotFirstDate ) {
+      this.loadingView(true, 'button[data-id=realtime-pay]');
+      this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
+    }
   },
 
   // 실시간 사용요금 요청-2

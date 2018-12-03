@@ -521,6 +521,7 @@ class MytDataSubmainController extends TwViewController {
     const curDate = new Date().getDate();
     return this.apiService.request(API_CMD.BFF_05_0091, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        // 1 ~ 4 일 (집계중으로표시하지 않음)
         if ( curDate < 5 ) {
           return null;
         } else {
