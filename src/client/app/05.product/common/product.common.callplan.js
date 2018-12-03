@@ -36,6 +36,7 @@ Tw.ProductCommonCallplan.prototype = {
 
     this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
+    this.$contents = this.$container.find('.fe-contents');
   },
 
   _bindEvent: function() {
@@ -45,6 +46,20 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
     this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
+
+    this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+  },
+
+  _confirmExternalUrl: function(e) {
+    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+
+    e.preventDefault();
+    e.stopPropagation();
+  },
+
+  _openExternalUrl: function(href) {
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal(href);
   },
 
   _getJoinTermCd: function(typcd) {
