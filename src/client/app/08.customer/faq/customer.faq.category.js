@@ -53,7 +53,7 @@ Tw.CustomerFaqCategory.prototype = {
     var list = _.map(data, $.proxy(function (item) {
       var ret = {
         value: item.ifaqGrpNm,
-        attr: 'value=' + item.ifaqGrpCd + ' title=' + item.ifaqGrpNm,
+        attr: 'value="' + item.ifaqGrpCd + '" title="' + item.ifaqGrpNm + '"',
         option: 'fe-category'
       };
       if (depth === 1 && this._depth1code === item.ifaqGrpCd) {
