@@ -99,7 +99,6 @@ Tw.PopupService.prototype = {
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback, hashName);
-    console.log(option);
     this._open(option);
   },
   openAlert: function (contents, title, btName, closeCallback) {
