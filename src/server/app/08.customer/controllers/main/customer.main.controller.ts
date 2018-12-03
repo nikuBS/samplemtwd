@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD } from '../../../../types/api-command.type';
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class CustomerMain extends TwViewController {
   constructor() {
@@ -18,15 +19,23 @@ class CustomerMain extends TwViewController {
     combineLatest(
       this.getBanners(),
       this.getNotice()
-    ).subscribe(([banners, noticeList]) => {
-
+    ).subscribe(([banners, notice]) => {
+      const noticeList = this.parseNoticeList(BrowserHelper.isApp(req), notice);
       res.render('main/customer.main.html', {
+        isApp: BrowserHelper.isApp(req),
         svcInfo: svcInfo,
         banners: banners,
         noticeList: noticeList,
         // researchList: researchList
       });
     });
+  }
+
+  private parseNoticeList(isApp, notice) {
+    if ( isApp ) {
+      return notice.result.content.splice(0, 3);
+    }
+    return notice.result.content.splice(0, 6);
   }
 
   private getBanners() {

@@ -25,62 +25,48 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-
+            <% if ( banners ) { %>
             <!-- .operation-guide-box -->
             <div class="operation-guide-box">
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box slider1">
                         <ul class="slider">
+                            <% banners.result.map( banner => { %>
                             <li>
                                 <div class="operation-guide-banner">
                                     <strong class="banner-tit">
-                                        데이터가<br>부족할 땐
-                                        <em class="tit-point">이렇게 하세요!</em>
+                                        <!--데이터가<br>부족할 땐<em class="tit-point">이렇게 하세요!</em>-->
+                                        <%-banner.menuImgDesc%>
                                     </strong>
                                     <ul>
-                                        <li><button class="banner-bt ico-type01">데이터 초과 요금 걱정마세요</button></li>
-                                        <li><button class="banner-bt ico-type02">마음껏 데이터를 쓸 수 있는 방법!</button></li>
-                                        <li><button class="banner-bt ico-type03">다른 정보도 확인하세요</button></li>
+                                        <% banner.contents.map( item => { %>
+                                        <% if ( item.mtwdBltn1CtgId === 'TIP001' ) { %>
+                                        <li><a
+                                            href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"
+                                            class="banner-bt ico-type01"><%-item.cntsNm%></a></li>
+                                        <% } else if (item.mtwdBltn1CtgId === 'TIP002') {%>
+                                        <li><a
+                                            href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"
+                                            class="banner-bt ico-type02"><%-item.cntsNm%></a></li>
+                                        <% } else {%>
+                                        <li><a
+                                            href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"
+                                            class="banner-bt ico-type03"><%-item.cntsNm%></a></li>
+                                        <% } %>
+                                        <% }) %>
                                     </ul>
                                     <span class="ico"></span>
                                 </div>
                             </li>
-                            <li>
-                                <div class="operation-guide-banner">
-                                    <strong class="banner-tit">
-                                        데이터가<br>부족할 땐
-                                        <em class="tit-point">이렇게 하세요!</em>
-                                    </strong>
-                                    <ul>
-                                        <li><button class="banner-bt ico-type01">데이터 초과 요금 걱정마세요</button></li>
-                                        <li><button class="banner-bt ico-type02">마음껏 데이터를 쓸 수 있는 방법!</button></li>
-                                        <li><button class="banner-bt ico-type03">다른 정보도 확인하세요</button></li>
-                                    </ul>
-                                    <span class="ico"></span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="operation-guide-banner">
-                                    <strong class="banner-tit">
-                                        데이터가<br>부족할 땐
-                                        <em class="tit-point">이렇게 하세요!</em>
-                                    </strong>
-                                    <ul>
-                                        <li><button class="banner-bt ico-type01">데이터 초과 요금 걱정마세요</button></li>
-                                        <li><button class="banner-bt ico-type02">마음껏 데이터를 쓸 수 있는 방법!</button></li>
-                                        <li><button class="banner-bt ico-type03">다른 정보도 확인하세요</button></li>
-                                    </ul>
-                                    <span class="ico"></span>
-                                </div>
-                            </li>
+                            <% }) %>
                         </ul>
                     </div>
                 </div>
                 <!--// .widget -->
             </div>
             <!--// .operation-guide-box -->
-
+            <% } %>
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
                 <p class="list-comp-title">궁금하신 점을 직접 찾아보실 수 있어요!</p>
@@ -91,12 +77,12 @@
             <div class="cont-box nogaps-top noborder">
                 <div class="inputbox address-wrap mt0" style="width:100%">
                         <span class="input">
-                            <input type="text" placeholder="문의내용 입력" maxlength="" title="문의내용 입력">
+                            <input class="fe-faq-search-text" type="text" placeholder="문의내용 입력" maxlength="" title="문의내용 입력">
                             <button class="cancel"><span class="blind">삭제</span></button>
                         </span>
                     <span class="space"></span>
                     <span class="bt-box">
-                            <button type="button">검색</button>
+                            <button type="button" class="fe-faq-search">검색</button>
                         </span>
                 </div>
             </div>
@@ -136,7 +122,8 @@
             <div class="cont-box nogaps-ver">
                 <div class="main-faq-menu">
                     <ul>
-                        <li><a href="/customer/agentsearch#name" class="menu-bt ico-type10"><span class="ico"></span>지점&middot;대리점 찾기</a></li>
+                        <li><a href="/customer/agentsearch#name" class="menu-bt ico-type10"><span class="ico"></span>지점&middot;대리점 찾기</a>
+                        </li>
                         <li><a href="/customer/agentsearch/repair" class="menu-bt ico-type11"><span class="ico"></span>AS센터 찾기</a></li>
                         <li><a href="" class="menu-bt ico-type12"><span class="ico"></span>로밍센터 찾기</a></li>
                     </ul>
@@ -145,36 +132,36 @@
             <!--// .cont-box -->
             <!-- .survey-box -->
             <!--<div class="survey-box">-->
-                <!--&lt;!&ndash; .widget &ndash;&gt;-->
-                <!--<div class="widget">-->
-                    <!--<div class="widget-box slider1">-->
-                        <!--<div class="coupon-genre-banner-slide">-->
-                            <!--<div class="slider-box">-->
-                                <!--<ul class="slider">-->
-                                    <!--<li>-->
-                                        <!--<div class="survey-banner">-->
-                                            <!--<strong class="banner-tit">더 좋은 청구서를 제공하기 위해 <em class="tit-point">설문에 답해주세요.</em></strong>-->
-                                            <!--<div><a class="bt-link-tx underline" href="">오늘의 설문 참여하기</a></div>-->
-                                        <!--</div>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<div class="survey-banner">-->
-                                            <!--<strong class="banner-tit">더 좋은 청구서를 제공하기 위해 <em class="tit-point">설문에 답해주세요.</em></strong>-->
-                                            <!--<div><a class="bt-link-tx underline" href="">오늘의 설문 참여하기</a></div>-->
-                                        <!--</div>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<div class="survey-banner">-->
-                                            <!--<strong class="banner-tit">더 좋은 청구서를 제공하기 위해 <em class="tit-point">설문에 답해주세요.</em></strong>-->
-                                            <!--<div><a class="bt-link-tx underline" href="">오늘의 설문 참여하기</a></div>-->
-                                        <!--</div>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--&lt;!&ndash;// .widget &ndash;&gt;-->
+            <!--&lt;!&ndash; .widget &ndash;&gt;-->
+            <!--<div class="widget">-->
+            <!--<div class="widget-box slider1">-->
+            <!--<div class="coupon-genre-banner-slide">-->
+            <!--<div class="slider-box">-->
+            <!--<ul class="slider">-->
+            <!--<li>-->
+            <!--<div class="survey-banner">-->
+            <!--<strong class="banner-tit">더 좋은 청구서를 제공하기 위해 <em class="tit-point">설문에 답해주세요.</em></strong>-->
+            <!--<div><a class="bt-link-tx underline" href="">오늘의 설문 참여하기</a></div>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<div class="survey-banner">-->
+            <!--<strong class="banner-tit">더 좋은 청구서를 제공하기 위해 <em class="tit-point">설문에 답해주세요.</em></strong>-->
+            <!--<div><a class="bt-link-tx underline" href="">오늘의 설문 참여하기</a></div>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<div class="survey-banner">-->
+            <!--<strong class="banner-tit">더 좋은 청구서를 제공하기 위해 <em class="tit-point">설문에 답해주세요.</em></strong>-->
+            <!--<div><a class="bt-link-tx underline" href="">오늘의 설문 참여하기</a></div>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;// .widget &ndash;&gt;-->
             <!--</div>-->
             <!--// .survey-box -->
 
@@ -188,13 +175,13 @@
             <div class="cont-box nogaps-top noborder">
                 <ul>
                     <!--<li>-->
-                        <!--<div class="link-long">-->
-                            <!--<button>가입&middot;변경&middot;해지 구비서류 안내-->
-                                <!--<span class="tx-sub">-->
-                                        <!--<span class="ico"></span>-->
-                                    <!--</span>-->
-                            <!--</button>-->
-                        <!--</div>-->
+                    <!--<div class="link-long">-->
+                    <!--<button>가입&middot;변경&middot;해지 구비서류 안내-->
+                    <!--<span class="tx-sub">-->
+                    <!--<span class="ico"></span>-->
+                    <!--</span>-->
+                    <!--</button>-->
+                    <!--</div>-->
                     <!--</li>-->
                     <li>
                         <div class="link-long">
@@ -206,17 +193,17 @@
                         </div>
                     </li>
                     <!--<li>-->
-                        <!--<div class="link-long">-->
-                            <!--<button>전화상담 예약하기-->
-                                <!--<span class="tx-sub">-->
-                                        <!--<span class="ico"></span>-->
-                                    <!--</span>-->
-                            <!--</button>-->
-                        <!--</div>-->
+                    <!--<div class="link-long">-->
+                    <!--<button>전화상담 예약하기-->
+                    <!--<span class="tx-sub">-->
+                    <!--<span class="ico"></span>-->
+                    <!--</span>-->
+                    <!--</button>-->
+                    <!--</div>-->
                     <!--</li>-->
                     <li>
                         <div class="link-long">
-                            <a href="">칭찬합니다
+                            <a href="/customer/svc-info/praise">칭찬합니다
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -225,7 +212,7 @@
                     </li>
                     <li>
                         <div class="link-long">
-                            <a href="">이용자 피해예방센터
+                            <a href="/customer/damage-info">이용자 피해예방센터
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -244,7 +231,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
-
+            <% if ( noticeList ) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
                 <p class="list-comp-title">공지사항 <a href="/customer/svc-info/notice" class="bt">전체보기</a></p>
@@ -254,40 +241,24 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="link-long-list">
+                    <% if ( noticeList ) { %>
+                    <% noticeList.map( item => { %>
                     <li>
                         <div class="link-long">
-                            <button>
-                                <em>[안내]</em> T world 개인정보 처리방침 변경 안내
+                            <a href="/customer/svc-info/notice#ntcId=<%-item.ntcId%>">
+                                <em>[안내]</em> <%-item.ntcTitNm%>
                                 <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
+                                            <span class="ico"></span>
+                                        </span>
+                            </a>
                         </div>
                     </li>
-                    <li>
-                        <div class="link-long">
-                            <button>
-                                <em>[안내]</em> 행복 AS전남대 미니 센터 영업종료
-                                <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>
-                                <em>[안내]</em> (7월 3주) 시스템 점검 안내
-                                <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
+                    <% }) %>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->
-
+            <% } %>
         </div>
     </div>
     <!--// #contents -->
@@ -295,9 +266,12 @@
 </div>
 <% include ../../components/javascript.component.html %>
 
-    <script>
-      $(document).ready(function () {
-      });
-    </script>
+<script>
+  $(document).ready(function () {
+    $('.fe-faq-search').on('click', function () {
+      document.location.href = '/customer/faq/search?' + $.param({ keyword: $('.fe-faq-search-text').val() });
+    });
+  });
+</script>
 </body>
 <% include ../../components/end.component.html %>
