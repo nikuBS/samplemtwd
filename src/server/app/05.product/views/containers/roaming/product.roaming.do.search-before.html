@@ -61,32 +61,37 @@
                                 <% } %>
                             </p>
                         </div>
-                        <% if (isLogin && loginInfo.eqpMdlNm) { %>
-                        <div class="phone-name">
-                            <strong><%= loginInfo.eqpMdlNm %></strong>
+                        <!--<% if (isLogin && loginInfo.eqpMdlNm) { %>-->
+                        <div class="fe-rm-phone">
+                            <div class="phone-name">
+                                <strong><%= loginInfo.eqpMdlNm %></strong>
+                            </div>
+                            <ul class="bt-slice pt20">
+                                <li class="bt-white2">
+                                    <button class="fe-change-model">변경</button>
+                                </li>
+                            </ul>
                         </div>
-                        <ul class="bt-slice pt20">
-                            <li class="bt-white2">
-                                <button>변경</button>
-                            </li>
-                        </ul>
-                        <% } else {%>
-                        <span class="inputbox">
+                        <!--<% } else {%>-->
+                        <div class="fe-rm-select">
+                          <span class="inputbox">
                             <span class="input">
-                                <button class="bt-dropdown big placeholder" title="데이터 용량" aria-haspopup="true">제조사를 선택하세요<span class="ico"></span></button>
+                                <button class="bt-dropdown big placeholder fe-roaming-mfactCd" title="데이터 용량" aria-haspopup="true">제조사를 선택하세요<span class="ico"></span></button>
                             </span>
                         </span>
-                        <span class="inputbox mt10">
+                            <span class="inputbox mt10">
                             <span class="input">
-                                <button class="bt-dropdown big placeholder" title="데이터 용량" aria-haspopup="true">모델명을 선택하세요<span class="ico"></span></button>
+                                <button class="bt-dropdown big placeholder fe-roaming-model" title="데이터 용량" aria-haspopup="true">모델명을 선택하세요<span class="ico"></span></button>
                             </span>
                         </span>
-                        <ul class="bt-slice pt20">
-                            <li class="bt-blue1">
-                                <button id="fe-rm-hp-search">선택</button>
-                            </li>
-                        </ul>
-                        <% } %>
+                            <ul class="bt-slice pt20">
+                                <li class="bt-blue1">
+                                    <button id="fe-rm-hp-search">선택</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--<% } %>-->
                         <% if (!isLogin) {%>
                         <p class="comm-indent-txt pt20">* 로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.</p>
                         <% } %>
@@ -112,8 +117,9 @@
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
+  var svcInfo = '<%- JSON.stringify(svcInfo) %>';
   $(document).ready(function () {
-    new Tw.ProductRoamingSearchBefore($('.wrap'));
+    new Tw.ProductRoamingSearchBefore($('.wrap'), JSON.parse(svcInfo));
   });
 </script>
 <% include ../../components/end.component.html %>

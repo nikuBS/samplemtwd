@@ -404,6 +404,7 @@ Tw.API_CMD = {
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
   BFF_10_0058: { path: '/core-product/v1/roaming/country-rate', method: Tw.API_METHOD.GET },
+  BFF_10_0059: { path: '/core-product/v1/roaming/modelCode-srch', method: Tw.API_METHOD.GET },
   BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: Tw.API_METHOD.GET },
   BFF_10_0084: { path: '/core-product/v1/roaming/fee-plans/:args0/joins', method: Tw.API_METHOD.POST },
 
