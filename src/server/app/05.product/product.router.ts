@@ -68,6 +68,11 @@ import ProductRoamingFiReservation2step from './controllers/roaming/product.roam
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
 import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info.center.controller';
 import ProductRoamingJoinRoamingSetup from './controllers/roaming/join/product.roaming.join.roaming-setup.controller';
+import ProductRoamingJoinRoamingBeginSetup from './controllers/roaming/join/product.roaming.join.roaming-begin-setup.controller';
+import ProductRoamingJoinRoamingAuto from './controllers/roaming/join/product.roaming.join.roaming-auto.controller';
+import ProductRoamingSettingRoamingAuto from './controllers/roaming/setting/product.roaming.setting.roaming-auto.controller';
+import ProductRoamingSettingRoamingSetup from './controllers/roaming/setting/product.roaming.setting.roaming-setup.controller';
+import ProductRoamingSettingRoamingBeginSetup from './controllers/roaming/setting/product.roaming.setting.roaming-begin-setup.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -136,6 +141,11 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/reservation3step', controller: ProductRoamingFiReservation3step });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
     this.controllers.push({ url: '/roaming/join/roaming-setup', controller: ProductRoamingJoinRoamingSetup });
+    this.controllers.push({ url: '/roaming/join/roaming-begin-setup', controller: ProductRoamingJoinRoamingBeginSetup });
+    this.controllers.push({ url: '/roaming/join/roaming-auto', controller: ProductRoamingJoinRoamingAuto });
+    this.controllers.push({ url: '/roaming/setting/roaming-setup', controller: ProductRoamingSettingRoamingSetup });
+    this.controllers.push({ url: '/roaming/setting/roaming-begin-setup', controller: ProductRoamingSettingRoamingBeginSetup });
+    this.controllers.push({ url: '/roaming/setting/roaming-auto', controller: ProductRoamingSettingRoamingAuto });
     this.controllers.push({ url: '/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
 

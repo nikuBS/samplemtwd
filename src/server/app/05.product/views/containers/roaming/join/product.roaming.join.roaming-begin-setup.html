@@ -1,7 +1,7 @@
 <%#
-* FileName: product.roaming.join.roaming-setup.html
+* FileName: product.roaming.join.roaming-begin-setup.html
 * Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.11.28
+* Date: 2018.12.03
 %>
 
 
@@ -36,14 +36,14 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="product-tit-wrap">
-                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
-                        <h3 class="tit-big"><%=prodRedisInfo.prodNm %></h3>
+                        <span class="tit-small">가입할 상품 옵션을 설정하세요.</span>
+                        <h3 class="tit-big"><%= prodRedisInfo.prodNm%></h3>
                     </div>
                 </div>
                 <!--// .cont-box -->
 
                 <div class="ti-caption-gray">
-                    <h4 class="tit">로밍 서비스 기간 설정</h4>
+                    <h3 class="tit">로밍 서비스 기간 설정</h3>
                     <button type="button" class="tip-view" title="로밍 서비스 기간 설정 정보보기" aria-haspopup="true">TIP</button>
                 </div>
 
@@ -51,40 +51,16 @@
                 <div class="cont-box">
                     <div class="set-roaming-time">
                         <div class="set">
-                            <h5 class="tit">개시일</h5>
+                            <h4 class="tit">개시일</h4>
                             <div class="btn-wrap">
-                                <div class="unit" aria-describedby="aria-dateset1">
+                                <div class="unit solid" aria-describedby="aria-dateset1">
                                     <span class="subtit">날짜</span>
                                     <button class="bt-dropdown big placeholder date" id="start_date" title="개시일 날짜 선택" aria-haspopup="true">선택<span class="ico"></span></button>
                                 </div>
-                                <div class="unit" aria-describedby="aria-timeset1">
-                                    <span class="subtit">시간</span>
-                                    <button class="bt-dropdown big placeholder time" id="start_time" title="개시일 시간 선택" aria-haspopup="true">선택<span class="ico"></span></button>
-                                </div>
                             </div>
-                            <p id="aria-val-tx1" class="error-txt start none">서비스 개시일 시간 설정은 당일 현재시간 이후만 가능합니다.</p>
-                            <ul class="announcement-box">
-                                <li id="aria-dateset1" class="announcement-bullet type01">1개월 이내의 날짜만 선택 가능합니다.</li>
-                                <li id="aria-timeset1" class="announcement-bullet type01">한국시간 기준 00시~23입니다.</li>
-                            </ul>
-                        </div>
-                        <div class="set">
-                            <h5 class="tit">종료일</h5>
-                            <div class="btn-wrap">
-                                <div class="unit" aria-describedby="aria-dateset2">
-                                    <span class="subtit">날짜</span>
-                                    <button class="bt-dropdown big placeholder date" id="end_date" title="종료일 날짜 선택" aria-haspopup="true">선택<span class="ico"></span></button>
-                                </div>
-                                <div class="unit" aria-describedby="aria-timeset2">
-                                    <span class="subtit">시간</span>
-                                    <button class="bt-dropdown big placeholder time" id="end_time" title="종료일 시간 선택" aria-haspopup="true">선택<span class="ico"></span></button>
-                                </div>
+                            <div class="announcement-box">
+                                <p id="aria-dateset1" class="announcement-bullet type02">1개월 이내의 날짜만 선택 가능합니다.</p>
                             </div>
-                            <p id="aria-val-tx2" class="error-txt end none">서비스 종료일 설정은 당일 이후만 가능합니다.</p>
-                            <ul class="announcement-box">
-                                <li id="aria-dateset2" class="announcement-bullet type01">서비스 개시일 30이내 날짜만 선택 가능합니다.</li>
-                                <li id="aria-timeset2" class="announcement-bullet type01">한국시간 기준 00시~23입니다.</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -92,10 +68,9 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box noborder bgnone">
-                    <ul class="announcement-box">
-                        <li class="announcement-bullet type01">신청한 시각부터 <strong>한국시각 기준으로 24시간 단위로 신청기간이 적용</strong>되며, 종료시점에 데이터 로밍이 자동으로 차단됩니다.</li>
-                        <li class="announcement-bullet type01">재이용을 원하실 경우 <strong>로밍 고객센터(02-6343-9000)</strong>으로 문의 주시길 바랍니다.</li>
-                    </ul>
+                    <div class="announcement-box">
+                        <p class="announcement-txt">국가는 중복 가입 가능합니다.</p>
+                    </div>
                 </div>
                 <!--// .cont-box -->
 
@@ -113,7 +88,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button disabled="disabled" id="do_confirm">설정완료</button><!-- 활성화시 disabled 속성 삭제 -->
+                            <button disabled="">설정완료</button>
                         </li>
                     </ul>
                 </div>
@@ -133,8 +108,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
-
+      new Tw.ProductRoamingJoinRoamingBeginSetup($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

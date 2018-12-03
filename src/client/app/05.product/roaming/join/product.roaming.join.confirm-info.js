@@ -1,5 +1,5 @@
 /**
- * FileName: product.roaming.info.guide.js
+ * FileName: product.roaming.join.confirm-info.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
  * Date: 2018.11.30
  */
