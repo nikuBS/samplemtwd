@@ -27,6 +27,7 @@ import CustomerAgentsearchRepair from './controllers/agentsearch/customer.agents
 import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.agentsearch.repair-detail.controller';
 import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
 import CustomerSvcInfoNotice from './controllers/svc-info/customer.svc-info.notice.controller';
+import CustomerFaqDoLikeThis from './controllers/faq/customer.faq.do-like-this.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -66,6 +67,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
+    this.controllers.push({ url: '/faq/do-like-this', controller: CustomerFaqDoLikeThis });
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/svc-info/researches(/:researchId)?', controller: CustomerResearches });
   }
