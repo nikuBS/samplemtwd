@@ -1,28 +1,43 @@
 /**
  * FileName: product.roaming.setting.roaming-setup.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.11.28
+ * Date: 2018.12.03
  */
 
-Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId) {
+Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = prodRedisInfo;
-  this._prodApiInfo = prodApiInfo;
+  this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this._init();
 };
 
-Tw.ProductRoamingJoinRoamingSetup.prototype = {
+Tw.ProductRoamingSettingRoamingSetup.prototype = {
+    _init : function(){
+        var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
+        var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format('YYYY. MM. DD');
+        var startTime = this._prodBffInfo.svcStartTm;
+        var endTime = this._prodBffInfo.svcEndTm;
+        this.$container.find('#start_date').text(startDate);
+        this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
+        this.$container.find('#end_date').text(endDate);
+        this.$container.find('#end_date').attr('data-number',this._prodBffInfo.svcEndDt);
+        this.$container.find('#start_time').text(startTime);
+        this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
+        this.$container.find('#end_time').text(endTime);
+        this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
+    },
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     },
     _getDateArrFromToDay : function(range,format){
-        var dateFormat = 'YYYY-MM-DD';
+        var dateFormat = 'YYYY. MM. DD';
         var resultArr = [];
         if(format){
             dateFormat = format;
@@ -42,7 +57,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     _getTimeArr : function(){
         var timeArr = [];
         for(var i=0;i<24;i++){
-            timeArr.push(i<10?'0'+i:i);
+            timeArr.push(i<10?'0'+i:''+i);
         }
         return timeArr;
     },
@@ -83,12 +98,12 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     },
     _actionSheetCloseEvt : function($layer){
         var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
-        var dateValue = $selectedTarget.text().trim().substr(0,10);
+        var dateValue = $selectedTarget.text().trim().substr(0,12);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
         changeTarget.text(dateValue);
         changeTarget.removeClass('placeholder');
-        changeTarget.attr('data-number',dateValue.replace(/-/g, ''));
+        changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
     },
@@ -194,8 +209,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                         prodNm : this._prodRedisInfo.prodNm,
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
-                        autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                        autoInfo : this._prodBffInfo,
+                        showStipulation : Object.keys(this._prodBffInfo.stipulationInfo).length>0
                    };
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');

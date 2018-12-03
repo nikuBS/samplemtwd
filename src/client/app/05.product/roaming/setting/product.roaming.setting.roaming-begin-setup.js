@@ -1,28 +1,34 @@
 /**
  * FileName: product.roaming.setting.roaming-setup.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.11.28
+ * Date: 2018.12.03
  */
 
-Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId) {
+Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
+
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = prodRedisInfo;
-  this._prodApiInfo = prodApiInfo;
+  this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this._init();
 };
 
-Tw.ProductRoamingJoinRoamingSetup.prototype = {
+Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
+    _init : function(){
+        var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
+        this.$container.find('#start_date').text(startDate);
+        this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
+    },
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
-      this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     },
     _getDateArrFromToDay : function(range,format){
-        var dateFormat = 'YYYY-MM-DD';
+        var dateFormat = 'YYYY. MM. DD';
         var resultArr = [];
         if(format){
             dateFormat = format;
@@ -39,13 +45,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         }
         return returnArr;
     },
-    _getTimeArr : function(){
-        var timeArr = [];
-        for(var i=0;i<24;i++){
-            timeArr.push(i<10?'0'+i:i);
-        }
-        return timeArr;
-    },
+
     _makeActionSheetDate : function(data){
         var returnActionSheetData = [
             {
@@ -65,13 +65,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         actionSheetData[0].list[0].value+= ' (오늘)';
         this._openSelectDatePop(actionSheetData,'');
     },
-    _btnTimeEvent : function($this){
-        var nowValue = $($this.currentTarget).text().trim();
-        var timeArr = this._getTimeArr();
-        var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$($this.currentTarget).attr('id')+'"',nowValue);
-        var actionSheetData = this._makeActionSheetDate(convertedArr);
-        this._openSelectDatePop(actionSheetData,'');
-    },
+
 
     _bindActionSheetElementEvt : function($layer){
         $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
@@ -83,34 +77,21 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     },
     _actionSheetCloseEvt : function($layer){
         var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
-        var dateValue = $selectedTarget.text().trim().substr(0,10);
+        var dateValue = $selectedTarget.text().trim().substr(0,12);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
         changeTarget.text(dateValue);
         changeTarget.removeClass('placeholder');
-        changeTarget.attr('data-number',dateValue.replace(/-/g, ''));
+        changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
     },
     _validateDateValue : function(){
         var startDate = this.$container.find('#start_date').attr('data-number');
-        var startTime = this.$container.find('#start_time').attr('data-number');
-        var endDate = this.$container.find('#end_date').attr('data-number');
-        var endTime = this.$container.find('#end_time').attr('data-number');
-        var startDateValidationResult = false;
-        var endDateValidationResult = false;
-        var allDateValidatioinResult = false;
 
-        if(!isNaN(startDate)&&!isNaN(startTime)){
-            startDateValidationResult = this._validateTimeValueAgainstNow(startDate,startTime,'start');
-        }
-        if(!isNaN(endDate)&&!isNaN(endTime)){
-            endDateValidationResult = this._validateTimeValueAgainstNow(endDate,endTime,'end');
-        }
-        if(startDateValidationResult&&endDateValidationResult){
-            allDateValidatioinResult = this._validateRoamingTimeValue(startDate,startTime,endDate,endTime);
-        }
-        if(startDateValidationResult&&endDateValidationResult&&allDateValidatioinResult){
+
+
+        if(!isNaN(startDate)){
             this.$container.find('.bt-fixed-area button').removeAttr('disabled');
         }else{
             this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
@@ -130,19 +111,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         }
         return returnValue;
     },
-    _validateRoamingTimeValue : function(startDate,startTime,endDate,endTime){
-        var returnValue = false;
-        var startValue = parseInt(startDate+''+startTime,10);
-        var endValue = parseInt(endDate+''+endTime,10);
-        if(startValue>=endValue){
-            var $errorsElement = this.$container.find('.error-txt.end');
-            $errorsElement.text('the error message in this case is not defined');
-            $errorsElement.removeClass('none');
-        }else{
-            returnValue = true;
-        }
-        return returnValue;
-    },
+
     _openSelectDatePop: function (data,title) {
       this._popupService.open({
               hbs: 'actionsheet_select_a_type',// hbs의 파일명
@@ -172,15 +141,14 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
 
     },
     _confirmInformationSetting : function () {
-        var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
-        var endDtIdx = parseInt(this.$container.find('#end_date').attr('data-idx'),10);
+
 
         var userJoinInfo = {
             'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
-            'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
-            'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
-            'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
-            'startEndTerm' : endDtIdx - startDtIdx
+            'svcEndDt' : {},
+            'svcStartTm' : {},
+            'svcEndTm' : {},
+            'startEndTerm' : {}
         };
 
         var data = {
@@ -194,8 +162,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                         prodNm : this._prodRedisInfo.prodNm,
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
-                        autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                        autoInfo : this._prodBffInfo,
+                        showStipulation : Object.keys(this._prodBffInfo.stipulationInfo).length>0
                    };
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');

@@ -1,10 +1,10 @@
 /**
- * FileName: product.roaming.setting.roaming-setup.js
+ * FileName: product.roaming.setting.roaming-auto.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.11.28
+ * Date: 2018.12.03
  */
 
-Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId) {
+Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
@@ -13,16 +13,17 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,s
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this._expireDate = expireDate;
 };
 
-Tw.ProductRoamingJoinRoamingSetup.prototype = {
+Tw.ProductRoamingJoinRoamingAuto.prototype = {
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     },
     _getDateArrFromToDay : function(range,format){
-        var dateFormat = 'YYYY-MM-DD';
+        var dateFormat = 'YYYY. MM. DD';
         var resultArr = [];
         if(format){
             dateFormat = format;
@@ -83,37 +84,39 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     },
     _actionSheetCloseEvt : function($layer){
         var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
-        var dateValue = $selectedTarget.text().trim().substr(0,10);
+        var dateValue = $selectedTarget.text().trim().substr(0,12);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
         changeTarget.text(dateValue);
         changeTarget.removeClass('placeholder');
-        changeTarget.attr('data-number',dateValue.replace(/-/g, ''));
+        changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
     },
     _validateDateValue : function(){
-        var startDate = this.$container.find('#start_date').attr('data-number');
-        var startTime = this.$container.find('#start_time').attr('data-number');
-        var endDate = this.$container.find('#end_date').attr('data-number');
-        var endTime = this.$container.find('#end_time').attr('data-number');
+        var startDateElement = this.$container.find('#start_date');
+        var startTimeElement = this.$container.find('#start_time');
+        var startDate = startDateElement.attr('data-number');
+        var startTime = startTimeElement.attr('data-number');
+        var endDateElement = this.$container.find('#end_date');
+        var endTimeElement = this.$container.find('#end_time');
         var startDateValidationResult = false;
-        var endDateValidationResult = false;
-        var allDateValidatioinResult = false;
+        // var endDateValidationResult = false;
 
         if(!isNaN(startDate)&&!isNaN(startTime)){
             startDateValidationResult = this._validateTimeValueAgainstNow(startDate,startTime,'start');
         }
-        if(!isNaN(endDate)&&!isNaN(endTime)){
-            endDateValidationResult = this._validateTimeValueAgainstNow(endDate,endTime,'end');
-        }
-        if(startDateValidationResult&&endDateValidationResult){
-            allDateValidatioinResult = this._validateRoamingTimeValue(startDate,startTime,endDate,endTime);
-        }
-        if(startDateValidationResult&&endDateValidationResult&&allDateValidatioinResult){
+
+        if(startDateValidationResult){
             this.$container.find('.bt-fixed-area button').removeAttr('disabled');
+            var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
+            var endDate = moment().add(expireDate, 'days').format('YYYY. MM. DD');
+            endDateElement.text(endDate);
+            endTimeElement.text(startTime);
         }else{
             this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
+            endDateElement.text(Tw.POPUP_TITLE.SELECT);
+            endTimeElement.text(Tw.POPUP_TITLE.SELECT);
         }
 
     },
@@ -172,15 +175,13 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
 
     },
     _confirmInformationSetting : function () {
-        var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
-        var endDtIdx = parseInt(this.$container.find('#end_date').attr('data-idx'),10);
 
         var userJoinInfo = {
             'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
-            'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
+            'svcEndDt' : {},
             'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
-            'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
-            'startEndTerm' : endDtIdx - startDtIdx
+            'svcEndTm' : {},
+            'startEndTerm' : {}
         };
 
         var data = {
@@ -199,7 +200,6 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                    };
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');
-
     }
 
     /*
