@@ -1,0 +1,119 @@
+<%#
+* FileName: myt-data.prepaid.voice-complete.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.11.28
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit">
+                            <span class="tx-highlight pt10"><%= mainTitle %></span>
+                        </p>
+                    </div>
+                    <div class="tx-contents">
+                        <% if ( type !== 'auto' && afterAmount) { %>
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">
+                                        충전 후 잔액
+                                    </span>
+                                    <span class="tx-cont"><%-convertAmount(afterAmount)%>원</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <% } else { %>
+                        <div class="basic-list">
+                            <ul>
+                                <% if ( chargeCd === '01' ) { %>
+                                <li>
+                                    <span class="title">매월 15일마다</span>
+                                    <span class="tx-cont"><%-convertAmount(amt)%>원씩 충전</span>
+                                </li>
+                                <% } %>
+                                <% if ( chargeCd === '02' ) { %>
+                                <li>
+                                    <span class="title">매월 26일마다</span>
+                                    <span class="tx-cont"><%-convertAmount(amt)%>원씩 충전</span>
+                                </li>
+                                <% } %>
+                                <% if ( chargeCd === '03' ) { %>
+                                <li>
+                                    <span class="title">잔액이 1,000원 이하인 경우</span>
+                                    <span class="tx-cont"><%-convertAmount(amt)%>원씩 충전</span>
+                                </li>
+                                <% } %>
+                                <% if ( chargeCd === '04' ) { %>
+                                <li>
+                                    <span class="title">잔액이 2,000원 이하인 경우</span>
+                                    <span class="tx-cont"><%-convertAmount(amt)%>원씩 충전</span>
+                                </li>
+                                <% } %>
+                                <% if ( chargeCd === '05' ) { %>
+                                <li>
+                                    <span class="title">잔액이 3,000원 이하인 경우</span>
+                                    <span class="tx-cont"><%-convertAmount(amt)%>원씩 충전</span>
+                                </li>
+                                <% } %>
+                                <% if ( chargeCd === '06' ) { %>
+                                <li>
+                                    <span class="title">잔액이 5,000원 이하인 경우</span>
+                                    <span class="tx-cont"><%-convertAmount(amt)%>원씩 충전</span>
+                                </li>
+                                <% } %>
+                                <li>
+                                    <span class="title"><%-convertDate(endDt)%> 까지</span>
+                                    <span class="tx-cont">자동 충전</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <% } %>
+                        <ul class="bt-slice item-one">
+                            <li><a href="<%= centerUrl %>" type="button" class="btn-round2 btn-style3"><%= centerName %></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><a href="<%= confirmUrl %>" type="button" class="btn-floating btn-style2">확인</a></li>
+            </ul>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>

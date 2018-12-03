@@ -333,6 +333,10 @@ export const MYT_DATA_COMPLETE_MSG = {
   DATA_RECHARGE_AUTO: '데이터 자동 충전 신청 완료',
   DATA_RECHARGE_CHANGE: '데이터 자동 충전 변경 완료',
   DATA_RECHARGE_CANCEL: '데이터 자동 충전 해지 완료',
+  VOICE_RECHARGE: '음성 충전 완료',
+  VOICE_RECHARGE_AUTO: '음성 자동 충전 신청 완료',
+  VOICE_RECHARGE_CHANGE: '음성 자동 충전 변경 완료',
+  VOICE_RECHARGE_CANCEL: '음성 자동 충전 해지 완료',
   DESCRIPTION: '데이터 1MB 이하 또는<br />사용기간 만료 1일 전일 때 자동 충전됩니다.',
   HISTORY: '충전내역 보기'
 };
