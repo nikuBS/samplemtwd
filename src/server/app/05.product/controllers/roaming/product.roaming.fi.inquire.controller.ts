@@ -11,15 +11,10 @@ import { API_CMD } from '../../../../types/api-command.type';
 
 export default class ProductRoamingFiInquire extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_10_0067, { page: 1, rentfrom : 20180322 , rentto : 20181107 }).subscribe((resp) => {
-
-      const getTFiData = resp;
-      // console.log('response : ' , JSON.stringify(resp));
-      res.render('roaming/product.roaming.fi.inquire.html', {
-        getTFiData: getTFiData,
-        svcInfo: svcInfo
-      });
-    });
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    res.render('roaming/product.roaming.fi.inquire.html', { svcInfo : svcInfo });
   }
 }
+
+
+
