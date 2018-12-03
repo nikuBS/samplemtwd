@@ -16,7 +16,7 @@ Tw.CertificationPublic = function () {
 
 
 Tw.CertificationPublic.prototype = {
-  open: function (svcInfo, authUrl, authKind, command, callback) {
+  open: function (authUrl, authKind, command, callback) {
     this._authUrl = authUrl;
     this._command = command;
     this._callback = callback;

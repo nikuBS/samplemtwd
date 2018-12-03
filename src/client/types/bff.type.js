@@ -43,6 +43,15 @@ Tw.HOME_SMART_CARD_E = {
   ADDITIONAL: 'H16'
 };
 
+Tw.SVC_STATE = {
+  AC: 'AC',      // 사용중
+  FB: 'FB',      // 직권해지
+  PB: 'PB',      // 직권해지신청
+  SP: 'SP',      // 정지
+  TG: 'TG',      // 일반해지
+  X1: 'X1'       // CIS PB 상태자료 이전
+};
+
 Tw.MYT_FARE_BILL_CO_TYPE = {
   TWORLD: 'T',
   BROADBAND: 'B'
@@ -72,6 +81,7 @@ Tw.AUTH_CERTIFICATION_METHOD = {
   FINANCE_AUTH: 'B',
   SMS_KEYIN: 'K',
   PASSWORD: 'W',
+  SMS_SECURITY: 'Y',
   SMS_REFUND: 'SF',
   IPIN_REFUND: 'IF',
   OTHER_REFUND: 'TF'

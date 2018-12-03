@@ -56,10 +56,12 @@ Tw.CertificationFinance.prototype = {
       this._svcInfo, this._authUrl,  this._authKind, this._command,  Tw.AUTH_CERTIFICATION_METHOD.SK_SMS, $.proxy(this._completeIdentification, this));
   },
   _onClickKtSms: function () {
-    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, this._command, $.proxy(this._completeIdentification, this));
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, this._command,
+      $.proxy(this._completeIdentification, this));
   },
   _onClickLgSms: function () {
-    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, this._command, $.proxy(this._completeIdentification, this));
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, this._command,
+      $.proxy(this._completeIdentification, this));
   },
   _onClickIpin: function () {
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, null, this._command, $.proxy(this._completeIdentification, this));
