@@ -211,9 +211,9 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const MOBILE = items['M'] || [];
-    const OTHER = items['O'] || [];
-    const SPC = items['S'] || [];
+    const MOBILE = (items && items['M']) || [];
+    const OTHER = (items && items['O']) || [];
+    const SPC = (items && items['S']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);

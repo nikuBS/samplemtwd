@@ -26,7 +26,9 @@ class MyTFareSubmainController extends TwViewController {
       isMicroPayment: false,
       isNotAutoPayment: true,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(svcInfo, allSvc)
+      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      // 1일 기준
+      isNotFirstDate: (new Date().getDate() > 1)
     };
 
     if ( req.params && req.params[0] === '/usagefee' ) {
@@ -229,9 +231,9 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const MOBILE = items['M'] || [];
-    const OTHER = items['O'] || [];
-    const SPC = items['S'] || [];
+    const MOBILE = (items && items['M']) || [];
+    const OTHER = (items && items['O']) || [];
+    const SPC = (items && items['S']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
