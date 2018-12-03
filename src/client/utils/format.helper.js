@@ -150,6 +150,26 @@ Tw.FormatHelper = (function () {
     };
   };
 
+  var convSpDataFormat = function (fee, curUnit) {
+    // 데이터 단위가 '원' 인 경우가 있음
+    fee = +fee;
+    if ( !isFinite(fee) ) {
+      return {
+        data: fee,
+        unit: curUnit
+      };
+    }
+
+    while ( fee >= 1024 ) {
+      fee /= 1024;
+    }
+
+    return {
+      data: convNumFormat(fee),
+      unit: curUnit
+    };
+  };
+
   var convDataFormat = function (data, curUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var unitIdx = _.findIndex(units, function (value) {
@@ -399,6 +419,7 @@ Tw.FormatHelper = (function () {
     convProductBasOfrVcallTmsCtt: convProductBasOfrVcallTmsCtt,
     convProductBasOfrCharCntCtt: convProductBasOfrCharCntCtt,
     convDataFormat: convDataFormat,
+    convSpDataFormat: convSpDataFormat,
     addComma: addComma,
     removeComma: removeComma,
     convVoiceMinFormatWithUnit: convVoiceMinFormatWithUnit,

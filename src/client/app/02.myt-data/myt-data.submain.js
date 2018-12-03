@@ -120,6 +120,8 @@ Tw.MyTDataSubMain.prototype = {
 
   __convFormat: function (data, unit) {
     switch ( unit ) {
+      case Tw.UNIT_E.FEE:
+        return Tw.FormatHelper.convSpDataFormat(data, Tw.UNIT[unit]);
       case Tw.UNIT_E.DATA:
         return Tw.FormatHelper.convDataFormat(data, Tw.UNIT[unit]);
       case Tw.UNIT_E.VOICE:
