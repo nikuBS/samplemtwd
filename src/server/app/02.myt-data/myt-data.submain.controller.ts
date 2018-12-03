@@ -321,7 +321,7 @@ class MytDataSubmainController extends TwViewController {
 
   convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
-    const MOBILE = items['M'] || [];
+    const MOBILE = (items && items['M']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE);
