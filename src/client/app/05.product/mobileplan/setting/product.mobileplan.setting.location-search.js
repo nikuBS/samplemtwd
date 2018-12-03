@@ -5,13 +5,13 @@
  * Page ID: MP_02_02_03_09(hbs)
  * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역 변경 > 할인지역 검색
  */
-Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallback) {
+Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallback, tmplt) {
   this.$container = rootEl;
   this.$selectList = $('.select-list', this.$container);
   this._applyCallback = applyCallback;
 
   // 지역 item 템플릿
-  this._tmpltLocItem = Handlebars.compile($('#loc-search-list-tmplt-item').html());
+  this._tmpltLocItem = tmplt;
 
   this._bindEvent();
   this.init(keyword);
@@ -49,12 +49,12 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
       return ;
     }
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
-    Tw.Api.request(Tw.API_CMD.BFF_10_0044, { areaNm : keyword })
+    Tw.Api.request(Tw.API_CMD.BFF_10_0044, { areaNm : encodeURIComponent(keyword) })
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -63,7 +63,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
 
@@ -89,6 +89,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     for(var i = 0; i < list.length; i++){
       html += this._tmpltLocItem(list[i]);
     }
+
     this.$selectList.html(html);
     $('.ti-caption-gray em', this.$container).text(list.length);
 
@@ -115,7 +116,9 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   _addLocation: function(){
     Tw.Popup.close();
     var selectedNum = this.$selectList.find('input[type=radio]:checked').val();
-    this._applyCallback(selectedNum);
+    var selectedName = this.$selectList.find('input[type=radio]:checked').attr('title');
+
+    this._applyCallback({num:selectedNum, name:selectedName});
   }
 
 };
