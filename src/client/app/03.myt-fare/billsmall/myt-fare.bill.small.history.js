@@ -3,7 +3,7 @@
  * Author: Lee kirim (kirim@sk.com)
  * Date: 2018. 11. 29
  */
-Tw.MyTFareBillSmallHitstory = function (rootEl, data) {
+Tw.MyTFareBillSmallHistory = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
   this._apiService = Tw.Api;
@@ -17,7 +17,7 @@ Tw.MyTFareBillSmallHitstory = function (rootEl, data) {
   this._bindEvent();
 };
 
-Tw.MyTFareBillSmallHitstory.prototype = {
+Tw.MyTFareBillSmallHistory.prototype = {
   _init: function (data) {
     this.current = this._getLastPathname();
 

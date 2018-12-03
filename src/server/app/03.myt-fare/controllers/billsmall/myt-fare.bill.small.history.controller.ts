@@ -67,7 +67,7 @@ class MyTFareBillSmallHistory extends TwViewController {
       if (data.histories !== undefined) {
         billList = data.histories.reverse().map((o, index) => {
           const blockState = MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState] === undefined ? null : MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
-          const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, '');
+          const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
           return Object.assign(o, {
             listId: index, 
             FullDate: DateHelper.getShortDateAndTime(plainTime),
