@@ -83,6 +83,11 @@ class BypassRouter {
 
     this.apiService.request(cmd, parameter, headers, ...(pathVariables))
       .subscribe((data) => {
+        // TODO: This is unpretty. Need to revise for NON JSON Object response
+        if (data instanceof Buffer) {
+          return res.end(data);
+        }
+
         data.serverSession = this.loginService.getServerSession();
         const svcInfo = this.loginService.getSvcInfo();
         if ( !FormatHelper.isEmpty(svcInfo) ) {
