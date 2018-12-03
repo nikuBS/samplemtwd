@@ -1,10 +1,10 @@
-<% if ( ['D', 'F'].indexOf(basicInfo.prodTypCd) !== -1 ) { %>
+<% if ( isWireplan || isCombine ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
     <p class="text">가입상담을 받아보시겠어요?</p>
     <div class="btn">
-        <a href="/product/wireplan/join/reservation?type_cd=<%= basicInfo.prodTypCd === 'D' ? 'internet' : 'combine' %>" class="btn-round3 btn-style3">예약</a>
+        <a href="/product/wireplan/join/reservation?type_cd=<%= isWireplan ? 'internet' : 'combine' %>" class="btn-round3 btn-style3">예약</a>
     </div>
 </div>
 <% } %>
@@ -43,9 +43,8 @@
 <% } %>
 
 <% // 설정 버튼 영역
-if ( ['AB', 'D'].indexOf(basicInfo.prodTypCd) !== -1 && (svcInfo && svcInfo.prodId === prodId)
-    || ['C', 'E', 'F', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && isJoined ) {
-%>
+if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
+    ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && isJoined ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
@@ -73,7 +72,7 @@ if ( ['AB', 'D'].indexOf(basicInfo.prodTypCd) !== -1 && (svcInfo && svcInfo.prod
 </div>
 <% } %>
 
-<% if ( basicInfo.prodTypCd === 'AB' && mobilePlanCompareInfo ) { %>
+<% if ( isWireplan && mobilePlanCompareInfo ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="plansaving-wrap">

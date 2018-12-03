@@ -428,10 +428,18 @@ export const PREPAID_PAYMENT_TYPE = {
 };
 
 export const PRODUCT_TYP_CD_LIST = {
-  AB: 'mobileplan',
-  C: 'mobileplan-add',
-  D: 'wireplan',
-  E: 'wireplan'
+  AB: 'product/mobileplan',
+  C: 'product/mobileplan-add',
+  D_I: 'product/wireplan/internet',
+  D_P: 'product/wireplan/phone',
+  D_T: 'product/wireplan/tv',
+  E_I: 'product/wireplan/internet',
+  E_P: 'product/wireplan/phone',
+  E_T: 'product/wireplan/tv',
+  H_P: 'product/roaming/fee',
+  H_A: 'product/roaming/planadd',
+  G: 'benefit/submain',
+  H: 'benefit/submain'
 };
 
 export const PRODUCT_CALLPLAN = {

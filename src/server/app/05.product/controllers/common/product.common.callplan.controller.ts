@@ -10,7 +10,12 @@ import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/common.type';
-import { DATA_UNIT, PRODUCT_TYP_CD_NAME, PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import {
+  DATA_UNIT,
+  PRODUCT_CALLPLAN_FEEPLAN,
+  PRODUCT_SIMILAR_PRODUCT,
+  PRODUCT_TYPE_NM
+} from '../../../../types/string.type';
 import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
@@ -24,29 +29,16 @@ class ProductCommonCallplan extends TwViewController {
   /**
    * 요금제 비교하기 Redis 정보 호출
    * @param prodTypCd
-   * @param compareIds
-   * @private
-   */
-  private _getMobilePlanCompareInfo(prodTypCd: any, compareIds: any): Observable<any> {
-    if (prodTypCd !== 'AB') {
-      return Observable.of({});
-    }
-
-    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + compareIds.join('/'));
-  }
-
-  /**
-   * 유사한 요금제 찾기
-   * @param prodTypCd
+   * @param svcInfoProdId
    * @param prodId
    * @private
    */
-  private _getMobilePlanSimilarProducts(prodTypCd: any, prodId: any): Observable<any> {
-    if (prodTypCd !== 'AB') {
+  private _getMobilePlanCompareInfo(prodTypCd: any, svcInfoProdId: any, prodId: any): Observable<any> {
+    if (prodTypCd !== 'AB' || FormatHelper.isEmpty(svcInfoProdId)) {
       return Observable.of({});
     }
 
-    return this.apiService.request(API_CMD.BFF_10_0112, { prodId: prodId });
+    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
   }
 
   /**
@@ -128,7 +120,6 @@ class ProductCommonCallplan extends TwViewController {
     });
 
     return Object.assign(basicInfo, {
-      prodTypName: PRODUCT_TYP_CD_NAME[basicInfo.prodTypCd],
       prodTypListPath: PRODUCT_TYP_CD_LIST[basicInfo.prodTypCd],
       linkBtnList: {
         join: joinBtnList,
@@ -286,25 +277,25 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * @param prodTypCd
-   * @param seriesInfo
+   * @param apiInfo
+   * @param isSeries
    * @private
    */
-  private _convertSeriesInfo (prodTypCd, seriesInfo): any {
-    if (FormatHelper.isEmpty(seriesInfo)) {
+  private _convertSeriesAndRecommendInfo (prodTypCd, apiInfo, isSeries): any {
+    if (FormatHelper.isEmpty(apiInfo)) {
       return null;
     }
 
-    return Object.assign(seriesInfo, {
-      seriesProdList: seriesInfo.seriesProdList.map((item) => {
-        const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
-          item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
-          isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
+    const list = isSeries ? apiInfo.seriesProdList : apiInfo.recommendProdList;
+    return list.map((item) => {
+      const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
+        item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
+        isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
-        return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
-          .reduce((a, b) => {
-            return Object.assign(a, b);
-          });
-      })
+      return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
+        .reduce((a, b) => {
+          return Object.assign(a, b);
+        });
     });
   }
 
@@ -327,15 +318,26 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * @param prodTypCd
    * @param similarProductInfo
    * @private
    */
-  private _convertSimilarProduct (similarProductInfo: any) {
+  private _convertSimilarProduct (prodTypCd: any, similarProductInfo: any) {
     if (similarProductInfo.code !== API_CODE.CODE_00) {
       return null;
     }
 
+    let titleNm: any = PRODUCT_SIMILAR_PRODUCT.PRODUCT;
+    if (prodTypCd === 'AB') {
+      titleNm = PRODUCT_SIMILAR_PRODUCT.PLANS;
+    }
+
+    if (prodTypCd === 'C') {
+      titleNm = PRODUCT_SIMILAR_PRODUCT.ADDITIONS;
+    }
+
     return Object.assign(similarProductInfo.result, {
+      titleNm: titleNm,
       prodFltIds: FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.map((item) => {
         return item.prodFltId;
       }).join(',')
@@ -363,8 +365,25 @@ class ProductCommonCallplan extends TwViewController {
     });
   }
 
+  /**
+   * @param prodTypCd
+   * @private
+   */
+  private _getIsCategory (prodTypCd: any): any {
+    return {
+      isMobileplan: prodTypCd === 'AB',
+      isMobileplanAdd: prodTypCd === 'C',
+      isWireplan: ['D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1,
+      isWireplanAdd: ['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1,
+      isRoaming: ['H_P', 'H_A'].indexOf(prodTypCd) !== -1,
+      isCombine: prodTypCd === 'F',
+      isDiscount: prodTypCd === 'G'
+    };
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
+      svcInfoProdId = svcInfo ? svcInfo.prodId : null,
       renderCommonInfo = {
         svcInfo: svcInfo,
         pageInfo: pageInfo,
@@ -393,16 +412,15 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0003, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
+          this.apiService.request(API_CMD.BFF_10_0112, { prodId: prodId }),
           this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-          this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, [svcInfo.prodId, prodId]),
-          this._getMobilePlanSimilarProducts(basicInfo.result.prodTypCd, prodId),
+          this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
           this._getIsJoined(basicInfo.result.prodTypCd, prodId),
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
           this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo,
-          mobilePlanCompareInfo, mobilePlanSimilarProductInfo,
-          isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
+          relateTagsInfo, seriesInfo, recommendsInfo, similarProductInfo, prodRedisInfo,
+          mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
@@ -417,18 +435,25 @@ class ProductCommonCallplan extends TwViewController {
             return this.error.render(res, renderCommonInfo);
           }
 
-          res.render('common/callplan/product.common.callplan.html', Object.assign(renderCommonInfo, {
+          const isCategory = this._getIsCategory(basicInfo.result.prodTypCd),
+            basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.summary.feeManlSetTitNm) ?
+              prodRedisInfo.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
+
+          res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
             prodId: prodId,
+            basFeeSubText: basFeeSubText,
             basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
             prodRedisInfo: this._convertRedisInfo(prodRedisInfo), // 상품 정보 by Redis
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
-            series: this._convertSeriesInfo(basicInfo.result.prodTypCd, seriesInfo.result), // 시리즈 상품
-            recommends: recommendsInfo.result,  // 함께하면 유용한 상품
-            mobilePlanCompareInfo: mobilePlanCompareInfo, // 요금제 비교하기
-            mobilePlanSimilarProductInfo: this._convertSimilarProduct(mobilePlanSimilarProductInfo),  // 모바일 요금제 유사한 상품
+            series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
+            recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
+            mobilePlanCompareInfo: FormatHelper.isEmpty(mobilePlanCompareInfo) ? null : mobilePlanCompareInfo, // 요금제 비교하기
+            similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
             additionsProdFilterInfo: additionsProdFilterInfo,  // 부가서비스 카테고리 필터 리스트
-            combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo)
+            combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo)  // 구비서류 제출 심사내역
+          }].reduce((a, b) => {
+            return Object.assign(a, b);
           }));
         });
       });
