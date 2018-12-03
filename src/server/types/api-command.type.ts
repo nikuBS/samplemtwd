@@ -72,6 +72,7 @@ export const API_CMD = {
   BFF_01_0054: { path: '/v1/captcha/audio', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0055: { path: '/v1/captcha/answer', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0058: { path: '/v1/auth/skt-sms/legal-agent', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0061: { path: '/core-auth/v1/user-email', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0063: { path: '/v1/auth/skt-sms/common', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   // AUTH
   BFF_03_0000_TEST: { path: '/v1/load-test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
