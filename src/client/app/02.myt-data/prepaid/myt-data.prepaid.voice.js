@@ -27,7 +27,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
-    this.$cardPw = this.$container.find('.fe-card-pw');
   },
 
   _bindEvent: function () {
@@ -43,7 +42,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _checkIsAbled: function () {
-    if ( this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '' ) {
+    if ( this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' ) {
       this.$btnRequestCreditCard.prop('disabled', false);
     } else {
       this.$btnRequestCreditCard.prop('disabled', true);
@@ -55,8 +54,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
       this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
       this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkLength(this.$cardPw.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
+      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6)
 
     if ( isValid ) {
       var htParams = {
@@ -83,6 +81,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     } else {
       this.$btnRequestPrepaidCard.prop('disabled', true);
     }
+
     return isValid;
   },
 
@@ -102,6 +101,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
       var previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
       var rechargeAmount = Number($('.fe-select-amount').data('amount'));
       var afterAmount = previousAmount + rechargeAmount;
+      this.amountInfo = {
+        previousAmount: previousAmount,
+        afterAmount: afterAmount,
+        rechargeAmount: rechargeAmount
+      };
 
       this._popupService.open({
         hbs: 'DC_09_01_01',
@@ -124,6 +128,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
       var previousAmount = Number(resp.result.curAmt);
       var rechargeAmount = Number(resp.result.cardAmt);
       var afterAmount = previousAmount + rechargeAmount;
+      this.amountInfo = {
+        previousAmount: previousAmount,
+        afterAmount: afterAmount,
+        rechargeAmount: rechargeAmount
+      };
 
       this._popupService.open({
         hbs: 'DC_09_01_01',
@@ -189,8 +198,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
       cardNum: this.$cardNumber.val(),
       expireYY: this.$cardY.val(),
-      expireMM: this.$cardM.val(),
-      pwd: this.$cardPw.val()
+      expireMM: this.$cardM.val()
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0053, htParams)
@@ -198,8 +206,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _onCompleteRechargeByCreditCard: function (res) {
-
-    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
+    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice/complete?type=voice&' + $.param(this.amountInfo));
     // if ( res.code === Tw.API_CODE.CODE_00 ) {
     //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
     // } else {

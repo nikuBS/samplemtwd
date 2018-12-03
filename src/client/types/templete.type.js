@@ -92,8 +92,10 @@ Tw.POPUP_TPL = {
         { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
         { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
         { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' },
-        { 'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
-          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청' }
+        {
+          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
+        }
       ]
     },
     {
@@ -361,9 +363,21 @@ Tw.POPUP_TPL = {
     data: [
       {
         'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="06" data-center="A100110000" data-booth="1000004045"', value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
-          { 'option': 'hbs-card-type', 'attr': 'id="07" data-center="A100110000" data-booth="1000004047"', value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
-          { 'option': 'hbs-card-type', 'attr': 'id="08" data-center="1430456896" data-booth="1430456957"', value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
+          {
+            'option': 'hbs-card-type',
+            'attr': 'id="06" data-center="A100110000" data-booth="1000004045"',
+            value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)'
+          },
+          {
+            'option': 'hbs-card-type',
+            'attr': 'id="07" data-center="A100110000" data-booth="1000004047"',
+            value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)'
+          },
+          {
+            'option': 'hbs-card-type',
+            'attr': 'id="08" data-center="1430456896" data-booth="1430456957"',
+            value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)'
+          },
           { 'option': 'hbs-card-type', 'attr': 'id="09" data-center="A100140000" data-booth="1000004055"', value: '김포공항 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="10" data-center="A900100000" data-booth="1000004057"', value: '제주공항 국제선 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="11" data-center="A200130000" data-booth="1000012532"', value: '김해공항 3층 로밍 센터' },
@@ -377,35 +391,35 @@ Tw.POPUP_TPL = {
     {
       title: '',
       data: [{
-          'list': [
-            { 'option': 'hbs-card-type', 'attr': 'id="1"', value: '인천공항 1터미널 3층' },
-            { 'option': 'hbs-card-type', 'attr': 'id="2"', value: '인천공항 1터미널 1층' }
-          ]
-        }]
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="1"', value: '인천공항 1터미널 3층' },
+          { 'option': 'hbs-card-type', 'attr': 'id="2"', value: '인천공항 1터미널 1층' }
+        ]
+      }]
     },
     {
       data: [{
-          'list': [
-            { 'option': 'hbs-card-type', 'attr': 'id="3"', value: '인천공항 2터미널 3층' },
-            { 'option': 'hbs-card-type', 'attr': 'id="4"', value: '인천공항 2터미널 1층' }
-          ]
-        }]
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="3"', value: '인천공항 2터미널 3층' },
+          { 'option': 'hbs-card-type', 'attr': 'id="4"', value: '인천공항 2터미널 1층' }
+        ]
+      }]
     },
     {
       data: [{
-          'list': [
-            { 'option': 'hbs-card-type', 'attr': 'id="7"', value: '김해공항 3층 국제선 청사' },
-            { 'option': 'hbs-card-type', 'attr': 'id="8"', value: '김해공항 1층 국제선 청사' }
-          ]
-        }]
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="7"', value: '김해공항 3층 국제선 청사' },
+          { 'option': 'hbs-card-type', 'attr': 'id="8"', value: '김해공항 1층 국제선 청사' }
+        ]
+      }]
     },
     {
       data: [{
-          'list': [
-            { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '국제1 여객터미널' },
-            { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '국제2 여객터미널' }
-          ]
-        }]
+        'list': [
+          { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '국제1 여객터미널' },
+          { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '국제2 여객터미널' }
+        ]
+      }]
     }
   ]
 };
@@ -416,28 +430,28 @@ Tw.MYT_TPL = {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
     '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
-    '<span class="cont"><span class="info-title">{{nickNm}}'+
+    '<span class="cont"><span class="info-title">{{nickNm}}' +
     '{{#if child}}' +
-    '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>'+
+    '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>' +
     '{{/if}}' +
     '<span class="info-sub">{{svcNum}}</span>' +
-    '<span class="price">{{data}}{{unit}}</span>'+
+    '<span class="price">{{data}}{{unit}}</span>' +
     '</span></span></button></li>'
   },
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
-      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-      '<span class="ico-wrap">' +
-      '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
-      '</span>' +
-      '<span class="cont">' +
-      '<span class="info-title">{{nickNm}}'+
-      '{{#if combine}}' +
-      '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>'+
-      '{{/if}}' +
-      '</span><span class="info-sub">{{svcNum}}</span>' +
-      '<span class="price">{{amt}} 원</span>'+
-      '</span></button></li>'
+    'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
+    '<span class="ico-wrap">' +
+    '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
+    '</span>' +
+    '<span class="cont">' +
+    '<span class="info-title">{{nickNm}}' +
+    '{{#if combine}}' +
+    '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>' +
+    '{{/if}}' +
+    '</span><span class="info-sub">{{svcNum}}</span>' +
+    '<span class="price">{{amt}} 원</span>' +
+    '</span></button></li>'
   },
   JOIN_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
@@ -677,10 +691,10 @@ Tw.MYT_PREPAID_AMOUNT = {
 
 Tw.MYT_PREPAID_RECHARGE_AMOUNT = {
   list: [
-    { text: '5,000원', value: 5000 },
-    { text: '3,000원', value: 3000 },
-    { text: '2,000원', value: 2000 },
-    { text: '1,000원', value: 1000 }
+    { text: '5,000원', value: 5000, chargeCd: '06'},
+    { text: '3,000원', value: 3000, chargeCd: '05' },
+    { text: '2,000원', value: 2000, chargeCd: '04' },
+    { text: '1,000원', value: 1000, chargeCd: '03' }
   ]
 };
 
@@ -711,8 +725,8 @@ Tw.MYT_PREPAID_RECHARGE_DATA = [
 
 Tw.MYT_PREPAID_DATE = {
   list: [
-    { text: '15일', value: 15 },
-    { text: '26일', value: 26 }
+    { text: '15일', value: 15, chargeCd: '01' },
+    { text: '26일', value: 26, chargeCd: '02' }
   ]
 };
 
