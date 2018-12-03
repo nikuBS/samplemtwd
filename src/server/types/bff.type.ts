@@ -253,7 +253,21 @@ export enum PROD_TTAB_BASIC_DATA_PLUS {
 export const MYT_FARE_HISTORY_MICRO_TYPE = {
   '01': '일반결제',
   '02': '묶음결제',
-  '03': '자동결제'
+  '03': '자동결제',
+  '04': '간편결제',
+  '05': '복합결제'
+};
+
+export const MYT_FARE_HISTORY_MICRO_PAY_TYPE = {
+  'Y': '무선',
+  'N': 'Web'
+};
+
+export const MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
+  A0: '차단중',
+  A1: '다음 달 차단예정',
+  C0: '', // 해제상태
+  C1: '다음 달 해제예정'
 };
 
 export const MYT_PAYMENT_HISTORY_REFUND_TYPE = {

@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.bill.contents.history.controller.ts
+ * FileName: myt-fare.bill.small.history.controller.ts
  * Author: Lee kirim (kirim@sk.com)
  * Date: 2018.09.17
  */
@@ -10,16 +10,20 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
+import { MYT_FARE_HISTORY_MICRO_TYPE, MYT_FARE_HISTORY_MICRO_PAY_TYPE, MYT_FARE_HISTORY_MICRO_BLOCK_TYPE } from '../../../../types/bff.type';
+import bill_guide_BFF_05_0079 from '../../../../mock/server/bill.guide.BFF_05_0079.mock';
 
 interface Info {
   [key: string]: string;
 }
 
 interface Query {
+  payMethod: string;
   fromDt: string;
   toDt: string;
 }
-class MyTFareBillContentsHistory extends TwViewController {
+
+class MyTFareBillSmallHistory extends TwViewController {
 
   fromDt;
   toDt;
@@ -35,14 +39,15 @@ class MyTFareBillContentsHistory extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     // 조회할 달 수 구하기
     this.setDatePeriod(req);
-
+  
     const query: Query = {
+      payMethod: 'ALL',
       fromDt: this.fromDt,
       toDt: this.toDt
     };
-  
-    this.apiService.request(API_CMD.BFF_05_0064, query).subscribe((resp) => {
 
+    this.apiService.request(API_CMD.BFF_05_0079, query).subscribe((resp): any => {
+      // console.log('\x1b[36m%s\x1b[0m', '------log auto code', resp.code, resp.result);
       this.logger.info(this, resp.code !== API_CODE.CODE_00, resp);
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
@@ -53,26 +58,37 @@ class MyTFareBillContentsHistory extends TwViewController {
         });
       }
 
-      const data = resp.result;
+      // const mockData = bill_guide_BFF_05_0079;
+      
+      const data = resp.result; // || mockData.result;
 
-      if (data.useConAmtDetailList !== undefined) {
-        data.useConAmtDetailList.reverse().map((o, index) => {
-          o.listId = index; 
-          o.useServiceNm = o.useServiceNm || o.payFlag; 
-          o.FullDate = DateHelper.getFullDateAndTimeWithDot(o.payTime);
-          o.useAmt = FormatHelper.addComma(o.useCharge); // 이용금액
-          o.dedAmt = FormatHelper.addComma(o.deductionCharge); // 공제금액
+      let billList;
+      
+      if (data.histories !== undefined) {
+        billList = data.histories.reverse().map((o, index) => {
+          const blockState = MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState] === undefined ? null : MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
+          const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
+          return Object.assign(o, {
+            listId: index, 
+            FullDate: DateHelper.getShortDateAndTime(plainTime),
+            useAmt: FormatHelper.addComma(o.sumPrice), // 이용금액
+            payMethodNm: MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
+            payWay: MYT_FARE_HISTORY_MICRO_PAY_TYPE[o.wapYn],
+            isShowBlockBtn: (o.payMethod === '03' && blockState !== null), // 차단하기/내역 버튼 표기여부
+            blockState: blockState || '', // 차단 상테
+            isBlocked: blockState ? true : false, // 차단여부
+          });
         });
       }
 
-      res.render('billcontents/myt-fare.bill.contents.history.html', {
+      res.render('billsmall/myt-fare.bill.small.history.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
         currentMonth: DateHelper.getCurrentMonth(this.fromDt) + MYT_STRING_KOR_TERM.month,  // 12월
-        totalCnt: data.useConAmtDetailList.length,
+        totalCnt: data.payHistoryCnt,
         data: {
           // 리스트를 위한 정보 전송
-          billList: data.useConAmtDetailList, 
+          billList: billList, 
           // 셀렉트 박스를 위한 정보 전송
           beforeYear: this.beforeYear,
           beforeMonth: this.beforeMonth,
@@ -124,9 +140,9 @@ class MyTFareBillContentsHistory extends TwViewController {
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_07_01_tip_01', title: '조회 안내'}
+      {link: 'MF_06_01_tip_01', title: '조회 안내'}
     ];
   }
 }
 
-export default MyTFareBillContentsHistory;
+export default MyTFareBillSmallHistory;

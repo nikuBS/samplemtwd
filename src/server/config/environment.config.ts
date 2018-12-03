@@ -7,7 +7,7 @@ const environment = {
     CDN_MANIFEST: 'http://localhost:3001',
     REDIS: {
       host: '61.250.19.37',
-      port: 31300,
+      port: 32300,
       db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',

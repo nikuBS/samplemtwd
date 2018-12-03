@@ -188,3 +188,10 @@ Tw.PREPAID_PAYMENT_TYPE = {
   '51': '후납',
   '99': '선불카드(PPS카드)'
 };
+
+Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
+  A0: '차단중',
+  A1: '다음 달 차단예정',
+  C0: '', // 해제상태
+  C1: '다음 달 해제예정'
+};

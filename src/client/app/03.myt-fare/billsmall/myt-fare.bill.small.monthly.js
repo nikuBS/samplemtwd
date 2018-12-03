@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.bill.contents.monthly.js
+ * FileName: myt-fare.bill.small.monthly.js
  * Author: Lee kirim (kirim@sk.com)
  * Date: 2018. 11. 29
  */
