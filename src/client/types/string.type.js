@@ -1,3 +1,7 @@
+Tw.COMMON_STRING = {
+  ALL: '전체'
+};
+
 Tw.DATA_UNIT = {
   KB: 'KB',
   MB: 'MB',

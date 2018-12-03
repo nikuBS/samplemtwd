@@ -19,6 +19,7 @@ import CustomerEmail from './controllers/email/customer.email.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
 import CustomerFaq from '../904.customer/controllers/faq/customer.faq.controller';
 import CustomerFaqSearch from './controllers/faq/customer.faq.search.controller';
+import CustomerFaqCategory from './controllers/faq/customer.faq.category.controller';
 import CustomerAgentsearch from './controllers/agentsearch/customer.agentsearch.controller';
 import CustomerAgentsearchDetail from './controllers/agentsearch/customer.agentsearch.detail.controller';
 import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsearch.near.controller';
@@ -64,6 +65,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
+    this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/svc-info/researches(/:researchId)?', controller: CustomerResearches });
   }
