@@ -25,14 +25,8 @@ Tw.CustomerFaq.prototype = {
     this.$btnSearch.on('click', $.proxy(this._onSearchRequested, this));
   },
   _onExternalLinks: function (e) {
-    if (Tw.BrowserHelper.isApp()) {
-      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
-        type: Tw.NTV_BROWSER.EXTERNAL,
-        href: $(e.currentTarget).attr('href')
-      });
-      return false;
-    }
-    return true;
+    var url = e.currentTarget.value;
+    Tw.CommonHelper.openUrlExternal(url);
   },
   _onSearchInput: function (e) {
     if (Tw.FormatHelper.isEmpty(e.currentTarget.value.trim())) {

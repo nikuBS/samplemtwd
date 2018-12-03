@@ -4,7 +4,7 @@
  * Date: 2018.08.21
  */
 
-Tw.CustomerFaqCategory = function (rootEl, rootCat, depth1, depth2) {
+Tw.CustomerFaqCategoryOld = function (rootEl, rootCat, depth1, depth2) {
   this.$container = rootEl;
 
   this._popupService = Tw.Popup;
@@ -30,7 +30,7 @@ Tw.CustomerFaqCategory = function (rootEl, rootCat, depth1, depth2) {
   this._bindEvents();
 };
 
-Tw.CustomerFaqCategory.prototype = {
+Tw.CustomerFaqCategoryOld.prototype = {
   _cacheElements: function () {
     this.$btnDepth1 = this.$container.find('.fe-btn-depth1');
     this.$btnDepth2 = this.$container.find('.fe-btn-depth2');

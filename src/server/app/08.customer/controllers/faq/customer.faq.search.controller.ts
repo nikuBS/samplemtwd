@@ -8,17 +8,20 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerFaqSearch extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const keyword = req.query.keyword;
     this.getSearchResult(keyword, res, svcInfo).subscribe(
       (result) => {
-        res.render('faq/customer.faq.search.html', {
-          result: result.content,
-          total: parseInt(result.totalElements, 10),
-          keyword
-        });
+        if (!FormatHelper.isEmpty(result)) {
+          res.render('faq/customer.faq.search.html', {
+            result: result.content,
+            total: parseInt(result.totalElements, 10),
+            keyword
+          });
+        }
       },
       (err) => {
         this.error.render(res, {

@@ -16,7 +16,6 @@ import environment from './config/environment.config';
 import AppRouter from './common/route/app.router';
 import { default as OldMytRouter } from './app/901.myt/myt.router';
 import { default as OldPaymentRouter } from './app/903.payment/payment.router';
-import { default as OldCustomerRouter } from './app/904.customer/customer.router';
 import CommonRouter from './app/00.common/common.router';
 import MainRouter from './app/01.main/main.router';
 import MyTDataRouter from './app/02.myt-data/myt-data.router';
@@ -126,7 +125,6 @@ class App {
   private setRoutes() {
     this.app.use('/myt', new AppRouter(OldMytRouter.instance.controllers).router);
     this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
-    this.app.use('/customer', new AppRouter(OldCustomerRouter.instance.controllers).router);
 
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
