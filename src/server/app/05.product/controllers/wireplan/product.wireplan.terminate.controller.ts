@@ -1,5 +1,4 @@
 /**
- * @todo Mock-data 로 작업 한 상태, 테스트 계정 찾는중
  * 상품 해지 - 유선 부가서비스
  * FileName: product.wireplan.terminate.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)

@@ -153,19 +153,13 @@ Tw.ProductCommonConfirm.prototype = {
       hbs: 'actionsheet_select_a_type',
       layer: true,
       title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
-      data: [{
-        'list': [
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS00, option: (this._termRsnCd === 'CS00') ? 'checked' : '', attr: 'data-term_rsn_cd="CS00"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS01, option: (this._termRsnCd === 'CS01') ? 'checked' : '', attr: 'data-term_rsn_cd="CS01"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS02, option: (this._termRsnCd === 'CS02') ? 'checked' : '', attr: 'data-term_rsn_cd="CS02"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS03, option: (this._termRsnCd === 'CS03') ? 'checked' : '', attr: 'data-term_rsn_cd="CS03"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS04, option: (this._termRsnCd === 'CS04') ? 'checked' : '', attr: 'data-term_rsn_cd="CS04"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS05, option: (this._termRsnCd === 'CS05') ? 'checked' : '', attr: 'data-term_rsn_cd="CS05"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS06, option: (this._termRsnCd === 'CS06') ? 'checked' : '', attr: 'data-term_rsn_cd="CS06"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS07, option: (this._termRsnCd === 'CS07') ? 'checked' : '', attr: 'data-term_rsn_cd="CS07"' },
-          { value: Tw.WIREPLAN_TERMINATE_CAUSE.CS08, option: (this._termRsnCd === 'CS08') ? 'checked' : '', attr: 'data-term_rsn_cd="CS08"' }
-        ]
-      }]
+      data: this._data.termRsnList.map(function(item) {
+        return {
+          value: item.ranNm,
+          option: this._termRsnCd === item.ranCd ? 'checked' : '',
+          attr: 'data-term_rsn_cd="' + item.ranCd + '"'
+        };
+      })
     }, $.proxy(this._bindSelectTerminateCause, this), null, 'select_term_rsn_cd');
   },
 

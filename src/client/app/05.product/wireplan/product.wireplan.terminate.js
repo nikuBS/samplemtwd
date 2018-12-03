@@ -59,12 +59,12 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _callConfirmCommonJs: function() {
-    new Tw.ProductCommonConfirm(false, this.$container, {
+    new Tw.ProductCommonConfirm(false, this.$container, $.extend(this._confirmOptions, {
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
       isWireplan: true,
       isTerm: true,
       isWidgetInit: true
-    }, $.proxy(this._prodConfirmOk, this));
+    }), $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function(callbackParams) {
@@ -80,7 +80,7 @@ Tw.ProductWireplanTerminate.prototype = {
       serNum: '',
       cntcPlcInfoRgstYn: this._btnData.cntcPlcInfoRgstYn,
       svcProdGrpCd: this._btnData.svcProdGrpCd,
-      termRsnCd: callbackParams.termRsnCd // @todo 해지사유코드 확인되면 삽입
+      termRsnCd: callbackParams.termRsnCd
     }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
   },
 
