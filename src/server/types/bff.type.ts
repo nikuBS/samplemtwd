@@ -447,3 +447,11 @@ export const PRODUCT_REPLACED_RULE = {
     RESULT: '집·이동전화 무제한'
   }]
 };
+export enum SVC_STATE {
+  AC = 'AC',      // 사용중
+  FB = 'FB',      // 직권해지
+  PB = 'PB',      // 직권해지신청
+  SP = 'SP',      // 정지
+  TG = 'TG',      // 일반해지
+  X1 = 'X1'       // CIS PB 상태자료 이전
+}

@@ -289,7 +289,7 @@ Tw.PopupService.prototype = {
         }
       }, this));
       this._prevHashList = [];
-      // skt_landing.action.popup.allClose();
+      skt_landing.action.popup.allClose();
       history.go(-hashLength);
     }
   },
