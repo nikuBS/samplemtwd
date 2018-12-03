@@ -1,4 +1,5 @@
 /**
+ * @todo 상품원장 미리보기; 기획 요건 확인 중
  * FileName: product.common.callplan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.11
@@ -8,8 +9,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO } from '../../../../types/common.type';
-import { DATA_UNIT, PRODUCT_TYP_CD_NAME, PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import { REDIS_PRODUCT_FILTER } from '../../../../types/common.type';
+import { DATA_UNIT, PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import {PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
@@ -101,7 +102,6 @@ class ProductCommonCallplanPreview extends TwViewController {
     });
 
     return Object.assign(basicInfo, {
-      prodTypName: PRODUCT_TYP_CD_NAME[basicInfo.prodTypCd],
       prodTypListPath: PRODUCT_TYP_CD_LIST[basicInfo.prodTypCd],
       linkBtnList: {
         join: joinBtnList,

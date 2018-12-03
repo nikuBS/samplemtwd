@@ -3,17 +3,17 @@
 
 <div class="cont-box nogaps-btm widget">
     <h3 class="suggest-tag-title">연관태그</h3>
-    <% if ( mobilePlanSimilarProductInfo && mobilePlanSimilarProductInfo.prodCnt > 0 && mobilePlanSimilarProductInfo.list.length > 0 ) { %>
+    <% if ( similarProductInfo && similarProductInfo.prodCnt > 0 && similarProductInfo.list.length > 0 ) { %>
     <div class="suggest-tag-titlebox">
-        <a href="/product/mobileplan?filters=<%= mobilePlanSimilarProductInfo.prodFltIds %>" class="suggest-tag-link">
+        <a href="/<%= basicInfo.prodTypListPath %>?filters=<%= similarProductInfo.prodFltIds %>" class="suggest-tag-link">
             <p class="text">
-                유사한 요금제를 찾아보세요!
-                <span class="textnumber">(<span class="number"><%= mobilePlanSimilarProductInfo.prodCnt %></span>개) </span>
+                유사한 <%= similarProductInfo.titleNm %> 찾아보세요!
+                <span class="textnumber">(<span class="number"><%= similarProductInfo.prodCnt %></span>개) </span>
             </p>
-            <% if (mobilePlanSimilarProductInfo.list) { %>
+            <% if (similarProductInfo.list) { %>
             <div class="taglist-wrap">
-                <% for (var i in mobilePlanSimilarProductInfo.list) { %>
-                <span class="tag-text">#<%= mobilePlanSimilarProductInfo.list[i].prodFltNm %></span>
+                <% for (var i in similarProductInfo.list) { %>
+                <span class="tag-text">#<%= similarProductInfo.list[i].prodFltNm %></span>
                 <% } %>
             </div>
             <% } %>
@@ -22,11 +22,17 @@
     <% } %>
     <div class="widget-box toggle02">
         <div class="suggest-tag-list openlist-wrap">
+            <% if ( !isCombine && !isDiscount ) { %>
             <ul>
                 <% for (var i in relateTags) { %>
-                <li><a href="/product/<%= basicInfo.prodTypListPath %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+                    <% if (basicInfo.prodTypListPath) { %>
+                    <li><a href="/<%= basicInfo.prodTypListPath %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+                    <% } else { %>
+                    <li><button type="button" class="link">#<%= relateTags[i].tagNm %></button></li>
+                    <% } %>
                 <% } %>
             </ul>
+            <% } %>
         </div>
     </div>
 </div>

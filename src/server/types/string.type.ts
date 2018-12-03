@@ -187,16 +187,6 @@ export const MYT_INFO_DISCOUNT_MONTH = {
   TITLE: '월별 상세 할인 내역'
 };
 
-export enum PRODUCT_TYP_CD_NAME {
-  AB = '요금제',
-  C = '부가서비스',
-  D = '인터넷/전화/IPTV',
-  E = '인터넷/전화/IPTV 부가서비스',
-  F = '결합상품',
-  G = '할인프로그램',
-  H = '로밍'
-}
-
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   direct: '즉시납부',
@@ -458,11 +448,19 @@ export const PRODUCT_TYPE_NM = {
   }
 };
 
+export const PRODUCT_CALLPLAN_FEEPLAN = '부가세포함';
+
 export const PRODUCT_CTG_NM = {
   PLANS: '요금제',
   ADDITIONS: '부가서비스',
   DISCOUNT_PROGRAM: '할인프로그램',
   COMBINATIONS: '결합상품'
+};
+
+export const PRODUCT_SIMILAR_PRODUCT = {
+  PRODUCT: '상품을',
+  PLANS: '요금제를',
+  ADDITIONS: '부가서비스를'
 };
 
 export const MYT_SUSPEND_STATE = {
