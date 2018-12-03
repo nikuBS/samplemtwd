@@ -52,6 +52,7 @@ Tw.ProductRoamingFee.prototype = {
   _findElement: function () {
     this.$addBtn = this.$container.find('.bt-more > button');
     this.$roamingPlanlist = this.$container.find('ul.recommendedrate-list');
+    this.$roamingPlanItemCnt = this.$container.find('.fe-fee-cnt');
   },
   _handleRoamingPlanFilters: function() {
       if (!this._roamingFilters) {
@@ -244,6 +245,7 @@ Tw.ProductRoamingFee.prototype = {
       }
 
       this.$roamingPlanlist.append(this._rmListTmpl({ items: items }));
+      this.$roamingPlanItemCnt.text(resp.result.productCount);
   },
   _openRoamingOrderPopup: function () {
       var list = Tw.PRODUCT_PLANS_ORDER.slice(),
