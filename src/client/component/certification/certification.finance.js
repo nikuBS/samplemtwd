@@ -8,7 +8,7 @@ Tw.CertificationFinance = function () {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
-  this._certSk = new Tw.CertificationSk();
+  this._certSkFull = new Tw.CertificationSkFull();
   this._certPublic = new Tw.CertificationPublic();
 
   this._svcInfo = null;
@@ -16,7 +16,6 @@ Tw.CertificationFinance = function () {
   this._command = null;
   this._callback = null;
   this._authKind = null;
-  this._resultUrl = null;
   this._isCompleteIden = false;
   this._isCheckTerm = true;
 
@@ -32,7 +31,6 @@ Tw.CertificationFinance.prototype = {
     this._command = command;
     this._callback = callback;
     this._authKind = authKind;
-    this._resultUrl = '/common/cert/complete';
 
     this._popupService.open({
       hbs: 'CO_02_02_01',
@@ -52,8 +50,8 @@ Tw.CertificationFinance.prototype = {
     }
   },
   _onClickSkSms: function () {
-    this._certSk.open(
-      this._svcInfo, this._authUrl,  this._authKind, this._command,  Tw.AUTH_CERTIFICATION_METHOD.SK_SMS, $.proxy(this._completeIdentification, this));
+    console.log('cert sms');
+    this._certSkFull.open(this._authUrl,  this._authKind, $.proxy(this._completeIdentification, this));
   },
   _onClickKtSms: function () {
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, this._command,
@@ -80,16 +78,16 @@ Tw.CertificationFinance.prototype = {
   },
   _completeIdentification: function (result) {
     if ( result.code === Tw.API_CODE.CODE_00 ) {
-      this._isCompleteIden = true;
-      this._popupService.close();
+      // this._isCompleteIden = true;
+      // this._popupService.close();
+      this._openPublic();
     } else {
-      // TODO: 인증 에러
       Tw.Error(result.code, result.msg).pop();
     }
   },
   _openPublic: function () {
     this._popupService.open({
-      hbs: 'CO_02_02_02',
+      hbs: 'CO_CE_02_05_02',
       layer: true
     }, $.proxy(this._onOpenPublicPopup, this), $.proxy(this._onClosePublicPopup, this));
   },
