@@ -123,6 +123,7 @@
         </ul>
         <% } %>
     </div>
+    <% if (data.remnantData && (data.remnantData.voice.length > 0 || remnantData.sms.length > 0)) { %>
     <hr class="cont-sp type1" aria-hidden="true" />
     <div class="cont-box nogaps-hoz">
         <ul class="date-graph-list">
@@ -204,6 +205,7 @@
             <% } %>
         </ul>
     </div>
+    <% } %>
 <!-- Phone -->
 <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
 <!-- PPS -->
@@ -273,6 +275,7 @@
             </li>
         </ul>
     </div>
+    <% if (data.remnantData && (data.remnantData.voice.length > 0 || remnantData.sms.length > 0)) { %>
     <hr class="cont-sp type1" aria-hidden="true" />
     <div class="cont-box nogaps-hoz">
     <ul class="date-graph-list">
@@ -353,7 +356,8 @@
         </li>
         <% } %>
     </ul>
-</div>
+    </div>
+    <% } %>
 <!-- PPS -->
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
     <!-- T-PocketFi & T-Login -->
