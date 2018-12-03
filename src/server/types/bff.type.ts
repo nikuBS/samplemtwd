@@ -420,7 +420,8 @@ export const PRODUCT_TYP_CD_LIST = {
   E: 'wireplan'
 };
 
-export const PRODUCT_CALLPLAN_FLICK = {
+export const PRODUCT_CALLPLAN = {
+  CIA_INSPT_RSLT: '비정상',
   SEE_CONTENTS: '상세참조'
 };
 
@@ -443,6 +444,6 @@ export const PRODUCT_REPLACED_RULE = {
     RESULT: '이동전화 무제한'
   }, {
     TARGET: ['999999998', '999,999,998'],
-    RESULT: '집전화·이동전화 무제한'
+    RESULT: '집·이동전화 무제한'
   }]
 };

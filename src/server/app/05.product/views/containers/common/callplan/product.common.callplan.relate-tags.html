@@ -3,7 +3,7 @@
 
 <div class="cont-box nogaps-btm widget">
     <h3 class="suggest-tag-title">연관태그</h3>
-    <% if ( mobilePlanSimilarProductInfo ) { %>
+    <% if ( mobilePlanSimilarProductInfo && mobilePlanSimilarProductInfo.prodCnt > 0 && mobilePlanSimilarProductInfo.list.length > 0 ) { %>
     <div class="suggest-tag-titlebox">
         <a href="/product/mobileplan?filters=<%= mobilePlanSimilarProductInfo.prodFltIds %>" class="suggest-tag-link">
             <p class="text">

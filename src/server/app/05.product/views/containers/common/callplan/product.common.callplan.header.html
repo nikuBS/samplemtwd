@@ -52,8 +52,8 @@
         </div>
         <% } else { %>
         <% if ( basicInfo.prodScrbYn === 'Y' && (
-            ['AB', 'D', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && svcInfo && svcInfo.prodId !== prodId ||
-            ['C', 'E', 'F'].indexOf(basicInfo.prodTypCd) !== -1 && !isJoined)
+            ['AB', 'D'].indexOf(basicInfo.prodTypCd) !== -1 && svcInfo && svcInfo.prodId !== prodId ||
+            ['C', 'E', 'F', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && !isJoined)
         ) { %>
         <div class="btn">
             <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
@@ -61,7 +61,7 @@
             <% } %>
         </div>
         <% } %>
-        <% if ( basicInfo.prodTermYn === 'Y' && (['C', 'E', 'F'].indexOf(basicInfo.prodTypCd) !== -1 && isJoined) ) { %>
+        <% if ( basicInfo.prodTermYn === 'Y' && (['C', 'E', 'F', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && isJoined) ) { %>
         <div class="btn">
             <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
             <button type="button" class="bt-white1 fe-btn_join" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
@@ -69,8 +69,8 @@
         </div>
         <% } %>
         <% if ( basicInfo.prodScrbYn === 'N' && (
-            ['AB', 'D', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && svcInfo && svcInfo.prodId !== prodId ||
-            ['C', 'E', 'F'].indexOf(basicInfo.prodTypCd) !== -1 && !isJoined)
+            ['AB', 'D'].indexOf(basicInfo.prodTypCd) !== -1 && svcInfo && svcInfo.prodId !== prodId ||
+            ['C', 'E', 'F', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && !isJoined)
         ) { %>
         <div class="limit">
             가입제한 상품

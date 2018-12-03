@@ -9,7 +9,12 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
-import { PRODUCT_INFINITY_BENEFIT, PRODUCT_INFINITY_BENEFIT_NM, PRODUCT_INFINITY_BENEFIT_PROD_NM } from '../../../../../types/string.type';
+import {
+  PRODUCT_INFINITY_BENEFIT,
+  PRODUCT_INFINITY_BENEFIT_NM,
+  PRODUCT_INFINITY_BENEFIT_PROD_NM,
+  PRODUCT_TYPE_NM
+} from '../../../../../types/string.type';
 import DateHelper from '../../../../../utils/date.helper';
 
 class ProductMobileplanLookupTplan extends TwViewController {
@@ -99,7 +104,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '혜택 이용내역'
+        title: PRODUCT_TYPE_NM.LOOKUP.TPLAN
       };
 
     this.apiService.request(API_CMD.BFF_10_0015, { tDiyGrCd: tDiyGrCd }, {}, 'NA00005959')

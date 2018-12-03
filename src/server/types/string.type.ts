@@ -143,6 +143,7 @@ export enum PRODUCT_INFINITY_BENEFIT_PROD_NM {
 }
 
 export enum PRODUCT_RESERVATION_TYPE_NM {
+  title = '가입 상담 예약',
   cellphone = '휴대폰',
   internet = '인터넷',
   phone = '전화',
@@ -447,7 +448,10 @@ export const PRODUCT_TYPE_NM = {
   JOIN: '가입',
   CHANGE: '변경',
   TERMINATE: '해지',
-  SETTING: '설정'
+  SETTING: '설정',
+  LOOKUP: {
+    TPLAN: '혜택이용내역'
+  }
 };
 
 export const PRODUCT_CTG_NM = {

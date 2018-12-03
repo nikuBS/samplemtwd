@@ -22,7 +22,7 @@ class ProductWireplanJoinReservation extends TwViewController {
     if (FormatHelper.isEmpty(typeCd) || FormatHelper.isEmpty(PRODUCT_RESERVATION_TYPE_NM[typeCd])) {
       return this.error.render(res, {
         svcInfo: svcInfo,
-        title: '가입 상담 예약'
+        title: PRODUCT_RESERVATION_TYPE_NM.title
       });
     }
 

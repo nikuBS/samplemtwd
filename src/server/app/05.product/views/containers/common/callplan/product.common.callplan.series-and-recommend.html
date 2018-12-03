@@ -65,9 +65,8 @@
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
-                                                            <%# // @TODO : 기본혜택 넣어주어야 함 (인터넷/전화/TV, 결합상품, 로밍) %>
-                                                            <% if (['AB', 'C', 'G'].indexOf(basicInfo.prodTypCd) === -1) { %>
-                                                                기본혜택
+                                                            <% if ( series.seriesProdList[i].prodBasBenfCtt && ['AB', 'C', 'G'].indexOf(basicInfo.prodTypCd) === -1) { %>
+                                                                <%= series.seriesProdList[i].prodBasBenfCtt %>
                                                             <% } %>
                                                             <% if ( series.seriesProdList[i].prodSmryDesc && basicInfo.prodTypCd === 'G' ) { %>
                                                             <div class="type">

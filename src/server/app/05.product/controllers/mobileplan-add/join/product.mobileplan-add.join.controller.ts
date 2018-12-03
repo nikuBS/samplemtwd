@@ -39,10 +39,7 @@ class ProductMobileplanAddJoin extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(prodRedisInfo)) {
-        return this.error.render(res, {
-          svcInfo: svcInfo,
-          title: PRODUCT_TYPE_NM.JOIN
-        });
+        return this.error.render(res, renderCommonInfo);
       }
 
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)

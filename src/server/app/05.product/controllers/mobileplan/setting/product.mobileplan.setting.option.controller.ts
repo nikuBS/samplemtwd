@@ -9,6 +9,7 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PROD_TTAB_BASIC_DATA_PLUS } from '../../../../../types/bff.type';
+import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
 class ProductMobileplanSettingOption extends TwViewController {
@@ -34,7 +35,7 @@ class ProductMobileplanSettingOption extends TwViewController {
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '설정'
+        title: PRODUCT_TYPE_NM.SETTING
       };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
