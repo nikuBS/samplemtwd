@@ -129,61 +129,6 @@
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-                <!-- .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true">
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
-                        <li>
-                            <div class="link-long">
-                                <a>요금제 변경하고 싶어요.
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a>이번달 실시간 요금 확인 하고 싶어요.
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a>휴대폰 일시정지하고 싶어요.
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a>소액결제 이용내역 확인 하고 싶어요.
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a>소액결제 한도 상향(하향) 하고 싶어요.
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!--// .cont-box -->
-            </div>
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
@@ -192,6 +137,127 @@
     </div>
 </div>
 <% include ../../components/javascript.component.html %>
+
+<script type="text/template" id="tpl_email_faq">
+    {{#if isCell}}
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <a>요금제 변경하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>이번달 실시간 요금 확인 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>휴대폰 일시정지하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>소액결제 이용내역 확인 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>소액결제 한도 상향(하향) 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    {{else}}
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <a>약정기간을 알고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>인터넷/전화/인터넷전화/Btv 위약금 내역을 알고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>서비스 가능지역 조회(설치가능 여부)를 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>가입신청/접수를 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a>해약 신청을 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    {{/if}}
+</script>
+
 <script>
   $(document).ready(function () {
     new Tw.CustomerEmail($('.wrap'));
