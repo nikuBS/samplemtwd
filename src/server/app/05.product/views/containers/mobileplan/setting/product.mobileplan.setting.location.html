@@ -3,7 +3,7 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.11.14
 %>
-<% include ../../components/start.component.html %>
+<% include ../../../components/start.component.html %>
 
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -18,15 +18,27 @@
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
-        <!--<%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo: svcInfo, option: { back:'popup' } }) %>-->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>설정</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../../../../common/views/components/header.component.html', { title: '설정', svcInfo: svcInfo, option: { back:'popup' } }) %>
+        <!--<div class="header-wrap">-->
+            <!--<div class="page-header">-->
+                <!--<div class="header-ti">-->
+                    <!--<h1>설정</h1>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <!--// #header -->
+
+        <script id="loc-search-list-tmplt-item" type="text/x-handlebars-template">
+            <li class="radiobox type01" role="radio" aria-checked="false">
+                <input type="radio" name="radio" value="{{ dcAreaNum }}" title="{{ areaNm }}" aria-labelledby="aria-comp-radio1">
+                <div class="comp-list-layout type2" id="aria-comp-radio1" aria-hidden="true">
+                    <p class="layout-text">
+                        <span class="mtext">{{ areaNm }}</span>
+                    </p>
+                </div>
+            </li>
+        </script>
+
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -66,7 +78,7 @@
                                             <h4 class="con-tit0">할인 신청한 지역</h4>
                                             <ul class="discount-location">
                                                 <script id="loc-list-tmplt-item" type="text/x-handlebars-template">
-                                                    <li data-dcareanum="{{ dcAreaNum }}">
+                                                    <li data-dcareanum="{{ dcAreaNum }}" data-auditDtm="{{ auditDtm }}" >
                                                         <span class="tit">{{ dcAreaNm }}</span>
                                                         <span class="btn"><div class="bt-alone"><button class="bt-line-gray1">해지</button></div></span>
                                                     </li>
@@ -123,7 +135,7 @@
                                                                 <span class="mtext">{{ custNmMask }}<span class="bar"></span>
                                                                     <!--<button type="button" class="btn-bf on" title="절친으로 등록하기">절친</button>-->
                                                                 </span>
-                                                                <span class="stext gray">{{ hp svcNumMask }}</span>
+                                                                <span class="stext gray">{{ hp svcNum }}</span>
                                                             </p>
                                                             <div class="list-btn">
                                                                 <div class="bt-alone"><button class="bt-line-gray1">해지</button></div>
@@ -147,20 +159,20 @@
         <!-- // .container-wrap -->
         <!--// #contents -->
         <footer id="fe-all-menu">
-            <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: data.pageInfo }); %>
+            <%- include('../../../../../../common/views/components/masking.component.html', { pageInfo: data.pageInfo }); %>
         </footer>
 
         <!-- .popup-closeBtn -->
-        <button class="prev-step">취소</button>
+        <!--<button class="prev-step">취소</button>-->
         <!--// .popup-closeBtn -->
     </div>
     <!-- // .popup hbs -->
 </div>
 
-<% include ../../components/javascript.component.html %>
+<% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductMobileplanSettingLocation($('.wrap'), <%- JSON.stringify(data) %>);
   });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../../../components/end.component.html %>
