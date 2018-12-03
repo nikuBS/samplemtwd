@@ -804,3 +804,14 @@ Tw.ANDROID_STORE = [
     ]
   }
 ];
+
+Tw.ROAMING_MFACTCD_LIST = {
+    list: [
+        { value: '전체', attr: 'data-mfact-code="ALL" data-mfact-name="전체"', 'option': 'hbs-mfact-cd' },
+        { value: '삼성', attr: 'data-mfact-code="SS" data-mfact-name="삼성"', 'option': 'hbs-mfact-cd' },
+        { value: 'LG', attr: 'data-mfact-code="LG" data-mfact-name="LG"', 'option': 'hbs-mfact-cd' },
+        { value: '팬택', attr: 'data-mfact-code="PT" data-mfact-name="팬택"', 'option': 'hbs-mfact-cd' },
+        { value: '애플', attr: 'data-mfact-code="CG" data-mfact-name="애플"', 'option': 'hbs-mfact-cd' },
+        { value: '기타', attr: 'data-mfact-code="ETC" data-mfact-name="기타"', 'option': 'hbs-mfact-cd' }
+    ]
+};
