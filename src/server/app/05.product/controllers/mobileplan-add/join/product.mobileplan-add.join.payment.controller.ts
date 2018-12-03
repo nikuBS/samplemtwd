@@ -9,10 +9,10 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import ProductHelper from '../../../../../utils/product.helper';
-import BFF_10_0017_mock from '../../../../../mock/server/product.BFF_10_0017.mock';
 
 class ProductMobileplanAddJoinPayment extends TwViewController {
   constructor() {
@@ -21,17 +21,12 @@ class ProductMobileplanAddJoinPayment extends TwViewController {
 
   private readonly _allowedProdIdList = ['NA00005872'];
 
-  private _getApi(): Observable<any> {
-    return Observable.of(BFF_10_0017_mock);
-    // this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
-        title: '가입'
+        title: PRODUCT_TYPE_NM.JOIN
       };
 
     if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
@@ -40,7 +35,7 @@ class ProductMobileplanAddJoinPayment extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
-      this._getApi()
+      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
     ).subscribe(([ basicInfo, joinTermInfo ]) => {
       const apiError = this.error.apiError([basicInfo, joinTermInfo]);
 
