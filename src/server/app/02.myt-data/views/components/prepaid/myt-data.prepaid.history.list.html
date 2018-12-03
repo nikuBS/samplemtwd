@@ -18,7 +18,9 @@
             </p>
             <div class="list-data">
                 <button class="bt-link data-tx {{#if isCanceled}}gray-tx{{else}}blue-tx{{/if}}" data-origin-idx={{idx}}>{{amt}}원</button>
-                {{#if isRefundable}}<button class="bt-link-tx underline red">취소</button>{{/if}}
+                {{#if isRefundable}}
+                    <button class="bt-link-tx underline red"  data-cancel-id="{{cancelOrderId}}" data-charge-code="{{dataChargeCd}}">취소</button>
+                {{/if}}
             </div>
         </li>
     {{/each}}

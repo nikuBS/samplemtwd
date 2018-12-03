@@ -47,6 +47,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$selectBtn.on('click', $.proxy(this._openChangeHistories, this));
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.data-tx', $.proxy(this._handleShowDetail, this));
+    this.$container.on('click', '.bt-link-tx.red', $.proxy(this._openCancel, this));
   },
 
   _cachedElement: function() {
@@ -214,5 +215,27 @@ Tw.MyTDataPrepaidHistory.prototype = {
     });
 
     this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });
+  },
+
+  _openCancel: function(e) {
+    var code = e.target.getAttribute('data-charge-code');
+    var id = e.target.getAttribute('data-cancel-id');
+
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, id, code));
+  },
+
+  _handleCancel: function(id, code) {
+    if (Tw.FormatHelper.isEmpty(code)) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id }).done($.proxy(this._handleSuccessCancel, this));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code }).done($.proxy(this._handleSuccessCancel, this));
+    }
+    this._popupService.close();
+  },
+
+  _handleSuccessCancel: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   }
 };
