@@ -48,12 +48,12 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _init: function() {
-    var hashSerNum = location.hash.replace('#', '');
-    if (Tw.FormatHelper.isEmpty(hashSerNum)) {
+    var hashNtcId = location.hash.replace('#', '');
+    if (Tw.FormatHelper.isEmpty(hashNtcId)) {
       return;
     }
 
-    var item = this.$list.find('[data-sernum="' + hashSerNum  + '"]');
+    var item = this.$list.find('[data-ntc_id="' + hashNtcId  + '"]');
     if (item.length > 0) {
       setTimeout(function() {
         item.trigger('click');
