@@ -17,7 +17,7 @@ import CustomerMain from './controllers/main/customer.main.controller';
 import CustomerVoice from './controllers/voice/customer.voice.controller';
 import CustomerEmail from './controllers/email/customer.email.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
-import CustomerFaq from '../904.customer/controllers/faq/customer.faq.controller';
+import CustomerFaq from './controllers/faq/customer.faq.controller';
 import CustomerFaqSearch from './controllers/faq/customer.faq.search.controller';
 import CustomerFaqCategory from './controllers/faq/customer.faq.category.controller';
 import CustomerAgentsearch from './controllers/agentsearch/customer.agentsearch.controller';
