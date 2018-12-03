@@ -27,9 +27,13 @@
                     </span>
                     <span class="text">
                         <% if (data.myLongPausedState && data.myLongPausedState.state) { %>
-                        장기일시정지 <%= data.myLongPausedState.opState %>
+                            <% if (data.myPausedState.state) { %>
+                                장기일시정지 중
+                            <% } else {%>
+                                장기일시정지 <%= data.myLongPausedState.opState %>
+                            <% } %>
                         <% } else {%>
-                        일시정지 중
+                            일시정지 중
                         <% } %>
                     </span>
                 </span>
