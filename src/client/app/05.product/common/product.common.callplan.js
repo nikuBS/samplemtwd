@@ -4,17 +4,13 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, filterIds) {
+Tw.ProductCommonCallplan = function(rootEl, prodId) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
-
   this._prodId = prodId;
-  this._prodTypCd = prodTypCd;
-  this._filterIds = filterIds;
-  this._template = Handlebars.compile($('#tpl_recommended_rate_item').html());
 
   this._cachedElement();
   this._bindEvent();
@@ -28,7 +24,6 @@ Tw.ProductCommonCallplan.prototype = {
   _init: function() {
     this._contentsDetailList = [];
     this._setContentsDetailList();
-    this._loadRecommendedrateList();
     this._setSettingBtnList();
   },
 
@@ -37,11 +32,8 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnJoin = this.$container.find('.fe-btn_join');
     this.$btnSetting = this.$container.find('.fe-btn_setting');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
-    this.$btnRecommendRateListMore = this.$container.find('.fe-btn_recommended_rate_list_more');
-    this.$btnRecommendProd = this.$container.find('.fe-btn_recommend_prod');
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
 
-    this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
     this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
   },
@@ -51,8 +43,6 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
-    this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
-    this.$btnRecommendProd.on('click', $.proxy(this._goRecommendProd, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
     this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
   },
@@ -151,7 +141,7 @@ Tw.ProductCommonCallplan.prototype = {
 
   _openContentsDetailPop: function(e) {
     var $item = $(e.currentTarget),
-      contentsIndex = $item.data('contents');
+      contentsIndex = $item.data('contents_idx');
 
     if (Tw.FormatHelper.isEmpty(this._contentsDetailList[contentsIndex])) {
       return;
@@ -203,52 +193,6 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     this._historyService.goLoad(btnLink);
-  },
-
-  _goRecommendProd: function(e) {
-    var prodId = $(e.currentTarget).data('prod_id');
-    if (Tw.FormatHelper.isEmpty(prodId)) {
-      return;
-    }
-
-    this._historyService.goLoad('/product/callplan/' + prodId);
-  },
-
-  _loadRecommendedrateList: function() {
-    if (Tw.FormatHelper.isEmpty(this._filterIds) || Tw.FormatHelper.isEmpty(this._ctgCd)) {
-      return;
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0031, {
-      idxCtgCd: this._ctgCd,
-      searchFltIds: this._filterIds,
-      searchCount: 3,
-      ignoreProdId: this._prodId
-    }).done($.proxy(this._appendRecommendList, this));
-  },
-
-  _appendRecommendList: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || resp.result.productCount < 1) {
-      return;
-    }
-
-    if (resp.result.productCount > 3) {
-      this.$btnRecommendRateListMore.show();
-    }
-
-    this.$recommendRateList.find('.recommendedrate-list')
-      .html(this._template({
-        list: resp.result.products.map(function(item) {
-          return $.extend(item, Tw.FormatHelper.convProductSpecifications(item.basFeeAmt,
-            item.basOfrDataQtyCtt, item.basOfrVcallTmsCtt, item.basOfrCharCntCtt));
-        })
-      }));
-
-    this.$recommendRateList.show();
-  },
-
-  _goRecommendRateMoreList: function() {
-    // this._historyService.goLoad('/product/' + this._ctgKey + '?filters=' + this._filterIds);
   }
 
 };

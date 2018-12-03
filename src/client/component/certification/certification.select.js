@@ -100,7 +100,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _openProductCert: function () {
-    this._apiService.request(Tw.API_CMD.BFF_10_9001, {}, {}, this._command.params.prodId, this._command.params.prodProcTypeCd)
+    this._apiService.request(Tw.API_CMD.BFF_10_0069, {}, {}, this._command.params.prodId, this._command.params.prodProcTypeCd)
       .done($.proxy(this._successGetPublicCert, this));
   },
 

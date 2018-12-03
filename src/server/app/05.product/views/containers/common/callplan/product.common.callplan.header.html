@@ -2,45 +2,47 @@
 <div class="cont-box nogaps-hoz productdetails-bg">
     <div class="productdetails-wrap">
         <h3 class="productdetails-title">
-            <% if ( ctgKey === 'mobileplan' && prodRedisInfo.summary.prodSmryDesc ) { %>
+            <% if ( basicInfo.prodTypCd === 'AB' && prodRedisInfo.summary.prodSmryDesc ) { %>
             <span class="sub"><%= prodRedisInfo.summary.prodSmryDesc %></span>
             <% } %>
             <% if ( prodRedisInfo.summary.prodNm ) { %>
             <div class="title"><%= prodRedisInfo.summary.prodNm %></div>
             <% } %>
         </h3>
-        <% if (basicInfo.prodFilterFlagList) { %>
-        <div class="productdetails-taglist">
-            <% for (var i in basicInfo.prodFilterFlagList) { %>
-            <a href="/product/<%= ctgKey %>?filters=<%= basicInfo.prodFilterFlagList[i].prodFltId %>"
-               class="tag-text">#<%= basicInfo.prodFilterFlagList[i].prodFltNm %></a>
-            <% } %>
-        </div>
-        <% } %>
         <% if ( basicInfo.prodStCd === 'E1000' ) { %>
-        <% if ( ctgKey === 'mobileplan' && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') )
-        { %>
-        <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
+            <% if ( (basicInfo.prodTypCd === 'AB' || basicInfo.prodTypCd === 'G') && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
+            <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
+            <% } %>
+            <% if ( basicInfo.prodTypCd === 'AB' && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') ) { %>
+            <%- prodRedisInfo.summary.smryHtmlCtt %>
+            <% } %>
+            <% if ( ['C', 'D', 'E', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && ( prodRedisInfo.summary.prodSmryDesc || prodRedisInfo.summary.prodBasBenfCtt ) ) { %>
+            <p class="productdetails-text02">
+                <% if ( prodRedisInfo.summary.prodSmryDesc ) { %>
+                <%= prodRedisInfo.summary.prodSmryDesc %>
+                <% } %>
+                <% if (['D', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && prodRedisInfo.summary.prodBasBenfCtt) { %>
+                    <% if ( prodRedisInfo.summary.prodSmryDesc ) { %><br><% } %>
+                    <%= prodRedisInfo.summary.prodBasBenfCtt %>
+                <% } %>
+            </p>
+            <% } %>
         <% } %>
-        <% if ( ctgKey === 'mobileplan' && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') )
-        { %>
-        <%- prodRedisInfo.summary.smryHtmlCtt %>
-        <% } %>
-        <% if ( ctgKey === 'mobileplan-add' && prodRedisInfo.summary.prodSmryDesc ) { %>
-        <p class="productdetails-text02"><%= prodRedisInfo.summary.prodSmryDesc %></p>
-        <% } %>
-        <% } %>
-        <% if ( basicInfo.prodTypCd === 'C' && basicInfo.svcOfrCoNm ) { %>
+        <% if ( basicInfo.svcOfrCoNm ) { %>
         <p class="productdetails-text03">서비스 제공 : <%= basicInfo.svcOfrCoNm %></p>
         <% } %>
     </div>
     <div class="productdetails-ledgercase">
         <% if ( prodRedisInfo.summary.basFeeInfo ) { %>
         <p class="price-text">
-            월정액(부가세포함)<br>
-            <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
-            <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
-            <span class="unit">원</span>
+            <% if (basicInfo.prodTypCd !== 'F') { %>
+                월정액(부가세포함)<br><%# // @TODO : 인터넷/전화/TV 에서 이용요금 괄호 안 타이틀 입력 %>
+                <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
+                <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
+                <span class="unit">원</span>
+                <% } %>
+            <% } else { %>
+            <%= prodRedisInfo.summary.prodBasBenfCtt %>
             <% } %>
         </p>
         <% } %>
@@ -49,23 +51,27 @@
             가입제한 상품
         </div>
         <% } else { %>
-        <% if ( basicInfo.prodScrbYn === 'Y' && (ctgKey === 'mobileplan' && svcInfo && svcInfo.prodId !== prodId || ctgKey
-        === 'mobileplan-add' && !isAdditionsJoined) ) { %>
+        <% if ( basicInfo.prodScrbYn === 'Y' && (
+            ['AB', 'D', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && svcInfo && svcInfo.prodId !== prodId ||
+            ['C', 'E', 'F'].indexOf(basicInfo.prodTypCd) !== -1 && !isJoined)
+        ) { %>
         <div class="btn">
             <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
                 <button type="button" class="bt-white1 fe-btn_join" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
             <% } %>
         </div>
         <% } %>
-        <% if ( basicInfo.prodTermYn === 'Y' && (ctgKey === 'mobileplan-add' && isAdditionsJoined) ) { %>
+        <% if ( basicInfo.prodTermYn === 'Y' && (['C', 'E', 'F'].indexOf(basicInfo.prodTypCd) !== -1 && isJoined) ) { %>
         <div class="btn">
             <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
             <button type="button" class="bt-white1 fe-btn_join" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
             <% } %>
         </div>
         <% } %>
-        <% if ( basicInfo.prodScrbYn === 'N' && (ctgKey === 'mobileplan' && svcInfo && svcInfo.prodId !== prodId || ctgKey
-        === 'mobileplan-add' && !isAdditionsJoined) ) { %>
+        <% if ( basicInfo.prodScrbYn === 'N' && (
+            ['AB', 'D', 'G', 'H'].indexOf(basicInfo.prodTypCd) !== -1 && svcInfo && svcInfo.prodId !== prodId ||
+            ['C', 'E', 'F'].indexOf(basicInfo.prodTypCd) !== -1 && !isJoined)
+        ) { %>
         <div class="limit">
             가입제한 상품
         </div>

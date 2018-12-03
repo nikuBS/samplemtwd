@@ -1,7 +1,10 @@
 import TwRouter from '../../common/route/tw.router';
 
 import ProductCommonCallplan from './controllers/common/product.common.callplan.controller';
+import ProductCommonCallplanPreview from './controllers/common/product.common.callplan-preview.controller';
+
 import ProductApps from './controllers/apps/product.apps.controller';
+import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
 
 import Product from './controllers/mobileplan/product.mobileplan.controller';
 import ProductPlans from './controllers/mobileplan/product.mobileplan.list.controller';
@@ -17,9 +20,11 @@ import ProductMobileplanSettingTing from './controllers/mobileplan/setting/produ
 import ProductMobileplanSettingNumber from './controllers/mobileplan/setting/product.mobileplan.setting.number.controller';
 import ProductMobileplanSettingNumberFriend from './controllers/mobileplan/setting/product.mobileplan.setting.number-friend.controller';
 import ProductMobileplanSettingBandYT from './controllers/mobileplan/setting/product.mobileplan.setting.bandYT.controller';
+import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/product.mobileplan.lookup.couple.controller';
+import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
-import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/product.mobileplan.lookup.couple.controller';
+import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -37,8 +42,9 @@ import ProductWires from './controllers/wireplan/product.wireplan.list.controlle
 import ProductWireplanJoinReservation from './controllers/wireplan/join/product.wireplan.join.reservation.controller';
 import ProductWireplanJoinRequireDocumentApply from './controllers/wireplan/join/product.wireplan.join.require-document.apply.controller';
 import ProductWireplanJoinRequireDocumentHistory from './controllers/wireplan/join/product.wireplan.join.require-document.history.controller';
+import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
+import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 
-import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
@@ -60,11 +66,7 @@ import ProductRoamingFiReservation1step from './controllers/roaming/product.roam
 import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
 import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info.center.controller';
-import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
-import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
-import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
 import ProductRoamingJoinRoamingSetup from './controllers/roaming/join/product.roaming.join.roaming-setup.controller';
-import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -136,6 +138,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
 
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
+    this.controllers.push({ url: '/callplan-preview', controller: ProductCommonCallplanPreview });
   }
 }
 
