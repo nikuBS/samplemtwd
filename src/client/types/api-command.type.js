@@ -30,7 +30,7 @@ Tw.API_CMD = {
   BFF_01_0021: { path: '/core-auth/v1/auth/motp', method: Tw.API_METHOD.GET },
   BFF_01_0026: { path: '/v1/cert/success', method: Tw.API_METHOD.POST },
   BFF_01_0027: { path: '/v1/pwd-cert-chk', method: Tw.API_METHOD.POST },
-  BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: Tw.API_METHOD.POST },
+  BFF_01_0028: { path: '/core-auth/v1/auth-sms-finance', method: Tw.API_METHOD.POST },
   BFF_01_0029: { path: '/v1/auth/secure/client-key', method: Tw.API_METHOD.POST },
   BFF_01_0030: { path: '/v1/auth/secure/server-key', method: Tw.API_METHOD.POST },
   BFF_01_0031: { path: '/registrationrequestfromfc', method: Tw.API_METHOD.POST },
