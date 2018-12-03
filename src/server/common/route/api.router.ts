@@ -82,7 +82,7 @@ class ApiRouter {
     const resp = {
       code: API_CODE.CODE_00,
       result: {
-        domain: EnvHelper.getEnvironment('DOMAIN')
+        domain: this.loginService.getDns()
       }
     };
 
@@ -176,16 +176,16 @@ class ApiRouter {
         destination: (req, file, cb) => {
           let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
 
-          if (!FormatHelper.isEmpty(req.body.dest)) {
+          if ( !FormatHelper.isEmpty(req.body.dest) ) {
             const dateFormat = dateHelper.getShortDateWithFormat(currentDate, 'YYMMDD');
 
             storagePath += '/' + req.body.dest + '/';
-            if (!fs.existsSync(storagePath)) {
+            if ( !fs.existsSync(storagePath) ) {
               fs.mkdirSync(storagePath);
             }
 
             storagePath += dateFormat + '/';
-            if (!fs.existsSync(storagePath)) {
+            if ( !fs.existsSync(storagePath) ) {
               fs.mkdirSync(storagePath);
             }
           }

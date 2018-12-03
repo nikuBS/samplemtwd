@@ -242,7 +242,8 @@ Tw.CertificationSk.prototype = {
     this._requestCert();
   },
   _onClickCertAdd: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_03_0027, {}).done($.proxy(this._successCertAdd, this));
+    this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
+      .done($.proxy(this._successCertAdd, this));
   },
   _successCertAdd: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
