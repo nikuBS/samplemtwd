@@ -27,6 +27,7 @@ Tw.CustomerEmail.prototype = {
     this.$btn_faq = this.$container.find('.fe-btn_faq');
     this.$wrap_faq = this.$container.find('.fe-wrap_faq');
     this.$close_faq = this.$container.find('.fe-close_faq');
+    this.tpl_email_faq = Handlebars.compile($('#tpl_email_faq').html());
   },
 
   _bindEvent: function () {
@@ -65,6 +66,13 @@ Tw.CustomerEmail.prototype = {
 
   _openFaq: function () {
     $(document.body).css('overflow', 'hidden');
+
+    if ( $('.fe-service_depth1').data('serviceDepth1') === 'CELL' ) {
+      this.$wrap_faq.find('.container-wrap').html(this.tpl_email_faq({ isCell: true }));
+    } else {
+      this.$wrap_faq.find('.container-wrap').html(this.tpl_email_faq({ isCell: false }));
+    }
+
     this.$wrap_faq.show();
   },
 
