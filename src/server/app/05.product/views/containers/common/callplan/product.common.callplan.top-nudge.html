@@ -63,9 +63,7 @@ if ( ['AB', 'D'].indexOf(basicInfo.prodTypCd) !== -1 && (svcInfo && svcInfo.prod
         </div>
         <ul class="fe-setting_btn_list" style="display: none">
             <% for (var i in basicInfo.linkBtnList.setting) { %>
-            <li data-url="<%= basicInfo.linkBtnList.setting[i].linkUrl %>"><%=
-                basicInfo.linkBtnList.setting[i].linkNm %>
-            </li>
+            <li data-url="<%= basicInfo.linkBtnList.setting[i].linkUrl %>"><%= basicInfo.linkBtnList.setting[i].linkNm %></li>
             <% } %>
         </ul>
     </div>

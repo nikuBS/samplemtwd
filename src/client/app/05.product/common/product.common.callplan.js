@@ -108,7 +108,7 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     if (typcd === 'SE') {
-      return this._historyService.goLoad(btnLink);
+      return this._historyService.goLoad(btnLink + '?prod_id=' + this._prodId);
     }
 
     if (Tw.FormatHelper.isEmpty(joinTermCd)) {
@@ -136,7 +136,7 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._historyService.goLoad(href);
+    this._historyService.goLoad(href + '?prod_id=' + this._prodId);
   },
 
   _openContentsDetailPop: function(e) {
@@ -184,7 +184,7 @@ Tw.ProductCommonCallplan.prototype = {
       return;
     }
 
-    this._historyService.goLoad(this._settingGoUrl);
+    this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
   _procAdvanceCheck: function(btnLink, resp) {
@@ -192,7 +192,7 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(null, resp.msg).pop();
     }
 
-    this._historyService.goLoad(btnLink);
+    this._historyService.goLoad(btnLink + '?prod_id=' + this._prodId);
   }
 
 };
