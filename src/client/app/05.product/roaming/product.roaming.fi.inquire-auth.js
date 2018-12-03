@@ -11,6 +11,7 @@ Tw.ProductRoamingFiInquireAuth = function (rootEl, countryCode) {
   this._formatHelper = Tw.FormatHelper;
   this._historyService = new Tw.HistoryService();
   this._countryCode = JSON.parse(countryCode);
+  this._totoalList = [];
   this._init();
 };
 
@@ -27,22 +28,30 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$list = this.$container.find('#fe-list');
     this.$inputSdate = this.$container.find('#fe-sdate');
     this.$inputEdate = this.$container.find('#fe-edate');
+    this.$inquirePeriod = this.$container.find('#fe-period');
+    this.$totalCnt = this.$container.find('#fe-total-cnt');
     this.$inquire = this.$container.find('#fe-inquire');
+    this.$more = this.$container.find('.bt-more');
+    this.$moreCnt = this.$container.find('#fe-more-cnt');
   },
 
   _bindEvent: function() {
     this.$inquire.on('click', $.proxy(this._search,this));
     this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
+    this.$container.on('click', '.bt-more', $.proxy(this._onMore,this));
   },
 
   _getInitPeriod: function() {
     //최초에 오늘 ~ 6개월 후 날짜 설정
     var startDate = moment().format('YYYY[-]MM[-]DD');
     var endDate = moment().add(+6, 'month').format('YYYY[-]MM[-]DD');
+    var getPeriod = this._dateHelper.getShortDateWithFormat(startDate, 'YYYY.M.DD' , 'YYYY-MM-DD') + ' - ' +
+      this._dateHelper.getShortDateWithFormat(endDate, 'YYYY.M.DD' , 'YYYY-MM-DD');
 
     this.$inputSdate.val(startDate);
     this.$inputEdate.val(endDate);
+    this.$inquirePeriod.text(getPeriod);
     this.page = 1;
   },
 
@@ -53,8 +62,12 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   },
 
   _getTfiResponse: function() {
-    var rentfrom = this._dateHelper.getShortDateWithFormat(this.$inputSdate.val(), 'YYYYMMDD' , 'YYYY-MM-DD');
-    var rentto = this._dateHelper.getShortDateWithFormat(this.$inputEdate.val(), 'YYYYMMDD' , 'YYYY-MM-DD');
+
+    var sdate = this.$inputSdate.val() === undefined ? moment().format('YYYY[-]MM[-]DD') : this.$inputSdate.val();
+    var edate = this.$inputEdate.val() === undefined ? moment().add(+6, 'month').format('YYYY[-]MM[-]DD') : this.$inputEdate.val();
+
+    var rentfrom = this._dateHelper.getShortDateWithFormat(sdate, 'YYYYMMDD' , 'YYYY-MM-DD');
+    var rentto = this._dateHelper.getShortDateWithFormat(edate, 'YYYYMMDD' , 'YYYY-MM-DD');
     this._apiService
       .request(Tw.API_CMD.BFF_10_0067, {
         page : this.page,
@@ -67,7 +80,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   _renderTemplate: function(res) {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
-      this._renderList(res);
+      this._renderListOne(res);
     }
   },
 
@@ -107,20 +120,35 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       returnObj[key] = element.value;
     });
 
-    for( var x in res.romlist){
-      res.romlist[x].visit_nat_lst = this._changeCountryCode(res.romlist[x].visit_nat_lst);
-      res.romlist[x].rental_sale_org_id = returnObj[res.romlist[x].rental_sale_org_id];
-      res.romlist[x].rental_booth_org_id = receiveObj[res.romlist[x].rental_booth_org_id];
-      res.romlist[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res.rentfrom);
+    for( var x in res){
+      res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
+      res[x].rental_sale_org_id = returnObj[res[x].rental_sale_org_id];
+      res[x].rental_booth_org_id = receiveObj[res[x].rental_booth_org_id];
+      res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res.rentfrom);
+      res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.MM.DD');
+      //TODO: 서버 값 릴리즈 되면 주석 값으로 변경
+      res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat('20181223', 'YYYY.MM.DD');//res.roamTpieList[x].rental_schd_end_dtm
     }
-    res.rentfrom = this._dateHelper.getShortDate(res.rentfrom);
-    res.rentto = this._dateHelper.getShortDate(res.rentto);
 
     return res;
   },
 
+  _renderListOne: function(res){
+    var list = res.romlist;
+    var total = res.iTotal + Tw.HISTORY_UNIT;
+
+    this.$totalCnt.text(total);
+    this.$list.empty();
+    this.$more.hide();
+
+    if ( list.length > 0 ){
+      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
+      this._renderList(this.$list, this._totoalList.shift());
+    }
+  },
+
   // 상단 템플릿 생성
-  _renderList: function(res) {
+  _renderList: function($container, res) {
     Handlebars.registerHelper('json', function(context) {
       return JSON.stringify(context);
     });
@@ -128,10 +156,27 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     var source = $('#tmplList').html();
     var template = Handlebars.compile(source);
     var data = this._parseList(res);
-
     var output = template({ list : data });
-    this.$list.empty().append(output);
+    this.$list.append(output);
 
+    this._moreButton();
+  },
+
+  _moreButton: function(){
+    var nextList = _.first(this._totoalList);
+
+    if ( nextList ) {
+      this.$moreCnt.text( '(0)'.replace('0', nextList.length) );
+      this.$more.show();
+    } else {
+      this.$more.hide();
+    }
+  },
+
+  _onMore : function () {
+    if( this._totoalList.length > 0 ){
+      this._renderList(this.$list, this._totoalList.shift());
+    }
   },
 
   _clickEditBtn: function(e){
@@ -172,7 +217,6 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       res.result.rominfo.rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
       var data = res.result;
-      this.impbranch =
 
       this._popupService.open({
           hbs: 'RM_14_03_02_01_01',
