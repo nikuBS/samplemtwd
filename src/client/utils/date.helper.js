@@ -175,7 +175,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.06.01 12:00
    */
   var getShortDateAndTime = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.M.DD hh:mm');
+    return moment(convDateFormat(date)).format('YYYY.M.DD. hh:mm');
   };
 
   /**

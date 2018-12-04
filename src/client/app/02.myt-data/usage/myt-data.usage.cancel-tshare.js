@@ -36,7 +36,7 @@ Tw.MyTDataUsageCancelTshare.prototype = {
         layer: true,
         data: {
           usimNum: this._options.usimNum,
-          date: Tw.DateHelper.getShortDateNoDot(new Date())
+          date: Tw.DateHelper.getShortDate(new Date())
         }
       }, null, null, this._COMPLETE_POPUP_HBS);
     } else {

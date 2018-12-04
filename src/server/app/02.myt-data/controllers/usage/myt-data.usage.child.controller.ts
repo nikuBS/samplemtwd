@@ -57,7 +57,7 @@ class MyTDataUsageChild extends TwViewController {
       fomattedData['childProdNm'] = baseFeePlan.prodName;
       res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo, pageInfo });
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, svcInfo, resp);
     });
   }
 
