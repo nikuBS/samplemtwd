@@ -12,6 +12,8 @@ Tw.ProductRoamingFiInquireAuth = function (rootEl, countryCode) {
   this._historyService = new Tw.HistoryService();
   this._countryCode = JSON.parse(countryCode);
   this._totoalList = [];
+  this._receiveObj = {};
+  this._returnObj = {};
   this._init();
 };
 
@@ -33,44 +35,49 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$inquire = this.$container.find('#fe-inquire');
     this.$more = this.$container.find('.bt-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
+    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
   },
 
   _bindEvent: function() {
-    this.$inquire.on('click', $.proxy(this._search,this));
+    this.$inquire.on('click', $.proxy(this._getTfiResponse,this));
     this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onMore,this));
+    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
   },
 
   _getInitPeriod: function() {
     //최초에 오늘 ~ 6개월 후 날짜 설정
     var startDate = moment().format('YYYY[-]MM[-]DD');
-    var endDate = moment().add(+6, 'month').format('YYYY[-]MM[-]DD');
+    var endDate = moment().add(6, 'month').format('YYYY[-]MM[-]DD');
     var getPeriod = this._dateHelper.getShortDateWithFormat(startDate, 'YYYY.M.DD' , 'YYYY-MM-DD') + ' - ' +
       this._dateHelper.getShortDateWithFormat(endDate, 'YYYY.M.DD' , 'YYYY-MM-DD');
+    var minDate = moment().subtract(2, 'years').format('YYYY[-]MM[-]DD');
+    var maxDate = moment().add(2, 'years').format('YYYY[-]MM[-]DD');
 
     this.$inputSdate.val(startDate);
+    this.$inputSdate.attr('min',minDate);
+    this.$inputSdate.attr('max',maxDate);
     this.$inputEdate.val(endDate);
+    this.$inputEdate.attr('min',minDate);
+    this.$inputEdate.attr('max',maxDate);
     this.$inquirePeriod.text(getPeriod);
-    this.page = 1;
-  },
 
-  // 조회 버튼 클릭 이벤트
-  _search: function() {
-    var sdate = $('#fe-sdate').val();
-    var edate = $('#fe-edate').val();
+
   },
 
   _getTfiResponse: function() {
-
     var sdate = this.$inputSdate.val() === undefined ? moment().format('YYYY[-]MM[-]DD') : this.$inputSdate.val();
     var edate = this.$inputEdate.val() === undefined ? moment().add(+6, 'month').format('YYYY[-]MM[-]DD') : this.$inputEdate.val();
 
     var rentfrom = this._dateHelper.getShortDateWithFormat(sdate, 'YYYYMMDD' , 'YYYY-MM-DD');
     var rentto = this._dateHelper.getShortDateWithFormat(edate, 'YYYYMMDD' , 'YYYY-MM-DD');
+
+    var page = 1;
+
     this._apiService
       .request(Tw.API_CMD.BFF_10_0067, {
-        page : this.page,
+        page : page,
         rentfrom : rentfrom,
         rentto : rentto
       })
@@ -106,9 +113,18 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   _parseList: function(res) {
     var receiveList = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE.data[0].list;
     var returnList = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.data[0].list;
-    var receiveObj = {};
-    var returnObj = {};
 
+    for(var rec in receiveList){
+      var startlen = receiveList[rec].attr.indexOf('data-booth') + 12;
+      var key = receiveList[rec].attr.substr(startlen,10);
+      this._receiveObj[key] = receiveList[rec].value;
+    }
+    for(var ret in returnList){
+      var startlen = returnList[ret].attr.indexOf('data-center') + 13;
+      var key = returnList[ret].attr.substr(startlen,10);
+      this._returnObj[key] = returnList[ret].value;
+    }
+    /*
     receiveList.forEach(function(element){
       var startlen = element.attr.indexOf('data-booth')+12;
       var key = element.attr.substr(startlen,10);
@@ -118,16 +134,19 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       var startlen = element.attr.indexOf('data-center')+13;
       var key = element.attr.substr(startlen,10);
       returnObj[key] = element.value;
-    });
+    });*/
 
     for( var x in res){
       res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
-      res[x].rental_sale_org_id = returnObj[res[x].rental_sale_org_id];
-      res[x].rental_booth_org_id = receiveObj[res[x].rental_booth_org_id];
+      res[x].rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id];
+      res[x].rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id];
       res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res.rentfrom);
-      res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.MM.DD');
+      if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){
+        res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
+      }
+      res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD');
       //TODO: 서버 값 릴리즈 되면 주석 값으로 변경
-      res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat('20181223', 'YYYY.MM.DD');//res.roamTpieList[x].rental_schd_end_dtm
+      res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat('20181223', 'YYYY.M.DD');//res.roamTpieList[x].rental_schd_end_dtm
     }
 
     return res;
@@ -136,7 +155,10 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   _renderListOne: function(res){
     var list = res.romlist;
     var total = res.iTotal + Tw.HISTORY_UNIT;
+    var getPeriod = this._dateHelper.getShortDateWithFormat(res.rentfrom, 'YYYY.M.DD' , 'YYYY-MM-DD') + ' - ' +
+      this._dateHelper.getShortDateWithFormat(res.rentto, 'YYYY.M.DD' , 'YYYY-MM-DD');
 
+    this.$inquirePeriod.text(getPeriod);
     this.$totalCnt.text(total);
     this.$list.empty();
     this.$more.hide();
@@ -185,6 +207,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     var rentalmgmtnum = data.rental_mgmt_num;
     var rentalgubun = data.rental_st_cd;
     var opclcd = data.op_cl_cd;
+    var changeCountry = data.visit_nat_lst.replace(/<br \/>/gi,', ');
 
     this._apiService
       .request(Tw.API_CMD.BFF_10_0068, {
@@ -192,9 +215,8 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
         opclcd : opclcd,
         rsvrcvdtm : rsvrcvdtm,
         rentalgubun : rentalgubun
-
       })
-      .done($.proxy(this._openEditPop, this));
+      .done($.proxy(this._openEditPop, this, changeCountry));
   },
 
   _clickCancelBtn : function(){
@@ -212,10 +234,14 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       .done($.proxy(this._renderTemplate, this));
   },
 
-  _openEditPop : function(res){
+  _openEditPop : function(changeCountry ,res){
     if(res.code === Tw.API_CODE.CODE_00){
       res.result.rominfo.rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
+      res.result.rominfo.rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id];
+      res.result.rominfo.rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id];
+      res.result.rominfo.changeCountry = changeCountry;
+
       var data = res.result;
 
       this._popupService.open({
@@ -350,6 +376,10 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     if(res.code === Tw.API_CODE.CODE_00) {
       this._historyService.goLoad('/product/roaming/fi/inquire-auth');
     }
+  },
+
+  _goRoamingGuide: function() {
+    this._historyService.replaceURL('/product/roaming/fi/guide');
   }
 
 };

@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 // import { Observable } from 'rxjs/Observable';
 
 export default class ProductRoamingInfoCenter extends TwViewController {
-  render(req: Request, res: Response, _next: NextFunction, svcInfo: any) {
-    res.render('roaming/product.roaming.info.center.html', { svcInfo : svcInfo });
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, pageInfo: any) {
+    res.render('roaming/product.roaming.info.center.html', { svcInfo , pageInfo });
   }
 }

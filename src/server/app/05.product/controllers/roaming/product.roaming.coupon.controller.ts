@@ -11,6 +11,6 @@ import { Request, Response, NextFunction } from 'express';
 export default class ProductRoamingCoupon extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    res.render('roaming/product.roaming.coupon.html', { svcInfo : svcInfo });
+    res.render('roaming/product.roaming.coupon.html', { svcInfo , pageInfo });
   }
 }

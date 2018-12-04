@@ -21,6 +21,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$btnCountryLink = this.$container.find('.link-area > .bt-link-tx');
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
+    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
   },
 
   _bindEvent: function() {
@@ -35,6 +36,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$container.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
     this.$container.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
     this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
+    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
   },
 
   _searchCountryCode: function(){
@@ -247,5 +249,9 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
     this._changeCheck();
     this._popupService.close();
+  },
+
+  _goRoamingGuide: function() {
+    this._historyService.replaceURL('/product/roaming/fi/guide');
   }
 };
