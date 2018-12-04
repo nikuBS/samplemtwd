@@ -6,9 +6,9 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import MyTDataUsage from './myt-data.usage.controller';
+import MyTDataHotData from './myt-data.hotdata.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import {  MYT_DATA_CHILD_USAGE } from '../../../../types/string.type';
 
@@ -18,7 +18,7 @@ const VIEW = {
 };
 
 class MyTDataUsageChild extends TwViewController {
-  private myTDataUsage = new MyTDataUsage();
+  private myTDataHotData = new MyTDataHotData();
 
   constructor() {
     super();
@@ -30,13 +30,10 @@ class MyTDataUsageChild extends TwViewController {
     if (FormatHelper.isEmpty(childSvcMgmtNum)) {
       return this.renderErr(res, svcInfo, {});
     }
-    const childUsageReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0001, {
-      childSvcMgmtNum: childSvcMgmtNum
-    });
-    const baseFeePlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {
-      childSvcMgmtNum: childSvcMgmtNum
-    });
-    Observable.combineLatest(childUsageReq, baseFeePlanReq).subscribe(([usageDataResp, baseFeePlanResp]) => {
+    Observable.combineLatest(
+      this.reqBalances(childSvcMgmtNum),
+      this.reqBaseFeePlan(childSvcMgmtNum)
+    ).subscribe(([usageDataResp, baseFeePlanResp]) => {
       const apiError = this.error.apiError([
         usageDataResp, baseFeePlanResp
       ]);
@@ -45,17 +42,22 @@ class MyTDataUsageChild extends TwViewController {
         return this.renderErr(res, svcInfo, apiError);
       }
 
-      const usageData = usageDataResp.result;
+      const usageDataResult = usageDataResp.result;
       const baseFeePlan = baseFeePlanResp.result;
-      const fomattedData = self.myTDataUsage.parseUsageData(usageData, svcInfo);
+      const usageData = self.myTDataHotData.parseUsageData(usageDataResult);
       const child = childInfo.find((_child) => {
         return _child.svcMgmtNum === childSvcMgmtNum;
       });
-      fomattedData['childSvcNum'] = child.svcNum;
-      fomattedData['childSvcMgmtNum'] = child.svcMgmtNum;
-      fomattedData['childProdId'] = baseFeePlan.prodId;
-      fomattedData['childProdNm'] = baseFeePlan.prodName;
-      res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo, pageInfo });
+      usageData['childSvcNum'] = child.svcNum;
+      usageData['childSvcMgmtNum'] = child.svcMgmtNum;
+      usageData['childProdId'] = baseFeePlan.prodId;
+      usageData['childProdNm'] = baseFeePlan.prodName;
+      const option = {
+        usageData,
+        svcInfo,
+        pageInfo
+      };
+      res.render(VIEW.DEFAULT, option);
     }, (resp) => {
       return this.renderErr(res, svcInfo, resp);
     });
@@ -72,6 +74,152 @@ class MyTDataUsageChild extends TwViewController {
     return this.error.render(res, option);
   }
 
+  private reqBalances(childSvcMgmtNum: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0001, {
+      childSvcMgmtNum: childSvcMgmtNum
+    });
+    // return Observable.create((observer) => {
+    //   setTimeout(() => {
+    //     const resp = {
+    //       'code': '00',
+    //       'msg': 'success',
+    //       'result': {
+    //         'dataTopUp': 'N',
+    //         'ting': 'N',
+    //         'dataDiscount': 'N',
+    //
+    //         'gnrlData': [
+    //           {
+    //             'prodId': 'POT10',
+    //             'prodNm': 'T가족모아데이터',
+    //             'skipId': 'POT10',
+    //             'skipNm': 'T가족모아데이터',
+    //             'unlimit': '0',
+    //             'total': '9437184',
+    //             'used': '0',
+    //             'remained': '1048576',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005134',
+    //             'prodNm': 'band 데이터 퍼펙트S',
+    //             'skipId': 'testSkipId',
+    //             'skipNm': 'band 데이터 퍼펙트S',
+    //             'unlimit': '0',
+    //             'total': '9437184',
+    //             'used': '0',
+    //             'remained': '2097152',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //           // ,
+    //           // {
+    //           //   'prodId': 'NA00005959',
+    //           //   'prodNm': 'Data 인피니티',
+    //           //   'skipId': 'DD3EA',
+    //           //   'skipNm': '데이터통화 무제한',
+    //           //   'unlimit': '1',
+    //           //   'total': '무제한',
+    //           //   'used': '무제한',
+    //           //   'remained': '무제한',
+    //           //   'unit': '140',
+    //           //   'rgstDtm': '',
+    //           //   'exprDtm': ''
+    //           // }
+    //         ],
+    //         'spclData': [
+    //           {
+    //             'prodId': 'NA00005959',
+    //             'prodNm': 'Data 인피니티',
+    //             'skipId': 'DD3CX',
+    //             'skipNm': '통합공유 데이터 40GB',
+    //             'unlimit': '0',
+    //             'total': '41943040',
+    //             'used': '0',
+    //             'remained': '41943040',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           // {
+    //           //   'prodId': 'NA00005959',
+    //           //   'prodNm': '다른놈',
+    //           //   'skipId': '1234',
+    //           //   'skipNm': '통합공유데이터 아님',
+    //           //   'unlimit': '0',
+    //           //   'total': '41943040',
+    //           //   'used': '0',
+    //           //   'remained': '41943040',
+    //           //   'unit': '140',
+    //           //   'rgstDtm': '',
+    //           //   'exprDtm': ''
+    //           // }
+    //         ],
+    //         'voice': [
+    //           {
+    //             'prodId': 'NA00005959',
+    //             'prodNm': 'Data 인피니티',
+    //             'skipId': 'DD3EB',
+    //             'skipNm': '영상, 부가전화 300분',
+    //             'unlimit': '0',
+    //             'total': '18000',
+    //             'used': '0',
+    //             'remained': '18000',
+    //             'unit': '240',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ],
+    //         'sms': [
+    //           {
+    //             'prodId': 'NA00005959',
+    //             'prodNm': 'Data 인피니티',
+    //             'skipId': 'DD3E4',
+    //             'skipNm': 'SMS/MMS/ⓜ메신저 기본제공',
+    //             'unlimit': 'B',
+    //             'total': '기본제공',
+    //             'used': '기본제공',
+    //             'remained': '기본제공',
+    //             'unit': '310',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ],
+    //         'etc': [
+    //           {
+    //             'prodId': 'NA00000318',
+    //             'prodNm': '착신전환(Voice only)',
+    //             'skipId': 'DDC63',
+    //             'skipNm': '착신전환 무료 제공',
+    //             'unlimit': '0',
+    //             'total': '16200',
+    //             'used': '0',
+    //             'remained': '16200',
+    //             'unit': '240',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ]
+    //       }
+    //     };
+    //     if (resp.code === API_CODE.CODE_00) {
+    //       observer.next(resp);
+    //       observer.complete();
+    //     } else {
+    //       observer.error();
+    //     }
+    //   }, 500);
+    // });
+  }
+
+  private reqBaseFeePlan(childSvcMgmtNum: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0041, {
+      childSvcMgmtNum: childSvcMgmtNum
+    });
+  }
 }
 
 export default MyTDataUsageChild;

@@ -201,7 +201,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._tFamilySharingErrCode = tFamilySharingResp.code;
       if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) { // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
-        this._$tfamilySharing.find('.data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
+        this._$tfamilySharing.find('.fe-data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
       }
     }
   },
@@ -233,9 +233,9 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
   },
 
   _setDataTxt: function ($el, usedData) {
-    $el.find('.data-txt').text(
+    $el.find('.fe-data-txt').html('<strong>' +
       Tw.MYT_DATA_TOTAL_SHARING_DATA.USED_DATA_PREFIX +
-      usedData.data + (usedData.unit || '') +
+      usedData.data + (usedData.unit || '') + '</strong>' +
       Tw.MYT_DATA_TOTAL_SHARING_DATA.USED_DATA_SUFFIX
     );
   },
@@ -274,7 +274,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     if ( this._options.dataSharingJoined === 'Y' ) {
       this._historyService.goHash('data-share-popup');
     } else {
-      this._historyService.goLoad('/product/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
+      this._historyService.goLoad('/product/mobileplan/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
     }
   },
 
