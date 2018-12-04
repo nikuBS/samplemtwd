@@ -134,18 +134,24 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this.paramData = $.extend({}, this.paramData, htParams);
 
+    this._popupService.openConfirm(
+      this.paramData.custNm + ' ( '+  Tw.FormatHelper.conTelFormatWithDash(this.$inputImmediatelyGift.val().replace(/-/g, '')) +' ) ' +
+      Tw.ALERT_MSG_MYT_DATA.GIFT_DATA_TARGET +
+      Tw.FormatHelper.convDataFormat(this.paramData.dataQty, 'MB').data +
+      Tw.FormatHelper.convDataFormat(this.paramData.dataQty, 'MB').unit +
+      Tw.ALERT_MSG_MYT_DATA.GIFT_DATA_QUESTION,
+      Tw.REFILL_COUPON_CONFIRM.CONFIRM_GIFT,
+      $.proxy(this._onSuccessSendingData, this)
+    );
+  },
+
+  _onSuccessSendingData: function (res) {
+    this._popupService.close();
+
     this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     // TODO: Implemented API TEST
     // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
     //   .done($.proxy(this._onSuccessSendingData, this));
-  },
-
-  _onSuccessSendingData: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
   },
 
   _checkValidateSendingButton: function () {
