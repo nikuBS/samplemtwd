@@ -3,7 +3,7 @@
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2018.11.30
 %>
-<% include ../../components/start.component.html %>
+<% include ../../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -14,8 +14,8 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap" data-category="<%= category %>">
-    <%- include('../../../../common/views/components/header.component.html', { title: pageTitle, svcInfo, option: { line: true } }); %>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: pageTitle }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -31,5 +31,5 @@
     <!--// #footer -->
 </div>
 </body>
-<% include ../../components/javascript.component.html %>
-<% include ../../components/end.component.html %>
+<% include ../../../components/javascript.component.html %>
+<% include ../../../components/end.component.html %>
