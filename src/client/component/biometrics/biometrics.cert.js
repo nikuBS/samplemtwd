@@ -1,17 +1,17 @@
 /**
- * FileName: main.menu.settings.biometrics.cert.js
+ * FileName: biometrics.cert.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.13
  */
 
-Tw.MainMenuSettingsBiometricsCert = function (target) {
+Tw.BiometricsCert = function (target) {
   this._target = target;
-  this._apiService = Tw.Api;
+  this._callback = null;
 
-  this._historyService = new Tw.HistoryService();
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._biometiricsRegister = new Tw.MainMenuSettingsBiometricsRegister(this._target);
+  this._biometiricsRegister = new Tw.BiometricsRegister(this._target);
   this._certSk = new Tw.CertificationSk();
   this._certPublic = new Tw.CertificationPublic();
   this._certNice = new Tw.CertificationNice();
@@ -23,8 +23,9 @@ Tw.MainMenuSettingsBiometricsCert = function (target) {
   this._getSvcInfo();
 };
 
-Tw.MainMenuSettingsBiometricsCert.prototype = {
-  open: function () {
+Tw.BiometricsCert.prototype = {
+  open: function (callback) {
+    this._callback = callback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_02',
       layer: true,
@@ -55,7 +56,7 @@ Tw.MainMenuSettingsBiometricsCert.prototype = {
   },
   _onClickSkSms: function () {
     this._certSk.open(
-      this._svcInfo, this._authUrl, this._authKind, null, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS, $.proxy(this._completeIdentification, this));
+      this._svcInfo, this._authUrl, this._authKind, null, $.proxy(this._completeIdentification, this), '', '', false, 1);
   },
   _onClickKtSms: function () {
     this._certNice.open(
@@ -69,9 +70,14 @@ Tw.MainMenuSettingsBiometricsCert.prototype = {
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, null, $.proxy(this._completeIdentification, this));
   },
   _onClickPublic: function () {
-    this._certPublic.open(this._svcInfo, this._authUrl, this._authKind, null, $.proxy(this._completeIdentification, this));
+    this._certPublic.open(this._authUrl, this._authKind, null, $.proxy(this._completeIdentification, this));
   },
   _completeIdentification: function (resp) {
-    this._biometiricsRegister.open();
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._biometiricsRegister.open(this._callback);
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+
   }
 };

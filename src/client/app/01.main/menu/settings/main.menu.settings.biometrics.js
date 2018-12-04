@@ -9,9 +9,8 @@ Tw.MainMenuSettingsBiometrics = function (rootEl, target) {
   this._target = target;
 
   this._nativeService = Tw.Native;
-  this._historyService = new Tw.HistoryService();
 
-  this._biometricsTerm = new Tw.MainMenuSettingsBiometricsTerms(this._target);
+  this._biometricsTerm = new Tw.BiometricsTerms(this._target);
 
   this.$inputFido = null;
   this.$txtFido = null;
@@ -55,7 +54,6 @@ Tw.MainMenuSettingsBiometrics.prototype = {
   _onFidoDeRegister: function (resp) {
   },
   _onClickRegisterFido: function () {
-    // this._historyService.goLoad('/main/menu/settings/biometrics/terms?target=' + this._target);
     this._biometricsTerm.open();
 
   },

@@ -123,7 +123,7 @@ Tw.CertificationSkFull.prototype = {
     }
   },
   _onClickCertAdd: function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq }, null, this.mdn)
+    this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
       .done($.proxy(this._successRequestCertAdd, this));
   },
   _successRequestCert: function (resp) {

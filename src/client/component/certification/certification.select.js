@@ -26,6 +26,8 @@ Tw.CertificationSelect = function () {
   this._optMethods = '';
   this._methodCnt = 1;
   this._enableFido = false;
+  this._registerFido = false;
+  this._fidoTarget = '';
 
   this._svcInfo = null;
   this._certInfo = null;
@@ -39,6 +41,10 @@ Tw.CertificationSelect = function () {
 
 
 Tw.CertificationSelect.prototype = {
+  FIDO_TYPE: {
+    '0': Tw.FIDO_TYPE.FINGER,
+    '1': Tw.FIDO_TYPE.FACE
+  },
   open: function (certInfo, command, deferred, callback) {
     this._certInfo = certInfo;
     this._command = command;
@@ -46,7 +52,6 @@ Tw.CertificationSelect.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
-    console.log(this._command);
     this._getSvcInfo();
   },
   _getSvcInfo: function () {
@@ -100,6 +105,7 @@ Tw.CertificationSelect.prototype = {
   _onFidoType: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 || resp.resultCode === Tw.NTV_CODE.CODE_01 ) {
       this._enableFido = true;
+      this._fidoTarget = this.FIDO_TYPE[resp.resultCode];
       this._checkFido();
     } else {
       this._checkSmsPri();
@@ -110,6 +116,7 @@ Tw.CertificationSelect.prototype = {
   },
   _onCheckFido: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._registerFido = true;
       this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.BIO);
     } else {
       this._checkSmsPri();
@@ -220,7 +227,7 @@ Tw.CertificationSelect.prototype = {
         this._certPublic.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
-        this._certBio.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
+        this._certBio.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
         this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));

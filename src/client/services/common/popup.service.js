@@ -30,7 +30,7 @@ Tw.PopupService.prototype = {
   _onOpenPopup: function () {
     var $popups = $('.tw-popup');
     var $currentPopup = $($popups[$popups.length - 1]);
-    Tw.Logger.info('[Popup Open]');
+    Tw.Logger.info('[Popup Open]', this._prevHashList);
     this._bindEvent($currentPopup);
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
@@ -44,21 +44,23 @@ Tw.PopupService.prototype = {
     skt_landing.action.popup.close();
   },
   _addHash: function (closeCallback, hashName) {
-    var curHash = location.hash || '#';
-    // Tw.Logger.log('[Popup] Add Hash', curHash);
-    this._prevHashList.push({
-      curHash: curHash,
-      closeCallback: closeCallback
-    });
+    setTimeout($.proxy(function () {
+      var curHash = location.hash || '#';
+      // Tw.Logger.log('[Popup] Add Hash', curHash);
+      this._prevHashList.push({
+        curHash: curHash,
+        closeCallback: closeCallback
+      });
 
-    if ( Tw.FormatHelper.isEmpty(hashName) ) {
-      hashName = '#popup' + this._prevHashList.length;
-    } else {
-      hashName = '#' + hashName + '_P';
-    }
+      if ( Tw.FormatHelper.isEmpty(hashName) ) {
+        hashName = '#popup' + this._prevHashList.length;
+      } else {
+        hashName = '#' + hashName + '_P';
+      }
 
-    // location.hash = 'popup' + this._prevHashList.length;
-    history.pushState(this._popupObj, 'popup', hashName);
+      // location.hash = 'popup' + this._prevHashList.length;
+      history.pushState(this._popupObj, 'popup', hashName);
+    }, this), 0);
   },
   _bindEvent: function ($container) {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
@@ -284,7 +286,9 @@ Tw.PopupService.prototype = {
     if ( hashLength > 0 ) {
       _.map(this._prevHashList, $.proxy(function (prevHash) {
         if ( !Tw.FormatHelper.isEmpty(prevHash.closeCallback) ) {
-          prevHash.closeCallback();
+          setTimeout(function () {
+            prevHash.closeCallback();
+          }, 0);
         }
       }, this));
       this._prevHashList = [];
