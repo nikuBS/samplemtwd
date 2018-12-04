@@ -67,6 +67,7 @@
             <!--// .cont-box -->
             <%- include('../components/submain/myt-fare.submain.contribution.html', data) %>
 
+            <% if (data.banner && data.banner.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box nogaps noborder">
                 <div class="main-slide-banner slide-pagingtype pg-rtop">
@@ -75,21 +76,13 @@
                         <div class="widget-box slider1">
                             <div class="slider-box">
                                 <ul class="slider">
+                                    <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
                                         <button>
-                                            <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            <img src="<%= data.banner[i].imgLinkUrl %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
                                         </button>
                                     </li>
-                                    <li>
-                                        <button>
-                                            <img src="/img/dummy/dummy-banner01.jpg" alt="">
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="/img/dummy/dummy-banner01.jpg" alt="">
-                                        </button>
-                                    </li>
+                                    <% } %>
                                 </ul>
                             </div>
                         </div>
@@ -97,6 +90,8 @@
                     <!--// .widget -->
                 </div>
             </div>
+            <% delete data.banner; %>
+            <% } %>
 
             <% if ( data.otherLines.length > 0) { %>
             <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>

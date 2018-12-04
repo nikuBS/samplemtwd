@@ -15,6 +15,8 @@ import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/stri
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
+import { MYT_BANNER_TYPE, REDIS_MYT_BANNER } from '../../types/common.type';
+import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
@@ -48,8 +50,10 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice()
-    ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+      this._getUsagePatternSevice(),
+      this.redisService.getData(REDIS_MYT_BANNER + MYT_BANNER_TYPE.DATA),
+      this._getBannerMock() // TODO: 추후 제거
+    ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner, bam]) => {
       if ( !svcInfo.svcMgmtNum || remnant.info ) {
         // 비정상 진입 또는 API 호출 오류
         this.error.render(res, {
@@ -105,10 +109,14 @@ class MytDataSubmainController extends TwViewController {
 
       // T가족모아 데이터
       if ( family && Object.keys(family).length > 0 ) {
-        data.family = this.convertFamilyData(family);
-        const remained = parseInt(data.family.remained, 10);
-        data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
-        data.family.limitation = parseInt(data.family.limitation, 10);
+        if (family.impossible) {
+          data.family = family;
+        } else {
+          data.family = this.convertFamilyData(family);
+          const remained = parseInt(data.family.remained, 10);
+          data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
+          data.family.limitation = parseInt(data.family.limitation, 10);
+        }
       }
 
       // 최근 충전 및 선물 내역
@@ -196,11 +204,33 @@ class MytDataSubmainController extends TwViewController {
       if ( pattern ) {
         data.pattern = pattern;
       }
+      // 배너 정보
+      if ( banner ) {
+        data.banner = this.parseBanner(banner);
+      } else {
+        data.banner = this.parseBanner(bam);
+      }
 
       res.render('myt-data.submain.html', { data });
     });
   }
 
+  parseBanner(data: any) {
+    const banners = data.banners;
+    const sort = {};
+    const result: any = [];
+    banners.forEach((item) => {
+      if ( item.bnnrExpsSeq ) {
+        sort[item.bnnrExpsSeq] = item;
+      }
+    });
+    const keys = Object.keys(sort).sort();
+    keys.forEach((key) => {
+      result.push(sort[key]);
+    });
+
+    return result;
+  }
 
   convShowData(data: any) {
     data.isUnlimit = !isFinite(data.total);
@@ -274,8 +304,8 @@ class MytDataSubmainController extends TwViewController {
           tmoaRemained += parseInt(item.remained, 10);
           tmoaTotal += parseInt(item.total, 10);
         } else {
-          etcRemained += parseInt(item.remained, 10);
-          etcTotal += parseInt(item.total, 10);
+          etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
+          etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
         }
         // }
       });
@@ -342,11 +372,13 @@ class MytDataSubmainController extends TwViewController {
       'adultYn': items.adultYn,
     };
     const list = items.mbrList;
-    list.filter((item) => {
-      if ( item.repYn === 'Y' ) {
-        info = Object.assign(info, item);
-      }
-    });
+    if ( list ) {
+      list.filter((item) => {
+        if ( item.repYn === 'Y' ) {
+          info = Object.assign(info, item);
+        }
+      });
+    }
     return info;
   }
 
@@ -531,6 +563,13 @@ class MytDataSubmainController extends TwViewController {
         // error
         return null;
       }
+    });
+  }
+
+  _getBannerMock(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(BANNER_MOCK);
+      obs.complete();
     });
   }
 }
