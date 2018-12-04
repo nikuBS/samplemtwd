@@ -17,9 +17,6 @@ Tw.ProductRoamingSearchResult = function (rootEl, svcInfo, srchInfo, rateInfo) {
   this._srchInfo = srchInfo;
   this._rateInfo = rateInfo;
 
-    Tw.Logger.info('_srchInfo :', this._srchInfo);
-    Tw.Logger.info('_rateInfo :', this._rateInfo);
-
   this._roamingSearchInit();
   this._bindEvents();
 };
@@ -33,6 +30,9 @@ Tw.ProductRoamingSearchResult.prototype = {
             'manageType': this._srchInfo.countryCd,
             'showDailyPrice': 'N'
         };
+
+        this.$container.find('.fe-search-input').val(this._srchInfo.countryNm);
+
 
         if(this._rateInfo.lte > 0){
             this.reqParams.manageType = 'L';
