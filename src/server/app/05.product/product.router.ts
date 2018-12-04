@@ -46,7 +46,6 @@ import ProductWireplanJoinRequireDocumentHistory from './controllers/wireplan/jo
 import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 
-
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
 import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
@@ -91,8 +90,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/setting/number', controller: ProductMobileplanSettingNumber });
     this.controllers.push({ url: '/mobileplan/setting/number-friend', controller: ProductMobileplanSettingNumberFriend });
     this.controllers.push({ url: '/mobileplan/setting/location', controller: ProductMobileplanSettingLocation });
-    this.controllers.push({ url: '/mobileplan/setting/no-limit', controller: ProductMobileplanSettingBandYT});
-    this.controllers.push({ url: '/mobileplan/lookup/couple', controller: ProductMobileplanSettingCouple});
+    this.controllers.push({ url: '/mobileplan/setting/no-limit', controller: ProductMobileplanSettingBandYT });
+    this.controllers.push({ url: '/mobileplan/lookup/couple', controller: ProductMobileplanSettingCouple });
     this.controllers.push({ url: '/mobileplan/lookup/tplan', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
@@ -120,7 +119,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
-    this.controllers.push({ url: '/apps/:appId', controller: ProductAppsDetail });
+    this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
 
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/roaming/do/search-after', controller: ProductRoamingSearchAfter });
