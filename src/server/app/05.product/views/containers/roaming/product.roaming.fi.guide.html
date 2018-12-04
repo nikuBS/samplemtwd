@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: 'T파이 임대', svcInfo: svcInfo, option: { line: true, back: 'none', home: true } }) %>
+    <%- include('../../../../common/views/components/header.component.html', { title: 'T파이 임대' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -224,11 +224,10 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>T파이 임대 이용 안내<button id="RM_14_01_tip_01" type="button" class="tip-view">TIP</button></li>
-                    <li>유의 사항<button id="RM_14_01_tip_02" type="button" class="tip-view">TIP</button></li>
-                    <li>문의 사항<button id="RM_14_01_tip_03" type="button" class="tip-view">TIP</button></li>
-                    <li>서비스 제공 대상<button id="RM_14_01_tip_04" type="button" class="tip-view">TIP</button></li>
-                    <!--<li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view">TIP</button></li>-->
+                    <li>T파이 임대 이용 안내 <button id="RM_14_01_tip_01" type="button" class="tip-view" title="T파이 임대 이용 안내 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>유의 사항 <button id="RM_14_01_tip_02" type="button" class="tip-view" title="유의 사항 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>문의 사항 <button id="RM_14_01_tip_03" type="button" class="tip-view" title="문의 사항 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>서비스 제공 대상 <button id="RM_14_01_tip_04" type="button" class="tip-view" title="서비스 제공 대상 정보보기" aria-haspopup="true">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -236,6 +235,7 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 </body>
 

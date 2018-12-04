@@ -10,7 +10,7 @@ import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 
 export default class ProductRoamingFi extends TwViewController {
-  render(req: Request, res: Response, _next: NextFunction, svcInfo: any) {
-      res.render('roaming/product.roaming.fi.guide.html', { svcInfo });
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, pageInfo: any) {
+      res.render('roaming/product.roaming.fi.guide.html', { svcInfo, pageInfo });
   }
 }

@@ -343,8 +343,9 @@ Tw.POPUP_TPL = {
           { 'option': 'hbs-card-type', 'attr': 'id="01" data-center="1430456896"', value: '인천공항 2터미널 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="02" data-center="A100140000"', value: '김포공항 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="03" data-center="A900100000"', value: '제주공항 국제선 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="04" data-center="A200130000"', value: '김해공항 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="05" data-center="1000012532"', value: '대구공항 2층 로밍 센터' }
+          { 'option': 'hbs-card-type', 'attr': 'id="04" data-center="A200130000"', value: '김해공항 3층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="05" data-center="C399900000"', value: '대구공항 2층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="14" data-center="1430452300"', value: '대구 SKT 황금점 매장' }
         ]
       }
     ]
@@ -363,25 +364,13 @@ Tw.POPUP_TPL = {
     data: [
       {
         'list': [
-          {
-            'option': 'hbs-card-type',
-            'attr': 'id="06" data-center="A100110000" data-booth="1000004045"',
-            value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)'
-          },
-          {
-            'option': 'hbs-card-type',
-            'attr': 'id="07" data-center="A100110000" data-booth="1000004047"',
-            value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)'
-          },
-          {
-            'option': 'hbs-card-type',
-            'attr': 'id="08" data-center="1430456896" data-booth="1430456957"',
-            value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)'
-          },
+          { 'option': 'hbs-card-type', 'attr': 'id="06" data-center="A100110000" data-booth="1000004045"', value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="07" data-center="A100110000" data-booth="1000004047"', value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="08" data-center="1430456896" data-booth="1430456957"', value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
           { 'option': 'hbs-card-type', 'attr': 'id="09" data-center="A100140000" data-booth="1000004055"', value: '김포공항 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="10" data-center="A900100000" data-booth="1000004057"', value: '제주공항 국제선 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="11" data-center="A200130000" data-booth="1000012532"', value: '김해공항 3층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="12" data-center="" data-booth=""', value: '대구공항 2층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="12" data-center="C399900000" data-booth="1430455436"', value: '대구공항 2층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="13" data-center="1430452300" data-booth="1430452300"', value: '대구 SKT 황금점 매장' }
         ]
       }

@@ -34,6 +34,7 @@
                 </li>
             </ul>
         </div>
+        {{#if dateDifference}}
         <ul class="bt-slice item-two mt30">
             <li class="bt-white2">
                 <button id="fe-cancel" data-response="{{json this}}">예약 취소</button>
@@ -42,6 +43,7 @@
                 <button id="fe-edit" data-response="{{json this}}" data-country="{{country}}">예약 수정</button>
             </li>
         </ul>
+        {{/if}}
     </li>
     {{/each}}
 </script>
