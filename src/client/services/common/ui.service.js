@@ -1,5 +1,6 @@
 Tw.UIService = function () {
   this.setBack();
+  this.setForward();
   this.setReplace();
   this.setBackRefresh();
   this.setInputEvent();
@@ -11,6 +12,12 @@ Tw.UIService.prototype = {
     $('.fe-common-back').on('click', function () {
       Tw.Logger.info('[Common Back]');
       window.history.back();
+    });
+  },
+  setForward: function () {
+    $('.fe-common-forward').on('click', function () {
+      Tw.Logger.info('[Common Forward]');
+      window.history.forward();
     });
   },
 

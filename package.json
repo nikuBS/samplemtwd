@@ -32,7 +32,7 @@
     "rxjs": "^5.5.12",
     "slick-carousel": "^1.8.1",
     "underscore": "^1.9.1",
-    "whatap": "^0.3.3",
+    "whatap": "^0.3.6",
     "winston": "^2.4.4"
   },
   "devDependencies": {

@@ -1,731 +1,798 @@
 <%#
 * FileName: home.html
 * Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.10.04
+* Date: 2018.12.04
+* HO_01_01
 %>
 
 <% include ../components/start.component.html %>
-<body>
+<body class="apphome"><!-- app홈 전용 // -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="mainHome" class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: `<a class="logo" href=""><img src="${CDN}/img/common/logo-tworld.png" alt="Tworld" /></a>`, svcInfo: svcInfo, option: { line: true, back: 'none', home: true } }) %>
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '<div class="h-logo"><a href="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></a></div>' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box noborder">
-                <div class="main-login-ti">
-                    <% if (svcType.login) { %>
-                    <% if (svcInfo.expsSvcCnt !== '0') { %>
-                    <% if (svcType.mobile) { %>
-                    <p class="login-ment"><%= svcInfo.mbrNm %> 님, 안녕하세요.<br />사랑하는 가족에게 데이터를 선물해보세요.</p>
-                    <% } else { %>
-                    <p class="login-ment"><%= svcInfo.mbrNm %> 님, 안녕하세요.</p>
-                    <% } %>
-                    <% } else { %>
-                    <p class="login-ment"><%= svcInfo.mbrNm %> 님, 안녕하세요.</p>
-                    <p class="login-ment-sub">SKT의 가족이 되어 <br/><em>특별한 혜택과 서비스를 이용</em>해보세요.</p>
-                    <% } %>
-                    <% } else { %>
-                    <p class="login-ment">로그인 후 T 회원만을 위한 혜택과 서비스를 이용해보세요.</p>
-                    <% } %>
-                    <% if (svcType.login && svcInfo.expsSvcCnt !== '0' && !(svcType.mobile)) { %>
-                    <div class="user-plan-infomation">
-                        <div class="user-plan-info1">
-                            <dl>
-                                <dt class="blind">회선 이름</dt>
-                                <dd><%= svcInfo.showName %></dd>
-                            </dl>
-                            <dl>
-                                <dt class="blind">회선 정보</dt>
-                                <dd><%= svcInfo.showSvc %></dd>
-                            </dl>
-                        </div>
-                        <div class="user-plan-info2">
-                            <dl>
-                                <dt>요금제</dt>
-                                <dd><%= svcInfo.prodNm %></dd>
-                            </dl>
-                            <% if (svcType.svcCategory === 'S') { %>
-                            <% if (homeData.joinInfo && homeData.joinInfo.showSvc) { %>
-                            <dl>
-                                <dt>약정기간</dt>
-                                <dd><%= homeData.joinInfo.svcPrdStaDt %>~<%= homeData.joinInfo.svcPrdEndDt %></dd>
-                            </dl>
-                            <% } %>
-                            <% } %>
-                            <% if (svcInfo.svcAttrCd === 'M2') { %>
-                            <dl>
-                                <dt>번호유지 기간</dt>
-                                <dd><%= homeData.ppsInfo.numEndDt %>까지</dd>
-                            </dl>
-                            <% } %>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-            <!--// .cont-box -->
-
-            <!-- .cont-box 실시간 잔여량 -->
-            <% if (svcType.login && svcInfo.expsSvcCnt !== '0' && svcType.svcCategory === 'M') { %>
-            <div class="cont-box pt10">
-                <!-- .th-use case : TH1 -->
-                <div class="th-use">
-                    <dl class="real-remaining">
-                        <% if (homeData.usageData.code === '00') { %>
-                        <dt>실시간 잔여량<a class="ico" href="/myt-data/hotdata"></a></dt>
-                        <dd>
-                            <% if (homeData.usageData.first === 'data') { %>
-                            <div class="remaining-amount">
-                                <% if(homeData.usageData.data.isUnlimit) { %>
-                                <span class="num ff-tg-black">무제한</span>
-                                <% } else { %>
-                                <span class="num ff-tg-black"><%= homeData.usageData.data.showRemained.data %></span>
-                                <span class="dingbat <%= (homeData.usageData.data.showRemained.unit).toLowerCase() %>"><span class="blind"><%= homeData.usageData.data.showRemained.unit %></span></span>
-                                <% } %>
-                            </div>
-                            <div class="graph-area-type4">
-                                <% if(homeData.usageData.data.isUnlimit) { %>
-                                <span class="graph-max">무제한</span>
-                                <% } else { %>
-                                <span class="graph-max"><%= homeData.usageData.data.showTotal.data %> <%= homeData.usageData.data.showTotal.unit %></span>
-                                <% } %>
-                                <span class="graph-min"><%= homeData.usageData.data.showUsed.data %> <%= homeData.usageData.data.showUsed.unit %> 사용</span>
-                                <span class="graph-bar1" style="width:<%= homeData.usageData.data.remainedRatio %>%;">
-                                        <span class="bar"></span>
-                                    </span>
-                                <span class="graph-bar2">
-                                        <span class="bar"></span>
-                                    </span>
-                            </div>
-                            <% } else if (homeData.usageData.first === 'voice') { %>
-                            <div class="remaining-amount">
-                                <% if(homeData.usageData.voice.isUnlimit) { %>
-                                <span class="num ff-tg-black">무제한</span>
-                                <% } else { %>
-                                <% if (homeData.usageData.voice.showRemained.hours !== 0) { %>
-                                <span class="num ff-tg-black"><%= homeData.usageData.voice.showRemained.hours %></span><span class="unit">시간</span>
-                                <% } %>
-                                <% if (homeData.usageData.voice.showRemained.min !== 0) { %>
-                                <span class="num ff-tg-black"><%= homeData.usageData.voice.showRemained.min %></span><span class="unit">분</span>
-                                <% } %>
-                                <% } %>
-                            </div>
-                            <div class="graph-area-type4">
-                                <span class="graph-max">
-                                    <% if(homeData.usageData.voice.isUnlimit) { %>
-                                    무제한
-                                    <% } else { %>
-                                    <% if (homeData.usageData.voice.showTotal.hours !== 0) { %>
-                                    <%= homeData.usageData.voice.showTotal.hours %> 시간
-                                    <% } %>
-                                    <% if (homeData.usageData.voice.showTotal.min !== 0) { %>
-                                    <%= homeData.usageData.voice.showTotal.min %> 분
-                                    <% } %>
-                                    <% if (homeData.usageData.voice.showTotal.sec !== 0) { %>
-                                    <%= homeData.usageData.voice.showTotal.sec %> 초
-                                    <% } %>
-                                    <% } %>
-
-                                </span>
-                                <span class="graph-min">
-                                    <% if (homeData.usageData.voice.showUsed.hours !== 0) { %>
-                                    <%= homeData.usageData.voice.showUsed.hours %> 시간
-                                    <% } %>
-                                    <% if (homeData.usageData.voice.showUsed.min !== 0) { %>
-                                    <%= homeData.usageData.voice.showUsed.min %> 분
-                                    <% } %>
-                                    <% if (homeData.usageData.voice.showUsed.sec !== 0) { %>
-                                    <%= homeData.usageData.voice.showUsed.sec %> 초
-                                    <% } %>
-                                    사용
-                                </span>
-                                <span class="graph-bar1" style="width:<%= homeData.usageData.data.remainedRatio %>%;">
-                                        <span class="bar"></span>
-                                    </span>
-                                <span class="graph-bar2">
-                                        <span class="bar"></span>
-                                    </span>
-                            </div>
-                            <% } %>
-                            <ul class="remaining-tm">
-                                <!--<li class="allline">-->
-                                    <!--<dl>-->
-                                        <!--<dt><span class="ico tm-music"></span></dt>-->
-                                        <!--<dd>멜론 익스트리밍 2.1GB 남음</dd>-->
-                                    <!--</dl>-->
-                                <!--</li>-->
-                                <% if(homeData.usageData.first !== 'voice' && homeData.usageData.voice) { %>
-                                <li>
-                                    <dl>
-                                        <dt><span class="ico tm-tel"></span></dt>
-                                        <% if(homeData.usageData.voice.isUnlimit) { %>
-                                        <dd> 무제한 </dd>
-                                        <% } else { %>
-                                        <dd>
-                                            <% if (homeData.usageData.voice.showRemained.hours !== 0) { %>
-                                            <%= homeData.usageData.voice.showRemained.hours %> 시간
-                                            <% } %>
-                                            <% if (homeData.usageData.voice.showRemained.min !== 0) { %>
-                                            <%= homeData.usageData.voice.showRemained.min %> 분
-                                            <% } %>
-                                            <% if (homeData.usageData.voice.showRemained.sec !== 0) { %>
-                                            <%= homeData.usageData.voice.showRemained.sec %> 초
-                                            <% } %>
-                                            남음
-                                        </dd>
-                                        <% } %>
-                                    </dl>
-                                </li>
-                                <% } %>
-                                <% if(homeData.usageData.sms) { %>
-                                <li>
-                                    <dl>
-                                        <dt><span class="ico tm-msg"></span></dt>
-                                        <% if(homeData.usageData.sms.isUnlimit) { %>
-                                        <dd> 무제한 </dd>
-                                        <% } else { %>
-                                        <dd><%= homeData.usageData.sms.remained %>건 남음</dd>
-                                        <% } %>
-                                    </dl>
-                                </li>
-                                <% } %>
-                            </ul>
-                        </dd>
-                        <% } else if (homeData.usageData.code === 'BLN0001') { %>
-                        <dt>실시간 잔여량</dt>
-                        <dd>
-                            <div class="real-remaining-notice">
-                                <p class="remaining-notice-txt">잠시 후 다시 이용해주세요.</p>
-                                <p class="remaining-notice-sub">안정적인 실시간 조회를 <br/>위해 조회 횟수를 제한하고 있습니다. <br/>(2시간 동안 최대 12회 조회 가능)</p>
-                                <span class="ico"></span>
-                            </div>
-                        </dd>
-                        <% } else if (homeData.usageData.code === 'BLN0003') { %>
-                        <dt>실시간 잔여량</dt>
-                        <dd>
-                            <div class="real-remaining-notice">
-                                <p class="remaining-notice-txt">잔여량 조회 서비스가 <br/>제공되지 않습니다.</p>
-                                <p class="remaining-notice-sub">정지 이력이 있어 잔여량 조회 서비스가 제공되지 않습니다. <br/> 자세한 문의는 고객센터를 <br/>이용해주시기 바랍니다.</p>
-                                <a class="bt-link-tx underline mt16" href="/customer/email">이메일로 문의하기</a>
-                                <span class="ico"></span>
-                            </div>
-                        </dd>
-                        <% } else if (homeData.usageData.code === 'BLN0002' || homeData.usageData.code === 'BLN0004') { %>
-                        <dt>실시간 잔여량</dt>
-                        <dd>
-                        </dd>
-                        <% } else { %>
-                        <dt>실시간 잔여량</dt>
-                        <dd>
-                        </dd>
-                        <% } %>
-                    </dl>
-                </div>
-                <!--// .th-use case : TH1 -->
-
-                <ul class="bt-slice item-two home">
-                    <li class="bt-white2">
-                        <button class="fe-bt-go-recharge">즉시 충전</button>
-                    </li>
-                    <li class="bt-white2">
-                        <a href="/myt-data/giftdata">T끼리 데이터 선물</a>
-                    </li>
-                </ul>
-            </div>
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
-            <!--// .cont-box -->
-
-            <!-- .cont-box -->
-            <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
-            <div class="cont-box pt10 pb0">
-                <!-- .th-use case : TH2_04 -->
-                <div class="th-use mb0">
-                    <% if (homeData.billData) { %>
-                    <dl class="real-remaining">
-                        <dt>요금안내서<a href="/myt-fare/billguide/guide" class="ico"></a></dt>
-                        <dd>
-                            <p class="remaining-group">
-                                <% if (homeData.billData.type1) { %>
-                                <em class="tx-bold"><%= homeData.billData.invMonth %>월 청구요금</em>
-                                <i class="badge badge-all-service ml6">서비스 전체</i>
-                                <% } else if (homeData.billData.type2) { %>
-                                <em class="tx-bold"><%= homeData.billData.invMonth %>월 청구요금</em>
-                                <% } else if (homeData.billData.type3) { %>
-                                <em class="tx-bold"><%= homeData.billData.invMonth %>월 사용요금</em>
-                                <% } %>
-                            </p>
-                            <div class="remaining-amount"><span class="num ff-tg-black"><%= homeData.billData.chargeAmtTot %></span><span class="unit">원</span></div>
-                            <div class="remaining-period">사용기간<span class="tx-period"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span></div>
-                        </dd>
-                    </dl>
-                    <div class="fee-info-box pb0">
-                        <div class="fee-card-info1">
-                            <% if (homeData.billData.type1 || homeData.billData.type2) { %>
-                            <dl>
-                                <dt>사용요금</dt>
-                                <dd class="ff-tg-black"><%= homeData.billData.usedAmtTot %><span class="ff-tg-light"> 원</span></dd>
-                            </dl>
-                            <dl>
-                                <dt>할인요금</dt>
-                                <dd class="ff-tg-black red-tx"><%= homeData.billData.deduckTot %><span class="ff-tg-light"> 원</span></dd>
-                            </dl>
-                            <% } else if (homeData.billData.type3) { %>
-                            <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
-                            <% } %>
-                        </div>
-                    </div>
-                    <% } else { %>
-                    <dl class="real-remaining">
-                        <dt>요금안내서<a href="/myt-fare/billguide/guide" class="ico"></a></dt>
-                        <dd>
-                            <span class="remaining-comment">SK 텔레콤의 가족이<br />되어주셔서 <em class="tx-bold">감사합니다.</em></span>
-                        </dd>
-                    </dl>
-                    <div class="fee-info-box pb0">
-                        <div class="fee-card-info1 noborder">
-                            <p class="tx">요금안내서가 도착하면 이곳에서 알려드려요.</p>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-                <!--// .th-use case : TH2_04 -->
-            </div>
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
-            <!--// .cont-box -->
-
-            <!-- .cont-box -->
-            <% if (svcType.login && svcType.svcCategory === 'O' ) { %>
-            <% } %>
-            <!--// .cont-box -->
-
-            <!-- .cont-box 멤버십 바코드 -->
-            <% if (svcType.login && svcType.mobile) { %>
-            <% if (homeData.membershipData) { %>
-            <div class="cont-box">
-                <div class="th-home-cpupon">
-                    <dl class="coupon-header">
-                        <dt>
-                            <span class="badge badge-vip"></span><span class="txt">T멤버십</span>
-                        </dt>
-                        <dd>
-                            <span class="benefit-cont"><em class="ff-tg-black"><%= homeData.membershipData.showUsedAmount %></em><span class="ff-tg-medium">원 사용</span></span>
-                        </dd>
-                    </dl>
-                    <div class="barcode-img">
-                        <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>" data-usedAmount="<%= homeData.membershipData.showUsedAmount %>"/>
-                        <!--<img src="/img/dummy/barcode2.jpg" alt="2497 4150 4581 3416"/>-->
-                    </div>
-                </div>
-            </div>
-            <% } else { %>
-            <div class="cont-box">
-                <div class="th-home-benefits">
-                    <p class="tx-benefits">아직 멤버십 카드가 없으신가요?<br /><em class="tx-bold">T멤버십을 신청</em>하고 <em class="tx-bold">SKT의 혜택</em>을<br />이용해보세요.</p>
-                    <span class="ico-benefits"></span>
-                </div>
-            </div>
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
-            <% } %>
-            <!--// .cont-box -->
-
-
-            <!-- .cont-box 주요메뉴 바로가기 -->
-            <% if (svcType.login && svcInfo.expsSvcCnt !== '0') { %>
-            <div class="cont-box">
-                <div class="main-quick-menu">
+            <!-- .home-tab -->
+            <div class="home-tab">
+                <div class="home-tab-belt">
                     <ul>
-                        <li><button class="plan"><span class="ico"></span>요금제</button></li>
-                        <li><button class="optional"><span class="ico"></span>부가서비스</button></li>
-                        <li><button class="subscr"><span class="ico"></span>가입정보</button></li>
-                        <li><button class="data"><span class="ico"></span>데이터</button></li>
-                        <li><button class="line"><span class="ico"></span>집전화/<br/>인터넷/TV</button></li>
-                        <li><button class="roaming"><span class="ico"></span>T로밍</button></li>
-                        <li><button class="charge"><span class="ico"></span>요금</button></li>
-                        <li><button class="benefit"><span class="ico"></span>혜택</button></li>
+                        <li class="tab"><div><button class="icon-home-tab-my on"><span class="blind">my</span></button><span class="bar"></span></div></li>
+                        <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
-            <% } %>
-            <!--// .cont-box -->
+            <!-- // .home-tab -->
+            <!-- .home-slider -->
+            <div class="home-slider">
+                <!-- .home-slider-belt -->
+                <div class="home-slider-belt">
+                    <!-- .home-slider-my -->
+                    <div class="home-slider-my">
+                        <% if (svcType.login) { %>
+                        <!-- .layer-noti -->
+                        <div class="dialog-box">
+                            <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
+                            <button class="dialog-txt">
+                                <span class="name"><%= svcInfo.mbrNm %> 고객님, 안녕하세요.</span>
+                                <span class="key">이번 달 요금안내서가 발행되었습니다.</span>
+                            </button>
+                            <div class="dialog-right-btn"><button class="icon-32px-exit"><span class="blind">닫기</span></button></div>
+                        </div>
+                        <!-- // .layer-noti -->
+                        <% } %>
 
-            <!-- .cont-box 이미지 배너 -->
-            <div class="cont-box nogaps noborder">
-                <div class="main-slide-banner">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box slider1">
-                            <div class="slider-box">
-                                <ul class="slider">
+                        <div class="main-top-group">
+                            <!-- 모바일 회선_잔여 데이터 -->
+                            <% if (svcType.login) { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt">010-12**-34**</button></em>
+                                <strong class="ti"><button class="bt">T플랜 패밀리</button></strong>
+
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box donutchart">
+                                        <!-- .donut-chart -->
+                                        <button class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
+                                            <div class="donut-chart-area">
+                                                <!-- loop -->
+                                                <div class="c100 p0" data-percent="70"><!-- data-percent :0 ~ 100 -->
+                                                    <div class="blue"><!-- red, yellow, green, blue -->
+                                                        <div class="slice">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                        <div class="slice transparent">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- // loop -->
+                                                <!-- loop -->
+                                                <div class="c100 p0" data-percent="50"><!-- data-percent :0 ~ 100 -->
+                                                    <div class="red"><!-- red, yellow, green, blue -->
+                                                        <div class="slice">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                        <div class="slice transparent">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- // loop -->
+                                            </div>
+                                            <span class="ti-data">
+                                                    <strong class="ti">남은 데이터</strong>
+                                                    <em class="data">36.7GB</em>
+                                                </span>
+                                        </button>
+                                        <!-- // .donut-chart -->
+                                        <button class="data-add">데이터</button>
+                                    </div>
+                                </div>
+                                <!-- // .widget -->
+
+                                <div class="legend">
+                                    <span class="category0"><span><em class="data">12.56GB</em> 나의 데이터</span></span>
+                                    <span class="category1"><span>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                </div>
+
+                                <div class="call-message">
+                                    <button class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> 1시간 45분</button>
+                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> 기본제공</button>
+                                </div>
+                            </div>
+                            <!-- //모바일 회선_잔여 데이터 -->
+
+                            <!-- 인터넷/전화/IPTV 요금안내서 -->
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt">인천 연************</button></em>
+                                <strong class="ti"><button class="bt">T스마트 광랜</button></strong>
+
+                                <div class="main-breakdown-box">
+                                    <div class="stit">10월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                    <em class="sum">82,500원</em>
+                                    <span class="date">2018.7.1.~2018.7.31.</span>
+                                    <ul class="list">
+                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type">94,560원</em></li>
+                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">-12,060원</em></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- // 인터넷/전화/IPTV 요금안내서 -->
+                            <% } else { %>
+                            <!-- 비로그인 -->
+                            <div class="main-error-box welcome">
+                                <span class="ico"><i class="icon-smile-120"><span class="blind">smile</span></i></span>
+                                <strong class="ti">반갑습니다. 고객님</strong>
+                                <p class="tx">로그인 후<br>고객님의 정보를 확인하세요.</p>
+                                <div class="btn-area">
+                                    <button type="button" class="btn-round1 btn-style4 fe-bt-slogin">간편 로그인하기</button>
+                                    <button type="button" class="btn-round1 btn-style1 fe-bt-login">로그인하기</button>
+                                </div>
+                                <p class="desc2">아직 T월드 회원이 아니시라면 <button class="bt">회원가입</button> 후 이용해 주세요</p>
+                            </div>
+                            <!-- // 비로그인 -->
+                            <% } %>
+
+                            <!-- MY 바로가기 -->
+                            <ul class="quick-menu-list">
+                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
+                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
+                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                            </ul>
+                            <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                            <!-- //MY 바로가기 -->
+                        </div>
+
+                        <!-- 이번 달 청구요금 -->
+                        <!--
+                        <div class="section-box">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point">이번 달 청구요금 <i class="icon-whole2"><span class="blind">전체</span></i></div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
+                                <ul class="list">
+                                    <li><strong class="ti">이용요금</strong> <em class="tx f-type">94,560원</em></li>
+                                    <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">-12,060원</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">자세히 보기</button>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        <!-- //이번 달 청구요금 -->
+                        <div class="main-membershop-box">
+                            <strong class="ti">membershop</strong>
+                            <span class="rating silver">silver</span>
+                            <!-- <span class="rating gold">gold</span>
+                            <span class="rating vip">vip</span> -->
+                            <span class="bar-code"><img src="<%= CDN %>/img/main/bar_code.png" alt="bar code"></span>
+                        </div>
+
+                        <!-- 이번 달 콘텐츠 이용내역 -->
+                        <div class="section-box">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point">이번 달 콘텐츠 이용내역</div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
+                                <ul class="list">
+                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">결제내역 보기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //이번 달 콘텐츠 이용내역 -->
+
+                        <!-- 이번 달 소액결제 이용내역 -->
+                        <div class="section-box">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point">이번 달 소액결제 이용내역</div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
+                                <ul class="list">
+                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">결제내역 보기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //이번 달 소액결제 이용내역 -->
+
+                        <!-- 멤버십 혜택 -->
+                        <div class="section-box nogaps">
+                            <div class="main-charge-box benefit section-swiper-box main-banner-img">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <div class="stit">김민정님을 위한 멤버십 혜택</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
+                                                        <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
+                                                        <button class="bt">혜택보러 가기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="stit">김민정님을 위한 멤버십 혜택</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
+                                                        <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
+                                                        <button class="bt">혜택보러 가기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="stit">김민정님을 위한 멤버십 혜택</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
+                                                        <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
+                                                        <button class="bt">혜택보러 가기</button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                        </div>
+                        <!-- //멤버십 혜택 -->
+
+                        <!-- T끼리 데이터 선물 -->
+                        <div class="section-box">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point">T끼리 데이터 선물</div>
+                                <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
+                                <ul class="list">
+                                    <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point">36.7GB</em></li>
+                                    <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type">1</span>회</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">선물하기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //T끼리 데이터 선물 -->
+
+                        <!-- 데이터 충전 -->
+                        <div class="section-box">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point">데이터 충전</div>
+                                <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
+                                <ul class="list">
+                                    <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point">500MB</em></li>
+                                    <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type">2</span>장</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">충전하기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //데이터 충전 -->
+
+                        <!-- 당신을 위한 기획전 -->
+                        <div class="section-box nogaps">
+                            <div class="main-charge-box advice section-swiper-box main-banner-img">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <div class="stit">당신을 위한 기획전</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                        <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                        <button class="bt">상담하러 가기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="stit">당신을 위한 기획전</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                        <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                        <button class="bt">상담하러 가기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="stit">당신을 위한 기획전</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                        <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                        <button class="bt">상담하러 가기</button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                        </div>
+                        <!-- //당신을 위한 기획전 -->
+
+                        <!-- 이럴 땐 이렇게 하세요 -->
+                        <div class="section-box nogaps">
+                            <div class="main-tip-box box-type section-swiper-box">
+                                <div class="stit c-point">이럴 땐 이렇게 하세요</div>
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                                <div class="btn-area">
+                                    <button class="bt">매장 찾기</button>
+                                    <button class="bt">A/S센터 찾기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //이럴 땐 이렇게 하세요 -->
+
+                        <!-- 공지사항 -->
+                        <div class="notice-slide-type">
+                            <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider2">
+                                    <div class="slider-box">
+                                        <ul class="slider">
+                                            <li>
+                                                <button>
+                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                    <span class="ico"></span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
+                                                    <span class="ico"></span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                        <!-- //공지사항 -->
+
+                    </div>
+                    <!-- // .home-slider-my -->
+                    <!-- .home-slider-store -->
+                    <div class="home-slider-store">
+
+                        <div class="main-top-group group-type">
+                            <!-- 메인 배너 -->
+                            <div class="main-banner-box section-swiper-box">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <button class="bt">
+                                                        <img src="<%= CDN %>/img/main/banner01.jpg" alt="">
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="bt">
+                                                        <img src="<%= CDN %>/img/main/banner01.jpg" alt="">
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="bt">
+                                                        <img src="<%= CDN %>/img/main/banner01.jpg" alt="">
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                            <!-- //메인 배너 -->
+
+                            <!-- MY 바로가기 -->
+                            <ul class="quick-menu-list">
+                                <li><button class="bt"><i class="icon-price-plan-80"></i>요금제</button></li>
+                                <li><button class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가상품</button></li>
+                                <li><button class="bt"><i class="icon-internet-80"></i>인터넷 ·<br>전화 · IPTV</button></li>
+                                <li><button class="bt"><i class="icon-roaming-80"></i>T로밍</button></li>
+                                <li><button class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                <li><button class="bt"><i class="icon-watch-80"></i>태블릿 · 워치</button></li>
+                                <li><button class="bt"><i class="icon-nugu-80"></i>NUGU</button></li>
+                                <li><button class="bt"><i class="icon-accessory-80"></i>액세서리</button></li>
+                            </ul>
+                            <!-- //MY 바로가기 -->
+                        </div>
+
+                        <!-- 다이렉트샵 -->
+                        <div class="section-box">
+                            <div class="main-direct-box">
+                                <div class="stit c-point"><button class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <strong class="ti">할인된 가격으로<br>인기 스마트폰 구매</strong>
+                                <span class="tx">SK텔레콤 고객을 위한 공시 지원금에 추가 지원금 할인</span>
+                                <ul class="info">
                                     <li>
-                                        <button>
-                                            <img src="<%= CDN %>/img/dummy/dmy-th3-1.png" alt="O CAMPUS 지금 바로 신청해! 오직 대학생을 위한 혜택! 대용량 클라우드 & 캠퍼스 데이터">
+                                        <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
+                                        <strong class="ti">iPhone XS</strong>
+                                        <em class="tx">56,270원~/월</em>
+                                        <span class="tag"><i class="icon-new"><span class="blind">NEW</span></i></span>
+                                    </li>
+                                    <li>
+                                        <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
+                                        <strong class="ti">iPhone XR</strong>
+                                        <em class="tx">39,711원~/월</em>
+                                        <span class="tag"><i class="icon-hot"><span class="blind">HOT</span></i></span>
+                                    </li>
+                                    <li>
+                                        <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
+                                        <strong class="ti">갤럭시 노트9갤럭시 노트9</strong>
+                                        <em class="tx">40,415원~/월</em>
+                                        <span class="tag"><i class="icon-expansion"><span class="blind">공시금 확대</span></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //다이렉트샵 -->
+
+                        <!-- 공시지원금 변동 알림 -->
+                        <div class="section-box nogaps">
+                            <button class="main-alarm-box">
+                                <i class="icon-alarm-red"><span class="blind">alarm</span></i>
+                                공시지원금 변동 알림을 받아 보세요
+                            </button>
+                        </div>
+                        <!-- //공시지원금 변동 알림 -->
+
+                        <!-- 모바일 요금제 -->
+                        <div class="section-box nogaps-btm">
+                            <div class="main-direct-box">
+                                <div class="stit c-point"><button class="bt">모바일 요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <strong class="ti">인기 있는 SK텔레콤의 대표요금제</strong>
+                                <ul class="charge-product">
+                                    <li>
+                                        <button class="bt-cont-box">
+                                            <em class="ranking">1</em>
+                                            <strong class="ti">T플랜 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
+                                            <span class="tx">DATA 맘껏 쓰고 나눠쓰는 T플랜</span>
                                         </button>
                                     </li>
                                     <li>
-                                        <button>
-                                            <img src="<%= CDN %>/img/dummy/dmy-th3-1.png" alt="O CAMPUS 지금 바로 신청해! 오직 대학생을 위한 혜택! 대용량 클라우드 & 캠퍼스 데이터">
+                                        <button class="bt-cont-box">
+                                            <em class="ranking">2</em>
+                                            <strong class="ti">T시그니처 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
+                                            <span class="tx">음성 · 데이터 무제한은 기본!<br>통신 · 단말 · 안심 영역의 프리미엄 혜택까지</span>
                                         </button>
                                     </li>
                                     <li>
-                                        <button>
-                                            <img src="<%= CDN %>/img/dummy/dmy-th3-1.png" alt="O CAMPUS 지금 바로 신청해! 오직 대학생을 위한 혜택! 대용량 클라우드 & 캠퍼스 데이터">
+                                        <button class="bt-cont-box">
+                                            <em class="ranking">3</em>
+                                            <strong class="ti">band 데이터 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
+                                            <span class="tx">음성 무제한 혜택을 기본 제공하는<br>스마트폰 대표 요금제!</span>
                                         </button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <!--// .widget -->
-                </div>
-            </div>
-            <!--// .cont-box -->
+                        <!-- //모바일 요금제 -->
 
-            <!-- .cont-box 주요메뉴 바로가기 -->
-            <% if (!(svcInfo && svcInfo.expsSvcCnt !== '0')) { %>
-            <div class="cont-box">
-                <div class="main-quick-menu">
-                    <ul>
-                        <li><button class="plan"><span class="ico"></span>요금제</button></li>
-                        <li><button class="optional"><span class="ico"></span>부가서비스</button></li>
-                        <li><button class="subscr"><span class="ico"></span>가입정보</button></li>
-                        <li><button class="data"><span class="ico"></span>데이터</button></li>
-                        <li><button class="line"><span class="ico"></span>집전화/<br/>인터넷/TV</button></li>
-                        <li><button class="roaming"><span class="ico"></span>T로밍</button></li>
-                        <li><button class="charge"><span class="ico"></span>요금</button></li>
-                        <li><button class="benefit"><span class="ico"></span>혜택</button></li>
-                    </ul>
-                </div>
-            </div>
-            <% } %>
-            <!--// .cont-box -->
+                        <!-- 인터넷 · 집전화 · IPTV -->
+                        <div class="section-box nogaps">
+                            <div class="main-charge-box combination main-banner-img">
+                                <button>
+                                    <img src="<%= CDN %>/img/main/img-main-banner03.png" alt="인터넷 · 전화 · IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" />
+                                </button>
+                                <!-- <div class="stit"><button class="bt">인터넷 · 전화 · IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></button></div>
+                                <div class="main-box-cont bg-type">
+                                    <strong class="ti">온가족 플랜</strong>
+                                    <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인</span>
+                                    <button class="bt">자세히 보기</button>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- //인터넷 · 집전화 · IPTV -->
 
-            <!-- .cont-box 할인혜택 -->
-            <% if(!(svcType.login && svcType.mobile)) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz">
-                <div class="shadow-box mt30">
-                    <div class="cont-card-ti fixed">
-                        <button>
-                            <span class="card-ti-txt">할인혜택</span>
-                            <span class="ico"></span>
-                        </button>
-                    </div>
-                    <div class="main-slide-banner dot-btm">
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider">
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-2.png" alt="SKT의 가족에게 드리는 특별한 혜택 첫 번째! 결합 할인. 할인 혜택 보기">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-2.png" alt="SKT의 가족에게 드리는 특별한 혜택 첫 번째! 결합 할인. 할인 혜택 보기">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-2.png" alt="SKT의 가족에게 드리는 특별한 혜택 첫 번째! 결합 할인. 할인 혜택 보기">
-                                            </button>
-                                        </li>
-                                    </ul>
+                        <!-- 모바일 부가상품 -->
+                        <div class="section-box nogaps-btm">
+                            <div class="main-direct-box">
+                                <div class="stit c-point"><button class="bt">모바일 부가상품 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <strong class="ti">유용한 부가상품</strong>
+                                <ul class="charge-product type-list">
+                                    <li>
+                                        <button class="bt-cont-box">
+                                            <strong class="ti">LTE 안심옵션</strong>
+                                            <em class="sum">월 <span>8,800</span>원</em>
+                                            <span class="tag">데이터, 혜택 · 편의</span>
+                                            <span class="tx">기본제공 데이터를 모두 사용한 후에도 부담 없이 웹서핑 · SNS · 이메일 등을 이용 할 수 있는 부가서비스</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="bt-cont-box">
+                                            <strong class="ti">oksusu & 안심 팩 oksusu & 안심 팩 oksusu & 안심 팩 oksusu & 안심 팩</strong>
+                                            <em class="sum">월 <span>8,800</span>원</em>
+                                            <span class="tag">콘텐츠 이용</span>
+                                            <span class="tx">실시간 TV 및 최신 영화 등의 동영상 콘텐츠(oksusu)를 마음껏 누릴 수 있습니다</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="bt-cont-box">
+                                            <strong class="ti ti-type">분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기</strong>
+                                            <em class="sum">무료</em>
+                                            <span class="tag">혜택 · 편의</span>
+                                            <span class="tx">스마트폰을 분실했을 때  관리할 수 있는 통합서비스(기기잠금, 개인정보 삭제, 위치조회서비스 등 제공)</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //모바일 부가상품 -->
+
+                        <!-- 할인혜택 -->
+                        <div class="section-box nogaps">
+                            <div class="main-charge-box discount main-banner-img">
+                                <button>
+                                    <img src="<%= CDN %>/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
+                                </button>
+                                <!-- <div class="stit"><button class="bt">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></button></div>
+                                <div class="main-box-cont">
+                                    <strong class="ti">선택약정할인</strong>
+                                    <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
+                                    <button class="bt">자세히 보기</button>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- //할인혜택 -->
+
+                        <!-- T로밍 -->
+                        <div class="section-box nogaps">
+                            <div class="main-charge-box roaming section-swiper-box main-banner-img bul">
+                                <!-- <div class="stit c-point"><button class="bt">T로밍 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div> -->
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <!-- <ul class="slider">
+                                                <li>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">아시아 여행을 계획하셨나요?</strong>
+                                                        <span class="tx">아시아 주요 27개국에서 유용한 상품</span>
+                                                        <button class="bt">로밍상품 보기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">아시아 여행을 계획하셨나요?</strong>
+                                                        <span class="tx">아시아 주요 27개국에서 유용한 상품</span>
+                                                        <button class="bt">로밍상품 보기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">아시아 여행을 계획하셨나요?</strong>
+                                                        <span class="tx">아시아 주요 27개국에서 유용한 상품</span>
+                                                        <button class="bt">로밍상품 보기</button>
+                                                    </div>
+                                                </li>
+                                            </ul> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                        </div>
+                        <!-- //T로밍 -->
+
+                        <!-- 프로모션 배너 -->
+                        <div class="accessories-box main-banner-img">
+                            <button class="bt"><img src="<%= CDN %>/img/main/img_accessories.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
+                        </div>
+                        <!-- //프로모션 배너 -->
+
+                        <!-- 프로모션 배너 -->
+                        <div class="accessories-box main-banner-img">
+                            <button class="bt"><img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
+                        </div>
+                        <!-- //프로모션 배너 -->
+
+                        <!-- T앱 -->
+                        <div class="section-box">
+                            <div class="main-tapp-box">
+                                <div class="stit c-point"><button class="bt">T앱 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <div class="ti">함께하면 더욱 스마트한 앱서비스</div>
+                                <ul class="app-list">
+                                    <li class="t-membership"><button class="bt">T멤버십</button></li>
+                                    <li class="t-map"><button class="bt">T맵</button></li>
+                                    <li class="t-call"><button class="bt">T전화</button></li>
+                                    <li class="t-pay"><button class="bt">T페이</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //T앱 -->
+
+                        <!-- 이럴 땐 이렇게 하세요 -->
+                        <div class="section-box nogaps">
+                            <div class="main-tip-box box-type section-swiper-box">
+                                <div class="stit c-point">이럴 땐 이렇게 하세요</div>
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                                <div class="btn-area">
+                                    <button class="bt">매장 찾기</button>
+                                    <button class="bt">A/S센터 찾기</button>
                                 </div>
                             </div>
                         </div>
-                        <!--// .widget -->
-                    </div>
-                </div>
-            </div>
-            <% } %>
-            <!--// .cont-box -->
+                        <!-- //이럴 땐 이렇게 하세요 -->
 
-            <!-- .cont-box 스마트 카드 01 -->
-            <% if (svcType.login && svcType.mobile) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-0 fe-smart-<%= smartCard[0].no %>" data-smartCard="<%= smartCard[0].no %>">
-                <div class="shadow-box mt30 empty">
-                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                        <button>
-                            <span class="card-ti-txt"><%= smartCard[0].title %></span>
-                            <span class="ico fe-smart-link"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-            <!--// .cont-box -->
-
-            <!-- .cont-box -->
-            <div class="cont-box bgnone noborder nogaps-hoz">
-                <div class="shadow-box mt30">
-                    <div class="main-slide-banner">
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider">
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-3.png" alt="세상이 요구하는 1순위? 오직 내가! 0 순위!">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-3.png" alt="세상이 요구하는 1순위? 오직 내가! 0 순위!">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-3.png" alt="세상이 요구하는 1순위? 오직 내가! 0 순위!">
-                                            </button>
-                                        </li>
-                                    </ul>
+                        <!-- 공지사항 -->
+                        <div class="notice-slide-type">
+                            <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider2">
+                                    <div class="slider-box">
+                                        <ul class="slider">
+                                            <li>
+                                                <button>
+                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                    <span class="ico"></span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
+                                                    <span class="ico"></span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+                            <!--// .widget -->
                         </div>
-                        <!--// .widget -->
-                    </div>
-                </div>
-            </div>
-            <!--// .cont-box -->
+                        <!-- //공지사항 -->
 
-            <% if(!(svcType.login && svcType.mobile)) { %>
-            <!-- .cont-box -->
-            <div class="cont-box bgnone noborder nogaps-hoz">
-                <div class="shadow-box mt30">
-                    <div class="cont-card-ti">
-                        <a href="/customer/faq/doitlikethis">
-                            <span class="card-ti-txt">이럴땐 이렇게 하세요</span>
-                            <span class="ico"></span>
-                        </a>
                     </div>
-                    <div class="main-faq-box">
-                        <ul>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-faq-data.png" alt="데이터 아이콘">
-                                    데이터가 부족할때
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-faq-miss.png" alt="분실 아이콘">
-                                    휴대폰을 분실했을 때
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-faq-child.png" alt="아이 아이콘">
-                                    우리 아이 스마트폰 관리
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- // .home-slider-store -->
                 </div>
+                <!-- // .home-slider-belt -->
             </div>
-            <!--// .cont-box -->
-            <!-- .cont-box -->
-            <div class="cont-box bgnone noborder nogaps-hoz">
-                <div class="shadow-box mt30">
-                    <div class="cont-card-ti fixed">
-                        <button>
-                            <span class="card-ti-txt">이벤트</span>
-                            <span class="ico"></span>
-                        </button>
-                    </div>
-                    <div class="main-slide-banner dot-btm">
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider">
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-4.png" alt="Galaxy Note9와 T플랜으로 가족을 9하라. 이벤트 보기">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-4.png" alt="Galaxy Note9와 T플랜으로 가족을 9하라. 이벤트 보기">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button>
-                                                <img src="<%= CDN %>/img/dummy/dmy-th3-4.png" alt="Galaxy Note9와 T플랜으로 가족을 9하라. 이벤트 보기">
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--// .widget -->
-                    </div>
-                </div>
-            </div>
-            <!--// .cont-box -->
-            <!-- 오퍼링 카드 -->
-            <!-- .cont-box -->
-            <div class="cont-box bgnone noborder nogaps-hoz">
-                <div class="shadow-box mt30">
-                    <div class="cont-card-ti">
-                        <button>
-                            <span class="card-ti-txt">T Apps</span>
-                            <span class="ico"></span>
-                        </button>
-                    </div>
-                    <div class="main-tapps-box">
-                        <ul>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-tapps-smart.png" alt="SMART HOME 앱 아이콘">
-                                    SMART HOME
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-tapps-tmap.png" alt="T MAP 앱 아이콘">
-                                    T MAP
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-tapps-tdial.png" alt="T 전화 앱 아이콘">
-                                    T 전화
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="<%= CDN %>/img/ico/ico-main-tapps-cloud.png" alt="CLOUD BERRY 앱 아이콘">
-                                    CLOUD BERRY
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-            <!--// .cont-box -->
-
-            <!-- .cont-box 스마트 카드 02 -->
-            <% if (svcType.login && svcType.mobile) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-1 fe-smart-<%= smartCard[1].no %>" data-smartCard="<%= smartCard[1].no %>">
-                <div class="shadow-box mt30 empty">
-                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                        <button>
-                            <span class="card-ti-txt"><%= smartCard[1].title %></span>
-                            <span class="ico fe-smart-link"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--// .cont-box -->
-
-            <!-- .cont-box 스마트 카드 03 -->
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-2 fe-smart-<%= smartCard[2].no %>" data-smartCard="<%= smartCard[2].no %>">
-                <div class="shadow-box mt30 empty">
-                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                        <button>
-                            <span class="card-ti-txt"><%= smartCard[2].title %></span>
-                            <span class="ico fe-smart-link"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--// .cont-box -->
-
-            <!-- 오퍼링카드 -->
-
-            <!-- .cont-box 스마트 카드 -->
-            <% smartCard.map((card, index) => { %>
-            <% if (index > 2) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-<%= index %> fe-smart-<%= smartCard[index].no %>" data-smartCard="<%= smartCard[index].no %>">
-                <div class="shadow-box mt30 empty">
-                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                        <button>
-                            <span class="card-ti-txt"><%= smartCard[index].title %></span>
-                            <span class="ico fe-smart-link"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-            <% }) %>
-            <% } %>
-            <!--// .cont-box -->
-
+            <!-- // .home-slider -->
         </div>
     </div>
     <!--// #contents -->
-    <!-- #footer -->
-    <div id="footer" class="footer-wrap">
-        <div class="footer-info">
-            <!-- .cont-box -->
-            <div class="cont-box nogaps noborder mt30">
-                <div class="notice-slide-box">
-                    <button class="notice-slide-ti"><span class="ico"></span>공지사항<span class="blind">바로가기</span></button>
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box slider2">
-                            <div class="slider-box">
-                                <ul class="slider">
-                                    <li>
-                                        <button>
-                                            <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
-                                            <span class="ico"></span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
-                                            <span class="ico"></span>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// .widget -->
-                </div>
-            </div>
-            <!--// .cont-box -->
-
-            <!-- .cont-box -->
-            <div class="cont-box bgnone noborder">
-                <ul class="main-link-btn">
-                    <li><button>T월드 매장 찾기</button></li>
-                    <li><button>고객 센터</button></li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-        </div>
-    </div>
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+<%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 </body>
 <% include ../components/javascript.component.html %>
-<% if (svcType.login && svcType.mobile) { %>
-<% include ../components/smart-card/bill.component.html %>
-<% include ../components/smart-card/contents.component.html %>
-<% include ../components/smart-card/gift.component.html %>
-<% include ../components/smart-card/micro-pay.component.html %>
-<%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
-<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>');
