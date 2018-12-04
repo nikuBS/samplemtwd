@@ -12593,7 +12593,8 @@ a.bt-link-tx.underline.small {
       background-size: 100% 100%; }
     .suggest-tag-titlebox .suggest-tag-link .text {
       font-size: 0.875rem;
-      font-weight: 700; }
+      font-weight: 700;
+      color: #000; }
       .suggest-tag-titlebox .suggest-tag-link .text .textnumber {
         display: inline-block;
         margin-left: 0.125rem;
