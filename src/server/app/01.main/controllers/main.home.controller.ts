@@ -13,7 +13,7 @@ import {
   HOME_SEGMENT,
   HOME_SEGMENT_ORDER,
   HOME_SMART_CARD,
-  LINE_NAME,
+  LINE_NAME, MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
   SVC_ATTR_NAME,
@@ -142,6 +142,7 @@ class MainHome extends TwViewController {
     let membershipData = null;
     return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        console.log(resp);
         membershipData = this.parseMembershipData(resp.result);
       }
       return membershipData;
@@ -150,6 +151,7 @@ class MainHome extends TwViewController {
 
   private parseMembershipData(membershipData): any {
     membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
+    membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd];
     return membershipData;
   }
 

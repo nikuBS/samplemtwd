@@ -212,10 +212,10 @@ export const HOME_SEGMENT_ORDER = {
 };
 
 export enum MEMBERSHIP_GROUP {
-  V = 'VIP',
-  G = 'Gold',
-  S = 'Silver',
-  O = '일반'
+  V = 'vip',
+  G = 'gold',
+  S = 'silver',
+  O = 'default'
 }
 
 export enum T_NOTIFY_TYPE {

@@ -38,6 +38,7 @@ Tw.MainHome.prototype = {
 
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
+    this.$barcodeGr = this.$container.find('#fe-membership-gr');
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
@@ -56,16 +57,26 @@ Tw.MainHome.prototype = {
   },
   _onClickBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
+    var mbrGr = this.$barcodeGr.data('mbrgr');
     var usedAmount = Tw.FormatHelper.addComma(this.$elBarcode.data('usedamount'));
     this._popupService.open({
-      hbs: 'TH1_05',
+      hbs: 'HO_01_01_02',
       layer: true,
       data: {
+        mbrGr: mbrGr,
+        mbrGrStr: mbrGr.toUpperCase(),
         cardNum: cardNum,
         usedAmount: usedAmount
       }
-    });
+    }, $.proxy(this._onOpenBarcode, this, cardNum));
   },
+  _onOpenBarcode: function (cardNum, $popupContainer) {
+    var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
+    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
+      extendBarcode.JsBarcode(cardNum);
+    }
+  },
+
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
     console.log('layerType : ', layerType);
