@@ -53,7 +53,9 @@ Tw.SMS_VALIDATION = {
   WAIT_NEXT_TIME: '재전송 제한시간(1분)이 지난 후에 이용해주세요.',
   EXPIRE_NEXT_TIME: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.',
   NOT_MATCH_CODE: '인증번호가 일치하지 않습니다',
-  EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.'
+  EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.',
+  ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
+  SUCCESS: '인증이 완료 되었습니다.'
 };
 
 Tw.POPUP_TITLE = {
