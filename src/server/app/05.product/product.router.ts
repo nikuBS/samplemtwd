@@ -72,6 +72,8 @@ import ProductRoamingJoinRoamingAuto from './controllers/roaming/join/product.ro
 import ProductRoamingSettingRoamingAuto from './controllers/roaming/setting/product.roaming.setting.roaming-auto.controller';
 import ProductRoamingSettingRoamingSetup from './controllers/roaming/setting/product.roaming.setting.roaming-setup.controller';
 import ProductRoamingSettingRoamingBeginSetup from './controllers/roaming/setting/product.roaming.setting.roaming-begin-setup.controller';
+import ProductRoamingLookup from './controllers/roaming/product.roaming.lookup.controller';
+import ProductRoamingJoinConfirmInfo from './controllers/roaming/join/product.roaming.join.confirm-info.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -142,11 +144,13 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/join/roaming-setup', controller: ProductRoamingJoinRoamingSetup });
     this.controllers.push({ url: '/roaming/join/roaming-begin-setup', controller: ProductRoamingJoinRoamingBeginSetup });
     this.controllers.push({ url: '/roaming/join/roaming-auto', controller: ProductRoamingJoinRoamingAuto });
+    this.controllers.push({ url: '/roaming/join/confirm-info', controller: ProductRoamingJoinConfirmInfo });
     this.controllers.push({ url: '/roaming/setting/roaming-setup', controller: ProductRoamingSettingRoamingSetup });
     this.controllers.push({ url: '/roaming/setting/roaming-begin-setup', controller: ProductRoamingSettingRoamingBeginSetup });
     this.controllers.push({ url: '/roaming/setting/roaming-auto', controller: ProductRoamingSettingRoamingAuto });
     this.controllers.push({ url: '/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
+    this.controllers.push({ url: '/roaming/lookup', controller: ProductRoamingLookup });
 
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan-preview', controller: ProductCommonCallplanPreview });

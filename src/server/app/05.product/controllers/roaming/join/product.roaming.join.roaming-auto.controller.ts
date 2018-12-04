@@ -33,12 +33,8 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
             this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId)
         ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
-            console.log('api test prodRedisInfo');
-            console.log(prodRedisInfo);
-            console.log('api test prodApiInfo');
-            console.log(prodApiInfo);
-            //if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
-            if (FormatHelper.isEmpty(prodRedisInfo)) {
+
+            if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
                     title: PRODUCT_TYPE_NM.JOIN
@@ -46,46 +42,14 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
             }
 
 
-            res.render('roaming/join/product.roaming.setting.roaming-auto.html', {
+            res.render('roaming/join/product.roaming.join.roaming-auto.html', {
                 svcInfo : this.loginService.getSvcInfo(),
                 prodRedisInfo : prodRedisInfo.summary,
-                prodApiInfo : null,
+                prodApiInfo : prodApiInfo.result,
                 prodId : prodId,
                 expireDate : ROAMING_AUTO_EXPIRE_CASE[prodId]
             });
         });
-
-        // this.apiService.request(API_CMD.BFF_10_0001, { joinTermCd: '01' }, {}, prodId)
-        //     .subscribe((reqDocInfo) => {
-        //         if (reqDocInfo.code !== API_CODE.CODE_00) {
-        //             return this.error.render(res, {
-        //                 svcInfo: svcInfo,
-        //                 title: PRODUCT_TYPE_NM.JOIN
-        //             });
-        //         }
-        //         Observable.combineLatest(
-        //             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-        //             this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId)
-        //         ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
-        //             console.log('api test prodRedisInfo');
-        //             console.log(prodRedisInfo);
-        //             console.log('api test prodApiInfo');
-        //             console.log(prodApiInfo);
-        //             if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
-        //                 return this.error.render(res, {
-        //                     svcInfo: svcInfo,
-        //                     title: PRODUCT_TYPE_NM.JOIN
-        //                 });
-        //             }
-        //
-        //             res.render('roaming/join/product.roaming.setting.roaming-setup.html', {
-        //                 svcInfo : svcInfo,
-        //                 prodRedisInfo : prodRedisInfo.summary,
-        //                 prodApiInfo : prodApiInfo.result,
-        //                 prodId : prodId
-        //             });
-        //         });
-        //     });
 
 
 

@@ -14,6 +14,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodRedisInfo,prodB
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this._apiService = Tw.Api;
   this._init();
 };
 
@@ -25,7 +26,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     },
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
-      this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
+      this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';
@@ -123,27 +124,9 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
           null,
           'select_date');
     },
-    _doJoin : function(data,apiService,historyService){
-        // apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
-        // done($.proxy(function (res) {
-        //     console.log('success');
-        //     console.log(res);
-        // }, this)).fail($.proxy(function (err) {
-        //     console.log('fail');
-        //     console.log(err);
-        // }, this));
-        if(true){
 
-        }else{
-
-        }
-
-
-    },
-    _confirmInformationSetting : function () {
-
-
-        var userJoinInfo = {
+    _changeInformationSetting : function () {
+        var userSettingInfo = {
             'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
             'svcEndDt' : {},
             'svcStartTm' : {},
@@ -151,35 +134,15 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
             'startEndTerm' : {}
         };
 
-        var data = {
-                        popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
-                        userJoinInfo : userJoinInfo,
-                        prodId : this._prodId,
-                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
-                        processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-                        prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
-                        svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
-                        prodNm : this._prodRedisInfo.prodNm,
-                        prodFee : this._prodRedisInfo.basFeeInfo,
-                        description : this._prodRedisInfo.prodSmryDesc,
-                        autoInfo : this._prodBffInfo,
-                        showStipulation : Object.keys(this._prodBffInfo.stipulationInfo).length>0
-                   };
-
-        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');
-
+        this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},this._prodId).
+        done($.proxy(function (res) {
+            console.log('success!');
+            console.log(res);
+            //TODO success process
+        }, this)).fail($.proxy(function (err) {
+            console.log('fail');
+            console.log(err);
+            //TODO fail process
+        }, this));
     }
-
-    /*
-    * 취소 alert(){
-    * this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
-    * }
-    *
-    *
-    * */
-
-
-
 };

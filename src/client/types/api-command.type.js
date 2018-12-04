@@ -412,6 +412,7 @@ Tw.API_CMD = {
   BFF_10_0059: { path: '/core-product/v1/roaming/modelCode-srch', method: Tw.API_METHOD.GET },
   BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: Tw.API_METHOD.GET },
   BFF_10_0084: { path: '/core-product/v1/roaming/fee-plans/:args0/joins', method: Tw.API_METHOD.POST },
+  BFF_10_0085: { path: '/core-product/v1/roaming/fee-plans/:args0/sets', method: Tw.API_METHOD.PUT },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
