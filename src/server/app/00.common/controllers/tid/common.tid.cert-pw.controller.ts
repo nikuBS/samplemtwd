@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import ParamsHelper from '../../../../utils/params.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import { TID, TID_SVC_TYPE } from '../../../../types/tid.type';
+import { AUTH_CERTIFICATION_METHOD } from '../../../../types/bff.type';
 
 class CommonTidCertPw extends TwViewController {
   constructor() {
@@ -25,7 +26,7 @@ class CommonTidCertPw extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.CERT,
-          redirect_uri: EnvHelper.getEnvironment('DOMAIN') + '/common/tid/route',
+          redirect_uri: 'http://' + this.loginService.getDns() + '/common/cert/complete?target=' + AUTH_CERTIFICATION_METHOD.PASSWORD,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE

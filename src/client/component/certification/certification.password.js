@@ -14,6 +14,8 @@ Tw.CertificationPassword = function () {
   this._command = null;
   this._callback = null;
   this._authKind = null;
+
+  window.onPopupCallbackPassword = $.proxy(this._onPopupCallback, this);
 };
 
 
@@ -30,13 +32,25 @@ Tw.CertificationPassword.prototype = {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(Tw.NTV_CMD.CERT_PW, {}, $.proxy(this._onCertResult, this));
     } else {
-      this._historyService.goLoad('/common/tid/cert-pw');
+      this._openCertBrowser();
+    }
+  },
+  _openCertBrowser: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
+      .done($.proxy(this._successGetDomain, this));
+  },
+  _successGetDomain: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      Tw.CommonHelper.openUrlInApp('http://' + resp.result.domain + '/common/tid/cert-pw', 'status=1,toolbar=1');
+      // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
   },
 
   _onCertResult: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._confirmPasswordCert();
+    } else {
+      Tw.Error(resp.resultCode, '').pop();
     }
   },
   _confirmPasswordCert: function () {
@@ -49,6 +63,9 @@ Tw.CertificationPassword.prototype = {
   },
   _successConfirmPasswordCert: function (resp) {
     this._callback(resp);
+  },
+  _onPopupCallback: function (resp) {
+    this._confirmPasswordCert();
   }
 
 };

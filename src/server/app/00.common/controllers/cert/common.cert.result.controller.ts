@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { AUTH_CERTIFICATION_KIND, NICE_TYPE } from '../../../../types/bff.type';
+import { AUTH_CERTIFICATION_KIND, NICE_TYPE, AUTH_CERTIFICATION_METHOD } from '../../../../types/bff.type';
 
 class CommonCertResult extends TwViewController {
   constructor() {
@@ -43,7 +43,7 @@ class CommonCertResult extends TwViewController {
   private sendResult(req, res, command, params) {
     this.apiService.request(command, params).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        res.redirect('/common/cert/complete');
+        res.redirect('/common/cert/complete?target=' + AUTH_CERTIFICATION_METHOD.IPIN);
       } else {
         // error
       }
