@@ -81,10 +81,10 @@ class MyTJoinWireModifyProduct extends TwViewController {
       });
     });
 
-    thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-      reqQuery: thisMain.reqQuery,
-      svcInfo: svcInfo,
-    });
+    // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+    //   reqQuery: thisMain.reqQuery,
+    //   svcInfo: svcInfo,
+    // });
   }
 
 
