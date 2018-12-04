@@ -17,19 +17,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="h-belt">
-                <div class="h-default">
-                    <div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-                    <div class="h-tit">이벤트 상세</div>
-                    <div class="h-serarch">
-                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%- include('../../../../common/views/components/header.component.html', { title: '이벤트 상세' }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -52,9 +40,7 @@
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        </footer>
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 <% include ../components/javascript.component.html %>

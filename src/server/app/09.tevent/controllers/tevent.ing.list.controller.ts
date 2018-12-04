@@ -18,7 +18,7 @@ class TeventIngList extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     this.apiService.request(API_CMD.BFF_09_0001, {
       svcDvcClCd: 'M',
       page: 0,
@@ -31,7 +31,8 @@ class TeventIngList extends TwViewController {
           content: this.parseData(result.content),
           totalPages: result.totalPages,
           totalElements: result.totalElements,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {
