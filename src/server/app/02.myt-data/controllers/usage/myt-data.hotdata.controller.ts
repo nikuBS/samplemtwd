@@ -15,8 +15,8 @@ import { SKIP_NAME, MYT_DATA_USAGE } from '../../../../types/string.type';
 import { UNIT } from '../../../../types/bff.type';
 
 const VIEW = {
-  HOTDATA: 'usage/myt-data.hotdata.html',
-  USAGE: 'usage/myt-data.usage.html',
+  CIRCLE: 'usage/myt-data.hotdata.html',
+  BAR: 'usage/myt-data.usage.html',
   ERROR: 'usage/myt-data.usage.error.html'
 };
 
@@ -61,43 +61,47 @@ class MyTDataHotdata extends TwViewController {
 
     Observable.combineLatest(reqArr).subscribe(([usageDataResp, extraDataResp]) => {
       if ( usageDataResp.code === API_CODE.CODE_00 ) {
-        // const fomattedData = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
-        let view = VIEW.USAGE;
-        const option = { svcInfo, pageInfo };
+        let view = VIEW.BAR;
+        const option = {
+          svcInfo,
+          pageInfo,
+          ppsInfo: null
+        };
 
-        if ( extraDataResp.code === API_CODE.CODE_00 ) {
-          switch ( svcInfo.svcAttrCd ) {
-            case 'M1' :
-                option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
+        switch ( svcInfo.svcAttrCd ) {
+          case 'M1' :
+              option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
+              if ( extraDataResp && extraDataResp.code === API_CODE.CODE_00 ) {
                 option['balanceAddOns'] = extraDataResp.result;
-                view = VIEW.HOTDATA;
-              // console.log('~~~~~~~M1');
-              break;
-            case 'M2' :
-              // extraDataResp = {
-              //   'code': '00',
-              //   'msg': 'success',
-              //   'result': {
-              //     'prodAmt': '0',
-              //     'remained': '500',
-              //     'obEndDt': '20180615',
-              //     'inbEndDt': '20180625',
-              //     'numEndDt': '20200215',
-              //     'dataYn': 'Y',
-              //     'dataOnlyYn': 'N'
-              //   }
-              // };
+              }
+              view = VIEW.CIRCLE;
+            break;
+          case 'M2' :
+            // extraDataResp = {
+            //   'code': '00',
+            //   'msg': 'success',
+            //   'result': {
+            //     'prodAmt': '0',
+            //     'remained': '500',
+            //     'obEndDt': '20180615',
+            //     'inbEndDt': '20180625',
+            //     'numEndDt': '20200215',
+            //     'dataYn': 'Y',
+            //     'dataOnlyYn': 'N'
+            //   }
+            // };
+              option['usageData'] = this.parseUsageData(usageDataResp.result);
+              if ( extraDataResp && extraDataResp.code === API_CODE.CODE_00 ) {
                 const extraData = extraDataResp.result;
                 extraData.showObEndDt = DateHelper.getShortDate(extraData.obEndDt);
                 extraData.showInbEndDt = DateHelper.getShortDate(extraData.inbEndDt);
                 extraData.showNumEndDt = DateHelper.getShortDate(extraData.numEndDt);
-                option['usageData'] = this.parseUsageData(usageDataResp.result);
                 option['ppsInfo'] = extraData;
-              break;
-            default:
-              option['usageData'] = this.parseUsageData(usageDataResp.result);
-              break;
-          }
+              }
+            break;
+          default:
+            option['usageData'] = this.parseUsageData(usageDataResp.result);
+            break;
         }
         res.render(view, option);
       } else {
@@ -108,6 +112,7 @@ class MyTDataHotdata extends TwViewController {
 
   public parseUsageData(usageData: any): any {
     const kinds = ['data', 'voice', 'sms', 'etc'];
+    this.setTotalRemained(usageData);
     usageData.data = usageData.gnrlData || [];
 
     kinds.map((kind) => {
@@ -131,21 +136,7 @@ class MyTDataHotdata extends TwViewController {
 
     if (gnrlData) {
       // 총데이터 잔여량 표시
-      let totalRemainUnLimited = false;
-      gnrlData.map((_data) => {
-        if (MYT_DATA_USAGE.UNLIMIT_CODE.indexOf(_data.unlimit) !== -1) {
-          totalRemainUnLimited = true;
-        }
-      });
-      if (totalRemainUnLimited) {
-        usageData.totalRemainUnLimited = true;
-        usageData.totalRemained = SKIP_NAME.UNLIMIT;
-      } else {
-        const totalRemained = gnrlData.reduce((_memo, _data) => {
-          return _memo + parseInt(_data.remained, 10);
-        }, 0);
-        usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT['140']);
-      }
+      this.setTotalRemained(usageData);
 
       // 기본제공데이터
       defaultData = gnrlData.find((_data) => {
@@ -189,6 +180,25 @@ class MyTDataHotdata extends TwViewController {
     });
     // console.log('~~~~~~~~~~~~~~~~~~~~~~~~usageData', usageData);
     return usageData;
+  }
+
+  private setTotalRemained(usageData: any) {
+    const gnrlData = usageData.gnrlData || [];
+    let totalRemainUnLimited = false;
+    gnrlData.map((_data) => {
+      if (MYT_DATA_USAGE.UNLIMIT_CODE.indexOf(_data.unlimit) !== -1) {
+        totalRemainUnLimited = true;
+      }
+    });
+    if (totalRemainUnLimited) {
+      usageData.totalRemainUnLimited = true;
+      usageData.totalRemained = SKIP_NAME.UNLIMIT;
+    } else {
+      const totalRemained = gnrlData.reduce((_memo, _data) => {
+        return _memo + parseInt(_data.remained, 10);
+      }, 0);
+      usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT['140']);
+    }
   }
 
   private reqBalances(): Observable<any> {

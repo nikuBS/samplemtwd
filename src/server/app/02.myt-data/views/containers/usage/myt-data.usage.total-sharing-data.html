@@ -15,86 +15,95 @@
 </div>
 <div id="fe-myt-data-usage-total-sharing-data" class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '통합공유 데이터', svcInfo: svcInfo, option: { line: true } }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '통합공유 데이터' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+
+
+            <hr class="cont-sp type1" aria-hidden="true" />
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
-                <div class="data-result">
-                    <p class="tit">총 공유량</p>
-                    <p class="data">
-                        <em><%= defaultData.sharedData.showUsed.data %></em>
-                        <span><%= defaultData.sharedData.showUsed.unit %></span>
-                    </p>
+                <div class="cont-box pb0 pl0 pr0">
+                    <div class="ti-caption-type01 pb20">
+                        <h2 class="tit">총 공유량</h2>
+                        <p class="num">
+                            <em><%= defaultData.sharedData.showUsed.data %><%= defaultData.sharedData.showUsed.unit %></em>
+                            사용
+                        </p>
+                    </div>
                 </div>
-
-                <ul class="link-long-list type2">
+                <ul class="full-link-list type1">
                     <li class="fe-tfamily-sharing" style="display: none;">
-                        <div class="link-long">
-                            <button>T가족공유 데이터
-                                <span class="tx-sub">
-                                    <span class="data-txt">
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">T가족공유데이터</span>
+                                    <span class="text fe-data-txt">
                                     </span>
-                                <span class="ico"></span></span>
-                            </button>
-                        </div>
+                                </span>
+                        </button>
                     </li>
                     <li class="fe-data-gift">
-                        <div class="link-long">
-                            <button>T끼리 선물하기
-                                <span class="tx-sub">
-                                    <span class="data-txt">
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">T끼리 데이터 선물하기</span>
+                                    <span class="text fe-data-txt">
                                     </span>
-                                    <span class="ico"></span>
                                 </span>
-                            </button>
-                        </div>
+                        </button>
                     </li>
                     <li class="fe-data-sharing">
-                        <div class="link-long">
-                            <button>데이터 함께쓰기
-                                <span class="tx-sub">
-                                    <span class="data-txt">
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">데이터 함께쓰기</span>
+                                    <span class="text fe-data-txt">
                                         <% if (balanceAddOns.dataSharing === 'N') { %>
                                             가입하기
-                                        <% }%>
-                                        <!--총 12.00GB 사용-->
+                                        <% } %>
                                     </span>
-                                <span class="ico"></span></span>
-                            </button>
-                        </div>
+                                </span>
+                        </button>
                     </li>
-                    <!--<li>-->
-                        <!--<div class="non-btn-cont">-->
-                            <!--<span class="tit">테더링</span>-->
-                            <!--<span class="txt">확인불가</span>-->
-                        <!--</div>-->
-                    <!--</li>-->
                 </ul>
             </div>
             <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
 
-            <div class="cont-box bgnone noborder">
-                <dl class="notice-explanation">
-                    <dt>통합공유 데이터란?</dt>
-                    <dd>고객님의 요금제
-                        <strong class="vbl"><%= defaultData.prodNm %></strong>
-                        기본제공 데이터<strong class="vbl"><%= defaultData.showTotal.data %> <%= defaultData.showTotal.unit %></strong>중
-                        <strong class="vbl"><%= defaultData.sharedData.showTotal.data %> <%= defaultData.sharedData.showTotal.unit %></strong>
-                        를 위의 방법으로 SKT 고객과 공유할 수 있습니다.</dd>
-                </dl>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="ti-caption-type01 type1">
+                    <h3 class="tit">통합공유 데이터란?</h3>
+                </div>
+                <% if (defaultData) { %>
+                <p class="total-share-data">
+                    고객님의 요금제는 <strong><%= defaultData.prodNm %></strong>이며,
+                    기본제공데이터
+                    <strong>
+                    <% if (defaultData.isUnlimited) { %>
+                        무제한
+                    <% } else { %>
+                        <% if (defaultData.showTotal) { %>
+                            <%= defaultData.showTotal.data %> <%= defaultData.showTotal.unit %>
+                        <% } %>
+                    <% } %>
+                    </strong> 중 <br>
+                    <strong>
+                        <% if (defaultData.sharedData && defaultData.sharedData.showTotal) { %>
+                            <%= defaultData.sharedData.showTotal.data %> <%= defaultData.sharedData.showTotal.unit %>
+                        <% } %>
+                    </strong>
+                    를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.
+                </p>
+                <% } %>
             </div>
+            <!--// .cont-box -->
 
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 <%- include('../../components/usage/myt-data.usage.data-share.html'); %>
 
