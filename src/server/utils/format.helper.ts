@@ -281,6 +281,11 @@ class FormatHelper {
 
     return regPhone.test(sNumber);
   }
+
+  static isNumber (number): boolean {
+    const regNumber = /^[0-9]*$/;
+    return regNumber.test(number);
+  }
 }
 
 export default FormatHelper;

@@ -53,7 +53,7 @@ class CommonMemberLine extends TwViewController {
 
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR_NAME[line.svcAttrCd];
-      line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDt);
+      line.showSvcScrbDtm = FormatHelper.isNumber(line.svcScrbDt) ? DateHelper.getShortDateNoDot(line.svcScrbDt) : line.svcScrbDt;
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR_NAME[line.svcAttrCd] : line.nickNm;
     });
   }
