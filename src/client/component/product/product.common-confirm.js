@@ -30,6 +30,7 @@ Tw.ProductCommonConfirm.prototype = {
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnCloseConfirm = this.$container.find('.fe-btn_close_confirm');
     this.$btnComparePlans = this.$container.find('.fe-btn_compare_plans');
+    this.$btnTipView = this.$container.find('.fe-btn_tip_view');
 
     this.$agreeWrap = this.$container.find('.fe-agree_wrap');
     this.$checkboxAgreeAll = this.$container.find('.fe-checkbox_agree_all');
@@ -53,6 +54,7 @@ Tw.ProductCommonConfirm.prototype = {
     this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));
     this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
     this.$btnSelectTerminateCause.on('click', $.proxy(this._openSelectTerminateCause, this));
+    this.$btnTipView.on('click', $.proxy(this._openTipView, this));
 
     this.$checkboxAgreeAll.on('change', $.proxy(this._agreeAllToggle, this));
     this.$checkboxAgreeItem.on('change', $.proxy(this._agreeItemToggle, this));
@@ -80,6 +82,29 @@ Tw.ProductCommonConfirm.prototype = {
     return $.extend(data, {
       isNoticeList: data.isMobilePlan || data.noticeList && data.noticeList.length > 0
     });
+  },
+
+  _openTipView: function(e) {
+    var $btn = $(e.currentTarget);
+    this._popupService.open({
+      'pop_name': 'type_tx_scroll',
+      'title': $btn.data('title'),
+      'title_type': 'sub',
+      'cont_align':'tl',
+      'contents': $btn.parent().find('.fe-tip_view_html').html(),
+      'bt_b': [{
+        style_class:'pos-left fe-btn_close',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    }, $.proxy(this._bindTipView, this));
+  },
+
+  _bindTipView: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_close', $.proxy(this._closeTipView, this));
+  },
+
+  _closeTipView: function() {
+    this._popupService.close();
   },
 
   _openPop: function() {
