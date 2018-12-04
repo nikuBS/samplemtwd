@@ -33,7 +33,6 @@ class MyTFareInfoOverpayRefund extends TwViewController {
 
     if (query.current === 'overpay-refund') {
       this.apiService.request(API_CMD.BFF_07_0030, {}).subscribe((resData) => {
-        
         if (resData.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             code: resData.code,
