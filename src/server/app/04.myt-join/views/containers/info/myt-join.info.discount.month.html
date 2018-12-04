@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '월별 상세 할인 내역', svcInfo: svcInfo }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '월별 상세 할인 내역' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="fe-myt-join-info-discount-month" class="container-wrap">
@@ -87,10 +87,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
