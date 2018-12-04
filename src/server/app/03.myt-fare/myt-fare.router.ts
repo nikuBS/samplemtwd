@@ -10,7 +10,6 @@ import MyTFareBillGuideCallGift from './controllers/billguide/myt-fare.bill.guid
 import MyTFareBillGuideRoaming from './controllers/billguide/myt-fare.bill.guide.roaming.controllers';
 import MyTFareBillGuideDonation from './controllers/billguide/myt-fare.bill.guide.donation.controllers';
 import MyTFareSubMainNonBill from './controllers/submain/myt-fare.submain.non-paymt';
-import MyTFareHistory from './controllers/history/myt-fare.history.controller';
 import MyTFareBillSmallHistory from './controllers/billsmall/myt-fare.bill.small.history.controller';
 import MyTFareBillSmallHistoryDetail from './controllers/billsmall/myt-fare.bill.small.history.detail.controller';
 import MyTFareBillSmallMonthly from './controllers/billsmall/myt-fare.bill.small.monthly.controller';

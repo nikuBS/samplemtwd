@@ -25,12 +25,12 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resp) => {
       // console.log('\x1b[36m%s\x1b[0m', '------log block list code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
-        /*return this.error.render(res, {
+        return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
           svcInfo: svcInfo
           //  ,pageInfo: pageInfo
-        });*/
+        });
       }
       // const mockData = bill_guide_BFF_05_0093;
       const data: Result | any = resp.result; // || mockData.result;

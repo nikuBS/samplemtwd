@@ -38,6 +38,7 @@ Tw.MyTFareInfoHistory.prototype = {
     var totalDataCounter = this.data.listData.mergedListData.length;
     this.renderListData = {};
 
+    // 리스트
     if (!totalDataCounter) {
       initedListTemplate = this.$template.$emptyList();
     } 
@@ -53,24 +54,12 @@ Tw.MyTFareInfoHistory.prototype = {
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
       this.renderListData.records = this.renderableListData.reduce($.proxy(function(prev, cur) {
         prev.push({items: [cur], date:cur.listDt});
-        /*if (prev.length) {
-          if (prev.slice(-1)[0].date === cur.listDt) {
-            prev.slice(-1)[0].items.push(cur);
-          } else {
-            prev.push({items: [cur], date:cur.listDt});
-          }
-        } else {
-          prev.push({items: [cur], date:cur.listDt});
-        }*/
-
         localStorage.removeItem('listLastIndex'); // 예약취소시 사용되는 로컬스토리지
-
         return prev;
       }, this), []);
 
       initedListTemplate = this.$template.$listWrapper(this.renderListData);
     }
-
     this.$domListWrapper.append(initedListTemplate);
     this._afterList();
     
@@ -102,12 +91,12 @@ Tw.MyTFareInfoHistory.prototype = {
   _bindEvent: function () {
     // 분류 선택 버튼 (셀렉트 버튼 노출)
     this.$actionSheetTrigger.on('click', $.proxy(this._typeActionSheetOpen, this));
-    // 과납내역 환불받기 
-    this.$addRefundAccountTrigger.on('click', $.proxy(this._openAddRefundAccount, this));
     // 자동납부 통합인출 해지 버튼
     this.$openAutoPaymentLayerTrigger.on('click', $.proxy(this._openAutoPaymentLayer, this));
     // 환불 처리 내역
     this.$moveRefundListTrigger.on('click', $.proxy(this._moveRefundList, this));
+    // 과납내역 환불받기 
+    this.$addRefundAccountTrigger.on('click', $.proxy(this._openAddRefundAccount, this));
     // - TIP버튼의 클릭이동에 대한 정의 추가 필요
   },
 
@@ -128,7 +117,10 @@ Tw.MyTFareInfoHistory.prototype = {
   // 상세보기 이동
   _listViewDetailHandler: function(e) {
     // 링크가 없다면 return ;
-    if(!$(e.currentTarget).data('listId')) return ;
+    if(!$(e.currentTarget).data('listId') &&
+        $(e.currentTarget).data('listId') !== 0 && 
+        $(e.currentTarget).data('listId') !== "0"
+      ) return ;
 
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     detailData.isPersonalBiz = this.data.isPersonalBiz;
@@ -308,13 +300,18 @@ Tw.MyTFareInfoHistory.prototype = {
 
   _successRegisterAccount: function(res) {
     if(res.code === '00') {
-      this._popupService.openAlert(Tw.POPUP_CONTENTS.REFUND_ACCOUNT_SUCCESS, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
-        this._popupService.close();
-      }, this));
+      this._popupService.openAlert(Tw.POPUP_CONTENTS.REFUND_ACCOUNT_SUCCESS, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._refreshOverPay, this));
     } else {
       this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, null);
     }
   },
+
+  // 환불 계좌 신청 완료 후 갱신
+  _refreshOverPay: function() {
+    this._popupService.close();
+    this._historyService.reload();
+  },
+
 
   _accountInputHandler: function (e) {
     this.isBankAccountNumberSeted = ($(e.currentTarget).val().length > 0);
