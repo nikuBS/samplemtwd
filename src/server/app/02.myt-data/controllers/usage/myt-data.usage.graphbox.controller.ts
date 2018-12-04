@@ -21,7 +21,7 @@ class MyTUsageGraphbox {
       // TODO 삭제예정
       data.showUsed = this.convFormat(data.used, data.unit);
       data.showRemained = this.convFormat(data.remained, data.unit);
-      data.remainedRatio = (data.remained / data.total * 100 ) || 0;
+      data.remainedRatio = Math.round(data.remained / data.total * 100 ) || 0;
     }
     if ( !data.isUsedUnlimited ) {
       data.showUseds = this.convFormatWithUnit(data.used, data.unit);
@@ -41,7 +41,7 @@ class MyTUsageGraphbox {
     data.isExceed = data.skipId === SKIP_NAME.EXCEED;
     data.isDailyUsed = data.skipId === SKIP_NAME.DAILY;
     data.isRunout = data.remained === '0' || data.isExceed;
-    data.couponDate = data.couponDate ? DateHelper.getShortDateNoDot(data.couponDate) : '';
+    data.couponDate = data.couponDate ? DateHelper.getShortDate(data.couponDate) : '';
     data.barClassName = this.getBarStayle(data.isUnlimited); // TODO 삭제예정
     data.barClass = this.getBarStyle(data.isUnlimited, data.unit);
     data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);

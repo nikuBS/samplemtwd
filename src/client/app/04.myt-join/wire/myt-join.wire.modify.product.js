@@ -15,7 +15,6 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
   this._history.init('hash');
 
   this.productFormData = {
-    reqrNm: this.resData.svcInfo.mbrNm,   // 신청인명
     cntcPrefrMblPhonNum: '',              // 휴대폰번호(0000-0000-0000 형식)
     cntcPrefrPhonNum: '',                 // 일반전화번호(0000-0000-0000 형식)
     prodMediaNm: '',                      // 상품선택
@@ -211,8 +210,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   _productBillSelectFun: function() {
 
     this.productBillSelect = _.filter( this.productBillList, $.proxy(function(item){
-      // return item.id === this.resData.svcInfo.svcAttrCd;
-      return item.id === 'S3';
+      return item.id === this.resData.svcInfo.svcAttrCd;
+      // return item.id === 'S3';
     }, this) )[0];
 
     Tw.Logger.info('[productBillSelect]', this.productBillSelect);

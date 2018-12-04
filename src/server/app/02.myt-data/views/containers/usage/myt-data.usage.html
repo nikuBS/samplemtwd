@@ -39,7 +39,7 @@
 
                 <% if (balanceAddOns && balanceAddOns.tdataSharing === 'Y') { %>
                 <div id="fe-tdata-share">
-                    <div class="data-type" id="head-tdata-share">
+                    <div class="data-type" id="fe-head-tdata-share">
                         <div class="tit-box">
                             <h4 class="tit">T데이터 셰어링 <span></span></h4>
                             <button aria-haspopup="true" class="info-view-ic">정보보기</button>
@@ -66,7 +66,7 @@
                             </li>
                         </script>
 
-                        <ul class="lineinfo-list" id="list-tdata-share">
+                        <ul class="lineinfo-list" id="fe-list-tdata-share">
                         </ul>
                     </div>
                     <!--// .cont-box -->
@@ -101,7 +101,7 @@
                 <% if (balanceAddOns && balanceAddOns.troamingSharing === 'Y') { %>
                 <div id="fe-troaming-share">
 
-                    <div class="data-type" id="head-troaming-share">
+                    <div class="data-type" id="fe-head-troaming-share">
                         <div class="tit-box">
                             <h4 class="tit">T로밍 함께 쓰기 잔여량</h4>
                         </div>
@@ -109,7 +109,7 @@
                     </div>
 
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps-hoz" id="cont-troaming-share">
+                    <div class="cont-box nogaps-hoz" id="fe-cont-troaming-share">
                         <ul class="graphlist-wrap">
                             <li class="graphbox-li">
                                 <h5 class="graphbox-title">T로밍 함께쓰기 60GB</h5>
@@ -126,7 +126,7 @@
                                 <div class="bar-chart-hoz">
                                     <span class="data-bar red" style="width:0%"></span>
                                 </div>
-                                <div class="chargedate-box str"><span>0일0시간</span> 남음</div>
+                                <div class="fe-chargedate-box str"><span>0일0시간</span> 남음</div>
                             </li>
                         </ul>
 
@@ -142,7 +142,7 @@
                                 </div>
                             </li>
                         </script>
-                        <ul class="lineinfo-list" id="list-troaming-share">
+                        <ul class="lineinfo-list" id="fe-list-troaming-share">
                         </ul>
                     </div>
                     <!--// .cont-box -->
@@ -156,22 +156,22 @@
                         <h4 class="tit">데이터 한도 요금제 잔여량</h4>
                     </div>
                     <!-- .cont-box -->
-                    <div class="cont-box" id="cont-data-limit">
+                    <div class="cont-box" id="fe-cont-data-limit">
                         <ul class="lineinfo-list2">
                             <li>
                                 <div class="line-name">
                                     <h5 class="tit">기본 데이터 충전</h5>
-                                    <p class="subtit">충전 금액 <span></span>원</p>
+                                    <p class="subtit">충전 금액 <span class="fe-recharge-amt"></span>원</p>
                                 </div>
                                 <div class="remain">
-                                    <p class="num"><span class="str">0</span>원</p>
+                                    <p class="num"><span class="str fe-remain-amt">0</span>원</p>
                                     <p class="txt">남음</p>
                                 </div>
                             </li>
                         </ul>
                         <ul class="bt-slice mt30">
                             <li class="bt-blue1">
-                                <button>충전 가능 금액 확인</button>
+                                <button class="fe-btn-recharge">충전 가능 금액 확인</button>
                             </li>
                         </ul>
                     </div>
@@ -190,13 +190,13 @@
 
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-hoz">
-                        <ul class="lineinfo-list2" id="list-ting">
+                        <ul class="lineinfo-list2" id="fe-list-ting">
                         </ul>
                         <script id="fe-ting-child-item" type="text/x-handlebars-template">
                             <li>
                                 <div class="line-name">
                                     <h5 class="tit">{{ skipLabel }}</h5>
-                                    <p class="subtit">{{ skipName }}</p>
+                                    <p class="subtit">{{ skipNm }}</p>
                                 </div>
                                 <div class="remain">
                                     <p class="num"><span class="str">{{ numComma remained }}</span>원</p>

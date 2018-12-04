@@ -29,7 +29,7 @@ class CustomerDamageInfoContents extends TwViewController {
     }
 
     res.render('damage-info/contents/customer.damage-info.contents.html', Object.assign(renderCommonInfo, {
-      pagetitle: CUSTOMER_DAMAGEINFO_CONTENTS_TITLE[pageNo]
+      pageTitle: CUSTOMER_DAMAGEINFO_CONTENTS_TITLE[pageNo]
     }));
   }
 }
