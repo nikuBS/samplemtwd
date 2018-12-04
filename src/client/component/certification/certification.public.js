@@ -61,8 +61,7 @@ Tw.CertificationPublic.prototype = {
     return result.custName + ',' + result.birthDate;
   },
   _needAccountInfo: function (path) {
-    if ( path === '/' +
-        'bypass/core-bill/v1/bill-pay/settle-pay-bank' ||
+    if ( path === '/bypass/core-bill/v1/bill-pay/settle-pay-bank' ||
       path === '/bypass/core-bill/v1/bill-pay/settle-pay-card' ) {
       return true;
     }
