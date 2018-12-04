@@ -20,8 +20,7 @@
 <div class="wrap step">
     <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', {
-    title: '가입', svcInfo: data.svcInfo, option: { back: 'step' } }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '가입' }); %>
     <!--// #header -->
 
     <!-- .container-wrap -->
@@ -125,9 +124,7 @@
         </div>
     </div>
     <!-- // .container-wrap -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 </body>
