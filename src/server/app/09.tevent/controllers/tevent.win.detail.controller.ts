@@ -15,14 +15,15 @@ class TeventWinDetail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const id = req.url.split('/')[3];
 
     this.apiService.request(API_CMD.BFF_09_0005, {}, {}, id).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('tevent.win.detail.html', {
           result: this.parseData(resp.result),
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {
