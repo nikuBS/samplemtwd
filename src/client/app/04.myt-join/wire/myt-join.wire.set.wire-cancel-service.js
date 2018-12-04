@@ -29,7 +29,8 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
     TerminationDtStr: '',       // 해지 요청일
     hpAndTelTypeStr: 'hp',      // 연락 가능한 연락처 체크 타입
     phoenNmStr: '',             // 연락 가능한 연락처
-    memberPhoneBol: false       // 회원정보 등록된 연락처 체크
+    memberPhoneBol: false,      // 회원정보 등록된 연락처 체크
+    dcRefdSearch:false          // 할인반환금 조회 여부
   };
 
   // 회원정보 등록된 연락처
@@ -71,13 +72,15 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   },
   _bindEvent: function () {
-    this.infoLi.on('click', 'input[type=checkbox]', $.proxy(this.$infoLiEvt, this));
+    this.infoLi.on('click', $.proxy(this.$infoLiEvt, this));
     this.productLi.on('click', 'input[type=checkbox]', $.proxy(this.$productLiEvt, this));
     this.hpAndTelType.on('click', 'input:radio[name=radio1]', $.proxy(this.hpAndTelTypeEvt, this));
-    this.$container.on('change', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
+    this.$container.on('input', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.phoneLi.on('click', 'input[type=checkbox]', $.proxy(this.phoneLiEvt, this));
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
+    this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
+
     this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
 
   },
@@ -113,6 +116,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.formData.termPrefrDy = this._noDash( this.dataModel.TerminationDtStr );
     this.formData.visitCntcNum = this.dataModel.phoenNmStr;
 
+    if( !this.dataModel.dcRefdSearch ){
+      // 할인 반환금을 조회해 주세요.
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V54);
+      return;
+    }
+
     Tw.Logger.info('[dataModel]', this.dataModel);
     Tw.Logger.info('[formData]', this.formData);
 
@@ -121,11 +130,34 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   },
 
-  $infoLiEvt: function(event) {
-    this._infoConfirm(event);
+  $infoLiEvt: function() {
+    var tempBol = this.infoLi.find('input[type=checkbox]').is(':checked'); // 체크 상태 여부
 
-    this._formValidateionChk();
-    Tw.Logger.info('[dataModel]', this.dataModel);
+    if(!tempBol){
+      this._popupService.open(
+        { hbs: 'MS_04_08_L01' },
+        $.proxy(function ($root) {
+          $root.on('click', '.bt-red1', $.proxy(function(){
+            this._popupService.close();
+            this.infoLi.attr('aria-checked', true);
+            this.infoLi.addClass('checked');
+            this.infoLi.find('input[type=checkbox]').prop('checked', true);
+            this.dataModel.infoConfirmBol = true;
+            this._formValidateionChk();
+          }, this));
+          Tw.Logger.info('[dataModel]', this.dataModel);
+        }, this),
+        null,
+        'cancel-info'
+      );
+
+    } else {
+      this.dataModel.infoConfirmBol = false;
+      this.infoLi.attr('aria-checked', false);
+      this.infoLi.removeClass('checked');
+      this.infoLi.find('input[type=checkbox]').attr('checked', false);
+    }
+
   },
   $productLiEvt: function(event) {
     this.dataModel.productList =  this._productChkConfirm(event); // 선택한 항목을 배열에 저장
@@ -144,16 +176,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     Tw.Logger.info('[해지 요청일]', tempDt, startDt, endDt);
 
     //유효성 체크
-    if ( this._dateChkBetween(tempDt, startDt, endDt) ) {
-      Tw.Logger.info('[범위에 포함]');
-
-      this.select_Termination_input.val( tempDt );
-      this.dataModel.TerminationDtStr = tempDt;
-
-    } else {
-      Tw.Logger.info('[범위에 포함 안됨!!]', this.select_Termination_input);
-      this.select_Termination_input.val('');
-    }
+    tempDt = this._dateChkBetween(tempDt, startDt, endDt);
+    this.select_Termination_input.val( tempDt );
+    this.dataModel.TerminationDtStr = tempDt;
 
     this._formValidateionChk();
     Tw.Logger.info('[dataModel]', this.dataModel);
@@ -183,9 +208,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       Tw.Logger.info('[휴대폰 타입]');
 
       if ( Tw.FormatHelper.isEmpty( this.memberPhoneObj.hp ) ) { // 값이 없을 경우
-        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
           $.proxy(function(){
-            // this._goLoad('/myt-join/submain/wire/history');
+            this.uncheckPhoneLi();
           }, this));
       } else { // 값이 있을 경우
         this.dataModel.phoenNmStr = this.memberPhoneObj.hp;
@@ -195,9 +220,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     } else if ( this.dataModel.hpAndTelTypeStr === 'tel' ) {
       Tw.Logger.info('[일반전화 타입]');
       if ( Tw.FormatHelper.isEmpty( this.memberPhoneObj.tel ) ) { // 값이 없을 경우
-        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A68.TITLE, null,
           $.proxy(function(){
-            // this._goLoad('/myt-join/submain/wire/history');
+            this.uncheckPhoneLi();
           }, this));
       } else { // 값이 있을 경우
         this.dataModel.phoenNmStr = this.memberPhoneObj.tel;
@@ -213,6 +238,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   },
 
+  uncheckPhoneLi: function(){
+    this.phoneLi.attr('aria-checked', false);
+    this.phoneLi.removeClass('checked');
+    this.phoneLi.find('input[type=checkbox]').attr('checked', false);
+  },
+
   /*
   * 연락 가능한 연락 타입 체크
   * 타입체크 값이 변경 될때 마다 초기화 될 항목이 있다.
@@ -226,8 +257,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.dataModel.phoenNmStr = '';
     this.input_hp.val('');
 
-    this.phoneLi.removeClass('checked');
-    this.phoneLi.find('input[type=checkbox]').attr('checked', false);
+    this.uncheckPhoneLi();
     this.dataModel.memberPhoneBol = false;
 
 
@@ -237,7 +267,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   //--------------------------------------------------------------------------[SVC]
   /*
   * 안내사항 확인
-   */
+
   _infoConfirm : function(event) {
     Tw.Logger.info('[안내사항 확인 이벤트]', event);
     var tempBol = this.infoLi.find('input[type=checkbox]').is(':checked'); // 체크 상태 여부
@@ -250,7 +280,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     Tw.Logger.info('[안내사항 확인 이벤트 end]', this.dataModel.infoConfirmBol);
 
-  },
+  }, */
 
 
 
@@ -290,6 +320,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
    */
   _memberPhoneSet: function() {
     // Tw.Logger.info('[회원정보 등록된 연락처 셋팅]');
+    if(!this.resData.allSvc) return;
     var hpList = this.resData.allSvc.M;
     var telList = this.resData.allSvc.S;
 
@@ -331,10 +362,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   * @return boolean
    */
   _dateChkBetween: function($search, $betweenStart, $betweenEnd) {
-    var search = $search;
-    var betweenStart = $betweenStart;
-    var betweenEnd = $betweenEnd;
-    return moment(search).isBetween(betweenStart, betweenEnd, null, '[)');
+    if(moment($search).isBefore($betweenStart)){
+      return $betweenStart;
+    }
+    if(moment($search).isAfter($betweenEnd)){
+      return $betweenEnd;
+    }
+    return $search;
   },
 
   /*
@@ -420,6 +454,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과1] _getWireCancelFeeInit', res);
+      this.dataModel.dcRefdSearch = true;
       this.cancelFeeInfo = res.result;
 
       _.map( this.cancelFeeInfo.penaltyInfo, $.proxy( function( item ){

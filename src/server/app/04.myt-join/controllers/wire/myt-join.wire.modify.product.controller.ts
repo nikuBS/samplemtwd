@@ -81,10 +81,10 @@ class MyTJoinWireModifyProduct extends TwViewController {
       });
     });
 
-    // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-    //   reqQuery: thisMain.reqQuery,
-    //   svcInfo: svcInfo,
-    // });
+    thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+      reqQuery: thisMain.reqQuery,
+      svcInfo: svcInfo,
+    });
   }
 
 
@@ -124,7 +124,7 @@ class MyTJoinWireModifyProduct extends TwViewController {
     return new Promise((resolve, reject) => {
       const ms: number = Math.floor(Math.random() * 1000) + 1;
       setTimeout(function () {
-        //console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
+        // console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
 
         if ( mockData.code === API_CODE.CODE_00 ) {
           resolve(mockData);
