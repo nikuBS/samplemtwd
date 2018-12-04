@@ -7,8 +7,6 @@
 Tw.ProductRoamingSearchBefore = function (rootEl, svcInfo) {
   this.$container = rootEl;
   this.$inputContrySearch = this.$container.find('#fe-rm-input');
-  this.$phoneSelect = this.$container.find('.fe-rm-phone');
-  this.$phoneChange = this.$container.find('.fe-rm-select');
 
   this._svcInfo = svcInfo;
   this._popupService = Tw.Popup;
@@ -16,24 +14,42 @@ Tw.ProductRoamingSearchBefore = function (rootEl, svcInfo) {
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
 
-  this._searchResultView = false;
-
   this._roamingSearchInit();
   this._bindEvents();
 };
 
 Tw.ProductRoamingSearchBefore.prototype = {
   _roamingSearchInit: function () {
-    if(!this._searchResultView) {
-      $('.fe-search-result').hide();
+    this.$userPhoneInfo = this.$container.find('#fe-search-phone');
+
+    this._phoneInfo = {
+        eqpMdlNm : ''
+    };
+
+    this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
+    this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
+
+    if(this._svcInfo !== null){
+        this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._svcInfo }));
+    }else {
+        this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
     }
 
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-search-btn', $.proxy(this._onBtnClicked, this));
-    // this.$container.on('click', '#fe-rm-hp-search', $.proxy(this._onHpSearch, this));
     this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));
     this.$container.on('click', '.fe-change-model', $.proxy(this._onChangeModel, this));
+    this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
+  },
+  _onClickSelectBtn: function () {
+    console.log('this._phoneInfo.eqpMdlNm : ' + this._phoneInfo.eqpMdlNm);
+    if(this._phoneInfo.eqpMdlNm !== '') {
+        this.$userPhoneInfo.empty();
+        this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
+    }else {
+        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+    }
   },
   _onBtnClicked : function () {
     this.keyword = this.$inputContrySearch.val().trim();
@@ -52,7 +68,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
     }
   },
   _onChangeModel: function () {
-
+    this._phoneInfo.eqpMdlNm = '';
+    this.$userPhoneInfo.empty();
+    this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
   },
   _handleSuccessSearchResult : function (resp) {
       var _result = resp.result;
@@ -97,7 +115,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
           var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm;
 
           console.log('resultUrl : ' + resultUrl);
+
           this._history.goLoad(resultUrl);
+          // this.$countryResult.empty();
+          // this.$countryResult.append(this._rmSearchCountryTmpl());
       }
 
   },
@@ -105,14 +126,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
   },
   _onHpSearch : function () {
-    // var mfactCd = 'ALL'; // test code
-    // var modelNm = '';
-    //
-    // if(modelNm !== ''){
-    //
-    // }else {
-    //   this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
-    // }
     this._popupService.open({
             hbs: 'actionsheet_select_a_type',
             layer: true,
@@ -137,23 +150,24 @@ Tw.ProductRoamingSearchBefore.prototype = {
       this._onSearchModel(cdValue);
   },
   _onSearchModel: function (val) {
-    console.log('on search model info : params = ' + val);
-
     this._apiService.request(Tw.API_CMD.BFF_10_0059, { mfactCd:val })
+    // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
         .done($.proxy(this._handleSuccessSearchModelResult, this))
         .fail($.proxy(this._handleFailModelSearch, this));
   },
   _handleSuccessSearchModelResult : function (resp) {
     var _result = resp.result;
+
     var listData = _.map(_result, function (item, idx) {
         return {
             value: _result[idx].eqpMdlNm,
             option: 'hbs-model-name',
-            attr: 'data-model-code="' + _result[idx].eqpMdlCd
+            attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
         };
     });
 
     console.log(JSON.stringify(listData));
+
     var data = [{
         list: null
     }];
@@ -162,13 +176,27 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this._popupService.open({
             hbs: 'actionsheet_select_a_type',
             layer: true,
-            data: [{ list: Tw.ROAMING_MFACTCD_LIST.list }]
+            data: data
       },
         $.proxy(this._selectModelCallback, this),
         $.proxy(this._closeActionPopup, this)
     );
   },
-  _selectModelCallback: function () {
+  _selectModelCallback: function ($layer) {
+    console.log('model select ... ');
+    $layer.on('click', '.hbs-model-name', $.proxy(this._onPhoneSelect, this, $layer));
+  },
+  _onPhoneSelect: function ($layer, e) {
+    var target = $(e.currentTarget);
+    var modelValue = target.attr('data-model-code');
+
+    console.log('modelValue : ' + modelValue);
+
+    this._phoneInfo.eqpMdlNm = modelValue;
+
+    this.$container.find('.fe-roaming-model').text(modelValue);
+
+    this._popupService.close();
 
   },
   _handleFailModelSearch: function () {

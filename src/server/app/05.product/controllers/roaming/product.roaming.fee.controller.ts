@@ -30,8 +30,8 @@ export default class ProductRoaming extends TwViewController {
             this.getRoamingData(),
             this.getRoamingPlanData(params)
         ).subscribe(([roamingData, roamingPlanData]) => {
-            this.logger.info(this, 'roamingPlanData', roamingPlanData);
-            res.render('roaming/product.roaming.fee.html', { svcInfo, roamingData, roamingPlanData, isLogin: this.isLogin(svcInfo) });
+
+            res.render('roaming/product.roaming.fee.html', { svcInfo, roamingData, roamingPlanData, isLogin: this.isLogin(svcInfo), pageInfo });
 
         });
     }
@@ -47,9 +47,10 @@ export default class ProductRoaming extends TwViewController {
         return this.apiService.request(API_CMD.BFF_10_0055, {}).map((resp) => {
             if ( resp.code === API_CODE.CODE_00 ) {
                 roamingData = resp.result;
+                this.logger.info(this, 'roamingData', roamingData);
+                return roamingData;
             }
-            this.logger.info(this, 'roamingData', roamingData);
-            return roamingData;
+
         });
     }
 

@@ -13,8 +13,8 @@ class ProductRoamingSearchBefore extends TwViewController {
         super();
     }
 
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
-        res.render('roaming/product.roaming.do.search-before.html', { svcInfo, isLogin: this.isLogin(svcInfo) });
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, pageInfo: any) {
+        res.render('roaming/product.roaming.do.search-before.html', { svcInfo, isLogin: this.isLogin(svcInfo), pageInfo });
 
 
     }

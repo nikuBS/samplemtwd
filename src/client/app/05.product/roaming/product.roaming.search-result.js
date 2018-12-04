@@ -33,7 +33,7 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         this.$container.find('.fe-search-input').val(this._srchInfo.countryNm);
 
-
+        this.currentType = '';
         if(this._rateInfo.lte > 0){
             this.reqParams.manageType = 'L';
         }else if(this._rateInfo.wcdma > 0){
@@ -68,7 +68,7 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
         var _result = resp.result;
-        Tw.Logger.info('success rate result ==== ', _result);
+        // Tw.Logger.info('success rate result ==== ', _result);
         // this.$roamingRatelist.text('요금 정보 입력');
 
         this.$roamingRatelist.append(this._rmRateInfoTmpl({ items: _result }));

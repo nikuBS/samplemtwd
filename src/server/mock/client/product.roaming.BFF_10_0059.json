@@ -1,0 +1,442 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": [
+    {
+      "mfrModlCd": "LGIO",
+      "eqpMdlNm": "AKA"
+    },
+    {
+      "mfrModlCd": "LGGT",
+      "eqpMdlNm": "G 플렉스"
+    },
+    {
+      "mfrModlCd": "LGIQ",
+      "eqpMdlNm": "G 플렉스 2"
+    },
+    {
+      "mfrModlCd": "LGGP",
+      "eqpMdlNm": "G2"
+    },
+    {
+      "mfrModlCd": "LGH5",
+      "eqpMdlNm": "G3"
+    },
+    {
+      "mfrModlCd": "LGIC",
+      "eqpMdlNm": "G3 A"
+    },
+    {
+      "mfrModlCd": "LGIV",
+      "eqpMdlNm": "G4"
+    },
+    {
+      "mfrModlCd": "LGML",
+      "eqpMdlNm": "G5"
+    },
+    {
+      "mfrModlCd": "B9WE",
+      "eqpMdlNm": "HTC DESIRE"
+    },
+    {
+      "mfrModlCd": "B9W1",
+      "eqpMdlNm": "HTC TOUCH DUAL"
+    },
+    {
+      "mfrModlCd": "B9W2",
+      "eqpMdlNm": "HTC-DIAMOND"
+    },
+    {
+      "mfrModlCd": "LGL7",
+      "eqpMdlNm": "LG Class"
+    },
+    {
+      "mfrModlCd": "B9WR",
+      "eqpMdlNm": "RAIDER"
+    },
+    {
+      "mfrModlCd": "B9WQ",
+      "eqpMdlNm": "SENSATION"
+    },
+    {
+      "mfrModlCd": "B9WD",
+      "eqpMdlNm": "TOUCH_HD2"
+    },
+    {
+      "mfrModlCd": "LGL8",
+      "eqpMdlNm": "V10"
+    },
+    {
+      "mfrModlCd": "LGIU",
+      "eqpMdlNm": "Volt LTE"
+    },
+    {
+      "mfrModlCd": "SSMD",
+      "eqpMdlNm": "갤럭시 A"
+    },
+    {
+      "mfrModlCd": "SSAC",
+      "eqpMdlNm": "갤럭시 A5"
+    },
+    {
+      "mfrModlCd": "SSAB",
+      "eqpMdlNm": "갤럭시 A7"
+    },
+    {
+      "mfrModlCd": "SSBD",
+      "eqpMdlNm": "갤럭시 A8"
+    },
+    {
+      "mfrModlCd": "SST0",
+      "eqpMdlNm": "갤럭시 J5"
+    },
+    {
+      "mfrModlCd": "SSQC",
+      "eqpMdlNm": "갤럭시 M style"
+    },
+    {
+      "mfrModlCd": "SSLO",
+      "eqpMdlNm": "갤럭시 R스타일"
+    },
+    {
+      "mfrModlCd": "SSMS",
+      "eqpMdlNm": "갤럭시 S"
+    },
+    {
+      "mfrModlCd": "SSNP",
+      "eqpMdlNm": "갤럭시 S 호핀"
+    },
+    {
+      "mfrModlCd": "SSN7",
+      "eqpMdlNm": "갤럭시 S2 3G"
+    },
+    {
+      "mfrModlCd": "SSPH",
+      "eqpMdlNm": "갤럭시 S2 LTE"
+    },
+    {
+      "mfrModlCd": "SSA1",
+      "eqpMdlNm": "갤럭시 S3 3G"
+    },
+    {
+      "mfrModlCd": "SSAO",
+      "eqpMdlNm": "갤럭시 S3 LTE"
+    },
+    {
+      "mfrModlCd": "SSIA",
+      "eqpMdlNm": "갤럭시 S4"
+    },
+    {
+      "mfrModlCd": "SSIG",
+      "eqpMdlNm": "갤럭시 S4 LTE"
+    },
+    {
+      "mfrModlCd": "SSIM",
+      "eqpMdlNm": "갤럭시 S5"
+    },
+    {
+      "mfrModlCd": "SSA0",
+      "eqpMdlNm": "갤럭시 S6(엣지)"
+    },
+    {
+      "mfrModlCd": "SS29",
+      "eqpMdlNm": "갤럭시 S7"
+    },
+    {
+      "mfrModlCd": "SS30",
+      "eqpMdlNm": "갤럭시 S7 엣지"
+    },
+    {
+      "mfrModlCd": "SSUA",
+      "eqpMdlNm": "갤럭시 W"
+    },
+    {
+      "mfrModlCd": "SSV8",
+      "eqpMdlNm": "갤럭시 골든"
+    },
+    {
+      "mfrModlCd": "SSAU",
+      "eqpMdlNm": "갤럭시 그랜드 맥스"
+    },
+    {
+      "mfrModlCd": "SS31",
+      "eqpMdlNm": "갤럭시 그랜드(그랜드 2)"
+    },
+    {
+      "mfrModlCd": "SSQP",
+      "eqpMdlNm": "갤럭시 넥서스"
+    },
+    {
+      "mfrModlCd": "SSOA",
+      "eqpMdlNm": "갤럭시 노트 1"
+    },
+    {
+      "mfrModlCd": "SSOE",
+      "eqpMdlNm": "갤럭시 노트 2"
+    },
+    {
+      "mfrModlCd": "SSI7",
+      "eqpMdlNm": "갤럭시 노트 3"
+    },
+    {
+      "mfrModlCd": "SSUP",
+      "eqpMdlNm": "갤럭시 노트 3 3G"
+    },
+    {
+      "mfrModlCd": "SSAS",
+      "eqpMdlNm": "갤럭시 노트 4"
+    },
+    {
+      "mfrModlCd": "SSAM",
+      "eqpMdlNm": "갤럭시 노트 4 S-LTE"
+    },
+    {
+      "mfrModlCd": "SS43",
+      "eqpMdlNm": "갤럭시 노트 5"
+    },
+    {
+      "mfrModlCd": "SSTD",
+      "eqpMdlNm": "갤럭시 노트 엣지"
+    },
+    {
+      "mfrModlCd": "SST6",
+      "eqpMdlNm": "갤럭시 노트(3G)"
+    },
+    {
+      "mfrModlCd": "SSI5",
+      "eqpMdlNm": "갤럭시 노트10.1"
+    },
+    {
+      "mfrModlCd": "SSI2",
+      "eqpMdlNm": "갤럭시 라운드"
+    },
+    {
+      "mfrModlCd": "SSOX",
+      "eqpMdlNm": "갤럭시 메가 6.3"
+    },
+    {
+      "mfrModlCd": "SSTH",
+      "eqpMdlNm": "갤럭시 알파"
+    },
+    {
+      "mfrModlCd": "SSN3",
+      "eqpMdlNm": "갤럭시 에이스"
+    },
+    {
+      "mfrModlCd": "SSN1",
+      "eqpMdlNm": "갤럭시 엣지 플러스"
+    },
+    {
+      "mfrModlCd": "SSI6",
+      "eqpMdlNm": "갤럭시 윈"
+    },
+    {
+      "mfrModlCd": "SSN8",
+      "eqpMdlNm": "갤럭시 지오"
+    },
+    {
+      "mfrModlCd": "SSIC",
+      "eqpMdlNm": "갤럭시 코어 어드밴스"
+    },
+    {
+      "mfrModlCd": "SSNC",
+      "eqpMdlNm": "갤럭시 탭"
+    },
+    {
+      "mfrModlCd": "SSPE",
+      "eqpMdlNm": "갤럭시 탭 10.1"
+    },
+    {
+      "mfrModlCd": "SSQF",
+      "eqpMdlNm": "갤럭시 탭 7.7"
+    },
+    {
+      "mfrModlCd": "SSBX",
+      "eqpMdlNm": "갤럭시 탭 A(S)"
+    },
+    {
+      "mfrModlCd": "SSJO",
+      "eqpMdlNm": "갤럭시 폴더 3G"
+    },
+    {
+      "mfrModlCd": "SSHI",
+      "eqpMdlNm": "갤럭시 폴더 LTE"
+    },
+    {
+      "mfrModlCd": "LGGW",
+      "eqpMdlNm": "구글 넥서스 5"
+    },
+    {
+      "mfrModlCd": "LGMA",
+      "eqpMdlNm": "넥서스 5x"
+    },
+    {
+      "mfrModlCd": "CGRB",
+      "eqpMdlNm": "뉴아이패드"
+    },
+    {
+      "mfrModlCd": "PTWY",
+      "eqpMdlNm": "미라크"
+    },
+    {
+      "mfrModlCd": "PTX7",
+      "eqpMdlNm": "미라크 A"
+    },
+    {
+      "mfrModlCd": "PTWZ",
+      "eqpMdlNm": "베가"
+    },
+    {
+      "mfrModlCd": "PTXE",
+      "eqpMdlNm": "베가 LTE"
+    },
+    {
+      "mfrModlCd": "PTXV",
+      "eqpMdlNm": "베가 LTE A"
+    },
+    {
+      "mfrModlCd": "PTXF",
+      "eqpMdlNm": "베가 LTE M"
+    },
+    {
+      "mfrModlCd": "PTXN",
+      "eqpMdlNm": "베가 R3"
+    },
+    {
+      "mfrModlCd": "PTX3",
+      "eqpMdlNm": "베가 S"
+    },
+    {
+      "mfrModlCd": "PTXK",
+      "eqpMdlNm": "베가 S5"
+    },
+    {
+      "mfrModlCd": "PTXP",
+      "eqpMdlNm": "베가 넘버6"
+    },
+    {
+      "mfrModlCd": "PTX8",
+      "eqpMdlNm": "베가 레이서"
+    },
+    {
+      "mfrModlCd": "PTXJ",
+      "eqpMdlNm": "베가 레이서 2"
+    },
+    {
+      "mfrModlCd": "PTXZ",
+      "eqpMdlNm": "베가 시크릿UP"
+    },
+    {
+      "mfrModlCd": "PTXW",
+      "eqpMdlNm": "베가 시크릿노트"
+    },
+    {
+      "mfrModlCd": "PTXR",
+      "eqpMdlNm": "베가 아이언"
+    },
+    {
+      "mfrModlCd": "PTY3",
+      "eqpMdlNm": "베가 아이언 2"
+    },
+    {
+      "mfrModlCd": "PTY4",
+      "eqpMdlNm": "베가 팝업노트"
+    },
+    {
+      "mfrModlCd": "BXW1",
+      "eqpMdlNm": "소니 X1"
+    },
+    {
+      "mfrModlCd": "BXW4",
+      "eqpMdlNm": "소니 X10"
+    },
+    {
+      "mfrModlCd": "BXV1",
+      "eqpMdlNm": "소니 엑스페리아"
+    },
+    {
+      "mfrModlCd": "PTWN",
+      "eqpMdlNm": "시리우스"
+    },
+    {
+      "mfrModlCd": "CGR2",
+      "eqpMdlNm": "아이패드 2"
+    },
+    {
+      "mfrModlCd": "CGAJ",
+      "eqpMdlNm": "아이패드 레티나"
+    },
+    {
+      "mfrModlCd": "CGD1",
+      "eqpMdlNm": "아이패드 미니"
+    },
+    {
+      "mfrModlCd": "CGBP",
+      "eqpMdlNm": "아이패드 미니 레티나"
+    },
+    {
+      "mfrModlCd": "CGBF",
+      "eqpMdlNm": "아이패드 에어"
+    },
+    {
+      "mfrModlCd": "CGCO",
+      "eqpMdlNm": "아이패드 에어 2"
+    },
+    {
+      "mfrModlCd": "CGW2",
+      "eqpMdlNm": "아이폰 3"
+    },
+    {
+      "mfrModlCd": "CGW4",
+      "eqpMdlNm": "아이폰 4"
+    },
+    {
+      "mfrModlCd": "CGAN",
+      "eqpMdlNm": "아이폰 5"
+    },
+    {
+      "mfrModlCd": "CGBZ",
+      "eqpMdlNm": "아이폰 6"
+    },
+    {
+      "mfrModlCd": "LGGF",
+      "eqpMdlNm": "옵티머스  G"
+    },
+    {
+      "mfrModlCd": "LGBP",
+      "eqpMdlNm": "옵티머스  LTE"
+    },
+    {
+      "mfrModlCd": "LGG6",
+      "eqpMdlNm": "옵티머스  LTE 2"
+    },
+    {
+      "mfrModlCd": "LGGM",
+      "eqpMdlNm": "옵티머스  LTE 3"
+    },
+    {
+      "mfrModlCd": "LGGS",
+      "eqpMdlNm": "옵티머스  뷰 3"
+    },
+    {
+      "mfrModlCd": "LGGL",
+      "eqpMdlNm": "옵티머스 G 프로"
+    },
+    {
+      "mfrModlCd": "LGH1",
+      "eqpMdlNm": "옵티머스 G 프로 2"
+    },
+    {
+      "mfrModlCd": "LGBX",
+      "eqpMdlNm": "옵티머스 뷰"
+    },
+    {
+      "mfrModlCd": "LGGG",
+      "eqpMdlNm": "옵티머스 뷰 2"
+    },
+    {
+      "mfrModlCd": "LGB2",
+      "eqpMdlNm": "옵티머스 원"
+    }
+  ]
+}

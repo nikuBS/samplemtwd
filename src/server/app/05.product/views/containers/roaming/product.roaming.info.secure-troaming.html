@@ -20,16 +20,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '자동안심 T 로밍이란?', svcInfo, option: { line: true } }); %>
-    <!--<div id="header" class="header-wrap">-->
-        <!--<div class="header">-->
-            <!--<div class="header-ti align-l">-->
-                <!--<h1>자동안심 T 로밍이란?</h1>-->
-            <!--</div>-->
-            <!--<button class="prev-step"><span class="blind">이전으로</span></button>-->
-            <!--<button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>-->
-        <!--</div>-->
-    <!--</div>-->
+    <%- include('../../../common/views/components/header.component.html', { title: '자동안심 T 로밍이란?' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -39,7 +30,7 @@
             <div class="cont-box">
                 <h3 class="tit-type5"><span class="str">로밍,</span><br />하나부터 열까지 새로고침</h3>
                 <div class="loaming-visual mt26">
-                    <img src="/img/product/vi-explain-loaming.png" alt="TBD">
+                    <img src="<%= CDN %>/img/product/vi-explain-loaming.png" alt="TBD">
                 </div>
                 <p class="article-type1 bk mt12">데이터로밍 이용 고객님은 저렴한 가격에<br />데이터는 늘어난 <span class="tx-bold">아시아패스(YT), 한중일패스(YT),<br />미주패스(YT), 유럽패스(YT)!!!</span></p>
                 <p class="article-type1 mt20">앗! 요금제 가입을 깜빡하셨다고요? 걱정하지 마세요!<br />자동안심 T로밍 음성/데이터 서비스로 요금 걱정 없이<br />안심하고 마음껏 사용하실 수 있습니다.</p>
@@ -53,7 +44,7 @@
                                         <div class="box-wrap">
                                             <div class="bg1"> <!-- 보라색 -->
                                                 <a class="txt-tit" href="/product/callplan/NA00005699">T로밍 한중일패스</a>
-                                                <span class="ico"><img src="/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
                                                 <span class="txt-type1">데이터 2GB &middot; 음성 3.6원/초 &middot; 문자/MMS</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br />(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">25,000원/5일</strong>
@@ -64,7 +55,7 @@
                                         <div class="box-wrap">
                                             <div class="bg2"> <!-- 녹색 -->
                                                 <a class="txt-tit" href="/product/callplan/NA00005900">T로밍 아시아패스</a>
-                                                <span class="ico"><img src="/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
                                                 <span class="txt-type1">데이터 2GB + 속도제어</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br />(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">25,000원/5일</strong>
@@ -75,7 +66,7 @@
                                         <div class="box-wrap">
                                             <div class="bg1"> <!-- 보라색 -->
                                                 <a class="txt-tit" href="/product/callplan/NA00006038">T로밍 미주패스 3GB</a>
-                                                <span class="ico"><img src="/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
                                                 <span class="txt-type1">데이터 3GB + 속도제어</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br />(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">33,000원/30일</strong>
@@ -86,7 +77,7 @@
                                         <div class="box-wrap">
                                             <div class="bg2"> <!-- 녹색 -->
                                                 <a class="txt-tit" href="/product/callplan/NA00006046">T로밍 유럽패스 3GB</a>
-                                                <span class="ico"><img src="/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
                                                 <span class="txt-type1">데이터 3GB + 속도제어</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br />(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">39,000원/30일</strong>
@@ -111,7 +102,7 @@
                 <div class="loaming-box mt28">
                     <h4 class="tit-type2">자동안심 T로밍 음성</h4>
                     <div class="loaming-visual">
-                        <img src="/img/product/vi-explain-loaming.png" alt="TBD">
+                        <img src="<%= CDN %>/img/product/vi-explain-loaming.png" alt="TBD">
                     </div>
                     <ul class="bul-list type2 fs13">
                         <li>전 고객 매일 3분 음성 무료 통화로 해외에서 도난<br />및 분실, 신변 안전 등의 위험 상황에서도 안심하고<br />통화 가능</li>
@@ -122,7 +113,7 @@
                 <div class="loaming-box mt28">
                     <h4 class="tit-type2">자동안심 T로밍 데이터</h4>
                     <div class="loaming-visual">
-                        <img src="/img/product/vi-explain-loaming.png" alt="TBD">
+                        <img src="<%= CDN %>/img/product/vi-explain-loaming.png" alt="TBD">
                     </div>
                     <ul class="bul-list type2 fs13 mt12">
                         <li>기존 데이터 종량 요율 대비 87.5% 저렴한 파격적인<br />요율(1패킷당 2.2원에서 0.275원으로 인하 /<br />1MB = 563원 / 10MB=5,630원 / 부가세포함)</li>
@@ -141,8 +132,12 @@
                     <!--<li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view">TIP</button></li>-->
                 <!--</ul>-->
             <!--</div>-->
-
         </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
     <!--// #contents -->
 </div>

@@ -819,6 +819,14 @@ Tw.ANDROID_STORE = [
   }
 ];
 
+Tw.ROAMING_MANAGE_TYPE = [
+    { type:'lte', value: 'LTE 자동로밍' },
+    { type:'wcdma', value: '3G 자동로밍' },
+    { type:'cdma', value: '2G 자동로밍' },
+    { type:'gsm', value: 'GSM 자동로밍' },
+    { type:'rent', value: '임대로밍' }
+];
+
 Tw.ROAMING_MFACTCD_LIST = {
     list: [
         { value: '전체', attr: 'data-mfact-code="ALL" data-mfact-name="전체"', 'option': 'hbs-mfact-cd' },
