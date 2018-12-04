@@ -1,14 +1,14 @@
 /**
- * FileName: main.menu.settings.biometrics.deregister.js
+ * FileName: biometrics.deregister.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.11.30
  */
 
-Tw.MainMenuSettingsBiometricsDeregister = function () {
+Tw.BiometricsDeregister = function () {
   this._popupService = Tw.Popup;
 };
 
-Tw.MainMenuSettingsBiometricsDeregister.prototype = {
+Tw.BiometricsDeregister.prototype = {
   open: function () {
     this._popupService.open({
       hbs: 'MA_03_01_02_01_05',
