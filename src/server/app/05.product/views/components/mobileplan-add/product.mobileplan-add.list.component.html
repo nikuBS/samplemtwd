@@ -10,11 +10,7 @@
             <a class="link" href="/product/callplan/{{prodId}}">
                 <div class="products-titleinfo">
                     <p class="title">{{prodNm}}</p>
-                    {{#if isMonthly}}
-                    <p class="info">월<span class="money">{{basFeeAmt}}</span>원</p>
-                    {{else}}
-                    <p class="info"><span class="money">{{basFeeAmt}}</span></p>
-                    {{/if}}
+                    <p class="info"><span class="money">{{basFeeAmt}}</span>{{#if isNumber}}원{{/if}}</p>
                 </div>
                 {{#if filters}}
                 <div class="taglist-wrap">

@@ -140,13 +140,7 @@
                                     <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="<%= addition.prodNm %>"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
-                                        <p class="info">
-                                        <% if (addition.basFeeInfo.isNaN) { %>
-                                            <span class="money"><%= addition.basFeeInfo.value %></span>
-                                        <% } else { %>
-                                            월<span class="money"><%= addition.basFeeInfo.value %></span>원
-                                        <% } %>
-                                        </p>
+                                        <p class="info"><span class="money"><%= addition.basFeeInfo.value %></span><% if (!addition.basFeeInfo.isNaN) { %>원<% } %></p>
                                     </div>
                                     <% if (addition.prodFltList) { %>
                                     <div class="taglist-wrap">
@@ -212,13 +206,7 @@
                                     <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="<%= addition.prodNm %>"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
-                                        <p class="info">
-                                            <% if (addition.basFeeInfo.isNaN) { %>
-                                                <span class="money"><%= addition.basFeeInfo.value %></span>
-                                            <% } else { %>
-                                                월<span class="money"><%= addition.basFeeInfo.value %></span>원
-                                            <% } %>
-                                        </p>
+                                        <p class="info"><span class="money"><%= addition.basFeeInfo.value %></span><% if (!addition.basFeeInfo.isNaN) { %>원<% } %></p>
                                     </div>
                                     <% if (addition.prodFltList) { %>
                                     <div class="taglist-wrap">
@@ -252,9 +240,9 @@
                             </ul>
                         </div>
                         <div class="suggest-tag-morewrap">
-                            <a role="button" aria-pressed="false" class="suggest-tag-more">
+                            <button role="button" aria-pressed="false" class="suggest-tag-more">
                                 <span class="more">더보기</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
