@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;fill-opacity:0;}
+	.st1{fill:none;stroke:#333333;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#333333;stroke-width:1.9;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#333333;stroke-width:1.9;stroke-linecap:round;stroke-miterlimit:10;}
+</style>
+<title>icon_80px_price_plan</title>
+<desc>Created with Sketch.</desc>
+<rect id="Icon_Area" x="0" class="st0" width="48" height="48"/>
+<g>
+	<polyline class="st1" points="15,17 19.5,29 24,17 28.5,29 33,17 	"/>
+	<path class="st2" d="M11.2,2h25.6C38,2,39,3,39,4.2v39.6c0,1.2-1,2.2-2.2,2.2H11.2C10,46,9,45,9,43.8V4.2C9,3,10,2,11.2,2z"/>
+	<line class="st3" x1="21" y1="8" x2="27" y2="8"/>
+	<line class="st3" x1="9.5" y1="38.5" x2="38.5" y2="38.5"/>
+	<line class="st1" x1="15" y1="24" x2="33" y2="24"/>
+</g>
+</svg>
