@@ -12,9 +12,6 @@ import MainMenuSettingsTerms from './controllers/menu/settings/main.menu.setting
 import MainMenuSettingsLocation from './controllers/menu/settings/main.menu.settings.location.controller';
 import MainMenuSettingsCertificates from './controllers/menu/settings/main.menu.settings.certificates.controller';
 import MainMenuSettingsBiometrics from './controllers/menu/settings/main.menu.settings.biometrics.cotroller';
-import MainMenuSettingsBiometricsTerms from './controllers/menu/settings/main.menu.settings.biometrics.terms.controller';
-import MainMenuSettingsBiometricsCert from './controllers/menu/settings/main.menu.settings.biometircs.cert.controller';
-import MainMenuSettingsBiometricsRegister from './controllers/menu/settings/main.menu.settings.bometrics.register.controller';
 import MainMenuSettingsFamilySites from './controllers/menu/settings/main.menu.settings.family-sites.controller';
 
 class MainRouter extends TwRouter {
@@ -26,9 +23,6 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings', controller: MainMenuSettings });
     // biometrics
     this.controllers.push({ url: '/menu/settings/biometrics', controller: MainMenuSettingsBiometrics });
-    // this.controllers.push({ url: '/menu/settings/biometrics/terms', controller: BiometricsTerms });
-    // this.controllers.push({ url: '/menu/settings/biometrics/cert', controller: BiometricsCert });
-    // this.controllers.push({ url: '/menu/settings/biometrics/register', controller: BiometricsRegister });
     this.controllers.push({ url: '/menu/settings/notification', controller: MainMenuSettingsNotifications });
     this.controllers.push({ url: '/menu/settings/privacy', controller: MainMenuSettingsPrivacy });
     this.controllers.push({ url: '/menu/settings/business-info', controller: MainMenuSettingsBusinessInfo });

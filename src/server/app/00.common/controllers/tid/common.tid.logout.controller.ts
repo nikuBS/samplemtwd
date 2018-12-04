@@ -27,7 +27,7 @@ class CommonTidLogout extends TwViewController {
       if ( key.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: key.result.clientId,
-          redirect_uri: EnvHelper.getEnvironment('DOMAIN') +
+          redirect_uri: 'http://' + this.loginService.getDns() +
             '/common/member/logout/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
         };

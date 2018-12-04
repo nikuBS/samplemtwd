@@ -517,3 +517,19 @@ export const ROAMING_AUTO_EXPIRE_CASE = {
     NA00005693 : 10
 };
 
+export enum AUTH_CERTIFICATION_METHOD {
+  SK_SMS = 'S',
+  SK_SMS_RE = 'R',
+  OTHER_SMS = 'T',
+  SAVE = 'A',
+  PUBLIC_AUTH = 'P',
+  IPIN = 'I',
+  BIO = 'O',
+  FINANCE_AUTH = 'B',
+  SMS_KEYIN = 'K',
+  PASSWORD = 'W',
+  SMS_SECURITY = 'Y',
+  SMS_REFUND = 'SF',
+  IPIN_REFUND = 'IF',
+  OTHER_REFUND = 'TF'
+}

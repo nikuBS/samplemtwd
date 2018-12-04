@@ -18,19 +18,7 @@
 <!--// #skip_navigation -->
 <div id="commonBiometricsMenu" class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="h-belt">
-            <div class="h-default">
-                <div class="h-menu">
-                    <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                </div>
-                <div class="h-tit">생체인증 설정</div>
-                <div class="h-serarch">
-                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html', { title: '생체인증 설정' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
