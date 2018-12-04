@@ -171,7 +171,10 @@ class ProductCommonCallplan extends TwViewController {
       };
     }
 
-    return null;
+    return {
+      txt: null,
+      unit: null
+    };
   }
 
   /**
@@ -338,7 +341,7 @@ class ProductCommonCallplan extends TwViewController {
 
     return Object.assign(similarProductInfo.result, {
       titleNm: titleNm,
-      prodFltIds: FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.map((item) => {
+      prodFltIds: FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.list.map((item) => {
         return item.prodFltId;
       }).join(',')
     });
