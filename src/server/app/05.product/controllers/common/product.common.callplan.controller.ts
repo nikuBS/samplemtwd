@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/common.type';
+import { REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/redis.type';
 import {
   DATA_UNIT,
   PRODUCT_CALLPLAN_FEEPLAN,
@@ -20,6 +20,7 @@ import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.typ
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
 
 class ProductCommonCallplan extends TwViewController {
   constructor() {

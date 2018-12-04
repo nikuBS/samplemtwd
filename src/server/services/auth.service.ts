@@ -1,7 +1,7 @@
 import LoginService from './login.service';
 import RedisService from './redis.service';
 import FormatHelper from '../utils/format.helper';
-import { REDIS_URL_META } from '../types/common.type';
+import { REDIS_URL_META } from '../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import LoggerService from './logger.service';
 import 'rxjs/add/operator/switchMap';
@@ -20,7 +20,7 @@ class AuthService {
   public setCert(req, res, params): Observable<any> {
     this.loginService.setCurrentReq(req, res);
     return this.redisService.getData(REDIS_URL_META + params.url)
-      .switchMap((resp) => this.setCertUrl(resp, params.url))
+      .switchMap((resp) => this.setCertUrl(resp.result, params.url))
       .map((resp) => {
         return { code: API_CODE.CODE_00, result: resp };
       });
@@ -31,10 +31,10 @@ class AuthService {
     const path = req.baseUrl + req.path;
     return this.redisService.getData(REDIS_URL_META + method + '|' + path).map((resp) => {
       const params = {
-        cert: this.checkCertUrl(resp, path),
+        cert: this.checkCertUrl(resp.result, path),
         url: path,
         svcInfo: this.loginService.getSvcInfo(),
-        urlMeta: resp
+        urlMeta: resp.result
       };
       return params;
     });

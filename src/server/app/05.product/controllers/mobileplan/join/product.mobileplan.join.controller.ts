@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import {REDIS_PRODUCT_INFO} from '../../../../../types/common.type';
+import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 
 class ProductMobileplanJoin extends TwViewController {
   constructor() {

@@ -13,8 +13,9 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { MYT_BANNER_TYPE, REDIS_MYT_BANNER } from '../../types/common.type';
+import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
+import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -47,7 +48,7 @@ class MyTJoinSubmainController extends TwViewController {
         res.redirect('/myt-join/submain_w');
       }
     }
-    let bannerKey = REDIS_MYT_BANNER + MYT_BANNER_TYPE.JOIN_INFO;
+    let bannerKey = REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO;
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
@@ -62,7 +63,7 @@ class MyTJoinSubmainController extends TwViewController {
     // 배너키변경
     if (this.type === 2) {
       // 유선
-      bannerKey = REDIS_MYT_BANNER + MYT_BANNER_TYPE.JOIN_INFO_WIRE;
+      bannerKey = REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO_WIRE;
     }
 
     Observable.combineLatest(

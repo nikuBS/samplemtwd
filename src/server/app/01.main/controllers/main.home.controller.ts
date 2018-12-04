@@ -21,7 +21,7 @@ import {
   UNIT_E
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION } from '../../../types/common.type';
+import { REDIS_APP_VERSION, REDIS_SMART_CARD } from '../../../types/redis.type';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -253,6 +253,7 @@ class MainHome extends TwViewController {
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        console.log(JSON.stringify(resp.result));
         usageData = this.parseUsageData(resp.result);
       }
       usageData.code = resp.code;

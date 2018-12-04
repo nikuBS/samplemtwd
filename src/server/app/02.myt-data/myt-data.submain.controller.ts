@@ -15,8 +15,9 @@ import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/stri
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
-import { MYT_BANNER_TYPE, REDIS_MYT_BANNER } from '../../types/common.type';
+import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
+import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
@@ -51,7 +52,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice(),
-      this.redisService.getData(REDIS_MYT_BANNER + MYT_BANNER_TYPE.DATA),
+      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.DATA),
       this._getBannerMock() // TODO: 추후 제거
     ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner, bam]) => {
       if ( !svcInfo.svcMgmtNum || remnant.info ) {

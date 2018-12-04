@@ -5,7 +5,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {DATA_UNIT, PRODUCT_MOBILEPLAN_COMPARE_PLANS} from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {RedistProductComparison} from '../../../../mock/server/product.mobileplan.compare-plans.mock';
-import {REDIS_PRODUCT_COMPARISON, REDIS_PRODUCT_INFO} from '../../../../types/common.type';
+import {REDIS_PRODUCT_COMPARISON, REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 
 /**
  * FileName: product.mobileplan.compare-plans.ts
