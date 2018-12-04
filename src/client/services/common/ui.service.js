@@ -63,24 +63,3 @@ Tw.UIService.prototype = {
     }
   }
 };
-
-
-// TODO : remove
-Tw.UIService.toggle = function (selector) {
-  if ( selector.hasClass('on') ) {
-    selector.removeClass('on');
-  }
-  else {
-    selector.addClass('on');
-  }
-};
-
-// TODO : remove
-Tw.UIService.setLocalStorage = function (key, value) {
-  localStorage.setItem(key, value);
-};
-
-// TODO : remove
-Tw.UIService.getLocalStorage = function (key) {
-  return localStorage.getItem(key);
-};

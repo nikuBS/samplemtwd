@@ -355,7 +355,7 @@ Tw.MainHome.prototype = {
     }
   },
   _resetHeight: function () {
-    $('.home-slider .home-slider-belt')[0].slick.animateHeight();
+    Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
   }
 
 };

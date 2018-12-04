@@ -85,6 +85,18 @@ Tw.CommonHelper = (function () {
       }, this));
   };
 
+  var startLoading = function (target, color, size) {
+    skt_landing.action.loading.on({ ta: target, co: color, size: size });
+  };
+
+  var endLoading = function (target) {
+    skt_landing.action.loading.off({ ta: target });
+  };
+
+  var resetHeight = function ($element) {
+    $element.slick.animateHeight();
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -94,6 +106,9 @@ Tw.CommonHelper = (function () {
     getLocalStorage: getLocalStorage,
     showDataCharge: showDataCharge,
     share: share,
-    openFreeSms: openFreeSms
+    openFreeSms: openFreeSms,
+    startLoading: startLoading,
+    endLoading: endLoading,
+    resetHeight: resetHeight
   };
 })();

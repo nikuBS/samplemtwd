@@ -142,7 +142,6 @@ class MainHome extends TwViewController {
     let membershipData = null;
     return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        console.log(resp);
         membershipData = this.parseMembershipData(resp.result);
       }
       return membershipData;
