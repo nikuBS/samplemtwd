@@ -415,6 +415,7 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0003, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
+          this.apiService.request(API_CMD.BFF_10_0139, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0112, { prodId: prodId }),
           this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
@@ -422,10 +423,10 @@ class ProductCommonCallplan extends TwViewController {
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
           this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, similarProductInfo, prodRedisInfo,
+          relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, prodRedisInfo,
           mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
-          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
+          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo ]);
 
           if (!FormatHelper.isEmpty(apiError)) {
             return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -450,6 +451,7 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
             recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
+            recommendApps: recommendsAppInfo.result,
             mobilePlanCompareInfo: FormatHelper.isEmpty(mobilePlanCompareInfo) ? null : mobilePlanCompareInfo, // 요금제 비교하기
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
