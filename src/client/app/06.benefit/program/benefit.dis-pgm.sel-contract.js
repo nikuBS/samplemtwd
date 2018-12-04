@@ -88,7 +88,7 @@ Tw.BenefitDisPgmSelContract.prototype = {
 
   _onSuccessSeldisSet: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan?prodId=' + this.data.prodId,
+      this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan?prod_id=' + this.data.prodId,
         Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
         Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
     }

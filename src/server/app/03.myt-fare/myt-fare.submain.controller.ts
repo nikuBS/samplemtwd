@@ -13,6 +13,8 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
+import { MYT_BANNER_TYPE, REDIS_MYT_BANNER } from '../../types/common.type';
+import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 
 class MyTFareSubmainController extends TwViewController {
   constructor() {
@@ -117,9 +119,11 @@ class MyTFareSubmainController extends TwViewController {
       this._getTaxInvoice(),
       this._getContribution(),
       this._getMicroPrepay(),
-      this._getContentPrepay()
+      this._getContentPrepay(),
+      this.redisService.getData(REDIS_MYT_BANNER + MYT_BANNER_TYPE.PAYMENT),
+      this._getBannerMock()
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
-                   taxInvoice, contribution, microPay, contentPay]) => {
+                   taxInvoice, contribution, microPay, contentPay, banner, bam]) => {
       // 소액결제
       if ( microPay ) {
         data.microPay = microPay;
@@ -162,6 +166,12 @@ class MyTFareSubmainController extends TwViewController {
       if ( contribution ) {
         data.contribution = contribution;
       }
+      // 배너
+      if ( banner ) {
+        data.banner = this.parseBanner(banner);
+      } else {
+        data.banner = this.parseBanner(bam);
+      }
 
       res.render('myt-fare.submain.html', { data });
     });
@@ -180,8 +190,10 @@ class MyTFareSubmainController extends TwViewController {
       this._getUsageFee(),
       this._getPaymentInfo(),
       this._getMicroPrepay(),
-      this._getContentPrepay()
-    ).subscribe(([usage, paymentInfo, microPay, contentPay]) => {
+      this._getContentPrepay(),
+      this.redisService.getData(REDIS_MYT_BANNER + MYT_BANNER_TYPE.PAYMENT_U),
+      this._getBannerMock()
+    ).subscribe(([usage, paymentInfo, microPay, contentPay, banner, bam]) => {
       if ( usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -225,9 +237,32 @@ class MyTFareSubmainController extends TwViewController {
           }
         }
 
+        if (banner) {
+          data.banner = this.parseBanner(banner);
+        } else {
+          data.banner = this.parseBanner(bam);
+        }
+
         res.render('myt-fare.submain.html', { data });
       }
     });
+  }
+
+  parseBanner(data: any) {
+    const banners = data.banners;
+    const sort = {};
+    const result: any = [];
+    banners.forEach((item) => {
+      if ( item.bnnrExpsSeq ) {
+        sort[item.bnnrExpsSeq] = item;
+      }
+    });
+    const keys = Object.keys(sort).sort();
+    keys.forEach((key) => {
+      result.push( sort[key] );
+    });
+
+    return result;
   }
 
   convertOtherLines(target, items): any {
@@ -365,6 +400,13 @@ class MyTFareSubmainController extends TwViewController {
       } else {
         return null;
       }
+    });
+  }
+
+  _getBannerMock(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(BANNER_MOCK);
+      obs.complete();
     });
   }
 }

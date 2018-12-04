@@ -62,13 +62,13 @@ class FormatHelper {
     const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB];
     let unitIdx = units.findIndex(value => value === curUnit);
 
-    data = +data;
     if ( !isFinite(data) ) {
       return {
         data: data,
         unit: curUnit
       };
     }
+    data = +data;
 
     while ( data >= 1024 ) {
       data /= 1024;
