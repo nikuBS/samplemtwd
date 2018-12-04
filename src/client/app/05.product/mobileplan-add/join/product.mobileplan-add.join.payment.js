@@ -229,6 +229,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   _procConfirm: function() {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
+      noticeList: this._confirmOptions.prodNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A3,

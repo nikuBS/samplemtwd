@@ -9,7 +9,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
-  this._data = data;
+  this._data = this._convData(data);
   this._isApply = false;
   this._isPopup = isPopup;
   this._applyCallback = applyCallback;
@@ -74,6 +74,12 @@ Tw.ProductCommonConfirm.prototype = {
     }
 
     this._confirmAlert = this._data.confirmAlert || Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
+  },
+
+  _convData: function(data) {
+    return $.extend(data, {
+      isNoticeList: data.isMobilePlan || data.noticeList && data.noticeList.length > 0
+    });
   },
 
   _openPop: function() {

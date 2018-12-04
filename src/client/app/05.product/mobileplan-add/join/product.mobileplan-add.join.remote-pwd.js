@@ -107,6 +107,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     if (this._isValid()) {
       new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
         isMobilePlan: false,
+        noticeList: this._confirmOptions.prodNoticeList,
         joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
         typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
         settingSummaryTexts: [{

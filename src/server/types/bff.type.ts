@@ -427,7 +427,6 @@ export const PREPAID_PAYMENT_TYPE = {
   '99': '선불카드(PPS카드)'
 };
 
-
 export const PRODUCT_TYP_CD_LIST = {
   AB: 'product/mobileplan',
   C: 'product/mobileplan-add',
@@ -446,6 +445,12 @@ export const PRODUCT_TYP_CD_LIST = {
 export const PRODUCT_CALLPLAN = {
   CIA_INSPT_RSLT: '비정상',
   SEE_CONTENTS: '상세참조'
+};
+
+export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
+  TW20000014: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
+  TW20000018: 'http://www.thonorsclub.com/',
+  TW20000019: 'http://skt.datacoupon.co.kr'
 };
 
 export const PRODUCT_REPLACED_RULE = {
