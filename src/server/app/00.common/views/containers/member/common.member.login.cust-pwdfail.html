@@ -1,70 +1,67 @@
 <%#
- * FileName: common.member.login.custo-pwdfail.html
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.07.11
+ * FileName: common.member.login.cust-pwdfail.html
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.12.04
 %>
 
 <% include ../../components/start.component.html %>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb_area">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
-<div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti">
-                <h1>로그인 실패</h1>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap"></div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
             </div>
         </div>
-    </div>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div id="auth-login-customer-pwd-fail" class="container">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="box-suggest">
-                    <div class="suggest-info">
-                        <p class="suggest-ti">고객보호 비밀번호를<br /><em class="tx-bold">5회 이상 잘못 입력</em>하셨습니다.</p>
-                        <ul class="suggest-list nodot">
-                            <li>SK텔레콤 지점에 직접 방문하시어 초기화 후 이용해주시기 바랍니다.</li>
-                        </ul>
+        <!--// #contents -->
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <div class="container">
+                    <div class="complete-wrap">
+                        <div class="title-box">
+                            <i class="icon-warning-120"><span class="blind">warning</span></i>
+                            <p class="tx-tit">
+                                <span class="tx-highlight">고객번호 비밀번호를<br />
+                                    <span class="tx-red1">5회 이상 잘못 입력</span>하셨습니다.
+                                </span>
+                            </p>
+                        </div>
+                        <div class="tx-contents">
+                            <p class="basic-txt">SK텔레콤 지점에 직접 방문하여 초기화 후<br />이용해 주시기 바랍니다.</p>
+
+                            <ul class="bt-slice item-two">
+                                <li><a href="/customer/email" class="btn-round2 btn-style3">이메일 상담</a></li>
+                                <li><a href="/customer/shop/search" class="btn-round2 btn-style3">지점∙대리점 찾기</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!--// .cont-box -->
 
-            <hr class="cont-sp type1" />
-
-            <div class="cont-box nogaps">
-                <div class="bt-link-box">
-                    <a class="bt-link-tx" href="/main/home">홈으로</a>
-                </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li><a href="/main/home" type="button" class="btn-floating btn-style2">확인</a></li>
+                </ul>
             </div>
-
-            <hr class="cont-sp type1" />
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-hoz">
-                <div class="link-long">
-                    <a href="/customer/email" title="온라인 상담/문의 알아보기로 이동">온라인 상담/문의 알아보기<span class="ico"></span></a>
-                </div>
-                <div class="link-long last">
-                    <a href="/customer/shop/search" title="지점/대리점 찾기 바로가기로 이동">지점/대리점 찾기 바로가기 <span class="ico"></span></a>
-                </div>
-            </div>
-            <!--// .cont-box -->
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+            <!--// .popup-closeBtn -->
         </div>
+        <!--// .popup hbs -->
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     </div>
-    <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-</div>
+</body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/end.component.html %>

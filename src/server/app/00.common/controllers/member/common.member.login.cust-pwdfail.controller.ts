@@ -1,7 +1,7 @@
 /**
  * FileName: common.login.customer-pwd-fail.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.07.11
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.12.04
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
