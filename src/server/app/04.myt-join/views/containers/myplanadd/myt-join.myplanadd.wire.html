@@ -17,7 +17,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스' }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -196,10 +196,7 @@
         <!--// #contents -->
     
     </div>
-    <footer id="fe-all-menu">
-        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>

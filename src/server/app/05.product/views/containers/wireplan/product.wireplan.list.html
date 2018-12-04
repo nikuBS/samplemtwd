@@ -19,7 +19,7 @@
     <div class="wrap">
         <!-- #header -->
         <div id="header" class="header-wrap">
-            <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo, option: { line: true } }); %>
+            <%- include('../../../common/views/components/header.component.html', { title: page }); %>
         </div>
         <!--// #header -->
         <!-- #contents -->
@@ -245,6 +245,7 @@
             </div>
         </div>
         <!--// #contents -->
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 
