@@ -319,12 +319,15 @@
         </div>
     </div>
     <!--// #contents -->
+    <!-- #footer -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
+    <!--// #footer -->
 </div>
 </body>
 
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-  };
+  });
 </script>
 <% include ../../components/end.component.html %>

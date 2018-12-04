@@ -53,10 +53,10 @@ export default class ProductRoaming extends TwViewController {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        res.render('roaming/product.roaming.html', { svcInfo, roamingCount, isLogin: this.isLogin(svcInfo) });
+        res.render('roaming/product.roaming.html', { svcInfo, pageInfo, roamingCount, isLogin: this.isLogin(svcInfo) });
       });
     } else {
-      res.render('roaming/product.roaming.html', { svcInfo, isLogin: this.isLogin(svcInfo)});
+      res.render('roaming/product.roaming.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo)});
     }
   }
 
