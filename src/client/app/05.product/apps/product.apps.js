@@ -33,10 +33,10 @@ Tw.ProductApps.prototype = {
 
   _getApps: function() {
     // this._apiService.request(Tw.API_CMD.BFF_10_0093, {})
-    $.ajax('http://localhost:3000/mock/product.apps.json').done($.proxy(this._handleGetApps, this));
+    $.ajax('http://localhost:3000/mock/product.apps.json').done($.proxy(this._handleLoadApps, this));
   },
 
-  _handleGetApps: function(resp) {
+  _handleLoadApps: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -68,7 +68,15 @@ Tw.ProductApps.prototype = {
   },
 
   _handleConfirmAppInstalled: function(apps, resp) {
-    var list = (resp.params && resp.params.list) || [];
+    var list = _.reduce(
+      (resp.params && resp.params.list) || [],
+      function(apps, app) {
+        var key = Object.keys(app)[0];
+        apps[key] = app[key];
+        return apps;
+      },
+      {}
+    );
 
     this._apps = _.map(apps, function(app) {
       app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;

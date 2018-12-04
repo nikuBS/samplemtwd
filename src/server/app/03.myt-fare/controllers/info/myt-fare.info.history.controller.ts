@@ -34,8 +34,9 @@ interface PaymentData {
   overPaymentCount?: number;
   refundPaymentCount?: number;
   refundTotalAmount?: string;
+  refundPaymentCnt?: number;
   isPersonalBiz?: boolean;
-  personalBizNum?: string;
+  // personalBizNum?: string;
   listData?: PaymentList;
 }
 
@@ -70,6 +71,7 @@ class MyTFareInfoHistory extends TwViewController {
       this.getAllPaymentData(req, res, next, query, svcInfo);
     } else {
       switch (query.sortType) {
+        // 즉시납부
         case 'direct':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -80,6 +82,7 @@ class MyTFareInfoHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        // 자동납부
         case 'auto':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -90,6 +93,7 @@ class MyTFareInfoHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        // 자동납부 통합인출
         case 'auto-all':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -100,6 +104,7 @@ class MyTFareInfoHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        // 소액결제 선결제
         case 'micro-prepay':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -110,6 +115,7 @@ class MyTFareInfoHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        // 콘텐츠 이용요금 선결제
         case 'content-prepay':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -120,6 +126,7 @@ class MyTFareInfoHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        // 포인트 납부예약
         case 'point-reserve':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -130,6 +137,7 @@ class MyTFareInfoHistory extends TwViewController {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
           });
           break;
+        // 포인트 자동납부
         case 'point-auto':
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
@@ -148,7 +156,6 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private renderView(req: Request, res: Response, next: NextFunction, data: any) {
-
     res.render('info/myt-fare.info.history.html', {
       svcInfo: data.svcInfo,
       pageInfo: data.pageInfo,
@@ -162,8 +169,9 @@ class MyTFareInfoHistory extends TwViewController {
         refundPaymentCount: this.paymentData.refundPaymentCount,
         overPaymentCount: this.paymentData.overPaymentCount,
         refundTotalAmount: this.paymentData.refundTotalAmount,
+        refundPaymentCnt: this.paymentData.refundPaymentCnt,
         isPersonalBiz: this.paymentData.isPersonalBiz,
-        personalBizNum: this.paymentData.personalBizNum,
+        // personalBizNum: this.paymentData.personalBizNum,
         listData: this.mergeData(data.listData),
         refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
         current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType,
@@ -174,13 +182,12 @@ class MyTFareInfoHistory extends TwViewController {
 
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).map((resp: { code: string; result: any; }) => {
-
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
       } else {
         this.paymentData.isPersonalBiz = true;
-        this.paymentData.personalBizNum = resp.result.taxReprintList ?
-            resp.result.taxReprintList[0] ? resp.result.taxReprintList[0].ctzBizNum : '' : '';
+        /*this.paymentData.personalBizNum = resp.result.taxReprintList ?
+            resp.result.taxReprintList[0] ? resp.result.taxReprintList[0].ctzBizNum : '' : '';*/
       }
 
       return null;
@@ -217,25 +224,22 @@ class MyTFareInfoHistory extends TwViewController {
         this.getOnetimePointReserveData(),
         this.getPointAutoPaymentData()
     ).subscribe(histories => {
-      // this.logger.info(this, '-[MyTFareInfoHistory] -------->');
-
       this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
     });
   }
 
   private getOverAndRefundPaymentData = (current?: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 과납 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
 
       this.paymentData.overPaymentCount = parseInt(resp.result.ovrPayCnt, 10); // 과납건수
       this.paymentData.refundPaymentCount = parseInt(resp.result.rfndTotAmt, 10); // 환불받을 총 금액
-      // this.logger.info(this, resp.result.rfndTotAmt, FormatHelper.addComma(resp.result.rfndTotAmt.toString()));
       this.paymentData.refundTotalAmount = FormatHelper.addComma(resp.result.rfndTotAmt.toString());
+      this.paymentData.refundPaymentCnt = resp.result.refundPaymentRecord.length;
 
-      // 환불신청내역
+      /*// 환불신청내역
       resp.result.refundPaymentRecord.map((o) => {
         o.sortDt = o.rfndReqDt;
         o.dataDt = DateHelper.getShortDate(o.rfndReqDt);
@@ -244,7 +248,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataSumAmt = FormatHelper.addComma(o.sumAmt);
         o.dataRefundState = MYT_PAYMENT_HISTORY_REFUND_TYPE[o.rfndStat];
         o.rfndStat = o.rfndStat;
-      });
+      });*/
 
       // 과납내역
       resp.result.overPaymentRecord.map((o) => {
@@ -259,7 +263,6 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; result: any }) => {
-       // console.log('\x1b[36m%s\x1b[0m', '------log 즉시납부내역 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -281,16 +284,12 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataSettleWayCode = MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE[o.settleWayCd];
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.direct + (o.cardProcCd === 'N' ? '' + MYT_FARE_PAYMENT_HISTORY_TYPE.CANCEL_KOR_TITLE : '');
       });
-
-      // this.logger.info(this, 'directPayment : .................>> ', resp.result);
-
       return resp.result;
     });
   }
 
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 자동납부 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -313,16 +312,12 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.auto;
         o.dataTmthColClCd = MYT_PAYMENT_HISTORY_AUTO_TYPE[o.tmthColClCd];
       });
-
-      // this.logger.info(this, 'autoPayment : .................>> ', resp.result);
-
       return resp.result;
     });
   }
 
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 자동납부 통합 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -340,16 +335,12 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataDewAmtType = MYT_PAYMENT_HISTORY_AUTO_UNITED_TYPE[o.drwAmtTyp];
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.autoAll;
       });
-
-      // this.logger.info(this, 'autoUnionPyment : .................>> ', resp.result);
-
       return resp.result;
     });
   }
 
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 소액결제 code', resp.code, resp.result);
 
       if (resp.code !== API_CODE.CODE_00) {
         return null;
@@ -374,7 +365,6 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 콘텐츠 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -398,7 +388,6 @@ class MyTFareInfoHistory extends TwViewController {
   // 포인트 납부예약(1회 납부예약)
   private getOnetimePointReserveData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 포인트납부예약 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
@@ -426,11 +415,9 @@ class MyTFareInfoHistory extends TwViewController {
   // 포인트 자동납부
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log 포인트자동납부 code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
-      // this.logger.info(this, '-------------------// point payment data', resp.result);
       resp.result.usePointList = resp.result;
       
       resp.result.usePointList.map((o) => {
@@ -478,9 +465,9 @@ class MyTFareInfoHistory extends TwViewController {
           prev.mergedListData = prev.mergedListData.concat(cur.reservePointList);
         }
 
-        if (cur.refundPaymentRecord && !prev.refundRecordList) {
+        /*if (cur.refundPaymentRecord && !prev.refundRecordList) {
           prev.refundRecordList = cur.refundPaymentRecord;
-        }
+        }*/
         if (cur.overPaymentRecord && !prev.overPaymentList) {
           prev.overPaymentList = cur.overPaymentRecord;
         }

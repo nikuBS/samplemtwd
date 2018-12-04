@@ -1,4 +1,4 @@
-<% if ( recommends.recommendAppList && recommends.recommendAppList.length > 0 ) { %>
+<% if ( recommendApps.recommendAppList && recommendApps.recommendAppList.length > 0 ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- 함께하면 더욱 스마트한 앱서비스 -->
@@ -9,14 +9,14 @@
         <div class="widget-box horizontal">
             <div class="horizontal-slide">
                 <ul class="horizontal-list smart-app">
-                    <% for ( var i in recommends.recommendAppList ) { %>
+                    <% for ( var i in recommendApps.recommendAppList ) { %>
                     <li>
                         <div>
-                            <a href="/product/callplan/<%= recommends.recommendAppList[i].prodId %>">
-                                <% if ( recommends.recommendAppList[i].appImg ) { %>
-                                <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
+                            <a href="/product/callplan/<%= recommendApps.recommendAppList[i].prodId %>">
+                                <% if ( recommendApps.recommendAppList[i].appImg ) { %>
+                                <img class="ico" src="<%= recommendApps.recommendAppList[i].appImg %>">
                                 <% } %>
-                                <span><%= recommends.recommendAppList[i].prodNm %></span>
+                                <span><%= recommendApps.recommendAppList[i].prodNm %></span>
                             </a>
                         </div>
                     </li>

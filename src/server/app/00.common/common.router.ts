@@ -76,7 +76,7 @@ export default class CommonRouter extends TwRouter {
     // logout
     this.controllers.push({ url: '/member/logout/complete', controller: CommonMemberLogoutComplete });
     this.controllers.push({ url: '/member/logout/expire', controller: CommonMemberLogoutExpire });
-    this.controllers.push({ url: '/memberlogout/route', controller: CommonMemberLogoutRoute });
+    this.controllers.push({ url: '/member/logout/route', controller: CommonMemberLogoutRoute });
     // member - line
     this.controllers.push({ url: '/member/line', controller: CommonMemberLine });
     this.controllers.push({ url: '/member/line/edit', controller: CommonMemberLineEdit });

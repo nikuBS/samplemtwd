@@ -19,7 +19,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '부가서비스', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '부가서비스' }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -27,7 +27,7 @@
             <div class="container">
                 
                 <!-- 사용중인 상품 -->
-                <% if (svcInfo && productData.myAdditions) { %>
+                <% if (svcInfo && productData.myAdditions && productData.myAdditions.recentlyJoinsProdNm) { %>
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <div class="cont-box nogaps">
                         <div class="calling-plan">
@@ -140,13 +140,7 @@
                                     <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="<%= addition.prodNm %>"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
-                                        <p class="info">
-                                        <% if (addition.basFeeInfo.isNaN) { %>
-                                            <span class="money"><%= addition.basFeeInfo.value %></span>
-                                        <% } else { %>
-                                            월<span class="money"><%= addition.basFeeInfo.value %></span>원
-                                        <% } %>
-                                        </p>
+                                        <p class="info"><span class="money"><%= addition.basFeeInfo.value %></span><% if (!addition.basFeeInfo.isNaN) { %>원<% } %></p>
                                     </div>
                                     <% if (addition.prodFltList) { %>
                                     <div class="taglist-wrap">
@@ -212,13 +206,7 @@
                                     <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="<%= addition.prodNm %>"></div>
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
-                                        <p class="info">
-                                            <% if (addition.basFeeInfo.isNaN) { %>
-                                                <span class="money"><%= addition.basFeeInfo.value %></span>
-                                            <% } else { %>
-                                                월<span class="money"><%= addition.basFeeInfo.value %></span>원
-                                            <% } %>
-                                        </p>
+                                        <p class="info"><span class="money"><%= addition.basFeeInfo.value %></span><% if (!addition.basFeeInfo.isNaN) { %>원<% } %></p>
                                     </div>
                                     <% if (addition.prodFltList) { %>
                                     <div class="taglist-wrap">
@@ -252,9 +240,9 @@
                             </ul>
                         </div>
                         <div class="suggest-tag-morewrap">
-                            <a role="button" aria-pressed="false" class="suggest-tag-more">
+                            <button role="button" aria-pressed="false" class="suggest-tag-more">
                                 <span class="more">더보기</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -278,7 +266,7 @@
                             </a>
                         </li>
                         <li>
-                            <a><!-- TODO: 링크 추가 필요(화면 ID: RM) -->
+                            <a href="/product/roaming">
                                 <i class="icon-roaming-40"><span class="blind">roaming</span></i>
                                 T로밍
                             </a>
@@ -301,10 +289,7 @@
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

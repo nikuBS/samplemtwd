@@ -16,7 +16,7 @@
     <!--// #skip_navigation -->
 
     <div class="wrap">
-        <%- include('../../../../../common/views/components/header.component.html', { title: '과납 환불 신청 처리 내역', svcInfo: svcInfo}); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: '과납 환불 신청 처리 내역'}); %>
 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -32,7 +32,7 @@
         <!--// #contents -->
 
         <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
         </footer>
     </div>

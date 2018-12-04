@@ -79,10 +79,10 @@ Tw.ProductList.prototype = {
   _mapProperData: function(item) {
     if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
       item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
-      item.isMonthly = true;
+      item.isNumber = true;
     } else if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
       item.basFeeInfo = Tw.FormatHelper.addComma(item.basFeeInfo);
-      item.isMonthly = true;
+      item.isNumber = true;
     }
 
     item.basOfrDataQtyCtt = this._isEmptyAmount(item.basOfrDataQtyCtt) ? null : Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt);

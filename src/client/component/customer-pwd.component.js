@@ -1,7 +1,7 @@
 /**
  * FileName: customer-pwd.component.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.08.06
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.12.04
  */
 
 Tw.CustomerPwdComponent = function (rootEl) {
@@ -16,8 +16,8 @@ Tw.CustomerPwdComponent = function (rootEl) {
   this._loginErrorCode = {
     UNDER_3: 'ICAS3213',       // 고객보호비밀번호 오입력(3회 미만)
     ERROR_3: 'ICAS3212',       // 고객보호비밀번호 오입력(3회)
-    ERROR_4: 'ICAS3215',       //고객보호비밀번호 오입력 (4회)
-    BLOCKED: 'ICAS3216'        //고객보호비밀번호 잠김 (지점 내점 안내 노출)
+    ERROR_4: 'ICAS3215',       // 고객보호비밀번호 오입력 (4회)
+    BLOCKED: 'ICAS3216'        // 고객보호비밀번호 잠김 (지점 내점 안내 노출)
   };
 
   this._lineChangeErrorCode = {
@@ -25,7 +25,7 @@ Tw.CustomerPwdComponent = function (rootEl) {
     ERROR_2: 'ICAS3482',       // 고객보호비밀번호 입력 오류 2회
     ERROR_3: 'ICAS3483',       // 고객보호비밀번호 입력 오류 3회
     ERROR_4: 'ICAS3484',       // 고객보호비밀번호 입력 오류 4회
-    BLOCKED: 'ICAS3215'       // 고객보호비밀번호 입력 오류 5회 (잠김예정)
+    BLOCKED: 'ICAS3215'        // 고객보호비밀번호 입력 오류 5회 (잠김예정)
   };
 
   if (Tw.FormatHelper.isEmpty(rootEl)) {
@@ -37,6 +37,7 @@ Tw.CustomerPwdComponent = function (rootEl) {
   this.$container = rootEl;
 
   this._cachedElement();
+  this._init();
   this._bindEvent();
 };
 
@@ -44,38 +45,74 @@ Tw.CustomerPwdComponent.prototype = {
 
   _onPopupOpend: function ($layer) {
     this.$container = $layer;
+    this.$container.find('.fe-svc-num').text(this._mdn);
 
-    this.$container.find('.badge').hide();
-    this.$container.find('.circuit-tx').text(this._mdn);
     this._cachedElement();
+    this._init();
     this._bindEvent();
   },
   _cachedElement: function () {
-    this.$inputBox = this.$container.find('.inputbox');
-    this.$deleteIcon = this.$container.find('.ico');
-    this.$errMsg = this.$container.find('.error-txt');
+    this.$pwdWrap = this.$container.find('.fe-pw-wrap');
+    this.$firstPwd = this.$container.find('.fe-first-pwd');
+    this.$errMsg = this.$container.find('.fe-error-msg');
+    this.$url = this.$container.find('.fe-url');
     this.$pwd = this.$container.find('input');
-    this.$pwd.val('');
+  },
+  _init: function () {
+    this._hideErrMsg();
+    this._firstFocus();
+    this._removeValue();
   },
   _bindEvent: function () {
-    this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestLogin, this));
-    this.$deleteIcon.on('click', $.proxy(this._removePwd, this));
+    this.$pwdWrap.on('input', 'input', $.proxy(this._onInput, this));
+  },
+  _onInput: function (event) {
+    var $target = $(event.currentTarget);
+
+    this._hideErrMsg();
+    this._setAsterisk($target);
+    this._moveFocus($target);
+  },
+  _hideErrMsg: function () {
+    this.$errMsg.hide();
+  },
+  _firstFocus: function () {
+    this.$firstPwd.focus();
+  },
+  _removeValue: function () {
+    this.$pwd.val('');
+  },
+  _setAsterisk: function ($target) {
+    $target.parent().removeClass('active').addClass('entered');
+  },
+  _moveFocus: function ($target) {
+    if ($target.hasClass('fe-last')) {
+      this._requestLogin();
+    } else {
+      var $nextTarget = $target.parent().next();
+      $nextTarget.addClass('active');
+      $nextTarget.find('input').focus();
+    }
   },
   _removePwd: function () {
     this.$pwd.val('');
   },
   _requestLogin: function () {
-    var pwd = this.$pwd.val();
     var api = this._isPopup ? Tw.NODE_CMD.CHANGE_SESSION : Tw.NODE_CMD.LOGIN_SVC_PASSWORD;
-    var data = { svcPwd: pwd};
+    var data = { svcPwd: this._getPwd() };
     if (this._isPopup) {
       data.svcMgmtNum = this._serviceNumber;
     }
     this._apiService.request(api, data)
       .done($.proxy(this._onLoginReuestDone, this))
-      .fail(function (err) {
-        Tw.Logger.error('auth.login.service.pwd Fail', err);
-      });
+      .fail($.proxy(this._onError, this));
+  },
+  _getPwd: function () {
+    var pwd = '';
+    this.$pwd.each(function () {
+      pwd += $(this).val().toString();
+    });
+    return pwd;
   },
   _onLoginReuestDone: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -108,19 +145,25 @@ Tw.CustomerPwdComponent.prototype = {
       }
 
       if (errCount >= 1) {
-        this.$inputBox.addClass('error');
-        this.$deleteIcon.removeClass('none');
-        this.$errMsg.removeClass('none');
-
-        this.$errMsg.text(this._changeCount(this.$errMsg.text(), errCount));
+        this.$errMsg.find('span').text(this._changeCount(this.$errMsg.text(), errCount));
+        this.$errMsg.show();
       }
 
-      var errorMsg = unexpectedError ? res.code + ' ' + res.msg : Tw.MSG_AUTH.LOGIN_A01;
-      this._popupService.openAlert(errorMsg);
+      if (unexpectedError) {
+        this._onError(res);
+      }
+      this._initField();
     }
   },
   _changeCount: function (msg, count) {
     return msg.replace(/\d/, count);
+  },
+  _initField: function () {
+    this.$pwdWrap.find('li').removeClass('entered');
+    this.$firstPwd.parent().addClass('active');
+
+    this._removeValue();
+    this._firstFocus();
   },
   _onPwdPopupClosed: function () {
     if (!this._isCloseCallbackNeeded) {
@@ -132,14 +175,7 @@ Tw.CustomerPwdComponent.prototype = {
       }
     } else {
       if (this._isPopup) {
-        this._popupService.open({ hbs: 'CO_01_02_03_P01_P01' }, function ($layer) {
-          $layer.on('click', '.bt-red1 > button', function () {
-            Tw.Popup.close();
-          });
-
-          $layer.find('.link-long > a')[0].href = '/customer/email';
-          $layer.find('.link-long.last > a').attr('href', '/customer/shop/search');
-        });
+        this._goFailPage();
       }
     }
   },
@@ -149,8 +185,15 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      this._historyService.goLoad('/main/home');
+      var url = this.$url.text();
+      if (Tw.FormatHelper.isEmpty(url)) {
+        url = '/main/home';
+      }
+      this._historyService.replaceURL(url);
     }
+  },
+  _onError: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   },
   _showFail: function () {
     this._pwdSuccess = false;
@@ -158,15 +201,23 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      this._historyService.goLoad('/common/tid/logout?target=/common/login/customer-pwd-fail');
+      this._goFailPage();
     }
+  },
+  _goFailPage: function () {
+    this._historyService.replaceURL('/common/member/login/cust-pwdfail');
+    // this._historyService.replaceURL('/common/tid/logout?target=/common/member/login/cust-pwdfail');
   },
   openLayer: function (mdn, serviceNumber, callback) {
     this._mdn = mdn;
     this._serviceNumber = serviceNumber;
     this._callback = callback;
 
-    this._popupService.open({ hbs: 'CO_01_02_03_P01' },
+    this._popupService.open({
+        url: '/hbs/',
+        hbs: 'CO_ME_01_02_02_02_02',
+        layer: true
+      },
       $.proxy(this._onPopupOpend, this),
       $.proxy(this._onPwdPopupClosed, this));
   }

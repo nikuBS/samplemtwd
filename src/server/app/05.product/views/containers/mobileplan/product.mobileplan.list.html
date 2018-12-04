@@ -18,16 +18,16 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '모바일 요금제', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '모바일 요금제' }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
+                
                 <!-- 사용중인 상품 -->
                 <% if (svcInfo && svcInfo.svcAttrCd.includes('M')) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
                     <div class="calling-plan">
                         <a href="/myt-join/myplan" class="wrap-link">
@@ -131,7 +131,7 @@
                 <!-- //이런 요금제는 어떠세요? -->
 
                 <!-- //부가서비스 목록 -->
-                
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="findyourplan-wrap">
                     <a class="link" href="/product/find-my-best-plans">
                         <dl class="desc">
@@ -158,10 +158,10 @@
                             </a>
                         </li>
                         <li>
-                            <button><!-- TODO: 링크 추가 필요(화면 ID: RM)-->
+                            <a href="/product/roaming">
                                 <i class="icon-roaming-40"><span class="blind">my</span></i>
                                 T로밍
-                            </button>
+                            </a>
                         </li>
                         <li>
                             <a href="/benefit/submain">
@@ -181,10 +181,7 @@
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 

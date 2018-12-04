@@ -17,8 +17,7 @@
     <!--// #skip_navigation -->
     <div id="myt-fare-bill-option" class="wrap">
         <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html',
-        { title: '납부방법', svcInfo: svcInfo, option:{ line: true } }); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: '납부방법' }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -183,10 +182,7 @@
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

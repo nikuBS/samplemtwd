@@ -37,7 +37,7 @@
                 <div class="home-slider-belt">
                     <!-- .home-slider-my -->
                     <div class="home-slider-my">
-                        <% if (svcType.login) { %>
+                        <% if (svcType.login && svcType.mobilePhone) { %>
                         <!-- .layer-noti -->
                         <div class="dialog-box">
                             <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
@@ -53,8 +53,33 @@
                         <div class="main-top-group">
                             <!-- 모바일 회선_잔여 데이터 -->
                             <% if (svcType.login) { %>
+                            <% if (svcInfo.totalSvcCnt === '0') { %>
+                            <!-- 미가입 -->
+                            <div class="main-error-box">
+                                <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                <strong class="ti">가입하신 회선이 없습니다.</strong>
+                                <p class="tx">SK텔레콤의 가족이 되어<br>다양하고 편리한 서비스를 이용해 보세요.</p>
+                                <div class="btn-area">
+                                    <button type="button" class="btn-round1 btn-style4">휴대폰 보러가기</button>
+                                </div>
+                            </div>
+                            <!-- // 미가입 -->
+                            <% } else if ( svcInfo.expsSvcCnt === '0') { %>
+                            <!-- 미등롣 -->
+                            <div class="main-error-box">
+                                <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                <strong class="ti">회선 등록이 필요합니다.</strong>
+                                <p class="tx">아직 등록되지 않은 회선이 12개 있습니다.<br>원활한 서비스 이용을 위해서<br>적어도 1개의 회선은 등록하셔야 합니다.</p>
+                                <div class="btn-area">
+                                    <a href="/common/member/line" type="button" class="btn-round1 btn-style1">회선 등록하기</a>
+                                </div>
+                            </div>
+                            <!-- // 미등록 -->
+                            <% } else { %>
+                            <% if (svcType.svcCategory === 'M') { %>
+                            <!-- 모바일 회선_잔여 데이터 -->
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt">010-12**-34**</button></em>
+                                <em class="line"><button class="bt"><%= svcInfo.svcNum %></button></em>
                                 <strong class="ti"><button class="bt">T플랜 패밀리</button></strong>
 
                                 <!-- .widget -->
@@ -63,7 +88,7 @@
                                         <!-- .donut-chart -->
                                         <button class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
-                                                <!-- loop -->
+                                                <!-- loop 공유데이터 -->
                                                 <div class="c100 p0" data-percent="70"><!-- data-percent :0 ~ 100 -->
                                                     <div class="blue"><!-- red, yellow, green, blue -->
                                                         <div class="slice">
@@ -77,7 +102,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- // loop -->
-                                                <!-- loop -->
+                                                <!-- loop 남은 데이터-->
                                                 <div class="c100 p0" data-percent="50"><!-- data-percent :0 ~ 100 -->
                                                     <div class="red"><!-- red, yellow, green, blue -->
                                                         <div class="slice">
@@ -114,7 +139,8 @@
                                 </div>
                             </div>
                             <!-- //모바일 회선_잔여 데이터 -->
-
+                            <% } %>
+                            <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt">인천 연************</button></em>
@@ -131,6 +157,8 @@
                                 </div>
                             </div>
                             <!-- // 인터넷/전화/IPTV 요금안내서 -->
+                            <% } %>
+                            <% } %>
                             <% } else { %>
                             <!-- 비로그인 -->
                             <div class="main-error-box welcome">
@@ -157,36 +185,27 @@
                             <!-- //MY 바로가기 -->
                         </div>
 
-                        <!-- 이번 달 청구요금 -->
-                        <!--
-                        <div class="section-box">
-                            <div class="main-breakdown-box">
-                                <div class="stit c-point">이번 달 청구요금 <i class="icon-whole2"><span class="blind">전체</span></i></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용요금</strong> <em class="tx f-type">94,560원</em></li>
-                                    <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">-12,060원</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">자세히 보기</button>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                        <!-- //이번 달 청구요금 -->
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (homeData.membershipData) { %>
                         <div class="main-membershop-box">
                             <strong class="ti">membershop</strong>
                             <span class="rating silver">silver</span>
                             <!-- <span class="rating gold">gold</span>
                             <span class="rating vip">vip</span> -->
-                            <span class="bar-code"><img src="<%= CDN %>/img/main/bar_code.png" alt="bar code"></span>
+                            <span class="bar-code">
+                                <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>" data-usedAmount="<%= homeData.membershipData.showUsedAmount %>" alt="bar code"/>
+                                <!--<img src="<%= CDN %>/img/main/bar_code.png" alt="bar code">-->
+                            </span>
                         </div>
+                        <% } else { %>
+                        <!-- 미발급 / 이용정지-->
+                        <% } %>
+                        <% } %>
 
-                        <!-- 이번 달 콘텐츠 이용내역 -->
-                        <div class="section-box">
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <div class="section-box fe-smart-0 fe-smart-<%= smartCard[0].no %>"  data-smartCard="<%= smartCard[0].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point">이번 달 콘텐츠 이용내역</div>
+                                <div class="stit c-point"><%= smartCard[0].title %></div>
                                 <em class="sum">82,500원</em>
                                 <span class="date">2018.7.1.~2018.7.31.</span>
                                 <ul class="list">
@@ -197,25 +216,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- //이번 달 콘텐츠 이용내역 -->
+                        <% } %>
 
-                        <!-- 이번 달 소액결제 이용내역 -->
-                        <div class="section-box">
-                            <div class="main-breakdown-box">
-                                <div class="stit c-point">이번 달 소액결제 이용내역</div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- //이번 달 소액결제 이용내역 -->
-
-                        <!-- 멤버십 혜택 -->
+                        <!-- 프로모션 배너 1 -->
                         <div class="section-box nogaps">
                             <div class="main-charge-box benefit section-swiper-box main-banner-img">
                                 <!-- .widget -->
@@ -273,41 +276,40 @@
                                 <!--// .widget -->
                             </div>
                         </div>
-                        <!-- //멤버십 혜택 -->
+                        <!-- // 프로모션 배너 2 -->
 
-                        <!-- T끼리 데이터 선물 -->
-                        <div class="section-box">
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <div class="section-box fe-smart-1 fe-smart-<%= smartCard[1].no %>"  data-smartCard="<%= smartCard[1].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point">T끼리 데이터 선물</div>
-                                <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
+                                <div class="stit c-point"><%= smartCard[1].title %></div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
                                 <ul class="list">
-                                    <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point">36.7GB</em></li>
-                                    <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type">1</span>회</em></li>
+                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
                                 </ul>
                                 <div class="btn-area">
-                                    <button class="bt">선물하기</button>
+                                    <button class="bt">결제내역 보기</button>
                                 </div>
                             </div>
                         </div>
-                        <!-- //T끼리 데이터 선물 -->
-
-                        <!-- 데이터 충전 -->
-                        <div class="section-box">
+                        <% } %>
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <div class="section-box fe-smart-2 fe-smart-<%= smartCard[2].no %>"  data-smartCard="<%= smartCard[2].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point">데이터 충전</div>
-                                <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
+                                <div class="stit c-point"><%= smartCard[2].title %></div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
                                 <ul class="list">
-                                    <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point">500MB</em></li>
-                                    <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type">2</span>장</em></li>
+                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
                                 </ul>
                                 <div class="btn-area">
-                                    <button class="bt">충전하기</button>
+                                    <button class="bt">결제내역 보기</button>
                                 </div>
                             </div>
                         </div>
-                        <!-- //데이터 충전 -->
+                        <% } %>
 
-                        <!-- 당신을 위한 기획전 -->
+                        <!-- 프로모션 배너 2 -->
                         <div class="section-box nogaps">
                             <div class="main-charge-box advice section-swiper-box main-banner-img">
                                 <!-- .widget -->
@@ -365,7 +367,97 @@
                                 <!--// .widget -->
                             </div>
                         </div>
-                        <!-- //당신을 위한 기획전 -->
+                        <!-- // 프로모션 배너 2 -->
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <div class="section-box fe-smart-3 fe-smart-<%= smartCard[3].no %>"  data-smartCard="<%= smartCard[3].no %>">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point"><%= smartCard[3].title %></div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
+                                <ul class="list">
+                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">결제내역 보기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <div class="section-box fe-smart-4 fe-smart-<%= smartCard[4].no %>"  data-smartCard="<%= smartCard[4].no %>">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point"><%= smartCard[4].title %></div>
+                                <em class="sum">82,500원</em>
+                                <span class="date">2018.7.1.~2018.7.31.</span>
+                                <ul class="list">
+                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
+                                </ul>
+                                <div class="btn-area">
+                                    <button class="bt">결제내역 보기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+
+                        <!-- 프로모션 배너 3 -->
+                        <div class="section-box nogaps">
+                            <div class="main-charge-box advice section-swiper-box main-banner-img">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button>
+                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <div class="stit">당신을 위한 기획전</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                        <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                        <button class="bt">상담하러 가기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="stit">당신을 위한 기획전</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                        <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                        <button class="bt">상담하러 가기</button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="stit">당신을 위한 기획전</div>
+                                                    <div class="main-box-cont">
+                                                        <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                        <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                        <button class="bt">상담하러 가기</button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                        </div>
+                        <!-- // 프로모션 배터 3 -->
 
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">
