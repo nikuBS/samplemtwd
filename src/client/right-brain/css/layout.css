@@ -280,203 +280,75 @@ body.bg-gray {
         background: #fff url(/img/common/btn-search.png) no-repeat 0.625rem 0.5625rem;
         background-size: 1.25rem 1.25rem; }
     #common-menu .section-cont .section-gnb {
+      margin-top: 0.625rem;
       border-bottom: 1px solid #e5e5e5;
       background: #fff; }
-    #common-menu .section-cont .bt-depth1 {
-      position: relative;
-      height: 3.25rem; }
-      #common-menu .section-cont .bt-depth1 > .bt {
+      #common-menu .section-cont .section-gnb .bt-depth1 {
         position: relative;
-        display: block;
-        width: 100%;
-        padding: 0 2.1875rem 0 3.25rem;
-        color: inherit;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 3.25rem;
-        text-align: left;
-        vertical-align: top;
-        -webkit-box-sizing: border-box;
-                box-sizing: border-box; }
-        #common-menu .section-cont .bt-depth1 > .bt:before {
-          content: '';
-          position: absolute;
-          left: 1rem;
-          top: 50%;
-          width: 1.5rem;
-          height: 1.5rem;
-          margin-top: -0.8125rem;
-          background-size: 100% auto;
-          background-repeat: no-repeat;
-          background-position: left center; }
-        #common-menu .section-cont .bt-depth1 > .bt .info {
-          margin-left: 0.4375rem;
-          color: #f76252;
-          font-size: 0.9375rem; }
-      #common-menu .section-cont .bt-depth1 > .more {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 3.25rem;
-        height: 100%;
-        background-image: url(/img/common/ico-menu-open.png);
-        background-position: center;
+        min-height: 3.25rem;
         background-repeat: no-repeat;
-        background-size: 13px auto;
-        font-size: 0;
-        line-height: 0; }
-    #common-menu .section-cont .gnb-depth1 {
-      padding: 0.9375rem 0;
-      border-top: 1px solid #f2f2f2; }
-      #common-menu .section-cont .gnb-depth1:first-child {
-        border: none; }
-      #common-menu .section-cont .gnb-depth1 .depth1-type1 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_history.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type2 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_charge.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type3 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_my.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type4 .bt-depth1 > .bt:before {
-        background-image: url(/img/common/ico-menu04.png); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type5 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_discount.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type6 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_event.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type7 .bt-depth1 > .bt:before {
-        background-image: url(/img/common/ico-menu07.png); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type8 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_vas.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type9 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_internet.svg); }
-      #common-menu .section-cont .gnb-depth1 .depth1-type10 .bt-depth1 > .bt:before {
-        background-image: url(/img/svg/icon_48px_roaming.svg); }
-      #common-menu .section-cont .gnb-depth1.gnb-type li {
-        margin-bottom: 0 !important; }
-        #common-menu .section-cont .gnb-depth1.gnb-type li .info {
-          display: none !important; }
-        #common-menu .section-cont .gnb-depth1.gnb-type li .more {
-          display: none !important; }
-        #common-menu .section-cont .gnb-depth1.gnb-type li .depth2 {
-          display: none !important; }
-      #common-menu .section-cont .gnb-depth1 > li:last-child.open {
-        margin-bottom: -1.875rem; }
-      #common-menu .section-cont .gnb-depth1 > li .depth2 {
-        display: none;
-        background: #f1f4f6; }
-        #common-menu .section-cont .gnb-depth1 > li .depth2 .bt {
-          display: block;
-          width: 100%;
-          padding: 0.8125rem 2.1875rem 0.875rem 3.25rem;
-          color: inherit;
-          font-size: 0.9375rem;
-          text-align: left;
-          -webkit-box-sizing: border-box;
-                  box-sizing: border-box; }
-      #common-menu .section-cont .gnb-depth1:last-child > li:last-child {
-        margin-bottom: -0.9375rem; }
-    #common-menu .section-cont .section-guide {
-      margin-top: 0.625rem;
-      border-bottom: 1px solid #e5e5e5;
-      background: #fff; }
-      #common-menu .section-cont .section-guide .bt-depth1 > .bt:before {
-        background-image: url(/img/common/ico-guide.png); }
-      #common-menu .section-cont .section-guide .depth2 {
-        display: none;
-        overflow: hidden;
-        background: #f1f4f6; }
-        #common-menu .section-cont .section-guide .depth2 .ti {
-          display: block;
-          padding: 1.0625rem 1rem 0.4375rem 3.25rem;
-          color: #666;
-          font-size: 0.75rem;
-          font-weight: 300; }
-        #common-menu .section-cont .section-guide .depth2 .bt {
+        background-size: 100% 100%;
+        background-position: left top; }
+        #common-menu .section-cont .section-gnb .bt-depth1 > .bt {
           position: relative;
-          display: block;
+          display: table;
           width: 100%;
-          padding: 0.5rem 1rem 0.5625rem 3.25rem;
+          min-height: 3.25rem;
+          padding: 0.9375rem 2.1875rem 0.8125rem 1rem;
           color: inherit;
-          font-size: 0.9375rem;
+          font-size: 17px;
+          font-weight: 500;
           text-align: left;
+          vertical-align: top;
           -webkit-box-sizing: border-box;
-                  box-sizing: border-box; }
-        #common-menu .section-cont .section-guide .depth2 ul {
-          margin-bottom: -0.0625rem; }
-        #common-menu .section-cont .section-guide .depth2 .line {
-          margin-top: 0.75rem; }
-          #common-menu .section-cont .section-guide .depth2 .line + .line {
-            margin: 0; }
-          #common-menu .section-cont .section-guide .depth2 .line .bt {
-            margin-top: -0.0625rem;
-            padding: 0.75rem 1rem 0.875rem 3.25rem; }
-            #common-menu .section-cont .section-guide .depth2 .line .bt:before {
-              content: '';
-              position: absolute;
-              left: 3.25rem;
-              right: 1rem;
-              top: 0;
-              height: 0.0625rem;
-              background: #e5e5e5; }
-            #common-menu .section-cont .section-guide .depth2 .line .bt:after {
-              content: '';
-              position: absolute;
-              left: 3.25rem;
-              right: 1rem;
-              bottom: 0;
-              height: 0.0625rem;
-              background: #e5e5e5; }
-    #common-menu .section-cont .section-shop {
-      margin-top: 0.625rem;
-      border-bottom: 1px solid #e5e5e5;
-      background: #fff; }
-      #common-menu .section-cont .section-shop .bt-depth1 {
-        height: auto; }
-      #common-menu .section-cont .section-shop .bt {
-        padding: 0.9375rem 5rem 0.9375rem 1rem;
-        line-height: initial; }
-        #common-menu .section-cont .section-shop .bt:before {
-          left: auto;
-          right: 2.9375rem;
-          width: 2.625rem;
-          height: 2.625rem;
-          margin-top: -1.375rem;
-          background: url(/img/common/ico-direct-shop.png) no-repeat;
-          background-size: 100%; }
-        #common-menu .section-cont .section-shop .bt .ti {
-          display: block;
-          font-size: 1.0625rem;
-          font-weight: 500; }
-        #common-menu .section-cont .section-shop .bt .tx {
-          display: block;
-          margin-top: 0.3125rem;
-          color: #999;
-          font-size: 0.875rem;
-          font-weight: 300; }
-      #common-menu .section-cont .section-shop .depth2 {
-        display: none;
-        background: #f1f4f6; }
-        #common-menu .section-cont .section-shop .depth2 .bt {
-          display: block;
-          width: 100%;
-          padding: 0.8125rem 2.1875rem 0.875rem 3.25rem;
-          color: inherit;
-          font-size: 0.9375rem;
-          text-align: left;
-          -webkit-box-sizing: border-box;
-                  box-sizing: border-box; }
-    #common-menu .section-cont .section-link {
-      margin-top: 0.625rem;
-      border-bottom: 1px solid #f2f2f2;
-      background: #fff; }
-      #common-menu .section-cont .section-link li {
+                  box-sizing: border-box;
+          table-layout: fixed; }
+          #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ico {
+            display: table-cell;
+            width: 1.5rem;
+            height: 1.5rem;
+            padding-right: 0.8125rem;
+            vertical-align: middle;
+            font-size: 0;
+            line-height: 0; }
+            #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ico img {
+              width: 100%;
+              height: 100%;
+              margin-top: -0.125rem; }
+          #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info {
+            display: table-cell;
+            line-height: 1.1875rem;
+            vertical-align: middle; }
+            #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
+              margin-left: 0.4375rem;
+              color: #f76252;
+              font-size: 0.9375rem; }
+            #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .tx {
+              display: block;
+              margin-top: 0.4375rem;
+              color: #999;
+              font-size: 0.875rem;
+              font-weight: 300; }
+        #common-menu .section-cont .section-gnb .bt-depth1 > .more {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 3.25rem;
+          height: 100%;
+          background-image: url(/img/common/ico-menu-open.png);
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 13px auto;
+          font-size: 0;
+          line-height: 0; }
+      #common-menu .section-cont .section-gnb .gnb-depth1 {
         border-top: 1px solid #f2f2f2; }
-        #common-menu .section-cont .section-link li:first-child {
-          border-top: none; }
-        #common-menu .section-cont .section-link li .bt {
+        #common-menu .section-cont .section-gnb .gnb-depth1 > li > .bt {
           position: relative;
           display: block;
           width: 100%;
           padding: 0.875rem 5rem 0.875rem 1rem;
+          border-top: 1px solid #f2f2f2;
           background: #fff;
           color: inherit;
           font-size: 1.0625rem;
@@ -484,7 +356,7 @@ body.bg-gray {
           text-align: left;
           -webkit-box-sizing: border-box;
                   box-sizing: border-box; }
-          #common-menu .section-cont .section-link li .bt:after {
+          #common-menu .section-cont .section-gnb .gnb-depth1 > li > .bt:after {
             content: '';
             position: absolute;
             right: 1rem;
@@ -494,6 +366,64 @@ body.bg-gray {
             margin-top: -0.3125rem;
             background: url(/img/common/ico-link.png) no-repeat;
             background-size: 100%; }
+        #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 {
+          display: none;
+          background: #f1f4f6; }
+          #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .ti {
+            display: block;
+            padding: 0.75rem 1rem 0.4375rem 3.25rem;
+            color: #666;
+            font-size: 0.75rem;
+            font-weight: 300; }
+            #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .ti + ul .bt {
+              padding: 0.5625rem 2.1875rem 0.5rem 3.25rem; }
+            #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .ti:last-of-type + ul li:last-of-type .bt:after {
+              display: none !important; }
+          #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .bt {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 2.1875rem 0.8125rem 3.25rem;
+            color: inherit;
+            font-size: 0.9375rem;
+            text-align: left;
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box; }
+          #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line {
+            margin-top: 0.8125rem; }
+            #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line + .line {
+              margin: 0; }
+            #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line .bt {
+              position: relative;
+              margin-top: -0.0625rem;
+              padding: 0.9375rem 1rem 0.8125rem 3.25rem !important; }
+              #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line .bt:before {
+                content: '';
+                position: absolute;
+                left: 3.25rem;
+                right: 1rem;
+                top: 0;
+                height: 0.0625rem;
+                background: #e5e5e5; }
+              #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line .bt:after {
+                content: '';
+                position: absolute;
+                left: 3.25rem;
+                right: 1rem;
+                bottom: 0;
+                height: 0.0625rem;
+                background: #e5e5e5; }
+        #common-menu .section-cont .section-gnb .gnb-depth1:first-child {
+          border-top: none; }
+          #common-menu .section-cont .section-gnb .gnb-depth1:first-child > .bt {
+            border-top: none; }
+      #common-menu .section-cont .section-gnb:first-child {
+        margin: 0; }
+        #common-menu .section-cont .section-gnb:first-child .gnb-depth1 {
+          padding: 0.9375rem 0; }
+          #common-menu .section-cont .section-gnb:first-child .gnb-depth1 > li:last-child.open {
+            margin-bottom: -1.875rem; }
+          #common-menu .section-cont .section-gnb:first-child .gnb-depth1:last-child > li:last-child.open {
+            margin-bottom: -0.9375rem; }
     #common-menu .section-cont .open .more {
       background-image: url(/img/common/ico-menu-close.png) !important; }
     #common-menu .section-cont .open .depth2 {

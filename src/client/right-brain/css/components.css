@@ -14693,6 +14693,8 @@ a.bt-link-tx.underline.small {
       display: table-cell;
       width: 80%;
       vertical-align: top; }
+      .payment-switch-wrap .payment-switch-list ul li .use-info-wrap.w-60 {
+        width: 60%; }
       .payment-switch-wrap .payment-switch-list ul li .use-info-wrap .name1 {
         display: block;
         font-size: 1.125rem;
@@ -14720,6 +14722,18 @@ a.bt-link-tx.underline.small {
       display: table-cell;
       width: 20%;
       vertical-align: top; }
+      .payment-switch-wrap .payment-switch-list ul li .switch-wrap.w-40 {
+        width: 40%; }
+      .payment-switch-wrap .payment-switch-list ul li .switch-wrap .txt-info {
+        font-size: 0.875rem; }
+      .payment-switch-wrap .payment-switch-list ul li .switch-wrap .red-btn {
+        display: inline-block;
+        margin-top: 0;
+        padding-bottom: 0.125rem;
+        color: #e22f26;
+        border-bottom: 1px solid #e22f26;
+        font-size: 0.875rem;
+        text-decoration: none; }
 
 .cont-tit-wrap .tit-small {
   display: block;
@@ -22129,6 +22143,8 @@ a.bt-link-tx.underline.small {
 .agree-chk-type2 .select-list-desc.interval-type .layout-text {
   padding-bottom: 0 !important; }
 
+/* 이은재 */
+/* 주미숙 */
 .btn-style1 {
   background: #f76252;
   color: #ffffff;
@@ -27800,3 +27816,12 @@ body.apphome {
 
 .val-txt-type01 {
   width: 100%; }
+
+.main-banner-img button, .main-banner-img a {
+  display: block;
+  width: 100%; }
+  .main-banner-img button img, .main-banner-img a img {
+    width: 100%; }
+
+.main-banner-img.bul .slick-dots {
+  top: 1.5rem !important; }
