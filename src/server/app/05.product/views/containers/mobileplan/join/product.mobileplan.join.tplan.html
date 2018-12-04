@@ -18,7 +18,7 @@
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-        <%- include('../../../../common/views/components/header.component.html', { title: '가입', svcInfo, option: { line: false } }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '가입' }); %>
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -33,8 +33,7 @@
                 <!--// .cont-box -->
 
                 <div class="product-select-wrap">
-                    <span class="data-tit">인피니티 상품 혜택 <button class="tip-view"
-                                                              id="MP_02_02_03_01_tip_01">TIP</button></span>
+                    <span class="data-tit">인피니티 상품 혜택 <button class="tip-view" id="MP_02_02_03_01_tip_01">TIP</button></span>
                 </div>
 
                 <!-- .cont-box -->
@@ -127,7 +126,7 @@
         <!--// .popup-closeBtn -->
         <!-- #footer -->
         <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
         </footer>
         <!--// #footer -->
     </div>
