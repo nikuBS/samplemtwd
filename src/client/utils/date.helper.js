@@ -148,11 +148,22 @@ Tw.DateHelper = (function () {
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01 (first date of this month)
    */
-  var getShortFirstDateNoNot = function (date) {
+  var getShortFirstDateNoDot = function (date) {
     var curDate = this.convDateFormat(date);
     var firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.MM.DD');
+    return moment(firstDate).format('YYYY.M.DD');
   };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.01 (first date of this month)
+   */
+  var getShortFirstDate = function (date) {
+    var curDate = this.convDateFormat(date);
+    var firstDate = new Date(curDate.setDate(1));
+    return moment(firstDate).format('YYYY.M.DD.');
+  };
+
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
@@ -313,8 +324,9 @@ Tw.DateHelper = (function () {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
     getShortDate: getShortDate,
+    getShortFirstDate: getShortFirstDate,
     getShortDateNoDot: getShortDateNoDot,
-    getShortFirstDateNoNot: getShortFirstDateNoNot,
+    getShortFirstDateNoDot: getShortFirstDateNoDot,
     getShortDateNoDate: getShortDateNoDate,
     getShortDateNoYear: getShortDateNoYear,
     getShortDateAndTime: getShortDateAndTime,

@@ -195,8 +195,8 @@ class MainHome extends TwViewController {
         deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),
         repSvc: billData.charge.repSvcYn === 'Y',
         totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
-        invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt),
-        invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
+        invEndDt: DateHelper.getShortDate(billData.charge.invDt),
+        invStartDt: DateHelper.getShortFirstDate(billData.charge.invDt),
         invMonth: DateHelper.getCurrentMonth(billData.charge.invDt),
         type1: totSvc && repSvc,
         type2: !totSvc,
@@ -220,10 +220,10 @@ class MainHome extends TwViewController {
     return {
       showSet: !(FormatHelper.isEmpty(joinInfo.setPrdStaDt) && FormatHelper.isEmpty(joinInfo.setPrdEndDt)),
       showSvc: !(FormatHelper.isEmpty(joinInfo.svcPrdStaDt) && FormatHelper.isEmpty(joinInfo.svcPrdEndDt)),
-      setPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.setPrdStaDt),
-      setPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.setPrdEndDt),
-      svcPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdStaDt),
-      svcPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdEndDt)
+      setPrdStaDt: DateHelper.getShortDate(joinInfo.setPrdStaDt),
+      setPrdEndDt: DateHelper.getShortDate(joinInfo.setPrdEndDt),
+      svcPrdStaDt: DateHelper.getShortDate(joinInfo.svcPrdStaDt),
+      svcPrdEndDt: DateHelper.getShortDate(joinInfo.svcPrdEndDt)
     };
   }
 

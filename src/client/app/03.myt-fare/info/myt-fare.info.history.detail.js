@@ -47,7 +47,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
       case 'AT':
       case 'AU':
         // 자동납부 카드/계좌
-        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoNot(this.detailData.dataLastInvDt));
+        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoDot(this.detailData.dataLastInvDt));
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;
       case 'RP':
