@@ -1,7 +1,7 @@
 /**
  * FileName: common.login.customer-pwd.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.07.11
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.12.04
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,7 +13,8 @@ class CommonMemberLoginCustPwd extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo });
+    const query = req.query;
+    res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, query: query });
   }
 }
 
