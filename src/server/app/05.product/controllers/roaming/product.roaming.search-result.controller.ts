@@ -84,23 +84,23 @@ class ProductRoamingSearchResult extends TwViewController {
                 }
 
                 this.logger.info(this, 'rateParams : ', rateParams);
-                //this.getCountryRate(rateParams);
+                this.getCountryRate(rateParams);
             }
             return roamingTypeData;
         });
     }
-    // private getCountryRate (params) {
-    //     this.logger.info(this, 'getCountryRate params :', params);
-    //
-    //     let roamingRateData = null;
-    //     return this.apiService.request(API_CMD.BFF_10_0058, params).map((resp) => {
-    //         if ( resp.code === API_CODE.CODE_00 ) {
-    //             roamingRateData = resp.result;
-    //             this.logger.info(this, 'roamingRateData ==== ', roamingRateData);
-    //         }
-    //         return roamingRateData;
-    //     });
-    // }
+    private getCountryRate (params) {
+        this.logger.info(this, 'getCountryRate params :', params);
+
+        let roamingRateData = null;
+        return this.apiService.request(API_CMD.BFF_10_0058, params).map((resp) => {
+            if ( resp.code === API_CODE.CODE_00 ) {
+                roamingRateData = resp.result;
+                this.logger.info(this, 'roamingRateData ==== ', roamingRateData);
+            }
+            return roamingRateData;
+        });
+    }
 }
 
 export default ProductRoamingSearchResult;

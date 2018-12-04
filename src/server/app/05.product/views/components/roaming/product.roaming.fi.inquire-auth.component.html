@@ -4,79 +4,44 @@
 * Date: 2018.11.28
 %>
 <script id="tmplList" type="text/x-handlebars-template">
-
-    <div class="widget">
-        <div class="widget-box toggle">
-            <div class="title-wrap">
-                <h3 class="tit-type4">T파이 내역 <span class="tx-bold tx-blue">{{list.iTotal}}건</span></h3>
-                <button class="bt-toggle bt-detail" role="button" aria-pressed="false" title="이용내역 더보기">{{list.rentfrom}} – {{list.rentto}}</button>
-            </div>
-            <div class="toggler">
-                <div class="search">
-                    <div class="inputbox date-selcet">
-                        <span class="date-type"><input id="fe-sdate" type="date" min="2000-01" max="2018-12" title="시작날짜 선택"/></span>
-                        <span class="bar">~</span>
-                        <span class="date-type"><input id="fe-edate" type="date" min="2000-01" max="2018-12" title="마지막날짜 선택"/></span>
-                    </div>
-                    <ul class="bt-slice pt20">
-                        <li class="bt-blue1">
-                            <button id="fe-inquire">조회하기</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="announcement-box pt16">
-                <p class="announcement-bullet type01">당일 기준 6개월 이후 임대 예정인 예약 건은 달력 날짜를 수동 설정 후 조회해주세요. (당일 전/후 최대 2년까지 조회 가능)</p>
-            </div>
+    {{#each list}}
+    <li>
+        <div class="basic-list">
+            <ul>
+                <li>
+                    <span class="title gray">예약일</span>
+                    <span class="tx-cont">{{rsv_rcv_dtm}}</span>
+                </li>
+                <li>
+                    <span class="title gray">임대 기간</span>
+                    <span class="tx-cont">{{rental_schd_sta_dtm}} ~ {{rental_schd_end_dtm}}</span>
+                </li>
+                <li>
+                    <span class="title gray">방문 국가</span>
+                    <span class="tx-cont">{{{visit_nat_lst}}}</span>
+                </li>
+                <li>
+                    <span class="title gray">수령 장소</span>
+                    <span class="tx-cont">{{rental_booth_org_id}}</span>
+                </li>
+                <li>
+                    <span class="title gray">반납 장소</span>
+                    <span class="tx-cont">{{rental_sale_org_id}}</span>
+                </li>
+                <li>
+                    <span class="title gray">진행 상태</span>
+                    <span class="tx-cont tx-bold">{{rental_st_nm}}</span>
+                </li>
+            </ul>
         </div>
-    </div>
-
-    <div class="charge-guide-wrap top-line pt0">
-        <ul class="list-type">
-            {{#each list.romlist}}
-            <li>
-                <div class="basic-list">
-                    <ul>
-                        <li>
-                            <span class="title gray">예약일</span>
-                            <span class="tx-cont">{{rsv_rcv_dtm}}</span>
-                        </li>
-                        <li>
-                            <span class="title gray">임대 기간</span>
-                            <span class="tx-cont">{{rental_schd_sta_dtm}} ~ 2018.09.21</span>
-                        </li>
-                        <li>
-                            <span class="title gray">방문 국가</span>
-                            <span class="tx-cont">{{{visit_nat_lst}}}</span>
-                        </li>
-                        <li>
-                            <span class="title gray">수령 장소</span>
-                            <span class="tx-cont">{{rental_booth_org_id}}</span>
-                        </li>
-                        <li>
-                            <span class="title gray">반납 장소</span>
-                            <span class="tx-cont">{{rental_sale_org_id}}</span>
-                        </li>
-                        <li>
-                            <span class="title gray">진행 상태</span>
-                            <span class="tx-cont tx-bold">{{rental_st_nm}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <ul class="bt-slice item-two mt30">
-                    <li class="bt-white2">
-                        <button id="fe-cancel" data-response="{{json this}}">예약 취소</button>
-                    </li>
-                    <li class="bt-white2">
-                        <button id="fe-edit" data-response="{{json this}}" data-country="{{country}}">예약 수정</button>
-                    </li>
-                </ul>
+        <ul class="bt-slice item-two mt30">
+            <li class="bt-white2">
+                <button id="fe-cancel" data-response="{{json this}}">예약 취소</button>
             </li>
-            {{/each}}
+            <li class="bt-white2">
+                <button id="fe-edit" data-response="{{json this}}" data-country="{{country}}">예약 수정</button>
+            </li>
         </ul>
-        <div class="bt-more gap-style">
-            <button>더보기</button>
-        </div>
-    </div>
+    </li>
+    {{/each}}
 </script>

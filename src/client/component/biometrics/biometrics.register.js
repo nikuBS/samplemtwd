@@ -1,20 +1,23 @@
 /**
- * FileName: main.menu.settings.biometrics.register.js
+ * FileName: biometrics.register.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.10
  */
 
-Tw.MainMenuSettingsBiometricsRegister = function (target) {
+Tw.BiometricsRegister = function (target) {
   this._target = target;
+  this._callback = null;
+
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
-  this._biometricsComplete = new Tw.MainMenuSettingsBiometricsComplete(this._target);
+  this._biometricsComplete = new Tw.BiometricsComplete(this._target);
 
   this._complete = false;
 };
 
-Tw.MainMenuSettingsBiometricsRegister.prototype = {
-  open: function () {
+Tw.BiometricsRegister.prototype = {
+  open: function (callback) {
+    this._callback = callback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_03',
       layer: true,
@@ -40,7 +43,7 @@ Tw.MainMenuSettingsBiometricsRegister.prototype = {
   },
   _onCloseBioRegister: function () {
     if ( this._complete ) {
-      this._biometricsComplete.open();
+      this._biometricsComplete.open(this._callback);
     }
   }
 };

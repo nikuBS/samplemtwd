@@ -58,12 +58,10 @@ Tw.CertificationSk.prototype = {
     this._getAllSvcInfo(opMethods, optMethods, isWelcome, methodCnt);
   },
   _checkSmsType: function (opMethods) {
-    if ( opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ) {
-      this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
-    } else if ( opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 ) {
+    if ( opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 ) {
       this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE;
     } else {
-      // error
+      this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
     }
   },
   _checkOption: function (optMethods) {
@@ -242,7 +240,8 @@ Tw.CertificationSk.prototype = {
     this._requestCert();
   },
   _onClickCertAdd: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_03_0027, {}).done($.proxy(this._successCertAdd, this));
+    this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
+      .done($.proxy(this._successCertAdd, this));
   },
   _successCertAdd: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {

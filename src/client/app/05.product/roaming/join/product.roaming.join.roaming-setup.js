@@ -1,5 +1,5 @@
 /**
- * FileName: product.roaming.join.roaming-setup.js
+ * FileName: product.roaming.setting.roaming-setup.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
  * Date: 2018.11.28
  */

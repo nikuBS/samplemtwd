@@ -6,8 +6,6 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import EnvHelper from '../../../../utils/env.helper';
 
 class CommonCertComplete extends TwViewController {
   constructor() {
@@ -15,7 +13,8 @@ class CommonCertComplete extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('cert/common.cert.complete.html', );
+    const target = req.query.target;
+    res.render('cert/common.cert.complete.html', { target });
   }
 }
 

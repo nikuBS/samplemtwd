@@ -427,6 +427,7 @@ export const PREPAID_PAYMENT_TYPE = {
   '99': '선불카드(PPS카드)'
 };
 
+
 export const PRODUCT_TYP_CD_LIST = {
   AB: 'product/mobileplan',
   C: 'product/mobileplan-add',
@@ -476,4 +477,59 @@ export enum SVC_STATE {
   SP = 'SP',      // 정지
   TG = 'TG',      // 일반해지
   X1 = 'X1'       // CIS PB 상태자료 이전
+}
+
+export const ROAMING_AUTO_EXPIRE_CASE = {
+    NA00003178 : 7,
+    NA00003177 : 5,
+    NA00004226 : 3,
+    NA00006039 : 30,
+    NA00005747 : 5,
+    NA00005901 : 5,
+    NA00005301 : 30,
+    NA00005337 : 30,
+    NA00006047 : 30,
+    NA00006041 : 30,
+    NA00005903 : 5,
+    NA00006043 : 30,
+    NA00006051 : 30,
+    NA00005506 : 30,
+    NA00005899 : 5,
+    NA00006049 : 30,
+    NA00006045 : 30,
+    NA00006053 : 30,
+    NA00005699 : 5,
+    NA00005898 : 5,
+    NA00005900 : 5,
+    NA00005902 : 5,
+    NA00006038 : 30,
+    NA00006040 : 30,
+    NA00006042 : 30,
+    NA00006044 : 30,
+    NA00006046 : 30,
+    NA00006048 : 30,
+    NA00006050 : 30,
+    NA00006052 : 30,
+    NA00005252 : 30,
+    NA00005300 : 30,
+    NA00005505 : 30,
+    NA00005690 : 10,
+    NA00005693 : 10
+};
+
+export enum AUTH_CERTIFICATION_METHOD {
+  SK_SMS = 'S',
+  SK_SMS_RE = 'R',
+  OTHER_SMS = 'T',
+  SAVE = 'A',
+  PUBLIC_AUTH = 'P',
+  IPIN = 'I',
+  BIO = 'O',
+  FINANCE_AUTH = 'B',
+  SMS_KEYIN = 'K',
+  PASSWORD = 'W',
+  SMS_SECURITY = 'Y',
+  SMS_REFUND = 'SF',
+  IPIN_REFUND = 'IF',
+  OTHER_REFUND = 'TF'
 }

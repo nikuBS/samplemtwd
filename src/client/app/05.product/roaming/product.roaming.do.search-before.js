@@ -138,10 +138,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
   },
   _onSearchModel: function (val) {
     console.log('on search model info : params = ' + val);
-    var _param = {
-        mfactCd : val
-    };
-    this._apiService.request(Tw.API_CMD.BFF_10_0059, _param)
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0059, { mfactCd:val })
         .done($.proxy(this._handleSuccessSearchModelResult, this))
         .fail($.proxy(this._handleFailModelSearch, this));
   },

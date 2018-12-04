@@ -5,11 +5,13 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 class CustomerFaq extends TwViewController {
-  render(req: Request, res: Response) {
-    res.render('faq/customer.faq.html');
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
+         childInfo: any, pageInfo: any) {
+
+    res.render('faq/customer.faq.html', { svcInfo, pageInfo });
   }
 }
 

@@ -53,7 +53,9 @@ Tw.SMS_VALIDATION = {
   WAIT_NEXT_TIME: '재전송 제한시간(1분)이 지난 후에 이용해주세요.',
   EXPIRE_NEXT_TIME: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.',
   NOT_MATCH_CODE: '인증번호가 일치하지 않습니다',
-  EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.'
+  EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.',
+  ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
+  SUCCESS: '인증이 완료 되었습니다.'
 };
 
 Tw.POPUP_TITLE = {
@@ -529,6 +531,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인 하였으며,\n선택하신 상품으로 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
   ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인 하였으며,\n선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
   ALERT_3_A5: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지하시면, 해당 회선은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
+  ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A8: { TITLE: '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
@@ -1231,3 +1234,5 @@ Tw.PREPAID_TYPES = {
   VOICE: '음성',
   DATA: '데이터'
 };
+
+Tw.HISTORY_UNIT = '건';

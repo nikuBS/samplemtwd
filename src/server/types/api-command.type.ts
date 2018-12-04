@@ -104,7 +104,7 @@ export const API_CMD = {
   BFF_03_0024: { path: '/core-auth/v1/t-noti-term-agreements', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0025: { path: '/core-auth/v1/requestRegistFcmUserInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0026: { path: '/core-auth/v1/requestRegistFcmClickInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_03_0027: { path: '/core-auth/v1/users/:args0/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0027: { path: '/core-auth/v1/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   // MainHome T-Notify
   BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -595,6 +595,7 @@ export const API_CMD = {
   BFF_10_0088: { path: '/core-product/v1/roaming/submain/promBannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0089: { path: '/core-product/v1/roaming/submain/alpaList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0090: { path: '/core-product/v1//roaming/submain/bannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0091: { path: '/core-product/v1/roaming/fee-plans/:args0/rom-use-periods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0098: { path: '/core-product/v1/wire/additions/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },

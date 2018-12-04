@@ -1,20 +1,21 @@
 /**
- * FileName: main.menu.settings.biometrics.terms.js
+ * FileName: biometrics.terms.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.13
  */
 
-Tw.MainMenuSettingsBiometricsTerms = function (target) {
+Tw.BiometricsTerms = function (target) {
   this._target = target;
+  this._callback = null;
 
-  this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
 
-  this._biometiricsCert = new Tw.MainMenuSettingsBiometricsCert(this._target);
+  this._biometiricsCert = new Tw.BiometricsCert(this._target);
 };
 
-Tw.MainMenuSettingsBiometricsTerms.prototype = {
-  open: function () {
+Tw.BiometricsTerms.prototype = {
+  open: function (callback) {
+    this._callback = callback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_01',
       layer: true,
@@ -48,8 +49,7 @@ Tw.MainMenuSettingsBiometricsTerms.prototype = {
     this._enableBtns();
   },
   onClickConfirm: function () {
-    this._biometiricsCert.open();
-    // this._historyService.goLoad('/main/menu/settings/biometrics/cert?target=' + this._target);
+    this._biometiricsCert.open(this._callback);
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);

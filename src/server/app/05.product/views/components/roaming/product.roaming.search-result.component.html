@@ -6,7 +6,7 @@
 
 <script id="fe-roaming-rate" type="text/x-handlebars-template">
     <div class="roaming-info-wrap">
-        <h4 class="txt">데이터(정보이용료 별도)<button class="tip-view">TIP</button></h4>
+        <h4 class="txt">데이터(정보이용료 별도)<button class="tip-view" id="RM_04_tip_01">TIP</button></h4>
         <div class="unpaid-charges mt12">
             <ul class="point-box mb0">
                 <li>
@@ -31,19 +31,22 @@
                 <li>
                     <dl>
                         <dt>방문국에서 방문국으로</dt>
-                        <dd>20.1원/초</dd>
+                        {{#if items.vMoChargeMin}}<dd>{{items.vMoChargeMin}}원/초</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
                 <li>
                     <dl>
                         <dt>방문국에서 한국/해외로</dt>
-                        <dd>40.3원/초</dd>
+                        {{#if items.vIntChargeMin}}<dd>{{items.vIntChargeMin}}원/초</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
                 <li>
                     <dl>
                         <dt>수신</dt>
-                        <dd>21.8원/초</dd>
+                        {{#if items.vMtChargeMin}}<dd>{{items.vMtChargeMin}}원/초</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
             </ul>
@@ -55,7 +58,8 @@
                 <li>
                     <dl>
                         <dt>SMS 발신</dt>
-                        <dd>165원/건</dd>
+                        {{#if items.sMoChargeMin}}<dd>{{items.sMoChargeMin}}원/건</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
                 <li>
@@ -67,13 +71,15 @@
                 <li>
                     <dl>
                         <dt>MMS 텍스트 발신</dt>
-                        <dd>330원/건</dd>
+                        {{#if items.mTxtCharge}}<dd>{{items.mTxtCharge}}원/건</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
                 <li>
                     <dl>
                         <dt>MMS 멀티미디어 발신</dt>
-                        <dd>440원/건</dd>
+                        {{#if items.mMtmCharge}}<dd>{{items.mMtmCharge}}원/건</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
                 <li>

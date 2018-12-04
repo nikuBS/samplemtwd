@@ -11,12 +11,14 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerFaqSearch extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
+         childInfo: any, pageInfo: any) {
     const keyword = req.query.keyword;
     this.getSearchResult(keyword, res, svcInfo).subscribe(
       (result) => {
         if (!FormatHelper.isEmpty(result)) {
           res.render('faq/customer.faq.search.html', {
+            svcInfo, pageInfo,
             result: result.content,
             total: parseInt(result.totalElements, 10),
             keyword

@@ -144,6 +144,8 @@ Tw.ProductRoamingFee.prototype = {
         if(this.$filterBtn.hasClass('checked')){
             this.$filterBtn.removeClass('checked');
             this.$selectBtn.removeAttr('checked');
+            $layer.find('input[data-rmfilter-id=F01526]').removeAttr('checked');
+            $layer.find('input[data-rmfilter-id=F01526]').parent().removeClass('checked');
         }else {
             this.$filterBtn.addClass('checked');
             this.$selectBtn.attr('checked','checked');

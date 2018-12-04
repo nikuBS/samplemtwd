@@ -13,7 +13,6 @@ Tw.ProductMobileplanSettingLocation = function(rootEl, options) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
-  console.log(options);
   this._init();
   this._bindEvent();
   this._registHelder();
@@ -59,6 +58,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     // 지역 item 템플릿
     this._tmpltLocItem = Handlebars.compile($('#loc-list-tmplt-item').html());
     this._tmpltNumItem = Handlebars.compile($('#num-list-tmplt-item').html());
+    this._tmpltLocSchItem = Handlebars.compile($('#loc-search-list-tmplt-item').html())
   },
 
   /**
@@ -90,7 +90,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
         new Tw.ProductMobileplanSettingLocationSearch(
           $root,
           keyword,
-          $.proxy(this._addLocation, this));
+          $.proxy(this._addLocation, this),
+          this._tmpltLocSchItem);
       }, this),
       $.proxy(function (){
         // close func..
@@ -103,8 +104,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * 할인지역 추가
    * @private
    */
-  _addLocation: function(dcAreaNum) {
-    this._settingTargetLocation('1', dcAreaNum, $.proxy(this._reloadLocList, this));
+  _addLocation: function(dcArea) {
+    this._settingTargetLocation('1', dcArea, $.proxy(this._reloadLocList, this));
   },
 
   /**
@@ -113,31 +114,50 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _removeLocation: function(event){
     var dcAreaNum = $(event.target).closest('li').data('dcareanum');
+    var auditDtm = $(event.target).closest('li').data('auditdtm');
 
-    // alert 3_A6
-    this._settingTargetLocation('3', dcAreaNum, function(){
-      $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
-    });
+    this._popupService.openModalTypeA(
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.TITLE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
+      $.proxy(function(){
+        this._popupService.close();
+        this._settingTargetLocation('3', {num:dcAreaNum, auditDtm:auditDtm}, function(){
+          $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
+        });
+      }, this));
   },
 
   /**
    * 지역 추가/삭제 api 호출
    * @private
    */
-  _settingTargetLocation: function(chgCd, frDcAreaNum, callback){
-    var params = {
-      chgCd: chgCd,             // 변경코드 1:등록, 2:변경, 3:삭제
-      frDcAreaNum: frDcAreaNum, // 현재 할인지역코드
-      toDcAreaNum: null,        // 변경할 할인지역코드
-      toDcAreaNm: null,         // 변경할 할인지역명
-      auditDtm: null            // 최종변경일시 (조회때 받은값)
-    };
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+  _settingTargetLocation: function(chgCd, dcArea, callback){
+    var params = null;
+
+    if(chgCd === '1'){
+      params = {
+        opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
+        frDcAreaNum: dcArea.num,  // 현재 할인지역코드
+        toDcAreaNum: null,        // 변경할 할인지역코드
+        toDcAreaNm: null,         // 변경할 할인지역명
+        auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
+      };
+    } else if(chgCd === '3'){
+      params = {
+        opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
+        frDcAreaNum: dcArea.num,  // 현재 할인지역코드
+        toDcAreaNum: dcArea.num,  // 변경할 할인지역코드
+        toDcAreaNm: null,         // 변경할 할인지역명
+        auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
+      };
+    }
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_10_0045, params )
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -146,7 +166,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
 
@@ -161,12 +181,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     $('.discount-location').html('');
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_10_0043, {})
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -176,7 +196,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
   },
@@ -203,8 +223,14 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _addNumber: function(){
+    // 3개 이상인 경우
+    //3_A8
+    if($('.comp-box li').length >= 3){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A8.TITLE);
+      return;
+    }
     var num = $('#num-input').val();
-    this._settingTargetNumber('1', num, $.proxy(this._reloadNumList, this));
+    this._settingTargetNumber('1', {svcnum:num}, $.proxy(this._reloadNumList, this));
   },
 
   /**
@@ -212,10 +238,20 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _removeNumber: function(event){
-    var svcNum = $(event.target).closest('li').data('svcnum');
-    this._settingTargetNumber('2', svcNum, function(){
-      $('.comp-box li').filter('[data-svcnum='+svcNum+']').remove();
-    });
+    var svcnum = $(event.target).closest('li').data('svcnum');
+    var auditdtm = $(event.target).closest('li').data('auditdtm');
+
+    this._popupService.openModalTypeA(
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
+      $.proxy(function(){
+        this._popupService.close();
+        this._settingTargetNumber('2', {svcnum:svcnum, auditdtm:auditdtm}, function(){
+          $('.comp-box li').filter('[data-svcnum='+svcnum+']').remove();
+        });
+      }, this));
+
   },
 
 
@@ -228,19 +264,30 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       return;
     }
 
-    var params = {
-      opClCd: opClCd,               // 변경코드 1:등록, 2:삭제, 3:변경
-      frAsgnNum: null,          // 변경전 지정번호 3인 경우만
-      asgnNum: asgnNum,             // 지정번호
-      auditDtm: null            // 변경일자 3인경우 조회시 내려준 값
-    };
+    var params = null;
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    if(opClCd === '1'){
+      params = {
+        opClCd: opClCd,           // 변경코드 1:등록, 2:삭제, 3:변경
+        frAsgnNum: null,          // 변경전 지정번호 3인 경우만
+        asgnNum: asgnNum.svcnum,  // 지정번호
+        auditDtm: null            // 변경일자 3인경우 조회시 내려준 값
+      };
+    } else if(opClCd === '2'){
+      params = {
+        opClCd: opClCd,           // 변경코드 1:등록, 2:삭제, 3:변경
+        frAsgnNum: null,          // 변경전 지정번호 3인 경우만
+        asgnNum: asgnNum.svcnum,  // 지정번호
+        auditDtm: asgnNum.auditdtm// 변경일자 3인경우 조회시 내려준 값
+      };
+    }
+
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_10_0074, params )
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -249,7 +296,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
   },
@@ -284,23 +331,23 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _reloadNumList: function(){
 
-    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.request(Tw.API_CMD.BFF_10_0073, {} )
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
         }
 
         $('.comp-box').html('');
-        this._appendNumberLi(resp.result);
+        this._appendNumberLi(resp.result.snumSetInfoList);
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: this.$container });
+        skt_landing.action.loading.off({ ta: '.container' });
         Tw.Error(err.status, err.statusText).pop();
       });
 

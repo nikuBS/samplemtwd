@@ -17,6 +17,7 @@ class CommonTidLogin extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const target = req.query.target || '/main/home';
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
@@ -25,8 +26,8 @@ class CommonTidLogin extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.LOGIN,
-          redirect_uri: EnvHelper.getEnvironment('DOMAIN') +
-          '/common/member/login/route?target=/main/home=' + resp.result.state,
+          redirect_uri: 'http://' + this.loginService.getDns() +
+          '/common/member/login/route?target=' + target + '=' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE

@@ -38,8 +38,8 @@ Tw.CertificationNice.prototype = {
   },
   _successGetDomain: function (path, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // Tw.CommonHelper.openUrlInApp(resp.result.domain + path, 'status=1,toolbar=1');
-      Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
+      Tw.CommonHelper.openUrlInApp('http://' + resp.result.domain + path, 'status=1,toolbar=1');
+      // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
   },
   _onPopupCallback: function (resp) {

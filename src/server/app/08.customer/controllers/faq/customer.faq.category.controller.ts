@@ -11,7 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerFaqCategory extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
+         childInfo: any, pageInfo: any) {
+
     const categoryId = req.query.id;
     const title = req.query.title;
     this.getCategoryList(res, svcInfo, categoryId)
@@ -37,7 +39,7 @@ class CustomerFaqCategory extends TwViewController {
                 data.list = result2.list;
                 data.isLast = result2.isLast;
                 res.render('faq/customer.faq.category.html', {
-                  svcInfo, title, data
+                  svcInfo, pageInfo, title, data
                 });
               },
               (err) => {

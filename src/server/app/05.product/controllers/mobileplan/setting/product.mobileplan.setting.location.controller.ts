@@ -31,61 +31,48 @@ class ProductMobileplanSettingLocation extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    // Observable.combineLatest(
-    //   this.apiService.request(API_CMD.BFF_10_0072, {}),
-    //   this.apiService.request(API_CMD.BFF_10_0073, {}))
-    //   .subscribe(([resp, resp2]) => {
-        const resp = {
-          'code': '00',
-          'msg': 'success',
-          'result': {
-            'zoneSetInfoList': [
-              {
-                'dcAreaNum': '10135',
-                'dcAreaNm': '중앙대학교',
-                'auditDtm': '20100806170537'
-              }
-            ],
-            'snumSetInfoList': [
-              {
-                'svcNum': '010xxxxxxxx',
-                'auditDtm': '20100806170537'
-              },
-              {
-                'svcNum': '011xxxxxxxx',
-                'auditDtm': '20100806170537'
-              },
-              {
-                'svcNum': '010xxxxxxxx',
-                'auditDtm': '20100806170537'
-              }
-            ]
-          }
-        };
-
-        const resp2 = {
-          'code': '00',
-          'msg': 'success',
-          'result': {
-            'snumSetInfoList': [
-              {
-                'svcNum': '010xxxxxxxx',
-                'svcNumMask': '010xx**xx**',
-                'custNmMask': '',
-                'auditDtm': '20051016193024'
-              },
-              {
-                'svcNum': '010xxxxxxxx',
-                'svcNumMask': '010xx**xx**',
-                'custNmMask': 'x*x',
-                'auditDtm': '20060920151950'
-              }
-            ]
-          }
-        };
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0043, {}),
+      this.apiService.request(API_CMD.BFF_10_0073, {}))
+      .subscribe(([resp, resp2]) => {
+        // const resp = {
+        //   'code': '00',
+        //   'msg': 'success',
+        //   'result': {
+        //     'zoneSetInfoList' : [
+        //       {
+        //         'dcAreaNum': '22288',
+        //         'dcAreaNm': '가천의과학대학교(연수캠퍼스)',
+        //         'scrbDt': '20091126',
+        //         'auditDtm': '20091126150810'
+        //       }
+        //     ]
+        //   }
+        // };
+        //
+        // const resp2 = {
+        //   'code': '00',
+        //   'msg': 'success',
+        //   'result': {
+        //     'snumSetInfoList': [
+        //       {
+        //         'svcNum': '010xxxxxxxx',
+        //         'svcNumMask': '010xx**xx**',
+        //         'custNmMask': '',
+        //         'auditDtm': '20051016193024'
+        //       },
+        //       {
+        //         'svcNum': '010xxxxxxxx',
+        //         'svcNumMask': '010xx**xx**',
+        //         'custNmMask': 'x*x',
+        //         'auditDtm': '20060920151950'
+        //       }
+        //     ]
+        //   }
+        // };
 
 
-    if ( resp.code === API_CODE.CODE_00 ) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           resp['result']['snumSetInfoList'] = resp2['result']['snumSetInfoList'];
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
@@ -93,22 +80,22 @@ class ProductMobileplanSettingLocation extends TwViewController {
 
         } else {
           return this.error.render(res, {
-            title: '할인지역,지정번호 설정',
+            title: PRODUCT_TYPE_NM.SETTING,
             code: resp.code,
             msg: resp.msg,
             svcInfo: svcInfo
           });
         }
-    //   }, (err) => {
-    //     return this.error.render(res, {
-    //       title: '할인지역,지정번호 설정',
-    //       code: err.code,
-    //       msg: err.msg,
-    //       svcInfo: svcInfo
-    //     });
-    //   });
-
+      }, (err) => {
+        return this.error.render(res, {
+          title: PRODUCT_TYPE_NM.SETTING,
+          code: err.code,
+          msg: err.msg,
+          svcInfo: svcInfo
+        });
+      });
   }
+
 }
 
 export default ProductMobileplanSettingLocation;

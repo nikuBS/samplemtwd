@@ -81,17 +81,14 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     this.$sendMsgResult.hide();
-
-    $.get('/mock/BFF_01_0058.json')
-      .done($.proxy(this._resAuthCode, this));
-
-    // this._apiService.request(Tw.API_CMD.BFF_01_0058, {
-    //   receiverNum: number
-    // }).done($.proxy(this._resAuthCode, this));
+    this._apiService.request(Tw.API_CMD.BFF_01_0058, {
+      receiverNum: number
+    }).done($.proxy(this._resAuthCode, this));
   },
 
   _setSendResultText: function(isError, text) {
-    this.$sendMsgResult.html($('<span\>').addClass(isError ? 'error-txt' : 'validation-txt').text(text));
+    this.$sendMsgResult.html($('<span\>').addClass('fe-send_result_msg')
+      .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
     this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.show();
   },
@@ -128,15 +125,9 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _reqValidateAuthCode: function() {
-    // this._apiService.request(Tw.API_CMD.BFF_01_0063, {
-    //   authNum: this.$inputAuthCode.val()
-    // }).done($.proxy(this._resValidateAuthCode, this));
-
-    this._resValidateAuthCode({
-      'code': '00',
-      'msg': 'success',
-      'result': null
-    });
+    this._apiService.request(Tw.API_CMD.BFF_01_0063, {
+      authNum: this.$inputAuthCode.val()
+    }).done($.proxy(this._resValidateAuthCode, this));
   },
 
   _resValidateAuthCode: function(resp) {
@@ -144,10 +135,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return this._setValidateResultText(true, this._replaceErrMsg(resp.code, resp.msg));
     }
 
-    // @todo 인증 성공 후 동작 확인 중
     this._isSend = false;
     this._validatedNumber = this.$inputNumber.val().replace(/-/gi, '');
 
+    this._setValidateResultText(false, Tw.SMS_VALIDATION.SUCCESS);
     this._toggleButton(this.$btnValidate, false);
     this._toggleButton(this.$btnSetupOk, true);
   },
@@ -161,11 +152,16 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return Tw.SMS_VALIDATION.EXPIRE_AUTH_TIME;
     }
 
+    if (code === 'SMS2013') {
+      return Tw.SMS_VALIDATION.ALREADY_AUTH;
+    }
+
     return msg;
   },
 
   _setValidateResultText: function(isError, text) {
-    this.$validateResult.html($('<span\>').addClass(isError ? 'error-txt' : 'validation-txt').text(text));
+    this.$validateResult.html($('<span\>').addClass('fe-send_result_msg')
+      .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
     this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.show();
   },
