@@ -18,7 +18,7 @@
 <div class="wrap step" data-type_cd="<%= typeCd %>" data-prod_id="<%= prodId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
-        <%- include('../../../../common/views/components/header.component.html', { title: '가입 상담 예약', svcInfo, option: { line: false } }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '가입 상담 예약' }); %>
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -203,7 +203,7 @@
         <!--// .popup-closeBtn -->
         <!-- #footer -->
         <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
         </footer>
         <!--// #footer -->
     </div>
