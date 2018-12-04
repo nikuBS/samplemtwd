@@ -1,0 +1,333 @@
+<%#
+* FileName: myt-data.hotdata.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.11.28
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<div id="myt-data-hotdata" class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 잔여량', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="calling-plan">
+                    <a class="wrap-link" href="/myt-join/myplan">
+                        <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                        <span class="stit"><%= svcInfo && svcInfo.prodNm %></span>
+                    </a>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <% if (usageData && usageData.data && usageData.data.length > 0) { %>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: '데이터', items: usageData.data, usageData: usageData }); %>
+            <% } %>
+
+
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <% if (balanceAddOns && balanceAddOns.tdataSharing === 'Y') { %>
+            <div id="fe-tdata-share" class="cont-box pb0">
+                <div id="fe-head-tdata-share" class="ti-caption-type01">
+                    <h2 class="tit">T데이터셰어링
+                        <span></span>
+                    </h2>
+                    <p class="num">총 사용
+                        <em>0</em>
+                        <span>GB</span>
+                    </p>
+                </div>
+                <div class="data-list-type1">
+                    <script id="fe-tdata-share-child-item" type="text/x-handlebars-template">
+                        <li>
+                            <span class="stit">{{ usimFormat usimNum }}</span>
+                            <div class="sta">
+                                <span>{{ dateFormat svcScrbDt }}</span>
+                                <span>
+                                        {{ svcStNm }}
+                                        {{#if isUsing }}
+                                        <a class="bt-link-tx underline" href="/myt-data/hotdata/cancel-tshare?cSvcMgmtNum={{cSvcMgmtNum}}">해지하기</a>
+                                        {{/if}}
+                                    </span>
+                            </div>
+                            <span class="use">
+                                    <strong>{{ byteFormat useAmt }}{{ byteUnit useAmt}}</strong>
+                                    사용
+                                </span>
+                        </li>
+                    </script>
+                    <ul class="type1" id="fe-list-tdata-share">
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } else { %>
+            <div class="cont-box nogaps">
+                <div class="t-data-sharing">
+                    <a class="submain-findyourplan" href="/product/callplan/NA00002887" style="color: #fff;">
+                        <strong>T데이터셰어링 이용해보기</strong>
+                        <p>하나의 데이터 요금으로 다양한 디지털기기에서 무선인터넷을 즐겨보세요!</p>
+                    </a>
+                </div>
+            </div>
+            <% } %>
+
+            <% if (balanceAddOns && balanceAddOns.troamingSharing === 'Y') { %>
+            <!-- .cont-box -->
+            <div id="fe-troaming-share" class="cont-box pb0">
+                <div id="fe-head-troaming-share" class="ti-caption-type01 pb20">
+                    <h2 class="tit">T로밍 함께쓰기 잔여량</h2>
+                    <p class="num">총 잔여량
+                        <em>0</em>GB
+                    </p>
+                </div>
+                <ul id="fe-cont-troaming-share" class="date-graph-list">
+                    <li>
+                        <div class="left">
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div id="fe-troaming-share-graph" class="c100"><!-- .p+(0~100) // -->
+                                        <div class="red"><!-- red, yellow, green, blue // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cont">
+                            <span class="txt1 graphbox-title"></span>
+                            <div class="date">
+                                <span class="remain data-state">
+                                    <strong>
+                                        <em></em>
+                                        <em></em>
+                                    </strong> 남음
+                                </span>
+                                <span class="use data-state">
+                                    <strong>
+                                        <em></em>
+                                        <em></em>
+                                    </strong> 사용
+                                </span>
+                            </div>
+                            <span class="txt3 fe-chargedate-box">
+                                <span>4일 18시간</span>
+                                남음
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="data-list-type1">
+                    <script id="fe-troaming-share-child-item" type="text/x-handlebars-template">
+                        <li>
+                            <span class="stit">{{ dashPhoneNum svcNum }}</span>
+                            <div class="sta">
+                                <span>설정일 {{ dateFormat auditDtm }}</span>
+                            </div>
+                            <span class="use"><strong>{{ byteFormat used }}{{ byteUnit used }}</strong>사용</span>
+                        </li>
+                    </script>
+                    <ul id="fe-list-troaming-share">
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
+
+
+            <% if (usageData && usageData.dataTopUp === 'Y') { %>
+            <!-- .cont-box -->
+            <div id="fe-cont-data-limit" class="cont-box pb0">
+                <div class="ti-caption-type01">
+                    <h2 class="tit">데이터 한도 요금제 잔여량</h2>
+                    <p class="r-btn"><button type="button" class="btn-round3 btn-style3 fe-btn-recharge">충전하기</button></p>
+                </div>
+                <div class="data-list-type1">
+                    <ul class="type1">
+                        <li>
+                            <span class="stit">기본 데이터 충전</span>
+                            <div class="sta">
+                                <span>
+                                    충전 금액:
+                                    <span class="fe-recharge-amt"></span>
+                                원</span>
+                            </div>
+                            <span class="use">
+                                <strong>
+                                    <span class="fe-remain-amt"></span>
+                                원</strong>남음
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
+
+            <% if (usageData && usageData.ting === 'Y') { %>
+            <!-- .cont-box -->
+            <div class="cont-box pb0">
+                <div class="ti-caption-type01">
+                    <h2 class="tit">팅 요금제 잔여량<button class="btn-tip" id="DC_01_01_tip_08"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                </div>
+                <div class="data-list-type1">
+                    <script id="fe-ting-child-item" type="text/x-handlebars-template">
+                        <li>
+                            <span class="stit">{{ skipLabel }}</span>
+                            <div class="sta">
+                                <span>{{ skipNm }}</span>
+                            </div>
+                            <span class="use"><strong>{{ numComma remained }}
+                                {{ unitLabel }}
+                            </strong>남음</span>
+                        </li>
+
+                    </script>
+                    <ul id="fe-list-ting" class="type1">
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
+
+            <% if (usageData && usageData.dataDiscount === 'Y') { %>
+            <!-- .cont-box -->
+            <div class="cont-box pb0">
+                <div class="ti-caption-type01">
+                    <h2 class="tit">24시간 데이터 50% 할인 사용량<button class="btn-tip" id="DC_01_01_tip_09"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                </div>
+                <div id="fe-cont-discount" class="data-list-type1">
+                    <ul class="type1">
+                        <li>
+                            <span class="stit">할인된 데이터</span>
+                            <div class="sta">
+                                <span class="fe-use-date"></span>
+                            </div>
+                            <span class="use">
+                                <strong class="fe-use-data"><span></span><span></span></strong>사용
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="btn-more">
+                        <button>실시간 이용요금 바로가기</button>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
+
+
+            <% if (balanceAddOns && balanceAddOns.bandDataSharing === 'Y') { %>
+            <!-- .cont-box -->
+            <div class="cont-box pb0">
+                <div id="head-band-data-share" class="ti-caption-type01">
+                    <h2 class="tit">내폰끼리 결합 사용량</h2>
+                    <p class="num">총 사용
+                        <em></em>
+                        <span></span>
+                    </p>
+                </div>
+                <div class="data-list-type1">
+                    <ul id="list-band-data-share" class="type1">
+                    </ul>
+                    <script id="fe-band-data-share-li" type="text/x-handlebars-template">
+                        <li>
+                            <span class="stit">{{ feeProdNm }}</span>
+                            <div class="sta">
+                                <span>설정일 {{ dateFormat auditDtm }}</span>
+                                <span class="f-type1">{{ dashPhoneNum svcNum }}</span>
+                            </div>
+                            <span class="use" data-child-svcnum="{{ svcMgmtNum }}">
+                                <button type="button" class="btn-round2 btn-style3 fe-btn-request">조회</button>
+                            </span>
+                        </li>
+                    </script>
+                    <script id="fe-band-data-share-li-detail" type="text/x-handlebars-template">
+                        <strong>
+                            {{ byteFormat used }}{{ byteUnit used }}
+                        </strong>사용
+                    </script>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
+
+
+
+            <% if (usageData && usageData.voice && usageData.voice.length > 0) { %>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'voice', color: 'green', typeStr: '음성/영상', items: usageData.voice }); %>
+            <% } %>
+
+            <% if (usageData && usageData.sms && usageData.sms.length > 0) { %>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'sms', color: 'yellow', typeStr: '문자', items: usageData.sms }); %>
+            <% } %>
+
+            <% if (usageData && usageData.etc && usageData.etc.length > 0) { %>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'etc', color: 'blue', typeStr: '기타', items: usageData.etc }); %>
+            <% } %>
+
+
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list">
+                    <li>실시간 사용량 조회 안내<button class="btn-tip" id="DC_01_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>실시간 사용량 조회가 불가능한 경우<button class="btn-tip" id="DC_01_01_tip_02"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>월중 요금상품 변경, 일시정지 시 유의사항<button class="btn-tip" id="DC_01_01_tip_03"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>마이벨 서비스·다다익선요금제 이용 가능 고객 안내<button class="btn-tip" id="DC_01_01_tip_04"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>사용량 조회 안내<button class="btn-tip" id="DC_01_01_tip_07"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>이용제한·자동해지 안내<button class="btn-tip" id="DC_01_01_tip_05"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>유심 안내<button class="btn-tip" id="DC_01_01_tip_06"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+</div>
+
+<!--// #skip_navigation -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTDataUsage($('#myt-data-hotdata'), {
+      svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
+      tdataSharing : '<%= balanceAddOns && balanceAddOns.tdataSharing %>',
+      troamingSharing : '<%= balanceAddOns && balanceAddOns.troamingSharing %>',
+      dataTopUp : '<%= usageData && usageData.dataTopUp %>',
+      ting : '<%= usageData && usageData.ting %>',
+      dataDiscount : '<%= usageData && usageData.dataDiscount %>',
+      bandDataSharing : '<%= balanceAddOns && balanceAddOns.bandDataSharing %>'
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -56,7 +56,7 @@ class MytDataUsageChildRecharge extends TwViewController {
 
   private getTingSubscriptions(resp: any): any {
     const result = resp.result;
-    result.showCurrentTopUpLimit = FormatHelper.addComma(result.currentTopUpLimit);
+    result.showTopUpLimit = FormatHelper.addComma(result.topUpLimit);
     return result;
   }
 

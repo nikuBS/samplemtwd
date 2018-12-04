@@ -44,7 +44,8 @@ export const MYT_DATA_USAGE = {
     DD3CV: '패밀리',
     DD3CU: '라지',
     DD4D5: '라지'
-  }
+  },
+  UNLIMIT_CODE: ['1', 'B', 'M']
 };
 
 export const MYT_DATA_USAGE_TOTAL_SHARING_DATA = {
