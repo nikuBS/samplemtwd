@@ -14,11 +14,11 @@ import {
   HOME_SEGMENT_ORDER,
   HOME_SMART_CARD,
   LINE_NAME,
+  MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
   SVC_ATTR_NAME,
   UNIT,
-  UNIT_E,
-  MYT_FARE_BILL_CO_TYPE
+  UNIT_E
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 import { REDIS_APP_VERSION } from '../../../types/common.type';
@@ -41,18 +41,43 @@ class MainHome extends TwViewController {
 
     if ( svcType.login ) {
       svcInfo = this.parseSvcInfo(svcType, svcInfo);
-      if ( svcType.mobile ) {
-        smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
-        Observable.combineLatest(
-          this.getUsageData(),
-          this.getMembershipData(),
-          this.getNotice()
-        ).subscribe(([usageData, membershipData, notice]) => {
-          homeData.usageData = usageData;
-          homeData.membershipData = membershipData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-        });
+      if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
+        if ( svcType.mobilePhone ) {
+          // 모바일 - 휴대폰 회선
+          smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
+          Observable.combineLatest(
+            this.getUsageData(),
+            this.getMembershipData(),
+            this.getNotice()
+          ).subscribe(([usageData, membershipData, notice]) => {
+            homeData.usageData = usageData;
+            homeData.membershipData = membershipData;
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+          });
+        } else {
+          // 모바일 - 휴대폰 외 회선
+          if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
+            Observable.combineLatest(
+              this.getUsageData(),
+              this.getPPSInfo(),
+              this.getNotice()
+            ).subscribe(([usageData, ppsInfo, notice]) => {
+              homeData.usageData = usageData;
+              homeData.ppsInfo = ppsInfo;
+              res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+            });
+          } else {
+            Observable.combineLatest(
+              this.getUsageData(),
+              this.getNotice()
+            ).subscribe(([usageData, notice]) => {
+              homeData.usageData = usageData;
+              res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+            });
+          }
+        }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
+        // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(),
           this.getJoinInfo(),
@@ -62,28 +87,9 @@ class MainHome extends TwViewController {
           homeData.joinInfo = joinInfo;
           res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
         });
-      } else {
-        if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
-          Observable.combineLatest(
-            this.getUsageData(),
-            this.getPPSInfo(),
-            this.getNotice()
-          ).subscribe(([usageData, ppsInfo, notice]) => {
-            homeData.usageData = usageData;
-            homeData.ppsInfo = ppsInfo;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-          });
-        } else {
-          Observable.combineLatest(
-            this.getUsageData(),
-            this.getNotice()
-          ).subscribe(([usageData, notice]) => {
-            homeData.usageData = usageData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-          });
-        }
       }
     } else {
+      // 비로그인
       this.getNotice().subscribe((notice) => {
         res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
       });
@@ -104,14 +110,14 @@ class MainHome extends TwViewController {
   private getSvcType(svcInfo): any {
     const svcType = {
       svcCategory: LINE_NAME.MOBILE,
-      mobile: false,
+      mobilePhone: false,
       login: false
     };
 
     if ( !FormatHelper.isEmpty(svcInfo) ) {
       svcType.login = true;
       if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
-        svcType.mobile = true;
+        svcType.mobilePhone = true;
       } else if ( svcInfo.svcAttrCd === SVC_ATTR_E.INTERNET || svcInfo.svcAttrCd === SVC_ATTR_E.IPTV || svcInfo.svcAttrCd === SVC_ATTR_E.TELEPHONE ) {
         svcType.svcCategory = LINE_NAME.INTERNET_PHONE_IPTV;
       } else if ( svcInfo.svcAttrCd === SVC_ATTR_E.POINT_CAM ) {
@@ -241,23 +247,24 @@ class MainHome extends TwViewController {
 
   // 사용량 조회
   private getUsageData(): Observable<any> {
-    const usageData = {
+    let usageData = {
       code: null
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
-      // if ( resp.code === API_CODE.CODE_00 ) {
-      //   usageData = this.parseUsageData(resp.result);
-      // }
-      // usageData.code = resp.code;
+      if ( resp.code === API_CODE.CODE_00 ) {
+        usageData = this.parseUsageData(resp.result);
+      }
+      usageData.code = resp.code;
       return usageData;
     });
   }
 
 
   private parseUsageData(usageData: any): any {
-    const kinds = ['data', 'voice', 'sms'];
+    const kinds = ['gnrlData', 'spclData', 'voice', 'sms'];
     const result = {
-      data: {},
+      gnrlData: {},
+      spclData: {},
       voice: {},
       sms: {},
       first: ''
