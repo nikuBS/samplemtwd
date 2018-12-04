@@ -39,6 +39,11 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    if ( svcInfo && ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) > -1 ) {
+      if ( req.path.indexOf('w') === -1 ) {
+        res.redirect('/myt-join/submain_w');
+      }
+    }
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
@@ -210,7 +215,7 @@ class MyTJoinSubmainController extends TwViewController {
   isMasking(target): boolean {
     let result = false;
     const MASK_CODE = '*';
-    if ( target.indexOf(MASK_CODE) > -1 ) {
+    if ( target && target.indexOf(MASK_CODE) > -1 ) {
       result = true;
     }
     return result;
