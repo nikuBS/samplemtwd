@@ -19,7 +19,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '부가서비스', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '부가서비스' }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -81,11 +81,7 @@
                             <a class="link" href="/product/callplan/<%= addition.prodId %>">
                                 <div class="products-titleinfo">
                                     <p class="title"><%= addition.prodNm %></p>
-                                    <% if (addition.basFeeAmt.isNaN) { %>
-                                        <p class="info"><span class="money"><%= addition.basFeeAmt.value %></span></p>
-                                    <% } else { %>
-                                        <p class="info">월<span class="money"><%= addition.basFeeAmt.value %></span>원</p>
-                                    <% } %>
+                                    <p class="info"><span class="money"><%= addition.basFeeAmt.value %></span><% if (!addition.basFeeAmt.isNaN) { %>원<% } %></p>
                                 </div>
                                 <% if (addition.filters && addition.filters.length > 0) { %>
                                 <div class="taglist-wrap">
@@ -99,12 +95,10 @@
                         </li>
                         <% }); %>
                     </ul>
-                    <% const leftCount = additionData.additions.productCount - additions.length;
-                    if (leftCount > 0) { %>
+                    <% const leftCount = additionData.additions.productCount - additions.length; %>
                     <div class="extraservice-more">
-                        <button class="btn" data-last-product="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">더보기(<%= leftCount %>)</button>
+                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">더보기(<%= leftCount %>)</button>
                     </div>
-                    <% } %>
                 </div>
                 <% } %>
 
@@ -149,10 +143,7 @@
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 

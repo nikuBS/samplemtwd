@@ -43,15 +43,15 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _openCancelPopup: function() {
-    this._popupService.openConfirm(Tw.MSG_CUSTOMER.HELPLINE_A01, Tw.POPUP_TITLE.CANCEL_HELPLINE, $.proxy(this._clearData, this));
+    this._popupService.openConfirm(Tw.ALERT_MSG_CUSTOMER.HELPLINE_A01, Tw.POPUP_TITLE.CANCEL_HELPLINE, $.proxy(this._clearData, this));
   },
 
   _clearData: function() {
     delete this._reservationType;
     delete this._reservationArea;
 
-    this.$btnType.text(Tw.HELPLINE_TYPE.GENERAL);
-    this.$btnArea.text(Tw.HELPLINE_AREA.CAPITAL);
+    this.$btnType.text(Tw.HELPLINE_TYPES[0].value);
+    this.$btnArea.text(Tw.CUSTOMER_HELPLINE_AREAS[0].value);
 
     var currentHours = new Date().getHours();
     this._availableTimes = _.filter(this._availableTimes, function(time) {
