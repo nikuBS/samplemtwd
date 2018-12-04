@@ -18,7 +18,7 @@ class ProductRoamingSearchResult extends TwViewController {
 
     private COUNTRY_CDDE = '';
 
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
       this.COUNTRY_CDDE = req.query.code;
       const searchInfo = {
@@ -46,7 +46,7 @@ class ProductRoamingSearchResult extends TwViewController {
       ).subscribe(([roamingTypeData, roamingRateData]) => {
 
           res.render('roaming/product.roaming.search-result.html',
-              { svcInfo, searchInfo, roamingTypeData, roamingRateData, isLogin: this.isLogin(svcInfo) });
+              { svcInfo, searchInfo, roamingTypeData, roamingRateData, isLogin: this.isLogin(svcInfo), pageInfo });
           this.logger.info(this, 'roamingTypeData : ', roamingTypeData);
           this.logger.info(this, 'roamingRateData : ', roamingRateData);
       });

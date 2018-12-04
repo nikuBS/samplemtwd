@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '로밍 부가서비스', svcInfo, option: { line: true } }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '로밍 부가서비스' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -27,6 +27,7 @@
             <% if (isLogin && roamingAddCntData) { %>
             <!-- 사용중인 상품 -->
             <% const roamingPlanAddTxt = roamingAddCntData.prodInfoTxt; %>
+            <% if(roamingPlanAddTxt) { %>
             <div class="cont-box gaps-style01">
                 <div class="submain-myfeeproducts-wrap">
                    <button type="button" class="submain-myfeeproducts">
@@ -35,6 +36,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
             <% } %>
             <!--//사용중인 상품 -->
             <!-- 정렬 및 필터 -->
@@ -91,12 +93,14 @@
                     </li>
                     <% }); %>
                 </ul>
+                <% if (roamingAddData.productCount > 0) { %>
                 <% const moreCount = roamingAddData.productCount - products.length; %>
                 <div class="bt-more gap-style">
                     <button class="<%= moreCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= moreCount %>">
                         더보기
                     </button>
                 </div>
+                <% } %>
             </div>
             <% } %>
             <!-- //cont-box -->
@@ -184,8 +188,12 @@
                 <!-- .widget -->
             </div>
             <!-- //다른상품 더보기 -->
-
         </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
     <!--// #contents -->
 </div>

@@ -21,7 +21,7 @@
 <div class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
-        <%- include('../../../common/views/components/header.component.html', { title: '자동로밍', svcInfo, option: { line: true } }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '자동로밍' }); %>
         <!--<div class="header">-->
             <!--<div class="header-ti align-l">-->
                 <!--<h1>자동로밍</h1>-->
@@ -76,7 +76,7 @@
                                                                 <div class="acco-tit">스마트폰(iOS : 아이폰 6S iOS9 기준)<button role="button" aria-pressed="false" title="스마트폰(iOS : 아이폰 6S iOS9 기준) 보기"></button></div>
                                                                 <div class="acco-cont">
                                                                     <div class="loaming-visual">
-                                                                        <img src="/img/product/vi-set-loaming1.png" alt="TBD">
+                                                                        <img src="<%= CDN %>/img/product/vi-set-loaming1.png" alt="TBD">
                                                                     </div>
                                                                     <div class="setting-step-txt">
                                                                         <ul>
@@ -92,7 +92,7 @@
                                                                 <div class="acco-tit">스마트폰(안드로이드)<button role="button" aria-pressed="false" title="스마트폰(안드로이드) 보기"></button></div>
                                                                 <div class="acco-cont">
                                                                     <div class="loaming-visual">
-                                                                        <img src="/img/product/vi-set-loaming2.png" alt="TBD">
+                                                                        <img src="<%= CDN %>/img/product/vi-set-loaming2.png" alt="TBD">
                                                                     </div>
                                                                     <div class="setting-step-txt">
                                                                         <ul>
@@ -137,7 +137,7 @@
                                                                 <div class="acco-tit">스마트폰(iOS)<button role="button" aria-pressed="false" title="스마트폰(iOS) 보기"></button></div>
                                                                 <div class="acco-cont">
                                                                     <div class="loaming-visual">
-                                                                        <img src="/img/product/vi-set-loaming3.png" alt="TBD">
+                                                                        <img src="<%= CDN %>/img/product/vi-set-loaming3.png" alt="TBD">
                                                                     </div>
                                                                     <div class="setting-step-txt">
                                                                         <ul>
@@ -152,7 +152,7 @@
                                                                 <div class="acco-tit">스마트폰(안드로이드)<button role="button" aria-pressed="false" title="스마트폰(안드로이드) 보기"></button></div>
                                                                 <div class="acco-cont">
                                                                     <div class="loaming-visual">
-                                                                        <img src="/img/product/vi-set-loaming4.png" alt="TBD">
+                                                                        <img src="<%= CDN %>/img/product/vi-set-loaming4.png" alt="TBD">
                                                                     </div>
                                                                     <div class="setting-step-txt">
                                                                         <ul>
@@ -326,7 +326,7 @@
                                                                         </li>
                                                                     </ul>
                                                                     <div class="loaming-visual">
-                                                                        <img src="/img/product/vi-set-cellphone.png" alt="TBD">
+                                                                        <img src="<%= CDN %>/img/product/vi-set-cellphone.png" alt="TBD">
                                                                     </div>
                                                                     <ul class="bul-list type3">
                                                                         <li>한국(SK Telecom) : 한국에 있을 때 / 귀국 후 선택</li>
@@ -430,7 +430,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="cont-box noborder bgnone">
                                         <div class="announcement-box">
                                             <p class="announcement-bullet type02">자동로밍 서비스란 별도 신청 없이 내 휴대폰, 내 번호 그대로 해외에서 바로 사용 가능한 서비스입니다.</p>
@@ -446,8 +445,13 @@
         </div>
     </div>
     <!--// #contents -->
-</div>
-</div>
+
+    <!-- #footer -->
+    <footer id="fe-all-menu">
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+    <!--// #footer -->
+    </div>
 </div>
 </body>
 

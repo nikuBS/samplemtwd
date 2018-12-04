@@ -58,6 +58,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
   _handleRoamingAddFilters: function() {
       if (!this._rmAddFilters) {
           this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.RMADD_CODE })
+          // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0032.json')
               .done($.proxy(this._handleGetRmAddFilters, this));
       } else {
           this._openRmAddFiltersPopup();
@@ -120,12 +121,13 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }
   },
     _handleSelectRomaingAddTag: function(target) {
-        var selectedTag = target.getAttribute('data-addfilter-id');
+        var selectedTag = target.getAttribute('data-rmtag-id');
+        console.log('selectedTag : ' + selectedTag);
         if (this._params.selectedTagId === selectedTag) {
             this._popupService.close();
             return;
         }
-
+        this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
     },
   _handleRmAddSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {

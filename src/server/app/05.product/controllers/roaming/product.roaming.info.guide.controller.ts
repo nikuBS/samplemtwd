@@ -8,8 +8,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response } from 'express';
 
 class ProductRoamingGuide extends TwViewController {
-  render(req: Request, res: Response, svcInfo: any) {
-    res.render( 'roaming/product.roaming.info.guide.html', { svcInfo });
+  render(req: Request, res: Response, svcInfo: any, pageInfo: any) {
+    res.render( 'roaming/product.roaming.info.guide.html', { svcInfo, pageInfo });
   }
 }
 
