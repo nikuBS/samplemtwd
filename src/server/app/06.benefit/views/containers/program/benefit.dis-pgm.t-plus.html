@@ -18,7 +18,7 @@
 
 <!--// #skip_navigation -->
 <div class="wrap step">
-    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '설정' }); %>
     <!--// #header -->
@@ -100,7 +100,10 @@
         </div>
     </div>
     <!-- // .container-wrap -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    <!-- .popup-closeBtn -->
+    <button class="prev-step fe-common-back">취소</button>
+    <!--// .popup-closeBtn -->
+    </div>
 </div>
 <% include ../components/javascript.component.html %>
 </body>
