@@ -9,8 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import { APP_DETAIL } from '../../../../mock/server/product.apps.mock';
-import {REDIS_PRODUCT_INFO} from '../../../../types/common.type';
+import { APP_DETAIL, APP_DETAIL2 } from '../../../../mock/server/product.apps.mock';
+import { REDIS_PRODUCT_INFO } from '../../../../types/common.type';
 
 export default class ProductAppsDetail extends TwViewController {
   private BANNER_POSITION = {
@@ -48,14 +48,14 @@ export default class ProductAppsDetail extends TwViewController {
       return resp;
     }
 
-    const imgs: Array<string> = [];
+    const images: Array<string> = [];
     return {
       ...resp.result,
-      images: (resp.result.appsList || []).reduce((arr, img) => {
+      images: (resp.result.scrshotList || []).reduce((arr, img) => {
         arr.push(img.scrshotImgUrl);
 
         return arr;
-      }, imgs)
+      }, images)
     };
     // });
   }

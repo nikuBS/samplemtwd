@@ -1,0 +1,34 @@
+<script id="fe-tmpl-app" type="text/x-handlebars-template">
+    <div class="t-apps">
+        <div class="t-apps-ico">
+            <img src="{{appIconImgUrl}}" alt="{{prodNm}}" class="ico">
+            <span class="name">{{prodNm}}</span>
+        </div>
+        <div class="txt mb20">{{sktProdBenfCtt}}</div>
+        {{#if isApp}}
+            {{#if isInstalled}}
+            <ul class="bt-slice">
+                <li class="bt-blue1 fe-open-btn">
+                    <button>앱실행하기</button>
+                </li>
+            </ul>
+            {{else}}
+                <div>
+                    {{#if isIos}}
+                        <a href="{{stores.appStore}}"><img src="/img/etc/banner-store01.png" alt="download on th app store" style="width:130px;" /></a>
+                    {{else}}
+                        <a href="{{stores.playStore}}"><img src="/img/etc/banner-store02.png" alt="get it on google play" style="width:130px;" /></a> 
+                        {{#if stores.oneStore}}<a href="{{stores.oneStore}}"><img src="/img/etc/banner-store03.png" alt="download on the one store" style="width:130px;" /></a>{{/if}}
+                    {{/if}}
+                </div>
+            {{/if}}
+        {{else}}
+            <ul class="bt-slice">
+                <li class="bt-blue1 fe-exe-btn">
+                    <button>앱실행하기</button>
+                </li>
+            </ul>
+        {{/if}}
+        <div class="txt mt20">* 3G 또는 LTE망 사용 시 데이터 요금이 발생됩니다.</div>
+    </div>
+</script>

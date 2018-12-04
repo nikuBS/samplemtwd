@@ -26,20 +26,7 @@
             <div class="container">
 
                 <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="t-apps">
-                        <div class="t-apps-ico">
-                            <img src="<%= app.appIconImgUrl %>" alt="<%= app.prodNm %>" class="ico">
-                            <span class="name"><%= app.prodNm %></span>
-                        </div>
-                        <div class="txt mb20"><%= app.prodSmryDesc %></div>
-                        <ul class="bt-slice">
-                            <li class="bt-blue1"><!-- TODO: 서버 데이터 확정 후, 버튼 작업 필요 -->
-                                <button>앱실행하기</button>
-                            </li>
-                        </ul>
-                        <div class="txt mt20">* 3G 또는 LTE망 사용 시 데이터 요금이 발생됩니다.</div>
-                    </div>
+                <div class="cont-box" id="fe-app">
                 </div>
                 <!-- // .cont-box -->
                 <% const topBanner = prodInfo && prodInfo.banners && prodInfo.banners.top; %>
@@ -52,7 +39,7 @@
                     <% } %>
                 <% } %>
 
-                <% if (app.images && app.images.length > 0 ) { %>
+                <% if (app && app.images && app.images.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
                     <div class="slide-show">
@@ -60,10 +47,10 @@
                         <div class="widget">
                             <div class="widget-box slider1">
                                 <div class="slider-box">
-                                    <ul id="fe-images" class="slider" data-images="<%- app.images %>">
-                                        <% app.images.map(img => { %>
+                                    <ul class="slider" id="fe-images">
+                                        <% app.images.map(image => { %>
                                         <li>
-                                            <div class="item"><img src="<%= img %>" alt="" class="thum" /></div>
+                                            <div class="item"><img src="<%= image %>" alt="" class="thum" /></div>
                                         </li>
                                         <% }); %>
                                     </ul>
@@ -91,7 +78,7 @@
                     <% } %>
                 <% } %>
                 <!-- .cont-box -->
-                <% if (apps.length > 0) { %>
+                <% if (apps && apps.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box">
                     <h3>함께하면 더욱 스마트한 앱서비스</h3>
@@ -103,7 +90,7 @@
                                     <% apps.map(app => { %>
                                         <li>
                                             <div>
-                                                <a href="/product/apps/<%= app.prodId %>">
+                                                <a href="/product/apps/app?appId=<%= app.prodId %>">
                                                     <img src="<%= app.appImg %>" alt="<%= app.prodNm %>" class="ico">
                                                     <span><%= app.prodNm %></span>
                                                 </a>
@@ -123,10 +110,12 @@
         <!--// #contents -->
     </div>
 </body>
+
+<% include ../../components/apps/product.apps.detail.component.html %>
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.ProductAppsDetail($('.wrap'));
+        new Tw.ProductAppsDetail($('.wrap'), <%- JSON.stringify(app) %>);
     })
 </script>
 <% include ../../components/end.component.html %>
