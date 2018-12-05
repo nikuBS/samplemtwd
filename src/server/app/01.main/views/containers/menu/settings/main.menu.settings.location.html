@@ -21,45 +21,40 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="cont-box">
-                    <div class="agree-list mt8">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box nogaps">
+                    <div class="list-comp-input location-agree">
                         <div class="widget">
-                            <div class="widget-box accordion">
-                                <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
-                                    <div class="acco-style none-title btn-hold">
-                                        <ul class="acco-list"><!-- .on: 열기 -->
-                                            <li class="acco-box on imp-view">
-                                                <div class="acco-tit">
-                                                    <div class="widget">
-                                                        <div class="widget-box check">
-                                                            <div class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                <i class="ico"></i>
-                                                                <input type="checkbox" name="checkbox" value="" title="개인정보활용 동의" <%= isAgree ? 'checked' : null %>>
-                                                                <span class="ml10">위치정보 이용동의 (선택)</span>
-                                                                <span class="sub-refer">위치정보 이용 동의 후 모바일 T WORLD가 내 위치 정보를 확인할 수 있습니다.</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a class="bt-link-tx underline" href="" target="_blank">전문보기</a>
-                                                </div>
-                                                <div class="acco-cont">
-                                                    <div class="agree-cont">
-                                                        <p class="agree-cont-defined">본인은 귀사가 공인인증서 인증을 위해 한국정보인증으로부터 본인 식별정보(CI/DI)를 제공받아 본인 확인 목적으로 이용하는 것에 동의합니다.</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                            <div class="agree-ckbox-wrap">
+                                <div class="ckbox">
+                                    <span class="custom-form"><input type="checkbox" id="ck_agree" name="r2" <%= isAgree ? 'checked' : null %>><span class="c-type1"></span></span>
+                                </div>
+                                <div class="comp-list-layout" id="aria-comp-agree">
+                                    <p class="layout-text">
+                                        <label for="ck_agree">위치정보 이용동의(선택)</label>
+                                        <span class="stext">위치정보 이용동의 후 모바일 T월드가 내 위치정보를 확인할 수 있습니다.</span>
+                                    </p>
+                                    <button id="fe-view" class="agree-view"><span class="blind">자세히 보기</span></button>
+                                </div>
+                            </div>
+                            <!--이용동의 내용-->
+                            <div class="agree-cont">
+                                <div class="cont-border">
+                                    <h3 class="mt20">수집 &middot; 이용목적</h3>
+                                    <p class="mt10">단말기의 위치정보에 기반하여 자기 위치 주변의 <strong>T월드</strong> 매장찾기 서비스 제공. 기지국 기반으로 모바일 <strong>T월드 앱 푸시</strong>를 통한 추천서비스 및 주변 매장 이벤트 등 SK텔레콤 또는 기타 제휴사의  상품/서비스에 관한 정보/광고 안내 서비스 제공</p>
+                                    <h3 class="mt20">수집 항목</h3>
+                                    <p class="mt10">서비스를 이용하는 시점에 기기 위치 정보 및 위치 기지국 정보</p>
                                 </div>
                             </div>
                         </div>
-                        <!--// .widget -->
+
                     </div>
                 </div>
-                <div class="cont-box nogaps noborder">
-                    <div class="explanation-box">
-                        <p>위치기반서비스를 이용하시기 위해서는 위치 선택 접근 권한동의가 선행되어야 합니다. <br/>선택 접근권한은 동의하지 않아도 서비스 이용 가능하나, 해당 권한이 필요한 기능은 제공이 제한될 수 있습니다.</p>
-                    </div>
+                <div class="cont-box noborder bgnone">
+                    <ul class="middot-list">
+                        <li>위치기반서비스를 이용하기 위해서는 위치 선택 접근권한에 먼저 동의하셔야 합니다.</li>
+                        <li>선택 접근권한은 동의하지 않아도 서비스를 이용할 수 있으나, 해당 권한이 필요한 기능은 이용이 제한될 수 있습니다.</li>
+                    </ul>
                 </div>
 
             </div>

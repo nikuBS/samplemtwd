@@ -10,6 +10,8 @@ Tw.MainMenuSettings = function (rootEl) {
   }
 
   this.$container = rootEl;
+  this._osType = 'I'; // default iOS,  'A': aos
+
 
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -47,24 +49,34 @@ Tw.MainMenuSettings.prototype = {
     var userAgentString = Tw.BrowserHelper.getUserAgent();
     var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
     this.$versionText.text(version);
+    this._currentVersion = version;
+
+    if (userAgentString.indexOf('osType:aos') !== -1) {
+      this._osType = 'A';
+    }
 
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
       .done($.proxy(this._onLatestVersion, this));
   },
   _onLatestVersion: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var latestVersion = res.result.latestVersion;
+      var currentOsType = this._osType;
+      var versionInfo = _.filter(res.result.ver, function (item) {
+        return item.osType === currentOsType;
+      });
+      var latestVersion = versionInfo[0]['new'];
       if (latestVersion > this._currentVersion) {
         this.$updateBox.removeClass('none');
       } else {
         this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
+        this.$versionText.addClass('point');
       }
     }
   },
   _onUpdate: function () {
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
-      url = 'market://details?id=com.sktelecom.minit';
+      url = 'intent://scan/#intent;package=com.sktelecom.minit;end';
     } else if (Tw.BrowserHelper.isIos()) {
       url = 'https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8';
     }
@@ -72,7 +84,7 @@ Tw.MainMenuSettings.prototype = {
     if (!Tw.FormatHelper.isEmpty(url)) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
         type: Tw.NTV_BROWSER.EXTERNAL,
-        url: url
+        href: url
       });
     }
   },
