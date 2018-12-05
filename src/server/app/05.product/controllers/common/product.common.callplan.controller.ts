@@ -108,6 +108,8 @@ class ProductCommonCallplan extends TwViewController {
       settingBtnList: any = [],
       termBtnList: any = [];
 
+    let isJoinReservation: any = false;
+
     basicInfo.linkBtnList.forEach((item) => {
       if (item.linkTypCd === 'SC') {
         joinBtnList.push(item);
@@ -116,6 +118,11 @@ class ProductCommonCallplan extends TwViewController {
 
       if (item.linkTypCd === 'SE') {
         settingBtnList.push(item);
+        return true;
+      }
+
+      if (item.linkTypCd === 'CT') {
+        isJoinReservation = true;
         return true;
       }
 
@@ -128,7 +135,8 @@ class ProductCommonCallplan extends TwViewController {
         join: joinBtnList,
         setting: settingBtnList,
         terminate: termBtnList
-      }
+      },
+      isJoinReservation: isJoinReservation
     });
   }
 
