@@ -302,6 +302,7 @@ Tw.MyTFareInfoHistory.prototype = {
     if(res.code === '00') {
       this._popupService.openAlert(Tw.POPUP_CONTENTS.REFUND_ACCOUNT_SUCCESS, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._refreshOverPay, this));
     } else {
+      if(res.code === 'ZNGME0000') res.msg = Tw.ALERT_MSG_MYT_FARE.ALERT_2_A32;
       this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, null);
     }
   },
