@@ -559,7 +559,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
   ALERT_3_A37: { TITLE: '이미 사용하고 있는 상품입니다.', MSG: '' },
   ALERT_3_A40: { TITLE: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?', MSG: '' },
-  ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' }
+  ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
+  ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.'
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {

@@ -4,13 +4,15 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
+
   this._prodId = prodId;
+  this._prodTypCd = prodTypCd;
 
   this._cachedElement();
   this._bindEvent();
@@ -28,7 +30,6 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _cachedElement: function() {
-    this.$btnList = this.$container.find('.fe-btn_list');
     this.$btnJoin = this.$container.find('.fe-btn_join');
     this.$btnSetting = this.$container.find('.fe-btn_setting');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
@@ -40,7 +41,6 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnList.on('click', 'button', $.proxy(this._goBtnLink, this));
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
@@ -60,18 +60,6 @@ Tw.ProductCommonCallplan.prototype = {
   _openExternalUrl: function(href) {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
-  },
-
-  _getJoinTermCd: function(typcd) {
-    if (typcd === 'SC') {
-      return '01';
-    }
-
-    if (typcd === 'TE') {
-      return '03';
-    }
-
-    return null;
   },
 
   _procSetting: function() {
@@ -111,46 +99,42 @@ Tw.ProductCommonCallplan.prototype = {
     });
   },
 
-  _goBtnLink: function(e) {
-    var $btn = $(e.currentTarget),
-      typcd = $btn.data('typcd'),
-      btnLink = $btn.data('url'),
-      joinTermCd = this._getJoinTermCd(typcd);
-
-    if (typcd === 'setting') {
-      return this._openSettingPop();
+  _getPreCheckApiReqInfo: function(joinTermCd) {
+    if (['AB', 'C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
+      return {
+        API_CMD: Tw.API_CMD.BFF_10_0007,
+        PARAMS: { joinTermCd: joinTermCd }
+      };
     }
 
-    if (typcd === 'SE') {
-      return this._historyService.goLoad(btnLink + '?prod_id=' + this._prodId);
+    if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
+      return {
+        API_CMD: Tw.API_CMD.BFF_10_0101,
+        PARAMS: { joinTermCd: joinTermCd }
+      };
     }
 
-    if (Tw.FormatHelper.isEmpty(joinTermCd)) {
-      return Tw.Error().page();
+    if (this._prodTypCd === 'F') {
+      return {
+        API_CMD: Tw.API_CMD.BFF_10_0119,
+        PARAMS: {}
+      };
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0007, {
-      joinTermCd: joinTermCd
-    }, null, this._prodId)
-      .done($.proxy(this._procAdvanceCheck, this, btnLink));
+    return null;
   },
 
   _goJoinTerminate: function(joinTermCd, e) {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    var url = $(e.currentTarget).data('url'),
+      preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0007, {
-      joinTermCd: joinTermCd
-    }, null, this._prodId)
-      .done($.proxy(this._goJoinTerminateResult, this, joinTermCd, $(e.currentTarget).data('url')));
-  },
-
-  _goJoinTerminateResult: function(joinTermCd, href, resp) {
-    Tw.CommonHelper.endLoading('.container');
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+    if (Tw.FormatHelper.isEmpty(preCheckApi)) {
+      return this._procAdvanceCheck(url, { code: '00' });
     }
 
-    this._historyService.goLoad(href + '?prod_id=' + this._prodId);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
+      .done($.proxy(this._procAdvanceCheck, this, url));
   },
 
   _openContentsDetailPop: function(e) {
@@ -201,12 +185,18 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
-  _procAdvanceCheck: function(btnLink, resp) {
+  _procAdvanceCheck: function(url, resp) {
+    Tw.CommonHelper.endLoading('.container');
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();
     }
 
-    this._historyService.goLoad(btnLink + '?prod_id=' + this._prodId);
+    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N') {
+      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_PRODUCT).pop();
+    }
+
+    this._historyService.goLoad(url + '?prod_id=' + this._prodId);
   }
 
 };

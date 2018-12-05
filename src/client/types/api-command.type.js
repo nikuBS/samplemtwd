@@ -414,6 +414,8 @@ Tw.API_CMD = {
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: Tw.API_METHOD.GET },
   BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
+  BFF_10_0101: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
