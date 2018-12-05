@@ -1,0 +1,117 @@
+<%#
+* FileName: product.roaming.join.roaming-combine.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.05
+%>
+
+
+<% include ../../../components/start.component.html %>
+<body data-gr-c-s-loaded="true">
+<!-- #skip_navigation
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>설정</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="ti-caption-gray">
+                    <h4 class="tit">회선설정</h4>
+                    <p class="num"><%= svcInfo.svcNum %>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <ul class="form-data-list">
+                        <li>
+                            <label class="tit">데이터 함께쓰기를 설정할 회선번호</label>
+                            <span class="inputbox bt-add error">
+                                    <span class="input">
+                                        <input type="text" id="input_phone" placeholder="숫자만 입력" title="데이터 함께쓰기를 설정할 회선번호를 입력하세요" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span class="bt-box">
+                                        <button type="button" id="phone_book">주소록</button>
+                                    </span>
+                                    <span class="tx-box announcement-box pt16">
+                                        <span id="aria-phone-tx1" class="announcement-bullet type02">데이터를 함께 사용할 휴대폰번호를 입력해주세요.</span>
+                                    </span>
+                                </span>
+                        </li>
+                    </ul>
+                    <ul class="bt-slice pt26">
+                        <li class="bt-blue1">
+                            <button disabled="" id="add_list">추가하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <div class="cont-box nogaps list_contents">
+                    <div class="list-comp-thumnail">
+                        <p class="list-comp-title">함께쓰기 신청된 회선</p>
+                        <ul class="comp-box">
+                            <li class="list-box">
+                                <div class="list-ico"><span class="ico type5">박</span></div>
+                                <p class="list-text">
+                                    <span class="mtext">박*주</span>
+                                    <span class="stext gray">010-12**-24**</span>
+                                </p>
+                                <div class="list-btn">
+                                    <div class="bt-alone">
+                                        <button class="bt-line-gray1">해지</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="cont-sp type1 list_contents" aria-hidden="true">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        <li>텍스트가 1줄인 Case입니다.</li>
+                        <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+
+
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingJoinRoamingCombine($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
+  });
+</script>
+<% include ../../../components/end.component.html %>

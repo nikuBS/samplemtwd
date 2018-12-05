@@ -76,7 +76,7 @@ class ProductRoamingSettingRoamingBeginSetup extends TwViewController {
         //         ,"settingYn" : true
         //
         //     },
-        //     prodId : prodId
+        //     prodId : 'test'
         // });
 
     }

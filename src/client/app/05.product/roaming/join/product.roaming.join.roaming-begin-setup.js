@@ -162,8 +162,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
             'svcEndDt' : {},
             'svcStartTm' : {},
             'svcEndTm' : {},
-            'startEndTerm' : {},
-            'joinType' : 'begin'
+            'startEndTerm' : {}
         };
 
         var data = {
@@ -178,7 +177,8 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
                         autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0,
+                        joinType : 'begin'
                    };
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);

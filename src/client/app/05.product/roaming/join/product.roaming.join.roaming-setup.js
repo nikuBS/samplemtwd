@@ -226,8 +226,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
             'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
             'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
             'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
-            'startEndTerm' : endDtIdx - startDtIdx,
-            'joinType' : 'setup'
+            'startEndTerm' : endDtIdx - startDtIdx
         };
 
         var data = {
@@ -242,7 +241,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
                         autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0,
+                        joinType : 'setup'
+
                    };
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);

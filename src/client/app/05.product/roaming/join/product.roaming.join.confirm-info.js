@@ -11,7 +11,9 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
+  console.log('1111111111111111');
   if(doJoinCallBack===null){
+      console.log('2222222222222222');
       this._svcInfo = closeCallBack;
       this._$popupContainer = this.$rootContainer;
       this._prodId = hash;
@@ -19,8 +21,10 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
       this._prodRedisInfo = rootData;
       this._page = true;
       this._bindPopupElementEvt(this.$rootContainer);
+      //this._stipulationInit(this._prodBffInfo);
       return;
   }
+  console.log('333333333333333333');
   this._doJoinCallBack = doJoinCallBack;
   this._openConfirmRoamingInfoPopup(data,closeCallBack,hash);
   this._rootData = rootData;
@@ -28,6 +32,7 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
 
 Tw.ProductRoamingJoinConfirmInfo.prototype = {
     _openConfirmRoamingInfoPopup : function (data,closeCallBack,hash) {
+        console.log('_openConfirmRoamingInfoPopup !!!!!!!!!!!!!!!!');
         this._popupService.open({
             hbs: 'RM_11_01_01_02',
             layer: true,
@@ -35,23 +40,36 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         },$.proxy(this._init,this),closeCallBack,hash);
     },
     _init : function($poppContainer){
+        console.log('init !!!!!!!!!!!!!!');
+        console.log(this._popupData.joinType);
         this._$popupContainer = $poppContainer;
         this._bindPopupElementEvt($poppContainer);
         var setingInfo;
-         if(this._popupData.userJoinInfo.joinType==='setup'){
+         if(this._popupData.joinType==='setup'){
              setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcStartTm+':00';
              setingInfo+= ' ~ '+moment(this._popupData.userJoinInfo.svcEndDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcEndTm+':00';
-         }else if(this._popupData.userJoinInfo.joinType==='auto'){
+         }else if(this._popupData.joinType==='auto'){
              setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcStartTm+':00';
-         }else if(this._popupData.userJoinInfo.joinType==='begin'){
+         }else if(this._popupData.joinType==='begin'){
              setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
+         }else if(this._popupData.joinType==='alarm'){
+             console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+             for(var i=0;i<this._popupData.userJoinInfo.svcNumList.length;i++){
+                 if(i>=2){
+                     break;
+                 }else{
+                     setingInfo=this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+'-';
+                     setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+'-';
+                     setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber3;
+                 }
+             }
          }
-        setingInfo+=' 설정완료';
 
         this._$popupContainer.find('.term').text(setingInfo);
 
     },
     _bindPopupElementEvt : function ($popupContainer) {
+        console.log(this._$popupContainer);
         this._$allAgreeElement = this._$popupContainer.find('.all.checkbox>input');
         this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
 
@@ -99,11 +117,10 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         $element.parent().attr('aria-checked',value==='checked'?true:false);
     },
     _doJoin : function () {
-        this._popupService.openConfirm('content', 'title', $.proxy(this._confirmInfo,this), null);
+        this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, null, $.proxy(this._confirmInfo,this));
     },
     _confirmInfo : function () {
         if(this._page===true){
-
             this._excuteJoin();
         }else{
             this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
@@ -118,46 +135,32 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
             'startEndTerm' : {}
         };
 
-        var completePopupData = {
-            prodNm : this._prodRedisInfo.prodNm,
-            isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
-            typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-            settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-            btnNmList : ['나의 가입정보 확인']
-        };
-        this._popupService.open({
-                hbs: 'complete_product_roaming',
-                layer: true,
-                data : completePopupData
-            },
-            $.proxy(this._bindCompletePopupEvt,this),
-            null,
-            'complete');
 
-        // this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},this.prodId).
-        // done($.proxy(function (res) {
-        //     console.log('success');
-        //     console.log(res);
-        //
-        //     var completePopupData = {
-        //         prodNm : this._prodRedisInfo.prodNm,
-        //         isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
-        //         typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-        //         settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-        //         btnNmList : ['나의 가입정보 확인']
-        //     };
-        //     this._popupService.open({
-        //             hbs: 'complete_product_roaming',
-        //             layer: true,
-        //             data : completePopupData
-        //         },
-        //         $.proxy(this._bindCompletePopupEvt,this),
-        //         null,
-        //         'complete');
-        // }, this)).fail($.proxy(function (err) {
-        //     console.log('fail');
-        //     console.log(err);
-        // }, this));
+
+        this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},this.prodId).
+        done($.proxy(function (res) {
+            console.log('success');
+            console.log(res);
+
+            var completePopupData = {
+                prodNm : this._prodRedisInfo.prodNm,
+                isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
+                typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+                settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
+                btnNmList : ['나의 가입정보 확인']
+            };
+            this._popupService.open({
+                    hbs: 'complete_product_roaming',
+                    layer: true,
+                    data : completePopupData
+                },
+                $.proxy(this._bindCompletePopupEvt,this),
+                null,
+                'complete');
+        }, this)).fail($.proxy(function (err) {
+            console.log('fail');
+            console.log(err);
+        }, this));
 
     },
     _bindCompletePopupEvt : function ($args) {
