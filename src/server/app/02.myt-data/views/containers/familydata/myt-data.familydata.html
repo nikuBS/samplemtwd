@@ -102,14 +102,13 @@
                                         <dt>공유한 데이터</dt>
                                         <dd><%= member.shared %>GB</dd>
                                         <% if (!isInfinity) {
-                                            const limitation = member.limitedYn === 'Y' && member.limitation; %>
-                                                <dt>이용한도</dt>
-                                                <dd>
-                                                    <span><%= limitation ? limitation + 'GB' : '자유 사용' %></span>
-                                                    <% if (familyInfo.isRepresentation) { %>
-                                                    <button class="bt-link-tx underline fe-setting-limit" data-limitation="<%= limitation %>">설정</button>
-                                                    <% } %>
-                                                </dd>
+                                            <dt>이용한도</dt>
+                                            <dd>
+                                                <span><%= member.limitedYn === 'Y' ? member.limitation + 'GB' : '자유 사용' %></span>
+                                                <% if (familyInfo.isRepresentation) { %>
+                                                <button class="bt-link-tx underline fe-setting-limit" data-limitation="<%= member.limitedYn === 'Y' && member.limitation %>">설정</button>
+                                                <% } %>
+                                            </dd>
                                         <% } %>
                                     </dl>
                                 </div>

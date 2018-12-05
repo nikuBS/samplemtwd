@@ -25,16 +25,16 @@ Tw.MyTDataFamily.prototype = {
       this._popupService.toast(Tw.MYT_DATA_FAMILY_TOAST.SUCCESS_CHANGE);
       if (this.$limitBtn) {
         this.$limitBtn.data('limitation', this._limitation);
-        if (this._limitation) {
-          this.$limitBtn
-            .parent()
-            .find('span')
-            .text(this._limitation + Tw.DATA_UNIT.GB);
-        } else {
+        if (this._limitation === false) {
           this.$limitBtn
             .parent()
             .find('span')
             .text(Tw.T_FAMILY_MOA_NO_LIMITATION);
+        } else {
+          this.$limitBtn
+            .parent()
+            .find('span')
+            .text(this._limitation + Tw.DATA_UNIT.GB);
         }
       }
     }
@@ -68,15 +68,15 @@ Tw.MyTDataFamily.prototype = {
     var limitation = this._limitation;
     this._popupService.close();
 
-    if (limitation) {
+    if (limitation === false) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, mgmtNum).done($.proxy(this._successChangeLimitation, this));
+    } else {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0050, {
           mbrSvcMgmtNum: mgmtNum,
           dataQty: limitation
         })
         .done($.proxy(this._successChangeLimitation, this));
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, mgmtNum).done($.proxy(this._successChangeLimitation, this));
     }
   },
 
