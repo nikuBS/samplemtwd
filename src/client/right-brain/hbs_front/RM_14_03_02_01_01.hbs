@@ -39,13 +39,13 @@
                     <li>
                         <label class="tit" for="flab02">임대시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <div class="inputbox date-selcet mt0">
-                            <span class="date-type full"><input id="flab02" type="date" value="{{data.rominfo.rental_schd_sta_dtm}}" min="2000-01-01" max="2018-12-31" title="임대시작 일자 선택"></span>
+                            <span class="date-type full"><input id="flab02" type="date" value="{{data.rominfo.rental_schd_sta_dtm}}" min="{{data.minDate}}" max="{{data.maxDate}}" title="임대시작 일자 선택"></span>
                         </div>
                     </li>
                     <li>
                         <label class="tit" for="flab03">반납 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <div class="inputbox date-selcet mt0">
-                            <span class="date-type full"><input id="flab03" type="date" value="{{data.rominfo.rental_schd_end_dtm}}" min="2000-01-01" max="2018-12-31" title="반납 일자 선택"></span>
+                            <span class="date-type full"><input id="flab03" type="date" value="{{data.rominfo.rental_schd_end_dtm}}" min="{{data.minDate}}" max="{{data.maxDate}}" title="반납 일자 선택"></span>
                         </div>
                     </li>
                     <li>
@@ -74,14 +74,14 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>예약 확인 사항<button id="RM_14_02_01_tip_01" type="button" class="tip-view">TIP</button></li>
+                    <li>예약 확인 사항 <button id="RM_14_02_01_tip_01" type="button" class="tip-view" title="예약 확인 사항 정보보기" aria-haspopup="true">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
 
-            <ul id="fe-register" data-mgmt="{{data.rominfo.rental_mgmt_num}}" class="bt-slice full">
+            <ul class="bt-slice full">
                 <li class="bt-red1">
-                    <button>예약 수정</button>
+                    <button id="fe-register" data-mgmt="{{data.rominfo.rental_mgmt_num}}" data-opclcd="{{data.rominfo.rsv_chnl_cd}}">예약 수정</button>
                 </li>
             </ul>
         </div>
