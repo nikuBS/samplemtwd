@@ -33,7 +33,10 @@ class ProductRoamingSettingRoamingSetup extends TwViewController {
                 this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
                 this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
             ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
-
+                console.log('test redis info');
+                console.log(prodRedisInfo);
+                console.log('test bff info');
+                console.log(prodBffInfo);
                 if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                     return this.error.render(res, {
                         svcInfo: svcInfo,
@@ -44,7 +47,7 @@ class ProductRoamingSettingRoamingSetup extends TwViewController {
                 res.render('roaming/setting/product.roaming.setting.roaming-setup.html', {
                     svcInfo : svcInfo,
                     prodRedisInfo : prodRedisInfo.summary,
-                    prodBffInfo : prodBffInfo,
+                    prodBffInfo : prodBffInfo.result,
                     prodId : prodId
                 });
         });

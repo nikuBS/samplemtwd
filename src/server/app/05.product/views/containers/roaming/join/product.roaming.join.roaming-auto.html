@@ -62,6 +62,7 @@
                                     <button class="bt-dropdown big placeholder time" id="start_time" title="개시일 시간 선택" aria-haspopup="true">선택<span class="ico"></span></button>
                                 </div>
                             </div>
+                            <span class="error-txt start none">서비스 개시일 설정은 당일 이후만 가능합니다.</span>
                             <ul class="announcement-box">
                                 <li id="aria-dateset1" class="announcement-bullet type01">1개월 이내의 날짜만 선택 가능합니다.</li>
                                 <li id="aria-timeset1" class="announcement-bullet type01">한국시간 기준 00시~23입니다.</li>
@@ -95,7 +96,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button disabled="disabled" >설정완료</button>
+                            <button disabled="disabled" id="do_confirm">설정완료</button>
                         </li>
                     </ul>
                 </div>

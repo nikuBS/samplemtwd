@@ -14,15 +14,18 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._expireDate = expireDate;
+  this._apiService = Tw.Api;
   this._init();
 };
 
 Tw.ProductRoamingSettingRoamingAuto.prototype = {
     _init : function(){
+
         var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
         var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format('YYYY. MM. DD');
         var startTime = this._prodBffInfo.svcStartTm;
         var endTime = this._prodBffInfo.svcEndTm;
+
         this.$container.find('#start_date').text(startDate);
         this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
         this.$container.find('#end_date').text(endDate);
@@ -35,7 +38,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
-      this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
+      this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._settingInformationSetting, this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';
@@ -140,6 +143,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         var returnValue = false;
         var $errorsElement = this.$container.find('.error-txt.'+className);
         if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+            $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
             $errorsElement.removeClass('none');
         }else{
             returnValue = true;
@@ -173,26 +177,9 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
           null,
           'select_date');
     },
-    _doJoin : function(data,apiService,historyService){
-        // apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
-        // done($.proxy(function (res) {
-        //     console.log('success');
-        //     console.log(res);
-        // }, this)).fail($.proxy(function (err) {
-        //     console.log('fail');
-        //     console.log(err);
-        // }, this));
-        if(true){
+    _settingInformationSetting : function () {
 
-        }else{
-
-        }
-
-
-    },
-    _confirmInformationSetting : function () {
-
-        var userJoinInfo = {
+        var userSettingInfo = {
             'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
             'svcEndDt' : {},
             'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
@@ -200,33 +187,18 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
             'startEndTerm' : {}
         };
 
-        var data = {
-                        popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
-                        userJoinInfo : userJoinInfo,
-                        prodId : this._prodId,
-                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
-                        processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-                        prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
-                        svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
-                        prodNm : this._prodRedisInfo.prodNm,
-                        prodFee : this._prodRedisInfo.basFeeInfo,
-                        description : this._prodRedisInfo.prodSmryDesc,
-                        autoInfo : this._prodBffInfo,
-                        showStipulation : Object.keys(this._prodBffInfo.stipulationInfo).length>0
-                   };
 
-        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');
+        this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},this._prodId).
+        done($.proxy(function (res) {
+            console.log('success');
+            console.log(res);
+            //TODO success process
+        }, this)).fail($.proxy(function (err) {
+            console.log('fail');
+            console.log(err);
+            //TODO fail process
+        }, this));
     }
-
-    /*
-    * 취소 alert(){
-    * this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
-    * }
-    *
-    *
-    * */
 
 
 

@@ -3,7 +3,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>가입</h1>
+                <h1>{{data.popupTitle}}</h1>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
                     <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
                     <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
                     <div class="in-info oneline">
-                        <span class="number"><span class="blind">회선번호</span>010-73**-06**</span>
+                        <span class="number"><span class="blind">회선번호</span>{{data.svcNum}}</span>
                     </div>
                 </div>
             </div>
@@ -31,12 +31,12 @@
                 <div class="charge-guide-wrap">
                     <div class="charge-cont">
 								<span class="sub-disc01">
-									<span class="elem">가입할 로밍 요금제(부가서비스)</span>
+									<span class="elem">{{data.processNm}}할 {{data.prodType}}({{data.svcType}})</span>
 								</span>
-                        <span class="tit-tx">T로밍 아시아패스</span>
-                        <span class="sub-disc03"><span class="tx-bold vbl">월 8,800원</span> 부가세포함</span>
+                        <span class="tit-tx">{{data.prodNm}}</span>
+                        <span class="sub-disc03"><span class="tx-bold vbl">월 {{data.prodFee}}원</span> 부가세포함</span>
                         <div class="cont-noti pt36">
-                            <span class="type3">데이터 기본제공량 소진 후 매일 50MB 추가 및 안심옵션 혜택 제공</span>
+                            <span class="type3">{{data.description}}</span>
                         </div>
                     </div>
                 </div>
@@ -73,10 +73,20 @@
                                 <span class="sub-tit">서비스</span>
                             </div>
                             <div class="cont-area">
-                                <dl>
-                                    <dt>부가서비스</dt>
-                                    <dd>T RING플러스(무료)</dd>
-                                </dl>
+                                {{#if data.autoInfo.preinfo.autoJoinList.length}}
+                                    {{#each data.autoInfo.preinfo.autoJoinList}}
+                                        <dl>
+                                            <dt>{{this.svcProdNm}}</dt>
+                                            <dd>{{this.prodNm}}</dd>
+                                        </dl>
+                                    {{/each}}
+                                {{else}}
+                                    <dl>
+                                        <dt>부가서비스</dt>
+                                        <dd>자동가입 부가서비스가 없습니다.</dd>
+                                    </dl>
+                                {{/if}}
+
                             </div>
                         </li>
                         <li>
@@ -85,109 +95,131 @@
                                 <span class="sub-tit">서비스</span>
                             </div>
                             <div class="cont-area">
-                                <dl>
-                                    <dt>부가서비스</dt>
-                                    <dd>T RING플러스(무료)</dd>
-                                </dl>
+                                {{#if data.autoInfo.preinfo.autoTermList.length}}
+                                    {{#each data.autoInfo.preinfo.autoTermList}}
+                                        <dl>
+                                            <dt>{{this.svcProdNm}}</dt>
+                                            <dd>{{this.prodNm}}</dd>
+                                        </dl>
+                                    {{/each}}
+                                {{else}}
+                                    <dl>
+                                        <dt>부가서비스</dt>
+                                        <dd>자동해지 부가서비스가 없습니다.</dd>
+                                    </dl>
+                                {{/if}}
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
             <!--// .cont-box -->
+            {{#if data.showStipulation }}
+                <div class="ti-caption-gray">
+                    <h3 class="tit">약관 및 이용동의</h3>
+                </div>
+            {{/if}}
 
-            <div class="ti-caption-gray">
-                <h3 class="tit">약관 및 이용동의</h3>
-            </div>
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="agree-chk-wrap">
-                    <div class="list-comp-input-agree">
-                        <div class="widget">
-                            <div class="widget-box check">
-                                <ul class="select-list" role="group">
-                                    <li>
-                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
-                                                <p class="layout-text all-chk">
-                                                    <span class="mtext">모두동의</span>
-                                                </p>
+            {{#if data.showStipulation }}
+                <div class="cont-box nogaps">
+                    <div class="agree-chk-wrap">
+                        <div class="list-comp-input-agree">
+                            <div class="widget">
+                                <div class="widget-box check">
+                                    <ul class="select-list" role="group">
+                                        <li>
+                                            <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                    <p class="layout-text all-chk">
+                                                        <span class="mtext">모두동의</span>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="서비스 이용약관 및 이용동의 (필수)" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox2">
-                                                <p class="layout-text">
-                                                    <span class="mtext">서비스 이용약관 및 이용동의 (필수)</span>
-                                                    <span class="stext-bg mt20">
+                                        </li>
+                                        {{#ifCond data.autoInfo.stipulationInfo.scrbStplAgreeYn '===' 'Y'}}
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.scrbStplAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">{{data.autoInfo.stipulationInfo.scrbStplAgreeTitNm}}</span>
+                                                            <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
+                                                                    {{{data.autoInfo.stipulationInfo.scrbStplAgreeHtmlCtt}}}
                                                                 </span>
                                                             </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="서비스 가입동의 (필수)" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox3">
-                                                <p class="layout-text">
-                                                    <span class="mtext">서비스 가입동의 (필수)</span>
-                                                    <span class="stext-bg mt20">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            </li>
+                                        {{/ifCond}}
+                                        {{#ifCond data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeYn '===' 'Y'}}
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">{{data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm}}</span>
+                                                            <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
+                                                                    {{{data.autoInfo.stipulationInfo.psnlInfoCnsgHtmlCtt}}}
                                                                 </span>
                                                             </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="개인정보 수집 · 이용 위탁동의 (필수)" aria-labelledby="aria-comp-checkbox4"><!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox4">
-                                                <p class="layout-text">
-                                                    <span class="mtext">개인정보 수집 · 이용 위탁동의 (필수)</span>
-                                                    <span class="stext-bg mt20">
-                                                                <span class="stext-c">
-                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
-                                                                </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            </li>
+                                        {{/ifCond}}
+                                        {{#ifCond data.autoInfo.stipulationInfo.psnlInfoOfrAgreeYn '===' 'Y'}}
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">{{data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm}}</span>
+                                                            <span class="stext-bg mt20">
+                                                            <span class="stext-c">
+                                                                {{{data.autoInfo.stipulationInfo.psnlInfoOfrHtmlCtt}}}
                                                             </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                                    </li>
-                                    <li>
-                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="checkbox" value="" title="개인정보 수집 · 이용 제3자 제공동의 (필수)" aria-labelledby="aria-comp-checkbox5"><!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox5">
-                                                <p class="layout-text">
-                                                    <span class="mtext">개인정보 수집 · 이용<br>제3자 제공동의 (필수)</span>
-                                                    <span class="stext-bg mt20">
-                                                                <span class="stext-c">
-                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
-                                                                </span>
+                                                        </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            </li>
+                                        {{/ifCond}}
+                                        {{#ifCond data.autoInfo.stipulationInfo.adInfoOfrAgreeYn '===' 'Y'}}
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">{{data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm}}</span>
+                                                            <span class="stext-bg mt20">
+                                                            <span class="stext-c">
+                                                                {{{data.autoInfo.stipulationInfo.adInfoOfrHtmlCtt}}}
                                                             </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
-                                    </li>
-                                </ul>
+                                                        </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            </li>
+                                        {{/ifCond}}
 
+                                    </ul>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--// .cont-box -->
+                <!--// .cont-box -->
+            {{/if}}
 
             <hr class="cont-sp type1" aria-hidden="true">
 
@@ -205,7 +237,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button disabled="disabled">가입하기</button>
+                        <button id="do_join">가입하기</button>
                     </li>
                 </ul>
             </div>
