@@ -1162,6 +1162,20 @@ Tw.BENEFIT = {
         LINK_TITLE: '나의 가입정보 확인하기 >'
       }
     }
+  },
+  INDEX: {
+    COMBINE: {
+      CONTENT: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
+      LINK_LIST:[
+        {
+          style_class: 'link l1',
+          txt: '신규신청'
+        }, {
+          style_class: 'link l2',
+          txt: '제출하기'
+        }
+      ]
+    }
   }
 };
 

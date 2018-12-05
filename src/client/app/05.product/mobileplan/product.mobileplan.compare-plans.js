@@ -5,6 +5,8 @@
  */
 Tw.ProductMobilePlanComparePlans = function (data) {
   this.$container = $('.wrap');
+  this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService();
   this._data = data;
   this._init();
 };
@@ -19,7 +21,30 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
   },
   _bindEvent: function () {
+    this.$container.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
+  },
 
+  // 가입하기 페이지 이동
+  _goJoinUrl: function (e) {
+    var joinUrl = $(e.currentTarget).data('joinUrl');
+    if (Tw.FormatHelper.isEmpty(joinUrl)) {
+      return;
+    }
+    Tw.CommonHelper.startLoading('.container','grey',true);
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0007, {
+      joinTermCd: '01'
+    }, null, Tw.UrlHelper.getQueryParams().prodId)
+      .done($.proxy(this._goJoinDone, this, joinUrl));
+  },
+
+  _goJoinDone: function(href, resp) {
+    Tw.CommonHelper.endLoading('.container');
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return this._onFail(resp);
+    }
+
+    this._historyService.goLoad(href + 'prod_id=' + Tw.UrlHelper.getQueryParams().prodId);
   },
 
   // 차트 생성
@@ -49,7 +74,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
         },
         {
           t : _data.prodNames[1],
-          v : $.isNumeric(_data.targetSupply) ? parseFloat(_data.targetSupply):_data.targetSupply
+          v : !isNaN(_data.targetSupply) ? parseFloat(_data.targetSupply):_data.targetSupply
         }
       ]
     });
