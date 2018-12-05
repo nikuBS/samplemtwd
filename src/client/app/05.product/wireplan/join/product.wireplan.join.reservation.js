@@ -56,11 +56,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _restoreLocalStorage: function() {
-    if (!Tw.UIService.getLocalStorage('productJoinReservation')) {
+    if (!Tw.CommonHelper.getLocalStorage('productJoinReservation')) {
       return;
     }
 
-    var data = Tw.UIService.getLocalStorage('productJoinReservation');
+    var data = Tw.CommonHelper.getLocalStorage('productJoinReservation');
     if (Tw.FormatHelper.isEmpty(data)) {
       return;
     }
@@ -90,7 +90,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
     }
 
-    Tw.UIService.setLocalStorage('productJoinReservation', '');
+    Tw.CommonHelper.setLocalStorage('productJoinReservation', '');
   },
 
   _cachedElement: function() {
@@ -638,7 +638,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _setLocalStorage: function() {
-    Tw.UIService.setLocalStorage('productJoinReservation', JSON.stringify({
+    Tw.CommonHelper.setLocalStorage('productJoinReservation', JSON.stringify({
       name: this.$reservName.val(),
       number: this.$reservNumber.val(),
       typeCd: this._typeCd,
