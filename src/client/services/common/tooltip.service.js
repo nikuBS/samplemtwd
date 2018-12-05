@@ -42,7 +42,7 @@ Tw.TooltipService.prototype = {
       'cont_align': 'tl',
       'contents': $result.contents,
       'bt_b': [{
-        style_class: 'tw-popup-closeBtn pos-center',
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
         txt: '닫기'
       }]
     });

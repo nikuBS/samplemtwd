@@ -9,6 +9,8 @@ Tw.CommonWithdrawalSurvey = function () {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
 
+  this._isTid = false;
+
   this._open();
 };
 
@@ -93,10 +95,11 @@ Tw.CommonWithdrawalSurvey.prototype = {
   _onRequestDone: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (res.result.tidYn === 'Y') {
-        this._hbs = 'CO_ME_01_05_01_04_02';
-      } else {
-        this._hbs = 'CO_ME_01_05_01_04_01';
+        this._isTid = true;
       }
+
+      this._isCompleteWithdraw = true;
+      this._popupService.close();
 
       // Getting rid of session
       this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
@@ -115,38 +118,7 @@ Tw.CommonWithdrawalSurvey.prototype = {
   },
   _onWithdrawal: function () {
     if (this._isCompleteWithdraw) {
-      this._openCompletePop();
-    }
-  },
-  _openCompletePop: function () {
-    this._popupService.open({
-      hbs: this._hbs
-    },
-      $.proxy(this._onOpenComplete, this),
-      $.proxy(this._goLink, this),
-      'complete'
-    );
-  },
-  _onOpenComplete: function ($layer) {
-    $layer.on('click', '.fe-id-withdrawal', $.proxy(this._setLink, this, 'tid'));
-    $layer.on('click', '.fe-re-join', $.proxy(this._setLink, this, 'join'));
-    $layer.on('click', '.fe-home', $.proxy(this._setLink, this, 'home'));
-  },
-  _setLink: function (type) {
-    if (type === 'tid') {
-      this.isTID = true;
-    } else if (type === 'join') {
-      this._link = '/common/tid/signup-local';
-    } else {
-      this._link = '/main/home';
-    }
-    this._popupService.close();
-  },
-  _goLink: function () {
-    if (this.isTID) {
-      Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.SKT_ID);
-    } else {
-      this._historyService.goLoad(this._link);
+      this._historyService.replaceURL('/common/member/withdrawal-complete?isTid=' + this._isTid);
     }
   },
   _error: function (err) {
