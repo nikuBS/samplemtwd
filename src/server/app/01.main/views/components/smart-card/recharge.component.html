@@ -10,8 +10,8 @@
         <div class="stit c-point">데이터 충전</div>
         <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
         <ul class="list">
-            <% if(usageData.data) { %>
-            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><%= usageData.gnrlData.showRemained.data %><%= usageData.gnrlData.showRemained.unit %></em></li>
+            <% if(usageData.data && usageData.data.isShow) { %>
+            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><%= usageData.data.showRemained %></em></li>
             <% } %>
             <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span
                 class="f-type">{{ refillCoupons }}</span>장</em></li>
