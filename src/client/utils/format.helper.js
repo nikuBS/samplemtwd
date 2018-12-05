@@ -404,6 +404,45 @@ Tw.FormatHelper = (function () {
     var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 
     return regPhone.test(sNumber);
+  };
+
+  var purifyPlansData = function (rawData) {
+    var data = rawData.sort(function (a, b) {
+      var ia = a.initial;
+      var ib = b.initial;
+
+      var patternHangul = /[ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ]/;
+
+      var order = function (a, b) {
+        if ( a < b ) {
+          return -1;
+        } else if ( a > b ) {
+          return 1;
+        }
+        return 0;
+      };
+
+      if ( ia.match(patternHangul) && ib.match(patternHangul) ) {
+        return order(ia, ib);
+      }
+
+      if ( ia.match(/[a-zA-Z]/) && ib.match(/[a-zA-Z]/) ) {
+        return order(ia, ib);
+      }
+
+      if ( ia.match(/[0-9]/) && ib.match(/[0-9]i/) ) {
+        return order(ia, ib);
+      }
+
+      if ( ia < ib ) {
+        return 1;
+      } else if ( ia > ib ) {
+        return -1;
+      }
+      return 0;
+    });
+
+    return data;
   }
 
   return {
@@ -444,6 +483,7 @@ Tw.FormatHelper = (function () {
     appendVoiceUnit: appendVoiceUnit,
     appendSMSUnit: appendSMSUnit,
     getTemplateString: getTemplateString,
-    isCellPhone: isCellPhone
+    isCellPhone: isCellPhone,
+    purifyPlansData: purifyPlansData
   };
 })();

@@ -9,6 +9,8 @@ Tw.CustomerEmailUpload = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
+  this._limitFileByteSize = 2097152;
+  this._acceptExt = ['jpg', 'jpeg', 'png', 'tif', 'bmp'];
 
   this._cachedElement();
   this._bindEvent();
@@ -37,28 +39,34 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _selectFile: function (e) {
-    if ( e.currentTarget.files[0] ) {
+    var fileInfo = $(e.currentTarget).prop('files').item(0);
+
+    if ( fileInfo.size > this._limitFileByteSize ) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+    }
+
+    if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
+    }
+
+    if ( fileInfo ) {
       var $elFileName = $(e.currentTarget).parent().parent().find('.fileview');
-      $elFileName.val(e.currentTarget.files[0].name);
+      $elFileName.val(fileInfo.name);
     }
 
-    if ( this.uploadFiles.length > 4 ) {
-      this.uploadFiles.pop();
-    }
-
-    this.uploadFiles = this.uploadFiles.concat($(e.currentTarget).prop('files')[0]);
+    this.uploadFiles = this.uploadFiles.concat(fileInfo);
   },
 
-  _uploadFile: function (e) {
+  _uploadFile: function () {
     var formData = new FormData();
+    formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
+
     this.uploadFiles.map(function (file) {
       formData.append('file', file);
     });
 
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this));
-
-    $('.fe-wrap-file-upload').remove();
   },
 
   _showUploadPopup: function (sType) {
@@ -72,6 +80,8 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _successUploadFile: function (res) {
+    this._hideUploadPopup();
+
     if ( this.type === 'service' ) {
       $('#tab1-tab .filename-list').html(this.tpl_upload_list({ files: res.result }));
     } else {

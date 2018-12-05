@@ -74,7 +74,7 @@ Tw.CustomerEmailService.prototype = {
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
       atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'), function (item) {
-        return $.trim($(item).find('.text').text() + ':' + '/uploads' + $(item).data('hashfile'));
+        return $.trim($(item).find('.text').text() + ':' + $(item).data('hashfile'));
       })
     });
 
@@ -88,7 +88,7 @@ Tw.CustomerEmailService.prototype = {
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
       atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'), function (item) {
-        return $.trim($(item).find('.text').text() + ':' + '/uploads' + $(item).data('hashfile'));
+        return $.trim($(item).find('.text').text() + ':' + $(item).data('hashfile'));
       })
     });
 
