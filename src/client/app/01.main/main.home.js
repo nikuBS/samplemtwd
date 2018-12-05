@@ -19,6 +19,7 @@ Tw.MainHome = function (rootEl, smartCard) {
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
 
+  this._lineComponent = new Tw.LineComponent();
   this._cachedElement();
   this._bindEvent();
   this._openLineResisterPopup();
@@ -48,7 +49,11 @@ Tw.MainHome.prototype = {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '#fe-bt-quick-edit', $.proxy(this._onClickQuickEdit, this));
-
+    this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
+  },
+  _onClickLine: function($event) {
+    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+    this._lineComponent.onClickLine(svcMgmtNum);
   },
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
