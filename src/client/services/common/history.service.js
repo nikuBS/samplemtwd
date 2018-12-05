@@ -40,7 +40,7 @@ Tw.HistoryService.prototype = {
     this.history.pushState(this.historyObj, this.fullPathName, targetUrl);
   },
   complete: function () {
-    Tw.UIService.setLocalStorage(this.storageName, 'done');
+    Tw.CommonHelper.setLocalStorage(this.storageName, 'done');
   },
   reload: function () {
     window.scrollTo(0, 0);
@@ -81,7 +81,7 @@ Tw.HistoryService.prototype = {
     if ( event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2 ) {
       if ( this.isDone() ) {
         var historyLength = -(this._urlHistoryLength);
-        Tw.UIService.setLocalStorage(this.storageName, '');
+        Tw.CommonHelper.setLocalStorage(this.storageName, '');
         this.resetHistory(historyLength);
       }
     }
@@ -139,7 +139,7 @@ Tw.HistoryService.prototype = {
     return this.$container.hasClass('process-complete');
   },
   isDone: function () {
-    return Tw.UIService.getLocalStorage(this.storageName) === 'done';
+    return Tw.CommonHelper.getLocalStorage(this.storageName) === 'done';
   },
   isBack: function () {
     if (window.performance) {

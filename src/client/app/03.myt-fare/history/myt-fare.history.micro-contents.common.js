@@ -78,7 +78,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
   },
 
   _moveDetailPage: function (e) {
-    Tw.UIService.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.currentMonthData[$(e.currentTarget).data('listId')]));
+    Tw.CommonHelper.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.currentMonthData[$(e.currentTarget).data('listId')]));
   },
 
   _setMicroPaymentContentsData: function (res) {
@@ -163,7 +163,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
       linkMoveBlockList: this.$container.find('#fe-detail-link-move-block-list') || null
     };
 
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('myTFareHistoryDetailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('myTFareHistoryDetailData'));
 
     if (this.detailData.useServiceCompany) {
       var tempArr = this.detailData.useServiceCompany.split(' ');
@@ -217,7 +217,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this.$detailInfo.linkMoveBlockList.show();
     this.$detailInfo.paymentBlockState.text(this._getDetailBlockState('A1'));
     this.detailData.cpState = 'A1';
-    Tw.UIService.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.detailData));
+    Tw.CommonHelper.setLocalStorage('myTFareHistoryDetailData', JSON.stringify(this.detailData));
   },
 
   _getDetailUsageType: function (wapInfo) {

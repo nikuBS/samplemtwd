@@ -91,11 +91,11 @@ Tw.MyTBillHistoryCommon.prototype = {
   },
 
   _setValueToLD: function (label, value) {
-    Tw.UIService.setLocalStorage(label, value);
+    Tw.CommonHelper.setLocalStorage(label, value);
   },
 
   _getValueFromLD: function (label) {
-    return Tw.UIService.getLocalStorage(label);
+    return Tw.CommonHelper.getLocalStorage(label);
   },
 
   _goLoad: function (url) {

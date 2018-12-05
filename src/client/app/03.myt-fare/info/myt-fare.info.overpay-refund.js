@@ -80,7 +80,7 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
-    Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
+    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
     this._historyService.goLoad(this._historyService.pathname + '/detail');
   },
 

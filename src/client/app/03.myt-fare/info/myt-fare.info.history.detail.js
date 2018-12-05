@@ -18,7 +18,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
   _init: function () {
     this.rootPathName = this._historyService.pathname;
 
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     this.queryParams = Tw.UrlHelper.getQueryParams();
 
     switch (this.queryParams.type) {

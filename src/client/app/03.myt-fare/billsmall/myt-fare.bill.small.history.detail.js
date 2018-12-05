@@ -21,7 +21,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     this.rootPathName = this._historyService.pathname;
 
     var renderedHTML;
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     
     if(this.detailData){
       renderedHTML = this.$template.$detailWrap(this.detailData);
@@ -94,7 +94,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
       blockState:Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE.A1,
       isBlocked:true
     });
-    Tw.UIService.setLocalStorage('detailData',JSON.stringify(this.detailData));
+    Tw.CommonHelper.setLocalStorage('detailData',JSON.stringify(this.detailData));
 
     this.$domWrapper.empty().append(this.$template.$detailWrap(this.detailData));
     this._bindEvent();

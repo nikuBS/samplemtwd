@@ -45,7 +45,7 @@ Tw.MyTFareInfoHistory.prototype = {
     else {
       this.listRenderPerPage = 20;
 
-      this.listLastIndex = Tw.UIService.getLocalStorage('listLastIndex') || this.listRenderPerPage;
+      this.listLastIndex = Tw.CommonHelper.getLocalStorage('listLastIndex') || this.listRenderPerPage;
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
 
       this.renderableListData = this.data.listData.mergedListData.slice(0, this.listRenderPerPage);
@@ -125,7 +125,7 @@ Tw.MyTFareInfoHistory.prototype = {
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
-    Tw.UIService.setLocalStorage('detailData', JSON.stringify(detailData));
+    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
     this._historyService.goLoad(this._historyService.pathname + "/detail?type=" + detailData.dataPayMethodCode + 
       (detailData.dataIsBank? "&isBank=" + detailData.dataIsBank:'') +
       (detailData.settleWayCd? "&settleWayCd=" + detailData.settleWayCd:"") +
@@ -201,7 +201,7 @@ Tw.MyTFareInfoHistory.prototype = {
   // 예약 취소 성공 후 리로딩
   _reLoading: function(){
     // 예약 취소 시 오픈된 리스트 기억
-    Tw.UIService.setLocalStorage('listLastIndex', this.listLastIndex);
+    Tw.CommonHelper.setLocalStorage('listLastIndex', this.listLastIndex);
     this._historyService.reload();
   },
   /*function() {

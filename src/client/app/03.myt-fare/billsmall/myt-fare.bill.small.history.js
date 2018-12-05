@@ -136,7 +136,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   // 디테일 페이지
   _moveDetailPage: function (e) {
-    Tw.UIService.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
+    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
     this._historyService.goLoad(this._historyService.pathname+'/detail');
   },  
 
