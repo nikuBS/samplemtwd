@@ -13,8 +13,9 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { MYT_BANNER_TYPE, REDIS_MYT_BANNER } from '../../types/common.type';
+import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
+import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 
 class MyTFareSubmainController extends TwViewController {
   constructor() {
@@ -120,7 +121,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay(),
-      this.redisService.getData(REDIS_MYT_BANNER + MYT_BANNER_TYPE.PAYMENT),
+      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT),
       this._getBannerMock()
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
                    taxInvoice, contribution, microPay, contentPay, banner, bam]) => {
@@ -191,7 +192,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getPaymentInfo(),
       this._getMicroPrepay(),
       this._getContentPrepay(),
-      this.redisService.getData(REDIS_MYT_BANNER + MYT_BANNER_TYPE.PAYMENT_U),
+      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT_U),
       this._getBannerMock()
     ).subscribe(([usage, paymentInfo, microPay, contentPay, banner, bam]) => {
       if ( usage.info ) {

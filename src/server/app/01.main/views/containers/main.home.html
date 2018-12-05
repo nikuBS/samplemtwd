@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="mainHome" class="wrap">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '<div class="h-logo"><a href="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></a></div>' }) %>
     <!--// #header -->
@@ -189,31 +189,31 @@
                         <% if (homeData.membershipData) { %>
                         <div class="main-membershop-box">
                             <strong class="ti">membershop</strong>
-                            <span class="rating silver">silver</span>
-                            <!-- <span class="rating gold">gold</span>
-                            <span class="rating vip">vip</span> -->
+                            <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
+                            <% if (homeData.membershipData.mbrStCd === 'SP') { %>
+                            <span class="tx">고객님의 멤버십 카드가<br><strong class="t-point">이용정지</strong> 상태입니다.</span>
+                            <% } else { %>
                             <span class="bar-code">
                                 <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>" data-usedAmount="<%= homeData.membershipData.showUsedAmount %>" alt="bar code"/>
                                 <!--<img src="<%= CDN %>/img/main/bar_code.png" alt="bar code">-->
                             </span>
+                            <% } %>
                         </div>
                         <% } else { %>
                         <!-- 미발급 / 이용정지-->
+                        <div class="main-membershop-box">
+                            <button class="ti-tx">
+                                <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
+                                <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
+                            </button>
+                        </div>
                         <% } %>
                         <% } %>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-0 fe-smart-<%= smartCard[0].no %>"  data-smartCard="<%= smartCard[0].no %>">
+                        <div class="section-box empty fe-smart-0 fe-smart-<%= smartCard[0].no %>" data-smartCard="<%= smartCard[0].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[0].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -279,32 +279,16 @@
                         <!-- // 프로모션 배너 2 -->
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-1 fe-smart-<%= smartCard[1].no %>"  data-smartCard="<%= smartCard[1].no %>">
+                        <div class="section-box empty fe-smart-1 fe-smart-<%= smartCard[1].no %>" data-smartCard="<%= smartCard[1].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[1].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-2 fe-smart-<%= smartCard[2].no %>"  data-smartCard="<%= smartCard[2].no %>">
+                        <div class="section-box empty fe-smart-2 fe-smart-<%= smartCard[2].no %>" data-smartCard="<%= smartCard[2].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[2].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -369,32 +353,16 @@
                         </div>
                         <!-- // 프로모션 배너 2 -->
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-3 fe-smart-<%= smartCard[3].no %>"  data-smartCard="<%= smartCard[3].no %>">
+                        <div class="section-box empty fe-smart-3 fe-smart-<%= smartCard[3].no %>" data-smartCard="<%= smartCard[3].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[3].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-4 fe-smart-<%= smartCard[4].no %>"  data-smartCard="<%= smartCard[4].no %>">
+                        <div class="section-box empty fe-smart-4 fe-smart-<%= smartCard[4].no %>" data-smartCard="<%= smartCard[4].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[4].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -885,6 +853,13 @@
 </div>
 </body>
 <% include ../components/javascript.component.html %>
+<% if (svcType.login && svcType.mobilePhone) { %>
+<% include ../components/smart-card/bill.component.html %>
+<% include ../components/smart-card/contents.component.html %>
+<% include ../components/smart-card/gift.component.html %>
+<% include ../components/smart-card/micro-pay.component.html %>
+<%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
+<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>');

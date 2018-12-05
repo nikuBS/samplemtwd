@@ -10,7 +10,7 @@ import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
-import { REDIS_URL_META } from '../../types/common.type';
+import { REDIS_URL_META } from '../../types/redis.type';
 import { LOGIN_TYPE, SVC_ATTR, LINE_NAME } from '../../types/bff.old.type';
 
 
@@ -136,7 +136,7 @@ abstract class TwViewController {
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
-      const urlMeta = resp;
+      const urlMeta = resp.result;
       this.logger.info(this, urlMeta);
       if ( FormatHelper.isEmpty(urlMeta) ) {
         // TODO do not register

@@ -13,7 +13,7 @@ import {
   HOME_SEGMENT,
   HOME_SEGMENT_ORDER,
   HOME_SMART_CARD,
-  LINE_NAME,
+  LINE_NAME, MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
   SVC_ATTR_NAME,
@@ -21,7 +21,7 @@ import {
   UNIT_E
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION } from '../../../types/common.type';
+import { REDIS_APP_VERSION, REDIS_SMART_CARD } from '../../../types/redis.type';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -150,6 +150,7 @@ class MainHome extends TwViewController {
 
   private parseMembershipData(membershipData): any {
     membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
+    membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd];
     return membershipData;
   }
 
@@ -195,8 +196,8 @@ class MainHome extends TwViewController {
         deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),
         repSvc: billData.charge.repSvcYn === 'Y',
         totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
-        invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt),
-        invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
+        invEndDt: DateHelper.getShortDate(billData.charge.invDt),
+        invStartDt: DateHelper.getShortFirstDate(billData.charge.invDt),
         invMonth: DateHelper.getCurrentMonth(billData.charge.invDt),
         type1: totSvc && repSvc,
         type2: !totSvc,
@@ -220,10 +221,10 @@ class MainHome extends TwViewController {
     return {
       showSet: !(FormatHelper.isEmpty(joinInfo.setPrdStaDt) && FormatHelper.isEmpty(joinInfo.setPrdEndDt)),
       showSvc: !(FormatHelper.isEmpty(joinInfo.svcPrdStaDt) && FormatHelper.isEmpty(joinInfo.svcPrdEndDt)),
-      setPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.setPrdStaDt),
-      setPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.setPrdEndDt),
-      svcPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdStaDt),
-      svcPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdEndDt)
+      setPrdStaDt: DateHelper.getShortDate(joinInfo.setPrdStaDt),
+      setPrdEndDt: DateHelper.getShortDate(joinInfo.setPrdEndDt),
+      svcPrdStaDt: DateHelper.getShortDate(joinInfo.svcPrdStaDt),
+      svcPrdEndDt: DateHelper.getShortDate(joinInfo.svcPrdEndDt)
     };
   }
 
@@ -252,6 +253,7 @@ class MainHome extends TwViewController {
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        console.log(JSON.stringify(resp.result));
         usageData = this.parseUsageData(resp.result);
       }
       usageData.code = resp.code;

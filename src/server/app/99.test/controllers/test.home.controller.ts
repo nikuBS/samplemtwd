@@ -21,7 +21,7 @@ import {
   MYT_FARE_BILL_CO_TYPE
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION } from '../../../types/common.type';
+import { REDIS_APP_VERSION } from '../../../types/redis.type';
 
 class TestHome extends TwViewController {
   constructor() {

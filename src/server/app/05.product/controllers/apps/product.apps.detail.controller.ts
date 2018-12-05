@@ -10,7 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { APP_DETAIL, APP_DETAIL2 } from '../../../../mock/server/product.apps.mock';
-import { REDIS_PRODUCT_INFO } from '../../../../types/common.type';
+import { REDIS_PRODUCT_INFO } from '../../../../types/redis.type';
 
 export default class ProductAppsDetail extends TwViewController {
   private BANNER_POSITION = {
@@ -72,8 +72,8 @@ export default class ProductAppsDetail extends TwViewController {
 
   private getProductInfo = appId => {
     return this.redisService.getData(REDIS_PRODUCT_INFO + appId).map(resp => {
-      if (!resp) {
-        return resp;
+      if (!resp.result) {
+        return resp.result;
       }
 
       return {

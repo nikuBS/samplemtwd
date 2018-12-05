@@ -5,7 +5,8 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { COOKIE_KEY, REDIS_APP_VERSION, REDIS_URL_META } from '../../types/common.type';
+import { COOKIE_KEY } from '../../types/common.type';
+import { REDIS_APP_VERSION, REDIS_URL_META } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
@@ -17,6 +18,7 @@ import VERSION from '../../config/version.config';
 import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
+import { REDIS_CODE } from '../../types/redis.type';
 
 class ApiRouter {
   public router: Router;
@@ -54,7 +56,7 @@ class ApiRouter {
     this.router.get('/serverSession', this.getServerSession.bind(this));
     this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
-    this.router.get('/service-notice', this.getServiceNotice.bind(this));
+    this.router.get('/app-notice', this.getAppNotice.bind(this));
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
   }
 
@@ -91,19 +93,12 @@ class ApiRouter {
 
   private getVersion(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
-      .subscribe((result) => {
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: {}
-        };
-
-        if ( !FormatHelper.isEmpty(result) ) {
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
           resp.result = {
-            ver: result.ver,
-            signGateGW: result.signGateGW
+            ver: resp.result.ver,
+            signGateGW: resp.result.signGateGW
           };
-        } else {
-          resp.code = API_CODE.CODE_404;
         }
 
         res.json(resp);
@@ -112,34 +107,20 @@ class ApiRouter {
 
   private getSplash(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
-      .subscribe((result) => {
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: null
-        };
-
-        if ( !FormatHelper.isEmpty(result) ) {
-          resp.result = result.splash;
-        } else {
-          resp.code = API_CODE.CODE_404;
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          resp.result = resp.result.splash;
         }
 
         res.json(resp);
       });
   }
 
-  private getServiceNotice(req: Request, res: Response, next: NextFunction) {
+  private getAppNotice(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
-      .subscribe((result) => {
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: null
-        };
-
-        if ( !FormatHelper.isEmpty(result) ) {
-          resp.result = result.notice;
-        } else {
-          resp.code = API_CODE.CODE_404;
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          resp.result = resp.result.notice;
         }
 
         res.json(resp);
@@ -151,10 +132,7 @@ class ApiRouter {
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
         // console.log(resp);
-        res.json({
-          code: API_CODE.CODE_00,
-          result: resp
-        });
+        res.json(resp);
       });
 
   }

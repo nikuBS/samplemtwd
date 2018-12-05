@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import {REDIS_PRODUCT_INFO} from '../../../../types/common.type';
+import {REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 
 interface Coupon {
   copnIsueNum: string;

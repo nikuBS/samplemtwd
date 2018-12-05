@@ -21,14 +21,6 @@ export enum BUILD_TYPE {
   GREEN = 'g'
 }
 
-export const REDIS_URL_META = 'UrlMetaNode:';
-export const REDIS_APP_VERSION = 'AppVersion:appLoad';
-
-export const REDIS_PRODUCT_INFO = 'ProductLedger:';
-export const REDIS_PRODUCT_FILTER = 'ProductFilter:';
-export const REDIS_PRODUCT_COMPARISON = 'ProductComparison:';
-export const REDIS_MYT_BANNER = 'Banner:';
-
 export const UPLOAD_TYPE = {
   EMAIL: 'email',
   RESERVATION: 'reservation',

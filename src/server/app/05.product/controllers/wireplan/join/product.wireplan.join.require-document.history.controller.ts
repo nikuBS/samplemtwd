@@ -12,7 +12,7 @@ import { PRODUCT_REQUIRE_DOCUMENT_TYPE_NM } from '../../../../../types/string.ty
 import { PRODUCT_RESERVATION_REJECT } from '../../../../../types/bff.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import {REDIS_PRODUCT_INFO} from '../../../../../types/common.type';
+import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 
 class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   constructor() {
