@@ -553,4 +553,4 @@ export enum AUTH_CERTIFICATION_METHOD {
   OTHER_REFUND = 'TF'
 }
 
-export const TPLAN_LIST = ['DD3CX', 'DD3CV', 'DD3CU', 'DD4D5'];
+export const TPLAN_SHARE_LIST = ['POT10', 'POT20'];
