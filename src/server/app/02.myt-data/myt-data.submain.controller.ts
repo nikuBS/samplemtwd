@@ -206,18 +206,13 @@ class MytDataSubmainController extends TwViewController {
         data.pattern = pattern;
       }
       // 배너 정보
-      if ( FormatHelper.isEmpty(banner) || (banner.code !== API_CODE.CODE_00) ) {
-        return this.error.render(res, {
-          svcInfo: svcInfo,
-          title: BANNER_TITLE
-        });
-      } else {
+      if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner);
-        } else {
-          // TODO: MOCK DATA 제거예정
-          data.banner = this.parseBanner(bam);
         }
+      } else {
+        // TODO: MOCK DATA 제거예정
+        data.banner = this.parseBanner(bam);
       }
 
       res.render('myt-data.submain.html', { data });
