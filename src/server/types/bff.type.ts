@@ -553,5 +553,4 @@ export enum AUTH_CERTIFICATION_METHOD {
   OTHER_REFUND = 'TF'
 }
 
-export const UNLIMIT_CODE = ['1', 'B', 'M'];
 export const TPLAN_LIST = ['DD3CX', 'DD3CV', 'DD3CU', 'DD4D5'];

@@ -36,8 +36,6 @@ class MainHome extends TwViewController {
       usageData: null,
       membershipData: null,
       billData: null,
-      ppsInfo: null,
-      joinInfo: null
     };
     let smartCard = [];
 
@@ -58,35 +56,21 @@ class MainHome extends TwViewController {
           });
         } else {
           // 모바일 - 휴대폰 외 회선
-          if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
-            Observable.combineLatest(
-              this.getUsageData(),
-              this.getPPSInfo(),
-              this.getNotice()
-            ).subscribe(([usageData, ppsInfo, notice]) => {
-              homeData.usageData = usageData;
-              homeData.ppsInfo = ppsInfo;
-              res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-            });
-          } else {
-            Observable.combineLatest(
-              this.getUsageData(),
-              this.getNotice()
-            ).subscribe(([usageData, notice]) => {
-              homeData.usageData = usageData;
-              res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-            });
-          }
+          Observable.combineLatest(
+            this.getUsageData(),
+            this.getNotice()
+          ).subscribe(([usageData, notice]) => {
+            homeData.usageData = usageData;
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+          });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(),
-          this.getJoinInfo(),
           this.getNotice()
-        ).subscribe(([billData, joinInfo, notice]) => {
+        ).subscribe(([billData, notice]) => {
           homeData.billData = billData;
-          homeData.joinInfo = joinInfo;
           res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
         });
       }
@@ -188,11 +172,16 @@ class MainHome extends TwViewController {
   }
 
   private parseBillData(billData): any {
-    if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) &&
-      billData.charge.coClCd !== MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+    if ( !FormatHelper.isEmpty(billData.charge) || !FormatHelper.isEmpty(billData.used) ) {
+      if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+        return {
+          isBroadband: true
+        };
+      }
       const repSvc = billData.charge.repSvcYn === 'Y';
       const totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
       return {
+        isBroadband: false,
         chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot),
         usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot),
         deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),

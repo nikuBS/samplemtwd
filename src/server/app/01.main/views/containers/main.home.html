@@ -253,20 +253,53 @@
                             <% } %>
                             <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
+                            <% if(homeData.billData) { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt">인천 연************</button></em>
-                                <strong class="ti"><button class="bt">T스마트 광랜</button></strong>
+                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
 
                                 <div class="main-breakdown-box">
-                                    <div class="stit">10월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
-                                    <em class="sum">82,500원</em>
-                                    <span class="date">2018.7.1.~2018.7.31.</span>
-                                    <ul class="list">
-                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type">94,560원</em></li>
-                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">-12,060원</em></li>
-                                    </ul>
+                                    <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
+                                    <p class="tx">전화 106 또는 <button class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
                                 </div>
                             </div>
+                            <% if(homeData.billData.isBroadband) { %>
+                            <% } else { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+
+                                <div class="main-breakdown-box">
+                                    <% if (homeData.billData.type1) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                    <% } else if (homeData.billData.type2) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금</div>
+                                    <% } else if (homeData.billData.type3) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
+                                    <% } %>
+                                    <em class="sum"><%= homeData.billData.chargeAmtTot %>원</em>
+                                    <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
+                                    <% if (homeData.billData.type1 || homeData.billData.type2) { %>
+                                    <ul class="list">
+                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.usedAmtTot %>원</em></li>
+                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
+                                    </ul>
+                                    <% } else if (homeData.billData.type3) { %>
+                                    <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                            <% } else { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+
+                                <div class="main-breakdown-box">
+                                    <strong class="ti">발행된 요금안내서가 없습니다.</strong>
+                                </div>
+                            </div>
+                            <% } %>
                             <!-- // 인터넷/전화/IPTV 요금안내서 -->
                             <% } %>
                             <% } %>
