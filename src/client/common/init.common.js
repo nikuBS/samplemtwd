@@ -27,7 +27,7 @@ Tw.Init.prototype = {
 
   _initComponent: function () {
     new Tw.MenuComponent();
-    new Tw.LineComponent();
+    // new Tw.LineComponent();
     new Tw.MaskingComponent();
   },
 

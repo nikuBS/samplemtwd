@@ -19,6 +19,7 @@ Tw.MainHome = function (rootEl, smartCard) {
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
 
+  this._lineComponent = new Tw.LineComponent();
   this._cachedElement();
   this._bindEvent();
   this._openLineResisterPopup();
@@ -48,7 +49,11 @@ Tw.MainHome.prototype = {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '#fe-bt-quick-edit', $.proxy(this._onClickQuickEdit, this));
-
+    this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
+  },
+  _onClickLine: function($event) {
+    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+    this._lineComponent.onClickLine(svcMgmtNum);
   },
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
@@ -125,7 +130,6 @@ Tw.MainHome.prototype = {
       var $billTemp = $('#fe-smart-bill');
       var tplBillCard = Handlebars.compile($billTemp.html());
       element.html(tplBillCard(result));
-      this._bindBillEvent();
     } else {
       element.hide();
     }
@@ -134,9 +138,6 @@ Tw.MainHome.prototype = {
   },
   _failBillData: function () {
 
-  },
-  _bindBillEvent: function () {
-    this.$container.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
   },
   _onClickPayment: function () {
     new Tw.MyTFareBill(this.$container);
@@ -242,21 +243,22 @@ Tw.MainHome.prototype = {
   },
   _successGiftData: function (element, sender, remain) {
     var result = null;
+
     if ( sender.code === Tw.API_CODE.CODE_00 ) {
       result = this._parseGiftData(sender, remain);
     }
-    this._drawGiftData(element, result);
+    this._drawGiftData(element, result, sender);
     this._resetHeight();
   },
   _failGiftData: function () {
 
   },
-  _drawGiftData: function (element, result) {
+  _drawGiftData: function (element, result, sender) {
     if ( !Tw.FormatHelper.isEmpty(result) ) {
       var $giftTemp = $('#fe-smart-gift');
       var tplGiftCard = Handlebars.compile($giftTemp.html());
       element.html(tplGiftCard(result));
-      // $('.fe-bt-go-gift').on('click', $.proxy(this._onClickBtGift, this, sender));
+      $('#fe-bt-go-gift').on('click', $.proxy(this._onClickBtGift, this, sender));
     } else {
       element.hide();
     }
@@ -282,9 +284,13 @@ Tw.MainHome.prototype = {
     if ( sender.code === Tw.API_CODE.CODE_00 ) {
       if ( sender.result.dataGiftCnt > 0 ) {
         this._historyService.goLoad('/myt-data/giftdata');
-      } else if ( sender.result.familyDataGiftCnt > 0 ) {
+      } else {
         this._historyService.goLoad('/myt-data/giftdata#auto');
       }
+    } else if ( sender.code === this.GIFT_ERROR_CODE.GFT0002 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A05);
+    } else {
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06);
     }
 
   },
@@ -300,7 +306,7 @@ Tw.MainHome.prototype = {
       var $rechargeTemp = $('#fe-smart-recharge');
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
-      $('.fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
+      $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
     } else {
       element.hide();
     }
