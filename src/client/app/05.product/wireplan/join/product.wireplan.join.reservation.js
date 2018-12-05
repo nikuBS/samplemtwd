@@ -487,13 +487,13 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._openExplainFilePop([]);
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, this._prodId)
       .done($.proxy(this._procExpalinFilePopRes, this));
   },
 
   _procExpalinFilePopRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._openExplainFilePop([]);
@@ -564,7 +564,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       });
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0076, reqParams)
       .done($.proxy(this._procApplyResult, this));
@@ -649,7 +649,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _procApplyResult: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

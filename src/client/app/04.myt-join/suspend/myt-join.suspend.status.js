@@ -50,7 +50,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       return;
     }
 
-    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('body', 'grey', true);
     var params = { fromDt: fromDate.replace(/-/g, '') };
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
       .done($.proxy(this._onSuccessResuspend, this, params))
@@ -58,7 +58,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _onSuccessResuspend: function (params, res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
@@ -86,7 +86,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _requesCancelResuspend: function () {
-    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('body', 'grey', true);
     var params = { isReserveCancel: 'Y' };
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
       .done($.proxy(this._onSuccessRequestCancel, this, params))
@@ -94,7 +94,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _onSuccessRequestCancel: function (params, res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
@@ -123,14 +123,14 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _requestReset: function () {
-    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('body', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0152, {})
       .done($.proxy(this._onSuccessRequestReset, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequestReset: function (res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.afterRequestSuccess('', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET, null);
     } else if ( res.code === 'MOD0022' ) {

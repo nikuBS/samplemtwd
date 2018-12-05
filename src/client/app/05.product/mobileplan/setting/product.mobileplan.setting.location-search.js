@@ -49,12 +49,12 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
       return ;
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     Tw.Api.request(Tw.API_CMD.BFF_10_0044, { areaNm : encodeURIComponent(keyword) })
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -63,7 +63,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
 

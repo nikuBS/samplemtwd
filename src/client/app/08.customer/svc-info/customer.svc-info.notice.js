@@ -70,13 +70,13 @@ Tw.CustomerSvcInfoNotice.prototype = {
       return;
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: 'M', ntcId: ntcId })
       .done($.proxy(this._setContentsRes, this));
   },
 
   _setContentsRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -123,7 +123,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _loadMoreList: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     var customParams = {};
     if (this._category === 'tworld') {
@@ -140,7 +140,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _appendMoreList: function(res) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     if (res.code !== Tw.API_CODE.CODE_00) {
       return this._apiError(res);
     }

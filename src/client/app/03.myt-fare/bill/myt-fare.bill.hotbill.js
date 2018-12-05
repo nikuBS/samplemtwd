@@ -57,11 +57,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _sendBillRequest: function (child) {
-    skt_landing.action.loading.on({
-      ta: child ? '.container' : '.fe-loading-bill',
-      co: 'white',
-      size: child ? true : false
-    });
+    Tw.CommonHelper.startLoading(child ? '.container' : '.fe-loading-bill', 'white', !!child);
     this._requestCount = 0;
     var params = { count: this._requestCount++ };
 
@@ -105,7 +101,7 @@ Tw.MyTFareHotBill.prototype = {
         //   this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
         //   delete group[Tw.HOTBILL_UNPAID_TITLE];
         // }
-        skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
+        Tw.CommonHelper.endLoading(child ? '.container' : '.fe-loading-bill');
         this._renderBillGroup(group, false, this.$container);
 
         // 전월요금 보이기
@@ -140,7 +136,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onErrorReceivedBillData: function (resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(resp.code, resp.msg).pop();
     //Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
   },
@@ -211,7 +207,7 @@ Tw.MyTFareHotBill.prototype = {
   _requestSwitchLine: function (target) {
     var lineComponent = new Tw.LineComponent();
     this._popupService.close();
-    skt_landing.action.loading.on({ ta: '.container' });
+    Tw.CommonHelper.startLoading('.container');
     lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._historyService.reload, this));
   }
 };

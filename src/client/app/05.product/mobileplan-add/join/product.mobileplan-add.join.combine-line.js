@@ -205,7 +205,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
   },
 
   _prodConfirmOk: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // prodId: this._prodId,
     //   prodProcTypeCd: 'JN',
@@ -216,7 +216,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

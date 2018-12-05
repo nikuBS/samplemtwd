@@ -65,7 +65,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0071, {
       opClCd: '1',
       asgnNum: number
@@ -73,7 +73,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _addDelNumRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -97,7 +97,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   _delNumReq: function(number, auditDtm) {
     this._popupService.close();
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0071, {
       opClCd: '2',
       asgnNum: number,
@@ -127,7 +127,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     var $elem = $(e.currentTarget).parents('li'),
       number = $elem.data('number');
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0071, {
       opClCd: '7',
@@ -137,7 +137,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _toggleFriendRes: function(number, resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

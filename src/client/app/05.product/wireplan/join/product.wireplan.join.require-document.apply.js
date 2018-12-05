@@ -64,7 +64,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }
 
     formData.append('file', this.$explainFile.get(0).files[0]);
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this));
@@ -87,7 +87,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
   },
 
   _successUploadFile: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
     }
