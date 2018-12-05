@@ -22,7 +22,7 @@ import {
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION, REDIS_SMART_CARD } from '../../../types/redis.type';
+import { REDIS_APP_VERSION, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 
 class MainHome extends TwViewController {
@@ -245,7 +245,6 @@ class MainHome extends TwViewController {
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        console.log(resp.result);
         usageData = this.parseUsageData(resp.result);
       }
       usageData.code = resp.code;
