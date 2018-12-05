@@ -34,17 +34,17 @@
                     <div class="cont-box nogaps-top">
                         <div class="form-data-tit-wrap">
                             <strong class="tit">금액정보</strong>
-                            <button aria-haspopup="true" class="info-view-ic fe-amount-info">금액정보 정보보기</button>
+                            <button id="MF_06_04_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                         </div>
                         <ul class="form-data-list">
                             <li class="type2">
-                                <label class="tit">기준 금액</label>
+                                <label class="tit">기준 금액</label><button id="MF_06_04_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
                                 </button>
                             </li>
                             <li class="type2">
-                                <label class="tit">선결제 금액</label>
+                                <label class="tit">선결제 금액</label><button id="MF_06_04_tip_04" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
                                 </button>
@@ -118,7 +118,7 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list">
-                            <li>이용 안내 <button aria-haspopup="true" id="MF_06_04_tip_02" class="tip-view" title="정보보기">TIP</button></li>
+                            <li>이용 안내 <button id="MF_06_04_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
