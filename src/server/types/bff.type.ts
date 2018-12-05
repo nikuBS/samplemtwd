@@ -86,6 +86,19 @@ export const DAY_BTN_STANDARD_SKIP_ID = [
   'DD0PB' // band 타임 프리
 ];
 
+export const T0_PLAN_SKIP_ID = [
+  'DD3CX',  // NA00005959	인피니티	통합공유 데이터 40GB
+  'DD3CV',  // NA00005958	패밀리	통합공유 데이터 20GB
+  'DD3CU',  // NA00005957	라지	통합공유 데이터 15GB
+  'DD4D5'   // NA00006157	0플랜 라지	통합공유 데이터 20GB
+];
+
+export const UNLIMIT_CODE = [
+  '1',  // 무제한	무제한 (SMS 항목인 경우) 기본제공/기본제공/기본제공
+  'B',  // 기본제공	기본제공
+  'M',  // 실사용량	무제한(SMS 항목인 경우) 기본제공/실사용량/기본제공
+];
+
 export const VOICE_UNIT = {
   HOURS: '시간',
   MIN: '분',
