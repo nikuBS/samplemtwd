@@ -16,13 +16,13 @@ import {
   LINE_NAME, MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
-  SVC_ATTR_NAME, TPLAN_LIST,
+  SVC_ATTR_NAME, TPLAN_SHARE_LIST,
   UNIT,
   UNIT_E, UNLIMIT_CODE
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION, REDIS_SMART_CARD } from '../../../types/redis.type';
+import { REDIS_APP_VERSION, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 
 class MainHome extends TwViewController {
@@ -258,16 +258,12 @@ class MainHome extends TwViewController {
     const etcKinds = ['voice', 'sms'];
     const result = {
       data: { isShow: false },
-      shareData: { isShow: false },
       voice: { isShow: false },
       sms: { isShow: false },
     };
 
     if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
-      this.convData(usageData.gnrlData, result.data);
-      if ( !FormatHelper.isEmpty(usageData.spclData) ) {
-        this.convShareData(usageData.spclData, result.data, result.shareData);
-      }
+      this.mergeData(usageData.gnrlData, result.data);
     }
 
     etcKinds.map((kind, index) => {
@@ -282,61 +278,34 @@ class MainHome extends TwViewController {
   private mergeData(list: any, data: any) {
     data.isShow = true;
     data.isUnlimit = false;
+    data.shareTotal = 0;
+    data.shareRemained = 0;
+    data.myRemainedRatio = 100;
+    data.shareRemainedRatio = 100;
     list.map((target) => {
       if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
         data.isUnlimit = true;
-        data.remainedRatio = 100;
-        data.showRemained = SKIP_NAME.UNLIMIT;
+        data.showMyRemained = SKIP_NAME.UNLIMIT;
+      }
+      if ( TPLAN_SHARE_LIST.indexOf(target.skipId) !== -1 ) {
+        data.shareTotal += +data.total;
+        data.shareRemained += data.remained;
       }
     });
+    data.showShareRemained = this.convFormat(data.shareRemained, UNIT_E.DATA);
     if ( !data.isUnlimit ) {
-      data.remained = list.reduce((_memo, _data) => {
-        return _memo + parseInt(_data.remained, 10);
-      }, 0);
-      data.total = list.reduce((_memo, _data) => {
-        return _memo + parseInt(_data.total, 10);
-      }, 0);
-      data.showRemained = this.convFormat(data.remained, UNIT_E.DATA);
-      data.remainedRatio = data.remained / data.total * 100;
-    }
-  }
-
-  private convData(gnrlData: any, data: any) {
-    this.mergeData(gnrlData, data);
-
-    data.isGraphUnlimit = false;
-    if ( data.isUnlimit ) {
-      data.isGraphUnlimit = true;
-    }
-
-    if ( !data.isGraphUnlimit ) {
-      data.graphRemained = data.remained;
-      data.graphTotal = data.total;
-      data.showGraphRemained = data.showRemained;
-    } else {
-      data.showGraphRemained = SKIP_NAME.UNLIMIT;
-    }
-  }
-
-  private convShareData(spclData: any, data: any, shareData: any) {
-    const list = spclData.filter((target) => {
-      return TPLAN_LIST.indexOf(target.skipId) !== -1;
-    });
-
-    if ( !FormatHelper.isEmpty(list) ) {
-      this.mergeData(list, shareData);
-
-      if ( shareData.isUnlimit ) {
-        data.isGraphUnlimit = true;
-      }
-
-      if ( !data.isGraphUnlimit ) {
-        data.graphRemained = data.remained + shareData.remained;
-        data.graphTotal = data.total + shareData.total;
-        data.showGraphRemained = this.convFormat(data.graphRemained, UNIT_E.DATA);
-        data.remainRatio = data.remained / data.graphTotal * 100;
-        shareData.remainedRatio = (data.remained + shareData.remained) / data.graphTotal * 100;
-      }
+      data.myTotal = 0;
+      data.myRemained = 0;
+      list.map((target) => {
+        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 ) {
+          console.log(target.skipId, target.total, target.remained);
+          data.myTotal += +target.total;
+          data.myRemained += +target.remained;
+        }
+      });
+      data.showMyRemained = this.convFormat(data.myRemained, UNIT_E.DATA);
+      data.myRemainedRatio = data.myRemained / (data.shareTotal + data.myTotal) * 100;
+      data.shareRemainedRatio = (data.myRemained + data.shareRemained) / (data.shareTotal + data.myTotal) * 100;
     }
   }
 

@@ -91,9 +91,9 @@
                                         <!-- .donut-chart -->
                                         <button class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
-                                                <% if(homeData.usageData.shareData && homeData.usageData.shareData.isShow) { %>
+                                                <% if(homeData.usageData.shareTotal !== 0) { %>
                                                 <!-- loop 공유데이터 -->
-                                                <div class="c100 p0" data-percent="<%= homeData.usageData.shareData.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.shareRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
                                                     <div class="blue"><!-- red, yellow, green, blue -->
                                                         <div class="slice">
                                                             <div class="bar"></div>
@@ -108,7 +108,7 @@
                                                 <!-- // loop -->
                                                 <% } %>
                                                 <!-- loop 남은 데이터-->
-                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.myRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
                                                     <div class="red"><!-- red, yellow, green, blue -->
                                                         <div class="slice">
                                                             <div class="bar"></div>
@@ -124,7 +124,7 @@
                                             </div>
                                             <span class="ti-data">
                                                 <strong class="ti">남은 데이터</strong>
-                                                <em class="data"><%= homeData.usageData.data.showGraphRemained %></em>
+                                                <em class="data"><%= homeData.usageData.data.showMyRemained %></em>
                                             </span>
                                         </button>
                                         <!-- // .donut-chart -->
@@ -133,10 +133,10 @@
                                 </div>
                                 <!-- // .widget -->
 
-                                <% if(homeData.usageData.shareData && homeData.usageData.shareData.isShow) { %>
+                                <% if(homeData.usageData.data.shareTotal !== 0) { %>
                                 <div class="legend">
-                                    <span class="category0"><span><em class="data"><%= homeData.usageData.data.showRemained %></em> 나의 데이터</span></span>
-                                    <span class="category1"><span><em class="data"><%= homeData.usageData.shareData.showRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
+                                    <span class="category1"><span><em class="data"><%= homeData.usageData.shareData.showShareRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                 </div>
                                 <% } %>
 
@@ -324,8 +324,12 @@
                                 <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
                                 <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
                                 <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
+                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
+                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
                             </ul>
-                            <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                            <div class="btn-area"><button id="fe-bt-quick-edit" class="bt-link-tx underline">바로가기 편집</button></div>
                             <!-- //MY 바로가기 -->
                         </div>
 

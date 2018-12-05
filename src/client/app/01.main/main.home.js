@@ -47,6 +47,7 @@ Tw.MainHome.prototype = {
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
+    this.$container.on('click', '#fe-bt-quick-edit', $.proxy(this._onClickQuickEdit, this));
 
   },
   _makeBarcode: function () {
@@ -76,7 +77,18 @@ Tw.MainHome.prototype = {
       extendBarcode.JsBarcode(cardNum);
     }
   },
+  _onClickQuickEdit: function () {
+    this._popupService.open({
+      hbs: 'HO_01_01_01',
+      layer: true
+    }, $.proxy(this._onOpenQuickEdit, this), $.proxy(this._onCloseQuickEdit, this));
+  },
+  _onOpenQuickEdit: function ($popupContainer) {
 
+  },
+  _onCloseQuickEdit: function () {
+
+  },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
     console.log('layerType : ', layerType);
