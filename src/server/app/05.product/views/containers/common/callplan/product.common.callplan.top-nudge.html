@@ -1,10 +1,10 @@
-<% if ( isWireplan || isCombine ) { %>
+<% if (( isWireplan || isCombine ) && basicInfo.isJoinReservation) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
     <p class="text">가입상담을 받아보시겠어요?</p>
     <div class="btn">
-        <a href="/product/wireplan/join/reservation?type_cd=<%= isWireplan ? 'internet' : 'combine' %>" class="btn-round3 btn-style3">예약</a>
+        <a href="/product/wireplan/join/reservation?type_cd=<%= isWireplan ? 'internet' : 'combine' %>&prod_id=<%= prodId %>" class="btn-round3 btn-style3">예약</a>
     </div>
 </div>
 <% } %>
