@@ -38,7 +38,7 @@ class ProductCommonCallplan extends TwViewController {
    */
   private _getMobilePlanCompareInfo(prodTypCd: any, svcInfoProdId: any, prodId: any): Observable<any> {
     if (prodTypCd !== 'AB' || FormatHelper.isEmpty(svcInfoProdId)) {
-      return Observable.of({});
+      return Observable.of({ code: null });
     }
 
     return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
@@ -74,7 +74,7 @@ class ProductCommonCallplan extends TwViewController {
    */
   private _getAdditionsFilterListByRedis(prodTypCd: any, prodId: any): Observable<any> {
     if (prodTypCd !== 'C') {
-      return Observable.of({});
+      return Observable.of({ code: null });
     }
 
     return this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230');
@@ -435,7 +435,7 @@ class ProductCommonCallplan extends TwViewController {
           relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, prodRedisInfo,
           mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
-          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
+          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo,  recommendsInfo, recommendsAppInfo, prodRedisInfo ]);
 
           if (!FormatHelper.isEmpty(apiError)) {
             return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -444,27 +444,23 @@ class ProductCommonCallplan extends TwViewController {
             }));
           }
 
-          if (FormatHelper.isEmpty(prodRedisInfo)) {
-            return this.error.render(res, renderCommonInfo);
-          }
-
           const isCategory = this._getIsCategory(basicInfo.result.prodTypCd),
-            basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.summary.feeManlSetTitNm) ?
-              prodRedisInfo.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
+            basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.result.summary.feeManlSetTitNm) ?
+              prodRedisInfo.result.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
 
           res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
             prodId: prodId,
             basFeeSubText: basFeeSubText,
             basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
-            prodRedisInfo: this._convertRedisInfo(prodRedisInfo), // 상품 정보 by Redis
+            prodRedisInfo: this._convertRedisInfo(prodRedisInfo.result), // 상품 정보 by Redis
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
             recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
             recommendApps: recommendsAppInfo.result,
-            mobilePlanCompareInfo: FormatHelper.isEmpty(mobilePlanCompareInfo) ? null : mobilePlanCompareInfo, // 요금제 비교하기
+            mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
-            additionsProdFilterInfo: additionsProdFilterInfo,  // 부가서비스 카테고리 필터 리스트
+            additionsProdFilterInfo: additionsProdFilterInfo.code !== API_CODE.CODE_00 ? null : additionsProdFilterInfo.result,  // 부가서비스 카테고리 필터 리스트
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo)  // 구비서류 제출 심사내역
           }].reduce((a, b) => {
             return Object.assign(a, b);

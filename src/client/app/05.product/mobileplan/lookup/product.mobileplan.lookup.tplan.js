@@ -60,7 +60,7 @@ Tw.ProductMobileplanLookupTplan.prototype = {
   },
 
   _goOtherProdIdBenefitList: function(e) {
-    this._historyService.goLoad('/product/lookup/tplan?prod_id=' + $(e.currentTarget).data('prod_id'));
+    this._historyService.goLoad('/product/lookup/tplan?s_prod_id=' + $(e.currentTarget).data('prod_id'));
   },
 
   _goTop: function() {

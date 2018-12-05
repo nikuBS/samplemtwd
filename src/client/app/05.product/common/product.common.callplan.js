@@ -90,7 +90,6 @@ Tw.ProductCommonCallplan.prototype = {
     var $btn = $(btn);
     this._settingBtnList.push({
       value: $btn.text(),
-      url: $btn.data('url'),
       attr: 'data-url="' + $btn.data('url') + '"'
     });
   },

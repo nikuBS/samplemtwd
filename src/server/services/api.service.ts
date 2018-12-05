@@ -160,7 +160,7 @@ class ApiService {
       }
       observer.next(error);
     } else {
-      this.logger.error(this, '[API ERROR] Exception', err.response);
+      this.logger.error(this, '[API ERROR] Exception', err);
       observer.next({ code: API_CODE.CODE_500 });
     }
     observer.complete();
