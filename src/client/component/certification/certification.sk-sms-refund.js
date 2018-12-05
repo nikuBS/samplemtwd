@@ -7,7 +7,6 @@
 Tw.CertificationSkSmsRefund = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService();
 
   this._gender = undefined;  // 2: female, 1: male
   this._isCertRequestSuccess = false;
@@ -22,7 +21,9 @@ Tw.CertificationSkSmsRefund.prototype = {
     SMS2008: 'SMS2008'  // 인증번호 입력시간 초과
   },
 
-  openSmsPopup: function () {
+  openSmsPopup: function (callback) {
+    this._callback = callback;
+
     this._popupService.open({
       hbs: 'MN_01_04_04'
     }, $.proxy(this._onOpenSmsPopup, this));
@@ -145,7 +146,9 @@ Tw.CertificationSkSmsRefund.prototype = {
       .then($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
           this._popupService.close();
-          this._historyService.goLoad('/main/menu/refund');
+          if (!!this._callback) {
+            this._callback(res);
+          }
         } else {
           if (!!this.SMS_CERT_ERROR[res.code]) {
             this._showCertNumberError(res.code);
