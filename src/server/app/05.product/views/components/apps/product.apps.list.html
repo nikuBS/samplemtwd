@@ -12,10 +12,8 @@
                 <a href="/product/apps/app?appId={{prodId}}">
                     <span class="app-ico">
                         <img src="{{iconImg}}" alt="{{imgAlt}}" class="ico" />
-                        {{#if isInstalled}}<span class="i-atv"><span class="blind">active</span></span>
-                        {{else}}
-                            {{#if isNew}}<span class="i-new"><span class="blind">new</span></span>{{/if}}
-                        {{/if}}
+                        {{#if isInstalled}}<span class="i-atv"><span class="blind">active</span></span>{{/if}}
+                        {{#if isNew}}<span class="i-new {{#if isInstalled}}none{{/if}}"><span class="blind">new</span></span>{{/if}}                        
                     </span>
                     <span class="app-name">{{prodNm}}</span>
                 </a>
