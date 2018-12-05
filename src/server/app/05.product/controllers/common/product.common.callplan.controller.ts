@@ -193,7 +193,7 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _getSummaryCase(summaryInfo): any {
-    if (!FormatHelper.isEmpty(summaryInfo.ledItmDesc)) {
+    if (!FormatHelper.isEmpty(summaryInfo.smryHtmlCtt)) {
       return '3';
     }
 
