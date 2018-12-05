@@ -193,7 +193,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     history.idx = histories.idx + idx;
     history.date = Tw.DateHelper.getShortDateNoYear(key);
-    history.icon = history.chargeTp === '1' ? Tw.PREPAID_ICONS.IMMEDIATELY : Tw.PREPAID_ICONS.MONTHLY;
+    if (Tw.PREPAID_BADGES[history.chargeTp]) {
+      history.badge = Tw.PREPAID_BADGES[history.chargeTp];
+    }
     history.isCanceled = history.payCd === '5' || history.payCd === '9';
     history.isRefundable = history.rfndPsblYn === 'Y';
     history.amt = Tw.FormatHelper.addComma(history.amt);
