@@ -27,7 +27,12 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <% const visibleVoice = voice.histories.hasOwnProperty(recentDate);
-                    const totalCount = visibleVoice? voice.count : data.count; %>
+                    const totalCount = visibleVoice? voice.count : data.count; 
+                    const BADGE = {
+                        1: { icon: 'auto', name: '1회' },
+                        2: { icon: 'one', name: '자동' },
+                        4: { icon: 'succession', name: '잔액승계' }
+                    } %>
                     <div class="ti-caption-gray">
                         <button class="bt-select" title="충전 데이터 유형 선택" aria-haspopup="true" data-type="<%= visibleVoice ? 'voice' : 'data' %>"><%= visibleVoice? '음성' : '데이터' %></button>
                         <div class="num">
@@ -51,11 +56,12 @@
                                         <% voice.histories[date].map(history => { %>
                                         <li>
                                             <p class="list-text">
-                                                <% if (history.chargeTp === '1') { %>
-                                                    <span class="stext-b"><i class="badge badge-auto"><span class="blind">1회</span></i> 음성 충전</span>
-                                                <% } else { %>
-                                                    <span class="stext-b"><i class="badge badge-one"><span class="blind">자동</span></i> 음성 충전</span>
-                                                <% } %>
+                                                <% const badge = BADGE[history.chargeTp]; %>
+                                                <span class="stext-b">
+                                                    <% if (badge) { %>
+                                                        <i class="badge badge-<%= badge.icon %>"><span class="blind"><%= badge.name %></span></i>
+                                                    <% } %>
+                                                음성 충전</span>
                                                 <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="gray-tx"><%= history.payNm %></span></span>
                                             </p>
                                             <div class="list-data">
@@ -84,11 +90,13 @@
                                         <% data.histories[date].map(history => { %>
                                         <li>
                                             <p class="list-text">
-                                                <% if (history.chargeTp === '1') { %>
-                                                    <span class="stext-b"><i class="badge badge-auto"><span class="blind">1회</span></i> 데이터 충전 <span class="data"><%= history.data %></span></span>
-                                                <% } else { %>
-                                                    <span class="stext-b"><i class="badge badge-one"><span class="blind">자동</span></i> 데이터 충전 <span class="data"><%= history.data %></span></span>
-                                                <% } %>
+                                                <% const badge = BADGE[history.chargeTp]; %>
+                                                <span class="stext-b">
+                                                    <% if (badge) { %>
+                                                    <i class="badge badge-<%= badge.icon %>"><span class="blind"><%= badge.name %></span></i> 
+                                                    <% } %>
+                                                    데이터 충전<span class="data"> <%= history.data %></span>
+                                                </span>
                                                 <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="black-tx"><%= history.payNm %></span></span>
                                             </p>
                                             <div class="list-data">
