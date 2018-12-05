@@ -23,8 +23,8 @@ Tw.MyTDataGiftSms.prototype = {
   },
 
   _setReceiverInfo: function () {
-    if ( this.paramData.custName ) {
-      $('.add-name').text(this.paramData.custName);
+    if ( this.paramData.custNm ) {
+      $('.add-name').text(this.paramData.custNm);
     }
 
     if ( this.paramData.befrSvcNum ) {
