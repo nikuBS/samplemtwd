@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
+import { BANNER_TITLE, CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
@@ -206,10 +206,18 @@ class MytDataSubmainController extends TwViewController {
         data.pattern = pattern;
       }
       // 배너 정보
-      if ( banner ) {
-        data.banner = this.parseBanner(banner);
+      if ( FormatHelper.isEmpty(banner) || (banner.code !== API_CODE.CODE_00) ) {
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          title: BANNER_TITLE
+        });
       } else {
-        data.banner = this.parseBanner(bam);
+        if ( !FormatHelper.isEmpty(banner.result) ) {
+          data.banner = this.parseBanner(banner);
+        } else {
+          // TODO: MOCK DATA 제거예정
+          data.banner = this.parseBanner(bam);
+        }
       }
 
       res.render('myt-data.submain.html', { data });
