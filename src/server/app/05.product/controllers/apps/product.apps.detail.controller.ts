@@ -77,8 +77,8 @@ export default class ProductAppsDetail extends TwViewController {
       }
 
       return {
-        ...resp,
-        banners: resp.banner.reduce((banners, banner) => {
+        ...resp.result,
+        banners: resp.result.banner.reduce((banners, banner) => {
           const position = this.BANNER_POSITION[banner.bnnrLocCD];
 
           if (position) {
