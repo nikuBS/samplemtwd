@@ -193,10 +193,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _requestUpload: function (files) {
     var formData = new FormData();
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
-    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._onError, this));

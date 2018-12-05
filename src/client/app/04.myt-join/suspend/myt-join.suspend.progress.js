@@ -49,6 +49,7 @@ Tw.MyTJoinSuspendProgress.prototype = {
 
   _requestUpload: function (files) {
     var formData = new FormData();
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
