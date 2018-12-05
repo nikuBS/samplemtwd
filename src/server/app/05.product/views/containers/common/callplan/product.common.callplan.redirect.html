@@ -1,0 +1,16 @@
+<%#
+* FileName: product.common.callplan.redirect.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2018.12.04
+%>
+
+<% include ../../../components/start.component.html %>
+<body>
+<div class="wrap"></div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(function () {
+    new Tw.ProductCommonCallplanRedirect('<%= redirectUrl %>');
+  });
+</script>

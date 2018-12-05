@@ -62,7 +62,8 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      isWidgetInit: true
+      isWidgetInit: true,
+      noticeList: this._confirmOptions.prodNoticeList
     }, $.proxy(this._prodConfirmOk, this));
   },
 

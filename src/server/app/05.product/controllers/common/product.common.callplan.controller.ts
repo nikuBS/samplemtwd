@@ -16,7 +16,7 @@ import {
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
-import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
+import {PRODUCT_CALLPLAN, PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -26,6 +26,8 @@ class ProductCommonCallplan extends TwViewController {
   constructor() {
     super();
   }
+
+  private readonly _benefitRedirectProdList = ['TW20000014', 'TW20000018', 'TW20000019'];
 
   /**
    * 요금제 비교하기 Redis 정보 호출
@@ -398,6 +400,12 @@ class ProductCommonCallplan extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
+    if (this._benefitRedirectProdList.indexOf(prodId) !== -1) {
+      return res.render('common/callplan/product.common.callplan.redirect.html', {
+        redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId]
+      });
+    }
+
     this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
       .subscribe((basicInfo) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
@@ -417,7 +425,7 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0139, {}, {}, prodId),
-          this.apiService.request(API_CMD.BFF_10_0112, { prodId: prodId }),
+          this.apiService.request(API_CMD.BFF_10_0112, {}, {}, prodId),
           this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
           this._getIsJoined(basicInfo.result.prodTypCd, prodId),
@@ -427,7 +435,7 @@ class ProductCommonCallplan extends TwViewController {
           relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, prodRedisInfo,
           mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
-          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo ]);
+          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo ]);
 
           if (!FormatHelper.isEmpty(apiError)) {
             return this.error.render(res, Object.assign(renderCommonInfo, {

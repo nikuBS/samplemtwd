@@ -489,7 +489,7 @@ export const API_CMD = {
   BFF_10_0003: { path: '/core-product/v1/ledger/:args0/tags', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0004: { path: '/core-product/v1/ledger/:args0/contents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0005: { path: '/core-product/v1/ledger/:args0/series', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0006: { path: '/core-product/v1/ledger/:args0/recommends', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0006: { path: '/core-product/v1/ledger/:args0/recommend-prods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0008: { path: '/v1/products/fee-plans/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0009: {
@@ -608,7 +608,7 @@ export const API_CMD = {
   },
   BFF_10_0109: { path: '/core-product/v1/services/wire/addition/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0111: { path: '/v1/products/wire/additions/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0112: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0112: { path: '/core-product/v1/ledger/:args0/similars', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0113: {
     path: '/core-product/v1/services/combinations/:args0/terminations/prechecks',
     method: API_METHOD.GET, server: API_SERVER.BFF,
@@ -621,7 +621,7 @@ export const API_CMD = {
   },
   BFF_10_0116: { path: '/core-product/v1/ledger/:args0/preview', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0139: { path: '/core-product/v1/ledger/:args0/recommendApps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0139: { path: '/core-product/v1/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
