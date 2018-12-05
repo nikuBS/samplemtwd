@@ -71,11 +71,6 @@ class MytDataSubmainController extends TwViewController {
         if ( data.remnantData.gdata ) {
           data.isDataInfo = true;
         }
-        // TODO: 잔여량 합산 API 정상 동작 후 재확인 필요
-        if ( data.remnantData.tmoa.length > 0 ) {
-          data.family = data.remnantData.tmoa[0];
-          data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
-        }
       }
 
       if ( child && child.length > 0 ) {
@@ -111,12 +106,17 @@ class MytDataSubmainController extends TwViewController {
       // T가족모아 데이터
       if ( family && Object.keys(family).length > 0 ) {
         if (family.impossible) {
+          // T가족모아 미가입인 경우
           data.family = family;
         } else {
-          data.family = this.convertFamilyData(family);
-          const remained = parseInt(data.family.remained, 10);
+          data.family = this.convertFamilyData(family, svcInfo);
+          const remained = parseInt(data.family.shared, 10) - parseInt(data.family.used, 10);
           data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
           data.family.limitation = parseInt(data.family.limitation, 10);
+          // T가족모아 서비스는 가입되어있지만 공유 불가능하거나 미성년인 경우
+          if (data.family.shrblYn === 'N' || data.family.adultYn === 'N') {
+            data.family.noshare = true;
+          }
         }
       }
 
@@ -299,21 +299,25 @@ class MytDataSubmainController extends TwViewController {
           result.totalLimit = true;
         }
         this.convShowData(item);
-        // if ( skipIdList.indexOf(item.skipId) === -1 ) {
-        result['gdata'].push(item);
-        // } else {
         // POT10, POT20
         if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
           result['tmoa'].push(item);
           tmoaRemained += parseInt(item.remained, 10);
           tmoaTotal += parseInt(item.total, 10);
         } else {
+          result['gdata'].push(item);
           etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
           etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
         }
-        // }
       });
-      result.total = this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
+      if ( !result.totalLimit ) {
+        result.total = this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
+      } else {
+        result.total = {
+          etcRemainedRatio: 100,
+          totalRemainedRatio: 0
+        };
+      }
     }
     if ( SDATA.length > 0 ) {
       SDATA.filter((item) => {
@@ -368,17 +372,15 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
-  convertFamilyData(items): any {
+  convertFamilyData(items, svcInfo): any {
     let info: any = {
       'total': items.total,
-      'used': items.used,
-      'remained': items.remained,
       'adultYn': items.adultYn,
     };
     const list = items.mbrList;
     if ( list ) {
       list.filter((item) => {
-        if ( item.repYn === 'Y' ) {
+        if ( item.svcMgmtNum === svcInfo.svcMgmtNum) {
           info = Object.assign(info, item);
         }
       });
@@ -424,9 +426,6 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
-  /**
-   * 실시간 잔여량 (합산 언제쯤..)
-   */
   _getRemnantData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
