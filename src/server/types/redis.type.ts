@@ -7,7 +7,7 @@ export const REDIS_PRODUCT_COMPARISON = 'ProductComparison:';
 
 export const REDIS_SC_URL = 'Scuturl:';
 export const REDIS_QUICK_MENU = 'UserQuickMenuByUser:';
-export const REDIS_QUICK_DEFAULT = 'UserQuickMenuByDefault';
+export const REDIS_QUICK_DEFAULT = 'UserQuickMenuByMbrGr';
 export const REDIS_TOOLTIP = 'ToolTip:';
 export const REDIS_MENU = 'FrontMenuList:';
 export const REDIS_SMART_CARD = 'SmartCardSorting:';

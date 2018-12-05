@@ -16,12 +16,14 @@ import {
   LINE_NAME, MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
-  SVC_ATTR_NAME,
+  SVC_ATTR_NAME, TPLAN_LIST,
   UNIT,
-  UNIT_E
+  UNIT_E, UNLIMIT_CODE
 } from '../../../types/bff.type';
+import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import { REDIS_APP_VERSION, REDIS_SMART_CARD } from '../../../types/redis.type';
+import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -249,34 +251,38 @@ class MainHome extends TwViewController {
   // 사용량 조회
   private getUsageData(): Observable<any> {
     let usageData = {
-      code: null
+      code: '',
+      msg: ''
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        console.log(JSON.stringify(resp.result));
         usageData = this.parseUsageData(resp.result);
       }
       usageData.code = resp.code;
+      usageData.msg = resp.msg;
       return usageData;
     });
   }
 
 
   private parseUsageData(usageData: any): any {
-    const kinds = ['gnrlData', 'spclData', 'voice', 'sms'];
+    const etcKinds = ['voice', 'sms'];
     const result = {
-      gnrlData: {},
-      spclData: {},
-      voice: {},
-      sms: {},
-      first: ''
+      data: { isShow: false },
+      shareData: { isShow: false },
+      voice: { isShow: false },
+      sms: { isShow: false },
     };
 
-    kinds.map((kind, index) => {
+    if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
+      this.convData(usageData.gnrlData, result.data);
+      if ( !FormatHelper.isEmpty(usageData.spclData) ) {
+        this.convShareData(usageData.spclData, result.data, result.shareData);
+      }
+    }
+
+    etcKinds.map((kind, index) => {
       if ( !FormatHelper.isEmpty(usageData[kind][0]) ) {
-        if ( FormatHelper.isEmpty(result.first) ) {
-          result.first = kind;
-        }
         result[kind] = usageData[kind][0];
         this.convShowData(result[kind]);
       }
@@ -284,26 +290,102 @@ class MainHome extends TwViewController {
     return result;
   }
 
-  private convShowData(data: any) {
-    data.isUnlimit = !isFinite(data.total);
-    data.remainedRatio = 100;
-    data.showUsed = this.convFormat(data.used, data.unit);
+  private mergeData(list: any, data: any) {
+    data.isShow = true;
+    data.isUnlimit = false;
+    list.map((target) => {
+      if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
+        data.isUnlimit = true;
+        data.remainedRatio = 100;
+        data.showRemained = SKIP_NAME.UNLIMIT;
+      }
+    });
     if ( !data.isUnlimit ) {
-      data.showTotal = this.convFormat(data.total, data.unit);
-      data.showRemained = this.convFormat(data.remained, data.unit);
+      data.remained = list.reduce((_memo, _data) => {
+        return _memo + parseInt(_data.remained, 10);
+      }, 0);
+      data.total = list.reduce((_memo, _data) => {
+        return _memo + parseInt(_data.total, 10);
+      }, 0);
+      data.showRemained = this.convFormat(data.remained, UNIT_E.DATA);
       data.remainedRatio = data.remained / data.total * 100;
     }
   }
 
-  private convFormat(data: string, unit: string): string {
+  private convData(gnrlData: any, data: any) {
+    this.mergeData(gnrlData, data);
+
+    data.isGraphUnlimit = false;
+    if ( data.isUnlimit ) {
+      data.isGraphUnlimit = true;
+    }
+
+    if ( !data.isGraphUnlimit ) {
+      data.graphRemained = data.remained;
+      data.graphTotal = data.total;
+      data.showGraphRemained = data.showRemained;
+    } else {
+      data.showGraphRemained = SKIP_NAME.UNLIMIT;
+    }
+  }
+
+  private convShareData(spclData: any, data: any, shareData: any) {
+    const list = spclData.filter((target) => {
+      return TPLAN_LIST.indexOf(target.skipId) !== -1;
+    });
+
+    if ( !FormatHelper.isEmpty(list) ) {
+      this.mergeData(list, shareData);
+
+      if ( shareData.isUnlimit ) {
+        data.isGraphUnlimit = true;
+      }
+
+      if ( !data.isGraphUnlimit ) {
+        data.graphRemained = data.remained + shareData.remained;
+        data.graphTotal = data.total + shareData.total;
+        data.showGraphRemained = this.convFormat(data.graphRemained, UNIT_E.DATA);
+        data.remainRatio = data.remained / data.graphTotal * 100;
+        shareData.remainedRatio = (data.remained + shareData.remained) / data.graphTotal * 100;
+      }
+    }
+  }
+
+  private convShowData(data: any) {
+    data.isShow = true;
+    data.isUnlimit = UNLIMIT_CODE.indexOf(data.unlimit) !== -1;
+    data.remainedRatio = 100;
+    // data.showUsed = this.convFormat(data.used, data.unit);
+    if ( !data.isUnlimit ) {
+      // data.showTotal = this.convFormat(data.total, data.unit);
+      data.showRemained = this.convFormat(data.remained, data.unit);
+      data.remainedRatio = data.remained / data.total * 100;
+    } else {
+      data.showRemained = UNLIMIT_NAME[data.unlimit];
+    }
+  }
+
+  private convFormat(data: string, unit: string): any {
     switch ( unit ) {
       case UNIT_E.DATA:
-        return FormatHelper.convDataFormat(data, UNIT[unit]);
+        const resultData = FormatHelper.convDataFormat(data, UNIT[unit]);
+        return resultData.data + resultData.unit;
       case UNIT_E.VOICE:
-        return FormatHelper.convVoiceFormat(data);
+        const resultVoice = FormatHelper.convVoiceFormat(data);
+        let resp = '';
+        if ( resultVoice.hours !== 0 ) {
+          resp += resultVoice.hours + TIME_UNIT.HOURS;
+        }
+        if ( resultVoice.min !== 0 ) {
+          if ( !FormatHelper.isEmpty(resp) ) {
+            resp += ' ';
+          }
+          resp += resultVoice.min + TIME_UNIT.MINUTE;
+        }
+        return resp;
       case UNIT_E.SMS:
       case UNIT_E.SMS_2:
-        return FormatHelper.addComma(data);
+        return FormatHelper.addComma(data) + UNIT_STR.SMS;
       default:
     }
     return '';
