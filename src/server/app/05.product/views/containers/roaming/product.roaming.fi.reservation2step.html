@@ -50,7 +50,7 @@
                     <div class="charge-guide-wrap top-line">
                         <div class="charge-cont">
                             <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
-                            <span class="tit-tgothic"><%= svcInfo.svcNum %> <span class="bt-alone"><button class="bt-bg-blue1" aria-haspopup="true">회선 변경</button></span></span>
+                            <span class="tit-tgothic"><%= svcInfo.svcNum %></span>
                             <span class="sub-disc04">
                                     <span class="elem">현 사용기기</span>
                                     <span class="elem"><%= svcInfo.eqpMdlNm %></span>
@@ -341,13 +341,13 @@
                         <li>
                             <label class="tit" for="flab02">임대시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox date-selcet mt0">
-                                <span class="date-type full"><input id="flab02" type="date" value="<%= formatDate %>" min="2000-01-01" max="2018-12-31" title="임대시작 일자 선택"></span>
+                                <span class="date-type full"><input id="flab02" type="date" value="<%= formatDate.minDate %>" min="<%= formatDate.minDate %>" max="<%= formatDate.maxDate %>" title="임대시작 일자 선택"></span>
                             </div>
                         </li>
                         <li>
                             <label class="tit" for="flab03">반납 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox date-selcet mt0">
-                                <span class="date-type full"><input id="flab03" type="date" value="<%= formatDate %>" min="2018-11-22" max="2018-12-31" title="반납 일자 선택"></span>
+                                <span class="date-type full"><input id="flab03" type="date" value="<%= formatDate.minDate %>" min="<%= formatDate.minDate %>" max="<%= formatDate.maxDate %>" title="반납 일자 선택"></span>
                             </div>
                         </li>
                         <li>
@@ -419,9 +419,9 @@
                 </div>
                 <!--// .cont-box -->
 
-                <ul id="fe-register" class="bt-slice full">
+                <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button disabled>신청하기</button>
+                        <button id="fe-register" disabled>신청하기</button>
                     </li>
                 </ul>
             </div>

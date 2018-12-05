@@ -232,7 +232,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
   _insertDashPhone: function() {
     //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
-    var phoneNum = $('#flab01').val();
+    var phoneNum = $('#flab01').val().replace(/\-/gi, '');
     var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
     $('#flab01').val(hypenPhoneNum);
   },

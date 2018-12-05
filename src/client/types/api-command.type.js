@@ -397,7 +397,7 @@ Tw.API_CMD = {
   BFF_10_0048: { path: '/core-modification/v1/wireJoin/listUseAddressService', method: Tw.API_METHOD.POST },
   BFF_10_0054: { path: '/core-product/v1/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
   BFF_10_0065: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.POST },
-  BFF_10_0066: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.POST },
+  BFF_10_0066: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.PUT },
   BFF_10_0067: { path: '/core-product/v1/roaming/tpie', method: Tw.API_METHOD.GET },
   BFF_10_0068: { path: '/core-product/v1/roaming/tpie-reservation', method: Tw.API_METHOD.GET },
   BFF_10_0069: { path: '/v1/products/:args0/auth/:args1', method: Tw.API_METHOD.GET },
