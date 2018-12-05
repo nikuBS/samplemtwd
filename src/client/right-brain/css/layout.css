@@ -2709,7 +2709,7 @@ body.bg-gray {
             font-weight: 400; }
 
 /* 상품상세 컬러값 */
-.bg-productdetail .container {
+.bg-productdetail #contents .container {
   padding-top: 0 !important; }
 
 .bg-productdetail .productdetails-bg {

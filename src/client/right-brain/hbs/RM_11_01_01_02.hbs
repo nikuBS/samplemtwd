@@ -140,7 +140,7 @@
                                         </li>
                                         {{#ifCond data.autoInfo.stipulationInfo.scrbStplAgreeYn '===' 'Y'}}
                                             <li>
-                                                <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.scrbStplAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text">
@@ -158,7 +158,7 @@
                                         {{/ifCond}}
                                         {{#ifCond data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeYn '===' 'Y'}}
                                             <li>
-                                                <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text">
@@ -176,7 +176,7 @@
                                         {{/ifCond}}
                                         {{#ifCond data.autoInfo.stipulationInfo.psnlInfoOfrAgreeYn '===' 'Y'}}
                                             <li>
-                                                <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text">
@@ -194,7 +194,7 @@
                                         {{/ifCond}}
                                         {{#ifCond data.autoInfo.stipulationInfo.adInfoOfrAgreeYn '===' 'Y'}}
                                             <li>
-                                                <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text">
@@ -227,14 +227,9 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    {{#each data.autoInfo.preinfo.joinNoticeList}}
-                        <li>
-                            {{this.prodNm}}
-                            {{#if this.noticeTxt.length}}
-                            <button type="button" class="tip-view" title="정보보기" data-txt="{{this.noticeTxt}}" aria-haspopup="true">TIP</button>
-                            {{/if}}
-                        </li>
-                    {{/each}}
+                    <li>텍스트가 1줄인 Case입니다.</li>
+                    <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -242,7 +237,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button id="do_join" disabled="disabled">가입하기</button>
+                        <button id="do_join">가입하기</button>
                     </li>
                 </ul>
             </div>
