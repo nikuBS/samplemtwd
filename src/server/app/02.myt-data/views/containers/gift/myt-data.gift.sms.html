@@ -15,31 +15,41 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html',
-    { title: '문자 보내기', svcInfo: svcInfo, option: { back: 'step' } }); %>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box nogaps noborder">
-                <h3 class="sub-title0">To. <span class="add-name"><!--김*진--></span><span class="add-info"><!--010-12**-45**--></span></h3>
-                <div class="cont-box">
-                    <textarea id="fe-sms_textarea" class="type-msg" rows="15" cols="30" maxlength="80" placeholder="메시지로 마음을 표현해 보세요.(80자 이내)"></textarea>
+<div class="wrap">
+    <div class="popup-page tw-popup fixed-bottom h60">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>문자 보내기</h1>
                 </div>
             </div>
-            <!--// .cont-box -->
-            <ul class="bt-slice full">
-                <li class="bt-red1">
-                    <button id="fe-send_gift_sms" disabled>보내기</button>
-                </li>
-            </ul>
         </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <h3 class="sub-title0">To. <span class="add-name"><!--김*진--></span><span class="add-info"><!--010-12**-45**--></span>
+                    </h3>
+                    <div class="cont-box">
+                        <textarea id="fe-sms_textarea" class="type-msg" rows="15" cols="30" maxlength="80"
+                                  placeholder="메시지로 마음을 표현해 보세요.(80자 이내)"></textarea>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button id="fe-send_gift_sms" disabled>보내기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// #contents -->
+        <button class="prev-step fe-common-back">취소</button>
     </div>
-    <!--// #contents -->
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
