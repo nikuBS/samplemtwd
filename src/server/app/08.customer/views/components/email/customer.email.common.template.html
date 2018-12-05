@@ -232,7 +232,7 @@
 
 <script type="text/template" id="tpl_upload_list">
     {{#each files}}
-    <li data-hashFile="{{name}}">
+    <li data-hashFile="/{{path}}{{name}}">
         <p class="text">{{originalName}}</p>
         <div class="bt-alone">
             <button class="bt-line-gray1 fe-remove-file">삭제</button>
