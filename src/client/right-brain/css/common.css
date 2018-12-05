@@ -1109,7 +1109,7 @@ button {
   cursor: pointer; }
 
 button:focus {
-  outline: 1px dotted #3c3c3c; }
+  outline: -webkit-focus-ring-color auto 5px; }
 
 button span, button:active span, button:focus span {
   position: relative; }
