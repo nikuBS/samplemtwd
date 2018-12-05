@@ -152,12 +152,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
         auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
       };
     }
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0045, params )
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -166,7 +166,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
 
@@ -181,12 +181,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     $('.discount-location').html('');
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0043, {})
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -196,7 +196,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
   },
@@ -282,12 +282,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       };
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0074, params )
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -296,7 +296,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
   },
@@ -331,12 +331,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _reloadNumList: function(){
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0073, {} )
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -347,7 +347,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
 

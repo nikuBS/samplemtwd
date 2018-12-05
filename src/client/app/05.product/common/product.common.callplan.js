@@ -136,7 +136,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _goJoinTerminate: function(joinTermCd, e) {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
@@ -145,7 +145,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _goJoinTerminateResult: function(joinTermCd, href, resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }

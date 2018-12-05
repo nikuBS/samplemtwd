@@ -24,14 +24,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       selector = '[data-id="container"]';
     }
     if ( value ) {
-      skt_landing.action.loading.on({
-        ta: selector, co: 'grey', size: true
-      });
+      Tw.CommonHelper.startLoading(selector, 'grey', true);
     }
     else {
-      skt_landing.action.loading.off({
-        ta: selector
-      });
+      Tw.CommonHelper.endLoading(selector);
     }
   },
 

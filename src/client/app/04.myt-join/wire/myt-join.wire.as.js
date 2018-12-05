@@ -131,7 +131,7 @@ Tw.MyTJoinWireAS.prototype = {
    */
   _requestNextData: function () {
     this._removeMoreBtn();
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0156, { page: String(this._nowPageNum+1) })
       .done($.proxy(function (resp) {
@@ -143,18 +143,18 @@ Tw.MyTJoinWireAS.prototype = {
         }
 
         this._printList(resp.result.history);
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
       }, this))
       .fail($.proxy(this._requestFail, this));
   },
 
   _showErrorAlert: function(code, msg){
     Tw.Error(code, msg).pop();
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
   _requestFail: function (err) {
     Tw.Error(err.status, err.statusText).pop();
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
   /**

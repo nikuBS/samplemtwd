@@ -55,7 +55,7 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _startGetBillResponseTimer: function (gubun) {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._resTimerID = setTimeout(this._getBillResponse(gubun), 500);
   },
 
@@ -139,7 +139,7 @@ Tw.MyTBillHotBill.prototype = {
       }
       this._onErrorReceivedBillData();
     }
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
   _onErrorReceivedBillData: function (e) {
@@ -194,7 +194,7 @@ Tw.MyTBillHotBill.prototype = {
   _showPreviousBill: function () {
     event.preventDefault();
     var self = this;
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService
       .request(Tw.API_CMD.BFF_05_0035, { gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS })
       .done(function () {

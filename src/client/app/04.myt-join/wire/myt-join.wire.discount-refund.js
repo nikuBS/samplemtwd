@@ -42,18 +42,18 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _requestData: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
           Tw.Error(resp.code, resp.msg).pop();
-          skt_landing.action.loading.off({ ta: '.container' });
+          Tw.CommonHelper.endLoading('.container');
           return;
         }
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
 
         var data = resp.result;
 
@@ -76,7 +76,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
         }
       }, this))
       .fail(function (err) {
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText);
       });
 

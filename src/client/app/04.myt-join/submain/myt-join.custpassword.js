@@ -59,7 +59,7 @@ Tw.MytJoinCustpassword.prototype = {
     this._chkedpwd = this._validatePwdInput('#pwd-input1');
     if(!this._chkedpwd) return;
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._pwdCheckService.check(
       this._chkedpwd,
@@ -82,12 +82,12 @@ Tw.MytJoinCustpassword.prototype = {
     this._currentHash = this._HASH_STEP_CHANGE;
 
     this._resetPwdInput('input:password');
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
   _onCheckPwdFail : function(/*res, errCnt, unexpectedError*/){
     $('#pwd-input1').parents('.inputbox').addClass('error');
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
   /**
@@ -248,7 +248,7 @@ Tw.MytJoinCustpassword.prototype = {
       data.svcPwd = this._chkedpwd; // 변경
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
@@ -261,7 +261,7 @@ Tw.MytJoinCustpassword.prototype = {
    * @private
    */
   _onApiSuccess: function (params) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
       var msgObj = this._new ? Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A64 : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A62;
@@ -282,7 +282,7 @@ Tw.MytJoinCustpassword.prototype = {
   },
 
   _onApiError: function (params) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(params.code, params.msg).pop();
   },
 

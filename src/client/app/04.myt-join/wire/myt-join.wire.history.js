@@ -203,12 +203,12 @@ Tw.MyTJoinWireHistory.prototype = {
    */
   _nextData: function () {
     this._removeMoreBtn();
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._nowPageNum += 1;
     this._printList(this._pagingList[this._nowPageNum]);
 
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
   /**

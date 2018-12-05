@@ -23,14 +23,10 @@ Tw.MyTFareSubMain.prototype = {
       selector = '[data-id="wrapper"]';
     }
     if ( value ) {
-      skt_landing.action.loading.on({
-        ta: selector, co: 'white', size: false
-      });
+      Tw.CommonHelper.startLoading(selector, 'white', false);
     }
     else {
-      skt_landing.action.loading.off({
-        ta: selector
-      });
+      Tw.CommonHelper.endLoading(selector);
     }
   },
 

@@ -51,7 +51,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
       return;
     }
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     /*
       $.ajax('/mock/membership.info.BFF_11_0015.json')
         .done($.proxy(this._onSuccess, this))
@@ -70,7 +70,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
       return false;
     }
     this._isJoinOk = resp.result.cardCreatableYn;
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
   _closeCallback: function () {
@@ -106,7 +106,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
 
   // API Fail
   _onFail: function (err) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).pop();
   }
 };

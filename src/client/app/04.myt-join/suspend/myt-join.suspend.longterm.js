@@ -273,14 +273,14 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   },
 
   _requestSuspend: function () {
-    skt_landing.action.loading.on({ ta: 'body' });
+    Tw.CommonHelper.startLoading('body');
     this._apiService.request(Tw.API_CMD.BFF_05_0197, this._suspendOptions)
       .done($.proxy(this._onSuccessRequest, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequest: function (res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(this._suspendOptions.fromDt) + ' - ' +
         Tw.DateHelper.getFullKoreanDate(this._suspendOptions.toDt);

@@ -131,7 +131,7 @@ Tw.MyTDataUsage.prototype = {
       return;
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.requestArray(reqList)
       .done($.proxy(function () {
@@ -167,7 +167,7 @@ Tw.MyTDataUsage.prototype = {
               break;
           }
         }
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
 
       }, this))
       .fail($.proxy(this._requestFail, this));
@@ -176,7 +176,7 @@ Tw.MyTDataUsage.prototype = {
 
   _requestFail: function (resp) {
     this._showErrorAlert(resp.code, resp.msg);
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
   },
 
 
@@ -334,14 +334,14 @@ Tw.MyTDataUsage.prototype = {
     var $btnContainer = $(event.target).parent();
     var svcNum = $btnContainer.attr('data-child-svcnum');
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0009, { cSvcMgmtNum: svcNum })
       .done($.proxy(function (resp) {
 
         if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
           this._showErrorAlert(resp.code, resp.msg);
-          skt_landing.action.loading.off({ ta: '.container' });
+          Tw.CommonHelper.endLoading('.container');
           return;
         }
 
@@ -349,7 +349,7 @@ Tw.MyTDataUsage.prototype = {
         var html = tmpl(resp.result);
 
         $btnContainer.html(html);
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
       }, this))
       .fail($.proxy(this._requestFail, this));
 
