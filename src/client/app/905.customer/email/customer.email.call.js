@@ -142,7 +142,7 @@ Tw.CustomerEmailCall.prototype = {
       param11: $('.fe-param11').val()
     };
 
-    Tw.UIService.setLocalStorage('post_info', JSON.stringify(params));
+    Tw.CommonHelper.setLocalStorage('post_info', JSON.stringify(params));
 
     this._history.replaceURL('/home/postcode');
   },

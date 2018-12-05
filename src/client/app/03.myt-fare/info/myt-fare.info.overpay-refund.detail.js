@@ -15,7 +15,7 @@ Tw.MyTFareInfoOverpayRefundDetail = function (rootEl, data) {
 
 Tw.MyTFareInfoOverpayRefundDetail.prototype = {
   _init: function () {
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
 
     this._initDetail();
   },

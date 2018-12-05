@@ -18,7 +18,7 @@ Tw.MyTFareBillContentsHitstoryDetail = function (rootEl, data) {
 Tw.MyTFareBillContentsHitstoryDetail.prototype = {
   _init: function() {
     var renderedHTML;
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     
     if(this.detailData){
       renderedHTML = this.$template.$detailWrap(this.detailData);

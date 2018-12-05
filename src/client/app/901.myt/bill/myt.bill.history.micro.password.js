@@ -27,9 +27,9 @@ Tw.MyTBillHistoryMicroPassword = function (rootEl, current, isUsePassword) {
     this.apiName = Tw.API_CMD.BFF_05_0086;
   }
 
-  if (Tw.UIService.getLocalStorage('pastP')) {
-    this.pastP = Tw.UIService.getLocalStorage('pastP');
-    Tw.UIService.setLocalStorage('pastP', '');
+  if (Tw.CommonHelper.getLocalStorage('pastP')) {
+    this.pastP = Tw.CommonHelper.getLocalStorage('pastP');
+    Tw.CommonHelper.setLocalStorage('pastP', '');
   }
 
   this._cachedElement();

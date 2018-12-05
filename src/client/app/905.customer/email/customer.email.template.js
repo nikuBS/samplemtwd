@@ -271,15 +271,15 @@ Tw.CustomerEmailTemplate.prototype = {
 
         if ( Tw.UrlHelper.getQueryParams().post ) {
           this._history.complete();
-          if ( Tw.UIService.getLocalStorage('post') ) {
-            var location = Tw.UIService.getLocalStorage('post').split(',');
+          if ( Tw.CommonHelper.getLocalStorage('post') ) {
+            var location = Tw.CommonHelper.getLocalStorage('post').split(',');
             $('.fe-param05').val(location[0]);
             $('.fe-param06').val(location[1]);
             $('.fe-param07').val(location[2]);
           }
 
-          if ( Tw.UIService.getLocalStorage('post_info') ) {
-            var previousParams = JSON.parse(Tw.UIService.getLocalStorage('post_info'));
+          if ( Tw.CommonHelper.getLocalStorage('post_info') ) {
+            var previousParams = JSON.parse(Tw.CommonHelper.getLocalStorage('post_info'));
             $('.fe-param01').val(previousParams.param01);
             $('.fe-param03').text(previousParams.param03);
             $('.fe-param04').text(previousParams.param04);

@@ -22,7 +22,7 @@ Tw.PostcodeMain = function (rootEl) {
 Tw.PostcodeMain.prototype = {
   _init: function () {
     this.$container.find('input[type="text"]').val('');
-    Tw.UIService.setLocalStorage('post', '');
+    Tw.CommonHelper.setLocalStorage('post', '');
   },
   _initVariables: function () {
     this._cityList = [];
@@ -540,7 +540,7 @@ Tw.PostcodeMain.prototype = {
     }
 
     if (isValid) {
-      Tw.UIService.setLocalStorage('post', [_postCode, _address, _detailAddress]);
+      Tw.CommonHelper.setLocalStorage('post', [_postCode, _address, _detailAddress]);
 
       this._history.setHistory();
 
