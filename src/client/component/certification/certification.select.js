@@ -233,7 +233,7 @@ Tw.CertificationSelect.prototype = {
         this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND:
-        //
+        (new Tw.CertificationSkSmsRefund()).openSmsPopup($.proxy(this._completeCert, this));
         break;
       // case Tw.AUTH_CERTIFICATION_METHOD.OTHER_REFUND:
       //   this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind, this._command, $.proxy(this._completeCert, this));

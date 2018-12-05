@@ -30,11 +30,17 @@
                     <div class="plan-pay-title">
                         <h3 class="tit">
                             <span class="pay-name"><%= data.refundArr[0].svcCdNm %></span>
+                            <% if (data.refundArr.length - 1 !== 0) { %>
                             <span class="pay-line mt4"><%= data.refundArr[0].svcNum %> 외 <%= data.refundArr.length - 1  %>건</span>
+                            <% } else { %>
+                            <span class="pay-line mt4"><%= data.refundArr[0].svcNum %></span>
+                            <% } %>
                             <span class="pay-sum">해지환급금액</span>
                             <span class="pay-fee"><span class="mt4"><%= data.totalAmount %></span>원</span>
                         </h3>
+                        <% if (data.refundArr.length -1 !== 0) { %>
                         <div class="bt-alone"><button class="bt-bg-blue1" id="fe-btn-detail">상세 보기</button></div>
+                        <% } %>
                     </div>
                 </div>
                 <!-- //cont-box -->
@@ -113,7 +119,7 @@
                         <li>
                             <dl>
                                 <dt>주민등록번호</dt>
-                                <dd>*******-*******</dd>
+                                <dd><%= data.socialId %></dd>
                             </dl>
                         </li>
                     </ul>
@@ -153,15 +159,6 @@
                         </div>
                     </div>
                     <!-- //cont-box -->
-                <% } else { %>
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <div class="contents-empty">
-                        <span class="ico type1"></span>
-                        <p class="desc">환급가능 금액이 없습니다.</p>
-                    </div>
-                </div>
-                <!-- //cont-box -->
                 <% } %>
 
                 <% if (data.submittedArr.length > 0) { %>

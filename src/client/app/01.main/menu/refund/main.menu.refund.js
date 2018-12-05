@@ -203,12 +203,13 @@ Tw.MainMenuRefund.prototype = {
     this._popupService.open({
       hbs: 'MN_01_04_01_01_01',
       data: {
-        name: this._data.name
+        name: this._data.name,
+        socialId: this._data.socialId
       }
     }, $.proxy(function (root) {
       new Tw.MainMenuRefundChangeAccount(root, this._bankList, target, $.proxy(function () {
         this._historyService.reload();
       }, this));
-    }, this));
+    }, this), null, 'change');
   }
 };
