@@ -12,7 +12,6 @@
 <!-- .cont-box -->
     <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.isDataInfo) { %>
-        <% if (data.remnantData && data.remnantData.total) { %>
         <% var totalData = data.remnantData.total; %>
         <ul class="date-graph-list b-line">
             <li>
@@ -21,8 +20,7 @@
                     <div class="donut-chart small">
                         <div class="donut-chart-area">
                             <!-- loop -->
-                            <% var tmoaRatio = totalData.tmoaRemainedRatio > 0 ? totalData.totalRemainedRatio : 0; %>
-                            <div class="c100 p<%= tmoaRatio %>"><!-- .p+(0~100) // -->
+                            <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
                                 <div class="blue"><!-- red, yellow, green, blue, comet // -->
                                     <div class="slice">
                                         <div class="bar"></div>
@@ -49,7 +47,7 @@
                     <span class="txt1">나의 데이터</span>
                     <div class="date">
                         <span class="remain">
-                            <% if(data.remnantData.totalLimit) { %>
+                            <% if (data.remnantData.totalLimit) { %>
                             <strong>무제한</strong>
                             <% } else { %>
                             <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
@@ -61,16 +59,19 @@
             </li>
         </ul>
         <% } %>
-        <% } %>
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
-                    <% if (data.remnantData && data.remnantData.sdata.length > 0) { %>
-                    <% var rdata = data.remnantData.sdata[0]; %>
+                    <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
+                    <% var rdata = data.remnantData.gdata[0]; %>
                     <li>
                         <span class="tit"><%= rdata.skipNm %></span>
                         <span class="value type1">
+                            <% if (data.remnantData.totalLimit) { %>
+                            <strong>무제한</strong>
+                            <% } else { %>
                             <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                            <% } %>
                         </span>
                     </li>
                     <% } %>
@@ -255,8 +256,8 @@
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
-                    <% if (data.remnantData && data.remnantData.sdata.length > 0) { %>
-                    <% var rdata = data.remnantData.sdata[0]; %>
+                    <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
+                    <% var rdata = data.remnantData.gdata[0]; %>
                     <li>
                         <span class="tit"><%= rdata.skipNm %></span>
                         <span class="value type1">
@@ -405,8 +406,8 @@
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
-                    <% if (data.remnantData && data.remnantData.sdata.length > 0) { %>
-                    <% var rdata = data.remnantData.sdata[0]; %>
+                    <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
+                    <% var rdata = data.remnantData.gdata[0]; %>
                     <li>
                         <span class="tit"><%= rdata.skipNm %></span>
                         <span class="value type1">

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_NEW_NUMBER_ERROR } from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
-import { NEW_NUMBER_MSG } from '../../types/string.type';
+import { BANNER_TITLE, NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
@@ -182,8 +182,10 @@ class MyTJoinSubmainController extends TwViewController {
         }
       }
       // 배너 정보
-      if ( banner ) {
-        data.banner = this.parseBanner(banner);
+      if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
+        if ( !FormatHelper.isEmpty(banner.result) ) {
+          data.banner = this.parseBanner(banner);
+        }
       }
 
       res.render('myt-join.submain.html', { data });

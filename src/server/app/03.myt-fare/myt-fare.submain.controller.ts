@@ -12,7 +12,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
-import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
+import { BANNER_TITLE, MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
@@ -168,9 +168,12 @@ class MyTFareSubmainController extends TwViewController {
         data.contribution = contribution;
       }
       // 배너
-      if ( banner ) {
-        data.banner = this.parseBanner(banner);
+      if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
+        if ( !FormatHelper.isEmpty(banner.result) ) {
+          data.banner = this.parseBanner(banner);
+        }
       } else {
+        // TODO: MOCK DATA 제거예정
         data.banner = this.parseBanner(bam);
       }
 
@@ -238,9 +241,12 @@ class MyTFareSubmainController extends TwViewController {
           }
         }
 
-        if (banner) {
-          data.banner = this.parseBanner(banner);
+        if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
+          if ( !FormatHelper.isEmpty(banner.result) ) {
+            data.banner = this.parseBanner(banner);
+          }
         } else {
+          // TODO: MOCK DATA 제거예정
           data.banner = this.parseBanner(bam);
         }
 
@@ -260,7 +266,7 @@ class MyTFareSubmainController extends TwViewController {
     });
     const keys = Object.keys(sort).sort();
     keys.forEach((key) => {
-      result.push( sort[key] );
+      result.push(sort[key]);
     });
 
     return result;
