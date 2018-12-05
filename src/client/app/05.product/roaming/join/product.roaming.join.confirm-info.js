@@ -11,9 +11,7 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
-  console.log('1111111111111111');
   if(doJoinCallBack===null){
-      console.log('2222222222222222');
       this._svcInfo = closeCallBack;
       this._$popupContainer = this.$rootContainer;
       this._prodId = hash;
@@ -24,7 +22,6 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
       //this._stipulationInit(this._prodBffInfo);
       return;
   }
-  console.log('333333333333333333');
   this._doJoinCallBack = doJoinCallBack;
   this._openConfirmRoamingInfoPopup(data,closeCallBack,hash);
   this._rootData = rootData;
@@ -32,7 +29,6 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
 
 Tw.ProductRoamingJoinConfirmInfo.prototype = {
     _openConfirmRoamingInfoPopup : function (data,closeCallBack,hash) {
-        console.log('_openConfirmRoamingInfoPopup !!!!!!!!!!!!!!!!');
         this._popupService.open({
             hbs: 'RM_11_01_01_02',
             layer: true,
@@ -40,8 +36,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         },$.proxy(this._init,this),closeCallBack,hash);
     },
     _init : function($poppContainer){
-        console.log('init !!!!!!!!!!!!!!');
-        console.log(this._popupData.joinType);
+
         this._$popupContainer = $poppContainer;
         this._bindPopupElementEvt($poppContainer);
         var setingInfo;
@@ -53,7 +48,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
          }else if(this._popupData.joinType==='begin'){
              setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
          }else if(this._popupData.joinType==='alarm'){
-             console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
              for(var i=0;i<this._popupData.userJoinInfo.svcNumList.length;i++){
                  if(i>=2){
                      break;
@@ -69,7 +64,6 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
 
     },
     _bindPopupElementEvt : function ($popupContainer) {
-        console.log(this._$popupContainer);
         this._$allAgreeElement = this._$popupContainer.find('.all.checkbox>input');
         this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
 
@@ -139,8 +133,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
 
         this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},this.prodId).
         done($.proxy(function (res) {
-            console.log('success');
-            console.log(res);
+
 
             var completePopupData = {
                 prodNm : this._prodRedisInfo.prodNm,
@@ -158,8 +151,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
                 null,
                 'complete');
         }, this)).fail($.proxy(function (err) {
-            console.log('fail');
-            console.log(err);
+
         }, this));
 
     },
@@ -168,9 +160,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         $($args).on('click','.btn-floating',this._goBack);
     },
     _goBack : function(){
-        console.log('_goBack ');
+
     },
     _goMyInfo : function () {
-        console.log('_goMyInfo ');
+
     }
 };
