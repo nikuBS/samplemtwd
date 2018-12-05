@@ -8,6 +8,7 @@ import { Request, Response, NextFunction } from 'express-serve-static-core';
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../../utils/format.helper';
 
 export default class MainMenuSettingsLocation extends TwViewController {
 
@@ -15,9 +16,11 @@ export default class MainMenuSettingsLocation extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
     this.isLocationTermAgreed(res, svcInfo).subscribe(
       (isAgree) => {
-        res.render('menu/settings/main.menu.settings.location.html', {
-          svcInfo, pageInfo, isAgree
-        });
+        if (!FormatHelper.isEmpty(isAgree)) {
+          res.render('menu/settings/main.menu.settings.location.html', {
+            svcInfo, pageInfo, isAgree
+          });
+        }
       },
       (err) => this.showError(res, svcInfo, err.code, err.msg)
     );

@@ -97,6 +97,25 @@ Tw.CommonHelper = (function () {
     $element.slick.animateHeight();
   };
 
+  var openTermLayer = function (code) {
+    Tw.Api.request(Tw.API_CMD.BFF_08_0059, {
+      svcType: 'MM',
+      serNum: code
+    }).done(function (res) {
+      if (res.code === Tw.API_CODE.CODE_00) {
+        Tw.Popup.open({
+          hbs: 'HO_04_05_01_02_01',
+          title: res.result.title,
+          content: res.result.content
+        });
+      } else {
+        Tw.Error(res.code, res.msg).pop();
+      }
+    }).fail(function (err) {
+      Tw.Error(err.code, err.msg).pop();
+    });
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -109,6 +128,7 @@ Tw.CommonHelper = (function () {
     openFreeSms: openFreeSms,
     startLoading: startLoading,
     endLoading: endLoading,
-    resetHeight: resetHeight
+    resetHeight: resetHeight,
+    openTermLayer: openTermLayer
   };
 })();

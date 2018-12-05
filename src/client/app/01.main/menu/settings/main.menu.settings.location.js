@@ -9,6 +9,7 @@ Tw.MainMenuSettingsLocation = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._cacheElements();
   this._bindEvents();
@@ -20,7 +21,7 @@ Tw.MainMenuSettingsLocation.prototype = {
   },
   _bindEvents: function () {
     this.$term.on('change', $.proxy(this._onTermChanged, this));
-    this.$container.on('click', 'a', $.proxy(this._onLink, this));
+    this.$container.on('click', '#fe-view', $.proxy(this._onLink, this));
   },
   _onTermChanged: function (e) {
     var data = {
@@ -39,17 +40,9 @@ Tw.MainMenuSettingsLocation.prototype = {
     Tw.Error(err.code, err.msg).pop();
     var checked = !!this.$term.attr('checked');
     this.$term.attr('checked', !checked);
-    if (checked) {
-      this.$term.closest('div').removeClass('checked').attr('aria-checked', !checked);
-    } else {
-      this.$term.closest('div').addClass('checked').attr('aria-checked', !checked);
-    }
   },
-  _onLink: function (e) {
-    if (!Tw.BrowserHelper.isApp()) {
-      return;
-    }
-
-    return false;
+  _onLink: function () {
+    var code = 40;
+    Tw.CommonHelper.openTermLayer(code);
   }
 };

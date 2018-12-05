@@ -19,111 +19,66 @@
         <%- include('../../../../common/views/components/header.component.html', { title: '설정' }); %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
-                    <ul class="link-long-list">
+                    <ul class="full-link-list type02">
                         <% if (isLogin) { %>
                         <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/location">위치정보 이용동의 설정
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
+                            <a href="/main/menu/settings/location">
+                                <span class="inner">
+                                    <span class="tit tx-medium">위치정보 이용동의 설정</span>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/notification">T알림 설정
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
+                            <a href="/main/menu/settings/notification">
+                                <span class="inner">
+                                    <span class="tit tx-medium">T알림 설정</span>
+                                </span>
+                            </a>
                         </li>
                         <% } %>
                         <% if (isApp && isLogin) { %>
                         <li>
                         <li>
-                            <div class="link-long">
-                                <button>위젯 설정
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit tx-medium">위젯 설정</span>
+                                </span>
+                            </button>
                         </li>
                         <% } %>
                         <% if (isLogin) { %>
                         <li>
-                            <div class="link-long">
-                                <a id="fe-go-certificates" href="/main/menu/settings/certificates">공인인증센터
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
+                            <a id="fe-go-certificates" href="/main/menu/settings/certificates">
+                                <span class="inner">
+                                    <span class="tit tx-medium">공인인증 센터</span>
+                                </span>
+                            </a>
                         </li>
                         <% } %>
                         <% if (isApp && isLogin) { %>
                         <li id="fe-bio">
-                            <div class="link-long">
-                                <a id="fe-bio-link" href="">생체인증 설정
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
+                            <a id="fe-bio-link" href="">
+                                <span class="inner">
+                                    <span class="tit tx-medium">생체인증 설정</span>
+                                </span>
+                            </a>
                         </li>
                         <% } %>
-                        <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/terms#sk">이용약관
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/privacy">개인정보처리방침
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a href="">책임의 한계와 법적고지
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/business-info">사업자 정보
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </li>
                         <% if (isApp) { %>
                         <li>
                             <div class="link-version">
-                                <span class="ver-title">버전정보</span>
-                                <div class="ver-number">
-                                    <span id="fe-version"></span>
-                                    <div id="fe-update-box" class="bt-alone none">
-                                        <button id="fe-btn-update" class="bt-bg-blue1">업데이트</button>
-                                    </div>
-                                </div>
+                                <span class="inner">
+                                    <span class="tit tx-medium">
+                                        버전 정보
+                                        <span id="fe-version" class="version-info"></span>
+                                    </span>
+                                    <span id="fe-update-box" class="text none">
+                                        <button id="fe-btn-update" class="bt-link-tx underline">업데이트</button>
+                                    </span>
+                                </span>
                             </div>
                         </li>
                         <% } %>
