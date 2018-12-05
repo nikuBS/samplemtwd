@@ -1,0 +1,86 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup fixed-bottom h60">
+    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>이용한도 설정</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="use-state-wrap type1">
+                    <ul>
+                        <li>
+                            <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                            <div class="info">
+                                <span class="stit">{{member.name}}<span class="phone">{{member.svcNum}}</span>
+                                {{#if member.isRepresentation}}
+                                <span class="ml0 sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span></span>
+                                {{/if}}
+                                <span class="mb">{{{data}}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz bb0">
+                <!-- .list-comp-input -->
+                <div class="list-input-type1">
+                    <ul>
+                        <li>
+                            <span class="form">
+                                <input type="radio" name="sradio1" id="sradio1" class="formradio-small" {{#unless limitation}}checked="checked"{{/unless}}><label for="sradio1">라디오박스</label>
+                            </span>
+                            <div class="cont">
+                                <span class="stit">자유 사용</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="form">
+                                <input type="radio" name="sradio1" id="sradio2" {{#if limitation}}checked="checked"{{/if}} class="formradio-small"><label for="sradio2">라디오박스</label>
+                            </span>
+                            <div class="cont">
+                                <span class="stit">한도 설정</span>
+                                <p class="inputbox pt14">
+                                    <span class="input">
+                                        <input type="number" placeholder="숫자만 입력" title="한도 설정" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" {{#if limitation}}value={{limitation}}{{/if}}>
+                                    </span>
+                                </p>
+                                <p class="fs-type2 mt8">설정한 한도 안에서 T가족모아데이터를 이용하실 수 있습니다.</p>
+                                <p class="fs-type2 mt4">0GB로 입력하시면 T가족모아데이터를 이용하실 수 없습니다.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .list-comp-input -->
+            </div>
+            <!--// .cont-box -->
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled>저장하기</button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn">취소</button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

@@ -77,10 +77,11 @@
                     <ul>
                         <% familyInfo.mbrList.map(member => { 
                             const isInfinity = member.prodId === INFINITY; %>
-                            <li>
+                            <li data-member="<%= JSON.stringify({ name: member.custNm, svcNum: member.svcNum, isRepresentation: member.repYn === 'Y', mgmtNum: member.svcMgmtNum }) %>">
                                 <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
                                 <div class="info">
-                                    <span class="stit"><%= member.custNm %>
+                                    <span class="stit">
+                                        <%= member.custNm %>
                                         <% if (member.repYn === 'Y') { %>
                                             <span class="sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span>
                                         <% } %>
@@ -100,20 +101,15 @@
                                         <dd><%= member.prodNm %></dd>
                                         <dt>공유한 데이터</dt>
                                         <dd><%= member.shared %>GB</dd>
-                                        <% if (!isInfinity) { %>
-                                            <% const limitation = member.limitedYn === 'Y' && member.limitation;
-                                            if (familyInfo.isRepresentation) { %>
+                                        <% if (!isInfinity) {
+                                            const limitation = member.limitedYn === 'Y' && member.limitation; %>
                                                 <dt>이용한도</dt>
                                                 <dd>
-                                                    <% if (limitation) { %>
-                                                        <%= limitation %>GB
+                                                    <span><%= limitation ? limitation + 'GB' : '자유 사용' %></span>
+                                                    <% if (familyInfo.isRepresentation) { %>
+                                                    <button class="bt-link-tx underline fe-setting-limit" data-limitation="<%= limitation %>">설정</button>
                                                     <% } %>
-                                                    <button class="bt-link-tx underline <%= limitation ? '' : 'ml0'%>" data-limitation="<%= limitation %>">설정</button>
                                                 </dd>
-                                            <% } else if (limitation) { %>
-                                                <dt>이용한도</dt>
-                                                <dd><%= limitation %>GB</dd>
-                                            <% } %>
                                         <% } %>
                                     </dl>
                                 </div>
