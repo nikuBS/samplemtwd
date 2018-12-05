@@ -271,7 +271,7 @@ export const API_CMD = {
   BFF_05_0186: { path: '/core-modification/v1/number-change/init', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0194: { path: '/core-modification/v1/longterm-phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0195: { path: '/core-modification/v1/longterm-phone-pause', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0196: { path: '/core-modification/v1/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0196: { path: '/core-modification/v1/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0197: { path: '/core-modification/v1/longterm-phone-pause', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE

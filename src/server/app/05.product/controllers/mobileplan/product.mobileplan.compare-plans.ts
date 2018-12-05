@@ -20,24 +20,29 @@ export default class ProductMobileplanComparePlans extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+    const prodId = req.query.prodId;
     Observable.combineLatest(
-      this.reqRecentUsage(),
-      this.redisProductLedger(req.params.prodId),
-      this.redisProductComparison(svcInfo, req.params.prodId)
-    ).subscribe(([data, prodRedisInfo, contents]) => {
+      this.apiService.request(API_CMD.BFF_05_0091, {}), // 최근 사용량 조회
+      this.redisService.getData(REDIS_PRODUCT_INFO + prodId), // Redis 요금제 조회
+      this.redisProductComparison(svcInfo, prodId), // Redis 컨텐츠 조회
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+    ).subscribe(([recentUsage, prodRedisInfo, contents, basicInfo]) => {
+      const errorRs = this.error.apiError([prodRedisInfo, contents, basicInfo]);
       // BIL0070 : 최근 사용량 데이터 없음
-      if (data.code === API_CODE.CODE_00 || data.code === 'BIL0070') {
-        res.render('mobileplan/product.mobileplan.compare-plans.html', this.getData(data, prodRedisInfo, contents));
+      if (FormatHelper.isEmpty(errorRs) && [API_CODE.CODE_00, 'BIL0070'].indexOf(recentUsage.code) !== -1) {
+        res.render('mobileplan/product.mobileplan.compare-plans.html', this.getData(recentUsage, prodRedisInfo, contents, basicInfo));
       } else {
-        this.fail(res, data, svcInfo);
+        this.fail(res, errorRs, svcInfo);
       }
     });
   }
 
-  private getData(data: any, prodRedisInfo: any, contents: any): any {
+  private getData(recentUsage: any, prodRedisInfo: any, contents: any, basicInfo: any): any {
     const msgs = PRODUCT_MOBILEPLAN_COMPARE_PLANS;
+    prodRedisInfo = this.parseProduct(prodRedisInfo.result);
+
     const _data = {
-      data : {
+      data: {
         prodNames: [msgs.MY_DATA_TXT, prodRedisInfo.prodNm],
         recentAvgTxt: msgs.RECENT_AVG_TXT.replace('{0}', msgs.USAGE_TXT),
         recentMaxTxt: msgs.RECENT_MAX_TXT.replace('{0}', msgs.USAGE_TXT),
@@ -45,14 +50,15 @@ export default class ProductMobileplanComparePlans extends TwViewController {
         max: 0,
         targetSupply: prodRedisInfo.basOfrGbDataQtyCtt
       },
-      contents: contents.guidMsgCtt
+      contents: contents.result.guidMsgCtt,
+      joinUrl: this.getJoinUrl(basicInfo).linkUrl
     };
-    if (!data.result || !data.result.data || data.result.data.length < 1) {
+    if (!recentUsage.result || !recentUsage.result.data || recentUsage.result.data.length < 1) {
       return _data;
     }
 
     let sum = 0, max = 0;
-    data.result.data.forEach((o) => {
+    recentUsage.result.data.forEach((o) => {
       const totalUsage = o.totalUsage;
       sum += parseFloat(totalUsage);
       if (totalUsage > max) {
@@ -60,7 +66,7 @@ export default class ProductMobileplanComparePlans extends TwViewController {
       }
     });
 
-    const dataSize = data.result.data.length;
+    const dataSize = recentUsage.result.data.length;
     const monthText = msgs.MONTH_TXT.replace('{0}', dataSize);
 
     Object.assign(_data.data, {
@@ -73,36 +79,20 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     return _data;
   }
 
-  // 최근 3개월 데이터 사용량 조회
-  private reqRecentUsage(): Observable<any> {
-    /*return Observable.create((observer) => {
-      observer.next({code: API_CODE.CODE_00});
-      observer.complete();
-    });*/
-    return this.apiService.request(API_CMD.BFF_05_0091, {}).map((response) => {
-      return response;
+  // 가입 페이지 URL
+  private getJoinUrl(basicInfo: any): any {
+    const res = {
+      linkNm: '',
+      linkUrl: ''
+    }
+    if (!basicInfo.result.linkBtnList || basicInfo.result.linkBtnList.length < 1) {
+      return res;
+    }
+    const joinUrlArr = basicInfo.result.linkBtnList.filter((item) => {
+      return item.linkTypCd === 'SC';
     });
-  }
 
-  // 현재 요금제, 비교 요금제 Redis 조회
-  private redisAllProductLedger(svcInfo: any, prodId: string): Observable<any> {
-    return Observable.combineLatest(
-      this.redisProductLedger(svcInfo.prodId),
-      this.redisProductLedger(prodId),
-      (me, target) => {
-        return {
-          me,
-          target
-        };
-      });
-  }
-
-  // 요금제 Redis 조회
-  private redisProductLedger(prodId: string): Observable<any> {
-    return this.redisService.getData(REDIS_PRODUCT_INFO + prodId)
-      .map((productInfo) => {
-        return this.parseProduct(productInfo);
-      });
+    return joinUrlArr[0] || res;
   }
 
   // 요금제 데이타 파싱
@@ -132,6 +122,7 @@ export default class ProductMobileplanComparePlans extends TwViewController {
   }
 
   // 컨텐츠 조회 ( Redis 에서 마크업을 받는다 )
+  // private redisProductComparison(prd1: any, prd2: string): Observable<any> {
   private redisProductComparison(svcInfo: any, prodId: string): Observable<any> {
     const mock = () => {
       return Observable.create((observer) => {
@@ -141,14 +132,11 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     };
 
     const real = (prodId1, prodId2) => {
-      return this.redisService.getData(`${REDIS_PRODUCT_COMPARISON}${prodId1}/${prodId2}`)
-        .map((resp) => {
-          return resp;
-        });
+      return this.redisService.getData(`${REDIS_PRODUCT_COMPARISON}${prodId1}/${prodId2}`);
     };
-
-    return mock();
-    // return real(svcInfo.prodId, prodId);
+    // return mock();
+    // return real('NA00005957', 'NA00005958');
+    return real(svcInfo.prodId, prodId);
   }
 
   // API Response fail

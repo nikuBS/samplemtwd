@@ -410,6 +410,17 @@ Tw.POPUP_TPL = {
         ]
       }]
     }
+  ],
+  BENEFIT_JOIN_ADVICE_PRODUCT: [
+    {
+      'list': [
+        { 'option': 'condition', 'attr': 'id="cellphone"', value: '휴대폰' },
+        { 'option': 'condition', 'attr': 'id="internet"', value: '인터넷' },
+        { 'option': 'condition', 'attr': 'id="phone"', value: '전화' },
+        { 'option': 'condition', 'attr': 'id="tv"', value: 'TV' },
+        { 'option': 'condition', 'attr': 'id="combine"', value: '결합상품' }
+      ]
+    }
   ]
 };
 
