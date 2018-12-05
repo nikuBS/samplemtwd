@@ -240,7 +240,7 @@ Tw.API_CMD = {
   BFF_06_0048: { path: '/core-recharge/v1/regular-tfamily-sharings', method: Tw.API_METHOD.POST },
   BFF_06_0049: { path: '/core-recharge/v1/regular-tfamily-sharings', method: Tw.API_METHOD.DELETE },
   BFF_06_0050: { path: '/core-recharge/v1/tfamily-sharing-limitations', method: Tw.API_METHOD.POST },
-  BFF_06_0051: { path: '/core-recharge/v1/tfamily-sharing-limitations', method: Tw.API_METHOD.DELETE },
+  BFF_06_0051: { path: '/core-recharge/v1/tfamily-sharing-limitations/:args0', method: Tw.API_METHOD.DELETE },
   BFF_06_0052: { path: '/core-bill/v1/pps-cards', method: Tw.API_METHOD.POST },
   BFF_06_0053: { path: '/core-bill/v1/pps-credit-cards', method: Tw.API_METHOD.POST },
   BFF_06_0054: { path: '/core-bill/v1/pps-auto', method: Tw.API_METHOD.POST },

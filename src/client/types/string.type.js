@@ -477,8 +477,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
-  ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기'},
-  ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제은 다음달에 적용 됩니다.', BUTTON: '해제하기'}
+  ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
+  ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제은 다음달에 적용 됩니다.', BUTTON: '해제하기' }
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -543,8 +543,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다', MSG: '' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
-  ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: ''},
-  ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인'},
+  ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
+  ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
   ALERT_3_A27: { TITLE: '수정되었습니다.', MSG: '' },
   ALERT_3_A28: { TITLE: '예약이 취소되었습니다.', MSG: '' },
   ALERT_3_A29: { TITLE: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.', MSG: '' },
@@ -1241,3 +1241,5 @@ Tw.PREPAID_TYPES = {
 };
 
 Tw.HISTORY_UNIT = '건';
+
+Tw.T_FAMILY_MOA_NO_LIMITATION = '자유 사용';

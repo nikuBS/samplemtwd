@@ -1,6 +1,6 @@
 /**
  * FileName: myt-data.familydata.controller.ts
- * Author: 박지만 (jiman.park@sk.com)
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.10.01
  */
 
@@ -25,7 +25,7 @@ class MyTDataFamily extends TwViewController {
         });
       }
 
-      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo, isApp: BrowserHelper.isApp(req) });
+      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo });
     });
   }
 
@@ -41,13 +41,35 @@ class MyTDataFamily extends TwViewController {
       const representation = resp.result.mbrList.find(member => member.repYn === 'Y');
       const mine = resp.result.mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
 
+      if (!mine) {
+        return {
+          code: '',
+          msg: ''
+        };
+      }
+
       return {
         ...resp.result,
-        total: FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.GB),
-        used: FormatHelper.convDataFormat(resp.result.used, DATA_UNIT.MB),
-        remained: FormatHelper.convDataFormat(resp.result.remained, DATA_UNIT.MB),
+        total: Number(resp.result.total),
+        used: Number(resp.result.used),
+        remained: Number(resp.result.remained),
         isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
-        mine
+        mine: {
+          ...mine,
+          used: Number(mine.used),
+          shared: Number(mine.shared),
+          limitation: Number(mine.limitation),
+          svcNum: FormatHelper.conTelFormatWithDash(mine.svcNum)
+        },
+        mbrList: resp.result.mbrList.map(member => {
+          return {
+            ...member,
+            used: Number(member.used),
+            shared: Number(member.shared),
+            limitation: Number(member.limitation),
+            svcNum: FormatHelper.conTelFormatWithDash(member.svcNum)
+          };
+        })
       };
     });
   }
