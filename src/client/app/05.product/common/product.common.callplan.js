@@ -142,7 +142,7 @@ Tw.ProductCommonCallplan.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
     }, null, this._prodId)
-      .done($.proxy(this._goJoinTerminateResult, this, joinTermCd, $(e.currentTarget).data('href')));
+      .done($.proxy(this._goJoinTerminateResult, this, joinTermCd, $(e.currentTarget).data('url')));
   },
 
   _goJoinTerminateResult: function(joinTermCd, href, resp) {
