@@ -149,13 +149,12 @@ class ApiRouter {
   // }
 
   private upload() {
-    const currentDate = new Date(),
-      storage = multer.diskStorage({
+    const storage = multer.diskStorage({
         destination: (req, file, cb) => {
           let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
 
           if ( !FormatHelper.isEmpty(req.body.dest) ) {
-            const dateFormat = dateHelper.getShortDateWithFormat(currentDate, 'YYMMDD');
+            const dateFormat = dateHelper.getShortDateWithFormat(new Date(), 'YYMMDD');
 
             storagePath += '/' + req.body.dest + '/';
             if ( !fs.existsSync(storagePath) ) {
@@ -171,7 +170,7 @@ class ApiRouter {
           cb(null, storagePath);
         },
         filename: (req, file, cb) => {
-          cb(null, currentDate.valueOf() + path.extname(file.originalname));
+          cb(null, new Date().valueOf() + '_' + Math.floor((Math.random() * 10000) + 1) + path.extname(file.originalname));
         },
         limits: { fileSize: 5 * 1024 * 1024 }
       });
