@@ -1,10 +1,10 @@
 /**
- * FileName: load-tworld-app.component.js
+ * FileName: common.share.app-install.info.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.30
  */
 
-Tw.LoadTworldApp = function (rootEl) {
+Tw.CommonShareAppInstallInfo = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
 
@@ -15,7 +15,7 @@ Tw.LoadTworldApp = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.LoadTworldApp.prototype = {
+Tw.CommonShareAppInstallInfo.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-tworld', $.proxy(this._onClickTworld, this));
   },
