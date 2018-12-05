@@ -47,6 +47,7 @@ import CommonCertIpinRefund from './controllers/cert/common.cert.ipin.refund.con
 import CommonCertResult from './controllers/cert/common.cert.result.controller';
 import CommonCertNiceRefund from './controllers/cert/common.cert.nice.refund.controller';
 import CommonTidCertPw from './controllers/tid/common.tid.cert-pw.controller';
+import CommonShareAppInstallInfo from './controllers/share/common.share.app-install.info.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -104,5 +105,6 @@ export default class CommonRouter extends TwRouter {
     // share
     this.controllers.push({ url: '/share/landing', controller: CommonShareLanding });
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
+    this.controllers.push({ url: '/share/app-install/info', controller: CommonShareAppInstallInfo });
   }
 }
