@@ -28,7 +28,7 @@ class MyTFareInfoBill extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query)

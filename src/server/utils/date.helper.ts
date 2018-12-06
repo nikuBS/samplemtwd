@@ -190,7 +190,7 @@ class DateHelper {
     const firstDate = new Date(curDate.setDate(1));
     return moment(firstDate).format('YYYY.M.DD');
   }
-
+  
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01 (first date of this month)

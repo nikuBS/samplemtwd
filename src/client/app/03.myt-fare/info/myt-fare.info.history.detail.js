@@ -22,7 +22,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
     this.queryParams = Tw.UrlHelper.getQueryParams();
 
     switch (this.queryParams.type) {
-      case 'DI':
+      case Tw.MYT_FARE_PAYMENT_TYPE.DIRECT:
         switch (this.detailData.dataPayType) {
           case 'CARD':
           case 'POINT':
@@ -36,19 +36,19 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
             break;
         }
           break;
-      case 'AU':    
+      case Tw.MYT_FARE_PAYMENT_TYPE.AUTOALL:    
         // 통합인출 조회
           this.$templateWrapper.append(this.$template.$directBase(this.detailData));
         break;
-      case 'AT':
+      case Tw.MYT_FARE_PAYMENT_TYPE.AUTO:
         // 자동납부 카드/계좌
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;
-      case 'RP':
+      case Tw.MYT_FARE_PAYMENT_TYPE.PRESERVE:
         // 포인트 납부예약
         this.$templateWrapper.append(this.$template.$reservePoint(this.detailData));
         break;
-      case 'PN': 
+      case Tw.MYT_FARE_PAYMENT_TYPE.PAUTO: 
         // 포인트 자동납부
         this.$templateWrapper.append(this.$template.$autoPoint(this.detailData));
         break;

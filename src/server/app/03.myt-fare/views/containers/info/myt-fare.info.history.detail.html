@@ -16,7 +16,7 @@
     </div>
     <!--// #skip_navigation -->
 
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <%- include('../../../../../common/views/components/header.component.html', { title: data.headerTitle }); %>
 
         <!-- #contents -->
@@ -27,10 +27,7 @@
             </div>
         </div>
 
-        <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 
     <% include ../../components/javascript.component.html %>

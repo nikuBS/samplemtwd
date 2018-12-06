@@ -56,7 +56,7 @@ class MyTFareInfoHistory extends TwViewController {
     this.returnErrorInfo = {}; 
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -65,7 +65,7 @@ class MyTFareInfoHistory extends TwViewController {
     };
 
     if (query.sortType === 'payment' || query.sortType === undefined) {
-      this.getAllPaymentData(req, res, next, query, svcInfo);
+      this.getAllPaymentData(req, res, next, query, svcInfo, pageInfo);
     } else {
       switch (query.sortType) {
         // 즉시납부
@@ -208,7 +208,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
-  private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any) {
+  private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
         this.checkHasPersonalBizNumber(),
         this.getAutoWithdrawalAccountInfo(),
@@ -221,7 +221,7 @@ class MyTFareInfoHistory extends TwViewController {
         this.getPointReservePaymentData(),
         this.getPointAutoPaymentData()
     ).subscribe(histories => {
-      this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo});
+      this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo });
     });
   }
 
@@ -265,12 +265,12 @@ class MyTFareInfoHistory extends TwViewController {
       }
 
       resp.result.directPaymentList = resp.result;
-
       resp.result.directPaymentList.map((o) => {
         o.sortDt = o.opDt;
         o.dataPayMethodCode = MYT_FARE_PAYMENT_TYPE.DIRECT;
         o.dataIsBankOrCard = this.isBankOrCard(o.cardCdNm) || this.isBankOrCard(o.settleWayCd) ;
         o.listTitle = o.dataIsBankOrCard ? o.cardCdNm + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.cardCdNm;
+        o.isPoint = (o.settlWayNm === MYT_FARE_PAYMENT_CODE.POINT);
         o.dataDt = DateHelper.getShortDate(o.opDt);
         o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataAmt = FormatHelper.addComma(o.cardAmt);
@@ -387,7 +387,6 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataSubInfo = o.reqNm;
         o.dataSubInfo2 = o.reqSt;
         o.dataDt = DateHelper.getShortDate(o.opDt);
-        o.dataFullDt = DateHelper.getFullDateAndTimeWithDot(o.opTm);
       });
 
       return resp.result;

@@ -24,7 +24,7 @@ class MyTFareInfoOverpayRefund extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -64,22 +64,22 @@ class MyTFareInfoOverpayRefund extends TwViewController {
           return prev;
         }, []);
 
-        this.renderListView(res, svcInfo, pageInfo, query, resData.result.refundPaymentRecord);
+        this.renderListView(res, svcInfo, pageInfo, resData.result.refundPaymentRecord);
       });
 
     } else if (query.current === 'detail') {
-      this.renderDetailView(res, svcInfo, pageInfo, query);
+      this.renderDetailView(res, svcInfo, pageInfo);
     }
   }
 
-  renderListView(res: Response, svcInfo: any, pageInfo: any, query: Query, data: any) {
+  renderListView(res: Response, svcInfo: any, pageInfo: any, data: any) {
 
     res.render('info/myt-fare.info.overpay-refund.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
         data: data
     }});
   }
 
-  renderDetailView(res: Response, svcInfo: any, pageInfo: any, query: Query) {
+  renderDetailView(res: Response, svcInfo: any, pageInfo: any) {
     res.render('info/myt-fare.info.overpay-refund.detail.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {}});
   }
 

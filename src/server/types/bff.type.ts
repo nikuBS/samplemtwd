@@ -115,7 +115,8 @@ export enum MYT_FARE_PAYMENT_TYPE {
 export enum MYT_FARE_PAYMENT_CODE {
   BANK = '41',
   BANK2 = '40',
-  CARD = '02'
+  CARD = '02',
+  POINT = '11'
 }
 
 export enum MYT_FARE_POINT_PAYMENT_STATUS {

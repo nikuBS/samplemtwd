@@ -50,7 +50,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   isPersonalBiz;
   billCnt;
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
@@ -109,7 +109,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     }
   }
 
-  // 사업자 여부, 세금계산서 / 현금영수증 조회 포함
+  // 사업자 여부, 세금계산서 / 현금영수증 조회 포함 (계좌이체 일 경우 해당함)
   private includeBillHistory = (callback, renderObj) => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).subscribe((resp: { code: string; result: any; }) => {
       // let isPersonalBiz; 
@@ -144,11 +144,11 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
 
       const resultData = resp.result; 
-
+            
       resultData.dataAmt = FormatHelper.addComma(resultData.cardAmt); // 납부금액
       resultData.invYearMonth = DateHelper.getShortDateNoDate(resultData.invDt), // 납부내용 (청구분)
       resultData.dataProcCode = MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE[resultData.cardProcCd]; // 요청결과
-      resultData.reqDate = DateHelper.getShortDate(resultData.reqDtm); // 요청일시
+      resultData.reqDate = DateHelper.getShortDate(parseFloat(resultData.reqDtm) ? resultData.reqDtm : opDt); // 요청일시
       resultData.comDate = DateHelper.getShortDate(resultData.opDt); // 납부일자
       resultData.dataIsBankOrCard = this.isBankOrCard(resultData.cardCdNm) || this.isBankOrCard(resultData.settleWayCd); // 카드 or 계좌 여부
       resultData.dataSettleWayCode = MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE[resultData.settleWayCd]; // 포인트 종류 (포인트일경우)
@@ -180,7 +180,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액 
       resultData.dataRequestAmt = FormatHelper.addComma(resultData.drwReqAmt); // 청구금액
       resultData.dataReqYearMonth = DateHelper.getShortDateWithFormat(resultData.lastInvDt, 'YYYY.M.'); // 청구년월 YYYY.M.
-      resultData.dataUseTermStart = DateHelper.getShortDate(DateHelper.getShortFirstDateNoDot(resultData.dataLastInvDt)); // 이용기간 YYYY.M.01.
+      resultData.dataUseTermStart = DateHelper.getShortFirstDate(resultData.lastInvDt); // 이용기간 YYYY.M.01.
       resultData.dataLastInvDt = DateHelper.getShortDate(resultData.lastInvDt); // 이용기간 ~ YYYY.M.DD.
       resultData.dataIsBank = !this.isCard(resultData.bankCardCoCdNm); // 은행인지 여부(텍스트로 판단)
       resultData.dataTitle = resultData.bankCardCoCdNm; // 은행명 / 카드사명
@@ -296,7 +296,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     const { res, svcInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0093, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+         return this._renderError(resp.code, resp.msg, res, svcInfo);
       }
       // index
       const resultData = resp.result[innerIndex || 0];
