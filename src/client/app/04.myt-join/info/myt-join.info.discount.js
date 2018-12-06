@@ -12,10 +12,8 @@ Tw.MyTJoinInfoDiscount = function (rootEl, resData) {
   this._popupService = Tw.Popup;
 
   this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
 
   this._init();
-
 };
 
 Tw.MyTJoinInfoDiscount.prototype = {
@@ -46,7 +44,6 @@ Tw.MyTJoinInfoDiscount.prototype = {
     // this._popupService.openConfirm(contents, title, btName);
 
 
-
   },
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');
@@ -56,20 +53,32 @@ Tw.MyTJoinInfoDiscount.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
     this.$container.on('click', '[data-target="detailList"]', $.proxy(this._detailListEvt, this)); // 월별상세할인내역
+    this.$container.on('click', 'button.fe-prod-btn', $.proxy(this._productMove, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
-  _detailListEvt: function(e) {
+  _productMove: function (e) {
+    var $target = $(e.currentTarget);
+    var prodId = $target.attr('data-id');
+    if ( prodId.indexOf('NA') > -1 ) {
+      this._history.goLoad('/product/callplan/'+ prodId);
+    }
+    else {
+      // 상품코드가 나오지 않은 아이템
+      this._popupService.openAlert('TBD (상품코드가 현재 없습니다.)');
+    }
+  },
+  _detailListEvt: function (e) {
     var $target = $(e.currentTarget);
     Tw.Logger.info('[svcAgrmtDcId]', $target.attr('data-value'));
 
-    var dataValObj = JSON.parse( $target.attr('data-value') );
+    var dataValObj = JSON.parse($target.attr('data-value'));
 
     Tw.Logger.info('[dataValObj]', dataValObj);
 
     var param = $.param(dataValObj);
 
-    Tw.Logger.info('[dataValObj > param]', param );
+    Tw.Logger.info('[dataValObj > param]', param);
 
     this._goLoad('/myt-join/myplancombine/infodiscount/month?' + param);
 
@@ -106,7 +115,8 @@ Tw.MyTJoinInfoDiscount.prototype = {
         // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
         this.$dataResult.hide();
         this.$noData.show();
-      } else {
+      }
+      else {
         this.$dataResult.show();
         this.$noData.hide();
       }
