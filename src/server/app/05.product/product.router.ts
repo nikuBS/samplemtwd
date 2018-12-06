@@ -74,6 +74,10 @@ import ProductRoamingSettingRoamingSetup from './controllers/roaming/setting/pro
 import ProductRoamingSettingRoamingBeginSetup from './controllers/roaming/setting/product.roaming.setting.roaming-begin-setup.controller';
 import ProductRoamingLookup from './controllers/roaming/product.roaming.lookup.controller';
 import ProductRoamingJoinConfirmInfo from './controllers/roaming/join/product.roaming.join.confirm-info.controller';
+import ProductRoamingJoinRoamingAlarm from './controllers/roaming/join/product.roaming.join.roaming-alarm.controller';
+import ProductRoamingSettingRoamingAlarm from './controllers/roaming/setting/product.roaming.setting.roaming-alarm.controller';
+import ProductRoamingSettingRoamingCombine from './controllers/roaming/setting/product.roaming.setting.roaming-combine.controller';
+import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product.roaming.join.roaming-combine.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -145,9 +149,13 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/join/roaming-begin-setup', controller: ProductRoamingJoinRoamingBeginSetup });
     this.controllers.push({ url: '/roaming/join/roaming-auto', controller: ProductRoamingJoinRoamingAuto });
     this.controllers.push({ url: '/roaming/join/confirm-info', controller: ProductRoamingJoinConfirmInfo });
+    this.controllers.push({ url: '/roaming/join/roaming-alarm', controller: ProductRoamingJoinRoamingAlarm });
+    this.controllers.push({ url: '/roaming/join/roaming-combine', controller: ProductRoamingJoinRoamingCombine });
     this.controllers.push({ url: '/roaming/setting/roaming-setup', controller: ProductRoamingSettingRoamingSetup });
     this.controllers.push({ url: '/roaming/setting/roaming-begin-setup', controller: ProductRoamingSettingRoamingBeginSetup });
     this.controllers.push({ url: '/roaming/setting/roaming-auto', controller: ProductRoamingSettingRoamingAuto });
+    this.controllers.push({ url: '/roaming/setting/roaming-alarm', controller: ProductRoamingSettingRoamingAlarm });
+    this.controllers.push({ url: '/roaming/setting/roaming-combine', controller: ProductRoamingSettingRoamingCombine });
     this.controllers.push({ url: '/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
     this.controllers.push({ url: '/roaming/lookup', controller: ProductRoamingLookup });

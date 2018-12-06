@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.setting.roaming-setup.controller.ts
+ * FileName: product.roaming.join.roaming-alarm.controller.ts
  * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.04
+ * Date: 2018.12.05
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -13,12 +13,11 @@ import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
 
-class ProductRoamingJoinConfirmInfo extends TwViewController {
+class ProductRoamingJoinRoamingAlarm extends TwViewController {
     constructor() {
         super();
     }
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-
         const prodId = req.query.prodId || null;
 
 
@@ -44,7 +43,7 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
                 });
             }
 
-            res.render('roaming/join/product.roaming.join.confirm-info.html', {
+            res.render('roaming/join/product.roaming.join.roaming-alarm.html', {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.summary,
                 prodApiInfo : prodApiInfo.result,
@@ -52,7 +51,7 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
             });
         });
 
-        // res.render('roaming/join/product.roaming.join.confirm-info.html', {
+        // res.render('roaming/join/product.roaming.join.roaming-alarm.html', {
         //     svcInfo : { svcMgmtNum: '1000285302',
         //         svcNum: '01054**62**',
         //         svcGr: 'A',
@@ -78,6 +77,18 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
         //         showName: '휴대폰',
         //         showSvc: '01054**62**'
         //     },
+        //     prodRedisInfo : { prodNm: 'T로밍 OnePass400기간형',
+        //         prodIconImgUrl: null,
+        //         prodSmryDesc: '전 세계 주요국에서 신청한 기간 동안 LTE/3G 데이터를 안심하고 이용할 수 있는 요금제',
+        //         prodBasBenfCtt: null,
+        //         sktProdBenfCtt: null,
+        //         basOfrGbDataQtyCtt: '-',
+        //         basOfrMbDataQtyCtt: null,
+        //         basOfrVcallTmsCtt: '-',
+        //         basOfrCharCntCtt: null,
+        //         smryHtmlCtt: null,
+        //         basFeeInfo: '16500',
+        //         freeYn: 'N' },
         //     prodBffInfo : {
         //         "preinfo": {
         //             "svcNumMask": "010xx**xx**",
@@ -160,26 +171,11 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
         //             "adInfoOfrHtmlCtt": "<p>test</p>"
         //         }
         //     },
-        //     prodRedisInfo : { prodNm: 'T로밍 OnePass400기간형',
-        //         prodIconImgUrl: null,
-        //         prodSmryDesc: '전 세계 주요국에서 신청한 기간 동안 LTE/3G 데이터를 안심하고 이용할 수 있는 요금제',
-        //         prodBasBenfCtt: null,
-        //         sktProdBenfCtt: null,
-        //         basOfrGbDataQtyCtt: '-',
-        //         basOfrMbDataQtyCtt: null,
-        //         basOfrVcallTmsCtt: '-',
-        //         basOfrCharCntCtt: null,
-        //         smryHtmlCtt: null,
-        //         basFeeInfo: '16500',
-        //         freeYn: 'N' },
-        //     prodId : 'test'
+        //     prodId : null
         // });
-
-
-
 
     }
 }
 
-export default ProductRoamingJoinConfirmInfo;
+export default ProductRoamingJoinRoamingAlarm;
 

@@ -51,12 +51,12 @@
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
 								<span class="sub-disc01">
-									<span class="elem"><%= prodRedisInfo.prodNm %> (부가서비스)</span>
+									<span class="elem">가입할 요금제 (부가서비스)</span>
 								</span>
-                            <span class="tit-tx">상품이름</span>
-                            <span class="sub-disc03"><span class="tx-bold vbl">월 3000원</span> 부가세포함</span>
+                            <span class="tit-tx"><%= prodRedisInfo.prodNm %></span>
+                            <span class="sub-disc03"><span class="tx-bold vbl">월 <%= prodRedisInfo.basFeeInfo%>원</span> 부가세포함</span>
                             <div class="cont-noti pt36">
-                                <span class="type3">설명</span>
+                                <span class="type3"><%= prodRedisInfo.prodSmryDesc %></span>
                             </div>
                         </div>
                     </div>
@@ -93,17 +93,19 @@
                                     <span class="sub-tit">서비스</span>
                                 </div>
                                 <div class="cont-area">
-
+                                    <% if(prodBffInfo.preinfo.autoJoinList.length>=1){ %>
                                     <dl>
-                                        <dt>부가서비스</dt>
-                                        <dd>추가 부가서비스</dd>
+                                        <% for(var i=0;i<prodBffInfo.preinfo.autoJoinList.length;i++){ %>
+                                        <dt><%= prodBffInfo.preinfo.autoJoinList[i].svcProdNm %></dt>
+                                        <dd><%= prodBffInfo.preinfo.autoJoinList[i].prodNm %></dd>
+                                        <% } %>
                                     </dl>
-
+                                    <% } else { %>
                                     <dl>
                                         <dt>부가서비스</dt>
                                         <dd>자동가입 부가서비스가 없습니다.</dd>
                                     </dl>
-
+                                    <% } %>
 
                                 </div>
                             </li>
@@ -113,31 +115,31 @@
                                     <span class="sub-tit">서비스</span>
                                 </div>
                                 <div class="cont-area">
-
+                                    <% if(prodBffInfo.preinfo.autoTermList.length>=1){ %>
+                                    <dl>
+                                        <% for(var i=0;i<prodBffInfo.preinfo.autoTermList.length;i++){ %>
+                                        <dt><%= prodBffInfo.preinfo.autoTermList[i].svcProdNm %></dt>
+                                        <dd><%= prodBffInfo.preinfo.autoTermList[i].prodNm %></dd>
+                                        <% } %>
+                                    </dl>
+                                    <% } else { %>
                                     <dl>
                                         <dt>부가서비스</dt>
                                         <dd>자동해지 부가서비스가 없습니다.</dd>
                                     </dl>
-
-                                    <dl>
-                                        <dt>부가서비스</dt>
-                                        <dd>자동해지 부가서비스가 없습니다.</dd>
-                                    </dl>
-
+                                    <% } %>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <!--// .cont-box -->
-
+                <% if(Object.keys(prodBffInfo.stipulationInfo).length>0){ %>
                 <div class="ti-caption-gray">
                     <h3 class="tit">약관 및 이용동의</h3>
                 </div>
 
-
                 <!-- .cont-box -->
-
                 <div class="cont-box nogaps">
                     <div class="agree-chk-wrap">
                         <div class="list-comp-input-agree">
@@ -154,16 +156,16 @@
                                                 </div>
                                             </div>
                                         </li>
-
+                                        <% if(prodBffInfo.stipulationInfo.scrbStplAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.scrbStplAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
-                                                        <span class="mtext"> data.autoInfo.stipulationInfo.scrbStplAgreeTitNm </span>
+                                                        <span class="mtext"><%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     data.autoInfo.stipulationInfo.scrbStplAgreeHtmlCtt
+                                                                     <%- prodBffInfo.stipulationInfo.scrbStplAgreeHtmlCtt %>
                                                                 </span>
                                                             </span>
                                                     </p>
@@ -171,16 +173,17 @@
                                             </div>
                                             <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                         </li>
-
+                                        <% } %>
+                                        <% if(prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
-                                                        <span class="mtext"> data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm </span>
+                                                        <span class="mtext"><%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     data.autoInfo.stipulationInfo.psnlInfoCnsgHtmlCtt
+                                                                     <%- prodBffInfo.stipulationInfo.psnlInfoCnsgHtmlCtt %>
                                                                 </span>
                                                             </span>
                                                     </p>
@@ -188,16 +191,17 @@
                                             </div>
                                             <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                         </li>
-
+                                        <% } %>
+                                        <% if(prodBffInfo.stipulationInfo.psnlInfoOfrAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
-                                                        <span class="mtext"> data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm </span>
+                                                        <span class="mtext"><%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                 data.autoInfo.stipulationInfo.psnlInfoOfrHtmlCtt
+                                                                 <%- prodBffInfo.stipulationInfo.psnlInfoOfrHtmlCtt %>
                                                             </span>
                                                         </span>
                                                     </p>
@@ -205,16 +209,17 @@
                                             </div>
                                             <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                         </li>
-
+                                        <% } %>
+                                        <% if(prodBffInfo.stipulationInfo.adInfoOfrAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
-                                                        <span class="mtext"> data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm </span>
+                                                        <span class="mtext"><%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                data.autoInfo.stipulationInfo.adInfoOfrHtmlCtt
+                                                                <%- prodBffInfo.stipulationInfo.adInfoOfrHtmlCtt %>
                                                             </span>
                                                         </span>
                                                     </p>
@@ -222,8 +227,7 @@
                                             </div>
                                             <button class="agree-view"><span class="blind">자세히 보기</span></button>
                                         </li>
-
-
+                                        <% } %>
                                     </ul>
 
                                 </div>
@@ -231,26 +235,26 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
                 <!--// .cont-box -->
 
 
                 <hr class="cont-sp type1" aria-hidden="true">
-
+                <% if(prodBffInfo.preinfo.joinNoticeList.length<=0){ %>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
                     <ul class="noti-list">
-
+                        <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
                         <li>
-                            확인내용
-                            <button type="button" class="tip-view" title="정보보기"  aria-haspopup="true">TIP</button>
-
+                            <%= prodBffInfo.preinfo.joinNoticeList[i].prodNm %>
+                            <button type="button" class="tip-view" title="정보보기" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
                         </li>
-
+                        <% } %>
                     </ul>
                 </div>
                 <!--// .cont-box -->
-
+                <% } %>
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">

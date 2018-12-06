@@ -1,0 +1,127 @@
+<%#
+* FileName: product.roaming.join.roaming-alarm.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.05
+* ID : RM_11_01_02_01
+%>
+
+
+<% include ../../../components/start.component.html %>
+<body data-gr-c-s-loaded="true">
+<!-- #skip_navigation
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>가입</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">변경할 상품의 옵션을 설정하세요.</span>
+                        <span class="tit-big"><%= prodRedisInfo.prodNm %></span>
+                    </div>
+                </div>
+
+                <div class="ti-caption-gray">
+                    <h4 class="tit">지정번호 설정 <button type="button" class="tip-view" title="지정번호 설정 정보보기" aria-haspopup="true">TIP</button></h4>
+                    <p class="num"><%= prodBffInfo.preinfo.svcNumMask%></p>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="input-number-wrap">
+                        <h3 class="tit">지정번호 설정할 회선번호</h3>
+                        <div class="form-box">
+                                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                    <span class="input">
+                                        <input type="tel" id="input_phone" placeholder="숫자만 입력" title="지정번호 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span class="bt-box">
+                                        <button type="button" id="phone_book">주소록</button>
+                                    </span>
+                                </span>
+                            <span id="aria-phone-tx1" class="input-comment">지정번호는 최대 5회선까지 신청가능하며, SK텔레콤 가입자뿐 아니라 타 이동통신 가입자도 지정 가능합니다.</span>
+                        </div>
+                    </div>
+                    <ul class="bt-slice pt26">
+                        <li class="bt-blue1">
+                            <button disabled="disabled" id="add_list">추가하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1 list_contents" aria-hidden="true">
+
+                <div class="cont-box nogaps list_contents">
+                    <div class="input-number-wrap">
+                        <h3 class="tit type1">결합 신청된 회선</h3>
+                        <div class="list-comp-thumnail">
+                            <ul class="comp-box">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+                        <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
+                        <li>
+                            <%= prodBffInfo.preinfo.joinNoticeList[i].prodNm %>
+                            <button type="button" class="tip-view" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>">TIP</button>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+                <% } %>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button id="confirm_info" disabled="disabled">설정완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+
+
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingJoinRoamingAlarm($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
+  });
+</script>
+<% include ../../../components/end.component.html %>
