@@ -14,6 +14,9 @@ Tw.CustomerDamageInfoContents.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '.fe-idpt_pop', $.proxy(this._openPop, this));
+    this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+
     this._bindUIEvent(this.$container);
   },
 
@@ -59,6 +62,25 @@ Tw.CustomerDamageInfoContents.prototype = {
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
       });
     });
+  },
+
+  _confirmExternalUrl: function(e) {
+    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+
+    e.preventDefault();
+    e.stopPropagation();
+  },
+
+  _openExternalUrl: function(href) {
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal(href);
+  },
+
+  _openInternalUrl: function(e) {
+    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'));
+
+    e.preventDefault();
+    e.stopPropagation();
   },
 
   _openPop: function(e) {
