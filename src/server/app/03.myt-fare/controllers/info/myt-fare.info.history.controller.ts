@@ -341,7 +341,6 @@ class MyTFareInfoHistory extends TwViewController {
 
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
-
       if (resp.code !== API_CODE.CODE_00) {
         return null;
       }

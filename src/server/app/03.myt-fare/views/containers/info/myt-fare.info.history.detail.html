@@ -45,30 +45,30 @@
             <div class="user-bill-detail">
                 <ul>
                     <li>
-                        <dl class="show-data">
-                            <dt>납부일자</dt>
-                            <dd class="tx-bold"><span class="number">{{dataDt}}</span></dd>
-                        </dl>
+                        <div class="head-text">
+                            <span class="tit">납부일자</span>
+                            <span class="val">{{dataDt}}</span>
+                        </div>
                     </li>
                     <li>
-                        <dl class="show-data">
-                            <dt>납부금액</dt>
-                            <dd class="tx-bold"><span class="number">{{dataAmt}}</span>원</dd>
-                        </dl>
-                        <dl class="show-data detail">
-                            <dt>청구금액</dt>
-                            <dd><span class="number">{{dataAmt}}</span>원</dd>
-                        </dl>
-                        <dl class="show-data detail">
-                            <dt>청구년월</dt>
-                            <dd><span class="number">{{invYearMonth}}</span></dd>
-                        </dl>
+                        <div class="head-text">
+                            <span class="tit">납부금액</span>
+                            <span class="val">{{dataAmt}}원</span>
+                        </div>
+                        <div class="sub-text">
+                            <span class="tit">청구금액</span>
+                            <span class="val">{{dataAmt}}원</span>
+                        </div>
+                        <div class="sub-text">
+                            <span class="tit">청구년월</span>
+                            <span class="val">{{invYearMonth}}</span>
+                        </div>
                     </li>
                     <li>
-                        <dl class="show-data">
-                            <dt>납부방법</dt>
-                            <dd class="tx-bold">{{dataSettleWayCode}}</dd>
-                        </dl>
+                        <div class="head-text">
+                            <span class="tit">납부방법</span>
+                            <span class="val">{{dataSettleWayCode}}</span>
+                        </div>
                     </li>
                 </ul>
             </div>

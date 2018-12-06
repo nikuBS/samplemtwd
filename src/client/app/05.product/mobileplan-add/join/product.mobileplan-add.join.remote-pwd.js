@@ -107,6 +107,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     if (this._isValid()) {
       new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
         isMobilePlan: false,
+        noticeList: this._confirmOptions.prodNoticeList,
         joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
         typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
         settingSummaryTexts: [{
@@ -118,7 +119,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _prodConfirmOk: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       password: $.trim(this.$inputPassword.siblings('input').val())
@@ -126,7 +127,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '로밍 부가서비스', svcInfo, option: { line: true } }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '로밍 부가서비스' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -27,6 +27,7 @@
             <% if (isLogin && roamingAddCntData) { %>
             <!-- 사용중인 상품 -->
             <% const roamingPlanAddTxt = roamingAddCntData.prodInfoTxt; %>
+            <% if(roamingPlanAddTxt) { %>
             <div class="cont-box gaps-style01">
                 <div class="submain-myfeeproducts-wrap">
                    <button type="button" class="submain-myfeeproducts">
@@ -35,6 +36,7 @@
                     </button>
                 </div>
             </div>
+            <% } %>
             <% } %>
             <!--//사용중인 상품 -->
             <!-- 정렬 및 필터 -->
@@ -91,12 +93,14 @@
                     </li>
                     <% }); %>
                 </ul>
+                <% if (roamingAddData.productCount > 0) { %>
                 <% const moreCount = roamingAddData.productCount - products.length; %>
                 <div class="bt-more gap-style">
                     <button class="<%= moreCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= moreCount %>">
                         더보기
                     </button>
                 </div>
+                <% } %>
             </div>
             <% } %>
             <!-- //cont-box -->
@@ -131,61 +135,16 @@
                     <a class="link" href="/product/roaming/info/center">공항 내 로밍센터 안내</a>
                 </li>
                 <li class="category-type">
-                    <a class="link" href="/customer/faq">자주찾는 질문</a>
+                    <a class="link" href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주찾는 질문</a>
                 </li>
             </ul>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- 다른상품 더보기 -->
-            <div class="cont-box">
-                <h3>다른상품 더보기</h3>
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box horizontal">
-                        <div class="horizontal-slide">
-                            <ul class="horizontal-list add-prod">
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type1"></span>
-                                            <span>요금제</span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type2"></span>
-                                            <span>부가서비스</span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type3"></span>
-                                            <span>인터넷/전화/<br>TV</span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type4"></span>
-                                            <span>혜택·할인</span>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- .widget -->
-            </div>
-            <!-- //다른상품 더보기 -->
-
+            <% include ../../components/roaming/product.roaming.bottom-link.component.html %>
         </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
     <!--// #contents -->
 </div>

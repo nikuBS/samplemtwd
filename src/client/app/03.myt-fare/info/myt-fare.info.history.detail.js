@@ -18,7 +18,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
   _init: function () {
     this.rootPathName = this._historyService.pathname;
 
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     this.queryParams = Tw.UrlHelper.getQueryParams();
 
     switch (this.queryParams.type) {
@@ -43,11 +43,13 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
             this.$templateWrapper.append(this.$template.$directBase(this.detailData));
             break;
         }
+          break;
+      case 'AU':    
+          this.$templateWrapper.append(this.$template.$directBase(this.detailData));
         break;
       case 'AT':
-      case 'AU':
         // 자동납부 카드/계좌
-        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoNot(this.detailData.dataLastInvDt));
+        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoDot(this.detailData.dataLastInvDt));
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;
       case 'RP':

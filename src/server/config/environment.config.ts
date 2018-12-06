@@ -3,10 +3,11 @@ const environment = {
     BFF_SERVER: 'http://61.250.19.37:31020',
     // BFF_SERVER: 'http://211.188.180.73:31020',
     BFF_SERVER_G: 'http://211.188.180.73:31010',
-    CDN: 'http://localhost:3001',
+    CDN: 'http://150.28.69.23:3001',
     CDN_MANIFEST: 'http://localhost:3001',
     REDIS: {
       host: '61.250.19.37',
+      // port: 31300,
       port: 32300,
       db: 0
     },

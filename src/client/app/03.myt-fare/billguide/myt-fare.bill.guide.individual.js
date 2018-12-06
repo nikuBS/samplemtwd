@@ -269,7 +269,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });
-    console.info('[ selectSvcType ] : ', selectSvcType);
+    Tw.Logger.info('[ selectSvcType ] : ', selectSvcType);
     return selectSvcType;
 
   },

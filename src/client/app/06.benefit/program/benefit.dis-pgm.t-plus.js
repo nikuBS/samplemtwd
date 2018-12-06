@@ -78,7 +78,7 @@ Tw.BenefitDisPgmTplus.prototype = {
 
   _onSuccessTplusJoin: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan?prodId=' + this.data.prodId,
+      this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan?prod_id=' + this.data.prodId,
         Tw.BENEFIT.DISCOUNT_PGM.TPLUS.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.TPLUS.FINISH.TITLE,
         Tw.BENEFIT.DISCOUNT_PGM.TPLUS.FINISH.CONTENT);
     }

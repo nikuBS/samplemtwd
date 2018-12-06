@@ -4,14 +4,14 @@ import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ErrorService from '../../services/error.service';
-import { URL } from '../../types/url.old.type';
 import FormatHelper from '../../utils/format.helper';
 import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
-import { REDIS_URL_META } from '../../types/common.type';
-import { LOGIN_TYPE, SVC_ATTR, LINE_NAME } from '../../types/bff.old.type';
+import { REDIS_CODE, REDIS_URL_META } from '../../types/redis.type';
+import { LOGIN_TYPE, SVC_ATTR_NAME, LINE_NAME } from '../../types/bff.type';
+import { UrlMetaModel } from '../../models/url-meta.model';
 
 
 abstract class TwViewController {
@@ -61,6 +61,7 @@ abstract class TwViewController {
 
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
+
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
         this.sessionLogin(req, res, next, path);
@@ -136,62 +137,70 @@ abstract class TwViewController {
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
-      const urlMeta = resp;
-      this.logger.info(this, urlMeta);
-      if ( FormatHelper.isEmpty(urlMeta) ) {
-        // TODO do not register
+      this.logger.info(this, '[URL META]', path, resp);
+      const urlMeta = new UrlMetaModel(resp.result || {});
+      if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
         if ( isLogin ) {
-          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-        } else {
-          if ( !FormatHelper.isEmpty(URL[path]) && URL[path].login ) {
-            res.send('need login');
+          urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
+          if ( urlMeta.auth.accessTypes.indexOf(svcInfo.loginType) !== -1 ) {
+            const urlAuth = urlMeta.auth.grades;
+            const svcGr = svcInfo.svcGr;
+            if ( urlAuth.indexOf(svcGr) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            } else {
+              // TODO: 접근권한 없음
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            }
           } else {
+            // 현재 로그인 방법으론 이용할 수 없음
+            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+              res.redirect('/common/member/slogin/fail');
+            } else {
+              // TODO: ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+              res.redirect('/common/member/slogin/fail');
+              // this.errorAuth(req, res, next, svcInfo);
+            }
+          }
+        } else {
+          if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
+            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            } else {
+              // login page
+              // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
+              res.redirect('/common/tid/login?target=' + path);
+            }
+          } else {
+            // TODO: admin 정보 입력 오류
             this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
         }
       } else {
-        if ( isLogin ) {
-          const urlAuth = urlMeta.auth.grades;
-          const svcGr = svcInfo.svcGr;
-          // if ( !FormatHelper.isEmpty(urlAuth) ) {
-          //   if ( svcInfo.totalSvcCnt === '0' ) {
-          //     this.errorEmptyLine(req, res, next, svcInfo);
-          //   } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
-          //     this.errorNoRegister(req, res, next, svcInfo);
-          //   } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-          //     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          //   } else if ( this._type === 'dev' ) {
-          //     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          //   } else {
-          //     const loginType = svcInfo.loginType;
-          //     if ( loginType === LOGIN_TYPE.EASY ) {
-          //       res.redirect('/common/member/slogin/fail');
-          //     } else {
-          //       this.errorAuth(req, res, next, svcInfo);
-          //     }
-          //   }
-          // } else {
-          //   // TODO: redis urlAuth Null
-          //   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          // }
-          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-
-        } else {
-          if ( urlMeta.auth.loginYn === 'Y' ) {
-            res.send('need login');
-          } else {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          }
-        }
+        // TODO: 등록되지 않은 메뉴
+        this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
       }
 
+      // if ( svcInfo.totalSvcCnt === '0' ) {
+      //   this.errorEmptyLine(req, res, next, svcInfo);
+      // } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
+      //   this.errorNoRegister(req, res, next, svcInfo);
+      // } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+      //   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+      // } else {
+      //   const loginType = svcInfo.loginType;
+      //   if ( loginType === LOGIN_TYPE.EASY ) {
+      //     res.redirect('/common/member/slogin/fail');
+      //   } else {
+      //     this.errorAuth(req, res, next, svcInfo);
+      //   }
+      // }
     });
   }
 
   private errorAuth(req, res, next, svcInfo) {
     const data = {
       showSvc: svcInfo.svcAttrCd.indexOf(LINE_NAME.INTERNET_PHONE_IPTV) === -1 ? svcInfo.svcNum : svcInfo.addr,
-      showAttr: SVC_ATTR[svcInfo.svcAttrCd]
+      showAttr: SVC_ATTR_NAME[svcInfo.svcAttrCd]
     };
 
     res.render('error.no-auth.html', { svcInfo, data });

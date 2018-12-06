@@ -12,7 +12,7 @@ import { PRODUCT_REQUIRE_DOCUMENT_TYPE_NM } from '../../../../../types/string.ty
 import { PRODUCT_RESERVATION_REJECT } from '../../../../../types/bff.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import DateHelper from '../../../../../utils/date.helper';
-import {REDIS_PRODUCT_INFO} from '../../../../../types/common.type';
+import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 
 class ProductWireplanJoinRequireDocumentApply extends TwViewController {
   constructor() {
@@ -86,13 +86,16 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
 
       this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.svcProdCd)
         .subscribe((prodRedisInfo) => {
-          if (FormatHelper.isEmpty(prodRedisInfo)) {
-            return this.error.render(res, renderCommonInfo);
+          if (prodRedisInfo.code !== API_CODE.CODE_00) {
+            return this.error.render(res, Object.assign(renderCommonInfo, {
+              code: prodRedisInfo.code,
+              msg: prodRedisInfo.msg
+            }));
           }
 
           res.render('wireplan/join/product.wireplan.join.require-document.apply.html', {
             reqDocInfo: this._converRequireDocumentInfo(reqDocInfo.result.necessaryDocumentInspectInfoList[0]),
-            prodRedisInfo: prodRedisInfo,
+            prodRedisInfo: prodRedisInfo.result,
             svcInfo: svcInfo,
             pageInfo: pageInfo
           });

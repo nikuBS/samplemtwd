@@ -82,12 +82,12 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
       svcCmd = Tw.API_CMD.BFF_05_0183;
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // 연장/해지 call api
     this._apiService.request(svcCmd, param)
       .done($.proxy(function (resp) {
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           var option = {
@@ -130,7 +130,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
   }

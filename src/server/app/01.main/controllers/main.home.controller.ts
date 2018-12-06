@@ -13,15 +13,17 @@ import {
   HOME_SEGMENT,
   HOME_SEGMENT_ORDER,
   HOME_SMART_CARD,
-  LINE_NAME,
+  LINE_NAME, MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
-  SVC_ATTR_NAME,
+  SVC_ATTR_NAME, TPLAN_SHARE_LIST,
   UNIT,
-  UNIT_E
+  UNIT_E, UNLIMIT_CODE
 } from '../../../types/bff.type';
+import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION } from '../../../types/common.type';
+import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
+import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -34,8 +36,6 @@ class MainHome extends TwViewController {
       usageData: null,
       membershipData: null,
       billData: null,
-      ppsInfo: null,
-      joinInfo: null
     };
     let smartCard = [];
 
@@ -56,35 +56,21 @@ class MainHome extends TwViewController {
           });
         } else {
           // 모바일 - 휴대폰 외 회선
-          if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
-            Observable.combineLatest(
-              this.getUsageData(),
-              this.getPPSInfo(),
-              this.getNotice()
-            ).subscribe(([usageData, ppsInfo, notice]) => {
-              homeData.usageData = usageData;
-              homeData.ppsInfo = ppsInfo;
-              res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-            });
-          } else {
-            Observable.combineLatest(
-              this.getUsageData(),
-              this.getNotice()
-            ).subscribe(([usageData, notice]) => {
-              homeData.usageData = usageData;
-              res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
-            });
-          }
+          Observable.combineLatest(
+            this.getUsageData(),
+            this.getNotice()
+          ).subscribe(([usageData, notice]) => {
+            homeData.usageData = usageData;
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+          });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(),
-          this.getJoinInfo(),
           this.getNotice()
-        ).subscribe(([billData, joinInfo, notice]) => {
+        ).subscribe(([billData, notice]) => {
           homeData.billData = billData;
-          homeData.joinInfo = joinInfo;
           res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
         });
       }
@@ -150,6 +136,7 @@ class MainHome extends TwViewController {
 
   private parseMembershipData(membershipData): any {
     membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
+    membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd];
     return membershipData;
   }
 
@@ -185,18 +172,23 @@ class MainHome extends TwViewController {
   }
 
   private parseBillData(billData): any {
-    if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) &&
-      billData.charge.coClCd !== MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+    if ( !FormatHelper.isEmpty(billData.charge) || !FormatHelper.isEmpty(billData.used) ) {
+      if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+        return {
+          isBroadband: true
+        };
+      }
       const repSvc = billData.charge.repSvcYn === 'Y';
       const totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
       return {
+        isBroadband: false,
         chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot),
         usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot),
         deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),
         repSvc: billData.charge.repSvcYn === 'Y',
         totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
-        invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt),
-        invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
+        invEndDt: DateHelper.getShortDate(billData.charge.invDt),
+        invStartDt: DateHelper.getShortFirstDate(billData.charge.invDt),
         invMonth: DateHelper.getCurrentMonth(billData.charge.invDt),
         type1: totSvc && repSvc,
         type2: !totSvc,
@@ -220,10 +212,10 @@ class MainHome extends TwViewController {
     return {
       showSet: !(FormatHelper.isEmpty(joinInfo.setPrdStaDt) && FormatHelper.isEmpty(joinInfo.setPrdEndDt)),
       showSvc: !(FormatHelper.isEmpty(joinInfo.svcPrdStaDt) && FormatHelper.isEmpty(joinInfo.svcPrdEndDt)),
-      setPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.setPrdStaDt),
-      setPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.setPrdEndDt),
-      svcPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdStaDt),
-      svcPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdEndDt)
+      setPrdStaDt: DateHelper.getShortDate(joinInfo.setPrdStaDt),
+      setPrdEndDt: DateHelper.getShortDate(joinInfo.setPrdEndDt),
+      svcPrdStaDt: DateHelper.getShortDate(joinInfo.svcPrdStaDt),
+      svcPrdEndDt: DateHelper.getShortDate(joinInfo.svcPrdEndDt)
     };
   }
 
@@ -248,33 +240,34 @@ class MainHome extends TwViewController {
   // 사용량 조회
   private getUsageData(): Observable<any> {
     let usageData = {
-      code: null
+      code: '',
+      msg: ''
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         usageData = this.parseUsageData(resp.result);
       }
       usageData.code = resp.code;
+      usageData.msg = resp.msg;
       return usageData;
     });
   }
 
 
   private parseUsageData(usageData: any): any {
-    const kinds = ['gnrlData', 'spclData', 'voice', 'sms'];
+    const etcKinds = ['voice', 'sms'];
     const result = {
-      gnrlData: {},
-      spclData: {},
-      voice: {},
-      sms: {},
-      first: ''
+      data: { isShow: false },
+      voice: { isShow: false },
+      sms: { isShow: false },
     };
 
-    kinds.map((kind, index) => {
+    if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
+      this.mergeData(usageData.gnrlData, result.data);
+    }
+
+    etcKinds.map((kind, index) => {
       if ( !FormatHelper.isEmpty(usageData[kind][0]) ) {
-        if ( FormatHelper.isEmpty(result.first) ) {
-          result.first = kind;
-        }
         result[kind] = usageData[kind][0];
         this.convShowData(result[kind]);
       }
@@ -282,26 +275,75 @@ class MainHome extends TwViewController {
     return result;
   }
 
-  private convShowData(data: any) {
-    data.isUnlimit = !isFinite(data.total);
-    data.remainedRatio = 100;
-    data.showUsed = this.convFormat(data.used, data.unit);
+  private mergeData(list: any, data: any) {
+    data.isShow = true;
+    data.isUnlimit = false;
+    data.shareTotal = 0;
+    data.shareRemained = 0;
+    data.myRemainedRatio = 100;
+    data.shareRemainedRatio = 100;
+    list.map((target) => {
+      if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
+        data.isUnlimit = true;
+        data.showMyRemained = SKIP_NAME.UNLIMIT;
+      }
+      if ( TPLAN_SHARE_LIST.indexOf(target.skipId) !== -1 ) {
+        data.shareTotal += +data.total;
+        data.shareRemained += data.remained;
+      }
+    });
+    data.showShareRemained = this.convFormat(data.shareRemained, UNIT_E.DATA);
     if ( !data.isUnlimit ) {
-      data.showTotal = this.convFormat(data.total, data.unit);
-      data.showRemained = this.convFormat(data.remained, data.unit);
-      data.remainedRatio = data.remained / data.total * 100;
+      data.myTotal = 0;
+      data.myRemained = 0;
+      list.map((target) => {
+        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 ) {
+          console.log(target.skipId, target.total, target.remained);
+          data.myTotal += +target.total;
+          data.myRemained += +target.remained;
+        }
+      });
+      data.showMyRemained = this.convFormat(data.myRemained, UNIT_E.DATA);
+      data.myRemainedRatio = data.myRemained / (data.shareTotal + data.myTotal) * 100;
+      data.shareRemainedRatio = (data.myRemained + data.shareRemained) / (data.shareTotal + data.myTotal) * 100;
     }
   }
 
-  private convFormat(data: string, unit: string): string {
+  private convShowData(data: any) {
+    data.isShow = true;
+    data.isUnlimit = UNLIMIT_CODE.indexOf(data.unlimit) !== -1;
+    data.remainedRatio = 100;
+    // data.showUsed = this.convFormat(data.used, data.unit);
+    if ( !data.isUnlimit ) {
+      // data.showTotal = this.convFormat(data.total, data.unit);
+      data.showRemained = this.convFormat(data.remained, data.unit);
+      data.remainedRatio = data.remained / data.total * 100;
+    } else {
+      data.showRemained = UNLIMIT_NAME[data.unlimit];
+    }
+  }
+
+  private convFormat(data: string, unit: string): any {
     switch ( unit ) {
       case UNIT_E.DATA:
-        return FormatHelper.convDataFormat(data, UNIT[unit]);
+        const resultData = FormatHelper.convDataFormat(data, UNIT[unit]);
+        return resultData.data + resultData.unit;
       case UNIT_E.VOICE:
-        return FormatHelper.convVoiceFormat(data);
+        const resultVoice = FormatHelper.convVoiceFormat(data);
+        let resp = '';
+        if ( resultVoice.hours !== 0 ) {
+          resp += resultVoice.hours + TIME_UNIT.HOURS;
+        }
+        if ( resultVoice.min !== 0 ) {
+          if ( !FormatHelper.isEmpty(resp) ) {
+            resp += ' ';
+          }
+          resp += resultVoice.min + TIME_UNIT.MINUTE;
+        }
+        return resp;
       case UNIT_E.SMS:
       case UNIT_E.SMS_2:
-        return FormatHelper.addComma(data);
+        return FormatHelper.addComma(data) + UNIT_STR.SMS;
       default:
     }
     return '';

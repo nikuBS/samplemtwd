@@ -116,22 +116,43 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
           null,
           'select_date');
     },
-    _doJoin : function(data,apiService,historyService){
-        // apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
-        // done($.proxy(function (res) {
-        //     console.log('success');
-        //     console.log(res);
-        // }, this)).fail($.proxy(function (err) {
-        //     console.log('fail');
-        //     console.log(err);
-        // }, this));
-        if(true){
+    _doJoin : function(data,apiService,historyService,$containerData){
 
-        }else{
+        var completePopupData = {
+            prodNm : data.prodNm,
+            isBasFeeInfo : data.prodFee,
+            typeNm : data.svcType,
+            settingType : (data.svcType+' '+data.processNm),
+            btnNmList : ['나의 가입정보 확인']
+        };
 
-        }
+        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
+        done($.proxy(function (res) {
+            console.log('success');
+            console.log(res);
 
-
+            this._popupService.open({
+                    hbs: 'complete_product_roaming',
+                    layer: true,
+                    data : completePopupData
+                },
+                $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
+                null,
+                'complete');
+        }, this)).fail($.proxy(function (err) {
+            console.log('fail');
+            console.log(err);
+        }, this));
+    },
+    _bindCompletePopupBtnEvt : function($args1,$args2){
+        $($args2).on('click','.btn-round2',$args1._goMyInfo);
+        $($args2).on('click','.btn-floating',$args1._goBack);
+    },
+    _goMyInfo : function(){
+        //TODO link my roaming info
+    },
+    _goBack : function(){
+        //TODO lik product info
     },
     _confirmInformationSetting : function () {
 
@@ -156,22 +177,13 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
                         autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0,
+                        joinType : 'begin'
                    };
 
-        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');
+        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
 
     }
-
-    /*
-    * 취소 alert(){
-    * this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
-    * }
-    *
-    *
-    * */
 
 
 

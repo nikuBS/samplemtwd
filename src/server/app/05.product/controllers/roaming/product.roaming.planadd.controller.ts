@@ -31,7 +31,8 @@ class ProductRoamingPlanAdd extends TwViewController {
             this.getRoamingPlanAddData(params)
         ).subscribe(([roamingAddCntData, roamingAddData]) => {
             this.logger.info(this, 'roamingAddData : ', roamingAddData);
-            res.render('roaming/product.roaming.planadd.html', { svcInfo, roamingAddCntData, roamingAddData, isLogin: this.isLogin(svcInfo) });
+            res.render('roaming/product.roaming.planadd.html',
+                { svcInfo, roamingAddCntData, roamingAddData, isLogin: this.isLogin(svcInfo), pageInfo });
 
         });
     }
@@ -44,7 +45,7 @@ class ProductRoamingPlanAdd extends TwViewController {
   }
   private getRoamingPlanAddCntData(): Observable<any> {
       let roamingPlanAddCntData = null;
-      return this.apiService.request(API_CMD.BFF_10_0055, {}).map((resp) => {
+      return this.apiService.request(API_CMD.BFF_10_0121, {}).map((resp) => {
           if ( resp.code === API_CODE.CODE_00 ) {
               roamingPlanAddCntData = resp.result;
           }

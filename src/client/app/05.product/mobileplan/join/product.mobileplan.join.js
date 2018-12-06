@@ -112,12 +112,13 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
+      noticeList: this._confirmOptions.joinNoticeList,
       isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // prodId: this._prodId,
     //   prodProcTypeCd: 'JN'
@@ -127,7 +128,7 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

@@ -22,7 +22,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     },
     _getDateArrFromToDay : function(range,format){
-        var dateFormat = 'YYYY-MM-DD';
+        var dateFormat = 'YYYY. MM. DD';
         var resultArr = [];
         if(format){
             dateFormat = format;
@@ -42,7 +42,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     _getTimeArr : function(){
         var timeArr = [];
         for(var i=0;i<24;i++){
-            timeArr.push(i<10?'0'+i:i);
+            timeArr.push(i<10?'0'+i:''+i);
         }
         return timeArr;
     },
@@ -83,16 +83,17 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     },
     _actionSheetCloseEvt : function($layer){
         var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
-        var dateValue = $selectedTarget.text().trim().substr(0,10);
+        var dateValue = $selectedTarget.text().trim().substr(0,12);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
         changeTarget.text(dateValue);
         changeTarget.removeClass('placeholder');
-        changeTarget.attr('data-number',dateValue.replace(/-/g, ''));
+        changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
-        this._validateDateValue();
+        this._validateDateValue(changeTarget.attr('id'));
     },
-    _validateDateValue : function(){
+    _validateDateValue : function(selectedDateTypeId){
+
         var startDate = this.$container.find('#start_date').attr('data-number');
         var startTime = this.$container.find('#start_time').attr('data-number');
         var endDate = this.$container.find('#end_date').attr('data-number');
@@ -104,11 +105,25 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         if(!isNaN(startDate)&&!isNaN(startTime)){
             startDateValidationResult = this._validateTimeValueAgainstNow(startDate,startTime,'start');
         }
+
+
         if(!isNaN(endDate)&&!isNaN(endTime)){
             endDateValidationResult = this._validateTimeValueAgainstNow(endDate,endTime,'end');
         }
+        if(!isNaN(endDate)){
+            var $endErrElement = this.$container.find('.error-txt.end');
+            if(endDate===moment().format('YYYYMMDD')){
+                endDateValidationResult = false;
+                $endErrElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_DATE);
+                if($endErrElement.hasClass('none')){
+                    $endErrElement.removeClass('none');
+                }
+            }else{
+                $endErrElement.addClass('none');
+            }
+        }
         if(startDateValidationResult&&endDateValidationResult){
-            allDateValidatioinResult = this._validateRoamingTimeValue(startDate,startTime,endDate,endTime);
+            allDateValidatioinResult = this._validateRoamingTimeValue(startDate,startTime,endDate,endTime,selectedDateTypeId);
         }
         if(startDateValidationResult&&endDateValidationResult&&allDateValidatioinResult){
             this.$container.find('.bt-fixed-area button').removeAttr('disabled');
@@ -121,6 +136,11 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         var returnValue = false;
         var $errorsElement = this.$container.find('.error-txt.'+className);
         if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+            if(className==='start'){
+                $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
+            }else{
+                $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_DATE);
+            }
             $errorsElement.removeClass('none');
         }else{
             returnValue = true;
@@ -130,13 +150,20 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         }
         return returnValue;
     },
-    _validateRoamingTimeValue : function(startDate,startTime,endDate,endTime){
+    _validateRoamingTimeValue : function(startDate,startTime,endDate,endTime,selectedTimeTypeId){
+
         var returnValue = false;
         var startValue = parseInt(startDate+''+startTime,10);
         var endValue = parseInt(endDate+''+endTime,10);
         if(startValue>=endValue){
-            var $errorsElement = this.$container.find('.error-txt.end');
-            $errorsElement.text('the error message in this case is not defined');
+            var $errorsElement;
+            if(selectedTimeTypeId.indexOf('end')>-1){
+                $errorsElement = this.$container.find('.error-txt.end');
+                $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_END);
+            }else{
+                $errorsElement = this.$container.find('.error-txt.start');
+                $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_START);
+            }
             $errorsElement.removeClass('none');
         }else{
             returnValue = true;
@@ -154,22 +181,41 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           null,
           'select_date');
     },
-    _doJoin : function(data,apiService,historyService){
-        // apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
-        // done($.proxy(function (res) {
-        //     console.log('success');
-        //     console.log(res);
-        // }, this)).fail($.proxy(function (err) {
-        //     console.log('fail');
-        //     console.log(err);
-        // }, this));
-        if(true){
+    _doJoin : function(data,apiService,historyService,$containerData){
 
-        }else{
-
-        }
-
-
+        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
+        done($.proxy(function (res) {
+            console.log('success');
+            console.log(res);
+            var completePopupData = {
+                prodNm : data.prodNm,
+                isBasFeeInfo : data.prodFee,
+                typeNm : data.svcType,
+                settingType : (data.svcType+' '+data.processNm),
+                btnNmList : ['나의 가입정보 확인']
+            };
+            this._popupService.open({
+                    hbs: 'complete_product_roaming',
+                    layer: true,
+                    data : completePopupData
+                },
+                $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
+                null,
+                'complete');
+        }, this)).fail($.proxy(function (err) {
+            console.log('fail');
+            console.log(err);
+        }, this));
+    },
+    _bindCompletePopupBtnEvt : function($args1,$args2){
+         $($args2).on('click','.btn-round2',$args1._goMyInfo);
+         $($args2).on('click','.btn-floating',$args1._goBack);
+    },
+    _goMyInfo : function(){
+        //TODO link my roaming info
+    },
+    _goBack : function(){
+      //TODO lik product info
     },
     _confirmInformationSetting : function () {
         var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
@@ -195,23 +241,14 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
                         autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0
+                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0,
+                        joinType : 'setup'
+
                    };
 
-        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data');
+        new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
 
     }
-
-    /*
-    * 취소 alert(){
-    * this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
-    * }
-    *
-    *
-    * */
-
 
 
 };

@@ -86,6 +86,19 @@ export const DAY_BTN_STANDARD_SKIP_ID = [
   'DD0PB' // band 타임 프리
 ];
 
+export const T0_PLAN_SKIP_ID = [
+  'DD3CX',  // NA00005959	인피니티	통합공유 데이터 40GB
+  'DD3CV',  // NA00005958	패밀리	통합공유 데이터 20GB
+  'DD3CU',  // NA00005957	라지	통합공유 데이터 15GB
+  'DD4D5'   // NA00006157	0플랜 라지	통합공유 데이터 20GB
+];
+
+export const UNLIMIT_CODE = [
+  '1',  // 무제한	무제한 (SMS 항목인 경우) 기본제공/기본제공/기본제공
+  'B',  // 기본제공	기본제공
+  'M',  // 실사용량	무제한(SMS 항목인 경우) 기본제공/실사용량/기본제공
+];
+
 export const VOICE_UNIT = {
   HOURS: '시간',
   MIN: '분',
@@ -212,10 +225,10 @@ export const HOME_SEGMENT_ORDER = {
 };
 
 export enum MEMBERSHIP_GROUP {
-  V = 'VIP',
-  G = 'Gold',
-  S = 'Silver',
-  O = '일반'
+  V = 'vip',
+  G = 'gold',
+  S = 'silver',
+  O = 'default'
 }
 
 export enum T_NOTIFY_TYPE {
@@ -427,7 +440,6 @@ export const PREPAID_PAYMENT_TYPE = {
   '99': '선불카드(PPS카드)'
 };
 
-
 export const PRODUCT_TYP_CD_LIST = {
   AB: 'product/mobileplan',
   C: 'product/mobileplan-add',
@@ -446,6 +458,12 @@ export const PRODUCT_TYP_CD_LIST = {
 export const PRODUCT_CALLPLAN = {
   CIA_INSPT_RSLT: '비정상',
   SEE_CONTENTS: '상세참조'
+};
+
+export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
+  TW20000014: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
+  TW20000018: 'http://www.thonorsclub.com/',
+  TW20000019: 'http://skt.datacoupon.co.kr'
 };
 
 export const PRODUCT_REPLACED_RULE = {
@@ -470,6 +488,7 @@ export const PRODUCT_REPLACED_RULE = {
     RESULT: '집·이동전화 무제한'
   }]
 };
+
 export enum SVC_STATE {
   AC = 'AC',      // 사용중
   FB = 'FB',      // 직권해지
@@ -480,41 +499,41 @@ export enum SVC_STATE {
 }
 
 export const ROAMING_AUTO_EXPIRE_CASE = {
-    NA00003178 : 7,
-    NA00003177 : 5,
-    NA00004226 : 3,
-    NA00006039 : 30,
-    NA00005747 : 5,
-    NA00005901 : 5,
-    NA00005301 : 30,
-    NA00005337 : 30,
-    NA00006047 : 30,
-    NA00006041 : 30,
-    NA00005903 : 5,
-    NA00006043 : 30,
-    NA00006051 : 30,
-    NA00005506 : 30,
-    NA00005899 : 5,
-    NA00006049 : 30,
-    NA00006045 : 30,
-    NA00006053 : 30,
-    NA00005699 : 5,
-    NA00005898 : 5,
-    NA00005900 : 5,
-    NA00005902 : 5,
-    NA00006038 : 30,
-    NA00006040 : 30,
-    NA00006042 : 30,
-    NA00006044 : 30,
-    NA00006046 : 30,
-    NA00006048 : 30,
-    NA00006050 : 30,
-    NA00006052 : 30,
-    NA00005252 : 30,
-    NA00005300 : 30,
-    NA00005505 : 30,
-    NA00005690 : 10,
-    NA00005693 : 10
+  NA00003178: 7,
+  NA00003177: 5,
+  NA00004226: 3,
+  NA00006039: 30,
+  NA00005747: 5,
+  NA00005901: 5,
+  NA00005301: 30,
+  NA00005337: 30,
+  NA00006047: 30,
+  NA00006041: 30,
+  NA00005903: 5,
+  NA00006043: 30,
+  NA00006051: 30,
+  NA00005506: 30,
+  NA00005899: 5,
+  NA00006049: 30,
+  NA00006045: 30,
+  NA00006053: 30,
+  NA00005699: 5,
+  NA00005898: 5,
+  NA00005900: 5,
+  NA00005902: 5,
+  NA00006038: 30,
+  NA00006040: 30,
+  NA00006042: 30,
+  NA00006044: 30,
+  NA00006046: 30,
+  NA00006048: 30,
+  NA00006050: 30,
+  NA00006052: 30,
+  NA00005252: 30,
+  NA00005300: 30,
+  NA00005505: 30,
+  NA00005690: 10,
+  NA00005693: 10
 };
 
 export enum AUTH_CERTIFICATION_METHOD {
@@ -532,4 +551,12 @@ export enum AUTH_CERTIFICATION_METHOD {
   SMS_REFUND = 'SF',
   IPIN_REFUND = 'IF',
   OTHER_REFUND = 'TF'
+}
+
+export const TPLAN_SHARE_LIST = ['POT10', 'POT20'];
+
+export enum LOGIN_TYPE {
+  NONE = 'N',
+  TID = 'T',
+  EASY = 'S'
 }

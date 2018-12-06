@@ -22,33 +22,57 @@ Tw.ProductRoamingSearchResult = function (rootEl, svcInfo, srchInfo, rateInfo) {
 };
 
 Tw.ProductRoamingSearchResult.prototype = {
+    type: {
+        lte:0,
+        wcdma:1,
+        cdma:2,
+        gsm:3,
+        rent:4
+    },
     _roamingSearchInit: function () {
         this.$roamingRatelist = this.$container.find('.fe-rate-info');
 
         this.reqParams = {
             'countryCode': this._srchInfo.countryCd,
-            'manageType': this._srchInfo.countryCd,
+            'manageType': '',
             'showDailyPrice': 'N'
         };
 
         this.$container.find('.fe-search-input').val(this._srchInfo.countryNm);
-
-
+        this.manageType = [];
+        this.typeTxt = [];
         if(this._rateInfo.lte > 0){
-            this.reqParams.manageType = 'L';
-        }else if(this._rateInfo.wcdma > 0){
-            this.reqParams.manageType = 'W';
-        }else if(this._rateInfo.gsm > 0){
-            this.reqParams.manageType = 'G';
-        }else if(this._rateInfo.cdma > 0){
-            this.reqParams.manageType = 'C';
-        }else if(this._rateInfo.rent > 0){
-            this.reqParams.manageType = '';
-            this.reqParams.showDailyPrice = 'Y';
-        }else {
-            this.reqParams.manageType = '';
-            this.reqParams.showDailyPrice = 'N';
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
         }
+        if(this._rateInfo.wcdma > 0){
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+        }
+        if(this._rateInfo.gsm > 0){
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+        }
+        if(this._rateInfo.cdma > 0){
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+        }
+        if(this._rateInfo.rent > 0){
+            this.reqParams.showDailyPrice = 'Y';
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+        }else {
+            this.reqParams.showDailyPrice = 'N';
+            if(this._svcInfo === null){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].value);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+            }
+        }
+
+        this.reqParams.manageType = this.manageType[0].type;
+        this.manageType[0].option = 'checked';
+        this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
+        this.$container.find('.fe-manage-type').text(this.typeTxt[0]);
 
         Tw.Logger.info('this.reqParams : ', this.reqParams);
 
@@ -68,9 +92,13 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
         var _result = resp.result;
-        Tw.Logger.info('success rate result ==== ', _result);
-        // this.$roamingRatelist.text('요금 정보 입력');
 
+        _result.serviceDiv = this.reqParams.manageType;
+
+        console.log('................._result : ' + JSON.stringify(_result));
+        console.log('................._result : ' + _result.serviceDiv );
+
+        this.$roamingRatelist.empty();
         this.$roamingRatelist.append(this._rmRateInfoTmpl({ items: _result }));
     },
     _handleFailSearch:function () {
@@ -78,6 +106,51 @@ Tw.ProductRoamingSearchResult.prototype = {
     },
     _bindEvents: function () {
         this.$container.on('click', '#fe-search-btn', $.proxy(this._onBtnClicked, this));
+        this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));
+        this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));
+        this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));
+
+        this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));
+    },
+    _openMangeType: function (){
+        this._popupService.open(
+            {
+                hbs: 'actionsheet_select_a_type', // hbs의 파일명
+                layer: true,
+                data: [{ list: this.manageType }]
+            },
+            $.proxy(this._handleOpenTypePopup, this),
+            undefined
+        );
+    },
+    _handleOpenTypePopup: function ($layer) {
+        $layer.on('click', 'ul.chk-link-list > li > button', $.proxy(this._handleSelectRoamingType, this));
+    },
+    _handleSelectRoamingType: function (e) {
+        var $target = $(e.currentTarget);
+        var rmType = $target.attr('data-manage-type');
+
+        if(this.reqParams.manageType === rmType){
+            this._popupService.close();
+        }else {
+            this.reqParams.manageType = rmType;
+        }
+
+    },
+    _selectPopupCallback:function () {
+
+    },
+    _closeActionPopup : function () {
+
+    },
+    _goRoamingPlan: function () {
+        this._history.goLoad('/product/roaming/fee');
+    },
+    _goRoamingPlanAdd: function () {
+        this._history.goLoad('/product/roaming/planadd');
+    },
+    _goRoamingCard: function () {
+        this._history.goLoad('/product/roaming/coupon');
     },
     _onBtnClicked : function () {
         this.keyword = this.$container.find('.fe-search-input').val().trim();

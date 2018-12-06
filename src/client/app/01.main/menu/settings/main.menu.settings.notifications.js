@@ -96,7 +96,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
   _onTermsClicked: function (e) {
     var id = e.target.id;
     this._popupService.open({
-      hbs: 'ST_01_05_L02',
+      hbs: 'HO_04_01_02_01',
       layer: true
     }, $.proxy(this._onTermsOpened, this, id));
   },
@@ -122,6 +122,11 @@ Tw.MainMenuSettingsNotifications.prototype = {
       }
     }, this));
     $root.on('click', '#fe-confirm', $.proxy(this._onTermsConfirmed, this, changedTerms));
+    $root.on('click', '.fe-view', $.proxy(function (e) {
+      this._popupService.close();
+      var code = e.currentTarget.value;
+      Tw.CommonHelper.openTermLayer(code);
+    }, this));
   },
   _onTermsConfirmed: function (terms) {
     this._popupService.close();
@@ -141,8 +146,10 @@ Tw.MainMenuSettingsNotifications.prototype = {
       if (terms.hasOwnProperty(elem.dataset.key)) {
         if (terms[elem.dataset.key]) {
           $(elem).addClass('checked');
+          $(elem).find('.agree').text(Tw.COMMON_STRING.AGREE);
         } else {
           $(elem).removeClass('checked');
+          $(elem).find('.agree').text(Tw.COMMON_STRING.DISAGREE);
         }
       }
     });

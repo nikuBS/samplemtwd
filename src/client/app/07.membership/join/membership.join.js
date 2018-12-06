@@ -10,7 +10,6 @@ Tw.MyTBenefitMembershipJoin = function (params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._historyService.init('hash');
   this.data = params.data;
   this._render();
   this._bindEvent();
@@ -24,14 +23,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       selector = '[data-id="container"]';
     }
     if ( value ) {
-      skt_landing.action.loading.on({
-        ta: selector, co: 'grey', size: true
-      });
+      Tw.CommonHelper.startLoading(selector, 'grey', true);
     }
     else {
-      skt_landing.action.loading.off({
-        ta: selector
-      });
+      Tw.CommonHelper.endLoading(selector);
     }
   },
 

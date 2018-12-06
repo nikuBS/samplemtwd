@@ -10,7 +10,6 @@ Tw.PPSRechargeLayer = function ($element) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._historyService.init('hash');
   this.data = {}; // 초기화
   this._initialize();
 };

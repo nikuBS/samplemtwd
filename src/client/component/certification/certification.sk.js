@@ -256,7 +256,8 @@ Tw.CertificationSk.prototype = {
       authUrl: this._authUrl,
       receiverNum: this._onKeyin ? this.$inputMdn.val() : '',
       authKind: this._authKind,
-      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : '',
+      method: this._onKeyin ? Tw.AUTH_CERTIFICATION_METHOD.K : this._smsType
     }).done($.proxy(this._successConfirm, this));
   },
   _successConfirm: function (resp) {

@@ -13,7 +13,12 @@
     {{#each items}}        
         <li>
             <p class="list-text">
-                <span class="stext-b"><i class="badge badge-{{icon.type}}"><span class="blind">{{icon.name}}</span></i> {{../typeName}} 충전 <span class="data">{{data}}</span></span>
+                <span class="stext-b">
+                    {{#if badge}}
+                    <i class="badge badge-{{badge.icon}}"><span class="blind">{{badge.name}}</span></i> 
+                    {{/if}}
+                    {{../typeName}} 충전 <span class="data">{{data}}</span>
+                </span>
                 <span class="stext"><span class="gray-tx">{{cardNm}}</span><span class="black-tx">{{payNm}}</span></span>
             </p>
             <div class="list-data">

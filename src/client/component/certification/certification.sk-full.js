@@ -169,7 +169,8 @@ Tw.CertificationSkFull.prototype = {
         authUrl: this._authUrl,
         receiverNum: this.mdn,
         authKind: this._authKind,
-        prodAuthKey: ''
+        prodAuthKey: '',
+        method: Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN
       };
       this._requestConfirm(params);
   },

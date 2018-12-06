@@ -31,7 +31,7 @@ Tw.BenefitMyBenefitCookiz.prototype = {
   },
 
   _requestPoints: function () {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService
       .request(Tw.API_CMD.BFF_05_0122, { page: this._page++, size: this.NUM_OF_ITEMS })
       .done($.proxy(this._onReceivedData, this))
@@ -43,7 +43,7 @@ Tw.BenefitMyBenefitCookiz.prototype = {
   },
 
   _onReceivedData: function (resp) {
-    skt_landing.action.loading.off({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._totalCount = resp.result.totRecCnt;
       if ( resp.result.length < 1 ) {

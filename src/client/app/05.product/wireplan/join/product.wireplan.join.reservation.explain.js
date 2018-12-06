@@ -224,8 +224,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _uploadExplainFile: function() {
-    var fileInfo = this.$explainFile.get(0).files[0],
-      formData = new FormData();
+    var fileInfo = this.$explainFile.get(0).files[0];
 
     if (fileInfo.size > this._limitFileByteSize) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
@@ -239,16 +238,13 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
     }
 
-    formData.append('dest', Tw.UPLOAD_TYPE.RESERVATION);
-    formData.append('file', this.$explainFile.get(0).files[0]);
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-
-    this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, this.$explainFile.get(0).files)
       .done($.proxy(this._successUploadFile, this));
   },
 
   _successUploadFile: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
     }

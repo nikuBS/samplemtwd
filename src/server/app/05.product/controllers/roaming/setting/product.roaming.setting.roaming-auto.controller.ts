@@ -7,7 +7,7 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
-import {REDIS_PRODUCT_INFO} from '../../../../../types/common.type';
+import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
@@ -49,6 +49,8 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
                 expireDate : ROAMING_AUTO_EXPIRE_CASE[prodId]
             });
         });
+
+
         // res.render('roaming/setting/product.roaming.setting.roaming-auto.html', {
         //     svcInfo : svcInfo,
         //     expireDate : ROAMING_AUTO_EXPIRE_CASE[prodId],

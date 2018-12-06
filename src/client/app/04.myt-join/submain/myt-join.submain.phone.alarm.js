@@ -101,12 +101,12 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
       return;
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     // 신청/변경 call api
     this._apiService.request(Tw.API_CMD.BFF_05_0182, param)
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           var option = {
@@ -142,7 +142,7 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
   }

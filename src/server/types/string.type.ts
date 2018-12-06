@@ -12,6 +12,13 @@ export enum SKIP_NAME {
   EXCEED = 'LT', // 초과
   DAILY = 'PA' // 일별사용량
 }
+
+export const UNLIMIT_NAME = {
+  '1': '무제한',
+  'B': '기본제공',
+  'M': '무제한'
+};
+
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)
 export const MYT_FARE_BILL_TYPE = {
   P: 'T world 확인',
@@ -44,8 +51,7 @@ export const MYT_DATA_USAGE = {
     DD3CV: '패밀리',
     DD3CU: '라지',
     DD4D5: '라지'
-  },
-  UNLIMIT_CODE: ['1', 'B', 'M']
+  }
 };
 
 export const MYT_DATA_USAGE_TOTAL_SHARING_DATA = {
@@ -96,7 +102,7 @@ export enum CURRENCY_UNIT {
 }
 
 export enum TIME_UNIT {
-  TIME = '시간',
+  HOURS = '시간',
   MINUTE = '분',
   SECOND = '초'
 }

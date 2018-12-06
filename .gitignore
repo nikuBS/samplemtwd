@@ -9,6 +9,7 @@ ee http://help.github.com/ignore-files/ for more about ignoring files.
 /out-tsc
 /logs
 /uploads/*.*
+/uploads/**/*.*
 
 # dependencies
 /node_modules

@@ -39,18 +39,18 @@ Tw.MyTJoinWireASDetail.prototype = {
 
       this._popupService.close();
 
-      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+      Tw.CommonHelper.startLoading('.container', 'grey', true);
 
       this._apiService.request(Tw.API_CMD.BFF_05_0150, { troubleNum: this._troubleNum })
         .done($.proxy(function (resp) {
 
           if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
-            skt_landing.action.loading.off({ ta: '.container' });
+            Tw.CommonHelper.endLoading('.container');
             Tw.Error(resp.code, resp.msg).pop();
             return ;
           }
 
-          skt_landing.action.loading.off({ ta: '.container' });
+          Tw.CommonHelper.endLoading('.container');
 
           this._popupService.openTypeA(
             Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A34.TITLE,
@@ -63,7 +63,7 @@ Tw.MyTJoinWireASDetail.prototype = {
           );
         }, this))
         .fail(function(err){
-          skt_landing.action.loading.off({ ta: '.container' });
+          Tw.CommonHelper.endLoading('.container');
           Tw.Error(err.status, err.statusText).pop();
         });
     },this));

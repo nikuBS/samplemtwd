@@ -9,22 +9,26 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_FILTER, REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/common.type';
+import { REDIS_PRODUCT_INFO, REDIS_PRODUCT_COMPARISON } from '../../../../types/redis.type';
 import {
   DATA_UNIT,
   PRODUCT_CALLPLAN_FEEPLAN,
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
-import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
+import {PRODUCT_CALLPLAN, PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
+import EnvHelper from '../../../../utils/env.helper';
 
 class ProductCommonCallplan extends TwViewController {
   constructor() {
     super();
   }
+
+  private readonly _benefitRedirectProdList = ['TW20000014', 'TW20000018', 'TW20000019'];
 
   /**
    * 요금제 비교하기 Redis 정보 호출
@@ -35,7 +39,7 @@ class ProductCommonCallplan extends TwViewController {
    */
   private _getMobilePlanCompareInfo(prodTypCd: any, svcInfoProdId: any, prodId: any): Observable<any> {
     if (prodTypCd !== 'AB' || FormatHelper.isEmpty(svcInfoProdId)) {
-      return Observable.of({});
+      return Observable.of({ code: null });
     }
 
     return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
@@ -71,7 +75,7 @@ class ProductCommonCallplan extends TwViewController {
    */
   private _getAdditionsFilterListByRedis(prodTypCd: any, prodId: any): Observable<any> {
     if (prodTypCd !== 'C') {
-      return Observable.of({});
+      return Observable.of({ code: null });
     }
 
     return this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230');
@@ -105,6 +109,8 @@ class ProductCommonCallplan extends TwViewController {
       settingBtnList: any = [],
       termBtnList: any = [];
 
+    let isJoinReservation: any = false;
+
     basicInfo.linkBtnList.forEach((item) => {
       if (item.linkTypCd === 'SC') {
         joinBtnList.push(item);
@@ -113,6 +119,11 @@ class ProductCommonCallplan extends TwViewController {
 
       if (item.linkTypCd === 'SE') {
         settingBtnList.push(item);
+        return true;
+      }
+
+      if (item.linkTypCd === 'CT') {
+        isJoinReservation = true;
         return true;
       }
 
@@ -125,7 +136,8 @@ class ProductCommonCallplan extends TwViewController {
         join: joinBtnList,
         setting: settingBtnList,
         terminate: termBtnList
-      }
+      },
+      isJoinReservation: isJoinReservation
     });
   }
 
@@ -143,8 +155,12 @@ class ProductCommonCallplan extends TwViewController {
       basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
 
     return Object.assign(prodRedisInfo, {
-      summary: Object.assign(prodRedisInfo.summary, ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
-        basDataTxt.txt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit)),
+      summary: [prodRedisInfo.summary,
+        ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo, basDataTxt.txt,
+          prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit),
+        { smryHtmlCtt: EnvHelper.setCdnUrl(prodRedisInfo.summary.smryHtmlCtt) }].reduce((a, b) => {
+        return Object.assign(a, b);
+      }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
       contents: this._convertContents(prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
@@ -182,7 +198,7 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _getSummaryCase(summaryInfo): any {
-    if (!FormatHelper.isEmpty(summaryInfo.ledItmDesc)) {
+    if (!FormatHelper.isEmpty(summaryInfo.smryHtmlCtt)) {
       return '3';
     }
 
@@ -207,7 +223,7 @@ class ProductCommonCallplan extends TwViewController {
 
     contentsInfo.forEach((item) => {
       if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
-        contentsResult[item.vslLedStylCd] = item.ledItmDesc;
+        contentsResult[item.vslLedStylCd] = EnvHelper.setCdnUrl(item.ledItmDesc);
         return true;
       }
 
@@ -216,12 +232,13 @@ class ProductCommonCallplan extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
-        contentsResult.PLM_FIRST = item.ledItmDesc;
+        contentsResult.PLM_FIRST = EnvHelper.setCdnUrl(item.ledItmDesc);
         return true;
       }
 
       contentsResult.LIST.push(Object.assign(item, {
-        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm'),
+        ledItmDesc: EnvHelper.setCdnUrl(item.ledItmDesc)
       }));
     });
 
@@ -239,7 +256,9 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     bannerInfo.forEach((item) => {
-      bannerResult[item.bnnrLocCd] = item;
+      bannerResult[item.bnnrLocCd] = Object.assign(item, {
+        bnnrDtlHtmlCtt: EnvHelper.setCdnUrl(item.bnnrDtlHtmlCtt)
+      });
     });
 
     return bannerResult;
@@ -397,6 +416,12 @@ class ProductCommonCallplan extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
+    if (this._benefitRedirectProdList.indexOf(prodId) !== -1) {
+      return res.render('common/callplan/product.common.callplan.redirect.html', {
+        redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId]
+      });
+    }
+
     this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
       .subscribe((basicInfo) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
@@ -416,7 +441,7 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
           this.apiService.request(API_CMD.BFF_10_0139, {}, {}, prodId),
-          this.apiService.request(API_CMD.BFF_10_0112, { prodId: prodId }),
+          this.apiService.request(API_CMD.BFF_10_0112, {}, {}, prodId),
           this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
           this._getIsJoined(basicInfo.result.prodTypCd, prodId),
@@ -426,7 +451,7 @@ class ProductCommonCallplan extends TwViewController {
           relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, prodRedisInfo,
           mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
-          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo ]);
+          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, prodRedisInfo ]);
 
           if (!FormatHelper.isEmpty(apiError)) {
             return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -435,27 +460,23 @@ class ProductCommonCallplan extends TwViewController {
             }));
           }
 
-          if (FormatHelper.isEmpty(prodRedisInfo)) {
-            return this.error.render(res, renderCommonInfo);
-          }
-
           const isCategory = this._getIsCategory(basicInfo.result.prodTypCd),
-            basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.summary.feeManlSetTitNm) ?
-              prodRedisInfo.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
+            basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.result.summary.feeManlSetTitNm) ?
+              prodRedisInfo.result.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
 
           res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
             prodId: prodId,
             basFeeSubText: basFeeSubText,
             basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
-            prodRedisInfo: this._convertRedisInfo(prodRedisInfo), // 상품 정보 by Redis
+            prodRedisInfo: this._convertRedisInfo(prodRedisInfo.result), // 상품 정보 by Redis
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
             recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
             recommendApps: recommendsAppInfo.result,
-            mobilePlanCompareInfo: FormatHelper.isEmpty(mobilePlanCompareInfo) ? null : mobilePlanCompareInfo, // 요금제 비교하기
+            mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
-            additionsProdFilterInfo: additionsProdFilterInfo,  // 부가서비스 카테고리 필터 리스트
+            additionsProdFilterInfo: additionsProdFilterInfo.code !== API_CODE.CODE_00 ? null : additionsProdFilterInfo.result,  // 부가서비스 카테고리 필터 리스트
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo)  // 구비서류 제출 심사내역
           }].reduce((a, b) => {
             return Object.assign(a, b);

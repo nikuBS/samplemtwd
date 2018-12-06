@@ -139,7 +139,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _requestSuspend: function () {
     this._popupService.close();
-    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('body', 'grey', true);
     var params = {
       fromDt: this.$dateFrom.val().replace(/-/g, ''),
       toDt: this.$dateTo.val().replace(/-/g, ''),
@@ -162,14 +162,14 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _requestReset: function () {
     this._popupService.close();
-    skt_landing.action.loading.on({ ta: 'body', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('body', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0152, {})
       .done($.proxy(this._onSuccessRequestReset, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequestSuspend: function (params, res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt) + ' - ' + Tw.DateHelper.getFullKoreanDate(params.toDt);
       var type = params.icallPhbYn === 'Y' ?
@@ -185,7 +185,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   },
 
   _onSuccessRequestReset: function (res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if(res.code === Tw.API_CODE.CODE_00) {
       this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET);
     }else{
@@ -194,7 +194,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   },
 
   _onError: function (res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     Tw.Error(res.status, res.statusText).pop();
   }
 };

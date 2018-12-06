@@ -20,7 +20,7 @@ class BenefitDisProgram extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    const prodId =  req.query.prodId || '';
+    const prodId =  req.query.prod_id || '';
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,

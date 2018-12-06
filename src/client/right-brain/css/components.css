@@ -4146,6 +4146,11 @@
       font-size: 0.75rem;
       color: #666;
       display: block; }
+    .basic-list ul li .tx-cont .sub-tx {
+      display: block;
+      color: #666;
+      font-size: 0.8125rem;
+      padding-top: 0.25rem; }
   .basic-list ul li:first-of-type {
     padding-top: 0; }
   .basic-list ul li .inner-top {
@@ -4517,7 +4522,8 @@
     position: relative; }
     .history-list ul li .li-elem .title-box {
       display: table-cell;
-      vertical-align: top; }
+      vertical-align: top;
+      width: 55%; }
       .history-list ul li .li-elem .title-box .tit {
         display: block;
         font-size: 1.125rem; }
@@ -4600,7 +4606,8 @@
     .history-list ul li .li-elem .price {
       vertical-align: top;
       display: table-cell;
-      text-align: right; }
+      text-align: right;
+      width: 45%; }
       .history-list ul li .li-elem .price .tx-price {
         font-family: "TgothicBlack", Roboto, sans-serif;
         font-size: 1.125rem; }
@@ -5046,6 +5053,14 @@
     .info-list-type1 .basic-list ul li .title {
       color: #666;
       line-height: 1.25rem; }
+    .info-list-type1 .basic-list ul li .tx-cont .tx-price {
+      font-size: 1.125rem;
+      font-family: "TgothicBlack", Roboto, sans-serif; }
+    .info-list-type1 .basic-list ul li .tx-cont .tx-unit {
+      padding-left: 0.1875rem;
+      font-size: 0.625rem;
+      font-family: "TgothicMedium", Roboto, sans-serif;
+      vertical-align: 0.0625rem; }
   .info-list-type1 .basic-list:last-of-type li:last-of-type {
     border-bottom: none; }
 
@@ -23143,7 +23158,8 @@ input[type="radio"].formradio-small:checked:disabled + label {
   border-bottom: 1px solid #f2f2f2; }
   .full-link-list li:last-child {
     border-bottom: 0; }
-  .full-link-list li button, .full-link-list li a {
+  .full-link-list li button, .full-link-list li a,
+  .full-link-list li .no-link {
     position: relative;
     display: block;
     -webkit-box-sizing: border-box;
@@ -23154,28 +23170,34 @@ input[type="radio"].formradio-small:checked:disabled + label {
     font-size: 0;
     line-height: 1;
     color: #000000; }
-    .full-link-list li button .inner, .full-link-list li a .inner {
+    .full-link-list li button .inner, .full-link-list li a .inner,
+    .full-link-list li .no-link .inner {
       display: table;
       width: 100%; }
-      .full-link-list li button .inner .tit, .full-link-list li a .inner .tit {
+      .full-link-list li button .inner .tit, .full-link-list li a .inner .tit,
+      .full-link-list li .no-link .inner .tit {
         display: table-cell;
         font-size: 1rem;
         /*font-weight:$fw-normal;*/
         vertical-align: middle; }
-        .full-link-list li button .inner .tit .sub, .full-link-list li a .inner .tit .sub {
+        .full-link-list li button .inner .tit .sub, .full-link-list li a .inner .tit .sub,
+        .full-link-list li .no-link .inner .tit .sub {
           display: block;
           font-size: 0.75rem;
           color: #959595; }
-      .full-link-list li button .inner .text, .full-link-list li a .inner .text {
+      .full-link-list li button .inner .text, .full-link-list li a .inner .text,
+      .full-link-list li .no-link .inner .text {
         display: table-cell;
         vertical-align: middle;
         font-size: 1rem;
         text-align: right;
         /*font-weight:$fw-medium;*/ }
-        .full-link-list li button .inner .text.type2, .full-link-list li a .inner .text.type2 {
+        .full-link-list li button .inner .text.type2, .full-link-list li a .inner .text.type2,
+        .full-link-list li .no-link .inner .text.type2 {
           /*newfont*/
           font-weight: 700; }
-    .full-link-list li button:after, .full-link-list li a:after {
+    .full-link-list li button:after, .full-link-list li a:after,
+    .full-link-list li .no-link:after {
       position: absolute;
       right: 0.625rem;
       top: 50%;
@@ -23186,6 +23208,8 @@ input[type="radio"].formradio-small:checked:disabled + label {
       content: '';
       background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 23% 50%;
       background-size: 100%; }
+  .full-link-list li .no-link:after {
+    display: none; }
 
 .device_android .full-link-list li button,
 .device_android .full-link-list li a {
@@ -23642,6 +23666,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
     width: 100%; }
   .inquire-link-list li .txt-area {
     display: table-cell;
+    width: 60%;
     font-size: 0;
     line-height: 1;
     vertical-align: middle; }
@@ -23666,6 +23691,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
       background: #e5e5e5; }
   .inquire-link-list li .rest-cont {
     display: table-cell;
+    width: 40%;
     text-align: right;
     line-height: 1;
     vertical-align: middle; }
@@ -24319,6 +24345,8 @@ input[type="radio"].formradio-small:checked:disabled + label {
   border-radius: 0.9375rem;
   -webkit-box-shadow: 0 0.625rem 0.9375rem #eaeaea;
           box-shadow: 0 0.625rem 0.9375rem #eaeaea; }
+  .section-box.empty {
+    min-height: 12.5rem; }
   .section-box.nogaps {
     padding: 0; }
     .section-box.nogaps .stit {
@@ -27826,3 +27854,28 @@ body.apphome {
 
 .main-banner-img.bul .slick-dots {
   top: 1.5rem !important; }
+
+.prepaid-txt-type01 {
+  padding: 0 1rem 1.25rem 1rem; }
+  .prepaid-txt-type01 .wrap-gaps-top {
+    padding: 1.25rem 0 0 0; }
+  .prepaid-txt-type01 p {
+    padding: 0.5rem 0 0 0;
+    font-size: 0.875rem;
+    color: #8d8d8d; }
+
+.sub-txt-type01 {
+  font-size: 0.75rem;
+  color: #8d8d8d; }
+
+.prepaid-card-info .stit {
+  font-size: 1.125rem; }
+
+.prepaid-card-info .stxt {
+  padding: 1.25rem 0 2.5rem 0;
+  font-size: 0.75rem;
+  color: #8d8d8d; }
+
+.prepaid-card-info .round-dot-list li {
+  color: #000000;
+  font-size: 0.8125rem; }

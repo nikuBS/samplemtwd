@@ -5,25 +5,23 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { COOKIE_KEY, REDIS_APP_VERSION, REDIS_URL_META } from '../../types/common.type';
+import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_MASKING_METHOD, REDIS_URL_META } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
-import AuthService from '../../services/auth.service';
-import EnvHelper from '../../utils/env.helper';
 import RedisService from '../../services/redis.service';
 import FormatHelper from '../../utils/format.helper';
 import VERSION from '../../config/version.config';
 import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
+import { REDIS_CODE } from '../../types/redis.type';
 
 class ApiRouter {
   public router: Router;
   private logger: LoggerService = new LoggerService();
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
-  private authService: AuthService = new AuthService();
   private redisService: RedisService = RedisService.getInstance();
 
   constructor() {
@@ -47,15 +45,19 @@ class ApiRouter {
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
     this.router.post('/uploads', this.uploadFile.bind(this));
-    this.router.post('/cert', this.setCert.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
     this.router.get('/serverSession', this.getServerSession.bind(this));
     this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
-    this.router.get('/service-notice', this.getServiceNotice.bind(this));
+    this.router.get('/app-notice', this.getAppNotice.bind(this));
+
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
+    this.router.get('/menu', this.getMenu.bind(this));
+    this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
+    this.router.get('/masking-method', this.getMaskingMethod.bind(this));
+    this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -91,19 +93,12 @@ class ApiRouter {
 
   private getVersion(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
-      .subscribe((result) => {
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: {}
-        };
-
-        if ( !FormatHelper.isEmpty(result) ) {
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
           resp.result = {
-            ver: result.ver,
-            signGateGW: result.signGateGW
+            ver: resp.result.ver,
+            signGateGW: resp.result.signGateGW
           };
-        } else {
-          resp.code = API_CODE.CODE_404;
         }
 
         res.json(resp);
@@ -112,34 +107,20 @@ class ApiRouter {
 
   private getSplash(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
-      .subscribe((result) => {
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: null
-        };
-
-        if ( !FormatHelper.isEmpty(result) ) {
-          resp.result = result.splash;
-        } else {
-          resp.code = API_CODE.CODE_404;
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          resp.result = resp.result.splash;
         }
 
         res.json(resp);
       });
   }
 
-  private getServiceNotice(req: Request, res: Response, next: NextFunction) {
+  private getAppNotice(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
-      .subscribe((result) => {
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: null
-        };
-
-        if ( !FormatHelper.isEmpty(result) ) {
-          resp.result = result.notice;
-        } else {
-          resp.code = API_CODE.CODE_404;
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          resp.result = resp.result.notice;
         }
 
         res.json(resp);
@@ -150,12 +131,37 @@ class ApiRouter {
     const url = req.query.url;
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
-        // console.log(resp);
-        res.json({
-          code: API_CODE.CODE_00,
-          result: resp
-        });
+        res.json(resp);
       });
+
+  }
+
+  private getMenu(req: Request, res: Response, next: NextFunction) {
+
+  }
+
+  private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
+    const menuId = req.query.menuId;
+    this.redisService.getData(REDIS_BANNER_ADMIN + menuId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getMaskingMethod(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_MASKING_METHOD)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
+    const svcMgmtNum = req.body.svcMgmtNum;
+    this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
+      res.json({
+        code: API_CODE.CODE_00
+      });
+    });
 
   }
 
@@ -171,13 +177,12 @@ class ApiRouter {
   // }
 
   private upload() {
-    const currentDate = new Date(),
-      storage = multer.diskStorage({
+    const storage = multer.diskStorage({
         destination: (req, file, cb) => {
           let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
 
           if ( !FormatHelper.isEmpty(req.body.dest) ) {
-            const dateFormat = dateHelper.getShortDateWithFormat(currentDate, 'YYMMDD');
+            const dateFormat = dateHelper.getShortDateWithFormat(new Date(), 'YYMMDD');
 
             storagePath += '/' + req.body.dest + '/';
             if ( !fs.existsSync(storagePath) ) {
@@ -193,7 +198,7 @@ class ApiRouter {
           cb(null, storagePath);
         },
         filename: (req, file, cb) => {
-          cb(null, currentDate.valueOf() + path.extname(file.originalname));
+          cb(null, new Date().valueOf() + '_' + Math.floor((Math.random() * 10000) + 1) + path.extname(file.originalname));
         },
         limits: { fileSize: 5 * 1024 * 1024 }
       });
@@ -224,16 +229,6 @@ class ApiRouter {
         })
       };
 
-      res.json(resp);
-    });
-  }
-
-  private setCert(req: Request, res: Response, next: NextFunction) {
-    const params = req.body;
-    this.logger.info(this, '[set cert]', params);
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
-    this.authService.setCert(req, res, params).subscribe((resp) => {
       res.json(resp);
     });
   }

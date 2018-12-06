@@ -9,7 +9,6 @@ Tw.MembershipClauseLayerPopup = function (params) {
   this._callback = params.callback;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._historyService.init('hash');
 };
 
 Tw.MembershipClauseLayerPopup.prototype = {

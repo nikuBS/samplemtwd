@@ -13,6 +13,8 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
+import { MYT_BANNER_TYPE } from '../../types/common.type';
+import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -39,18 +41,24 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    this.__setType(svcInfo);
+    if ( this.type === 2 ) {
+      if ( req.path.indexOf('w') === -1 ) {
+        res.redirect('/myt-join/submain_w');
+      }
+    }
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    this.__setType(svcInfo);
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
     if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === '10' || svcInfo.pwdStCd === '60') ) {
       // 10 -> 신청, 60 -> 초기화 -- 설정가능한상태
       this.isPwdSt = true;
     }
+
     Observable.combineLatest(
       this._getMyInfo(),
       this._getMyHistory(),
@@ -61,8 +69,9 @@ class MyTJoinSubmainController extends TwViewController {
       this._getLongPausedState(),
       this._getWireFreeCall(),
       this._getOldNumberInfo(),
-      this._getChangeNumInfoService()
-    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc]) => {
+      this._getChangeNumInfoService(),
+      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO)
+    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
         this.error.render(res, {
@@ -165,6 +174,12 @@ class MyTJoinSubmainController extends TwViewController {
           }
         }
       }
+      // 배너 정보
+      if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( !FormatHelper.isEmpty(banner.result) ) {
+          data.banner = this.parseBanner(banner.result);
+        }
+      }
 
       res.render('myt-join.submain.html', { data });
     });
@@ -194,6 +209,27 @@ class MyTJoinSubmainController extends TwViewController {
     }
   }
 
+  parseBanner(data: any) {
+    const banners = data.banners;
+    const sort = {};
+    const result: any = [];
+    banners.forEach((item) => {
+      if ( item.bnnrExpsSeq ) {
+        sort[item.bnnrExpsSeq] = item;
+      }
+      // TEST
+      // if ( !FormatHelper.isEmpty(item.imgLinkUrl) ) {
+      //   sort[item.bnnrSeq] = item;
+      // }
+    });
+    const keys = Object.keys(sort).sort();
+    keys.forEach((key) => {
+      result.push(sort[key]);
+    });
+
+    return result;
+  }
+
   daysBetween(date1, date2) {
     // The number of milliseconds in one day
     const ONE_DAY = 1000 * 60 * 60 * 24;
@@ -210,7 +246,7 @@ class MyTJoinSubmainController extends TwViewController {
   isMasking(target): boolean {
     let result = false;
     const MASK_CODE = '*';
-    if ( target.indexOf(MASK_CODE) > -1 ) {
+    if ( target && target.indexOf(MASK_CODE) > -1 ) {
       result = true;
     }
     return result;

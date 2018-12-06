@@ -1,5 +1,7 @@
 Tw.COMMON_STRING = {
-  ALL: '전체'
+  ALL: '전체',
+  AGREE: '동의',
+  DISAGREE: '비동의'
 };
 
 Tw.DATA_UNIT = {
@@ -352,7 +354,29 @@ Tw.ALERT_MSG_COMMON = {
   CHANGE: '변경하시겠습니까?'
 };
 
-Tw.ALERT_MSG_HOME = {};
+Tw.ALERT_MSG_HOME = {
+  A01: 'MY 바로가기 편집을 종료하시겠습니까?',
+  A02: 'T월드에서 제공하는 기본 바로가기로 변경 하시겠습니까?',
+  A03: 'MY 바로가기는 최대 20개까지 추가할 수 있습니다.',
+  A04: 'MY 바로가기를 모두 제거 했습니다. MY 바로가기를 추가해 T월드를 보다 쉽게 사용해 보세요.',
+  A05: '고객님께서 가입한 요금제는 T끼리 데이터 선물이 불가능합니다.',
+  A06: '선물 후 잔여 데이터가 500MB 이상, 선물 가능 횟수가 남아 있어야 T끼리 선물하기가 가능합니다.',
+  A50: '',
+  A51: '',
+  A52: '',
+  A53: '',
+  A54: '',
+  A55: '',
+  A56: '',
+  A57: '',
+  A58: '',
+  A59: '',
+  A60: '',
+  A61: '',
+  A62: '',
+  A63: '',
+  A64: ''
+};
 
 Tw.ALERT_MSG_MYT_DATA = {
   GIFT_DATA_TARGET: '님에게',
@@ -467,6 +491,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V44: '휴대폰 번호가 올바르지 않습니다.',
   ALERT_2_A28: '팩스 전송이 완료 되었습니다.',
   ALERT_2_A29: '이메일로 전송 완료 되었습니다.',
+  ALERT_2_A32: '계좌 정보를 확인해주세요.',
   ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500점 부터 가능합니다.',
   ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000점 부터 가능합니다.',
   ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.',
@@ -476,8 +501,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
-  ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기'},
-  ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제은 다음달에 적용 됩니다.', BUTTON: '해제하기'}
+  ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
+  ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제은 다음달에 적용 됩니다.', BUTTON: '해제하기' }
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -539,10 +564,11 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A8: { TITLE: '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
+  ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다', MSG: '' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
-  ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: ''},
-  ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인'},
+  ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
+  ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
   ALERT_3_A27: { TITLE: '수정되었습니다.', MSG: '' },
   ALERT_3_A28: { TITLE: '예약이 취소되었습니다.', MSG: '' },
   ALERT_3_A29: { TITLE: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.', MSG: '' },
@@ -555,11 +581,12 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
   ALERT_3_A37: { TITLE: '이미 사용하고 있는 상품입니다.', MSG: '' },
   ALERT_3_A40: { TITLE: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?', MSG: '' },
-  ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' }
+  ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
+  ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.'
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
-  ALERT_3_A22: { TITLE: '알림', BUTTON: '확인' },
+  ALERT_3_A22: { TITLE: '알림', MSG: ' 은(는) 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
   ALERT_3_A23: { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
   ALERT_3_A24: { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' }
 };
@@ -1157,6 +1184,20 @@ Tw.BENEFIT = {
         LINK_TITLE: '나의 가입정보 확인하기 >'
       }
     }
+  },
+  INDEX: {
+    COMBINE: {
+      CONTENT: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
+      LINK_LIST:[
+        {
+          style_class: 'link l1',
+          txt: '신규신청'
+        }, {
+          style_class: 'link l2',
+          txt: '제출하기'
+        }
+      ]
+    }
   }
 };
 
@@ -1239,3 +1280,5 @@ Tw.PREPAID_TYPES = {
 };
 
 Tw.HISTORY_UNIT = '건';
+
+Tw.T_FAMILY_MOA_NO_LIMITATION = '자유 사용';

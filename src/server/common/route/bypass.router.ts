@@ -4,7 +4,6 @@ import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
 import ApiService from '../../services/api.service';
 import FormatHelper from '../../utils/format.helper';
 import LoginService from '../../services/login.service';
-import AuthService from '../../services/auth.service';
 
 
 class BypassRouter {
@@ -12,7 +11,6 @@ class BypassRouter {
 
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
-  private authService: AuthService = new AuthService();
 
   constructor() {
     this.router = express.Router();
@@ -39,36 +37,19 @@ class BypassRouter {
   }
 
   private setGetApi(cmd) {
-    this.router.get(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.GET));
+    this.router.get(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.GET));
   }
 
   private setPostApi(cmd) {
-    this.router.post(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.POST));
+    this.router.post(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.POST));
   }
 
   private setPutApi(cmd) {
-    this.router.put(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.PUT));
+    this.router.put(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.PUT));
   }
 
   private setDeleteApi(cmd) {
-    this.router.delete(cmd.path, this.checkApi.bind(this, cmd, API_METHOD.DELETE));
-  }
-
-  private checkApi(cmd: any, method: API_METHOD, req: Request, res: Response, next: NextFunction) {
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
-
-    // this.authService.getUrlMeta(req, res, method).subscribe((resp) => {
-    //   if ( resp['cert'] ) {
-    //     return res.json({
-    //       code: API_CODE.CODE_03,
-    //       result: resp
-    //     });
-    //   } else {
-    //     this.sendRequest(cmd, req, res, next);
-    //   }
-    // });
-    this.sendRequest(cmd, req, res, next);
+    this.router.delete(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.DELETE));
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
@@ -81,8 +62,16 @@ class BypassRouter {
     const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
     const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
 
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+
     this.apiService.request(cmd, parameter, headers, ...(pathVariables))
       .subscribe((data) => {
+        // TODO: This is unpretty. Need to revise for NON JSON Object response
+        if (data instanceof Buffer) {
+          return res.end(data);
+        }
+
         data.serverSession = this.loginService.getServerSession();
         const svcInfo = this.loginService.getSvcInfo();
         if ( !FormatHelper.isEmpty(svcInfo) ) {

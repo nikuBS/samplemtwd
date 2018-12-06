@@ -127,11 +127,7 @@
                                         </li>
                                         <li class="acco-box">
                                             <div class="acco-tit">
-                                                <% var joinSub = 'submain'; %>
-                                                <% if (svcInfo && ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) > -1) { %>
-                                                    <% joinSub = 'submain_w'; %>
-                                                <% } %>
-                                                <a class="link" href="/myt-join/<%= joinSub %>">나의 가입 정보
+                                                <a class="link" href="/myt-join/submain>">나의 가입 정보
                                                     <% if (svcInfo && svcInfo.expsSvcCnt) { %>
                                                     <span class="detail">총 <%= svcInfo.expsSvcCnt %>개의 회선</span>
                                                     <% } %>
@@ -290,8 +286,8 @@
                                                     <li class="tit"><button>구비서류 안내</button></li>
                                                     <li class="tit"><a href="/customer/svc-info/notice">공지사항</a></li>
                                                     <li class="tit"><button>고객의견</button></li>
-                                                    <li><button>칭찬합니다</button></li>
-                                                    <li><button>설문조사</button></li>
+                                                    <li><a href="/customer/svc-info/praise">칭찬합니다</a></li>
+                                                    <!-- <li><button>설문조사</button></li> -->
                                                     <li><button>제안합니다</button></li>
                                                     <li class="tit"><a href="/customer/damage-info">이용자 피해예방센터</a></li>
                                                 </ul>
@@ -337,6 +333,7 @@
                             <li class="member-info"><a href="/common/member/manage"><span class="ico"></span><span class="txt">회원정보</span></a></li>
                             <li class="member-setting"><a href="/main/menu/settings"><span class="ico"></span><span class="txt">설정</span></a></li>
                             <li class="member-log"><button class="fe-bt-logout"><span class="ico"></span><span class="txt">로그아웃</span></button></li>
+                            <!-- <li class="member-log"><button id="fe-test"><span class="ico"></span><span class="txt">로그아웃</span></button></li> -->
                         </ul>
                         <button class="bt-link-tx underline red" href="">문의하기</button>
                         <div class="address">
@@ -346,7 +343,7 @@
                 </div>
                 <!--// .cont-box -->
             </div>
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->

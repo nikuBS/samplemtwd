@@ -100,14 +100,19 @@ class ProductMobileplanLookupTplan extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const tDiyGrCd = req.query.prod_id || null,
+    const tDiyGrCd = req.query.s_prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
         title: PRODUCT_TYPE_NM.LOOKUP.TPLAN
       };
 
-    this.apiService.request(API_CMD.BFF_10_0015, { tDiyGrCd: tDiyGrCd }, {}, 'NA00005959')
+    const reqParams: any = {};
+    if (!FormatHelper.isEmpty(tDiyGrCd)) {
+      reqParams.tDiyGrCd = tDiyGrCd;
+    }
+
+    this.apiService.request(API_CMD.BFF_10_0015, reqParams, {}, 'NA00005959')
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

@@ -6,6 +6,7 @@ Tw.PopupService = function () {
   this._openCallback = null;
   this._closeCallback = null;
   this._hashService = Tw.Hash;
+  this._tooltipService = Tw.Tooltip;
 
   this._popupObj = {};
 
@@ -66,6 +67,11 @@ Tw.PopupService.prototype = {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
+    $container.on('click', '.btn-tip', $.proxy(this._getTip, this));
+    $container.on('click', '.tip-view', $.proxy(this._getTip, this));
+  },
+  _getTip: function () {
+    this._tooltipService.getTip();
   },
   _confirm: function () {
     if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {

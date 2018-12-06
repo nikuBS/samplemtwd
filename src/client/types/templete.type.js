@@ -343,8 +343,9 @@ Tw.POPUP_TPL = {
           { 'option': 'hbs-card-type', 'attr': 'id="01" data-center="1430456896"', value: '인천공항 2터미널 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="02" data-center="A100140000"', value: '김포공항 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="03" data-center="A900100000"', value: '제주공항 국제선 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="04" data-center="A200130000"', value: '김해공항 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="05" data-center="1000012532"', value: '대구공항 2층 로밍 센터' }
+          { 'option': 'hbs-card-type', 'attr': 'id="04" data-center="A200130000"', value: '김해공항 3층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="05" data-center="C399900000"', value: '대구공항 2층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="14" data-center="1430452300"', value: '대구 SKT 황금점 매장' }
         ]
       }
     ]
@@ -363,25 +364,13 @@ Tw.POPUP_TPL = {
     data: [
       {
         'list': [
-          {
-            'option': 'hbs-card-type',
-            'attr': 'id="06" data-center="A100110000" data-booth="1000004045"',
-            value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)'
-          },
-          {
-            'option': 'hbs-card-type',
-            'attr': 'id="07" data-center="A100110000" data-booth="1000004047"',
-            value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)'
-          },
-          {
-            'option': 'hbs-card-type',
-            'attr': 'id="08" data-center="1430456896" data-booth="1430456957"',
-            value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)'
-          },
+          { 'option': 'hbs-card-type', 'attr': 'id="06" data-center="A100110000" data-booth="1000004045"', value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="07" data-center="A100110000" data-booth="1000004047"', value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
+          { 'option': 'hbs-card-type', 'attr': 'id="08" data-center="1430456896" data-booth="1430456957"', value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
           { 'option': 'hbs-card-type', 'attr': 'id="09" data-center="A100140000" data-booth="1000004055"', value: '김포공항 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="10" data-center="A900100000" data-booth="1000004057"', value: '제주공항 국제선 1층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="11" data-center="A200130000" data-booth="1000012532"', value: '김해공항 3층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="12" data-center="" data-booth=""', value: '대구공항 2층 로밍 센터' },
+          { 'option': 'hbs-card-type', 'attr': 'id="12" data-center="C399900000" data-booth="1430455436"', value: '대구공항 2층 로밍 센터' },
           { 'option': 'hbs-card-type', 'attr': 'id="13" data-center="1430452300" data-booth="1430452300"', value: '대구 SKT 황금점 매장' }
         ]
       }
@@ -420,6 +409,17 @@ Tw.POPUP_TPL = {
           { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '국제2 여객터미널' }
         ]
       }]
+    }
+  ],
+  BENEFIT_JOIN_ADVICE_PRODUCT: [
+    {
+      'list': [
+        { 'option': 'condition', 'attr': 'id="cellphone"', value: '휴대폰' },
+        { 'option': 'condition', 'attr': 'id="internet"', value: '인터넷' },
+        { 'option': 'condition', 'attr': 'id="phone"', value: '전화' },
+        { 'option': 'condition', 'attr': 'id="tv"', value: 'TV' },
+        { 'option': 'condition', 'attr': 'id="combine"', value: '결합상품' }
+      ]
     }
   ]
 };
@@ -796,15 +796,10 @@ Tw.SUSPEND_RELATION = {
 
 Tw.PREPAID_HISTORIES = [{ value: '음성 충전', attr: 'data-type="voice"' }, { value: '데이터 충전', attr: 'data-type="data"' }];
 
-Tw.PREPAID_ICONS = {
-  IMMEDIATELY: {
-    name: '1회',
-    type: 'auto'
-  },
-  MONTHLY: {
-    name: '자동',
-    type: 'one'
-  }
+Tw.PREPAID_BADGES = {
+  1: { name: '1회', icon: 'auto' },
+  2: { name: '자동', icon: 'one' },
+  4: { name: '잔액승계', icon: 'succession' }
 };
 
 Tw.ANDROID_STORE = [
@@ -818,6 +813,16 @@ Tw.ANDROID_STORE = [
     ]
   }
 ];
+
+Tw.ROAMING_MANAGE_TYPE = {
+  list:[
+      { value: 'LTE 자동로밍', attr: 'data-manage-type="L"', 'option': '', type: 'L' },
+      { value: '3G 자동로밍', attr: 'data-manage-type="W"', 'option': '', type: 'W' },
+      { value: '2G 자동로밍', attr: 'data-manage-type="C"', 'option': '', type: 'C' },
+      { value: 'GSM 자동로밍', attr: 'data-manage-type="G"', 'option': '', type: 'G' },
+      { value: '임대로밍', attr: 'data-manage-type=""', 'option': '', type: '' }
+  ]
+};
 
 Tw.ROAMING_MFACTCD_LIST = {
     list: [

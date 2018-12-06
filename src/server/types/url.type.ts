@@ -90,6 +90,7 @@ export const URL = {
 
   // Product
   '/product/mobileplan': { login: false, id: 'MP', title: '모바일 요금제' },
+  '/product/mobileplan/compare-plans': { login: true, id: 'MP_02_02_01', title: '요금제 비교하기' },
   '/product/mobileplan-add': { login: false, id: 'MV', title: '부가서비스' },
   '/product/mobileplan/list': { login: false, id: 'MP_02', title: '모바일 요금제' },
   '/product/mobileplan-add/list': { login: false, id: 'MV_01', title: '부가서비스' },

@@ -5,8 +5,6 @@
  */
 
 Tw.LineComponent = function () {
-  this.$container = $('#header');
-
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -22,8 +20,8 @@ Tw.LineComponent = function () {
   this._urlAuth = null;
   this._changeLine = false;
   this._callback = null;
-  this._bindEvent();
-  Tw.Logger.info('[Line] init complete', this._urlAuth);
+  // this._bindEvent();
+  // Tw.Logger.info('[Line] init complete', this._urlAuth);
 };
 
 Tw.LineComponent.prototype = {
@@ -32,25 +30,25 @@ Tw.LineComponent.prototype = {
     RDT0007: 'RDT0007',    //	service-password locked	고객비밀번호 인증필요
     RDT0008: 'RDT0008'     //	service-password initialized	고객비밀번호 재설정 필요 ( 신청, 초기화 상태 )
   },
-  _bindEvent: function () {
-    this.$btLine = this.$container.find('#fe-bt-line');
-    var selectedMgmt = this.$btLine.data('svcmgmtnum');
-    var urlAuth = this.$btLine.data('svcmgmtnum');
-
-    this.$btLine.on('click', $.proxy(this._onClickBtLine, this, selectedMgmt, urlAuth));
-  },
-  _onClickBtLine: function (selectedMgmt, urlAuth, $event) {
-    $event.stopPropagation();
-    var curBtn = $($event.currentTarget);
-    if ( !curBtn.hasClass('no-arrow') ) {
-      // if ( !curBtn.hasClass('disabled') ) {
-      //   this._getLineList();
-      // } else {
-      //   this._closePopup();
-      // }
-      this.onClickLine(selectedMgmt, urlAuth);
-    }
-  },
+  // _bindEvent: function () {
+  //   this.$btLine = this.$container.find('#fe-bt-line');
+  //   var selectedMgmt = this.$btLine.data('svcmgmtnum');
+  //   var urlAuth = this.$btLine.data('svcmgmtnum');
+  //
+  //   this.$btLine.on('click', $.proxy(this._onClickBtLine, this, selectedMgmt, urlAuth));
+  // },
+  // _onClickBtLine: function (selectedMgmt, urlAuth, $event) {
+  //   $event.stopPropagation();
+  //   var curBtn = $($event.currentTarget);
+  //   if ( !curBtn.hasClass('no-arrow') ) {
+  //     // if ( !curBtn.hasClass('disabled') ) {
+  //     //   this._getLineList();
+  //     // } else {
+  //     //   this._closePopup();
+  //     // }
+  //     this.onClickLine(selectedMgmt, urlAuth);
+  //   }
+  // },
   onClickLine: function (selectedMgmt, urlAuth) {
     this._selectedMgmt = selectedMgmt;
     this._urlAuth = urlAuth;
@@ -127,7 +125,6 @@ Tw.LineComponent.prototype = {
   },
   _convLineData: function (lineData, category) {
     var result = [];
-    console.log(this._selectedMgmt);
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
       var selected = this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked ' : '';

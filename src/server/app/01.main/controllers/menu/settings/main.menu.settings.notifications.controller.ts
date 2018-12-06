@@ -49,6 +49,14 @@ export default class MainMenuSettingsNotifications extends TwViewController {
 
   private checkTworldAgreedInfo(res: Response, svcInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_03_0021, {}).map((resp) => {
+      // Mock
+      /*
+      return {
+        twdAdRcvAgreeYn: 'Y',
+        twdInfoRcvAgreeYn: 'N',
+        twdLocUseAgreeYn: 'Y'
+      };
+      */
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
       }

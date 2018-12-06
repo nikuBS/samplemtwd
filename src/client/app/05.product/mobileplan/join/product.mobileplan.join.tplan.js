@@ -62,7 +62,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       return this._procConfirm();
     }
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._overpayRetryCnt++;
     this._isSetOverPayReq = true;
@@ -71,7 +71,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _resOverpay: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (['ZEQPN0002', 'ZORDN3598'].indexOf(resp.code) !== -1 && this._overpayRetryCnt < 3) { // 최대 3회까지 재조회 시도
       this._isSetOverPayReq = false;
@@ -105,6 +105,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   _procConfirm: function() {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
+      noticeList: this._confirmOptions.joinNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
@@ -116,7 +117,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _prodConfirmOk: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // prodId: this._prodId,
     //   prodProcTypeCd: 'JN',
@@ -129,7 +130,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

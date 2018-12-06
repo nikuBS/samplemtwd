@@ -120,6 +120,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
+      noticeList: this._confirmOptions.joinNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
@@ -131,7 +132,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
   },
 
   _prodConfirmOk: function() {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // prodId: this._prodId,
     //   prodProcTypeCd: 'JN',
@@ -144,7 +145,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

@@ -23,12 +23,13 @@ Tw.ProductApps.prototype = {
 
   _bindEvent: function() {
     this.$orderBtn.on('click', $.proxy(this._openOrderPopup, this));
-    this.$container.on('change', '.btn-switch input', $.proxy(this._toggleShowInstalled, this));
+    this.$container.on('change', '.btn-switch input', $.proxy(this._handleToggleShowInstalled, this));
   },
 
   _cachedElement: function() {
     this.$list = this.$container.find('.app-list-bottom');
     this.$orderBtn = this.$container.find('.text-type01');
+    this.$switchBtn = this.$container.find('.btn-switch input');
   },
 
   _getApps: function() {
@@ -91,6 +92,7 @@ Tw.ProductApps.prototype = {
   _appendApps: function(isApp) {
     this._sort('storRgstDtm');
     this.$list.html(this._appsTmpl({ apps: this._apps, isApp: isApp }));
+    this.$news = this.$list.find('.i-new.none');
   },
 
   _openOrderPopup: function() {
@@ -134,6 +136,10 @@ Tw.ProductApps.prototype = {
     this._sort(nOrder);
     this.$list.empty();
     this.$list.html(this._appsTmpl({ apps: this._apps }));
+    this.$news = this.$list.find('.i-new.none');
+    if (this.$switchBtn) {
+      this._toggleShowInstalled(false);
+    }
     this._popupService.close();
   },
 
@@ -152,13 +158,17 @@ Tw.ProductApps.prototype = {
     return 0;
   },
 
-  _toggleShowInstalled: function(e) {
-    var isOn = e.currentTarget.getAttribute('checked');
+  _handleToggleShowInstalled: function(e) {
+    this._toggleShowInstalled(e.currentTarget.getAttribute('checked'));
+  },
 
+  _toggleShowInstalled: function(isOn) {
     if (isOn) {
       this.$list.find('.i-atv').removeClass('none');
+      this.$news.addClass('none');
     } else {
       this.$list.find('.i-atv').addClass('none');
+      this.$news.removeClass('none');
     }
   }
 };

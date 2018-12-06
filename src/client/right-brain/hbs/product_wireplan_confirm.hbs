@@ -241,50 +241,19 @@
                 </div>
                 <!--// .cont-box -->
             {{/if}}
-            {{#if tipList}}
+            {{#if isNoticeList}}
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                    <ul class="noti-list">
-                        {{#tipList}}
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list fe-noti-list">
+                        {{#noticeList}}
                             <li>
-                                {{text}} <button type="button" class="tip-view" id="{{code}}" aria-haspopup="true">TIP</button>
+                                {{noticeTit}} <button type="button" class="tip-view fe-btn_tip_view" data-title="{{noticeTit}}" aria-haspopup="true">TIP</button>
+                                <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
                             </li>
-                        {{/tipList}}
-                    </ul>
-                </div>
-                <!--// .cont-box -->
-            {{/if}}
-            {{#if preinfo.joinNoticeList}}
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                    <ul class="noti-list">
-                        {{#preinfo.joinNoticeList}}
-                            <li>
-                                {{{noticeTxt}}}
-                            </li>
-                        {{/preinfo.joinNoticeList}}
-                    </ul>
-                </div>
-                <!--// .cont-box -->
-            {{/if}}
-            {{#if preinfo.termNoticeList}}
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                    <ul class="noti-list">
-                        {{#preinfo.termNoticeList}}
-                            <li>
-                                {{{noticeTxt}}}
-                            </li>
-                        {{/preinfo.termNoticeList}}
+                        {{/noticeList}}
                     </ul>
                 </div>
                 <!--// .cont-box -->

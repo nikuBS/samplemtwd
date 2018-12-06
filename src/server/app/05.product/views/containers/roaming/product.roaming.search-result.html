@@ -2,7 +2,6 @@
 * FileName: product.roaming.search-result.html
 * Author: Eunjung Jung
 * Date: 2018.11.08
-* id: MV
 %>
 
 
@@ -19,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회', svcInfo, option: { line: true } }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -31,7 +30,7 @@
                 <div class="list-comp-thumnail refill-coupon-top">
                     <div class="comp-box country-roaming">
                         <div class="list-box cont-noti">
-                            <h3 class="tit">출국 국가 검색<button class="tip-view">TIP</button></h3>
+                            <h3 class="tit">출국 국가 검색<button class="tip-view" id="RM_03_01_01_01_tip_01">TIP</button></h3>
                             <span class="type1">아래에서 국가명을 입력하신 후 검색 버튼을 <br/>클릭해주세요.</span>
                         </div>
                         <div class="inputbox bt-add">
@@ -103,14 +102,14 @@
                         <% if (roamingTypeData.dataRoamingYn  === 'Y') {%>
                         <li>
                             <div class="link-long">
-                                <button><span class="icon"><img src="/img/product/ico-roaming-info01.png" alt="데이터 로밍" /></span>데이터 로밍<span class="ico"></span></button>
+                                <button><span class="icon"><img src="<%= CDN %>/img/product/ico-roaming-info01.png" alt="데이터 로밍" /></span>데이터 로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
                         <% if (roamingTypeData.voiceRoamingYn  === 'Y') {%>
                         <li>
                             <div class="link-long">
-                                <button><span class="icon"><img src="/img/product/ico-roaming-info02.png" alt="음성 로밍" /></span>음성 로밍<span class="ico"></span></button>
+                                <button><span class="icon"><img src="<%= CDN %>/img/product/ico-roaming-info02.png" alt="음성 로밍" /></span>음성 로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
@@ -119,20 +118,14 @@
                     <h4 class="txt pt40">로밍 서비스 방식별 종량 요금 안내</h4>
                     <div class="cont-noti">
                         <span class="type3">이용 가능한 로밍 서비스 방식은 <br/>
-                            <strong class="">
-                                <% if (roamingTypeData.lte > 0) {%>LTE 자동로밍<% } %><% if (roamingTypeData.lte > 0 && roamingTypeData.wcdma > 0) {%>, <% } %>
-                                <% if (roamingTypeData.wcdma > 0) {%>3G 자동로밍<% } %><% if (roamingTypeData.cdma > 0) {%>, <% } %>
-                                <% if (roamingTypeData.cdma > 0) {%>2G 자동로밍<% } %><% if (roamingTypeData.gsm > 0) {%>, <% } %>
-                                <% if (roamingTypeData.gsm > 0) {%>GSM 자동로밍<% } %><% if (roamingTypeData.rent > 0) {%>, <% } %>
-                                <% if (roamingTypeData.rent > 0) {%>임대로밍<% } %>
-                            </strong>입니다.</span>
+                            <strong class="fe-rm-type"></strong>입니다.</span>
                     </div>
-                    <p class="mt20"><button class="bt-dropdown big" title="사용 가능 서비스" aria-haspopup="true">
-                        <% if (roamingTypeData.lte > 0) {%>LTE 자동로밍
-                        <% } else if (roamingTypeData.wcdma > 0) {%>3G 자동로밍
-                        <% } else if (roamingTypeData.cdma > 0) {%>2G 자동로밍
-                        <% } else if (roamingTypeData.gsm > 0) {%>GSM 자동로밍
-                        <% } else {%>임대로밍<% } %>
+                    <p class="mt20"><button class="bt-dropdown big fe-manage-type" title="사용 가능 서비스" aria-haspopup="true">
+                        <!--<% if (roamingTypeData.lte > 0) {%>LTE 자동로밍-->
+                        <!--<% } else if (roamingTypeData.wcdma > 0) {%>3G 자동로밍-->
+                        <!--<% } else if (roamingTypeData.cdma > 0) {%>2G 자동로밍-->
+                        <!--<% } else if (roamingTypeData.gsm > 0) {%>GSM 자동로밍-->
+                        <!--<% } else {%>임대로밍<% } %>-->
                         <span class="ico"></span></button></p>
                     <p class="comm-indent-txt pt20">* 안내 요금은 부가세가 포함된 금액입니다.</p>
                 </div>
@@ -140,86 +133,6 @@
             <!--// .cont-box -->
             <!-- .cont-box -->
             <div class="cont-box fe-rate-info">
-                <!--<div class="roaming-info-wrap">-->
-                    <!--<h4 class="txt">데이터(정보이용료 별도)<button class="tip-view">TIP</button></h4>-->
-                    <!--<div class="unpaid-charges mt12">-->
-                        <!--<ul class="point-box mb0">-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>데이터</dt>-->
-                                    <!--<dd>0.275원/패킷</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                    <!--<ul class="round-dot-list mt20 pb20">-->
-                        <!--<li>임대로밍의 경우 일임대료는 2,200원(부가세포함)입니다.상기 요금은 3G/GSM 기준의 요율이며, 대여 받으시는 임대폰의 기종에 따라 요금은 상이할 수 있습니다.</li>-->
-                        <!--<li><strong>LTE 자동로밍</strong>을 이용하셔도 <strong>음성 로밍은 3G/GSM망으로 연결되어 3G 자동로밍 요율</strong>이 적용됩니다.<br/>자세한 사항은 3G 자동로밍을 선택해서 확인하세요.</li>-->
-                        <!--<li>선택하신 국가는 통화버튼을 누른 시점부터 로밍 요금이 부과되오니 유의하시기 바랍니다.</li>-->
-                        <!--<li><strong>T로밍 데이터 안심서비스!</strong><br />데이터 종량 과금이 5,000원 일 상한 도달 시, 원패스 제휴 사업자 접속의 경우 200kbps 속도제어, 비 제휴 사업자 접속의 경우 데이터 차단이 됩니다.</li>-->
-                        <!--<li>3/23부터는 음성 통화 요금이 분당 과금에서 초당 과금으로 변경됩니다.</li>-->
-                    <!--</ul>-->
-
-                    <!--<h4 class="txt tline">음성</h4>-->
-                    <!--<div class="unpaid-charges mt12 pb20">-->
-                        <!--<ul class="point-box mb0">-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>방문국에서 방문국으로</dt>-->
-                                    <!--<dd>20.1원/초</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>방문국에서 한국/해외로</dt>-->
-                                    <!--<dd>40.3원/초</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>수신</dt>-->
-                                    <!--<dd>21.8원/초</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-
-                    <!--<h3 class="txt tline">문자</h3>-->
-                    <!--<div class="unpaid-charges mt12">-->
-                        <!--<ul class="point-box mb0">-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>SMS 발신</dt>-->
-                                    <!--<dd>165원/건</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>SMS 수신</dt>-->
-                                    <!--<dd>무료</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>MMS 텍스트 발신</dt>-->
-                                    <!--<dd>330원/건</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>MMS 멀티미디어 발신</dt>-->
-                                    <!--<dd>440원/건</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<dl>-->
-                                    <!--<dt>MMS 수신</dt>-->
-                                    <!--<dd>무료</dd>-->
-                                <!--</dl>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
             <!--// .cont-box -->
 
@@ -233,7 +146,7 @@
                                 <div class="acco-style btn-hold">
                                     <ul class="acco-list pt0">
                                         <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="/img/product/ico-info01.png" alt="음성통화 수신요금 안내" /></span>음성통화 수신요금 안내<button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info01.png" alt="음성통화 수신요금 안내" /></span>음성통화 수신요금 안내<button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="round-dot-list">
                                                     <li>
@@ -244,14 +157,14 @@
                                                     <li>
                                                         음성통화 수신을 위한 국제전화사업자를 선택하실 수 있으며,
                                                         미선택 시 SK텔링크로 자동 설정됩니다.
-                                                        <p><button class="bt-link-tx underline">국제전화 사업자 선택 자세히 보기 </button></p>
+                                                        <p><a class="bt-link-tx underline" href="/product/callplan/TW61000002">국제전화 사업자 선택 자세히 보기 </a></p>
                                                     </li>
                                                     <li>부가 서비스 : 발신자표시서비스(무료), 로밍안내 방송서비스(무료)</li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="/img/product/ico-info02.png" alt="문자 메시지 요금 안내" /></span>문자 메시지 요금 안내<button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info02.png" alt="문자 메시지 요금 안내" /></span>문자 메시지 요금 안내<button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="round-dot-list">
                                                     <li>
@@ -261,19 +174,19 @@
                                             </div>
                                         </li>
                                         <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="/img/product/ico-info03.png" alt="이것만은 꼭 확인하세요" /></span>이것만은 꼭 확인하세요<button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info03.png" alt="이것만은 꼭 확인하세요" /></span>이것만은 꼭 확인하세요<button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="round-dot-list">
                                                     <li>
                                                         해당 국가의 경우 2G 자동 로밍 서비스 방식이 지원되지만,
                                                         지역에 따라 로밍 가능 여부가 달라질 수 있습니다.
-                                                        <p><button class="bt-link-tx underline">서비스 이용가능 지역 자세히 보기</button></p>
+                                                        <p><a class="bt-link-tx underline fe-able-area" href="http://tworld.co.kr/poc/roaming/html/popup/cm8GsmUsa.html" target="_blank">서비스 이용가능 지역 자세히 보기</a></p>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="/img/product/ico-info04.png" alt="로밍 시 국가별 주의 사항" /></span>로밍 시 국가별 주의 사항<button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info04.png" alt="로밍 시 국가별 주의 사항" /></span>로밍 시 국가별 주의 사항<button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="round-dot-list">
                                                     <li>
@@ -289,7 +202,7 @@
                                                         또는 T 로밍 고객센터 1599-2011(유료), T world 에서
                                                         선택하실 수 있으며, 선택하지 않을 경우 SK텔링크로
                                                         자동 설정됩니다.
-                                                        <p><button class="bt-link-tx underline">국제전화 사업자 선택 자세히 보기 </button></p>
+                                                        <p><a class="bt-link-tx underline" href="/product/callplan/TW61000002">국제전화 사업자 선택 자세히 보기 </a></p>
                                                     </li>
                                                     <li>수신요금은 국제전화사업자의 요금정책에 따라 차이가
                                                         있을 수 있으며, 초당 과금됩니다.</li>
@@ -321,8 +234,8 @@
                                     <li>
                                         <div class="box-wrap">
                                             <div class="bg1"> <!-- 보라색 -->
-                                                <button class="txt-tit">T로밍 아시아패스</button>
-                                                <span class="ico"><img src="/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
+                                                <a class="txt-tit" href="/product/callplan/NA00005900">T로밍 아시아패스</a>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
                                                 <span class="txt-type1">아시아 주요 27개국에서 5일간 LTE/3G 데이터 안심하고 이용!</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">25,000원/5일</strong>
@@ -332,8 +245,8 @@
                                     <li>
                                         <div class="box-wrap">
                                             <div class="bg2"> <!-- 녹색 -->
-                                                <button class="txt-tit">T로밍 유럽패스 3GB</button>
-                                                <span class="ico"><img src="/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
+                                                <a class="txt-tit" href="/product/callplan/NA00006046">T로밍 유럽패스 3GB</a>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
                                                 <span class="txt-type1">유럽 51개국에서 LTE/3G 데이터를 저렴하게 이용!</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">39,000원/30일</strong>
@@ -362,40 +275,40 @@
                                 <ul class="horizontal-list useful-goods">
                                     <li>
                                         <div>
-                                            <button class="bg3"> <!-- 보라색 -->
+                                            <button class="bg3 fe-rmplan-btn"> <!-- 보라색 -->
                                                 <span class="located top">
 														<span class="txt-tit">로밍 요금제</span>
 													</span>
                                                 <span class="located bottom">
 														<span class="txt-detail">사용 패턴별/국가별로 <br/>설계된 다양한 로밍 요금제</span>
 													</span>
-                                                <span class="ico"><img src="/img/product/ico-roaming-service01.png" alt="T로밍 아시아패스" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service01.png" alt="T로밍 아시아패스" /></span>
                                             </button>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
-                                            <button class="bg3"> <!-- 보라색 -->
+                                            <button class="bg3 fe-btn-rmadd"> <!-- 보라색 -->
                                                 <span class="located top">
 														<span class="txt-tit">로밍 부가서비스</span>
 													</span>
                                                 <span class="located bottom">
 														<span class="txt-detail">로밍 이용 시 함께하면 좋은 <br/>무료 부가 서비스를 추천해 드립니다.</span>
 													</span>
-                                                <span class="ico"><img src="/img/product/ico-roaming-service02.png" alt="T로밍 아시아패스" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service02.png" alt="T로밍 아시아패스" /></span>
                                             </button>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
-                                            <button class="bg3"> <!-- 보라색 -->
+                                            <button class="bg3 fe-rm-card"> <!-- 보라색 -->
                                                 <span class="located top">
 														<span class="txt-tit">로밍 카드/쿠폰</span>
 													</span>
                                                 <span class="located bottom">
 														<span class="txt-detail">T 로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>
 													</span>
-                                                <span class="ico"><img src="/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>
+                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>
                                             </button>
                                         </div>
                                     </li>
@@ -412,7 +325,7 @@
 
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
                     <li>이용 관련 안내 <button type="button" class="tip-view" id="RM_03_01_01_01_tip_03" title="~~정보보기" aria-haspopup="true">TIP</button></li>
                     <li>요금제 관련 안내 <button type="button" class="tip-view" id="RM_03_01_01_01_tip_04" title="~~정보보기" aria-haspopup="true">TIP</button></li>
@@ -420,6 +333,11 @@
             </div>
             <!--// .cont-box -->
         </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
     <!--// #contents -->
 </div>
@@ -427,9 +345,9 @@
 
 <% include ../../components/javascript.component.html %>
 <script>
-    var svcInfo = '<%- JSON.stringify(svcInfo) %>';
-    var searchInfo = '<%- JSON.stringify(searchInfo) %>';
-    var roamingTypeData = '<%- JSON.stringify(roamingTypeData) %>';
+  var svcInfo = '<%- JSON.stringify(svcInfo) %>';
+  var searchInfo = '<%- JSON.stringify(searchInfo) %>';
+  var roamingTypeData = '<%- JSON.stringify(roamingTypeData) %>';
   $(document).ready(function () {
     new Tw.ProductRoamingSearchResult($('.wrap'), JSON.parse(svcInfo), JSON.parse(searchInfo), JSON.parse(roamingTypeData));
   });

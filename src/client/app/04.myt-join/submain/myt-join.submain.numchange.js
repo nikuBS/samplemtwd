@@ -135,12 +135,12 @@ Tw.MyTJoinPhoneNumChange.prototype = {
       num2 : numArr[2]
     };
 
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0185, param)
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           // Tw.Error(resp.code, resp.msg).pop();
           this._popupService.openAlert(Tw.MYT_JOIN_MGMT_NUMCHG.ALERT_SVC_FAIL);
@@ -156,7 +156,7 @@ Tw.MyTJoinPhoneNumChange.prototype = {
 
       }, this))
       .fail(function(err){
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
   }

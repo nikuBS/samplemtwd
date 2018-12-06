@@ -4,7 +4,6 @@
 * Date: 2018.11.08
 %>
 
-
 <% include ../../components/start.component.html %>
 <body>
 <!-- #skip_navigation -->
@@ -18,7 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회', svcInfo, option: { line: true } }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -31,7 +30,7 @@
                     <div class="comp-box country-roaming">
                         <div class="list-box cont-noti">
                             <p class="list-text">
-                                <span class="mtext">출국 국가 검색<button class="tip-view">TIP</button></span>
+                                <span class="mtext">출국 국가 검색<button class="tip-view" id="RM_03_01_01_01_tip_01">TIP</button></span>
                                 <span class="type1">아래에서 국가명을 입력하신 후 검색 버튼을 <br/>클릭해주세요.</span>
                             </p>
                         </div>
@@ -48,60 +47,17 @@
             </div>
             <!--// .cont-box -->
 
-            <!-- .cont-box -->
-
+            <!-- .cont-box 폰 정보 -->
             <div class="cont-box pt0">
-                <div class="list-comp-thumnail refill-coupon-top">
-                    <div class="comp-box country-roaming">
-                        <div class="list-box cont-noti pt0">
-                            <p class="list-text">
-                                <span class="mtext">휴대폰 선택<button class="tip-view">TIP</button></span>
-                                <% if (!isLogin) {%>
-                                <span class="type1">출국 국가 검색 후 휴대폰 모델을 선택하시면 <br/>해당 국가에서 이용 가능한 로밍 서비스 방식과 <br/>요금을 확인하실 수 있습니다.</span>
-                                <% } %>
-                            </p>
-                        </div>
-                        <!--<% if (isLogin && loginInfo.eqpMdlNm) { %>-->
-                        <div class="fe-rm-phone">
-                            <div class="phone-name">
-                                <strong><%= loginInfo.eqpMdlNm %></strong>
-                            </div>
-                            <ul class="bt-slice pt20">
-                                <li class="bt-white2">
-                                    <button class="fe-change-model">변경</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--<% } else {%>-->
-                        <div class="fe-rm-select">
-                          <span class="inputbox">
-                            <span class="input">
-                                <button class="bt-dropdown big placeholder fe-roaming-mfactCd" title="데이터 용량" aria-haspopup="true">제조사를 선택하세요<span class="ico"></span></button>
-                            </span>
-                        </span>
-                            <span class="inputbox mt10">
-                            <span class="input">
-                                <button class="bt-dropdown big placeholder fe-roaming-model" title="데이터 용량" aria-haspopup="true">모델명을 선택하세요<span class="ico"></span></button>
-                            </span>
-                        </span>
-                            <ul class="bt-slice pt20">
-                                <li class="bt-blue1">
-                                    <button id="fe-rm-hp-search">선택</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--<% } %>-->
-                        <% if (!isLogin) {%>
-                        <p class="comm-indent-txt pt20">* 로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.</p>
-                        <% } %>
-                    </div>
+                <div class="list-comp-thumnail refill-coupon-top" id="fe-search-phone">
                 </div>
             </div>
-            <!--// .cont-box -->
+            <!--// .cont-box 폰 정보 -->
+
             <hr class="cont-sp type1" aria-hidden="true" />
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
                     <li>이용 관련 안내 <button type="button" class="tip-view" id="RM_03_01_01_01_tip_03" aria-haspopup="true">TIP</button></li>
                     <li>요금제 관련 안내 <button type="button" class="tip-view" id="RM_03_01_01_01_tip_04" aria-haspopup="true">TIP</button></li>
@@ -109,6 +65,11 @@
             </div>
             <!--// .cont-box -->
         </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
     </div>
     <!--// #contents -->
 </div>
@@ -120,4 +81,5 @@
     new Tw.ProductRoamingSearchBefore($('.wrap'), JSON.parse(svcInfo));
   });
 </script>
+<% include ../../components/roaming/product.roaming.search-result.component.html %>
 <% include ../../components/end.component.html %>

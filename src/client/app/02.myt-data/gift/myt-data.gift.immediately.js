@@ -50,11 +50,17 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var mockDataQty = 900;
-      var dataQty = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
+      // var mockDataQty = 900;
+      var apiDataQty = res.result.dataQty;
+      var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+      // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
       this.$remainQty.text(dataQty.data + dataQty.unit);
-      this._setAmountUI(Number(mockDataQty));
+      this._setAmountUI(Number(apiDataQty));
+
+      // this.$remainQty.text(mockData.data + mockData.unit);
+      // this._setAmountUI(Number(mockDataQty));
     } else {
+      this._setAmountUI(Number(0));
       Tw.Error(res.code, res.msg).pop();
     }
   },
@@ -135,7 +141,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.paramData = $.extend({}, this.paramData, htParams);
 
     this._popupService.openConfirm(
-      this.paramData.custNm + ' ( '+  Tw.FormatHelper.conTelFormatWithDash(this.$inputImmediatelyGift.val().replace(/-/g, '')) +' ) ' +
+      this.paramData.custNm + ' ( ' + Tw.FormatHelper.conTelFormatWithDash(this.$inputImmediatelyGift.val().replace(/-/g, '')) + ' ) ' +
       Tw.ALERT_MSG_MYT_DATA.GIFT_DATA_TARGET +
       Tw.FormatHelper.convDataFormat(this.paramData.dataQty, 'MB').data +
       Tw.FormatHelper.convDataFormat(this.paramData.dataQty, 'MB').unit +
@@ -148,10 +154,18 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onSuccessSendingData: function (res) {
     this._popupService.close();
 
-    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+    // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     // TODO: Implemented API TEST
-    // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-    //   .done($.proxy(this._onSuccessSendingData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
+      .done($.proxy(this._onRequestSuccessGiftData, this));
+  },
+
+  _onRequestSuccessGiftData: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _checkValidateSendingButton: function () {

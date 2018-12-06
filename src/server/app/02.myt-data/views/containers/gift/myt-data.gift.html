@@ -17,8 +17,14 @@
 <!--// #skip_navigation -->
 <div class="wrap step">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html',
-    { title: 'T끼리 데이터 선물', svcInfo: svcInfo, option: { back: 'step' } }); %>
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <div class="header-wrap noborder">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>T끼리 데이터 선물</h1>
+                </div>
+            </div>
+        </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -62,6 +68,8 @@
     <!--// #contents -->
     <div class="popup-page tw-popup fe-layer_available_product" style="display:none">
 
+    </div>
+    <button class="prev-step fe-common-back">취소</button>
     </div>
 </div>
 </body>

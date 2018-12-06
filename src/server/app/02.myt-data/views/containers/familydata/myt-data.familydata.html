@@ -18,21 +18,24 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: 'T가족모아 데이터' }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: 'T가족모아데이터' }); %>
+    <% const INFINITY = 'NA00005959'; %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="data-realtime-wrap">
+                    <% const total = familyInfo.mine.limitedYn === 'Y' ? familyInfo.mine.limitation : familyInfo.total; %>
                     <li>
                         <div class="graph">
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
                                     <!-- loop -->
-                                    <div class="c100 p<%= familyInfo.remained.data / familyInfo.total.data * 100 %>"><!-- .p+(0~100) // -->
+                                    <div class="c100 p<%= familyInfo.remained / total / 10 %>"><!-- .p+(0~100) // -->
                                         <div class="blue"><!-- red, yellow, green, blue // -->
                                             <div class="slice">
                                                 <div class="bar"></div>
@@ -46,9 +49,13 @@
                         </div>
                         <div class="cont">
                             <span class="stit">나의 T가족모아데이터<button id="DC_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
-                            <span class="txt1"><span class="ff-type1"><%= familyInfo.remained.data + familyInfo.remained.unit %></span>남음</span>
+                            <% if (familyInfo.mine.prodId === INFINITY) { %>
+                                <span class="txt1"><span class="ff-type1">0GB</span> (Data 인피니티 이용)</span>
+                            <% } else { %>
+                                <span class="txt1"><span class="ff-type1"><%= familyInfo.total + 'MB' %></span>남음</span>
+                            <% } %>
                         </div>
-                        <% if ( familyInfo.mine.shrblYn === "Y" ) { %>
+                        <% if (familyInfo.mine.shrblYn === "Y") { %>
                         <span class="btn-r">
                             <a href="/myt-data/familydata/share" class="btn-round2 btn-style3">공유</a>
                         </span>
@@ -57,7 +64,7 @@
                 </ul>
                 <div class="total-data">
                     <span class="stit">총 가족 공유 데이터</span>
-                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.remained.data + familyInfo.remained.unit %></span>남음</span>
+                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total + 'GB' %></span></span>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -68,12 +75,24 @@
                 </div>
                 <div class="use-state-wrap">
                     <ul>
-                        <% familyInfo.mbrList.map(member => { %>
-                            <li>
+                        <% familyInfo.mbrList.map(member => { 
+                            const isInfinity = member.prodId === INFINITY; %>
+                            <li data-member="<%= JSON.stringify({ name: member.custNm, svcNum: member.svcNum, isRepresentation: member.repYn === 'Y', mgmtNum: member.svcMgmtNum }) %>">
                                 <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
                                 <div class="info">
-                                    <span class="stit"><%=member.custNm%><% if( member.repYn === 'Y' ) { %><span class="sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span><% } %></span>
-                                    <span class="r-txt"><span class="ff-type1"><%= member.used %>MB</span>이용</span>
+                                    <span class="stit">
+                                        <%= member.custNm %>
+                                        <% if (member.repYn === 'Y') { %>
+                                            <span class="sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span>
+                                        <% } %>
+                                    </span>
+                                    <span class="r-txt">
+                                        <% if (isInfinity) { %>
+                                            <span class="ff-type1">무제한</span>
+                                        <% } else { %>
+                                            <span class="ff-type1"><%= member.used %>MB</span>이용
+                                        <% } %>
+                                    </span>
                                     <p><%= member.svcNum %></p>
                                 </div>
                                 <div class="detail">
@@ -82,12 +101,14 @@
                                         <dd><%= member.prodNm %></dd>
                                         <dt>공유한 데이터</dt>
                                         <dd><%= member.shared %>GB</dd>
-                                        <% if (member.limitedYn === 'Y' || familyInfo.isRepresentation) { %>
-                                        <dt>이용한도</dt>
-                                        <dd>
-                                            <% if ((member.limitation || '').length > 0) { %><%= member.limitation %>GB<% } %>
-                                            <% if (familyInfo.isRepresentation) { %><button class="bt-link-tx underline" href="">설정</button><% } %>
-                                        </dd>
+                                        <% if (!isInfinity) {
+                                            <dt>이용한도</dt>
+                                            <dd>
+                                                <span><%= member.limitedYn === 'Y' ? member.limitation + 'GB' : '자유 사용' %></span>
+                                                <% if (familyInfo.isRepresentation) { %>
+                                                <button class="bt-link-tx underline fe-setting-limit" data-limitation="<%= member.limitedYn === 'Y' && member.limitation %>">설정</button>
+                                                <% } %>
+                                            </dd>
                                         <% } %>
                                     </dl>
                                 </div>

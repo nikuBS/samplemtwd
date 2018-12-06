@@ -8,10 +8,9 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_INFO } from '../../../../types/common.type';
+import { REDIS_PRODUCT_INFO } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT } from '../../../../types/string.old.type';
-import { TIME_UNIT } from '../../../../types/string.type';
+import { DATA_UNIT, TIME_UNIT } from '../../../../types/string.type';
 
 interface Option {
   dataVoiceClCd: string;
@@ -88,8 +87,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
 
   private getRedisProductInfo(res: Response, svcInfo: any, prodId: any): Observable<any> {
     return this.redisService.getData(REDIS_PRODUCT_INFO + prodId).map(resp => {
-      if (!FormatHelper.isEmpty(resp)) {
-        return resp.summary;
+      if (!FormatHelper.isEmpty(resp.result)) {
+        return resp.result.summary;
       }
 
       this.error.render(res, { code: resp.code, msg: resp.msg, svcInfo });

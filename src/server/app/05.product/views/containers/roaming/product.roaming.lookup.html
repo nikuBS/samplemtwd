@@ -1,0 +1,97 @@
+<%#
+* FileName: product.roaming.lookup.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.03
+* ID: RM_11_01_02_06
+%>
+
+<% include ../../components/start.component.html %>
+<body data-gr-c-s-loaded="true">
+<!-- #skip_navigation
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>설정</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box noborder">
+
+                    <div class="myinfo-wrap">
+                        <div class="myinfo-cont">
+                            <div class="subtitle">
+                                <span class="name">데이터 로밍 요금상품 <button type="button" class="tip-view" title="로밍 서비스 기간 설정 정보보기" aria-haspopup="true">TIP</button></span>
+                            </div>
+                            <div class="title pt6">
+                                <span><%= prodBffInfo.prodNm %></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="detail-info-list pt36">
+                        <li>
+                            <dl>
+                                <dt>이용요금</dt>
+                                <dd>
+                                    <p class="value"><span class="point"><%= prodBffInfo.prodFee %></span> / 일</p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>서비스 개시일</dt>
+                                <dd>
+                                    <p class="value" id="start_date"></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>서비스 종료일</dt>
+                                <dd>
+                                    <p class="value" id="end_date"></p>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+</div>
+
+
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingLookup($('.wrap'),<%- JSON.stringify(prodBffInfo) %>);
+  });
+</script>
+
+<% include ../../components/end.component.html %>

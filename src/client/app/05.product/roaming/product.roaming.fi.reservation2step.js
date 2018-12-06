@@ -21,6 +21,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$btnCountryLink = this.$container.find('.link-area > .bt-link-tx');
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
+    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
   },
 
   _bindEvent: function() {
@@ -35,6 +36,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$container.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
     this.$container.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
     this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
+    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
   },
 
   _searchCountryCode: function(){
@@ -230,7 +232,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
   _insertDashPhone: function() {
     //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
-    var phoneNum = $('#flab01').val();
+    var phoneNum = $('#flab01').val().replace(/\-/gi, '');
     var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
     $('#flab01').val(hypenPhoneNum);
   },
@@ -247,5 +249,9 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
     this._changeCheck();
     this._popupService.close();
+  },
+
+  _goRoamingGuide: function() {
+    this._historyService.replaceURL('/product/roaming/fi/guide');
   }
 };

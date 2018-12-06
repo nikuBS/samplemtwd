@@ -6,7 +6,7 @@
 <script id="productList" type="text/x-handlebars-template">
     {{#list}}
     <li>
-        <button class="list" type="button">
+        <button class="list" type="button" data-benefit-id="{{benefitId}}">
             <em>
                 {{benefitNm}}
                 {{#ifCond useYn '===' '사용중' }}
@@ -22,7 +22,10 @@
                     <span>{{tagNm}}</span>
                 {{/each}}
             </div>
-            <span class="img"><img src="{{imgFullPath}}" alt="{{benefitNm}}"/></span>
+            {{#isNotEmpty imgFullPath}}
+                hello
+                <span class="img"><img src="{{imgFullPath}}" alt="{{benefitNm}}"/></span>
+            {{/isNotEmpty}}
         </button>
     </li>
     {{/list}}

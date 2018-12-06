@@ -10,7 +10,6 @@ Tw.MyTFareSubMain = function (params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._historyService.init('hash');
   this.data = params.data;
   this._rendered();
   this._bindEvent();
@@ -23,14 +22,10 @@ Tw.MyTFareSubMain.prototype = {
       selector = '[data-id="wrapper"]';
     }
     if ( value ) {
-      skt_landing.action.loading.on({
-        ta: selector, co: 'white', size: false
-      });
+      Tw.CommonHelper.startLoading(selector, 'white', false);
     }
     else {
-      skt_landing.action.loading.off({
-        ta: selector
-      });
+      Tw.CommonHelper.endLoading(selector);
     }
   },
 

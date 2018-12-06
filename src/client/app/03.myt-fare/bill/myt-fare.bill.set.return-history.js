@@ -27,7 +27,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
 
   // 요금 안내서 반송내역 조회
   _reqReturnHistory : function () {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.Api
       .request(Tw.API_CMD.BFF_05_0039_N, {})
       .done($.proxy(this._successReturnHistory, this))
@@ -63,7 +63,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
 
   // 반송내역조회 호출 후 > 반송내역 리스트 더보기 세팅
   _successReturnHistory : function (res) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     // 발행내역 없는 경우
     if ( res.code === 'ZINVN8319' ) {
       // this._onFail(res);
@@ -98,7 +98,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
 
   // API Fail
   _onFail: function (err) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code,err.msg).pop();
   }
 };

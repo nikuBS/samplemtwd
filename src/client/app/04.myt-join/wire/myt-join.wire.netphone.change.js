@@ -96,17 +96,17 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
       return;
     }
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0164, {phoneNum: phNum})
       .done(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
-          skt_landing.action.loading.off({ ta: '.container' });
+          Tw.CommonHelper.endLoading('.container');
           Tw.Error(resp.code, resp.msg).pop();
           return;
         }
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
 
         var code = resp.result.wnpOperStCd;
 
@@ -144,7 +144,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
         }
       })
       .fail(function (err) {
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText);
       });
 

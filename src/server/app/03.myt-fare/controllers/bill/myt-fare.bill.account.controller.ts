@@ -44,7 +44,7 @@ class MyTFareBillAccount extends TwViewController {
         }
       });
     } else {
-      res.render('only.app.info.html', {
+      res.render('share/common.share.app-install.info.html', {
         svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }

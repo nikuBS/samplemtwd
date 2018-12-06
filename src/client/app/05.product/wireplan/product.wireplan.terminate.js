@@ -62,13 +62,14 @@ Tw.ProductWireplanTerminate.prototype = {
     new Tw.ProductCommonConfirm(false, this.$container, $.extend(this._confirmOptions, {
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
       isWireplan: true,
+      noticeList: this._confirmOptions.noticeList,
       isTerm: true,
       isWidgetInit: true
     }), $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function(callbackParams) {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // prodId: this._prodId,
     //   prodProcTypeCd: 'TM'
@@ -85,7 +86,7 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _procTerminateRes: function(resp) {
-    skt_landing.action.loading.off({ ta: '.container' });
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

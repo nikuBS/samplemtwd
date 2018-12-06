@@ -42,8 +42,6 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._rmListTmpl = Handlebars.compile($('#fe-rmtmpl-add').html());
       this._rmFilterTmpl = Handlebars.compile($('#fe-rmtmpl-addfilter').html());
 
-      console.log('params ==== ' + JSON.stringify(this._params));
-      console.log(' leftCount : ' + this._leftCount);
   },
   _findAddElement: function () {
       this.$rmAddBtn = this.$container.find('.bt-more > button');
@@ -58,6 +56,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
   _handleRoamingAddFilters: function() {
       if (!this._rmAddFilters) {
           this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.RMADD_CODE })
+          // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0032.json')
               .done($.proxy(this._handleGetRmAddFilters, this));
       } else {
           this._openRmAddFiltersPopup();
@@ -90,8 +89,6 @@ Tw.ProductRoamingPlanAdd.prototype = {
           )
           .value();
 
-      console.log('rm add Filters : ' + JSON.stringify(rmAddFilters));
-
       this._popupService.open(
           {
               hbs: 'RM_12_01',
@@ -120,23 +117,21 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }
   },
     _handleSelectRomaingAddTag: function(target) {
-        var selectedTag = target.getAttribute('data-addfilter-id');
+        var selectedTag = target.getAttribute('data-rmtag-id');
+
         if (this._params.selectedTagId === selectedTag) {
             this._popupService.close();
             return;
         }
-
+        this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
     },
   _handleRmAddSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
           return input.getAttribute('data-addfilter-id');
       }).join(',');
 
-      console.log(searchRmFltIds);
-
       this._params = { idxCtgCd: this.RMADD_CODE };
       this._params.searchFltIds = searchRmFltIds;
-      console.log(this._params);
       this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
           .done($.proxy(this._handleLoadNewAddFilters, this));
   },

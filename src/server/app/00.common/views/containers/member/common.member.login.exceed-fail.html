@@ -7,6 +7,7 @@
 
 <% include ../../components/start.component.html %>
 <!-- body -->
+<body class="bg-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -17,45 +18,39 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti">
-                <h1>로그인 실패</h1>
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="box-suggest">
-                    <div class="suggest-info">
-                        <p class="suggest-ti">1일 로그인<br /><em class="tx-bold">허용 횟수를 초과</em>하였습니다.</p>
-                        <ul class="suggest-list">
-                            <li>1일 로그인 허용횟수인 30회를 초과하여 <em class="tx-bold">오늘 24시까지 T world 이용이 불가</em>합니다.</li>
-                            <li>접속 품질을 위한 조치이오니 양해 바랍니다.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--// .cont-box -->
 
-            <hr class="cont-sp type1" aria-hidden="true" />
-
-            <div class="cont-box nogaps">
-                <div class="bt-link-box">
-                    <a class="bt-link-tx fe-replace-history" href="/main/home">홈으로</a>
-                </div>
-            </div>
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-btn pt0">
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <h3 class="complete-title pt60">
+                    <img src="/img/ico/ico-login-fail.png" alt=""/>
+                    <span>1일 로그인 <strong>허용 횟수를<br /> 초과</strong>하였습니다.</span>
+                </h3>
+                <p class="complete-error-tx pt32">
+                    <span class="tx2">1일 로그인 허용횟수인 30회를 초과하여<br /><strong class="str">오늘 24시까지 T world 이용이 불가</strong>합니다.</span>
+                    <span class="tx2 block pt20">접속 품질을 위한 조치이오니 양해 바랍니다.</span>
+                </p>
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <a class="fe-replace-history" href="/main/home">홈으로</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <!--// .popup hbs -->
 </div>
+</body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

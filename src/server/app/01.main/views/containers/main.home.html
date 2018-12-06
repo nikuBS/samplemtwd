@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="mainHome" class="wrap">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '<div class="h-logo"><a href="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></a></div>' }) %>
     <!--// #header -->
@@ -77,19 +77,23 @@
                             <!-- // 미등록 -->
                             <% } else { %>
                             <% if (svcType.svcCategory === 'M') { %>
+                            <% if (homeData.usageData) { %>
+                            <% if (homeData.usageData.code === '00') { %>
                             <!-- 모바일 회선_잔여 데이터 -->
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt"><%= svcInfo.svcNum %></button></em>
-                                <strong class="ti"><button class="bt">T플랜 패밀리</button></strong>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
 
+                                <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box donutchart">
                                         <!-- .donut-chart -->
                                         <button class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
+                                                <% if(homeData.usageData.shareTotal !== 0) { %>
                                                 <!-- loop 공유데이터 -->
-                                                <div class="c100 p0" data-percent="70"><!-- data-percent :0 ~ 100 -->
+                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.shareRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
                                                     <div class="blue"><!-- red, yellow, green, blue -->
                                                         <div class="slice">
                                                             <div class="bar"></div>
@@ -102,8 +106,9 @@
                                                     </div>
                                                 </div>
                                                 <!-- // loop -->
+                                                <% } %>
                                                 <!-- loop 남은 데이터-->
-                                                <div class="c100 p0" data-percent="50"><!-- data-percent :0 ~ 100 -->
+                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.myRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
                                                     <div class="red"><!-- red, yellow, green, blue -->
                                                         <div class="slice">
                                                             <div class="bar"></div>
@@ -118,9 +123,9 @@
                                                 <!-- // loop -->
                                             </div>
                                             <span class="ti-data">
-                                                    <strong class="ti">남은 데이터</strong>
-                                                    <em class="data">36.7GB</em>
-                                                </span>
+                                                <strong class="ti">남은 데이터</strong>
+                                                <em class="data"><%= homeData.usageData.data.showMyRemained %></em>
+                                            </span>
                                         </button>
                                         <!-- // .donut-chart -->
                                         <button class="data-add">데이터</button>
@@ -128,34 +133,173 @@
                                 </div>
                                 <!-- // .widget -->
 
+                                <% if(homeData.usageData.data.shareTotal !== 0) { %>
                                 <div class="legend">
-                                    <span class="category0"><span><em class="data">12.56GB</em> 나의 데이터</span></span>
-                                    <span class="category1"><span>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
+                                    <span class="category1"><span><em class="data"><%= homeData.usageData.shareData.showShareRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                 </div>
+                                <% } %>
 
                                 <div class="call-message">
-                                    <button class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> 1시간 45분</button>
-                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> 기본제공</button>
+                                    <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
+                                    <button class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></button>
+                                    <% } %>
+                                    <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
+                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></button>
+                                    <% } %>
                                 </div>
+                                <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box donutchart">
+                                        <!-- .donut-chart -->
+                                        <button class="donut-chart"><!-- 데이터 경우 data-type 추가 -->
+                                            <div class="donut-chart-area">
+                                                <!-- loop -->
+                                                <div class="c100 p0" data-percent="<%= homeData.usageData.voice.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                    <div class="green"><!-- red, yellow, green, blue -->
+                                                        <div class="slice">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                        <div class="slice transparent">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- // loop -->
+                                            </div>
+                                            <span class="ti-data">
+                                                <strong class="ti">남은 음성통화</strong>
+                                                <em class="tx2"><%= homeData.usageData.voice.showRemained %></em>
+                                            </span>
+                                        </button>
+                                        <!-- // .donut-chart -->
+                                    </div>
+                                </div>
+                                <!-- // .widget -->
+
+                                <div class="call-message">
+                                    <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
+                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></button>
+                                    <% } %>
+                                </div>
+                                <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box donutchart">
+                                        <!-- .donut-chart -->
+                                        <button class="donut-chart"><!-- 데이터 경우 data-type 추가 -->
+                                            <div class="donut-chart-area">
+                                                <!-- loop -->
+                                                <div class="c100 p0" data-percent="<%= homeData.usageData.sms.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                    <div class="yellow"><!-- red, yellow, green, blue -->
+                                                        <div class="slice">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                        <div class="slice transparent">
+                                                            <div class="bar"></div>
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- // loop -->
+                                            </div>
+                                            <span class="ti-data">
+                                                    <strong class="ti">남은 문자</strong>
+                                                    <em class="data"><%= homeData.usageData.sms.showRemained %></em>
+                                                </span>
+                                        </button>
+                                        <!-- // .donut-chart -->
+                                    </div>
+                                </div>
+                                <!-- // .widget -->
+                                <% } %>
                             </div>
                             <!-- //모바일 회선_잔여 데이터 -->
+                            <% } else if (homeData.usageData.code === 'BLN0001') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
+                                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0003') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다</p>
+                                </div>
+                            </div>
+                            <% } else { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                                    <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
+                                </div>
+
+                            </div>
+                            <% } %>
+                            <% } %>
                             <% } %>
                             <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
+                            <% if(homeData.billData) { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt">인천 연************</button></em>
-                                <strong class="ti"><button class="bt">T스마트 광랜</button></strong>
+                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
 
                                 <div class="main-breakdown-box">
-                                    <div class="stit">10월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
-                                    <em class="sum">82,500원</em>
-                                    <span class="date">2018.7.1.~2018.7.31.</span>
-                                    <ul class="list">
-                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type">94,560원</em></li>
-                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">-12,060원</em></li>
-                                    </ul>
+                                    <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
+                                    <p class="tx">전화 106 또는 <button class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
                                 </div>
                             </div>
+                            <% if(homeData.billData.isBroadband) { %>
+                            <% } else { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+
+                                <div class="main-breakdown-box">
+                                    <% if (homeData.billData.type1) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                    <% } else if (homeData.billData.type2) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금</div>
+                                    <% } else if (homeData.billData.type3) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
+                                    <% } %>
+                                    <em class="sum"><%= homeData.billData.chargeAmtTot %>원</em>
+                                    <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
+                                    <% if (homeData.billData.type1 || homeData.billData.type2) { %>
+                                    <ul class="list">
+                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.usedAmtTot %>원</em></li>
+                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
+                                    </ul>
+                                    <% } else if (homeData.billData.type3) { %>
+                                    <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                            <% } else { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+
+                                <div class="main-breakdown-box">
+                                    <strong class="ti">발행된 요금안내서가 없습니다.</strong>
+                                </div>
+                            </div>
+                            <% } %>
                             <!-- // 인터넷/전화/IPTV 요금안내서 -->
                             <% } %>
                             <% } %>
@@ -180,8 +324,12 @@
                                 <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
                                 <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
                                 <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
+                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
+                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
                             </ul>
-                            <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                            <div class="btn-area"><button id="fe-bt-quick-edit" class="bt-link-tx underline">바로가기 편집</button></div>
                             <!-- //MY 바로가기 -->
                         </div>
 
@@ -189,31 +337,31 @@
                         <% if (homeData.membershipData) { %>
                         <div class="main-membershop-box">
                             <strong class="ti">membershop</strong>
-                            <span class="rating silver">silver</span>
-                            <!-- <span class="rating gold">gold</span>
-                            <span class="rating vip">vip</span> -->
+                            <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
+                            <% if (homeData.membershipData.mbrStCd === 'SP') { %>
+                            <span class="tx">고객님의 멤버십 카드가<br><strong class="t-point">이용정지</strong> 상태입니다.</span>
+                            <% } else { %>
                             <span class="bar-code">
                                 <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>" data-usedAmount="<%= homeData.membershipData.showUsedAmount %>" alt="bar code"/>
                                 <!--<img src="<%= CDN %>/img/main/bar_code.png" alt="bar code">-->
                             </span>
+                            <% } %>
                         </div>
                         <% } else { %>
                         <!-- 미발급 / 이용정지-->
+                        <div class="main-membershop-box">
+                            <button class="ti-tx">
+                                <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
+                                <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
+                            </button>
+                        </div>
                         <% } %>
                         <% } %>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-0 fe-smart-<%= smartCard[0].no %>"  data-smartCard="<%= smartCard[0].no %>">
+                        <div class="section-box empty fe-smart-0 fe-smart-<%= smartCard[0].no %>" data-smartCard="<%= smartCard[0].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[0].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -279,32 +427,16 @@
                         <!-- // 프로모션 배너 2 -->
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-1 fe-smart-<%= smartCard[1].no %>"  data-smartCard="<%= smartCard[1].no %>">
+                        <div class="section-box empty fe-smart-1 fe-smart-<%= smartCard[1].no %>" data-smartCard="<%= smartCard[1].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[1].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-2 fe-smart-<%= smartCard[2].no %>"  data-smartCard="<%= smartCard[2].no %>">
+                        <div class="section-box empty fe-smart-2 fe-smart-<%= smartCard[2].no %>" data-smartCard="<%= smartCard[2].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[2].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -369,32 +501,16 @@
                         </div>
                         <!-- // 프로모션 배너 2 -->
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-3 fe-smart-<%= smartCard[3].no %>"  data-smartCard="<%= smartCard[3].no %>">
+                        <div class="section-box empty fe-smart-3 fe-smart-<%= smartCard[3].no %>" data-smartCard="<%= smartCard[3].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[3].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box fe-smart-4 fe-smart-<%= smartCard[4].no %>"  data-smartCard="<%= smartCard[4].no %>">
+                        <div class="section-box empty fe-smart-4 fe-smart-<%= smartCard[4].no %>" data-smartCard="<%= smartCard[4].no %>">
                             <div class="main-breakdown-box">
                                 <div class="stit c-point"><%= smartCard[4].title %></div>
-                                <em class="sum">82,500원</em>
-                                <span class="date">2018.7.1.~2018.7.31.</span>
-                                <ul class="list">
-                                    <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
-                                </ul>
-                                <div class="btn-area">
-                                    <button class="bt">결제내역 보기</button>
-                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -885,6 +1001,13 @@
 </div>
 </body>
 <% include ../components/javascript.component.html %>
+<% if (svcType.login && svcType.mobilePhone) { %>
+<% include ../components/smart-card/bill.component.html %>
+<% include ../components/smart-card/contents.component.html %>
+<% include ../components/smart-card/gift.component.html %>
+<% include ../components/smart-card/micro-pay.component.html %>
+<%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
+<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>');

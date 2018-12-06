@@ -50,7 +50,7 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
    * @private
    */
   _onclickSchNums: function(){
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     var param = {
       gubun: 'S',
@@ -81,7 +81,7 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0184, param)
       .done($.proxy(function (resp) {
 
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 ){
           Tw.Error(resp.code, resp.msg).pop();
           return ;
@@ -99,7 +99,7 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
       }, this))
       .fail(function(err){
         Tw.Error(err.status, err.statusText).pop();
-        skt_landing.action.loading.off({ ta: '.container' });
+        Tw.CommonHelper.endLoading('.container');
       });
   },
 

@@ -67,6 +67,7 @@ export default class ProductRoamingMyUse extends TwViewController {
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
+            basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : prod.basFeeTxt,
             scrbDt: DateHelper.getShortDateNoDot(prod.scrbDt)
           };
         })
@@ -92,6 +93,7 @@ export default class ProductRoamingMyUse extends TwViewController {
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
+            basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : prod.basFeeTxt,
             scrbDt: DateHelper.getShortDateNoDot(prod.scrbDt)
           };
         })

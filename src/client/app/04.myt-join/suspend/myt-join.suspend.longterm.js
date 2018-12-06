@@ -139,10 +139,10 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _requestUpload: function (files) {
     var formData = new FormData();
+    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
-    formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._onError, this));
@@ -273,14 +273,14 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   },
 
   _requestSuspend: function () {
-    skt_landing.action.loading.on({ ta: 'body' });
+    Tw.CommonHelper.startLoading('body');
     this._apiService.request(Tw.API_CMD.BFF_05_0197, this._suspendOptions)
       .done($.proxy(this._onSuccessRequest, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequest: function (res) {
-    skt_landing.action.loading.off({ ta: 'body' });
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(this._suspendOptions.fromDt) + ' - ' +
         Tw.DateHelper.getFullKoreanDate(this._suspendOptions.toDt);

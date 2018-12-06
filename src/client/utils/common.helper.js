@@ -50,6 +50,19 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  var fileUpload = function (dest, files) {
+    var formData = new FormData();
+    if (!Tw.FormatHelper.isEmpty(dest)) {
+      formData.append('dest', dest);
+    }
+
+    _.each(files, function(file) {
+      formData.append('file', file);
+    });
+
+    return Tw.Api.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData);
+  };
+
   var showDataCharge = function (confirmCallback, cancelCallback) {
     Tw.Popup.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
@@ -85,6 +98,37 @@ Tw.CommonHelper = (function () {
       }, this));
   };
 
+  var startLoading = function (target, color, size) {
+    skt_landing.action.loading.on({ ta: target, co: color, size: size });
+  };
+
+  var endLoading = function (target) {
+    skt_landing.action.loading.off({ ta: target });
+  };
+
+  var resetHeight = function ($element) {
+    $element.slick.animateHeight();
+  };
+
+  var openTermLayer = function (code) {
+    Tw.Api.request(Tw.API_CMD.BFF_08_0059, {
+      svcType: 'MM',
+      serNum: code
+    }).done(function (res) {
+      if (res.code === Tw.API_CODE.CODE_00) {
+        Tw.Popup.open({
+          hbs: 'HO_04_05_01_02_01',
+          title: res.result.title,
+          content: res.result.content
+        });
+      } else {
+        Tw.Error(res.code, res.msg).pop();
+      }
+    }).fail(function (err) {
+      Tw.Error(err.code, err.msg).pop();
+    });
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -94,6 +138,11 @@ Tw.CommonHelper = (function () {
     getLocalStorage: getLocalStorage,
     showDataCharge: showDataCharge,
     share: share,
-    openFreeSms: openFreeSms
+    openFreeSms: openFreeSms,
+    startLoading: startLoading,
+    endLoading: endLoading,
+    resetHeight: resetHeight,
+    openTermLayer: openTermLayer,
+    fileUpload: fileUpload
   };
 })();

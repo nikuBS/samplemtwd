@@ -23,10 +23,6 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _goRoamingGuide: function() {
     this._historyService.replaceURL('/product/roaming/fi/guide');
-  },
-
-  _reload: function() {
-    this._historyService.reload();
   }
 
 };

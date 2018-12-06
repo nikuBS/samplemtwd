@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_FILTER } from '../../../../types/common.type';
+import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
 import { DATA_UNIT, PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import {PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';

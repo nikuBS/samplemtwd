@@ -57,6 +57,7 @@ Tw.ProductRoamingFee.prototype = {
   _handleRoamingPlanFilters: function() {
       if (!this._roamingFilters) {
           this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.RM_CODE })
+          // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0032.json')
               .done($.proxy(this._handleGetFilters, this));
       } else {
           this._openRoamingFiltersPopup();
@@ -124,13 +125,13 @@ Tw.ProductRoamingFee.prototype = {
       }
   },
   _handleSelectRomaingTag: function(target) {
-      var selectedTag = target.getAttribute('data-rmtag-id');
-      if (this._params.selectedTagId === selectedTag) {
-          this._popupService.close();
-          return;
-      }
-
-    },
+    var selectedTag = target.getAttribute('data-rmtag-id');
+    if (this._params.selectedTagId === selectedTag) {
+        this._popupService.close();
+        return;
+    }
+    this._history.goLoad('/product/roaming/fee?tag=' + selectedTag);
+  },
   _handleResetBtn: function ($layer) {
         $layer.find('.btn-type01').removeClass('checked');
         $layer.find('input').removeAttr('checked');

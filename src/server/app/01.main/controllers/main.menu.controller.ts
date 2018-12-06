@@ -16,7 +16,7 @@ class MainMenu extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const menuData = {
       usageData: null,
       billData: null,
@@ -24,7 +24,7 @@ class MainMenu extends TwViewController {
     };
 
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.render('main.menu.html', { svcInfo, menuData });
+      res.render('main.menu.html', { svcInfo, menuData, pageInfo });
     } else {
       Observable.combineLatest(
         this.getUsageData(),
@@ -34,7 +34,7 @@ class MainMenu extends TwViewController {
         menuData.usageData = usageData;
         menuData.billData = billData;
         menuData.membershipData = membershipData;
-        res.render('main.menu.html', { svcInfo, menuData });
+        res.render('main.menu.html', { svcInfo, menuData, pageInfo });
       });
     }
   }

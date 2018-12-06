@@ -15,7 +15,7 @@ Tw.MyTFareInfoOverpayRefundDetail = function (rootEl, data) {
 
 Tw.MyTFareInfoOverpayRefundDetail.prototype = {
   _init: function () {
-    this.detailData = JSON.parse(Tw.UIService.getLocalStorage('detailData'));
+    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
 
     this._initDetail();
   },
@@ -41,7 +41,7 @@ Tw.MyTFareInfoOverpayRefundDetail.prototype = {
     this.$template.$statusIng.css({'display': this.detailData.rfndStat !== 'ING' ? 'none' : ''});
     this.$template.$statusEtc.css({'display': this.detailData.rfndStat !== 'ING' ? '' : 'none'});
 
-    this.$template.$reqDate.text(this.detailData.reqDt);
+    this.$template.$reqDate.text(this.detailData.dataDt);
     this.$template.$reqAmt.text(this.detailData.dataAmt);
     this.$template.$overAmt.text(this.detailData.dataOverAmt);
     this.$template.$bondAmt.text(this.detailData.dataBondAmt);
@@ -53,8 +53,6 @@ Tw.MyTFareInfoOverpayRefundDetail.prototype = {
     this.$template.$procDate.text(this.detailData.dataDt);
 
     this.$template.$statusInnerText.text(this.detailData.dataStatus);
-
-    console.log(this.detailData, this.$template);
 
   }
 };

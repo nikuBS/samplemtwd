@@ -9,7 +9,7 @@ import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
-import { LOGIN_TYPE } from '../types/bff.old.type';
+import { LOGIN_TYPE } from '../types/bff.type';
 
 class ApiService {
   static instance;
@@ -59,12 +59,16 @@ class ApiService {
   }
 
   private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {
-    const option = {
+    let option = {
       url: apiUrl + this.makePath(command.path, command.method, params, args),
       method: command.method,
       headers: this.makeHeader(command, header, params),
       data: params
     };
+
+    if (!!command.responseType) {
+      option = Object.assign(option, { responseType: command.responseType });
+    }
 
     return option;
   }
@@ -116,13 +120,14 @@ class ApiService {
   }
 
   private apiCallback(observer, command, resp) {
+    const contentType = resp.headers['content-type'];
+
     const respData = resp.data;
-    this.logger.info(this, '[API RESP]', respData);
+    this.logger.info(this, '[API RESP]', !contentType.includes('json') ? 'No JSON' : respData);
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers);
     }
-
 
     observer.next(respData);
     observer.complete();
@@ -155,7 +160,7 @@ class ApiService {
       }
       observer.next(error);
     } else {
-      this.logger.error(this, '[API ERROR] Exception', err.response);
+      this.logger.error(this, '[API ERROR] Exception', err);
       observer.next({ code: API_CODE.CODE_500 });
     }
     observer.complete();

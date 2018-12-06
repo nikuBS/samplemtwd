@@ -11,33 +11,14 @@ import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { SKIP_NAME, MYT_DATA_USAGE } from '../../../../types/string.type';
-import { UNIT } from '../../../../types/bff.type';
+import { SKIP_NAME } from '../../../../types/string.type';
+import { T0_PLAN_SKIP_ID, UNIT, UNLIMIT_CODE } from '../../../../types/bff.type';
 
 const VIEW = {
   CIRCLE: 'usage/myt-data.hotdata.html',
   BAR: 'usage/myt-data.usage.html',
   ERROR: 'usage/myt-data.usage.error.html'
 };
-
-const T_O_PLAN_SHARE_DATA = [
-  {
-    'skipId': 'DD3CX',
-    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD3CX
-  },
-  {
-    'skipId': 'DD3CV',
-    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD3CV
-  },
-  {
-    'skipId': 'DD3CU',
-    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD3CU
-  },
-  {
-    'skipId': 'DD4D5',
-    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD4D5
-  }
-];
 
 class MyTDataHotdata extends TwViewController {
   constructor() {
@@ -156,7 +137,7 @@ class MyTDataHotdata extends TwViewController {
 
     if (spclData) {
       // 통합공유데이터
-      tPlanSharedData = this.getDataInTarget(T_O_PLAN_SHARE_DATA, spclData) || {};
+      tPlanSharedData = this.getDataInTarget(T0_PLAN_SKIP_ID, spclData) || {};
 
       // 통합공유데이터 제외한 데이터 배열 취합
       dataArr = dataArr.concat(spclData.filter((_data) => {
@@ -186,7 +167,7 @@ class MyTDataHotdata extends TwViewController {
     const gnrlData = usageData.gnrlData || [];
     let totalRemainUnLimited = false;
     gnrlData.map((_data) => {
-      if (MYT_DATA_USAGE.UNLIMIT_CODE.indexOf(_data.unlimit) !== -1) {
+      if (UNLIMIT_CODE.indexOf(_data.unlimit) !== -1) {
         totalRemainUnLimited = true;
       }
     });
@@ -350,18 +331,24 @@ class MyTDataHotdata extends TwViewController {
 
   private getDataInTarget(target: any, dataArray: any): any {
     let data;
-    target.map((tOPlanBaseData) => {
-      if ( !data ) {
-        data = dataArray.find((_data) => {
-          if (tOPlanBaseData.skipId === _data.skipId) {
-            _data.prodNm = tOPlanBaseData.prodNm;
-            return true;
-          }
-          return false;
-        });
+    dataArray.map((_data) => {
+      if (target.indexOf(_data.skipId) !== -1) {
+        data = _data;
       }
     });
     return data;
+    // target.map((tOPlanBaseData) => {
+    //   if ( !data ) {
+    //     data = dataArray.find((_data) => {
+    //       if (tOPlanBaseData.skipId === _data.skipId) {
+    //         // _data.prodNm = tOPlanBaseData.prodNm;
+    //         return true;
+    //       }
+    //       return false;
+    //     });
+    //   }
+    // });
+    // return data;
   }
 }
 
