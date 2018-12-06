@@ -27,8 +27,9 @@ Tw.MainMenu.prototype = {
     cert.open({
       authClCd: Tw.AUTH_CERTIFICATION_KIND.F
     }, '', null, null, function (result) {
-      console.log('complete');
-      console.log(result);
+      if (result.code === '00') {
+        (new Tw.HistoryService()).goLoad('/main/menu/refund');
+      }
     });
     // var cert = new Tw.CertificationSkSmsRefund();
     // cert.openSmsPopup();

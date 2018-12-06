@@ -47,6 +47,20 @@
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
+                <% if (!data.canSubmit) { %>
+                <div class="cont-box">
+                    <div class="announcement-box">
+                        <div class="announcement-bullet type01">SK텔레콤 고객센터(지역번호 없이 114)로 연락하시거나, 지점/대리점에 방문하셔야 환급금을 신청하실 수 있습니다.</div>
+                        <div class="announcement-bullet type01">지점/대리점에 방문하시는 경우, 필요한 구비 서류를 확인하여 방문해주시기 바랍니다.</div>
+                    </div>
+
+                    <ul class="bt-slice item-one mt20">
+                        <li class="bt-blue1">
+                            <a href="/customer/agentsearch">지점/대리점 찾기</a>
+                        </li>
+                    </ul>
+                </div>
+                <% } else { %>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="wrap-gaps-top">
@@ -160,8 +174,9 @@
                     </div>
                     <!-- //cont-box -->
                 <% } %>
+                <% } %>
 
-                <% if (data.submittedArr.length > 0) { %>
+                <% if (data.submittedArr.length > 0 && data.canSubmit) { %>
                 <div class="ti-caption-gray">
                     <span class="tit">신청내역</span>
                 </div>
@@ -236,9 +251,9 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list">
-                        <li>공공기관 사칭 주의! <button type="button" id="MN_01_04_01_01_tip_01" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                        <li>송금 오류가 난 경우! <button type="button"id="MN_01_04_01_01_tip_02"  class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                        <li>송금 기간 <button type="button" id="MN_01_04_01_01_tip_03" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>공공기관 사칭 주의! <button type="button" id="MN_01_04_01_01_tip_01" page-id="MN_01_04_01_01" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>송금 오류가 난 경우! <button type="button"id="MN_01_04_01_01_tip_02" page-id="MN_01_04_01_01" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                        <li>송금 기간 <button type="button" id="MN_01_04_01_01_tip_03" page-id="MN_01_04_01_01" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
                     </ul>
                 </div>
                 <!-- //cont-box -->
