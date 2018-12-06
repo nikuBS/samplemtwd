@@ -18569,6 +18569,7 @@ a.bt-link-tx.underline.small {
     border-top: 1px solid #e1e1e1;
     text-align: left;
     color: inherit;
+    line-height: inherit;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
     .email-consult-list > li .list-inner:after {
@@ -18606,23 +18607,25 @@ a.bt-link-tx.underline.small {
       .email-consult-list > li .list-inner .state:before {
         content: '';
         position: absolute;
-        left: 0;
+        left: 0.0625rem;
         top: 50%;
         width: 0.0625rem;
         height: 0.5625rem;
-        margin-top: -0.25rem;
+        margin-top: -0.3125rem;
         background: #e1e1e1; }
-  .email-consult-list > li:first-child .list-inner {
-    border-top: none; }
-  .email-consult-list > li ul li {
+  .email-consult-list > li button.list-inner .date-state {
+    padding-top: 0.1875rem; }
+  .email-consult-list > li.re-inquiry {
     margin-bottom: 1.25rem; }
-    .email-consult-list > li ul li .list-inner {
+    .email-consult-list > li.re-inquiry .list-inner {
       position: relative;
       border-top: none;
       padding: 0 1.5625rem 0 2.75rem; }
-      .email-consult-list > li ul li .list-inner:after {
+      .email-consult-list > li.re-inquiry .list-inner:after {
         top: -0.125rem; }
-      .email-consult-list > li ul li .list-inner .again {
+      .email-consult-list > li.re-inquiry .list-inner .date-state {
+        line-height: 1; }
+      .email-consult-list > li.re-inquiry .list-inner .again {
         position: absolute;
         top: 0.125rem;
         left: 0;
@@ -18634,6 +18637,8 @@ a.bt-link-tx.underline.small {
         font-weight: 700;
         font-size: 0.625rem;
         text-align: center; }
+  .email-consult-list > li:first-child .list-inner {
+    border-top: none; }
 
 .details-top .tit {
   display: block;
@@ -25166,10 +25171,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 body.apphome {
   background: #f4f4f4; }
-  body.apphome .popup-page {
-    background: none; }
-    body.apphome .popup-page .cont-box {
-      background: none; }
   body.apphome .main-top-group {
     z-index: 2; }
     body.apphome .main-top-group::before {

@@ -8,6 +8,8 @@ body.bg-gray {
 
 .wrap {
   padding-bottom: 1.875rem; }
+  .wrap > .container-wrap {
+    margin-bottom: 1.25rem; }
   .wrap.step {
     min-height: 100%;
     -webkit-box-sizing: border-box;
