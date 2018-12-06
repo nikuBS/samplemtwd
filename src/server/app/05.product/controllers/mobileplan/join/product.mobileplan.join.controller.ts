@@ -10,17 +10,32 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
+import { REDIS_PRODUCT_COMPARISON } from '../../../../../types/redis.type';
 import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 
 class ProductMobileplanJoin extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * 요금제 비교하기 Redis 정보 호출
+   * @param svcInfoProdId
+   * @param prodId
+   * @private
+   */
+  private _getMobilePlanCompareInfo(svcInfoProdId: any, prodId: any): Observable<any> {
+    if (FormatHelper.isEmpty(svcInfoProdId)) {
+      return Observable.of({ code: null });
+    }
+
+    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
+      svcInfoProdId = svcInfo ? svcInfo.prodId : null,
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
@@ -38,8 +53,9 @@ class ProductMobileplanJoin extends TwViewController {
 
       Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId),
-        this.apiService.request(API_CMD.BFF_10_0009, {})
-      ).subscribe(([joinTermInfo, overPayReqInfo]) => {
+        this.apiService.request(API_CMD.BFF_10_0009, {}),
+        this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
+      ).subscribe(([joinTermInfo, overPayReqInfo, mobilePlanCompareInfo]) => {
         if (joinTermInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: joinTermInfo.code,
@@ -49,6 +65,7 @@ class ProductMobileplanJoin extends TwViewController {
 
         res.render('mobileplan/join/product.mobileplan.join.html', Object.assign(renderCommonInfo, {
           joinTermInfo: ProductHelper.convPlansJoinTermInfo(joinTermInfo.result),
+          mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
           isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
           prodId: prodId
         }));

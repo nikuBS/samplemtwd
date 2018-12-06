@@ -4,7 +4,7 @@
  * Date: 2018.11.09
  */
 
-Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn) {
+Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -13,6 +13,7 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, confirmOptio
   this._prodId = prodId;
   this._displayId = displayId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
+  this._isComparePlan = isComparePlanYn === 'Y';
   this._confirmOptions = JSON.parse(confirmOptions);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
@@ -105,6 +106,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   _procConfirm: function() {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
+      isComparePlan: this._isComparePlan,
       noticeList: this._confirmOptions.joinNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
@@ -118,9 +120,6 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-
-    // prodId: this._prodId,
-    //   prodProcTypeCd: 'JN',
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       asgnNumList: [],

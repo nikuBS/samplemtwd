@@ -53,11 +53,14 @@ Tw.ProductCommonConfirm.prototype = {
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
     this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));
     this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
-    this.$btnSelectTerminateCause.on('click', $.proxy(this._openSelectTerminateCause, this));
     this.$btnTipView.on('click', $.proxy(this._openTipView, this));
 
     this.$checkboxAgreeAll.on('change', $.proxy(this._agreeAllToggle, this));
     this.$checkboxAgreeItem.on('change', $.proxy(this._agreeItemToggle, this));
+
+    if (this._data.isWireplan && this._data.isTerm) {
+      this.$btnSelectTerminateCause.on('click', $.proxy(this._openSelectTerminateCause, this));
+    }
 
     this._init();
   },
@@ -247,10 +250,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    this._popupService.open({
-      hbs: 'MP_02_02_01',
-      data: {}
-    }, null, null, 'compare_plans');
+    Tw.CommonHelper.openUrlInApp('/product/mobileplan/compare-plans?prodId=' + this._data.preinfo.toProdInfo.prodId, 'status=1,toolbar=1');
   },
 
   _closePop: function() {
