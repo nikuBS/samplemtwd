@@ -4,7 +4,7 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -13,6 +13,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd) {
 
   this._prodId = prodId;
   this._prodTypCd = prodTypCd;
+  this._isPreview = isPreview === 'Y';
 
   this._cachedElement();
   this._bindEvent();
@@ -46,7 +47,6 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
     this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
-
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
   },
 
@@ -63,6 +63,11 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _procSetting: function() {
+    if (this._isPreview) {
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.PREVIEW);
+      return;
+    }
+
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
     } else {
@@ -125,6 +130,11 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _goJoinTerminate: function(joinTermCd, e) {
+    if (this._isPreview) {
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.PREVIEW);
+      return;
+    }
+
     var url = $(e.currentTarget).data('url'),
       preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
