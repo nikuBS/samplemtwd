@@ -17,7 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '장애 A/S신청 현황', svcInfo: svcInfo, option: { line: true } }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '장애 A/S신청 현황' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div class="container-wrap">
@@ -93,10 +93,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 <script>
   $(document).ready(function () {
