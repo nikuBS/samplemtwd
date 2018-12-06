@@ -50,6 +50,19 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  var fileUpload = function (dest, files) {
+    var formData = new FormData();
+    if (!Tw.FormatHelper.isEmpty(dest)) {
+      formData.append('dest', dest);
+    }
+
+    _.each(files, function(file) {
+      formData.append('file', file);
+    });
+
+    return Tw.Api.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData);
+  };
+
   var showDataCharge = function (confirmCallback, cancelCallback) {
     Tw.Popup.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
@@ -129,6 +142,7 @@ Tw.CommonHelper = (function () {
     startLoading: startLoading,
     endLoading: endLoading,
     resetHeight: resetHeight,
-    openTermLayer: openTermLayer
+    openTermLayer: openTermLayer,
+    fileUpload: fileUpload
   };
 })();
