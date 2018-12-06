@@ -18,6 +18,11 @@ import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
 class MyTFareSubmainController extends TwViewController {
+
+  get bannerUrl() {
+    return REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT;
+  }
+
   constructor() {
     super();
   }
@@ -121,7 +126,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT)
+      this.redisService.getData(this.bannerUrl)
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
                    taxInvoice, contribution, microPay, contentPay, banner]) => {
       // 소액결제
@@ -191,7 +196,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getPaymentInfo(),
       this._getMicroPrepay(),
       this._getContentPrepay(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT_U),
+      this.redisService.getData(this.bannerUrl),
     ).subscribe(([usage, paymentInfo, microPay, contentPay, banner]) => {
       if ( usage.info ) {
         this.error.render(res, {

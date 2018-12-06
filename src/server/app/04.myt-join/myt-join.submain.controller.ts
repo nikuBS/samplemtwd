@@ -47,7 +47,6 @@ class MyTJoinSubmainController extends TwViewController {
         res.redirect('/myt-join/submain_w');
       }
     }
-    let bannerKey = REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO;
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
@@ -58,11 +57,6 @@ class MyTJoinSubmainController extends TwViewController {
     if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === '10' || svcInfo.pwdStCd === '60') ) {
       // 10 -> 신청, 60 -> 초기화 -- 설정가능한상태
       this.isPwdSt = true;
-    }
-    // 배너키변경
-    if ( this.type === 2 ) {
-      // 유선
-      bannerKey = REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO_WIRE;
     }
 
     Observable.combineLatest(
@@ -76,7 +70,7 @@ class MyTJoinSubmainController extends TwViewController {
       this._getWireFreeCall(),
       this._getOldNumberInfo(),
       this._getChangeNumInfoService(),
-      this.redisService.getData(bannerKey)
+      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO)
     ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
