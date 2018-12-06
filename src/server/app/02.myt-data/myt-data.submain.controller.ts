@@ -11,13 +11,13 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { BANNER_TITLE, CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
+import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
 import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
@@ -53,8 +53,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice(),
       this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.DATA),
-      this._getBannerMock() // TODO: 추후 제거
-    ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner, bam]) => {
+    ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
       if ( !svcInfo.svcMgmtNum || remnant.info ) {
         // 비정상 진입 또는 API 호출 오류
         this.error.render(res, {
@@ -206,13 +205,10 @@ class MytDataSubmainController extends TwViewController {
         data.pattern = pattern;
       }
       // 배너 정보
-      if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
+      if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
-          data.banner = this.parseBanner(banner);
+          data.banner = this.parseBanner(banner.result);
         }
-      } else {
-        // TODO: MOCK DATA 제거예정
-        data.banner = this.parseBanner(bam);
       }
 
       res.render('myt-data.submain.html', { data });
@@ -227,6 +223,10 @@ class MytDataSubmainController extends TwViewController {
       if ( item.bnnrExpsSeq ) {
         sort[item.bnnrExpsSeq] = item;
       }
+      // TEST
+      // if ( !FormatHelper.isEmpty(item.imgLinkUrl) ) {
+      //   sort[item.bnnrSeq] = item;
+      // }
     });
     const keys = Object.keys(sort).sort();
     keys.forEach((key) => {

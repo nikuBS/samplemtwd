@@ -559,5 +559,3 @@ export const ROAMING_RECEIVE_CENTER = {
   '6': '대구공항 2층 로밍 센터',
   '7': '대구 SKT 황금점 매장'
 };
-
-export const BANNER_TITLE = '배너 조회';
