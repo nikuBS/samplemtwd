@@ -10,8 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { REDIS_PRODUCT_INFO } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT } from '../../../../types/string.old.type';
-import { TIME_UNIT } from '../../../../types/string.type';
+import { DATA_UNIT, TIME_UNIT } from '../../../../types/string.type';
 
 interface Option {
   dataVoiceClCd: string;

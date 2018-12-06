@@ -10,7 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT } from '../../../../types/string.old.type';
+import { DATA_UNIT } from '../../../../types/string.type';
 
 class MyTDataGift extends TwViewController {
   constructor() {

@@ -5,7 +5,6 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { SVC_ATTR } from '../../../../types/bff.old.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { MYT_JOIN_WIRE } from '../../../../types/string.type';
 

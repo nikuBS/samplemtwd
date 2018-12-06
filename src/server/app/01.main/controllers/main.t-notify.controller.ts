@@ -19,7 +19,7 @@ class MainTNotify extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     let history = [];
     if ( !FormatHelper.isEmpty(svcInfo) && svcInfo.expsSvcCnt !== '0' && svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
       Observable.combineLatest(
@@ -33,10 +33,10 @@ class MainTNotify extends TwViewController {
           year: DateHelper.getCurrentYear(),
           month: DateHelper.getCurrentMonth()
         };
-        res.render('main.t-notify.html', { svcInfo, history, currentDate });
+        res.render('main.t-notify.html', { svcInfo, history, currentDate, pageInfo});
       });
     } else {
-      res.render('main.t-notify.html', { svcInfo, history });
+      res.render('main.t-notify.html', { svcInfo, history, pageInfo });
     }
 
 

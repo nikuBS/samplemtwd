@@ -15,6 +15,7 @@ Tw.UPLOAD_TYPE = {
 
 Tw.REDIS_KEY = {
   URL_META: 'UrlMetaNode:',
+  REDIS_MASKING_METHOD: 'MaskAuthMethods',
   APP_VERSION: 'AppVersion:appLoad',
 
   PRODUCT_INFO: 'ProductLedger:',

@@ -8,6 +8,7 @@ export interface IUrlMeta {
   seoMetaTagKwdCtt: string;
   auth: any;
   block: any;
+  masking: boolean;
 }
 
 export class UrlMetaModel implements IUrlMeta {
@@ -20,6 +21,7 @@ export class UrlMetaModel implements IUrlMeta {
   seoMetaTagKwdCtt: string = '';
   auth: any = {};
   block: any = {};
+  masking: boolean = false;
   constructor(object) {
     this.menuId = object.menuId || this.menuId;
     this.menuNm = object.menuNm || this.menuNm;
@@ -30,5 +32,6 @@ export class UrlMetaModel implements IUrlMeta {
     this.seoMetaTagKwdCtt = object.seoMetaTagKwdCtt || this.seoMetaTagKwdCtt;
     this.auth = object.auth || this.auth;
     this.block = object.block || this.block;
+    this.masking = object.masking || this.masking;
   }
 }

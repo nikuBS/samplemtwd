@@ -14,8 +14,6 @@ import environment from './config/environment.config';
 
 // Route Modules
 import AppRouter from './common/route/app.router';
-import { default as OldMytRouter } from './app/901.myt/myt.router';
-import { default as OldPaymentRouter } from './app/903.payment/payment.router';
 import CommonRouter from './app/00.common/common.router';
 import MainRouter from './app/01.main/main.router';
 import MyTDataRouter from './app/02.myt-data/myt-data.router';
@@ -123,9 +121,6 @@ class App {
   }
 
   private setRoutes() {
-    this.app.use('/myt', new AppRouter(OldMytRouter.instance.controllers).router);
-    this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
-
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
@@ -153,12 +148,6 @@ class App {
       path.join(__dirname, 'app/08.customer/views/containers'),
       path.join(__dirname, 'app/09.tevent/views/containers'),
       path.join(__dirname, 'app/08.auth/views/containers'),
-
-      path.join(__dirname, 'app/901.myt/views/containers'),
-      path.join(__dirname, 'app/902.recharge/views/containers'),
-      path.join(__dirname, 'app/903.payment/views/containers'),
-      path.join(__dirname, 'app/904.customer/views/containers'),
-      path.join(__dirname, 'app/905.auth/views/containers'),
       path.join(__dirname, 'common/views/containers'),
 
       path.join(__dirname, 'app/99.test/views/containers')

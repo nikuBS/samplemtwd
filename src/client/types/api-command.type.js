@@ -476,8 +476,7 @@ Tw.NODE_CMD = {
   UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
-  SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST },
-  GET_SERVER_SERSSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
+  GET_SERVER_SESSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
@@ -487,7 +486,9 @@ Tw.NODE_CMD = {
 
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
   GET_MENU : { path: '/menu', method: Tw.API_METHOD.GET },
-  GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET }
+  GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
+  GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
+  SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST }
 };
 
 Tw.TMAP = {

@@ -3,7 +3,6 @@ import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
-import { UserCertModel } from '../models/user-cert.model';
 import EnvHelper from '../utils/env.helper';
 
 class LoginService {
@@ -120,38 +119,6 @@ class LoginService {
     });
   }
 
-  public getUserCert(): any {
-    this.logger.debug(this, '[getUserCert]', this.request.session);
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.userCert) ) {
-      this.logger.debug(this, '[getUserCert]', this.request.session.userCert);
-      return this.request.session.userCert;
-    }
-    return null;
-  }
-
-  public getSelectedUserCert(): any {
-    const userCert = this.getUserCert();
-    if ( !FormatHelper.isEmpty(userCert) ) {
-      return userCert[this.request.session.svcInfo.svcMgmtNum];
-    }
-    return null;
-  }
-
-  public setUserCert(userCert: any): Observable<any> {
-    return Observable.create((observer) => {
-      const svcMgmtNum = this.request.session.svcInfo.svcMgmtNum;
-      if ( FormatHelper.isEmpty(this.request.session.userCert) ) {
-        this.request.session.userCert = {};
-      }
-      this.request.session.userCert[svcMgmtNum] = new UserCertModel(userCert);
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setUserCert]', this.request.session);
-        observer.next(this.request.session.userCert);
-        observer.complete();
-      });
-    });
-  }
-
   public setChannel(channel: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
@@ -170,6 +137,30 @@ class LoginService {
       return this.request.session.channel;
     }
     return this.request.cookies[COOKIE_KEY.CHANNEL];
+  }
+
+  public setMaskingCert(svcMgmtNum: string): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) ) {
+        if ( FormatHelper.isEmpty(this.request.masking) ) {
+          this.request.session.masking = [];
+        }
+        this.request.session.masking.push(svcMgmtNum);
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setServerSession]', this.request.session);
+          observer.next(this.request.session.masking);
+          observer.complete();
+        });
+      }
+    });
+  }
+
+  public getMaskingCert(svcMgmtNum: string): boolean {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.masking) ) {
+      return this.request.session.masking.indexOf(svcMgmtNum) !== -1;
+    }
+    return false;
+
   }
 
   public logoutSession(): Observable<any> {

@@ -1,5 +1,6 @@
 Tw.ApiService = function () {
   this._popupService = new Tw.PopupService();
+  this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
 };
 
@@ -74,14 +75,18 @@ Tw.ApiService.prototype = {
   },
   _completeCert: function (resp, deferred, requestInfo) {
     if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
-      var arrParams = [];
-      arrParams.push(requestInfo.command);
-      arrParams.push(requestInfo.params);
-      arrParams.push(requestInfo.headers);
-      arrParams = arrParams.concat(requestInfo.pathVariables);
+      if(resp.authKind === Tw.AUTH_CERTIFICATION_KIND.O) {
+        this._historyService.reload();
+      } else {
+        var arrParams = [];
+        arrParams.push(requestInfo.command);
+        arrParams.push(requestInfo.params);
+        arrParams.push(requestInfo.headers);
+        arrParams = arrParams.concat(requestInfo.pathVariables);
 
-      this.request.apply(this, arrParams)
-        .done($.proxy(this._successRequestAfterCert, this, deferred));
+        this.request.apply(this, arrParams)
+          .done($.proxy(this._successRequestAfterCert, this, deferred));
+      }
     } else {
       deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
     }
@@ -131,7 +136,7 @@ Tw.ApiService.prototype = {
   },
 
   setSession: function (callback) {
-    this.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
+    this.request(Tw.NODE_CMD.GET_SERVER_SESSION, {})
       .done($.proxy(this._successSession, this, callback));
   },
 

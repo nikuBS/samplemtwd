@@ -4,7 +4,6 @@ import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ErrorService from '../../services/error.service';
-import { URL } from '../../types/url.old.type';
 import FormatHelper from '../../utils/format.helper';
 import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
@@ -62,6 +61,7 @@ abstract class TwViewController {
 
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
+
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
         this.sessionLogin(req, res, next, path);
@@ -137,9 +137,11 @@ abstract class TwViewController {
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
+      this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
         if ( isLogin ) {
+          urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
           if ( urlMeta.auth.accessTypes.indexOf(svcInfo.loginType) !== -1 ) {
             const urlAuth = urlMeta.auth.grades;
             const svcGr = svcInfo.svcGr;
@@ -160,16 +162,21 @@ abstract class TwViewController {
             }
           }
         } else {
-          if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
+            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            } else {
+              // login page
+              // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
+              res.redirect('/common/tid/login?target=' + path);
+            }
           } else {
-            // login page
-            // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
-            res.redirect('/common/tid/login?target=' + path);
+            // TODO: admin 정보 입력 오류
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
         }
       } else {
-        // 등록되지 않은 메뉴
+        // TODO: 등록되지 않은 메뉴
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
       }
 
