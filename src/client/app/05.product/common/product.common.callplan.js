@@ -100,7 +100,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getPreCheckApiReqInfo: function(joinTermCd) {
-    if (['AB', 'C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
+    if (['AB', 'C', 'H_P', 'H_A', 'G'].indexOf(this._prodTypCd) !== -1) {
       return {
         API_CMD: Tw.API_CMD.BFF_10_0007,
         PARAMS: { joinTermCd: joinTermCd }

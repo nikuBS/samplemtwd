@@ -155,9 +155,12 @@ class ProductCommonCallplan extends TwViewController {
       basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
 
     return Object.assign(prodRedisInfo, {
-      smryHtmlCtt: EnvHelper.setCdnUrl(prodRedisInfo.smryHtmlCtt),
-      summary: Object.assign(prodRedisInfo.summary, ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
-        basDataTxt.txt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit)),
+      summary: [prodRedisInfo.summary,
+        ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo, basDataTxt.txt,
+          prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit),
+        { smryHtmlCtt: EnvHelper.setCdnUrl(prodRedisInfo.summary.smryHtmlCtt) }].reduce((a, b) => {
+        return Object.assign(a, b);
+      }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
       contents: this._convertContents(prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
