@@ -5,10 +5,11 @@
  */
 Tw.MaskingComponent = function () {
   this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService();
 
   this.$btMasking = null;
   this._url = '';
-  this._cert = null;
+  this._cert = new Tw.CertificationSelect();
 
   this._bindEvent();
 };
@@ -19,24 +20,34 @@ Tw.MaskingComponent.prototype = {
     this.$btMasking.on('click', $.proxy(this._onClickMasking, this));
   },
   _onClickMasking: function () {
-    this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_URL_META, params: { url: this._url } },
-      { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
-    ]).done($.proxy(this._successGetData, this));
+    this._apiService.request(Tw.NODE_CMD.GET_MASKING_METHOD, {})
+      .done($.proxy(this._successGetData, this));
   },
-  _successGetData: function (urlMeta, svcInfo) {
-    if ( urlMeta.code === Tw.API_CODE.CODE_00 && svcInfo.code === Tw.API_CODE.CODE_00 ) {
-      this._cert = new Tw.CertificationSelect();
-      var params = {
-        url: this._url,
-        svcInfo: svcInfo.result,
-        urlMeta: urlMeta.result
-      };
+  _successGetData: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var params = $.extend(resp.result, {
+        authClCd: Tw.AUTH_CERTIFICATION_KIND.A,
+        prodProcType: ''
+      });
+
       this._cert.open(params, null, null, $.proxy(this._completeCert, this));
     }
   },
-  _completeCert: function () {
-
+  _completeCert: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._apiService.request(Tw.NODE_CMD.SET_MASKING_COMPLETE, {
+        svcMgmtNum: resp.svcMgmtNum
+      }).done($.proxy(this._successMaskingComplete, this));
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _successMaskingComplete: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.reload();
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   }
 
 };

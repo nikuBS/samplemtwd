@@ -61,6 +61,7 @@ abstract class TwViewController {
 
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
+
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
         this.sessionLogin(req, res, next, path);
@@ -136,9 +137,11 @@ abstract class TwViewController {
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
+      this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
         if ( isLogin ) {
+          urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
           if ( urlMeta.auth.accessTypes.indexOf(svcInfo.loginType) !== -1 ) {
             const urlAuth = urlMeta.auth.grades;
             const svcGr = svcInfo.svcGr;
@@ -173,7 +176,7 @@ abstract class TwViewController {
           }
         }
       } else {
-        // 등록되지 않은 메뉴
+        // TODO: 등록되지 않은 메뉴
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
       }
 

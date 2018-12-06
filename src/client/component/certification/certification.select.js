@@ -68,10 +68,14 @@ Tw.CertificationSelect.prototype = {
     var methods = {};
     this._authKind = this._certInfo.authClCd;
 
-    if ( this._authKind !== Tw.AUTH_CERTIFICATION_KIND.F ) {
+    if ( Tw.FormatHelper.isEmpty(this._authKind) && this._authKind !== Tw.AUTH_CERTIFICATION_KIND.F ) {
       methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
-      this._opMethods = methods.opAuthMethods;
-      this._optMethods = methods.optAuthMethods;
+      if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.A ) {
+        this._opMethods = methods;
+      } else {
+        this._opMethods = methods.opAuthMethods;
+        this._optMethods = methods.optAuthMethods;
+      }
     }
 
     if ( !Tw.FormatHelper.isEmpty(this._optMethods) && this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 ) {
@@ -83,13 +87,9 @@ Tw.CertificationSelect.prototype = {
         this._openProductCert();
         break;
       case Tw.AUTH_CERTIFICATION_KIND.A:
-        // this._openOpCert();
-        break;
       case Tw.AUTH_CERTIFICATION_KIND.P:
-        this._openOpCert();
-        break;
       case Tw.AUTH_CERTIFICATION_KIND.O:
-        // this._openOpCert();
+        this._openOpCert();
         break;
       case Tw.AUTH_CERTIFICATION_KIND.F:
         this._openRefundCert();
@@ -319,6 +319,8 @@ Tw.CertificationSelect.prototype = {
         this._optionCert = false;
         this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
       } else {
+        resp.authKind = this._authKind;
+        resp.svcMgmtNum = this._svcInfo.svcMgmtNum;
         this._callback(resp, this._deferred, this._command);
       }
     } else if ( resp.code === 'CERT0001' ) {
@@ -326,6 +328,7 @@ Tw.CertificationSelect.prototype = {
       this._openSelectPopup(false);
     } else {
       // TODO: 인증 실패
+      this._callback(resp, this._deferred, this._command);
     }
   }
 };

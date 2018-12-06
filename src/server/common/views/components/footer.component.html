@@ -57,7 +57,7 @@
             <li><button type="button"><i class="icon-gnb-back-n fe-common-back"><span class="blind">back</span></i></button></li>
             <li><button type="button"><i class="icon-gnb-next-n fe-common-forward"><span class="blind">next</span></i></button></li>
             <% if (svcInfo && !locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y') { %>
-            <li><button type="button"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button></li>
+            <li><button id="fe-bt-masking" type="button" data-menuId="<%= pageInfo.menuId %>" data-menuUrl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button></li>
             <% } else { %>
             <li><button type="button"><i class="icon-gnb-lock-d"><span class="blind">lock disabled</span></i></button></li>
             <% } %>

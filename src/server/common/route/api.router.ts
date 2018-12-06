@@ -5,13 +5,10 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { COOKIE_KEY } from '../../types/common.type';
-import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_URL_META } from '../../types/redis.type';
+import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_MASKING_METHOD, REDIS_URL_META } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
-import AuthService from '../../services/auth.service';
-import EnvHelper from '../../utils/env.helper';
 import RedisService from '../../services/redis.service';
 import FormatHelper from '../../utils/format.helper';
 import VERSION from '../../config/version.config';
@@ -25,7 +22,6 @@ class ApiRouter {
   private logger: LoggerService = new LoggerService();
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
-  private authService: AuthService = new AuthService();
   private redisService: RedisService = RedisService.getInstance();
 
   constructor() {
@@ -49,7 +45,6 @@ class ApiRouter {
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
     this.router.post('/uploads', this.uploadFile.bind(this));
-    this.router.post('/cert', this.setCert.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
@@ -61,6 +56,8 @@ class ApiRouter {
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
+    this.router.get('/masking-method', this.getMaskingMethod.bind(this));
+    this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -134,7 +131,6 @@ class ApiRouter {
     const url = req.query.url;
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
-        // console.log(resp);
         res.json(resp);
       });
 
@@ -150,6 +146,23 @@ class ApiRouter {
       .subscribe((resp) => {
         res.json(resp);
       });
+  }
+
+  private getMaskingMethod(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_MASKING_METHOD)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
+    const svcMgmtNum = req.body.svcMgmtNum;
+    this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
+      res.json({
+        code: API_CODE.CODE_00
+      });
+    });
+
   }
 
   // private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
@@ -216,16 +229,6 @@ class ApiRouter {
         })
       };
 
-      res.json(resp);
-    });
-  }
-
-  private setCert(req: Request, res: Response, next: NextFunction) {
-    const params = req.body;
-    this.logger.info(this, '[set cert]', params);
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
-    this.authService.setCert(req, res, params).subscribe((resp) => {
       res.json(resp);
     });
   }
