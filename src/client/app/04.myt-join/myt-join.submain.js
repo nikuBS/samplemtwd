@@ -10,7 +10,6 @@ Tw.MyTJoinSubMain = function (params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._historyService.init('hash');
   this.data = params.data;
   this._rendered();
   this._bindEvent();

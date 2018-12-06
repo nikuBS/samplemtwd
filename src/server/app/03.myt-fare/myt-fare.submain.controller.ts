@@ -12,12 +12,17 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
-import { BANNER_TITLE, MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
+import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
 class MyTFareSubmainController extends TwViewController {
+
+  get bannerUrl() {
+    return REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT;
+  }
+
   constructor() {
     super();
   }
@@ -121,10 +126,9 @@ class MyTFareSubmainController extends TwViewController {
       this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT),
-      this._getBannerMock()
+      this.redisService.getData(this.bannerUrl)
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
-                   taxInvoice, contribution, microPay, contentPay, banner, bam]) => {
+                   taxInvoice, contribution, microPay, contentPay, banner]) => {
       // 소액결제
       if ( microPay ) {
         data.microPay = microPay;
@@ -168,13 +172,10 @@ class MyTFareSubmainController extends TwViewController {
         data.contribution = contribution;
       }
       // 배너
-      if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
+      if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
-          data.banner = this.parseBanner(banner);
+          data.banner = this.parseBanner(banner.result);
         }
-      } else {
-        // TODO: MOCK DATA 제거예정
-        data.banner = this.parseBanner(bam);
       }
 
       res.render('myt-fare.submain.html', { data });
@@ -195,9 +196,8 @@ class MyTFareSubmainController extends TwViewController {
       this._getPaymentInfo(),
       this._getMicroPrepay(),
       this._getContentPrepay(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT_U),
-      this._getBannerMock()
-    ).subscribe(([usage, paymentInfo, microPay, contentPay, banner, bam]) => {
+      this.redisService.getData(this.bannerUrl),
+    ).subscribe(([usage, paymentInfo, microPay, contentPay, banner]) => {
       if ( usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -241,13 +241,10 @@ class MyTFareSubmainController extends TwViewController {
           }
         }
 
-        if ( !FormatHelper.isEmpty(banner) || (banner.code === API_CODE.CODE_00) ) {
+        if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
           if ( !FormatHelper.isEmpty(banner.result) ) {
-            data.banner = this.parseBanner(banner);
+            data.banner = this.parseBanner(banner.result);
           }
-        } else {
-          // TODO: MOCK DATA 제거예정
-          data.banner = this.parseBanner(bam);
         }
 
         res.render('myt-fare.submain.html', { data });
@@ -263,6 +260,10 @@ class MyTFareSubmainController extends TwViewController {
       if ( item.bnnrExpsSeq ) {
         sort[item.bnnrExpsSeq] = item;
       }
+      // TEST
+      // if ( !FormatHelper.isEmpty(item.imgLinkUrl) ) {
+      //   sort[item.bnnrSeq] = item;
+      // }
     });
     const keys = Object.keys(sort).sort();
     keys.forEach((key) => {
