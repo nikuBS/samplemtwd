@@ -30,7 +30,15 @@
     <!-- .cont-box -->
     <div class="cont-box nogaps-btm">
         <div class="statement-cont type2">
-            <h3 class="title">{{resData.useSvcType.svcType}}</h3>
+            <div class="single-list">
+                <span class="title">
+                    {{!-- 주석 아이콘 --}}
+                    {{#if_icon rootItem.label }}
+                    {{/if_icon}}
+                    <span class="in-tx type2">{{resData.useSvcType.svcType}}</span>
+                </span>
+            </div>
+
             <div class="statement-detail">
                 <!-- .widget -->
                 <div class="widget">

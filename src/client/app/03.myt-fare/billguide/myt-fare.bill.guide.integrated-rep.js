@@ -33,8 +33,9 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     if ( this.resData.childLineInfo ) {
       this._getChildBillInfo();
+    } else {
+      $('#divChildListHaeder').hide();
     }
-
 
     if ( this.resData.reqQuery.line ) {
       //특정 회선 선택
@@ -69,29 +70,36 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _hbRegisterHelper: function () {
 
     Handlebars.registerHelper('date_txt', function (dateVal) {
-      return Tw.DateHelper.getShortDateWithFormatAddByUnit(dateVal, 1, 'days', 'YYYY년 MM월', 'YYYYMMDD');
+      return Tw.DateHelper.getShortDateWithFormatAddByUnit(dateVal, 1, 'days', 'YYYY년 M월', 'YYYYMMDD');
     });
 
     Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
     });
 
-    Handlebars.registerHelper('if_contents', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1 ) {
-        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.CONTENTS;
+    // 컨텐츠/소액결제 분기 및 tag리턴
+    Handlebars.registerHelper('if_contents', function (strVal) {
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN[i].SCH_ID;
+        if ( strVal.indexOf(searchName) > -1 ) {
+          return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN[i].ELEMENT;
+        }
       }
+      return strVal;
     });
 
-    Handlebars.registerHelper('if_micro', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1 ) {
-        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.MICRO;
+    // 휴대폰/인터넷/TV 아이콘 리턴
+    Handlebars.registerHelper('if_icon', function (strVal) {
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE.TIT_ICON.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[i].SCH_LB;
+        if ( strVal.indexOf(searchName) > -1 ) {
+          return Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[i].ELEMENT;
+        }
       }
+      return Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[0].ELEMENT;
     });
 
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
       if ( strVal.indexOf(searchName) > -1 ) {
         return Tw.MYT_FARE_BILL_GUIDE.THIRD_PARTY_TPL;
       }
@@ -130,11 +138,11 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function () { // 콘텐츠 이용료 최초화면 바로가기
-      this._goLoad('/myt-fare/bill/contents');
+      this._history.goLoad('/myt-fare/bill/contents');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function () { // 소액결재 최초화면 바로가기
-      this._goLoad('/myt-fare/bill/small');
+      this._history.goLoad('/myt-fare/bill/small');
     }, this));
   },
   //--------------------------------------------------------------------------[EVENT]
@@ -144,16 +152,16 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
   _payListBtnEvt: function () {
     Tw.Logger.info('[납부내역조회]');
-    this._goLoad('/myt-fare/info/history');
+    this._history.goLoad('/myt-fare/info/history');
   },
   _callGiftBtnEvt: function () {
-    this._goLoad('/myt-fare/billguide/callgift');
+    this._history.goLoad('/myt-fare/billguide/callgift');
   },
   _roamingBtnEvt: function () {
-    this._goLoad('/myt-fare/billguide/roaming');
+    this._history.goLoad('/myt-fare/billguide/roaming');
   },
   _donationBtnEvt: function () {
-    this._goLoad('/myt-fare/billguide/donation');
+    this._history.goLoad('/myt-fare/billguide/donation');
   },
   _hbDateRadioEvt: function (e) {
     Tw.Logger.info('[날짜 클릭]');
@@ -172,7 +180,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     };
     // Tw.Logger.info('[param]', param);
     // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
-    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
+    this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
   },
 
   _conditionChangeEvt: function () {
@@ -225,23 +233,22 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0047;
+    var targetApi = Tw.API_CMD.BFF_05_0036;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({ command: targetApi, params: { childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum } });
+      commands.push({ command: targetApi, params: { selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum, detailYn:'Y' }});
     }
 
+    Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
-      .done(function () {
+      .done(function (resp) {
         var childLineInfo = thisMain.resData.childLineInfo;
 
         _.each(arguments, function (element, index) {
-          // Tw.Logger.info('[element, index, list]', element, index, list);
-          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {
+          if ( element.result && (element.result.selSvcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
           }
-
         });
 
         thisMain._getChildBillInfoInit();
@@ -250,15 +257,15 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
   _getChildBillInfoInit: function () {
     var thisMain = this;
-    var childListData = $.extend(true, {}, thisMain.resData.childLineInfo);
+    var childListData = thisMain.resData.childLineInfo;
 
-    childListData = _.map(childListData, function (item) {
+    for(var i = 0; i < childListData.length; i++){
+      var item = childListData[i];
+      item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       if ( item.detailInfo ) {
         item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
-        item.svcNum = thisMain._phoneStrToDash(item.svcNum);
-        return item;
       }
-    });
+    }
 
     Tw.Logger.info('childListData', childListData);
 
@@ -289,8 +296,20 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // Tw.Logger.info('[BFF_05_0036 상세내역]', res.result.paidAmtDetailInfo);
 
-      var paidAmtDetailInfo = $.extend(true, {}, res.result.paidAmtDetailInfo);
+      var paidAmtDetailInfo = res.result.paidAmtDetailInfo;
 
+      // 자녀회선 삭제
+      // if(thisMain.resData.childLineInfo) {
+      //   for ( var i = paidAmtDetailInfo.length - 1; i >= 0; i-- ) {
+      //     for ( var j = 0; j < thisMain.resData.childLineInfo.length; j++ ) {
+      //       if ( paidAmtDetailInfo[i].svcMgmtNum === thisMain.resData.childLineInfo[j].svcMgmtNum ) {
+      //         paidAmtDetailInfo.splice(i, 1);
+      //       }
+      //     }
+      //   }
+      // }
+
+      paidAmtDetailInfo = $.extend(true, {}, paidAmtDetailInfo);
       paidAmtDetailInfo = _.map(paidAmtDetailInfo, function (item) {
         item.svcInfoNm = thisMain._phoneStrToDash(item.svcInfoNm);
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
@@ -404,6 +423,29 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     var html = template(data);
     jqTg.append(html);
   },
+  // allSvc 정보에서 해당 상품의 id와 이름을 찾아서 리턴한다.
+  _getProdInfo: function(svcMgmtNum) {
+    var svcS = this.resData.allSvc.S || [];
+    var svcM = this.resData.allSvc.M || [];
+    var svcO = this.resData.allSvc.O || [];
+    for(var i = 0; i < svcS.length; i++){
+      if(svcMgmtNum === svcS[i].svcMgmtNum){
+        return {id: svcS[i].prodId, nm: svcS[i].prodNm};
+      }
+    }
+    for(var i = 0; i < svcM.length; i++){
+      if(svcMgmtNum === svcM[i].svcMgmtNum){
+        return {id: svcM[i].prodId, nm: svcM[i].prodNm};
+      }
+    }
+    for(var i = 0; i < svcO.length; i++){
+      if(svcMgmtNum === svcO[i].svcMgmtNum){
+        return {id: svcO[i].prodId, nm: svcO[i].prodNm};
+      }
+    }
+    return {id: '', nm: ''};
+  },
+
   //--------------------------------------------------------------------------[COM]
   _comTraverse: function ($data, $groupKey, $priceKey) {
     var thisMain = this;
@@ -420,10 +462,15 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       }
       tempSum = thisMain._comComma(tempSum);
 
+      var prodInfo = thisMain._getProdInfo(tempData[val][0].svcMgmtNum);
+      console.log('_comTraverse tempData[val]', tempData[val]);
+      console.log('_comTraverse tempData[val][0]', tempData[val][0]);
       return {
         id: val,
         label: tempData[val][0].svcNm,
         svcInfoNm: tempData[val][0].svcInfoNm,
+        prodId: prodInfo.id,
+        prodNm: prodInfo.nm,
         children: tempData[val],
         totPrice: tempSum
       };
@@ -444,15 +491,10 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     var strVal = String(str);
     return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
   _go: function (hash) {
     this._history.setHistory();
-    window.location.hash = hash;
+    this._history.goHash(hash);
+    // window.location.hash = hash;
   }
 
 };

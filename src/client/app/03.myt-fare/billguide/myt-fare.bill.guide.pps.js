@@ -88,7 +88,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
 
     _.map(this.detailListObj[0].listData, function (item) {
-      item.usedDt = moment(item.usedDt, 'YYYYMMDD').format('YYYY.MM.DD');
+      item.usedDt = moment(item.usedDt, 'YYYYMMDD').format('YYYY.M.DD');
 
       // 0보다 작을 경우 데이터 이외 사용 항목(음성/sms/충전 등)
       if ( Number(item.used) < 0 ) {
@@ -182,7 +182,7 @@ Tw.MyTFareBillGuidePps.prototype = {
         Tw.Logger.info('[ start 는 max]');
 
         pushData = {
-          value: momentTemp.format('YYYY년 MM월'),
+          value: momentTemp.format('YYYY년 M월'),
           option: '',
           attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
         };
@@ -259,7 +259,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       this.selDateObj.endDt = dataVal;
     }
     $target.attr('data-value', dataVal);
-    $target.text(momentObj.format('YYYY.MM'));
+    $target.text(momentObj.format('YYYY.M'));
 
     Tw.Logger.info(this.selDateObj);
 
@@ -371,7 +371,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.selDateObj.selectList = [];
     this.selDateObj.selectEndList = [];
     for ( var i = 1, len = this.selDateObj.startRangeNum; i <= len; i++ ) {
-      var val = moment().subtract(i, 'months').format('YYYY년 MM월');
+      var val = moment().subtract(i, 'months').format('YYYY년 M월');
       var defaultVal = moment().subtract(i, 'months').format('YYYYMM');
 
       var pushData = {
@@ -417,25 +417,6 @@ Tw.MyTFareBillGuidePps.prototype = {
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
-  },
-  _comUnComma: function (str) {
-    str = String(str);
-    // return str.replace(/[^\d]+/g, '');
-    return str.replace(/,/g, '');
-  },
-  _phoneStrToDash: function (str) {
-    var strVal = String(str);
-    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
-  },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
-  _go: function (hash) {
-    this._history.setHistory();
-    window.location.hash = hash;
   }
 
 };

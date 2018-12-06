@@ -9,12 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
-import moment from 'moment';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import bill_guide_BFF_05_0036 from '../../../../mock/server/bill.guide.BFF_05_0036.mock';
-import bill_guide_BFF_05_0049 from '../../../../mock/server/bill.guide.BFF_05_0049.mock';
-import bill_guide_BFF_05_0024 from '../../../../mock/server/bill.guide.BFF_05_0024.mock';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
 
 class MyTFareBillGuide extends TwViewController {
@@ -98,6 +94,8 @@ class MyTFareBillGuide extends TwViewController {
     this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
+    this.logger.info(this, '[ childInfo ] : ', childInfo);
+
     // ---------------------------------------------------------------------------------[화면 구분]
     /*
     * A1. 선불폰 | svcInfo.svcAttrCd : M2
@@ -107,7 +105,7 @@ class MyTFareBillGuide extends TwViewController {
     * A5. 통합청구회선 대표 | this._billpayInfo.repSvcYn === 'Y'
     * A6. 통합청구회선 대표아님 |
      */
-     const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
+    const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
     // const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
 
     switch ( svcInfo.svcAttrCd ) {
@@ -116,54 +114,61 @@ class MyTFareBillGuide extends TwViewController {
         this._typeChk = 'A1';
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-        thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
+        // thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
+        this.prepaidCircuit(res, svcInfo, allSvc, childInfo);
+
         break;
       case 'O1' :
         this.logger.info(this, '[ 기업솔루션(포인트캠) ]', svcInfo.svcAttrCd);
         this._typeChk = 'A2';
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-        thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
+        // thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
+        this.companyCircuit(res, svcInfo, allSvc, childInfo);
         break;
       default :
 
-          this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
+        this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
 
-          Promise.all([promiseTypeChk]).then(function(resArr) {
-            thisMain.logger.info(thisMain, `[ Promise.all > success ] : `, resArr);
-            thisMain._billpayInfo = resArr[0].result;
+        Promise.all([promiseTypeChk]).then(function(resArr) {
+          thisMain.logger.info(thisMain, `[ Promise.all > success ] : `, resArr);
+          thisMain._billpayInfo = resArr[0].result;
 
-            if ( thisMain._billpayInfo.coClCd === 'B' ) {
-              thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
-              thisMain._typeChk = 'A3';
+          if ( thisMain._billpayInfo.coClCd === 'B' ) {
+            thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
+            thisMain._typeChk = 'A3';
+            thisMain.skbroadbandCircuit(res);
+          } else {
+            if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+              thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
+              thisMain._typeChk = 'A4';
+              thisMain.individualCircuit(res, svcInfo, allSvc, childInfo);
             } else {
-              if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
-                thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
-                thisMain._typeChk = 'A4';
+              if ( thisMain._billpayInfo.repSvcYn === 'Y' ) {
+                thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 ]', thisMain._billpayInfo.repSvcYn);
+                thisMain._typeChk = 'A5';
+                thisMain.combineRepresentCircuit(res, svcInfo, allSvc, childInfo);
               } else {
-                if ( thisMain._billpayInfo.repSvcYn === 'Y' ) {
-                  thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 ]', thisMain._billpayInfo.repSvcYn);
-                  thisMain._typeChk = 'A5';
-                } else {
-                  thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 아님!!!! ]', thisMain._billpayInfo.repSvcYn);
-                  thisMain._typeChk = 'A6';
-                }
+                thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 아님!!!! ]', thisMain._billpayInfo.repSvcYn);
+                thisMain._typeChk = 'A6';
+                thisMain.combineCommonCircuit(res, svcInfo, allSvc, childInfo);
               }
             }
-            thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
-            thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
+          }
+          thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
+          thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
 
-            thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
+          // thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
 
-          }, function(err) {
-            thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
-            return thisMain.error.render(res, {
-              title: 'title',
-              code: err.code,
-              msg: err.msg,
-              svcInfo: svcInfo
-            });
+        }, function(err) {
+          thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+          return thisMain.error.render(res, {
+            title: 'title',
+            code: err.code,
+            msg: err.msg,
+            svcInfo: svcInfo
           });
+        });
 
     }
 
@@ -172,39 +177,6 @@ class MyTFareBillGuide extends TwViewController {
     //   svcInfo: svcInfo,
     // });
 
-  }
-
-  // ---------------------------------------------------------------------------------[초기화 분기처리]
-  private controllerInit(res, svcInfo, allSvc, childInfo) {
-
-    switch ( this._typeChk ) {
-      case 'A1' :
-        this.logger.info(this, '[ PPS 선불폰 controllerInit ] A1 : ', this._typeChk);
-        this.prepaidCircuit(res, svcInfo, allSvc, childInfo);
-        break;
-      case 'A2' :
-        this.logger.info(this, '[ 기업솔루션 controllerInit ] A2 : ', this._typeChk);
-        this.companyCircuit(res, svcInfo, allSvc, childInfo);
-        break;
-      case 'A3' :
-        this.logger.info(this, '[ SK브로드밴드 가입 controllerInit ] A3 : ', this._typeChk);
-        this.skbroadbandCircuit(res, svcInfo, allSvc, childInfo);
-        break;
-      case 'A4' :
-        this.logger.info(this, '[ 개별청구회선 controllerInit ] A4 : ', this._typeChk);
-        this.individualCircuit(res, svcInfo, allSvc, childInfo);
-        break;
-      case 'A5' :
-        this.logger.info(this, '[ 통합청구회선-대표 controllerInit ] A5 : ', this._typeChk);
-        this.combineRepresentCircuit(res, svcInfo, allSvc, childInfo);
-        break;
-      case 'A6' :
-        this.logger.info(this, '[ 통합청구회선-일반 controllerInit ] A6 : ', this._typeChk);
-        this.combineCommonCircuit(res, svcInfo, allSvc, childInfo);
-        break;
-      default :
-
-    }
   }
 
   // 통합청구(대표)
@@ -277,7 +249,8 @@ class MyTFareBillGuide extends TwViewController {
         intBillLineInfo: thisMain._intBillLineInfo,
         childLineInfo: thisMain._childLineInfo,
         showConditionInfo: thisMain._showConditionInfo,
-        unpaidBillsInfo: thisMain._unpaidBillsInfo
+        unpaidBillsInfo: thisMain._unpaidBillsInfo,
+        allSvc: allSvc
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -334,7 +307,8 @@ class MyTFareBillGuide extends TwViewController {
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
         intBillLineInfo: thisMain._intBillLineInfo,
-        childLineInfo: thisMain._childLineInfo
+        childLineInfo: thisMain._childLineInfo,
+        allSvc: allSvc
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -394,7 +368,8 @@ class MyTFareBillGuide extends TwViewController {
         intBillLineInfo: thisMain._intBillLineInfo,
         childLineInfo: thisMain._childLineInfo,
         showConditionInfo: thisMain._showConditionInfo,
-        unpaidBillsInfo: thisMain._unpaidBillsInfo
+        unpaidBillsInfo: thisMain._unpaidBillsInfo,
+        allSvc: allSvc
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -429,24 +404,24 @@ class MyTFareBillGuide extends TwViewController {
 
       // thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsObEndDt =
-        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsInbEndDt =
-        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsNumEndDt =
-        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.MM.DD', 'YYYYMMDD');
+        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
-      thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.MM.DD hh:mm');
+      thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.M.DD hh:mm');
 
       thisMain._commDataInfo.ppsStartDateVal = thisMain.getStartDateFormat('YYYYMM');
-      thisMain._commDataInfo.ppsStartDateTxt = thisMain.getStartDateFormat('YYYY.MM');
+      thisMain._commDataInfo.ppsStartDateTxt = thisMain.getStartDateFormat('YYYY.M');
 
       thisMain._commDataInfo.ppsEndDateVal = thisMain.getEndDateFormat('YYYYMM');
-      thisMain._commDataInfo.ppsEndDateTxt = thisMain.getEndDateFormat('YYYY.MM');
+      thisMain._commDataInfo.ppsEndDateTxt = thisMain.getEndDateFormat('YYYY.M');
     };
 
     Promise.all([p1]).then(function(resArr) {
@@ -478,8 +453,9 @@ class MyTFareBillGuide extends TwViewController {
     const thisMain = this;
   }
   // SK브로드밴드가입
-  private skbroadbandCircuit(res, svcInfo, allSvc, childInfo) {
+  private skbroadbandCircuit(res) {
     const thisMain = this;
+    thisMain.renderView(res, thisMain._urlTplInfo.skbroadbandPage, {});
   }
 
   // -------------------------------------------------------------[SVC]
@@ -543,12 +519,12 @@ class MyTFareBillGuide extends TwViewController {
 
   public getSelStaDt(date: string): any { // 월 시작일 구하기
     // return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
-    return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.MM.DD');
+    return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.M.DD');
   }
 
   public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
     // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
-    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'MM.DD');
+    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'M.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
@@ -581,10 +557,10 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public conditionChangeDtListFun() {
-    console.log('에러 확인 > conditionChangeDtListFun');
+    // console.log('에러 확인 > conditionChangeDtListFun');
     const thisMain = this;
     let dtList = thisMain._billpayInfo.invDtArr.slice();
-    console.dir(dtList);
+    // console.dir(dtList);
 
     dtList = dtList.map(function (item, idx, arr) {
       // item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
@@ -670,7 +646,7 @@ class MyTFareBillGuide extends TwViewController {
     return new Promise((resolve, reject) => {
       const ms: number = Math.floor(Math.random() * 1000) + 1;
       setTimeout(function () {
-        console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
+        // console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
 
         if ( mockData.code === API_CODE.CODE_00 ) {
           resolve(mockData);

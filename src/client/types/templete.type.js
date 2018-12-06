@@ -533,11 +533,17 @@ Tw.TERMS_ACTION = {
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
-  DETAIL_BTN: {
-    CONTENTS: '<span class="bt-detail"><button data-target="detailContentsBtn">자세히 보기</button></span>',
-    MICRO: '<span class="bt-detail"><button data-target="detailMicroBtn">자세히 보기</button></span>'
-  },
-  THIRD_PARTY_TPL: '<span class="badge badge-other"><span class="blind">타사</span></span>'
+  TIT_ICON:[
+    {SCH_LB:'이동전화', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
+    {SCH_LB:'휴대폰', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
+    {SCH_LB:'인터넷', ELEMENT : '<span class="ico-wrap"><i class="icon-internet-48"><span class="blind">internet</span></i></span>'},
+    {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind">pc</span></i></span>'}
+  ],
+  DETAIL_BTN: [
+    {SCH_ID : '콘텐츠이용료', ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},
+    {SCH_ID : '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
+  ],
+  THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>'
 
 };
 

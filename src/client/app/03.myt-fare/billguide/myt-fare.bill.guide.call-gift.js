@@ -155,29 +155,5 @@ Tw.MyTFareBillGuideCallGift.prototype = {
       ss: second,
       hhmmss: hour + ':' + minute + ':' + second
     };
-  },
-  _comComma: function (str) {
-    str = String(str);
-    return Tw.FormatHelper.addComma(str);
-  },
-  _comUnComma: function (str) {
-    str = String(str);
-    // return str.replace(/[^\d]+/g, '');
-    return str.replace(/,/g, '');
-  },
-  _phoneStrToDash: function (str) {
-    var strVal = String(str);
-    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
-  },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
-  _go: function (hash) {
-    this._history.setHistory();
-    window.location.hash = hash;
   }
-
 };
