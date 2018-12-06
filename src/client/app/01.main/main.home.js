@@ -51,7 +51,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-quick-edit', $.proxy(this._onClickQuickEdit, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
   },
-  _onClickLine: function($event) {
+  _onClickLine: function ($event) {
     var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
     this._lineComponent.onClickLine(svcMgmtNum);
   },
@@ -96,8 +96,10 @@ Tw.MainHome.prototype = {
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
-    console.log('layerType : ', layerType);
-    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+    // layerType = Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER;
+    Tw.Logger.info('[Home] layerType', layerType);
+    if ( !Tw.FormatHelper.isEmpty(layerType) &&
+      (layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER) ) {
       this._lineRegisterLayer.openRegisterLinePopup(layerType);
     }
   },
