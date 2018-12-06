@@ -485,7 +485,9 @@ Tw.NODE_CMD = {
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
   GET_APP_NOTICE: { path: '/app-notice', method: Tw.API_METHOD.GET },
 
-  GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET }
+  GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
+  GET_MENU : { path: '/menu', method: Tw.API_METHOD.GET },
+  GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

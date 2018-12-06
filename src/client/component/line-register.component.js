@@ -10,6 +10,7 @@ Tw.LineRegisterComponent = function () {
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
   this._historyService = new Tw.HistoryService();
 
+  this._alreayRegisterList = [];
   this._registerLength = 0;
   this._listLength = 0;
   this._marketingSvc = '';
@@ -19,6 +20,7 @@ Tw.LineRegisterComponent = function () {
   this.$childChecks = null;
   this.$allCheck = null;
   this.$list = null;
+  this.$btMore = null;
 };
 
 Tw.LineRegisterComponent.prototype = {
@@ -38,7 +40,7 @@ Tw.LineRegisterComponent.prototype = {
     }
   },
   _failGetLineInfo: function (error) {
-    console.log(error);
+    Tw.Error(error.code, error.msg).pop();
   },
   _parseLineInfo: function (lineList) {
     var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
@@ -48,6 +50,7 @@ Tw.LineRegisterComponent.prototype = {
         list = list.concat(this._convLineData(lineList[Tw.LINE_NAME[line]], Tw.LINE_NAME[line]));
       }
     }, this));
+
     return list;
   },
 
@@ -60,12 +63,15 @@ Tw.LineRegisterComponent.prototype = {
       line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
       line.showAddr = type === Tw.LINE_NAME.INTERNET_PHONE_IPTV;
       line.showPet = type === Tw.LINE_NAME.MOBILE;
-      line.isRegister = line.expsYn === 'Y';
-      result.push(line);
       if ( line.expsYn === 'N' ) {
         this._listLength++;
+        result.push(line);
+      } else {
+        this._alreayRegisterList.push(line.svcMgmtNum);
       }
+      line.isShow = this._listLength <= Tw.DEFAULT_LIST_COUNT;
     }, this));
+
     return result;
   },
   _openRegisterLine: function (data, type) {
@@ -75,6 +81,7 @@ Tw.LineRegisterComponent.prototype = {
         layer: true,
         new_customer: type === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER,
         list_length: this._listLength,
+        bt_more: this._listLength > Tw.DEFAULT_LIST_COUNT,
         data: data
       }, $.proxy(this._onOpenRegisterLine, this), $.proxy(this._onCloseRegisterLine, this), 'line-register');
     }
@@ -87,10 +94,12 @@ Tw.LineRegisterComponent.prototype = {
     this.$childChecks = $layer.find('.fe-check-child');
     this.$allCheck = $layer.find('#fe-check-all');
     this.$list = $layer.find('.fe-item');
+    this.$btMore = $layer.find('#fe-bt-more');
 
     this.$btnRegister.on('click', $.proxy(this._onClickRegister, this));
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
     this.$allCheck.on('change', $.proxy(this._onClickAllCheck, this));
+    this.$btMore.on('click', $.proxy(this._onClickMore, this));
   },
   _onClickAllCheck: function ($event) {
     var $currentTarget = $($event.currentTarget);
@@ -110,11 +119,22 @@ Tw.LineRegisterComponent.prototype = {
     $event.stopPropagation();
 
     var $selected = this.$childChecks.filter(':checked').parent();
-    var svcNumList = [];
+    var svcNumList = this._alreayRegisterList;
     _.map($selected, $.proxy(function (checkbox) {
       svcNumList.push($(checkbox).data('svcmgmtnum'));
     }, this));
     this._registerLineList(svcNumList.join('~'), svcNumList.length);
+  },
+  _onClickMore: function () {
+    var $hideList = this.$list.filter('.none');
+    var $showList = $hideList.filter(function (index) {
+      return index < Tw.DEFAULT_LIST_COUNT;
+    });
+    var remainCnt = $hideList.length - $showList.length;
+    $showList.removeClass('none');
+    if ( remainCnt === 0 ) {
+      this.$btMore.hide();
+    }
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);
@@ -137,7 +157,6 @@ Tw.LineRegisterComponent.prototype = {
   },
   _enableBtns: function () {
     var selectedLength = this.$childChecks.filter(':checked').length;
-    console.log('selected', selectedLength);
     if ( selectedLength === 0 ) {
       this.$btnRegister.attr('disabled', true);
     } else {
@@ -160,7 +179,7 @@ Tw.LineRegisterComponent.prototype = {
     }
   },
   _failRegisterLineList: function (error) {
-    console.log(error);
+    Tw.Error(error.code, error.msg).pop();
   },
   _onCloseRegisterLine: function () {
     if ( this._registerLength > 0 ) {

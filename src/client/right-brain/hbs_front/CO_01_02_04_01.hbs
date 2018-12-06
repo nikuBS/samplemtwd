@@ -49,8 +49,8 @@
                                     </div>
                                 </li>
                                 {{#each data}}
-                                <li class="checkbox type01-big fe-item {{#if isRegister}}checked none{{/if}}" role="checkbox" aria-checked="{{isRegister}}" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{showName}}" data-svcNum="{{svcNum}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" class="fe-check-child {{#if isRegister}}none{{/if}}" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3" {{#if isRegister}}checked{{/if}}/><!-- 체크상태일 경우 checked="checked" -->
+                                <li class="checkbox type01-big fe-item {{#unless isShow}}none{{/unless}}" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{showName}}" data-svcNum="{{svcNum}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="checkbox" class="fe-check-child" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3"/><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
                                         <p class="layout-text">
                                             <span class="mtext">{{showName}}</span>
@@ -63,9 +63,11 @@
                         </div>
                     </div>
                 </div>
+                {{#if bt_more }}
                 <div class="bt-more">
-                    <button>더보기</button>
+                    <button id="fe-bt-more">더보기</button>
                 </div>
+                {{/if}}
             </div>
             <!--// .cont-box -->
             <ul class="bt-slice full">
