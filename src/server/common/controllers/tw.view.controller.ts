@@ -160,12 +160,17 @@ abstract class TwViewController {
             }
           }
         } else {
-          if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
+            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            } else {
+              // login page
+              // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
+              res.redirect('/common/tid/login?target=' + path);
+            }
           } else {
-            // login page
-            // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
-            res.redirect('/common/tid/login?target=' + path);
+            // TODO: admin 정보 입력 오류
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
         }
       } else {
