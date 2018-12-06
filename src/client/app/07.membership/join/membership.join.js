@@ -10,7 +10,6 @@ Tw.MyTBenefitMembershipJoin = function (params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._historyService.init('hash');
   this.data = params.data;
   this._render();
   this._bindEvent();
