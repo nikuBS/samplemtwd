@@ -43,12 +43,10 @@ class ProductRoamingSearchResult extends TwViewController {
       Observable.combineLatest(
           this.getManageTypeSrch(params)
           // this.getRoamingPlanData(params)
-      ).subscribe(([roamingTypeData, roamingRateData]) => {
-
+      ).subscribe(([roamingTypeData]) => {
           res.render('roaming/product.roaming.search-result.html',
-              { svcInfo, searchInfo, roamingTypeData, roamingRateData, isLogin: this.isLogin(svcInfo), pageInfo });
+              {svcInfo, searchInfo, roamingTypeData, isLogin: this.isLogin(svcInfo), pageInfo});
           this.logger.info(this, 'roamingTypeData : ', roamingTypeData);
-          this.logger.info(this, 'roamingRateData : ', roamingRateData);
       });
     }
     private isLogin(svcInfo: any): boolean {
@@ -62,43 +60,8 @@ class ProductRoamingSearchResult extends TwViewController {
         return this.apiService.request(API_CMD.BFF_10_0061, param).map((resp) => {
             if ( resp.code === API_CODE.CODE_00 ) {
                 roamingTypeData = resp.result;
-                const rateParams = {
-                    countryCode: this.COUNTRY_CDDE,
-                    manageType: '',
-                    showDailyPrice: 'N'
-                };
-                if ( resp.result.lte > 0 ) {
-                   rateParams.manageType = 'L';
-                } else if ( resp.result.wcdma > 0 ) {
-                   rateParams.manageType = 'W';
-                } else if ( resp.result.gsm > 0 ) {
-                   rateParams.manageType = 'G';
-                } else if ( resp.result.cdma > 0 ) {
-                   rateParams.manageType = 'C';
-                } else if ( resp.result.rent > 0) {
-                   rateParams.manageType = '';
-                   rateParams.showDailyPrice = 'Y';
-                } else {
-                   rateParams.manageType = '';
-                   rateParams.showDailyPrice = 'N';
-                }
-
-                this.logger.info(this, 'rateParams : ', rateParams);
-                this.getCountryRate(rateParams);
             }
             return roamingTypeData;
-        });
-    }
-    private getCountryRate (params) {
-        this.logger.info(this, 'getCountryRate params :', params);
-
-        let roamingRateData = null;
-        return this.apiService.request(API_CMD.BFF_10_0058, params).map((resp) => {
-            if ( resp.code === API_CODE.CODE_00 ) {
-                roamingRateData = resp.result;
-                this.logger.info(this, 'roamingRateData ==== ', roamingRateData);
-            }
-            return roamingRateData;
         });
     }
 }
