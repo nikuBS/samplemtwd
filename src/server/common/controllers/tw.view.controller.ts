@@ -129,7 +129,8 @@ abstract class TwViewController {
   }
 
   private setChannel(req, res): Observable<any> {
-    const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
+    // const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
+    const channel = CHANNEL_TYPE.MOBILE_APP;
     this.logger.info(this, '[set cookie]', channel);
     return this._loginService.setChannel(channel);
   }
@@ -152,14 +153,15 @@ abstract class TwViewController {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             }
           } else {
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             // 현재 로그인 방법으론 이용할 수 없음
-            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-              res.redirect('/common/member/slogin/fail');
-            } else {
+            // if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+              // res.redirect('/common/member/slogin/fail');
+            // } else {
               // TODO: ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-              res.redirect('/common/member/slogin/fail');
+              // res.redirect('/common/member/slogin/fail');
               // this.errorAuth(req, res, next, svcInfo);
-            }
+            // }
           }
         } else {
           if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
