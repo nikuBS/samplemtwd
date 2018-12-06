@@ -47,7 +47,7 @@ export default class Product extends TwViewController {
         }
 
         const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
-        res.render('mobileplan/product.mobileplan.html', { svcInfo, productData, pageInfo, isApp: BrowserHelper.isApp(req) });
+        res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
       });
     }
   }
