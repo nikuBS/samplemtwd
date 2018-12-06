@@ -26,3 +26,16 @@ export enum REDIS_CODE {
   CODE_EMPTY = '01',
   CODE_ERROR = '02'
 }
+
+export enum CHANNEL_CODE {
+  PC = 'O',
+  MWEB = 'M',
+  IOS = 'I',
+  ANDROID = 'A'
+}
+
+export enum MENU_CODE {
+  MWEB = '01',
+  ONWEB = '04',
+  MAPP = '05'
+}
