@@ -35,7 +35,7 @@ Tw.TooltipService.prototype = {
   },
   _openTip: function ($result) {
     this._popupService.open({
-      url: '/hbs/',
+      url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
       'title': $result.title,
       'title_type': 'sub',
