@@ -65,16 +65,15 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _selectKind: function () {
-    var methods = {};
     this._authKind = this._certInfo.authClCd;
 
-    if ( Tw.FormatHelper.isEmpty(this._authKind) && this._authKind !== Tw.AUTH_CERTIFICATION_KIND.F ) {
-      methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
+    if ( !Tw.FormatHelper.isEmpty(this._authKind) && this._authKind !== Tw.AUTH_CERTIFICATION_KIND.F ) {
+      var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
       if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.A ) {
         this._opMethods = methods;
       } else {
         this._opMethods = methods.opAuthMethods;
-        this._optMethods = methods.optAuthMethods;
+        this._optMethods = methods.optAuthMethods || '';
       }
     }
 
@@ -320,7 +319,11 @@ Tw.CertificationSelect.prototype = {
         this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
       } else {
         resp.authKind = this._authKind;
-        resp.svcMgmtNum = this._svcInfo.svcMgmtNum;
+        if ( !Tw.FormatHelper.isEmpty(this._svcInfo) ) {
+          resp.svcMgmtNum = this._svcInfo.svcMgmtNum;
+        } else {
+          resp.svcMgmtNum = '';
+        }
         this._callback(resp, this._deferred, this._command);
       }
     } else if ( resp.code === 'CERT0001' ) {
