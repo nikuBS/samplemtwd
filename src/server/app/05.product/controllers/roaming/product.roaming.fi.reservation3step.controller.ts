@@ -15,7 +15,7 @@ export default class ProductRoamingReservation3step extends TwViewController {
     const centerName = ROAMING_RECEIVE_CENTER[selectIdx];
 
     let centerImg = '';
-    //이미지 추후 적용
+    // 이미지 추후 적용
     /*
     switch (selectIdx) {
       case '0':
@@ -49,7 +49,7 @@ export default class ProductRoamingReservation3step extends TwViewController {
     const data = {
       centerName,
       centerImg
-    }
+    };
 
     res.render('roaming/product.roaming.fi.reservation3step.html', { svcInfo : svcInfo , data : data });
   }

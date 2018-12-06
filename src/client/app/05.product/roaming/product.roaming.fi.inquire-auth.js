@@ -24,7 +24,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._getInitPeriod();
-    this._getTfiResponse();;
+    this._getTfiResponse();
   },
 
   _cachedElement: function() {
@@ -45,10 +45,12 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onMore,this));
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
+    this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
+    this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
   },
 
   _getInitPeriod: function() {
-    //최초에 오늘 ~ 6개월 후 날짜 설정
+    //최초 날짜 설정
     var startDate = moment().format('YYYY[-]MM[-]DD');
     var endDate = moment().add(6, 'month').format('YYYY[-]MM[-]DD');
     var getPeriod = this._dateHelper.getShortDateWithFormat(startDate, 'YYYY.M.DD' , 'YYYY-MM-DD') + ' - ' +
@@ -63,8 +65,6 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$inputEdate.attr('min',minDate);
     this.$inputEdate.attr('max',maxDate);
     this.$inquirePeriod.text(getPeriod);
-
-
   },
 
   _getTfiResponse: function() {
@@ -83,7 +83,6 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
         rentto : rentto
       })
       .done($.proxy(this._renderTemplate, this));
-
   },
 
   _renderTemplate: function(res) {
@@ -97,7 +96,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     //한글로된 국가 배열 -> 코드 배열로 교체
     var codeArr = code.split(',');
     var allCountryCode = this._countryCode;
-    codeArr = codeArr.map(function(x){return x});
+    codeArr = codeArr.map(function(x){return x;});
 
     allCountryCode.forEach(function(key){
       if(codeArr.indexOf(key.countryCode) >= 0){
@@ -117,15 +116,15 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     var returnList = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.data[0].list;
 
     for(var rec in receiveList){
-      var startlen = receiveList[rec].attr.indexOf('data-booth') + 12;
-      var key = receiveList[rec].attr.substr(startlen,10);
-      this._receiveObj[key] = receiveList[rec].value;
-      this._impbranchObj[key] = receiveList[rec].attr.substr(receiveList[rec].attr.indexOf('data-center') + 13, 10);
+      var receiveLen = receiveList[rec].attr.indexOf('data-booth') + 12;
+      var receiveKey = receiveList[rec].attr.substr(receiveLen,10);
+      this._receiveObj[receiveKey] = receiveList[rec].value;
+      this._impbranchObj[receiveKey] = receiveList[rec].attr.substr(receiveList[rec].attr.indexOf('data-center') + 13, 10);
     }
     for(var ret in returnList){
-      var startlen = returnList[ret].attr.indexOf('data-center') + 13;
-      var key = returnList[ret].attr.substr(startlen,10);
-      this._returnObj[key] = returnList[ret].value;
+      var returnLen = returnList[ret].attr.indexOf('data-center') + 13;
+      var returnKey = returnList[ret].attr.substr(returnLen,10);
+      this._returnObj[returnKey] = returnList[ret].value;
     }
 
     for( var x in res){
@@ -143,7 +142,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
 
     return res;
   },
-
+  
   _renderListOne: function(res){
     var list = res.romlist;
 
@@ -168,7 +167,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     }
   },
 
-  // 상단 템플릿 생성
+  // 예약내역 템플릿 생성
   _renderList: function($container, res) {
     Handlebars.registerHelper('json', function(context) {
       return JSON.stringify(context);
@@ -269,7 +268,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       res.result.rominfo.rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id];
       res.result.rominfo.rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id];
       res.result.rominfo.changeCountry = changeCountry;
-      res.result.minDate = moment().add(2, 'months').format('YYYY-MM-DD');
+      res.result.minDate = moment().add(2, 'days').format('YYYY-MM-DD');
       res.result.maxDate = this._dateHelper.getEndOfMonSubtractDate(undefined,-6,'YYYY-MM-DD');
 
       var data = res.result;
@@ -350,8 +349,14 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   },
 
   _changeCheck : function(){
+    var dateCheck = true;
+
+    if($('#flab02').val() === '' || $('#flab03').val() === ''){
+      dateCheck = false;
+    }
+
     setTimeout(function(){
-      if($('#flab01').val().length > 0){
+      if($('#flab01').val().length > 0 && dateCheck){
         $('.bt-red1 button').removeAttr('disabled');
       }else{
         $('.bt-red1 button').attr('disabled','disabled');

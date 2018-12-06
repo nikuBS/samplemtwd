@@ -15,7 +15,12 @@ export default class ProductRoamingFiInquireAuth extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     this.apiService.request(API_CMD.BFF_10_0060, {keyword : ''}).subscribe((resp) => {
-      const countryCode = resp.result;
+      let countryCode = {};
+      if ( resp.code === API_CODE.CODE_00 ) {
+        countryCode = resp.result;
+      } else {
+        countryCode = resp;
+      }
 
       res.render('roaming/product.roaming.fi.inquire-auth.html', {
         countryCode: countryCode,
