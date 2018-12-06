@@ -4,7 +4,6 @@ import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ErrorService from '../../services/error.service';
-import { URL } from '../../types/url.old.type';
 import FormatHelper from '../../utils/format.helper';
 import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';

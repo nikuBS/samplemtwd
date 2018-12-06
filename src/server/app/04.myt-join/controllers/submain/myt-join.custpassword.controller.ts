@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { SVC_ATTR } from '../../../../types/bff.old.type';
+import { SVC_ATTR_NAME } from '../../../../types/bff.type';
 
 
 class MyTJoinCustpassword extends TwViewController {
@@ -44,7 +44,7 @@ class MyTJoinCustpassword extends TwViewController {
 
 
     const data = {
-      title: svcInfo.svcAttrCd ? SVC_ATTR[svcInfo.svcAttrCd] : '',
+      title: svcInfo.svcAttrCd ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : '',
       number: svcInfo.svcNum || '',
       svcInfo: svcInfo,
       pageInfo: pageInfo,
