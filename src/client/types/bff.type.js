@@ -4,9 +4,9 @@ Tw.MYT_FARE_AUTO = {
 };
 
 Tw.TING_TITLE = {
-  HA: '통화가능금액',
-  CH: '충전금액',
-  PR: '선물충전금액'
+  HA: '통화 가능 금액',
+  CH: '충전 금액',
+  PR: '선물충전 금액'
 };
 
 Tw.MYT_FARE_SUB_MAIN = {

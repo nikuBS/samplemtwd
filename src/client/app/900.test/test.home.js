@@ -144,10 +144,10 @@ Tw.TestHome.prototype = {
     };
   },
   _getContentData: function (element) {
-    $.ajax('/mock/home/BFF_05_0064.json')
+    // $.ajax('/mock/home/BFF_05_0064.json')
     // this._apiService.request(Tw.API_CMD.BFF_05_0064, {})
-      .done($.proxy(this._successContentData, this, element))
-      .fail($.proxy(this._failContentData, this));
+      // .done($.proxy(this._successContentData, this, element))
+      // .fail($.proxy(this._failContentData, this));
   },
   _successContentData: function (element, resp) {
     console.log('successContentData', resp);

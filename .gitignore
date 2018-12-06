@@ -49,3 +49,4 @@ yarn-error.log
 Thumbs.db
 
 package-lock.json
+nodemon-debug.json

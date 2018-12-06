@@ -37,19 +37,19 @@ class BypassRouter {
   }
 
   private setGetApi(cmd) {
-    this.router.get(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.GET));
+    this.router.get(cmd.path, this.sendRequest.bind(this, cmd));
   }
 
   private setPostApi(cmd) {
-    this.router.post(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.POST));
+    this.router.post(cmd.path, this.sendRequest.bind(this, cmd));
   }
 
   private setPutApi(cmd) {
-    this.router.put(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.PUT));
+    this.router.put(cmd.path, this.sendRequest.bind(this, cmd));
   }
 
   private setDeleteApi(cmd) {
-    this.router.delete(cmd.path, this.sendRequest.bind(this, cmd, API_METHOD.DELETE));
+    this.router.delete(cmd.path, this.sendRequest.bind(this, cmd));
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {

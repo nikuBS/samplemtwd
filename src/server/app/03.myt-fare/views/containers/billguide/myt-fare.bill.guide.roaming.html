@@ -24,7 +24,7 @@
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
 
-        <%- include('../../../../common/views/components/header.component.html', { title: '로밍 사용요금 조회', svcInfo: svcInfo, option: { back: 'popup' } }) %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '로밍 사용요금 조회' }) %>
 
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -62,8 +62,14 @@
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- TBD -->
-                <img src="<%= CDN %>/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list">
+                        <li>로밍 사용요금 안내 <button id="MF_02_01_03_tip_01" type="button" class="tip-view">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
 
             </div>
         </div>
@@ -73,9 +79,7 @@
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 
 <script>

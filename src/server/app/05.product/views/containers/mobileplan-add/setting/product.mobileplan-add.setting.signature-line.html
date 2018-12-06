@@ -15,7 +15,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap step" data-prod_id="<%= prodId %>" data-display_id="MV_02_02_02"
-     data-svc_prod_grp_id="<%= combineLineInfo.svcProdGrpId %>">
+     data-svc_prod_grp_id="<%= combineLineInfo.svcProdGrpId %>" data-menuId="M000420">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -105,11 +105,6 @@
         <!-- .popup-closeBtn -->
         <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
-        <!-- #footer -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
-        <!--// #footer -->
     </div>
     <!-- // .popup hbs -->
 </div>

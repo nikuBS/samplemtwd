@@ -51,7 +51,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // var mockDataQty = 900;
-      var apiDataQty = res.result.dataQty;
+      var apiDataQty = res.result.dataRemQty;
       var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
       // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
       this.$remainQty.text(dataQty.data + dataQty.unit);

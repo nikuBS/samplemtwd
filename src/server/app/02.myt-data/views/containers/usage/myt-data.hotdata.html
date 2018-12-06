@@ -247,8 +247,7 @@
                 <div id="head-band-data-share" class="ti-caption-type01">
                     <h2 class="tit">내폰끼리 결합 사용량</h2>
                     <p class="num">총 사용
-                        <em></em>
-                        <span></span>
+                        <em></em><span></span>
                     </p>
                 </div>
                 <div class="data-list-type1">
@@ -258,7 +257,7 @@
                         <li>
                             <span class="stit">{{ feeProdNm }}</span>
                             <div class="sta">
-                                <span>설정일 {{ dateFormat auditDtm }}</span>
+                                <span>설정일: {{ dateFormat auditDtm }}</span>
                                 <span class="f-type1">{{ dashPhoneNum svcNum }}</span>
                             </div>
                             <span class="use" data-child-svcnum="{{ svcMgmtNum }}">
@@ -269,7 +268,7 @@
                     <script id="fe-band-data-share-li-detail" type="text/x-handlebars-template">
                         <strong>
                             {{ byteFormat used }}{{ byteUnit used }}
-                        </strong>사용
+                        </strong> 사용
                     </script>
                 </div>
             </div>
@@ -280,7 +279,7 @@
 
 
             <% if (usageData && usageData.voice && usageData.voice.length > 0) { %>
-            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'voice', color: 'green', typeStr: '음성/영상', items: usageData.voice }); %>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'voice', color: 'green', typeStr: '음성통화·영상통화', items: usageData.voice }); %>
             <% } %>
 
             <% if (usageData && usageData.sms && usageData.sms.length > 0) { %>

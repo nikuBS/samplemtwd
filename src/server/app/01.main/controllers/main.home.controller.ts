@@ -22,7 +22,15 @@ import {
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
+import {
+  REDIS_APP_VERSION,
+  REDIS_BANNER_ADMIN,
+  REDIS_HOME_NOTI,
+  REDIS_QUICK_DEFAULT,
+  REDIS_SMART_CARD,
+  REDIS_CODE,
+  REDIS_HOME_NOTICE
+} from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 
 class MainHome extends TwViewController {
@@ -48,7 +56,7 @@ class MainHome extends TwViewController {
           Observable.combineLatest(
             this.getUsageData(),
             this.getMembershipData(),
-            this.getNotice()
+            this.getNoti()
           ).subscribe(([usageData, membershipData, notice]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
@@ -58,7 +66,7 @@ class MainHome extends TwViewController {
           // 모바일 - 휴대폰 외 회선
           Observable.combineLatest(
             this.getUsageData(),
-            this.getNotice()
+            this.getNoti()
           ).subscribe(([usageData, notice]) => {
             homeData.usageData = usageData;
             res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
@@ -68,7 +76,7 @@ class MainHome extends TwViewController {
         // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(),
-          this.getNotice()
+          this.getNoti()
         ).subscribe(([billData, notice]) => {
           homeData.billData = billData;
           res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
@@ -76,7 +84,7 @@ class MainHome extends TwViewController {
       }
     } else {
       // 비로그인
-      this.getNotice().subscribe((notice) => {
+      this.getNoti().subscribe((notice) => {
         res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
       });
     }
@@ -114,13 +122,13 @@ class MainHome extends TwViewController {
     return svcType;
   }
 
-  private getNotice(): Observable<any> {
-    return this.redisService.getData(REDIS_APP_VERSION)
-      .map((result) => {
-        if ( !FormatHelper.isEmpty((result)) ) {
-          return result.notice;
+  private getNoti(): Observable<any> {
+    return this.redisService.getData(REDIS_HOME_NOTI)
+      .map((resp) => {
+        console.log(resp);
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          return resp.result;
         }
-        return null;
       });
   }
 

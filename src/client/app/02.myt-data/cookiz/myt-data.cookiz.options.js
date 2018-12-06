@@ -48,8 +48,8 @@ Tw.MyTDataCookizOptions.prototype = {
   _pesterDetailConfirm: function () {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
-    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE +
-      this.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.MOBILE_TWORLD;
+    var content = Tw.ALERT_MSG_MYT_DATA.TING_PESTER.TITLE +
+      Tw.FormatHelper.conTelFormatWithDash(this.svcInfo.svcNum) + Tw.ALERT_MSG_MYT_DATA.TING_PESTER.CONTENT + Tw.OUTLINK.MOBILE_TWORLD;
     Tw.CommonHelper.share(content);
   },
 
