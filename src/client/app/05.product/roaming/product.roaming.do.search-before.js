@@ -43,7 +43,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
   },
   _onClickSelectBtn: function () {
-    console.log('this._phoneInfo.eqpMdlNm : ' + this._phoneInfo.eqpMdlNm);
     if(this._phoneInfo.eqpMdlNm !== '') {
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
@@ -76,8 +75,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
       var _result = resp.result;
       if ( resp.code === Tw.API_CODE.CODE_00 ) {
-          console.log(_result.length);
-          var alertMsg = this.keyword + '은(는) 로밍 서비스 국가가 아닙니다.';
+          var alertMsg = this.keyword + Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.MSG;
           if (_result.length === 0) {
               this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE);
               this.$inputContrySearch.val('');
@@ -92,8 +90,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
                       attr: 'data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"'
                   };
               });
-
-              console.log(JSON.stringify(listData));
 
               var data = [{
                   list: null
@@ -142,7 +138,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       var target = $(e.currentTarget);
       var cdValue = target.attr('data-mfact-code');
       var cdName = target.attr('data-mfact-name');
-      console.log('search before cdValue : ' + cdValue + ' cdName : ' + cdName);
 
       this._popupService.close();
       this.$container.find('.fe-roaming-mfactCd').text(cdName);
@@ -167,8 +162,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
             };
         });
 
-        console.log(JSON.stringify(listData));
-
         var data = [{
             list: null
         }];
@@ -188,14 +181,11 @@ Tw.ProductRoamingSearchBefore.prototype = {
     }
   },
   _selectModelCallback: function ($layer) {
-    console.log('model select ... ');
     $layer.on('click', '.hbs-model-name', $.proxy(this._onPhoneSelect, this, $layer));
   },
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
     var modelValue = target.attr('data-model-code');
-
-    console.log('modelValue : ' + modelValue);
 
     this._phoneInfo.eqpMdlNm = modelValue;
 
@@ -208,13 +198,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
   },
   _selectPopupCallback : function ($layer) {
-    console.log('select popup callback');
+
     $layer.on('click', '.hbs-country-name', $.proxy(this._goLoadSearchResult, this, $layer));
   },
-    _closeActionPopup : function () {
-      // this._history.goLoad('/product/roaming/search-result');
-      // this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
-      console.log('goLoad');
+  _closeActionPopup : function () {
   },
   _goLoadSearchResult: function ($layer, e) {
       var target = $(e.currentTarget);
