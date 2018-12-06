@@ -48,6 +48,7 @@ import CommonCertResult from './controllers/cert/common.cert.result.controller';
 import CommonCertNiceRefund from './controllers/cert/common.cert.nice.refund.controller';
 import CommonTidCertPw from './controllers/tid/common.tid.cert-pw.controller';
 import CommonShareAppInstallInfo from './controllers/share/common.share.app-install.info.controller';
+import CommonMemberWithdrawalComplete from './controllers/member/common.member.withdrawal-complete';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -87,6 +88,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/member/manage', controller: CommonMemberManage });
     this.controllers.push({ url: '/member/tid-pwd', controller: CommonMemberTidPwd });
     this.controllers.push({ url: '/member/signup-guide', controller: CommonMemberSignupGuide });
+    this.controllers.push({ url: '/member/withdrawal-complete', controller: CommonMemberWithdrawalComplete });
 
     // tid
     this.controllers.push({ url: '/tid/login', controller: CommonTidLogin });

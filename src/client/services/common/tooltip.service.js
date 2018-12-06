@@ -35,14 +35,14 @@ Tw.TooltipService.prototype = {
   },
   _openTip: function ($result) {
     this._popupService.open({
-      url: '/hbs/',
+      url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
       'title': $result.title,
       'title_type': 'sub',
       'cont_align': 'tl',
       'contents': $result.contents,
       'bt_b': [{
-        style_class: 'tw-popup-closeBtn pos-center',
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
         txt: '닫기'
       }]
     });
