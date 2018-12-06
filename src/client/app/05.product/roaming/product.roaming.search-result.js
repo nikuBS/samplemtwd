@@ -31,7 +31,8 @@ Tw.ProductRoamingSearchResult.prototype = {
     },
     _roamingSearchInit: function () {
         this.$roamingRatelist = this.$container.find('.fe-rate-info');
-
+        this.$roamingNoti = this.$container.find('#fe-rm-noti');
+        this.$notiButton = this.$container.find('.fe-noti-btn');
         this.reqParams = {
             'countryCode': this._srchInfo.countryCd,
             'manageType': '',
@@ -49,18 +50,18 @@ Tw.ProductRoamingSearchResult.prototype = {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].value);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
         }
-        if(this._rateInfo.gsm > 0){
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].value);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
-        }
         if(this._rateInfo.cdma > 0){
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].value);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
         }
+        if(this._rateInfo.gsm > 0){
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+        }
         if(this._rateInfo.rent > 0){
             this.reqParams.showDailyPrice = 'Y';
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].value);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].value);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
         }else {
             this.reqParams.showDailyPrice = 'N';
             if(this._svcInfo === null){
@@ -72,12 +73,12 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.reqParams.manageType = this.manageType[0].type;
         this.manageType[0].option = 'checked';
         this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
-        this.$container.find('.fe-manage-type').text(this.typeTxt[0]);
 
         Tw.Logger.info('this.reqParams : ', this.reqParams);
 
         this._getCountryRoamingRate(this.reqParams);
         this._rmRateInfoTmpl = Handlebars.compile($('#fe-roaming-rate').html());
+        this._rmNoticeTmpl = Handlebars.compile($('#fe-roaming-notice').html());
     },
     _getCountryRoamingRate: function (params) {
         Tw.Logger.info('get countryRoamingRate params :::: ', params);
@@ -92,14 +93,48 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
         var _result = resp.result;
+        var typeIndex = null;
+        for(var idx in this.manageType) {
+            if(this.manageType[idx].type === this.reqParams.manageType) {
+                typeIndex = idx;
+                this.manageType[idx].option = 'checked';
+            }else {
+                this.manageType[idx].option = '';
+            }
+        }
 
-        _result.serviceDiv = this.reqParams.manageType;
+        var noticeParam = {
+            voiceShown: true,
+            ableShown: true,
+            attentionShown: false,
+            svcAttention: _result.svcAttention
+        };
 
-        console.log('................._result : ' + JSON.stringify(_result));
-        console.log('................._result : ' + _result.serviceDiv );
+        if(this.reqParams.manageType === 'L'){
+            _result.lteShown = true;
+            noticeParam.voiceShown = false;
+        }else if(this.reqParams.manageType === ''){
+            _result.rentShown = true;
+        }
 
+        if(_result.ableAreaType === 'A'){
+            noticeParam.ableShown = false;
+        }
+
+        noticeParam.attentionShown = (_result.svcAttention) ? true : false;
+
+        Tw.Logger.info('result noticeParam = ', JSON.stringify(noticeParam));
+        if(typeIndex === null || typeIndex === ''){
+            typeIndex = -1;
+        }
+
+        this.$container.find('.fe-manage-type').text(this.manageType[typeIndex].value);
         this.$roamingRatelist.empty();
         this.$roamingRatelist.append(this._rmRateInfoTmpl({ items: _result }));
+
+        this.$roamingNoti.empty();
+        this.$roamingNoti.append(this._rmNoticeTmpl({ items: noticeParam }));
+
     },
     _handleFailSearch:function () {
 
@@ -109,8 +144,20 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));
         this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));
         this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));
+        this.$container.on('click', '.fe-noti-btn', $.proxy(this._notiDetailView, this));
 
         this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));
+    },
+    _notiDetailView: function (e) {
+        var $target = $(e.currentTarget);
+        var ariaPressed = $target.attr('aria-pressed');
+        if(ariaPressed === 'false'){
+            $target.attr('aria-pressed', 'true');
+            $target.parents('li').addClass('on');
+        }else {
+            $target.attr('aria-pressed', 'false');
+            $target.parents('li').removeClass('on');
+        }
     },
     _openMangeType: function (){
         this._popupService.open(
@@ -134,8 +181,10 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._popupService.close();
         }else {
             this.reqParams.manageType = rmType;
+            this._popupService.close();
+            this._getCountryRoamingRate(this.reqParams);
+            console.log('this.reqParams.manageType : ' + this.reqParams.manageType);
         }
-
     },
     _selectPopupCallback:function () {
 
