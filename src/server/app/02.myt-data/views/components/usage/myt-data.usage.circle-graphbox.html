@@ -66,25 +66,44 @@
                         <button class="bt-link-tx underline ml6">당일 사용량 조회</button>
                         <% } %>
                     </div>
-                    <% if (items[i].couponDate !== '') { %>
-                    <span class="txt2">쿠폰 등록일 <%= items[i].couponDate  %></span>
+                    <% if (items[i].rgstDtm !== '') { %>
+                    <span class="txt2">쿠폰 등록일: <%= items[i].rgstDtm  %></span>
                     <% } %>
 
                 </div>
             </div>
 
-            <% if (items[i].sharedData) { %>
+            <% if (items[i].tOPlanSharedData) { %>
             <div class="calling-plan type01">
                 <button class="wrap-link fs-type01 fe-btn-share">
-                    <% if (items[i].sharedData.showRemained) { %>
-                    <span class="left" style="width: auto;"><strong class="ff-tb"><%= items[i].sharedData.showRemained.data %><%= items[i].sharedData.showRemained.unit %></strong> 공유 가능</span>
+                    <% if (items[i].tOPlanSharedData.showRemained) { %>
+                    <span class="left" style="width: auto;"><strong class="ff-tb"><%= items[i].tOPlanSharedData.showRemained.data %><%= items[i].tOPlanSharedData.showRemained.unit %></strong> 공유 가능</span>
                     <% } %>
-                    <% if (items[i].sharedData.showUsed) { %>
-                    <span class="right fc-type01"><strong class="ff-tb fs-type02"><%= items[i].sharedData.showUsed.data %><%= items[i].sharedData.showUsed.unit %></strong> 공유</span>
+                    <% if (items[i].tOPlanSharedData.showUsed) { %>
+                    <span class="right fc-type01"><strong class="ff-tb fs-type02"><%= items[i].tOPlanSharedData.showUsed.data %><%= items[i].tOPlanSharedData.showUsed.unit %></strong> 공유</span>
                     <% } %>
                 </button>
             </div>
             <hr class="cont-sp type1" aria-hidden="true" style="margin: 0 -1rem -1px;">
+            <% } else if (items[i].sharedData) { %>
+            <div class="calling-plan type01">
+                <button class="wrap-link fs-type01 fe-btn-share">
+                    <span class="left" style="width: auto;">
+                        <strong class="ff-tb fe-remained">
+                            <% if(items[i].isRemainUnlimited) { %>
+                                <%= items[i].remained %>
+                            <% } else { %>
+                                <% for (var j = 0; j < items[i].showRemaineds.length; j++) { %>
+                                <%= items[i].showRemaineds[j].data %><%= items[i].showRemaineds[j].unit %>
+                                <% } %>
+                            <% } %>
+                        </strong> 공유 가능
+                    </span>
+                    <span class="right fc-type01">
+                        <strong id="sharedDataUsed" class="ff-tb fs-type02 fe-used"></strong> 공유
+                    </span>
+                </button>
+            </div>
             <% } %>
         </li>
 

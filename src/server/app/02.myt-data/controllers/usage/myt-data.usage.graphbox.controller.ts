@@ -30,18 +30,18 @@ class MyTUsageGraphbox {
       data.showRemaineds = this.convFormatWithUnit(data.remained, data.unit);
     }
     // 통합공유데이터가 있는 경우
-    if ( data.sharedData ) {
+    if ( data.tOPlanSharedData ) {
       // data.showUsed = this.convFormat(data.used, data.unit);
       data.showTotal = this.convFormat(data.total, data.unit);
-      data.sharedData.showTotal = this.convFormat(data.sharedData.total, data.unit);
-      data.sharedData.showRemained = this.convFormat(data.sharedData.remained, data.unit);
-      data.sharedData.showUsed = this.convFormat(data.sharedData.used, data.unit);
+      data.tOPlanSharedData.showTotal = this.convFormat(data.tOPlanSharedData.total, data.unit);
+      data.tOPlanSharedData.showRemained = this.convFormat(data.tOPlanSharedData.remained, data.unit);
+      data.tOPlanSharedData.showUsed = this.convFormat(data.tOPlanSharedData.used, data.unit);
     }
 
     data.isExceed = data.skipId === SKIP_NAME.EXCEED;
     data.isDailyUsed = data.skipId === SKIP_NAME.DAILY;
     data.isRunout = data.remained === '0' || data.isExceed;
-    data.couponDate = data.couponDate ? DateHelper.getShortDate(data.couponDate) : '';
+    data.rgstDtm = data.rgstDtm ? DateHelper.getShortDate(data.rgstDtm) : '';
     data.barClassName = this.getBarStayle(data.isUnlimited); // TODO 삭제예정
     data.barClass = this.getBarStyle(data.isUnlimited, data.unit);
     data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);

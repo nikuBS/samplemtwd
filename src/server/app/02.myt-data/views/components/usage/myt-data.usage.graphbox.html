@@ -57,8 +57,8 @@
             <div class="bar-chart-hoz">
                 <span class="data-bar <%= items[i].barClass %>" style="width:<%= items[i].remainedRatio %>%;"></span>
             </div>
-            <% if (items[i].couponDate !== '') { %>
-            <p class="chargedate-box">쿠폰등록일 <span><%= items[i].couponDate  %></span></p>
+            <% if (items[i].rgstDtm !== '') { %>
+            <p class="chargedate-box">쿠폰 등록일: <span><%= items[i].rgstDtm  %></span></p>
             <% } %>
             <% if (items[i].sharedData) { %>
                 <div class="share-info mt20">

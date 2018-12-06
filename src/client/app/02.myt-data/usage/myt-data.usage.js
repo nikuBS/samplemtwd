@@ -5,10 +5,11 @@ Tw.MyTDataUsage = function (rootEl, options) {
   this._historyService = new Tw.HistoryService();
   this._options = options;
 
+  this._cachedElement();
   this._bindEvent();
   this._registerHelper();
   this._requestServices();
-
+  this._init();
 
   // 클라이언트 파일 변경 테스트 코드
   // this.$container.find('.fe-test').css({backgroundColor: 'red'});
@@ -64,20 +65,48 @@ Tw.MyTDataUsage = function (rootEl, options) {
 
 Tw.MyTDataUsage.prototype = {
 
+  _cachedElement: function () {
+    this._$sharedDataUsed = this.$container.find('#sharedDataUsed');
+  },
+
+  _init: function () {
+    if ( _.size(this._$sharedDataUsed) ) { // T/O플랜아님 && 기본제공데이터 존재
+      this._setSharedDataUsed();
+    }
+  },
+
+  _setSharedDataUsed: function () {
+    var reqList = [];
+    var today = new Date();
+    // T끼리 선물하기
+    reqList.push({
+      command: Tw.API_CMD.BFF_06_0018,
+      params: {
+        fromDt: Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMM01'),
+        toDt: Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMMDD'),
+        type: '1'
+      }
+    });
+    // 데이터 함께쓰기
+    if ( this._options.tdataSharing === 'Y' ) {
+      reqList.push({
+        command: Tw.API_CMD.BFF_05_0004,
+        params: {}
+      });
+    }
+    new Tw.SharedDataUsedCalculation({
+      reqList: reqList,
+      done: $.proxy(function (totalSumConv) {
+        this._$sharedDataUsed.text(totalSumConv.data + totalSumConv.unit);
+      }, this)
+    });
+  },
+
   /**
    * 이벤트 바인딩
    * @private
    */
   _bindEvent: function () {
-
-    // this.$container.on('click', '#fe-head-tdata-share .info-view-ic', $.proxy(this.showGuidePopup, this,
-    //   Tw.INFO.MYT.TDATA_SHARE.DC_01_01_TITLE, Tw.INFO.MYT.TDATA_SHARE.DC_01_01_CONTENTS));
-
-    // this.$container.on('click', '#head-ting .info-view-ic', $.proxy(this.showGuidePopup, this,
-    //   Tw.INFO.MYT.USAGE_TING.DC_01_01_TITLE, Tw.INFO.MYT.USAGE_TING.DC_01_01_CONTENTS));
-
-    // this.$container.on('click', '#head-discount .info-view-ic', $.proxy(this.showGuidePopup, this,
-    //   Tw.INFO.MYT.DISCOUNT.DC_01_01_TITLE, Tw.INFO.MYT.DISCOUNT.DC_01_01_CONTENTS));
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
     this.$container.on('click', '#fe-cont-discount .btn-more button', $.proxy(function () {
