@@ -15,7 +15,7 @@ class CustomerMain extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any): void {
     combineLatest(
       this.getBanners(),
       this.getNotice()
@@ -26,6 +26,7 @@ class CustomerMain extends TwViewController {
         svcInfo: svcInfo,
         banners: banners,
         noticeList: noticeList,
+        pageInfo: pageInfo
         // researchList: researchList
       });
     });

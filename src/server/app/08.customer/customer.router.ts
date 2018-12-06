@@ -1,5 +1,4 @@
 import TwRouter from '../../common/route/tw.router';
-import CustomerDocument from '../904.customer/controllers/document/customer.document.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
 import CustomerGuideSiteUse from './controllers/useguide/customer.useguide.site.controller';
@@ -28,6 +27,7 @@ import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.
 import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
 import CustomerSvcInfoNotice from './controllers/svc-info/customer.svc-info.notice.controller';
 import CustomerFaqDoLikeThis from './controllers/faq/customer.faq.do-like-this.controller';
+import CustomerDocument from './controllers/document/customer.document.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {

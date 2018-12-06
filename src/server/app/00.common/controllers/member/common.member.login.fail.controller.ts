@@ -12,9 +12,9 @@ class CommonMemberLoginFail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo, allSvc, chideInfo, pageInfo) {
     const errorCode = req.query.errorCode;
-    res.render('member/common.member.login.fail.html', { errorCode, svcInfo });
+    res.render('member/common.member.login.fail.html', { errorCode, svcInfo, pageInfo });
   }
 }
 
