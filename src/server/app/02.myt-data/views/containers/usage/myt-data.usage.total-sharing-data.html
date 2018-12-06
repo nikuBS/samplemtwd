@@ -30,7 +30,11 @@
                     <div class="ti-caption-type01 pb20">
                         <h2 class="tit">총 공유량</h2>
                         <p class="num">
-                            <em><%= defaultData.sharedData.showUsed.data %><%= defaultData.sharedData.showUsed.unit %></em>
+                            <% if (defaultData.tOPlanSharedData) { %>
+                                <em><%= defaultData.tOPlanSharedData.showUsed.data %><%= defaultData.tOPlanSharedData.showUsed.unit %></em>
+                            <% } else if (defaultData.sharedData) { %>
+                                <em id="sharedDataUsed"></em>
+                            <% } %>
                             사용
                         </p>
                     </div>
@@ -81,17 +85,25 @@
                     고객님의 요금제는 <strong><%= defaultData.prodNm %></strong>이며,
                     기본제공데이터
                     <strong>
-                    <% if (defaultData.isUnlimited) { %>
-                        무제한
-                    <% } else { %>
-                        <% if (defaultData.showTotal) { %>
-                            <%= defaultData.showTotal.data %> <%= defaultData.showTotal.unit %>
+                        <% if (defaultData.isUnlimited) { %>
+                            무제한
+                        <% } else { %>
+                            <% if (defaultData.showRemained) { %>
+                                <%= defaultData.showRemained.data %> <%= defaultData.showRemained.unit %>
+                            <% } %>
                         <% } %>
-                    <% } %>
                     </strong> 중 <br>
                     <strong>
-                        <% if (defaultData.sharedData && defaultData.sharedData.showTotal) { %>
-                            <%= defaultData.sharedData.showTotal.data %> <%= defaultData.sharedData.showTotal.unit %>
+                        <% if (defaultData.tOPlanSharedData) { %>
+                            <%= defaultData.tOPlanSharedData.showRemained.data %><%= defaultData.tOPlanSharedData.showRemained.unit %>
+                        <% } else if (defaultData.sharedData) { %>
+                            <% if (defaultData.isUnlimited) { %>
+                                무제한
+                            <% } else { %>
+                                <% if (defaultData.showRemained) { %>
+                                  <%= defaultData.showRemained.data %> <%= defaultData.showRemained.unit %>
+                                <% } %>
+                            <% } %>
                         <% } %>
                     </strong>
                     를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.

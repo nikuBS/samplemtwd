@@ -3,6 +3,91 @@
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 08.
  */
+Tw.SharedDataUsedCalculation = function (options) {
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._options = options;
+  this._reqList = this._options.reqList;
+  this._done = this._options.done;
+  this._request();
+};
+
+Tw.SharedDataUsedCalculation.prototype = {
+  _request: function () {
+    var reqList = this._reqList;
+    this._apiService.requestArray(reqList)
+      .done($.proxy(function () {
+        var totalSum = 0;
+        for ( var i = 0; i < reqList.length; i++ ) {
+          var resp = arguments[i];
+          if ( reqList[i].done ) {
+            reqList[i].done(resp);
+          }
+
+          if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
+            totalSum += 0;
+            this._popupService.openAlert(resp.msg, resp.code);
+            continue;
+          }
+
+          switch ( reqList[i].command.path ) {
+            case Tw.API_CMD.BFF_06_0018.path :
+              // resp = {
+              //   'code': '00',
+              //   'msg': 'success',
+              //   'result': [
+              //     {
+              //       'opDtm': '20170701',
+              //       'dataQty': '3',
+              //       'custNm': '김*진',
+              //       'svcNum': '01062**50**',
+              //       'type': '1',
+              //       'giftType': 'GC'
+              //     }
+              //   ]
+              // };
+              // MB
+              var sum = _.reduce(resp.result, function (memo, data) {
+                return memo + parseInt(data.dataQty, 10);
+              }, 0);
+              sum = sum * 1024; // KB로 변환
+              totalSum += sum;
+              break;
+            case Tw.API_CMD.BFF_05_0004.path :
+              // resp = {
+              //   'code': '00',
+              //   'msg': 'success',
+              //   'result': {
+              //     data : {
+              //       used : '2048'
+              //     },
+              //     childList : [{
+              //       svcNum : '010-45**-12**',
+              //       svcMgmtNum : '7200XXXX',
+              //       feeProdId : '상품ID',
+              //       feeProdNm : 'LTE함께쓰기Basic',
+              //       auditDtm : '20150113'
+              //     }]
+              //   }
+              // };
+              // KB
+              if ( resp.result.data ) {
+                totalSum += parseInt(resp.result.data.used, 10);
+              } else {
+                totalSum += 0;
+              }
+              break;
+            default :
+              break;
+          }
+        }
+        var totalSumConv = Tw.FormatHelper.convDataFormat(totalSum, Tw.DATA_UNIT.KB);
+        if ( this._done ) {
+          this._done(totalSumConv);
+        }
+      }, this));
+  }
+};
 
 Tw.MyTDataUsageTotalSharingData = function (rootEl, options) {
   this.$container = rootEl;
@@ -40,6 +125,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
   },
 
   _cachedElement: function () {
+    this._$sharedDataUsed = this.$container.find('#sharedDataUsed');
     this._$tfamilySharing = this.$container.find('.fe-tfamily-sharing');
     this._$dataSharing = this.$container.find('.fe-data-sharing');
     this._$dataGift = this.$container.find('.fe-data-gift');
@@ -53,10 +139,37 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   _rendered: function () {
     this._reqTFamilySharing();
-    this._reqDataGifts();
+
+    var reqList = [];
+    var today = new Date();
+    // T끼리 선물하기
+    reqList.push({
+      command: Tw.API_CMD.BFF_06_0018,
+      params: {
+        fromDt: Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMM01'),
+        toDt: Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMMDD'),
+        type: '1'
+      },
+      done: $.proxy(this._onDoneDataGifts, this)
+      // error: $.proxy(this._onFailReq, this)
+    });
+    // 데이터 함께쓰기
     if ( this._options.dataSharingJoined === 'Y' ) {
-      this._reqDataSharing();
+      reqList.push({
+        command: Tw.API_CMD.BFF_05_0004,
+        params: {},
+        done: $.proxy(this._onDoneDataSharing, this)
+        // error: $.proxy(this._onFailReq, this)
+      });
     }
+    new Tw.SharedDataUsedCalculation({
+      reqList: reqList,
+      done: $.proxy(function (totalSumConv) {
+        if ( _.size(this._$sharedDataUsed) ) { // T/O플랜아님 && 기본제공데이터 존재
+          this._$sharedDataUsed.text(totalSumConv.data + totalSumConv.unit);
+        }
+      }, this)
+    });
   },
 
   _reqTFamilySharing: function () {
@@ -202,6 +315,8 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) { // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
         this._$tfamilySharing.find('.fe-data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
+      } else {
+        this._popupService.openAlert(tFamilySharingResp.msg, tFamilySharingResp.code);
       }
     }
   },
@@ -272,20 +387,16 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   _onClickBtnDataSharing: function () {
     if ( this._options.dataSharingJoined === 'Y' ) {
-      this._historyService.goHash('data-share-popup');
+      this._historyService.goHash('datashare_P');
     } else {
       this._historyService.goLoad('/product/mobileplan/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
     }
   },
 
   _getSharedData: function (svcMgmtNum, list) {
-    if ( !_.size(list) ) {
-      return;
-    }
-    return _.reduce(_.where(list, {
+    var data = _.find(list, {
       svcMgmtNum: svcMgmtNum
-    }), function (memo, data) {
-      return memo + parseInt(data.shared, 10);
-    }, 0);
+    });
+    return data ? parseInt(data.shared, 10) : 0;
   }
 };
