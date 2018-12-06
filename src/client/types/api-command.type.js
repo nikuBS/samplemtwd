@@ -485,10 +485,13 @@ Tw.NODE_CMD = {
   GET_APP_NOTICE: { path: '/app-notice', method: Tw.API_METHOD.GET },
 
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
-  GET_MENU : { path: '/menu', method: Tw.API_METHOD.GET },
+  GET_MENU: { path: '/menu', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
-  SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST }
+  SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
+  GET_HOME_NOTICE: { path: '/home/notice', method: Tw.API_METHOD.GET },
+  GET_HOME_HELP: { path: '/home/help', method: Tw.API_METHOD.GET },
+  GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {
