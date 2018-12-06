@@ -16,20 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '010 전환 번호변경', svcInfo, option: { line: true } }); %>
-<!--    <div id="header" class="header-wrap">
-        <div class="h-belt">
-            <div class="h-default">
-                <div class="h-menu">
-                    <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                </div>
-                <div class="h-tit">010 전환 번호변경</div>
-                <div class="h-serarch">
-                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                </div>
-            </div>
-        </div>
-    </div>-->
+    <%- include('../../../common/views/components/header.component.html', { title: '010 전환 번호변경' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div class="container-wrap">
@@ -87,9 +74,6 @@
     </li>
 </script>
 
-<footer id="fe-all-menu">
-    <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
-</footer>
 <script>
   $(document).ready(function () {
     new Tw.MyTJoinPhoneNumChange($('.wrap'), <%- JSON.stringify(data) %>);
