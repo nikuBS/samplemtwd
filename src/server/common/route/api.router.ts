@@ -6,7 +6,7 @@ import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
 import { COOKIE_KEY } from '../../types/common.type';
-import { REDIS_APP_VERSION, REDIS_URL_META } from '../../types/redis.type';
+import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_URL_META } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
@@ -57,7 +57,10 @@ class ApiRouter {
     this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/app-notice', this.getAppNotice.bind(this));
+
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
+    this.router.get('/menu', this.getMenu.bind(this));
+    this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -135,6 +138,18 @@ class ApiRouter {
         res.json(resp);
       });
 
+  }
+
+  private getMenu(req: Request, res: Response, next: NextFunction) {
+
+  }
+
+  private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
+    const menuId = req.query.menuId;
+    this.redisService.getData(REDIS_BANNER_ADMIN + menuId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
   }
 
   // private setDeviceInfo(req: Request, res: Response, next: NextFunction) {

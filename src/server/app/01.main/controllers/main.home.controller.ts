@@ -22,7 +22,7 @@ import {
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
+import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 
 class MainHome extends TwViewController {
