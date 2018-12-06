@@ -245,11 +245,6 @@ export enum RAINBOW_POINT_REL_CD {
   P = 'P'
 }
 
-export enum LOGIN_TYPE {
-  TID = 'T',
-  EASY = 'S'
-}
-
 export enum AUTH_CERTIFICATION_TYPE {
   PREV = 'P',
   AFTER = 'A',

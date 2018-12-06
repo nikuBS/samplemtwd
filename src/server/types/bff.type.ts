@@ -554,3 +554,9 @@ export enum AUTH_CERTIFICATION_METHOD {
 }
 
 export const TPLAN_SHARE_LIST = ['POT10', 'POT20'];
+
+export enum LOGIN_TYPE {
+  NONE = 'N',
+  TID = 'T',
+  EASY = 'S'
+}
