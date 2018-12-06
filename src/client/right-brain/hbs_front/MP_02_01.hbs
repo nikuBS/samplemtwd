@@ -14,7 +14,7 @@
         <h2 class="blind">내용</h2>
         <div class="container">
 
-            <div class="ti-caption-gray bdt">
+            <div class="ti-caption-gray bdt titlebox-bgtype01">
                 <h3 class="tit">필터를 선택해주세요</h3>
                 <div class="num">
                     <button class="resetbtn">초기화</button>
@@ -28,7 +28,7 @@
                         <div class="widget-box check">
                             <div class="filtertype-wrap">
                                 <ul class="select-list division-five" role="roup">
-                                    {{#each data.deviceFilters}}
+                                    {{#each deviceFilters}}
                                     <li class="checkbox" role="checkbox">
                                         <input type="checkbox" name="checkbox" title="{{name}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{id}}"/><!-- 체크상태일 경우 checked="checked" -->
                                         <p class="text-wrap">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                {{#each data.filters}}
+                {{#each filters}}
                 <h3 class="filterlist-title">{{prodFltNm}}</h3>
                 <div class="productfilter-type">
                     <!-- .widget -->
@@ -68,17 +68,19 @@
             </div>
             <!--// .cont-box -->
 
+            {{#if tags}}
             <hr class="cont-sp type1" aria-hidden="true" />
             <!-- 추천태그 -->
             <div class="cont-box gaps-style02">
                 <h3 class="suggest-tag-title">추천태그</h3>
                 <ul class="suggest-tag-list openlist-wrap">
-                    {{#each data.tags}}
+                    {{#each tags}}
                     <li><button type="button" class="link" data-tag-id={{tagId}}>#{{prodTagNm}}</button></li>
                     {{/each}}
                 </ul>
             </div>
             <!--//추천태그 -->
+            {{/if}}
 
             <ul class="bt-slice full">
                 <li class="bt-red1">

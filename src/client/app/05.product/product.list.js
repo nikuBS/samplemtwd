@@ -13,8 +13,6 @@ Tw.ProductList = function(rootEl, params, pageInfo) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
 
   this.cachedElement();
   this.bindEvent();
@@ -163,59 +161,39 @@ Tw.ProductList.prototype = {
   },
 
   _openSelectFiltersPopup: function() {
-    var deviceFilters = _.map(
-      Tw.PRODUCT_LIST_DEVICE_FILTERS[this.CODE],
-      $.proxy(function(filter) {
-        var currentFilter = this._params.searchFltIds;
-        if (currentFilter && currentFilter.indexOf(filter.id) >= 0) {
-          return {
-            id: filter.id,
-            icon: filter.icon,
-            name: filter.name,
-            checked: true
-          };
-        }
-
-        return filter;
-      }, this)
-    );
+    var currentFilters = this._params.searchFltIds;
+    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS[this.CODE], function(filter) {
+      if (currentFilters && currentFilters.indexOf(filter.id) >= 0) {
+        return Object.assign({ checked: true }, filter);
+      }
+      return filter;
+    });
 
     var filters = _.chain(this._filters.filters)
       .filter(function(filter) {
         return filter.prodFltId !== 'F01120' && filter.prodFltId !== 'F01220';
       })
-      .map(
-        $.proxy(function(filter) {
-          return {
-            prodFltId: filter.prodFltId,
-            prodFltNm: filter.prodFltNm,
-            subFilters: _.map(
-              filter.subFilters,
-              $.proxy(function(sFilter) {
-                var currentFilter = this._params.searchFltIds;
-                if (currentFilter && currentFilter.indexOf(sFilter.prodFltId) >= 0) {
-                  return {
-                    prodFltId: sFilter.prodFltId,
-                    prodFltNm: sFilter.prodFltNm,
-                    checked: true
-                  };
-                }
-                return sFilter;
-              }, this)
-            )
-          };
-        }, this)
-      )
+      .map(function(filter) {
+        return {
+          prodFltId: filter.prodFltId,
+          prodFltNm: filter.prodFltNm,
+          subFilters: _.map(filter.subFilters, function(subFilter) {
+            if (currentFilters && currentFilters.indexOf(subFilter.prodFltId) >= 0) {
+              return Object.assign({ checked: true }, subFilter);
+            }
+            return subFilter;
+          })
+        };
+      })
       .value();
 
     this._popupService.open(
       {
         hbs: 'MP_02_01',
-        data: {
-          deviceFilters: deviceFilters,
-          filters: filters,
-          tags: this._filters.tags
-        }
+        deviceFilters: deviceFilters,
+        filters: filters,
+        tags: this._filters.tags,
+        layer: true
       },
       $.proxy(this._handleOpenSelectFilterPopup, this),
       undefined,
@@ -251,16 +229,17 @@ Tw.ProductList.prototype = {
 
   _handleSelectFilters: function($layer) {
     var searchFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
-      return input.getAttribute('data-filter-id');
-    }).join(',');
+        return input.getAttribute('data-filter-id');
+      }).join(','),
+      originParams = this._params;
 
     this._params = { idxCtgCd: this.CODE };
     this._params.searchFltIds = searchFltIds;
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams));
   },
 
-  _handleLoadDataWithNewFilters: function(resp) {
+  _handleLoadDataWithNewFilters: function(originParams, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
       return;
@@ -269,6 +248,7 @@ Tw.ProductList.prototype = {
     if (resp.result.products.length === 0) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      this._params = originParams;
     } else {
       delete this._params.searchLastProdId;
       delete this._leftCount;
@@ -279,18 +259,19 @@ Tw.ProductList.prototype = {
       }
 
       if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
-        var filters = resp.result.searchOption.searchFltIds;
-        var $filters = this.$container.find('.fe-select-filter');
-        var data = {};
-        data.filters = _.map(filters.slice(0, 2), function(filter, index, arr) {
-          if (index === 0 && arr.length === 2) {
+        var filters = resp.result.searchOption.searchFltIds,
+          $filters = this.$container.find('.fe-select-filter'),
+          data = {},
+          DEFAILT_COUNT = 2;
+        data.filters = _.map(filters.slice(0, DEFAILT_COUNT), function(filter, index) {
+          if (index === 0) {
             return filter.prodFltNm + ',';
           }
           return filter.prodFltNm;
         });
 
-        if (filters.length > 2) {
-          data.leftCount = filters.length - 2;
+        if (filters.length > DEFAILT_COUNT) {
+          data.leftCount = filters.length - DEFAILT_COUNT;
         }
         $filters.html(this._filterTmpl(data));
       }
@@ -308,7 +289,7 @@ Tw.ProductList.prototype = {
       return;
     }
 
-    this._history.goLoad('/product/' + this.TYPE + '?tag=' + selectedTag);
+    window.location.href = '/product/' + this.TYPE + '?tag=' + selectedTag;
   },
 
   _isEmptyAmount: function(value) {
