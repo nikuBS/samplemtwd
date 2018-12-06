@@ -37,6 +37,8 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     this.$container.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
     this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
+    this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
+    this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
   },
 
   _searchCountryCode: function(){
@@ -47,7 +49,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
     //한글로된 국가 배열 -> 코드 배열로 교체
     if(res.code === Tw.API_CODE.CODE_00) {
       var allCountryCode = res.result;
-      var countyArr = this.countryArr.map(function(x){return x});
+      var countyArr = this.countryArr.map(function(x){return x;});
 
       allCountryCode.forEach(function(key){
         if(countyArr.indexOf(key.countryNm) >= 0){
@@ -105,7 +107,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
   _handleSuccessFiReservation: function(res){
     if(res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/product/roaming/fi/reservation3step?selectIdx=' + this.selectIdx);
+      this._historyService.replaceURL('/product/roaming/fi/reservation3step?selectIdx=' + this.selectIdx);
     }
   },
 
@@ -205,11 +207,18 @@ Tw.ProductRoamingFiReservation2step.prototype = {
   },
 
   _changeCheck: function() {
+    var dateCheck = true;
+
+    if($('#flab02').val() === '' || $('#flab03').val() === ''){
+      dateCheck = false;
+    }
+
     if(this.countryArr.length > 0){
       var countryCheck = true;
     }
 
     setTimeout(function(){
+
       var inputPhoneCheck = '';
 
       if($('#flab01').val().length > 0){
@@ -218,7 +227,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
         inputPhoneCheck = false;
       }
 
-      if($('#check1').hasClass('checked') && $('#check2').hasClass('checked') && countryCheck && inputPhoneCheck){
+      if($('#check1').hasClass('checked') && $('#check2').hasClass('checked') && countryCheck && inputPhoneCheck && dateCheck){
         $('.bt-red1 button').removeAttr('disabled');
       }else{
         $('.bt-red1 button').attr('disabled','disabled');

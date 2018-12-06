@@ -33,7 +33,7 @@ Tw.ProductRoamingCoupon.prototype = {
 
     this._popupService.open({
         hbs: hbs,
-        layer: true,
+        layer: true
       },
       null,
       null, hash);
