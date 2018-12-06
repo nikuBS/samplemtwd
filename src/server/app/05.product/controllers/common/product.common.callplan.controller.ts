@@ -2,7 +2,6 @@
  * FileName: product.common.callplan.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.11
- * @see prodTypCd (AB: 모바일 요금제, C: 모바일 부가서비스, D: 인터넷/TV/전화, E: 인터넷/TV/전화 부가서비스, F: 결합상품, G: 할인프로그램, H: 로밍)
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -465,6 +464,7 @@ class ProductCommonCallplan extends TwViewController {
               prodRedisInfo.result.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN;
 
           res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
+            isPreview: false,
             prodId: prodId,
             basFeeSubText: basFeeSubText,
             basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
