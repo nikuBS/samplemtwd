@@ -201,6 +201,14 @@ class DateHelper {
     return moment(firstDate).format('YYYY.M.DD.');
   }
 
+   /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.05
+   */
+  static getShortDateNoDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY.M');
+  }
+
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 06.01

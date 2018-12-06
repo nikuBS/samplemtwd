@@ -18,19 +18,11 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
   _init: function () {
     this.rootPathName = this._historyService.pathname;
 
-    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
+    this.detailData = this.data.content ? this.data.content : JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     this.queryParams = Tw.UrlHelper.getQueryParams();
 
     switch (this.queryParams.type) {
       case 'DI':
-        this.detailData.dataUseTermStart = this.detailData.dataDt.substr(0, 8) + '01';
-        this.detailData = Object.assign(this.detailData, this.data.data, {
-          invYearMonth:Tw.DateHelper.getShortDateNoDate(this.data.data.invDt),
-          reqDate:Tw.DateHelper.getShortDate(this.data.data.reqDtm),
-          comDate:Tw.DateHelper.getShortDate(this.data.data.opDt)
-        });
-        /*this.detailData.cardNum = this.data.data.cardNum;
-        this.detailData.aprvNum = this.data.data.aprvNum;*/
         switch (this.detailData.dataPayType) {
           case 'CARD':
           case 'POINT':
@@ -45,11 +37,11 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         }
           break;
       case 'AU':    
+        // 통합인출 조회
           this.$templateWrapper.append(this.$template.$directBase(this.detailData));
         break;
       case 'AT':
         // 자동납부 카드/계좌
-        this.detailData.dataUseTermStart = Tw.DateHelper.getShortDate(Tw.DateHelper.getShortFirstDateNoDot(this.detailData.dataLastInvDt));
         this.$templateWrapper.append(this.$template.$auto(this.detailData));
         break;
       case 'RP':
