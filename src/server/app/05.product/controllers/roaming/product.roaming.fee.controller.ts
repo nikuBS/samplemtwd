@@ -49,6 +49,10 @@ export default class ProductRoaming extends TwViewController {
                 roamingData = resp.result;
                 this.logger.info(this, 'roamingData', roamingData);
                 return roamingData;
+            } else {
+                return {
+                    err: resp
+                };
             }
 
         });
@@ -72,5 +76,6 @@ export default class ProductRoaming extends TwViewController {
             }
         });
     }
+
 }
 

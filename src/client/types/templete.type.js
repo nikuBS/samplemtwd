@@ -814,13 +814,15 @@ Tw.ANDROID_STORE = [
   }
 ];
 
-Tw.ROAMING_MANAGE_TYPE = [
-    { type:'lte', value: 'LTE 자동로밍' },
-    { type:'wcdma', value: '3G 자동로밍' },
-    { type:'cdma', value: '2G 자동로밍' },
-    { type:'gsm', value: 'GSM 자동로밍' },
-    { type:'rent', value: '임대로밍' }
-];
+Tw.ROAMING_MANAGE_TYPE = {
+  list:[
+      { value: 'LTE 자동로밍', attr: 'data-manage-type="L"', 'option': '', type: 'L' },
+      { value: '3G 자동로밍', attr: 'data-manage-type="W"', 'option': '', type: 'W' },
+      { value: '2G 자동로밍', attr: 'data-manage-type="C"', 'option': '', type: 'C' },
+      { value: 'GSM 자동로밍', attr: 'data-manage-type="G"', 'option': '', type: 'G' },
+      { value: '임대로밍', attr: 'data-manage-type=""', 'option': '', type: '' }
+  ]
+};
 
 Tw.ROAMING_MFACTCD_LIST = {
     list: [

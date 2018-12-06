@@ -7,7 +7,7 @@
 <script id="fe-phone-info" type="text/x-handlebars-template">
     <div class="comp-box country-roaming">
         <div class="list-box cont-noti pt0">
-            <h3 class="tit">휴대폰 선택<button class="tip-view">TIP</button></h3>
+            <h3 class="tit">휴대폰 선택<button class="tip-view" id="RM_03_01_01_01_tip_02">TIP</button></h3>
             <span class="type1">출국 국가 검색 후 휴대폰 모델을 선택하시면 <br>해당 국가에서 이용 가능한 로밍 서비스 방식과 <br>요금을 확인하실 수 있습니다.</span>
         </div>
         <div class="phone-name">
@@ -25,7 +25,7 @@
 <script id="fe-phone-select" type="text/x-handlebars-template">
     <div class="comp-box country-roaming">
         <div class="list-box cont-noti pt0">
-            <h3 class="tit">휴대폰 선택<button class="tip-view">TIP</button></h3>
+            <h3 class="tit">휴대폰 선택<button class="tip-view" id="RM_03_01_01_01_tip_02">TIP</button></h3>
             <span class="type1">출국 국가 검색 후 휴대폰 모델을 선택하시면 <br>해당 국가에서 이용 가능한 로밍 서비스 방식과 <br>요금을 확인하실 수 있습니다.</span>
         </div>
         <span class="inputbox">
@@ -55,7 +55,8 @@
                 <li>
                     <dl>
                         <dt>데이터</dt>
-                        <dd>{{items.dMoChargeMin}}원/패킷</dd>
+                        {{#if items.dMoChargeMin}}<dd>{{items.dMoChargeMin}}원/패킷</dd>
+                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                     </dl>
                 </li>
             </ul>

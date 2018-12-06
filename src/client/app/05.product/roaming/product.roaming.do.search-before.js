@@ -43,7 +43,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
   },
   _onClickSelectBtn: function () {
-    console.log('this._phoneInfo.eqpMdlNm : ' + this._phoneInfo.eqpMdlNm);
     if(this._phoneInfo.eqpMdlNm !== '') {
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
@@ -73,57 +72,54 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
   },
   _handleSuccessSearchResult : function (resp) {
+
       var _result = resp.result;
+      if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          var alertMsg = this.keyword + Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.MSG;
+          if (_result.length === 0) {
+              this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE);
+              this.$inputContrySearch.val('');
+              return;
+          }
 
-      console.log(_result.length);
-      var alertMsg = this.keyword + '은(는) 로밍 서비스 국가가 아닙니다.';
-      if(_result.length === 0) {
-          this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE);
-          this.$inputContrySearch.val('');
-          return;
-      }
+          if (_result.length > 1) {
+              var listData = _.map(_result, function (item, idx) {
+                  return {
+                      value: _result[idx].countryNm,
+                      option: 'hbs-country-name',
+                      attr: 'data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"'
+                  };
+              });
 
-      if(_result.length > 1 ){
-          var listData = _.map(_result, function (item, idx) {
-              return {
-                  value: _result[idx].countryNm,
-                  option: 'hbs-country-name',
-                  attr: 'data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"'
-              };
-          });
+              var data = [{
+                  list: null
+              }];
 
-          console.log(JSON.stringify(listData));
+              data[0].list = listData;
+              this._popupService.open({
+                      hbs: 'actionsheet_select_a_type',
+                      layer: true,
+                      title: Tw.POPUP_TITLE.SELECT_COUNTRY,
+                      data: data
+                  },
+                  $.proxy(this._selectPopupCallback, this),
+                  $.proxy(this._closeActionPopup, this)
+              );
 
-          var data = [{
-              list: null
-          }];
+          } else {
+              var countryCode = _result[0].countryCode;
+              var countryNm = encodeURIComponent(_result[0].countryNm);
+              var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm;
 
-          data[0].list = listData;
-          this._popupService.open({
-                hbs: 'actionsheet_select_a_type',
-                  layer: true,
-                  title: Tw.POPUP_TITLE.SELECT_COUNTRY,
-                  data: data
-              },
-              $.proxy(this._selectPopupCallback, this),
-              $.proxy(this._closeActionPopup, this)
-          );
-
-      }else {
-          var countryCode = _result[0].countryCode;
-          var countryNm = encodeURIComponent(_result[0].countryNm);
-          var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm;
-
-          console.log('resultUrl : ' + resultUrl);
-
-          this._history.goLoad(resultUrl);
-          // this.$countryResult.empty();
-          // this.$countryResult.append(this._rmSearchCountryTmpl());
+              this._history.goLoad(resultUrl);
+          }
+      } else {
+          Tw.Error(resp.code, resp.msg).pop();
       }
 
   },
-  _handleFailSearch : function () {
-
+  _handleFailSearch : function (err) {
+      Tw.Error(err.code, err.msg).pop();
   },
   _onHpSearch : function () {
     this._popupService.open({
@@ -142,7 +138,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       var target = $(e.currentTarget);
       var cdValue = target.attr('data-mfact-code');
       var cdName = target.attr('data-mfact-name');
-      console.log('search before cdValue : ' + cdValue + ' cdName : ' + cdName);
 
       this._popupService.close();
       this.$container.find('.fe-roaming-mfactCd').text(cdName);
@@ -158,39 +153,39 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _handleSuccessSearchModelResult : function (resp) {
     var _result = resp.result;
 
-    var listData = _.map(_result, function (item, idx) {
-        return {
-            value: _result[idx].eqpMdlNm,
-            option: 'hbs-model-name',
-            attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
-        };
-    });
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+        var listData = _.map(_result, function (item, idx) {
+            return {
+                value: _result[idx].eqpMdlNm,
+                option: 'hbs-model-name',
+                attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
+            };
+        });
 
-    console.log(JSON.stringify(listData));
+        var data = [{
+            list: null
+        }];
 
-    var data = [{
-        list: null
-    }];
-
-    data[0].list = listData;
-    this._popupService.open({
-            hbs: 'actionsheet_select_a_type',
-            layer: true,
-            data: data
-      },
-        $.proxy(this._selectModelCallback, this),
-        $.proxy(this._closeActionPopup, this)
-    );
+        data[0].list = listData;
+        this._popupService.open({
+                hbs: 'actionsheet_select_a_type',
+                layer: true,
+                data: data
+            },
+            $.proxy(this._selectModelCallback, this),
+            $.proxy(this._closeActionPopup, this)
+        );
+    } else {
+        this.$container.find('.fe-roaming-mfactCd').text('제조사를 선택하세요');
+        Tw.Error(resp.code, resp.msg).pop();
+    }
   },
   _selectModelCallback: function ($layer) {
-    console.log('model select ... ');
     $layer.on('click', '.hbs-model-name', $.proxy(this._onPhoneSelect, this, $layer));
   },
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
     var modelValue = target.attr('data-model-code');
-
-    console.log('modelValue : ' + modelValue);
 
     this._phoneInfo.eqpMdlNm = modelValue;
 
@@ -203,13 +198,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
   },
   _selectPopupCallback : function ($layer) {
-    console.log('select popup callback');
+
     $layer.on('click', '.hbs-country-name', $.proxy(this._goLoadSearchResult, this, $layer));
   },
-    _closeActionPopup : function () {
-      // this._history.goLoad('/product/roaming/search-result');
-      // this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
-      console.log('goLoad');
+  _closeActionPopup : function () {
   },
   _goLoadSearchResult: function ($layer, e) {
       var target = $(e.currentTarget);
