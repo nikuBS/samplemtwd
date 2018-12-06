@@ -188,6 +188,7 @@
                     </li>
                 </ul>
                 <!--2018 09-21 수정: 버튼 추가 및 구조변경(.myfare-list 밖으로 뺌)-->
+                {{#if isBillCnt}}
                 <ul class="bt-slice solid mt20">
                     {{#if isPersonalBiz}}
                     <li>
@@ -199,6 +200,7 @@
                     </li>
                     {{/if}}
                 </ul>
+                {{/if}}
             </div>
         </div>
         
@@ -275,6 +277,7 @@
                 </ul>
             </div>
             {{#if dataIsBank}}
+            {{#if isBillCnt}}
             <ul class="bt-slice solid mt20">
                 {{#if isPersonalBiz}}
                 <li>
@@ -286,6 +289,7 @@
                 </li>
                 {{/if}}
             </ul>
+            {{/if}}
             {{/if}}
         </div>
         <!--// 자동납부내역 -->

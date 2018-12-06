@@ -156,7 +156,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
       this.renderView(renderObj, Object.assign(resultData, {
         isPersonalBiz: this.isPersonalBiz,
-        billCnt: this.billCnt
+        isBillCnt: this.billCnt > 0
       }));
 
     });
@@ -189,7 +189,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
       this.renderView(renderObj, Object.assign(resultData, {
         isPersonalBiz: this.isPersonalBiz,
-        billCnt: this.billCnt
+        isBillCnt: this.billCnt > 0
       }));
       
     });     
@@ -218,7 +218,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       
       this.renderView(renderObj, Object.assign(resultData, {
         isPersonalBiz: this.isPersonalBiz,
-        billCnt: this.billCnt
+        isBillCnt: this.billCnt > 0
       }));
     });
   }
