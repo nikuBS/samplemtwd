@@ -183,7 +183,6 @@ Tw.ProductRoamingSearchResult.prototype = {
             this.reqParams.manageType = rmType;
             this._popupService.close();
             this._getCountryRoamingRate(this.reqParams);
-            console.log('this.reqParams.manageType : ' + this.reqParams.manageType);
         }
     },
     _selectPopupCallback:function () {
@@ -219,7 +218,6 @@ Tw.ProductRoamingSearchResult.prototype = {
     _handleSuccessSearchResult : function (resp) {
         var _result = resp.result;
 
-        console.log(_result.length);
         var alertMsg = this.keyword + '은(는) 로밍 서비스 국가가 아닙니다.';
         if(_result.length === 0) {
             this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE);
@@ -235,8 +233,6 @@ Tw.ProductRoamingSearchResult.prototype = {
                     attr: 'data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"'
                 };
             });
-
-            console.log(JSON.stringify(listData));
 
             var data = [{
                 list: null
@@ -258,7 +254,6 @@ Tw.ProductRoamingSearchResult.prototype = {
             var countryNm = encodeURIComponent(_result[0].countryNm);
             var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm;
 
-            console.log('resultUrl : ' + resultUrl);
             this._history.goLoad(resultUrl);
         }
 
