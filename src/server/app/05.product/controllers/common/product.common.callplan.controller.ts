@@ -21,6 +21,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
+import EnvHelper from '../../../../utils/env.helper';
 
 class ProductCommonCallplan extends TwViewController {
   constructor() {
@@ -154,6 +155,7 @@ class ProductCommonCallplan extends TwViewController {
       basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
 
     return Object.assign(prodRedisInfo, {
+      smryHtmlCtt: EnvHelper.setCdnUrl(prodRedisInfo.smryHtmlCtt),
       summary: Object.assign(prodRedisInfo.summary, ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo,
         basDataTxt.txt, prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit)),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
@@ -218,7 +220,7 @@ class ProductCommonCallplan extends TwViewController {
 
     contentsInfo.forEach((item) => {
       if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
-        contentsResult[item.vslLedStylCd] = item.ledItmDesc;
+        contentsResult[item.vslLedStylCd] = EnvHelper.setCdnUrl(item.ledItmDesc);
         return true;
       }
 
@@ -227,12 +229,13 @@ class ProductCommonCallplan extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
-        contentsResult.PLM_FIRST = item.ledItmDesc;
+        contentsResult.PLM_FIRST = EnvHelper.setCdnUrl(item.ledItmDesc);
         return true;
       }
 
       contentsResult.LIST.push(Object.assign(item, {
-        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm')
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm'),
+        ledItmDesc: EnvHelper.setCdnUrl(item.ledItmDesc)
       }));
     });
 
@@ -250,7 +253,9 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     bannerInfo.forEach((item) => {
-      bannerResult[item.bnnrLocCd] = item;
+      bannerResult[item.bnnrLocCd] = Object.assign(item, {
+        bnnrDtlHtmlCtt: EnvHelper.setCdnUrl(item.bnnrDtlHtmlCtt)
+      });
     });
 
     return bannerResult;
@@ -443,7 +448,7 @@ class ProductCommonCallplan extends TwViewController {
           relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, prodRedisInfo,
           mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
-          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo,  recommendsInfo, recommendsAppInfo, prodRedisInfo ]);
+          const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, prodRedisInfo ]);
 
           if (!FormatHelper.isEmpty(apiError)) {
             return this.error.render(res, Object.assign(renderCommonInfo, {
