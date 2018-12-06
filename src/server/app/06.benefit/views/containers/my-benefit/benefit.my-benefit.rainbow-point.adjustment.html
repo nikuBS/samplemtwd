@@ -18,10 +18,12 @@
 
 <div id="fe-my-benefit-rainbow-point-adjustment" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines="<%= linesData %>">
     <div class="popup-page nobg tw-popup">
-        <div id="header" class="header-wrap">
-            <!-- #header -->
-            <%- include('../../../../common/views/components/header.component.html', { title: '포인트 합산' }); %>
-            <!--// #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>포인트 합산</h1>
+                </div>
+            </div>
         </div>
     <!-- #contents -->
         <div class="container-wrap">
@@ -124,9 +126,6 @@
             </div>
         </div>
     <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
         <!-- .popup-closeBtn -->
         <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
