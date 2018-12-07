@@ -15,14 +15,20 @@ Tw.ProductRoamingFiReservation1step.prototype = {
 
   _cachedElement: function() {
     this.$btnPopupClose = this.$container.find('.popup-closeBtn');
+    this.$certBtn = this.$container.find('#fe-cert');
   },
 
   _bindEvent: function() {
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
+    this.$certBtn.on('click', $.proxy(this._openCertPopup, this));
   },
 
   _goRoamingGuide: function() {
     this._historyService.replaceURL('/product/roaming/fi/guide');
+  },
+
+  _openCertPopup: function() {
+    //인증받기
   }
 
 };
