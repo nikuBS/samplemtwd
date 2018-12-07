@@ -9,7 +9,7 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,sv
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -167,15 +167,13 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
             settingType : (data.svcType+' '+data.processNm),
             btnNmList : ['나의 가입정보 확인']
         };
-
-
-
+        if($containerData._prodId==='NA00005690'||$containerData._prodId==='NA00005693'){
+            completePopupData.btnNmList.unshift('자회선 설정하기');
+        }
         apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {
-            console.log('success');
-            console.log(res);
-
-            this._popupService.open({
+            if(res.code===Tw.API_CODE.CODE_00){
+                this._popupService.open({
                         hbs: 'complete_product_roaming',
                         layer: true,
                         data : completePopupData
@@ -183,20 +181,29 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
                     $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
                     null,
                     'complete');
+            }
         }, this)).fail($.proxy(function (err) {
-            console.log('fail');
-            console.log(err);
+
         }, this));
     },
     _bindCompletePopupBtnEvt : function($args1,$args2){
-        $($args2).on('click','.btn-round2',$args1._goMyInfo);
-        $($args2).on('click','.btn-floating',$args1._goBack);
+        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+
+        if($args1._prodId==='NA00005690'||$args1._prodId==='NA00005693'){
+            $($args2).on('click','#btn0.btn-round2',$.proxy($args1._goSetting,$args1));
+            $($args2).on('click','#btn1.btn-round2',$.proxy($args1._goMyInfo,$args1));
+        }else{
+            $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
+        }
     },
     _goMyInfo : function(){
-        //TODO link my roaming info
+        this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-        //TODO lik product info
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
+    },
+    _goSetting : function(){
+        this._historyService.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
     },
     _confirmInformationSetting : function () {
 

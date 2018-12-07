@@ -36,6 +36,7 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
             this.apiService.request(API_CMD.BFF_10_0141, {}, {})
         ).subscribe(([ prodRedisInfo, prodBffInfo]) => {
 
+
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
@@ -45,7 +46,7 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
 
             res.render('roaming/join/product.roaming.join.roaming-combine.html', {
                 svcInfo : svcInfo,
-                prodRedisInfo : prodRedisInfo.summary,
+                prodRedisInfo : prodRedisInfo.result.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId
             });

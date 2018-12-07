@@ -21,6 +21,9 @@ Tw.ProductRoamingLookup.prototype = {
         this.$container.find('#end_date').text(endDate+' '+this._prodBffInfo.svcEndTm+':00');
     },
     _bindBtnEvents: function () {
-
+        this.$container.on('click','.popup-closeBtn',$.proxy(this._goBack,this));
+    },
+    _goBack : function () {
+        this._history.goBack();
     }
 };

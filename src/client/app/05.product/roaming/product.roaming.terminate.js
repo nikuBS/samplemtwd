@@ -12,7 +12,7 @@ Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodRed
     this._historyService = new Tw.HistoryService(this.$rootContainer);
     this._svcInfo = svcInfo;
     this._prodId = prodId;
-    this._prodBffInfo = prodBffInfo;
+    this._prodBffInfo = JSON.parse(prodBffInfo);
     this._prodRedisInfo = prodRedisInfo;
     this._page = true;
     this._bindPopupElementEvt();
@@ -68,7 +68,6 @@ Tw.ProductRoamingTerminate.prototype = {
         $element.parent().attr('aria-checked',value==='checked'?true:false);
     },
     _doJoin : function () {
-        alert('test');
         this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, null, $.proxy(this._confirmInfo,this));
     },
     _confirmInfo : function () {
@@ -90,39 +89,40 @@ Tw.ProductRoamingTerminate.prototype = {
             null,
             'complete');
 
-        // this._apiService.request(Tw.API_CMD.BFF_10_0084, {}, {},this.prodId).
-        // done($.proxy(function (res) {
-        //
-        //
-        //     var completePopupData = {
-        //         prodNm : this._prodRedisInfo.prodNm,
-        //         processNm : PRODUCT_TYPE_NM.TERMINATE,
-        //         isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
-        //         typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-        //         settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-        //         btnNmList : ['나의 가입정보 확인']
-        //     };
-        //     this._popupService.open({
-        //             hbs: 'complete_product_roaming',
-        //             layer: true,
-        //             data : completePopupData
-        //         },
-        //         $.proxy(this._bindCompletePopupEvt,this),
-        //         null,
-        //         'complete');
-        // }, this)).fail($.proxy(function (err) {
-        //
-        // }, this));
+        this._apiService.request(Tw.API_CMD.BFF_10_0086, {}, {},this.prodId).
+        done($.proxy(function (res) {
+
+            if(res===Tw.API_CODE.CODE_00){
+                var completePopupData = {
+                    prodNm : this._prodRedisInfo.prodNm,
+                    processNm : PRODUCT_TYPE_NM.TERMINATE,
+                    isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
+                    typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+                    settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
+                    btnNmList : ['나의 가입정보 확인']
+                };
+                this._popupService.open({
+                        hbs: 'complete_product_roaming',
+                        layer: true,
+                        data : completePopupData
+                    },
+                    $.proxy(this._bindCompletePopupEvt,this),
+                    null,
+                    'complete');
+            }
+        }, this)).fail($.proxy(function (err) {
+
+        }, this));
 
     },
-    _bindCompletePopupEvt : function ($args) {
-        $($args).on('click','.btn-round2',this._goMyInfo);
-        $($args).on('click','.btn-floating',this._goBack);
+    _bindCompletePopupBtnEvt : function($args1,$args2){
+        $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
+        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+    },
+    _goMyInfo : function(){
+        this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-
-    },
-    _goMyInfo : function () {
-
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
     }
 };

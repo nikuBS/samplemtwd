@@ -37,7 +37,8 @@
                     <div class="myinfo-wrap">
                         <div class="myinfo-cont">
                             <div class="subtitle">
-                                <span class="name">데이터 로밍 요금상품 <button type="button" class="tip-view" title="로밍 서비스 기간 설정 정보보기" aria-haspopup="true">TIP</button></span>
+                                <span class="name">데이터 로밍 요금상품
+                                    <button id="RM_11_01_02_06_tip_01_01" page-id="RM_11_01_02_06_tip_01_01" type="button" class="tip-view" title="로밍 서비스 기간 설정 정보보기" aria-haspopup="true">TIP</button></span>
                             </div>
                             <div class="title pt6">
                                 <span><%= prodBffInfo.prodNm %></span>
@@ -46,6 +47,7 @@
                     </div>
 
                     <ul class="detail-info-list pt36">
+                        <% if(prodBffInfo.prodFee) {%>
                         <li>
                             <dl>
                                 <dt>이용요금</dt>
@@ -54,6 +56,7 @@
                                 </dd>
                             </dl>
                         </li>
+                        <% } %>
                         <li>
                             <dl>
                                 <dt>서비스 개시일</dt>
@@ -90,7 +93,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingLookup($('.wrap'),<%- JSON.stringify(prodBffInfo) %>);
+    new Tw.ProductRoamingLookup($('.wrap'),'<%- JSON.stringify(prodBffInfo) %>');
   });
 </script>
 

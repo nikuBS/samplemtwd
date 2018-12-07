@@ -14,7 +14,7 @@ Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = [];
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -62,39 +62,33 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
       if(this._requestOrder('CHK',reuqestPhoneNum)){
           if(this._requestOrder('add',reuqestPhoneNum)){
               console.log('go to setting/roaming-combine');
+              this._history.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
           }
       }
       this._clearInput();
   },
   _requestOrder : function(requestType,phoneNum){
 
-        var reqestValue = {
+        var requestValue = {
             svcOpClCd : '',
             startDtm : this._prodBffInfo.startdtm,
             endDtm : this._prodBffInfo.enddtm,
             childSvcNum : '',
             delChildSvcMgmtNum : ''
         };
-        reqestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
+      requestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
         if(requestType === 'remove'){
-            reqestValue.delChildSvcMgmtNum = phoneNum;
+            requestValue.delChildSvcMgmtNum = phoneNum;
         }else{
-            reqestValue.childSvcNum = phoneNum;
+            requestValue.childSvcNum = phoneNum;
         }
-        console.log(reqestValue);
 
-        return true;
-        // this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
-        // done($.proxy(function (res) {
-        //     console.log('success');
-        //     console.log(res);
-        //
-        //     return true
-        //
-        // }, this)).fail($.proxy(function (err) {
-        //     console.log('fail');
-        //     console.log(err);
-        // }, this));
+        this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
+        done($.proxy(function (res) {
+            return res.code === Tw.API_CODE.CODE_00;
+        }, this)).fail($.proxy(function (err) {
+            return false;
+        }, this));
   },
 
   _showPhoneBook : function () {

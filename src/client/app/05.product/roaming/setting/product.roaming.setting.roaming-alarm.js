@@ -9,7 +9,7 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInf
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
+  this._history.init();
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
@@ -30,11 +30,14 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
       this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
+      this.$container.on('click','.prev-step',$.proxy(this._go_back,this));
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
   },
-
+    _go_back : function(){
+      this._history.goBack();
+    },
     _clearInput : function(){
         this.$inputElement.val('');
         this._activateAddBtn();
@@ -57,39 +60,26 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
           this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
           return;
       }
-
       var tempPhoneNum = this.$inputElement.val().split('-');
       var phoneObj = {
           'serviceNumber1' : tempPhoneNum[0],
           'serviceNumber2' : tempPhoneNum[1],
           'serviceNumber3' : tempPhoneNum[2]
       };
-
       var requestValue = {
           'svcNumList' : [phoneObj]
       };
-
-      // this._addedList.push(phoneObj);
-      // this._activateConfirmBtn();
-      // this._clearInput();
-      // this._changeList();
-
-      this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
+      this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},this._prodId).
       done($.proxy(function (res) {
-          console.log('success');
-          console.log(res);
-
-          this._addedList.push(phoneObj);
-          this._activateConfirmBtn();
-          this._clearInput();
-          this._changeList();
-
+          if(res.code===Tw.API_CODE.CODE_00){
+              this._addedList.push(phoneObj);
+              this._activateConfirmBtn();
+              this._clearInput();
+              this._changeList();
+          }
       }, this)).fail($.proxy(function (err) {
-          console.log('fail');
-          console.log(err);
+
       }, this));
-
-
   },
   _changeList : function(){
       this.$container.find('.list-box').remove();
@@ -132,9 +122,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _makeTemplate : function (phoneNum,idx) {
       var template = '<li class="list-box">';
-          template+='<div class="list-ico"><span class="ico type5">이</span></div>';
+          //template+='<div class="list-ico"><span class="ico type5">이</span></div>';
           template+='<p class="list-text">';
-          template+='<span class="mtext">이*름</span>';
+          //template+='<span class="mtext">이*름</span>';
           template+='<span class="stext gray">'+phoneNum.serviceNumber1+'-'+phoneNum.serviceNumber2+'-'+phoneNum.serviceNumber3+'</span>';
           template+='</p>';
           template+='<div class="list-btn">';
@@ -145,9 +135,20 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _removeOnList : function ($args) {
 
-      var selectedIndex = parseInt($($args).attr('data-idx'),10);
-      this._addedList.splice(selectedIndex,1);
-      this._changeList();
+      var selectedIndex = $args.currentTarget.attributes['data-idx'].nodeValue;
+      var requestValue = {
+          'svcNumList' : this._addedList[selectedIndex]
+      };
+
+      this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},this._prodId).
+      done($.proxy(function (res) {
+          if(res.code===Tw.API_CODE.CODE_00){
+              this._addedList.splice(selectedIndex,1);
+              this._changeList();
+          }
+      }, this)).fail($.proxy(function (err) {
+
+      }, this));
   },
   _bindRemoveEvt : function () {
       this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));

@@ -9,9 +9,13 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
+    console.log(svcInfo);
+    console.log(typeof (svcInfo));
+    console.log(JSON.stringify(svcInfo));
+
   this._prodId = prodId;
 };
 
@@ -129,31 +133,29 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
 
         apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {
-            console.log('success');
-            console.log(res);
-
-            this._popupService.open({
-                    hbs: 'complete_product_roaming',
-                    layer: true,
-                    data : completePopupData
-                },
-                $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
-                null,
-                'complete');
+            if(res.code===Tw.API_CODE.CODE_00){
+                this._popupService.open({
+                        hbs: 'complete_product_roaming',
+                        layer: true,
+                        data : completePopupData
+                    },
+                    $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
+                    null,
+                    'complete');
+            }
         }, this)).fail($.proxy(function (err) {
-            console.log('fail');
-            console.log(err);
+
         }, this));
     },
     _bindCompletePopupBtnEvt : function($args1,$args2){
-        $($args2).on('click','.btn-round2',$args1._goMyInfo);
-        $($args2).on('click','.btn-floating',$args1._goBack);
+        $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
+        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
     },
     _goMyInfo : function(){
-        //TODO link my roaming info
+        this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-        //TODO lik product info
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
     },
     _confirmInformationSetting : function () {
 

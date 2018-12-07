@@ -42,7 +42,7 @@ class ProductRoamingJoinRoamingAlarm extends TwViewController {
 
             res.render('roaming/join/product.roaming.join.roaming-alarm.html', {
                 svcInfo : svcInfo,
-                prodRedisInfo : prodRedisInfo.summary,
+                prodRedisInfo : prodRedisInfo.result.summary,
                 prodApiInfo : prodApiInfo.result,
                 prodId : prodId
             });

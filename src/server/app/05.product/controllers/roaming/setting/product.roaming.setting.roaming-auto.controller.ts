@@ -57,42 +57,6 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
             });
         });
 
-
-        // res.render('roaming/setting/product.roaming.setting.roaming-auto.html', {
-        //     svcInfo : svcInfo,
-        //     expireDate : ROAMING_AUTO_EXPIRE_CASE[prodId],
-        //     prodBffInfo :
-        //         {
-        //                 "svcStartDt" : "20181225"
-        //                 ,"svcEndDt" : "20181230"
-        //                 ,"svcStartTm" : "12"
-        //                 ,"svcEndTm" : "12"
-        //                 ,"startEndTerm" : "15"
-        //                 ,"prodNm" : "T로밍 요금제"
-        //                 ,"prodFee" : ""
-        //                 ,"romSetClCd" : "DTDN"
-        //                 ,"isAdult" : "true"
-        //                 ,"chkCurProdStat" : "false"
-        //                 ,"settingYn" : true
-        //
-        //             }
-        //         ,
-        //     prodRedisInfo : { prodNm: 'T로밍 데이터 1만원',
-        //         prodIconImgUrl: null,
-        //         prodSmryDesc: '전세계 150개국 이상에서 3G/LTE 데이터로밍을 실속있게 이용가능한 한도 요금제',
-        //         prodBasBenfCtt: null,
-        //         sktProdBenfCtt: null,
-        //         basOfrGbDataQtyCtt: '-',
-        //         basOfrMbDataQtyCtt: null,
-        //         basOfrVcallTmsCtt: '-',
-        //         basOfrCharCntCtt: null,
-        //         smryHtmlCtt: null,
-        //         basFeeInfo: '11000',
-        //         freeYn: 'N' },
-        //     prodId : 'testId'
-        //
-        // });
-
     }
 }
 

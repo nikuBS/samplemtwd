@@ -60,7 +60,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
       if(this._requestOrder('CHK',reuqestPhoneNum)){
          if(this._requestOrder('add',reuqestPhoneNum)){
-            console.log('refresh');
+             this._history.reload();
          }
       }
 
@@ -80,23 +80,19 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       }else{
           reqestValue.childSvcNum = phoneNum;
       }
-      console.log(reqestValue);
 
-      return true;
-      // this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
-      // done($.proxy(function (res) {
-      //     console.log('success');
-      //     console.log(res);
-      //
-      //     this._addedList.push(phoneObj);
-      //     this._activateConfirmBtn();
-      //     this._clearInput();
-      //     this._changeList();
-      //
-      // }, this)).fail($.proxy(function (err) {
-      //     console.log('fail');
-      //     console.log(err);
-      // }, this));
+
+
+      this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
+      done($.proxy(function (res) {
+          if(res.code===Tw.API_CODE.CODE_00){
+              return true;
+          }else{
+              return false;
+          }
+      }, this)).fail($.proxy(function (err) {
+          return false;
+      }, this));
   },
   _changeList : function(){
       this.$container.find('.list-box').remove();
@@ -157,7 +153,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
 
       if(this._requestOrder('CHK',reuqestPhoneNum)){
           if(this._requestOrder('remove',reuqestPhoneNum)){
-              console.log('refresh');
+              this._history.reload();
           }
       }
   },

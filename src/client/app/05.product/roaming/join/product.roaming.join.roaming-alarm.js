@@ -14,7 +14,7 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,s
   this._nativeService = Tw.Native;
   this._addedList = [];
   this._changeList();
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -135,39 +135,38 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
         apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {
-
-            var completePopupData = {
-                prodNm : data.prodNm,
-                processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-                isBasFeeInfo : data.prodFee,
-                typeNm : data.svcType,
-                settingType : (data.svcType+' '+data.processNm),
-                btnNmList : ['나의 가입정보 확인']
-            };
-            this._popupService.open({
-                    hbs: 'complete_product_roaming',
-                    layer: true,
-                    data : completePopupData
-                },
-                $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
-                null,
-                'complete');
+            if(res.code===Tw.API_CODE.CODE_00){
+                var completePopupData = {
+                    prodNm : data.prodNm,
+                    processNm : Tw.PRODUCT_TYPE_NM.JOIN,
+                    isBasFeeInfo : data.prodFee,
+                    typeNm : data.svcType,
+                    settingType : (data.svcType+' '+data.processNm),
+                    btnNmList : ['나의 가입정보 확인']
+                };
+                this._popupService.open({
+                        hbs: 'complete_product_roaming',
+                        layer: true,
+                        data : completePopupData
+                    },
+                    $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
+                    null,
+                    'complete');
+            }
         }, this)).fail($.proxy(function (err) {
 
         }, this));
    },
-   _bindCompletePopupBtnEvt : function($args1,$args2){
-        $($args2).on('click','.btn-round2',$args1._goMyInfo);
-        $($args2).on('click','.btn-floating',$args1._goBack);
-   },
-   _goMyInfo : function(){
-        //TODO link my roaming info
-        console.log('_goMyInfo called');
-   },
-   _goBack : function(){
-        //TODO lik product info
-        console.log('_goBack called');
-   },
+    _bindCompletePopupBtnEvt : function($args1,$args2){
+        $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
+        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+    },
+    _goMyInfo : function(){
+        this._historyService.goLoad('/product/roaming/my-use');
+    },
+    _goBack : function(){
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
+    },
    _confirmInformationSetting : function () {
         var userJoinInfo = {
             'svcNumList' : this._addedList
