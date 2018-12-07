@@ -70,7 +70,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _hbRegisterHelper: function () {
 
     Handlebars.registerHelper('date_txt', function (dateVal) {
-      return Tw.DateHelper.getShortDateWithFormatAddByUnit(dateVal, 1, 'days', 'YYYY년 M월', 'YYYYMMDD');
+      return Tw.DateHelper.getShortDateWithFormatAddByUnit(dateVal, 1, 'days', Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE, 'YYYYMMDD');
     });
 
     Handlebars.registerHelper('index_of', function (context, ndx) {
@@ -79,10 +79,10 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     // 컨텐츠/소액결제 분기 및 tag리턴
     Handlebars.registerHelper('if_contents', function (strVal) {
-      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.length; i++){
-        var searchName = Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN[i].SCH_ID;
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].SCH_ID;
         if ( strVal.indexOf(searchName) > -1 ) {
-          return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN[i].ELEMENT;
+          return Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].ELEMENT;
         }
       }
       return strVal;
@@ -90,21 +90,34 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     // 휴대폰/인터넷/TV 아이콘 리턴
     Handlebars.registerHelper('if_icon', function (strVal) {
-      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE.TIT_ICON.length; i++){
-        var searchName = Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[i].SCH_LB;
+      if(!strVal) return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[i].SCH_LB;
         if ( strVal.indexOf(searchName) > -1 ) {
-          return Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[i].ELEMENT;
+          return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[i].ELEMENT;
         }
       }
-      return Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[0].ELEMENT;
+      return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
     });
 
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
       if ( strVal.indexOf(searchName) > -1 ) {
-        return Tw.MYT_FARE_BILL_GUIDE.THIRD_PARTY_TPL;
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
       }
     });
 
+    Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
+      if ( strVal.indexOf(searchName) > -1 ) {
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
+      }
+    });
+
+    Handlebars.registerHelper('if_dc_red', function (strVal) {
+      if ( strVal.indexOf(Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.LABEL) > -1 ) {
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.CLASS;
+      }
+      return '';
+    });
 
   },
   _cachedElement: function () {
@@ -123,6 +136,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     this.$searchNmSvcType = $('[data-target="searchNmSvcType"]');
 
+    this.$searchNmSvcTypeTplAll = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.ALL);
+    this.$searchNmSvcTypeTplOth = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.OTHER);
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
@@ -391,16 +406,18 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       return item.svcMgmtNum === svcMgmtNum;
     });
     // Tw.Logger.info('[ _searchNmSvcTypeFun ]', selectSvcType);
-    var textVal = '';
+    var textVal = selectSvcType.svcType;
+    var templt = this.$searchNmSvcTypeTplOth;
 
-    if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
+    if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE ) {
+      templt = this.$searchNmSvcTypeTplAll;
+    } else if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
       textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
-    }
-    else {
+    } else {
       textVal = selectSvcType.svcType + '(' + selectSvcType.dtlAddr + ')';
     }
 
-    this.$searchNmSvcType.text(textVal);
+    this.$searchNmSvcType.html(templt({svcType: textVal}));
   },
   _useSvcTypeFun: function () {
     var svcTypeList = this.resData.commDataInfo.intBillLineList;
@@ -463,8 +480,6 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       tempSum = thisMain._comComma(tempSum);
 
       var prodInfo = thisMain._getProdInfo(tempData[val][0].svcMgmtNum);
-      console.log('_comTraverse tempData[val]', tempData[val]);
-      console.log('_comTraverse tempData[val][0]', tempData[val][0]);
       return {
         id: val,
         label: tempData[val][0].svcNm,

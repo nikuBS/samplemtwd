@@ -63,7 +63,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
       startDt: this._getPeriod(this.selectVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectVal, 'YYYYMMDD').endDt
     };
-    console.info('[param]', param);
+    // console.info('[param]', param);
 
     this._getDonationInfo(param);
 
@@ -79,7 +79,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this.detailListObj.curLen = this.detailListObj.listData.length;
 
     _.map(this.detailListObj.listData, function (item) {
-      item.billTcDt = moment( item.billTcDt, 'YYYYMMDD' ).format('YYYY.MM.DD');
+      item.billTcDt = Tw.DateHelper.getShortDateNoDot( item.billTcDt );
       item.sponAmt = thisMain._comComma(item.sponAmt);
       return item;
     });
@@ -137,8 +137,8 @@ Tw.MyTFareBillGuideDonation.prototype = {
       var totalCount = res.result.totalCount;
 
       var resData = {
-        startDt: moment(param.startDt).format('YYYY.MM.DD'),
-        endDt: moment(param.endDt).format('YYYY.MM.DD'),
+        startDt: Tw.DateHelper.getShortDateNoDot( param.startDt ),
+        endDt: Tw.DateHelper.getShortDateNoDot( param.endDt ),
         totalNum: this._comComma(totalNum),
         list: dataArr,
         totalCount: totalCount
@@ -214,7 +214,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     dateArray[4] = threeMonth;
     dateArray[5] = sixMonth;
 
-    console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
+    // console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
 
     var startDt = dateArray[selectVal];
     var endDt = moment().format(formatStr);

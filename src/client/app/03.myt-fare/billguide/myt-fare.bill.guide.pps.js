@@ -88,7 +88,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
 
     _.map(this.detailListObj[0].listData, function (item) {
-      item.usedDt = moment(item.usedDt, 'YYYYMMDD').format('YYYY.M.DD');
+      item.usedDt = Tw.DateHelper.getShortDateNoDot(item.usedDt);
 
       // 0보다 작을 경우 데이터 이외 사용 항목(음성/sms/충전 등)
       if ( Number(item.used) < 0 ) {
@@ -182,7 +182,7 @@ Tw.MyTFareBillGuidePps.prototype = {
         Tw.Logger.info('[ start 는 max]');
 
         pushData = {
-          value: momentTemp.format('YYYY년 M월'),
+          value: momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE),
           option: '',
           attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
         };
@@ -246,7 +246,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     $tg.addClass('checked');
 
     selectDateVal = $tg.attr('data-value');
-    console.info('selectDateVal', selectDateVal);
+    // console.info('selectDateVal', selectDateVal);
 
     var momentObj = moment(selectDateVal, 'YYYYMM');
 
@@ -283,7 +283,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       if ( diffMontsVal <= this.selDateObj.endRangeNum ) {
         // 유효성 완료, 조회 진행
         Tw.Logger.info('[유효성 완료, 조회 진행] ');
-        console.info('[selDateObj] ', this.selDateObj);
+        // console.info('[selDateObj] ', this.selDateObj);
         this._getHistoriesInfo();
 
       } else {
@@ -371,7 +371,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.selDateObj.selectList = [];
     this.selDateObj.selectEndList = [];
     for ( var i = 1, len = this.selDateObj.startRangeNum; i <= len; i++ ) {
-      var val = moment().subtract(i, 'months').format('YYYY년 M월');
+      var val = moment().subtract(i, 'months').format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE);
       var defaultVal = moment().subtract(i, 'months').format('YYYYMM');
 
       var pushData = {
@@ -384,7 +384,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       // this.selDateObj.selectEndList.push(pushData);
     }
 
-    console.info('[selDateObj] ', this.selDateObj);
+    // console.info('[selDateObj] ', this.selDateObj);
 
   },
 

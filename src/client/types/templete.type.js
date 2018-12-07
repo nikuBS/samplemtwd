@@ -532,7 +532,7 @@ Tw.TERMS_ACTION = {
   }
 };
 
-Tw.MYT_FARE_BILL_GUIDE = {
+Tw.MYT_FARE_BILL_GUIDE_TPL = {
   TIT_ICON:[
     {SCH_LB:'이동전화', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
     {SCH_LB:'휴대폰', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
@@ -543,8 +543,12 @@ Tw.MYT_FARE_BILL_GUIDE = {
     {SCH_ID : '콘텐츠이용료', ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},
     {SCH_ID : '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
   ],
-  THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>'
-
+  THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
+  PRICE_DC_POINT: { LABEL:'요금할인', CLASS : 'txt-point'},
+  SVC_TYPE_TPL :{
+    ALL: '<i class="icon-whole"><span class="blind">{{svcType}}</span></i>',
+    OTHER: '<span class="bar"></span>{{svcType}}'
+  }
 };
 
 Tw.HELPLINE_TYPES = [{ value: '일반' }, { value: '로밍' }, { value: '통화품질 상담' }];

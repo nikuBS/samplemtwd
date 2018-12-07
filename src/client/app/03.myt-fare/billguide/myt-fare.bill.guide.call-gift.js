@@ -121,8 +121,8 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   //--------------------------------------------------------------------------[COM]
   _toSecond: function (str) {
     var strl = str;
-    var m_loc = strl.indexOf('분'); // 분
-    var s_loc = strl.indexOf('초'); // 초
+    var m_loc = strl.indexOf(Tw.VOICE_UNIT.MIN); // 분
+    var s_loc = strl.indexOf(Tw.VOICE_UNIT.SEC); // 초
     var m_val = Number(strl.slice(0, m_loc).trim());
     var s_val = Number(strl.slice(m_loc + 1, s_loc).trim());
     var total_s_val = (m_val * 60) + s_val; // 초로 변환
@@ -130,9 +130,9 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     return total_s_val;
   },
   _toHHMMSS: function (num) {
-    console.info('[초]', num);
+    // console.info('[초]', num);
     var myNum = parseInt(num, 10);
-    console.info('[초 변환]', myNum);
+    // console.info('[초 변환]', myNum);
 
     var hour = Math.floor(myNum / 3600);
     var minute = Math.floor((myNum - (hour * 3600)) / 60);

@@ -60,10 +60,10 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
     // 컨텐츠/소액결제 분기 및 tag리턴
     Handlebars.registerHelper('if_contents', function (strVal) {
-      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.length; i++){
-        var searchName = Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN[i].SCH_ID;
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].SCH_ID;
         if ( strVal.indexOf(searchName) > -1 ) {
-          return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN[i].ELEMENT;
+          return Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].ELEMENT;
         }
       }
       return strVal;
@@ -71,19 +71,27 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
     // 휴대폰/인터넷/TV 아이콘 리턴
     Handlebars.registerHelper('if_icon', function (strVal) {
-      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE.TIT_ICON.length; i++){
-        var searchName = Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[i].SCH_LB;
+      if(!strVal) return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[i].SCH_LB;
         if ( strVal.indexOf(searchName) > -1 ) {
-          return Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[i].ELEMENT;
+          return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[i].ELEMENT;
         }
       }
-      return Tw.MYT_FARE_BILL_GUIDE.TIT_ICON[0].ELEMENT;
+      return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
     });
 
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
       if ( strVal.indexOf(searchName) > -1) {
-        return Tw.MYT_FARE_BILL_GUIDE.THIRD_PARTY_TPL;
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
       }
+    });
+
+    Handlebars.registerHelper('if_dc_red', function (strVal) {
+      if ( strVal.indexOf(Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.LABEL) > -1 ) {
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.CLASS;
+      }
+      return '';
     });
 
   },
@@ -95,6 +103,8 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     this.$hbChildListArea = $('[data-target="hbChildListArea"]');
     this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
+    // this.$searchNmSvcTypeTplAll = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.ALL);
+    // this.$searchNmSvcTypeTplOth = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.OTHER);
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
@@ -266,7 +276,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });
-    console.info('[ selectSvcType ] : ', selectSvcType);
+    // console.info('[ selectSvcType ] : ', selectSvcType);
     return selectSvcType;
 
   },

@@ -45,7 +45,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       startDt: this._getPeriod(this.selectVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectVal, 'YYYYMMDD').endDt
     };
-    console.info('[param]', param);
+    // console.info('[param]', param);
 
     this._getRoamingInfo(param);
 
@@ -158,7 +158,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     dateArray[4] = threeMonth;
     dateArray[5] = sixMonth;
 
-    console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
+    // console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
 
     var startDt = dateArray[selectVal];
     var endDt = moment().format(formatStr);
