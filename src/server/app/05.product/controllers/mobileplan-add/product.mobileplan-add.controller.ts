@@ -58,19 +58,6 @@ export default class ProductAddition extends TwViewController {
     return of(undefined);
   }
 
-  private getPromotionBanners = () => {
-    return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
-      }
-
-      return resp.result;
-    });
-  }
-
   private getBestAdditions = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {

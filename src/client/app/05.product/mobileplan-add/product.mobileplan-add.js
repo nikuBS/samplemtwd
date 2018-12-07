@@ -1,3 +1,9 @@
+/**
+ * FileName: product.mobileplan-add.js
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * Date: 2018.12.07
+ */
+
 Tw.ProductMobileplanAdd = function(rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
