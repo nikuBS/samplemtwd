@@ -20,11 +20,11 @@
 <div class="wrap" id="fe-benefit-my">
     <div id="header" class="header-wrap">
         <!-- #header -->
-        <%- include('../../../../common/views/components/header.component.html', { title: '나의 혜택·할인', svcInfo: svcInfo, option: { line: true } }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '나의 혜택·할인'}); %>
         <!--// #header -->
     </div>
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div id="contents" class="container-wrap" data-menuId="<%= pageInfo.menuId %>">
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
@@ -188,9 +188,6 @@
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
 </div>
 <script>
   $(document).ready(function () {

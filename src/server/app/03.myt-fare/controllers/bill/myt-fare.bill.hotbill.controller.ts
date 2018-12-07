@@ -89,7 +89,7 @@ class MyTFareBillHotbill extends TwViewController {
           });
       } else {
         const options = {
-          svcInfo: svcInfo,
+          svcInfo,
           pageInfo,
           lines: [],
           billAvailable: true,
