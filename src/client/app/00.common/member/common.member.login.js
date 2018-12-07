@@ -41,10 +41,10 @@ Tw.CommonMemberLogin.prototype = {
       }
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      this._historyService.goLoad('/common/login/customer-pwd');
+      this._historyService.goLoad('/common/member/login/customer-pwd');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
-      this._historyService.goLoad('/common/login/dormancy');
+      this._historyService.goLoad('/common/member/login/dormancy');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
       this._historyService.goLoad('/common/member/login/exceed-fail');
     } else {
