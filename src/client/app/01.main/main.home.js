@@ -392,5 +392,4 @@ Tw.MainHome.prototype = {
   _resetHeight: function () {
     Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
   }
-
 };
