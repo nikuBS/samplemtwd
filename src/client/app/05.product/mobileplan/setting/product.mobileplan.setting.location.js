@@ -114,6 +114,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _removeLocation: function(event){
     var dcAreaNum = $(event.target).closest('li').data('dcareanum');
+    var dcAreaNm = $(event.target).closest('li').data('dcareanm');
     var auditDtm = $(event.target).closest('li').data('auditdtm');
 
     this._popupService.openModalTypeA(
@@ -122,9 +123,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
       $.proxy(function(){
         this._popupService.close();
-        this._settingTargetLocation('3', {num:dcAreaNum, auditDtm:auditDtm}, function(){
-          $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
-        });
+        this._settingTargetLocation(
+          '3',
+          {num: dcAreaNum, name: dcAreaNm, auditDtm: auditDtm},
+          function(){
+            $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
+          });
       }, this));
   },
 
@@ -133,25 +137,14 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _settingTargetLocation: function(chgCd, dcArea, callback){
-    var params = null;
+    var params = {
+      opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
+      frDcAreaNum: null,        // 현재 할인지역코드
+      toDcAreaNum: dcArea.num,  // 변경할 할인지역코드
+      toDcAreaNm: dcArea.name,  // 변경할 할인지역명
+      auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
+    };
 
-    if(chgCd === '1'){
-      params = {
-        opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
-        frDcAreaNum: dcArea.num,  // 현재 할인지역코드
-        toDcAreaNum: null,        // 변경할 할인지역코드
-        toDcAreaNm: null,         // 변경할 할인지역명
-        auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
-      };
-    } else if(chgCd === '3'){
-      params = {
-        opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
-        frDcAreaNum: dcArea.num,  // 현재 할인지역코드
-        toDcAreaNum: dcArea.num,  // 변경할 할인지역코드
-        toDcAreaNm: null,         // 변경할 할인지역명
-        auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
-      };
-    }
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0045, params )

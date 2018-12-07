@@ -95,6 +95,7 @@ class MyTFareBillGuide extends TwViewController {
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
     this.logger.info(this, '[ childInfo ] : ', childInfo);
+    allSvc = allSvc || { 'S': [], 'O': [], 'M': [] };
 
     // ---------------------------------------------------------------------------------[화면 구분]
     /*
@@ -114,7 +115,6 @@ class MyTFareBillGuide extends TwViewController {
         this._typeChk = 'A1';
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-        // thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
         this.prepaidCircuit(res, svcInfo, allSvc, childInfo);
 
         break;
@@ -123,7 +123,6 @@ class MyTFareBillGuide extends TwViewController {
         this._typeChk = 'A2';
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-        // thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
         this.companyCircuit(res, svcInfo, allSvc, childInfo);
         break;
       default :
@@ -157,8 +156,6 @@ class MyTFareBillGuide extends TwViewController {
           }
           thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
           thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-
-          // thisMain.controllerInit(res, svcInfo, allSvc, childInfo);
 
         }, function(err) {
           thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -436,7 +433,8 @@ class MyTFareBillGuide extends TwViewController {
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
         ppsInfo: thisMain._ppsInfo,
-        commDataInfo: thisMain._commDataInfo
+        commDataInfo: thisMain._commDataInfo,
+        allSvc: allSvc
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -524,7 +522,7 @@ class MyTFareBillGuide extends TwViewController {
 
   public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
     // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
-    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'M.DD');
+    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'YYYY.M.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
