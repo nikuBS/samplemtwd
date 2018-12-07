@@ -391,7 +391,9 @@ export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
 export const MYT_JOIN_WIRE_SET_PAUSE = {
   TITLE: '일시 정지/해제',
   MONTH: '개월 ',
-  DAY: '일'
+  DAY: '일',
+  AC: '일시 정지 신청',
+  SP: '일시 정지 해제'
 };
 
 export enum CUSTOMER_NOTICE_CATEGORY {
