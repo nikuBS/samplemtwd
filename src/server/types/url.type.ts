@@ -86,7 +86,7 @@ export const URL = {
   '/myt-data/recharge/limit': { login: true, id: 'DC_04_01', title: '데이터 한도 요금제' },
   '/myt-data/recharge/coupon': { login: true, id: 'DC_05', title: '나의 리필쿠폰' },
   '/myt-data/recharge/coupon/use': { login: true, id: 'DC_05_01', title: '리필 쿠폰 사용' },
-  '/myt-data/datainfo': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
+  '/myt-data/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
   '/product/mobileplan': { login: false, id: 'MP', title: '모바일 요금제' },

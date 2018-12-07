@@ -17,7 +17,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <%- include('../../../common/views/components/header.component.html', { title: '나의 부가상품' }); %>
         <!--// #header -->
@@ -113,7 +113,7 @@
 				<div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list">
-                        <li>부가서비스 이용안내 <button id="MS_06_01_tip_01" type="button" class="tip-view" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                        <li>부가서비스 이용안내 <button id="MS_06_01_tip_01" page-id="MS_06" type="button" class="tip-view" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">TIP</button></li>
                     </ul>
                 </div>
                 <!-- //꼭 확인해 주세요 -->

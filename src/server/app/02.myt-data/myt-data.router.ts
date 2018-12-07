@@ -12,7 +12,7 @@ import MyTDataTing from './controllers/ting/myt-data.ting.controller';
 import MyTDataGift from './controllers/gift/myt-data.gift.controller';
 import MyTDataLimit from './controllers/limit/myt-data.limit.controller';
 import MyTDataCookiz from './controllers/cookiz/myt-data.cookiz.controller';
-import MyTDataInfo from './controllers/datainfo/myt-data.datainfo.controller';
+import MyTDataHistory from './controllers/history/myt-data.history.controller';
 import MyTDataFamily from './controllers/familydata/myt-data.familydata.controller';
 import MyTDataFamilyShare from './controllers/familydata/myt-data.familydata.share.controller';
 import MyTDataPrepaidHistory from './controllers/prepaid/myt-data.prepaid.history.controller';
@@ -39,7 +39,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/coupon/complete', controller: MyTDataRechargeCouponComplete });
     this.controllers.push({ url: '/familydata', controller: MyTDataFamily });
     this.controllers.push({ url: '/familydata/share', controller: MyTDataFamilyShare });
-    this.controllers.push({ url: '/datainfo', controller: MyTDataInfo });
+    this.controllers.push({ url: '/history', controller: MyTDataHistory });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
     this.controllers.push({ url: '/submain/child-hotdata', controller: MyTDataUsageChild });
     this.controllers.push({ url: '/submain/child-hotdata/recharge', controller: MyTDataUsageChildRecharge });
@@ -57,7 +57,6 @@ class MytDataRouter extends TwRouter {
 
     // 임시
     this.controllers.push({ url: '/usage', controller: MyTDataUsage });
-
   }
 }
 
