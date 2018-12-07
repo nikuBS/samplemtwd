@@ -623,7 +623,7 @@ export const API_CMD = {
     method: API_METHOD.GET, server: API_SERVER.BFF,
     bypass: true
   },
-  BFF_10_0116: { path: '/core-product/v1/ledger/:args0/preview', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0116: { path: '/core-product/v1/ledger/:args0/previews', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0139: { path: '/core-product/v1/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
