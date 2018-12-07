@@ -43,8 +43,8 @@ Tw.ProductApps.prototype = {
   },
 
   _getApps: function() {
-    // this._apiService.request(Tw.API_CMD.BFF_10_0093, {})
-    $.ajax('http://localhost:3000/mock/product.apps.json').done($.proxy(this._handleLoadApps, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0093, {}).done($.proxy(this._handleLoadApps, this));
+    // $.ajax('http://localhost:3000/mock/product.apps.json').done($.proxy(this._handleLoadApps, this));
   },
 
   _handleLoadApps: function(resp) {
