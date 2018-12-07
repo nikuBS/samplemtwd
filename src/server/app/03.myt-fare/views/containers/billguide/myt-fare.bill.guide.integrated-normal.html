@@ -29,7 +29,15 @@
     <!-- .cont-box -->
     <div class="cont-box nogaps-btm">
         <div class="statement-cont type2">
-            <h3 class="title">{{resData.useSvcType.svcType}}</h3>
+            <div class="single-list">
+                <span class="title">
+                    {{!-- 주석 아이콘 --}}
+                    {{#if_icon rootItem.label }}
+                    {{/if_icon}}
+                    <span class="in-tx type2">{{resData.useSvcType.svcType}}</span>
+                </span>
+            </div>
+
             <div class="statement-detail">
                 <!-- .widget -->
                 <div class="widget">
@@ -47,7 +55,7 @@
                                             <button role="button" aria-pressed="false">
                                                 <div class="in-title">
                                                     <span class="tit">{{largeItem.id}}</span>
-                                                    <span class="tx-cont">{{largeItem.totPrice}} 원</span>
+                                                    <span class="tx-cont {{#if_dc_red largeItem.id }}{{/if_dc_red}}">{{largeItem.totPrice}} 원</span>
                                                 </div>
                                             </button>
                                         </div>
@@ -135,7 +143,7 @@
 
 <div id="fe-wrap" class="wrap">
 
-    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }) %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }); %>
 
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -171,7 +179,9 @@
                 <div class="user-month-bill">
                     <div class="this-month-bill type3">
                         <p class="stit"><%=commDataInfo.selClaimDt %>
-                            <i class="icon-whole" data-target="searchNmSvcType"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
+                            <span data-target="searchNmSvcType">
+                                <i class="icon-whole"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
+                            </span>
                         </p>
                         <% if( billpayInfo.useAmtTot != 0 ){ %>
                         <p class="price"><%=commDataInfo.useAmtTot %></p>
