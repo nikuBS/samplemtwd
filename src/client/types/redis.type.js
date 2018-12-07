@@ -18,7 +18,7 @@ Tw.REDIS_KEY = {
   BANNER_TOS_LINK: 'BannerTosLnkgInfo:',
   BANNER_TOS_KEY: 'BannerTosKey:',
   BANNER_TOS_META: 'BannerTosInfo:',
-  HOME_NOTI: 'HomeNotiList',
+  HOME_NOTI: 'WelcomeMsg:WelcomeMsgList',
   HOME_NOTICE: 'HomeNotice:',
   HOME_HELP: 'HomeCicntsList'
 };

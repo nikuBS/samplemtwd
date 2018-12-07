@@ -22,6 +22,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice) {
   this._lineComponent = new Tw.LineComponent();
   this._cachedElement();
   this._bindEvent();
+  this._getWelcomeMsg();
   this._openEmrNotice(emrNotice);
 
   this._initScroll();
@@ -36,7 +37,6 @@ Tw.MainHome.prototype = {
     GFT0005: 'GFT0005',   // 제공자가 미성년자이면 선물하기 불가
     GFT0013: 'GFT0013'    // 기
   },
-
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
@@ -96,7 +96,6 @@ Tw.MainHome.prototype = {
   },
   _openEmrNotice: function (notice) {
     if ( notice === 'true' ) {
-
       this._getHomeNotice();
     } else {
       this._openLineResisterPopup();
@@ -112,46 +111,68 @@ Tw.MainHome.prototype = {
     }
   },
   _openNoticePopup: function (notice) {
-    this._popupService.open({
+    var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
+    var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
+    var today = new Date().getTime();
+    if ( today > startTime && today < endTime ) {
+      this._popupService.open({
         'pop_name': 'type_tx_scroll',
         'title': notice.ntcTitNm,
         'title_type': 'sub',
         'cont_align': 'tl',
         'contents': notice.ntcCtt,
-        'bt_b': [{
-          style_class: 'tw-popup-closeBtn bt-gray1 pos-left',
-          txt: Tw.BUTTON_LABEL.CLOSE
-        }, {
-          style_class: 'bt-red1 pos-right fe-bt-confirm',
-          txt: Tw.NOTI_POPUP_BTN[notice.ntcReqRsnCtt] || Tw.BUTTON_LABEL.CONFIRM
-        }]
-      },
-      $.proxy(this._onOpenNotice, this),
-      $.proxy(this._onCloseNotice, this));
-
+        'bt_b': this._makeBtnList(notice)
+      }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
+    }
+  },
+  _makeBtnList: function (notice) {
+    var NOTI_POPUP_STYLE = {
+      '0': 'tw-popup-closeBtn',
+      '7': 'fe-bt-oneday',
+      '10': 'fe-bt-week',
+      '100': 'fe-bt-never'
+    };
+    return [{
+      style_class: 'tw-popup-closeBtn bt-gray1 pos-left',
+      txt: Tw.BUTTON_LABEL.CLOSE
+    }, {
+      style_class: 'bt-red1 pos-right ' + (NOTI_POPUP_STYLE[notice.ntcReqRsnCtt] || 'tw-popup-closeBtn'),
+      txt: Tw.NOTI_POPUP_BTN[notice.ntcReqRsnCtt] || Tw.BUTTON_LABEL.CONFIRM
+    }];
   },
   _onOpenNotice: function ($popupContainer) {
-    $popupContainer.on('click', '.fe-bt-confirm', $.proxy(this._confirmNotice, this));
+    $popupContainer.on('click', '.fe-bt-oneday', $.proxy(this._confirmNoticeOneday, this));
+    $popupContainer.on('click', '.fe-bt-week', $.proxy(this._confirmNoticeWeek));
+    $popupContainer.on('click', '.fe-bt-never', $.proxy(this._confirmNoticeNever));
   },
   _onCloseNotice: function () {
     this._openLineResisterPopup();
   },
-  _confirmNotice: function () {
-    this._popupService.close()
+  _confirmNoticeOneday: function () {
+    this._popupService.close();
+  },
+  _confirmNoticeWeek: function () {
+    this._popupService.close();
+  },
+  _confirmNoticeNever: function () {
+    this._popupService.close();
   },
   _openLineResisterPopup: function () {
-    $(window).on('env', $.proxy(function () {
-      var layerType = this.$container.data('layertype');
-      // layerType = Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD;
-      Tw.Logger.info('[Home] layerType', layerType);
-      if ( !Tw.FormatHelper.isEmpty(layerType) ) {
-        if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
-          this._lineRegisterLayer.openRegisterLinePopup(layerType);
-        } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
-          this._openCustomerPasswordGuide();
-        }
+    var layerType = this.$container.data('layertype');
+    // layerType = Tw.LOGIN_NOTICE_TYPE.NEW_LINE;
+    Tw.Logger.info('[Home] layerType', layerType);
+    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+      if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
+        this._lineRegisterLayer.openRegisterLinePopup(layerType);
+      } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
+        this._openCustomerPasswordGuide();
+      } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
       }
-    }, this));
+    }
+  },
+  _closeNewLine: function () {
+    this._historyService.goLoad('/common/member/line');
   },
   _openCustomerPasswordGuide: function () {
     this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
@@ -436,5 +457,52 @@ Tw.MainHome.prototype = {
   },
   _resetHeight: function () {
     Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+  },
+  _getWelcomeMsg: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
+      .done($.proxy(this._successWelcomeMsg, this));
+  },
+  _successWelcomeMsg: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._welcomeList = this._filterShowMsg(resp.result.welcomeMsgList);
+      this._drawWelcomeMsg(this._welcomeList);
+    }
+  },
+  _filterShowMsg: function (list) {
+    var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+    return _.filter(list, $.proxy(function (msg) {
+      var startTime = Tw.DateHelper.convDateFormat(msg.expsStaDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(msg.expsEndDtm).getTime();
+      var today = new Date().getTime();
+      return (nonShow.indexOf(msg.wmsgId) === -1 && startTime < today && endTime > today);
+    }, this));
+  },
+  _drawWelcomeMsg: function (list) {
+    var $welcomeEl = this.$container.find('#fe-tmpl-noti');
+    if ( list.length > 0 ) {
+      var $welcomeTemp = $('#fe-home-welcome');
+      var tplWelcome = Handlebars.compile($welcomeTemp.html());
+      $welcomeEl.html(tplWelcome({ msg: list[0] }));
+      $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this));
+      $('#fe-bt-noti-go').on('click', $.proxy(this.onClickGoNoti, this));
+      // $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
+      this._resetHeight();
+    } else {
+      $welcomeEl.hide();
+    }
+  },
+  _onClickCloseNoti: function () {
+    var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+    if ( nonShow === '' ) {
+      nonShow = this._welcomeList[0].wmsgId;
+    } else {
+      nonShow = nonShow + ',' + this._welcomeList[0].wmsgId;
+    }
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
+    this._welcomeList = this._filterShowMsg(this._welcomeList);
+    this._drawWelcomeMsg(this._welcomeList);
+  },
+  onClickGoNoti: function () {
+
   }
 };

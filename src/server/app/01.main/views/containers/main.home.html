@@ -39,13 +39,7 @@
                     <div class="home-slider-my">
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <!-- .layer-noti -->
-                        <div class="dialog-box">
-                            <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
-                            <button class="dialog-txt">
-                                <span class="name"><%= svcInfo.mbrNm %> 고객님, 안녕하세요.</span>
-                                <span class="key">이번 달 요금안내서가 발행되었습니다.</span>
-                            </button>
-                            <div class="dialog-right-btn"><button class="icon-32px-exit"><span class="blind">닫기</span></button></div>
+                        <div id="fe-tmpl-noti">
                         </div>
                         <!-- // .layer-noti -->
                         <% } %>
@@ -983,6 +977,7 @@
 <% include ../components/smart-card/gift.component.html %>
 <% include ../components/smart-card/micro-pay.component.html %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
+<%- include('../components/home/home-welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
 <script>
   $(document).ready(function () {

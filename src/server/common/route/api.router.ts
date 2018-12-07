@@ -14,7 +14,7 @@ import {
   REDIS_MENU,
   REDIS_URL_META,
   REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP, REDIS_TOOLTIP
+  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI
 } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
@@ -66,6 +66,7 @@ class ApiRouter {
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
+    this.router.get('/home/welcome', this.getHomeWelcome.bind(this));
     this.router.get('/home/notice', this.getHomeNotice.bind(this));
     this.router.get('/home/help', this.getHomeHelp.bind(this));
     this.router.get('/tooltip', this.getTooltip.bind(this));
@@ -166,6 +167,13 @@ class ApiRouter {
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
     this.redisService.getData(REDIS_BANNER_ADMIN + menuId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getHomeWelcome(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_HOME_NOTI)
       .subscribe((resp) => {
         res.json(resp);
       });

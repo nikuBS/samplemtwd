@@ -17,7 +17,7 @@ export const REDIS_BANNER_ADMIN = 'Banner:';
 export const REDIS_BANNER_TOS_LINK = 'BannerTosLnkgInfo:';
 export const REDIS_BANNER_TOS_KEY = 'BannerTosKey:';
 export const REDIS_BANNER_TOS_META = 'BannerTosInfo:';
-export const REDIS_HOME_NOTI = 'HomeNotiList';
+export const REDIS_HOME_NOTI = 'WelcomeMsg:WelcomeMsgList';
 export const REDIS_HOME_NOTICE = 'HomeNotice:';
 export const REDIS_HOME_HELP = 'HomeCicntsList';
 
