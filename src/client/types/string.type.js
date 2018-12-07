@@ -348,7 +348,7 @@ Tw.MYT_FARE_PAYMENT_TYPE = {
   CONTENT: 'CP',
   PRESERVE: 'PR',
   PAUTO: 'PN'
-}
+};
 
 Tw.ALERT_MSG_COMMON = {
   EXIT_APP: '앱을 종료하시겠습니까?',
@@ -581,6 +581,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다', MSG: '' },
+  ALERT_3_A17: { TITLE: '알림', MSG: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
   ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
   ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
@@ -1204,11 +1205,12 @@ Tw.BENEFIT = {
   INDEX: {
     COMBINE: {
       CONTENT: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
-      LINK_LIST:[
+      LINK_LIST: [
         {
           style_class: 'link l1',
           txt: '신규신청'
-        }, {
+        },
+        {
           style_class: 'link l2',
           txt: '제출하기'
         }
