@@ -13,28 +13,45 @@ Tw.CertificationFinance = function () {
 
   this._svcInfo = null;
   this._authUrl = null;
-  this._command = null;
   this._callback = null;
   this._authKind = null;
   this._isCompleteIden = false;
   this._isCheckTerm = true;
+  this._fidoTarget = '';
 
   this.$privacyCheck = null;
 };
 
 
 Tw.CertificationFinance.prototype = {
-
-  open: function (svcInfo, authUrl, authKind, command, callback) {
+  FIDO_TYPE: {
+    '0': Tw.FIDO_TYPE.FINGER,
+    '1': Tw.FIDO_TYPE.FACE
+  },
+  open: function (svcInfo, authUrl, authKind, callback) {
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
-    this._command = command;
     this._callback = callback;
     this._authKind = authKind;
 
+    this._fidoType();
+  },
+  _fidoType: function () {
+    this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(this._onFidoType, this));
+  },
+  _onFidoType: function (resp) {
+    var enableFido = false;
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 || resp.resultCode === Tw.NTV_CODE.CODE_01 ) {
+      enableFido = true;
+      this._fidoTarget = this.FIDO_TYPE[resp.resultCode];
+    }
+    this._openFinance(enableFido);
+  },
+  _openFinance: function (enableFido) {
     this._popupService.open({
       hbs: 'CO_02_02_01',
-      layer: true
+      layer: true,
+      enableFido: enableFido
     }, $.proxy(this._onOpenFinancePopup, this), $.proxy(this._onCloseFinancePopup, this));
   },
   _onOpenFinancePopup: function ($popupContainer) {
@@ -50,22 +67,33 @@ Tw.CertificationFinance.prototype = {
     }
   },
   _onClickSkSms: function () {
-    console.log('cert sms');
-    this._certSkFull.open(this._authUrl,  this._authKind, $.proxy(this._completeIdentification, this));
+    this._certSkFull.open(this._authUrl, this._authKind, $.proxy(this._completeIdentification, this));
   },
   _onClickKtSms: function () {
-    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, this._command,
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, '',
       $.proxy(this._completeIdentification, this));
   },
   _onClickLgSms: function () {
-    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, this._command,
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, '',
       $.proxy(this._completeIdentification, this));
   },
   _onClickIpin: function () {
-    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, null, this._command, $.proxy(this._completeIdentification, this));
+    this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, null, '', $.proxy(this._completeIdentification, this));
   },
   _onClickBio: function () {
+    this._checkFido();
   },
+  _checkFido: function () {
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onCheckFido, this));
+  },
+  _onCheckFido: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this), true, this._fidoTarget);
+    } else {
+      this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this), false, this._fidoTarget);
+    }
+  },
+
   _openCertBrowser: function (path) {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
       .done($.proxy(this._successGetDomain, this, path));

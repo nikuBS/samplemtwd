@@ -56,7 +56,7 @@ Tw.BiometricsCert.prototype = {
   },
   _onClickSkSms: function () {
     this._certSk.open(
-      this._svcInfo, this._authUrl, this._authKind, null, $.proxy(this._completeIdentification, this), '', '', false, 1);
+      this._svcInfo, this._authUrl, this._authKind, '', $.proxy(this._completeIdentification, this), '', '', false, 1);
   },
   _onClickKtSms: function () {
     this._certNice.open(

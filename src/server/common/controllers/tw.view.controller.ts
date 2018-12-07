@@ -164,6 +164,7 @@ abstract class TwViewController {
             // }
           }
         } else {
+          console.log('not login');
           if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -178,7 +179,7 @@ abstract class TwViewController {
           }
         }
       } else {
-        // TODO: 등록되지 않은 메뉴
+        // TODO: 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
       }
 
