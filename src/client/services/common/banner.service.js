@@ -16,7 +16,7 @@ Tw.BannerService.prototype = {
 
     switch (linkType) {
       case Tw.BANNER_LINK_TYPE.CHANNEL_APP:
-      case Tw.BANNER_LINK_TYPE.CHANNER_WEB: {
+      case Tw.BANNER_LINK_TYPE.CHANNEL_WEB: {
         window.location.href = link;
         break;
       }

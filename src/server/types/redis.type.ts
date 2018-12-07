@@ -41,7 +41,8 @@ export enum MENU_CODE {
 }
 
 export enum DEVICE_CODE {
-  MOBILE = '01',
+  MWEB = '01',
   IOS = '02',
-  ANDROID = '03'
+  ANDROID = '03',
+  MOBILE = '05'
 }
