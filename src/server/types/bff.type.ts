@@ -141,6 +141,18 @@ export enum MYT_FARE_PAYMENT_TITLE {
   AUTO_CANCEL = '자동납부 해지'
 }
 
+export enum MYT_FARE_PAYMENT_PROCESS_DATE {
+  S = '청구일자',
+  R = '인출요청일자',
+  D = '납부일자'
+}
+
+export enum MYT_FARE_PAYMENT_PROCESS_ATM {
+  S = '청구금액',
+  R = '인출요청금액',
+  D = '납부금액'
+}
+
 export enum MYT_FARE_PAYMENT_NAME {
   NEW = '신청하기',
   CHANGE = '변경하기',

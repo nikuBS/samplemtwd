@@ -17,7 +17,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <%- include('../../../common/views/components/header.component.html', { title: '나의 결합상품' }); %>
         <!--// #header -->
@@ -66,7 +66,7 @@
                                 <li>
                                     <div class="inner">
                                         <% const tip = TIPS[comb.prodId]%>
-                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
+                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" page-id="MS_07" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
                                         <p class="txt"><%= comb.prodBasBenfCtt %></p>
                                         <p class="date">신청일  <%= comb.scrbDt %></p>
                                         <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>

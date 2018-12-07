@@ -63,6 +63,7 @@ Tw.SMS_VALIDATION = {
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
+  ERROR: '에러',
   SELECT_BANK: '은행선택',
   SELECT_AMOUNT: '금액 선택',
   SELECT: '선택',
@@ -240,7 +241,7 @@ Tw.MYT_DATA_TOTAL_SHARING_DATA = {
 
 Tw.MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
-    YYYYMM_TYPE: 'YYYY년 MM월'
+    YYYYMM_TYPE: 'YYYY년 M월'
   },
   FIRST_SVCTYPE: '서비스 전체',
   PHONE_SVCTYPE: '휴대폰',
@@ -655,9 +656,9 @@ Tw.ALERT_MSG_AUTH = {
   L02: '첫 번째 순서가 변경 되었습니다.',
   L03: '선택하신 회선을 사용 가능 회선 목록으로 이동 시 회선관리 목록에서 삭제됩니다.<br/>삭제 후 다시 사용하시려면 직접 등록하셔야 가능합니다.',
   L04: '번경 내용을 저장하시겠습니까?',
-  L05: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
-  L06: '이미 다른 계정에 등록된 회선 입니다.',
-  L07: '이미 등록된 회선 입니다.'
+  ALERT_4_A7: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
+  ALERT_4_A8: '이미 다른 계정에 등록된 회선 입니다.',
+  ALERT_4_A9: '이미 등록된 회선 입니다.'
 };
 
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';

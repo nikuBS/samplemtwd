@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step" data-menuId="M000415">
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="ti-caption-gray">
-                    <h4 class="tit">보호자 회선 설정 <button type="button" class="tip-view" id="MV_02_02_04_tip_01" title="보호자 회선 설정 정보보기" aria-haspopup="true">TIP</button></h4>
+                    <h4 class="tit">보호자 회선 설정 <button type="button" class="tip-view" page-id="MV_02_02_04" id="MV_02_02_04_tip_01" title="보호자 회선 설정 정보보기" aria-haspopup="true">TIP</button></h4>
                     <p class="num"><%= svcInfo.svcNum %></p>
                 </div>
 

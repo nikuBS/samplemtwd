@@ -16,7 +16,7 @@ interface ITimeInfo {
 }
 
 export default class CustomerHelpline extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _layerType: string) {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0001, {}).subscribe((resp: { code: string; msg: string; result: ITimeInfo }) => {
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
@@ -31,7 +31,7 @@ export default class CustomerHelpline extends TwViewController {
         availHours: resp.result.availHours.map(time => time.slice(0, -2))
       };
 
-      res.render('helpline/customer.helpline.html', { svcInfo, timeInfo, isApp: BrowserHelper.isApp(req) });
+      res.render('helpline/customer.helpline.html', { svcInfo, timeInfo, isApp: BrowserHelper.isApp(req), pageInfo });
     });
   }
 }

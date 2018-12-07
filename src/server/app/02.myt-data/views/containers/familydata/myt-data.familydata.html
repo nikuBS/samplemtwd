@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: 'T가족모아데이터' }); %>
     <% const INFINITY = 'NA00005959'; %>
@@ -136,8 +136,8 @@
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list">
-                    <li>T가족모아데이터 유의사항<button id="DC_02_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li>T가족모아데이터 이용한도 설정 안내<button id="DC_02_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>T가족모아데이터 유의사항<button id="DC_02_tip_02" page-id="DC_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li>T가족모아데이터 이용한도 설정 안내<button id="DC_02_tip_03" page-id="DC_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                 </ul>
             </div>
         </div>

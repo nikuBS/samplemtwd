@@ -136,7 +136,7 @@
                                 <% if(homeData.usageData.data.shareTotal !== 0) { %>
                                 <div class="legend">
                                     <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
-                                    <span class="category1"><span><em class="data"><%= homeData.usageData.shareData.showShareRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                 </div>
                                 <% } %>
 
@@ -575,6 +575,7 @@
                         </div>
                         <!-- // 프로모션 배터 3 -->
 
+                        <% if(redisData.help && redisData.help && redisData.help.length > 0) { %>
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">
                             <div class="main-tip-box box-type section-swiper-box">
@@ -584,40 +585,30 @@
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
                                             <ul class="slider">
+                                                <% redisData.help.map((help) => { %>
                                                 <li>
                                                     <ul class="help-list">
-                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
-                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
-                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                        <% help.map((target) => { %>
+                                                        <li class="list-t01"><a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt"><%= target.mainExpsTitNm %></a></li>
+                                                        <% }) %>
                                                     </ul>
                                                 </li>
-                                                <li>
-                                                    <ul class="help-list">
-                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
-                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
-                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <ul class="help-list">
-                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
-                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
-                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
-                                                    </ul>
-                                                </li>
+                                                <% }) %>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <!--// .widget -->
                                 <div class="btn-area">
-                                    <button class="bt">매장 찾기</button>
-                                    <button class="bt">A/S센터 찾기</button>
+                                    <a href="/customer/agentsearch" class="bt">매장 찾기</a>
+                                    <a href="/customer/agentsearch/repair" class="bt">A/S센터 찾기</a>
                                 </div>
                             </div>
                         </div>
                         <!-- //이럴 땐 이렇게 하세요 -->
+                        <% } %>
 
+                        <% if(redisData.notice && redisData.notice.mainNotice && redisData.notice.mainNotice.length > 0) { %>
                         <!-- 공지사항 -->
                         <div class="notice-slide-type">
                             <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
@@ -626,18 +617,14 @@
                                 <div class="widget-box slider2">
                                     <div class="slider-box">
                                         <ul class="slider">
+                                            <% redisData.notice.mainNotice.map((notice) => { %>
                                             <li>
-                                                <button>
-                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                <a href="/customer/svc-info/notice">
+                                                    <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
                                                     <span class="ico"></span>
-                                                </button>
+                                                </a>
                                             </li>
-                                            <li>
-                                                <button>
-                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
-                                                    <span class="ico"></span>
-                                                </button>
-                                            </li>
+                                            <% }) %>
                                         </ul>
                                     </div>
                                 </div>
@@ -645,6 +632,7 @@
                             <!--// .widget -->
                         </div>
                         <!-- //공지사항 -->
+                        <% } %>
 
                     </div>
                     <!-- // .home-slider-my -->
@@ -684,10 +672,10 @@
 
                             <!-- MY 바로가기 -->
                             <ul class="quick-menu-list">
-                                <li><button class="bt"><i class="icon-price-plan-80"></i>요금제</button></li>
-                                <li><button class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가상품</button></li>
-                                <li><button class="bt"><i class="icon-internet-80"></i>인터넷 ·<br>전화 · IPTV</button></li>
-                                <li><button class="bt"><i class="icon-roaming-80"></i>T로밍</button></li>
+                                <li><a href="/product/mobileplan" class="bt"><i class="icon-price-plan-80"></i>요금제</a></li>
+                                <li><a href="/product/mobileplan-add" class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가상품</a></li>
+                                <li><a href="/product/wireplan" class="bt"><i class="icon-internet-80"></i>인터넷 ·<br>전화 · IPTV</a></li>
+                                <li><a href="/product/roaming" class="bt"><i class="icon-roaming-80"></i>T로밍</a></li>
                                 <li><button class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
                                 <li><button class="bt"><i class="icon-watch-80"></i>태블릿 · 워치</button></li>
                                 <li><button class="bt"><i class="icon-nugu-80"></i>NUGU</button></li>
@@ -738,7 +726,7 @@
                         <!-- 모바일 요금제 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><button class="bt">모바일 요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <div class="stit c-point"><a href="/product/mobileplan/list" class="bt">모바일 요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                 <strong class="ti">인기 있는 SK텔레콤의 대표요금제</strong>
                                 <ul class="charge-product">
                                     <li>
@@ -786,7 +774,7 @@
                         <!-- 모바일 부가상품 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><button class="bt">모바일 부가상품 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <div class="stit c-point"><a href="/product/mobileplan-add/list" class="bt">모바일 부가상품 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                 <strong class="ti">유용한 부가상품</strong>
                                 <ul class="charge-product type-list">
                                     <li>
@@ -905,18 +893,19 @@
                         <!-- T앱 -->
                         <div class="section-box">
                             <div class="main-tapp-box">
-                                <div class="stit c-point"><button class="bt">T앱 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <div class="stit c-point"><a href="/product/apps" class="bt">T앱 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                 <div class="ti">함께하면 더욱 스마트한 앱서비스</div>
                                 <ul class="app-list">
-                                    <li class="t-membership"><button class="bt">T멤버십</button></li>
-                                    <li class="t-map"><button class="bt">T맵</button></li>
-                                    <li class="t-call"><button class="bt">T전화</button></li>
-                                    <li class="t-pay"><button class="bt">T페이</button></li>
+                                    <li class="t-membership"><a href="/product/apps/app?appId=TW50000020" class="bt">T멤버십</a></li>
+                                    <li class="t-map"><a href="/product/apps/app?appId=TW50000044" class="bt">T맵</a></li>
+                                    <li class="t-call"><a href="/product/apps/app?appId=TW50000002" class="bt">T전화</a></li>
+                                    <li class="t-pay"><a href="/product/apps/app?appId=TW50000015" class="bt">T페이</a></li>
                                 </ul>
                             </div>
                         </div>
                         <!-- //T앱 -->
 
+                        <% if(redisData.help && redisData.help && redisData.help.length > 0) { %>
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">
                             <div class="main-tip-box box-type section-swiper-box">
@@ -926,40 +915,30 @@
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
                                             <ul class="slider">
+                                                <% redisData.help.map((help) => { %>
                                                 <li>
                                                     <ul class="help-list">
-                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
-                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
-                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                        <% help.map((target) => { %>
+                                                        <li class="list-t01"><a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt"><%= target.mainExpsTitNm %></a></li>
+                                                        <% }) %>
                                                     </ul>
                                                 </li>
-                                                <li>
-                                                    <ul class="help-list">
-                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
-                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
-                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <ul class="help-list">
-                                                        <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
-                                                        <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
-                                                        <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
-                                                    </ul>
-                                                </li>
+                                                <% }) %>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <!--// .widget -->
                                 <div class="btn-area">
-                                    <button class="bt">매장 찾기</button>
-                                    <button class="bt">A/S센터 찾기</button>
+                                    <a href="/customer/agentsearch" class="bt">매장 찾기</a>
+                                    <a href="/customer/agentsearch/repair" class="bt">A/S센터 찾기</a>
                                 </div>
                             </div>
                         </div>
                         <!-- //이럴 땐 이렇게 하세요 -->
+                        <% } %>
 
+                        <% if(redisData.notice && redisData.notice.mainNotice && redisData.notice.mainNotice.length > 0) { %>
                         <!-- 공지사항 -->
                         <div class="notice-slide-type">
                             <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
@@ -968,18 +947,14 @@
                                 <div class="widget-box slider2">
                                     <div class="slider-box">
                                         <ul class="slider">
+                                            <% redisData.notice.mainNotice.map((notice) => { %>
                                             <li>
-                                                <button>
-                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                <a href="/customer/svc-info/notice">
+                                                    <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
                                                     <span class="ico"></span>
-                                                </button>
+                                                </a>
                                             </li>
-                                            <li>
-                                                <button>
-                                                    <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
-                                                    <span class="ico"></span>
-                                                </button>
-                                            </li>
+                                            <% }) %>
                                         </ul>
                                     </div>
                                 </div>
@@ -987,6 +962,7 @@
                             <!--// .widget -->
                         </div>
                         <!-- //공지사항 -->
+                        <% } %>
 
                     </div>
                     <!-- // .home-slider-store -->

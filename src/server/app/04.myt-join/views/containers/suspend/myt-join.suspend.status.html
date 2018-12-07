@@ -14,10 +14,9 @@
         <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
-<div id="fe-myt-join-suspend" class="wrap">
+<div id="fe-myt-join-suspend" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html',
-    { title: '일시정지 신청현황', svcInfo: svcInfo, option: { line: false } }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '일시정지 신청현황'}); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -53,14 +52,14 @@
                 <ul class="noti-list">
                     <% if(!status || status.type === 'long-term' || status.isProgressing) { %>
                     <li>장기일시정지 안내
-                        <button type="button" class="tip-view" id="MS_03_05_03_tip_03">TIP</button>
+                        <button type="button" class="tip-view" id="MS_03_05_03_tip_03" page-id="MS_03_05_03_01">TIP</button>
                     </li>
                     <% } else { %>
                     <li>일시정지 기간안내
-                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_01">TIP</button>
+                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_01" page-id="MS_03_05_03_01">TIP</button>
                     </li>
                     <li>일시정지 요금안내
-                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_02">TIP</button>
+                        <button type="button" class="tip-view" id="MS_03_05_03_01_tip_02" page-id="MS_03_05_03_01">TIP</button>
                     </li>
                     <% } %>
                 </ul>
@@ -70,11 +69,6 @@
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo:
-        pageInfo }); %>
-    </footer>
 </div>
 
 <!--// #skip_navigation -->

@@ -12,11 +12,11 @@ Tw.BannerService.prototype = {
     var target = e.currentTarget,
       linkType = target.getAttribute('data-link-type'),
       link = target.getAttribute('data-link'),
-      isBill = target.getAttribute('data-is-bill'),
+      isBill = target.getAttribute('data-is-bill');
 
     switch (linkType) {
       case Tw.BANNER_LINK_TYPE.CHANNEL_APP:
-      case Tw.BANNER_LINK_TYPE.CHANNER_WEB: {
+      case Tw.BANNER_LINK_TYPE.CHANNEL_WEB: {
         window.location.href = link;
         break;
       }

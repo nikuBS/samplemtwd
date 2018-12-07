@@ -63,7 +63,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
       startDt: this._getPeriod(this.selectVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectVal, 'YYYYMMDD').endDt
     };
-    console.info('[param]', param);
+    // console.info('[param]', param);
 
     this._getDonationInfo(param);
 
@@ -79,7 +79,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this.detailListObj.curLen = this.detailListObj.listData.length;
 
     _.map(this.detailListObj.listData, function (item) {
-      item.billTcDt = moment( item.billTcDt, 'YYYYMMDD' ).format('YYYY.MM.DD');
+      item.billTcDt = Tw.DateHelper.getShortDateNoDot( item.billTcDt );
       item.sponAmt = thisMain._comComma(item.sponAmt);
       return item;
     });
@@ -137,8 +137,8 @@ Tw.MyTFareBillGuideDonation.prototype = {
       var totalCount = res.result.totalCount;
 
       var resData = {
-        startDt: moment(param.startDt).format('YYYY.MM.DD'),
-        endDt: moment(param.endDt).format('YYYY.MM.DD'),
+        startDt: Tw.DateHelper.getShortDateNoDot( param.startDt ),
+        endDt: Tw.DateHelper.getShortDateNoDot( param.endDt ),
         totalNum: this._comComma(totalNum),
         list: dataArr,
         totalCount: totalCount
@@ -214,7 +214,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     dateArray[4] = threeMonth;
     dateArray[5] = sixMonth;
 
-    console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
+    // console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
 
     var startDt = dateArray[selectVal];
     var endDt = moment().format(formatStr);
@@ -260,67 +260,10 @@ Tw.MyTFareBillGuideDonation.prototype = {
     jqTg.append(html);
   },
 
-  _svcToTimeObj: function (str) {
-    var total_s_val = this._toSecond(str);
-    return this._toHHMMSS(total_s_val);
-  },
   //--------------------------------------------------------------------------[COM]
-  _toSecond: function (str) {
-    var strl = str;
-    var m_loc = strl.indexOf('분'); // 분
-    var s_loc = strl.indexOf('초'); // 초
-    var m_val = Number(strl.slice(0, m_loc).trim());
-    var s_val = Number(strl.slice(m_loc + 1, s_loc).trim());
-    var total_s_val = (m_val * 60) + s_val; // 초로 변환
-
-    return total_s_val;
-  },
-  _toHHMMSS: function (num) {
-    var myNum = parseInt(num, 10);
-    var hour = Math.floor(myNum / 3600);
-    var minute = Math.floor((myNum - (hour * 3600)) / 60);
-    var second = myNum - (hour * 3600) - (minute * 60);
-
-    if ( hour < 10 ) {
-      hour = '0' + hour;
-    }
-    if ( minute < 10 ) {
-      minute = '0' + minute;
-    }
-    if ( second < 10 ) {
-      second = '0' + second;
-    }
-
-    return {
-      totalSec: myNum,
-      hh: hour,
-      mm: minute,
-      ss: second,
-      hhmmss: hour + ':' + minute + ':' + second
-    };
-  },
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
-  },
-  _comUnComma: function (str) {
-    str = String(str);
-    // return str.replace(/[^\d]+/g, '');
-    return str.replace(/,/g, '');
-  },
-  _phoneStrToDash: function (str) {
-    var strVal = String(str);
-    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
-  },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
-  _go: function (hash) {
-    this._history.setHistory();
-    window.location.hash = hash;
   }
 
 };

@@ -38,7 +38,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
           break;
       case Tw.MYT_FARE_PAYMENT_TYPE.AUTOALL:    
         // 통합인출 조회
-          this.$templateWrapper.append(this.$template.$directBase(this.detailData));
+          this.$templateWrapper.append(this.$template.$autoUnit(this.detailData));
         break;
       case Tw.MYT_FARE_PAYMENT_TYPE.AUTO:
         // 자동납부 카드/계좌
@@ -71,6 +71,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
       $directOCBandCard : Handlebars.compile($('#fe-payment-detail-ocb-card').html()),
       $directBank : Handlebars.compile($('#fe-payment-detail-bank').html()),
       $auto : Handlebars.compile($('#fe-payment-detail-auto').html()),
+      $autoUnit : Handlebars.compile($('#fe-payment-detail-auto-unit').html()), // 통합인출
       $microContents : Handlebars.compile($('#fe-payment-detail-micro-contents').html()),
       $reservePoint: Handlebars.compile($('#fe-payment-detail-reserve-point').html()),
       $autoPoint: Handlebars.compile($('#fe-payment-detail-auto-point').html())

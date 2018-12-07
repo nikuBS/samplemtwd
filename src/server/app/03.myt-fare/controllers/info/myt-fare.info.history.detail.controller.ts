@@ -18,9 +18,11 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_PAYMENT_HISTORY_AUTO_TYPE, MYT_FARE_PAYMENT_CODE, 
   MYT_FARE_POINT_PAYMENT_STATUS, 
-  MYT_PAYMENT_HISTORY_AUTO_UNITED_TYPE, 
   MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE,
-  MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING} from '../../../../types/bff.type';
+  MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING,
+  MYT_FARE_PAYMENT_PROCESS_DATE,
+  MYT_FARE_PAYMENT_PROCESS_ATM
+} from '../../../../types/bff.type';
 
 interface Query {
   current: string;
@@ -73,7 +75,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         this.includeBillHistory(this.getDirectPaymentData, Object.assign(renderObj, {opDt, payOpTm}));
         break;
       case MYT_FARE_PAYMENT_TYPE.AUTOALL:
-        // 통합납부
+        // 통합인출납부
         this.includeBillHistory(this.getAutoUnitedPaymentData, renderObj);
         break;
       case MYT_FARE_PAYMENT_TYPE.MICRO:
@@ -139,6 +141,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   private getDirectPaymentData(renderObj: RenderObj) {
     const { res, svcInfo, opDt, payOpTm } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0091, {opDt, payOpTm}).subscribe((resp) => {
+      
       if (resp.code !== API_CODE.CODE_00) {
         return this._renderError(resp.code, resp.msg, res, svcInfo);
       }
@@ -209,12 +212,11 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
       }
 
-      resultData.dataTitle = resultData.bankNm;
-      resultData.dataIsBank = !this.isCard(resultData.bankNm);
-      resultData.listTitle = resultData.bankNm + (resultData.dataIsBank ? ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : '');
-      resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt);
-      resultData.dataDt = DateHelper.getShortDate(resultData.drwDt);
-      resultData.dataDewAmtType = MYT_PAYMENT_HISTORY_AUTO_UNITED_TYPE[resultData.drwAmtTyp];
+      resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.DD.
+      resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액 
+      resultData.dataTmthColClCd = MYT_PAYMENT_HISTORY_AUTO_TYPE[resultData.tmthColClCd]; // 구분
+      resultData.dataDtTitle = MYT_FARE_PAYMENT_PROCESS_DATE[resultData.drwAmtTyp] || '';
+      resultData.dataAmtTitle = MYT_FARE_PAYMENT_PROCESS_ATM[resultData.drwAmtTyp] || '';
       
       this.renderView(renderObj, Object.assign(resultData, {
         isPersonalBiz: this.isPersonalBiz,

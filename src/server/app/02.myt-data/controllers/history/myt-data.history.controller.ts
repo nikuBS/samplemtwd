@@ -22,7 +22,7 @@ enum RechargeTypes {
   ALL
 }
 
-export default class MyTDataInfo extends TwViewController {
+export default class MyTDataHistory extends TwViewController {
   private fromDt: string = DateHelper.getPastYearShortDate();
   private toDt: string = DateHelper.getShortDate(new Date());
 
@@ -80,7 +80,7 @@ export default class MyTDataInfo extends TwViewController {
         chargeData.display = histories[filterIdx].concat(histories[filterIdx + 1]);
       }
 
-      res.render('datainfo/myt-data.datainfo.html', { svcInfo, pageInfo, filterIdx, chargeData });
+      res.render('history/myt-data.history.html', { svcInfo, pageInfo, filterIdx, chargeData });
     });
   }
 

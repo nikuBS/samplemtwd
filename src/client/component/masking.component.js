@@ -16,7 +16,7 @@ Tw.MaskingComponent = function () {
 Tw.MaskingComponent.prototype = {
   _bindEvent: function () {
     this.$btMasking = $('#fe-bt-masking');
-    this._url = this.$btMasking.data('url');
+    this._url = this.$btMasking.data('menuurl');
     this.$btMasking.on('click', $.proxy(this._onClickMasking, this));
   },
   _onClickMasking: function () {

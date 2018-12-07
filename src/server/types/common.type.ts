@@ -26,9 +26,3 @@ export const UPLOAD_TYPE = {
   RESERVATION: 'reservation',
   SUSPEND: 'suspend'
 };
-
-export const MYT_BANNER_TYPE = {
-  DATA: 'M000194',
-  PAYMENT: 'M000233',
-  JOIN_INFO: 'M000301'
-};

@@ -213,6 +213,7 @@
 <!-- PPS -->
     <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.isDataInfo) { %>
+        <% var totalData = data.remnantData.total; %>
         <ul class="date-graph-list b-line">
             <li>
                 <div class="left">
@@ -220,7 +221,7 @@
                     <div class="donut-chart small">
                         <div class="donut-chart-area">
                             <!-- loop -->
-                            <div class="c100 p80"><!-- .p+(0~100) // -->
+                            <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
                                 <div class="blue"><!-- red, yellow, green, blue, comet // -->
                                     <div class="slice">
                                         <div class="bar"></div>
@@ -230,7 +231,7 @@
                             </div>
                             <!-- // loop -->
                             <!-- loop -->
-                            <div class="c100 p70"><!-- .p+(0~100) // -->
+                            <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
                                 <div class="red"><!-- red, yellow, green, blue, comet // -->
                                     <div class="slice">
                                         <div class="bar"></div>
@@ -246,7 +247,13 @@
                 <div class="cont">
                     <span class="txt1">나의 데이터</span>
                     <div class="date">
-                        <span class="remain"><strong>36.7GB</strong> 남음</span>
+                        <span class="remain">
+                            <% if (data.remnantData.totalLimit) { %>
+                            <strong>무제한</strong>
+                            <% } else { %>
+                            <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
+                            <% } %>
+                        </span>
                     </div>
                 </div>
                 <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
@@ -364,6 +371,8 @@
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
     <!-- T-PocketFi & T-Login -->
     <div class="cont-box pt0" data-id="remnant-container">
+        <% if (data.isDataInfo) { %>
+        <% var totalData = data.remnantData.total; %>
         <ul class="date-graph-list b-line">
             <li>
                 <div class="left">
@@ -371,7 +380,7 @@
                     <div class="donut-chart small">
                         <div class="donut-chart-area">
                             <!-- loop -->
-                            <div class="c100 p80"><!-- .p+(0~100) // -->
+                            <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
                                 <div class="blue"><!-- red, yellow, green, blue, comet // -->
                                     <div class="slice">
                                         <div class="bar"></div>
@@ -381,7 +390,7 @@
                             </div>
                             <!-- // loop -->
                             <!-- loop -->
-                            <div class="c100 p70"><!-- .p+(0~100) // -->
+                            <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
                                 <div class="red"><!-- red, yellow, green, blue, comet // -->
                                     <div class="slice">
                                         <div class="bar"></div>
@@ -397,12 +406,17 @@
                 <div class="cont">
                     <span class="txt1">나의 데이터</span>
                     <div class="date">
-                        <span class="remain"><strong>36.7GB</strong> 남음</span>
+                        <% if (data.remnantData.totalLimit) { %>
+                        <strong>무제한</strong>
+                        <% } else { %>
+                        <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
+                        <% } %>
                     </div>
                 </div>
                 <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
             </li>
         </ul>
+        <% } %>
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>

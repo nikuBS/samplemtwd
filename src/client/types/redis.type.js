@@ -1,6 +1,6 @@
 Tw.BANNER_LINK_TYPE = {
-  CHANNEL_APP: '01',
-  CHANNER_WEB: '02',
-  OTHER_APP: '03',
-  OTHER_WEB: '04'
+  CHANNEL_APP: '1',
+  CHANNEL_WEB: '2',
+  OTHER_APP: '3',
+  OTHER_WEB: '4'
 };

@@ -12,8 +12,8 @@ class CommonMemberLoginReactive extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/common.member.login.reactive.html', { svcInfo: svcInfo });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    res.render('member/common.member.login.reactive.html', { svcInfo: svcInfo, pageInfo: pageInfo });
   }
 }
 

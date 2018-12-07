@@ -17,7 +17,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <%- include('../../../common/views/components/header.component.html', { title: '요금제' }); %>
         <!--// #header -->
@@ -25,7 +25,7 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <% if (svcInfo && svcInfo.svcAttrCd.includes('M')) { %>
+                <% if (svcInfo && svcInfo.svcAttrCd.includes('M') && svcInfo.prodNm) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- my -->
