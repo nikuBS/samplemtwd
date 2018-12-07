@@ -5,7 +5,7 @@
 
  */
 
-Tw.MainHome = function (rootEl, smartCard, emrNotice) {
+Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -25,6 +25,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice) {
   this._bindEvent();
   this._getWelcomeMsg();
   this._openEmrNotice(emrNotice);
+  this._setBanner(menuId);
 
   this._initScroll();
 };
@@ -508,7 +509,7 @@ Tw.MainHome.prototype = {
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
       $welcomeEl.html(tplWelcome({ msg: list[0] }));
       $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this));
-      $('#fe-bt-noti-go').on('click', $.proxy(this.onClickGoNoti, this));
+      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this));
       // $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
       this._resetHeight();
     } else {
@@ -526,7 +527,16 @@ Tw.MainHome.prototype = {
     this._welcomeList = this._filterShowMsg(this._welcomeList);
     this._drawWelcomeMsg(this._welcomeList);
   },
-  onClickGoNoti: function () {
+  _onClickGoNoti: function () {
 
+  },
+  _setBanner: function (menuId) {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId })
+      .done($.proxy(this._successBanner, this));
+  },
+  _successBanner: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      new Tw.BannerService(this.$container, resp.result.banners);
+    }
   }
 };
