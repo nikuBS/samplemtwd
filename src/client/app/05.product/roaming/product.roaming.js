@@ -23,6 +23,8 @@ Tw.ProductRoaming.prototype = {
   },
   _init : function() {
     this.nMax = this._options.alpaList.length - 1;
+
+    this.$container.show();
   },
   _onOpenFormInfo: function ($layer) {
     this.$prevBtn = $layer.find('#_dev_prev');
