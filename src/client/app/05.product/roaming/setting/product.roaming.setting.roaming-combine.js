@@ -5,7 +5,7 @@
  * ID : RM_11_01_02_01
  */
 
-Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,prodSettingInfo) {
+Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -13,14 +13,14 @@ Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffI
   this._history.init('hash');
   this._bindElementEvt();
   this._nativeService = Tw.Native;
-  this._addedList = this._sortingSettingData(prodSettingInfo.togetherMemList);
+  this._addedList = this._sortingSettingData(prodBffInfo.togetherMemList);
   this._changeList();
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._prodSettingInfo = prodSettingInfo;
+
 };
 
 Tw.ProductRoamingSettingRoamingCombine.prototype = {
@@ -69,8 +69,8 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
 
       var reqestValue = {
           svcOpClCd : '',
-          startDtm : this._prodSettingInfo.startdtm,
-          endDtm : this._prodSettingInfo.enddtm,
+          startDtm : this._prodBffInfo.startdtm,
+          endDtm : this._prodBffInfo.enddtm,
           childSvcNum : '',
           delChildSvcMgmtNum : ''
       };

@@ -5,7 +5,7 @@
  * ID : RM_11_01_02_07
  */
 
-Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,prodSettingInfo) {
+Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -19,7 +19,7 @@ Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._prodSettingInfo = prodSettingInfo;
+
 };
 
 Tw.ProductRoamingJoinRoamingCombine.prototype = {
@@ -70,8 +70,8 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
 
         var reqestValue = {
             svcOpClCd : '',
-            startDtm : this._prodSettingInfo.startdtm,
-            endDtm : this._prodSettingInfo.enddtm,
+            startDtm : this._prodBffInfo.startdtm,
+            endDtm : this._prodBffInfo.enddtm,
             childSvcNum : '',
             delChildSvcMgmtNum : ''
         };

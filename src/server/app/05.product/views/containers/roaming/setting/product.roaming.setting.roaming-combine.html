@@ -80,7 +80,7 @@
 
                 <hr class="cont-sp type1" aria-hidden="true">
 
-                <!-- .cont-box -->
+                <!-- .cont-box
                 <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
@@ -109,7 +109,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingSettingRoamingCombine($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>',<%- JSON.stringify(prodSettingInfo) %>);
+    new Tw.ProductRoamingSettingRoamingCombine($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
   });
 
 </script>

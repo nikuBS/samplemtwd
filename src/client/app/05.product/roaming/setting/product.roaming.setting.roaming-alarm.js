@@ -5,14 +5,14 @@
  * ID : RM_11_01_02_01
  */
 
-Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,prodSettingInfo) {
+Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
   this._bindElementEvt();
   this._nativeService = Tw.Native;
-  this._addedList = this._sortingSettingData(prodSettingInfo.combinationLineList);
+  this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
   this._changeList();
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;

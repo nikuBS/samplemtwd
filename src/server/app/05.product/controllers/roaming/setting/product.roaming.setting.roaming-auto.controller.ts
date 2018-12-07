@@ -20,6 +20,7 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
     }
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
         const prodId = req.query.prodId || null;
+        let expireDate = '';
 
         if (FormatHelper.isEmpty(prodId)) {
             return this.error.render(res, {
@@ -40,13 +41,19 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
                 });
             }
 
+            if (prodBffInfo.romUsePrdInfo) {
+                expireDate = prodBffInfo.romUsePrdInfo;
+            } else {
+                expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
+            }
+
 
             res.render('roaming/setting/product.roaming.setting.roaming-auto.html', {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                expireDate : ROAMING_AUTO_EXPIRE_CASE[prodId]
+                expireDate : expireDate
             });
         });
 
