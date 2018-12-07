@@ -4,7 +4,7 @@
  * Date: 2018.09.21
  */
 
-Tw.MyTDataInfo = function(rootEl, histories) {
+Tw.MyTDataHistory = function(rootEl, histories) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
 
@@ -13,7 +13,7 @@ Tw.MyTDataInfo = function(rootEl, histories) {
   this._init(histories);
 };
 
-Tw.MyTDataInfo.prototype = {
+Tw.MyTDataHistory.prototype = {
   DEFAULT_LIST_COUNT: 20,
   TYPES: {
     DATA_GIFT: 0,
