@@ -59,9 +59,9 @@
                                                 <%- banner.bnnrHtmlCtt %>
                                             </button>
                                             <% } else if (banner.bnnrTypCd === 'I') { %>
-                                            <a href="<%= banner.twdViewUrl %>">
-                                                <img src="<%= banner.imgId %>" alt="<%= banner.imgAltVal %>">
-                                            </a>
+                                            <button class="fe-banner" data-is-bill="<%= banner.billYn === 'Y' %>" data-link-type="<%= banner.imgLinkTrgtClCd %>" data-link="<%= banner.imgLinkUrl %>">
+                                                <img src="<%= banner.bnnrFilePathNm %>" alt="<%= banner.bnnrImgAltCtt %>">
+                                            </button>
                                             <% } %>
                                         </li>
                                         <% }); %>
@@ -278,4 +278,9 @@
     </div>
 </body>
 <% include ../components/javascript.component.html %>
+<script>
+    $(document).ready(function() {
+        new Tw.BannerService($('.wrap'));
+    })
+</script>
 <% include ../components/end.component.html %>
