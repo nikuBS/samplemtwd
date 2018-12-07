@@ -18,6 +18,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice) {
   this.$elBarcode = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
+  this._emrNotice = null;
 
   this._lineComponent = new Tw.LineComponent();
   this._cachedElement();
@@ -114,7 +115,8 @@ Tw.MainHome.prototype = {
     var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
     var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
     var today = new Date().getTime();
-    if ( today > startTime && today < endTime ) {
+    this._emrNotice = notice;
+    if ( today > startTime && today < endTime && this._checkShowEmrNotice(notice, today) ) {
       this._popupService.open({
         'pop_name': 'type_tx_scroll',
         'title': notice.ntcTitNm,
@@ -124,6 +126,16 @@ Tw.MainHome.prototype = {
         'bt_b': this._makeBtnList(notice)
       }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
     }
+  },
+  _checkShowEmrNotice: function (notice, today) {
+    var stored = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_EMR_NOTICE));
+    if ( !Tw.FormatHelper.isEmpty(stored) && stored.id === notice.ntcId ) {
+      if ( stored.time === '' ) {
+        return false;
+      }
+      return stored.time < today;
+    }
+    return true;
   },
   _makeBtnList: function (notice) {
     var NOTI_POPUP_STYLE = {
@@ -149,13 +161,25 @@ Tw.MainHome.prototype = {
     this._openLineResisterPopup();
   },
   _confirmNoticeOneday: function () {
+    var today = new Date();
+    this._setEmrNotice(today.setDate(today.getDate() + 1));
     this._popupService.close();
   },
   _confirmNoticeWeek: function () {
+    var today = new Date();
+    this._setEmrNotice(today.setDate(today.getDate() + 7));
     this._popupService.close();
   },
   _confirmNoticeNever: function () {
+    this._setEmrNotice();
     this._popupService.close();
+  },
+  _setEmrNotice: function (time) {
+    var store = {
+      id: this._emrNotice.ntcId,
+      time: time || ''
+    };
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_EMR_NOTICE, JSON.stringify(store));
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
