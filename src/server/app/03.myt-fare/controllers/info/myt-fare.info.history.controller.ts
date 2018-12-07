@@ -314,7 +314,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.drwDt;
         o.innerIndex = index;
         o.dataPayMethodCode = MYT_FARE_PAYMENT_TYPE.AUTOALL;
-        o.listTitle = o.dataIsBank ? o.dataTitle + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.dataTitle;
+        o.listTitle = o.bankNm + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE; // 통합인출은 은행이 전제임 
         o.dataAmt = FormatHelper.addComma(o.drwAmt);
         o.dataDt = DateHelper.getShortDate(o.drwDt);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.autoAll;
