@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../../utils/format.helper';
+import StringHelper from '../../../../../utils/string.helper';
 
 class ProductMobileplanSettingLocation extends TwViewController {
   private readonly _allowedProdIdList = ['NA00000008', 'NA00002563', 'NA00002585'];
@@ -74,6 +75,7 @@ class ProductMobileplanSettingLocation extends TwViewController {
 
         if ( resp.code === API_CODE.CODE_00 ) {
           resp['result']['snumSetInfoList'] = resp2['result']['snumSetInfoList'];
+          resp['result']['svcNum'] = StringHelper.phoneStringToDash(svcInfo.svcNum);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
           res.render('mobileplan/setting/product.mobileplan.setting.location.html', option);
