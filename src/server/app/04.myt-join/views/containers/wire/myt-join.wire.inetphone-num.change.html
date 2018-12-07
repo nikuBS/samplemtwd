@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '신청내역' }); %>
     <!--// #header -->
@@ -63,7 +63,7 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>인터넷 전화 번호이동 안내 <button id="MS_04_01_02_tip_01" type="button" class="tip-view" title="인터넷 전화 번호이동 안내" aria-haspopup="true">TIP</button></li>
+                    <li>인터넷 전화 번호이동 안내 <button id="MS_04_01_02_tip_01" page-id="MS_04_01_02" type="button" class="tip-view" title="인터넷 전화 번호이동 안내" aria-haspopup="true">TIP</button></li>
                 </ul>
             </div>
 
