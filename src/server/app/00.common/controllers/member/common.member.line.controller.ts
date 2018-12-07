@@ -17,20 +17,21 @@ class CommonMemberLine extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const list = resp.result;
         const lineInfo = this.parseLineList(list);
         res.render('member/common.member.line.html', Object.assign(lineInfo, {
-          svcInfo
+          svcInfo, pageInfo
         }));
       } else {
         // ICAS3101
-        res.render('member/common.member.line.empty.html',  { svcInfo });
+        res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
       }
     });
   }
+
   private parseLineList(lineList): any {
     const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
     let totalCount = 0;

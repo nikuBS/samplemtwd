@@ -17,7 +17,7 @@ class CommonMemberLineEdit extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.category = req.query.category;
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -25,7 +25,8 @@ class CommonMemberLineEdit extends TwViewController {
         res.render('member/common.member.line.edit.html', Object.assign(lineList, {
           category: this.category,
           lineCategory: SVC_CATEGORY[this.category],
-          svcInfo
+          svcInfo,
+          pageInfo
         }));
       } else {
         res.send('api error' + resp.code + ' ' + resp.msg);

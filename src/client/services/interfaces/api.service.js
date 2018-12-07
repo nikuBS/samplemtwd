@@ -65,8 +65,8 @@ Tw.ApiService.prototype = {
           headers: headers,
           pathVariables: pathVariables
         };
-        // url, svcInfo, urlMeta, callbackFunction, deferred...
-        this._cert.open(resp.result, requestInfo, deferred, $.proxy(this._completeCert, this));
+        var authUrl = command.method + '|' + command.path;
+        this._cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
     } else {
