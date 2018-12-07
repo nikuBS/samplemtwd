@@ -48,6 +48,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
     this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
   },
 
   _confirmExternalUrl: function(e) {
@@ -60,6 +61,13 @@ Tw.ProductCommonCallplan.prototype = {
   _openExternalUrl: function(href) {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
+  },
+
+  _openInternalUrl: function(e) {
+    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'));
+
+    e.preventDefault();
+    e.stopPropagation();
   },
 
   _procSetting: function() {
