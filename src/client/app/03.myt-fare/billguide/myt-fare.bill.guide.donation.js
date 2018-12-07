@@ -11,8 +11,7 @@ Tw.MyTFareBillGuideDonation = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this.bffListData = null; //원본 리스트 데이터
   this.detailListObj = {

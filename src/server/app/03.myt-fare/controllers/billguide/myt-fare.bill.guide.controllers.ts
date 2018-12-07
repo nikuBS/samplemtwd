@@ -261,61 +261,11 @@ class MyTFareBillGuide extends TwViewController {
     }), 'p1');
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
 
-    // Promise.all([p1, p2]).then(function(resArr) {
-    //
-    //   thisMain._billpayInfo = resArr[0].result;
-    //   thisMain._intBillLineInfo = resArr[1].result;
+    Promise.all([p1, p2]).then(function(resArr) {
 
-    thisMain._billpayInfo = {
-      svcMgmtNum: '7033115182',
-      invDt : '20170930',
-      invDtArr : [
-        '20170930',
-        '20170831',
-        '20170731',
-        '20170630',
-        '20170531',
-        '20170430'
-      ],
-      useAmtTot : '75510',
-      deduckTotInvAmt : '-22055',
-      unPayAmt : '99820',
-      useAmtMonthCnt : 6,
-      useAmtDetailInfo : [{
-        billItmLclNm : '',
-        billItmSclNm : '',
-        svcNm : '휴대폰',
-        coClNm : 'SKT',
-        ibilItmCreMclNm : '',
-        ibilItmCreMclAmt : '',
-        billItmNm : '',
-        invAmt : '',
-        repSvcNm : '01012**34**'
-      }],
-      unPayAmtList : [{
-        invDt : '20170930',
-        comBat : '99820'
-      }]
-    };
-    thisMain._intBillLineInfo = {
-      services: [
-        {
-          svcType: '휴대폰',
-          svcNum: '010-12**-45**',
-          svcMgmtNum: '123456789',
-          dtlAddr: '****',
-          acntRepYN: 'Y'
-        },
-        {
-          svcType: 'IPTV',
-          svcNum: '',
-          svcMgmtNum: '987654321',
-          dtlAddr: '104동*********',
-          assistAddr: '관랜E',
-          acntRepYN: 'N'
-        }
-      ]
-    };
+      thisMain._billpayInfo = resArr[0].result;
+      thisMain._intBillLineInfo = resArr[1].result;
+
       thisMain._childLineInfo = childInfo;
 
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -340,15 +290,15 @@ class MyTFareBillGuide extends TwViewController {
         childLineInfo: thisMain._childLineInfo,
         allSvc: allSvc
       });
-    // }, function(err) {
-    //   thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
-    //   return thisMain.error.render(res, {
-    //     title: 'title',
-    //     code: err.code,
-    //     msg: err.msg,
-    //     svcInfo: svcInfo
-    //   });
-    // });
+    }, function(err) {
+      thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      return thisMain.error.render(res, {
+        title: 'title',
+        code: err.code,
+        msg: err.msg,
+        svcInfo: svcInfo
+      });
+    });
   }
 
   // 개별청구

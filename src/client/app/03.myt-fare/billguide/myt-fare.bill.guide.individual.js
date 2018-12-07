@@ -12,8 +12,7 @@ Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
   this._popupService = Tw.Popup;
   this._hashService = Tw.Hash;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this._init();
 
