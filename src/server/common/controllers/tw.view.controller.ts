@@ -171,7 +171,7 @@ abstract class TwViewController {
             } else {
               // login page
               // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
-              res.redirect('/common/tid/login?target=' + path);
+              res.redirect('/common/member/login?target=' + path);
             }
           } else {
             // TODO: admin 정보 입력 오류

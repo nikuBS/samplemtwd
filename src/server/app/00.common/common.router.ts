@@ -49,6 +49,7 @@ import CommonCertNiceRefund from './controllers/cert/common.cert.nice.refund.con
 import CommonTidCertPw from './controllers/tid/common.tid.cert-pw.controller';
 import CommonShareAppInstallInfo from './controllers/share/common.share.app-install.info.controller';
 import CommonMemberWithdrawalComplete from './controllers/member/common.member.withdrawal-complete';
+import CommonMemberLogin from './controllers/member/common.member.login.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -65,6 +66,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push( {url: '/cert/result', controller: CommonCertResult, post: true});
 
     // member - login
+    this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
     this.controllers.push({ url: '/member/login/exceed-fail', controller: CommonMemberLoginExceedFail });
