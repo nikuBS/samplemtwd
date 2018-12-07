@@ -32,7 +32,7 @@ class MyTFareBillContentsHistory extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     // 조회할 달 수 구하기
     this.setDatePeriod(req);
 
