@@ -109,7 +109,8 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingSettingRoamingAlarm($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>',<%- JSON.stringify(prodSettingInfo) %>);
+    new Tw.ProductRoamingSettingRoamingCombine($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>',<%- JSON.stringify(prodSettingInfo) %>);
   });
+
 </script>
 <% include ../../../components/end.component.html %>

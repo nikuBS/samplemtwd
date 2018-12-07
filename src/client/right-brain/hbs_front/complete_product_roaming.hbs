@@ -6,7 +6,7 @@
                 <div class="title-box">
                     <i class="icon-complete-120"><span class="blind">complete</span></i>
                     <p class="tx-tit">{{data.prodNm}} ({{data.isBasFeeInfo}}원)<br>
-                        <span class="tx-highlight pt10"><em>{{data.typeNm}}</em> 완료</span></p>
+                        <span class="tx-highlight pt10"><em>{{data.typeNm}} {{data.processNm}}</em> 완료</span></p>
                 </div>
                 <div class="tx-contents">
                     <!--<div class="basic-list">
@@ -32,17 +32,20 @@
                         </ul>
                     </div>-->
                     <!-- btn1 case-->
-                    {{#ifCond data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeYn '<=' '1'}}
-                    <ul class="bt-slice">
-                        <li><button type="button" class="btn-round2 btn-style3">문자로 알리기</button></li>
-                    </ul>
+                    {{#ifCond data.btnNmList.length '<' '2'}}
+                        <ul class="bt-slice">
+                            {{#each data.btnNmList}}
+                                <li><button type="button" class="btn-round2 btn-style3">{{this}}</button></li>
+                            {{/each}}
+                        </ul>
                     {{/ifCond}}
                     <!-- btn2 case-->
-                    {{#ifCond data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeYn '>' '2'}}
-                    <ul class="bt-slice item-two">
-                        <li><button type="button" class="btn-round2 btn-style3" id="btn1">문자로 알리기</button></li>
-                        <li><button type="button" class="btn-round2 btn-style3" id="btn2">선물내역 보기</button></li>
-                    </ul>
+                    {{#ifCond data.btnNmList.length '>=' '2'}}
+                        <ul class="bt-slice item-two">
+                            {{#each data.btnNmList}}
+                                <li><button type="button" class="btn-round2 btn-style3" id="btn{{@index}}">{{this}}</button></li>
+                            {{/each}}
+                        </ul>
                     {{/ifCond}}
                 </div>
             </div>

@@ -425,6 +425,8 @@ Tw.API_CMD = {
   BFF_10_0061: { path: '/core-product/v1/roaming/ManageType-srch', method: Tw.API_METHOD.GET },
   BFF_10_0084: { path: '/core-product/v1/roaming/fee-plans/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0085: { path: '/core-product/v1/roaming/fee-plans/:args0/sets', method: Tw.API_METHOD.PUT },
+  BFF_10_0086: { path: '/core-product/v1/roaming/fee-plans/:args0/terminations', method: Tw.API_METHOD.DELETE },
+  BFF_10_0092: { path: '/core-product/v1/roaming/services/t-roam-tog/:args0/members', method: Tw.API_METHOD.POST },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
