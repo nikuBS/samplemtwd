@@ -147,7 +147,7 @@ class MyTJoinSuspendStatus extends TwViewController {
         if ( options['status'] ) {
           options['status']['isProgressing'] = true;
         }
-      } else if ( progress.debugMessage.trim() === '404' ) {
+      } else if ( progress.debugMessage.trim() === '500' ) {
         options['progress'] = null;
         if ( options['status'] ) {
           options['status']['isProgressing'] = false;
