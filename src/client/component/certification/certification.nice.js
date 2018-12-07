@@ -29,7 +29,8 @@ Tw.CertificationNice.prototype = {
     if ( authKind === Tw.AUTH_CERTIFICATION_KIND.F ) {
       url = this.NICE_URL[niceType + '_refund'];
     }
-    this._openCertBrowser(url + '?authUrl=' + authUrl + '&authKind=' + authKind + '&niceKind=' + niceKind);
+    this._openCertBrowser(url + '?authUrl=' +
+      encodeURIComponent(authUrl) + '&authKind=' + encodeURIComponent(authKind) + '&niceKind=' + encodeURIComponent(niceKind));
 
   },
   _openCertBrowser: function (path) {
