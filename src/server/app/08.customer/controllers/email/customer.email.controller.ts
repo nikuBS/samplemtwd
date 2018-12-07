@@ -10,6 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+import { Observable } from 'rxjs/Observable';
 
 class CustomerEmail extends TwViewController {
   constructor() {
@@ -34,15 +35,18 @@ class CustomerEmail extends TwViewController {
         ));
         break;
       case 'service-retry':
-        this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
-          .subscribe((response) => {
-            res.render('email/customer.email.service.retry.html',
-              Object.assign({}, responseData, {
-                inquiryInfo: response.result,
-                convertDate: this.convertDate
-              })
-            );
-          });
+        Observable.combineLatest(
+          this.getServiceCategory(),
+          this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
+        ).subscribe(([serviceCategory, historyDetail]) => {
+          res.render('email/customer.email.service.retry.html',
+            Object.assign({}, responseData, {
+              serviceCategory: serviceCategory.result,
+              inquiryInfo: historyDetail.result,
+              convertDate: this.convertDate
+            })
+          );
+        });
         break;
       case 'quality-retry':
         this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd)
@@ -58,6 +62,7 @@ class CustomerEmail extends TwViewController {
       case 'history':
         this.getEmailHistory()
           .subscribe((response) => {
+
             res.render('email/customer.email.history.html',
               Object.assign({}, responseData, {
                 inquiryList: response.result,
@@ -94,6 +99,10 @@ class CustomerEmail extends TwViewController {
       inqClCd: inqClCd,
       svcDvcClCd: 'M'
     });
+  }
+
+  private getServiceCategory() {
+    return this.apiService.request(API_CMD.BFF_08_0010, {});
   }
 
   public convertDate(sDate) {

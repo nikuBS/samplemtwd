@@ -4,7 +4,8 @@
 * Date: 2018.11.07
 %>
 <% include ../../components/start.component.html %>
-
+<%-JSON.stringify(serviceCategory)%>
+<%-JSON.stringify(inquiryInfo)%>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -45,8 +46,14 @@
                                         <div class="cont-box nogaps-btm">
                                             <div class="plan-title">
                                                 <h3 class="tit">
-                                                    <span class="fe-category_depth1"></span> <span class="tx-normal">서비스의</span><br>
-                                                    <span class="fe-category_depth2"></span> <span class="tx-normal">대해</span><br>
+                                                    <% if ( inquiryInfo.inqClCd === 'B' ) { %>
+                                                    <span class="fe-category_depth1">휴대폰</span>
+                                                    <% } else { %>
+                                                    <span class="fe-category_depth1">인터넷/집전화/TV</span>
+                                                    <% } %>
+
+                                                    <span class="tx-normal">서비스의</span><br>
+                                                    <span class="fe-category_depth2"><%-inquiryInfo.ofrCtgNm%></span> <span class="tx-normal">대해</span><br>
                                                     <span class="tx-normal">문의합니다.</span>
                                                 </h3>
                                             </div>
@@ -146,7 +153,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerEmail($('.wrap'));
+    // new Tw.CustomerEmail($('.wrap'));
     new Tw.CustomerEmailServiceRetry($('.wrap'));
   });
 </script>
