@@ -36,7 +36,7 @@ class ProductCommonCallplanPreview extends TwViewController {
       {
         baseInfo: this._convertBasicInfo(prodInfo.baseInfo),
         relateTags: this._convertRelateTags(prodInfo.prodTagList),
-        similars: this._convertSimilarProduct(prodInfo.prodTypCd, prodInfo.similars)
+        similar: this._convertSimilarProduct(prodInfo.prodTypCd, prodInfo.similar)
       },
       this._convertRedisInfo({
         summary: prodInfo.summary,
@@ -352,7 +352,7 @@ class ProductCommonCallplanPreview extends TwViewController {
           recommends: this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, convertedProdInfo.recommendProdList, false),  // 함께하면 유용한 상품
           recommendApps: convertedProdInfo.recommendAppList,
           mobilePlanCompareInfo: null, // 요금제 비교하기
-          similarProductInfo: convertedProdInfo.similars,  // 모바일 요금제 유사한 상품
+          similarProductInfo: convertedProdInfo.similar,  // 모바일 요금제 유사한 상품
           isJoined: false,  // 가입 여부
           additionsProdFilterInfo: additionsProdFilterInfo.code !== API_CODE.CODE_00 ? null : additionsProdFilterInfo.result,  // 부가서비스 카테고리 필터 리스트
           combineRequireDocumentInfo: null  // 구비서류 제출 심사내역
