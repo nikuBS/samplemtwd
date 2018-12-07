@@ -77,14 +77,14 @@ class MyTFareBillHotbill extends TwViewController {
                 return svc.svcMgmtNum !== svcInfo['svcMgmtNum'];
               });
             }
-
             res.render('bill/myt-fare.bill.hotbill.html', {
               svcInfo,
               pageInfo,
               lines: svcs,
               billAvailable: true,
               preAmount: preAmount,
-              preBill: preBill
+              preBill: preBill,
+              title: MYT_FARE_HOTBILL_TITLE.MAIN
             });
           });
       } else {

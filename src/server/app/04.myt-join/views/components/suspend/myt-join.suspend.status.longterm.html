@@ -31,7 +31,11 @@
                 </li>
                 <li>
                     <span class="title">사유</span>
-                    <span class="tx-cont"><%= reason %></span>
+                    <span class="tx-cont">
+                      <% if(locals.reason) { %>
+                        <%= reason %>
+                      <% } %>
+                    </span>
                 </li>
                 <li>
                     <span class="title">구비서류</span>
@@ -45,7 +49,9 @@
                 <li>
                     <span class="title">추가 연락처</span>
                     <span class="tx-cont">
+                        <% if(locals.cntcNum) { %>
                         <span class="block"><%= cntcNum %></span>
+                        <% } %>
                         <% if(locals.cntcNumRelNm) { %>
                         <span class="block">(관계 : <%= cntcNumRelNm %>)</span>
                          <% } %>
