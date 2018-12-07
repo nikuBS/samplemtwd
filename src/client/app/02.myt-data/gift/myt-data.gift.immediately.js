@@ -56,7 +56,7 @@ Tw.MyTDataGiftImmediately.prototype = {
       var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
       // this.$remainQty.text(dataQty.data + dataQty.unit);
       // this._setAmountUI(Number(apiDataQty));
-      //
+      this.beforeDataQty = mockDataQty;
       this.$remainQty.text(mockData.data + mockData.unit);
       this._setAmountUI(Number(mockDataQty));
     } else {
@@ -135,7 +135,8 @@ Tw.MyTDataGiftImmediately.prototype = {
   _requestSendingData: function () {
     var htParams = {
       befrSvcNum: this.$inputImmediatelyGift.val(),
-      dataQty: this.$wrap_data_select_list.find('li.checked input').val()
+      dataQty: this.$wrap_data_select_list.find('li.checked input').val(),
+      beforeDataQty: this.beforeDataQty
     };
 
     this.paramData = $.extend({}, this.paramData, htParams);
@@ -154,10 +155,10 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onSuccessSendingData: function (res) {
     this._popupService.close();
 
-    // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     // TODO: Implemented API TEST
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-      .done($.proxy(this._onRequestSuccessGiftData, this));
+    // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
+    //   .done($.proxy(this._onRequestSuccessGiftData, this));
   },
 
   _onRequestSuccessGiftData: function (res) {
