@@ -17,7 +17,6 @@ Tw.LineComponent = function () {
   this._index = 0;
   this._goAuthLine = false;
   this._lineList = null;
-  this._urlAuth = null;
   this._changeLine = false;
   this._callback = null;
   // this._bindEvent();
@@ -49,10 +48,17 @@ Tw.LineComponent.prototype = {
   //     this.onClickLine(selectedMgmt, urlAuth);
   //   }
   // },
-  onClickLine: function (selectedMgmt, urlAuth) {
-    this._selectedMgmt = selectedMgmt;
-    this._urlAuth = urlAuth;
+  onClickLine: function (selectedMgmt) {
+    this._init(selectedMgmt);
     this._getLineList();
+  },
+  _init: function (selectedMgmt) {
+    this._index = 0;
+    this._selectedMgmt = selectedMgmt;
+    this._goAuthLine = false;
+    this._lineList = null;
+    this._changeLine = false;
+    this._callback = null;
   },
   _getLineList: function () {
     // if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
@@ -68,7 +74,9 @@ Tw.LineComponent.prototype = {
   _successGetLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(resp.result);
-      this._openListPopup(this._lineList);
+      if ( this._index > 1 ) {
+        this._openListPopup(this._lineList);
+      }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
