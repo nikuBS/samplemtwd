@@ -40,10 +40,11 @@ class ProductRoamingSettingRoamingBeginSetup extends TwViewController {
                 });
             }
 
+
             res.render('roaming/setting/product.roaming.setting.roaming-begin-setup.html', {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.summary,
-                prodBffInfo : prodBffInfo,
+                prodBffInfo : prodBffInfo.result,
                 prodId : prodId
             });
         });

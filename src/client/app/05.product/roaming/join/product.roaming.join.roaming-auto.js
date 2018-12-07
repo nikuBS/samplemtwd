@@ -161,6 +161,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     _doJoin : function(data,apiService,historyService,$containerData){
         var completePopupData = {
             prodNm : data.prodNm,
+            processNm : Tw.PRODUCT_TYPE_NM.JOIN,
             isBasFeeInfo : data.prodFee,
             typeNm : data.svcType,
             settingType : (data.svcType+' '+data.processNm),

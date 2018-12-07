@@ -33,12 +33,9 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId),
+            this.apiService.request(API_CMD.BFF_10_0141, {}, {})
         ).subscribe(([ prodRedisInfo, prodBffInfo]) => {
-            console.log('api test prodRedisInfo');
-            console.log(prodRedisInfo);
-            console.log('api test prodBffInfo');
-            console.log(prodBffInfo);
+
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
@@ -92,20 +89,35 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
         //         smryHtmlCtt: null,
         //         basFeeInfo: '16500',
         //         freeYn: 'N' },
-        //     prodBffInfo : {
-        //         "svcStartDt" : "20181110"
-        //         ,"svcEndDt" : "12"
-        //         ,"svcStartTm" : "20181125"
-        //         ,"svcEndTm" : "12"
-        //         ,"startEndTerm" : "15"
-        //         ,"prodNm" : "T로밍 요금제"
-        //         ,"prodFee" : ""
-        //         ,"romSetClCd" : "DTDN"
-        //         ,"isAdult" : "true"
-        //         ,"chkCurProdStat" : "false"
-        //         ,"settingYn" : true
+        //     prodBffInfo :  {
         //
-        //     },
+        //
+        //             "svcMgmtNum": "1178937507",
+        //                 "svcNum": "01049525651",
+        //                 "prodId": "NA00005690",
+        //                 "prodNm": "T로밍 함께쓰기 3GB",
+        //                 "startdtm": "20180908090000",
+        //                 "enddtm": "20180918090000",
+        //                 "usedays": "10",
+        //                 "joinYn": true,
+        //                 "svcProdGrpId": "RA0000000221963",
+        //                 "togetherMemList": [
+        //                 {
+        //                     "svcProdGrpId": "RA0000000221963",
+        //                     "svcMgmtNum": "1178937507",
+        //                     "svcNum": "01049525651",
+        //                     "childYn": false
+        //                 },
+        //                 {
+        //                     "svcMgmtNum": "7262133476",
+        //                     "svcNum": "01033988216",
+        //
+        //                     "custNm" : "한국방송공사" // 이름 or 법인명등 마스킹 적용되어 리턴
+        //                     "childYn": true
+        //                 }
+        //             ]
+        //
+        //         },
         //     prodId : null
         // });
 

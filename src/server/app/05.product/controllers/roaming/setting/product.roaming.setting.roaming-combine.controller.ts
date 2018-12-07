@@ -33,14 +33,10 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId),
-            this.apiService.request(API_CMD.BFF_10_0021, {}, {}, prodId),
-        ).subscribe(([ prodRedisInfo, prodBffInfo, prodSettingInfo ]) => {
-            console.log('api test prodRedisInfo');
-            console.log(prodRedisInfo);
-            console.log('api test prodBffInfo');
-            console.log(prodBffInfo);
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) || (prodSettingInfo.code !== API_CODE.CODE_00)) {
+            this.apiService.request(API_CMD.BFF_10_0141, {}, {}),
+        ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
+
+            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
                     title: PRODUCT_TYPE_NM.JOIN
@@ -51,12 +47,12 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.summary,
                 prodApiInfo : prodBffInfo.result,
-                prodSettingInfo : prodSettingInfo.result,
                 prodId : prodId
             });
         });
 
-        // res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
+
+        // res.render('roaming/setting/product.roaming.setting.roaming-combine.html', {
         //     svcInfo : { svcMgmtNum: '1000285302',
         //         svcNum: '01054**62**',
         //         svcGr: 'A',
@@ -95,93 +91,38 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
         //         basFeeInfo: '16500',
         //         freeYn: 'N' },
         //     prodBffInfo : {
-        //         "preinfo": {
-        //             "svcNumMask": "010xx**xx**",
-        //             "svcProdGrpId": "",
-        //             "autoJoinList": [
-        //                 {
-        //                     "svcProdCd": "3",
-        //                     "svcProdNm": "부가서비스",
-        //                     "prodNm": "보험멤버십할인"
-        //                 }
-        //             ],
-        //             "autoTermList": [
-        //                 {
-        //                     "svcProdCd": "3",
-        //                     "svcProdNm": "부가서비스",
-        //                     "prodNm": "보험멤버십할인"
-        //                 }
-        //             ],
-        //             "joinNoticeList": [
-        //                 {
-        //                     "prodNm": "보험멤버십할인",
-        //                     "noticeTxt": "<font color=#313131><br>&#8226; <B>음성통화 기능이 지원되지 않는 단말</B>에 대해서는 부가서비스 <B>가입이 제한</B>됩니다.</font>"
-        //                 }
-        //             ],
-        //             "termNoticeList": [
-        //                 {
-        //                     "prodNm": "mVoIP한도정지",
-        //                     "noticeTxt": "본 서비스 해지시 본인인증 절차가 필요합니다."
-        //                 }
-        //             ],
-        //             "frProdInfo": {
-        //                 "prodId": "NA00004775",
-        //                 "prodNm": "band 데이터 퍼펙트",
-        //                 "basFeeInfo": "무료",
-        //                 "basOfrDataQtyCtt": "11.0GB",
-        //                 "basOfrVcallTmsCtt": "집전화·이동전화 무제한",
-        //                 "basOfrCharCntCtt": "기본제공",
-        //                 "chgSktProdBenfCtt": ""
-        //             },
-        //             "toProdInfo": {
-        //                 "prodId": "NA00005959",
-        //                 "prodNm": "Data 인피니티",
-        //                 "basFeeInfo": "100000",
-        //                 "basOfrDataQtyCtt": "무제한",
-        //                 "basOfrVcallTmsCtt": "집전화·이동전화 무제한",
-        //                 "basOfrCharCntCtt": "기본제공",
-        //                 "chgSktProdBenfCtt": "test"
-        //             }
-        //         },
-        //         "downgrade": {
-        //             "guidMsgCtt": "요금제 변경 시, 마이스마트콜을 이용 중인 경우 유료로 전환되며, 멜론 모바일 스트리밍 무료 이용 혜택도 종료됩니다. (재인증 불가)",
-        //             "htmlMsgYn": "N"
-        //         },
-        //         "installmentAgreement": {
-        //             "penAmt": "0",
-        //             "frDcAmt": "0",
-        //             "toDcAmt": "0",
-        //             "agrmtDayCnt": "0",
-        //             "agrmtUseCnt": "0",
-        //             "premTermYn": "N",
-        //             "premTermMsg": "",
-        //             "gapDcCd": "",
-        //             "gapDcAmt": "0"
-        //         },
-        //         "stipulationInfo": {
-        //             "scrbStplAgreeYn": "Y",
-        //             "scrbStplAgreeTitNm": "",
-        //             "scrbStplAgreeHtmlCtt": "<p>test</p>",
-        //             "termStplAgreeYn": "N",
-        //             "termStplAgreeTitNm": "",
-        //             "termStplAgreeHtmlCtt": "",
-        //             "psnlInfoCnsgAgreeYn": "Y",
-        //             "psnlInfoCnsgAgreeTitNm": "",
-        //             "psnlInfoCnsgHtmlCtt": "<p>test</p>",
-        //             "psnlInfoOfrAgreeYn": "Y",
-        //             "psnlInfoOfrAgreeTitNm": "",
-        //             "psnlInfoOfrHtmlCtt": "<p>test</p>",
-        //             "adInfoOfrAgreeYn": "Y",
-        //             "adInfoOfrAgreeTitNm": "",
-        //             "adInfoOfrHtmlCtt": "<p>test</p>"
-        //         }
-        //     },
-        //     prodSettingInfo : {
-        //         "combinationLineList": [
+        //         "svcMgmtNum": "1178937507",
+        //         "svcNum": "01049525651",
+        //         "prodId": "NA00005690",
+        //         "prodNm": "T로밍 함께쓰기 3GB",
+        //         "startdtm": "20180908090000",
+        //         "enddtm": "20180918090000",
+        //         "usedays": "10",
+        //         "joinYn": true,
+        //         "svcProdGrpId": "RA0000000221963",
+        //         "togetherMemList": [
         //             {
-        //                 "svcNum": "010860002XX"
+        //                 "svcProdGrpId": "RA0000000221963",
+        //                 "svcMgmtNum": "1178937507",
+        //                 "svcNum": "01049525651",
+        //                 "childYn": false
+        //             },
+        //             {
+        //                 "svcMgmtNum": "7262133476",
+        //                 "svcNum": "01033988216",
+        //
+        //                 "custNm" : "한국방송공사",
+        //                 "childYn": true
+        //             },
+        //             {
+        //                 "svcMgmtNum": "1238764412",
+        //                 "svcNum": "01077778888",
+        //
+        //                 "custNm" : "테스트네임",
+        //                 "childYn": true
         //             }
         //         ]
+        //
         //     },
         //     prodId : null
         // });

@@ -137,6 +137,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
 
             var completePopupData = {
                 prodNm : this._prodRedisInfo.prodNm,
+                processNm : Tw.PRODUCT_TYPE_NM.JOIN,
                 isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
                 typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
                 settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,

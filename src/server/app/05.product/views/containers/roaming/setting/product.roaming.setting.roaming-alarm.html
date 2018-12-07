@@ -80,7 +80,20 @@
 
                 <hr class="cont-sp type1" aria-hidden="true">
 
-                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list">
+
+                        <li>
+                            서비스 이용안내
+                            <button type="button" class="tip-view" >TIP</button>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+                <!-- .cont-box
                 <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
@@ -109,7 +122,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingSettingRoamingAlarm($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>',<%- JSON.stringify(prodSettingInfo) %>);
+    new Tw.ProductRoamingSettingRoamingAlarm($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

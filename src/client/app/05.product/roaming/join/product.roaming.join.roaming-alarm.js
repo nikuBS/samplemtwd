@@ -23,7 +23,9 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,s
 Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
   _bindElementEvt : function () {
-      this.$container.on('keyup', '#input_phone', $.proxy(this._changeInputValue, this));
+      this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
+      this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
+      this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
       this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
       this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
       this.$container.on('click', '#confirm_info', $.proxy(this._confirmInformationSetting, this));
@@ -34,13 +36,19 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _clearInput : function(){
       this.$inputElement.val('');
-  },
-  _changeInputValue : function(){
-      var replaceVal = this.$inputElement.val().replace(/\-/g,'');
-      replaceVal = replaceVal.substr(0,11);
-      var changedPhoneNum = Tw.StringHelper.phoneStringToDash(replaceVal);
-      this.$inputElement.val(changedPhoneNum);
       this._activateAddBtn();
+  },
+  _inputBlurEvt : function(){
+      var tempVal = this.$inputElement.val();
+      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+      this.$inputElement.attr('maxlength','13');
+      this.$inputElement.val(tempVal);
+      //this._activateAddBtn();
+  },
+  _inputFocusEvt : function(){
+      var tempVal = this.$inputElement.val().replace(/\-/g,'');
+      this.$inputElement.attr('maxlength','11');
+      this.$inputElement.val(tempVal);
   },
   _addPhoneNumOnList : function () {
       if(this._addedList.length>=5){
@@ -85,7 +93,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
     _activateAddBtn : function () {
 
-    if(this.$inputElement.val().length>=12){
+    if(this.$inputElement.val().length>=10){
         this.$addBtn.removeAttr('disabled');
     }else{
         this.$addBtn.attr('disabled','disabled');
@@ -102,9 +110,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
   _makeTemplate : function (phoneNum,idx) {
       var template = '<li class="list-box">';
-          template+='<div class="list-ico"><span class="ico type5">이</span></div>';
+          //template+='<div class="list-ico"><span class="ico type5">이</span></div>';
           template+='<p class="list-text">';
-          template+='<span class="mtext">이*름</span>';
+          //template+='<span class="mtext">이*름</span>';
           template+='<span class="stext gray">'+phoneNum.serviceNumber1+'-'+phoneNum.serviceNumber2+'-'+phoneNum.serviceNumber3+'</span>';
           template+='</p>';
           template+='<div class="list-btn">';
@@ -127,10 +135,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
         apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {
-            console.log('success');
-            console.log(res);
+
             var completePopupData = {
                 prodNm : data.prodNm,
+                processNm : Tw.PRODUCT_TYPE_NM.JOIN,
                 isBasFeeInfo : data.prodFee,
                 typeNm : data.svcType,
                 settingType : (data.svcType+' '+data.processNm),
@@ -145,8 +153,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
                 null,
                 'complete');
         }, this)).fail($.proxy(function (err) {
-            console.log('fail');
-            console.log(err);
+
         }, this));
    },
    _bindCompletePopupBtnEvt : function($args1,$args2){

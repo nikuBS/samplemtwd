@@ -5,15 +5,14 @@
  * ID : RM_11_01_02_01
  */
 
-Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,prodSettingInfo) {
-
+Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
   this._bindElementEvt();
   this._nativeService = Tw.Native;
-  this._addedList = this._sortingSettingData(prodSettingInfo.combinationLineList);
+  this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
   this._changeList();
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;
@@ -25,7 +24,9 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInf
 Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _bindElementEvt : function () {
-      this.$container.on('keyup', '#input_phone', $.proxy(this._changeInputValue, this));
+      this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
+      this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
+      this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
       this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
       this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
@@ -34,16 +35,23 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$confirmBtn = this.$container.find('#confirm_info');
   },
 
-  _clearInput : function(){
-      this.$inputElement.val('');
-  },
-  _changeInputValue : function(){
-      var replaceVal = this.$inputElement.val().replace(/\-/g,'');
-      replaceVal = replaceVal.substr(0,11);
-      var changedPhoneNum = Tw.StringHelper.phoneStringToDash(replaceVal);
-      this.$inputElement.val(changedPhoneNum);
-      this._activateAddBtn();
-  },
+    _clearInput : function(){
+        this.$inputElement.val('');
+        this._activateAddBtn();
+    },
+    _inputBlurEvt : function(){
+        var tempVal = this.$inputElement.val();
+        tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+        this.$inputElement.attr('maxlength','13');
+        this.$inputElement.val(tempVal);
+        //this._activateAddBtn();
+    },
+    _inputFocusEvt : function(){
+        var tempVal = this.$inputElement.val().replace(/\-/g,'');
+        this.$inputElement.attr('maxlength','11');
+        this.$inputElement.val(tempVal);
+    },
+
   _addPhoneNumOnList : function () {
       if(this._addedList.length>=5){
           this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
@@ -107,7 +115,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
     _activateAddBtn : function () {
 
-    if(this.$inputElement.val().length>=12){
+    if(this.$inputElement.val().length>=10){
         this.$addBtn.removeAttr('disabled');
     }else{
         this.$addBtn.attr('disabled','disabled');
