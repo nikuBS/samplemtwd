@@ -5,8 +5,8 @@
 %>
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/bill/myt-fare.bill.hotbill.lines.html %>
 <% include ../../components/bill/myt-fare.bill.hotbill.billgroup.html %>
-
 
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -18,7 +18,7 @@
 </div>
 <div id="fe-myt-fare-hotbill" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: locals.title }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: title }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -97,28 +97,11 @@
                 <h3 class="tit-type6">다른 회선 실시간 이용요금</h3>
             <!-- .cont-box -->
                 <ul class="my-line-info">
-                    <% for (let i = 0; i < lines.length; i++) { %>
-                        <li>
-                            <button data-idx=<%= i %> data-id="fe-other-line">
-                                <span class="ico-wrap">
-                                    <% if (!lines[i].svcAttrCd || lines[i].svcAttrCd === 'M1') { %>
-                                    <i class="icon-cellphone-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i>
-                                     <% } else {%>
-                                    <i class="icon-tablet-80"><span class="blind"><%= lines[i].eqpMdlNm %></span></i>
-                                     <% } %>
-                                </span>
-                                <span class="cont">
-                                    <span class="info-title"><%= lines[i].eqpMdlNm %>
-                                         <% if (lines[i].child) { %>
-                                        <i class="icon-children ml6"><span class="blind">자녀</span></i></span>
-                                         <% } %>
-                                    <span class="info-sub"><%= lines[i].svcNum %></span>
-                                    <span class="price"><%= lines[i].bill %>원</span>
-                                </span>
-                            </button>
-                        </li>
-                    <% } %>
                 </ul>
+
+                <div class="bt-more" style="display: none;">
+                    <button id="fe-bt-more">더 보기<span>0</span></button>
+                </div>
 
             </div>
             <% } %>
