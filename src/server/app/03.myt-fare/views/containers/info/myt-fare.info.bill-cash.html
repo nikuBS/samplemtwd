@@ -34,7 +34,7 @@
             <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
             <ul class="pg-chk-list">
                 <% data.noticeInfo.forEach(function(info){ %>
-                    <li data-list-id="<%=info.link%>"><%=info.title%><button class="btn-tip" title="정보보기" ><i class="icon-badge-tip"><span class=
+                    <li data-list-id="<%=info.link%>"><%=info.title%><button class="btn-tip" id="<%=info.link%>" page-id="<%=info.view%>" title="정보보기" ><i class="icon-badge-tip"><span class=
                     "blind">TIP</span></i></button></li>
                 <% }); %>
             </ul>

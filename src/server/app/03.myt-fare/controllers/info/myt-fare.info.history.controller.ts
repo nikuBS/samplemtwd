@@ -526,11 +526,11 @@ class MyTFareInfoHistory extends TwViewController {
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_08_tip_01', title: '다회선 통합납부 고객'},
-      {link: 'MF_08_tip_02', title: '납부내역 조회기간 안내'},
-      {link: 'MF_08_tip_03', title: '자동납부, 지로납부 확인'},
-      {link: 'MF_08_tip_04', title: '요금납부 안내'},
-      {link: 'MF_08_tip_05', title: '납부취소 안내'}
+      {link: 'MF_08_tip_01', view: 'MF_08', title: '다회선 통합납부 고객'},
+      {link: 'MF_08_tip_02', view: 'MF_08', title: '납부내역 조회기간 안내'},
+      {link: 'MF_08_tip_03', view: 'MF_08', title: '자동납부, 지로납부 확인'},
+      {link: 'MF_08_tip_04', view: 'MF_08', title: '요금납부 안내'},
+      {link: 'MF_08_tip_05', view: 'MF_08', title: '납부취소 안내'}
     ];
   }
 }
