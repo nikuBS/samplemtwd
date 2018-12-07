@@ -27,9 +27,7 @@ class CommonShareLanding extends TwViewController {
       urlArr.map((target) => {
         result[target.split('=')[0]] = target.split('=')[1];
       });
-
       res.render('share/common.share.landing.html', { result, isLogin: !FormatHelper.isEmpty(svcInfo) });
-
     } else {
       res.json(url);
     }

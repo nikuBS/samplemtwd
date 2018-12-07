@@ -17,6 +17,7 @@ Tw.CommonHelper = (function () {
   };
   // 앱 / 일반에서 링크 열기
   var openUrlExternal = function (url, option) {
+
     openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
   };
 
