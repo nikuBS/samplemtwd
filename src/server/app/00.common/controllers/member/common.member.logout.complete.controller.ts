@@ -12,7 +12,7 @@ class CommonMemberLogoutComplete extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     res.render('member/common.member.logout.complete.html', { svcInfo });
   }
 }

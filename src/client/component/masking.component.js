@@ -30,7 +30,7 @@ Tw.MaskingComponent.prototype = {
         prodProcType: ''
       });
 
-      this._cert.open(params, null, null, $.proxy(this._completeCert, this));
+      this._cert.open(params, this._url, null, null, $.proxy(this._completeCert, this));
     }
   },
   _completeCert: function (resp) {

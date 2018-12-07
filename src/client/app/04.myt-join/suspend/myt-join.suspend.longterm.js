@@ -155,13 +155,13 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: res.path
+          filePath: item.path
         };
       });
 
       this._apiService.request(Tw.API_CMD.BFF_01_0046, {
         recvFaxNum: 'skt257@sk.com',
-        proMemo: '', // TBD
+        proMemo: '', // TBD 필수값임 확인필요
         scanFiles: convFileList
       })
         .done($.proxy(this._onSuccessUscanUpload, this))

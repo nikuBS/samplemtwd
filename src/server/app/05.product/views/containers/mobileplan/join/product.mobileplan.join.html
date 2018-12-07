@@ -20,7 +20,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(function () {
-    new Tw.ProductMobileplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%= isOverPayReqYn %>');
+    new Tw.ProductMobileplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

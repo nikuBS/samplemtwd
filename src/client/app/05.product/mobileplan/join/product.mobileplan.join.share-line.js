@@ -4,7 +4,7 @@
  * Date: 2018.11.14
  */
 
-Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmOptions) {
+Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -12,7 +12,11 @@ Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmO
 
   this._prodId = prodId;
   this._displayId = displayId;
+  this._isOverPayReq = isOverPayReqYn === 'Y';
+  this._isComparePlan = isComparePlanYn === 'Y';
   this._confirmOptions = JSON.parse(confirmOptions);
+  this._isSetOverPayReq = false;
+  this._overpayRetryCnt = 0;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -36,7 +40,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', $.proxy(this._reqOverpay, this));
   },
 
   _openAppAddressBook: function() {
@@ -108,6 +112,51 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     });
   },
 
+  _reqOverpay: function() {
+    if (!this._isOverPayReq || this._isSetOverPayReq) {
+      return this._procConfirm();
+    }
+
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+
+    this._overpayRetryCnt++;
+    this._isSetOverPayReq = true;
+    this._apiService.request(Tw.API_CMD.BFF_10_0010)
+      .done($.proxy(this._resOverpay, this));
+  },
+
+  _resOverpay: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
+
+    if (['ZEQPN0002', 'ZORDN3598'].indexOf(resp.code) !== -1 && this._overpayRetryCnt < 3) { // 최대 3회까지 재조회 시도
+      this._isSetOverPayReq = false;
+      return this._reqOverpay();
+    }
+
+    var overpayResults = {
+      isOverpayResult: resp.code === Tw.API_CODE.CODE_00
+    };
+
+    if (overpayResults.isOverpayResult) {
+      var isDataOvrAmt = parseFloat(resp.result.dataOvrAmt) > 0,
+        isVoiceOvrAmt = parseFloat(resp.result.voiceOvrAmt) > 0,
+        isSmsOvrAmt = parseFloat(resp.result.smsOvrAmt) > 0;
+
+      if (!isDataOvrAmt && !isVoiceOvrAmt && !isSmsOvrAmt) {
+        overpayResults.isOverpayResult = false;
+      } else {
+        overpayResults = $.extend(overpayResults, {
+          isDataOvrAmt: isDataOvrAmt,
+          isVoiceOvrAmt: isVoiceOvrAmt,
+          isSmsOvrAmt: isSmsOvrAmt
+        });
+      }
+    }
+
+    this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
+    this._procConfirm();
+  },
+
   _procConfirm: function() {
     if (!Tw.ValidationHelper.isCellPhone(this.$inputNumber.val())) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
@@ -116,6 +165,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
 
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
+      isComparePlan: this._isComparePlan,
       noticeList: this._confirmOptions.joinNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
@@ -129,9 +179,6 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
 
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-
-    // prodId: this._prodId,
-    //   prodProcTypeCd: 'JN',
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],

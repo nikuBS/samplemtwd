@@ -39,3 +39,9 @@ export enum MENU_CODE {
   ONWEB = '04',
   MAPP = '05'
 }
+
+export enum DEVICE_CODE {
+  MOBILE = '01',
+  IOS = '02',
+  ANDROID = '03'
+}

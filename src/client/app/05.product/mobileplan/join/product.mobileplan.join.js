@@ -5,7 +5,7 @@
  * Date: 2018.10.01
  */
 
-Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReqYn) {
+Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReqYn, isComparePlanYn) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -15,6 +15,7 @@ Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReq
 
   this._prodId = prodId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
+  this._isComparePlan = isComparePlanYn === 'Y';
   this._confirmOptions = JSON.parse(confirmOptions);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
@@ -113,15 +114,13 @@ Tw.ProductMobileplanJoin.prototype = {
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
       noticeList: this._confirmOptions.joinNoticeList,
+      isComparePlan: this._isComparePlan,
       isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-
-    // prodId: this._prodId,
-    //   prodProcTypeCd: 'JN'
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));

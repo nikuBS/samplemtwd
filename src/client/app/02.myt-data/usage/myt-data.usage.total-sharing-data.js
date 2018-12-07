@@ -245,63 +245,6 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   },
 
-  _reqDataGifts: function () {
-    var today = new Date();
-    this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-      fromDt: Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMM01'),
-      toDt: Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMMDD'),
-      type: '1'
-    })
-      .done($.proxy(this._onDoneDataGifts, this))
-      .fail($.proxy(this._onFailReq, this));
-
-    // this._onDoneDataGifts({
-    //   'code': '00',
-    //   'msg': 'success',
-    //   'result': [
-    //   ]
-    // });
-
-    // this._onDoneDataGifts({
-    //   'traceId':'19a84460192be56f',
-    //   'spanId':'19a84460192be56f',
-    //   'clientDebugMessage':'19a84460192be56f*',
-    //   'msg':'요청이 실패했습니다.',
-    //   'hostname':'bff-spring-mobile-7d89d75d67-gdvjx',
-    //   'code':'BFF0001',
-    //   'orgHostname':'bff-spring-mobile-7d89d75d67-gdvjx',
-    //   'appName':'bff-spring-mobile',
-    //   'cause':'Hystrix circuit short-circuited and is OPEN',
-    //   'debugMessage':'GET//core-{msName}/** short-circuited and fallback failed.'
-    // });
-
-  },
-
-  _reqDataSharing: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0004)
-      .done($.proxy(this._onDoneDataSharing, this))
-      .fail($.proxy(this._onFailReq, this));
-
-    // this._onDoneDataSharing({
-    //   'code': '00',
-    //   'msg': 'success',
-    //   'result': {
-    //     'data': {
-    //       'used': '0'
-    //     },
-    //     'childList': [
-    //       {
-    //         'svcNum': '****',
-    //         'svcMgmtNum': '7265407272',
-    //         'feeProdId': 'NA00004046',
-    //         'feeProdNm': 'LTE함께쓰기Basic(스마트폰)',
-    //         'auditDtm': '20160303'
-    //       }
-    //     ]
-    //   }
-    // });
-  },
-
   _onDoneTFamilySharing: function (svcInfoResp, tFamilySharingResp) {
     if (
       svcInfoResp.code === Tw.API_CODE.CODE_00 &&
@@ -389,7 +332,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     if ( this._options.dataSharingJoined === 'Y' ) {
       this._historyService.goHash('datashare_P');
     } else {
-      this._historyService.goLoad('/product/mobileplan/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
+      this._historyService.goLoad('/product/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
     }
   },
 

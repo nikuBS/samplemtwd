@@ -9,6 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import BFF_10_0089_mock from '../../../../mock/server/product.BFF_10_0089.mock';
 
 export default class ProductRoaming extends TwViewController {
   constructor() {
@@ -41,22 +42,37 @@ export default class ProductRoaming extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (this.isLogin(svcInfo)) {
       Observable.combineLatest(
-        this.getRoamingCount()
-      ).subscribe(([roamingCount]) => {
+        this.getRoamingCount(),
+        this.getAlpaList()
+      ).subscribe(([roamingCount, alpaList]) => {
 
         const error = {
-          code: roamingCount.code,
-          msg: roamingCount.msg
+          code: roamingCount.code || alpaList.code,
+          msg: roamingCount.msg || alpaList.msg
         };
 
         if ( error.code ) {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        res.render('roaming/product.roaming.html', { svcInfo, pageInfo, roamingCount, isLogin: this.isLogin(svcInfo) });
+        res.render('roaming/product.roaming.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), roamingCount, alpaList });
       });
     } else {
-      res.render('roaming/product.roaming.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo)});
+      Observable.combineLatest(
+        this.getAlpaList()
+      ).subscribe(([alpaList]) => {
+
+        const error = {
+          code: alpaList.code,
+          msg: alpaList.msg
+        };
+
+        if ( error.code ) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
+
+        res.render('roaming/product.roaming.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), alpaList });
+      });
     }
   }
 
@@ -94,7 +110,9 @@ export default class ProductRoaming extends TwViewController {
   }
 
   private getAlpaList(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0089, {'bnnrExpsAreaCd' : '_alpha_2002_F'}).map((resp) => {
+    return Observable.of(BFF_10_0089_mock)
+    // return this.apiService.request(API_CMD.BFF_10_0089, {'bnnrExpsAreaCd' : '_alpha_2002_F'})
+    .map((resp) => {
       if ( resp.code !== API_CODE.CODE_00 ) {
         return {
           code: resp.code,

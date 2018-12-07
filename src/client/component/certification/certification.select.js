@@ -6,7 +6,6 @@
 
 Tw.CertificationSelect = function () {
   this._certSk = new Tw.CertificationSk();
-  this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
   this._certPublic = new Tw.CertificationPublic();
   this._certFinance = new Tw.CertificationFinance();
@@ -35,6 +34,7 @@ Tw.CertificationSelect = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+  this._prodAuthKey = '';
 
   this._optionCert = false;
 };
@@ -45,12 +45,13 @@ Tw.CertificationSelect.prototype = {
     '0': Tw.FIDO_TYPE.FINGER,
     '1': Tw.FIDO_TYPE.FACE
   },
-  open: function (certInfo, command, deferred, callback) {
+  open: function (certInfo, authUrl, command, deferred, callback) {
     this._certInfo = certInfo;
     this._command = command;
-    this._authUrl = this._command === null ? '' : this._command.command.method + '|' + this._command.command.path;
+    this._authUrl = authUrl;
     this._deferred = deferred;
     this._callback = callback;
+
 
     this._getSvcInfo();
   },
@@ -65,33 +66,20 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _selectKind: function () {
-    var methods = {};
     this._authKind = this._certInfo.authClCd;
 
-    if ( Tw.FormatHelper.isEmpty(this._authKind) && this._authKind !== Tw.AUTH_CERTIFICATION_KIND.F ) {
-      methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
-      if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.A ) {
-        this._opMethods = methods;
-      } else {
-        this._opMethods = methods.opAuthMethods;
-        this._optMethods = methods.optAuthMethods;
-      }
-    }
-
-    if ( !Tw.FormatHelper.isEmpty(this._optMethods) && this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 ) {
-      this._optionCert = true;
-    }
-
     switch ( this._authKind ) {
-      case Tw.AUTH_CERTIFICATION_KIND.R:
+      case Tw.AUTH_CERTIFICATION_KIND.R:  // 상품
         this._openProductCert();
         break;
-      case Tw.AUTH_CERTIFICATION_KIND.A:
-      case Tw.AUTH_CERTIFICATION_KIND.P:
-      case Tw.AUTH_CERTIFICATION_KIND.O:
-        this._openOpCert();
+      case Tw.AUTH_CERTIFICATION_KIND.A:  // 마스킹
+        this._openMaskingCert();
         break;
-      case Tw.AUTH_CERTIFICATION_KIND.F:
+      case Tw.AUTH_CERTIFICATION_KIND.P:  // 업무
+      case Tw.AUTH_CERTIFICATION_KIND.O:  // 업무 & 마스킹
+        this._openBusinessCert();
+        break;
+      case Tw.AUTH_CERTIFICATION_KIND.F:  // 미환급금
         this._openRefundCert();
         break;
       default:
@@ -152,30 +140,59 @@ Tw.CertificationSelect.prototype = {
     return this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
       this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1;
   },
-  _openProductCert: function () {
-    this._apiService.request(Tw.API_CMD.BFF_10_0069, {}, {}, this._command.params.prodId, this._command.params.prodProcTypeCd)
-      .done($.proxy(this._successGetPublicCert, this));
-  },
-
   _openMaskingCert: function () {
+    var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
+    this._opMethods = methods;
+    this._openOpCert();
+  },
+  _openBusinessCert: function () {
+    var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
+    if ( !Tw.FormatHelper.isEmpty(this._authKind) ) {
+      this._opMethods = methods.opAuthMethods;
+      this._optMethods = methods.optAuthMethods || '';
+    }
+    if ( !Tw.FormatHelper.isEmpty(this._optMethods) && this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 ) {
+      this._optionCert = true;
+    }
+    this._openOpCert();
+  },
+  _openProductCert: function () {
+    // TODO: prodAuthKey 설정 필요
+    this._prodAuthKey = this._certInfo.prodAuthKey;
+    this._opMethods = this._certInfo.opMethods;
+    this._optMethods = this._certInfo.optMethods;
 
+    if ( !Tw.FormatHelper.isEmpty(this._optMethods) && this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 ) {
+      this._optionCert = true;
+    }
+    var prodId = '';
+    var prodProcTypeCd = '';
+    if(this._prodAuthKey.indexOf(':') !== -1) {
+      prodId = this._prodAuthKey.split(':')[0];
+      prodProcTypeCd = this._prodAuthKey.split(':')[1];
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0069, {}, {}, prodId, prodProcTypeCd)
+      .done($.proxy(this._successGetPublicCert, this));
   },
   _openRefundCert: function () {
     this._popupService.open({
       hbs: 'CO_CE_02_01_refund',
       layer: true
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
-
   },
 
   _successProductCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.FormatHelper.isEmpty(resp.result.prodAuthMethods) ) {
         this._callback({
-          code: Tw.API_CODE.CODE_00
+          code: Tw.API_CODE.CERT_FAIL
         }, this._deferred, this._command);
       } else {
-        console.log('process cert');
+        // TODO: set cert method
+        this._opMethods = '';
+        this._optMethods = '';
+        this._openOpCert();
       }
     } else {
       this._callback(resp, this._deferred, this._command);
@@ -211,36 +228,30 @@ Tw.CertificationSelect.prototype = {
     switch ( this._certMethod ) {
       case Tw.AUTH_CERTIFICATION_METHOD.SK_SMS:
         this._certSk.open(
-          this._svcInfo, this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this),
+          this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this),
           this._opMethods, this._optMethods, isWelcome, this._methodCnt);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
-        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind, this._command, $.proxy(this._completeCert, this));
+        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind, this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.IPIN:
-        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, this._command, $.proxy(this._completeCert, this));
+        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PASSWORD:
-        this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
+        this._certPassword.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
-        this._certPublic.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
+        this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
-        this._certBio.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
+        this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
+        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND:
         (new Tw.CertificationSkSmsRefund()).openSmsPopup($.proxy(this._completeCert, this));
         break;
-      // case Tw.AUTH_CERTIFICATION_METHOD.OTHER_REFUND:
-      //   this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind, this._command, $.proxy(this._completeCert, this));
-      //   break;
-      // case Tw.AUTH_CERTIFICATION_METHOD.IPIN_REFUND:
-      //   this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, this._command, $.proxy(this._completeCert, this));
-      //   break;
       default:
         this._popupService.openAlert('Not Supported');
         break;
@@ -320,7 +331,11 @@ Tw.CertificationSelect.prototype = {
         this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
       } else {
         resp.authKind = this._authKind;
-        resp.svcMgmtNum = this._svcInfo.svcMgmtNum;
+        if ( !Tw.FormatHelper.isEmpty(this._svcInfo) ) {
+          resp.svcMgmtNum = this._svcInfo.svcMgmtNum;
+        } else {
+          resp.svcMgmtNum = '';
+        }
         this._callback(resp, this._deferred, this._command);
       }
     } else if ( resp.code === 'CERT0001' ) {

@@ -15,7 +15,7 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역'}); %>
 
     <!-- #contents -->
@@ -42,10 +42,7 @@
     </div>
     <!--// #contents -->
 
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 
 </div>
 

@@ -70,36 +70,18 @@
                     <div class="widget-box horizontal">
                         <div class="horizontal-slide">
                             <ul class="horizontal-list info-link-box">
+                                <% for (var index in alpaList) { %>
                                 <li>
-                                    <button class="info-link-inner">
-                                        <em class="mark">“</em><strong class="tit">아시아 여행</strong>을<br>계획 중이신가요?
+                                    <button class="info-link-inner" data-index="<%=index%>">
+                                        <em class="mark">“</em><%-alpaList[index].alpaNaviKwdNm%>
                                     </button>
                                 </li>
-                                <li>
-                                    <button class="info-link-inner">
-                                        <em class="mark">“</em><strong class="tit">중국/일본</strong>으로<br>떠나시나요?
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="info-link-inner">
-                                        <em class="mark">“</em><strong class="tit">미주 여행</strong>을<br>계획 중이신가요?
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="info-link-inner">
-                                        <em class="mark">“</em><strong class="tit">유럽 여행</strong>을<br>계획 중이신가요?
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="info-link-inner">
-                                        <em class="mark">“</em><strong class="tit">짧게</strong><br>여행 가시나요?
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="info-link-inner">
-                                        <em class="mark">“</em><strong class="tit">길게</strong><br>여행 가시나요?
-                                    </button>
-                                </li>
+                                <% } %>
+                                <!--<li>-->
+                                    <!--<button class="info-link-inner">-->
+                                        <!--<em class="mark">“</em><strong class="tit">중국/일본</strong>으로<br>떠나시나요?-->
+                                    <!--</button>-->
+                                <!--</li>-->
                             </ul>
                         </div>
                     </div>
@@ -303,6 +285,9 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.ProductRoaming($('#productRoaming'), {
+      alpaList: <%-JSON.stringify(alpaList)%>
+    });
   });
 </script>
 <% include ../../components/end.component.html %>

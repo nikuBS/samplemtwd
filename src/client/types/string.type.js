@@ -339,6 +339,16 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.'
 };
 
+Tw.MYT_FARE_PAYMENT_TYPE = {
+  DIRECT: 'DI',
+  AUTO: 'AT',
+  AUTOALL: 'AU',
+  MICRO: 'MP',
+  CONTENT: 'CP',
+  PRESERVE: 'PR',
+  PAUTO: 'PN'
+}
+
 Tw.ALERT_MSG_COMMON = {
   EXIT_APP: '앱을 종료하시겠습니까?',
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
@@ -1287,3 +1297,9 @@ Tw.PREPAID_TYPES = {
 Tw.HISTORY_UNIT = '건';
 
 Tw.T_FAMILY_MOA_NO_LIMITATION = '자유 사용';
+
+Tw.LOGIN_CUS_PW_GUIDE = {
+  TITLE: '고객보호 비밀번호를</br>설정해 주세요.',
+  CONTENTS: '고객보호 비밀번호 서비스 신청 후 아직 비밀번호를 설정하지 않으셨습니다.</br>고객보호 비밀번호 설정 후 정상적인 이용이 가능합니다.',
+  BUTTON: '설정하기'
+};

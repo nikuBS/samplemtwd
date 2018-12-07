@@ -125,11 +125,9 @@ Tw.MyTFareInfoHistory.prototype = {
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
-    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
+    // Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
     this._historyService.goLoad(this._historyService.pathname + "/detail?type=" + detailData.dataPayMethodCode + 
-      (detailData.dataIsBank? "&isBank=" + detailData.dataIsBank:'') +
-      (detailData.settleWayCd? "&settleWayCd=" + detailData.settleWayCd:"") +
-      (detailData.dataPayType? "&paytype=" + detailData.dataPayType:"") +
+      (detailData.innerIndex !== undefined ? "&innerIndex=" + detailData.innerIndex: '') + 
       (detailData.dataPayMethodCode === "DI"? "&opDt=" + detailData.opDt + "&payOpTm=" + detailData.payOpTm: "")
     );
   },
