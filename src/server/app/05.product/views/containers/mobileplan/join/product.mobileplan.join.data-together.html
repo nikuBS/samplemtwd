@@ -86,6 +86,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanJoinDataTogether($('.wrap'), '<%= prodId %>', 'MP_02_02_03_05', '<%- JSON.stringify(joinTermInfo) %>');
+  new Tw.ProductMobileplanJoinDataTogether($('.wrap'), '<%= prodId %>', 'MP_02_02_03_05', '<%- JSON.stringify(joinTermInfo) %>',
+    '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>

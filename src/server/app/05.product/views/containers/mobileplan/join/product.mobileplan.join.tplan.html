@@ -138,6 +138,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanJoinTplan($('.wrap'), '<%= prodId %>', 'MP_02_02_03_01', '<%- JSON.stringify(joinTermInfo) %>', '<%= isOverPayReqYn %>');
+  new Tw.ProductMobileplanJoinTplan($('.wrap'), '<%= prodId %>', 'MP_02_02_03_01', '<%- JSON.stringify(joinTermInfo) %>',
+    '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>

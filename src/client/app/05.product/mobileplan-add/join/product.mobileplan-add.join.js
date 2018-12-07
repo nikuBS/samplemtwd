@@ -70,9 +70,6 @@ Tw.ProductMobileplanAddJoin.prototype = {
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    // prodId: this._prodId,
-    //   prodProcTypeCd: 'JN',
-
     this._apiService.request(Tw.API_CMD.BFF_10_0035, {
       addCd: '2'
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));

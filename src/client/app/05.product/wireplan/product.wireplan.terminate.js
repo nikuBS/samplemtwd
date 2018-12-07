@@ -71,9 +71,6 @@ Tw.ProductWireplanTerminate.prototype = {
   _prodConfirmOk: function(callbackParams) {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    // prodId: this._prodId,
-    //   prodProcTypeCd: 'TM'
-
     this._apiService.request(Tw.API_CMD.BFF_10_0100, {
       addInfoExistYn: this._btnData.addInfoExistYn,
       addInfoRelScrnId: this._btnData.addInfoRelScrnId,
