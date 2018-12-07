@@ -16,10 +16,16 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html',
-    { title: '목소리인증서비스', svcInfo: svcInfo, option:{ line: false } }); %>
-    <!--// #header -->
+    <div class="popup-page tw-popup fixed-bottom">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>목소리 인증 서비스</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -63,10 +69,10 @@
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <!-- .popup-closeBtn -->
+    <button class="prev-step fe-common-back">취소</button>
+    <!--// .popup-closeBtn -->
+    </div>
 </div>
     <% include ../../components/javascript.component.html %>
     <script>

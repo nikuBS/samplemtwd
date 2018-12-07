@@ -16,11 +16,17 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html',
-    { title: '음성 자동 충전', svcInfo: svcInfo, option: { back: 'step' } }); %>
-    <!--// #header -->
+<div class="wrap">
+    <div class="popup-page tw-popup fixed-bottom">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>음성 자동 충전</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
     <!-- #contents -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -31,17 +37,34 @@
                     <dl class="total-box">
                         <dt>현재 카드 잔액</dt>
                         <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span
-                            class="ff-tg-medium">원</span></dd>
+                            class="ff-tg-medium">원</span>
+                            <button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02">TIP</button>
+                        </dd>
                     </dl>
                     <% if ( AutoInfo ) { %>
-                    <p class="ctext3 mb20">매월 15일 자동 충전</p>
+                        <% if ( AutoInfo.amtCd === '01' ) {  %>
+                        <p class="ctext3 mb20">매월 15일 자동 충전</p>
+                        <% } %>
+                        <% if ( AutoInfo.amtCd === '02' ) {  %>
+                        <p class="ctext3 mb20">매월 26일 자동 충전</p>
+                        <% } %>
+                        <% if ( AutoInfo.amtCd === '03' ) {  %>
+                        <p class="ctext3 mb20">잔액 1,000인 경우 자동 충전</p>
+                        <% } %>
+                        <% if ( AutoInfo.amtCd === '04' ) {  %>
+                        <p class="ctext3 mb20">잔액 2,000인 경우 자동 충전</p>
+                        <% } %>
+                        <% if ( AutoInfo.amtCd === '05' ) {  %>
+                        <p class="ctext3 mb20">잔액 3,000인 경우 자동 충전</p>
+                        <% } %>
+                        <% if ( AutoInfo.amtCd === '06' ) {  %>
+                        <p class="ctext3 mb20">잔액 5,000인 경우 자동 충전</p>
+                        <% } %>
                     <% } %>
                     <ul class="point-box mb20">
                         <li>
                             <dl>
-                                <dt>발신 기간
-                                    <button class="tip-view">TIP</button>
-                                </dt>
+                                <dt>발신 기간</dt>
                                 <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                             </dl>
                         </li>
@@ -172,7 +195,7 @@
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
                     <li>공인인증서 인증 안내
-                        <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button>
+                        <button type="button" class="tip-view" title="공인인증서 인증 안내" aria-haspopup="true" id="DC_09_02_tip_01" page-id="DC_09_02">TIP</button>
                     </li>
                 </ul>
             </div>
@@ -187,6 +210,10 @@
         </div>
     </div>
     <!--// #contents -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step fe-common-back">취소</button>
+    <!--// .popup-closeBtn -->
+    </div>
 </div>
 <% include ../../components/javascript.component.html %>
 
@@ -196,10 +223,10 @@
             <li>
                 <label class="tit" for="formInput01">충전금액</label>
                 <span class="inputbox">
-                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true"
-                                            required>금액 선택<span
-                                        class="ico"></span></button>
-                                </span>
+                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true"
+                            required>금액 선택<span
+                        class="ico"></span></button>
+                </span>
             </li>
             <li>
                 <label class="tit" for="formInput02">충전 방식</label>

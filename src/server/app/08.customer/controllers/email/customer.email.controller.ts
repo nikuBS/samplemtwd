@@ -62,7 +62,6 @@ class CustomerEmail extends TwViewController {
       case 'history':
         this.getEmailHistory()
           .subscribe((response) => {
-
             res.render('email/customer.email.history.html',
               Object.assign({}, responseData, {
                 inquiryList: response.result,
