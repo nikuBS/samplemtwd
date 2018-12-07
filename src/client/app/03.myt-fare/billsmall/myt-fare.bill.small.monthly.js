@@ -20,6 +20,7 @@ Tw.MyTFareBillSmallMonthly.prototype = {
     
     renderedHTML = this.$template.$monthContent(
       Object.assign(this.data,{
+        userTipID:'MF_06_01_03', // 팁 화면 아이디
         useTipLink:'MF_06_01_03_tip_01' // 팁
       })
     );
