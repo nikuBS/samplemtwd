@@ -41,7 +41,7 @@
     <% include ../../components/javascript.component.html %>
     <script>
       $(document).ready(function () {
-          new Tw.MyTFareBillContentsHitstoryDetail($(document));
+          new Tw.MyTFareBillContentsHitstoryDetail($(document), '<%- JSON.stringify(data)%>');
       });
     </script>
     <script id="fe-detail-contents" type="text/x-handlebars-template">
