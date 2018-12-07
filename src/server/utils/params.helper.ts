@@ -22,7 +22,7 @@ class ParamsHelper {
       const arrLength = arrParams.length;
       for (let i = 0; i < arrLength; i++) {
         const item = arrParams[i].split('=');
-        obj[item[0]] = item[1];
+        obj[item[0]] = decodeURIComponent(item[1]);
       }
 
       return obj;
