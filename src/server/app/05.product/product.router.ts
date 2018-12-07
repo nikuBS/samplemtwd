@@ -61,7 +61,6 @@ import ProductRoamingCoupon from './controllers/roaming/product.roaming.coupon.c
 import ProductRoamingFiGuide from './controllers/roaming/product.roaming.fi.guide.controller';
 import ProductRoamingFiInquire from './controllers/roaming/product.roaming.fi.inquire.controller';
 import ProductRoamingFiInquireAuth from './controllers/roaming/product.roaming.fi.inquire-auth.controller';
-import ProductRoamingFiInquireEdit from './controllers/roaming/product.roaming.fi.inquire-edit.controller';
 import ProductRoamingFiReservation1step from './controllers/roaming/product.roaming.fi.reservation1step.controller';
 import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
@@ -141,7 +140,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
     this.controllers.push({ url: '/roaming/fi/inquire', controller: ProductRoamingFiInquire });
     this.controllers.push({ url: '/roaming/fi/inquire-auth', controller: ProductRoamingFiInquireAuth });
-    this.controllers.push({ url: '/roaming/fi/inquire-edit', controller: ProductRoamingFiInquireEdit });
     this.controllers.push({ url: '/roaming/coupon', controller: ProductRoamingCoupon });
     this.controllers.push({ url: '/roaming/fi/reservation1step', controller: ProductRoamingFiReservation1step });
     this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
