@@ -65,7 +65,6 @@ class MainHome extends TwViewController {
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            console.log(redisData.help);
             res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
           });
         } else {
@@ -134,7 +133,13 @@ class MainHome extends TwViewController {
       this.getHomeNotice(noticeCode),
       this.getHomeHelp()
     ).map(([noti, notice, help]) => {
-      return { noti, notice, help };
+      let mainNotice = null;
+      let emrNotice = null;
+      if ( !FormatHelper.isEmpty(notice) ) {
+        mainNotice = notice.mainNotice;
+        emrNotice = notice.emrNotice;
+      }
+      return { noti, mainNotice, emrNotice, help };
     });
   }
 
@@ -149,7 +154,6 @@ class MainHome extends TwViewController {
   }
 
   private getHomeNotice(noticeCode): Observable<any> {
-
     return this.redisService.getData(REDIS_HOME_NOTICE + noticeCode)
       .map((resp) => {
         // if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {

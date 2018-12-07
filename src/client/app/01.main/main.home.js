@@ -5,7 +5,7 @@
 
  */
 
-Tw.MainHome = function (rootEl, smartCard) {
+Tw.MainHome = function (rootEl, smartCard, emrNotice) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -22,7 +22,7 @@ Tw.MainHome = function (rootEl, smartCard) {
   this._lineComponent = new Tw.LineComponent();
   this._cachedElement();
   this._bindEvent();
-  this._openLineResisterPopup();
+  this._openEmrNotice(emrNotice);
 
   this._initScroll();
 };
@@ -93,6 +93,51 @@ Tw.MainHome.prototype = {
   },
   _onCloseQuickEdit: function () {
 
+  },
+  _openEmrNotice: function (notice) {
+    if ( notice === 'true' ) {
+
+      this._getHomeNotice();
+    } else {
+      this._openLineResisterPopup();
+    }
+  },
+  _getHomeNotice: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_HOME_NOTICE, {})
+      .done($.proxy(this._successHomeNotice, this));
+  },
+  _successHomeNotice: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._openNoticePopup(resp.result.emrNotice);
+    }
+  },
+  _openNoticePopup: function (notice) {
+    this._popupService.open({
+        'pop_name': 'type_tx_scroll',
+        'title': notice.ntcTitNm,
+        'title_type': 'sub',
+        'cont_align': 'tl',
+        'contents': notice.ntcCtt,
+        'bt_b': [{
+          style_class: 'tw-popup-closeBtn bt-gray1 pos-left',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }, {
+          style_class: 'bt-red1 pos-right fe-bt-confirm',
+          txt: Tw.NOTI_POPUP_BTN[notice.ntcReqRsnCtt] || Tw.BUTTON_LABEL.CONFIRM
+        }]
+      },
+      $.proxy(this._onOpenNotice, this),
+      $.proxy(this._onCloseNotice, this));
+
+  },
+  _onOpenNotice: function ($popupContainer) {
+    $popupContainer.on('click', '.fe-bt-confirm', $.proxy(this._confirmNotice, this));
+  },
+  _onCloseNotice: function () {
+    this._openLineResisterPopup();
+  },
+  _confirmNotice: function () {
+    this._popupService.close()
   },
   _openLineResisterPopup: function () {
     $(window).on('env', $.proxy(function () {
