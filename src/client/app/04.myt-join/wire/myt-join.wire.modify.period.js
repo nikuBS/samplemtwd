@@ -23,7 +23,8 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
 
 Tw.MyTJoinWireModifyPeriod.prototype = {
   _URL: {
-    MAIN: '/myt-join/submain_w'
+    MAIN: '/myt-join/submain',
+    COMPLETE: '/myt-join/submain/wire/modifyperiod/complete'
   },
   _LOADING_POPUP_HBS: 'MS_04_06_L01',
   _MAXSIMUM_INTERVAL_CNT: 2,          // 결과조회 최대 호출 카운트
@@ -391,7 +392,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
 
   _reqAgreementsSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.Popup.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, null, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.COMPLETE_TEXT);
+      this._historyService.replaceURL(this._URL.COMPLETE);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }

@@ -17,7 +17,8 @@ Tw.MytJoinWireSetPause = function (rootEl, options) {
 
 Tw.MytJoinWireSetPause.prototype = {
   _URL: {
-    MAIN: '/myt-join/submain_w'
+    MAIN: '/myt-join/submain',
+    COMPLETE: '/myt-join/submain/wire/wirestopgo/complete'
   },
   _DATE_FORMAT: {
     INPUT: 'YYYY-MM-DD',
@@ -171,16 +172,8 @@ Tw.MytJoinWireSetPause.prototype = {
 
   _reqWireSetPauseDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var msg;
-      switch ( this._options.svcStCd ) {
-        case this._SVC_ST_CD.AC:
-          msg = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.COMPLETE_TEXT;
-          break;
-        case this._SVC_ST_CD.SP:
-          msg = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.COMPLETE_TEXT;
-          break;
-      }
-      Tw.Popup.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, Tw.BUTTON_LABEL.CONFIRM, msg);
+      this._historyService.replaceURL(this._URL.COMPLETE + '?svcStCd=' + this._options.svcStCd);
+
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }

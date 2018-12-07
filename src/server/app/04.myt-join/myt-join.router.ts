@@ -16,8 +16,10 @@ import MyTJoinWireFreeCallCheck from './controllers/wire/myt-join.wire.freeCallC
 import MyTJoinWireModifyAddress from './controllers/wire/myt-join.wire.modify.address.controller';
 import MyTJoinWireModifyProduct from './controllers/wire/myt-join.wire.modify.product.controller';
 import MyTJoinWireModifyPeriod from './controllers/wire/myt-join.wire.modify.period.controller';
+import MyTJoinWireModifyPeriodComplete from './controllers/wire/myt-join.wire.modify.period-complete.controller';
 import MyTJoinWireSetWireCancelService from './controllers/wire/myt-join.wire.set.wire-cancel-service.controller';
 import MyTJoinWireSetPause from './controllers/wire/myt-join.wire.set.pause.controller';
+import MyTJoinWireSetPauseComplete from './controllers/wire/myt-join.wire.set.pause-complete.controller';
 import MyTJoinWireGuideChangeOwnership from './controllers/wire/myt-join.wire.guide.change-ownership.controller';
 import MyTJoinWire from './controllers/wire/myt-join.wire.controller';
 import MyTJoinWireAS from './controllers/wire/myt-join.wire.as.controller';
@@ -59,8 +61,10 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/wire/modifyaddress', controller: MyTJoinWireModifyAddress });
     this.controllers.push({ url: '/submain/wire/modifyproduct', controller: MyTJoinWireModifyProduct });
     this.controllers.push({ url: '/submain/wire/modifyperiod', controller: MyTJoinWireModifyPeriod });
+    this.controllers.push({ url: '/submain/wire/modifyperiod/complete', controller: MyTJoinWireModifyPeriodComplete });
     this.controllers.push({ url: '/submain/wire/cancelsvc', controller: MyTJoinWireSetWireCancelService });
     this.controllers.push({ url: '/submain/wire/wirestopgo', controller: MyTJoinWireSetPause });
+    this.controllers.push({ url: '/submain/wire/wirestopgo/complete', controller: MyTJoinWireSetPauseComplete });
     this.controllers.push({ url: '/submain/wire/changeowner', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/submain/suspend', controller: MyTJoinSuspend });
     this.controllers.push({ url: '/submain/suspend/status', controller: MyTJoinSuspendStatus });
