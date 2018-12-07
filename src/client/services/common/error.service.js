@@ -19,8 +19,15 @@ Tw.ErrorService.prototype = {
 
   pop: function() {
     this._popupService.open({
-      hbs: 'error_common',
-      data: this._data
+      url: Tw.Environment.cdn + '/hbs/',
+      'title': this.data.code,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': this.data.msg,
+      'bt_b': [{
+        style_class: 'pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
     },
       $.proxy(this._request, this),
       $.proxy(this._close, this));
