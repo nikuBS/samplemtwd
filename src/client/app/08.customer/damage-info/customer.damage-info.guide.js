@@ -25,10 +25,7 @@ Tw.CustomerDamageInfoGuide.prototype = {
   _bindEvent: function() {
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
-
-    if (Tw.BrowserHelper.isApp()) {
-      this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlinkConfirm, this));
-    }
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
   },
 
   _openCategorySelectPopup: function() {
@@ -78,14 +75,18 @@ Tw.CustomerDamageInfoGuide.prototype = {
     }
   },
 
-  _openOutlinkConfirm: function(e) {
-    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openOutlink, this, $(e.currentTarget).attr('href')));
-
+  _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    }
+
+    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
-  _openOutlink: function(href) {
+  _openExternalUrl: function(href) {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
   }
