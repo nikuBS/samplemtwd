@@ -17,18 +17,22 @@ Tw.CustomerDamageInfoRelated.prototype = {
 
   _bindEvent: function() {
     if (Tw.BrowserHelper.isApp()) {
-      this.$container.on('click', '.fe-outlink', $.proxy(this._confirm, this));
+      this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     }
   },
 
-  _confirm: function(e) {
-    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._open, this, $(e.currentTarget).attr('href')));
-
+  _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    }
+
+    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
-  _open: function(href) {
+  _openExternalUrl: function(href) {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
   }
