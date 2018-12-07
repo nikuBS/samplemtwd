@@ -9,14 +9,8 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 
 class ProductRoamingSearchBefore extends TwViewController {
-    constructor() {
-        super();
-    }
-
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, pageInfo: any) {
-        res.render('roaming/product.roaming.do.search-before.html', { svcInfo, isLogin: this.isLogin(svcInfo), pageInfo });
-
-
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+        res.render('roaming/product.roaming.do.search-before.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo) });
     }
 
     private isLogin(svcInfo: any): boolean {
