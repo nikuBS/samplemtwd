@@ -107,7 +107,7 @@ export const API_CMD = {
   BFF_03_0027: { path: '/core-auth/v1/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   // MainHome T-Notify
-  BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0002: { path: '/core-product/v1/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_04_0003: { path: '//core-modification/v1/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_04_0004: { path: '/core-auth/v1/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
