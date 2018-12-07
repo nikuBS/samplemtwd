@@ -67,9 +67,11 @@ Tw.TooltipService.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _getContents: function ($content) {
-    for (var i = 0; i < $content.length; i++) {
-      if ($content[i].id === this._id) {
-        this._openTip($content[i]);
+    if (!Tw.FormatHelper.isEmpty($content)) {
+      for (var i = 0; i < $content.length; i++) {
+        if ($content[i].id === this._id) {
+          this._openTip($content[i]);
+        }
       }
     }
   },
