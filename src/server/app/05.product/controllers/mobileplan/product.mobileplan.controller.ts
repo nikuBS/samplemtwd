@@ -12,9 +12,9 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
-import { REDIS_BANNER_ADMIN, DEVICE_CODE } from '../../../../types/redis.type';
+import { REDIS_BANNER_ADMIN } from '../../../../types/redis.type';
 import BrowserHelper from '../../../../utils/browser.helper';
-import DateHelper from '../../../../utils/date.helper';
+import RedisHelper from '../../../../utils/redis.helper';
 // import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 
 export default class Product extends TwViewController {
@@ -25,9 +25,8 @@ export default class Product extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    const browserCode = DEVICE_CODE[this.getBrowserInfo(req)];
     Observable.combineLatest(
-      this.getPromotionBanners(pageInfo.menuId, browserCode),
+      this.getPromotionBanners(pageInfo.menuId, req),
       this.getProductGroups(),
       this.getRecommendedPlans(),
       this.getMyFilters(!!svcInfo),
@@ -50,29 +49,15 @@ export default class Product extends TwViewController {
     });
   }
 
-  private getPromotionBanners = (id, browserCode) => {
+  private getPromotionBanners = (id, req) => {
     return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
       // const resp = PROMOTION_BANNERS;
       if (!resp.result) {
         return resp.result;
       }
 
-      return (resp.result.banners || [])
-        .filter(banner => {
-          return (
-            banner.chnlClCd.includes(browserCode) &&
-            DateHelper.getDifference(banner.expsStaDtm.substring(0, 8)) <= 0 &&
-            DateHelper.getDifference(banner.expsEndDtm.substring(0, 8)) >= 0
-          );
-        })
-        .sort((a, b) => {
-          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
-        });
+      return RedisHelper.sortBanners(req);
     });
-  }
-
-  private getBrowserInfo = req => {
-    return BrowserHelper.isApp(req) ? (BrowserHelper.isAndroid(req) ? 'ANDROID' : 'IOS') : 'MOBILE';
   }
 
   private getProductGroups = () => {
