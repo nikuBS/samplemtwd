@@ -13,7 +13,6 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
 class MyTJoinSubmainController extends TwViewController {
@@ -70,7 +69,7 @@ class MyTJoinSubmainController extends TwViewController {
       this._getWireFreeCall(),
       this._getOldNumberInfo(),
       this._getChangeNumInfoService(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.JOIN_INFO)
+      this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId)
     ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
@@ -214,13 +213,12 @@ class MyTJoinSubmainController extends TwViewController {
     const sort = {};
     const result: any = [];
     banners.forEach((item) => {
+      // 배너노출순번의 정보가 있는 경우
       if ( item.bnnrExpsSeq ) {
         sort[item.bnnrExpsSeq] = item;
+      } else {
+        sort[item.bnnrSeq] = item;
       }
-      // TEST
-      // if ( !FormatHelper.isEmpty(item.imgLinkUrl) ) {
-      //   sort[item.bnnrSeq] = item;
-      // }
     });
     const keys = Object.keys(sort).sort();
     keys.forEach((key) => {

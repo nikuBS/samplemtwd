@@ -15,7 +15,6 @@ import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/stri
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
-import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
@@ -52,7 +51,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.DATA),
+      this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
     ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
       if ( !svcInfo.svcMgmtNum || remnant.info ) {
         // 비정상 진입 또는 API 호출 오류
@@ -104,7 +103,7 @@ class MytDataSubmainController extends TwViewController {
 
       // T가족모아 데이터
       if ( family && Object.keys(family).length > 0 ) {
-        if (family.impossible) {
+        if ( family.impossible ) {
           // T가족모아 미가입인 경우
           data.family = family;
         } else {
@@ -113,7 +112,7 @@ class MytDataSubmainController extends TwViewController {
           data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
           data.family.limitation = parseInt(data.family.limitation, 10);
           // T가족모아 서비스는 가입되어있지만 공유 불가능하거나 미성년인 경우
-          if (data.family.shrblYn === 'N' || data.family.adultYn === 'N') {
+          if ( data.family.shrblYn === 'N' || data.family.adultYn === 'N' ) {
             data.family.noshare = true;
           }
         }
@@ -220,13 +219,12 @@ class MytDataSubmainController extends TwViewController {
     const sort = {};
     const result: any = [];
     banners.forEach((item) => {
+      // 배너노출순번의 정보가 있는 경우
       if ( item.bnnrExpsSeq ) {
         sort[item.bnnrExpsSeq] = item;
+      } else {
+        sort[item.bnnrSeq] = item;
       }
-      // TEST
-      // if ( !FormatHelper.isEmpty(item.imgLinkUrl) ) {
-      //   sort[item.bnnrSeq] = item;
-      // }
     });
     const keys = Object.keys(sort).sort();
     keys.forEach((key) => {
@@ -380,7 +378,7 @@ class MytDataSubmainController extends TwViewController {
     const list = items.mbrList;
     if ( list ) {
       list.filter((item) => {
-        if ( item.svcMgmtNum === svcInfo.svcMgmtNum) {
+        if ( item.svcMgmtNum === svcInfo.svcMgmtNum ) {
           info = Object.assign(info, item);
         }
       });

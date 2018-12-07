@@ -13,14 +13,18 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { MYT_BANNER_TYPE } from '../../types/common.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
 
 class MyTFareSubmainController extends TwViewController {
+  private _bannerUrl: string = '';
+
+  set bannerUrl(value) {
+    this._bannerUrl = value;
+  }
 
   get bannerUrl() {
-    return REDIS_BANNER_ADMIN + MYT_BANNER_TYPE.PAYMENT;
+    return this._bannerUrl;
   }
 
   constructor() {
@@ -77,7 +81,7 @@ class MyTFareSubmainController extends TwViewController {
             });
           }
         }
-
+        this.bannerUrl = REDIS_BANNER_ADMIN + pageInfo.menuId;
         if ( data.type === 'UF' ) {
           this._requestUsageFee(req, res, data, svcInfo);
         } else {
@@ -257,13 +261,12 @@ class MyTFareSubmainController extends TwViewController {
     const sort = {};
     const result: any = [];
     banners.forEach((item) => {
+      // 배너노출순번의 정보가 있는 경우
       if ( item.bnnrExpsSeq ) {
         sort[item.bnnrExpsSeq] = item;
+      } else {
+        sort[item.bnnrSeq] = item;
       }
-      // TEST
-      // if ( !FormatHelper.isEmpty(item.imgLinkUrl) ) {
-      //   sort[item.bnnrSeq] = item;
-      // }
     });
     const keys = Object.keys(sort).sort();
     keys.forEach((key) => {
