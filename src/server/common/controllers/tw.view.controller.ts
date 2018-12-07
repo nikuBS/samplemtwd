@@ -171,7 +171,7 @@ abstract class TwViewController {
             } else {
               // login page
               // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
-              res.redirect('/common/tid/login?target=' + path);
+              res.redirect('/common/member/login?target=' + path);
             }
           } else {
             // TODO: admin 정보 입력 오류
@@ -227,9 +227,9 @@ abstract class TwViewController {
 
   private failLogin(req, res, next, errorCode) {
     if ( errorCode === API_LOGIN_ERROR.ICAS3228 ) {    // 고객보호비밀번호
-      res.redirect('/common/login/customer-pwd');
+      res.redirect('/common/member/login/customer-pwd');
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
-      res.redirect('/common/login/dormancy');
+      res.redirect('/common/member/login/reactive');
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
       res.redirect('/common/member/login/exceed-fail');
     } else {
