@@ -37,4 +37,9 @@ Tw.NOTI_POPUP_TYPE = {
   NEVER: '100'
 };
 
-
+Tw.REDIS_DEVICE_CODE = {
+  MWEB: '01',
+  IOS: '02',
+  ANDROID: '03',
+  MOBILE: '05'
+};
