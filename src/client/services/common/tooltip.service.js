@@ -22,7 +22,7 @@ Tw.TooltipService.prototype = {
     this._id = $target.attr('id');
 
     if (this._isExist($pageId)) {
-      this._getContents(this._tooltipList[$pageId], 'exist');
+      this._getContents(this._tooltipList);
     } else {
       // this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { TooltipInfo: $pageId })
       $.ajax('/mock/tip.json')
@@ -58,7 +58,7 @@ Tw.TooltipService.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       var $content = res.result.tooltip;
       if (!Tw.FormatHelper.isEmpty($content)) {
-        this._tooltipList.push($content);
+        this._tooltipList = $content;
         this._getContents($content, 'api');
       }
     } else {
