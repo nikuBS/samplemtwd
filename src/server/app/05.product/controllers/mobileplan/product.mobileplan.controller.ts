@@ -26,12 +26,12 @@ export default class Product extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getPromotionBanners(pageInfo.menuId),
+      // this.getPromotionBanners(pageInfo.menuId),
       this.getProductGroups(),
       this.getRecommendedPlans(),
       this.getMyFilters(!!svcInfo),
       this.getRecommendedTags()
-    ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
+    ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
       // ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
       const error = {
         code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
@@ -44,17 +44,17 @@ export default class Product extends TwViewController {
         return this.error.render(res, { ...error, svcInfo });
       }
 
-      const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
+      const productData = { groups, myFilters, recommendedPlans, recommendedTags };
       res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
     });
   }
 
-  private getPromotionBanners = id => {
-    // return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
-    return Observable.of(PROMOTION_BANNERS).map(resp => {
-      return resp.result && resp.result.banners;
-    });
-  }
+  // private getPromotionBanners = id => {
+  //   // return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
+  //   return Observable.of(PROMOTION_BANNERS).map(resp => {
+  //     return resp.result && resp.result.banners;
+  //   });
+  // }
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {

@@ -4,11 +4,13 @@
  * Date: 2018.11.14
  */
 
-Tw.ProductApps = function(rootEl) {
+Tw.ProductApps = function(rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+
+  this._getBanners(menuId);
 
   this._cachedElement();
   this._bindEvent();
@@ -30,6 +32,14 @@ Tw.ProductApps.prototype = {
     this.$list = this.$container.find('.app-list-bottom');
     this.$orderBtn = this.$container.find('.text-type01');
     this.$switchBtn = this.$container.find('.btn-switch input');
+  },
+
+  _getBanners: function(menuId) {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId }).done($.proxy(this._handleLoadBanners, this));
+  },
+
+  _handleLoadBanners: function(resp) {
+    new Tw.BannerService(this.$container, resp.result && resp.result.banners);
   },
 
   _getApps: function() {
