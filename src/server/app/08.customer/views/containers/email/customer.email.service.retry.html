@@ -17,11 +17,17 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html',
-    { title: '이메일 상담', svcInfo: svcInfo, option: { back: 'step' } }); %>
-    <!--// #header -->
-    <div class="container-wrap">
+    <div class="popup-page tw-popup fixed-bottom">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>이메일 상담</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
@@ -148,6 +154,8 @@
                 </div>
             </div>
         </div>
+    </div>
+        <button class="prev-step fe-common-back">취소</button>
     </div>
 </div>
 <% include ../../components/javascript.component.html %>
