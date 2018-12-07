@@ -161,38 +161,41 @@ Tw.ProductList.prototype = {
   },
 
   _openSelectFiltersPopup: function() {
-    var currentFilters = this._params.searchFltIds;
-    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS[this.CODE], function(filter) {
-      if (currentFilters && currentFilters.indexOf(filter.id) >= 0) {
-        return Object.assign({ checked: true }, filter);
-      }
-      return filter;
-    });
+    var currentFilters = this._params.searchFltIds,
+      currentTag = this._params.searchTagId;
 
     var filters = _.chain(this._filters.filters)
-      .filter(function(filter) {
-        return filter.prodFltId !== 'F01120' && filter.prodFltId !== 'F01220';
-      })
       .map(function(filter) {
         return {
           prodFltId: filter.prodFltId,
           prodFltNm: filter.prodFltNm,
-          subFilters: _.map(filter.subFilters, function(subFilter) {
-            if (currentFilters && currentFilters.indexOf(subFilter.prodFltId) >= 0) {
-              return Object.assign({ checked: true }, subFilter);
-            }
-            return subFilter;
-          })
+          subFilters:
+            currentFilters && currentFilters.length > 0
+              ? _.map(filter.subFilters, function(subFilter) {
+                  if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
+                    return Object.assign({ checked: true }, subFilter);
+                  }
+                  return subFilter;
+                })
+              : filter.subFilters
         };
       })
       .value();
 
+    var tags = currentTag
+      ? _.map(this._filters.tags, function(tag) {
+          if (currentTag === tag.tagId) {
+            return Object.assign({ checked: true }, tag);
+          }
+          return tag;
+        })
+      : this._filters.tags;
+
     this._popupService.open(
       {
         hbs: 'MP_02_01',
-        deviceFilters: deviceFilters,
         filters: filters,
-        tags: this._filters.tags,
+        tags: tags,
         layer: true
       },
       $.proxy(this._handleOpenSelectFilterPopup, this),
@@ -284,12 +287,12 @@ Tw.ProductList.prototype = {
   _handleSelectTag: function(target) {
     var selectedTag = target.getAttribute('data-tag-id');
 
-    if (this._params.selectedTagId === selectedTag) {
+    if (this._params.searchTagId === selectedTag) {
       this._popupService.close();
       return;
     }
 
-    window.location.href = '/product/' + this.TYPE + '?tag=' + selectedTag;
+    window.location.href = window.location.pathname + '?tag=' + selectedTag;
   },
 
   _isEmptyAmount: function(value) {
