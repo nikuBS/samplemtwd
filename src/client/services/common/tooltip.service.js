@@ -6,6 +6,11 @@ Tw.TooltipService = function () {
 
   this._tooltipList = [];
   this._id = null;
+  this._link = null;
+
+  this._inapp = false;
+  this._isExternal = false;
+  this._isLink = false;
 
   this._bindEvent();
 };
@@ -72,6 +77,42 @@ Tw.TooltipService.prototype = {
         style_class: 'tw-popup-closeBtn bt-red1 pos-right',
         txt: '닫기'
       }]
-    });
+    },
+      $.proxy(this._onOpen, this),
+      $.proxy(this._onClose, this));
+  },
+  _onOpen: function ($layer) {
+    $layer.on('click', 'a', $.proxy(this._onClick, this));
+  },
+  _onClick: function (event) {
+    event.preventDefault();
+
+    var $target = $(event.currentTarget);
+    this._link = $target.attr('href');
+
+    if (Tw.BrowserHelper.isApp()) {
+      if ($target.hasClass('fe-link-inapp')) {
+        this._inapp = true;
+      }
+    }
+
+    if ($target.hasClass('fe-link-external')) {
+      this._isExternal = true;
+    } else {
+      this._isLink = true;
+    }
+
+    this._popupService.close();
+  },
+  _onClose: function () {
+    if (this._inapp) {
+      Tw.CommonHelper.openUrlInApp(this._link);
+    }
+    if (this._isExternal) {
+      Tw.CommonHelper.openUrlExternal(this._link);
+    }
+    if (this._isLink) {
+      window.location.href = this._link;
+    }
   }
 };

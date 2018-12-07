@@ -20,7 +20,7 @@ Tw.ErrorService.prototype = {
   pop: function() {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
-      'title': this.data.code,
+      'title': Tw.POPUP_TITLE.ERROR + '\n' + this.data.code,
       'title_type': 'sub',
       'cont_align': 'tl',
       'contents': this.data.msg,
