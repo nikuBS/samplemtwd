@@ -38,7 +38,7 @@ class ProductCommonCallplanPreview extends TwViewController {
           linkBtnList: prodInfo.linkBtnList
         })),
         relateTags: this._convertRelateTags(prodInfo.prodTagList),
-        similar: this._convertSimilarProduct(prodInfo.prodTypCd, prodInfo.similar)
+        similar: this._convertSimilarProduct(prodInfo.baseInfo.prodTypCd, prodInfo.similar)
       },
       this._convertRedisInfo({
         summary: prodInfo.summary,
@@ -274,10 +274,6 @@ class ProductCommonCallplanPreview extends TwViewController {
    * @private
    */
   private _convertSimilarProduct (prodTypCd: any, similarProductInfo: any) {
-    if (similarProductInfo.code !== API_CODE.CODE_00) {
-      return null;
-    }
-
     let titleNm: any = PRODUCT_SIMILAR_PRODUCT.PRODUCT;
     if (prodTypCd === 'AB') {
       titleNm = PRODUCT_SIMILAR_PRODUCT.PLANS;
@@ -287,11 +283,12 @@ class ProductCommonCallplanPreview extends TwViewController {
       titleNm = PRODUCT_SIMILAR_PRODUCT.ADDITIONS;
     }
 
-    return Object.assign(similarProductInfo.result, {
+    return Object.assign(similarProductInfo, {
       titleNm: titleNm,
-      prodFltIds: FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.list.map((item) => {
+      prodFltIds: FormatHelper.isEmpty(similarProductInfo.list) ? '' : similarProductInfo.list.map((item) => {
         return item.prodFltId;
-      }).join(',')
+      }).join(','),
+      list: similarProductInfo.similarsList
     });
   }
 
