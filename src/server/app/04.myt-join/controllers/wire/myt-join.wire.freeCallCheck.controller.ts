@@ -23,15 +23,8 @@ class MyTJoinWireFreeCallCheck extends TwViewController {
   private _svcInfo: any;
   public pageInfo: any;
 
-  // 데이터
-  private _resDataInfo: any = {};
-
-  // 공통데이터
-  private _commDataInfo: any = {
-  };
-
   private _urlTplInfo: any = {
-    pageRenderView: 'wire/myt-join.wire.freeCallCheck.html',
+    pageRenderView: 'wire/myt-join.wire.freeCallCheck.html'
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

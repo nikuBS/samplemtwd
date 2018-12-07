@@ -66,7 +66,7 @@
             <ul>	
              {{#each cpHistories}}			
                 <li data-list-id="{{listId}}">
-                    <div class="use-info-wrap">
+                    <div class="use-info-wrap w-60">
                         <span class="name1">{{cpNm}}</span>
                         <span class="name2">{{pgNm}}</span>
                         <span class="date">{{FullDate}}</span>
@@ -74,20 +74,11 @@
                         <span class="due-date">{{blockState}}</span>
                         {{/if}}
                     </div>
-                    <div class="switch-wrap">
-                        <span class="widget">
-                            <span class="widget-box switch">
-                                <span class="btn-switch type1 on">
-                                    <span class="switch-style" role="checkbox" >
-                                        <span class="on-tx" data-list-id="{{listId}}">해제</span>
-                                        <span class="off-tx" data-list-id="{{listId}}">차단</span>
-                                    </span>
-                                </span>
-                            </span>
-                        </span>
+                    <div class="switch-wrap w-40 tr">
+                        <button class="red-btn on-tx" data-list-id="{{listId}}">해제하기</button>
                     </div>
                 </li>
-        {{/each}}
+            {{/each}}
             </ul>
     </script>
 

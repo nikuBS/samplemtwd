@@ -434,8 +434,9 @@ Tw.MyTFareBillSetChange.prototype = {
     });
 
     _reqData.toBillTypeCd = this._convertBillType();
+    // 'T world 확인' 일 때
     if (this._billType === 'P' && this._data.isusimchk === 'Y') {
-      _reqData.nreqGuidSmsSndYn = this._getTogetherVal() === 'X' ? 'N' : 'Y';
+      _reqData.nreqGuidSmsSndYn = this._getTogetherVal() === 'YES' ? 'Y' : 'N';
     }
 
     return {data: _reqData, result: _result};

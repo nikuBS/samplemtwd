@@ -14,7 +14,7 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
 import { REDIS_BANNER_ADMIN } from '../../../../types/redis.type';
 import BrowserHelper from '../../../../utils/browser.helper';
-import RedisHelper from '../../../../utils/redis.helper';
+import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 // import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 
 export default class Product extends TwViewController {
@@ -26,7 +26,7 @@ export default class Product extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getPromotionBanners(pageInfo.menuId, req),
+      this.getPromotionBanners(pageInfo.menuId),
       this.getProductGroups(),
       this.getRecommendedPlans(),
       this.getMyFilters(!!svcInfo),
@@ -49,14 +49,10 @@ export default class Product extends TwViewController {
     });
   }
 
-  private getPromotionBanners = (id, req) => {
-    return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
-      // const resp = PROMOTION_BANNERS;
-      if (!resp.result) {
-        return resp.result;
-      }
-
-      return RedisHelper.sortBanners(req);
+  private getPromotionBanners = id => {
+    // return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
+    return Observable.of(PROMOTION_BANNERS).map(resp => {
+      return resp.result && resp.result.banners;
     });
   }
 

@@ -41,7 +41,7 @@
                 <% } %>
 
                 <% const banners = productData.banners;
-                if (banners && banners.length > 0) { %>
+                if (banners) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                     
                 <!-- 스와이프 -->
@@ -51,21 +51,7 @@
                         <div class="widget">
                             <div class="widget-box slider1">
                                 <div class="slider-box">
-                                    <ul class="slider">
-                                        <% banners.map(banner => { %>
-                                        <li>
-                                            <% if (banner.bnnrTypCd === 'H') { %>
-                                            <button>
-                                                <%- banner.bnnrHtmlCtt %>
-                                            </button>
-                                            <% } else if (banner.bnnrTypCd === 'I') { %>
-                                            <button class="fe-banner" data-is-bill="<%= banner.billYn === 'Y' %>" data-link-type="<%= banner.imgLinkTrgtClCd %>" data-link="<%= banner.imgLinkUrl %>">
-                                                <img src="<%= banner.bnnrFilePathNm %>" alt="<%= banner.bnnrImgAltCtt %>">
-                                            </button>
-                                            <% } %>
-                                        </li>
-                                        <% }); %>
-                                    </ul>
+                                    <ul class="slider" data-location="8"></ul>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +266,7 @@
 <% include ../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.BannerService($('.wrap'));
+        new Tw.BannerService($('.wrap'), <%- JSON.stringify(banners) %>);
     })
 </script>
 <% include ../components/end.component.html %>

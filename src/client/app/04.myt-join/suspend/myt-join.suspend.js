@@ -29,6 +29,7 @@ Tw.MyTJoinSuspend.prototype = {
 
   _bindEvent: function () {
     this.$tabLinker.on('click', $.proxy(this._onTabChanged, this));
+    this.$container.on('click', '.fe-bt-back', $.proxy(this._onClose, this));
     $(document).on('ready', $.proxy(this._setInitialTab, this));
   },
 
@@ -71,6 +72,9 @@ Tw.MyTJoinSuspend.prototype = {
         }
         break;
     }
-  }
+  },
 
+  _onClose: function(e){
+    this._historyService.goLoad('/myt-join/submain');
+  }
 };

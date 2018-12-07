@@ -11,7 +11,6 @@ import DateHelper from '../../../../utils/date.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
 import { MYT_FARE_HISTORY_MICRO_TYPE, MYT_FARE_HISTORY_MICRO_PAY_TYPE, MYT_FARE_HISTORY_MICRO_BLOCK_TYPE } from '../../../../types/bff.type';
-import bill_guide_BFF_05_0079 from '../../../../mock/server/bill.guide.BFF_05_0079.mock';
 
 interface Info {
   [key: string]: string;
@@ -57,12 +56,10 @@ class MyTFareBillSmallHistory extends TwViewController {
           //  ,pageInfo: pageInfo
         });
       }
-
-      // const mockData = bill_guide_BFF_05_0079;
       
-      const data = resp.result; // || mockData.result;
+      const data = resp.result; 
 
-      let billList;
+      let billList = [];
       
       if (data.histories !== undefined) {
         billList = data.histories.reverse().map((o, index) => {
@@ -73,10 +70,6 @@ class MyTFareBillSmallHistory extends TwViewController {
             FullDate: DateHelper.getShortDateAndTime(plainTime),
             useAmt: FormatHelper.addComma(o.sumPrice), // 이용금액
             payMethodNm: MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
-            payWay: MYT_FARE_HISTORY_MICRO_PAY_TYPE[o.wapYn],
-            isShowBlockBtn: (o.payMethod === '03' && blockState !== null), // 차단하기/내역 버튼 표기여부
-            blockState: blockState || '', // 차단 상테
-            isBlocked: blockState ? true : false, // 차단여부
           });
         });
       }
@@ -96,7 +89,9 @@ class MyTFareBillSmallHistory extends TwViewController {
           curMonth: this.curMonth,
           selectedYear: DateHelper.getCurrentYear(this.fromDt),
           selectedMonth: DateHelper.getCurrentMonth(this.fromDt),
-          noticeInfo: this.getNoticeInfo()
+          noticeInfo: this.getNoticeInfo(),
+          searchFromDt: query.fromDt, // 상세내역 들어갈 때 조회 기준 값
+          searchToDt: query.toDt // 상세내역 들어갈 때 조회 기준 값
         }
       });
       //

@@ -13,15 +13,15 @@ Tw.MyTFareBillSmallHistory = function (rootEl, data) {
   this._params = Tw.UrlHelper.getQueryParams();
 
   this._cachedElement();
-  this._init(data);
+  this._init();
   this._bindEvent();
 };
 
 Tw.MyTFareBillSmallHistory.prototype = {
-  _init: function (data) {
+  _init: function () {
     this.current = this._getLastPathname();
 
-    this._initBillList(data);
+    this._initBillList();
     this.monthActionSheetListData = $.proxy(this._setMonthActionSheetData, this)(); //현재로부터 지난 6개월 구하기 
   },
 
@@ -48,7 +48,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
     this.$domListWrapper.on('click', '.bt-more', $.proxy(this._updateBillList, this));
   },
 
-  _initBillList: function (data) {
+  _initBillList: function () {
     //리스트 갯수
     var totalDataCounter = this.data.billList.length; 
     var BtnMoreList;
@@ -95,11 +95,11 @@ Tw.MyTFareBillSmallHistory.prototype = {
       year = this.data.beforeYear, 
       month = this.data.beforeMonth, 
       month_limit = 12; 
-
+    
     // 6개월 리스트 만들기
     for(var i = 1; i<=6; i++){
       month = parseFloat(this.data.beforeMonth)+i;
-      if(month>= month_limit){ 
+      if(month> month_limit){ 
         year = this.data.curYear;
         month -= month_limit;
       }
@@ -136,8 +136,11 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   // 디테일 페이지
   _moveDetailPage: function (e) {
-    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
-    this._historyService.goLoad(this._historyService.pathname+'/detail');
+    this._historyService.goLoad(this._historyService.pathname+'/detail?fromDt=' + 
+                                this.data.searchFromDt + '&toDt=' + 
+                                this.data.searchToDt + '&listId=' + 
+                                $(e.currentTarget).data('listId')
+                              );
   },  
 
   // 더 보기

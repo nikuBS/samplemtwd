@@ -99,7 +99,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     // 6개월 리스트 만들기
     for(var i = 1; i<=6; i++){
       month = parseFloat(this.data.beforeMonth)+i;
-      if(month>= month_limit){ 
+      if(month> month_limit){ 
         year = this.data.curYear;
         month -= month_limit;
       }
@@ -136,8 +136,12 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   // 디테일 페이지
   _moveDetailPage: function (e) {
-    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
-    this._historyService.goLoad(this._historyService.pathname+'/detail');
+    // Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(this.data.billList[$(e.currentTarget).data('listId')]));
+    this._historyService.goLoad(this._historyService.pathname+'/detail?fromDt=' + 
+                                this.data.searchFromDt + '&toDt=' + 
+                                this.data.searchToDt + '&listId=' + 
+                                $(e.currentTarget).data('listId')
+                              );
   },  
 
   // 더 보기

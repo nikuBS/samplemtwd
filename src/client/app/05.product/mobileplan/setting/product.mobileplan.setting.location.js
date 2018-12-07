@@ -35,7 +35,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
     $('.comp-box').on('click', '.bt-line-gray1', $.proxy(this._removeNumber, this));
-
+    $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
+    $('#num-inputbox .cancel').on('click', $.proxy(this._onclickInputDel, this));
   },
 
   /**
@@ -59,6 +60,63 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     this._tmpltLocItem = Handlebars.compile($('#loc-list-tmplt-item').html());
     this._tmpltNumItem = Handlebars.compile($('#num-list-tmplt-item').html());
     this._tmpltLocSchItem = Handlebars.compile($('#loc-search-list-tmplt-item').html())
+  },
+
+  /**
+   * input password 키 입력시
+   * @param event
+   * @private
+   */
+  _onKeyUp: function (event) {
+
+    // 숫자 외 다른 문자를 입력한 경우
+    var $input = $(event.target);
+    var value = $input.val();
+    var reg = /[^0-9-]/g;
+
+    if( reg.test(value) ){
+      event.stopPropagation();
+      event.preventDefault();
+      $input.val(value.replace(reg, ''));
+    }
+
+    this._resetPhoneNum($input);
+
+    // 전화번호 체크
+    if ( this._isPhoneNum($input.val()) ) {
+      $('#num-inputbox').removeClass('error');
+
+    } else {
+      if( !$('#num-inputbox').hasClass('error') ){
+        $('#num-inputbox').addClass('error');
+      }
+    }
+  },
+
+  _onclickInputDel: function(/*event*/){
+    //$('#inputReqPhone').val('');
+    $('#num-inputbox').removeClass('error');
+  },
+
+  _isPhoneNum: function(val){
+    var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
+    return phoneReg.test(val);
+  },
+
+  _resetPhoneNum: function($input){
+    var value = $input.val();
+    if(value.length === 3 && value.indexOf('-') === -1){
+      $input.val(value + '-');
+    }
+    if(value.length === 8 && value.lastIndexOf('-') === 3){
+      $input.val(value + '-');
+    }
+    if(value.length >= 9){
+      value = value.replace(/-/g, '');
+      value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+      $('input').val(value);
+    }
+
   },
 
   /**
@@ -253,11 +311,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _settingTargetNumber: function(opClCd, asgnNum, callback){
-    if( !opClCd || !asgnNum ){
+    if( !opClCd || !asgnNum || !asgnNum.svcnum){
       return;
     }
 
     var params = null;
+    asgnNum.svcnum = asgnNum.svcnum.replace(/-/g, '');
 
     if(opClCd === '1'){
       params = {
