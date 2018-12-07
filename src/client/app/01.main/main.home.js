@@ -95,13 +95,28 @@ Tw.MainHome.prototype = {
 
   },
   _openLineResisterPopup: function () {
-    var layerType = this.$container.data('layertype');
-    // layerType = Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER;
-    Tw.Logger.info('[Home] layerType', layerType);
-    if ( !Tw.FormatHelper.isEmpty(layerType) &&
-      (layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER) ) {
-      this._lineRegisterLayer.openRegisterLinePopup(layerType);
-    }
+    $(window).on('env', $.proxy(function () {
+      var layerType = this.$container.data('layertype');
+      // layerType = Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD;
+      Tw.Logger.info('[Home] layerType', layerType);
+      if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+        if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
+          this._lineRegisterLayer.openRegisterLinePopup(layerType);
+        } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
+          this._openCustomerPasswordGuide();
+        }
+      }
+    }, this));
+  },
+  _openCustomerPasswordGuide: function () {
+    this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
+      null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
+  },
+  _confirmCustPwGuide: function () {
+    this._popupService.close();
+  },
+  _closeCustPwGuide: function () {
+    this._historyService.goLoad('/myt-join/custpassword');
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
