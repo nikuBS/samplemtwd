@@ -524,7 +524,7 @@ class MyTFareBillGuide extends TwViewController {
 
   public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
     // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
-    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'M.DD');
+    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'YYYY.M.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
