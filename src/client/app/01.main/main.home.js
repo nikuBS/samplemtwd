@@ -297,7 +297,7 @@ Tw.MainHome.prototype = {
         invStartDt: Tw.DateHelper.getShortDate(contents.fromDt),
         invMonth: Tw.DateHelper.getCurrentMonth(contents.fromDt),
         usedAmtTot: Tw.FormatHelper.addComma(contents.invDtTotalAmtCharge),
-        listLength: contents.useConAmtDetailList
+        listLength: contents.useConAmtDetailList.length
       };
     }
   },
