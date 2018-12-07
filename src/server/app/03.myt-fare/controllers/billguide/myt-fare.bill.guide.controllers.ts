@@ -92,6 +92,7 @@ class MyTFareBillGuide extends TwViewController {
     const thisMain = this;
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
+
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
     this.logger.info(this, '[ childInfo ] : ', childInfo);
@@ -169,11 +170,6 @@ class MyTFareBillGuide extends TwViewController {
 
     }
 
-    // thisMain.renderView(res, thisMain._urlTplInfo.combineRepresentPage, {
-    //   reqQuery: thisMain.reqQuery,
-    //   svcInfo: svcInfo,
-    // });
-
   }
 
   // 통합청구(대표)
@@ -204,8 +200,12 @@ class MyTFareBillGuide extends TwViewController {
     const p3 = this._getPromiseApiMock(bill_guide_BFF_05_0024, 'p3');
     */
 
-    const dataInit = function () {
-      thisMain.logger.info(thisMain, '[ 데이터 초기화 > dataInit ]');
+    Promise.all([p1, p2, p3]).then(function(resArr) {
+
+      thisMain._billpayInfo = resArr[0].result;
+      thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._unpaidBillsInfo = resArr[2].result;
+      thisMain._childLineInfo = childInfo;
 
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
@@ -220,20 +220,10 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr;
 
-        thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
 
       thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
-    };
-
-    Promise.all([p1, p2, p3]).then(function(resArr) {
-
-      thisMain._billpayInfo = resArr[0].result;
-      thisMain._intBillLineInfo = resArr[1].result;
-      thisMain._unpaidBillsInfo = resArr[2].result;
-      thisMain._childLineInfo = childInfo;
-
-      dataInit();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
 
@@ -271,7 +261,63 @@ class MyTFareBillGuide extends TwViewController {
     }), 'p1');
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
 
-    const dataInit = function () {
+    // Promise.all([p1, p2]).then(function(resArr) {
+    //
+    //   thisMain._billpayInfo = resArr[0].result;
+    //   thisMain._intBillLineInfo = resArr[1].result;
+
+    thisMain._billpayInfo = {
+      svcMgmtNum: '7033115182',
+      invDt : '20170930',
+      invDtArr : [
+        '20170930',
+        '20170831',
+        '20170731',
+        '20170630',
+        '20170531',
+        '20170430'
+      ],
+      useAmtTot : '75510',
+      deduckTotInvAmt : '-22055',
+      unPayAmt : '99820',
+      useAmtMonthCnt : 6,
+      useAmtDetailInfo : [{
+        billItmLclNm : '',
+        billItmSclNm : '',
+        svcNm : '휴대폰',
+        coClNm : 'SKT',
+        ibilItmCreMclNm : '',
+        ibilItmCreMclAmt : '',
+        billItmNm : '',
+        invAmt : '',
+        repSvcNm : '01012**34**'
+      }],
+      unPayAmtList : [{
+        invDt : '20170930',
+        comBat : '99820'
+      }]
+    };
+    thisMain._intBillLineInfo = {
+      services: [
+        {
+          svcType: '휴대폰',
+          svcNum: '010-12**-45**',
+          svcMgmtNum: '123456789',
+          dtlAddr: '****',
+          acntRepYN: 'Y'
+        },
+        {
+          svcType: 'IPTV',
+          svcNum: '',
+          svcMgmtNum: '987654321',
+          dtlAddr: '104동*********',
+          assistAddr: '관랜E',
+          acntRepYN: 'N'
+        }
+      ]
+    };
+      thisMain._childLineInfo = childInfo;
+
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -283,20 +329,7 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
-      thisMain._commDataInfo.repSvcNm = (thisMain._billpayInfo) ? thisMain.phoneStrToDash( thisMain._billpayInfo.repSvcNm ) : null;
-
-
-    };
-
-    Promise.all([p1, p2]).then(function(resArr) {
-
-      thisMain._billpayInfo = resArr[0].result;
-      thisMain._intBillLineInfo = resArr[1].result;
-      thisMain._childLineInfo = childInfo;
-
-      dataInit();
-
-      thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
+      thisMain.logger.info(thisMain, '[_urlTplInfo.combineCommonPage] : ', thisMain._urlTplInfo.combineCommonPage);
       thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
@@ -307,15 +340,15 @@ class MyTFareBillGuide extends TwViewController {
         childLineInfo: thisMain._childLineInfo,
         allSvc: allSvc
       });
-    }, function(err) {
-      thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
-      return thisMain.error.render(res, {
-        title: 'title',
-        code: err.code,
-        msg: err.msg,
-        svcInfo: svcInfo
-      });
-    });
+    // }, function(err) {
+    //   thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+    //   return thisMain.error.render(res, {
+    //     title: 'title',
+    //     code: err.code,
+    //     msg: err.msg,
+    //     svcInfo: svcInfo
+    //   });
+    // });
   }
 
   // 개별청구
@@ -329,7 +362,13 @@ class MyTFareBillGuide extends TwViewController {
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
     const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
 
-    const dataInit = function () {
+    Promise.all([p1, p2, p3]).then(function(resArr) {
+
+      thisMain._billpayInfo = resArr[0].result;
+      thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._unpaidBillsInfo = resArr[2].result;
+      thisMain._childLineInfo = childInfo;
+
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -343,17 +382,6 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
-
-    };
-
-    Promise.all([p1, p2, p3]).then(function(resArr) {
-
-      thisMain._billpayInfo = resArr[0].result;
-      thisMain._intBillLineInfo = resArr[1].result;
-      thisMain._unpaidBillsInfo = resArr[2].result;
-      thisMain._childLineInfo = childInfo;
-
-      dataInit();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.individualPage] : ', thisMain._urlTplInfo.individualPage);
       thisMain.renderView(res, thisMain._urlTplInfo.individualPage, {
@@ -386,7 +414,9 @@ class MyTFareBillGuide extends TwViewController {
       invDt: this.reqQuery.date
     }), 'p1');
 
-    const dataInit = function () {
+    Promise.all([p1]).then(function(resArr) {
+
+      thisMain._ppsInfo = resArr[0].result;
 
       if ( thisMain._ppsInfo.dataYn === 'N' && thisMain._ppsInfo.dataOnlyYn === 'Y' ) { // 데이터 요금제 'A'
         thisMain._commDataInfo.ppsType = 'A';
@@ -419,13 +449,6 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.ppsEndDateVal = thisMain.getEndDateFormat('YYYYMM');
       thisMain._commDataInfo.ppsEndDateTxt = thisMain.getEndDateFormat('YYYY.M');
-    };
-
-    Promise.all([p1]).then(function(resArr) {
-
-      thisMain._ppsInfo = resArr[0].result;
-
-      dataInit();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.prepaidPage] : ', thisMain._urlTplInfo.prepaidPage);
       thisMain.renderView(res, thisMain._urlTplInfo.prepaidPage, {
@@ -539,63 +562,50 @@ class MyTFareBillGuide extends TwViewController {
 
   public intBillLineFun() {
     const thisMain = this;
-    const svcTotList = thisMain._intBillLineInfo.slice();
-    svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
 
-    svcTotList.map( function (item, idx, arr) {
-      if ( idx !== 0 && item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
+    const svcTotList = thisMain._intBillLineInfo.services || [];
+
+    for ( let i = 0; i < svcTotList.length; i++ ) {
+      const item = svcTotList[i];
+      if ( item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
         item.label = thisMain.phoneStrToDash( item.svcNum );
       } else {
         item.label = item.dtlAddr;
       }
-      return item;
-    });
-
+    }
+    svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
     return svcTotList;
   }
 
   public conditionChangeDtListFun() {
-    // console.log('에러 확인 > conditionChangeDtListFun');
     const thisMain = this;
-    let dtList = thisMain._billpayInfo.invDtArr.slice();
-    // console.dir(dtList);
-
-    dtList = dtList.map(function (item, idx, arr) {
-      // item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
-      // getShortDateWithFormatAddByUnit
-      item = DateHelper.getShortDateWithFormatAddByUnit(item, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
-      return item;
-    });
-
+    const dtList = thisMain._billpayInfo.invDtArr || [];
+    for ( let i = 0; i < dtList.length; i++ ) {
+      dtList[i] = DateHelper.getShortDateWithFormatAddByUnit(dtList[i], 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    }
     return dtList;
   }
 
   public paidAmtSvcCdListFun() {
     const thisMain = this;
-    // console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
-    // console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
-    let paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList.slice();
-    paidAmtSvcCdList = paidAmtSvcCdList.map(function (item, idx, arr) {
-      item.amt = FormatHelper.addComma(item.amt);
-
-      if ( item.svcNm === MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) {
-        item.svcNm = MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
+    const paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList || [];
+    for ( let i = 0; i < paidAmtSvcCdList.length; i++ ) {
+      paidAmtSvcCdList[i].amt = FormatHelper.addComma(paidAmtSvcCdList[i].amt);
+      if ( paidAmtSvcCdList[i].svcNm === MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) {
+        paidAmtSvcCdList[i].svcNm = MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
       }
-
-      return item;
-    });
-
-    // console.log('에러 확인 2 > thisMain._billpayInfo.paidAmtSvcCdList');
-    // console.dir( paidAmtSvcCdList );
-
+    }
     return paidAmtSvcCdList;
-
   }
 
 
   // 별표가 있는 휴대폰 번호 대시 적용
   public phoneStrToDash(strCellphoneNum: string): string {
-    return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+    if ( !strCellphoneNum ) {
+      return '';
+    }
+    // return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+    return StringHelper.phoneStringToDash(strCellphoneNum.replace(/-/g, ''));
   }
 
   public getCircuitChildInfoMask(obj: any): any { // 휴대폰 마스킹 처리
