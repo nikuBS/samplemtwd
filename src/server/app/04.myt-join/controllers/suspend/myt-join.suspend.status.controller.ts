@@ -153,21 +153,20 @@ class MyTJoinSuspendStatus extends TwViewController {
           options['status']['isProgressing'] = false;
         }
       } else {
-        this.error.render(res, {
+        return this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,
           svcInfo: svcInfo,
-          msg: apiError.msg,
-          code: apiError.code
+          msg: progress.msg,
+          code: progress.code
         });
       }
 
       if ( !options['progress'] && !options['status'] ) {
-        this.error.render(res, {
+        return this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,
           svcInfo: svcInfo,
           msg: MYT_SUSPEND_ERROR_MSG.NOT_SUSPENDED
         });
-        return;
       }
       res.render('suspend/myt-join.suspend.status.html', options);
 
