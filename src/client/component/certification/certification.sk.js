@@ -5,10 +5,6 @@
  */
 
 Tw.CertificationSk = function () {
-  this._certSms = new Tw.CertificationSkSms();
-  this._certKeyin = new Tw.CertificationSkKeyin();
-  this._certMotp = new Tw.CertificationSkMotp();
-
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
@@ -16,8 +12,8 @@ Tw.CertificationSk = function () {
   this._svcInfo = null;
   this._authUrl = null;
   this._authKind = null;
-  this._command = null;
   this._callback = null;
+  this._prodAuthKey = null;
 
   this._callbackParam = null;
   this._smsType = '';
@@ -27,6 +23,7 @@ Tw.CertificationSk = function () {
   this._securityMdn = '';
   this._seqNo = '';
   this._onKeyin = false;
+  this._jobCode = 'NFM_TWD_MBIMASK_AUTH';
 };
 
 
@@ -47,13 +44,13 @@ Tw.CertificationSk.prototype = {
     SMS2014: 'SMS2014',
     SMS3001: 'SMS3001'
   },
-  open: function (svcInfo, authUrl, authKind, command, callback, opMethods, optMethods, isWelcome, methodCnt) {
+  open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt) {
     this._callbackParam = null;
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._authKind = authKind;
-    this._command = command;
     this._callback = callback;
+    this._prodAuthKey = prodAuthKey;
 
     this._getAllSvcInfo(opMethods, optMethods, isWelcome, methodCnt);
   },
@@ -208,15 +205,29 @@ Tw.CertificationSk.prototype = {
     }
   },
   _requestCert: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
+      .done($.proxy(this._successGetUrlMeta, this));
+
+
+  },
+  _successGetUrlMeta: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result.auth && resp.result.auth.jobCode ) {
+        // this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
+      }
+    }
+    this._sendCert();
+  },
+  _sendCert: function () {
     if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
       this._apiService.request(Tw.API_CMD.BFF_01_0014, {
-        jobCode: 'NFM_TWD_MBIMASK_AUTH',
+        jobCode: this._jobCode,
         receiverNum: this._onKeyin ? this.$inputMdn.val() : '',
         mdn: this._securityMdn
       }).done($.proxy(this._onSuccessCert, this));
     } else if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE ) {
       this._apiService.request(Tw.API_CMD.BFF_01_0057, {
-        jobCode: 'NFM_TWD_MBIMASK_AUTH',
+        jobCode: this._jobCode,
         mdn: this._securityMdn
       }).done($.proxy(this._onSuccessCert, this));
 
@@ -251,12 +262,12 @@ Tw.CertificationSk.prototype = {
   },
   _onClickConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, {
-      jobCode: 'NFM_TWD_MBIMASK_AUTH',
+      jobCode: this._jobCode,
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
       receiverNum: this._onKeyin ? this.$inputMdn.val() : '',
       authKind: this._authKind,
-      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : '',
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : '',
       method: this._onKeyin ? Tw.AUTH_CERTIFICATION_METHOD.K : this._smsType
     }).done($.proxy(this._successConfirm, this));
   },

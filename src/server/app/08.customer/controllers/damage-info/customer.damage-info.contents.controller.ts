@@ -5,8 +5,8 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
+import { CUSTOMER_DAMAGEINFO_CONTENTS_TITLE } from '../../../../types/string.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {CUSTOMER_DAMAGEINFO_CONTENTS_TITLE} from '../../../../types/string.type';
 
 class CustomerDamageInfoContents extends TwViewController {
   constructor() {

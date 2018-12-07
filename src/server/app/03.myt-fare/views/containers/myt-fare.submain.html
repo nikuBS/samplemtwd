@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: '나의 요금' }); %>
     <!--// #header -->
@@ -24,7 +24,6 @@
         <div class="container" data-id="submain-container">
             <div class="user-greeting">
                 <i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>
-                <!-- TODO:Admin 정보가 있다면 변경 -->
                 <p class="msg"><%= data.svcInfo.mbrNm %>님,<br /><span class="str">변함없이 저희와 함께해 주셔서 감사합니다.</span></p>
             </div>
             <!-- 청구요금 -->
@@ -78,9 +77,9 @@
                                 <ul class="slider">
                                     <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
-                                        <button>
-                                            <img src="<%= data.banner[i].imgLinkUrl %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
-                                        </button>
+                                        <a href="<%= data.banner[i].imgLinkUrl %>">
+                                            <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
+                                        </a>
                                     </li>
                                     <% } %>
                                 </ul>
@@ -100,7 +99,7 @@
             <div class="cont-box nogaps-btm" data-id="other-line">
                 <div class="tit-wrap">
                     <h3 class="tit-type6 iblock">다른 회선 요금 조회</h3>
-                    <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                    <button class="btn-tip" page-id="MF1_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                 </div>
                 <ul class="my-line-info">
                 </ul>

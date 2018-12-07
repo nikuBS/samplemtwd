@@ -15,7 +15,7 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역'}); %>
 
     <!-- #contents -->
@@ -32,7 +32,7 @@
         <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
             <ul class="pg-chk-list">
                 <% data.noticeInfo.forEach(function(info){ %>
-                    <li data-list-id="<%=info.link%>"><%=info.title%><button class="btn-tip" title="정보보기" ><i class="icon-badge-tip"><span class=
+                    <li data-list-id="<%=info.link%>"><%=info.title%><button class="btn-tip" id="<%=info.link%>" page-id="<%=info.view%>" title="정보보기" ><i class="icon-badge-tip"><span class=
                     "blind">TIP</span></i></button></li>
                 <% }); %>
             </ul>
@@ -42,10 +42,7 @@
     </div>
     <!--// #contents -->
 
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 
 </div>
 

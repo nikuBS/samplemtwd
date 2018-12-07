@@ -18,7 +18,7 @@ interface Result {
   [key: string]: string;
 }
 class MyTFareBillSmallMonthly extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       gubun: 'Done',

@@ -14,7 +14,7 @@ class CommonCertNice extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const mobileco = req.query.niceKind;
     const authUrl = req.query.authUrl;
     const authKind = req.query.authKind;

@@ -18,7 +18,7 @@ class CommonTidLogout extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const target = req.query.target || '/common/member/logout/complete';
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_03_0007, {}),

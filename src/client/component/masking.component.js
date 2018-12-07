@@ -16,7 +16,7 @@ Tw.MaskingComponent = function () {
 Tw.MaskingComponent.prototype = {
   _bindEvent: function () {
     this.$btMasking = $('#fe-bt-masking');
-    this._url = this.$btMasking.data('url');
+    this._url = this.$btMasking.data('menuurl');
     this.$btMasking.on('click', $.proxy(this._onClickMasking, this));
   },
   _onClickMasking: function () {
@@ -30,7 +30,7 @@ Tw.MaskingComponent.prototype = {
         prodProcType: ''
       });
 
-      this._cert.open(params, null, null, $.proxy(this._completeCert, this));
+      this._cert.open(params, this._url, null, null, $.proxy(this._completeCert, this));
     }
   },
   _completeCert: function (resp) {

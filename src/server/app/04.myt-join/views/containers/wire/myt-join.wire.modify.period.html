@@ -17,7 +17,7 @@
 </div>
 <!--// #skip_navigation -->
 
-<div id="fe-myt-join-wire-modify-period" class="wrap">
+<div id="fe-myt-join-wire-modify-period" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <div class="header-wrap">
@@ -68,7 +68,7 @@
                                     <div class="elem">
                                         <p class="tit">
                                             해지 위약금
-                                            <button class="tip-view" id="MS_04_04_tip_02">TIP</button>
+                                            <button class="tip-view" id="MS_04_04_tip_02" page-id="MS_04_06">TIP</button>
                                         </p>
                                         <p class="data"><em class="fe-term-brch-amt"></em><span>원</span></p>
                                     </div>
@@ -182,9 +182,6 @@
         <!--// .popup-closeBtn -->
     </div>
     <!-- // .popup hbs -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
 </div>
 
 

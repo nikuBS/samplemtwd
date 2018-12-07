@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: '나의 가입정보' }); %>
     <!--// #header -->
@@ -64,12 +64,11 @@
                                 <ul class="slider">
                                     <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
-                                        <button>
-                                            <img src="<%= data.banner[i].imgLinkUrl %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
-                                        </button>
+                                        <a href="<%= data.banner[i].imgLinkUrl %>">
+                                            <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
+                                        </a>
                                     </li>
                                     <% } %>
-                                    <% delete data.banner; %>
                                 </ul>
                             </div>
                         </div>
@@ -87,7 +86,7 @@
                 <div class="cont-box nogaps-btm" data-id="other-lines">
                     <div class="tit-wrap">
                         <h3 class="tit-type6 iblock">다른 회선 정보</h3>
-                        <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">MS_tip_01</span></i></button>
+                        <button class="btn-tip" page-id="MS_tip_01"><i class="icon-badge-tip"><span class="blind">MS_tip_01</span></i></button>
                     </div>
                     <ul class="my-line-info">
                         <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>

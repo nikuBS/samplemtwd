@@ -28,7 +28,7 @@ class MyTFareInfoBill extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query)
@@ -77,7 +77,7 @@ class MyTFareInfoBill extends TwViewController {
    // 꼭 확인해 주세요 팁 메뉴 정리
    private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_08_01_02_tip_01', title: '현금영수증 발급내역 확인'}
+      {link: 'MF_08_01_02_tip_01', view: 'MF_08_01_02', title: '현금영수증 발급내역 확인'}
     ];
   }
 

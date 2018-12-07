@@ -14,8 +14,9 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 관련 사이트', svcInfo, option: { line: true } }); %><!-- #contents -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 관련 사이트' }); %>
+    <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">

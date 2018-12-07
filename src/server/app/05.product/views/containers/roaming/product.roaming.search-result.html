@@ -121,11 +121,6 @@
                             <strong class="fe-rm-type"></strong>입니다.</span>
                     </div>
                     <p class="mt20"><button class="bt-dropdown big fe-manage-type" title="사용 가능 서비스" aria-haspopup="true">
-                        <!--<% if (roamingTypeData.lte > 0) {%>LTE 자동로밍-->
-                        <!--<% } else if (roamingTypeData.wcdma > 0) {%>3G 자동로밍-->
-                        <!--<% } else if (roamingTypeData.cdma > 0) {%>2G 자동로밍-->
-                        <!--<% } else if (roamingTypeData.gsm > 0) {%>GSM 자동로밍-->
-                        <!--<% } else {%>임대로밍<% } %>-->
                         <span class="ico"></span></button></p>
                     <p class="comm-indent-txt pt20">* 안내 요금은 부가세가 포함된 금액입니다.</p>
                 </div>
@@ -144,72 +139,7 @@
                         <div class="widget-box accordion">
                             <div class="acco-cover"><!-- toggle : 한개만 열기 -->
                                 <div class="acco-style btn-hold">
-                                    <ul class="acco-list pt0">
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info01.png" alt="음성통화 수신요금 안내" /></span>음성통화 수신요금 안내<button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="round-dot-list">
-                                                    <li>
-                                                        음성통화 수신요금 : SK텔링크 기준이며, SK브로드밴드
-                                                        257.4원(부가세포함), LG U+ 277.2원(부가세포함), KT
-                                                        277.2원(부가세포함), 온세통신 261.36원(부가세포함)입니다.
-                                                    </li>
-                                                    <li>
-                                                        음성통화 수신을 위한 국제전화사업자를 선택하실 수 있으며,
-                                                        미선택 시 SK텔링크로 자동 설정됩니다.
-                                                        <p><a class="bt-link-tx underline" href="/product/callplan/TW61000002">국제전화 사업자 선택 자세히 보기 </a></p>
-                                                    </li>
-                                                    <li>부가 서비스 : 발신자표시서비스(무료), 로밍안내 방송서비스(무료)</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info02.png" alt="문자 메시지 요금 안내" /></span>문자 메시지 요금 안내<button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="round-dot-list">
-                                                    <li>
-                                                        현지 발신 & 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용(건당 최대 165원, 부가세포함)이 추가로 발생합니다.
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info03.png" alt="이것만은 꼭 확인하세요" /></span>이것만은 꼭 확인하세요<button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="round-dot-list">
-                                                    <li>
-                                                        해당 국가의 경우 2G 자동 로밍 서비스 방식이 지원되지만,
-                                                        지역에 따라 로밍 가능 여부가 달라질 수 있습니다.
-                                                        <p><a class="bt-link-tx underline fe-able-area" href="http://tworld.co.kr/poc/roaming/html/popup/cm8GsmUsa.html" target="_blank">서비스 이용가능 지역 자세히 보기</a></p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info04.png" alt="로밍 시 국가별 주의 사항" /></span>로밍 시 국가별 주의 사항<button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="round-dot-list">
-                                                    <li>
-                                                        수신요금은 현지사업자의 요금과 국제전화사업자의 요금이
-                                                        합산된 금액이며, 현지사업자의 수신요금은 분당 과금,
-                                                        국제전화사업자의 수신요금은 초당 과금됩니다.
-                                                    </li>
-                                                    <li>
-                                                        현지사업자의 수신요금은 음성통화 과금을 1분단위로
-                                                        이루어집니다.(예) 45초 통화시 1분 과금, 5분 10초 통화시
-                                                        6분 과금 수신을 위한 국제전화사업자(SK텔링크,
-                                                        SK브로드밴드, 데이콤, KT, 온세텔레콤)는 로밍센터 방문
-                                                        또는 T 로밍 고객센터 1599-2011(유료), T world 에서
-                                                        선택하실 수 있으며, 선택하지 않을 경우 SK텔링크로
-                                                        자동 설정됩니다.
-                                                        <p><a class="bt-link-tx underline" href="/product/callplan/TW61000002">국제전화 사업자 선택 자세히 보기 </a></p>
-                                                    </li>
-                                                    <li>수신요금은 국제전화사업자의 요금정책에 따라 차이가
-                                                        있을 수 있으며, 초당 과금됩니다.</li>
-                                                    <li>로밍요금 전체금액에 대한 10%가 부가세로 적용됩니다.</li>
-                                                </ul>
-                                            </div>
-                                        </li>
+                                    <ul class="acco-list pt0" id="fe-rm-noti">
                                     </ul>
                                 </div>
                             </div>

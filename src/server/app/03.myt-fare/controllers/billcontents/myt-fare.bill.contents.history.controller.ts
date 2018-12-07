@@ -32,7 +32,7 @@ class MyTFareBillContentsHistory extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     // 조회할 달 수 구하기
     this.setDatePeriod(req);
 
@@ -124,7 +124,7 @@ class MyTFareBillContentsHistory extends TwViewController {
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_07_01_tip_01', title: '조회 안내'}
+      {link: 'MF_07_01_tip_01', view: 'MF_07_01', title: '조회 안내'}
     ];
   }
 }

@@ -29,7 +29,10 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
     if ( this.resData.childLineInfo ) {
       this._getChildBillInfo();
+    } else {
+      $('#divChildListHaeder').hide();
     }
+
     this._getUseBillsInfo();
 
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
@@ -55,25 +58,40 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       return context[ndx];
     });
 
-    Handlebars.registerHelper('if_contents', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1) {
-        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.CONTENTS;
+    // 컨텐츠/소액결제 분기 및 tag리턴
+    Handlebars.registerHelper('if_contents', function (strVal) {
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].SCH_ID;
+        if ( strVal.indexOf(searchName) > -1 ) {
+          return Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].ELEMENT;
+        }
       }
+      return strVal;
     });
 
-    Handlebars.registerHelper('if_micro', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
-      if ( strVal.indexOf(searchName) > -1) {
-        return Tw.MYT_FARE_BILL_GUIDE.DETAIL_BTN.MICRO;
+    // 휴대폰/인터넷/TV 아이콘 리턴
+    Handlebars.registerHelper('if_icon', function (strVal) {
+      if(!strVal) return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
+      for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON.length; i++){
+        var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[i].SCH_LB;
+        if ( strVal.indexOf(searchName) > -1 ) {
+          return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[i].ELEMENT;
+        }
       }
+      return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
     });
 
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
       if ( strVal.indexOf(searchName) > -1) {
-        return Tw.MYT_FARE_BILL_GUIDE.THIRD_PARTY_TPL;
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
       }
+    });
+
+    Handlebars.registerHelper('if_dc_red', function (strVal) {
+      if ( strVal.indexOf(Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.LABEL) > -1 ) {
+        return Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.CLASS;
+      }
+      return '';
     });
 
   },
@@ -85,6 +103,8 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     this.$hbChildListArea = $('[data-target="hbChildListArea"]');
     this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
+    // this.$searchNmSvcTypeTplAll = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.ALL);
+    // this.$searchNmSvcTypeTplOth = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.OTHER);
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
@@ -94,23 +114,23 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     this.$container.on('click', '[data-target="donationBtn"]', $.proxy(this._donationBtnEvt, this)); // 기부금/후원금 사용요금
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
-      this._goLoad('/myt-fare/bill/contents');
+      this._history.goLoad('/myt-fare/bill/contents');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
-      this._goLoad('/myt-fare/bill/small');
+      this._history.goLoad('/myt-fare/bill/small');
     }, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
   _callGiftBtnEvt: function () {
-    this._goLoad('/myt-fare/billguide/callgift');
+    this._history.goLoad('/myt-fare/billguide/callgift');
   },
   _roamingBtnEvt: function () {
-    this._goLoad('/myt-fare/billguide/roaming');
+    this._history.goLoad('/myt-fare/billguide/roaming');
   },
   _donationBtnEvt: function () {
-    this._goLoad('/myt-fare/billguide/donation');
+    this._history.goLoad('/myt-fare/billguide/donation');
   },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
@@ -165,30 +185,29 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var param = {
       date: this.paramDate
     };
-    this._goLoad('/myt-fare/billguide/guide?' + $.param(param));
+    this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0047;
+    var targetApi = Tw.API_CMD.BFF_05_0036;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({ command: targetApi, params: { childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum } });
+      commands.push({ command: targetApi, params: { selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum, detailYn:'Y' }});
     }
 
+    Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
-      .done(function () {
+      .done(function (resp) {
         var childLineInfo = thisMain.resData.childLineInfo;
 
         _.each(arguments, function (element, index) {
-          // Tw.Logger.info('[element, index, list]', element, index, list);
-          if ( childLineInfo[index].svcMgmtNum === element.result.svcMgmtNum ) {
+          if ( element.result && (element.result.selSvcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
           }
-
         });
 
         thisMain._getChildBillInfoInit();
@@ -197,15 +216,15 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   _getChildBillInfoInit: function () {
     var thisMain = this;
-    var childListData = $.extend(true, {}, thisMain.resData.childLineInfo);
+    var childListData = thisMain.resData.childLineInfo;
 
-    childListData = _.map(childListData, function (item) {
+    for(var i = 0; i < childListData.length; i++){
+      var item = childListData[i];
+      item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       if ( item.detailInfo ) {
         item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
-        item.svcNum = thisMain._phoneStrToDash(item.svcNum);
-        return item;
       }
-    });
+    }
 
     Tw.Logger.info('childListData', childListData);
 
@@ -257,7 +276,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });
-    console.info('[ selectSvcType ] : ', selectSvcType);
+    // console.info('[ selectSvcType ] : ', selectSvcType);
     return selectSvcType;
 
   },
@@ -271,6 +290,28 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     };
     var html = template(data);
     jqTg.append(html);
+  },
+  // allSvc 정보에서 해당 상품의 id와 이름을 찾아서 리턴한다.
+  _getProdInfo: function(svcMgmtNum) {
+    var svcS = this.resData.allSvc.S || [];
+    var svcM = this.resData.allSvc.M || [];
+    var svcO = this.resData.allSvc.O || [];
+    for(var i = 0; i < svcS.length; i++){
+      if(svcMgmtNum === svcS[i].svcMgmtNum){
+        return {id: svcS[i].prodId, nm: svcS[i].prodNm};
+      }
+    }
+    for(var i = 0; i < svcM.length; i++){
+      if(svcMgmtNum === svcM[i].svcMgmtNum){
+        return {id: svcM[i].prodId, nm: svcM[i].prodNm};
+      }
+    }
+    for(var i = 0; i < svcO.length; i++){
+      if(svcMgmtNum === svcO[i].svcMgmtNum){
+        return {id: svcO[i].prodId, nm: svcO[i].prodNm};
+      }
+    }
+    return {id: '', nm: ''};
   },
 
   //--------------------------------------------------------------------------[COM]
@@ -313,15 +354,10 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var strVal = String(str);
     return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
   _go: function (hash) {
     this._history.setHistory();
-    window.location.hash = hash;
+    this._history.goHash(hash);
+    //window.location.hash = hash;
   }
 
 

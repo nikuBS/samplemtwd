@@ -16,12 +16,14 @@
 </div>
 <!--// #skip_navigation -->
 
-<div id="fe-my-benefit-rainbow-point-adjustment" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines="<%= linesData %>">
+<div id="fe-my-benefit-rainbow-point-adjustment" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines="<%= linesData %>" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page nobg tw-popup">
-        <div id="header" class="header-wrap">
-            <!-- #header -->
-            <%- include('../../../../common/views/components/header.component.html', { title: '포인트 합산' }); %>
-            <!--// #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>포인트 합산</h1>
+                </div>
+            </div>
         </div>
     <!-- #contents -->
         <div class="container-wrap">
@@ -45,7 +47,7 @@
                             <button class="bt-dropdown big tx-bold fe-btn-line-to-receive" title="포인트 받는 회선" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>">
                                 <span class="fe-svc-num"><%= lineToReceive.svcNum %></span>
                             </button> 으로
-                            <button class="tip-view" id="BS_01_01_03_tip_01">정보보기</button>
+                            <button class="tip-view" id="BS_01_01_03_tip_01" page-id="BS_01_01_03">정보보기</button>
                         </div>
                         <div class="inputbox">
                                 <span class="input">
@@ -124,9 +126,6 @@
             </div>
         </div>
     <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
         <!-- .popup-closeBtn -->
         <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->

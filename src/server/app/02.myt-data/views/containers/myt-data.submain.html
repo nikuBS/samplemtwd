@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터&middot;통화' }); %>
     <!--// #header -->
@@ -32,7 +32,7 @@
                 <div class="cont-box nogaps">
                     <div class="recharge-sum-change">
                         <span>리필쿠폰
-                            <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                            <button class="btn-tip" page-id="DC1_tip_01"><i class="icon-badge-tip"><span class="blind">DC1_tip_01</span></i></button>
                         </span>
                         <button class="change txt1"><%= data.refill.length %>장</button>
                     </div>
@@ -123,7 +123,7 @@
                         최근 충전·선물 내역
                         <% } %>
                     </h2>
-                    <span class="r-btn"><a href="/myt-data/datainfo" class="more">더보기</a></span>
+                    <span class="r-btn"><a href="/myt-data/history" class="more">더보기</a></span>
                 </div>
                 <div class="list-comp-history type01">
                     <ul class="comp-box">
@@ -161,9 +161,9 @@
                                 <ul class="slider">
                                     <% debugger; for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
-                                        <button>
-                                            <img src="<%= data.banner[i].imgLinkUrl %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
-                                        </button>
+                                        <a href="<%= data.banner[i].imgLinkUrl %>">
+                                            <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
+                                        </a>
                                     </li>
                                     <% } %>
                                 </ul>
@@ -185,7 +185,7 @@
                 <div class="cont-box noborder nogaps-btm b-line1" data-id="other-lines">
                     <div class="ti-caption-type01 pb0">
                         <h2 class="tit">다른 회선의 실시간 잔여량</h2>
-                        <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                        <button class="btn-tip" page-id="DC1_tip_02"><i class="icon-badge-tip"><span class="blind">DC1_tip_02</span></i></button>
                     </div>
 
                     <div class="my-line-info-wrap">

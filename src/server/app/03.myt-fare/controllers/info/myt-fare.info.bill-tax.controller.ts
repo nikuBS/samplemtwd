@@ -45,7 +45,7 @@ class MyTFareInfoBillTax extends TwViewController {
   }  
   
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const query: Query = {
       isQueryEmpty: FormatHelper.isEmpty(req.query)
     };
@@ -128,9 +128,9 @@ class MyTFareInfoBillTax extends TwViewController {
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_08_01_01_tip_01', title: '세금계산서 적용안내'},
-      {link: 'MF_08_01_01_tip_02', title: '납세금계산서 내역 조회'},
-      {link: 'MF_08_01_01_tip_03', title: '세금계산서 합산 및 재발행'}
+      {link: 'MF_08_01_01_tip_01', view: 'MF_08_01_01', title: '세금계산서 적용안내'},
+      {link: 'MF_08_01_01_tip_02', view: 'MF_08_01_01', title: '납세금계산서 내역 조회'},
+      {link: 'MF_08_01_01_tip_03', view: 'MF_08_01_01', title: '세금계산서 합산 및 재발행'}
     ];
   }
 

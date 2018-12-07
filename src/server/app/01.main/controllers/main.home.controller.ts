@@ -22,8 +22,19 @@ import {
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_QUICK_DEFAULT, REDIS_SMART_CARD } from '../../../types/redis.type';
+import {
+  REDIS_APP_VERSION,
+  REDIS_BANNER_ADMIN,
+  REDIS_HOME_NOTI,
+  REDIS_QUICK_DEFAULT,
+  REDIS_SMART_CARD,
+  REDIS_CODE,
+  REDIS_HOME_NOTICE,
+  REDIS_HOME_HELP,
+  CHANNEL_CODE
+} from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
+import BrowserHelper from '../../../utils/browser.helper';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -38,6 +49,8 @@ class MainHome extends TwViewController {
       billData: null,
     };
     let smartCard = [];
+    const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
+      BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
     if ( svcType.login ) {
       svcInfo = this.parseSvcInfo(svcType, svcInfo);
@@ -48,36 +61,37 @@ class MainHome extends TwViewController {
           Observable.combineLatest(
             this.getUsageData(),
             this.getMembershipData(),
-            this.getNotice()
-          ).subscribe(([usageData, membershipData, notice]) => {
+            this.getRedisData(noticeCode)
+          ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+            console.log(redisData.help);
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
           });
         } else {
           // 모바일 - 휴대폰 외 회선
           Observable.combineLatest(
             this.getUsageData(),
-            this.getNotice()
-          ).subscribe(([usageData, notice]) => {
+            this.getRedisData(noticeCode)
+          ).subscribe(([usageData, redisData]) => {
             homeData.usageData = usageData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
           });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(),
-          this.getNotice()
-        ).subscribe(([billData, notice]) => {
+          this.getRedisData(noticeCode)
+        ).subscribe(([billData, redisData]) => {
           homeData.billData = billData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
         });
       }
     } else {
       // 비로그인
-      this.getNotice().subscribe((notice) => {
-        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice, pageInfo });
+      this.getRedisData(noticeCode).subscribe((redisData) => {
+        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
       });
     }
   }
@@ -114,14 +128,54 @@ class MainHome extends TwViewController {
     return svcType;
   }
 
-  private getNotice(): Observable<any> {
-    return this.redisService.getData(REDIS_APP_VERSION)
-      .map((result) => {
-        if ( !FormatHelper.isEmpty((result)) ) {
-          return result.notice;
-        }
-        return null;
+  private getRedisData(noticeCode): Observable<any> {
+    return Observable.combineLatest(
+      this.getNoti(),
+      this.getHomeNotice(noticeCode),
+      this.getHomeHelp()
+    ).map(([noti, notice, help]) => {
+      return { noti, notice, help };
+    });
+  }
+
+  private getNoti(): Observable<any> {
+    return this.redisService.getData(REDIS_HOME_NOTI)
+      .map((resp) => {
+        // if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        //
+        // }
+        return resp.result;
       });
+  }
+
+  private getHomeNotice(noticeCode): Observable<any> {
+
+    return this.redisService.getData(REDIS_HOME_NOTICE + noticeCode)
+      .map((resp) => {
+        // if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        //   return resp.result;
+        // }
+        return resp.result;
+      });
+  }
+
+  private getHomeHelp(): Observable<any> {
+    let result = null;
+    return this.redisService.getData(REDIS_HOME_HELP)
+      .map((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          result = this.parseHelpData(resp.result.cicntsList);
+        }
+        return result;
+      });
+  }
+
+  private parseHelpData(cicntsList): any {
+    const resultArr = <any>[];
+    for ( let i = 0; i < cicntsList.length; i += 3 ) {
+      resultArr.push(cicntsList.slice(i, i + 3));
+    }
+    return resultArr;
   }
 
   private getMembershipData(): Observable<any> {

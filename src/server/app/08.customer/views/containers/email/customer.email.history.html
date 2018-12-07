@@ -27,8 +27,12 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="email-consult-list">
-                    <% inquiryList.map( (inquiry) => { %>
+                <% inquiryList.map( (inquiry) => { %>
+                    <% if ( inquiry.supInqId !== '' ) { %>
+                    <li class="re-inquiry">
+                    <% } else { %>
                     <li>
+                    <% } %>
                         <button data-inqId="<%-inquiry.inqId%>" data-inqClCd="<%-inquiry.inqClCd%>"
                                 class="list-inner fe-btn_history_detail">
                             <% if ( inquiry.supInqId !== '' ) { %>
@@ -45,7 +49,7 @@
                             </span>
                         </button>
                     </li>
-                    <% }) %>
+                <% }) %>
                 </ul>
                 <!--<div class="bt-more">-->
                 <!--<button>더보기</button>-->

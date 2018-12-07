@@ -115,7 +115,8 @@ export enum MYT_FARE_PAYMENT_TYPE {
 export enum MYT_FARE_PAYMENT_CODE {
   BANK = '41',
   BANK2 = '40',
-  CARD = '02'
+  CARD = '02',
+  POINT = '11'
 }
 
 export enum MYT_FARE_POINT_PAYMENT_STATUS {
@@ -138,6 +139,18 @@ export enum MYT_FARE_PAYMENT_TITLE {
   AUTO_NEW = '자동납부 신청',
   AUTO_CHANGE = '자동납부 변경',
   AUTO_CANCEL = '자동납부 해지'
+}
+
+export enum MYT_FARE_PAYMENT_PROCESS_DATE {
+  S = '청구일자',
+  R = '인출요청일자',
+  D = '납부일자'
+}
+
+export enum MYT_FARE_PAYMENT_PROCESS_ATM {
+  S = '청구금액',
+  R = '인출요청금액',
+  D = '납부금액'
 }
 
 export enum MYT_FARE_PAYMENT_NAME {

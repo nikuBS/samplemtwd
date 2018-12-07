@@ -61,9 +61,9 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_06_01_02_tip_01', title: '차단내역 안내'},
-      {link: 'MF_06_01_02_tip_02', title: '차단/해제 적용 기준'},
-      {link: 'MF_06_01_02_tip_03', title: '특정 콘텐츠 차단/해제 안내'}
+      {link: 'MF_06_01_02_tip_01', view: 'MF_06_01_02', title: '차단내역 안내'},
+      {link: 'MF_06_01_02_tip_02', view: 'MF_06_01_02', title: '차단/해제 적용 기준'},
+      {link: 'MF_06_01_02_tip_03', view: 'MF_06_01_02', title: '특정 콘텐츠 차단/해제 안내'}
     ];
   }
 }

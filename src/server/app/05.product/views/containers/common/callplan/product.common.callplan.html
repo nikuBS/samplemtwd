@@ -17,7 +17,7 @@
 </div>
 <!--// #skip_navigation -->
 <!-- #contents -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../common/views/components/header.component.html', { title: '', svcInfo, option: { line: false } }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -69,13 +69,8 @@
         </div>
     </div>
     <!--// #contents -->
-    <!-- #footer -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
-    <!--// #footer -->
 </div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>'); });</script>
+<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>', '<%= isPreview ? "Y" : "N" %>'); });</script>
 <% include ../../../components/end.component.html %>

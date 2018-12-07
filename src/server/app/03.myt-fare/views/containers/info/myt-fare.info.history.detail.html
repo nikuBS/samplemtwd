@@ -16,7 +16,7 @@
     </div>
     <!--// #skip_navigation -->
 
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <%- include('../../../../../common/views/components/header.component.html', { title: data.headerTitle }); %>
 
         <!-- #contents -->
@@ -27,10 +27,7 @@
             </div>
         </div>
 
-        <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 
     <% include ../../components/javascript.component.html %>
@@ -75,6 +72,59 @@
         </div>
         <!--// .cont-box -->
     </script>
+    <script id="fe-payment-detail-auto-unit" type="text/x-handlebars-template">
+        <!-- 통합인출 -->
+         <div class="cont-box nogaps-hoz bg-payment">
+            <div class="user-bill-detail">
+                <ul>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">{{dataDtTitle}}</span>
+                            <span class="val">{{dataDt}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">{{dataAmtTitle}}</span>
+                            <span class="val">{{dataAmt}}원</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">은행명</span>
+                            <span class="val">{{bankNm}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">계좌번호</span>
+                            <span class="val">{{bankNum}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="head-text">
+                            <span class="tit">구분</span>
+                            <span class="val">{{dataTmthColClCd}}</span>
+                        </div>
+                    </li>
+                </ul>
+                {{#if isBillCnt}}
+                <ul class="bt-slice solid mt20">
+                    {{#if isPersonalBiz}}
+                    <li>
+                        <button class="btn-round1 btn-style4 go-bill-tax">세금계산서 발행내역</button>
+                    </li>
+                    {{else}}
+                    <li>
+                        <button class="btn-round1 btn-style4 go-bill-cash">현금영수증 발행내역</button>
+                    </li>
+                    {{/if}}
+                </ul>
+                {{/if}}
+            </div>
+        </div>
+        <!--// 통합인출 -->
+    </script>
     <script id="fe-payment-detail-ocb-card" type="text/x-handlebars-template">
         <!-- 즉시납부 포인트 / 카드 -->
         <div class="cont-box nogaps-hoz bg-payment">
@@ -113,7 +163,7 @@
                         <div class="head-text">
                             {{#if dataIsBankOrCard}}
                             <span class="tit">카드 종류</span>
-                            <span class="val">{{dataTitle}}</span>
+                            <span class="val">{{cardCdNm}}</span>
                             {{else}}
                             <span class="tit">포인트 종류</span>
                             <span class="val">{{dataSettleWayCode}}</span>
@@ -170,14 +220,14 @@
                         </dl>
                         <div class="sub-text">
                             <span class="tit">요청일시</span>
-                            <span class="val">{{dataDt}}</span>
+                            <span class="val">{{reqDate}}</span>
                         </dl>
                         <!--2018 09-21 수정: 승인일시 삭제-->
                     </li>
                     <li>
                         <div class="head-text">
                             <span class="tit">은행명</span>
-                            <span class="val">{{dataTitle}}</span>
+                            <span class="val">{{cardCdNm}}</span>
                         </dl>
                     </li>
                     <li>
@@ -188,6 +238,7 @@
                     </li>
                 </ul>
                 <!--2018 09-21 수정: 버튼 추가 및 구조변경(.myfare-list 밖으로 뺌)-->
+                {{#if isBillCnt}}
                 <ul class="bt-slice solid mt20">
                     {{#if isPersonalBiz}}
                     <li>
@@ -199,6 +250,7 @@
                     </li>
                     {{/if}}
                 </ul>
+                {{/if}}
             </div>
         </div>
         
@@ -275,6 +327,7 @@
                 </ul>
             </div>
             {{#if dataIsBank}}
+            {{#if isBillCnt}}
             <ul class="bt-slice solid mt20">
                 {{#if isPersonalBiz}}
                 <li>
@@ -286,6 +339,7 @@
                 </li>
                 {{/if}}
             </ul>
+            {{/if}}
             {{/if}}
         </div>
         <!--// 자동납부내역 -->
@@ -384,12 +438,6 @@
         <div class="cont-box nogaps-hoz bg-payment">
             <div class="user-bill-detail">
                 <ul>
-                    <!--<li>
-                        <div class="head-text">
-                            <span class="tit">신청일자</span>
-                            <span class="val">{{dataDt}}</span>
-                        </div>
-                    </li>-->
                     <li>
                         <div class="head-text">
                             <span class="tit">신청 포인트</span>

@@ -68,7 +68,7 @@ export const MYT_DATA_CHILD_USAGE = {
 
 export const MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
-    YYYYMM_TYPE: 'YYYY년 MM월'
+    YYYYMM_TYPE: 'YYYY년 M월'
   },
   FIRST_SVCTYPE: '서비스 전체',
   PHONE_SVCTYPE: '휴대폰',
@@ -82,6 +82,16 @@ export enum MYT_FARE_PAYMENT_NAME {
   BANK3 = 'bank',
   CARD = '카드',
   CARD2 = 'card'
+}
+
+export enum MYT_FARE_PAYMENT_TYPE {
+  DIRECT = 'DI',
+  AUTO = 'AT',
+  AUTOALL = 'AU',
+  MICRO = 'MP',
+  CONTENT = 'CP',
+  PRESERVE = 'PR',
+  PAUTO = 'PN'
 }
 
 export const MYT_FEEPLAN_BENEFIT = {
@@ -291,6 +301,10 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   AU: '자동납부 상세 내역',
   MP: '소액 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
+};
+
+export const MYT_PAYMENT_DETAIL_ERROR = {
+  MSG: '상세내역을 조회할 수 없습니다.'
 };
 
 export const MYT_FARE_PAYMENT_ERROR = {

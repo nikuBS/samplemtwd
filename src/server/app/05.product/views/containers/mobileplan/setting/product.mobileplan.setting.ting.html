@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -57,7 +57,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="wrap-gaps-top">
-                        <h3>기본제공 금액 내 데이터 상한 금액 변경 <button class="tip-view" id="MP_02_02_03_03_tip_01">TIP</button></h3>
+                        <h3>기본제공 금액 내 데이터 상한 금액 변경 <button class="tip-view" id="MP_02_02_03_03_tip_01" page-id="MP_02_02_03_03">TIP</button></h3>
                     </div>
                     <div class="list-comp-input">
                         <div class="widget">
@@ -109,11 +109,6 @@
         <!-- .popup-closeBtn -->
         <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
-        <!-- #footer -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
-        <!--// #footer -->
     </div>
     <!-- // .popup hbs -->
 </div>

@@ -61,7 +61,8 @@ Tw.MyTDataUsageDataShare.prototype = {
     var template = Handlebars.compile(source);
     this._$children.empty();
     _.each(this._children, $.proxy(function (child) {
-      child.auditDtm = Tw.DateHelper.getShortDateNoDot(child.auditDtm);
+      child.auditDtm = Tw.DateHelper.getShortDate(child.auditDtm);
+      child.svcNum = Tw.FormatHelper.getDashedCellPhoneNumber(child.svcNum);
       var $child = template(child);
       this._$children.append($child);
     }, this));

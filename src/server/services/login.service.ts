@@ -198,17 +198,21 @@ class LoginService {
     if ( !FormatHelper.isEmpty(this.request) ) {
       const url = this.request.baseUrl + this.request.path;
       if ( url.indexOf('bypass') !== -1 ) {
-        let path = (this.request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
-        if ( path.indexOf('?') !== -1 ) {
-          path = path.split('?')[0];
-        }
-        return path;
+        this.getReferer();
       } else {
         // console.log('path', url);
         return this.request.baseUrl + this.request.path;
       }
     }
     return '';
+  }
+
+  public getReferer(): string {
+    let path = (this.request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
+    if ( path.indexOf('?') !== -1 ) {
+      path = path.split('?')[0];
+    }
+    return path;
   }
 
   public getDns(): string {

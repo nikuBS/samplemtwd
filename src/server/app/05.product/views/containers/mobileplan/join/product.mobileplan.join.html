@@ -15,12 +15,12 @@
     </ul>
   </div>
   <!--// #skip_navigation -->
-  <div class="wrap"></div>
+  <div class="wrap" data-menuId="<%= pageInfo.menuId %>"></div>
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>
   $(function () {
-    new Tw.ProductMobileplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%= isOverPayReqYn %>');
+    new Tw.ProductMobileplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

@@ -63,6 +63,7 @@ Tw.SMS_VALIDATION = {
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
+  ERROR: '에러',
   SELECT_BANK: '은행선택',
   SELECT_AMOUNT: '금액 선택',
   SELECT: '선택',
@@ -240,7 +241,7 @@ Tw.MYT_DATA_TOTAL_SHARING_DATA = {
 
 Tw.MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
-    YYYYMM_TYPE: 'YYYY년 MM월'
+    YYYYMM_TYPE: 'YYYY년 M월'
   },
   FIRST_SVCTYPE: '서비스 전체',
   PHONE_SVCTYPE: '휴대폰',
@@ -339,6 +340,16 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.'
 };
 
+Tw.MYT_FARE_PAYMENT_TYPE = {
+  DIRECT: 'DI',
+  AUTO: 'AT',
+  AUTOALL: 'AU',
+  MICRO: 'MP',
+  CONTENT: 'CP',
+  PRESERVE: 'PR',
+  PAUTO: 'PN'
+}
+
 Tw.ALERT_MSG_COMMON = {
   EXIT_APP: '앱을 종료하시겠습니까?',
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
@@ -404,6 +415,10 @@ Tw.ALERT_MSG_MYT_DATA = {
   DATA_PESTER: {
     TITLE: '[SKT] ',
     CONTENT: '님이\n"T끼리 데이터 선물 조르기"를 요청하셨습니다.\n데이터 선물 하러가기\n'
+  },
+  TING_PESTER: {
+    TITLE: '[SKT] ',
+    CONTENT: '님이\n"팅 요금제 충전선물 조르기"를 요청하셨습니다.\n팅 요금 충전선물을 해주세요!\n'
   },
   V56: '충전 금액을 선택해 주세요.',
   ALERT_2_A74: '충전을 취소하시겠습니까?'
@@ -582,7 +597,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A37: { TITLE: '이미 사용하고 있는 상품입니다.', MSG: '' },
   ALERT_3_A40: { TITLE: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?', MSG: '' },
   ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
-  ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.'
+  ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
+  PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.'
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
@@ -640,9 +656,9 @@ Tw.ALERT_MSG_AUTH = {
   L02: '첫 번째 순서가 변경 되었습니다.',
   L03: '선택하신 회선을 사용 가능 회선 목록으로 이동 시 회선관리 목록에서 삭제됩니다.<br/>삭제 후 다시 사용하시려면 직접 등록하셔야 가능합니다.',
   L04: '번경 내용을 저장하시겠습니까?',
-  L05: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
-  L06: '이미 다른 계정에 등록된 회선 입니다.',
-  L07: '이미 등록된 회선 입니다.'
+  ALERT_4_A7: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
+  ALERT_4_A8: '이미 다른 계정에 등록된 회선 입니다.',
+  ALERT_4_A9: '이미 등록된 회선 입니다.'
 };
 
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
@@ -1282,3 +1298,9 @@ Tw.PREPAID_TYPES = {
 Tw.HISTORY_UNIT = '건';
 
 Tw.T_FAMILY_MOA_NO_LIMITATION = '자유 사용';
+
+Tw.LOGIN_CUS_PW_GUIDE = {
+  TITLE: '고객보호 비밀번호를</br>설정해 주세요.',
+  CONTENTS: '고객보호 비밀번호 서비스 신청 후 아직 비밀번호를 설정하지 않으셨습니다.</br>고객보호 비밀번호 설정 후 정상적인 이용이 가능합니다.',
+  BUTTON: '설정하기'
+};

@@ -10,7 +10,7 @@ Tw.CertificationBio = function () {
   this._callback = null;
   this._authUrl = null;
   this._authKind = null;
-  this._command = null;
+  this._prodAuthKey = null;
 };
 
 
@@ -20,11 +20,11 @@ Tw.CertificationBio.prototype = {
     CANCEL: 258,
     LOCK: 259
   },
-  open: function (authUrl, authKind, command, callback, isRegister, target) {
+  open: function (authUrl, authKind, prodAuthKey, callback, isRegister, target) {
     this._callback = callback;
     this._authUrl = authUrl;
     this._authKind = authKind;
-    this._command = command;
+    this._prodAuthKey = prodAuthKey;
 
     this._biometricsTerm = new Tw.BiometricsTerms(target);
 
@@ -35,11 +35,11 @@ Tw.CertificationBio.prototype = {
       this._biometricsTerm.open($.proxy(this._onFidoRegister, this));
     }
   },
-  _fidoAuth: function (authUrl, authKind, command) {
+  _fidoAuth: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_AUTH, {
       authUrl: this._authUrl,
       authKind: this._authKind,
-      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? command.params.prodId + command.params.prodProctypeCd : ''
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : ''
     }, $.proxy(this._onFidoAuth, this));
   },
   _onFidoAuth: function (resp) {

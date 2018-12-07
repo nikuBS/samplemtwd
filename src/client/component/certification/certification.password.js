@@ -11,20 +11,20 @@ Tw.CertificationPassword = function () {
   this._historyService = new Tw.HistoryService();
 
   this._authUrl = null;
-  this._command = null;
   this._callback = null;
   this._authKind = null;
+  this._prodAuthKey = null;
 
   window.onPopupCallbackPassword = $.proxy(this._onPopupCallback, this);
 };
 
 
 Tw.CertificationPassword.prototype = {
-  open: function (authUrl, authKind, command, callback) {
+  open: function (authUrl, authKind, prodAuthKey, callback) {
     this._authUrl = authUrl;
-    this._command = command;
     this._callback = callback;
     this._authKind = authKind;
+    this._prodAuthKey = prodAuthKey;
 
     this._openCertPassword();
   },
@@ -58,7 +58,7 @@ Tw.CertificationPassword.prototype = {
       type: Tw.AUTH_CERTIFICATION_METHOD.W,
       authUrl: this._authUrl,
       authKind: this._authKind,
-      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : ''
     }).done($.proxy(this._successConfirmPasswordCert, this));
   },
   _successConfirmPasswordCert: function (resp) {

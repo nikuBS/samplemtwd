@@ -15,7 +15,7 @@ class CommonCertIpin extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const authUrl = req.query.authUrl;
     const authKind = req.query.authKind;
     const prodAuthKey = req.query.prodAuthKey; // 상품인증이 있는 경우

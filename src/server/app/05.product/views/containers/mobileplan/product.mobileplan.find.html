@@ -14,7 +14,7 @@
   </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
   <div class="popup-page nobg tw-popup no-btn">
     <!-- #header -->
     <div class="header-wrap">
@@ -36,11 +36,6 @@
     <!-- .popup-closeBtn -->
     <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
     <!--// .popup-closeBtn -->
-    <!-- #footer -->
-    <footer id="fe-all-menu">
-      <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
-    <!--// #footer -->
   </div>
 </div>
 </body>

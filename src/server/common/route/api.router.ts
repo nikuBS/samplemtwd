@@ -1,11 +1,21 @@
-import express from 'express';
-import { Router, Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response, Router } from 'express';
 import multer from 'multer';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { REDIS_APP_VERSION, REDIS_BANNER_ADMIN, REDIS_MASKING_METHOD, REDIS_URL_META } from '../../types/redis.type';
+import {
+  CHANNEL_CODE,
+  MENU_CODE,
+  REDIS_APP_VERSION,
+  REDIS_BANNER_ADMIN,
+  REDIS_CODE,
+  REDIS_MASKING_METHOD,
+  REDIS_MENU,
+  REDIS_URL_META,
+  REDIS_HOME_NOTICE,
+  REDIS_HOME_HELP, REDIS_TOOLTIP
+} from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
@@ -15,7 +25,7 @@ import VERSION from '../../config/version.config';
 import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
-import { REDIS_CODE } from '../../types/redis.type';
+import BrowserHelper from '../../utils/browser.helper';
 
 class ApiRouter {
   public router: Router;
@@ -56,6 +66,9 @@ class ApiRouter {
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
+    this.router.get('/home/notice', this.getHomeNotice.bind(this));
+    this.router.get('/home/help', this.getHomeHelp.bind(this));
+    this.router.get('/tooltip', this.getTooltip.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
@@ -128,7 +141,7 @@ class ApiRouter {
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
-    const url = req.query.url;
+    const url = this.loginService.getReferer();
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
         res.json(resp);
@@ -137,12 +150,46 @@ class ApiRouter {
   }
 
   private getMenu(req: Request, res: Response, next: NextFunction) {
-
+    const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
+    const svcInfo = this.loginService.getSvcInfo();
+    this.redisService.getData(REDIS_MENU + code)
+      .subscribe((resp) => {
+        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+          resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
+          res.json(resp);
+        } else {
+          res.json(resp);
+        }
+      })
   }
 
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
     this.redisService.getData(REDIS_BANNER_ADMIN + menuId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getHomeNotice(req: Request, res: Response, next: NextFunction) {
+    const code = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
+      BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
+    this.redisService.getData(REDIS_HOME_NOTICE + code)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getHomeHelp(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_HOME_HELP)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getTooltip(req: Request, res: Response, next: NextFunction) {
+    const menuId = req.query.menuId;
+    this.redisService.getData(REDIS_TOOLTIP + menuId)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -178,30 +225,30 @@ class ApiRouter {
 
   private upload() {
     const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-          let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
+      destination: (req, file, cb) => {
+        let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
 
-          if ( !FormatHelper.isEmpty(req.body.dest) ) {
-            const dateFormat = dateHelper.getShortDateWithFormat(new Date(), 'YYMMDD');
+        if ( !FormatHelper.isEmpty(req.body.dest) ) {
+          const dateFormat = dateHelper.getShortDateWithFormat(new Date(), 'YYMMDD');
 
-            storagePath += '/' + req.body.dest + '/';
-            if ( !fs.existsSync(storagePath) ) {
-              fs.mkdirSync(storagePath);
-            }
-
-            storagePath += dateFormat + '/';
-            if ( !fs.existsSync(storagePath) ) {
-              fs.mkdirSync(storagePath);
-            }
+          storagePath += '/' + req.body.dest + '/';
+          if ( !fs.existsSync(storagePath) ) {
+            fs.mkdirSync(storagePath);
           }
 
-          cb(null, storagePath);
-        },
-        filename: (req, file, cb) => {
-          cb(null, new Date().valueOf() + '_' + Math.floor((Math.random() * 10000) + 1) + path.extname(file.originalname));
-        },
-        limits: { fileSize: 5 * 1024 * 1024 }
-      });
+          storagePath += dateFormat + '/';
+          if ( !fs.existsSync(storagePath) ) {
+            fs.mkdirSync(storagePath);
+          }
+        }
+
+        cb(null, storagePath);
+      },
+      filename: (req, file, cb) => {
+        cb(null, new Date().valueOf() + '_' + Math.floor((Math.random() * 10000) + 1) + path.extname(file.originalname));
+      },
+      limits: { fileSize: 5 * 1024 * 1024 }
+    });
 
     return multer({ storage: storage }).array('file');
   }

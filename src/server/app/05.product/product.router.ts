@@ -79,12 +79,14 @@ import ProductRoamingSettingRoamingAlarm from './controllers/roaming/setting/pro
 import ProductRoamingSettingRoamingCombine from './controllers/roaming/setting/product.roaming.setting.roaming-combine.controller';
 import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product.roaming.join.roaming-combine.controller';
 import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
+import ProductMobilePlanIndividuals from './controllers/mobileplan/product.mobileplan.individuals.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
     super();
 
-    this.controllers.push({ url: '/mobileplan(/club-t|/campuszone|/concierge)?', controller: Product });
+    this.controllers.push({ url: '/mobileplan', controller: Product });
+    this.controllers.push({ url: '/mobileplan/club-t|campuszone|concierge', controller: ProductMobilePlanIndividuals });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
     this.controllers.push({ url: '/mobileplan/join/tplan', controller: ProductMobileplanJoinTplan });
     this.controllers.push({ url: '/mobileplan/join/share-line', controller: ProductMobileplanJoinShareLine });

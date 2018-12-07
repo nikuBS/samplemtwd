@@ -45,7 +45,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       startDt: this._getPeriod(this.selectVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectVal, 'YYYYMMDD').endDt
     };
-    console.info('[param]', param);
+    // console.info('[param]', param);
 
     this._getRoamingInfo(param);
 
@@ -83,8 +83,8 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       Tw.Logger.info('[param]', param);
 
       var resData = {
-        startDt: moment(param.startDt).format('YYYY.MM.DD'),
-        endDt: moment(param.endDt).format('YYYY.MM.DD'),
+        startDt: moment(param.startDt).format('YYYY.M.DD'),
+        endDt: moment(param.endDt).format('YYYY.M.DD'),
         totalNum: this._comComma(totalNum)
       };
 
@@ -158,7 +158,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     dateArray[4] = threeMonth;
     dateArray[5] = sixMonth;
 
-    console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
+    // console.info('[ 선택한 날짜 ]', dateArray[selectVal]);
 
     var startDt = dateArray[selectVal];
     var endDt = moment().format(formatStr);
@@ -245,25 +245,6 @@ Tw.MyTFareBillGuideRoaming.prototype = {
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
-  },
-  _comUnComma: function (str) {
-    str = String(str);
-    // return str.replace(/[^\d]+/g, '');
-    return str.replace(/,/g, '');
-  },
-  _phoneStrToDash: function (str) {
-    var strVal = String(str);
-    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
-  },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
-  _go: function (hash) {
-    this._history.setHistory();
-    window.location.hash = hash;
   }
 
 };

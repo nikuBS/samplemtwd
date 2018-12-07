@@ -15,13 +15,15 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="fe-my-benefit-rainbow-point-transfer" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines-to-receive="<%= linesToReceiveData %>">
+<div id="fe-my-benefit-rainbow-point-transfer" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines-to-receive="<%= linesToReceiveData %>" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-        <div id="header" class="header-wrap">
-            <!-- #header -->
-            <%- include('../../../../common/views/components/header.component.html', { title: '포인트 양도' }); %>
-            <!--// #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>포인트 양도</h1>
+                </div>
+            </div>
         </div>
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -121,9 +123,6 @@
             </div>
         </div>
         <!-- // .container-wrap -->
-        <footer id="fe-all-menu">
-            <%- include('../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        </footer>
         <!-- .popup-closeBtn -->
         <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->

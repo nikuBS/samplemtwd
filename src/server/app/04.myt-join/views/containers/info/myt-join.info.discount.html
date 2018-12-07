@@ -17,9 +17,9 @@
 </div>
 <!--// #skip_navigation -->
 
-<div id="fe-wrap" class="wrap">
+<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '약정할인 및 단말상환 정보', svcInfo: svcInfo, option: { line:true } }) %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '약정할인 및 단말상환 정보' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -127,10 +127,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 
 

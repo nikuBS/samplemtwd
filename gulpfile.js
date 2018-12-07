@@ -254,6 +254,14 @@ gulp.task('css-rb', function () {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('css-copy', function() {
+  return gulp.src([
+    'src/client/right-brain/css/**/idpt-reset-mobile.css',
+    'src/client/right-brain/css/**/idpt-service-mobile.css',
+    'src/client/right-brain/css/**/m_product.css'
+  ]).pipe(gulp.dest(dist + 'css'));
+});
+
 gulp.task('img', function () {
   return gulp.src('src/client/right-brain/img/**/*')
   // .pipe(gulp.dest(dist_tmp + 'img'))
@@ -322,7 +330,6 @@ gulp.task('get-manifest', function () {
     }));
 });
 
-
 gulp.task('js-old-app', oldAppNames.map(function (app) {
   return 'js-old' + app;
 }));
@@ -335,7 +342,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs', 'font']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-copy', 'img', 'hbs', 'font']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'resource', 'cab']);
 gulp.task('run', ['server', 'watch']);

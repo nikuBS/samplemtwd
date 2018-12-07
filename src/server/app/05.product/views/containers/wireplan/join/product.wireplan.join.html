@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap"></div>
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>"></div>
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () { new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%- JSON.stringify(btnData) %>'); });</script>

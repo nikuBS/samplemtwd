@@ -68,19 +68,6 @@ Tw.CommonMemberLineBizRegister.prototype = {
       this.$btConfirm.attr('disabled', true);
     }
   },
-  _isValidInput: function () {
-    if ( Tw.FormatHelper.isEmpty(this.$inputMdn.val()) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A31);
-      return false;
-    } else if ( Tw.FormatHelper.isEmpty(this.$inputCop.val()) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A32);
-      return false;
-    } else if ( Tw.FormatHelper.isEmpty(this.$inputCopNum.val()) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A33);
-      return false;
-    }
-    return true;
-  },
   _sendBizSession: function () {
     var params = {
       svcNum: this.$inputMdn.val(),
@@ -122,11 +109,11 @@ Tw.CommonMemberLineBizRegister.prototype = {
   },
   _handleError: function (code, message) {
     if ( code === this.ERROR_CODE.ATH0021 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L06);
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8);
     } else if ( code === this.ERROR_CODE.ATH0022 && code === this.ERROR_CODE.ATH0023 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L05);
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7);
     } else {
-      this._popupService.openAlert(code + ' ' + message);
+      Tw.Error(code, message).pop();
     }
   }
 };

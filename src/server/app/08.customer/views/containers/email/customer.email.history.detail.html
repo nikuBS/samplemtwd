@@ -56,6 +56,7 @@
                 <!--// .cont-box -->
                 <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 <div class="bt-fixed-area">
+                    <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
                     <ul class="bt-slice item-two full">
                         <li class="bt-gray1">
                             <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
@@ -68,6 +69,15 @@
                             </button>
                         </li>
                     </ul>
+                    <% } else { %>
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                            </button>
+                        </li>
+                    </ul>
+                    <% } %>
                 </div>
                 <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             </div>

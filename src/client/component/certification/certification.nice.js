@@ -7,8 +7,8 @@
 Tw.CertificationNice = function () {
   this._apiService = Tw.Api;
 
-  this._command = null;
   this._callback = null;
+  this._prodAuthKey = null;
 
   window.onPopupCallback = $.proxy(this._onPopupCallback, this);
   window.onCloseInApp = $.proxy(this._onPopupCallback, this);
@@ -21,15 +21,16 @@ Tw.CertificationNice.prototype = {
     nice_refund: '/common/cert/nice/refund',
     ipin_refund: '/common/cert/ipin/refund'
   },
-  open: function (authUrl, authKind, niceType, niceKind, command, callback) {
+  open: function (authUrl, authKind, niceType, niceKind, prodAuthKey, callback) {
     this._callback = callback;
-    this._command = command;
+    this._prodAuthKey = prodAuthKey;
 
     var url = this.NICE_URL[niceType];
     if ( authKind === Tw.AUTH_CERTIFICATION_KIND.F ) {
       url = this.NICE_URL[niceType + '_refund'];
     }
-    this._openCertBrowser(url + '?authUrl=' + authUrl + '&authKind=' + authKind + '&niceKind=' + niceKind);
+    this._openCertBrowser(url + '?authUrl=' +
+      encodeURIComponent(authUrl) + '&authKind=' + encodeURIComponent(authKind) + '&niceKind=' + encodeURIComponent(niceKind));
 
   },
   _openCertBrowser: function (path) {

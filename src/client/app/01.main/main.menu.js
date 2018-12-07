@@ -26,7 +26,7 @@ Tw.MainMenu.prototype = {
     var cert = new Tw.CertificationSelect();
     cert.open({
       authClCd: Tw.AUTH_CERTIFICATION_KIND.F
-    }, null, null, function (result) {
+    }, '', null, null, function (result) {
       console.log('complete');
       console.log(result);
     });
