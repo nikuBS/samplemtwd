@@ -3,6 +3,7 @@ Tw.NativeService = function () {
   this._callbackList = [];
   this._randomCode = 0;
   this._popupService = new Tw.PopupService();
+  this._gnb = null;
 
   this._init();
 };
@@ -17,6 +18,9 @@ Tw.NativeService.prototype = {
       //   this._callByIframe(Tw.IOS_URL + command + '?p=' + encodeURIComponent(JSON.stringify(parameter)));
       // }
     }
+  },
+  setGNB: function (gnb) {
+    this._gnb = gnb;
   },
 
   _init: function () {
@@ -68,6 +72,8 @@ Tw.NativeService.prototype = {
     if ( /\/main\/home/.test(location.href) ) {
       if ( this._popupService.isPopup() ) {
         this._popupService.close();
+      } else if (!!this._gnb && this._gnb.isOpened()) {
+        this._gnb.close();
       } else {
         this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.EXIT_APP, null, $.proxy(this._exitApp, this));
       }

@@ -156,11 +156,20 @@ class ApiRouter {
       .subscribe((resp) => {
         if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
+          if (resp.result.isLogin) {
+            resp.result.userInfo = {};
+            resp.result.userInfo.svcNum = svcInfo.svcNum;
+            resp.result.userInfo.name = svcInfo.mbrNm;
+            resp.result.userInfo.totalSvcCnt = svcInfo.totalSvcCnt;
+            resp.result.userInfo.expsSvcCnt = svcInfo.expsSvcCnt;
+            resp.result.userInfo.deviceName = svcInfo.eqpMdlNm;
+            resp.result.userInfo.loginType = svcInfo.loginType;
+          }
           res.json(resp);
         } else {
           res.json(resp);
         }
-      })
+      });
   }
 
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
