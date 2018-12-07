@@ -414,7 +414,7 @@ Tw.BenefitIndex.prototype = {
         .request(Tw.API_CMD.BFF_10_0039, {
           inetTypCd: this.$internetType.filter(':checked').val(),
           mblPhonLineCnt: this.$mblPhonLineCnt.text(),
-          btvUseYn: this.$btvUseYn.find('checked').val()
+          btvUseYn: this.$btvUseYn.filter(':checked').val()
         })
         .done($.proxy(this._successDiscountAmt, this))
         .fail($.proxy(this._onFail, this, ''));
