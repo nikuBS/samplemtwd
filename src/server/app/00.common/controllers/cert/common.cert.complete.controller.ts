@@ -12,7 +12,7 @@ class CommonCertComplete extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const target = req.query.target;
     res.render('cert/common.cert.complete.html', { target });
   }
