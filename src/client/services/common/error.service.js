@@ -20,12 +20,12 @@ Tw.ErrorService.prototype = {
   pop: function() {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
-      'title': Tw.POPUP_TITLE.ERROR + '\n' + this.data.code,
+      'title': Tw.POPUP_TITLE.ERROR + '\n' + this._data.code,
       'title_type': 'sub',
       'cont_align': 'tl',
-      'contents': this.data.msg,
+      'contents': this._data.msg,
       'bt_b': [{
-        style_class: 'pos-right',
+        style_class: 'pos-right tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     },

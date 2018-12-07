@@ -18,17 +18,25 @@ Tw.TooltipService = function () {
 Tw.TooltipService.prototype = {
   getTip: function (event) {
     var $target = $(event.currentTarget);
-    var $targetId = $target.attr('page-id');
+    var $pageId = this._getPageId($target);
     this._id = $target.attr('id');
 
-    if (this._isExist($targetId)) {
-      this._getContents(this._tooltipList[$targetId], 'exist');
+    if (this._isExist($pageId)) {
+      this._getContents(this._tooltipList[$pageId], 'exist');
     } else {
-      //this._apiService.request('', { id: $targetId })
+      // this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { id: $pageId })
       $.ajax('/mock/tip.json')
-        .done($.proxy(this._success, this, $targetId))
+        .done($.proxy(this._success, this, $pageId))
         .fail($.proxy(this._fail, this));
     }
+  },
+  _getPageId: function ($target) {
+    var $pageId = $target.attr('page-id');
+    if (Tw.FormatHelper.isEmpty($pageId)) {
+      var $id = $target.attr('id');
+      $pageId = $id.toString().split('_tip')[0];
+    }
+    return $pageId;
   },
   _isExist: function ($targetId) {
     if (Tw.FormatHelper.isEmpty(this._tooltipList)) {
@@ -59,9 +67,11 @@ Tw.TooltipService.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _getContents: function ($content) {
-    for (var i = 0; i < $content.length; i++) {
-      if ($content[i].id === this._id) {
-        this._openTip($content[i]);
+    if (!Tw.FormatHelper.isEmpty($content)) {
+      for (var i = 0; i < $content.length; i++) {
+        if ($content[i].id === this._id) {
+          this._openTip($content[i]);
+        }
       }
     }
   },
