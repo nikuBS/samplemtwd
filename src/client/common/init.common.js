@@ -29,6 +29,7 @@ Tw.Init.prototype = {
     new Tw.MenuComponent();
     // new Tw.LineComponent();
     new Tw.MaskingComponent();
+    new Tw.ShareComponent();
   },
 
   _logVersion: function (resp) {
@@ -41,7 +42,7 @@ Tw.Init.prototype = {
 
       if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
         /* jshint undef: false */
-        // alert(result.version);
+        alert(result.version);
         /* jshint undef: false */
       }
     }

@@ -9,7 +9,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonShareLanding('<%= result.command %>', '<%= isLogin %>');
+    new Tw.CommonShareLanding('<%= result.target %>', '<%= result.loginType %>', '<%= isLogin %>');
   });
 </script>
 <% include ../components/end.component.html %>

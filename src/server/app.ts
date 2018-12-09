@@ -36,6 +36,7 @@ import LoggerService from './services/logger.service';
 import ApiService from './services/api.service';
 import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
+import ShortcutRouter from './common/route/shortcut.router';
 
 class App {
   public app: Application = express();
@@ -71,6 +72,7 @@ class App {
     this.setApis();
     this.setBypass();
     this.setNative();
+    this.setShortCut();
     this.setGlobalVariables();
     this.setClientMap();
     this.setErrorHandler();
@@ -133,6 +135,10 @@ class App {
     this.app.use('/tevent', new AppRouter(TeventRouter.instance.controllers).router);
 
     this.app.use('/test', new AppRouter(TestRouter.instance.controllers).router);
+  }
+
+  private setShortCut() {
+    this.app.use('/', new ShortcutRouter().router);
   }
 
   private setViewPath() {
