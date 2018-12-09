@@ -11,8 +11,7 @@ Tw.MyTFareBillGuideRoaming = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this._init();
 
@@ -56,21 +55,16 @@ Tw.MyTFareBillGuideRoaming.prototype = {
   //--------------------------------------------------------------------------[API]
   _getRoamingInfo: function (param) {
 
-    return this._apiService.request(Tw.API_CMD.BFF_05_0044, param).done($.proxy(this._getRoamingInfoInit, this, param));
-
-    // var thisMain = this;
-    // $.ajax('http://localhost:3000/mock/myt.bill.billguide.roaming.BFF_05_0044.json')
-    //   .done(function (resp) {
-    //     Tw.Logger.info(resp);
-    //     thisMain._getRoamingInfoInit(param, resp);
-    //   })
-    //   .fail(function (err) {
-    //     Tw.Logger.info(err);
-    //   });
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0044, param)
+      .done($.proxy(this._getRoamingInfoInit, this, param))
+      .fail(function(){
+        Tw.CommonHelper.endLoading('.container');
+      });
   },
   _getRoamingInfoInit: function (param, res) {
     // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
-
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var dataArr = res.result.roamingList;
       var totalNum = 0;
@@ -83,8 +77,8 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       Tw.Logger.info('[param]', param);
 
       var resData = {
-        startDt: moment(param.startDt).format('YYYY.M.DD'),
-        endDt: moment(param.endDt).format('YYYY.M.DD'),
+        startDt: Tw.DateHelper.getShortDateNoDot(param.startDt),
+        endDt: Tw.DateHelper.getShortDateNoDot(param.endDt),
         totalNum: this._comComma(totalNum)
       };
 
