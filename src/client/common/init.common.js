@@ -29,6 +29,7 @@ Tw.Init.prototype = {
     new Tw.MenuComponent();
     // new Tw.LineComponent();
     new Tw.MaskingComponent();
+    new Tw.ShareComponent();
   },
 
   _logVersion: function (resp) {

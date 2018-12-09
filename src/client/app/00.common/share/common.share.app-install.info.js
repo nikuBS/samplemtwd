@@ -4,8 +4,11 @@
  * Date: 2018.11.30
  */
 
-Tw.CommonShareAppInstallInfo = function (rootEl) {
+Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
   this.$container = rootEl;
+  this._target = target || '/main/home';
+  this._loginType = loginType || 'T';
+
   this._popupService = Tw.Popup;
 
   this._isAndroid = Tw.BrowserHelper.isAndroid();
@@ -20,7 +23,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
     this.$container.on('click', '.fe-tworld', $.proxy(this._onClickTworld, this));
   },
   _onClickTworld: function () {
-    var appCustomScheme = 'mtworldapp2://tworld?login_yn=Y&app_url=A013';
+    var appCustomScheme = 'mtworldapp2://tworld?target=' + encodeURIComponent(this._target) + '&loginType=' + this._loginType;
     setTimeout($.proxy(this._openStore, this), 500);
 
     window.location.href = appCustomScheme;
