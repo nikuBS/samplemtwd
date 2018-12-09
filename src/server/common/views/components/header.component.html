@@ -124,7 +124,9 @@
                     {{/if}}
                     <span class="ti-info">
                         {{menuNm}}
-                        <em class="info">10.2GB / 70분</em>
+                        {{#if isRealtime}}
+                        <em class="info fe-menu-realtime" value="{{realtimeBFF}}"></em>
+                        {{/if}}
                         {{#if isDesc}}
                         <em class="tx">{{menuDesc}}</em>
                         {{/if}}
@@ -164,7 +166,9 @@
                     {{/if}}
                     <span class="ti-info">
                         {{menuNm}}
-                        <em class="info">10.2GB / 70분</em>
+                        {{#if isRealtime}}
+                        <em class="info fe-menu-realtime" data-value="{{realtimeBFF}}"></em>
+                        {{/if}}
                         {{#if isDesc}}
                         <em class="tx">{{menuDesc}}</em>
                         {{/if}}

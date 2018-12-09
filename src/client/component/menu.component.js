@@ -35,6 +35,13 @@ Tw.MenuComponent.prototype = {
     M000537: 'M000537'  // T Apps
   },
 
+  REAL_TIME_ITEM: {
+    M000194: 'data',
+    M000233: 'bill',
+    M000301: 'svcCnt',
+    M000570: 'membership'
+  },
+
   _init: function () {
     $(window).on('hashchange', $.proxy(this._checkAndClose, this));
     this._nativeService.setGNB(this);
@@ -69,7 +76,7 @@ Tw.MenuComponent.prototype = {
             this._modifyMenu(
               res.result.isLogin,
               res.result.userInfo,
-              this._tideUpMenuInfo(res.result.frontMenus, this._isLogin ? res.result.userInfo.loginType : 'N')
+              this._tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
             );
             this._isMenuSet = true;
           } else {
@@ -112,7 +119,7 @@ Tw.MenuComponent.prototype = {
     this._historyService.goLoad(url);
   },
   _onRefund: function (e) {
-    if (this._isLogin) { // If it's not logged in
+    if (!this._isLogin) { // If it's not logged in
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, null, null, $.proxy(function () {
@@ -124,7 +131,6 @@ Tw.MenuComponent.prototype = {
   },
 
   _modifyMenu: function (isLogin, userInfo, menu) {
-    console.log(menu);
     var isApp = Tw.BrowserHelper.isApp();
 
     // When login or logout
@@ -153,6 +159,8 @@ Tw.MenuComponent.prototype = {
         default:
           break;
       }
+    } else {
+      this.$container.removeClass('user-type');
     }
 
     // When web
@@ -172,10 +180,57 @@ Tw.MenuComponent.prototype = {
 
     this.$menuArea.prepend(this._menuTpl({ list: menu }));
 
+    if (isLogin) {
+      $('.fe-menu-realtime').each($.proxy(function (i, elem) {
+        var type = elem.getAttribute('data-value');
+        switch (type) {
+          case 'svcCnt':
+            $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.totalSvcCnt));
+            break;
+          case 'bill':
+            this._apiService.request(Tw.API_CMD.BFF_05_0036, {})
+              .then($.proxy(function (res) {
+                if (res.code === Tw.API_CODE.CODE_00) {
+                  var info = res.result;
+                  var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
+                  var discount = info.deduckTotInvAmt ? parseInt(info.deduckTotInvAmt, 10) : 0;
+                  $(elem).text(
+                    Tw.FormatHelper.convNumFormat(total + discount) + Tw.CURRENCY_UNIT.WON);
+                }
+              }, this));
+            break;
+          case 'data':
+            this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
+              .then(function (res) {
+                if (res.code === Tw.API_CODE.CODE_00) {
+                  $(elem).text('NeedToParse');
+                }
+              });
+            break;
+          case 'membership':
+            this._apiService.request(Tw.API_CMD.BFF_04_0001, {})
+              .then(function (res) {
+                if (res.code === Tw.API_CODE.CODE_00) {
+                  var group = {
+                    V: 'vip',
+                    G: 'gold',
+                    S: 'silver',
+                    O: 'default'
+                  };
+                  $(elem).text(group[res.result.mbrGrCd]);
+                }
+              });
+            break;
+          default:
+            break;
+        }
+      }, this));
+    }
+
     skt_landing.action.gnb();
   },
 
-  _tideUpMenuInfo: function (menuInfo, loginType) {
+  _tideUpMenuInfo: function (menuInfo, userInfo) {
     var sorted = _.sortBy(menuInfo, function (item) {
       return parseInt(item.expsSeq, 10);
     });
@@ -195,16 +250,20 @@ Tw.MenuComponent.prototype = {
       }
     }
 
+
+    var loginType = Tw.FormatHelper.isEmpty(userInfo) ? 'N': userInfo.loginType;
     category = _.chain(category)
-      .filter(function (item) {
+      .filter($.proxy(function (item) {
         if (item.supMenuNmExpsYn === 'Y') {
           item.showThis = true;
         }
+
         item.isIcon = item.iconImgUseYn === 'Y' ? true : false;
         item.isBg = item.bgimgUseYn === 'Y' ? true : false;
         item.hasChildren = item.children.length > 0 ? true : false;
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
         item.isLink = !!item.menuUrl;
+
         if (!!item.urlAuthClCd) {
           if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
             item.menuUrl = '/common/member/login';
@@ -217,9 +276,15 @@ Tw.MenuComponent.prototype = {
           }
         }
 
-        return item.frontMenuDpth === '1';
+        if (loginType !== 'N') {
+          if (!!this.REAL_TIME_ITEM[item.menuId]) {
+            item.isRealtime = true;
+            item.realtimeBFF = this.REAL_TIME_ITEM[item.menuId];
+          }
+        }
 
-      })
+        return item.frontMenuDpth === '1';
+      }, this))
       .reduce($.proxy(function (memo, item) {
         if (memo.length === 0) {
           memo.push([]);
@@ -232,6 +297,13 @@ Tw.MenuComponent.prototype = {
         return memo;
       }, this), [])
       .value();
+
+    // This is totally shit! Unbelievable!
+    var subCategory = category[0];
+    subCategory[1].children.push(subCategory[2].children[0]);
+    subCategory[1].children.push(subCategory[3].children[0]);
+    subCategory = subCategory.slice(0, 2).concat(subCategory.slice(4));
+    category[0] = subCategory;
 
     return category;
   },
