@@ -39,11 +39,8 @@
                 </div>
                 <!--//my -->
                 <% } %>
-
-                <% const banners = productData.banners;
-                if (banners) { %>
+                
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                    
                 <!-- 스와이프 -->
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner slide-pagingtype">
@@ -59,7 +56,6 @@
                     </div>
                 </div>
                 <!-- //스와이프 -->
-                <% } %>
 
                 <!-- 많이 찾는 요금제 -->
                 <% const groups = productData.groups.grpProdList; %>
@@ -263,10 +259,11 @@
         <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
-<% include ../components/javascript.component.html %>
+
+<% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.BannerService($('.wrap'), <%- JSON.stringify(banners) %>);
+        new Tw.ProductSubmain($('.wrap'), '<%= pageInfo.menuId %>');
     })
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>

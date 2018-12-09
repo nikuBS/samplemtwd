@@ -18,27 +18,13 @@ export default class ProductAddition extends TwViewController {
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getMyAdditions(!!svcInfo),
-      this.getPromotionBanners(),
       this.getBestAdditions(),
-      this.getAdditionBanners(),
       this.getRecommendedAdditions(),
       this.getRecommendedTags()
-    ).subscribe(([myAdditions, banners, bestAdditions, additionBanners, recommendedAdditions, recommendedTags]) => {
+    ).subscribe(([myAdditions, bestAdditions, recommendedAdditions, recommendedTags]) => {
       const error = {
-        code:
-          (myAdditions && myAdditions.code) ||
-          banners.code ||
-          bestAdditions.code ||
-          additionBanners.code ||
-          recommendedAdditions.code ||
-          recommendedTags.code,
-        msg:
-          (myAdditions && myAdditions.msg) ||
-          banners.msg ||
-          bestAdditions.msg ||
-          additionBanners.msg ||
-          recommendedAdditions.msg ||
-          recommendedTags.msg
+        code: (myAdditions && myAdditions.code) || bestAdditions.code || recommendedAdditions.code || recommendedTags.code,
+        msg: (myAdditions && myAdditions.msg) || bestAdditions.msg || recommendedAdditions.msg || recommendedTags.msg
       };
 
       if (error.code) {
@@ -47,9 +33,7 @@ export default class ProductAddition extends TwViewController {
 
       const productData = {
         myAdditions,
-        banners,
         bestAdditions,
-        additionBanners,
         recommendedAdditions,
         recommendedTags
       };
@@ -74,19 +58,6 @@ export default class ProductAddition extends TwViewController {
     return of(undefined);
   }
 
-  private getPromotionBanners = () => {
-    return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
-      }
-
-      return resp.result;
-    });
-  }
-
   private getBestAdditions = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -109,23 +80,6 @@ export default class ProductAddition extends TwViewController {
           };
         })
       };
-    });
-  }
-
-  private getAdditionBanners = () => {
-    return this.apiService.request(API_CMD.BFF_10_0030, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
-      }
-
-      if (FormatHelper.isEmpty(resp.result)) {
-        return resp.result;
-      }
-
-      return resp.result.bnnrList;
     });
   }
 
