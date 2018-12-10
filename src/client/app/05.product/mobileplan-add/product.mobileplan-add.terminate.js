@@ -18,7 +18,6 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
 };
 
 Tw.ProductMobileplanAddTerminate.prototype = {
-
   _init: function() {
     this._convConfirmOptions();
     this._bindEvent();
@@ -50,24 +49,28 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       svcNumMask: this._confirmOptions.preinfo.svcNumMask,
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      isAutoJoinTermList: this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0,
       isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree
     });
   },
 
   _callConfirmCommonJs: function() {
-    new Tw.ProductCommonConfirm(false, this.$container, {
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
-      noticeList: this._confirmOptions.prodNoticeList,
-      isWidgetInit: true
-    }, $.proxy(this._prodConfirmOk, this));
+    new Tw.ProductCommonConfirm(
+      false,
+      this.$container,
+      {
+        confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
+        noticeList: this._confirmOptions.prodNoticeList,
+        isWidgetInit: true
+      },
+      $.proxy(this._prodConfirmOk, this)
+    );
   },
 
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0036, {
-    }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
@@ -77,8 +80,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId)
-      .done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {
@@ -91,23 +93,29 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   },
 
   _openSuccessPop: function() {
-    if ( !this._isResultPop ) {
+    if (!this._isResultPop) {
       return;
     }
 
-    this._popupService.open({
-      hbs: 'complete_product',
-      data: {
-        mytPage: 'myplanadd',
-        prodId: this._prodId,
-        prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-        prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
-        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
-      }
-    }, $.proxy(this._openResPopupEvent, this), $.proxy(this._onClosePop, this), 'terminate_success');
+    this._popupService.open(
+      {
+        hbs: 'complete_product',
+        data: {
+          mytPage: 'additions',
+          prodId: this._prodId,
+          prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
+          prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+          typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
+          isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
+          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo
+            ? this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON
+            : ''
+        }
+      },
+      $.proxy(this._openResPopupEvent, this),
+      $.proxy(this._onClosePop, this),
+      'terminate_success'
+    );
   },
 
   _openResPopupEvent: function($popupContainer) {
@@ -116,11 +124,13 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
   _openVasTermPopup: function(respResult) {
     var popupOptions = {
-      hbs:'MV_01_02_02_01',
-      'bt': [{
-        style_class: 'bt-blue1 fe-btn_back',
-        txt: Tw.BUTTON_LABEL.CLOSE
-      }]
+      hbs: 'MV_01_02_02_01',
+      bt: [
+        {
+          style_class: 'bt-blue1 fe-btn_back',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }
+      ]
     };
 
     if (respResult.prodTmsgTypCd === 'H') {
@@ -137,8 +147,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
     }
 
     this._isResultPop = true;
-    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openSuccessPop, this), 'vasterm_pop');
+    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {
@@ -157,5 +166,4 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   _onClosePop: function() {
     this._historyService.goBack();
   }
-
 };

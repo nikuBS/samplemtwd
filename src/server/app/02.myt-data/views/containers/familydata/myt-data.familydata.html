@@ -28,6 +28,7 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <!-- .cont-box -->
             <div class="cont-box nogaps">
+                <% if (familyInfo.mine) { %>
                 <ul class="data-realtime-wrap">
                     <% const total = familyInfo.mine.limitedYn === 'Y' ? familyInfo.mine.limitation : familyInfo.total; %>
                     <li>
@@ -62,6 +63,7 @@
                         <% } %>
                     </li>
                 </ul>
+                <% } %>
                 <div class="total-data">
                     <span class="stit">총 가족 공유 데이터</span>
                     <span class="r-txt"><span class="ff-type1"><%= familyInfo.total + 'GB' %></span></span>
@@ -101,7 +103,7 @@
                                         <dd><%= member.prodNm %></dd>
                                         <dt>공유한 데이터</dt>
                                         <dd><%= member.shared %>GB</dd>
-                                        <% if (!isInfinity) {
+                                        <% if (!isInfinity) { %>
                                             <dt>이용한도</dt>
                                             <dd>
                                                 <span><%= member.limitedYn === 'Y' ? member.limitation + 'GB' : '자유 사용' %></span>

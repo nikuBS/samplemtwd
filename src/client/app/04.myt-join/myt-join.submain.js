@@ -188,7 +188,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 부가 상품
   _onMovedAddProduct: function () {
-    this._historyService.goLoad('/myt-join/myplanadd');
+    this._historyService.goLoad('/myt-join/additions');
   },
   // 결합 상품
   _onMovedComProduct: function () {
