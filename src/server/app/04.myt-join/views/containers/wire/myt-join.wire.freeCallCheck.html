@@ -19,9 +19,14 @@
 <div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-
         <!-- #header -->
-        <%- include('../../../../common/views/components/header.component.html', { title: 'B끼리 무료 통화 대상자 조회' }) %>
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>B끼리 무료 통화 대상자 조회</h1>
+                </div>
+            </div>
+        </div>
         <!--// #header -->
 
         <!-- .container-wrap -->
