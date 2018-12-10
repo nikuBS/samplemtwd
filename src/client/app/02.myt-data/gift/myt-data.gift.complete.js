@@ -40,6 +40,7 @@ Tw.MyTDataGiftComplete.prototype = {
     }
 
     if (this.paramData.befrSvcNum) {
+      this.paramData.befrSvcNum = this.paramData.befrSvcNum.replace(/-/g, '');
       this.$phone.text(Tw.FormatHelper.conTelFormatWithDash(this.paramData.befrSvcNum));
     }
 

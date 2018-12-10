@@ -11,8 +11,7 @@ Tw.MyTFareBillGuideDonation = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this.bffListData = null; //원본 리스트 데이터
   this.detailListObj = {
@@ -116,17 +115,11 @@ Tw.MyTFareBillGuideDonation.prototype = {
   //--------------------------------------------------------------------------[API]
   _getDonationInfo: function (param) {
 
-    return this._apiService.request(Tw.API_CMD.BFF_05_0038, param).done($.proxy(this._getDonationInfoInit, this, param));
-
-    // var thisMain = this;
-    // $.ajax('http://localhost:3000/mock/myt.bill.billguide.donation.BFF_05_0038.json')
-    //   .done(function (resp) {
-    //     Tw.Logger.info(resp);
-    //     thisMain._getDonationInfoInit(param, resp);
-    //   })
-    //   .fail(function (err) {
-    //     Tw.Logger.info(err);
-    //   });
+    this._apiService.request(Tw.API_CMD.BFF_05_0038, param)
+      .done($.proxy(this._getDonationInfoInit, this, param))
+      .fail(function(){
+        Tw.CommonHelper.endLoading('.container');
+      });
   },
   _getDonationInfoInit: function ( param, res ) {
     // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );

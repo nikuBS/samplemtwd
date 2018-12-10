@@ -132,7 +132,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       res[x].rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id];
       res[x].impbranch = this._impbranchObj[res[x].rental_booth_org_id];
       res[x].rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id];
-      res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res.rentfrom);
+      res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
       if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){
         res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
       }
@@ -253,12 +253,31 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
 
     this._apiService
       .request(Tw.API_CMD.BFF_10_0066, params )
-      .done($.proxy(this._reload, this));
+      .done($.proxy(this._openCancelAlert, this));
+  },
+
+  _openCancelAlert: function (res) {
+    if(res.code === Tw.API_CODE.CODE_00) {
+      var self = this;
+      this._popupService.close();
+
+      setTimeout(function(){
+        self._cancleCompletePop();
+      },100);
+    }
+  },
+
+  _cancleCompletePop: function (){
+    var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A28;
+    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
   },
 
   _reload: function(){
     this._popupService.close();
-    this._historyService.reload();
+    var self = this;
+    setTimeout(function(){
+      self._historyService.reload();
+    },100);
   },
 
   _openEditPop : function(changeCountry ,res){
@@ -278,19 +297,19 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
           layer: true,
           data: data
         },
-        $.proxy(this._onEditPopOpened, this)
+        $.proxy(this._onEditPopOpened, this), null, 'edit'
       );
     }
   },
 
-  _onEditPopOpened : function(){
-    this.$container.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
-    this.$container.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
-    this.$container.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
-    this.$container.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
-    this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
-    this.$container.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
-    this.$container.on('click', '#fe-link', $.proxy(this._goRoamingCenter, this));
+  _onEditPopOpened : function($root){
+    $root.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
+    $root.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
+    $root.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
+    $root.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
+    $root.on('click', '.cancel', $.proxy(this._changeCheck, this));
+    $root.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
+    $root.on('click', '#fe-link', $.proxy(this._goRoamingCenter, this));
     this._insertDashPhone();
     this._changeCheck();
   },
@@ -405,12 +424,14 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       'romingTypCd': '28',
       'type': 'U'
     };
+
     this._apiService.request(Tw.API_CMD.BFF_10_0066, params).done($.proxy(this._handleSuccessEditReservation, this));
   },
 
   _handleSuccessEditReservation: function(res) {
     if(res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/product/roaming/fi/inquire-auth');
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
     }
   },
 

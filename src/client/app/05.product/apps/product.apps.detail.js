@@ -110,15 +110,17 @@ Tw.ProductAppsDetail.prototype = {
   _handleCheckAndOpenApp: function() {
     var store = '';
 
-    if (Tw.BrowserHelper.isIos()) {
-      store = this._stores['appStore'];
-    } else {
-      store = this._stores['playStore'];
-    }
+    if (this._stores) {
+      if (Tw.BrowserHelper.isIos()) {
+        store = this._stores['appStore'];
+      } else {
+        store = this._stores['playStore'] || '';
+      }
 
-    setTimeout(function() {
-      window.location = store;
-    }, 1000);
+      setTimeout(function() {
+        window.location = store;
+      }, 1000);
+    }
     window.location.href = this._app.lnkgAppScmCtt;
   },
 

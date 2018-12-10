@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '이용계약 정보'}) %>
     <!--// #header -->
@@ -78,9 +78,9 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>서비스개통확인 및 문의사항 <button id="MS_02_01_tip_01" type="button" class="icon-tip">TIP</button></li>
-                    <li>서비스 이용계약서 조회 <button id="MS_02_01_tip_02" type="button" class="icon-tip">TIP</button></li>
-                    <li>2011년 10월 4일 이전 가입 고객 <button id="MS_02_01_tip_03" type="button" class="icon-tip">TIP</button></li>
+                    <li>서비스개통확인 및 문의사항 <button id="MS_02_01_tip_01" page-id="MS_02_01" type="button" class="icon-tip btn-tip">TIP</button></li>
+                    <li>서비스 이용계약서 조회 <button id="MS_02_01_tip_02" page-id="MS_02_01" type="button" class="icon-tip btn-tip">TIP</button></li>
+                    <li>2011년 10월 4일 이전 가입 고객 <button id="MS_02_01_tip_03" page-id="MS_02_01" type="button" class="icon-tip btn-tip">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

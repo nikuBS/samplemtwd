@@ -1,7 +1,8 @@
 Tw.COMMON_STRING = {
   ALL: '전체',
   AGREE: '동의',
-  DISAGREE: '비동의'
+  DISAGREE: '비동의',
+  UNLIMIT: '무제한'
 };
 
 Tw.DATA_UNIT = {
@@ -348,7 +349,7 @@ Tw.MYT_FARE_PAYMENT_TYPE = {
   CONTENT: 'CP',
   PRESERVE: 'PR',
   PAUTO: 'PN'
-}
+};
 
 Tw.ALERT_MSG_COMMON = {
   EXIT_APP: '앱을 종료하시겠습니까?',
@@ -366,6 +367,7 @@ Tw.ALERT_MSG_COMMON = {
 };
 
 Tw.ALERT_MSG_HOME = {
+  NEW_LINE: 'T world에서 사용하실 수 있는 회선이 추가되었습니다.',
   A01: 'MY 바로가기 편집을 종료하시겠습니까?',
   A02: 'T월드에서 제공하는 기본 바로가기로 변경 하시겠습니까?',
   A03: 'MY 바로가기는 최대 20개까지 추가할 수 있습니다.',
@@ -581,6 +583,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다', MSG: '' },
+  ALERT_3_A17: { TITLE: '알림', MSG: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
   ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
   ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
@@ -1108,7 +1111,7 @@ Tw.UPLOAD_FILE = {
   WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
-  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
+  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif, pdf)파일을 첨부할 수 있습니다.',
   BUTTON_ADD: '파일찾기',
   BUTTON_DELETE: '파일삭제'
 };
@@ -1204,11 +1207,12 @@ Tw.BENEFIT = {
   INDEX: {
     COMBINE: {
       CONTENT: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
-      LINK_LIST:[
+      LINK_LIST: [
         {
           style_class: 'link l1',
           txt: '신규신청'
-        }, {
+        },
+        {
           style_class: 'link l2',
           txt: '제출하기'
         }
@@ -1285,6 +1289,18 @@ Tw.ROAMING_CENTER = [
   '제주신항'
 ];
 
+Tw.ROAMING_DESC = {
+  MFACTCD_DESC: '제조사를 선택하세요.',
+  HEADER_NOTI_MSG: '출국 국가 검색 후 휴대폰 모델을 선택하시면 <br>' +
+      '해당 국가에서 이용 가능한 로밍 서비스 방식과<br>요금을 확인하실 수 있습니다.',
+  HEADER_LOGIN_MSG: '가입된 무선 회선 정보가 확인되지 않습니다. 휴대폰을 선택하신 후 상단에서 국가명으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.' +
+      ' 국가명으로만 검색하셔도 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다. 찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
+  HEADER_LINE_MSG: '기본 회선을 무선 회선으로 변경하시면 가입된 휴대폰 정보로 출국 국가별 이용 가능한 로밍 서비스 방식과 요금을 확인하실 수 있습니다.' +
+      ' 찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
+  BOTTOM_NOTI_LOGIN_MSG: '* 로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.',
+  BOTTOM_NOTI_PHONE_MSG: '* 고객님은 회선 미인증 회원입니다. <br>' + 'T world에서 회선 인증 후 이용 가능한 서비스 방식 확인이 가능합니다.'
+};
+
 Tw.EVENT_TYPE = {
   E: '응모형',
   N: '일반형'
@@ -1303,4 +1319,19 @@ Tw.LOGIN_CUS_PW_GUIDE = {
   TITLE: '고객보호 비밀번호를</br>설정해 주세요.',
   CONTENTS: '고객보호 비밀번호 서비스 신청 후 아직 비밀번호를 설정하지 않으셨습니다.</br>고객보호 비밀번호 설정 후 정상적인 이용이 가능합니다.',
   BUTTON: '설정하기'
+};
+
+Tw.NOTI_POPUP_BTN = {
+  '0': '없음',
+  '7': '하루동안 열지 않음',
+  '10': '일주일동안 열지 않음',
+  '100': '다시 보지 않음,'
+};
+
+Tw.MENU_STRING = {
+  TOTAL: '총 ',
+  DESC: '개의 회선',
+  SVC_COUNT: function (count) {
+    return this.TOTAL + count + this.DESC;
+  }
 };

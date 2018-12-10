@@ -31,7 +31,8 @@ import {
   REDIS_CODE,
   REDIS_HOME_NOTICE,
   REDIS_HOME_HELP,
-  CHANNEL_CODE
+  CHANNEL_CODE,
+  REDIS_SMART_CARD_DEFAULT
 } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
@@ -52,6 +53,15 @@ class MainHome extends TwViewController {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
+    // this.redisService.getString(REDIS_SMART_CARD + svcInfo.svcMgmtNum)
+    //   .subscribe((resp) => {
+    //     console.log(resp);
+    //   });
+    // this.redisService.getString(REDIS_SMART_CARD_DEFAULT)
+    //   .subscribe((resp) => {
+    //     console.log('default', resp);
+    //   });
+
     if ( svcType.login ) {
       svcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
@@ -65,7 +75,6 @@ class MainHome extends TwViewController {
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            console.log(redisData.help);
             res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
           });
         } else {
@@ -134,7 +143,13 @@ class MainHome extends TwViewController {
       this.getHomeNotice(noticeCode),
       this.getHomeHelp()
     ).map(([noti, notice, help]) => {
-      return { noti, notice, help };
+      let mainNotice = null;
+      let emrNotice = null;
+      if ( !FormatHelper.isEmpty(notice) ) {
+        mainNotice = notice.mainNotice;
+        emrNotice = notice.emrNotice;
+      }
+      return { noti, mainNotice, emrNotice, help };
     });
   }
 
@@ -149,7 +164,6 @@ class MainHome extends TwViewController {
   }
 
   private getHomeNotice(noticeCode): Observable<any> {
-
     return this.redisService.getData(REDIS_HOME_NOTICE + noticeCode)
       .map((resp) => {
         // if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {

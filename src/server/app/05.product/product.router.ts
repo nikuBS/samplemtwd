@@ -61,7 +61,6 @@ import ProductRoamingCoupon from './controllers/roaming/product.roaming.coupon.c
 import ProductRoamingFiGuide from './controllers/roaming/product.roaming.fi.guide.controller';
 import ProductRoamingFiInquire from './controllers/roaming/product.roaming.fi.inquire.controller';
 import ProductRoamingFiInquireAuth from './controllers/roaming/product.roaming.fi.inquire-auth.controller';
-import ProductRoamingFiInquireEdit from './controllers/roaming/product.roaming.fi.inquire-edit.controller';
 import ProductRoamingFiReservation1step from './controllers/roaming/product.roaming.fi.reservation1step.controller';
 import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
 import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
@@ -78,6 +77,7 @@ import ProductRoamingJoinRoamingAlarm from './controllers/roaming/join/product.r
 import ProductRoamingSettingRoamingAlarm from './controllers/roaming/setting/product.roaming.setting.roaming-alarm.controller';
 import ProductRoamingSettingRoamingCombine from './controllers/roaming/setting/product.roaming.setting.roaming-combine.controller';
 import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product.roaming.join.roaming-combine.controller';
+import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
 import ProductMobilePlanIndividuals from './controllers/mobileplan/product.mobileplan.individuals.controller';
 
 class ProductRouter extends TwRouter {
@@ -141,7 +141,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
     this.controllers.push({ url: '/roaming/fi/inquire', controller: ProductRoamingFiInquire });
     this.controllers.push({ url: '/roaming/fi/inquire-auth', controller: ProductRoamingFiInquireAuth });
-    this.controllers.push({ url: '/roaming/fi/inquire-edit', controller: ProductRoamingFiInquireEdit });
     this.controllers.push({ url: '/roaming/coupon', controller: ProductRoamingCoupon });
     this.controllers.push({ url: '/roaming/fi/reservation1step', controller: ProductRoamingFiReservation1step });
     this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
@@ -164,6 +163,8 @@ class ProductRouter extends TwRouter {
 
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan-preview', controller: ProductCommonCallplanPreview });
+
+    this.controllers.push({ url: '/roaming/terminate', controller: ProductRoamingTerminate });
   }
 }
 

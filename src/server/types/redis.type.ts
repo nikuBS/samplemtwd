@@ -12,12 +12,13 @@ export const REDIS_QUICK_DEFAULT = 'UserQuickMenuByMbrGr:';
 export const REDIS_TOOLTIP = 'ToolTip:';
 export const REDIS_MENU = 'FrontMenuList:';
 export const REDIS_SMART_CARD = 'SmartCardSorting:';
+export const REDIS_SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999';
 export const REDIS_RCM_MENU = 'FrontRcmndMenu:';
 export const REDIS_BANNER_ADMIN = 'Banner:';
 export const REDIS_BANNER_TOS_LINK = 'BannerTosLnkgInfo:';
 export const REDIS_BANNER_TOS_KEY = 'BannerTosKey:';
 export const REDIS_BANNER_TOS_META = 'BannerTosInfo:';
-export const REDIS_HOME_NOTI = 'HomeNotiList';
+export const REDIS_HOME_NOTI = 'WelcomeMsg:WelcomeMsgList';
 export const REDIS_HOME_NOTICE = 'HomeNotice:';
 export const REDIS_HOME_HELP = 'HomeCicntsList';
 
@@ -38,11 +39,4 @@ export enum MENU_CODE {
   MWEB = '01',
   ONWEB = '04',
   MAPP = '05'
-}
-
-export enum DEVICE_CODE {
-  MWEB = '01',
-  IOS = '02',
-  ANDROID = '03',
-  MOBILE = '05'
 }

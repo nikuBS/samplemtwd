@@ -5,11 +5,58 @@
 %>
 
 <% include ../components/start.component.html %>
-<!-- body -->
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="app-info-wrap">
+                    <ul>
+                        <% if (isAndroid) { %>
+                        <li><a href="https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8"><img src="<%= CDN %>/img/common/icon-app-ios.png" alt="ios" /></a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=Com.sktelecom.minit"><img src="<%= CDN %>/img/common/icon-app-play-store.png" alt="google play store" /></a></li>
+                        <% } else { %>
+                        <li><a href="https://www.onestore.co.kr/userpoc/game/view?pid=0000032819"><img src="<%= CDN %>/img/common/icon-app-one-store.png" alt="One Store" /></a></li>
+                        <% } %>
+                    </ul>
+                    <p>Copyright ⓒ SK Telecom</p>
+
+                    <div class="link-wrap pt26">
+                        <button class="bt-link-tx underline">괜찮습니다. 모바일웹으로 볼게요.</button>
+                    </div>
+                </div>
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-tworld">T world App 바로가기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonShareBridge();
+    new Tw.CommonShareAppInstallInfo($('.wrap'), '<%= target %>', '<%= loginType %>');
   });
 </script>
 <% include ../components/end.component.html %>

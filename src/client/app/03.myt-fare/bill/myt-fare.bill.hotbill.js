@@ -8,10 +8,12 @@ Tw.MyTFareHotBill = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this.NUM_OF_ITEMS = 20;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
+  this._getLines();
   this._cachedElement();
   this._bindEvent();
   this._sendBillRequest(this.childSvcMgmtNum);
@@ -29,12 +31,49 @@ Tw.MyTFareHotBill.prototype = {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
     this.$preBill = this.$container.find('#fe-bt-prev');
-    this.$lineButton = this.$container.find('[data-id="fe-other-line"]');
+    this.$btMore = this.$container.find('#fe-bt-more');
+    this.$lineList = this.$container.find('.my-line-info');
   },
 
   _bindEvent: function () {
-    this.$lineButton.on('click', $.proxy(this._onClickLine, this));
+    // this.$lineButton.on('click', $.proxy(this._onClickLine, this));
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
+  },
+
+  /**
+   * 자녀회선, 본인의 다른 회선 정보를 가져와 화면 하단에 표시
+   *
+   */
+
+  _getLines: function () {
+    var APIs = [
+      { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {} },
+      { command: Tw.NODE_CMD.GET_ALL_SVC, params: {} },
+      { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
+    ];
+    this._lines = [];
+    this._apiService.requestArray(APIs)
+      .done($.proxy(function (children, svcs, svcInfo) {
+        if ( children.code === Tw.API_CODE.CODE_00 && !_.isEmpty(children.result) ) {
+          this._lines = _.clone(children.result);
+        }
+        if ( svcs.code === Tw.API_CODE.CODE_00 && !_.isEmpty(svcs.result) ) {
+          var otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
+            return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
+          });
+          this._lines = this._lines.concat(_.clone(otherLines));
+        }
+        this._lines.map(function (line, idx) {
+          line.svcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
+          line.isCellphone = line.svcAttrCd === 'M1';
+          line.idx = idx;
+        });
+        this._svcInfo = _.clone(svcInfo.result);
+        this._idxLastItem = 0;
+        this._renderLines();
+        this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
+      }, this));
+
   },
 
   _getBillResponse: function (childSvcMgmtNum, resp) {
@@ -120,7 +159,6 @@ Tw.MyTFareHotBill.prototype = {
       }
       this._onErrorReceivedBillData(resp);
     }
-    // skt_landing.action.loading.off({ ta: '.loading' });
   },
 
   _renderBillGroup: function (group, child, wrapper) {
@@ -138,52 +176,31 @@ Tw.MyTFareHotBill.prototype = {
   _onErrorReceivedBillData: function (resp) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(resp.code, resp.msg).pop();
-    //Tw.Error(resp.code, resp.msg).pop(null, $.proxy(this._onErrorClosed, this));
   },
 
-  _onErrorClosed: function () {
-    // this._historyService.goLoad('/myt-fare/submain');
+  _renderLines: function () {
+    var items = this._lines.slice(this._idxLastItem, this._idxLastItem + this.NUM_OF_ITEMS);
+    var source = $('#fe-list-template').html();
+    var template = Handlebars.compile(source);
+    var output = template({ list: items });
+    this.$lineList.append(output);
+    this._idxLastItem += this.NUM_OF_ITEMS;
+    var moreItems = this._lines.length - this._idxLastItem;
+    if ( moreItems > 0 ) {
+      this.$btMore.show();
+      this.$btMore.find('span').text('(' + moreItems + ')');
+    } else {
+      this.$btMore.hide();
+    }
   },
 
   _onClickLine: function (e) {
     var idx = e.currentTarget.getAttribute('data-idx');
-
-    if ( !this.lines ) {
-      var APIs = [
-        { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {} },
-        { command: Tw.NODE_CMD.GET_ALL_SVC, params: {} },
-        { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
-      ];
-      this.lines = [];
-      this._apiService.requestArray(APIs)
-        .done($.proxy(function (children, svcs, svcInfo) {
-          if ( children.code === Tw.API_CODE.CODE_00 && !_.isEmpty(children.result) ) {
-            this.lines = _.clone(children.result);
-          }
-          if ( svcs.code === Tw.API_CODE.CODE_00 && !_.isEmpty(svcs.result) ) {
-            var otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
-              return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
-            });
-            this.lines = this.lines.concat(_.clone(otherLines));
-          }
-          this.lines.map(function (line) {
-            line.svcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
-          });
-          this._svcInfo = _.clone(svcInfo.result);
-          var targetSvc = this.lines[idx];
-          if ( targetSvc.child ) {
-            this._onClickChild(targetSvc);
-          } else {
-            this._confirmSwitchLine(targetSvc);
-          }
-        }, this));
+    var targetSvc = this._lines[idx];
+    if ( targetSvc.child ) {
+      this._onClickChild(targetSvc);
     } else {
-      var targetSvc = this.lines[idx];
-      if ( targetSvc.child ) {
-        this._onClickChild(targetSvc);
-      } else {
-        this._confirmSwitchLine(targetSvc);
-      }
+      this._confirmSwitchLine(targetSvc);
     }
   },
 
@@ -196,12 +213,12 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _confirmSwitchLine: function (target) {
-    var defaultLineInfo = this._svcInfo.svcNum + ' ' + this._svcInfo.nickNm;
-    var selectLineInfo = target.svcNum + ' ' + target.nickNm;
+    var defaultLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum) + ' ' + this._svcInfo.nickNm;
+    var selectLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum) + ' ' + target.nickNm;
     this.changeLineMgmtNum = target.svcMgmtNum;
     this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
       defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), Tw.Popup.close);
+      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null);
   },
 
   _requestSwitchLine: function (target) {

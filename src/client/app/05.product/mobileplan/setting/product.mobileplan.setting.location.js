@@ -35,7 +35,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
     $('.comp-box').on('click', '.bt-line-gray1', $.proxy(this._removeNumber, this));
-
+    $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
+    $('#num-inputbox .cancel').on('click', $.proxy(this._onclickInputDel, this));
   },
 
   /**
@@ -59,6 +60,63 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     this._tmpltLocItem = Handlebars.compile($('#loc-list-tmplt-item').html());
     this._tmpltNumItem = Handlebars.compile($('#num-list-tmplt-item').html());
     this._tmpltLocSchItem = Handlebars.compile($('#loc-search-list-tmplt-item').html())
+  },
+
+  /**
+   * input password 키 입력시
+   * @param event
+   * @private
+   */
+  _onKeyUp: function (event) {
+
+    // 숫자 외 다른 문자를 입력한 경우
+    var $input = $(event.target);
+    var value = $input.val();
+    var reg = /[^0-9-]/g;
+
+    if( reg.test(value) ){
+      event.stopPropagation();
+      event.preventDefault();
+      $input.val(value.replace(reg, ''));
+    }
+
+    this._resetPhoneNum($input);
+
+    // 전화번호 체크
+    if ( this._isPhoneNum($input.val()) ) {
+      $('#num-inputbox').removeClass('error');
+
+    } else {
+      if( !$('#num-inputbox').hasClass('error') ){
+        $('#num-inputbox').addClass('error');
+      }
+    }
+  },
+
+  _onclickInputDel: function(/*event*/){
+    //$('#inputReqPhone').val('');
+    $('#num-inputbox').removeClass('error');
+  },
+
+  _isPhoneNum: function(val){
+    var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
+    return phoneReg.test(val);
+  },
+
+  _resetPhoneNum: function($input){
+    var value = $input.val();
+    if(value.length === 3 && value.indexOf('-') === -1){
+      $input.val(value + '-');
+    }
+    if(value.length === 8 && value.lastIndexOf('-') === 3){
+      $input.val(value + '-');
+    }
+    if(value.length >= 9){
+      value = value.replace(/-/g, '');
+      value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+      $('input').val(value);
+    }
+
   },
 
   /**
@@ -114,6 +172,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _removeLocation: function(event){
     var dcAreaNum = $(event.target).closest('li').data('dcareanum');
+    var dcAreaNm = $(event.target).closest('li').data('dcareanm');
     var auditDtm = $(event.target).closest('li').data('auditdtm');
 
     this._popupService.openModalTypeA(
@@ -122,9 +181,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
       $.proxy(function(){
         this._popupService.close();
-        this._settingTargetLocation('3', {num:dcAreaNum, auditDtm:auditDtm}, function(){
-          $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
-        });
+        this._settingTargetLocation(
+          '3',
+          {num: dcAreaNum, name: dcAreaNm, auditDtm: auditDtm},
+          function(){
+            $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
+          });
       }, this));
   },
 
@@ -133,25 +195,14 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _settingTargetLocation: function(chgCd, dcArea, callback){
-    var params = null;
+    var params = {
+      opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
+      frDcAreaNum: null,        // 현재 할인지역코드
+      toDcAreaNum: dcArea.num,  // 변경할 할인지역코드
+      toDcAreaNm: dcArea.name,  // 변경할 할인지역명
+      auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
+    };
 
-    if(chgCd === '1'){
-      params = {
-        opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
-        frDcAreaNum: dcArea.num,  // 현재 할인지역코드
-        toDcAreaNum: null,        // 변경할 할인지역코드
-        toDcAreaNm: null,         // 변경할 할인지역명
-        auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
-      };
-    } else if(chgCd === '3'){
-      params = {
-        opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
-        frDcAreaNum: dcArea.num,  // 현재 할인지역코드
-        toDcAreaNum: dcArea.num,  // 변경할 할인지역코드
-        toDcAreaNm: null,         // 변경할 할인지역명
-        auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
-      };
-    }
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0045, params )
@@ -260,11 +311,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _settingTargetNumber: function(opClCd, asgnNum, callback){
-    if( !opClCd || !asgnNum ){
+    if( !opClCd || !asgnNum || !asgnNum.svcnum){
       return;
     }
 
     var params = null;
+    asgnNum.svcnum = asgnNum.svcnum.replace(/-/g, '');
 
     if(opClCd === '1'){
       params = {

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
+import ParamsHelper from '../../../../utils/params.helper';
 
 class MyTDataGift extends TwViewController {
   constructor() {
@@ -22,7 +23,8 @@ class MyTDataGift extends TwViewController {
     const responseData = {
       svcInfo: svcInfo,
       isApp: BrowserHelper.isApp(req),
-      convertTDataSet: this.convertTDataSet
+      convertTDataSet: this.convertTDataSet,
+      convertTelNumber: this.convertTelNumber
     };
 
     switch ( page ) {
@@ -30,7 +32,11 @@ class MyTDataGift extends TwViewController {
         res.render('gift/myt-data.gift.sms.html', responseData);
         break;
       case 'auto-complete':
-        res.render('gift/myt-data.gift.auto-complete.html', responseData);
+        const response = Object.assign({
+          params: ParamsHelper.getQueryParams(req.url)
+        }, responseData);
+
+        res.render('gift/myt-data.gift.auto-complete.html', response);
         break;
       case 'complete':
         Observable.combineLatest(
@@ -39,8 +45,10 @@ class MyTDataGift extends TwViewController {
         ).subscribe(([senderInfo, remainInfo]) => {
           const response = Object.assign({
             remainInfo: remainInfo,
-            senderInfo: senderInfo
+            senderInfo: senderInfo,
+            params: ParamsHelper.getQueryParams(req.url)
           }, responseData);
+
 
           res.render('gift/myt-data.gift.complete.html', response);
         });
@@ -100,6 +108,8 @@ class MyTDataGift extends TwViewController {
   public convertTDataSet(sQty) {
     return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
   }
+
+  public convertTelNumber = (sNumber) => FormatHelper.conTelFormatWithDash(sNumber.replace(/-/g, ''));
 }
 
 export default MyTDataGift;

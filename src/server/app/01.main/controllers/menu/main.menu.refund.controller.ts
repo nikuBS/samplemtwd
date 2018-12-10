@@ -40,6 +40,7 @@ interface RefundItemSubmitted extends RefundItem {
 interface RefundInfo {
   name: string;
   socialId: string;
+  canSubmit: boolean; // If there is customer number or not
   canDonate: boolean;
   totalCount: number;
   totalAmount: string; // Amount of the money can be refunded
@@ -102,6 +103,7 @@ class MainMenuRefund extends TwViewController {
     const purified = {
       name: data.custNm,
       socialId: data.ctzCorpNum,
+      canSubmit: !!data.cancelRefund[0].custNum,
       refundArr: data.cancelRefund.filter((item: RefundItem) => {
         return item.donaReqYn !== 'Y' && FormatHelper.isEmpty(item.effStaDt);
       }).map((item: RefundItem) => {

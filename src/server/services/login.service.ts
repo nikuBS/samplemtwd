@@ -207,8 +207,9 @@ class LoginService {
     return '';
   }
 
-  public getReferer(): string {
-    let path = (this.request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
+  public getReferer(req?: any): string {
+    const request = req || this.request;
+    let path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
     if ( path.indexOf('?') !== -1 ) {
       path = path.split('?')[0];
     }

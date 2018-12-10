@@ -6,6 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
+import ParamsHelper from '../../../../utils/params.helper';
 
 class CommonShareLanding extends TwViewController {
   constructor() {
@@ -16,20 +17,8 @@ class CommonShareLanding extends TwViewController {
     const url = decodeURIComponent(req.query.url);
 
     if ( url.indexOf('mtworldapp2://') !== -1 ) {
-      const urlInfo = url.split('?')[1];
-      let urlArr = <any>[];
-      if ( urlInfo.indexOf('&') !== -1 ) {
-        urlArr = urlInfo.split('&');
-      } else {
-        urlArr.push(urlInfo);
-      }
-      const result = {};
-      urlArr.map((target) => {
-        result[target.split('=')[0]] = target.split('=')[1];
-      });
-
+      const result = ParamsHelper.getQueryParams(url);
       res.render('share/common.share.landing.html', { result, isLogin: !FormatHelper.isEmpty(svcInfo) });
-
     } else {
       res.json(url);
     }

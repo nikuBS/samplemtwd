@@ -59,6 +59,7 @@ class MyTJoinSubmainController extends TwViewController {
     }
 
     Observable.combineLatest(
+      this._getMyLine(),
       this._getMyInfo(),
       this._getMyHistory(),
       this._getAddtionalProduct(),
@@ -70,7 +71,7 @@ class MyTJoinSubmainController extends TwViewController {
       this._getOldNumberInfo(),
       this._getChangeNumInfoService(),
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
+    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동
       if ( myif.info ) {
         this.error.render(res, {
@@ -83,6 +84,17 @@ class MyTJoinSubmainController extends TwViewController {
       }
       data.type = this.type;
       data.isPwdSt = this.isPwdSt;
+      // 가입회선정보
+      if ( myline ) {
+        const mobile = myline['M'];
+        if ( !FormatHelper.isEmpty(mobile) ) {
+          mobile.filter((item) => {
+            if ( data.svcInfo.svcMgmtNum === item.svcMgmtNum ) {
+              data.svcInfo.nickNm = item.nickNm;
+            }
+          });
+        }
+      }
       // 가입정보
       switch ( this.type ) {
         case 0:
@@ -296,6 +308,19 @@ class MyTJoinSubmainController extends TwViewController {
     result.address = data.basAddr + data.dtlAddr;
     return result;
   }
+
+  // 가입회선조회
+  _getMyLine() {
+    return this.apiService.request(API_CMD.BFF_03_0004, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
+
 
   // 가입정보
   _getMyInfo() {

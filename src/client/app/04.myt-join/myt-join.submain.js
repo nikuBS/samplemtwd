@@ -10,6 +10,7 @@ Tw.MyTJoinSubMain = function (params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
+  this._nicknamePopup = new Tw.NicknameComponent();
   this.data = params.data;
   this._rendered();
   this._bindEvent();
@@ -72,6 +73,7 @@ Tw.MyTJoinSubMain.prototype = {
       }
     }
     this.$joinService = this.$container.find('[data-id=join-svc]');
+    this.$nickNmBtn = this.$container.find('[data-id=change-nick]');
   },
 
   _bindEvent: function () {
@@ -127,12 +129,22 @@ Tw.MyTJoinSubMain.prototype = {
       }
     }
     this.$joinService.on('click', $.proxy(this._onMovedJoinService, this));
+    this.$nickNmBtn.on('click', $.proxy(this._onChangeNickName, this));
   },
 
   _initialize: function () {
   },
 
-  //
+  _onChangeNickName: function() {
+    var nickNm = this.data.svcInfo.nickNm;
+    var svcMgmtNum = this.data.svcInfo.svcMgmtNum;
+    this._nicknamePopup.openNickname(nickNm, svcMgmtNum, $.proxy(this._onCloseNickNAmePopup, this));
+  },
+
+  _onCloseNickNAmePopup: function() {
+    this._historyService.reload();
+  },
+
   _onMovedJoinService: function () {
     var type = 'cellphone';
     switch ( this.data.svcInfo.svcAttrCd ) {

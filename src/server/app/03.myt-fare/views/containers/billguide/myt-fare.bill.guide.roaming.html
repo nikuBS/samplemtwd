@@ -20,11 +20,19 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="fe-wrap" class="wrap">
+<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
 
-        <%- include('../../../../common/views/components/header.component.html', { title: '로밍 사용요금 조회' }); %>
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>로밍 사용요금 조회</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
 
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -66,7 +74,7 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list">
-                        <li>로밍 사용요금 안내 <button id="MF_02_01_03_tip_01" type="button" class="tip-view">TIP</button></li>
+                        <li>로밍 사용요금 안내 <button id="MF_02_01_03_tip_01" page-id="MF_02_01_03" type="button" class="tip-view">TIP</button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->

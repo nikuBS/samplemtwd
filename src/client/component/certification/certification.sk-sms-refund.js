@@ -66,7 +66,7 @@ Tw.CertificationSkSmsRefund.prototype = {
   },
   _onCert: function () {
     var data = {
-      name: encodeURIComponent(this.$inputName.val().trim()),
+      name: this.$inputName.val().trim(),
       birthDay: this.$inputBirth.val().trim(),
       gender: this._gender,
       svcNum: this.$inputNumber.val().trim()
@@ -136,7 +136,7 @@ Tw.CertificationSkSmsRefund.prototype = {
   },
   _requestCertConfirm: function () {
     var data = {
-      name: encodeURIComponent(this.$inputName.val().trim()),
+      name: this.$inputName.val().trim(),
       birthDay: this.$inputBirth.val().trim(),
       gender: this._gender,
       svcNum: this.$inputNumber.val().trim(),

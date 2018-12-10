@@ -39,11 +39,13 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
         this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
         this.$container.find('#end_time').text(parseInt(endTime,10));
         this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
+
     },
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
       this.$container.on('click','.bt-fixed-area #do_change',$.proxy(this._changeInformationSetting, this));
+      this.$container.on('click','.prev-step',$.proxy(this._goBack,this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';
@@ -215,16 +217,14 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
 
         this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},this._prodId).
         done($.proxy(function (res) {
-            console.log('success');
-            console.log(res);
-            //TODO success process
-        }, this)).fail($.proxy(function (err) {
-            console.log('fail');
-            console.log(err);
-            //TODO fail process
+            if(res.code===Tw.API_CODE.CODE_00){
+                this._historyService.goBack();
+            }
         }, this));
+    },
+    _goBack : function () {
+        this._historyService.goBack();
     }
-
 
 
 };

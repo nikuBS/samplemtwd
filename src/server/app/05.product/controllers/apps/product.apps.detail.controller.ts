@@ -22,46 +22,45 @@ export default class ProductAppsDetail extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const appId = req.params.appId;
 
-    Observable.combineLatest(this.getProductInfo(appId), this.getRecommendedApps(appId)).subscribe(([prodInfo, apps]) => {
-      const app: any = this.getAppDetail(appId);
+    Observable.combineLatest(this.getAppDetail(appId), this.getProductInfo(appId), this.getRecommendedApps(appId)).subscribe(
+      ([app, prodInfo, apps]) => {
+        const error = {
+          code: app.code || apps.code,
+          msg: app.msg || apps.msg
+        };
 
-      const error = {
-        code: app.code || apps.code,
-        msg: app.msg || apps.msg
-      };
+        if (error.code) {
+          return this.error.render(res, {
+            ...error,
+            svcInfo
+          });
+        }
 
-      if (error.code) {
-        return this.error.render(res, {
-          ...error,
-          svcInfo
-        });
+        res.render('apps/product.apps.detail.html', { svcInfo, pageInfo, isApp: BrowserHelper.isApp(req), apps, app, prodInfo });
       }
-
-      res.render('apps/product.apps.detail.html', { svcInfo, pageInfo, isApp: BrowserHelper.isApp(req), apps, app, prodInfo });
-    });
+    );
   }
 
   private getAppDetail = appId => {
-    // return this.apiService.request(API_CMD.BFF_10_0097, {}, {}, appId).map(resp => {
-    const resp = APP_DETAIL;
-    if (resp.code !== API_CODE.CODE_00) {
-      return resp;
-    }
+    return this.apiService.request(API_CMD.BFF_10_0097, {}, {}, appId).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
 
-    const images: Array<string> = [];
-    return {
-      ...resp.result,
-      images: (resp.result.scrshotList || []).reduce((arr, img) => {
-        arr.push(img.scrshotImgUrl);
+      const images: Array<string> = [];
+      return {
+        ...resp.result,
+        images: (resp.result.scrshotList || []).reduce((arr, img) => {
+          arr.push(img.scrshotImgUrl);
 
-        return arr;
-      }, images)
-    };
-    // });
+          return arr;
+        }, images)
+      };
+    });
   }
 
   private getRecommendedApps = appId => {
-    return this.apiService.request(API_CMD.BFF_10_0006, { prodId: appId }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, appId).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }

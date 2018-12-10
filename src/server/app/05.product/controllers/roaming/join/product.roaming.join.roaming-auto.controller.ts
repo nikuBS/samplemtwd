@@ -21,6 +21,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
         const prodId = req.query.prodId || null;
+        let expireDate = '';
 
         if (FormatHelper.isEmpty(prodId)) {
             return this.error.render(res, {
@@ -31,23 +32,30 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId)
-        ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
+            this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, prodId),
+            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
+        ).subscribe(([ prodRedisInfo, prodApiInfo, prodServiceTimeInfo ]) => {
 
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
+            if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00) || (prodServiceTimeInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
                     title: PRODUCT_TYPE_NM.JOIN
                 });
             }
 
+            if (prodServiceTimeInfo.romSetClCdD) {
+                expireDate = prodServiceTimeInfo.romSetClCdD;
+            } else {
+                expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
+            }
+
 
             res.render('roaming/join/product.roaming.join.roaming-auto.html', {
                 svcInfo : this.loginService.getSvcInfo(),
-                prodRedisInfo : prodRedisInfo.summary,
+                prodRedisInfo : prodRedisInfo.result.summary,
                 prodApiInfo : prodApiInfo.result,
                 prodId : prodId,
-                expireDate : ROAMING_AUTO_EXPIRE_CASE[prodId]
+                expireDate : expireDate
             });
         });
 

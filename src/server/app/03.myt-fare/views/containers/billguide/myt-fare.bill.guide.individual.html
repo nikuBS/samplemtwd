@@ -142,7 +142,7 @@
 </div>
 <!--// #skip_navigation -->
 
-<div id="fe-wrap" class="wrap">
+<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
 
     <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }); %>
 
@@ -177,8 +177,6 @@
                 <div class="user-month-bill">
                     <div class="this-month-bill type3">
                         <p class="stit"><%=commDataInfo.selClaimDt %>
-                            <i class="icon-whole" data-target="searchNmSvcType"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
-
                             <span data-target="searchNmSvcType">
                                 <i class="icon-whole"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
                             </span>
@@ -277,8 +275,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>이용요금 <button id="MF_02_01_tip_01" type="button" class="tip-view">TIP</button></li>
-                    <li>로밍 이용요금 안내 <button id="MF_02_01_tip_02" type="button" class="tip-view">TIP</button></li>
+                    <li>이용요금 <button id="MF_02_01_tip_01" page-id="MF_02_03" type="button" class="tip-view">TIP</button></li>
+                    <li>로밍 이용요금 안내 <button id="MF_02_01_tip_02" page-id="MF_02_03" type="button" class="tip-view">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

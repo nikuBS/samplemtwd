@@ -33,14 +33,10 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId),
             this.apiService.request(API_CMD.BFF_10_0021, {}, {}, prodId),
-        ).subscribe(([ prodRedisInfo, prodBffInfo, prodSettingInfo ]) => {
-            console.log('api test prodRedisInfo');
-            console.log(prodRedisInfo);
-            console.log('api test prodBffInfo');
-            console.log(prodBffInfo);
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) || (prodSettingInfo.code !== API_CODE.CODE_00)) {
+        ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
+
+            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) ) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
                     title: PRODUCT_TYPE_NM.JOIN
@@ -50,11 +46,11 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
             res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.summary,
-                prodApiInfo : prodBffInfo.result,
-                prodSettingInfo : prodSettingInfo.result,
+                prodBffInfo : prodBffInfo.result,
                 prodId : prodId
             });
         });
+
 
         // res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
         //     svcInfo : { svcMgmtNum: '1000285302',

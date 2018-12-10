@@ -17,58 +17,129 @@
 <!--// #skip_navigation -->
 <div class="wrap complete">
     <!-- #contents -->
+    <!--<div id="contents" class="container-wrap">-->
+        <!--<div class="container">-->
+            <!--<h1 class="complete-title">-->
+                <!--<img src="<%= CDN %>/img/dummy/dmy-complete.jpg" alt="">-->
+                <!--<span><strong class="data_qty"></strong><strong> 선물</strong> 완료</span>-->
+            <!--</h1>-->
+            <!--<div class="complete-info">-->
+                <!--<dl>-->
+                    <!--<dt>받으시는 분</dt>-->
+                    <!--<dd>-->
+                        <!--<strong class="name"></strong>-->
+                        <!--<br>-->
+                        <!--<span class="phone"></span>-->
+                    <!--</dd>-->
+                <!--</dl>-->
+                <!--&lt;!&ndash;<dl>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<dt>잔여 데이터</dt>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<dd>31.2GB <span class="total-data">/ 42GB</span></dd>&ndash;&gt;-->
+                <!--&lt;!&ndash;</dl>&ndash;&gt;-->
+                <!--<% if ( senderInfo.goodFamilyMemberYn === 'Y' ) { %>-->
+                <!--<dl>-->
+                    <!--<dt>선물하기 남은 횟수</dt>-->
+                    <!--<dd>T끼리 <%=senderInfo.dataGiftCnt%>회 / 가족 무제한</dd>-->
+                <!--</dl>-->
+                <!--<% } else if ( senderInfo.familyMemberYn === 'Y' ) { %>-->
+                <!--<dl>-->
+                    <!--<dt>선물하기 남은 횟수</dt>-->
+                    <!--<dd>T끼리 <%=senderInfo.dataGiftCnt%>회 / 가족 <%=senderInfo.familyDataGiftCnt%>회</dd>-->
+                <!--</dl>-->
+                <!--<% } else { %>-->
+                <!--<dl>-->
+                    <!--<dt>선물하기 남은 횟수</dt>-->
+                    <!--<dd>T끼리 <%=senderInfo.dataGiftCnt%>회</dd>-->
+                <!--</dl>-->
+                <!--<% } %>-->
+            <!--</div>-->
+            <!--<div class="complete-btn-box pt40">-->
+                <!--<ul class="bt-slice">-->
+                    <!--<li class="bt-blue1">-->
+                        <!--<button class="fe-btn_gift_history">선물내역 보기</button>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--<div class="bt-link-box">-->
+                    <!--<button class="bt-link-tx fe-btn_go_sms">문자로 알리기</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<button class="complete-closeBtn fe-common-back">-->
+                <!--<span class="blind">페이지 닫기</span>-->
+            <!--</button>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--// #contents -->
+
+    <div id="header" class="header-wrap">
+    </div>
     <div id="contents" class="container-wrap">
         <div class="container">
-            <h1 class="complete-title">
-                <img src="<%= CDN %>/img/dummy/dmy-complete.jpg" alt="">
-                <span><strong class="data_qty"></strong><strong> 선물</strong> 완료</span>
-            </h1>
-            <div class="complete-info">
-                <dl>
-                    <dt>받으시는 분</dt>
-                    <dd>
-                        <strong class="name"></strong>
-                        <br>
-                        <span class="phone"></span>
-                    </dd>
-                </dl>
-                <!--<dl>-->
-                    <!--<dt>잔여 데이터</dt>-->
-                    <!--<dd>31.2GB <span class="total-data">/ 42GB</span></dd>-->
-                <!--</dl>-->
-                <% if ( senderInfo.goodFamilyMemberYn === 'Y' ) { %>
-                <dl>
-                    <dt>선물하기 남은 횟수</dt>
-                    <dd>T끼리 <%=senderInfo.dataGiftCnt%>회 / 가족 무제한</dd>
-                </dl>
-                <% } else if ( senderInfo.familyMemberYn === 'Y' ) { %>
-                <dl>
-                    <dt>선물하기 남은 횟수</dt>
-                    <dd>T끼리 <%=senderInfo.dataGiftCnt%>회 / 가족 <%=senderInfo.familyDataGiftCnt%>회</dd>
-                </dl>
-                <% } else { %>
-                <dl>
-                    <dt>선물하기 남은 횟수</dt>
-                    <dd>T끼리 <%=senderInfo.dataGiftCnt%>회</dd>
-                </dl>
-                <% } %>
-            </div>
-            <div class="complete-btn-box pt40">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <button class="fe-btn_gift_history">선물내역 보기</button>
-                    </li>
-                </ul>
-                <div class="bt-link-box">
-                    <button class="bt-link-tx fe-btn_go_sms">문자로 알리기</button>
-                </div>
-            </div>
-            <button class="complete-closeBtn fe-common-back">
-                <span class="blind">페이지 닫기</span>
-            </button>
         </div>
     </div>
-    <!--// #contents -->
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit"><%-params.custNm%> (<%-params.befrSvcNum%>) 님께<br>
+                            <span class="tx-highlight pt10"><em><%-convertTDataSet(params.dataQty).data%><%-convertTDataSet(params.dataQty).unit%></em> 선물 완료</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">남은 데이터</span>
+                                    <span class="tx-cont"><span class="tx-red1"><%-convertTDataSet(params.beforeDataQty-params.dataQty).data%><%-convertTDataSet(params.beforeDataQty-params.dataQty).unit%></span> / <%-convertTDataSet(params.beforeDataQty).data%><%-convertTDataSet(params.beforeDataQty).unit%></span>
+                                </li>
+                                <% if ( senderInfo.goodFamilyMemberYn === 'Y' ) { %>
+                                <li>
+                                    <span class="title">선물하기 남은 횟수</span>
+                                    <span class="tx-cont">T끼리 <span class="tx-red1"><%=senderInfo.dataGiftCnt%>회</span> / 가족 무제한</span>
+                                </li>
+                                <% } else if ( senderInfo.familyMemberYn === 'Y' ) { %>
+                                <li>
+                                    <span class="title">선물하기 남은 횟수</span>
+                                    <span class="tx-cont">T끼리 <span class="tx-red1"><%=senderInfo.dataGiftCnt%>회</span> / 가족 <span class="tx-red1"><%=senderInfo.familyDataGiftCnt%>회</span></span>
+                                </li>
+                                <% } else { %>
+                                <li>
+                                    <span class="title">선물하기 남은 횟수</span>
+                                    <span class="tx-cont">T끼리 <span class="tx-red1"><%=senderInfo.dataGiftCnt%>회</span></span>
+                                </li>
+                                <% } %>
+                            </ul>
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<span class="title">리스트의 내용이 전환되는</span>-->
+                                    <!--<span class="tx-cont">Data data</span>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<span class="title">경우 윗선을 둡니다.</span>-->
+                                    <!--<span class="tx-cont">한글 데이터</span>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        </div>
+                        <ul class="bt-slice item-two">
+                            <li><button type="button" class="btn-round2 btn-style3 fe-btn_go_sms">문자로 알리기</button></li>
+                            <li><button type="button" class="btn-round2 btn-style3 fe-btn_gift_history">선물내역 보기</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
+            </ul>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+        <!--// .popup-closeBtn -->
+    </div>
 </div>
 
 <% include ../../components/javascript.component.html %>

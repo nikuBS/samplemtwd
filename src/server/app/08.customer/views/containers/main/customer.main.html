@@ -15,8 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
     { title: '이용안내', svcInfo: svcInfo, option:{ line: false } }); %>
@@ -36,11 +35,10 @@
                             <li>
                                 <div class="operation-guide-banner">
                                     <strong class="banner-tit">
-                                        <!--데이터가<br>부족할 땐<em class="tit-point">이렇게 하세요!</em>-->
                                         <%-banner.menuImgDesc%>
                                     </strong>
                                     <ul>
-                                        <% banner.contents.map( item => { %>
+                                        <% banner.contents.splice(0, 3).map( item => { %>
                                         <% if ( item.mtwdBltn1CtgId === 'TIP001' ) { %>
                                         <li><a
                                             href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"

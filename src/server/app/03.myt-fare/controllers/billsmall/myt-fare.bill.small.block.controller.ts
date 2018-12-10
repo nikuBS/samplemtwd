@@ -20,39 +20,43 @@ interface Result {
 }
 
 class MyTFareBillSmallHistoryDetail extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resp) => {
-      // console.log('\x1b[36m%s\x1b[0m', '------log block list code', resp.code, resp.result);
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
           svcInfo: svcInfo
-          //  ,pageInfo: pageInfo
         });
       }
       // const mockData = bill_guide_BFF_05_0093;
       const data: Result | any = resp.result; // || mockData.result;
 
       // 사용처 / 결제대행업체 / 신청일
-      data.cpHistories.map((o, index) => {
-        const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
-        const plainApply = o.applyMonth.replace(/-/gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
-        o.listId = index;
-        o.FullDate = DateHelper.getShortDate(plainTime);
-        o.applyDate = DateHelper.getShortDate(plainApply);
-        // API 에서 cpState를 받아올 수 없음 기준일로 판단
-        o.cpState = (parseFloat(DateHelper.getCurrentShortDate(DateHelper.getNextMonth())) > parseFloat(plainApply)) ? 'A0' : 'A1';
-        o.blockState = MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
-        // o.isBlock = (o.cpState === 'A0' || o.cpState === 'A1'); 
-      });
+      if (data.cpHistories && data.cpHistories.length) {
+        data.cpHistories.map((o, index) => {
+          const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
+          const plainApply = o.applyMonth.replace(/-/gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
+          o.listId = index;
+          o.FullDate = DateHelper.getShortDate(plainTime);
+          o.applyDate = DateHelper.getShortDate(plainApply);
+          // API 에서 cpState를 받아올 수 없음 기준일로 판단
+          o.cpState = (parseFloat(DateHelper.getCurrentShortDate(DateHelper.getNextMonth())) > parseFloat(plainApply)) ? 'A0' : 'A1';
+          o.blockState = MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
+          // o.isBlock = (o.cpState === 'A0' || o.cpState === 'A1'); 
+        });
+      } else {
+        data.cpHistories = [];
+      }
+      
       res.render('billsmall/myt-fare.bill.small.block.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo,
         totalCnt: data.payHistoryCnt,
-        data: data,
-        noticeInfo: this.getNoticeInfo()
+        data: Object.assign(data, {
+          noticeInfo: this.getNoticeInfo()
+        })
       });
     });
     

@@ -82,6 +82,7 @@ Tw.API_CMD = {
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
 
   // HOME
+  BFF_04_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
   BFF_04_0003: { path: '//core-modification/v1/quick-menu/saveInfo', method: Tw.API_METHOD.POST },
   BFF_04_0004: { path: '/core-auth/v1/get-fcm-push-list', method: Tw.API_METHOD.GET },
 
@@ -425,6 +426,8 @@ Tw.API_CMD = {
   BFF_10_0061: { path: '/core-product/v1/roaming/ManageType-srch', method: Tw.API_METHOD.GET },
   BFF_10_0084: { path: '/core-product/v1/roaming/fee-plans/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0085: { path: '/core-product/v1/roaming/fee-plans/:args0/sets', method: Tw.API_METHOD.PUT },
+  BFF_10_0086: { path: '/core-product/v1/roaming/fee-plans/:args0/terminations', method: Tw.API_METHOD.DELETE },
+  BFF_10_0092: { path: '/core-product/v1/roaming/services/t-roam-tog/:args0/members', method: Tw.API_METHOD.POST },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
@@ -489,6 +492,7 @@ Tw.NODE_CMD = {
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
+  GET_HOME_WELCOME: { path: '/home/welcome', method: Tw.API_METHOD.GET },
   GET_HOME_NOTICE: { path: '/home/notice', method: Tw.API_METHOD.GET },
   GET_HOME_HELP: { path: '/home/help', method: Tw.API_METHOD.GET },
   GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET }

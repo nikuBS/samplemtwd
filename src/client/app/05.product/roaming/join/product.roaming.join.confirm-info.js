@@ -133,23 +133,25 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
 
         this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},this.prodId).
         done($.proxy(function (res) {
+            if(res.code===Tw.API_CODE.CODE_00){
+                var completePopupData = {
+                    prodNm : this._prodRedisInfo.prodNm,
+                    processNm : Tw.PRODUCT_TYPE_NM.JOIN,
+                    isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
+                    typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+                    settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
+                    btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
+                };
+                this._popupService.open({
+                        hbs: 'complete_product_roaming',
+                        layer: true,
+                        data : completePopupData
+                    },
+                    $.proxy(this._bindCompletePopupEvt,this),
+                    null,
+                    'complete');
 
-
-            var completePopupData = {
-                prodNm : this._prodRedisInfo.prodNm,
-                isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
-                typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-                settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-                btnNmList : ['나의 가입정보 확인']
-            };
-            this._popupService.open({
-                    hbs: 'complete_product_roaming',
-                    layer: true,
-                    data : completePopupData
-                },
-                $.proxy(this._bindCompletePopupEvt,this),
-                null,
-                'complete');
+            }
         }, this)).fail($.proxy(function (err) {
 
         }, this));
@@ -160,9 +162,10 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         $($args).on('click','.btn-floating',this._goBack);
     },
     _goBack : function(){
-
+        this._popupService.close();
+        this._historyService.goBack();
     },
     _goMyInfo : function () {
-
+        this._historyService.goLoad('/product/roaming/my-use');
     }
 };

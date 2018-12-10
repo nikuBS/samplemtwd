@@ -22,11 +22,11 @@ Tw.TooltipService.prototype = {
     this._id = $target.attr('id');
 
     if (this._isExist($pageId)) {
-      this._getContents(this._tooltipList[$pageId], 'exist');
+      this._getContents(this._tooltipList);
     } else {
-      // this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { id: $pageId })
+      // this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { TooltipInfo: $pageId })
       $.ajax('/mock/tip.json')
-        .done($.proxy(this._success, this, $pageId))
+        .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     }
   },
@@ -54,11 +54,13 @@ Tw.TooltipService.prototype = {
     this.$document.on('click', '.btn-tip', $.proxy(this.getTip, this));
     this.$document.on('click', '.tip-view', $.proxy(this.getTip, this));
   },
-  _success: function ($targetId, res) {
+  _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var $content = res.result.tip[$targetId];
-      this._tooltipList.push($content);
-      this._getContents($content, 'api');
+      var $content = res.result.tooltip;
+      if (!Tw.FormatHelper.isEmpty($content)) {
+        this._tooltipList = $content;
+        this._getContents($content, 'api');
+      }
     } else {
       this._fail(res);
     }
@@ -67,11 +69,9 @@ Tw.TooltipService.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _getContents: function ($content) {
-    if (!Tw.FormatHelper.isEmpty($content)) {
-      for (var i = 0; i < $content.length; i++) {
-        if ($content[i].id === this._id) {
-          this._openTip($content[i]);
-        }
+    for (var i = 0; i < $content.length; i++) {
+      if ($content[i].mtwdTtipId === this._id) {
+        this._openTip($content[i]);
       }
     }
   },
@@ -79,10 +79,10 @@ Tw.TooltipService.prototype = {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
-      'title': $result.title,
+      'title': $result.ttipTitNm,
       'title_type': 'sub',
       'cont_align': 'tl',
-      'contents': $result.contents,
+      'contents': $result.ttipCtt,
       'bt_b': [{
         style_class: 'tw-popup-closeBtn bt-red1 pos-right',
         txt: '닫기'
