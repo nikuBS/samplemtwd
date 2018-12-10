@@ -16,10 +16,15 @@ class BenefitIndex extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
+    const _pageInfo = {
+      menuId : 'M000542'
+    };
+
+    pageInfo = FormatHelper.isEmpty(svcInfo) ? _pageInfo : pageInfo;
+
     res.render('index/benefit.index.html', {
       svcInfo,
-      pageInfo,
-      isLogin : !FormatHelper.isEmpty(svcInfo)
+      pageInfo
     });
   }
 }

@@ -15,9 +15,6 @@ Tw.BenefitIndexPopup.prototype = {
   },
 
   _openCallbackRestrictLaw : function ($layer) {
-    var openUrlExternal = function(href) {
-      Tw.CommonHelper.openUrlExternal(href,'');
-    };
     var openExternal = function (e) {
       e.preventDefault();
       var $target = $(e.currentTarget);
@@ -26,6 +23,10 @@ Tw.BenefitIndexPopup.prototype = {
       if ( Tw.FormatHelper.isEmpty($target.attr('href')) ) {
         return;
       }
+
+      var openUrlExternal = function(href) {
+        Tw.CommonHelper.openUrlExternal(href,'');
+      };
 
       // Tworld 는 과금발생 알러트 제외
       if ( $target.attr('data-no-alert') !== undefined ) {
