@@ -182,7 +182,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     this._apiService
       .requestArray([{ command: Tw.NODE_CMD.GET_SVC_INFO }, { command: Tw.API_CMD.BFF_06_0044 }])
       .done($.proxy(this._onDoneTFamilySharing, this))
-      .fail($.proxy(this._onFailReq, this));
+      .fail($.proxy(this._onFailTFamilySharing, this));
 
     // this._onDoneTFamilySharing({
     //   'code': '00',
@@ -261,9 +261,13 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
         this._$tfamilySharing.show();
         this._$tfamilySharing.find('.fe-data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
       } else {
-        this._popupService.openAlert(tFamilySharingResp.msg, tFamilySharingResp.code);
+        this._$tfamilySharing.hide();
       }
     }
+  },
+
+  _onFailTFamilySharing: function() {
+    this._$tfamilySharing.hide();
   },
 
   _onDoneDataGifts: function(resp) {

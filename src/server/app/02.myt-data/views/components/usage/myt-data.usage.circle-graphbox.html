@@ -51,6 +51,13 @@
                                 <% } %> 남음
                             <% } %>
                         </span>
+                        <% if (items[i].isVisibleDayBtn) { %>
+                        <span class="use fe-use" style="display: none;">
+                            <strong></strong>
+                            오늘사용
+                        </span>
+                        <button class="bt-link-tx underline ml6 fe-btn-daily-used" data-prodid="<%= items[i].prodId %>">당일 사용량 조회</button>
+                        <% } else { %>
                         <span class="use">
                             <% if (!items[i].isUsedUnlimited) { %>
                                 <% for (var j = 0; j < items[i].showUseds.length; j++) { %>
@@ -62,8 +69,6 @@
                                 사용
                             <% } %>
                         </span>
-                        <% if (items[i].isVisibleDayBtn) { %>
-                        <button class="bt-link-tx underline ml6">당일 사용량 조회</button>
                         <% } %>
                     </div>
                     <% if (items[i].rgstDtm !== '') { %>
