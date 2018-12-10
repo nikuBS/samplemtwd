@@ -309,34 +309,16 @@ Tw.MyTDataSubMain.prototype = {
       // PPS 인 경우 자동알람서비스
       if (Tw.BrowserHelper.isApp()) {
         // TODO: 금융거래 본인인증 작업이 완료되면 이후 처리 우선은 페이지 이동으로만 처리하고 완료 후 [DC_09_05] 이동
-        this._popupService.openAlert('TBD');
+        // 인증인 API 호출시 인증화면으로 넘어감으로 DC_09_05로 이동 - 재차 확인 필요
+        this._historyService.goLoad('/myt-data/recharge/prepaid/alarm');
       } else {
-        // 웹인 경우 모바일 앱으로 유도 (설치/미설치)
-        this._popupService.openModalTypeA(
-          Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.TITLE,
-          Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.MSG,
-          Tw.ALERT_MSG_COMMON.T_WORLD_APP_MOVED.BUTTON,
-          $.proxy(this._onOpenTworldMovedAlert, this),
-          $.proxy(this._onConfirmTworldMovedAlert, this),
-          this
-        );
+        // CO_UT_09_01 page 이동
+        this._historyService.goLoad('/common/share/app-install/info');
       }
     } else {
       this._historyService.goLoad('/myt-data/giftdata');
     }
   },
-
-  _onOpenTworldMovedAlert: function($layer) {
-    $layer.find('.pos-left .tw-popup-closeBtn').on(
-      'click',
-      $.proxy(function() {
-        // TODO: 서비스 이용 안내 페이지로 이동 [CO_UT_09_01]
-        this._popupService.openAlert('TBD');
-      }, this)
-    );
-  },
-
-  _onConfirmTworldMovedAlert: function() {},
 
   // T가족모아
   _onFamilyMoaDetail: function() {
