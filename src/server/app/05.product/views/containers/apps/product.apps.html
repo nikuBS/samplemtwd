@@ -24,7 +24,6 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <% if (banners && banners.length > 0) { %>
                 <!-- 스와이프 -->
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner dot-btm slide-pagingtype">
@@ -32,21 +31,7 @@
                         <div class="widget">
                             <div class="widget-box slider1">
                                 <div class="slider-box">
-                                    <ul class="slider">
-                                        <% banners.map(banner => { %>
-                                        <li>
-                                            <% if (banner.bnnrTypCd === 'I') { %>
-                                                <a href="<%= banner.twdViewUrl %>">
-                                                    <img src="<%= banner.imgId %>" alt="<%= banner.imgAltVal %>">
-                                                </a>
-                                            <% } else { %>
-                                                <button>
-                                                <%- banner.bnnrHtmlCtt %>
-                                                </button>
-                                            <% } %>
-                                        </li>
-                                        <% }); %>
-                                    </ul>
+                                    <ul class="slider" data-location="T"></ul>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +39,6 @@
                     </div>
                 </div>
                 <!-- //스와이프 -->
-                <% } %>
                 <div class="pl16"><button class="bt-dropdown text-type01" title="정렬조건" aria-haspopup="true">최신순</button></div>
                 <!-- .cont-box -->
                 <div class="cont-box">
@@ -140,7 +124,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.ProductApps($('.wrap'));
+        new Tw.ProductApps($('.wrap'), '<%= pageInfo.menuId %>');
     })
 </script>
 <% include ../../components/end.component.html %>

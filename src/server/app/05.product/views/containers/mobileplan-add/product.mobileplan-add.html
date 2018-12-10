@@ -40,39 +40,22 @@
                 <% } %>
                 <!--//사용중인 상품 -->
 
-                <% const banners = productData.banners; %>
-                <% if (banners && banners.length > 0) { %>
-                    <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true"/>
 
-                    <!-- 스와이프 -->
-                    <div class="cont-box nogaps noborder">
-                        <div class="main-slide-banner slide-pagingtype">
-                            <!-- .widget -->
-                            <div class="widget">
-                                <div class="widget-box slider1">
-                                    <div class="slider-box">
-                                        <ul class="slider">
-                                            <% banners.map(banner => { %>
-                                                <li>
-                                                    <% if (banner.bnnrTypCd === 'H') { %>
-                                                        <button>
-                                                        <%- banner.bnnrHtmlCtt %>
-                                                        </button>
-                                                    <% } else if (banner.bnnrTypCd === 'I') { %>
-                                                        <a href="<%= banner.twdViewUrl %>">
-                                                            <img src="<%= banner.imgId %>" alt="<%= banner.imgAltVal %>">
-                                                        </a>
-                                                    <% } %>
-                                                </li>
-                                            <% }); %>
-                                        </ul>
-                                    </div>
+                <!-- 스와이프 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider" data-location="9"></ul>
                                 </div>
                             </div>
-                            <!--// .widget -->
                         </div>
+                        <!--// .widget -->
                     </div>
-                <% } %>
+                </div>
                 <!-- //스와이프 -->
 
                 <!--상품 퀵메뉴-->
@@ -158,9 +141,6 @@
                 <% } %>
                 <!-- //SKT의 대표 부가상품 -->
 
-
-                <% const additionBanners = productData.additionBanners; %>
-                <% if (additionBanners && productData.additionBanners.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- 스와이프 -->
                 <div class="cont-box nogaps noborder">
@@ -169,22 +149,13 @@
                         <div class="widget">
                             <div class="widget-box slider1">
                                 <div class="slider-box">
-                                    <ul class="slider">
-                                        <% additionBanners.map(banner => { %>
-                                            <li>
-                                                <a href="<%= banner.twdViewUrl %>">
-                                                    <img src="<%= banner.imgUrl %>" alt="<%= banner.imgAltVal %>">
-                                                </a>
-                                            </li>
-                                        <% }) %>
-                                    </ul>
+                                    <ul class="slider" data-location="C"></ul>
                                 </div>
                             </div>
                         </div>
                         <!--// .widget -->
                     </div>
                 </div>
-                <% } %>
                 <!-- //스와이프 -->
 
                 <!-- 이런 부가서비스는 어떠세요? -->
@@ -293,4 +264,9 @@
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function() {
+        new Tw.ProductSubmain($('.wrap'), '<%= pageInfo.menuId %>');
+    })
+</script>
 <% include ../../components/end.component.html %>

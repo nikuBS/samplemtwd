@@ -39,8 +39,6 @@
                 <!--//my -->
                 <% } %>
 
-                <!-- 스와이프 -->
-                <% if (banners.top.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner slide-pagingtype">
@@ -48,30 +46,16 @@
                         <div class="widget">
                             <div class="widget-box slider1">
                                 <div class="slider-box">
-                                    <ul class="slider">
-                                        <% banners.top.map(banner => { %>
-                                        <li>
-                                            <% if (banner.bnnrTypCd === 'I') { %>
-                                                <a href="<%= banner.twdViewUrl %>">
-                                                    <img src="<%= banner.imgId %>" alt="<%= banner.imgAltVal %>">
-                                                </a>
-                                            <% } else { %>
-                                                <button>
-                                                <%- banner.bnnrHtmlCtt %>
-                                                </button>
-                                            <% } %>
-                                        </li>
-                                        <% }); %>
-                                    </ul>
+                                    <ul class="slider" data-location="0"></ul>
                                 </div>
                             </div>
                         </div>
                         <!--// .widget -->
                     </div>
                 </div>
-                <% } %>
                 <!-- //스와이프 -->
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps-hoz">
                     <ul class="category-infoarealist">
                         <li class="category-type">
@@ -122,35 +106,19 @@
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <!-- 결합혜택 정보 안내 영역 -->
-                <% if (banners.center.length > 0) { %>
-                    <div class="cont-box nogaps noborder">
-                        <div class="main-slide-banner dot-btm slide-pagingtype">
-                            <!-- .widget -->
-                            <div class="widget">
-                                <div class="widget-box slider1">
-                                    <div class="slider-box">
-                                        <ul class="slider">
-                                            <% banners.center.map(banner => { %>
-                                            <li>
-                                                <% if (banner.bnnrTypCd === 'I') { %>
-                                                    <a href="<%= banner.twdViewUrl %>">
-                                                        <img src="<%= banner.imgId %>" alt="<%= banner.imgAltVal %>">
-                                                    </a>
-                                                <% } else { %>
-                                                    <button>
-                                                    <%- banner.bnnrHtmlCtt %>
-                                                    </button>
-                                                <% } %>
-                                            </li>
-                                            <% }); %>
-                                        </ul>
-                                    </div>
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner dot-btm slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider" data-location="C"></ul>
                                 </div>
                             </div>
-                            <!--// .widget -->
                         </div>
+                        <!--// .widget -->
                     </div>
-                <% } %>
+                </div>
                 <!-- //결합혜택 정보 안내 영역 -->
 
                 <hr class="cont-sp type1" aria-hidden="true" />
@@ -199,5 +167,10 @@
         <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function() {
+        new Tw.ProductSubmain($('.wrap'), '<%= pageInfo.menuId %>');
+    })
+</script>
+<% include ../../components/end.component.html %>

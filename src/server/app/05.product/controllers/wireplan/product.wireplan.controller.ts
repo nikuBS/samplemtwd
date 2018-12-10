@@ -20,20 +20,15 @@ export default class ProductWire extends TwViewController {
     } else if (uri === 'portability') {
       res.render('wireplan/product.wireplan.portability.html', { svcInfo, pageInfo });
     } else {
-      Observable.combineLatest(this.getMyWireInfo(svcInfo), this.getBanners()).subscribe(([myWire, banners]) => {
-        const error = {
-          code: (myWire && myWire.code) || banners.code,
-          msg: (myWire && myWire.msg) || banners.msg
-        };
-
-        if (error.code) {
+      this.getMyWireInfo(svcInfo).subscribe(myWire => {
+        if (myWire && myWire.code) {
           return this.error.render(res, {
-            ...error,
+            ...myWire,
             svcInfo
           });
         }
 
-        res.render('wireplan/product.wireplan.html', { svcInfo, pageInfo, myWire, banners });
+        res.render('wireplan/product.wireplan.html', { svcInfo, pageInfo, myWire });
       });
     }
   }
@@ -49,22 +44,5 @@ export default class ProductWire extends TwViewController {
     }
 
     return of(undefined);
-  }
-
-  private getBanners = () => {
-    return this.apiService.request(API_CMD.BFF_10_0050, { idxCtgCd: this.WIRE_CODE }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
-      }
-
-      return {
-        top: (resp.result || []).filter(banner => {
-          return banner.bnnrLocCd === 'T';
-        }),
-        center: (resp.result || []).filter(banner => {
-          return banner.bnnrLocCd === 'C';
-        })
-      };
-    });
   }
 }

@@ -58,8 +58,7 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
       lineNum2: $('#inputNum2').val()
     };
 
-    if(!param.lineNum1 || param.lineNum1.length !== 4
-      || !param.lineNum2 || param.lineNum2.length !== 4){
+    if(!param.lineNum1 || param.lineNum1.length !== 4 || !param.lineNum2 || param.lineNum2.length !== 4){
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V29);
       //this._popupService.toast('번호를 4자리로 입력해 주십시오.');
       return;

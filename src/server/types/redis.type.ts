@@ -12,6 +12,7 @@ export const REDIS_QUICK_DEFAULT = 'UserQuickMenuByMbrGr:';
 export const REDIS_TOOLTIP = 'ToolTip:';
 export const REDIS_MENU = 'FrontMenuList:';
 export const REDIS_SMART_CARD = 'SmartCardSorting:';
+export const REDIS_SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999';
 export const REDIS_RCM_MENU = 'FrontRcmndMenu:';
 export const REDIS_BANNER_ADMIN = 'Banner:';
 export const REDIS_BANNER_TOS_LINK = 'BannerTosLnkgInfo:';

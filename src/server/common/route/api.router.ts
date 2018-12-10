@@ -98,7 +98,7 @@ class ApiRouter {
     const resp = {
       code: API_CODE.CODE_00,
       result: {
-        domain: this.loginService.getDns()
+        domain: req.headers.host
       }
     };
 
@@ -142,7 +142,7 @@ class ApiRouter {
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
-    const url = this.loginService.getReferer();
+    const url = this.loginService.getReferer(req);
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
         res.json(resp);
@@ -152,6 +152,9 @@ class ApiRouter {
 
   private getMenu(req: Request, res: Response, next: NextFunction) {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+
     const svcInfo = this.loginService.getSvcInfo();
     this.redisService.getData(REDIS_MENU + code)
       .subscribe((resp) => {
@@ -221,6 +224,9 @@ class ApiRouter {
 
   private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
     const svcMgmtNum = req.body.svcMgmtNum;
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+
     this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
       res.json({
         code: API_CODE.CODE_00

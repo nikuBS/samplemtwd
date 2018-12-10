@@ -1,7 +1,8 @@
 Tw.COMMON_STRING = {
   ALL: '전체',
   AGREE: '동의',
-  DISAGREE: '비동의'
+  DISAGREE: '비동의',
+  UNLIMIT: '무제한'
 };
 
 Tw.DATA_UNIT = {
@@ -1325,4 +1326,12 @@ Tw.NOTI_POPUP_BTN = {
   '7': '하루동안 열지 않음',
   '10': '일주일동안 열지 않음',
   '100': '다시 보지 않음,'
+};
+
+Tw.MENU_STRING = {
+  TOTAL: '총 ',
+  DESC: '개의 회선',
+  SVC_COUNT: function (count) {
+    return this.TOTAL + count + this.DESC;
+  }
 };

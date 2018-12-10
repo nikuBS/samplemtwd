@@ -13,8 +13,7 @@ Tw.MyTFareBillGuideIntegratedRep = function (rootEl, resData) {
   this._popupService = Tw.Popup;
   this._hashService = Tw.Hash;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this._init();
 
@@ -257,7 +256,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
-      .done(function (resp) {
+      .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
 
         _.each(arguments, function (element, index) {
@@ -450,12 +449,12 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         return {id: svcS[i].prodId, nm: svcS[i].prodNm};
       }
     }
-    for(var i = 0; i < svcM.length; i++){
+    for(i = 0; i < svcM.length; i++){
       if(svcMgmtNum === svcM[i].svcMgmtNum){
         return {id: svcM[i].prodId, nm: svcM[i].prodNm};
       }
     }
-    for(var i = 0; i < svcO.length; i++){
+    for(i = 0; i < svcO.length; i++){
       if(svcMgmtNum === svcO[i].svcMgmtNum){
         return {id: svcO[i].prodId, nm: svcO[i].prodNm};
       }
