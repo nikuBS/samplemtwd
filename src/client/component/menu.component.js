@@ -122,7 +122,7 @@ Tw.MenuComponent.prototype = {
     if (!this._isLogin) { // If it's not logged in
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
-      }, null, null, $.proxy(function () {
+      }, '', null, null, $.proxy(function () {
         this._historyService.goLoad(e.currentTarget.value);
       }, this));
     } else {
