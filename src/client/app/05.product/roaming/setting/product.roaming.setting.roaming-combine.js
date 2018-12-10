@@ -5,7 +5,7 @@
  * ID : RM_11_01_02_01
  */
 
-Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,prodSettingInfo) {
+Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -13,19 +13,22 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInf
   this._history.init('hash');
   this._bindElementEvt();
   this._nativeService = Tw.Native;
-  this._addedList = this._sortingSettingData(prodSettingInfo.combinationLineList);
+  this._addedList = this._sortingSettingData(prodBffInfo.togetherMemList);
   this._changeList();
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
+
 };
 
-Tw.ProductRoamingSettingRoamingAlarm.prototype = {
+Tw.ProductRoamingSettingRoamingCombine.prototype = {
 
   _bindElementEvt : function () {
-      this.$container.on('keyup', '#input_phone', $.proxy(this._changeInputValue, this));
+      this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
+      this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
+      this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
       this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
       this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
@@ -34,67 +37,76 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$confirmBtn = this.$container.find('#confirm_info');
   },
 
-  _clearInput : function(){
-      this.$inputElement.val('');
-  },
-  _changeInputValue : function(){
-      var replaceVal = this.$inputElement.val().replace(/\-/g,'');
-      replaceVal = replaceVal.substr(0,11);
-      var changedPhoneNum = Tw.StringHelper.phoneStringToDash(replaceVal);
-      this.$inputElement.val(changedPhoneNum);
-      this._activateAddBtn();
-  },
+    _clearInput : function(){
+        this.$inputElement.val('');
+        this._activateAddBtn();
+    },
+    _inputBlurEvt : function(){
+        var tempVal = this.$inputElement.val();
+        tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+        this.$inputElement.attr('maxlength','13');
+        this.$inputElement.val(tempVal);
+    },
+    _inputFocusEvt : function(){
+        var tempVal = this.$inputElement.val().replace(/\-/g,'');
+        this.$inputElement.attr('maxlength','11');
+        this.$inputElement.val(tempVal);
+    },
   _addPhoneNumOnList : function () {
       if(this._addedList.length>=5){
           this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
           return;
       }
+      var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
+      if(this._requestOrder('CHK',reuqestPhoneNum)){
+         if(this._requestOrder('add',reuqestPhoneNum)){
+             this._history.reload();
+         }
+      }
 
-      var tempPhoneNum = this.$inputElement.val().split('-');
-      var phoneObj = {
-          'serviceNumber1' : tempPhoneNum[0],
-          'serviceNumber2' : tempPhoneNum[1],
-          'serviceNumber3' : tempPhoneNum[2]
+  },
+  _requestOrder : function(requestType,phoneNum){
+
+      var reqestValue = {
+          svcOpClCd : '',
+          startDtm : this._prodBffInfo.startdtm,
+          endDtm : this._prodBffInfo.enddtm,
+          childSvcNum : '',
+          delChildSvcMgmtNum : ''
       };
+      reqestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
+      if(requestType === 'remove'){
+          reqestValue.delChildSvcMgmtNum = phoneNum;
+      }else{
+          reqestValue.childSvcNum = phoneNum;
+      }
 
-      var requestValue = {
-          'svcNumList' : [phoneObj]
-      };
 
-      // this._addedList.push(phoneObj);
-      // this._activateConfirmBtn();
-      // this._clearInput();
-      // this._changeList();
 
       this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
       done($.proxy(function (res) {
-          console.log('success');
-          console.log(res);
-
-          this._addedList.push(phoneObj);
-          this._activateConfirmBtn();
-          this._clearInput();
-          this._changeList();
-
+          if(res.code===Tw.API_CODE.CODE_00){
+              return true;
+          }else{
+              return false;
+          }
       }, this)).fail($.proxy(function (err) {
-          console.log('fail');
-          console.log(err);
+          return false;
       }, this));
-
-
   },
   _changeList : function(){
       this.$container.find('.list-box').remove();
       for(var i=0;i<this._addedList.length;i++){
-          this._makeTemplate(this._addedList[i],i);
+          this._makeTemplate(this._addedList[i].custNm,this._addedList[i].svcNum,i);
       }
-      this._bindRemoveEvt();
-      this._activateAddBtn();
+
       if(this._addedList.length<=0){
           this.$container.find('.list_contents').hide();
       }else{
           this.$container.find('.list_contents').show();
       }
+      this._activateAddBtn();
+      this._bindRemoveEvt();
   },
   _showPhoneBook : function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._phoneBookCallBack,this));
@@ -107,7 +119,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
     _activateAddBtn : function () {
 
-    if(this.$inputElement.val().length>=12){
+    if(this.$inputElement.val().length>=10){
         this.$addBtn.removeAttr('disabled');
     }else{
         this.$addBtn.attr('disabled','disabled');
@@ -121,54 +133,42 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this.$confirmBtn.attr('disabled','disabled');
     }
   },
-  _makeTemplate : function (phoneNum,idx) {
+  _makeTemplate : function (name,phoneNum,idx) {
       var template = '<li class="list-box">';
           template+='<div class="list-ico"><span class="ico type5">이</span></div>';
           template+='<p class="list-text">';
-          template+='<span class="mtext">이*름</span>';
-          template+='<span class="stext gray">'+phoneNum.serviceNumber1+'-'+phoneNum.serviceNumber2+'-'+phoneNum.serviceNumber3+'</span>';
+          template+='<span class="mtext">'+name+'</span>';
+          template+='<span class="stext gray">'+phoneNum+'</span>';
           template+='</p>';
           template+='<div class="list-btn">';
-          template+='<div class="bt-alone"><button data-idx="'+idx+'" class="bt-line-gray1">삭제</button></div>';
+          template+='<div class="bt-alone"><button class="bt-line-gray1" id="list'+idx+'" data-idx="'+idx+'">삭제</button></div>';
           template+='</div>';
           template+='</li>';
        this.$container.find('.comp-box').append(template);
   },
   _removeOnList : function ($args) {
+      var selectedIdx = $args.currentTarget.attributes['data-idx'].nodeValue;
+      selectedIdx = parseInt(selectedIdx,10);
+      var reuqestPhoneNum = this._addedList[selectedIdx].svcNum;
 
-      var selectedIndex = parseInt($($args).attr('data-idx'),10);
-      this._addedList.splice(selectedIndex,1);
-      this._changeList();
+      if(this._requestOrder('CHK',reuqestPhoneNum)){
+          if(this._requestOrder('remove',reuqestPhoneNum)){
+              this._history.reload();
+          }
+      }
   },
   _bindRemoveEvt : function () {
       this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
   },
   _sortingSettingData : function (inputData) {
-      console.log(inputData)
+      var tempArr = [];
       for(var i=0;i<inputData.length;i++){
-          var tempArr = this._convertPhoneNumFormat(inputData[i].svcNum).split('-');
-          inputData[i] = {
-              'serviceNumber1' : tempArr[0],
-              'serviceNumber2' : tempArr[1],
-              'serviceNumber3' : tempArr[2]
-          };
-      }
-
-      return inputData;
-  },
-  _convertPhoneNumFormat : function (phoneString) {
-      var returnVal='';
-      var cutIdx = [3,7];
-      if(phoneString.length<11){
-          cutIdx[1] = cutIdx[1]-1;
-      }
-      for(var i=0;i<phoneString.length;i++){
-          if(i===cutIdx[0]||i===cutIdx[1]){
-              returnVal+='-';
+          if(inputData[i].childYn===true){
+              tempArr.push(inputData[i]);
           }
-          returnVal+=phoneString.charAt(i);
       }
-      return returnVal;
+      return tempArr;
   }
+
 
 };

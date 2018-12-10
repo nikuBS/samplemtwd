@@ -9,7 +9,7 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,s
   this._popupService = Tw.Popup;
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -182,40 +182,38 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           'select_date');
     },
     _doJoin : function(data,apiService,historyService,$containerData){
-
         apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {
-            console.log('success');
-            console.log(res);
-            var completePopupData = {
-                prodNm : data.prodNm,
-                isBasFeeInfo : data.prodFee,
-                typeNm : data.svcType,
-                settingType : (data.svcType+' '+data.processNm),
-                btnNmList : ['나의 가입정보 확인']
-            };
-            this._popupService.open({
-                    hbs: 'complete_product_roaming',
-                    layer: true,
-                    data : completePopupData
-                },
-                $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
-                null,
-                'complete');
+            if(res.code===Tw.API_CODE.CODE_00){
+                var completePopupData = {
+                    prodNm : data.prodNm,
+                    isBasFeeInfo : data.prodFee,
+                    typeNm : data.svcType,
+                    settingType : (data.svcType+' '+data.processNm),
+                    btnNmList : ['나의 가입정보 확인']
+                };
+                this._popupService.open({
+                        hbs: 'complete_product_roaming',
+                        layer: true,
+                        data : completePopupData
+                    },
+                    $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
+                    null,
+                    'complete');
+            }
         }, this)).fail($.proxy(function (err) {
-            console.log('fail');
-            console.log(err);
+
         }, this));
     },
     _bindCompletePopupBtnEvt : function($args1,$args2){
-         $($args2).on('click','.btn-round2',$args1._goMyInfo);
-         $($args2).on('click','.btn-floating',$args1._goBack);
+         $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
+         $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
     },
     _goMyInfo : function(){
-        //TODO link my roaming info
+        this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-      //TODO lik product info
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
     },
     _confirmInformationSetting : function () {
         var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
@@ -245,7 +243,6 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                         joinType : 'setup'
 
                    };
-
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
 
     }

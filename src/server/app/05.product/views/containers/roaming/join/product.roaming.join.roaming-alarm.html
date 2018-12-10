@@ -42,7 +42,7 @@
 
                 <div class="ti-caption-gray">
                     <h4 class="tit">지정번호 설정 <button type="button" class="tip-view" title="지정번호 설정 정보보기" aria-haspopup="true">TIP</button></h4>
-                    <p class="num"><%= prodBffInfo.preinfo.svcNumMask%></p>
+                    <p class="num"><%= svcInfo.showSvc %></p>
                 </div>
 
                 <!-- .cont-box -->
@@ -52,7 +52,7 @@
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input type="tel" id="input_phone" placeholder="숫자만 입력" title="지정번호 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1">
+                                        <input type="tel" id="input_phone" placeholder="숫자만 입력" title="지정번호 설정할 회선번호" aria-labelledby="aria-citation-phone" maxlength="11" aria-describedby="aria-phone-tx1">
                                         <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="bt-box">
@@ -85,20 +85,20 @@
                 <!-- .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
 
-                <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
+
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
                     <ul class="noti-list">
-                        <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
+
                         <li>
-                            <%= prodBffInfo.preinfo.joinNoticeList[i].prodNm %>
-                            <button type="button" class="tip-view" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>">TIP</button>
+                            서비스 이용안내
+                            <button type="button" class="tip-view" >TIP</button>
                         </li>
-                        <% } %>
+
                     </ul>
                 </div>
                 <!--// .cont-box -->
-                <% } %>
+
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
@@ -121,7 +121,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingJoinRoamingAlarm($('.wrap'),<%- JSON.stringify(prodRedisInfo) %>,<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
+    new Tw.ProductRoamingJoinRoamingAlarm($('.wrap'),'<%- JSON.stringify(prodRedisInfo) %>',<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>');
   });
 </script>
 <% include ../../../components/end.component.html %>
