@@ -107,7 +107,7 @@ export const API_CMD = {
   BFF_03_0027: { path: '/core-auth/v1/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   // MainHome T-Notify
-  BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0002: { path: '/core-product/v1/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_04_0003: { path: '//core-modification/v1/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_04_0004: { path: '/core-auth/v1/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -269,7 +269,7 @@ export const API_CMD = {
   BFF_05_0184: { path: '/core-modification/v1/number-change/search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0185: { path: '/core-modification/v1/number-change/process', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0186: { path: '/core-modification/v1/number-change/init', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0194: { path: '/core-modification/v1/longterm-phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0194: { path: '/core-modification/v1/longterm-phone-pause', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0195: { path: '/core-modification/v1/longterm-phone-pause', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0196: { path: '/core-modification/v1/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0197: { path: '/core-modification/v1/longterm-phone-pause', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -634,7 +634,7 @@ export const API_CMD = {
   BFF_10_0059: { path: '/core-product/v1/roaming/modelCode-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0060: { path: '/core-product/v1/roaming/country-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0061: { path: '/core-product/v1/roaming/ManageType-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0097: { path: '/core-product/v1/ledger/:args0/apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0097: { path: '/core-product/v1/ledger/:args0/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0121: { path: '/core-product/v1/services/roaming/add-count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0141: { path: '/core-product/v1/roaming/services/t-roam-tog/members', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 

@@ -3,7 +3,7 @@ export const MyTBillSetData = {
   'code': '00',
   'msg': 'success',
   'result': {
-    'isusimchk': 'Y',
+    'isusimchk': 'N',
     'nreqGuidSmsSndYn': 'Y',
     'curBillType': 'P',
     'scurBillYn': 'Y',

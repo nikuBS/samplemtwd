@@ -14,7 +14,7 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
 import { REDIS_BANNER_ADMIN } from '../../../../types/redis.type';
 import BrowserHelper from '../../../../utils/browser.helper';
-import RedisHelper from '../../../../utils/redis.helper';
+import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 // import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 
 export default class Product extends TwViewController {
@@ -26,12 +26,12 @@ export default class Product extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getPromotionBanners(pageInfo.menuId, req),
+      // this.getPromotionBanners(pageInfo.menuId),
       this.getProductGroups(),
       this.getRecommendedPlans(),
       this.getMyFilters(!!svcInfo),
       this.getRecommendedTags()
-    ).subscribe(([banners, groups, recommendedPlans, myFilters, recommendedTags]) => {
+    ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
       // ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
       const error = {
         code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
@@ -44,21 +44,17 @@ export default class Product extends TwViewController {
         return this.error.render(res, { ...error, svcInfo });
       }
 
-      const productData = { banners, groups, myFilters, recommendedPlans, recommendedTags };
+      const productData = { groups, myFilters, recommendedPlans, recommendedTags };
       res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
     });
   }
 
-  private getPromotionBanners = (id, req) => {
-    return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
-      // const resp = PROMOTION_BANNERS;
-      if (!resp.result) {
-        return resp.result;
-      }
-
-      return RedisHelper.sortBanners(req);
-    });
-  }
+  // private getPromotionBanners = id => {
+  //   // return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
+  //   return Observable.of(PROMOTION_BANNERS).map(resp => {
+  //     return resp.result && resp.result.banners;
+  //   });
+  // }
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {

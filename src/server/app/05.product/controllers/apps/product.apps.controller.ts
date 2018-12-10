@@ -13,25 +13,6 @@ export default class ProductApps extends TwViewController {
   private APPS_CODE = 'F01700';
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    this.getBanners().subscribe(banners => {
-      if (banners.code) {
-        return this.error.render(res, {
-          ...banners,
-          svcInfo
-        });
-      }
-
-      res.render('apps/product.apps.html', { svcInfo, pageInfo, banners, isApp: BrowserHelper.isApp(req) });
-    });
-  }
-
-  private getBanners = () => {
-    return this.apiService.request(API_CMD.BFF_10_0050, { idxCtgCd: this.APPS_CODE }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
-      }
-
-      return resp.result;
-    });
+    res.render('apps/product.apps.html', { svcInfo, pageInfo, isApp: BrowserHelper.isApp(req) });
   }
 }

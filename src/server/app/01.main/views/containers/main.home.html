@@ -39,13 +39,7 @@
                     <div class="home-slider-my">
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <!-- .layer-noti -->
-                        <div class="dialog-box">
-                            <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
-                            <button class="dialog-txt">
-                                <span class="name"><%= svcInfo.mbrNm %> 고객님, 안녕하세요.</span>
-                                <span class="key">이번 달 요금안내서가 발행되었습니다.</span>
-                            </button>
-                            <div class="dialog-right-btn"><button class="icon-32px-exit"><span class="blind">닫기</span></button></div>
+                        <div id="fe-tmpl-noti">
                         </div>
                         <!-- // .layer-noti -->
                         <% } %>
@@ -373,22 +367,7 @@
                                 <div class="widget">
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
-                                            <ul class="slider">
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
-                                                    </button>
-                                                </li>
+                                            <ul class="slider" data-location="1">
                                             </ul>
                                         </div>
                                         <!-- <div class="slider-box">
@@ -448,22 +427,7 @@
                                 <div class="widget">
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
-                                            <ul class="slider">
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
-                                                    </button>
-                                                </li>
+                                            <ul class="slider"  data-location="2">
                                             </ul>
                                         </div>
                                         <!-- <div class="slider-box">
@@ -522,22 +486,7 @@
                                 <div class="widget">
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
-                                            <ul class="slider">
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="<%= CDN %>/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
-                                                    </button>
-                                                </li>
+                                            <ul class="slider" data-location="3">
                                             </ul>
                                         </div>
                                         <!-- <div class="slider-box">
@@ -646,22 +595,7 @@
                                 <div class="widget">
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
-                                            <ul class="slider">
-                                                <li>
-                                                    <button class="bt">
-                                                        <img src="<%= CDN %>/img/main/banner01.jpg" alt="">
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="bt">
-                                                        <img src="<%= CDN %>/img/main/banner01.jpg" alt="">
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="bt">
-                                                        <img src="<%= CDN %>/img/main/banner01.jpg" alt="">
-                                                    </button>
-                                                </li>
+                                            <ul class="slider"  data-location="4">
                                             </ul>
                                         </div>
                                     </div>
@@ -983,10 +917,11 @@
 <% include ../components/smart-card/gift.component.html %>
 <% include ../components/smart-card/micro-pay.component.html %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
+<%- include('../components/home/home-welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
 <script>
   $(document).ready(function () {
-    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>', '<%= redisData.embNotice !== null %>');
+    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>');
   });
 </script>
 <% include ../components/end.component.html %>

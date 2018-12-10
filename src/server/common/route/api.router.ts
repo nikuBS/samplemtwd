@@ -14,7 +14,7 @@ import {
   REDIS_MENU,
   REDIS_URL_META,
   REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP, REDIS_TOOLTIP
+  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI
 } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
@@ -66,6 +66,7 @@ class ApiRouter {
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
+    this.router.get('/home/welcome', this.getHomeWelcome.bind(this));
     this.router.get('/home/notice', this.getHomeNotice.bind(this));
     this.router.get('/home/help', this.getHomeHelp.bind(this));
     this.router.get('/tooltip', this.getTooltip.bind(this));
@@ -97,7 +98,7 @@ class ApiRouter {
     const resp = {
       code: API_CODE.CODE_00,
       result: {
-        domain: this.loginService.getDns()
+        domain: req.headers.host
       }
     };
 
@@ -141,7 +142,7 @@ class ApiRouter {
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
-    const url = this.loginService.getReferer();
+    const url = this.loginService.getReferer(req);
     this.redisService.getData(REDIS_URL_META + url)
       .subscribe((resp) => {
         res.json(resp);
@@ -151,21 +152,40 @@ class ApiRouter {
 
   private getMenu(req: Request, res: Response, next: NextFunction) {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+
     const svcInfo = this.loginService.getSvcInfo();
     this.redisService.getData(REDIS_MENU + code)
       .subscribe((resp) => {
         if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
+          if (resp.result.isLogin) {
+            resp.result.userInfo = {};
+            resp.result.userInfo.svcNum = svcInfo.svcNum;
+            resp.result.userInfo.name = svcInfo.mbrNm;
+            resp.result.userInfo.totalSvcCnt = svcInfo.totalSvcCnt;
+            resp.result.userInfo.expsSvcCnt = svcInfo.expsSvcCnt;
+            resp.result.userInfo.deviceName = svcInfo.eqpMdlNm;
+            resp.result.userInfo.loginType = svcInfo.loginType;
+          }
           res.json(resp);
         } else {
           res.json(resp);
         }
-      })
+      });
   }
 
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
     this.redisService.getData(REDIS_BANNER_ADMIN + menuId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getHomeWelcome(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_HOME_NOTI)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -204,6 +224,9 @@ class ApiRouter {
 
   private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
     const svcMgmtNum = req.body.svcMgmtNum;
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+
     this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
       res.json({
         code: API_CODE.CODE_00

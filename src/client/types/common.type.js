@@ -1,5 +1,7 @@
 Tw.LSTORE_KEY = {
-  LINE_REFRESH: 'lineRefresh'
+  LINE_REFRESH: 'lineRefresh',
+  HOME_WELCOME: 'homeWelcome',
+  HOME_EMR_NOTICE: 'homeEmrNotice'
 };
 
 Tw.FIDO_TYPE = {

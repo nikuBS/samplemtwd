@@ -274,7 +274,10 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
 
   _reload: function(){
     this._popupService.close();
-    this._historyService.reload();
+    var self = this;
+    setTimeout(function(){
+      self._historyService.reload();
+    },100);
   },
 
   _openEditPop : function(changeCountry ,res){
@@ -430,10 +433,6 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
         this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
     }
-  },
-
-  _openEditAlertCloseCallback: function() {
-    this._historyService.goLoad('/product/roaming/fi/inquire-auth');
   },
 
   _goRoamingGuide: function() {

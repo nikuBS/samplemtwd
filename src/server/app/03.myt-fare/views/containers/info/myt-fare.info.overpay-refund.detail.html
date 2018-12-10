@@ -30,47 +30,52 @@
                             <li>
                                 <div class="head-text">
                                     <span class="tit">신청 일자</span>
-                                    <span class="val" id="fe-detail-date"></span>
+                                    <span class="val"><%= data.reqDt%></span>
                                 </div>
                             </li>
                             <li>
                                 <div class="head-text">
                                     <span class="tit">신청 금액</span>
-                                    <span class="val"><span id="fe-detail-req-amt"></span> 원</span>
+                                    <span class="val"><%= data.dataAmt%> 원</span>
                                 </div>
                                 <div class="sub-text">
                                     <span class="tit">과납 금액</span>
-                                    <span class="val"><span id="fe-detail-over-amt"></span> 원</span>
+                                    <span class="val"><%= data.dataOverAmt%> 원</span>
                                 </div>
                                 <div class="sub-text">
                                     <span class="tit">채권보존료</span>
-                                    <span class="val"><span id="fe-detail-bond-amt"></span> 원</span>
+                                    <span class="val"><%= data.dataBondAmt%> 원</span>
                                 </div>
                                 <div class="sub-text">
                                     <span class="tit">합계금액</span>
-                                    <span class="val"><span id="fe-detail-total"></span> 원</span>
+                                    <span class="val"><%= data.dataAmt%> 원</span>
                                 </div>
                             </li>
                             <li>
                                 <div class="head-text">
                                     <span class="tit">처리결과</span>
-                                    <span class="val" id="fe-detail-ing"><span class="fe-detail-status"></span></span>
-                                    <span class="val" id="fe-detail-etc"><span class="fe-detail-status"></span> ( <span id="fe-detail-refund-total"></span>원 )</span>
+                                    <% if(data.inProcess){ %>
+                                    <span class="val" id="fe-detail-ing"><%= data.dataStatus%></span>
+                                    <% }else{ %>
+                                    <span class="val" id="fe-detail-etc"><%= data.dataStatus%> ( <%= data.dataAmt%>원 )</span>
+                                    <%} %>
                                 </div>
+                                <% if(!data.inProcess){ %>
                                 <div id="fe-detail-overpay-refund-result">
                                     <div class="sub-text">
                                         <span class="tit">은행</span>
-                                        <span class="val" id="fe-detail-bank-name"></span>
+                                        <span class="val"><%=data.rfndBankNm %></span>
                                     </div>
                                     <div class="sub-text">
                                         <span class="tit">계좌번호</span>
-                                        <span class="val"><span id="fe-detail-bank-num"></span></span>
+                                        <span class="val"><%=data.rfndBankNum %></span>
                                     </div>
                                     <div class="sub-text">
                                         <span class="tit">처리일자</span>
-                                        <span class="val"><span id="fe-detail-proc-date"></span></span>
+                                        <span class="val"><%=data.dataDt%></span>
                                     </div>
                                 </div>
+                                <%} %>
                             </li>
                         </ul>
                     </div>

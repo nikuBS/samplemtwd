@@ -28,6 +28,7 @@ Tw.MyTDataGiftSms.prototype = {
     }
 
     if ( this.paramData.befrSvcNum ) {
+      this.paramData.befrSvcNum = this.paramData.befrSvcNum.replace(/-/g, '');
       $('.add-info').text(Tw.FormatHelper.getFormattedPhoneNumber(this.paramData.befrSvcNum));
     }
   },

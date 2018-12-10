@@ -1,0 +1,17 @@
+<%#
+* FileName: home-welcome..html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.10.06
+%>
+<script id="fe-home-welcome" type="text/x-handlebars-template">
+    <div class="dialog-box">
+        <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
+        <button id="fe-bt-noti-go" class="dialog-txt">
+            <span class="name"><%= svcInfo.mbrNm %> 고객님, {{ msg.gretPhrs }}</span>
+            <span class="key">{{ msg.wmsgCtt }}</span>
+        </button>
+        <div class="dialog-right-btn">
+            <button id="fe-bt-noti-close" class="icon-32px-exit"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+</script>

@@ -23,25 +23,6 @@
 
             <!-- .cont-box -->
             <div class="cont-box">
-                <div class="phonefilter-wrap">
-                    <div class="widget">
-                        <div class="widget-box check">
-                            <div class="filtertype-wrap">
-                                <ul class="select-list division-five" role="roup">
-                                    {{#each deviceFilters}}
-                                    <li class="checkbox" role="checkbox">
-                                        <input type="checkbox" name="checkbox" title="{{name}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{id}}"/><!-- 체크상태일 경우 checked="checked" -->
-                                        <p class="text-wrap">
-                                            <i class="ico type-{{icon}}"></i><span class="text">{{{name}}}</span>
-                                        </p>
-                                    </li>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 {{#each filters}}
                 <h3 class="filterlist-title">{{prodFltNm}}</h3>
                 <div class="productfilter-type">
@@ -75,7 +56,7 @@
                 <h3 class="suggest-tag-title">추천태그</h3>
                 <ul class="suggest-tag-list openlist-wrap">
                     {{#each tags}}
-                    <li><button type="button" class="link" data-tag-id={{tagId}}>#{{prodTagNm}}</button></li>
+                    <li><button type="button" class="link {{#if checked}}active{{/if}}" data-tag-id={{tagId}}>#{{prodTagNm}}</button></li>
                     {{/each}}
                 </ul>
             </div>

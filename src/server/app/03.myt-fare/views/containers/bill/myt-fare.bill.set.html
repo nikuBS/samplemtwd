@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '요금안내서 설정'}); %>
     <!--// #header -->
@@ -36,7 +36,7 @@
                 <!--우편인 경우만 안보임-->
                 <% if( '1' !== data.curBillType ) {%>
                 <dl class="info-tx0">
-                    <dt>함께 받는 요금안내서</dt>
+                    <dt><%='P' !== data.billInfo[0].cd ? '함께 받는 요금안내서':'SMS 수신여부'%></dt>
                     <dd><strong><%= data.billInfo[1].nm  %></strong></dd>
                 </dl>
                 <%}%>
@@ -120,7 +120,7 @@
                     <% data.billList.forEach( (bill) => { %>
                     <li>
                         <div class="link-long lower-h">
-                            <a href="/myt-fare/billsetup/change?billType=<%=bill.cd%>&subBillType=X">
+                            <a href="/myt-fare/billsetup/change?billType=<%=bill.cd%>&subBillType=<%=bill.cd !== 'P' ? 'X':'NO'%>">
                                 <span class="ico-thum2"></span><%= bill.nm %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>

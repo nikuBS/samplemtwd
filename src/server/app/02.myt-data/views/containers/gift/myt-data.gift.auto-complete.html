@@ -16,35 +16,75 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap complete">
+<div class="wrap">
+    <!-- #contents -->
+    <!--<div id="contents" class="container-wrap">-->
+        <!--<div class="container">-->
+            <!--<h1 class="complete-title">-->
+                <!--<img src="/img/dummy/dmy-complete.jpg" alt="">-->
+                <!--<span><strong class="data_qty"></strong> <strong>자동 선물</strong> <br> 신청 완료</span>-->
+            <!--</h1>-->
+            <!--<div class="complete-info">-->
+                <!--<dl>-->
+                    <!--<dt>받으시는 분</dt>-->
+                    <!--<dd>-->
+                        <!--<strong class="name"></strong>-->
+                        <!--<br>-->
+                        <!--<span class="phone"></span>-->
+                    <!--</dd>-->
+                <!--</dl>-->
+            <!--</div>-->
+            <!--<div class="complete-btn-box pt40">-->
+                <!--<ul class="bt-slice">-->
+                    <!--<li class="bt-blue1">-->
+                        <!--<button class="fe-btn_gift_history">선물내역 보기</button>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--<button class="complete-closeBtn fe-common-back"><span class="blind">페이지 닫기</span></button>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--// #contents -->
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
-            <h1 class="complete-title">
-                <img src="/img/dummy/dmy-complete.jpg" alt="">
-                <span><strong class="data_qty"></strong> <strong>자동 선물</strong> <br> 신청 완료</span>
-            </h1>
-            <div class="complete-info">
-                <dl>
-                    <dt>받으시는 분</dt>
-                    <dd>
-                        <strong class="name"></strong>
-                        <br>
-                        <span class="phone"></span>
-                    </dd>
-                </dl>
-            </div>
-            <div class="complete-btn-box pt40">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <button class="fe-btn_gift_history">선물내역 보기</button>
-                    </li>
-                </ul>
-            </div>
-            <button class="complete-closeBtn fe-common-back"><span class="blind">페이지 닫기</span></button>
         </div>
     </div>
     <!--// #contents -->
+
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit"><%-params.custNm%> (<%-convertTelNumber(params.befrSvcNum)%>) 님께<br>
+                            <span class="tx-highlight pt10"><em><%-convertTDataSet(params.dataQty).data%><%-convertTDataSet(params.dataQty).unit%></em> 자동 선물 신청 완료</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <ul class="bt-slice">
+                            <li><button type="button" class="btn-round2 btn-style3">선물내역 보기</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
+            </ul>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+        <!--// .popup-closeBtn -->
+    </div>
 </div>
 
 <% include ../../components/javascript.component.html %>

@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillSmallHitstoryDetail = function (rootEl, data) {
   this.$container = rootEl;
-
+  this.data = data ? JSON.parse(data) : '';
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(rootEl);
   this._popupService = Tw.Popup;
@@ -21,7 +21,8 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     this.rootPathName = this._historyService.pathname;
 
     var renderedHTML;
-    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
+    
+    this.detailData = this.data; //JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     
     if(this.detailData){
       renderedHTML = this.$template.$detailWrap(this.detailData);
@@ -94,7 +95,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
       blockState:Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE.A1,
       isBlocked:true
     });
-    Tw.CommonHelper.setLocalStorage('detailData',JSON.stringify(this.detailData));
+    // Tw.CommonHelper.setLocalStorage('detailData',JSON.stringify(this.detailData));
 
     this.$domWrapper.empty().append(this.$template.$detailWrap(this.detailData));
     this._bindEvent();

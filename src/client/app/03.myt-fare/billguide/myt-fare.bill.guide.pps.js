@@ -11,8 +11,7 @@ Tw.MyTFareBillGuidePps = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this.selDateObj = {
     maxDt: null,

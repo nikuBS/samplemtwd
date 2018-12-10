@@ -11,8 +11,7 @@ Tw.MyTFareBillGuideCallGift = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
+  this._history = new Tw.HistoryService();
 
   this._init();
 
@@ -56,12 +55,15 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   // },
   //--------------------------------------------------------------------------[API]
   _getCallGiftInfo: function (param) {
-    return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
-
-
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0045, param)
+      .done($.proxy(this._getCallGiftInfoInit, this))
+      .fail(function(){
+        Tw.CommonHelper.endLoading('.container');
+      });
   },
   _getCallGiftInfoInit: function (res) {
-
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var resObj = this._svcToTimeObj(res.result.callData);
       this.$dateSelect.hide();
@@ -79,8 +81,8 @@ Tw.MyTFareBillGuideCallGift.prototype = {
         hh: resObj.hh,
         mm: resObj.mm,
         ss: resObj.ss,
-        startDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').startDt,
-        endDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').endDt
+        startDt: this._getPeriod(this.selectMonthVal, 'YYYY.M.DD').startDt,
+        endDt: this._getPeriod(this.selectMonthVal, 'YYYY.M.DD').endDt
       };
 
       this._svcHbDetailList(resData, this.$dataResult, this.$entryTpl);

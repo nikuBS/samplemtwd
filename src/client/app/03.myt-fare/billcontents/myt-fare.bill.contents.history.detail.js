@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillContentsHitstoryDetail = function (rootEl, data) {
   this.$container = rootEl;
-  
+  this.data = data ? JSON.parse(data) : '';
   this._historyService = new Tw.HistoryService(rootEl);
   
   this._params = Tw.UrlHelper.getQueryParams();
@@ -18,7 +18,7 @@ Tw.MyTFareBillContentsHitstoryDetail = function (rootEl, data) {
 Tw.MyTFareBillContentsHitstoryDetail.prototype = {
   _init: function() {
     var renderedHTML;
-    this.detailData = JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
+    this.detailData = this.data; // JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
     
     if(this.detailData){
       renderedHTML = this.$template.$detailWrap(this.detailData);

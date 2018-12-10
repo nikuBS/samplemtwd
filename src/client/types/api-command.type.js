@@ -82,6 +82,7 @@ Tw.API_CMD = {
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
 
   // HOME
+  BFF_04_0001: { path: '/core-membership/v1/card/home', method: Tw.API_METHOD.GET },
   BFF_04_0003: { path: '//core-modification/v1/quick-menu/saveInfo', method: Tw.API_METHOD.POST },
   BFF_04_0004: { path: '/core-auth/v1/get-fcm-push-list', method: Tw.API_METHOD.GET },
 
@@ -491,6 +492,7 @@ Tw.NODE_CMD = {
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
+  GET_HOME_WELCOME: { path: '/home/welcome', method: Tw.API_METHOD.GET },
   GET_HOME_NOTICE: { path: '/home/notice', method: Tw.API_METHOD.GET },
   GET_HOME_HELP: { path: '/home/help', method: Tw.API_METHOD.GET },
   GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET }

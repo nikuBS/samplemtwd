@@ -1,0 +1,28 @@
+<%#
+* FileName: myt-fare.bill.hotbill.lines
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 12. 7.
+%>
+<script id="fe-list-template" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <button data-idx={{ idx }} data-id="fe-other-line">
+            <span class="ico-wrap">
+                {{#if isCellphone }}
+                <i class="icon-cellphone-80"><span class="blind">{{ eqpMdlNm }}</span></i>
+                {{ else }}
+                <i class="icon-tablet-80"><span class="blind">{{ eqpMdlNm }}</span></i>
+                 {{/if }}
+        </span>
+            <span class="cont">
+            <span class="info-title">{{ eqpMdlNm }}
+                {{#if child}}
+                <i class="icon-children ml6"><span class="blind">자녀</span></i></span>
+                {{/if}}
+            <span class="info-sub">{{ svcNum }}</span>
+            <span class="price">{{ bill }}원</span>
+        </span>
+        </button>
+    </li>
+    {{/each}}
+</script>

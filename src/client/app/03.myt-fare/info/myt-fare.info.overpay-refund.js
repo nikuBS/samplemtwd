@@ -80,8 +80,8 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
-    Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
-    this._historyService.goLoad(this._historyService.pathname + '/detail');
+    // Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
+    this._historyService.goLoad(this._historyService.pathname + '/detail?listId='+detailData.listId);
   },
 
   _updatePaymentList: function (e) {

@@ -80,7 +80,9 @@ class MyTFareBillContentsHistory extends TwViewController {
           curMonth: this.curMonth,
           selectedYear: DateHelper.getCurrentYear(this.fromDt),
           selectedMonth: DateHelper.getCurrentMonth(this.fromDt),
-          noticeInfo: this.getNoticeInfo()
+          noticeInfo: this.getNoticeInfo(),
+          searchFromDt: query.fromDt,
+          searchToDt: query.toDt
         }
       });
       //

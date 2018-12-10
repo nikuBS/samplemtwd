@@ -29,16 +29,50 @@ Tw.ProductRoamingSearchResult.prototype = {
         gsm:3,
         rent:4
     },
+    MFACT_CODE: {
+        ALL: 0,
+        SS: 1,
+        LG: 2,
+        PT: 3,
+        CG: 4,
+        ETC: 5
+    },
     _roamingSearchInit: function () {
         this.$roamingRatelist = this.$container.find('.fe-rate-info');
         this.$roamingNoti = this.$container.find('#fe-rm-noti');
         this.$notiButton = this.$container.find('.fe-noti-btn');
+        this.$userPhoneInfo = this.$container.find('#fe-search-phone');
+        this._phoneInfo = {
+            eqpMdlNm : ''
+        };
         this.reqParams = {
             'countryCode': this._srchInfo.countryCd,
             'manageType': '',
             'showDailyPrice': 'N'
         };
 
+        this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
+        this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
+
+        if(this._svcInfo !== null){
+            if(this._svcInfo.eqpMdlNm !== ''){
+                this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._svcInfo }));
+            }else {
+                if(this._srchInfo.eqpMdlNm !== ''){
+                    this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._srchInfo }));
+                }else {
+                    this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
+                }
+            }
+        }else {
+            Tw.Logger.info('==== this._srchInfo.eqpMdlNm : ', this._srchInfo.eqpMdlNm);
+            Tw.Logger.info('this._srchInfo : ' + JSON.stringify(this._srchInfo));
+            if(this._srchInfo.eqpMdlNm !== '' ){
+                this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._srchInfo }));
+            }else {
+                this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
+            }
+        }
         this.$container.find('.fe-search-input').val(this._srchInfo.countryNm);
         this.manageType = [];
         this.typeTxt = [];
@@ -64,9 +98,14 @@ Tw.ProductRoamingSearchResult.prototype = {
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
         }else {
             this.reqParams.showDailyPrice = 'N';
-            if(this._svcInfo === null){
+            if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
                 this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].value);
                 this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+            } else {
+                if(this._srchInfo.eqpMdlNm === ''){
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].value);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+                }
             }
         }
 
@@ -79,12 +118,64 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._getCountryRoamingRate(this.reqParams);
         this._rmRateInfoTmpl = Handlebars.compile($('#fe-roaming-rate').html());
         this._rmNoticeTmpl = Handlebars.compile($('#fe-roaming-notice').html());
+
+        this._roamingDecriptonInit();
     },
     _getCountryRoamingRate: function (params) {
         Tw.Logger.info('get countryRoamingRate params :::: ', params);
         this._apiService.request(Tw.API_CMD.BFF_10_0058, params)
             .done($.proxy(this._handleSuccessRateResult, this))
             .fail($.proxy(this._handleFailSearch, this));
+    },
+    _bindEvents: function () {
+        this.$container.on('click', '#fe-search-btn', $.proxy(this._onBtnClicked, this));
+        this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));
+        this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));
+        this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));
+        this.$container.on('click', '.fe-noti-btn', $.proxy(this._notiDetailView, this));
+        this.$container.on('click', '.fe-change-model', $.proxy(this._onChangeModel, this));
+        this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));
+        this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));
+        this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));
+        this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
+    },
+    _onClickSelectBtn: function () {
+        if(this.modelValue !== '') {
+            this._phoneInfo.eqpMdlNm = this.modelValue;
+            this._srchInfo.eqpMdlNm = this.modelValue;
+            this.$userPhoneInfo.empty();
+            this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
+            this._roamingDecriptonInit();
+        }else {
+            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+        }
+    },
+    _onSelectModel: function () {
+        if(this.cdValue === undefined || this.cdValue === ''){
+            return;
+        }else {
+            var data = [{
+                list: null
+            }];
+            data[0].list = this.listData;
+            this._popupService.open({
+                    hbs: 'actionsheet_select_a_type',
+                    layer: true,
+                    data: data
+                },
+                $.proxy(this._selectModelCallback, this),
+                $.proxy(this._closeActionPopup, this)
+            );
+        }
+    },
+    _selectModelCallback: function ($layer) {
+        $layer.on('click', '.hbs-model-name', $.proxy(this._onPhoneSelect, this, $layer));
+    },
+    _onPhoneSelect: function ($layer, e) {
+        var target = $(e.currentTarget);
+        this.modelValue = target.attr('data-model-code');
+        this.$container.find('.fe-roaming-model').text(this.modelValue);
+        this._popupService.close();
     },
     _handleSuccessRateResult: function (resp) {
         if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -139,14 +230,66 @@ Tw.ProductRoamingSearchResult.prototype = {
     _handleFailSearch:function () {
 
     },
-    _bindEvents: function () {
-        this.$container.on('click', '#fe-search-btn', $.proxy(this._onBtnClicked, this));
-        this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));
-        this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));
-        this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));
-        this.$container.on('click', '.fe-noti-btn', $.proxy(this._notiDetailView, this));
+    _onHpSearch: function () {
+        this._popupService.open({
+                hbs: 'actionsheet_select_a_type',
+                layer: true,
+                data: [{ list: Tw.ROAMING_MFACTCD_LIST.list }]
+            },
+            $.proxy(this._selectMfactCdCallback, this),
+            $.proxy(this._closeActionPopup, this)
+        );
+    },
+    _selectMfactCdCallback: function ($layer) {
+        $layer.on('click', '.hbs-mfact-cd', $.proxy(this._getModelInfo, this, $layer));
+    },
+    _getModelInfo: function ($layer, e) {
+        var target = $(e.currentTarget);
+        this.cdValue = target.attr('data-mfact-code');
+        this.cdName = target.attr('data-mfact-name');
+        for (var i in Tw.ROAMING_MFACTCD_LIST.list){
+            Tw.ROAMING_MFACTCD_LIST.list[i].option = 'hbs-mfact-cd';
+        }
+        var list = Tw.ROAMING_MFACTCD_LIST.list.slice();
+        var codeType = this.MFACT_CODE[this.cdValue];
+        list[codeType].option = 'hbs-mfact-cd checked';
+        this._popupService.close();
+        this.$container.find('.fe-roaming-mfactCd').text(this.cdName);
 
-        this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));
+        this._onSearchModel(this.cdValue);
+    },
+    _onSearchModel: function (val) {
+        this._apiService.request(Tw.API_CMD.BFF_10_0059, { mfactCd:val })
+        // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
+            .done($.proxy(this._handleSuccessSearchModelResult, this))
+            .fail($.proxy(this._handleFailModelSearch, this));
+    },
+    _handleSuccessSearchModelResult : function (resp) {
+        var _result = resp.result;
+
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+            this.listData = _.map(_result, function (item, idx) {
+                return {
+                    value: _result[idx].eqpMdlNm,
+                    option: 'hbs-model-name',
+                    attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
+                };
+            });
+        } else {
+            this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
+            Tw.Error(resp.code, resp.msg).pop();
+        }
+    },
+    _handleFailModelSearch: function () {
+
+    },
+    _onChangeModel: function (){
+        this._phoneInfo.eqpMdlNm = '';
+        this._srchInfo.eqpMdlNm = '';
+        this.modelValue = '';
+        this.$userPhoneInfo.empty();
+        this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
+        this._roamingDecriptonInit();
     },
     _notiDetailView: function (e) {
         var $target = $(e.currentTarget);
@@ -162,7 +305,7 @@ Tw.ProductRoamingSearchResult.prototype = {
     _openMangeType: function (){
         this._popupService.open(
             {
-                hbs: 'actionsheet_select_a_type', // hbs의 파일명
+                hbs: 'actionsheet_select_a_type',
                 layer: true,
                 data: [{ list: this.manageType }]
             },
@@ -185,10 +328,27 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._getCountryRoamingRate(this.reqParams);
         }
     },
-    _selectPopupCallback:function () {
-
+    _selectPopupCallback:function ($layer) {
+        $layer.on('click', '.hbs-country-name', $.proxy(this._goLoadSearchResult, this, $layer));
     },
-    _closeActionPopup : function () {
+    _goLoadSearchResult: function ($layer, e) {
+        var target = $(e.currentTarget);
+        var optValue = target.attr('data-value');
+
+        var valueArr = optValue.split('|');
+        var countryCode = valueArr[0];
+        var countryNm = encodeURIComponent(valueArr[1]);
+
+        var eqpMdlNm = '';
+        if(this._srchInfo.eqpMdlNm !== ''){
+            eqpMdlNm = encodeURIComponent(this._srchInfo.eqpMdlNm);
+        }
+
+        var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm;
+
+        this._history.goLoad(resultUrl);
+    },
+    _closeActionPopup: function () {
 
     },
     _goRoamingPlan: function () {
@@ -218,7 +378,7 @@ Tw.ProductRoamingSearchResult.prototype = {
     _handleSuccessSearchResult : function (resp) {
         var _result = resp.result;
 
-        var alertMsg = this.keyword + '은(는) 로밍 서비스 국가가 아닙니다.';
+        var alertMsg = this.keyword + Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.MSG;
         if(_result.length === 0) {
             this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE);
             this.$inputContrySearch.val('');
@@ -252,11 +412,52 @@ Tw.ProductRoamingSearchResult.prototype = {
         }else {
             var countryCode = _result[0].countryCode;
             var countryNm = encodeURIComponent(_result[0].countryNm);
-            var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm;
+
+            var eqpMdlNm = '';
+            if(this._srchInfo.eqpMdlNm !== ''){
+                eqpMdlNm = encodeURIComponent(this._srchInfo.eqpMdlNm);
+            }
+            var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm;
 
             this._history.goLoad(resultUrl);
         }
+    },
+    _roamingDecriptonInit: function () {
+        if(this._svcInfo !== null){
+            this._svcInfo.totalSvcCnt = Number(this._svcInfo.totalSvcCnt);
+            if(this._svcInfo.totalSvcCnt > 1 ){
+                if(this._svcInfo.svcGr !== 'A'){
+                    this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
+                    this.$container.find('.fe-bottom-msg').html('');
+                } else {
+                    if(this._srchInfo.eqpMdlNm !== ''){
+                        this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+                        this.$container.find('.fe-bottom-msg').html('');
 
+                    } else {
+                        this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+                        this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
+                    }
+                }
+            }else if(this._svcInfo.totalSvcCnt === 1){
+                if(this._svcInfo.svcGr !== 'A'){
+                    this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
+                    this.$container.find('.fe-bottom-msg').html('');
+                } else {
+                    if(this._srchInfo.eqpMdlNm !== ''){
+                        this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+                        this.$container.find('.fe-bottom-msg').html('');
+
+                    } else {
+                        this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+                        this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
+                    }
+                }
+            }
+        } else {
+            this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+            this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_LOGIN_MSG);
+        }
     },
     _handleFailSearchResult : function () {
 
