@@ -132,7 +132,7 @@ oldAppNames.map(function (app, index) {
       .pipe(concat(app + 'old.js'))
       // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
@@ -155,7 +155,7 @@ appNames.map(function (app, index) {
       .pipe(concat(app + '.js'))
       // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
@@ -178,7 +178,7 @@ appNames.map(function (app, index) {
       .pipe(concat(app + '.js'))
       // .pipe(gulp.dest(dist_tmp + 'js'))
       .pipe(gulp.dest(dist + 'js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
