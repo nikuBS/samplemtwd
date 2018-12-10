@@ -121,19 +121,41 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
         }
 
         // 완료화면 호출
-        Tw.Popup.afterRequestSuccess(
-          '/myt-join/submain/phone/alarm',
-          '/myt-join/submain',
-          null,
-          null,
-          compTxt);
+        // Tw.Popup.afterRequestSuccess(
+        //   '/myt-join/submain/phone/alarm',
+        //   '/myt-join/submain',
+        //   null,
+        //   null,
+        //   compTxt);
+        this._goCompletePage({
+          compPage: '/myt-join/submain/phone/extalarm/complete',
+          mainTxt: '',
+          subTxt: compTxt,
+          confirmMovPage: '/myt-join/submain'
+        });
 
       }, this))
       .fail(function(err){
         Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
+  },
+
+  /**
+   * 완료페이지로 가기
+   * @param options
+   * @private
+   */
+  _goCompletePage: function(options){
+    var param = '?' +
+      'confirmMovPage=' + (options.confirmMovPage||'') + '&' +
+      'mainTxt=' + (options.mainTxt||'') + '&' +
+      'subTxt=' + (options.subTxt||'') + '&' +
+      'linkTxt=' + (options.linkTxt||'') + '&' +
+      'linkPage=' + (options.linkPage||'');
+    this._historyService.goLoad(options.compPage + param);
   }
+
 
 
 };
