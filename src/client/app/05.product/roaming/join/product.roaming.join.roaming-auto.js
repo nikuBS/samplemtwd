@@ -165,10 +165,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
             isBasFeeInfo : data.prodFee,
             typeNm : data.svcType,
             settingType : (data.svcType+' '+data.processNm),
-            btnNmList : ['나의 가입정보 확인']
+            btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         if($containerData._prodId==='NA00005690'||$containerData._prodId==='NA00005693'){
-            completePopupData.btnNmList.unshift('자회선 설정하기');
+            completePopupData.btnNmList.unshift('');
         }
         apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {

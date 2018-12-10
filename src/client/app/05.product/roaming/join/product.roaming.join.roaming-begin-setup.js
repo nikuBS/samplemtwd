@@ -128,7 +128,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
             isBasFeeInfo : data.prodFee,
             typeNm : data.svcType,
             settingType : (data.svcType+' '+data.processNm),
-            btnNmList : ['나의 가입정보 확인']
+            btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
 
         apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).

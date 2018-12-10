@@ -140,7 +140,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
                     isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
                     typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
                     settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-                    btnNmList : ['나의 가입정보 확인']
+                    btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
                 };
                 this._popupService.open({
                         hbs: 'complete_product_roaming',
