@@ -43,7 +43,7 @@ export const URL = {
 
   '/myt-join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt-join/myplan': { login: true, id: 'MS_05', title: '나의 요금제' },
-  '/myt-join/myplanadd': { login: true, id: 'MS_06', title: '나의 부가상품' },
+  '/myt-join/additions': { login: true, id: 'MS_06', title: '나의 부가상품' },
   '/myt-join/myplancombine': { login: true, id: 'MS_07', title: '나의 결합상품' },
   '/myt-join/myplan/alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
   '/myt-join/myplan/alarmterminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
