@@ -247,7 +247,7 @@ Tw.MyTJoinSubMain.prototype = {
         this._historyService.goLoad('/myt-join/myinfo/contract');
         break;
       case 'work-notify':
-        this._historyService.goLoad('myt-join/wire/wiredo/sms');
+        this._historyService.goLoad('/myt-join/wire/wiredo/sms');
         break;
     }
   },
