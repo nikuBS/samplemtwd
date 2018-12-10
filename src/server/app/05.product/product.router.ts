@@ -24,7 +24,7 @@ import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/prod
 import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
-import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans';
+import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
