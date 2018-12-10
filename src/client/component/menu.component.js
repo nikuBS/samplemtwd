@@ -3,7 +3,7 @@ Tw.MenuComponent = function () {
     this.$container = $('#common-menu');
     this.$gnbBtn = $('#fe-bt-gnb');
 
-    if (Tw.FormatHelper.isEmpty(this.$container) || Tw.FormatHelper.isEmpty(this.$gnbBtn)) {
+    if (!this.$container.length || !this.$gnbBtn.length) {
       return;
     }
 
