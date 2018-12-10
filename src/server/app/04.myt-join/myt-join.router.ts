@@ -78,7 +78,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinPhoneNumChgAlarmExt });
     this.controllers.push({ url: '/submain/phone/extalarm/complete', controller: MyTJoinPhoneNumChgAlarmExt });
     this.controllers.push({ url: '/myplanadd', controller: MyTJoinMyPlanAdd });
-    this.controllers.push({ url: '/myplancombine(/:combination)?', controller: MyTJoinMyPlanCombine });
+    this.controllers.push({ url: '/combinations(/:combination)?', controller: MyTJoinMyPlanCombine });
   }
 }
 
