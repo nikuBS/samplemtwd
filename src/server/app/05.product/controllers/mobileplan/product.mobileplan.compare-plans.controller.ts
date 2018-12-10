@@ -8,9 +8,10 @@ import {RedistProductComparison} from '../../../../mock/server/product.mobilepla
 import {REDIS_PRODUCT_COMPARISON, REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 
 /**
- * FileName: product.mobileplan.compare-plans.ts
+ * FileName: product.mobileplan.compare-plans.controller.ts
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.11.23
+ * 요금제 > 요금제 비교하기
  */
 
 export default class ProductMobileplanComparePlans extends TwViewController {
@@ -23,9 +24,9 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     const prodId = req.query.prodId;
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0091, {}), // 최근 사용량 조회
-      this.redisService.getData(REDIS_PRODUCT_INFO + prodId), // Redis 요금제 조회
+      this.redisService.getData(REDIS_PRODUCT_INFO + prodId), // Redis 상품원장 조회
       this.redisProductComparison(svcInfo, prodId), // Redis 컨텐츠 조회
-      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)  // 상품원장 - 상품기본정보
     ).subscribe(([recentUsage, prodRedisInfo, contents, basicInfo]) => {
       const errorRs = this.error.apiError([prodRedisInfo, contents, basicInfo]);
       // BIL0070 : 최근 사용량 데이터 없음
@@ -84,7 +85,7 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     const res = {
       linkNm: '',
       linkUrl: ''
-    }
+    };
     if (!basicInfo.result.linkBtnList || basicInfo.result.linkBtnList.length < 1) {
       return res;
     }
