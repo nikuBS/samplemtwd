@@ -135,13 +135,13 @@ Tw.MyTJoinSubMain.prototype = {
   _initialize: function () {
   },
 
-  _onChangeNickName: function() {
+  _onChangeNickName: function () {
     var nickNm = this.data.svcInfo.nickNm;
     var svcMgmtNum = this.data.svcInfo.svcMgmtNum;
     this._nicknamePopup.openNickname(nickNm, svcMgmtNum, $.proxy(this._onCloseNickNAmePopup, this));
   },
 
-  _onCloseNickNAmePopup: function() {
+  _onCloseNickNAmePopup: function () {
     this._historyService.reload();
   },
 
@@ -204,7 +204,14 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function () {
-    this._historyService.goLoad('/myt-join/submain/suspend#temporary');
+    if( this.data.myPausedState.state || this.data.myLongPausedState.state ) {
+      // 일시정지 중이거나 장기일시 중이거나 하는 경우 신청현황
+      this._historyService.goLoad('submain/suspend/status');
+    }
+    else {
+      // 신청해
+      this._historyService.goLoad('/myt-join/submain/suspend#temporary');
+    }
   },
   // 인터넷/IPTV/집전화 신청 내역 및 조회
   _onMovedWireInquire: function () {
