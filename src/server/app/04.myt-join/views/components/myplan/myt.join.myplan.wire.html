@@ -36,27 +36,6 @@
             <% } %>
         </div>
 
-        <% if ( feePlan.optionFeePlans && feePlan.optionFeePlans.length > 0 ) { %>
-        <!-- .cont-box -->
-        <div class="cont-box nogaps-btm">
-           <h3 class="tit-type6">옵션요금제</h3>
-           <div class="separate-link-list">
-                <ul>
-                    <% for (var i in feePlan.optionFeePlans) { %>
-                    <li>
-                        <div class="txt-area">
-                            <span class="tit"><%= feePlan.optionFeePlans[i].prodNm %></span>
-                            <span class="join-date">가입일 <%= feePlan.optionFeePlans[i].scrbDt %></span>
-                        </div>
-                        <a href="/product/callplan/<%= feePlan.optionFeePlans[i].prodId %>" class="btn">상세보기</a>
-                    </li>
-                    <% } %>
-                </ul>
-            </div>
-        </div>
-        <!--// .cont-box -->
-        <% } %>
-
         <% if (feePlan.dcBenefits.length > 0) { %>
         <!-- .cont-box -->
         <div class="cont-box nogaps-btm">
