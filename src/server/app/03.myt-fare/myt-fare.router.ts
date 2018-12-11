@@ -58,7 +58,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/tpoint', controller: MyTFareBillTPoint });
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
     this.controllers.push({ url: '/bill/option', controller: MyTFareBillOption });
-    this.controllers.push({ url: '/bill/auto/register', controller: MyTFareBillAutoRegister });
+    this.controllers.push({ url: '/bill/option/register', controller: MyTFareBillAutoRegister });
     this.controllers.push({ url: '/bill/pay-complete', controller: MyTFareBillPayComplete });
     this.controllers.push({ url: '/bill/point-complete', controller: MyTFareBillPointComplete });
 
