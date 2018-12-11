@@ -23,7 +23,7 @@ export const URL = {
   '/myt-fare/billguide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
   '/myt-fare/billguide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt-fare/bill/option': { login: true, id: 'MF_05_01', title: '납부방법' },
-  '/myt-fare/bill/auto/register': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
+  '/myt-fare/bill/option/register': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
   '/myt-fare/bill/small': { login: true, id: 'MF_06', title: '소액결제' },
   '/myt-fare/bill/small/auto': { login: true, id: 'MF_06_04', title: '소액결제 자동선결제 신청' },
   '/myt-fare/bill/small/auto/info': { login: true, id: 'MF_06_05', title: '소액결제 자동선결제 변경 및 해지 정보' },

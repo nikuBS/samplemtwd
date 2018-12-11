@@ -44,7 +44,7 @@ Tw.MyTFareBillOption.prototype = {
     this.$container.on('click', '.fe-change-address', $.proxy(this._changeAddress, this));
   },
   _goAutoPayment: function () {
-    this._historyService.goLoad('/myt-fare/bill/auto/register');
+    this._historyService.goLoad('/myt-fare/bill/option/register');
   },
   _openCancelAutoPayment: function () {
     this._popupService.open({
