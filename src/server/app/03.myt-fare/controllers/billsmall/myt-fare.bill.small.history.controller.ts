@@ -135,7 +135,7 @@ class MyTFareBillSmallHistory extends TwViewController {
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_06_01_tip_01', view: 'MF_06_01', title: '조회 안내'}
+      {link: 'MF_06_01_tip_01', view: 'M000269', title: '조회 안내'}
     ];
   }
 }
