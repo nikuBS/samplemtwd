@@ -95,7 +95,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     const histories = result.history;
     histories.map((history) => {
       history.showPoint = FormatHelper.addComma(history.point);
-      history.showOpDt = DateHelper.getShortDateNoDot(history.opDt);
+      history.showOpDt = DateHelper.getShortDate(history.opDt);
     });
     return result;
   }
