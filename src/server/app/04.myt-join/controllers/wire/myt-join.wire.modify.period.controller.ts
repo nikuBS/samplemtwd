@@ -21,10 +21,6 @@ class MyTJoinWireModifyPeriod extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.renderErr(res, {}, svcInfo);
-    }
-
     Observable.combineLatest(
       this.reqWireAgreementsInfo()
     ).subscribe(([wireAgreementsInfoResp]) => {

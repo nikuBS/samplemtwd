@@ -25,13 +25,6 @@ class MyTJoinWireSetPause extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.error.render(res, {
-        title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
-        svcInfo
-      });
-    }
-
     Observable.combineLatest(
       this.reqWirePauseInfo()
     ).subscribe(([wirePauseInfoResp]) => {
