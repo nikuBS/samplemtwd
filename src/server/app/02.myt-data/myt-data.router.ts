@@ -51,7 +51,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/prepaid/voice/auto', controller: MyTDataPrepaidVoiceAuto });
     this.controllers.push({ url: '/recharge/prepaid/voice/complete', controller: MyTDataPrepaidVoiceComplete });
     this.controllers.push({ url: '/recharge/prepaid/data', controller: MyTDataPrepaidData });
-    this.controllers.push({ url: '/recharge/prepaid/data/auto', controller: MyTDataPrepaidDataAuto });
+    this.controllers.push({ url: '/recharge/prepaid/data-auto', controller: MyTDataPrepaidDataAuto });
     this.controllers.push({ url: '/recharge/prepaid/data/complete', controller: MyTDataPrepaidDataComplete });
     this.controllers.push({ url: '/recharge/prepaid/alarm', controller: MyTDataPrepaidAlarm });
 
