@@ -32,6 +32,8 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$check_voice_term.on('click', $.proxy(this._onClickAgreeTerm, this));
     this.$btn_select_phone.on('click', $.proxy(this._onShowSelectPhoneNumber, this));
     this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
+    this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _onSuccessLineInfo: function (res) {
@@ -87,5 +89,15 @@ Tw.CustomerVoiceRegister.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _stepBack: function () {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._history.goBack();
+      }, this));
   }
 };
