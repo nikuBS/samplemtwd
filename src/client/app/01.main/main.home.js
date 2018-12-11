@@ -5,7 +5,7 @@
 
  */
 
-Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId) {
+Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -21,13 +21,16 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId) {
   this._emrNotice = null;
 
   this._lineComponent = new Tw.LineComponent();
-  this._cachedElement();
-  this._bindEvent();
-  this._getWelcomeMsg();
+
   this._openEmrNotice(emrNotice);
   this._setBanner(menuId);
 
-  this._initScroll();
+  if(isLogin === 'true') {
+    this._cachedElement();
+    this._getWelcomeMsg();
+    this._bindEvent();
+    this._initScroll();
+  }
 };
 
 Tw.MainHome.prototype = {
@@ -536,7 +539,10 @@ Tw.MainHome.prototype = {
   },
   _successBanner: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      new Tw.BannerService(this.$container, resp.result.banners);
+      new Tw.BannerService(this.$container, resp.result.banners, $.proxy(this._successDrawBanner, this));
     }
+  },
+  _successDrawBanner: function () {
+    this._resetHeight();
   }
 };

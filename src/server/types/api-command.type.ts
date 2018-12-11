@@ -113,7 +113,7 @@ export const API_CMD = {
   BFF_04_0004: { path: '/core-auth/v1/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0005: { path: '/core-modification/v1/quick-menu/getMbrCond', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // MYT
-  BFF_05_0001: { path: '/v1/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0001: { path: '/v1/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_05_0002: { path: '/core-balance/v1/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0003: { path: '/core-balance/v1/troaming-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0004: { path: '/core-balance/v1/data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
