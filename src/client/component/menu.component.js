@@ -60,6 +60,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '#fe-refund', $.proxy(this._onRefund, this));
     this.$container.on('click', '#fe-btn-simple-login', $.proxy(this._onSimpleLogin, this));
     this.$container.on('click', '.fe-menu-link', $.proxy(this._onMenuLink, this));
+    this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
@@ -117,6 +118,10 @@ Tw.MenuComponent.prototype = {
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
     this._historyService.goLoad(url);
+  },
+  _onFreeSMS: function () {
+    console.log('hakjoon');
+    Tw.CommonHelper.openFreeSms();
   },
   _onRefund: function (e) {
     if (!this._isLogin) { // If it's not logged in
