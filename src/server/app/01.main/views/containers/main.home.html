@@ -921,7 +921,7 @@
 <% } %>
 <script>
   $(document).ready(function () {
-    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>');
+    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');
   });
 </script>
 <% include ../components/end.component.html %>
