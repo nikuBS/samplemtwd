@@ -205,7 +205,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onClickPreBill: function () {
-    this._historyService.goLoad('/myt-fare/hotbill/prev');
+    this._historyService.goLoad('/myt-fare/bill/hotbill/prev');
   },
 
   _onClickChild: function (target) {
