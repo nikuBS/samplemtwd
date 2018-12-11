@@ -32,7 +32,8 @@ Tw.MenuComponent = function () {
 Tw.MenuComponent.prototype = {
   TOP_PADDING_MENU: {
     M000603: 'M000603',  // 이용안내
-    M000537: 'M000537'  // T Apps
+    M000537: 'M000537',  // T Apps
+    M000812: 'M000812'   // Direct shop
   },
 
   REAL_TIME_ITEM: {
@@ -120,7 +121,6 @@ Tw.MenuComponent.prototype = {
     this._historyService.goLoad(url);
   },
   _onFreeSMS: function () {
-    console.log('hakjoon');
     Tw.CommonHelper.openFreeSms();
   },
   _onRefund: function (e) {
