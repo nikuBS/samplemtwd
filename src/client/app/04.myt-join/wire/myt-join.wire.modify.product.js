@@ -12,7 +12,6 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
   this._popupService = Tw.Popup;
 
   this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
 
   this.productFormData = {
     cntcPrefrMblPhonNum: '',              // 휴대폰번호(0000-0000-0000 형식)
@@ -318,14 +317,15 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
   _goBack: function () {
-    this._history.go(-1);
+    this._history.goBack();
   },
   _goLoad: function (url) {
-    location.href = url;
+    this._history.goLoad(url);
   },
   _go: function (hash) {
-    this._history.setHistory();
-    window.location.hash = hash;
+    this._history.goHash(hash);
+    // this._history.setHistory();
+    // window.location.hash = hash;
   },
   // 휴대폰/일반전화 입력 시 자동 하이픈 넣기
   _onFormatHpNum : function (e) {
