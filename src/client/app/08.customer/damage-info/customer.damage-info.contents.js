@@ -14,8 +14,8 @@ Tw.CustomerDamageInfoContents.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '.fe-idpt_pop', $.proxy(this._openPop, this));
-    this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this._bindUIEvent(this.$container);
   },
