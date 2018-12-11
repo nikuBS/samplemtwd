@@ -24,8 +24,7 @@ Tw.TooltipService.prototype = {
     if (this._isExist($pageId)) {
       this._getContents(this._tooltipList);
     } else {
-      // this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { TooltipInfo: $pageId })
-      $.ajax('/mock/tip.json')
+      this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { menuId: $pageId })
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     }
