@@ -77,7 +77,7 @@ class MyTFareInfoBill extends TwViewController {
    // 꼭 확인해 주세요 팁 메뉴 정리
    private getNoticeInfo(): Info[] {
     return [
-      {link: 'MF_08_01_02_tip_01', view: 'MF_08_01_02', title: '현금영수증 발급내역 확인'}
+      {link: 'MF_08_01_02_tip_01', view: 'M000295', title: '현금영수증 발급내역 확인'}
     ];
   }
 
