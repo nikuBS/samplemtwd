@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-option" class="wrap" data-menuId="MF_05_01">
+    <div id="myt-fare-bill-option" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html', { title: '납부방법' }); %>
         <!--// #header -->
@@ -187,7 +187,7 @@
                         <li>인출(승인)일 안내<button id="MF_05_01_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <li>자동납부 할인 안내<button id="MF_05_01_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <% } else { %>
-                        <li>매월 5일 이후 해지 시<button page-id="MF_05_01" id="MF_05_01_02_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li>매월 5일 이후 해지 시<button id="MF_05_01_02_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <% } %>
                         <li>이용시간 안내<button id="MF_05_01_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <li>추가문의 안내<button id="MF_05_01_tip_04" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>

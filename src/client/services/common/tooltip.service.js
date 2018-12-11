@@ -33,8 +33,7 @@ Tw.TooltipService.prototype = {
   _getPageId: function ($target) {
     var $pageId = $target.attr('page-id');
     if (Tw.FormatHelper.isEmpty($pageId)) {
-      var $id = $target.attr('id');
-      $pageId = $id.toString().split('_tip')[0];
+      $pageId = $target.parents('.wrap').attr('data-menuId');
     }
     return $pageId;
   },

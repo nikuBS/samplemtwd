@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- .popup hbs -->
         <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
             <!-- #header -->
@@ -35,7 +35,7 @@
                     <div class="cont-box">
                         <div class="unpaid-charges">
                             <dl class="total-box">
-                                <dt>남은 데이터 량 <button id="DC_09_04_tip_03" class="tip-view">TIP</button></dt>
+                                <dt>남은 데이터 량 <button page-id="M000227" id="DC_09_04_tip_03" class="tip-view">TIP</button></dt>
                                 <dd class="t-point"><span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.dataObj.dataValue %>">
                                     <%= ppsInfo.dataObj.data %></span><span class="ff-tg-medium">MB</span>
                                 </dd>
