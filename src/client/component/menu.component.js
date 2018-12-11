@@ -32,7 +32,8 @@ Tw.MenuComponent = function () {
 Tw.MenuComponent.prototype = {
   TOP_PADDING_MENU: {
     M000603: 'M000603',  // 이용안내
-    M000537: 'M000537'  // T Apps
+    M000537: 'M000537',  // T Apps
+    M000812: 'M000812'   // Direct shop
   },
 
   REAL_TIME_ITEM: {
@@ -60,6 +61,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '#fe-refund', $.proxy(this._onRefund, this));
     this.$container.on('click', '#fe-btn-simple-login', $.proxy(this._onSimpleLogin, this));
     this.$container.on('click', '.fe-menu-link', $.proxy(this._onMenuLink, this));
+    this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
@@ -117,6 +119,9 @@ Tw.MenuComponent.prototype = {
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
     this._historyService.goLoad(url);
+  },
+  _onFreeSMS: function () {
+    Tw.CommonHelper.openFreeSms();
   },
   _onRefund: function (e) {
     if (!this._isLogin) { // If it's not logged in
