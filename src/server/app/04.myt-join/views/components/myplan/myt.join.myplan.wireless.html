@@ -1,151 +1,143 @@
-<div class="container">
-  <!-- .cont-box -->
-  <div class="cont-box">
-    <div class="myinfo-wrap">
-      <div class="myinfo-cont">
-        <div class="title">
-          <span class="blind">상품명</span>
-          <span class="title-l"><%= feePlan.feePlanProd.prodNm %></span>
-        </div>
-        <% if ( feePlan.feePlanProd.prodFltNm ) { %>
-        <span class="subtitle3">#<%= feePlan.feePlanProd.prodFltNm %></span>
-        <% } %>
-      </div>
-      <div class="ico-wrap type01"><!-- 2018-11-02 추가 -->
-        <div class="bt-alone"><a href="/product/callplan/<%= feePlan.feePlanProd.prodId %>" class="bt-bg-blue1">상세보기</a></div>
-      </div>
-      <div class="info-detail mt40">
-      <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
-        <div class="tb-type">
-          <ul>
-            <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
-            <li>
-              <dl>
-                <dt>데이터</dt>
-                <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
-                <dd><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %></dd>
-                <% } else { %>
-                <dd><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %></dd>
+<div id="contents" class="container-wrap">
+    <div class="container">
+
+        <div class="plan-compact-info">
+            <div class="plan">
+                <span class="tit"><%= feePlan.feePlanProd.prodNm %></span>
+                <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
+                <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
                 <% } %>
-              </dl>
-            </li>
-            <% } %>
-            <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) { %>
-            <li>
-              <dl>
-                <dt>음성</dt>
-                <dd><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %></dd>
-              </dl>
-            </li>
-            <% } %>
-            <% if ( feePlan.feePlanProd.basOfrCharCntCtt ) { %>
-            <li>
-              <dl>
-                <dt>문자</dt>
-                <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
-                <dd><%= feePlan.feePlanProd.basOfrCharCntCtt.value %></dd>
-                <% } else { %>
-                <dd><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %></dd>
+                <% if ( feePlan.feePlanProd.basFeeInfo && feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
+                <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %></span>
                 <% } %>
-              </dl>
-            </li>
-            <% } %>
-          </ul>
-        </div>
-        <% } %>
-        <% if ( feePlan.feePlanProd.basFeeInfo ) { %>
-        <div class="price-wrap mt20">
-          <span class="tx-sub"><span class="tx-bold vbl">월정액</span><% if ( !feePlan.feePlanProd.basFeeInfo.isNaN ) { %> 부가세포함<% } %></span>
-          <span class="tx-price">
-            <span class="price"><%= feePlan.feePlanProd.basFeeInfo.value %></span>
-            <% if ( !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
-            <span class="unit">원</span>
-            <% } %>
-          </span>
-        </div>
-        <% } %>
-      </div>
-    </div>
-    <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
-    <ul class="bt-slice item-two mt20">
-      <% for (var i in feePlan.feePlanProd.btnList) { %>
-      <li class="bt-white2">
-        <a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a>
-      </li>
-      <% } %>
-    </ul>
-    <% } %>
-  </div>
-  <!--// .cont-box -->
-
-  <% if ( isFeeAlarm ) { %>
-  <hr class="cont-sp type1" aria-hidden="true">
-
-  <!-- .cont-box -->
-  <div class="cont-box nogaps">
-    <ul class="link-long-list">
-      <li>
-        <div class="link-long">
-          <a href="/myt-join/myplan/alarm">요금제 변경 가능 알림 서비스<span class="ico"></span></a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <!--// .cont-box -->
-  <% } %>
-
-  <% if ( feePlan.optionAndDiscountProgramList.length > 0 ) { %>
-  <div class="ti-caption-gray">
-    <h3 class="tit">옵션/할인 프로그램</h3>
-  </div>
-  <!-- .cont-box -->
-  <div class="cont-box nogaps-hoz">
-    <div class="history-list type2">
-      <ul>
-        <% for (var i in feePlan.optionAndDiscountProgramList) { %>
-        <li>
-          <div class="li-elem">
-            <% if ( feePlan.optionAndDiscountProgramList[i].prodLinkYn === 'Y' ) { %>
-            <a href="/product/callplan/<%= feePlan.optionAndDiscountProgramList[i].prodId %>" class="bt-detail">
-              <div class="title-box">
-                <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
-                <span class="sub-tit"><span>가입</span><span><%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span></span>
-              </div>
-            </a>
-            <% } else { %>
-            <div class="title-box">
-              <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
-              <span class="sub-tit"><span>가입</span><span><%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span></span>
+            </div>
+            <div class="sub">
+                <% if ( feePlan.feePlanProd.prodFltNm ) { %>
+                <span class="hash">#<%= feePlan.feePlanProd.prodFltNm %></span>
+                <% } %>
+                <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
+                <span class="rest">월정액(부가세 포함)</span>
+                <% } %>
+            </div>
+            <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
+            <div class="service-wrap">
+                <div class="service">
+                    <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
+                    <span class="sv-spec data">
+                        <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
+                        <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %>
+                        <% } else { %>
+                        <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %>
+                        <% } %>
+                    </span>
+                    <% } %>
+                    <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) { %>
+                    <span class="sv-spec">
+                        <i class="ico-phone-plan"></i><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
+                    </span>
+                    <% } %>
+                    <% if ( feePlan.feePlanProd.basOfrCharCntCtt ) { %>
+                    <span class="sv-spec">
+                        <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
+                        <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value %>
+                        <% } else { %>
+                        <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %>
+                        <% } %>
+                    </span>
+                    <% } %>
+                </div>
             </div>
             <% } %>
-            <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
-            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>" class="bt-link-tx underline"><%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %></a>
-            <% } %>
-          </div>
-        </li>
-        <% } %>
-      </ul>
-    </div>
-    <ul class="bt-slice mb20 pt20"><!-- 2018-11-02 추가 -->
-      <li class="bt-blue1">
-        <a href="/product/mobileplan">요금제 변경하기</a>
-      </li>
-    </ul>
-  </div>
-  <!--// .cont-box -->
-  <% } %>
-  <% if ( tipList ) { %>
-  <hr class="cont-sp type1" aria-hidden="true"/>
+        </div>
 
-  <!-- .cont-box -->
-  <div class="cont-box nogaps-btm">
-    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-    <ul class="noti-list">
-      <% for ( var i in tipList) { %>
-      <li><%= tipList[i].title %> <button type="button" class="icon-tip" id="<%= tipList[i].code %>">TIP</button></li>
-      <% } %>
-    </ul>
-  </div>
-  <!--// .cont-box -->
-  <% } %>
+        <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
+        <!-- .cont-box -->
+        <div class="cont-box nogaps">
+            <ul class="btn-link-list">
+                <% for (var i in feePlan.feePlanProd.btnList) { %>
+                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
+                <% } %>
+            </ul>
+        </div>
+        <!--// .cont-box -->
+        <% } %>
+
+        <% if ( isFeeAlarm ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- .cont-box -->
+        <div class="cont-box nogaps">
+            <ul class="full-link-list">
+                <li>
+                    <a href="/myt-join/myplan/alarm">
+                        <span class="inner">
+                            <span class="tit">요금제 변경 가능 알림 서비스</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--// .cont-box -->
+        <% } %>
+
+        <% if ( feePlan.optionAndDiscountProgramList.length > 0 ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- .cont-box -->
+        <div class="cont-box nogaps-btm">
+            <h3 class="tit-type6">옵션 &middot; 할인 프로그램</h3>
+            <div class="separate-link-list">
+                <ul>
+                    <% for (var i in feePlan.optionAndDiscountProgramList) { %>
+                    <li>
+                        <div class="txt-area">
+                            <span class="tit">선택약정할인제도</span>
+                            <span class="join-date">가입일 2018.8.15.</span>
+                            <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
+                            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>" class="bt-link-tx underline">
+                                <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>
+                            </a>
+                            <% } %>
+                        </div>
+                        <% if ( feePlan.optionAndDiscountProgramList[i].prodLinkYn === 'Y' ) { %>
+                        <a href="/product/callplan/<%= feePlan.optionAndDiscountProgramList[i].prodId %>" class="btn">상세보기</a>
+                        <% } %>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <!--// .cont-box -->
+        <% } %>
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- .cont-box -->
+        <div class="cont-box nogaps">
+            <ul class="full-link-list">
+                <li>
+                    <a href="/product/mobileplan">
+                        <span class="inner">
+                            <span class="tit">요금제 변경하기</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--// .cont-box -->
+
+        <% if ( tipList ) { %>
+        <!-- .cont-box -->
+        <div class="cont-box noborder bgnone">
+            <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+            <ul class="pg-chk-list">
+                <% for ( var i in tipList) { %>
+                <li><%= tipList[i].title %><button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                <% } %>
+            </ul>
+        </div>
+        <!--// .cont-box -->
+        <% } %>
+
+    </div>
 </div>
