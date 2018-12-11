@@ -99,8 +99,22 @@ export const URL = {
   '/product/wireplan/phone': { login: false, id: 'WP_01', title: '전화' },
   '/product/wireplan/tv': { login: false, id: 'WP_01', title: 'TV' },
   '/product/apps': { login: false, id: 'TA', title: 'T apps' },
+  '/product/roaming/join/roaming-setup': { login: true, id: 'RM_11_01_02_02', title: '가입' },
+  '/product/roaming/join/roaming-begin-setup': { login: true, id: 'RM_11_01_02_03', title: '가입' },
+  '/product/roaming/join/roaming-auto': { login: true, id: 'RM_11_01_02_05', title: '가입' },
+  '/product/roaming/join/confirm-info': { login: true, id: 'RM_11_01_01_02', title: '가입' },
+  '/product/roaming/join/roaming-alarm': { login: true, id: 'RM_11_01_02_01', title: '가입' },
+  '/product/roaming/join/roaming-combine': { login: true, id: 'RM_11_01_02_07', title: '설정' },
+  '/product/roaming/setting/roaming-setup': { login: true, id: 'RM_11_01_02_02', title: '설정' },
+  '/product/roaming/setting/roaming-begin-setup': { login: true, id: 'RM_11_01_02_03', title: '가입' },
+  '/product/roaming/setting/roaming-auto': { login: true, id: 'RM_11_01_02_05', title: '설정' },
+  '/product/roaming/setting/roaming-alarm': { login: true, id: 'RM_11_01_02_01', title: '설정' },
+  '/product/roaming/setting/roaming-combine': { login: true, id: 'RM_11_01_02_07', title: '설정' },
+  '/product/roaming/lookup': { login: true, id: 'RM_11_01_02_06', title: '설정' },
+  '/product/roaming/terminate': { login: true, id: 'MV_01_02_03', title: '해지' },
 
-  // Customer
+
+    // Customer
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
