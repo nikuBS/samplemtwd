@@ -21,7 +21,7 @@ class MyTDataPrepaidDataAuto extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     if (BrowserHelper.isApp(req)) {
       Observable.combineLatest(
@@ -36,6 +36,7 @@ class MyTDataPrepaidDataAuto extends TwViewController {
             ppsInfo: this.parseData(ppsResult),
             autoInfo: this.parseAuto(autoResult),
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             isApp: BrowserHelper.isApp(req)
           });
         } else {

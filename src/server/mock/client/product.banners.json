@@ -1,0 +1,71 @@
+{
+  "code": "00",
+  "result": {
+    "banners": [
+      {
+        "bnnrSeq": "9329",
+        "expsStaDtm": "20171109000000",
+        "expsEndDtm": "20171231000000",
+        "imgLinkUrl": "/product/mobileplan-add",
+        "imgLinkTrgtClCd": "I",
+        "bnnrFileNm": null,
+        "bnnrFilePathNm": "/img/dummy/dummy-banner01.jpg",
+        "bnnrExpsSeq": null,
+        "bnnrImgAltCtt": null,
+        "bnnrDesc": "44444",
+        "bnnrLocCd": "T",
+        "billYn": "N",
+        "oferStcCd": null,
+        "chnlClCd": "01,02,03,05"
+      },
+      {
+        "bnnrSeq": "9329",
+        "expsStaDtm": "20181101000000",
+        "expsEndDtm": "20181222235959",
+        "imgLinkUrl": "/product/mobileplan-add",
+        "imgLinkTrgtClCd": null,
+        "bnnrFileNm": "Penguins.jpg",
+        "bnnrFilePathNm": "/img/dummy/dummy-banner05.jpg",
+        "bnnrExpsSeq": "0",
+        "bnnrImgAltCtt": "통합검색배너 alt값임.",
+        "bnnrDesc": null,
+        "bnnrLocCd": "T",
+        "billYn": "N",
+        "oferStcCd": null,
+        "chnlClCd": "05"
+      },
+      {
+        "bnnrSeq": "9329",
+        "expsStaDtm": "20181101000000",
+        "expsEndDtm": "20181222235959",
+        "imgLinkUrl": "/product/mobileplan-add",
+        "imgLinkTrgtClCd": null,
+        "bnnrFileNm": "Penguins.jpg",
+        "bnnrFilePathNm": "/img/dummy/dummy-banner01.jpg",
+        "bnnrExpsSeq": "3",
+        "bnnrImgAltCtt": "통합검색배너 alt값임.",
+        "bnnrDesc": null,
+        "bnnrLocCd": "T",
+        "billYn": "N",
+        "oferStcCd": null,
+        "chnlClCd": "05"
+      },
+      {
+        "bnnrSeq": "9329",
+        "expsStaDtm": "20181101000000",
+        "expsEndDtm": "20181222235959",
+        "imgLinkUrl": "/product/mobileplan-add",
+        "imgLinkTrgtClCd": null,
+        "bnnrFileNm": "Penguins.jpg",
+        "bnnrFilePathNm": "/img/dummy/dummy-banner01.jpg",
+        "bnnrExpsSeq": "2",
+        "bnnrImgAltCtt": "통합검색배너 alt값임.",
+        "bnnrDesc": null,
+        "bnnrLocCd": "T",
+        "billYn": "N",
+        "oferStcCd": null,
+        "chnlClCd": "05"
+      }
+    ]
+  }
+}

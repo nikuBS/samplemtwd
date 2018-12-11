@@ -128,7 +128,7 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareHotBill($('#fe-myt-fare-hotbill'), <%- JSON.stringify({ preBill }) %>);
+    new Tw.MyTFareHotBill($('#fe-myt-fare-hotbill'), <%- JSON.stringify({ lines }) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

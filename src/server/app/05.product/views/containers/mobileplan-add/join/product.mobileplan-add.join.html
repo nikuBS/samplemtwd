@@ -20,7 +20,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(function () {
-    new Tw.ProductMobileplanAddJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductMobileplanAddJoin($('.wrap'), '<%= prodId %>', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

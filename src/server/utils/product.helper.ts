@@ -4,7 +4,6 @@ import FormatHelper from './format.helper';
 
 class ProductHelper {
   static convStipulation(stipulation: any): any {
-    console.log(stipulation);
     if (FormatHelper.isEmpty(stipulation)) {
       return null;
     }
@@ -30,16 +29,16 @@ class ProductHelper {
     }
 
     const isScrbStplAgree = stipulation.scrbStplAgreeYn === 'Y',
-      isPsnlInfoCnsgAgree = stipulation.termStplAgreeYn === 'Y',
-      isPsnlInfoOfrAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
+      isPsnlInfoCnsgAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
+      isPsnlInfoOfrAgree = stipulation.psnlInfoOfrAgreeYn === 'Y',
       isAdInfoOfrAgree = stipulation.adInfoOfrAgreeYn === 'Y',
       isTermStplAgree = stipulation.termStplAgreeYn === 'Y',
       existsCount = _getStipulationYnCnt([
         stipulation.scrbStplAgreeYn,
-        stipulation.termStplAgreeYn,
         stipulation.psnlInfoCnsgAgreeYn,
         stipulation.psnlInfoOfrAgreeYn,
-        stipulation.adInfoOfrAgreeYn
+        stipulation.adInfoOfrAgreeYn,
+        stipulation.termStplAgreeYn
       ]);
 
     return Object.assign(stipulation, {
@@ -50,10 +49,10 @@ class ProductHelper {
       isTermStplAgree: isTermStplAgree,
       isAllAgree: existsCount > 1,
       scrbStplAgreeCttSummary: _getAgreementSummary(isScrbStplAgree, stipulation.scrbStplAgreeHtmlCtt),
-      termStplAgreeCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.termStplAgreeHtmlCtt),
-      psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.psnlInfoCnsgHtmlCtt),
-      psnlInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.psnlInfoOfrHtmlCtt),
-      adInfoOfrCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.psnlInfoCnsgHtmlCtt),
+      psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.psnlInfoCnsgHtmlCtt),
+      psnlInfoOfrCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.psnlInfoOfrHtmlCtt),
+      adInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.psnlInfoCnsgHtmlCtt),
+      termStplAgreeCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.termStplAgreeHtmlCtt),
       existsCount: existsCount
     });
   }

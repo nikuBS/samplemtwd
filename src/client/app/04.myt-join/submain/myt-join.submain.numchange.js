@@ -147,18 +147,41 @@ Tw.MyTJoinPhoneNumChange.prototype = {
           return ;
         }
 
-        Tw.Popup.afterRequestSuccess(
-          '/myt-join/submain/phone/alarm',
-          '/myt-join/submain',
-          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
-          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
-          Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + chgNum);
+        // Tw.Popup.afterRequestSuccess(
+        //   '/myt-join/submain/phone/alarm',
+        //   '/myt-join/submain',
+        //   Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
+        //   Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
+        //   Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + chgNum);
+        this._goCompletePage({
+          compPage: '/myt-join/submain/numchange/complete',
+          mainTxt: Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.MAIN_TXT,
+          subTxt: Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.SUB_TXT + chgNum,
+          linkTxt: Tw.MYT_JOIN_MGMT_NUMCHG.COMPLETE_POPUP.LINK_TXT,
+          linkPage: '/myt-join/submain/phone/alarm',
+          confirmMovPage: '/myt-join/submain'
+        });
 
       }, this))
       .fail(function(err){
         Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
+  },
+
+  /**
+   * 완료페이지로 가기
+   * @param options
+   * @private
+   */
+  _goCompletePage: function(options){
+    var param = '?' +
+      'confirmMovPage=' + (options.confirmMovPage||'') + '&' +
+      'mainTxt=' + (options.mainTxt||'') + '&' +
+      'subTxt=' + (options.subTxt||'') + '&' +
+      'linkTxt=' + (options.linkTxt||'') + '&' +
+      'linkPage=' + (options.linkPage||'');
+    this._historyService.goLoad(options.compPage + param);
   }
 
 };

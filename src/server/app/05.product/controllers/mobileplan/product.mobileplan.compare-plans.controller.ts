@@ -8,9 +8,10 @@ import {RedistProductComparison} from '../../../../mock/server/product.mobilepla
 import {REDIS_PRODUCT_COMPARISON, REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 
 /**
- * FileName: product.mobileplan.compare-plans.ts
+ * FileName: product.mobileplan.compare-plans.controller.ts
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.11.23
+ * 요금제 > 요금제 비교하기
  */
 
 export default class ProductMobileplanComparePlans extends TwViewController {
@@ -19,25 +20,25 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prodId;
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0091, {}), // 최근 사용량 조회
-      this.redisService.getData(REDIS_PRODUCT_INFO + prodId), // Redis 요금제 조회
+      this.redisService.getData(REDIS_PRODUCT_INFO + prodId), // Redis 상품원장 조회
       this.redisProductComparison(svcInfo, prodId), // Redis 컨텐츠 조회
-      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)  // 상품원장 - 상품기본정보
     ).subscribe(([recentUsage, prodRedisInfo, contents, basicInfo]) => {
       const errorRs = this.error.apiError([prodRedisInfo, contents, basicInfo]);
       // BIL0070 : 최근 사용량 데이터 없음
       if (FormatHelper.isEmpty(errorRs) && [API_CODE.CODE_00, 'BIL0070'].indexOf(recentUsage.code) !== -1) {
-        res.render('mobileplan/product.mobileplan.compare-plans.html', this.getData(recentUsage, prodRedisInfo, contents, basicInfo));
+        res.render('mobileplan/product.mobileplan.compare-plans.html', this.getData(recentUsage, prodRedisInfo, contents, basicInfo, pageInfo));
       } else {
         this.fail(res, errorRs, svcInfo);
       }
     });
   }
 
-  private getData(recentUsage: any, prodRedisInfo: any, contents: any, basicInfo: any): any {
+  private getData(recentUsage: any, prodRedisInfo: any, contents: any, basicInfo: any, pageInfo: any): any {
     const msgs = PRODUCT_MOBILEPLAN_COMPARE_PLANS;
     prodRedisInfo = this.parseProduct(prodRedisInfo.result);
 
@@ -51,7 +52,8 @@ export default class ProductMobileplanComparePlans extends TwViewController {
         targetSupply: prodRedisInfo.basOfrGbDataQtyCtt
       },
       contents: contents.result.guidMsgCtt,
-      joinUrl: this.getJoinUrl(basicInfo).linkUrl
+      joinUrl: this.getJoinUrl(basicInfo).linkUrl,
+      pageInfo
     };
     if (!recentUsage.result || !recentUsage.result.data || recentUsage.result.data.length < 1) {
       return _data;
@@ -84,7 +86,7 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     const res = {
       linkNm: '',
       linkUrl: ''
-    }
+    };
     if (!basicInfo.result.linkBtnList || basicInfo.result.linkBtnList.length < 1) {
       return res;
     }

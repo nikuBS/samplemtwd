@@ -12,7 +12,7 @@ Tw.ProductMobileplanAddJoinCombineLine = function(rootEl, prodId, displayId, con
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._confirmOptions = JSON.parse(confirmOptions);
+  this._confirmOptions = JSON.parse(unescape(confirmOptions));
 
   this.$container = rootEl;
   this._cachedElement();
@@ -228,7 +228,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        mytPage: 'myplanadd',
+        mytPage: 'additions',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

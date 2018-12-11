@@ -747,7 +747,7 @@ Tw.PRODUCT_JOIN_TYPE = [
   { value: '휴대폰', attr: 'data-type-code="cellphone"' },
   { value: '인터넷', attr: 'data-type-code="internet"' },
   { value: '전화', attr: 'data-type-code="phone"' },
-  { value: 'TV', attr: 'data-type-code="TV"' },
+  { value: 'TV', attr: 'data-type-code="tv"' },
   { value: '결합상품', attr: 'data-type-code="combine"' }
 ];
 

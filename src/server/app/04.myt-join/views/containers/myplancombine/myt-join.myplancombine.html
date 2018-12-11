@@ -59,14 +59,15 @@
                                     NH00000041: '10',
                                     NH00000105: '11',
                                     TW00000016: '11',
-                                    NH00000040: '12'
-                                    TW00000063: '12',
+                                    NH00000040: '12',
+                                    TW00000063: '12'
                                 }
+                                
                                 combinations.map(comb => { %>
                                 <li>
                                     <div class="inner">
-                                        <% const tip = TIPS[comb.prodId]%>
-                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" page-id="MS_07" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
+                                        <% const tip = TIPS[comb.prodId] %>
+                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
                                         <p class="txt"><%= comb.prodBasBenfCtt %></p>
                                         <p class="date">신청일  <%= comb.scrbDt %></p>
                                         <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
@@ -92,7 +93,7 @@
                         </div>
                         <ul class="bt-slice">
                             <li class="bt-blue1">
-                                <button>결합할인 보러가기</button><!-- TODO: 링크추가(BS_04_01) -->
+                                <a href="/benefit/submain?filters=F01422">결합할인 보러가기</a><!-- TODO: 링크추가(BS_04_01) -->
                             </li>
                         </ul>
                     </div>

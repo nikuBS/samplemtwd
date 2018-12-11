@@ -423,7 +423,8 @@ Tw.ALERT_MSG_MYT_DATA = {
     CONTENT: '님이\n"팅 요금제 충전선물 조르기"를 요청하셨습니다.\n팅 요금 충전선물을 해주세요!\n'
   },
   V56: '충전 금액을 선택해 주세요.',
-  ALERT_2_A74: '충전을 취소하시겠습니까?'
+  ALERT_2_A74: '충전을 취소하시겠습니까?',
+  DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {

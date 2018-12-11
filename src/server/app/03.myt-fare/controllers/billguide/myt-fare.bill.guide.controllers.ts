@@ -513,7 +513,7 @@ class MyTFareBillGuide extends TwViewController {
   public intBillLineFun() {
     const thisMain = this;
 
-    const svcTotList = thisMain._intBillLineInfo.services || [];
+    const svcTotList = thisMain._intBillLineInfo || [];
 
     for ( let i = 0; i < svcTotList.length; i++ ) {
       const item = svcTotList[i];

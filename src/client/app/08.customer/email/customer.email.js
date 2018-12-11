@@ -8,6 +8,7 @@ Tw.CustomerEmail = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService();
 
   this._cachedElement();
@@ -38,6 +39,20 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
+  },
+
+  _onClickBtnAddr: function (e) {
+    var $elInput = $(e.currentTarget).closest('.inputbox').find('input');
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, $elInput));
+  },
+
+  _onContact: function ($elInput, response) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      var params = response.params;
+      $elInput.val(params.phoneNumber);
+      // this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
+    }
   },
 
   _onKeyUpPhoneNumber: function (e) {

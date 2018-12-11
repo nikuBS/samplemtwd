@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="product-select-wrap">
-                    <span class="data-tit">공유회선 설정<button class="tip-view" id="MP_02_02_03_11_tip_01" page-id="MP_02_02_03_11">TIP</button></span>
+                    <span class="data-tit">공유회선 설정<button class="tip-view" id="MP_02_02_03_11_tip_01" page-id="<%= pageInfo.menuId %>">TIP</button></span>
                     <span class="data-number"><%= svcInfo.svcNum %></span>
                 </div>
 
@@ -71,10 +71,10 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list">
-                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_02" page-id="MP_02_02_03_11" aria-haspopup="true">TIP</button></li>
-                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_03" page-id="MP_02_02_03_11" aria-haspopup="true">TIP</button></li>
-                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_04" page-id="MP_02_02_03_11" aria-haspopup="true">TIP</button></li>
-                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_05" page-id="MP_02_02_03_11" aria-haspopup="true">TIP</button></li>
+                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_02" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></li>
+                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_03" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></li>
+                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_04" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></li>
+                        <li><button type="button" class="tip-view" title="정보보기" id="MP_02_02_03_11_tip_05" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
@@ -98,7 +98,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanJoinShareLine($('.wrap'), '<%= prodId %>', 'MP_02_02_03_11', '<%- JSON.stringify(joinTermInfo) %>',
+  new Tw.ProductMobileplanJoinShareLine($('.wrap'), '<%= prodId %>', 'MP_02_02_03_11', '<%- escape(JSON.stringify(joinTermInfo)) %>',
     '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>

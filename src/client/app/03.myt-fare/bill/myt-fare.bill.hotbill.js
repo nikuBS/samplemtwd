@@ -3,7 +3,7 @@
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 9. 20.
  */
-Tw.MyTFareHotBill = function (rootEl) {
+Tw.MyTFareHotBill = function (rootEl, params) {
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -13,10 +13,17 @@ Tw.MyTFareHotBill = function (rootEl) {
   this._historyService.init();
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
-  this._getLines();
+  // this._getLines();
+
   this._cachedElement();
   this._bindEvent();
   this._sendBillRequest(this.childSvcMgmtNum);
+  this._lines = params.lines;
+  if(this._lines.length > 0){
+    this._idxLastItem = 0;
+    this._renderLines();
+    this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
+  }
 
   if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
     this._billInfoAvailable = true;
@@ -65,6 +72,7 @@ Tw.MyTFareHotBill.prototype = {
         }
         this._lines.map(function (line, idx) {
           line.svcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
+          line.bill = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
           line.isCellphone = line.svcAttrCd === 'M1';
           line.idx = idx;
         });
@@ -124,7 +132,7 @@ Tw.MyTFareHotBill.prototype = {
 
       if ( this._billInfoAvailable ) {
         var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
-        this.$amount.text(total);
+        this.$amount.text(total + Tw.CURRENCY_UNIT.WON);
         var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD.');
         var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD.');
         this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
@@ -205,11 +213,11 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onClickPreBill: function () {
-    this._historyService.goLoad('/myt-fare/hotbill/prev');
+    this._historyService.goLoad('/myt-fare/bill/hotbill/prev');
   },
 
   _onClickChild: function (target) {
-    this._historyService.goLoad('/myt-fare/hotbill/child?child=' + target.svcMgmtNum);
+    this._historyService.goLoad('/myt-fare/bill/hotbill/child?child=' + target.svcMgmtNum);
   },
 
   _confirmSwitchLine: function (target) {

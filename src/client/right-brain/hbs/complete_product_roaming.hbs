@@ -33,19 +33,19 @@
                     </div>-->
                     <!-- btn1 case-->
                     {{#ifCond data.btnNmList.length '<' '2'}}
-                    <ul class="bt-slice">
-                        {{#each data.btnNmList}}
-                        <li><button type="button" class="btn-round2 btn-style3">{{this}}</button></li>
-                        {{/each}}
-                    </ul>
+                        <ul class="bt-slice">
+                            {{#each data.btnNmList}}
+                                <li><button type="button" class="btn-round2 btn-style3">{{this}}</button></li>
+                            {{/each}}
+                        </ul>
                     {{/ifCond}}
                     <!-- btn2 case-->
                     {{#ifCond data.btnNmList.length '>=' '2'}}
-                    <ul class="bt-slice item-two">
-                        {{#each data.btnNmList}}
-                            <li><button type="button" class="btn-round2 btn-style3" id="btn{{@index}}">{{this}}</button></li>
-                        {{/each}}
-                    </ul>
+                        <ul class="bt-slice item-two">
+                            {{#each data.btnNmList}}
+                                <li><button type="button" class="btn-round2 btn-style3" id="btn{{@index}}">{{this}}</button></li>
+                            {{/each}}
+                        </ul>
                     {{/ifCond}}
                 </div>
             </div>

@@ -403,7 +403,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간요금 이동
   _onClickedRealTimePay: function (/*event*/) {
-    this._historyService.goLoad('/myt-fare/hotbill');
+    this._historyService.goLoad('/myt-fare/bill/hotbill');
   },
 
   // 미납요금버튼

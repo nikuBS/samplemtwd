@@ -12,7 +12,7 @@ class MembershipInfoGrade extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     res.render('info/membership.info.grade.html', {
       svcInfo,

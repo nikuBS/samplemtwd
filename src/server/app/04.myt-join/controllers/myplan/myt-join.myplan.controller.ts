@@ -167,7 +167,10 @@ class MyTJoinMyplan extends TwViewController {
       };
     }
 
-    return null;
+    return {
+      txt: null,
+      unit: null
+    };
   }
 
   /**

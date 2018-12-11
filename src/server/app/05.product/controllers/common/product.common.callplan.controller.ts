@@ -157,7 +157,7 @@ class ProductCommonCallplan extends TwViewController {
       summary: [prodRedisInfo.summary,
         ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo, basDataTxt.txt,
           prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit),
-        { smryHtmlCtt: EnvHelper.setCdnUrl(prodRedisInfo.summary.smryHtmlCtt) }].reduce((a, b) => {
+        { smryHtmlCtt: EnvHelper.setCdnUrl(this._removePcImgs(prodRedisInfo.summary.smryHtmlCtt)) }].reduce((a, b) => {
         return Object.assign(a, b);
       }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
@@ -222,7 +222,7 @@ class ProductCommonCallplan extends TwViewController {
 
     contentsInfo.forEach((item) => {
       if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
-        contentsResult[item.vslLedStylCd] = EnvHelper.setCdnUrl(item.ledItmDesc);
+        contentsResult[item.vslLedStylCd] = EnvHelper.setCdnUrl(this._removePcImgs(item.ledItmDesc));
         return true;
       }
 
@@ -231,13 +231,13 @@ class ProductCommonCallplan extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
-        contentsResult.PLM_FIRST = EnvHelper.setCdnUrl(item.ledItmDesc);
+        contentsResult.PLM_FIRST = EnvHelper.setCdnUrl(this._removePcImgs(item.ledItmDesc));
         return true;
       }
 
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm'),
-        ledItmDesc: EnvHelper.setCdnUrl(item.ledItmDesc)
+        ledItmDesc: EnvHelper.setCdnUrl(this._removePcImgs(item.ledItmDesc))
       }));
     });
 
@@ -256,7 +256,7 @@ class ProductCommonCallplan extends TwViewController {
 
     bannerInfo.forEach((item) => {
       bannerResult[item.bnnrLocCd] = Object.assign(item, {
-        bnnrDtlHtmlCtt: EnvHelper.setCdnUrl(item.bnnrDtlHtmlCtt)
+        bnnrDtlHtmlCtt: EnvHelper.setCdnUrl(this._removePcImgs(item.bnnrDtlHtmlCtt))
       });
     });
 
@@ -400,6 +400,18 @@ class ProductCommonCallplan extends TwViewController {
       isCombine: prodTypCd === 'F',
       isDiscount: prodTypCd === 'G'
     };
+  }
+
+  /**
+   * @param context
+   * @private
+   */
+  private _removePcImgs (context: any): any {
+    if (FormatHelper.isEmpty(context)) {
+      return null;
+    }
+
+    return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, '');
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

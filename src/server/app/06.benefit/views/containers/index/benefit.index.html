@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div class="wrap" data-menuId="<%=pageInfo.menuId%>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '혜택&middot;할인' }) %>
     <!--// #header -->
@@ -28,7 +28,7 @@
             <!--나의 혜택&middot;할인 정보-->
             <div id="fe-my-benefit-area" class="cont-box none">
                 <div class="my-benefit-info">
-                    <button type="button" class="view" data-url="/benefit/my-benefit">나의 혜택&middot;할인 정보</button>
+                    <button type="button" class="view" data-url="/benefit/my">나의 혜택&middot;할인 정보</button>
                     <div class="info">
                         <ul>
                             <li>
@@ -59,32 +59,42 @@
                         <div class="widget-box radio">
                             <div class="filtertype-wrap">
                                 <ul id="fe-category" class="select-list division-five" role="group">
-                                    <li class="radiobox checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" name="radio1" value="" title="전체" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                    <li class="radiobox checked" role="radio" aria-checked="true">
+                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" name="radio1" value="" title="전체" checked/>
+                                        <!-- 체크상태일 경우 checked="checked" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit1"></i><span class="text">전체</span>
                                         </p>
                                     </li>
-                                    <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="F01421" title="요금할인"/><!-- 체크상태일 경우 checked="false" -->
+                                    <li class="radiobox" role="radio" aria-checked="false">
+                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <input type="radio" name="radio1" value="F01421" title="요금할인"/>
+                                        <!-- 체크상태일 경우 checked="false" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit2"></i><span class="text">요금할인</span>
                                         </p>
                                     </li>
-                                    <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="F01422" title="결합할인"/><!-- 체크상태일 경우 checked="false" -->
+                                    <li class="radiobox" role="radio" aria-checked="false">
+                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <input type="radio" name="radio1" value="F01422" title="결합할인"/>
+                                        <!-- 체크상태일 경우 checked="false" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit3"></i><span class="text">결합할인</span>
                                         </p>
                                     </li>
-                                    <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="F01423" title="장기가입혜택"/><!-- 체크상태일 경우 checked="false" -->
+                                    <li class="radiobox" role="radio" aria-checked="false">
+                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <input type="radio" name="radio1" value="F01423" title="장기가입혜택"/>
+                                        <!-- 체크상태일 경우 checked="false" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit4"></i><span class="text">장기가입혜택</span>
                                         </p>
                                     </li>
-                                    <li class="radiobox" role="radio" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
-                                        <input type="radio" name="radio1" value="F01424" title="참여혜택"/><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                    <li class="radiobox" role="radio" aria-checked="false" aria-disabled="true">
+                                        <!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                                        <input type="radio" name="radio1" value="F01424" title="참여혜택"/>
+                                        <!-- 비활성화상태일 경우 disabled="disabled" -->
                                         <p class="text-wrap">
                                             <i class="ico benefit5"></i><span class="text">참여혜택</span>
                                         </p>
@@ -114,7 +124,7 @@
                 <div class="cont-box">
                     <div class="discount-look-ahead">
                         <strong class="stit-type">결합할인금액 미리보기</strong>
-                        <p>내게  딱 맞는 결합할인 금액을 확인하세요</p>
+                        <p>내게 딱 맞는 결합할인 금액을 확인하세요</p>
                         <div class="board-type">
                             <p>인터넷</p>
                             <div>
@@ -122,15 +132,18 @@
                                     <div class="widget-box radio">
                                         <ul class="select-list" role="radiogroup" data-check-disabled>
                                             <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="inetTypCd" value="F1" title="광랜 1회선" data-name="inetTypCd"/><!-- 체크상태일 경우 checked="checked" -->
+                                                <input type="radio" name="inetTypCd" value="F1" title="광랜 1회선"
+                                                       data-name="inetTypCd"/><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="radio-txt">광랜 1회선</span>
                                             </li>
                                             <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="inetTypCd" value="F2" title="광랜 2회선" data-name="inetTypCd"/><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="radio" name="inetTypCd" value="F2" title="광랜 2회선"
+                                                       data-name="inetTypCd"/><!-- 체크상태일 경우 checked="false" -->
                                                 <span class="radio-txt">광랜 2회선</span>
                                             </li>
                                             <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="inetTypCd" value="G0" title="Giga" data-name="inetTypCd"/><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                                <input type="radio" name="inetTypCd" value="G0" title="Giga"
+                                                       data-name="inetTypCd"/><!-- 비활성화상태일 경우 disabled="disabled" -->
                                                 <span class="radio-txt">Giga</span>
                                             </li>
                                         </ul>
@@ -151,11 +164,13 @@
                                     <div class="widget-box radio">
                                         <ul class="select-list" role="radiogroup" data-check-disabled>
                                             <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="btvUseYn" value="Y" title="값1" data-name="btvUseYn"/><!-- 체크상태일 경우 checked="checked" -->
+                                                <input type="radio" name="btvUseYn" value="Y" title="값1"
+                                                       data-name="btvUseYn"/><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="radio-txt">있음</span>
                                             </li>
                                             <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="btvUseYn" value="N" title="값2" data-name="btvUseYn"/><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="radio" name="btvUseYn" value="N" title="값2"
+                                                       data-name="btvUseYn"/><!-- 체크상태일 경우 checked="false" -->
                                                 <span class="radio-txt">없음</span>
                                             </li>
                                         </ul>
@@ -216,25 +231,25 @@
                     <ul>
                         <li>
                             <button class="list" type="button" data-url="/product/mobileplan">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut01.png" alt="" />
+                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut01.png" alt=""/>
                                 <span>요금제</span>
                             </button>
                         </li>
                         <li>
                             <button class="list" type="button" data-url="/product/mobileplan-add">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut02.png" alt="" />
+                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut02.png" alt=""/>
                                 <span>부가서비스</span>
                             </button>
                         </li>
                         <li>
                             <button class="list" type="button" data-url="/product/wireplan">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut03.png" alt="" />
+                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut03.png" alt=""/>
                                 <span>인터넷∙전화∙TV</span>
                             </button>
                         </li>
                         <li>
                             <button class="list" type="button" data-url="/roaming">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut04.png" alt="" />
+                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut04.png" alt=""/>
                                 <span>T로밍</span>
                             </button>
                         </li>
@@ -247,13 +262,14 @@
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo,pageInfo: pageInfo }); %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo,pageInfo: pageInfo });
+    %>
 </div>
 </body>
 
 <script>
   $(document).ready(function () {
-    new Tw.BenefitIndex($('.wrap'), '<%=isLogin%>');
+    new Tw.BenefitIndex($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo)%>')  );
   });
 </script>
 <% include ../../components/end.component.html %>

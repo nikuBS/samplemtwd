@@ -170,18 +170,20 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.state = true;
       }
 
-      data.numberSvc = numSvc;
-      if ( data.numberSvc.code === API_CODE.CODE_00 ) {
-        data.isNotChangeNumber = true;
-        if ( data.numberSvc.extnsPsblYn === 'Y' ) {
-          data.numberChanged = true;
-        } else {
-          const curDate = new Date();
-          const endDate = DateHelper.convDateFormat(data.numberSvc.notiEndDt);
-          const betweenDay = this.daysBetween(curDate, endDate);
-          if ( betweenDay > 28 ) {
-            // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
-            data.isNotChangeNumber = false;
+      if ( numSvc ) {
+        data.numberSvc = numSvc;
+        if ( data.numberSvc.code === API_CODE.CODE_00 ) {
+          data.isNotChangeNumber = true;
+          if ( data.numberSvc.extnsPsblYn === 'Y' ) {
+            data.numberChanged = true;
+          } else {
+            const curDate = new Date();
+            const endDate = DateHelper.convDateFormat(data.numberSvc.notiEndDt);
+            const betweenDay = this.daysBetween(curDate, endDate);
+            if ( betweenDay > 28 ) {
+              // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
+              data.isNotChangeNumber = false;
+            }
           }
         }
       }
