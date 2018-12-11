@@ -43,12 +43,16 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     if (Tw.FormatHelper.isEmpty(this._prodId)) {
       return;
+    } else {
+      this.$combineExplainAllWrap.show();
     }
 
     if (this._prodId !== 'NH00000103') {
       setTimeout(function() {
         this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
         this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
+
+        this._toggleCombineExplain();
       }.bind(this));
     }
 
@@ -103,6 +107,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$formData = this.$container.find('.fe-form_data');
     this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
     this.$combineIsExists = this.$container.find('.fe-combine_is_exists');
+    this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');
+    this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap');
 
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -222,12 +228,15 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _changeCombineSelected: function() {
     if (this.$combineSelected.is(':checked')) {
+      this.$combineExplainAllWrap.show();
       return;
     }
 
     this._prodId = null;
     this._setBtnCombineTxt(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NONE.TITLE);
 
+    this.$combineExplainAllWrap.hide();
+    this.$combineExplainCheckboxWrap.hide();
     this.$combineExplain.attr('aria-disabled', true).addClass('disabled').removeClass('checked');
     this.$combineExplain.find('input[type=checkbox]').attr('disabled', 'disabled').prop('disabled', true)
       .prop('checked', false);
@@ -311,9 +320,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
         .attr('disabled', 'disabled').prop('disabled', true);
       this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
+      this.$combineExplainCheckboxWrap.hide();
     } else {
       this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
       this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
+      this.$combineExplainCheckboxWrap.show();
     }
   },
 
@@ -325,11 +336,15 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _bindAgreePop: function($popupContainer) {
-    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closeAgreePop, this));
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._setAgreeAndclosePop, this));
   },
 
-  _closeAgreePop: function() {
+  _setAgreeAndclosePop: function() {
     this._popupService.close();
+
+    if (!this.$agreeWrap.find('input[type=checkbox]').is(':checked')) {
+      this.$agreeWrap.find('input[type=checkbox]').trigger('click');
+    }
   },
 
   _procClearInput: function(e) {

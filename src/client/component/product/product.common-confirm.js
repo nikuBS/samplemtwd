@@ -242,15 +242,23 @@ Tw.ProductCommonConfirm.prototype = {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').text()
       }
-    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
+    }, $.proxy(this._bindAgreePop, this, $parent), null, 'agree_pop');
   },
 
-  _bindAgreePop: function($popupContainer) {
-    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._closePop, this));
+  _bindAgreePop: function($wrap, $popupContainer) {
+    $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._setAgreeAndclosePop, this, $wrap));
   },
 
   _openComparePlans: function() {
     Tw.CommonHelper.openUrlInApp('/product/mobileplan/compare-plans?prodId=' + this._data.preinfo.toProdInfo.prodId, 'status=1,toolbar=1');
+  },
+
+  _setAgreeAndclosePop: function($wrap) {
+    if (!$wrap.find('input[type=checkbox]').is(':checked')) {
+      $wrap.find('input[type=checkbox]').trigger('click');
+    }
+
+    this._closePop();
   },
 
   _closePop: function() {
