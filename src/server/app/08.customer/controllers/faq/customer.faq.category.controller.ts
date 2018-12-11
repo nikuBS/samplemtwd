@@ -88,7 +88,7 @@ class CustomerFaqCategory extends TwViewController {
       if (resp.code === API_CODE.CODE_00) {
         return {
           list: resp.result.content,
-          isLast: resp.result.last === 'true' ? true : false
+          isLast: resp.result.last
         };
       }
 
