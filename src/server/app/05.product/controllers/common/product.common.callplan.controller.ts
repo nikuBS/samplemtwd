@@ -407,6 +407,10 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _removePcImgs (context: any): any {
+    if (FormatHelper.isEmpty(context)) {
+      return null;
+    }
+
     return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, '');
   }
 
