@@ -144,7 +144,7 @@ Tw.MyTJoinWireHistory.prototype = {
   _bindEvent: function () {
 
     // 목록 클릭시 - 화면이동
-    this.$container.on('click', '.cont-box li[data-no]', $.proxy(this._showListDetail, this));
+    this.$container.on('click', '.history-list li[data-no]', $.proxy(this._showListDetail, this));
 
     // 더보기 버튼 클릭시
     this.$container.on('click', '.bt-more', $.proxy(this._nextData, this));
