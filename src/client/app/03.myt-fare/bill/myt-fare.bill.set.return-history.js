@@ -46,9 +46,9 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     // 반송 등록일 기준으로 내림차순 정렬
     list = Tw.FormatHelper.sortObjArrDesc(list, 'undlvRgstDt');
     _.forEach(list, function(data){
-      data.undlvRgstDt = Tw.DateHelper.getShortDateNoDot(data.undlvRgstDt);
-      data.invDt = Tw.DateHelper.getShortDateNoDot(data.invDt);
-      data.sndDt = Tw.DateHelper.getShortDateNoDot(data.sndDt);
+      data.undlvRgstDt = Tw.DateHelper.getShortDate(data.undlvRgstDt);
+      data.invDt = Tw.DateHelper.getShortDate(data.invDt);
+      data.sndDt = Tw.DateHelper.getShortDate(data.sndDt);
       data.billTyp = Tw.MYT_FARE_BILL_SET.RETURN_HISTORY.BILL_TYPE_NAME[$.trim(data.billTyp)] || data.billTyp;
     });
   },
