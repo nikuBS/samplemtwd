@@ -98,7 +98,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanJoinShareLine($('.wrap'), '<%= prodId %>', 'MP_02_02_03_11', '<%- JSON.stringify(joinTermInfo) %>',
+  new Tw.ProductMobileplanJoinShareLine($('.wrap'), '<%= prodId %>', 'MP_02_02_03_11', '<%- escape(JSON.stringify(joinTermInfo)) %>',
     '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>

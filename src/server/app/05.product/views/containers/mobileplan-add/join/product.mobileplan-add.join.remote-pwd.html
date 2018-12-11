@@ -102,7 +102,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinRemotePwd($('.wrap'), '<%= prodId %>', 'MV_02_02_03', '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductMobileplanAddJoinRemotePwd($('.wrap'), '<%= prodId %>', 'MV_02_02_03', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>
