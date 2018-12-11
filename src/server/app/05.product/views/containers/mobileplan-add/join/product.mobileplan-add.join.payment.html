@@ -108,7 +108,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinPayment($('.wrap'), '<%= prodId %>', 'MV_02_02_04', '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductMobileplanAddJoinPayment($('.wrap'), '<%= prodId %>', 'MV_02_02_04', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

@@ -109,7 +109,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>
