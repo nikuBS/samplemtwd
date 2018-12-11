@@ -11,7 +11,7 @@ import MyTFareBillSetCommon from './myt-fare.bill.set.common.controller';
 
 class MyTFareBillSet extends MyTFareBillSetCommon {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.svcInfo = svcInfo;
     Observable.combineLatest(
       // this.mockReqBillType()

@@ -20,7 +20,7 @@ export default class ProductMobileplanComparePlans extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prodId;
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0091, {}), // 최근 사용량 조회
@@ -31,14 +31,14 @@ export default class ProductMobileplanComparePlans extends TwViewController {
       const errorRs = this.error.apiError([prodRedisInfo, contents, basicInfo]);
       // BIL0070 : 최근 사용량 데이터 없음
       if (FormatHelper.isEmpty(errorRs) && [API_CODE.CODE_00, 'BIL0070'].indexOf(recentUsage.code) !== -1) {
-        res.render('mobileplan/product.mobileplan.compare-plans.html', this.getData(recentUsage, prodRedisInfo, contents, basicInfo));
+        res.render('mobileplan/product.mobileplan.compare-plans.html', this.getData(recentUsage, prodRedisInfo, contents, basicInfo, pageInfo));
       } else {
         this.fail(res, errorRs, svcInfo);
       }
     });
   }
 
-  private getData(recentUsage: any, prodRedisInfo: any, contents: any, basicInfo: any): any {
+  private getData(recentUsage: any, prodRedisInfo: any, contents: any, basicInfo: any, pageInfo: any): any {
     const msgs = PRODUCT_MOBILEPLAN_COMPARE_PLANS;
     prodRedisInfo = this.parseProduct(prodRedisInfo.result);
 
@@ -52,7 +52,8 @@ export default class ProductMobileplanComparePlans extends TwViewController {
         targetSupply: prodRedisInfo.basOfrGbDataQtyCtt
       },
       contents: contents.result.guidMsgCtt,
-      joinUrl: this.getJoinUrl(basicInfo).linkUrl
+      joinUrl: this.getJoinUrl(basicInfo).linkUrl,
+      pageInfo
     };
     if (!recentUsage.result || !recentUsage.result.data || recentUsage.result.data.length < 1) {
       return _data;
