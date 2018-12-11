@@ -2681,6 +2681,13 @@
   background: url(/img/svg/icon_32px_name_edit.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-pin-36 {
+  display: inline-block;
+  width: 1.125rem;
+  height: 1.125rem;
+  background: url(/img/ico/icon_36px_pin.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-call-40 {
   display: inline-block;
   width: 1.25rem;
@@ -6001,6 +6008,14 @@
   height: 2rem;
   background: url(/img/ico/ico-after.png) no-repeat;
   background-size: 2rem auto; }
+
+.list-comp-lineinfo li .lineinfo-user.full-w {
+  width: 100%; }
+
+.membership-benefit .list-tit {
+  padding-bottom: 0.625rem;
+  font-size: 0.875rem;
+  color: #666; }
 
 /* 김연주 */
 .data-result {
@@ -15068,6 +15083,12 @@ a.bt-link-tx.underline.small {
           .cont-actionsheet .ac-list .type1 .table-cell > span.simbol.ico12 {
             background: url(/img/svg/icon_40px_call.svg) no-repeat 0 0;
             background-size: 100% 100%; }
+        .cont-actionsheet .ac-list .type1 .table-cell > span.pin {
+          margin-left: 0.3125rem;
+          width: 1.125rem;
+          height: 1.125rem;
+          background: url(/img/ico/icon_36px_pin.png) no-repeat 0 0;
+          background-size: 100% 100%; }
         .cont-actionsheet .ac-list .type1 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
@@ -17353,6 +17374,10 @@ a.bt-link-tx.underline.small {
     height: 3.75rem;
     background: url(/img/customer/bg-book.png) no-repeat 0 0;
     background-size: 100% 100%; }
+  .customer-as .link {
+    margin-top: 0.3125rem;
+    color: #3b98e6;
+    font-size: 0.75rem; }
 
 /* CS_02_01 : 지점/대리점 찾기 */
 .search-point .filter {
@@ -22164,6 +22189,15 @@ a.bt-link-tx.underline.small {
 .concierge-service-detail .announcement-bullet {
   font-size: 0.9375rem !important;
   color: #000; }
+
+.charge-guide-wrap.type1 .tit {
+  font-size: 1.5rem;
+  font-family: "TgothicBlack", Roboto, sans-serif;
+  line-height: 1; }
+
+.charge-guide-wrap.type1 .charge-txt {
+  vertical-align: bottom;
+  padding-right: 0; }
 
 /* 최은현 */
 .cont-box.rt-bt-type {
