@@ -42,7 +42,7 @@ Tw.TooltipService.prototype = {
     }
 
     for (var key in this._tooltipList) {
-      if (key === $targetId) {
+      if (this._tooltipList[key].menuId === $targetId) {
         return true;
       }
     }
