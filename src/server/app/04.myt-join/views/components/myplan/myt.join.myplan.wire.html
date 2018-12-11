@@ -9,14 +9,11 @@
                 <% } %>
             </div>
             <div class="sub">
-                <% if (svcInfo.svcAttrCd === 'S2') { %>
-                <span class="hash">3년 약정시</span>
-                <% } %>
-                <% if (svcInfo.svcAttrCd === 'S3') { %>
-                <span class="hash">3년 약정시+초고속 결합시</span>
-                <% } %>
-                <% if ( feePlan.isDisplayFeeAmt ) { %>
+                <% if ( feePlan.isDisplayFeeAmt && (feePlan.feeManlSetYn === 'N' || !feePlan.feeManlSetTitNm) ) { %>
                 <span class="rest">월정액(부가세 포함)</span>
+                <% } %>
+                <% if ( feePlan.isDisplayFeeAmt && (feePlan.feeManlSetYn === 'Y' && feePlan.feeManlSetTitNm) ) { %>
+                <span class="rest"><%= feePlan.feeManlSetTitNm %></span>
                 <% } %>
             </div>
             <% if ( feePlan.prodBasBenfCtt && (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2') ) { %>
