@@ -1,6 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
 import MyTDataSubMain from './myt-data.submain.controller';
-import MyTDataUsage from './controllers/usage/myt-data.usage.controller';
 import MyTDataHotdata from './controllers/usage/myt-data.hotdata.controller';
 import MyTDataUsageChild from './controllers/usage/myt-data.usage.child.controller';
 import MyTDataUsageChildRecharge from './controllers/usage/myt-data.usage.child.recharge.controller';
@@ -54,9 +53,6 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/prepaid/data/auto', controller: MyTDataPrepaidDataAuto });
     this.controllers.push({ url: '/recharge/prepaid/data/complete', controller: MyTDataPrepaidDataComplete });
     this.controllers.push({ url: '/recharge/prepaid/alarm', controller: MyTDataPrepaidAlarm });
-
-    // 임시
-    this.controllers.push({ url: '/usage', controller: MyTDataUsage });
   }
 }
 
