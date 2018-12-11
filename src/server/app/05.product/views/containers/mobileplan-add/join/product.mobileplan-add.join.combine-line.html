@@ -109,6 +109,6 @@
 <% include ../../../components/mobileplan-add/product.line.component.html %>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanAddJoinCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_01', '<%- JSON.stringify(joinTermInfo) %>');
+  new Tw.ProductMobileplanAddJoinCombineLine($('.wrap'), '<%= prodId %>', 'MV_02_02_01', '<%- escape(JSON.stringify(joinTermInfo)) %>');
 });</script>
 <% include ../../../components/end.component.html %>

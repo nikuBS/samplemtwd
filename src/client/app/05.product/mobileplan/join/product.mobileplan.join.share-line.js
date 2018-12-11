@@ -14,7 +14,7 @@ Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmO
   this._displayId = displayId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
-  this._confirmOptions = JSON.parse(confirmOptions);
+  this._confirmOptions = JSON.parse(unescape(confirmOptions));
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 

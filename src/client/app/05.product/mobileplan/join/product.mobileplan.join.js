@@ -16,7 +16,7 @@ Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReq
   this._prodId = prodId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
-  this._confirmOptions = JSON.parse(confirmOptions);
+  this._confirmOptions = JSON.parse(unescape(confirmOptions));
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 

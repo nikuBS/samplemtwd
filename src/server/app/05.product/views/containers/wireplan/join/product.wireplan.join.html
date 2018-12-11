@@ -17,5 +17,5 @@
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>"></div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%- JSON.stringify(btnData) %>'); });</script>
+<script>$(function () { new Tw.ProductWireplanJoin($('.wrap'), '<%= prodId %>', '<%- escape(JSON.stringify(joinTermInfo)) %>', '<%- escape(JSON.stringify(btnData)) %>'); });</script>
 <% include ../../../components/end.component.html %>

@@ -19,7 +19,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(function () {
-    new Tw.ProductWireplanTerminate($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(joinTermInfo) %>', '<%- JSON.stringify(btnData) %>');
+    new Tw.ProductWireplanTerminate($('.wrap'), '<%= prodId %>', '<%- escape(JSON.stringify(joinTermInfo)) %>', '<%- escape(JSON.stringify(btnData)) %>');
   });
 </script>
 <% include ../../components/end.component.html %>
