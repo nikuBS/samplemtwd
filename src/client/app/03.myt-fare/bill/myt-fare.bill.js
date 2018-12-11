@@ -127,9 +127,9 @@ Tw.MyTFareBill.prototype = {
     if (this.$uri !== null) {
       var fullUrl = '';
       if (this.$uri === 'auto') {
-        fullUrl = '/myt-fare/bill/auto/register';
+        fullUrl = '/myt-fare/bill/option/register';
       } else {
-        fullUrl = '/myt-fare/bill/' + this.$uri;
+        fullUrl = '/myt-fare/bill/option';
       }
       this._historyService.goLoad(fullUrl);
     }

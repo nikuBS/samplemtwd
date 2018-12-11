@@ -135,7 +135,7 @@ Tw.PPSRechargeLayer.prototype = {
 
   _onClickAuto: function (name, event) {
     var $target = $(event.target);
-    var url = this.defaultUrl + '/data/auto'; // default - data
+    var url = this.defaultUrl + '/data-auto'; // default - data
     if ( name === 'auto-voice' ) {
       url = this.defaultUrl + '/voice/auto';
     }
@@ -145,7 +145,7 @@ Tw.PPSRechargeLayer.prototype = {
 
   _onClickAutoChange: function (name, event) {
     var $target = $(event.target);
-    var url = this.defaultUrl + '/data/auto'; // default - data
+    var url = this.defaultUrl + '/data-auto'; // default - data
     if ( name === 'auto-change-voice' ) {
       url = this.defaultUrl + '/voice/auto';
     }
