@@ -128,8 +128,6 @@ Tw.MyTFareBill.prototype = {
       var fullUrl = '';
       if (this.$uri === 'auto') {
         fullUrl = '/myt-fare/bill/option/register';
-      } else {
-        fullUrl = '/myt-fare/bill/option';
       }
       this._historyService.goLoad(fullUrl);
     }
