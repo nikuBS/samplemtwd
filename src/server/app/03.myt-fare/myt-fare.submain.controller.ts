@@ -15,6 +15,7 @@ import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
+import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTFareSubmainController extends TwViewController {
   private _bannerUrl: string = '';
@@ -282,9 +283,15 @@ class MyTFareSubmainController extends TwViewController {
     const SPC = (items && items['S']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
-      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+      let nOthers: any = [];
+      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          item.nickNm = item.eqpMdlNm || item.nickNm;
+          // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+          if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
+            item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
+          }
           list.push(item);
         }
       });

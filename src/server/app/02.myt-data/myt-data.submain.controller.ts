@@ -363,6 +363,7 @@ class MytDataSubmainController extends TwViewController {
       const nOthers: any = Object.assign([], MOBILE);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          item.nickNm = item.eqpMdlNm || item.nickNm;
           list.push(item);
         }
       });

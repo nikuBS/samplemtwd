@@ -14,6 +14,7 @@ import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
+import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -270,7 +271,8 @@ class MyTJoinSubmainController extends TwViewController {
     const SPC = (items && items['S']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
-      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+      let nOthers: any = [];
+      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           let clsNm = 'cellphone';
@@ -278,6 +280,11 @@ class MyTJoinSubmainController extends TwViewController {
             clsNm = 'pc';
           } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
             clsNm = 'tablet';
+          }
+          item.nickNm = item.eqpMdlNm || item.nickNm;
+          // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+          if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
+            item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
           item.className = clsNm;
           list.push(item);
