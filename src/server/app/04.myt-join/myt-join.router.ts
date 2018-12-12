@@ -38,7 +38,6 @@ class MyTJoinRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
-    this.controllers.push({ url: '/suspend', controller: MyTJoinSuspend });
 
     // new url
     this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });

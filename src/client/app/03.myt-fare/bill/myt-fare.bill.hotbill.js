@@ -4,36 +4,37 @@
  * Date: 2018. 9. 20.
  */
 Tw.MyTFareHotBill = function (rootEl, params) {
-  this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this.NUM_OF_ITEMS = 20;
   this._historyService = new Tw.HistoryService();
-  this._historyService.init();
+
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
-  // this._getLines();
-
-  this._cachedElement();
-  this._bindEvent();
-  this._sendBillRequest(this.childSvcMgmtNum);
   this._lines = params.lines;
-  if(this._lines.length > 0){
-    this._idxLastItem = 0;
-    this._renderLines();
-    this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
-  }
-
-  if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
-    this._billInfoAvailable = true;
-    Handlebars.registerHelper('isBill', function (val, options) {
-      return (Tw.MyTFareHotBill.NO_BILL_FIELDS.indexOf(val) < 0) ? options.fn(this) : options.inverse(this);
-    });
-  }
+  this._init();
 };
 
 Tw.MyTFareHotBill.prototype = {
+  _init: function () {
+    this._idxLastItem = 0;
+    this._cachedElement();
+    this._bindEvent();
+    this._sendBillRequest(this.childSvcMgmtNum);
+    if ( this._lines.length > 0 ) {
+      this._renderLines();
+      this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
+    }
+
+    if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
+      this._billInfoAvailable = true;
+      Handlebars.registerHelper('isBill', function (val, options) {
+        return (Tw.MyTFareHotBill.NO_BILL_FIELDS.indexOf(val) < 0) ? options.fn(this) : options.inverse(this);
+      });
+    }
+  },
+
   _cachedElement: function () {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
@@ -47,61 +48,26 @@ Tw.MyTFareHotBill.prototype = {
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
   },
 
-  /**
-   * 자녀회선, 본인의 다른 회선 정보를 가져와 화면 하단에 표시
-   *
-   */
-
-  _getLines: function () {
-    var APIs = [
-      { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {} },
-      { command: Tw.NODE_CMD.GET_ALL_SVC, params: {} },
-      { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
-    ];
-    this._lines = [];
-    this._apiService.requestArray(APIs)
-      .done($.proxy(function (children, svcs, svcInfo) {
-        if ( children.code === Tw.API_CODE.CODE_00 && !_.isEmpty(children.result) ) {
-          this._lines = _.clone(children.result);
-        }
-        if ( svcs.code === Tw.API_CODE.CODE_00 && !_.isEmpty(svcs.result) ) {
-          var otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
-            return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
-          });
-          this._lines = this._lines.concat(_.clone(otherLines));
-        }
-        this._lines.map(function (line, idx) {
-          line.svcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
-          line.bill = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
-          line.isCellphone = line.svcAttrCd === 'M1';
-          line.idx = idx;
-        });
-        this._svcInfo = _.clone(svcInfo.result);
-        this._idxLastItem = 0;
-        this._renderLines();
-        this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
-      }, this));
-
-  },
-
   _getBillResponse: function (childSvcMgmtNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var params = { count: this._requestCount++ };
-      if ( this._isPrev ) {
-        params.gubun = 'Q';
-      } else if ( childSvcMgmtNum ) {
-        params.childSvcMgmtNum = childSvcMgmtNum;
-      } else {
-        params.gubun = '9';
-      }
-      this._apiService
-        .request(Tw.API_CMD.BFF_05_0022, params)
-        .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
-        .fail($.proxy(this._onErrorReceivedBillData, this));
+      setTimeout($.proxy(function () {
+        var params = { count: this._requestCount++ };
+        if ( this._isPrev ) {
+          params.gubun = 'Q';
+        } else if ( childSvcMgmtNum ) {
+          params.childSvcMgmtNum = childSvcMgmtNum;
+        }
+        this._apiService
+          .request(Tw.API_CMD.BFF_05_0022, params)
+          .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
+          .fail($.proxy(this._onErrorReceivedBillData, this));
+      }, this), this._isPrev ? 5000 : 2500);
+
     } else {
       this._onErrorReceivedBillData(resp);
     }
   },
+
 
   _sendBillRequest: function (child) {
     Tw.CommonHelper.startLoading(child ? '.container' : '.fe-loading-bill', 'white', !!child);
@@ -112,9 +78,8 @@ Tw.MyTFareHotBill.prototype = {
       params.gubun = 'Q';
     } else if ( child ) {
       params.childSvcMgmtNum = child.svcMgmtNum;
-    } else {
-      params.gubun = '9';
     }
+
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, params)
       .done($.proxy(this._getBillResponse, this, child))
@@ -133,8 +98,12 @@ Tw.MyTFareHotBill.prototype = {
       if ( this._billInfoAvailable ) {
         var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
         this.$amount.text(total + Tw.CURRENCY_UNIT.WON);
-        var fromDt = Tw.DateHelper.getShortDateWithFormat(resp.result.fromDt, 'YYYY.MM.DD.');
-        var toDt = Tw.DateHelper.getShortDateWithFormat(resp.result.toDt, 'YYYY.MM.DD.');
+        var fromDt = Tw.DateHelper.getShortDateWithFormat(
+          this._isPrev ? resp.result.beforeFromDt : resp.result.fromDt, 'YYYY.MM.DD.'
+        );
+        var toDt = Tw.DateHelper.getShortDateWithFormat(
+          this._isPrev ? resp.result.beforetoDt : resp.result.toDt, 'YYYY.MM.DD.'
+        );
         this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
         var fieldInfo = {
           lcl: 'billItmLclNm',
@@ -143,21 +112,9 @@ Tw.MyTFareHotBill.prototype = {
           value: this._isPrev ? 'invAmt1' : 'invAmt2'
         };
         var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
-        // if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
-        //   this.$unpaid.show();
-        //   this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
-        //   delete group[Tw.HOTBILL_UNPAID_TITLE];
-        // }
+
         Tw.CommonHelper.endLoading(child ? '.container' : '.fe-loading-bill');
         this._renderBillGroup(group, false, this.$container);
-
-        // 전월요금 보이기
-        if ( !this._isPrev && !this.childSvcMgmtNum ) {
-          if ( parseInt(billData.totOpenBal1, 10) > 0 ) {
-            this.$container.find('.fe-prev-wrapper').show();
-            this.$container.find('#fe-pre-amount').text(billData.totOpenBal1 + Tw.CURRENCY_UNIT.WON);
-          }
-        }
       }
     } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
