@@ -178,7 +178,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
   },
 
   _prodConfirmOk: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
@@ -187,7 +187,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

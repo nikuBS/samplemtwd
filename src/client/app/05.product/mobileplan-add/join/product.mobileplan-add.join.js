@@ -68,7 +68,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
   },
 
   _prodConfirmOk: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0035, {
       addCd: '2'
@@ -76,7 +76,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

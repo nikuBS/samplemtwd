@@ -154,7 +154,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._procAdvanceCheck(url, { code: '00' });
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
       .done($.proxy(this._procAdvanceCheck, this, url));
   },
@@ -208,7 +208,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _procAdvanceCheck: function(url, resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();
