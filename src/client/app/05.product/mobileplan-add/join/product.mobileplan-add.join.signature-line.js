@@ -12,7 +12,7 @@ Tw.ProductMobileplanAddJoinSignatureLine = function(rootEl, prodId, displayId, c
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
 
   this.$container = rootEl;
   this._cachedElement();

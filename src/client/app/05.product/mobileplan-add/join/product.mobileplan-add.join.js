@@ -13,7 +13,7 @@ Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
 
   this._init();
 };

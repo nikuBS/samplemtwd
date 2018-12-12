@@ -12,8 +12,8 @@ Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) 
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
-  this._btnData = JSON.parse(unescape(btnData));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._btnData = JSON.parse(window.unescape(btnData));
 
   this._init();
 };
