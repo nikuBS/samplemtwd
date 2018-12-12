@@ -55,18 +55,24 @@ Tw.ApiService.prototype = {
       delete resp.loginType;
     }
 
+    var requestInfo = {
+      command: command,
+      params: params,
+      headers: headers,
+      pathVariables: pathVariables
+    };
+    var authUrl = command.method + '|' + command.path;
     if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 || resp.code === Tw.API_CODE.BFF_0010 ) {
       Tw.Logger.info('[API Cert]', command);
-      this._cert = new Tw.CertificationSelect();
+      var cert = new Tw.CertificationSelect();
       setTimeout($.proxy(function () {
-        var requestInfo = {
-          command: command,
-          params: params,
-          headers: headers,
-          pathVariables: pathVariables
-        };
-        var authUrl = command.method + '|' + command.path;
-        this._cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
+        cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
+      }, this), 0);
+      return deferred.promise();
+    } else if (resp.code === Tw.API_CODE.BFF_0020) {
+      var certRepresentative = new Tw.CertificationRepresentative();
+      setTimeout($.proxy(function () {
+        certRepresentative.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
     } else {
