@@ -11,7 +11,7 @@ import MembershipBenefitPlus from './controllers/benefit/membership.benefit.plus
 class MembershipRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/membership/join', controller: MembershipJoin });
+    this.controllers.push({ url: '/join', controller: MembershipJoin });
     this.controllers.push({ url: '/benefit/brand', controller: MembershipBenefitBrand });
     this.controllers.push({ url: '/benefit/brand-benefit', controller: MembershipBenefitBrandBenefit });
     this.controllers.push({ url: '/benefit/map', controller: MembershipBenefitBrandMap });
