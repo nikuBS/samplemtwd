@@ -91,6 +91,9 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initialize: function() {
+    setTimeout(function() {
+      window.scrollTo(0, 0);
+    }, 500);
     this._svcMgmtNumList = [];
     if (this.data.pattern) {
       setTimeout($.proxy(this._initPatternChart, this), 300);

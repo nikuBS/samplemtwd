@@ -133,6 +133,9 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   _initialize: function () {
+    setTimeout(function() {
+      window.scrollTo(0, 0);
+    }, 500);
   },
 
   _onChangeNickName: function () {
