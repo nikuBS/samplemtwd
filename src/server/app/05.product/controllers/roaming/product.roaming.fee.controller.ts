@@ -31,7 +31,7 @@ export default class ProductRoaming extends TwViewController {
             this.getRoamingPlanData(params)
         ).subscribe(([roamingData, roamingPlanData]) => {
 
-            res.render('roaming/product.roaming.fee.html', { svcInfo, roamingData, roamingPlanData, isLogin: this.isLogin(svcInfo), pageInfo });
+            res.render('roaming/product.roaming.fee.html', { svcInfo, roamingData, roamingPlanData, params, isLogin: this.isLogin(svcInfo), pageInfo });
 
         });
     }

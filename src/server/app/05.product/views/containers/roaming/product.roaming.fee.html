@@ -150,7 +150,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFee($('.wrap'), { code: 'F01500' });
+    new Tw.ProductRoamingFee($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01500' });
   });
 </script>
 <% include ../../components/roaming/product.roaming.fee.component.html %>
