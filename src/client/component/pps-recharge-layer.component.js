@@ -137,7 +137,7 @@ Tw.PPSRechargeLayer.prototype = {
     var $target = $(event.target);
     var url = this.defaultUrl + '/data-auto'; // default - data
     if ( name === 'auto-voice' ) {
-      url = this.defaultUrl + '/voice/auto';
+      url = this.defaultUrl + '/voice-auto';
     }
     $target.attr('data-url', url);
     this._popupService.close();
@@ -147,7 +147,7 @@ Tw.PPSRechargeLayer.prototype = {
     var $target = $(event.target);
     var url = this.defaultUrl + '/data-auto'; // default - data
     if ( name === 'auto-change-voice' ) {
-      url = this.defaultUrl + '/voice/auto';
+      url = this.defaultUrl + '/voice-auto';
     }
     $target.attr('data-url', url);
     this._popupService.close();

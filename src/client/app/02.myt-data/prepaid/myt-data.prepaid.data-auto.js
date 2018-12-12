@@ -44,7 +44,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.replaceURL('/myt-data/recharge/prepaid/data/complete?type=cancel');
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/data-complete?type=cancel');
     } else {
       this._fail(res);
     }
@@ -155,7 +155,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
 
     if (res.code === Tw.API_CODE.CODE_00) {
       var code = this.$dataSelector.attr('id');
-      this._historyService.replaceURL('/myt-data/recharge/prepaid/data/complete?data=' + code + '&type=' + type);
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/data-complete?data=' + code + '&type=' + type);
     } else {
       this._fail(res);
     }

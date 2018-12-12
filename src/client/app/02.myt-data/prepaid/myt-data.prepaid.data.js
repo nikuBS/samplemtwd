@@ -135,7 +135,7 @@ Tw.MyTDataPrepaidData.prototype = {
   _afterRechargeSuccess: function () {
     if (this._isRechargeSuccess) {
       var data = Tw.FormatHelper.customDataFormat(this._afterData.toString().replace(',',''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
-      this._historyService.replaceURL('/myt-data/recharge/prepaid/data/complete?data=' + data.data);
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/data-complete?data=' + data.data);
     }
   },
   _setLayerData: function ($layer) {
