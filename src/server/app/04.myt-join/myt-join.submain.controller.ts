@@ -141,6 +141,9 @@ class MyTJoinSubmainController extends TwViewController {
             data.myAddProduct.addTotCnt = data.myAddProduct.addProdCnt;
             break;
           default:
+            if ( data.myAddProduct.productCntInfo ) {
+              data.myAddProduct = data.myAddProduct.productCntInfo;
+            }
             data.myAddProduct.addTotCnt =
               parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
               parseInt(data.myAddProduct.comProdCnt, 10);
@@ -403,18 +406,7 @@ class MyTJoinSubmainController extends TwViewController {
     return this.apiService.request(API_URL, {}).map((resp) => {
       // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.productCntInfo ) {
-          // 무선
-          return resp.result.productCntInfo;
-        } else if ( resp.result.additionCount ) {
-          // 유선
-          return resp.result;
-        } else if ( resp.result.addProdCnt ) {
-          // T-PocketFi, T-Login, PPS
-          return resp.result;
-        } else {
-          return null;
-        }
+        return resp.result;
       } else {
         // error
         return null;
