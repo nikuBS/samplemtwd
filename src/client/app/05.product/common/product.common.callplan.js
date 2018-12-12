@@ -9,6 +9,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
 
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
@@ -147,14 +148,22 @@ Tw.ProductCommonCallplan.prototype = {
       return;
     }
 
-    var url = $(e.currentTarget).data('url'),
-      preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(this._getSvcInfoRes, this, joinTermCd, $(e.currentTarget).data('url')));
+  },
+
+  _getSvcInfoRes: function(joinTermCd, url, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return this._tidLanding.goLogin();
+    }
+
+    var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
     if (Tw.FormatHelper.isEmpty(preCheckApi)) {
       return this._procAdvanceCheck(url, { code: '00' });
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
       .done($.proxy(this._procAdvanceCheck, this, url));
   },
@@ -208,7 +217,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _procAdvanceCheck: function(url, resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();
