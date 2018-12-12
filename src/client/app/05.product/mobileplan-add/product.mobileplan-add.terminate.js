@@ -27,6 +27,10 @@ Tw.ProductMobileplanAddTerminate.prototype = {
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
   },
 
+  _getJoinConfirmContext: function() {
+    $.get(Tw.Environment.cdn + '/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
+  },
+
   _setConfirmBodyIntoContainer: function(context) {
     var tmpl = Handlebars.compile(context),
       html = tmpl(this._confirmOptions);
