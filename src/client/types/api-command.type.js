@@ -47,7 +47,7 @@ Tw.API_CMD = {
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
   BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: Tw.API_METHOD.POST },
   BFF_01_0051: { path: '/core-auth/v1/refund/skt-auth-sms/send', method: Tw.API_METHOD.POST },
-  BFF_01_0052: { path: '/core-auth/v1/refund/skt-auth-sms/confirm', method: Tw.API_METHOD.POST },
+  BFF_01_0052: { path: '/v1/refund/skt-auth-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_01_0053: { path: '/v1/captcha/image', method: Tw.API_METHOD.GET },
   BFF_01_0054: { path: '/v1/captcha/audio', method: Tw.API_METHOD.GET },
   BFF_01_0055: { path: '/v1/captcha/answer/:args0', method: Tw.API_METHOD.PUT },
