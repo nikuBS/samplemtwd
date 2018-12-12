@@ -31,7 +31,7 @@ class MyTFareBillHotbill extends TwViewController {
       this._preBillAvailable = false;
     }
     // debuging
-    this._preBillAvailable = true;
+    // this._preBillAvailable = true;
 
     // 2일부터 조회 가능
     if ( new Date().getDate() === 1 ) {

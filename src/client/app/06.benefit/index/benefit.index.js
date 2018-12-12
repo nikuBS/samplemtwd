@@ -3,13 +3,13 @@
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.26
  */
-Tw.BenefitIndex = function (rootEl, isLogin) {
+Tw.BenefitIndex = function (rootEl, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._moreViewSvc = new Tw.MoreViewComponent();
   this._history = new Tw.HistoryService();
-  this._isLogin = isLogin;
+  this._isLogin = !Tw.FormatHelper.isEmpty(svcInfo);
   this._init();
 };
 

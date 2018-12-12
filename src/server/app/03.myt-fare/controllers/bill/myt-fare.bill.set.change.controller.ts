@@ -12,7 +12,7 @@ import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
 
 class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     this.svcInfo = svcInfo;
     Observable.combineLatest(

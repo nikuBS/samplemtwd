@@ -80,20 +80,7 @@ class MyTJoinMyplan extends TwViewController {
       basFeeAmt: wirePlan.basFeeAmt > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
       isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
       svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.MM.DD'),
-      dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits),
-      optionFeePlans: this._convertWireOptionFeePlans(wirePlan.optionFeePlans)
-    });
-  }
-
-  /**
-   * @param optionFeePlans
-   * @private
-   */
-  private _convertWireOptionFeePlans(optionFeePlans): any {
-    return optionFeePlans.map((item) => {
-      return Object.assign(item, {
-        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
-      });
+      dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits)
     });
   }
 
@@ -167,7 +154,10 @@ class MyTJoinMyplan extends TwViewController {
       };
     }
 
-    return null;
+    return {
+      txt: null,
+      unit: null
+    };
   }
 
   /**

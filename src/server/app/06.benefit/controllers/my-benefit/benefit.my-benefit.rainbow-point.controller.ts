@@ -132,7 +132,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
   private getRainbowPointHistoryResult(resp: any): any {
     const rainbowPointHistoryResult = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     rainbowPointHistoryResult.history.map((history) => {
-      history.opDt = DateHelper.getShortDateNoDot(history.opDt);
+      history.opDt = DateHelper.getShortDate(history.opDt);
       history.point = FormatHelper.addComma(history.point);
       history.point = FormatHelper.addComma(history.point);
       history.opClNm = MY_BENEFIT_RAINBOW_POINT.OLCLCD[history.opClCd];

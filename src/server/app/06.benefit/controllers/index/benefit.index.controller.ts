@@ -14,12 +14,11 @@ class BenefitIndex extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     res.render('index/benefit.index.html', {
       svcInfo,
-      pageInfo,
-      isLogin : !FormatHelper.isEmpty(svcInfo)
+      pageInfo
     });
   }
 }

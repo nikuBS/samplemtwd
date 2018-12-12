@@ -159,7 +159,7 @@
                         <div class="widget-box slider1">
                             <div class="slider-box">
                                 <ul class="slider">
-                                    <% debugger; for (var i=0; i < data.banner.length; i++) { %>
+                                    <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
                                         <a href="<%= data.banner[i].imgLinkUrl %>">
                                             <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
@@ -211,7 +211,7 @@
                         </button>
                     </li>
                     <li>
-                        <button data-href="/myt-join/myplanadd">
+                        <button data-href="/myt-join/additions">
                             <i class="icon-my-40"><span class="blind">my</span></i>나의 가입 정보 &gt; 나의 부가서비스
                         </button>
                     </li>
@@ -226,7 +226,7 @@
                         </button>
                     </li>
                     <li>
-                        <button data-href="">
+                        <button data-href="/product/roaming/my-use">
                             <i class="icon-roaming-40"><span class="blind">my</span></i>T로밍 &gt; 나의 로밍
                         </button>
                     </li>

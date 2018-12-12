@@ -228,16 +228,14 @@ class ProductCommonCallplanPreview extends TwViewController {
 
   /**
    * @param prodTypCd
-   * @param apiInfo
-   * @param isSeries
+   * @param list
    * @private
    */
-  private _convertSeriesAndRecommendInfo (prodTypCd, apiInfo, isSeries): any {
-    if (FormatHelper.isEmpty(apiInfo)) {
+  private _convertSeriesAndRecommendInfo (prodTypCd, list): any {
+    if (FormatHelper.isEmpty(list)) {
       return null;
     }
 
-    const list = isSeries ? apiInfo.seriesProdList : apiInfo.recommendProdList;
     return list.map((item) => {
       const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
         item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
@@ -348,8 +346,10 @@ class ProductCommonCallplanPreview extends TwViewController {
             banner: convertedProdInfo.banner
           }, // 상품 정보 by Redis
           relateTags: convertedProdInfo.relateTags, // 연관 태그
-          series: this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.series, true), // 시리즈 상품
-          recommends: this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.recommendProdList, false),  // 함께하면 유용한 상품
+          series: FormatHelper.isEmpty(prodInfo.result.seriesProdList) ? null :
+            this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.seriesProdList), // 시리즈 상품
+          recommends: FormatHelper.isEmpty(prodInfo.result.recommendProdList) ? null :
+            this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.recommendProdList),  // 함께하면 유용한 상품
           recommendApps: FormatHelper.isEmpty(convertedProdInfo.recommendAppList) ? null : { recommendAppList: convertedProdInfo.recommendAppList },
           mobilePlanCompareInfo: null, // 요금제 비교하기
           similarProductInfo: convertedProdInfo.similar,  // 모바일 요금제 유사한 상품

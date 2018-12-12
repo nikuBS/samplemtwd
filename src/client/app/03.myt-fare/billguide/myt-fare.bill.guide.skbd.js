@@ -24,7 +24,5 @@ Tw.MyTFareBillGuideSKBD = function (rootEl) {
   );
 };
 
-Tw.MyTFareBillGuideIntegratedNormal.prototype = {
-
-
+Tw.MyTFareBillGuideSKBD.prototype = {
 };

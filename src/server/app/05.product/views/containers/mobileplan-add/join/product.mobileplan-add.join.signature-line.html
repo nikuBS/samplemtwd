@@ -40,7 +40,7 @@
 
                 <div class="ti-caption-gray">
                     <h4 class="tit">스마트워치 회선 설정
-                        <button type="button" class="tip-view" title="스마트워치 회선 설정" id="MV_02_02_02_tip_01" page-id="MV_02_02_02" aria-haspopup="true">TIP</button>
+                        <button type="button" class="tip-view" title="스마트워치 회선 설정" id="MV_02_02_02_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button>
                     </h4>
                     <p class="num"><%= svcInfo.svcNum %></p>
                 </div>
@@ -109,7 +109,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- JSON.stringify(joinTermInfo) %>');
+    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

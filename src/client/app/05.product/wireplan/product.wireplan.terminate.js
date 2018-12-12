@@ -12,14 +12,13 @@ Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) 
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
-  this._confirmOptions = JSON.parse(confirmOptions);
-  this._btnData = JSON.parse(btnData);
+  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._btnData = JSON.parse(unescape(btnData));
 
   this._init();
 };
 
 Tw.ProductWireplanTerminate.prototype = {
-
   _init: function() {
     this._convConfirmOptions();
     this._bindEvent();
@@ -59,27 +58,39 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _callConfirmCommonJs: function() {
-    new Tw.ProductCommonConfirm(false, this.$container, $.extend(this._confirmOptions, {
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
-      isWireplan: true,
-      noticeList: this._confirmOptions.noticeList,
-      isTerm: true,
-      isWidgetInit: true
-    }), $.proxy(this._prodConfirmOk, this));
+    new Tw.ProductCommonConfirm(
+      false,
+      this.$container,
+      $.extend(this._confirmOptions, {
+        confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
+        isWireplan: true,
+        noticeList: this._confirmOptions.noticeList,
+        isTerm: true,
+        isWidgetInit: true
+      }),
+      $.proxy(this._prodConfirmOk, this)
+    );
   },
 
   _prodConfirmOk: function(callbackParams) {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0100, {
-      addInfoExistYn: this._btnData.addInfoExistYn,
-      addInfoRelScrnId: this._btnData.addInfoRelScrnId,
-      addSvcAddYn: this._btnData.addSvcAddYn,
-      serNum: '',
-      cntcPlcInfoRgstYn: this._btnData.cntcPlcInfoRgstYn,
-      svcProdGrpCd: this._btnData.svcProdGrpCd,
-      termRsnCd: callbackParams.termRsnCd
-    }, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+    this._apiService
+      .request(
+        Tw.API_CMD.BFF_10_0100,
+        {
+          addInfoExistYn: this._btnData.addInfoExistYn,
+          addInfoRelScrnId: this._btnData.addInfoRelScrnId,
+          addSvcAddYn: this._btnData.addSvcAddYn,
+          serNum: '',
+          cntcPlcInfoRgstYn: this._btnData.cntcPlcInfoRgstYn,
+          svcProdGrpCd: this._btnData.svcProdGrpCd,
+          termRsnCd: callbackParams.termRsnCd
+        },
+        {},
+        this._prodId
+      )
+      .done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
@@ -89,8 +100,7 @@ Tw.ProductWireplanTerminate.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId)
-      .done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {
@@ -103,22 +113,28 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _openSuccessPop: function() {
-    if ( !this._isResultPop ) {
+    if (!this._isResultPop) {
       return;
     }
 
-    this._popupService.open({
-      hbs: 'complete_product',
-      data: {
-        mytPage: 'myplanadd',
-        prodId: this._prodId,
-        prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-        typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
-        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
-      }
-    }, $.proxy(this._openResPopupEvent, this), $.proxy(this._onClosePop, this), 'terminate_success');
+    this._popupService.open(
+      {
+        hbs: 'complete_product',
+        data: {
+          mytPage: 'additions',
+          prodId: this._prodId,
+          prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
+          typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
+          isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
+          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo
+            ? this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON
+            : ''
+        }
+      },
+      $.proxy(this._openResPopupEvent, this),
+      $.proxy(this._onClosePop, this),
+      'terminate_success'
+    );
   },
 
   _openResPopupEvent: function($popupContainer) {
@@ -127,11 +143,13 @@ Tw.ProductWireplanTerminate.prototype = {
 
   _openVasTermPopup: function(respResult) {
     var popupOptions = {
-      hbs:'MV_01_02_02_01',
-      'bt': [{
-        style_class: 'bt-blue1 fe-btn_back',
-        txt: Tw.BUTTON_LABEL.CLOSE
-      }]
+      hbs: 'MV_01_02_02_01',
+      bt: [
+        {
+          style_class: 'bt-blue1 fe-btn_back',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }
+      ]
     };
 
     if (respResult.prodTmsgTypCd === 'H') {
@@ -148,8 +166,7 @@ Tw.ProductWireplanTerminate.prototype = {
     }
 
     this._isResultPop = true;
-    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openSuccessPop, this), 'vasterm_pop');
+    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
 
   _bindVasTermPopupEvent: function($popupContainer) {
@@ -168,5 +185,4 @@ Tw.ProductWireplanTerminate.prototype = {
   _onClosePop: function() {
     this._historyService.goBack();
   }
-
 };

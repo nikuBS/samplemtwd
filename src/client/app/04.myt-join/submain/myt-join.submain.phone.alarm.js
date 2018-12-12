@@ -131,12 +131,18 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
         }
 
         // 완료화면 호출
-        Tw.Popup.afterRequestSuccess(
-          '/myt-join/submain/phone/alarm',
-          '/myt-join/submain',
-          null,
-          null,
-          Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
+        // Tw.Popup.afterRequestSuccess(
+        //   '/myt-join/submain/phone/alarm',
+        //   '/myt-join/submain',
+        //   null,
+        //   null,
+        //   Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
+        this._goCompletePage({
+          compPage: '/myt-join/submain/phone/alarm/complete',
+          mainTxt: '',
+          subTxt: Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG,
+          confirmMovPage: '/myt-join/submain'
+        });
 
         // this._popupService.toast(Tw.MYT_JOIN_MGMT_NUMCHG_ALARM.TOAST_SUC_REG);
 
@@ -145,6 +151,21 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
         Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
+  },
+
+  /**
+   * 완료페이지로 가기
+   * @param options
+   * @private
+   */
+  _goCompletePage: function(options){
+    var param = '?' +
+      'confirmMovPage=' + (options.confirmMovPage||'') + '&' +
+      'mainTxt=' + (options.mainTxt||'') + '&' +
+      'subTxt=' + (options.subTxt||'') + '&' +
+      'linkTxt=' + (options.linkTxt||'') + '&' +
+      'linkPage=' + (options.linkPage||'');
+    this._historyService.goLoad(options.compPage + param);
   }
 
 

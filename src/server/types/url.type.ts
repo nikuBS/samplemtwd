@@ -23,7 +23,7 @@ export const URL = {
   '/myt-fare/billguide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
   '/myt-fare/billguide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt-fare/bill/option': { login: true, id: 'MF_05_01', title: '납부방법' },
-  '/myt-fare/bill/auto/register': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
+  '/myt-fare/bill/option/register': { login: true, id: 'MF_05_01_01', title: '자동납부 신청 및 변경' },
   '/myt-fare/bill/small': { login: true, id: 'MF_06', title: '소액결제' },
   '/myt-fare/bill/small/auto': { login: true, id: 'MF_06_04', title: '소액결제 자동선결제 신청' },
   '/myt-fare/bill/small/auto/info': { login: true, id: 'MF_06_05', title: '소액결제 자동선결제 변경 및 해지 정보' },
@@ -43,8 +43,8 @@ export const URL = {
 
   '/myt-join': { login: true, id: 'MS', title: '나의 가입 정보' },
   '/myt-join/myplan': { login: true, id: 'MS_05', title: '나의 요금제' },
-  '/myt-join/myplanadd': { login: true, id: 'MS_06', title: '나의 부가상품' },
-  '/myt-join/myplancombine': { login: true, id: 'MS_07', title: '나의 결합상품' },
+  '/myt-join/additions': { login: true, id: 'MS_06', title: '나의 부가상품' },
+  '/myt-join/combinations': { login: true, id: 'MS_07', title: '나의 결합상품' },
   '/myt-join/myplan/alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알람' },
   '/myt-join/myplan/alarmterminate': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt-join/myplancombine/infodiscount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
@@ -99,8 +99,22 @@ export const URL = {
   '/product/wireplan/phone': { login: false, id: 'WP_01', title: '전화' },
   '/product/wireplan/tv': { login: false, id: 'WP_01', title: 'TV' },
   '/product/apps': { login: false, id: 'TA', title: 'T apps' },
+  '/product/roaming/join/roaming-setup': { login: true, id: 'RM_11_01_02_02', title: '가입' },
+  '/product/roaming/join/roaming-begin-setup': { login: true, id: 'RM_11_01_02_03', title: '가입' },
+  '/product/roaming/join/roaming-auto': { login: true, id: 'RM_11_01_02_05', title: '가입' },
+  '/product/roaming/join/confirm-info': { login: true, id: 'RM_11_01_01_02', title: '가입' },
+  '/product/roaming/join/roaming-alarm': { login: true, id: 'RM_11_01_02_01', title: '가입' },
+  '/product/roaming/join/roaming-combine': { login: true, id: 'RM_11_01_02_07', title: '설정' },
+  '/product/roaming/setting/roaming-setup': { login: true, id: 'RM_11_01_02_02', title: '설정' },
+  '/product/roaming/setting/roaming-begin-setup': { login: true, id: 'RM_11_01_02_03', title: '가입' },
+  '/product/roaming/setting/roaming-auto': { login: true, id: 'RM_11_01_02_05', title: '설정' },
+  '/product/roaming/setting/roaming-alarm': { login: true, id: 'RM_11_01_02_01', title: '설정' },
+  '/product/roaming/setting/roaming-combine': { login: true, id: 'RM_11_01_02_07', title: '설정' },
+  '/product/roaming/lookup': { login: true, id: 'RM_11_01_02_06', title: '설정' },
+  '/product/roaming/terminate': { login: true, id: 'MV_01_02_03', title: '해지' },
 
-  // Customer
+
+    // Customer
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
@@ -122,12 +136,12 @@ export const URL = {
 
   // Benefit
   '/benefit/submain': { login: false, id: 'BS', title: '혜택.할인 Index' },
-  '/benefit/my-benefit': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
+  '/benefit/my': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
   '/benefit/my/rainbowpoint': { login: true, id: 'BS_01_01', title: '레인보우 포인트' },
   '/benefit/my/rainbowpoint/adjustment': { login: true, id: 'BS_01_01_03', title: '포인트 합산' },
   '/benefit/my/rainbowpoint/transfer': { login: true, id: 'BS_01_01_04', title: '포인트 양도' },
-  '/benefit/my-benefit/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
-  '/benefit/my-benefit/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
+  '/benefit/my/cookiz': { login: false, id: 'BS_01_01_06', title: '쿠키즈팅 포인트' },
+  '/benefit/my/military': { login: false, id: 'BS_01_01_05', title: '현역플랜 포인트' },
 
   // Common
   '/common/member/tid-pwd': { login: false, id: 'CO_ME_01_04', title: '아이디 찾기/비밀번호 재설정' },

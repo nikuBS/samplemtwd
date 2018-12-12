@@ -19,7 +19,7 @@ class MyTDataPrepaidData extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     if (BrowserHelper.isApp(req)) {
       Observable.combineLatest(
@@ -32,6 +32,7 @@ class MyTDataPrepaidData extends TwViewController {
             ppsInfo: this.parseData(result),
             emailAddress: this.parseMail(email),
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             isApp: BrowserHelper.isApp(req)
           });
         } else {

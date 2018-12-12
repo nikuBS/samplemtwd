@@ -24,8 +24,7 @@ Tw.TooltipService.prototype = {
     if (this._isExist($pageId)) {
       this._getContents(this._tooltipList);
     } else {
-      // this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { TooltipInfo: $pageId })
-      $.ajax('/mock/tip.json')
+      this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { menuId: $pageId })
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     }
@@ -33,8 +32,7 @@ Tw.TooltipService.prototype = {
   _getPageId: function ($target) {
     var $pageId = $target.attr('page-id');
     if (Tw.FormatHelper.isEmpty($pageId)) {
-      var $id = $target.attr('id');
-      $pageId = $id.toString().split('_tip')[0];
+      $pageId = $target.parents('.wrap').attr('data-menuId');
     }
     return $pageId;
   },
@@ -44,7 +42,7 @@ Tw.TooltipService.prototype = {
     }
 
     for (var key in this._tooltipList) {
-      if (key === $targetId) {
+      if (this._tooltipList[key].menuId === $targetId) {
         return true;
       }
     }

@@ -107,10 +107,12 @@ Tw.MyTDataUsage.prototype = {
    * @private
    */
   _bindEvent: function () {
+    // 당일사용량 조회버튼
+    this.$container.on('click', 'button.fe-btn-daily-used', $.proxy(this._setDailyUsed, this));
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
     this.$container.on('click', '#fe-cont-discount .btn-more button', $.proxy(function () {
-      this._historyService.goLoad('/myt-fare/hotbill');
+      this._historyService.goLoad('/myt-fare/bill/hotbill');
     }, this));
 
     // 데이터 한도 요금제 - 충전 가능 금액 확인 버튼 - 데이터 한도 요금제로 이동
@@ -127,6 +129,65 @@ Tw.MyTDataUsage.prototype = {
       this._historyService.goLoad('/myt-data/hotdata/total-sharing');
     }, this));
 
+  },
+
+  _getDailyUsed: function (usageDataResp, prodId) {
+    var datas = [];
+    if ( _.size(usageDataResp.gnrlData) ) {
+      datas = datas.concat(usageDataResp.gnrlData);
+    }
+    if ( _.size(usageDataResp.spclData) ) {
+      datas = datas.concat(usageDataResp.spclData);
+    }
+    return _.find(datas, {
+      prodId: prodId,
+      skipId: 'PA'
+    });
+  },
+
+  _setDailyUsed: function (event) {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0001)
+      .done($.proxy(function (resp) {
+        Tw.CommonHelper.endLoading('.container');
+        if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
+          this._showErrorAlert(resp.code, resp.msg);
+          return;
+        }
+        var $button = $(event.currentTarget);
+        var $used = $button.closest('li').find('.fe-use');
+        var dailyUsed = this._getDailyUsed(resp.result, $button.data('prodid'));
+        if (Tw.FormatHelper.isEmpty(dailyUsed)) {
+          this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.DAILY_USED_USAGE_ERROR);
+          return;
+        }
+        if (dailyUsed) {
+          $button.hide();
+          dailyUsed.showUsed = this._convFormat(dailyUsed.used, dailyUsed.unit);
+          $used.find('strong').text(dailyUsed.showUsed.data + dailyUsed.showUsed.unit);
+          $used.show();
+        }
+      }, this))
+      .fail(function() {
+        Tw.CommonHelper.endLoading('.container');
+      });
+  },
+
+  _convFormat: function (data, unit) {
+    switch ( unit ) {
+      case Tw.UNIT_E.DATA:
+        return Tw.FormatHelper.convDataFormat(data, Tw.UNIT[unit]);
+      case Tw.UNIT_E.VOICE:
+      case Tw.UNIT_E.VOICE_2:
+        return Tw.FormatHelper.convVoiceFormat(data);
+      case Tw.UNIT_E.SMS:
+      case Tw.UNIT_E.SMS_2:
+        return Tw.FormatHelper.addComma(data);
+      case Tw.UNIT_E.FEE:
+        return Tw.FormatHelper.addComma(data);
+      default:
+    }
+    return '';
   },
 
   /**
