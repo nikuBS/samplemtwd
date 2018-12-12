@@ -26,6 +26,7 @@ Tw.CustomerVoice.prototype = {
 
   _bindEvent: function () {
     this.$btn_register.on('click', $.proxy(this._checkHistories, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _checkHistories: function () {
@@ -58,5 +59,15 @@ Tw.CustomerVoice.prototype = {
     //     'type1'
     //   );
     // }
+  },
+
+  _stepBack: function () {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._history.goBack();
+      }, this));
   }
 };
