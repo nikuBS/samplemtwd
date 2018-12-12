@@ -16,6 +16,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._smartCardOrder = JSON.parse(smartCard);
 
   this.$elBarcode = null;
+  this.$tabStore = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
@@ -24,12 +25,17 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._openEmrNotice(emrNotice);
   this._setBanner(menuId);
+  this._cachedDefaultElement();
 
-  if(isLogin === 'true') {
+  if ( isLogin === 'true' ) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
     this._initScroll();
+  } else {
+    setTimeout($.proxy(function () {
+      this.$tabStore.trigger('click');
+    }, this), 0);
   }
 };
 
@@ -41,6 +47,9 @@ Tw.MainHome.prototype = {
     GFT0004: 'GFT0004',   // 제공자 당월 선물가능 용량 미달
     GFT0005: 'GFT0005',   // 제공자가 미성년자이면 선물하기 불가
     GFT0013: 'GFT0013'    // 기
+  },
+  _cachedDefaultElement: function () {
+    this.$tabStore = this.$container.find('.icon-home-tab-store');
   },
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
