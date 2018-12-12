@@ -15,11 +15,12 @@ import {
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
-import {PRODUCT_CALLPLAN, PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
+import { PRODUCT_CALLPLAN, PRODUCT_CALLPLAN_BENEFIT_REDIRECT,
+  PRODUCT_CALLPLAN_ADDITIONS_REDIRECT, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
+import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
 import EnvHelper from '../../../../utils/env.helper';
 
 class ProductCommonCallplan extends TwViewController {
@@ -28,6 +29,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   private readonly _benefitRedirectProdList = ['TW20000014', 'TW20000018', 'TW20000019'];
+  private readonly _additionsRedirectProdList = ['NA00003557', 'NA00003558', 'NA00004048', 'NA00004049',
+    'NA00004046', 'NA00003556', 'NA00004047', 'NA00003958'];
 
   /**
    * 요금제 비교하기 Redis 정보 호출
@@ -431,6 +434,10 @@ class ProductCommonCallplan extends TwViewController {
       return res.render('common/callplan/product.common.callplan.redirect.html', {
         redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId]
       });
+    }
+
+    if (this._additionsRedirectProdList.indexOf(prodId) !== -1) {
+      return res.redirect('/product/callplan/' + PRODUCT_CALLPLAN_ADDITIONS_REDIRECT[prodId]);
     }
 
     this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
