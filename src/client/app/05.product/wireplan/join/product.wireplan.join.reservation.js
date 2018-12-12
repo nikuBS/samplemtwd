@@ -594,7 +594,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return {
         fileSize: item.size,
         fileName: item.name,
-        filePath: item.path
+        filePath: '/' + item.path
       };
     });
 
