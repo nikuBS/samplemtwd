@@ -126,8 +126,26 @@ Tw.PopupService.prototype = {
         style_class: 'pos-left tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        style_class: 'bt-blue1 pos-right tw-popup-confirm',
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openConfirmButton: function (contents, title, confirmCallback, closeCallback, cancelButton, confirmButton) {
+    var option = {
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: cancelButton || Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: confirmButton || Tw.BUTTON_LABEL.CONFIRM
       }]
     };
     this._setConfirmCallback(confirmCallback);

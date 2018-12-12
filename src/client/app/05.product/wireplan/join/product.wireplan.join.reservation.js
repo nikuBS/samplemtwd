@@ -74,27 +74,28 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    this.$reservName = data.name;
-    this.$reservNumber = data.number;
+    this.$reservName.val(data.name);
+    this.$reservNumber.val(data.number).trigger('change');
     this._typeCd = data.typeCd;
-    this._prodId = data.prodId;
+    this._prodId = Tw.FormatHelper.isEmpty(data.prodId) ? null : data.prodId;
 
     this._typeCdPopupClose();
     this._setCombineResult();
 
-    if (data.isExplain) {
-      this.$combineExplain.addClass('checked');
-      this.$combineExplain.find('input[type=checkbox]').prop('checked', true).attr('checked', 'checked')
-        .removeAttr('disabled').prop('disabled', false);
+    this.$agreeWrap.find('input[type=checkbox]').trigger('click');
+    this.$combineSelected.trigger('click');
+
+    if (Tw.FormatHelper.isEmpty(this._prodId) && this._prodId !== 'NH00000103') {
       this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
-    } else {
-      this.$combineExplain.removeClass('checked');
-      this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
-        .attr('disabled', 'disabled').prop('disabled', true);
-      this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
+      this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
     }
 
-    Tw.CommonHelper.setLocalStorage('productJoinReservation', '');
+    if (data.isExplain) {
+      this.$combineExplain.find('input[type=checkbox]').trigger('click');
+    }
+
+    this.$btnApply.trigger('click');
+    Tw.CommonHelper.removeLocalStorage('productJoinReservation');
   },
 
   _cachedElement: function() {
@@ -307,6 +308,10 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _getCombineProdNm: function() {
+    if (Tw.FormatHelper.isEmpty(this._prodId)) {
+      return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NONE.TITLE;
+    }
+
     if (!Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId])) {
       return Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId].TITLE;
     }
@@ -315,6 +320,10 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _toggleCombineExplain: function() {
+    if (Tw.FormatHelper.isEmpty(this._prodId)) {
+      return;
+    }
+
     if (this._prodId === 'NH00000103') {
       this.$combineExplain.removeClass('checked');
       this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
@@ -416,8 +425,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
-      return this._popupService.openTwoBtTypeB(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, null,
-        null, null, null, $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this));
+      return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
+        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
     }
 
     // 결합상품(개인형) 기 가입 상품 유무 체크
@@ -557,6 +566,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._isCombineInfo = false;
 
+    Tw.CommonHelper.removeLocalStorage('productJoinReservation');
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
       this._isCombineInfo = true;
 
@@ -659,7 +669,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       typeCd: this._typeCd,
       prodId: this._prodId,
       isExplain: this.$combineExplain.find('input[type=checkbox]').is(':checked'),
-      expireTime: new Date().getTime() + (3600 * 10)
+      expireTime: new Date().getTime() + (60000 * 10)
     }));
   },
 
