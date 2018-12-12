@@ -91,8 +91,8 @@
                     <% for (var i in feePlan.optionAndDiscountProgramList) { %>
                     <li>
                         <div class="txt-area">
-                            <span class="tit">선택약정할인제도</span>
-                            <span class="join-date">가입일 2018.8.15.</span>
+                            <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
+                            <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
                             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
                             <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>" class="bt-link-tx underline">
                                 <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>
