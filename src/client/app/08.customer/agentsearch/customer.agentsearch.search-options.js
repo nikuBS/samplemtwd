@@ -38,6 +38,7 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     this.$container.on('change', 'input[type="radio"]', $.proxy(this._onStoreTypeChanged, this));
     this.$container.on('change', 'input[type=checkbox]', $.proxy(this._onCategoryChanged, this));
     this.$container.on('click', '.bt-red1 button', $.proxy(this._onApply, this));
+    this.$container.on('click', '#fe-bt-close', $.proxy(this._onClose, this));
   },
   _onStoreTypeChanged: function (e) {
     this._newOptions.storeType = e.currentTarget.value;
@@ -55,5 +56,15 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     } else {
       this._applyCallback(this._newOptions);
     }
+  },
+  _onClose: function () {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._popupService.close();
+      }, this)
+    );
   }
 };
