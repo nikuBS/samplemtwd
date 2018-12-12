@@ -26,9 +26,11 @@ class CustomerDocument extends TwViewController {
       this.getEtcService()
     ).subscribe(([mobile, etc]) => {
       if (mobile.code === API_CODE.CODE_00) {
+        const isEtc = req.query.type === 'etc';
         res.render('document/customer.document.html', {
           mobileCategoryList: this.parseData(mobile.result.ctgList),
           etcCategoryList: this.parseData(etc.result.ctgList),
+          isEtc: isEtc,
           svcInfo: svcInfo,
           pageInfo: pageInfo
         });
