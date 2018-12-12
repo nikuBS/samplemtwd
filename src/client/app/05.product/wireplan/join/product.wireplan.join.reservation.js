@@ -416,8 +416,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
-      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
-        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this));
+      return this._popupService.openTwoBtTypeB(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, null,
+        null, null, null, $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this));
     }
 
     // 결합상품(개인형) 기 가입 상품 유무 체크
