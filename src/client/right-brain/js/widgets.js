@@ -39,6 +39,11 @@ skt_landing.widgets = {
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var tube_box = $(this).find('.tube-list'),
           tube_list = tube_box.find('> li');
       var listClass = ['one','two','three','four','five'],
@@ -99,6 +104,11 @@ skt_landing.widgets = {
   },
   widget_deltype: function(){
     $('.input').each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var bt = $(this).find('.cancel'),
           field = bt.prev();
       if(field.val() == '' || field.attr('readonly')){
@@ -121,6 +131,11 @@ skt_landing.widgets = {
   },
   widget_step: function () {
     $('.step-list li').each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       if(!$(this).hasClass('on')){
         $(this).attr('aria-hidden', true);
       }
@@ -129,6 +144,11 @@ skt_landing.widgets = {
   widget_radio: function (ta) {
     var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
     input.each(function () {
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var box = $(this).closest('.radiobox');
       if($(this).closest('.radio-slide').length > 0){
         var radioSlide = $(this).closest('.radio-slide'),
@@ -171,6 +191,11 @@ skt_landing.widgets = {
   widget_check: function (ta) {
     var input = ta ? $(ta).find('.checkbox :checkbox') : $('.checkbox :checkbox');
     input.each(function () {
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var box = $(this).closest('.checkbox');
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
@@ -196,6 +221,11 @@ skt_landing.widgets = {
   widget_file: function(ta){
     var input = ta ? $(ta).find('.widget-box.file') : $('.widget-box.file');
     input.each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var file = $(this).find('.file'),
           vfile = $(this).find('.fileview');
       if(vfile){
@@ -207,33 +237,43 @@ skt_landing.widgets = {
   },
   widget_tfCombined: function (ta) {
     var box = ta ? $(ta).find('.txfield-combined') : $('.txfield-combined');
-      $(window).on('load', function(){
-        box.each(function(){
-          var _this = $(this);
-          var count = 0;
-          _this.find('.input-focus').on('focus',function(e){
-            count ++;
-            _this.addClass('focus');
-            if(count > 0){
-              _this.find('.inner-tx').addClass('once');
-            }
-          }).on('blur',function(){
-            _this.removeClass('focus');
-          });
-        });
-
-        box.find('.combined-cell').each(function(num){
-          var _this = $(this);
-          var _this_w = _this.width();
-          var _dt_w = _this.find('dt').width();
-          $('.combined-cell').eq(num).find('dt').width(_dt_w);
-          $('.combined-cell').eq(num).find('dd').width(_this_w-_dt_w);
+   
+      box.each(function(){
+        if($(this).data('event') == undefined){
+          $(this).data('event', 'bind')
+        }else{
+          return;
+        }
+        var _this = $(this);
+        var count = 0;
+        _this.find('.input-focus').on('focus',function(e){
+          count ++;
+          _this.addClass('focus');
+          if(count > 0){
+            _this.find('.inner-tx').addClass('once');
+          }
+        }).on('blur',function(){
+          _this.removeClass('focus');
         });
       });
+/* 정체 불명 
+      box.find('.combined-cell').each(function(num){
+        var _this = $(this);
+        var _this_w = _this.width();
+        var _dt_w = _this.find('dt').width();
+        $('.combined-cell').eq(num).find('dt').width(_dt_w);
+        $('.combined-cell').eq(num).find('dd').width(_this_w-_dt_w);
+      });
+*/
   },
   widget_slider1: function (ta) {
     var widget = ta ? $(ta).find('.slider1') : $('.slider1');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this).find('.slider');
       _this.slick({
         dots: true,
@@ -278,6 +318,11 @@ skt_landing.widgets = {
   widget_slider2: function (ta) {
     var widget = ta ? $(ta).find('.slider2') : $('.slider2');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this).find('.slider');
       _this.slick({
         dots: false,
@@ -311,6 +356,11 @@ skt_landing.widgets = {
   widget_accordion: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.accordion') : $('.widget-box.accordion');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this);
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
@@ -361,6 +411,11 @@ skt_landing.widgets = {
   widget_accordion2: function(ta){
     var widget = ta ? $(ta).find('.widget-box.accordion2') : $('.widget-box.accordion2');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this),
           box = _this.find('> .acco-style > .acco-box'),
           list = box.find('> .acco-list'),
@@ -391,6 +446,11 @@ skt_landing.widgets = {
   widget_switch: function (ta) {
     var widget = ta ? $(ta).find('.switch .btn-switch input') : $('.switch .btn-switch input');
     $(widget).each(function () {
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       checkSwitch(this, !$(this).closest('.btn-switch').hasClass('on'));
       $(this).on('change', function () {
         checkSwitch(this);
@@ -430,6 +490,11 @@ skt_landing.widgets = {
   widget_switch2: function (ta) {
     var widget = ta ? $(ta).find('.switch2 .btn-switch input') : $('.switch2 .btn-switch input');
     $(widget).each(function () {
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var box = $(this).closest('li');
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
@@ -454,7 +519,13 @@ skt_landing.widgets = {
   },
   widget_toggle: function(ta){
     var widget = ta ? $(ta).find('.bt-toggle') : $('.bt-toggle');
-    $(widget).on('click', function(){
+    widget.each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
+      $(this).on('click', function(){
         var _this = $(this);
         var toggler = _this.closest('.toggle').find('.toggler');
         if (toggler.is(':hidden')) {
@@ -466,11 +537,17 @@ skt_landing.widgets = {
           _this.attr('aria-pressed', 'false');
           _this.removeClass('open');
         }
-    });
+      })
+    })
   },
   component_tabs: function (ta) {
     var tabArr = ta ? $(ta).find('.tabs .tab-area') : $('.tabs .tab-area');
     tabArr.each(function () {
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this),
           tabList = _this.find('.tab-linker'),
           tabCont = _this.find('.tab-contents');
@@ -510,9 +587,13 @@ skt_landing.widgets = {
   widget_toggle01: function(ta) {
     var widget = ta ? $(ta).find('.toggle01') : $('.toggle01');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this);
       var _item = _this.find('> .representcharge-list > li');
-          
       widget.on('click','> .representcharge-list > li > .representcharge-info',function(){
         if ( $(this).attr('aria-pressed') === 'true' ) {
           $(this).closest('li').removeClass('current');
@@ -527,6 +608,11 @@ skt_landing.widgets = {
   widget_toggle02: function(ta) {
     var widget = ta ? $(ta).find('.toggle02') : $('.toggle02');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var _this = $(this);
       var _list = _this.find('> .suggest-tag-list');
       var _btn  = _this.find('.suggest-tag-morewrap button, .suggest-tag-morewrap a');
@@ -551,6 +637,11 @@ skt_landing.widgets = {
   widget_horizontal: function(ta){
     var widget = $(ta).find('.horizontal');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var belt = $(this).find('.horizontal-list'),
           slide = $(this).find('.horizontal-slide'),
           items = belt.find('> li'),
@@ -571,6 +662,11 @@ skt_landing.widgets = {
   widget_donutchart: function(ta){
     var widget = ta ? $(ta).find('.widget-box.donutchart') : $('.widget-box.donutchart');
     $(widget).each(function(){
+      if($(this).data('event') == undefined){
+        $(this).data('event', 'bind')
+      }else{
+        return;
+      }
       var time = 1500,
       now = 0,
       interval = 10,
