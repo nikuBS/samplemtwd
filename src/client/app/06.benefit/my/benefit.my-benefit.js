@@ -31,31 +31,33 @@ Tw.BenefitMyBenefit.prototype = {
 
   _onClickPay: function () {
     this._popupService.open({
-      hbs: 'actionsheet_link_a_type',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.BENEFIT.PAYMENT.TITLE,
+      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
       data: [{
-
+        'title': Tw.BENEFIT.PAYMENT.TITLE,
         'list': [
           {
-            attr: 'data-role="fe-link"; data-url="/myt-fare/bill/cashbag"',
-            value: Tw.BENEFIT.PAYMENT.TYPE.OK + ' (' + this._points.ocb + Tw.BENEFIT.PAYMENT.UNIT + ')'
+            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/cashbag"',
+            txt: Tw.BENEFIT.PAYMENT.TYPE.OK + ' (' + this._points.ocb + Tw.BENEFIT.PAYMENT.UNIT + ')'
           },
           {
-            attr: 'data-role="fe-link"; data-url="/myt-fare/bill/tpoint"',
-            value: Tw.BENEFIT.PAYMENT.TYPE.T + ' (' + this._points.t + Tw.BENEFIT.PAYMENT.UNIT + ')'
+            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/tpoint"',
+            txt: Tw.BENEFIT.PAYMENT.TYPE.T + ' (' + this._points.t + Tw.BENEFIT.PAYMENT.UNIT + ')'
           },
           {
-            attr: 'data-role="fe-link"; data-url="/myt-fare/bill/rainbow"',
-            value: Tw.BENEFIT.PAYMENT.TYPE.RAINBOW + '  (' + this._points.rainbow + Tw.BENEFIT.PAYMENT.UNIT + ')'
+            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/rainbow"',
+            txt: Tw.BENEFIT.PAYMENT.TYPE.RAINBOW + '  (' + this._points.rainbow + Tw.BENEFIT.PAYMENT.UNIT + ')'
           }
         ]
       }]
-    }, $.proxy(this._bindBtnListEvent, this));
+    }, $.proxy(this._bindPopupEvent, this));
   },
 
-  _bindBtnListEvent: function ($layer) {
+  _bindPopupEvent: function ($layer) {
     $layer.find('[data-role="fe-link"]').on('click', $.proxy(this._onClickPayByPointLinK, this));
+    $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
 
   _onClickPayByPointLinK: function (e) {
