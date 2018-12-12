@@ -51,8 +51,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _desciptionInit: function () {
       if(this._svcInfo !== null){
           this._svcInfo.totalSvcCnt = Number(this._svcInfo.totalSvcCnt);
+          this._svcAttrCd = this._svcInfo.svcAttrCd.charAt(0);
           if(this._svcInfo.totalSvcCnt > 1 ){
-              if(this._svcInfo.svcGr !== 'A'){
+              if(this._svcAttrCd !== 'M'){
                   this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
               } else {
@@ -65,8 +66,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
                   }
               }
           }else if(this._svcInfo.totalSvcCnt === 1){
-              this._svcInfo.svcGr = 'A';
-              if(this._svcInfo.svcGr !== 'A'){
+              if(this._svcAttrCd !== 'M'){
                   this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
               } else {

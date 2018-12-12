@@ -54,7 +54,7 @@ Tw.ProductRoamingGuide.prototype = {
     this._history.goLoad('/product/roaming/info/data-roaming');
   },
   _goLoadFaq : function () {
-    this._history.goLoad('/customer/faq');
+    this._history.goLoad('/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D');
   },
   _goLoadRoamingGuide: function () {
       window.location.href = 'http://www.wiseuser.go.kr/jsp/commList.do?bcode=520&hcode=500&vcode=2019';
