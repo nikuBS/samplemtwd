@@ -34,6 +34,7 @@
                             <% banners.result.map( banner => { %>
                             <li>
                                 <div class="operation-guide-banner">
+                                    <button class="more-view">더보기</button>
                                     <strong class="banner-tit">
                                         <%-banner.menuImgDesc%>
                                     </strong>
@@ -232,7 +233,7 @@
             <% if ( noticeList ) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
-                <p class="list-comp-title">공지사항 <a href="/customer/svc-info/notice" class="bt">전체보기</a></p>
+                <p class="list-comp-title">공지사항 <a href="/customer/svc-info/notice" class="ico"></a></p>
             </div>
             <!--// .cont-box -->
 
