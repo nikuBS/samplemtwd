@@ -195,7 +195,13 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({ command: targetApi, params: { selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum, detailYn:'Y' }});
+      commands.push({
+        command: targetApi,
+        params: {
+          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          detailYn:'Y',
+          invDt: this.resData.reqQuery.date
+        }});
     }
 
     Tw.Logger.info('------- 자녀 사용량 조회 -----------------');

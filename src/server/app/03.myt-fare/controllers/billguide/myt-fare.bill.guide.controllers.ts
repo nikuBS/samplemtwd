@@ -218,7 +218,6 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
-      thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr;
 
       thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
@@ -528,8 +527,9 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public conditionChangeDtListFun() {
+
     const thisMain = this;
-    const dtList = thisMain._billpayInfo.invDtArr || [];
+    const dtList = thisMain._billpayInfo.invDtArr ? thisMain._billpayInfo.invDtArr.slice() : [];
     for ( let i = 0; i < dtList.length; i++ ) {
       dtList[i] = DateHelper.getShortDateWithFormatAddByUnit(dtList[i], 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
     }
