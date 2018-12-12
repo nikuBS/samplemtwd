@@ -112,6 +112,14 @@ export const URL = {
   '/product/roaming/setting/roaming-combine': { login: true, id: 'RM_11_01_02_07', title: '설정' },
   '/product/roaming/lookup': { login: true, id: 'RM_11_01_02_06', title: '설정' },
   '/product/roaming/terminate': { login: true, id: 'MV_01_02_03', title: '해지' },
+  '/product/roaming/coupon': { login: false, id: 'RM_13', title: '로밍 카드/쿠폰' },
+  '/product/roaming/fi/guide': { login: false, id: 'RM_14_01', title: 'T파이 이용안내' },
+  '/product/roaming/fi/reservation1step': { login: true, id: 'RM_14_02_01', title: 'T파이 예약 1단계' },
+  '/product/roaming/fi/reservation2step': { login: true, id: 'RM_14_02_02', title: 'T파이 예약 2단계' },
+  '/product/roaming/fi/reservation3step': { login: true, id: 'RM_14_02_03', title: 'T파이 예약 3단계' },
+  '/product/roaming/fi/inquire': { login: true, id: 'RM_14_03_01', title: 'T파이 조회/취소' },
+  '/product/roaming/fi/inquire-auth': { login: true, id: 'RM_14_03_02_01', title: 'T파이 조회/취소' },
+  '/product/roaming/info/center': { login: false, id: 'RM_15_01_01', title: '공항 로밍센터' },
 
 
     // Customer
