@@ -67,7 +67,7 @@ export const API_CMD = {
   BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0050: { path: '/v1/auth/anonymous/exsms/result', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_01_0051: { path: '/core-auth/v1/refund/skt-auth-sms/send', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_01_0052: { path: '/core-auth/v1/refund/skt-auth-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0052: { path: '/v1/refund/skt-auth-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0053: { path: '/v1/captcha/image', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, responseType: 'arraybuffer' },
   BFF_01_0054: { path: '/v1/captcha/audio', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true , responseType: 'arraybuffer' },
   BFF_01_0055: { path: '/v1/captcha/answer/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
