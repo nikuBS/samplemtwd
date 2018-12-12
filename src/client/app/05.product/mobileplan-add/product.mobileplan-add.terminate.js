@@ -12,7 +12,7 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
 
   this._init();
 };
@@ -25,6 +25,10 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
   _bindEvent: function() {
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+  },
+
+  _getJoinConfirmContext: function() {
+    $.get(Tw.Environment.cdn + '/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
   },
 
   _setConfirmBodyIntoContainer: function(context) {
@@ -107,9 +111,8 @@ Tw.ProductMobileplanAddTerminate.prototype = {
           prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
           typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
           isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo
-            ? this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON
-            : ''
+          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
+            this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
         }
       },
       $.proxy(this._openResPopupEvent, this),

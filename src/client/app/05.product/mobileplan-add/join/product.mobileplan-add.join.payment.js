@@ -12,7 +12,7 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
 
   this._sendCount = 0;
   this._isSend = false;
