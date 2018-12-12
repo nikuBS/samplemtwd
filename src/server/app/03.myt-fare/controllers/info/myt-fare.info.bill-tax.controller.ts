@@ -93,7 +93,8 @@ class MyTFareInfoBillTax extends TwViewController {
 
       resp.result.taxReprintList.map((o) => {
         o.ctzBizName = svcInfo.eqpMdlNm;
-        o.taxBillYearMonth = DateHelper.getYearMonth(o.taxBillIsueDt); // 발행시 구분자(selSearch)
+        // 발행시 구분자(selSearch) YYYYMM API 호출시 YYYYM 형태는 인지 못함 2018.12
+        o.taxBillYearMonth = DateHelper.getCurrentShortDate(o.taxBillIsueDt).substring(0, 6); 
         o.taxBillIsueDt = DateHelper.getShortDate(o.taxBillIsueDt);
         o.splyPrc = FormatHelper.addComma(o.splyPrc.toString());
         o.vatAmt = FormatHelper.addComma(o.vatAmt.toString());

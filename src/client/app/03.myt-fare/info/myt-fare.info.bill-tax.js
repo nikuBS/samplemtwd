@@ -137,7 +137,7 @@ Tw.MyTFareInfoBillTax.prototype = {
   _sendRerequestByFax: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0019, {
         fax:this.$faxNumberInput.val(),
-        selSearch:this.targetData.taxBillYearMonth,
+        selSearch: this.targetData.taxBillYearMonth,
         selType:'M'
       })
         .done($.proxy(this._resSendCallback, this)).fail();
@@ -174,7 +174,11 @@ Tw.MyTFareInfoBillTax.prototype = {
     if (res.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(res.code, res.msg).pop();
     }
-    this._popupService.openAlert(this.isFax ? this.$faxNumberInput+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28 : this.$emailInput.val()+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
+    this._popupService.openAlert(this.isFax ? 
+      // is Fax
+      Tw.FormatHelper.getDashedPhoneNumber(this.$faxNumberInput.val())+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28 : 
+      // is Email
+      this.$emailInput.val()+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
         Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
           this._popupService.close();
         }, this));
