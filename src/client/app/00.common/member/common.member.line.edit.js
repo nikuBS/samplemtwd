@@ -13,6 +13,7 @@ Tw.CommonMemberLineEdit = function (rootEl, category) {
   this._historyService = new Tw.HistoryService();
 
   this._marketingSvc = '';
+  this._goBizRegister = false;
 
   this._init();
   this._bindEvent();
@@ -34,7 +35,32 @@ Tw.CommonMemberLineEdit.prototype = {
     this._popupService.open({
       hbs: 'CO_01_05_02_04_01',
       layer: true
-    }, null, null, 'guide');
+    }, $.proxy(this._onOpenEditGuide, this), $.proxy(this._onCloseEditGuide, this), 'guide');
+  },
+  _onOpenEditGuide: function($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-biz-register', $.proxy(this._onClickBizRegister, this));
+    $popupContainer.on('click', '#fe-bt-biz-signup', $.proxy(this._onClickBizSignup, this));
+  },
+  _onCloseEditGuide: function () {
+    if(this._goBizRegister) {
+      this._historyService.goLoad('/common/member/line/biz-register');
+    }
+  },
+  _onClickBizRegister: function () {
+    this._goBizRegister = true;
+    this._popupService.close();
+  },
+  _onClickBizSignup: function () {
+    this._popupService.open({
+      hbs: 'CO_01_05_02_02',
+      layer: true
+    }, $.proxy(this._onOpenBizSignup, this));
+  },
+  _onOpenBizSignup: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-go-url', $.proxy(this._goUrl, this));
+  },
+  _goUrl: function () {
+    Tw.CommonHelper.openUrlExternal('http://www.biztworld.co.kr');
   },
   _completeEdit: function () {
     var list = this.$container.find('.fe-item-active');
