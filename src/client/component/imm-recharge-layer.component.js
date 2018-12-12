@@ -77,12 +77,15 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
-        subList.push({
-          'option': 'limit',
-          'button-attr': 'type="button"',
-          'icon': 'ico4',
-          'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.LIMIT
-        });
+        var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);
+        if ( this.immChargeData.limit.blockYn === 'N' || curLimit > 0 ) {
+          subList.push({
+            'option': 'limit',
+            'button-attr': 'type="button"',
+            'icon': 'ico4',
+            'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.LIMIT
+          });
+        }
       }
       if ( !_.isEmpty(this.immChargeData.etc) ) {
         subList.push({
