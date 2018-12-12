@@ -58,6 +58,10 @@ class MyTJoinSubmainController extends TwViewController {
       // 10 -> 신청, 60 -> 초기화 -- 설정가능한상태
       this.isPwdSt = true;
     }
+    // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+    if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+      data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
+    }
 
     Observable.combineLatest(
       this._getMyLine(),

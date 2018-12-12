@@ -83,6 +83,10 @@ class MyTFareSubmainController extends TwViewController {
           }
         }
         this.bannerUrl = REDIS_BANNER_ADMIN + pageInfo.menuId;
+        // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+        if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+          data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
+        }
         if ( data.type === 'UF' ) {
           this._requestUsageFee(req, res, data, svcInfo);
         } else {
