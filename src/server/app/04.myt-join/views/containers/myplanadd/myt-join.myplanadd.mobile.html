@@ -72,7 +72,7 @@
                                 <% if (addition.btnList.length > 0) { %>
                                     <span class="bt-wrap">
                                         <% addition.btnList.map(btn => { %>
-                                            <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                            <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>?prod_id=<%= addition.prodId %>"><%= btn.btnNm %></a>
                                             <!-- <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a> -->
                                         <% }); %>
                                     </span>

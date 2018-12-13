@@ -55,7 +55,9 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
-    this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
+    this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
+
+    this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
   },
@@ -160,8 +162,42 @@ Tw.ProductCommonCallplan.prototype = {
       return;
     }
 
+    var url = $(e.currentTarget).data('url');
+    if (url.indexOf('BPCP:') !== -1) {
+      return this._getBpcp(url);
+    }
+
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done($.proxy(this._getSvcInfoRes, this, joinTermCd, $(e.currentTarget).data('url')));
+      .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url));
+  },
+
+  _detectBpcp: function(e) {
+    var url = $(e.currentTarget).attr('href');
+    if (url.indexOf('BPCP:') === -1) {
+      return true;
+    }
+
+    this._getBpcp(url);
+    e.preventDefault();
+    e.stopPropagation();
+  },
+
+  _getBpcp: function(url) {
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: url.replace('BPCP:', '') })
+      .done($.proxy(this._resBpcp, this));
+  },
+
+  _resBpcp: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   },
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
