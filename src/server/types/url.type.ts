@@ -120,7 +120,8 @@ export const URL = {
   '/product/roaming/fi/inquire': { login: true, id: 'RM_14_03_01', title: 'T파이 조회/취소' },
   '/product/roaming/fi/inquire-auth': { login: true, id: 'RM_14_03_02_01', title: 'T파이 조회/취소' },
   '/product/roaming/info/center': { login: false, id: 'RM_15_01_01', title: '공항 로밍센터' },
-
+  '/product/roaming': { login: false, id: 'RM', title: '로밍' },
+  '/product/roaming/my-use': { login: false, id: 'RM_02_01_01', title: '나의 로밍 이용현황' },
 
     // Customer
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
