@@ -122,6 +122,15 @@ export const URL = {
   '/product/roaming/info/center': { login: false, id: 'RM_15_01_01', title: '공항 로밍센터' },
   '/product/roaming': { login: false, id: 'RM', title: '로밍' },
   '/product/roaming/my-use': { login: false, id: 'RM_02_01_01', title: '나의 로밍 이용현황' },
+  '/product/roaming/do/search-before': { login: false, id: 'RM_03_01_01_01', title: '국가별 로밍 요금 조회' },
+  '/product/roaming/search-result': { login: false, id: 'RM_04', title: '국가별 로밍 요금 조회' },
+  '/product/roaming/info/guide': { login: false, id: 'RM_16_01', title: '로밍안내' },
+  '/product/roaming/info/lte': { login: false, id: 'RM_16_02_01', title: '자동로밍' },
+  '/product/roaming/info/secure-troaming': { login: false, id: 'RM_16_03', title: '자동안심 T로밍이란?' },
+  '/product/roaming/info/data-roaming': { login: false, id: 'RM_16_04', title: 'SMS / DATA 로밍' },
+  '/product/roaming/fee': { login: false, id: 'RM_11', title: '로밍 요금제' },
+  '/product/roaming/planadd': { login: false, id: 'RM_12', title: '로밍 부가서비스' },
+
 
     // Customer
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
