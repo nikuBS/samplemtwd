@@ -291,9 +291,29 @@ Tw.MytJoinCustpassword.prototype = {
    * @private
    */
   _onclickBtnCancel: function(){
+    // 입력한 값이 있는지
+    var hasInput = (
+      $('#pwd-input1').val().length > 0 ||
+      $('#pwd-input2').val().length > 0 ||
+      $('#pwd-input3').val().length > 0
+    );
 
+    // 입력값이 있는 경우 입력값 버릴건지 확인
+    if(hasInput){
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(this._confirmBack, this));
+    } else {
+      this._confirmBack();
+    }
+
+  },
+
+  _confirmBack: function(){
 
     if( this._new ){
+
       // 2_A200
       this._popupService.openConfirm(
         Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A200.MSG,
@@ -316,13 +336,9 @@ Tw.MytJoinCustpassword.prototype = {
         }, this));
     } else {
 
-      this._popupService.openConfirm(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          // main(MS)으로 이동
-          this._historyService.goLoad('/myt-join/submain');
-        }, this));
+      // main(MS)으로 이동
+      this._historyService.goLoad('/myt-join/submain');
+
     }
   }
 
