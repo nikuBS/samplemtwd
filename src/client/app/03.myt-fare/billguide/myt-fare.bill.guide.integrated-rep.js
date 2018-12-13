@@ -251,7 +251,13 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({ command: targetApi, params: { selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum, detailYn:'Y' }});
+      commands.push({
+        command: targetApi,
+        params: {
+          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          detailYn:'Y',
+          invDt: this.resData.reqQuery.date
+        }});
     }
 
     Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
@@ -294,7 +300,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     * 실 데이터
     * */
     return this._apiService.request(Tw.API_CMD.BFF_05_0036, {
-      detailYn: 'Y'
+      detailYn: 'Y',
+      invDt: this.resData.reqQuery.date
     }).done($.proxy(this._getBillsDetailInfoInit, this));
 
     // Tw.Logger.info('클라이언트 목데이터');
