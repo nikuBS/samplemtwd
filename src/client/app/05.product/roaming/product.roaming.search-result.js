@@ -138,6 +138,14 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));
         this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));
         this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
+        this.$container.on('click', '.fe-rm-asiapass', $.proxy(this._goAsiaPassPlan, this));
+        this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));
+    },
+    _goAsiaPassPlan: function () {
+        this._history.goLoad('/product/callplan/NA00005900');
+    },
+    _goEuropePassPlan: function () {
+        this._history.goLoad('/product/callplan/NA00006046');
     },
     _onClickSelectBtn: function () {
         if(this.modelValue !== '') {

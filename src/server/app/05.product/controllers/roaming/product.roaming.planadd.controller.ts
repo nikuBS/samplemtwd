@@ -32,7 +32,7 @@ class ProductRoamingPlanAdd extends TwViewController {
         ).subscribe(([roamingAddCntData, roamingAddData]) => {
             this.logger.info(this, 'roamingAddData : ', roamingAddData);
             res.render('roaming/product.roaming.planadd.html',
-                { svcInfo, roamingAddCntData, roamingAddData, isLogin: this.isLogin(svcInfo), pageInfo });
+                { svcInfo, roamingAddCntData, roamingAddData, params, isLogin: this.isLogin(svcInfo), pageInfo });
 
         });
     }

@@ -4,13 +4,14 @@
  * Date: 2018.11.12
  */
 
-Tw.ProductRoamingPlanAdd = function (rootEl, pageInfo) {
+Tw.ProductRoamingPlanAdd = function (rootEl, params, roamingAddData, pageInfo) {
   this.$container = rootEl;
   this.RMADD_CODE = pageInfo.code;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
+  this._param = params;
+  this._roamingAddData = roamingAddData;
 
   this._findAddElement();
   this._bindRoamingAddBtnEvents();
@@ -36,11 +37,23 @@ Tw.ProductRoamingPlanAdd.prototype = {
       };
 
       this._params.idxCtgCd = this.RMADD_CODE;
+      if(this._param.searchTagId){
+          this._params.searchTagId = this._param.searchTagId;
+          this.selectTag = true;
+      }else {
+          this.selectTag = false;
+      }
       this._params.searchLastProdId = this.$rmAddBtn.data('last-product');
       this._leftCount = this.$rmAddBtn.data('left-count');
 
       this._rmListTmpl = Handlebars.compile($('#fe-rmtmpl-add').html());
       this._rmFilterTmpl = Handlebars.compile($('#fe-rmtmpl-addfilter').html());
+
+      var totalCnt = Number(this._roamingAddData.productCount);
+      if(totalCnt === 0) {
+          var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
+          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      }
 
   },
   _findAddElement: function () {
@@ -119,11 +132,22 @@ Tw.ProductRoamingPlanAdd.prototype = {
     _handleSelectRomaingAddTag: function(target) {
         var selectedTag = target.getAttribute('data-rmtag-id');
 
-        if (this._params.selectedTagId === selectedTag) {
+        this._popupService.close();
+        if(selectedTag) {
+            this.selectTag = true;
+        }
+        if (this._params.searchTagId === selectedTag) {
             this._popupService.close();
             return;
         }
-        this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
+
+        this._params.searchTagId = selectedTag;
+        this._params.searchLastProdId = '';
+        this._params.searchFltIds = '';
+
+        this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
+            .done($.proxy(this._handleLoadNewAddFilters, this));
+        //this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
     },
   _handleRmAddSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
@@ -148,7 +172,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
           delete this._leftCount;
           this.$rmPlanAddlist.empty();
 
-          if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
+          if (resp.result.searchOption && resp.result.searchOption.searchFltIds.length > 0) {
               var filters = resp.result.searchOption.searchFltIds;
               var $filters = this.$container.find('.fe-rmadd-filter');
               var data = {};
@@ -163,6 +187,14 @@ Tw.ProductRoamingPlanAdd.prototype = {
                   data.leftCount = filters.length - 2;
               }
               $filters.html(this._rmFilterTmpl(data));
+          } else if(resp.result.searchOption && resp.result.searchOption.searchTagId){
+              var tagNm = resp.result.searchOption.searchProdTagNm;
+              var $tags = this.$container.find('.fe-rmadd-filter');
+              var tagData = {'filters':[tagNm]};
+              $tags.html(this._rmFilterTmpl(tagData));
+          } else {
+              var allData = {'filters':[]};
+              this.$container.find('.fe-rmadd-filter').html(this._rmFilterTmpl(allData));
           }
 
           this._popupService.close();
@@ -182,16 +214,38 @@ Tw.ProductRoamingPlanAdd.prototype = {
     this._openRmAddFiltersPopup();
   },
   _bindAddFilterBtnEvent: function ($layer, e) {
-      this.$filterBtn = $(e.currentTarget);
-      this.$selectBtn =  $(e.currentTarget).find('input');
+      var $target = $(e.currentTarget);
+      if(this.selectTag){
+          var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
+          this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag, this, $layer, $target));
+      } else {
+          this.$filterBtn = $(e.currentTarget);
+          this.$selectBtn =  $(e.currentTarget).find('input');
 
-      if(this.$filterBtn.hasClass('checked')){
-          this.$filterBtn.removeClass('checked');
+          if(this.$filterBtn.hasClass('checked')){
+              this.$filterBtn.removeClass('checked');
+              this.$selectBtn.removeAttr('checked');
+          }else {
+              this.$filterBtn.addClass('checked');
+              this.$selectBtn.attr('checked','checked');
+          }
+      }
+
+  },
+  _handleResetTag: function ($layer, $target) {
+    this._popupService.close();
+      this._params.searchTagId = '';
+      this.$selectBtn =  $target.find('input');
+
+      if($target.hasClass('checked')){
+          $target.removeClass('checked');
           this.$selectBtn.removeAttr('checked');
       }else {
-          this.$filterBtn.addClass('checked');
+          $target.addClass('checked');
           this.$selectBtn.attr('checked','checked');
       }
+
+      this.selectTag = false;
   },
   _openRmAddOrderPopup: function () {
       var list = Tw.PRODUCT_PLANS_ORDER.slice(),
