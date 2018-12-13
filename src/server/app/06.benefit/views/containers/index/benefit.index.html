@@ -213,7 +213,7 @@
                                 <button id="fe-join-advice-reserve" type="button" class="list">가입상담예약 신청/조회</button>
                             </li>
                             <li>
-                                <button type="button" class="list" data-url="/customer/document">구비서류 안내</button>
+                                <button type="button" class="list" data-url="/customer/document?type=etc">구비서류 안내</button>
                             </li>
                         </ul>
                     </div>
@@ -224,39 +224,33 @@
 
 
             <!-- 다른 페이지를 찾고 계신가요? area-->
-            <div id="fe-another-product" class="none">
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <!-- cont-box -->
-                <div class="benefit-page-shortcut">
-                    <ul>
-                        <li>
-                            <button class="list" type="button" data-url="/product/mobileplan">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut01.png" alt=""/>
-                                <span>요금제</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="list" type="button" data-url="/product/mobileplan-add">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut02.png" alt=""/>
-                                <span>부가서비스</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="list" type="button" data-url="/product/wireplan">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut03.png" alt=""/>
-                                <span>인터넷∙전화∙TV</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="list" type="button" data-url="/roaming">
-                                <img src="<%= CDN %>/img/benefit/icon_benefit_shortcut04.png" alt=""/>
-                                <span>T로밍</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <!-- //cont-box -->
+            <!-- cont-box -->
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                <ul class="pg-link-list">
+                    <li>
+                        <button class="list" type="button" data-url="/product/mobileplan">
+                            <i class="icon-my-40"><span class="blind">my</span></i>요금제
+                        </button>
+                    </li>
+                    <li>
+                        <button class="list" type="button" data-url="/product/mobileplan-add">
+                            <i class="icon-my-40"><span class="blind">my</span></i>부가서비스
+                        </button>
+                    </li>
+                    <li>
+                        <button class="list" type="button" data-url="/product/wireplan">
+                            <i class="icon-my-40"><span class="blind">my</span></i>인터넷∙전화∙TV
+                        </button>
+                    </li>
+                    <li>
+                        <button class="list" type="button" data-url="/product/roaming">
+                            <i class="icon-my-40"><span class="blind">my</span></i>T로밍
+                        </button>
+                    </li>
+                </ul>
             </div>
+            <!-- //cont-box -->
             <!--// 다른 페이지를 찾고 계신가요? area-->
 
         </div>
