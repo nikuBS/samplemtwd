@@ -4,8 +4,9 @@
  * Date: 2018.11.30
  */
 
-Tw.BiometricsDeregister = function () {
+Tw.BiometricsDeregister = function (target) {
   this._popupService = Tw.Popup;
+  this._target = target;
 };
 
 Tw.BiometricsDeregister.prototype = {

@@ -108,7 +108,9 @@ Tw.POPUP_CONTENTS = {
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
   RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
   NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.',
-  DONATION: '해지환급금 기부신청을 하시겠습니까?'
+  DONATION: '해지환급금 기부신청을 하시겠습니까?',
+  BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
+  BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
