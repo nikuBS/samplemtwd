@@ -2,7 +2,7 @@
 <div class="cont-box nogaps-hoz productdetails-bg">
     <div class="productdetails-wrap">
         <h3 class="productdetails-title">
-            <% if ( isMobileplan && prodRedisInfo.summary.prodSmryDesc ) { %>
+            <% if (( isMobileplan || isDiscount ) && prodRedisInfo.summary.prodSmryDesc ) { %>
             <span class="sub"><%= prodRedisInfo.summary.prodSmryDesc %></span>
             <% } %>
             <% if ( prodRedisInfo.summary.prodNm ) { %>
@@ -58,14 +58,14 @@
         ) { %>
         <div class="btn">
             <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
-                <button type="button" class="bt-white1 fe-btn_join" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
+                <button type="button" class="bt-white1 fe-btn_join fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
             <% } %>
         </div>
         <% } %>
         <% if ( basicInfo.prodTermYn === 'Y' && (( isMobileplanAdd || isWireplanAdd || isCombine || isDiscount || isRoaming ) && isJoined) ) { %>
         <div class="btn">
             <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
-            <button type="button" class="bt-white1 fe-btn_join" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
+            <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
             <% } %>
         </div>
         <% } %>

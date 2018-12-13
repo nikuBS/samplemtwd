@@ -454,8 +454,8 @@ export const PREPAID_PAYMENT_TYPE = {
 };
 
 export const PRODUCT_TYP_CD_LIST = {
-  AB: 'product/mobileplan',
-  C: 'product/mobileplan-add',
+  AB: 'product/mobileplan/list',
+  C: 'product/mobileplan-add/list',
   D_I: 'product/wireplan/internet',
   D_P: 'product/wireplan/phone',
   D_T: 'product/wireplan/tv',

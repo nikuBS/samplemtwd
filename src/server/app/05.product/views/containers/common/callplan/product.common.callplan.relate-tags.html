@@ -1,4 +1,5 @@
-<% if ( relateTags && relateTags.length > 0 ) { %>
+<% if ( relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ||
+similarProductInfo && similarProductInfo.prodCnt > 0 && similarProductInfo.list.length > 0 ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box nogaps-btm widget">
@@ -20,9 +21,9 @@
         </a>
     </div>
     <% } %>
+    <% if ( relateTags && relateTags.length > 0 && (!isCombine && !isDiscount)) { %>
     <div class="widget-box toggle02">
         <div class="suggest-tag-list openlist-wrap">
-            <% if ( !isCombine && !isDiscount ) { %>
             <ul>
                 <% for (var i in relateTags) { %>
                     <% if (basicInfo.prodTypListPath) { %>
@@ -32,8 +33,8 @@
                     <% } %>
                 <% } %>
             </ul>
-            <% } %>
         </div>
     </div>
+    <% } %>
 </div>
 <% } %>

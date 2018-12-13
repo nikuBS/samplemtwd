@@ -15,14 +15,11 @@ Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) 
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
   this._btnData = JSON.parse(window.unescape(btnData));
 
-  this._init();
+  this._convConfirmOptions();
+  this._bindEvent();
 };
 
 Tw.ProductWireplanTerminate.prototype = {
-  _init: function() {
-    this._convConfirmOptions();
-    this._bindEvent();
-  },
 
   _bindEvent: function() {
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
