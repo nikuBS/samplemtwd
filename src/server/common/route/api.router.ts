@@ -106,12 +106,14 @@ class ApiRouter {
   }
 
   private getVersion(req: Request, res: Response, next: NextFunction) {
+    const env = String(process.env.NODE_ENV);
     this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((resp) => {
         if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
           resp.result = {
             ver: resp.result.ver,
-            signGateGW: resp.result.signGateGW
+            signGateGW: resp.result.signGateGW,
+            cdn: environment[env].CDN
           };
         }
 

@@ -20,7 +20,8 @@ Tw.REDIS_KEY = {
   BANNER_TOS_META: 'BannerTosInfo:',
   HOME_NOTI: 'WelcomeMsg:WelcomeMsgList',
   HOME_NOTICE: 'HomeNotice:',
-  HOME_HELP: 'HomeCicntsList'
+  HOME_HELP: 'HomeCicntsList',
+  REDIS_MENU_URL: 'MenuSubUrl:'
 };
 
 Tw.BANNER_LINK_TYPE = {
