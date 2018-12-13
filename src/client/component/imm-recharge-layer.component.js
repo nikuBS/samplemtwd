@@ -154,6 +154,12 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     if ( $target.length > 0 ) {
       this._historyService.goLoad($target.attr('data-url'));
     }
+    else {
+      $target = this.$popupContainer.find('[data-external]');
+      if($target.length > 0) {
+        Tw.CommonHelper.openUrlExternal($target.attr('data-external'));
+      }
+    }
   },
 
   // DC_04 팝업내 아이템 선택시 이동
@@ -181,8 +187,9 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this._popupService.close();
   },
 
-  _onPrepayCoupon: function () {
-    // TODO: BPCP페이지 미개발 상태로 개발 완료 후 처리
-    this._popupService.openAlert('TBD');
+  _onPrepayCoupon: function (event) {
+    var $target = $(event.target);
+    $target.attr('data-external', 'http://skt.datacoupon.co.kr');
+    this._popupService.close();
   }
 };
