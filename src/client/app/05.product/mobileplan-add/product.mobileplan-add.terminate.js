@@ -14,14 +14,11 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
   this._prodId = prodId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
 
-  this._init();
+  this._convConfirmOptions();
+  this._bindEvent();
 };
 
 Tw.ProductMobileplanAddTerminate.prototype = {
-  _init: function() {
-    this._convConfirmOptions();
-    this._bindEvent();
-  },
 
   _bindEvent: function() {
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));

@@ -17,10 +17,12 @@ Tw.MyTJoinMyplanAlarmterminate.prototype = {
 
   _cachedElement: function() {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
+    this.$btnBack = this.$container.find('.fe-btn_back');
   },
 
   _bindEvent: function() {
     this.$btnTerminate.on('click', $.proxy(this._alarmTerminate, this));
+    this.$btnBack.on('click', $.proxy(this._resultPopupClose, this));
   },
 
   _alarmTerminate: function() {

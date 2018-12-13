@@ -20,15 +20,11 @@ Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReq
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 
-  this._init();
+  this._convConfirmOptions();
+  this._bindEvent();
 };
 
 Tw.ProductMobileplanJoin.prototype = {
-
-  _init: function() {
-    this._convConfirmOptions();
-    this._reqOverpay();
-  },
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
@@ -68,11 +64,11 @@ Tw.ProductMobileplanJoin.prototype = {
     }
 
     this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
-    this._bindEvent();
+    this._getJoinConfirmContext();
   },
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on('env', $.proxy(this._reqOverpay, this));
   },
 
   _getJoinConfirmContext: function() {

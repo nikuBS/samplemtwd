@@ -8,6 +8,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
+
   this._popupService = new Tw.PopupService();
   this._tidLanding = new Tw.TidLandingComponent();
   this._apiService = Tw.Api;
@@ -29,6 +31,11 @@ Tw.ProductCommonCallplan.prototype = {
     this._contentsDetailList = [];
     this._setContentsDetailList();
     this._setSettingBtnList();
+    this._showReadyOn();
+
+    if (this._historyService.isBack()) {
+      this._historyService.reload();
+    }
   },
 
   _cachedElement: function() {
@@ -36,6 +43,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting = this.$container.find('.fe-btn_setting');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
+    this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
 
     this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
@@ -50,6 +58,10 @@ Tw.ProductCommonCallplan.prototype = {
     this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+  },
+
+  _showReadyOn: function() {
+    this.$btnReadyOn.show();
   },
 
   _confirmExternalUrl: function(e) {
