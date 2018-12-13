@@ -10,7 +10,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
   this._limitFileByteSize = 2097152;
-  this._acceptExt = ['jpg', 'jpeg', 'png', 'tif', 'bmp'];
+  this._acceptExt = ['jpg', 'jpeg', 'png', 'gif'];
 
   this._cachedElement();
   this._bindEvent();
