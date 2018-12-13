@@ -13,12 +13,14 @@ export interface ISvcInfo {
   actRepYn: string;         // 청구대표서비스여부
   smsUsableYn: string;      // SMS 착신가능여부
   motpUsableYn: string;     // MOTP 사용가능 여부
-  totalSvcCnt: string;      // 전체 회선수
-  expsSvcCnt: string;       // 등록된 회선수
   svcStCd: string;          // 현재서비스의 서비스상태코드
   eqpMdlNm: string;         // 펫네임
   svcScrbDt: string;        // 가입일자
   svcLastUpdDtm: string;    // 최종변경일시
+  userId: string;           // TID
+  xtUserId: string;         // xtractor용 암호화 ID
+  totalSvcCnt: string;      // 전체 회선수
+  expsSvcCnt: string;       // 등록된 회선수
   mbrNm: string;            // 고객명
   loginType: string;        // 로그인 형태  E: 간편로그인 T: TID 로그인
   noticeType: string;
@@ -39,15 +41,20 @@ export class SvcInfoModel implements ISvcInfo {
   actRepYn: string = '';
   smsUsableYn: string = '';
   motpUsableYn: string = '';
-  totalSvcCnt: string = '';
-  expsSvcCnt: string = '';
   svcStCd: string = '';
   eqpMdlNm: string = '';
   svcScrbDt: string = '';
   svcLastUpdDtm: string = '';
+  // BFF_01_0002
+  userId: string = '';
+  xtUserId: string = '';
+  totalSvcCnt: string = '';
+  expsSvcCnt: string = '';
+  // Login
   mbrNm: string = '';
-  loginType: string = '';
   noticeType: string = '';
+  //
+  loginType: string = '';
 
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
@@ -64,12 +71,14 @@ export class SvcInfoModel implements ISvcInfo {
     this.actRepYn = object.actRepYn || this.actRepYn;
     this.smsUsableYn = object.smsUsableYn || this.smsUsableYn;
     this.motpUsableYn = object.motpUsableYn || this.motpUsableYn;
-    this.totalSvcCnt = object.totalSvcCnt || this.totalSvcCnt;
-    this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
     this.svcStCd = object.svcStCd || this.svcStCd;
     this.eqpMdlNm = object.eqpMdlNm || this.eqpMdlNm;
     this.svcScrbDt = object.svcScrbDt || this.svcScrbDt;
     this.svcLastUpdDtm = object.svcLastUpdDtm || this.svcLastUpdDtm;
+    this.userId = object.userId || this.userId;
+    this.xtUserId = object.xtUserId || this.xtUserId;
+    this.totalSvcCnt = object.totalSvcCnt || this.totalSvcCnt;
+    this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
     this.mbrNm = object.mbrNm || this.mbrNm;
     this.loginType = object.loginType || this.loginType;
     this.noticeType = object.noticeType || this.noticeType;

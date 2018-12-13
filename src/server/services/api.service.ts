@@ -210,7 +210,7 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
+          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd, loginType: type });
         } else {
           throw resp;
         }
@@ -218,7 +218,6 @@ class ApiService {
       .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          resp.result.loginType = type;
           return this.loginService.setSvcInfo(resp.result);
         } else {
           return this.loginService.setSvcInfo(null);
