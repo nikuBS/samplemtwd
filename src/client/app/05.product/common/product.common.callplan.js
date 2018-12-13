@@ -46,8 +46,8 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
-    this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
-    this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
+    this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
+    this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
   },
@@ -168,9 +168,9 @@ Tw.ProductCommonCallplan.prototype = {
       .done($.proxy(this._procAdvanceCheck, this, url));
   },
 
-  _openContentsDetailPop: function(e) {
+  _openContentsDetailPop: function(key, e) {
     var $item = $(e.currentTarget),
-      contentsIndex = $item.data('contents_idx');
+      contentsIndex = $item.data(key);
 
     if (Tw.FormatHelper.isEmpty(this._contentsDetailList[contentsIndex])) {
       return;
