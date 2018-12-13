@@ -894,19 +894,19 @@
         word-break: keep-all;
         text-align: center;
         color: #666; }
-      .popup .popup-info .popup-contents .link-list {
+      .popup .popup-info .popup-contents .link-list li {
+        margin: 0.625rem 0 0 0;
+        text-align: center;
+        border: 0; }
+        .popup .popup-info .popup-contents .link-list li:first-of-type {
+          margin: 0; }
+        .popup .popup-info .popup-contents .link-list li button {
+          color: #3b98e6;
+          font-size: 0.75rem;
+          border-bottom: 1px solid #3b98e6; }
+      .popup .popup-info .popup-contents .inner-contents + .link-list {
         margin: 1.25rem 0 0 0;
         padding: 0 0 0.625rem 0; }
-        .popup .popup-info .popup-contents .link-list li {
-          margin: 0.625rem 0 0 0;
-          text-align: center;
-          border: 0; }
-          .popup .popup-info .popup-contents .link-list li:first-of-type {
-            margin: 0; }
-          .popup .popup-info .popup-contents .link-list li button {
-            color: #3b98e6;
-            font-size: 0.75rem;
-            border-bottom: 1px solid #3b98e6; }
       .popup .popup-info .popup-contents .notice-list {
         padding: 0.9375rem;
         border-radius: 0.5rem;
@@ -950,6 +950,8 @@
           margin: 0.625rem 0 0 0; }
           .popup .popup-info .popup-contents .tube-list-ti .select-option .select-list .checkbox {
             display: block; }
+    .popup .popup-info .popup-contents + .btn-box {
+      margin-top: 1.875rem; }
     .popup .popup-info .popup-closeBtn {
       position: absolute;
       right: 0.25rem;
@@ -5378,11 +5380,22 @@
     color: #666;
     font-size: 0.75rem;
     position: relative; }
-    .process-list ul li.complete {
+    .process-list ul li.request {
       font-weight: 700;
       color: #3b98e6; }
-      .process-list ul li.complete:before {
+      .process-list ul li.request:before {
         background: url(/img/ico/ico-process.png) no-repeat 0 0;
+        background-size: 3rem auto; }
+    .process-list ul li.ing {
+      font-weight: 700;
+      color: #3b98e6; }
+      .process-list ul li.ing:before {
+        background: url(/img/ico/ico-process1.png) no-repeat 0 0;
+        background-size: 3rem auto; }
+    .process-list ul li.complete {
+      font-weight: 700; }
+      .process-list ul li.complete:before {
+        background: url(/img/ico/ico-process2.png) no-repeat 0 0;
         background-size: 3rem auto; }
     .process-list ul li:last-of-type:after {
       display: none; }
@@ -5393,7 +5406,6 @@
       margin-bottom: 0.625rem;
       width: 3rem;
       height: 3rem;
-      background: url(/img/ico/ico-process.png) no-repeat 0 -3rem;
       background-size: 3rem auto; }
     .process-list ul li:after {
       content: '';
@@ -7172,17 +7184,6 @@
     margin-top: 1rem;
     font-size: 0.75rem;
     color: #666; }
-  .expect-benefit .ico-expect {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 3.875rem;
-    height: 4.6875rem;
-    -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
-    content: '';
-    background: url(/img/ico/ico-exp-benefit.png);
-    background-size: 3.875rem; }
 
 .list-comp-lineinfo li .no-link {
   overflow: hidden;
@@ -7959,7 +7960,7 @@ a.bt-link-tx.underline.small {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 14.5rem;
-  height: 10.625rem;
+  height: 11.625rem;
   padding: 1rem 0 1rem 1.25rem;
   background: #e6f2fe;
   border-radius: 0.1875rem;
@@ -13969,15 +13970,6 @@ a.bt-link-tx.underline.small {
       height: 4rem;
       font-size: 0;
       line-height: 0; }
-    .category-infoarealist .category-type .category-infobox.type-internet:after {
-      background: url("/img/product/img_wp01.png") no-repeat 0 0;
-      background-size: 4rem 4rem; }
-    .category-infoarealist .category-type .category-infobox.type-tel:after {
-      background: url("/img/product/img_wp02.png") no-repeat 0 0;
-      background-size: 4rem 4rem; }
-    .category-infoarealist .category-type .category-infobox.type-tv:after {
-      background: url("/img/product/img_wp03.png") no-repeat 0 0;
-      background-size: 4rem 4rem; }
 
 .shortcutslist-wrap {
   display: -webkit-box;
