@@ -36,10 +36,12 @@
     <% } %>
     <!-- PPS 인 경우에는 가입비에 대한 정보가 없으므로 비노출 -->
     <% if (data.myInfo) { %>
-    <li class="pt10">
-        <span class="title">가입비 (<%= data.myInfo.apprAmt %>원)</span>
-        <span class="tx-cont"><%= data.myInfo.invBamt %>원 미청구</span>
-    </li>
+        <% if (data.myInfo.invBamt !== '0') { %>
+        <li class="pt10">
+            <span class="title">가입비 (<%= data.myInfo.apprAmt %>원)</span>
+            <span class="tx-cont"><%= data.myInfo.invBamt %>원 미청구</span>
+        </li>
+        <% } %>
     <% } %>
     <li class="pt10">
         <span class="title">고객보호 비밀번호
