@@ -51,6 +51,10 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  var removeLocalStorage = function(key) {
+    return localStorage.removeItem(key);
+  };
+
   var fileUpload = function (dest, files) {
     var formData = new FormData();
     if (!Tw.FormatHelper.isEmpty(dest)) {
@@ -137,6 +141,7 @@ Tw.CommonHelper = (function () {
     toast: toast,
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
+    removeLocalStorage: removeLocalStorage,
     showDataCharge: showDataCharge,
     share: share,
     openFreeSms: openFreeSms,
