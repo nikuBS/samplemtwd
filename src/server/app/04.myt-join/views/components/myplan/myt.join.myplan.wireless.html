@@ -55,7 +55,7 @@
         <div class="cont-box nogaps">
             <ul class="btn-link-list">
                 <% for (var i in feePlan.feePlanProd.btnList) { %>
-                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
+                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.prodId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
                 <% } %>
             </ul>
         </div>
