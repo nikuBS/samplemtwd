@@ -153,6 +153,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
       $.proxy(function () {
+        this._popupService.close();
         $('.fe-wrap_direct_order').remove();
       }, this));
   }

@@ -40,6 +40,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _onClickBtnAddr: function (e) {
@@ -51,7 +52,6 @@ Tw.CustomerEmail.prototype = {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
       $elInput.val(params.phoneNumber);
-      // this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
     }
   },
 
@@ -94,6 +94,16 @@ Tw.CustomerEmail.prototype = {
   _closeFaq: function () {
     $(document.body).css('overflow', 'auto');
     this.$wrap_faq.hide();
+  },
+
+  _stepBack: function () {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._history.goBack();
+      }, this));
   }
 };
 
