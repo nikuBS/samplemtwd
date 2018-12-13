@@ -517,6 +517,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A86: { TITLE: '알림', MSG: 'T포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
   ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
+  ALERT_2_A89: { TITLE: '알림', MSG: '선결제 가능 금액이 없습니다.' },
   ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
