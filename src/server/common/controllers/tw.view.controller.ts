@@ -129,8 +129,7 @@ abstract class TwViewController {
   }
 
   private setChannel(req, res): Observable<any> {
-    // const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
-    const channel = CHANNEL_TYPE.MOBILE_APP;
+    const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
     this.logger.info(this, '[set cookie]', channel);
     return this._loginService.setChannel(channel);
   }

@@ -9,6 +9,7 @@ Tw.MainMenuSettingsBiometrics = function (rootEl, target) {
   this._target = target;
 
   this._nativeService = Tw.Native;
+  this._popupService = Tw.Popup;
 
   this._biometricsTerm = new Tw.BiometricsTerms(this._target);
 
@@ -27,14 +28,18 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     this.$inputFido = this.$container.find('#fe-input-set-' + this._target);
 
     this.$btCancel.on('click', $.proxy(this._onClickCancelFido, this));
-    this.$container.on('click', '#fe-bt-register-' + this._target , $.proxy(this._onClickRegisterFido, this));
+    this.$container.on('click', '#fe-bt-register-' + this._target, $.proxy(this._onClickRegisterFido, this));
   },
   _checkFido: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onFidoCheck, this));
   },
   _onClickCancelFido: function () {
+    var content = this._target === Tw.FIDO_TYPE.FINGER ? Tw.POPUP_CONTENTS.BIO_FINGER_DEREGISTER : Tw.POPUP_CONTENTS.BIO_FACE_DEREGISTER;
+    this._popupService.openConfirm(content, null, $.proxy(this._onConfirmCancelFido, this));
+  },
+  _onConfirmCancelFido: function () {
+    this._popupService.close();
     this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, {}, $.proxy(this._onFidoDeRegister, this));
-
   },
   _onFidoCheck: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -52,15 +57,21 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     }
   },
   _onFidoDeRegister: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      var biometricsDeregister = new Tw.BiometricsDeregister(this._target);
+      biometricsDeregister.open();
+    } else {
+      Tw.Error(resp.resultCode, '').pop();
+    }
   },
   _onClickRegisterFido: function () {
     this._biometricsTerm.open();
 
   },
-  _setEnableStatus: function(str) {
+  _setEnableStatus: function (str) {
     this.$txtFido.text(str);
   },
-  _setDisableStatus: function(str) {
+  _setDisableStatus: function (str) {
     this.$txtFido.text(str);
     this.$btCancel.attr('disabled', true);
     this.$btCancel.parents('.fe-cancel').addClass('disabled');
