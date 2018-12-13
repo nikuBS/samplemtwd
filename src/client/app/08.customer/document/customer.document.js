@@ -21,7 +21,12 @@ Tw.CustomerDocument.prototype = {
     this.$docInfo = this.$container.find('.required-doc-param');
     this.$docResult = this.$container.find('.required-doc-result');
 
-    this._initVariables('tab1');
+    var defaultTab = 'tab1';
+    if (Tw.UrlHelper.getQueryParams().type === 'etc') {
+      defaultTab = 'tab2';
+    }
+
+    this._initVariables(defaultTab);
     this._showAndHide();
   },
   _bindEvent: function () {
