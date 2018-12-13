@@ -37,6 +37,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
 
     this._isPaySuccess = false;
+    this._isClose = false;
   },
   _bindEvent: function () {
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
@@ -145,10 +146,24 @@ Tw.MyTFareBillPrepayPay.prototype = {
     $layer.find('.fe-payment-type').text(this.$cardTypeSelector.text());
 
     $layer.on('click', '.fe-pay', $.proxy(this._pay, this, $layer));
+    $layer.on('click', '.fe-close', $.proxy(this._close, this));
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=' + this.$title);
+    }
+  },
+  _close: function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.TITLE,
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON);
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
     }
   },
   _pay: function ($layer) {
