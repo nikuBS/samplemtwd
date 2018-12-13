@@ -72,9 +72,9 @@ class BypassRouter {
           return res.end(data);
         }
 
-        data.serverSession = this.loginService.getServerSession();
         const svcInfo = this.loginService.getSvcInfo();
         if ( !FormatHelper.isEmpty(svcInfo) ) {
+          data.serverSession = this.loginService.getServerSession();
           data.loginType = svcInfo.loginType;
         }
         return res.json(data);
