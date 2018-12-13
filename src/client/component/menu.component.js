@@ -8,6 +8,7 @@ Tw.MenuComponent = function () {
     }
 
     this._historyService = new Tw.HistoryService();
+    this._tidLanding = new Tw.TidLandingComponent();
     this._nativeService = Tw.Native;
     this._apiService = Tw.Api;
 
@@ -65,7 +66,14 @@ Tw.MenuComponent.prototype = {
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
-    $('.fe-bt-login').on('click', $.proxy(this._onLoginRequested, this));
+    $('.fe-bt-login').on('click', $.proxy(this._onClickLogin, this));
+    $('.fe-bt-logout').on('click', $.proxy(this._onClickLogout, this));
+  },
+  _onClickLogin: function () {
+    this._tidLanding.goLogin();
+  },
+  _onClickLogout: function () {
+    this._tidLanding.goLogout();
   },
   _onGnbBtnClicked: function () {
     this._isOpened = true;
@@ -100,10 +108,6 @@ Tw.MenuComponent.prototype = {
     if (window.location.hash.indexOf('menu') === -1 && this._isOpened) {
       this.$closeBtn.click();
     }
-  },
-
-  _onLoginRequested: function () {
-    this._historyService.goLoad('/common/member/login');
   },
   _onSimpleLogin: function () {
     if (Tw.BrowserHelper.isAndroid) {
