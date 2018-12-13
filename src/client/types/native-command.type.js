@@ -56,3 +56,8 @@ Tw.NTV_LOG_T = {
   ERROR: 0,
   DEBUG: 1
 };
+
+Tw.NTV_STORAGE = {
+  MOST_RECENT_PUSH_SEQ: 'mostRecentPushSeq',
+  LAST_READ_PUSH_SEQ: 'lastReadPushSeq'
+};
