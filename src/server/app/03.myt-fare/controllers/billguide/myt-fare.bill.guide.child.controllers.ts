@@ -105,11 +105,11 @@ class MyTFareBillGuideChild extends TwViewController {
       childSvcMgmtNum: this.reqQuery.line
     }), 'p1');
 
-    const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
+    // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
 
-    Promise.all([p1, p2]).then(function(resArr) {
+    Promise.all([p1]).then(function(resArr) {
       thisMain._billpayInfo = resArr[0].result;
-      thisMain._unpaidBillsInfo = resArr[1].result;
+      thisMain._unpaidBillsInfo = resArr[0].result.unPayAmtList;
 
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
@@ -122,7 +122,6 @@ class MyTFareBillGuideChild extends TwViewController {
       thisMain._commDataInfo.intBillLineList =
         (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(childInfo, thisMain.reqQuery.line) : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
-      thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
 
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
         reqQuery: thisMain.reqQuery,
@@ -150,50 +149,6 @@ class MyTFareBillGuideChild extends TwViewController {
 
 
   // -------------------------------------------------------------[SVC]
-  public getSelectNonPayment(): any {
-    const thisMain = this;
-    const unPaidAmtMonthInfoList = thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList;
-    const queryDate = thisMain.reqQuery.date;
-
-    if ( unPaidAmtMonthInfoList.length ) {
-      return 'N';
-    }
-
-    let dateVal;
-    if ( queryDate ) {
-      dateVal = queryDate;
-    } else {
-      dateVal = thisMain._billpayInfo.invDt;
-    }
-
-    /*
-    * test
-     */
-    // const unPaidAmtMonthInfoList = [
-    //   {unPaidInvDt: '20180831', unPaidAmt: '890090'},
-    //   {unPaidInvDt: '20180731', unPaidAmt: '790090'},
-    //   {unPaidInvDt: '20180631', unPaidAmt: '690090'},
-    //   {unPaidInvDt: '20180531', unPaidAmt: '590090'}
-    // ];
-    // dateVal = '20180731';
-
-
-    let result;
-    result = unPaidAmtMonthInfoList.filter( function(item) {
-      return item.unPaidInvDt === dateVal;
-    });
-
-    this.logger.info(this, '[ 필터 > result ] : ', result);
-
-    if ( result.length > 0 ) {
-      result = 'Y';
-    } else {
-      result = 'N';
-    }
-
-    return result;
-  }
-
   public getSelStaDt(date: string): any { // 월 시작일 구하기
     // return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
     return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.M.DD');

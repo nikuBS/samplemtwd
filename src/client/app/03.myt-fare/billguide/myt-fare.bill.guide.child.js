@@ -27,12 +27,6 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    if ( this.resData.childLineInfo ) {
-      this._getChildBillInfo();
-    } else {
-      $('#divChildListHaeder').hide();
-    }
-
     this._getUseBillsInfo();
 
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
@@ -116,6 +110,12 @@ Tw.MyTFareBillGuideChild.prototype = {
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
       this._history.goLoad('/myt-fare/bill/small');
     }, this));
+
+    this.$container.on('click', '#divUnpaidBill button', $.proxy(function() { // 미납요금으로 이동
+      var dt = this.resData.reqQuery.date || '';
+      this._history.goLoad('/myt-fare/unbill?child=' + this.resData.reqQuery.line + '&dt=' + dt);
+    }, this));
+
   },
   //--------------------------------------------------------------------------[EVENT]
 
@@ -212,6 +212,18 @@ Tw.MyTFareBillGuideChild.prototype = {
       //위젯 아코디언 초기화
       skt_landing.widgets.widget_accordion($('.widget'));
 
+      // 미납요금 계산
+      if( res.result.unPayAmtList && res.result.unPayAmtList.length > 0){
+        var unpayList = res.result.unPayAmtList;
+        var unpayTot = 0;
+        for(var i = 0; i < unpayList.length; i++){
+          unpayTot += parseInt(unpayList[i].comBat, 10);
+        }
+        if(unpayTot > 0){
+          $('#spanUnpaidTot').text(Tw.FormatHelper.addComma(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);
+          $('#divUnpaidBill').show();
+        }
+      }
     }
   },
   //--------------------------------------------------------------------------[SVC]
