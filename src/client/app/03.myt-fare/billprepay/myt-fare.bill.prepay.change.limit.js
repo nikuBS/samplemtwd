@@ -29,7 +29,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     var apiName = this._getLimitApiName();
     this._apiService.request(apiName, {})
       .done($.proxy(this._getLimitSuccess, this))
-      .fail($.proxy(this._getLimitFail, this));
+      .fail($.proxy(this._fail, this));
   },
   _getLimitApiName: function () {
     var apiName = '';
@@ -42,9 +42,13 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   },
   _getLimitSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._changeLimit(res.result);
+      if (res.result.isUnpaid === 'Y') {
+        this._getLimitFail();
+      } else {
+        this._changeLimit(res.result);
+      }
     } else {
-      this._getLimitFail();
+      this._fail();
     }
   },
   _getLimitFail: function () {
@@ -152,7 +156,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
 
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._changeLimitSuccess, this))
-      .fail($.proxy(this._changeLimitFail, this));
+      .fail($.proxy(this._fail, this));
   },
   _changeLimitApiName: function () {
     var apiName = '';
@@ -192,10 +196,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       this._popupService.close();
       this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_LIMIT);
     } else {
-      this._changeLimitFail(res);
+      this._fail(res);
     }
   },
-  _changeLimitFail: function (err) {
+  _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }
 };
