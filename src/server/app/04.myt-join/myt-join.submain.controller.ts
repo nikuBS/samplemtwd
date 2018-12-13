@@ -77,15 +77,27 @@ class MyTJoinSubmainController extends TwViewController {
       this._getChangeNumInfoService(),
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId)
     ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
-      // 가입정보가 없는 경우에는 에러페이지 이동
-      if ( myif.info ) {
-        this.error.render(res, {
-          title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
-          code: myif.info.code,
-          msg: myif.info.msg,
-          svcInfo: svcInfo
-        });
-        return false;
+      // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
+      if (this.type === 1) {
+        if (myhs.info) {
+          this.error.render(res, {
+            title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
+            code: myhs.info.code,
+            msg: myhs.info.msg,
+            svcInfo: svcInfo
+          });
+          return false;
+        }
+      } else {
+        if ( myif.info ) {
+          this.error.render(res, {
+            title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
+            code: myif.info.code,
+            msg: myif.info.msg,
+            svcInfo: svcInfo
+          });
+          return false;
+        }
       }
       data.type = this.type;
       data.isPwdSt = this.isPwdSt;
