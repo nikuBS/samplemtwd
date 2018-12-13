@@ -32,7 +32,8 @@ import {
   REDIS_HOME_NOTICE,
   REDIS_HOME_HELP,
   CHANNEL_CODE,
-  REDIS_SMART_CARD_DEFAULT
+  REDIS_SMART_CARD_DEFAULT,
+  REDIS_MENU_URL
 } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
