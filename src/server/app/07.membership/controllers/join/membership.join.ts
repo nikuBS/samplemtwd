@@ -41,7 +41,7 @@ class MembershipJoin extends TwViewController {
           data.isIndividual = true;
         }
 
-        res.render('membership/benefit.membership.join.html', { data });
+        res.render('join/membership.join.html', { data });
       } else {
         return this.error.render(res, {
           title: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,

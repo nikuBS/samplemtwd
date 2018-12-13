@@ -14,6 +14,7 @@ import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
+import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -56,6 +57,10 @@ class MyTJoinSubmainController extends TwViewController {
     if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === '10' || svcInfo.pwdStCd === '60') ) {
       // 10 -> 신청, 60 -> 초기화 -- 설정가능한상태
       this.isPwdSt = true;
+    }
+    // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+    if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+      data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
     }
 
     Observable.combineLatest(
@@ -136,6 +141,9 @@ class MyTJoinSubmainController extends TwViewController {
             data.myAddProduct.addTotCnt = data.myAddProduct.addProdCnt;
             break;
           default:
+            if ( data.myAddProduct.productCntInfo ) {
+              data.myAddProduct = data.myAddProduct.productCntInfo;
+            }
             data.myAddProduct.addTotCnt =
               parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
               parseInt(data.myAddProduct.comProdCnt, 10);
@@ -270,7 +278,8 @@ class MyTJoinSubmainController extends TwViewController {
     const SPC = (items && items['S']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
-      const nOthers: any = Object.assign([], MOBILE, OTHER, SPC);
+      let nOthers: any = [];
+      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           let clsNm = 'cellphone';
@@ -278,6 +287,11 @@ class MyTJoinSubmainController extends TwViewController {
             clsNm = 'pc';
           } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
             clsNm = 'tablet';
+          }
+          item.nickNm = item.eqpMdlNm || item.nickNm;
+          // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+          if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
+            item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
           item.className = clsNm;
           list.push(item);
@@ -392,18 +406,7 @@ class MyTJoinSubmainController extends TwViewController {
     return this.apiService.request(API_URL, {}).map((resp) => {
       // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.productCntInfo ) {
-          // 무선
-          return resp.result.productCntInfo;
-        } else if ( resp.result.additionCount ) {
-          // 유선
-          return resp.result;
-        } else if ( resp.result.addProdCnt ) {
-          // T-PocketFi, T-Login, PPS
-          return resp.result;
-        } else {
-          return null;
-        }
+        return resp.result;
       } else {
         // error
         return null;

@@ -197,6 +197,9 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _initialize: function () {
+    setTimeout(function() {
+      window.scrollTo(0, 0);
+    }, 500);
     this._requestCount = -1;
     this._resTimerID = null;
     this._chartDefaultClass = 'chart_link item';
