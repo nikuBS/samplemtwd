@@ -12,7 +12,7 @@ import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { SKIP_NAME } from '../../../../types/string.type';
-import { T0_PLAN_SKIP_ID, UNIT, UNLIMIT_CODE } from '../../../../types/bff.type';
+import { DAY_BTN_STANDARD_SKIP_ID, T0_PLAN_SKIP_ID, UNIT, UNLIMIT_CODE } from '../../../../types/bff.type';
 
 const VIEW = {
   CIRCLE: 'usage/myt-data.hotdata.html',
@@ -158,6 +158,28 @@ class MyTDataHotdata extends TwViewController {
         }
       }
     }
+
+    // 당일 사용량(PA) DDZ25, DDZ23, DD0PB 에 해당하는 공제항목이 있으면
+    // 해당 항목의 prodId와 같고 && skipId가 'PA'인 항목은 노출 제외
+
+    const pas = dataArr.filter((_data) => {
+      return DAY_BTN_STANDARD_SKIP_ID.indexOf(_data.skipId) !== -1;
+    });
+
+    if (pas.length > 0) {
+      pas.map((pa) => {
+        dataArr = dataArr.filter((_data) => {
+          return !(_data.skipId === 'PA' && _data.prodId === pa.prodId);
+        });
+      });
+    }
+
+    // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
+    dataArr = dataArr.filter((_data) => {
+      return !(_data.skipId === 'PA' && (UNLIMIT_CODE.indexOf(_data.unlimit) === -1));
+    });
+
+
     usageData.data = dataArr;
     // console.log('~~~~~~~~~~~~~usageData.data', usageData.data);
 
@@ -193,6 +215,269 @@ class MyTDataHotdata extends TwViewController {
 
   private reqBalances(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {});
+
+    // return Observable.create((observer) => {
+    //   setTimeout(() => {
+    //     const resp = {
+    //       'code': '00',
+    //       'msg': 'success',
+    //       'result': {
+    //         'dataTopUp': 'N',
+    //         'ting': 'N',
+    //         'dataDiscount': 'N',
+    //         'gnrlData': [
+    //           {
+    //             'prodId': 'POT10',
+    //             'prodNm': 'T가족모아데이터',
+    //             'skipId': 'POT10',
+    //             'skipNm': 'T가족모아데이터',
+    //             'unlimit': '0',
+    //             'total': '0',
+    //             'used': '0',
+    //             'remained': '0',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'FD004',
+    //             'skipNm': '데이터리필',
+    //             'unlimit': '0',
+    //             'total': '20971520',
+    //             'used': '0',
+    //             'remained': '20971520',
+    //             'unit': '140',
+    //             'rgstDtm': '20181201000000',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'FD004',
+    //             'skipNm': '데이터리필',
+    //             'unlimit': '0',
+    //             'total': '20971520',
+    //             'used': '0',
+    //             'remained': '20971520',
+    //             'unit': '140',
+    //             'rgstDtm': '20181212101442',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3DZ',
+    //             'skipNm': '데이터통화 150GB 무료',
+    //             'unlimit': '0',
+    //             'total': '157286400',
+    //             'used': '0',
+    //             'remained': '157286400',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ],
+    //         'spclData': [
+    //           {
+    //             'prodId': 'NH00000100',
+    //             'prodNm': '온가족프리_혜택1_500MB',
+    //             'skipId': 'DDR38',
+    //             'skipNm': '온가족프리 데이터500MB',
+    //             'unlimit': '0',
+    //             'total': '512000',
+    //             'used': '0',
+    //             'remained': '512000',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3CV',
+    //             'skipNm': '통합공유 데이터 20GB',
+    //             'unlimit': '0',
+    //             'total': '20971520',
+    //             'used': '0',
+    //             'remained': '20971520',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3D0',
+    //             'skipNm': '한도초과후 데이터 무료',
+    //             'unlimit': '1',
+    //             'total': '무제한',
+    //             'used': '무제한',
+    //             'remained': '무제한',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00004217',
+    //             'prodNm': 'oksusu 데이터 프리',
+    //             'skipId': 'DDZ25',
+    //             'skipNm': 'oksusu 데이터프리 데이터무제한',
+    //             'unlimit': 'M',
+    //             'total': '무제한',
+    //             'used': '0',
+    //             'remained': '무제한',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00004217',
+    //             'prodNm': 'oksusu 데이터 프리',
+    //             'skipId': 'PA',
+    //             'skipNm': '일별 사용량',
+    //             'unlimit': 'M',
+    //             'total': '무제한',
+    //             'used': '4096',
+    //             'remained': '무제한',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00004720',
+    //             'prodNm': 'band 타임 프리',
+    //             'skipId': 'DD0PB',
+    //             'skipNm': 'band 타임 프리 데이터무제한',
+    //             'unlimit': 'M',
+    //             'total': '무제한',
+    //             'used': '0',
+    //             'remained': '무제한',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00004720',
+    //             'prodNm': 'band 타임 프리',
+    //             'skipId': 'PA',
+    //             'skipNm': '일별 사용량',
+    //             'unlimit': 'M',
+    //             'total': '무제한',
+    //             'used': '4096',
+    //             'remained': '무제한',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA000042171',
+    //             'prodNm': 'oksusu 데이터 프리 무제한 아님!!!!!!',
+    //             'skipId': 'PA',
+    //             'skipNm': '일별 사용량',
+    //             'unlimit': '0',
+    //             'total': '4096',
+    //             'used': '0',
+    //             'remained': '4096',
+    //             'unit': '140',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ],
+    //         'voice': [
+    //           {
+    //             'prodId': 'NH00000087',
+    //             'prodNm': '온가족프리_혜택2_가족무료',
+    //             'skipId': 'DDM57',
+    //             'skipNm': '온가족 가족간 음성통화 무료',
+    //             'unlimit': '0',
+    //             'total': '300000',
+    //             'used': '0',
+    //             'remained': '300000',
+    //             'unit': '240',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3E0',
+    //             'skipNm': '영상, 부가전화 300분',
+    //             'unlimit': '0',
+    //             'total': '18000',
+    //             'used': '0',
+    //             'remained': '18000',
+    //             'unit': '240',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3DX',
+    //             'skipNm': 'SKT 고객간 음성 무제한',
+    //             'unlimit': 'M',
+    //             'total': '무제한',
+    //             'used': '0',
+    //             'remained': '무제한',
+    //             'unit': '240',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3DY',
+    //             'skipNm': '집전화·이동전화 음성 무제한',
+    //             'unlimit': 'M',
+    //             'total': '무제한',
+    //             'used': '0',
+    //             'remained': '무제한',
+    //             'unit': '240',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ],
+    //         'sms': [
+    //           {
+    //             'prodId': 'NA00005958',
+    //             'prodNm': '패밀리',
+    //             'skipId': 'DD3DT',
+    //             'skipNm': 'SMS/MMS/ⓜ메신저 기본제공',
+    //             'unlimit': 'B',
+    //             'total': '기본제공',
+    //             'used': '기본제공',
+    //             'remained': '기본제공',
+    //             'unit': '310',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           },
+    //           {
+    //             'prodId': 'NH00000087',
+    //             'prodNm': '온가족프리_혜택2_가족무료',
+    //             'skipId': 'DDM58',
+    //             'skipNm': '온가족 가족간 SMS 무료',
+    //             'unlimit': 'B',
+    //             'total': '기본제공',
+    //             'used': '기본제공',
+    //             'remained': '기본제공',
+    //             'unit': '310',
+    //             'rgstDtm': '',
+    //             'exprDtm': ''
+    //           }
+    //         ],
+    //         'etc': []
+    //       }
+    //     };
+    //     if (resp.code === API_CODE.CODE_00) {
+    //       observer.next(resp);
+    //       observer.complete();
+    //     } else {
+    //       observer.error();
+    //     }
+    //   }, 500);
+    // });
   }
 
   private reqBalanceAddOns(): Observable<any> {
