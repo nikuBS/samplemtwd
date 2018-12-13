@@ -15,6 +15,9 @@ Tw.MyTFareBillAutoCancel = function (rootEl, $layer) {
   this._commonHelper = Tw.CommonHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
+  this._isComplete = false;
+  this._isClose = false;
+
   this._bindEvent();
 };
 
@@ -73,10 +76,15 @@ Tw.MyTFareBillAutoCancel.prototype = {
     this.$layer = $layer;
     $layer.on('click', '.fe-select-bank', $.proxy(this._setBankList, this, bankList));
     $layer.on('click', '.fe-request', $.proxy(this._request, this));
+    $layer.on('click', '.fe-close', $.proxy(this._close, this));
   },
   _closeSmsInfo: function () {
-    if (this.$isComplete) {
+    if (this._isComplete) {
       this._historyService.goLoad('/myt-fare/bill/option?type=sms');
+    }
+
+    if (this._isClose) {
+      this._popupService.close();
     }
   },
   _setBankList: function (bankList, event) {
@@ -129,10 +137,14 @@ Tw.MyTFareBillAutoCancel.prototype = {
   },
   _smsSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this.$isComplete = true;
+      this._isComplete = true;
       this._popupService.close();
     } else {
       this._fail(res);
     }
+  },
+  _close: function () {
+    this._isClose = true;
+    this._popupService.close();
   }
 };
