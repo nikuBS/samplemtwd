@@ -33,8 +33,7 @@ Tw.MyTDataSubMain.prototype = {
     if ( this.data.family ) {
       this.$familymoaBanner = this.$container.find('[data-id=family-moa]');
     }
-    // TODO: 선불쿠폰 API 기능 완료 후 작업(TBD)
-    // this.$prepayContainer = this.$container.find('[data-id=prepay-container]');
+    this.$prepayContainer = this.$container.find('[data-id=prepay-container]');
     if ( this.data.refill ) {
       this.$refillBtn = this.$container.find('[data-id=refill]');
     }
@@ -88,6 +87,7 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
+    this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
   },
 
   _initialize: function () {
@@ -452,6 +452,12 @@ Tw.MyTDataSubMain.prototype = {
     var $target = $(event.target);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
+  },
+
+  _onPrepayCoupon: function (event) {
+    var $target = $(event.currentTarget);
+    var href = $target.attr('data-href');
+    Tw.CommonHelper.openUrlExternal(href);
   },
 
   _errorRequest: function (resp) {
