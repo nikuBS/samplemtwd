@@ -72,6 +72,7 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   _reqFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(err.msg, err.code);
   },
 
