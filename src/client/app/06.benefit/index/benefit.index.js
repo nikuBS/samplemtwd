@@ -28,7 +28,6 @@ Tw.BenefitIndex.prototype = {
     this.$point = this.$container.find('#fe-point');
     this.$benefit = this.$container.find('#fe-benefit');
     this.$list = this.$container.find('#fe-list');
-    this.$anotherProduct = this.$container.find('#fe-another-product');
     this.$showDiscountBtn = this.$container.find('#fe-show-discount');
     // 결합할인금액 미리보기 > (인터넷, 이동전화, TV) 설정
     this.$internetType = this.$container.find('[data-name="inetTypCd"]'); // 인터넷
@@ -309,15 +308,14 @@ Tw.BenefitIndex.prototype = {
       .parent().addClass('checked').attr('aria-checked',true);
 
     this._reqProductList(categoryId);
-    this.$anotherProduct.addClass('none');
     this.$combinationPreview.addClass('none');
     this.$discountResult.addClass('none');
-    // 카테고리가 '전체' 가 아니라면 '다른 페이지를 찾고 계신가요?' 보이기
-    if (categoryId !== '') {
-      this.$anotherProduct.removeClass('none');
-      // 결합할인 클릭 이라면 '결합할인금액 미리보기' 노출
-      if (categoryId === 'F01422') {
-        this.$combinationPreview.removeClass('none');
+
+    // 결합할인 클릭 이라면 '결합할인금액 미리보기' 노출
+    if (categoryId === 'F01422') {
+      this.$combinationPreview.removeClass('none');
+      // 로그인 했다면 "가입상담예약" 신청여부 API 조회 요청
+      if (this._isLogin) {
         this._reqDocumentsInspects();
       }
     }

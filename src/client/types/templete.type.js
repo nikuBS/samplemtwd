@@ -244,16 +244,11 @@ Tw.POPUP_TPL = {
     }
   ],
   JOIN_INFO_NO_AGREEMENT: {
-    title: '포인트 사용 유형',
-    data: [
-      {
-        'list': [
-          { 'option': 'condition', 'attr': 'id="0"', value: '전체' },
-          { 'option': 'condition', 'attr': 'id="1"', value: '포인트 사용' },
-          { 'option': 'condition', 'attr': 'id="2"', value: '포인트 적립' },
-          { 'option': 'condition', 'attr': 'id="3"', value: '포인트 소멸' }
-        ]
-      }
+    'list': [
+      {'label-attr':'id="0"','radio-attr':'id="0" name="r1" value="전체"','txt':'전체'},
+      {'label-attr':'id="1"','radio-attr':'id="1" name="r1" value="포인트 사용"','txt':'포인트 사용'},
+      {'label-attr':'id="2"','radio-attr':'id="2" name="r1" value="포인트 적립"','txt':'포인트 적립'},
+      {'label-attr':'id="3"','radio-attr':'id="3" name="r1" value="포인트 소멸"','txt':'포인트 소멸'}
     ]
   },
   JOIN_INFO_MGMT_PERIOD: {

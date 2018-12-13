@@ -62,17 +62,17 @@ Tw.MoreViewComponent.prototype = {
       var _data = _.map(dateGroup,function(objectOfDateGroup, k1){
         return {
           date : k1,
-          subList : objectOfDateGroup
+          subList : _.sortBy(objectOfDateGroup, groupDateKey).reverse()
         };
       });
 
       return {
         year : k,
-        list : _data
+        list : _.sortBy(_data, 'date').reverse()
       };
     });
 
-    return data.reverse();
+    return _.sortBy(data, 'year').reverse();
   },
 
   // 최초 한번 전체 리스트를 셋 한다.
