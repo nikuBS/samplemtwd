@@ -17,7 +17,7 @@ Tw.MyTDataUsageChildRecharge = function (rootEl, options) {
 
 Tw.MyTDataUsageChildRecharge.prototype = {
   _URL: {
-    MYT_DATA_SUBMAIN: '/myt-data/submain'
+    COMPLETE: '/myt-data/submain/child-hotdata/recharge/complete'
   },
   _AMT_MAXIMUM: 20000,
   _AMT_MINIMUM: 1000,
@@ -82,8 +82,7 @@ Tw.MyTDataUsageChildRecharge.prototype = {
 
   _reqSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess(this._URL.MYT_DATA_SUBMAIN, this._URL.MYT_DATA_SUBMAIN, null,
-        Tw.MYT_DATA_USAGE_CHILD_RECHARGE.MSG.CHANGE);
+      this._historyService.replaceURL(this._URL.COMPLETE);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
