@@ -170,7 +170,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
       isComparePlan: this._isComparePlan,
-      noticeList: this._confirmOptions.joinNoticeList,
+      noticeList: $.merge(this._confirmOptions.termNoticeList, this._confirmOptions.joinNoticeList),
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
