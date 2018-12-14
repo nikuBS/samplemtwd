@@ -91,9 +91,6 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initialize: function () {
-    setTimeout(function () {
-      window.scrollTo(0, 0);
-    }, 500);
     this._svcMgmtNumList = [];
     if ( this.data.pattern ) {
       setTimeout($.proxy(this._initPatternChart, this), 300);
@@ -437,15 +434,12 @@ Tw.MyTDataSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
-    this._historyService.reload();
-    if ( Tw.BrowserHelper.isApp() ) {
-      setTimeout(
-        $.proxy(function () {
-          this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-        }, this),
-        500
-      );
-    }
+    setTimeout($.proxy(function () {
+      this._historyService.reload();
+      if ( Tw.BrowserHelper.isApp() ) {
+        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }
+    }, this), 500);
   },
 
   _onOtherPages: function (event) {
