@@ -137,13 +137,29 @@
                 {{/if}}
             </div>
             {{#if hasChildren}}
+            {{#if isLine}}
+            <div class="depth2">
+                <ul>
+                    {{#each children}}
+                    {{#if hasChildren}}
+                    <strong class="ti">{{menuNm}}</strong>
+                    {{#each children}}
+                    <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                    {{/each}}
+                    {{else}}
+                    <li class="line"><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                    {{/if}}
+                    {{/each}}
+                </ul>
+            </div>
+            {{else}}
             <div class="depth2">
                 <ul>
                     {{#each children}}
                     <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
                     {{/each}}
                 </ul>
-            </div>
+            {{/if}}
             {{/if}}
         </li>
     </ul>

@@ -32,7 +32,7 @@ Tw.MenuComponent = function () {
 
 Tw.MenuComponent.prototype = {
   TOP_PADDING_MENU: {
-    M000603: 'M000603',  // 이용안내
+    M000602: 'M000602',  // 이용안내
     M000537: 'M000537',  // T Apps
     M000812: 'M000812'   // Direct shop
   },
@@ -240,9 +240,19 @@ Tw.MenuComponent.prototype = {
   },
 
   _tideUpMenuInfo: function (menuInfo, userInfo) {
-    var sorted = _.sortBy(menuInfo, function (item) {
-      return parseInt(item.expsSeq, 10);
-    });
+    var sorted = _.chain(menuInfo)
+      .filter(function (item) {
+        if (item.menuId === 'M000344') {
+          item.expsSeq = '100';
+        }
+        if (item.menuId === 'M000353') {
+          item.expsSeq = '101';
+        }
+        return item.menuId !== 'M000343'; // Remove 인터넷/집전화/IPTV menu by hard coded
+      })
+      .sortBy(function (item) {
+        return parseInt(item.expsSeq, 10);
+      }).value();
 
     var category = _.reduce(sorted, function (memo, item) {
       item.children = [];
@@ -255,10 +265,14 @@ Tw.MenuComponent.prototype = {
       if (sorted[i].frontMenuDpth !== '1') {
         if (!!category[sorted[i].supMenuId]) {
           category[sorted[i].supMenuId].children.push(sorted[i]);
+        } else {
+          // Modify some menu category by hard coded
+          if (sorted[i].menuId === 'M000344' || sorted[i].menuId === 'M000353') {
+            category['M000301'].children.push(sorted[i]);
+          }
         }
       }
     }
-
 
     var loginType = Tw.FormatHelper.isEmpty(userInfo) ? 'N': userInfo.loginType;
     category = _.chain(category)
@@ -271,17 +285,17 @@ Tw.MenuComponent.prototype = {
         item.isBg = item.bgimgUseYn === 'Y' ? true : false;
         item.hasChildren = item.children.length > 0 ? true : false;
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
-        item.isLink = !!item.menuUrl;
+        item.isLink = !!item.menuUrl && item.menuUrl !== '/';
 
         if (!!item.urlAuthClCd) {
           if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
-            item.menuUrl = '/common/member/login';
-            item.children = [];
-            item.hasChildren = false;
+            item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+            // item.children = [];
+            // item.hasChildren = false;
           } else if (loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1) {
-            item.menuUrl = 'common/member/slogin/fail';
-            item.children = [];
-            item.hasChildren = false;
+            item.menuUrl = item.isLink ? 'common/member/slogin/fail' : item.menuUrl;
+            // item.children = [];
+            // item.hasChildren = false;
           }
         }
 
@@ -300,6 +314,9 @@ Tw.MenuComponent.prototype = {
         }
         if (!!this.TOP_PADDING_MENU[item.menuId]) {
           memo.push([]);
+          if (item.menuId === this.TOP_PADDING_MENU.M000602) {
+            item.isLine = true;
+          }
         }
         memo[memo.length - 1].push(item);
 
