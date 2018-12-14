@@ -692,10 +692,16 @@ export const API_CODE = {
   BFF_0014: 'BFF0014', // 고객비밀번호 재설정 필요
   BFF_0015: 'BFF0015', // 비밀번호 인증 필요 (업무인증에 옵션으로 추가되는 인증)
 
+  REDIS_SUCCESS: '00',
+  REDIS_EMPTY: '01',
+  REDIS_ERROR: '02',
+
+  NODE_1001: '1001',    // login 필요
+
   CODE_200: '200',
   CODE_400: '400',
   CODE_404: '404',
-  CODE_500: '500'
+  CODE_500: '500',
 };
 
 export const API_SVC_PWD_ERROR = {

@@ -9,7 +9,7 @@ import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
-import { REDIS_CODE, REDIS_URL_META } from '../../types/redis.type';
+import { REDIS_URL_META } from '../../types/redis.type';
 import { LOGIN_TYPE, SVC_ATTR_NAME, LINE_NAME } from '../../types/bff.type';
 import { UrlMetaModel } from '../../models/url-meta.model';
 
@@ -139,7 +139,7 @@ abstract class TwViewController {
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
-      if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+      if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         if ( isLogin ) {
           urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
           if ( urlMeta.auth.accessTypes.indexOf(svcInfo.loginType) !== -1 ) {

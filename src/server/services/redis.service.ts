@@ -5,7 +5,8 @@ import EnvHelper from '../utils/env.helper';
 import { COOKIE_KEY } from '../types/common.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../utils/format.helper';
-import { REDIS_CODE } from '../types/redis.type';
+import { NODE_API_ERROR } from '../types/string.type';
+import { API_CODE } from '../types/api-command.type';
 
 class RedisService {
   private static instance: RedisService;
@@ -53,12 +54,14 @@ class RedisService {
     return Observable.create((observer) => {
       this.client.get(key, (err, reply) => {
         const resp = {
-          code: REDIS_CODE.CODE_SUCCESS,
+          code: API_CODE.REDIS_SUCCESS,
+          msg: 'success',
           result: null
         };
 
         if ( FormatHelper.isEmpty(reply) ) {
-          resp.code = REDIS_CODE.CODE_EMPTY;
+          resp.code = API_CODE.REDIS_EMPTY;
+          resp.msg = NODE_API_ERROR[API_CODE.REDIS_EMPTY];
         } else {
           resp.result = reply;
         }
@@ -73,17 +76,20 @@ class RedisService {
     return Observable.create((observer) => {
       this.client.get(key, (err, reply) => {
         const resp = {
-          code: REDIS_CODE.CODE_SUCCESS,
+          code: API_CODE.REDIS_SUCCESS,
+          msg: 'success',
           result: null
         };
 
         if ( FormatHelper.isEmpty(reply) ) {
-          resp.code = REDIS_CODE.CODE_EMPTY;
+          resp.code = API_CODE.REDIS_EMPTY;
+          resp.msg = NODE_API_ERROR[API_CODE.REDIS_EMPTY];
         } else {
           try {
             resp.result = JSON.parse(reply);
           } catch ( e ) {
-            resp.code = REDIS_CODE.CODE_ERROR;
+            resp.code = API_CODE.REDIS_ERROR;
+            resp.msg = NODE_API_ERROR[API_CODE.REDIS_ERROR];
           }
         }
 

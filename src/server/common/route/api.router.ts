@@ -9,12 +9,11 @@ import {
   MENU_CODE,
   REDIS_APP_VERSION,
   REDIS_BANNER_ADMIN,
-  REDIS_CODE,
   REDIS_MASKING_METHOD,
   REDIS_MENU,
   REDIS_URL_META,
   REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI
+  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI, REDIS_QUICK_MENU, REDIS_QUICK_DEFAULT
 } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
@@ -26,6 +25,7 @@ import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
+import { NODE_API_ERROR } from '../../types/string.type';
 
 class ApiRouter {
   public router: Router;
@@ -70,6 +70,7 @@ class ApiRouter {
     this.router.get('/home/notice', this.getHomeNotice.bind(this));
     this.router.get('/home/help', this.getHomeHelp.bind(this));
     this.router.get('/tooltip', this.getTooltip.bind(this));
+    this.router.get('/home/quick-menu', this.getQuickMenu.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
@@ -109,7 +110,7 @@ class ApiRouter {
     const env = String(process.env.NODE_ENV);
     this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((resp) => {
-        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = {
             ver: resp.result.ver,
             signGateGW: resp.result.signGateGW,
@@ -124,7 +125,7 @@ class ApiRouter {
   private getSplash(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((resp) => {
-        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = resp.result.splash;
         }
 
@@ -135,7 +136,7 @@ class ApiRouter {
   private getAppNotice(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((resp) => {
-        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = resp.result.notice;
         }
 
@@ -160,9 +161,9 @@ class ApiRouter {
     const svcInfo = this.loginService.getSvcInfo();
     this.redisService.getData(REDIS_MENU + code)
       .subscribe((resp) => {
-        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
-          if (resp.result.isLogin) {
+          if ( resp.result.isLogin ) {
             resp.result.userInfo = {};
             resp.result.userInfo.svcNum = svcInfo.svcNum;
             resp.result.userInfo.name = svcInfo.mbrNm;
@@ -217,6 +218,38 @@ class ApiRouter {
       });
   }
 
+  private getQuickMenu(req: Request, res: Response, next: NextFunction) {
+    const svcInfo = this.loginService.getSvcInfo();
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1001,
+        msg: NODE_API_ERROR[API_CODE.NODE_1001]
+      });
+    }
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+    const svcMgmtNum = this.loginService.getSvcInfo().svcMgmtNum;
+    this.redisService.getData(REDIS_QUICK_MENU + svcMgmtNum)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+          throw resp;
+        } else {
+          return this.apiService.request(API_CMD.BFF_04_0005, {});
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const defaultCode = resp.result;
+          return this.redisService.getData(REDIS_QUICK_DEFAULT + defaultCode);
+        } else {
+          throw resp;
+        }
+      })
+      .subscribe((resp) => {
+        return res.json(resp);
+      });
+  }
+
   private getMaskingMethod(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_MASKING_METHOD)
       .subscribe((resp) => {
@@ -225,6 +258,13 @@ class ApiRouter {
   }
 
   private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
+    const svcInfo = this.loginService.getSvcInfo();
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1001,
+        msg: NODE_API_ERROR[API_CODE.NODE_1001]
+      });
+    }
     const svcMgmtNum = req.body.svcMgmtNum;
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);

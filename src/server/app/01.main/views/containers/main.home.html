@@ -312,19 +312,23 @@
                             <!-- // 비로그인 -->
                             <% } %>
 
+                            <% if(svcType.login) { %>
+                            <div id="fe-tmpl-quick">
+                            </div>
+                            <% } else { %>
                             <!-- MY 바로가기 -->
                             <ul class="quick-menu-list">
-                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
-                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
-                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
-                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
-                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
-                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
-                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
-                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                <li><a class="bt"><i class="icon-charge-80"></i>나의 요금</a></li>
+                                <li><a class="bt"><i class="icon-tmembership-80"></i>T멤버십</a></li>
+                                <li><a class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</a></li>
+                                <li><a class="bt"><i class="icon-immediate-80"></i>즉시 납부</a></li>
+                                <li><a class="bt"><i class="icon-charge-80"></i>나의 요금</a></li>
+                                <li><a class="bt"><i class="icon-tmembership-80"></i>T멤버십</a></li>
+                                <li><a class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</a></li>
+                                <li><a class="bt"><i class="icon-immediate-80"></i>즉시 납부</a></li>
                             </ul>
-                            <div class="btn-area"><button id="fe-bt-quick-edit" class="bt-link-tx underline">바로가기 편집</button></div>
                             <!-- //MY 바로가기 -->
+                            <% } %>
                         </div>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
@@ -917,7 +921,8 @@
 <% include ../components/smart-card/gift.component.html %>
 <% include ../components/smart-card/micro-pay.component.html %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
-<%- include('../components/home/home-welcome.component.html', { svcInfo: svcInfo }); %>
+<%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
+<% include ../components/home/home.quick-menu.component.html %>
 <% } %>
 <script>
   $(document).ready(function () {
