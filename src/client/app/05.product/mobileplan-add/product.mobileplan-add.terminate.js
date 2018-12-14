@@ -135,13 +135,13 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
     if (respResult.prodTmsgTypCd === 'H') {
       popupOptions = $.extend(popupOptions, {
-        editor_html: respResult.prodTmsgHtmlCtt
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
       });
     }
 
     if (respResult.prodTmsgTypCd === 'I') {
       popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : respResult.rgstImgUrl,
+        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : Tw.Environment.cdn + respResult.rgstImgUrl,
         img_src: respResult.imgFilePathNm
       });
     }
