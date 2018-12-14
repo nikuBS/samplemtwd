@@ -38,6 +38,8 @@ Tw.MembershipClauseLayerPopup.prototype = {
         return Tw.POPUP_TPL.MEMBERSHIP_CLAUSE_ITEM['06'];
       case 'BE_04_02_L07':
         return Tw.POPUP_TPL.MEMBERSHIP_CLAUSE_ITEM['07'];
+      case 'BE_04_02_L09':
+        return Tw.POPUP_TPL.MEMBERSHIP_CLAUSE_ITEM['09'];
     }
   },
 
