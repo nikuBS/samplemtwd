@@ -833,7 +833,7 @@ Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
 Tw.MYT_DATA_FAMILY_SUCCESS_DELETE_MONTHLY = '매월 자동 공유 해지 완료';
 
 Tw.MYT_DATA_CANCEL_MONTHLY = {
-  ALERT_NOT_SK: "SK텔레콤 사용자에게만 데이터 선물을 하실 수 있습니다.",
+  ALERT_NOT_SK: 'SK텔레콤 사용자에게만 데이터 선물을 하실 수 있습니다.',
   TITLE: '매월 자동 충전을 취소하시겠습니까?',
   CONTENTS: '취소는 다음 달부터 적용됩니다.',
   BTN_NAME: '취소하기'
@@ -1047,7 +1047,8 @@ Tw.CUSTOMER_VOICE = {
 };
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
-  SELECT_QUESTION: '문의사항 선택'
+  SELECT_QUESTION: '문의사항 선택',
+  SMS_ALARM: 'SMS알림 설정 시 답변이 등록되면 입력하신 휴대전화번호로 SMS가 발송됩니다.'
 };
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
