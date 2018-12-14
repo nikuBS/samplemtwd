@@ -109,7 +109,7 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      noticeList: this._confirmOptions.joinNoticeList,
+      noticeList: $.merge(this._confirmOptions.termNoticeList, this._confirmOptions.joinNoticeList),
       isComparePlan: this._isComparePlan,
       isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
