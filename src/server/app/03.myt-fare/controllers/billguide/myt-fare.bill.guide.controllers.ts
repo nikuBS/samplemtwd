@@ -224,6 +224,13 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
 
+      // 사용요금/청구요금이 존재하는지
+      if ( thisMain.reqQuery.line ) {
+        thisMain._billpayInfo.existBill = (thisMain._billpayInfo.useAmtDetailInfo && thisMain._billpayInfo.useAmtDetailInfo.length > 0);
+      } else {
+        thisMain._billpayInfo.existBill = (thisMain._billpayInfo.paidAmtDetailInfo && thisMain._billpayInfo.paidAmtDetailInfo.length > 0);
+      }
+
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
 
       thisMain.renderView(res, thisMain._urlTplInfo.combineRepresentPage, {
