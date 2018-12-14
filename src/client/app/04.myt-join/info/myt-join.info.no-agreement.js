@@ -165,9 +165,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     var options = {
       hbs:'actionsheet01',
       layer:true,
-      data:[
-        Tw.POPUP_TPL.JOIN_INFO_NO_AGREEMENT
-      ],
+      data:Tw.POPUP_TPL.JOIN_INFO_NO_AGREEMENT,
       btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
     };
     this._popupService.open(options, $.proxy(this._selectPopupCallback, this, $target));

@@ -70,7 +70,7 @@ class MyTFareBillSetReissue extends TwViewController {
       data['halfYear'] = this.setLocalHalfYearData(response.result.reissueYMs);
       // 유선인 경우에 재발행 사유 정보가 있어 아래정보로 유,무선 구분한다.
       if ( this.isLocal ) {
-        data['reasons'] = response.result.reissueReasons;
+        data['reasons'] = this.sortReasons(response);
         data['type'] = '02';
         this.setBillIsueTyps(MYT_FARE_BILL_REQ_REISSUE_MULTI_LOCAL_TYPE, data);
       } else {
@@ -78,6 +78,26 @@ class MyTFareBillSetReissue extends TwViewController {
       }
     }
     return data;
+  }
+
+  private sortReasons(response: any): any {
+    if (FormatHelper.isEmpty(response.result.reissueReasons)) {
+      return [];
+    }
+    // 사유 정렬순서
+    const idx = {
+      '03': 1,
+      '02': 2,
+      '06': 3,
+      '99': 4
+    };
+
+    const reasons = response.result.reissueReasons.map((v) => {
+      v.idx = idx[v.commCdVal];
+      return v;
+    });
+
+    return FormatHelper.sortObjArrAsc(reasons, 'idx');
   }
 
   private setBillIsueTyps(def, data) {

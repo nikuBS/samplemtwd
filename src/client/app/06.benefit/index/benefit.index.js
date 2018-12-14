@@ -101,21 +101,25 @@ Tw.BenefitIndex.prototype = {
 
   // 가입상담 상품선택 action sheet
   _choiceJoinAdvice: function () {
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: '',
-      data: Tw.POPUP_TPL.BENEFIT_JOIN_ADVICE_PRODUCT
-    }, $.proxy(this._callbackJoinAdvice, this));
+    var options = {
+      hbs:'actionsheet01',
+      layer:true,
+      data: Tw.POPUP_TPL.BENEFIT_JOIN_ADVICE_PRODUCT,
+      btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
+    };
+    this._popupService.open(options, $.proxy(this._callbackJoinAdvice, this));
   },
 
   _callbackJoinAdvice: function ($layer) {
     var self = this;
-    $layer.one('click', '.condition', function () {
-      $(this).addClass('checked');
+    $layer.one('click', '[name="r1"]', function () {
+      // $(this).addClass('checked');
       self._popupService.close();
       location.href = '/product/wireplan/join/reservation?type_cd=' + $(this).attr('id');
     });
+
+    // 닫기 버튼 클릭
+    $layer.one('click', '#fe-back', this._popupService.close);
   },
 
   // 할인금액 보기 클릭 이벤트
