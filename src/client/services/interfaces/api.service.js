@@ -69,12 +69,14 @@ Tw.ApiService.prototype = {
       }
       var cert = new Tw.CertificationSelect();
       setTimeout($.proxy(function () {
+        Tw.CommonHelper.allOffLoading();
         cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
     } else if ( resp.code === Tw.API_CODE.BFF_0020 ) {
       var certRepresentative = new Tw.CertificationRepresentative();
       setTimeout($.proxy(function () {
+        Tw.CommonHelper.allOffLoading();
         certRepresentative.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
