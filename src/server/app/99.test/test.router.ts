@@ -6,6 +6,7 @@ import TestMyTFareUnbill from './controllers/submain/test.myt-fare.submain.non-p
 import TestCustomerSvcInfoNoticeTworld from './controllers/test.customer.svc-info.notice.tworld.controller';
 import TestCustomerSvcInfoNoticeTworldNohyst from './controllers/test.customer.svc-info.notice.tworld.nohyst.controller';
 import TestMyTDataInfo from './controllers/test.myt-data.datainfo.controller';
+import TestMainMenuController from './controllers/test.main.menu.controller';
 
 class TestRouter extends TwRouter {
   constructor() {
@@ -17,6 +18,7 @@ class TestRouter extends TwRouter {
     this.controllers.push({ url: '/customer/svc-info/notice(/tworld)?', controller: TestCustomerSvcInfoNoticeTworld });
     this.controllers.push({ url: '/customer/svc-info/notice/tworld/nohyst', controller: TestCustomerSvcInfoNoticeTworldNohyst });
     this.controllers.push({ url: '/myt-data/datainfo', controller: TestMyTDataInfo });
+    this.controllers.push({ url: '/main/menu', controller: TestMainMenuController });
   }
 }
 
