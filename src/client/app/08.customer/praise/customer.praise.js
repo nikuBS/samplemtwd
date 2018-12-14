@@ -180,8 +180,7 @@ Tw.CustomerPraise.prototype = {
     });
 
     if (emptyInputs || this.$reasons.val().length === 0 || (this._selectedType === 1 && this._selectedArea === undefined)) {
-      this.$submitBtn.attr('disabled');
-      return;
+      return this.$submitBtn.attr('disabled');
     } else {
       this.$submitBtn.removeAttr('disabled');
     }
@@ -255,7 +254,8 @@ Tw.CustomerPraise.prototype = {
 
   _handleClickCancel: function() {
     var ALERT = Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL;
-    this._popupService.openConfirm(ALERT.MSG, ALERT.MSG, $.proxy(this._handleConfirmCancel, this));
+    this._popupService.openConfirmButton(null, ALERT.TITLE,
+      $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _handleConfirmCancel: function() {
