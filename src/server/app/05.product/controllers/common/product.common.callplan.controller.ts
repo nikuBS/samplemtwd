@@ -239,7 +239,7 @@ class ProductCommonCallplan extends TwViewController {
       }
 
       contentsResult.LIST.push(Object.assign(item, {
-        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm'),
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prVisual' : 'plm'),
         ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
       }));
     });
