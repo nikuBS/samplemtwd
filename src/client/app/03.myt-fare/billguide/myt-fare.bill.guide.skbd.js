@@ -19,6 +19,7 @@ Tw.MyTFareBillGuideSKBD = function (rootEl) {
     $.proxy(function ($layer) {
       $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
     }, this), $.proxy(function () {
+      Tw.CommonHelper.startLoading('.wrap', 'grey', true);
       this._historyService.goBack();
     }, this)
   );

@@ -177,27 +177,20 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="user-month-bill">
-                    <div class="this-month-bill type3">
-                        <p class="stit"><%=commDataInfo.selClaimDt %>
-                            <span data-target="searchNmSvcType">
-                                <i class="icon-whole"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
-                            </span>
-                        </p>
-                        <% if( billpayInfo.useAmtTot != 0 ){ %>
-                        <p class="price"><%=commDataInfo.useAmtTot %></p>
+                    <div class="this-month-bill">
+                        <p class="stit"><%=commDataInfo.selClaimDt %></p>
+                        <p class="msg">
+                            <span class="str">
+                                <% for (var i=0; i < intBillLineInfo.length; i++) {
+                                     if ( intBillLineInfo[i].acntRepYN === 'Y' ) {
+                                %>
+                                <%= intBillLineInfo[i].label %>
+                                <%   }
+                                   }
+                                %>
+                            </span>에<br />통합청구되었습니다.</p>
                         <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
-                        <% } %>
                         <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건 변경</button></div>
-                    </div>
-                    <% if( billpayInfo.useAmtTot == 0 ){ %>
-                    <div class="result-none type2">
-                        이번 달에 사용하신 이용요금이 없습니다.
-                    </div>
-                    <% } %>
-
-                    <div class="detail-bill">
-                        <ul data-target="hbPaidAmtSvcCdListArea">
-                        </ul>
                     </div>
                 </div>
                 <% if( billpayInfo.coClCd === 'B' ){ %>
