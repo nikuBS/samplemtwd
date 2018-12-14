@@ -202,7 +202,7 @@ Tw.ProductCommonCallplan.prototype = {
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      return this._tidLanding.goLogin();
+      return this._tidLanding.goLogin(location.href + (Tw.FormatHelper.isEmpty(location.search) ? '' : location.search));
     }
 
     var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
