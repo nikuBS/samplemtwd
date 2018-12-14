@@ -248,6 +248,7 @@
                             <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
                             <% if(homeData.billData) { %>
+                            <% if(homeData.billData.isBroadband) { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
                                 <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
@@ -257,7 +258,6 @@
                                     <p class="tx">전화 106 또는 <button class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
                                 </div>
                             </div>
-                            <% if(homeData.billData.isBroadband) { %>
                             <% } else { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
