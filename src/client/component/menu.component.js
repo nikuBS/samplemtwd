@@ -271,7 +271,7 @@ Tw.MenuComponent.prototype = {
         item.isBg = item.bgimgUseYn === 'Y' ? true : false;
         item.hasChildren = item.children.length > 0 ? true : false;
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
-        item.isLink = !!item.menuUrl;
+        item.isLink = !!item.menuUrl && item.menuUrl !== '/';
 
         if (!!item.urlAuthClCd) {
           if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
