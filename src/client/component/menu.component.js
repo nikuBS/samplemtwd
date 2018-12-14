@@ -32,7 +32,7 @@ Tw.MenuComponent = function () {
 
 Tw.MenuComponent.prototype = {
   TOP_PADDING_MENU: {
-    M000603: 'M000603',  // 이용안내
+    M000602: 'M000602',  // 이용안내
     M000537: 'M000537',  // T Apps
     M000812: 'M000812'   // Direct shop
   },
