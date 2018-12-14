@@ -13,7 +13,7 @@
             <% if (( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
             <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
             <% } %>
-            <% if ( isMobileplan && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') ) { %>
+            <% if ( ( isMobileplan || isCombine ) && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') ) { %>
             <%- prodRedisInfo.summary.smryHtmlCtt %>
             <% } %>
             <% if (( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming ) &&
