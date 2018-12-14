@@ -134,6 +134,10 @@ Tw.CommonHelper = (function () {
     });
   };
 
+  var replaceCdnUrl = function(context) {
+    return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -149,6 +153,7 @@ Tw.CommonHelper = (function () {
     endLoading: endLoading,
     resetHeight: resetHeight,
     openTermLayer: openTermLayer,
-    fileUpload: fileUpload
+    fileUpload: fileUpload,
+    replaceCdnUrl: replaceCdnUrl
   };
 })();

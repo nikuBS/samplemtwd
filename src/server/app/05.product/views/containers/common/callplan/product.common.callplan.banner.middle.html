@@ -1,5 +1,5 @@
 <% if ( prodRedisInfo.banner.C && prodRedisInfo.banner.C.bnnrImgUrl ) { %>
-<a href="<%= prodRedisInfo.banner.C.bnnrLinkUrl %>"><img src="<%= prodRedisInfo.banner.C.bnnrImgUrl %>"></a>
+<a href="<%= prodRedisInfo.banner.C.bnnrLinkUrl %>"><img src="<%= CDN %><%= prodRedisInfo.banner.C.bnnrImgUrl %>"></a>
 <% } else if ( prodRedisInfo.banner.C && prodRedisInfo.banner.C.bnnrDtlHtmlCtt ) { %>
 <%- prodRedisInfo.banner.C.bnnrDtlHtmlCtt %>
 <% } %>
