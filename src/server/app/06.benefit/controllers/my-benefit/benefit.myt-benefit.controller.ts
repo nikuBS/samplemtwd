@@ -91,7 +91,7 @@ class BenefitMyBenefit extends TwViewController {
         if ( parseInt(combination.result.etcCnt, 10) > 0 ) {
           options['bond'] = {
             name: combination.result.prodNm,
-            total: parseInt(combination.result.etcCnt, 10)
+            total: parseInt(combination.result.etcCnt, 10) + (combination.result.prodNm.trim() !== '' ? 1 : 0)
           };
           options['count'] += options['bond'].total;
         }
