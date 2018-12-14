@@ -61,7 +61,7 @@ Tw.CommonPostcodeLast.prototype = {
     this.$zip = this.$selectedTab.find('.fe-zip');
     this.$detailAddress = this.$selectedTab.find('.fe-address');
     this._postType = this.$selectedTab.attr('data-type');
-    this.$saveBtn = this.$selectedTab.find('.fe-save');
+    this.$saveBtn = this.$layer.find('.fe-save');
     this.$saveAddress = {};
   },
   _initData: function ($addressObject) {
