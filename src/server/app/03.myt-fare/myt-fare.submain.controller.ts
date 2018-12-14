@@ -14,7 +14,7 @@ import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ER
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
-import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
+import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTFareSubmainController extends TwViewController {
@@ -181,7 +181,7 @@ class MyTFareSubmainController extends TwViewController {
         data.contribution = contribution;
       }
       // 배너
-      if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
+      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner.result);
         }
@@ -250,7 +250,7 @@ class MyTFareSubmainController extends TwViewController {
           }
         }
 
-        if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( banner.code === API_CODE.REDIS_SUCCESS ) {
           if ( !FormatHelper.isEmpty(banner.result) ) {
             data.banner = this.parseBanner(banner.result);
           }

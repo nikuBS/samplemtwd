@@ -5,7 +5,7 @@
 * CO_01_05_02_04
 %>
 <% include ../../components/start.component.html %>
-<body>
+<body>ㅅ
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -38,7 +38,7 @@
                         <div class="list-edit-bt"><button id="fe-bt-complete" class="edit">저장</button><button id="fe-bt-guide" class="list-edit-guide">이용안내 <span class="ico"></span></button></div>
                         <div class="mline-manage-sort">
                             <div class="sortlist">
-                                <p class="mline-manage-ti">이용중인 회선 <span class="mline-num red"><span class="num"><%= expsY.length %></span>개</span></p>
+                                <p class="mline-manage-ti">이용중인 회선 <span class="mline-num red"><span id="fe-txt-used" class="num"><%= expsY.length %></span>개</span></p>
                                 <ul id="sortable-enabled" class="connectedSortable enabled">
                                     <% expsY.map((line) => { %>
                                     <li class="ui-state-default fe-item fe-item-active" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
@@ -63,10 +63,10 @@
                                 </ul>
 
                                 <hr class="cont-sp type4" aria-hidden="true"/>
-                                <p class="mline-manage-ti">추가 가능한 회선 <span class="mline-num blue"><span class="num"><%= expsN.length %></span>개</span></p>
+                                <p class="mline-manage-ti">추가 가능한 회선 <span class="mline-num blue"><span id="fe-txt-unused" class="num"><%= expsN.length %></span>개</span></p>
                                 <ul id="sortable-disabled" class="connectedSortable disabled">
                                     <% expsN.map((line) => { %>
-                                    <li class="ui-state-default fe-item" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
+                                    <li class="ui-state-default fe-item fe-item-inactive" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %></p>
                                             <% if(category !== 'S') { %>

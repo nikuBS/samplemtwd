@@ -18,7 +18,7 @@ Tw.CommonLoginDormancy.prototype = {
           if (res.code === Tw.API_CODE.CODE_00) {
             window.location = '/main/home';
           } else if (res.code === Tw.API_LOGIN_ERROR.ICAS3228) {  // Need service password
-            window.location = '/common/login/customer-pwd';
+            window.location = '/common/login/cust-pwd';
           } else {
             Tw.Popup.openAlert(res.code + ' ' + res.msg);
           }

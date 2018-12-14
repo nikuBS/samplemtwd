@@ -577,3 +577,9 @@ export const ROAMING_RECEIVE_CENTER = {
   '6': '대구공항 2층 로밍 센터',
   '7': '대구 SKT 황금점 매장'
 };
+
+export const NODE_API_ERROR = {
+  '1001': '로그인이 필요합니다.',
+  '01': '해당 값이 없습니다.',
+  '02': '잘못된 형식입니다.'
+};

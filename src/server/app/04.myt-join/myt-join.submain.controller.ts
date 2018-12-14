@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
+import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTJoinSubmainController extends TwViewController {
@@ -208,7 +208,7 @@ class MyTJoinSubmainController extends TwViewController {
         }
       }
       // 배너 정보
-      if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
+      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner.result);
         }

@@ -23,12 +23,6 @@ export const REDIS_HOME_NOTICE = 'HomeNotice:';
 export const REDIS_HOME_HELP = 'HomeCicntsList';
 export const REDIS_MENU_URL = 'MenuSubUrl:';
 
-export enum REDIS_CODE {
-  CODE_SUCCESS = '00',
-  CODE_EMPTY = '01',
-  CODE_ERROR = '02'
-}
-
 export enum CHANNEL_CODE {
   PC = 'O',
   MWEB = 'M',

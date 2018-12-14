@@ -111,6 +111,12 @@ Tw.CommonHelper = (function () {
     skt_landing.action.loading.off({ ta: target });
   };
 
+  var allOffLoading = function () {
+    if($('.tw-loading').length > 0) {
+      skt_landing.action.loading.allOff();
+    }
+  };
+
   var resetHeight = function ($element) {
     $element.slick.animateHeight();
   };
@@ -151,6 +157,7 @@ Tw.CommonHelper = (function () {
     openFreeSms: openFreeSms,
     startLoading: startLoading,
     endLoading: endLoading,
+    allOffLoading: allOffLoading,
     resetHeight: resetHeight,
     openTermLayer: openTermLayer,
     fileUpload: fileUpload,
