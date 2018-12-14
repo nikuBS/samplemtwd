@@ -228,10 +228,10 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onClickSuspend: function () {
     var option = {};
-    var from, to, diff;
+    var from, to, diff, $period;
     if ( this.$optionType.filter('[checked]').val() === 'military' ) {
       //validation check
-      var $period = this.$container.find('.fe-military.fe-period');
+      $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
@@ -248,7 +248,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     } else {
       //validation check
       from = Tw.DateHelper.getCurrentShortDate();
-      var $period = this.$container.find('.fe-abroad.fe-date');
+      $period = this.$container.find('.fe-abroad.fe-date');
       to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'days') ;
       if ( diff < 0 ) {

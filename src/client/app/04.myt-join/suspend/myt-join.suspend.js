@@ -74,7 +74,7 @@ Tw.MyTJoinSuspend.prototype = {
     }
   },
 
-  _onClose: function(e){
+  _onClose: function(){
     this._historyService.goLoad('/myt-join/submain');
   }
 };
