@@ -3,7 +3,7 @@
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
  */
-Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
+Tw.MyTFareBillGuideChild = function (rootEl, resData) {
   this.resData = resData;
   Tw.Logger.info('[Server Res Data]', resData);
 
@@ -20,18 +20,12 @@ Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
   this.paramLine = '';
 };
 
-Tw.MyTFareBillGuideIndividual.prototype = {
+Tw.MyTFareBillGuideChild.prototype = {
   _init: function () {
 
     this._cachedElement();
     this._bindEvent();
     this._hbRegisterHelper();
-
-    if ( this.resData.childLineInfo ) {
-      this._getChildBillInfo();
-    } else {
-      $('#divChildListHaeder').hide();
-    }
 
     this._getUseBillsInfo();
 
@@ -98,10 +92,8 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   },
   _cachedElement: function () {
     this.$entryTplUseBill = $('#fe-entryTplUseBill');
-    this.$entryTplChild = $('#fe-entryTplChild');
 
     this.$hbDetailListArea = $('[data-target="hbDetailListArea"]');
-    this.$hbChildListArea = $('[data-target="hbChildListArea"]');
 
     this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
@@ -111,13 +103,6 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
 
-    this.$container.on('click', '[data-target="callGiftBtn"]', $.proxy(this._callGiftBtnEvt, this)); // 콜기프트 사용요금
-    this.$container.on('click', '[data-target="roamingBtn"]', $.proxy(this._roamingBtnEvt, this)); // 로밍 사용요금
-    this.$container.on('click', '[data-target="donationBtn"]', $.proxy(this._donationBtnEvt, this)); // 기부금/후원금 사용요금
-
-    this.$container.on('click', '[data-target="feePayBtn"]', $.proxy(this._feePayBtnEvt, this)); // 요금납부
-    this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
-
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
       this._history.goLoad('/myt-fare/bill/contents');
     }, this));
@@ -126,31 +111,14 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       this._history.goLoad('/myt-fare/bill/small');
     }, this));
 
-    this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동
+    this.$container.on('click', '#divUnpaidBill button', $.proxy(function() { // 미납요금으로 이동
+      var dt = this.resData.reqQuery.date || '';
+      this._history.goLoad('/myt-fare/unbill?child=' + this.resData.reqQuery.line + '&dt=' + dt);
+    }, this));
+
   },
   //--------------------------------------------------------------------------[EVENT]
-  _feePayBtnEvt: function () {
-    Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
-    this.myTFarePayment = new Tw.MyTFareBill(this.$container);
-  },
-  _payListBtnEvt: function () {
-    Tw.Logger.info('[납부내역조회]');
-    this._history.goLoad('/myt-fare/info/history');
-  },
-  _callGiftBtnEvt: function () {
-    this._history.goLoad('/myt-fare/billguide/callgift');
-  },
-  _roamingBtnEvt: function () {
-    this._history.goLoad('/myt-fare/billguide/roaming');
-  },
-  _donationBtnEvt: function () {
-    this._history.goLoad('/myt-fare/billguide/donation');
-  },
-  _goChildBillInfo: function(event) {
-    var childLine = $(event.currentTarget).data('svc-mgmt-num');
-    var dt = this.resData.reqQuery.date || '';
-    this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
-  },
+
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_select_a_type';
@@ -202,66 +170,18 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _conditionChangeEvtClose: function () {
     Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     var param = {
+      line: this.resData.reqQuery.line,
       date: this.paramDate
     };
-    this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
+    this._history.goLoad('/myt-fare/billguide/child?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]
-  _getChildBillInfo: function () {
-    var thisMain = this;
-    var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0036;
-    var commands = [];
 
-    for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({
-        command: targetApi,
-        params: {
-          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
-          detailYn:'Y',
-          invDt: this.resData.reqQuery.date
-        }});
-    }
-
-    Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
-    this._apiService.requestArray(commands)
-      .done(function () {
-        var childLineInfo = thisMain.resData.childLineInfo;
-
-        _.each(arguments, function (element, index) {
-          if ( element.result && (element.result.selSvcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
-            childLineInfo[index].detailInfo = element.result;
-          }
-        });
-
-        thisMain._getChildBillInfoInit();
-
-      });
-  },
-  _getChildBillInfoInit: function () {
-    var thisMain = this;
-    var childListData = thisMain.resData.childLineInfo;
-
-    for(var i = 0; i < childListData.length; i++){
-      var item = childListData[i];
-      item.svcNum = thisMain._phoneStrToDash(item.svcNum);
-      if ( item.detailInfo ) {
-        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
-      }
-    }
-
-    Tw.Logger.info('childListData', childListData);
-
-    this._svcHbDetailList(childListData, this.$hbChildListArea, this.$entryTplChild);
-
-  },
-
-
-  // BFF_05_0047 사용요금 조회(본인)
+  // BFF_05_0047 사용요금 조회
   _getUseBillsInfo: function () {
     return this._apiService.request(Tw.API_CMD.BFF_05_0047, {
-      sSvcMgmtNum: this.resData.reqQuery.line,
+      childSvcMgmtNum: this.resData.reqQuery.line,
       invDt: this.resData.reqQuery.date
     }).done($.proxy(this._getUseBillsInfoInit, this));
   },
@@ -292,6 +212,18 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       //위젯 아코디언 초기화
       skt_landing.widgets.widget_accordion($('.widget'));
 
+      // 미납요금 계산
+      if( res.result.unPayAmtList && res.result.unPayAmtList.length > 0){
+        var unpayList = res.result.unPayAmtList;
+        var unpayTot = 0;
+        for(var i = 0; i < unpayList.length; i++){
+          unpayTot += parseInt(unpayList[i].comBat, 10);
+        }
+        if(unpayTot > 0){
+          $('#spanUnpaidTot').text(Tw.FormatHelper.addComma(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);
+          $('#divUnpaidBill').show();
+        }
+      }
     }
   },
   //--------------------------------------------------------------------------[SVC]

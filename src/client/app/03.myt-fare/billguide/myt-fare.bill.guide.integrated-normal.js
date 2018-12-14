@@ -120,6 +120,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       this._history.goLoad('/myt-fare/bill/small');
     }, this));
 
+    this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동
   },
   //--------------------------------------------------------------------------[EVENT]
   _callGiftBtnEvt: function () {
@@ -130,6 +131,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   _donationBtnEvt: function () {
     this._history.goLoad('/myt-fare/billguide/donation');
+  },
+  _goChildBillInfo: function(event) {
+    var childLine = $(event.currentTarget).data('svc-mgmt-num');
+    var dt = this.resData.reqQuery.date || '';
+    this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
   },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);

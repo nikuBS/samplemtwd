@@ -42,6 +42,7 @@ import MyTFareBillContentsAutoInfo from './controllers/billcontents/myt-fare.bil
 import MyTFareBillContentsAutoChange from './controllers/billcontents/myt-fare.bill.contents.auto.change.controller';
 import MyTFareBillPayComplete from './controllers/bill/myt-fare.bill.pay-complete.controller';
 import MyTFareBillPointComplete from './controllers/bill/myt-fare.bill.point-complete.controller';
+import MyTFareBillGuideChild from './controllers/billguide/myt-fare.bill.guide.child.controllers';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -97,6 +98,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/submain(/usagefee)?', controller: MyTFareSubMain });
     this.controllers.push({ url: '/unbill', controller: MyTFareSubMainNonBill });
     this.controllers.push({ url: '/billguide/guide', controller: MyTFareBillGuide });
+    this.controllers.push({ url: '/billguide/child', controller: MyTFareBillGuideChild });
     this.controllers.push({ url: '/billguide/callgift', controller: MyTFareBillGuideCallGift });
     this.controllers.push({ url: '/billguide/roaming', controller: MyTFareBillGuideRoaming });
     this.controllers.push({ url: '/billguide/donation', controller: MyTFareBillGuideDonation });

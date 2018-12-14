@@ -1,29 +1,12 @@
 <%#
-* FileName: myt-fare.bill.guide.individual.html
-* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
-* Date: 2018.09.12
+* FileName: myt-fare.bill.guide.dhile.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.12.13
+* MF_09_01
 %>
 
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-
-<script id="fe-entryTplChild" type="text/x-handlebars-template">
-    <div>
-        {{!-- 주석 : 자녀사용요금 --}}
-        {{# each resData as |rootItem rootIndex|}}
-        <li>
-            <button data-target="childBillInfo" data-svc-mgmt-num="{{rootItem.svcMgmtNum}}">
-                <span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>
-                <span class="cont">
-                <span class="info-title">{{rootItem.eqpMdlNm}}<i class="icon-children ml6"><span class="blind">자녀</span></i></span>
-                <span class="info-sub">{{rootItem.svcNum}}</span>
-                <span class="price">{{rootItem.detailInfo.useAmtTot}}원</span>
-            </span>
-            </button>
-        </li>
-        {{/each}}
-    </div>
-</script>
 
 <script id="fe-entryTplUseBill" type="text/x-handlebars-template">
 
@@ -32,10 +15,8 @@
         <div class="statement-cont type2">
             <div class="single-list">
                 <span class="title">
-                    {{!-- 주석 아이콘 --}}
-                    {{#if_icon rootItem.label }}
-                    {{/if_icon}}
-                    <span class="in-tx type2">{{resData.useSvcType.svcType}}</span>
+                    <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                    <span class="in-tx type2">휴대폰</span>
                 </span>
             </div>
 
@@ -144,7 +125,7 @@
 
 <div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
 
-    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '자녀 이용요금' }); %>
 
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -161,10 +142,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
-                    <a href="/product/callplan/<%= svcInfo.prodId %>">
+                    <a href="/product/callplan/<%= commDataInfo.intBillLineList[0].prodId %>">
                     <button class="wrap-link">
-                        <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
-                        <span class="stit"><%= svcInfo.prodNm %></span>
+                            <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
+                            <span class="stit"><%= commDataInfo.intBillLineList[0].prodNm %></span>
+
                     </button>
                     </a>
                 </div>
@@ -177,9 +159,7 @@
                 <div class="user-month-bill">
                     <div class="this-month-bill type3">
                         <p class="stit"><%=commDataInfo.selClaimDt %>
-                            <span data-target="searchNmSvcType">
-                                <i class="icon-whole"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
-                            </span>
+                            <span class="bar"></span><%=commDataInfo.intBillLineList[0].label %>
                         </p>
                         <% if( billpayInfo.useAmtTot != 0 ){ %>
                         <p class="price"><%=commDataInfo.useAmtTot %></p>
@@ -209,67 +189,25 @@
             <div data-target="hbDetailListArea">
 
             </div>
-
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="btn-link-list">
-                    <% if(showConditionInfo.autopayYn == 'N' && showConditionInfo.selectNonPaymentYn == 'Y' ){ %>
-                    <li class="last-line">
-                        <button data-target="feePayBtn">요금 납부</button>
-                    </li>
-                    <% } %>
-                    <li class="last-line">
-                        <button data-target="payListBtn">납부 내역 조회</button>
-                    </li>
-                </ul>
+            <div id="divUnpaidBill" style="display: none;">
+                <div class="cont-box nogaps">
+                    <ul class="full-link-list" >
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">미납요금</span>
+                                    <span class="text type2" id="spanUnpaidTot"></span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
             </div>
             <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm" id="divChildListHaeder">
-                <h3 class="tit-type6">자녀 회선 이용요금</h3>
-
-                <ul class="my-line-info" data-target="hbChildListArea">
-
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="full-link-list">
-                    <li>
-                        <button data-target="callGiftBtn">
-                                <span class="inner">
-                                    <span class="tit">콜기프트 사용요금</span>
-                                </span>
-                        </button>
-                    </li>
-                    <li>
-                        <button data-target="roamingBtn">
-                                <span class="inner">
-                                    <span class="tit">로밍 사용요금</span>
-                                </span>
-                        </button>
-                    </li>
-                    <li>
-                        <button data-target="donationBtn">
-                                <span class="inner">
-                                    <span class="tit">기부금/후원금</span>
-                                </span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
@@ -293,14 +231,12 @@
 
 <script>
   $(document).ready(function () {
-    var oMyTFareGuide = new Tw.MyTFareBillGuideIndividual( $('#fe-wrap'), {
+    new Tw.MyTFareBillGuideChild( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      allSvc: <%-JSON.stringify(allSvc) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       commDataInfo : <%-JSON.stringify(commDataInfo) %>,
       intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
-      childLineInfo : <%-JSON.stringify(childLineInfo) %>,
       showConditionInfo : <%-JSON.stringify(showConditionInfo) %>,
       unpaidBillsInfo : <%-JSON.stringify(unpaidBillsInfo) %>
   } );

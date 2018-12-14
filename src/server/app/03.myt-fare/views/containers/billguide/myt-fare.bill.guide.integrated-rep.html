@@ -22,7 +22,7 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
     {{!-- 주석 : 자녀사용요금 --}}
     {{# each resData as |rootItem rootIndex|}}
     <li>
-        <button>
+        <button data-target="childBillInfo" data-svc-mgmt-num="{{rootItem.svcMgmtNum}}">
             <span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>
             <span class="cont">
                 <span class="info-title">{{rootItem.eqpMdlNm}}<i class="icon-children ml6"><span class="blind">자녀</span></i></span>
@@ -271,12 +271,12 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
+                    <a href="/product/callplan/<%= svcInfo.prodId %>">
                     <button class="wrap-link">
-                        <a href="/product/callplan/<%= svcInfo.prodId %>">
                         <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
                         <span class="stit"><%= svcInfo.prodNm %></span>
-                        </a>
                     </button>
+                    </a>
                 </div>
             </div>
             <!--// .cont-box -->
