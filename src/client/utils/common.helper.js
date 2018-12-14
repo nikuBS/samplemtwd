@@ -68,7 +68,7 @@ Tw.CommonHelper = (function () {
     return Tw.Api.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData);
   };
 
-  var showDataCharge = function (confirmCallback, cancelCallback) {
+  var showDataCharge = function (confirmCallback, closeCallback) {
     Tw.Popup.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
       Tw.POPUP_TITLE.EXTERNAL_LINK,
@@ -76,7 +76,7 @@ Tw.CommonHelper = (function () {
         Tw.Popup.close();
         confirmCallback();
       },
-      cancelCallback
+      closeCallback
     );
   };
 
