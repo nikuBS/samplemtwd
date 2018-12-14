@@ -161,8 +161,6 @@ Tw.CertificationSelect.prototype = {
     this._opMethods = this._certInfo.opAuthMethods;
     this._optMethods = this._certInfo.optAuthMethods;
 
-    console.log('product cert');
-
     if ( !Tw.FormatHelper.isEmpty(this._optMethods) && this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 ) {
       this._optionCert = true;
     }
