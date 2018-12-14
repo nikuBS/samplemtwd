@@ -243,14 +243,16 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  JOIN_INFO_NO_AGREEMENT: {
-    'list': [
-      {'label-attr':'id="0"','radio-attr':'id="0" name="r1" value="전체"','txt':'전체'},
-      {'label-attr':'id="1"','radio-attr':'id="1" name="r1" value="포인트 사용"','txt':'포인트 사용'},
-      {'label-attr':'id="2"','radio-attr':'id="2" name="r1" value="포인트 적립"','txt':'포인트 적립'},
-      {'label-attr':'id="3"','radio-attr':'id="3" name="r1" value="포인트 소멸"','txt':'포인트 소멸'}
-    ]
-  },
+  JOIN_INFO_NO_AGREEMENT: [
+    {
+      'list': [
+        {'label-attr':'id="0"','radio-attr':'id="0" name="r1" value="전체"','txt':'전체'},
+        {'label-attr':'id="1"','radio-attr':'id="1" name="r1" value="포인트 사용"','txt':'포인트 사용'},
+        {'label-attr':'id="2"','radio-attr':'id="2" name="r1" value="포인트 적립"','txt':'포인트 적립'},
+        {'label-attr':'id="3"','radio-attr':'id="3" name="r1" value="포인트 소멸"','txt':'포인트 소멸'}
+      ]
+    }
+  ],
   JOIN_INFO_MGMT_PERIOD: {
     title: '기간선택',
     data: [
@@ -409,11 +411,11 @@ Tw.POPUP_TPL = {
   BENEFIT_JOIN_ADVICE_PRODUCT: [
     {
       'list': [
-        { 'option': 'condition', 'attr': 'id="cellphone"', value: '휴대폰' },
-        { 'option': 'condition', 'attr': 'id="internet"', value: '인터넷' },
-        { 'option': 'condition', 'attr': 'id="phone"', value: '전화' },
-        { 'option': 'condition', 'attr': 'id="tv"', value: 'TV' },
-        { 'option': 'condition', 'attr': 'id="combine"', value: '결합상품' }
+        {'label-attr':'id="cellphone"','radio-attr':'id="cellphone" name="r1" value="휴대폰"','txt':'휴대폰'},
+        {'label-attr':'id="internet"' ,'radio-attr':'id="internet" name="r1" value="인터넷"','txt':'인터넷'},
+        {'label-attr':'id="phone"'    ,'radio-attr':'id="phone" name="r1" value="전화"','txt':'전화'},
+        {'label-attr':'id="tv"'       ,'radio-attr':'id="tv" name="r1" value="TV"','txt':'TV'},
+        {'label-attr':'id="combine"'  ,'radio-attr':'id="combine" name="r1" value="결합상품"','txt':'결합상품'}
       ]
     }
   ]

@@ -78,23 +78,21 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
     this.pushBillInfo(billArr, 'P' === billType ? 'NO' : 'X');
 
-    // P:T world, H:Bill Letter
-    if (['P', 'H'].some(o => o === billType)) {
+    // 'T world 확인'
+    if ('P' === billType) {
+      // 무선 이면서 SMS 수신 가능
+      if ('M' === lineType && 'Y' === data.isusimchk) {
+        this.pushBillInfo(billArr, 'YES');
+      } else { // 유선 이거나 SMS 수신불가일때
+        data.isNotTogether = true;  // 유선 일때는 '입력하실 정보가 없습니다.'
+      }
+    } else if ('H' === billType) { // Bill Letter
       // 무선 일 때만
       if ('M' === lineType) {
-        // 'T world 확인' 이면서 단독 USIM 체크가 Y 일때 (= SMS 수신 가능일때)
-        if ('P' === billType && 'Y' === data.isusimchk) {
-          if (data.nreqGuidSmsSndYn === 'Y') {
-            this.pushBillInfo(billArr, 'YES');
-          } else {
-            this.pushBillInfo(billArr, 'NO');
-          }
-        }
-        if ('H' === billType) {
-          this.pushBillInfo(billArr, 'B');
-        }
+        this.pushBillInfo(billArr, 'B');
       }
-    } else if (['B', 'H'].some(o => o === billType)) { // 문자 , Bill Letter
+      this.pushBillInfo(billArr, '2');
+    } if ('B' === billType) { // 문자
       this.pushBillInfo(billArr, '2');
     }
 
