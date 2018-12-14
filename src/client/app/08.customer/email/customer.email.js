@@ -94,14 +94,8 @@ Tw.CustomerEmail.prototype = {
   },
 
   _closeFaq: function () {
-    this._popupService.openConfirm(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        $(document.body).css('overflow', 'auto');
-        this.$wrap_faq.hide();
-        this._popupService.close();
-      }, this));
+    $(document.body).css('overflow', 'auto');
+    this.$wrap_faq.hide();
   },
 
   _openSMSAlert: function (e) {
