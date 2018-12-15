@@ -232,20 +232,38 @@ Tw.MenuComponent.prototype = {
               .then($.proxy(function (res) {
                 if (res.code === Tw.API_CODE.CODE_00) {
                   var info = res.result;
+                  if (info.coClCd === Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND) {
+                    $(elem).remove();
+                    return;
+                  }
                   var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
-                  var discount = info.deduckTotInvAmt ? parseInt(info.deduckTotInvAmt, 10) : 0;
                   $(elem).text(
-                    Tw.FormatHelper.convNumFormat(total + discount) + Tw.CURRENCY_UNIT.WON);
+                    Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                } else {
+                  $(elem).remove();
                 }
-              }, this));
+              }, this))
+              .fail(function () {
+                $(elem).remove();
+              });
             break;
           case 'data':
             this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
-              .then(function (res) {
+              .then($.proxy(function (res) {
                 if (res.code === Tw.API_CODE.CODE_00) {
-                  $(elem).text('NeedToParse');
+                  var text = this._parseUsage(res.result);
+                  if (!text) {
+                    $(elem).remove();
+                    return;
+                  }
+                  $(elem).text(text);
+                } else {
+                  $(elem).remove();
                 }
-              });
+              }, this))
+              .fail(function () {
+                $(elem).remove();
+              })
             break;
           case 'membership':
             this._apiService.request(Tw.API_CMD.BFF_04_0001, {})
@@ -258,7 +276,12 @@ Tw.MenuComponent.prototype = {
                     O: 'default'
                   };
                   $(elem).text(group[res.result.mbrGrCd]);
+                } else {
+                  $(elem).remove();
                 }
+              })
+              .fail(function () {
+                $(elem).remove();
               });
             break;
           default:
@@ -363,6 +386,37 @@ Tw.MenuComponent.prototype = {
     category[0] = subCategory;
 
     return category;
+  },
+
+  _parseUsage: function (info) {
+    if (info.gnrlData.length === 0) {
+      return undefined;
+    }
+
+    var ret = '';
+
+    var dataRemained = _.reduce(info.gnrlData, function (memo, item) {
+      if (memo < 0) { // Unlimit
+        return memo;
+      }
+
+      if (Tw.UNLIMIT_CODE.indexOf(item.unlimit) !== -1) {
+        memo = -1;
+        return memo;
+      }
+
+      memo += +item.remained;
+      return memo;
+    }, 0);
+
+    if (dataRemained < 0) {
+      ret = Tw.COMMON_STRING.UNLIMIT;
+    } else {
+      var dataObj = Tw.FormatHelper.convDataFormat(dataRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
+      ret = dataObj.data + dataObj.unit;
+    }
+
+    return ret;
   },
 
   isOpened: function () {
