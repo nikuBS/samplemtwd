@@ -63,6 +63,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '#fe-btn-simple-login', $.proxy(this._onSimpleLogin, this));
     this.$container.on('click', '.fe-menu-link', $.proxy(this._onMenuLink, this));
     this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
+    this.$container.on('click', '.fe-t-noti', $.proxy(this._onTNoti, this));
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
@@ -97,6 +98,12 @@ Tw.MenuComponent.prototype = {
           Tw.Error(err.code, err.msg).pop();
         });
     }
+  },
+  _onTNoti: function () {
+    if (!this._tNotifyComp) {
+      this._tNotifyComp = new Tw.TNotifyComponent();
+    }
+    this._tNotifyComp.open();
   },
   _onClose: function () {
     this._isOpened = false;
