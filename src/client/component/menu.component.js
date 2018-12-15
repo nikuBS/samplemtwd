@@ -30,6 +30,13 @@ Tw.MenuComponent = function () {
 
     this._init();
     this._bindEvents();
+
+    if (location.hash === '#menu') {
+      console.log('hakjoon menu');
+      setTimeout($.proxy(function () {
+        this.$gnbBtn.click();
+      }, this), 100);
+    }
   }, this));
 };
 
@@ -149,7 +156,7 @@ Tw.MenuComponent.prototype = {
   },
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
-    this._historyService.goLoad(url);
+    this._historyService.replaceURL(url);
   },
   _onFreeSMS: function () {
     Tw.CommonHelper.openFreeSms();
@@ -160,10 +167,10 @@ Tw.MenuComponent.prototype = {
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, '', null, null, $.proxy(function () {
-        this._historyService.goLoad(e.currentTarget.value);
+        this._historyService.replaceURL(e.currentTarget.value);
       }, this));
     } else {
-      this._historyService.goLoad(e.currentTarget.value);
+      this._historyService.replaceURL(e.currentTarget.value);
     }
   },
 

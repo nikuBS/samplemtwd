@@ -45,7 +45,7 @@
                     <!-- //case3 -->
                     <!-- //로그인 후 -->
                     <button class="c-notify on fe-when-login fe-t-noti none"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
-                    <a class="c-option fe-when-app-or-login none" href='/main/menu/settings'><span class="blind">설정</span></a>
+                    <button class="c-option fe-when-app-or-login fe-menu-link none" value='/main/menu/settings'><span class="blind">설정</span></button>
                 </div>
                 <div class="section-cont" id="fe-menu-area">
                     <!-- 검색영역 오픈시 제외
@@ -63,13 +63,13 @@
                     <!-- footer -->
                     <div class="footer">
                         <ul class="f-menu">
-                            <li><a class="bt" href="/main/menu/settings/terms">이용약관</a></li>
+                            <li><button class="bt fe-menu-link" value="/main/menu/settings/terms">이용약관</button></li>
                             <li><button class="bt fe-outlink" value="https://privacy.sktelecom.com/view.do?ctg=policy&name=policy"><strong>개인정보 처리방침</strong></button></li>
                             <li><a class="bt fe-when-web none" href="http://piuh.sktelecom.com" target=_blank><strong>개인정보 이용내역</strong></a></li>
                             <!-- li><button class="bt"><strong>인증서 불러오기</strong></button></li -->
                             <!-- 모바일 web -->
                             <li><button class="bt" id="fe-refund" value="/main/menu/refund">미환급금 조회</button></li>
-                            <li><a class="bt" href="/customer/damage-info">이용자 피해예방센터</a></li>
+                            <li><button class="bt fe-menu-link" value="/customer/damage-info">이용자 피해예방센터</button></li>
                         </ul>
                         <p class="f-info">
                             휴대폰 고객센터 : 국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료)<br>
@@ -80,12 +80,12 @@
                         <strong class="f-ltd">SK telecom., LTD</strong>
                         <div class="f-bt">
                             <!-- 로그인 전 -->
-                            <a class="f-member fe-when-logout none" href="/common/member/signup-guide">회원가입</a>
+                            <button class="f-member fe-when-logout fe-menu-link none" value="/common/member/signup-guide">회원가입</button>
                             <button class="f-login fe-bt-login fe-when-logout none">로그인</button>
                             <button class="f-login2 fe-when-logout-and-app none" id="fe-btn-simple-login">간편 로그인</button>
                             <!-- //로그인 전 -->
                             <!-- 로그인 후 -->
-                            <a class="f-member fe-when-login none" href="/common/member/manage">회원정보</a>
+                            <button class="f-member fe-when-login fe-menu-link none" value="/common/member/manage">회원정보</a>
                             <button class="f-logout fe-when-login none fe-bt-logout">로그아웃</button>
                             <!-- //로그인 후 -->
                         </div>
