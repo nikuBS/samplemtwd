@@ -73,9 +73,11 @@ Tw.MenuComponent.prototype = {
 
     $('.fe-bt-login').on('click', $.proxy(this._onClickLogin, this));
     $('.fe-bt-logout').on('click', $.proxy(this._onClickLogout, this));
+
+    this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
   },
   _onClickLogin: function () {
-    this._tidLanding.goLogin();
+    this._tidLanding.goLogin(location.href);
   },
   _onClickLogout: function () {
     this._tidLanding.goLogout();
@@ -343,7 +345,8 @@ Tw.MenuComponent.prototype = {
 
         if (!!item.urlAuthClCd) {
           if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
-            item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+            // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+            item.loginNeed = true;
             // item.children = [];
             // item.hasChildren = false;
           } else if (loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1) {

@@ -114,7 +114,9 @@
             {{else}}
             <div class="bt-depth1">
             {{/if}}
-                {{#if isLink}}
+                {{#if loginNeed}}
+                <button class="bt fe-bt-login">
+                {{else if isLink}}
                 <button class="bt fe-menu-link" value="{{menuUrl}}">
                 {{else}}
                 <button class="bt">
@@ -144,10 +146,18 @@
                     {{#if hasChildren}}
                     <strong class="ti">{{menuNm}}</strong>
                     {{#each children}}
+                    {{#if loginNeed}}
+                    <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
+                    {{else}}
                     <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                    {{/if}}
                     {{/each}}
                     {{else}}
+                    {{#if loginNeed}}
+                    <li class="line"><button class="bt fe-bt-login">{{menuNm}}</button></li>
+                    {{else}}
                     <li class="line"><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                    {{/if}}
                     {{/if}}
                     {{/each}}
                 </ul>
@@ -156,7 +166,11 @@
             <div class="depth2">
                 <ul>
                     {{#each children}}
+                    {{#if loginNeed}}
+                    <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
+                    {{else}}
                     <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                    {{/if}}
                     {{/each}}
                 </ul>
             {{/if}}
@@ -172,7 +186,9 @@
             {{else}}
             <div class="bt-depth1">
             {{/if}}
-                {{#if isLink}}
+                {{#if loginNeed}}
+                <button class="bt fe-bt-login">
+                {{else if isLink}}
                 <button class="bt fe-menu-link" value="{{menuUrl}}">
                 {{else}}
                 <button class="bt">
@@ -198,7 +214,11 @@
             <div class="depth2">
                 <ul>
                     {{#each children}}
+                    {{#if loginNeed}}
+                    <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
+                    {{else}}
                     <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                    {{/if}}
                     {{/each}}
                 </ul>
             </div>
