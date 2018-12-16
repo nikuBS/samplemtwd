@@ -23,9 +23,11 @@ Tw.CustomerAgentsearchNear = function (rootEl) {
   this._currentBranchType = 0;
   this._currentGu = undefined;
 
-  this._init();
-  this._cacheElements();
-  this._bindEvents();
+  this._showDataChargeIfNeeded($.proxy(function () {
+    this._init();
+    this._cacheElements();
+    this._bindEvents();
+  }, this));
 };
 
 Tw.CustomerAgentsearchNear.prototype = {
@@ -56,6 +58,25 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
     this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
+  },
+  _showDataChargeIfNeeded: function (callback) {
+    if (Tw.BrowserHelper.isApp()) {
+      var confirmed = false;
+      Tw.CommonHelper.showDataCharge(
+        $.proxy(function () {
+          confirmed = true;
+          callback();
+        }, this),
+        $.proxy(function () {
+          if (confirmed) {
+            return;
+          }
+          this._historyService.goBack();
+        }, this)
+      )
+    } else {
+      callback();
+    }
   },
   _checkTermAgreement: function (location) {
     var isAgreed = false;

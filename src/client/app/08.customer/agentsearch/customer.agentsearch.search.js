@@ -89,7 +89,6 @@ Tw.CustomerAgentsearch.prototype = {
     this.$btnOptions.on('click', $.proxy(this._onOptionsClicked, this));
     this.$container.on('click', '.bt-more button', $.proxy(this._onMoreRequested, this));
     this.$container.on('click', '.fe-branch-detail', $.proxy(this._onBranchDetail, this));
-    this.$container.on('click', '.fe-data-charge', $.proxy(this._onNearBranchClicked, this));
     this.$container.on('click', '.fe-custom-replace-history', $.proxy(this._onTabChanged, this));
   },
   _onTabChanged: function (e) {
@@ -279,22 +278,7 @@ Tw.CustomerAgentsearch.prototype = {
 
     var code = $(e.currentTarget).attr('value');
 
-    if (Tw.BrowserHelper.isApp()) {
-      this._showDataChargePopup($.proxy(function () {
-        this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
-      }, this));
-    } else {
-      this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
-    }
-  },
-  _onNearBranchClicked: function (e) {
-    if (Tw.BrowserHelper.isApp()) {
-      this._showDataChargePopup($.proxy(function () {
-        this._historyService.goLoad($(e.currentTarget).attr('href'));
-      }, this));
-      return false;
-    }
-    return true;
+    this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
   },
   _showDataChargePopup: function (onConfirm) {
     this._popupService.openConfirm(

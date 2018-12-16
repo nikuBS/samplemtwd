@@ -88,6 +88,10 @@ class CustomerAgentsearchDetail extends TwViewController {
     const star = Math.round(parseFloat(purified.custRateAvg));
     purified.star = 'star' + star;
 
+    if (purified.custRateAvg.match(/\d/)) {
+      purified.custRateAvg += '.0';
+    }
+
     return purified;
   }
 }
