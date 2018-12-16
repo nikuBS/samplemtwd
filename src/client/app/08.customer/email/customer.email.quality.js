@@ -34,6 +34,16 @@ Tw.CustomerEmailQuality.prototype = {
   _request: function () {
     var qualityCategory = this.$quality_depth1.data('quality-depth1');
 
+    if ( !this._isValidServiceEmail() ) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM
+      );
+
+      return false;
+    }
+
     switch ( qualityCategory ) {
       case 'cell':
         this._requestCell();
@@ -132,5 +142,11 @@ Tw.CustomerEmailQuality.prototype = {
     } else {
       $('.fe-quality_register').prop('disabled', true);
     }
+  },
+
+  _isValidServiceEmail: function () {
+    var sEmail = $('.fe-quality_email').val();
+
+    return Tw.ValidationHelper.isEmail(sEmail);
   }
 };
