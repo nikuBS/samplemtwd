@@ -137,7 +137,7 @@ class MyTFareBillGuide extends TwViewController {
           if ( thisMain._billpayInfo.coClCd === 'B' ) {
             thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
             thisMain._typeChk = 'A3';
-            thisMain.skbroadbandCircuit(res);
+            thisMain.skbroadbandCircuit(res, svcInfo);
           } else {
             if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
               thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
@@ -223,6 +223,13 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
 
       thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
+
+      // 사용요금/청구요금이 존재하는지
+      if ( thisMain.reqQuery.line ) {
+        thisMain._billpayInfo.existBill = (thisMain._billpayInfo.useAmtDetailInfo && thisMain._billpayInfo.useAmtDetailInfo.length > 0);
+      } else {
+        thisMain._billpayInfo.existBill = (thisMain._billpayInfo.paidAmtDetailInfo && thisMain._billpayInfo.paidAmtDetailInfo.length > 0);
+      }
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
 
@@ -423,9 +430,12 @@ class MyTFareBillGuide extends TwViewController {
     const thisMain = this;
   }
   // SK브로드밴드가입
-  private skbroadbandCircuit(res) {
+  private skbroadbandCircuit(res, svcInfo) {
     const thisMain = this;
-    thisMain.renderView(res, thisMain._urlTplInfo.skbroadbandPage, {});
+    thisMain.renderView(res, thisMain._urlTplInfo.skbroadbandPage, {
+      svcInfo: svcInfo,
+      pageInfo: thisMain.pageInfo
+    });
   }
 
   // -------------------------------------------------------------[SVC]
@@ -519,7 +529,12 @@ class MyTFareBillGuide extends TwViewController {
       if ( item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
         item.label = thisMain.phoneStrToDash( item.svcNum );
       } else {
-        item.label = item.dtlAddr;
+        if ( item.dtlAddr && item.dtlAddr.length > 18 ) {
+          item.label = item.dtlAddr.substr(0, 18);
+        } else {
+          item.label = item.dtlAddr;
+        }
+
       }
     }
     svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );

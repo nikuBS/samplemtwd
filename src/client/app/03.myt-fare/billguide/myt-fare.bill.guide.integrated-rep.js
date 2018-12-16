@@ -340,6 +340,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       paidAmtDetailInfo = $.extend(true, {}, paidAmtDetailInfo);
       paidAmtDetailInfo = _.map(paidAmtDetailInfo, function (item) {
         item.svcInfoNm = thisMain._phoneStrToDash(item.svcInfoNm);
+        item.svcInfoNm = thisMain._getShortStr(item.svcInfoNm);
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         if ( item.svcNm === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_0 ) {
           item.svcNm = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
@@ -427,7 +428,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     } else if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
       textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
     } else {
-      textVal = selectSvcType.svcType + '(' + selectSvcType.dtlAddr + ')';
+      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.dtlAddr) + ')';
     }
 
     this.$searchNmSvcType.html(templt({svcType: textVal}));
@@ -523,6 +524,12 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._history.setHistory();
     this._history.goHash(hash);
     // window.location.hash = hash;
+  },
+  _getShortStr: function(str){
+    if( str && str.length > 18 ){
+      return str.substr(0, 18);
+    }
+    return str;
   }
 
 };
