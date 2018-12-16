@@ -33,6 +33,7 @@ Tw.CustomerEmailServiceRetry.prototype = {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-service_register', $.proxy(this._retry_inquiry, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _getInquiryDetail: function (res) {
@@ -112,6 +113,16 @@ Tw.CustomerEmailServiceRetry.prototype = {
     } else {
       $('.fe-service_register').prop('disabled', true);
     }
+  },
+
+  _stepBack: function () {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._history.goBack();
+      }, this));
   }
 };
 

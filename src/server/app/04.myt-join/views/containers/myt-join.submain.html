@@ -28,7 +28,13 @@
                     <div class="my-device-type">
                         <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
                         <div class="user-info">
-                            <span class="username"><span class="blind">가입자명</span><%= data.myInfo.custNm || data.svcInfo.mbrNm %></span>
+                            <span class="username"><span class="blind">가입자명</span>
+                                <% if(data.type === 1) { %>
+                                <%= data.svcInfo.mbrNm %>
+                                <% } else { %>
+                                <%= data.myInfo.custNm || data.svcInfo.mbrNm %>
+                                <% } %>
+                            </span>
                             <span class="device"><span class="blind">닉네임 / 디바이스 펜네임</span>
                                 <% if(data.svcInfo.nickNm) { %>
                                 <%= data.svcInfo.nickNm %>

@@ -157,46 +157,20 @@ Tw.CertificationSelect.prototype = {
     this._openOpCert();
   },
   _openProductCert: function () {
-    // TODO: prodAuthKey 설정 필요
     this._prodAuthKey = this._certInfo.prodAuthKey;
-    this._opMethods = this._certInfo.opMethods;
-    this._optMethods = this._certInfo.optMethods;
+    this._opMethods = this._certInfo.opAuthMethods;
+    this._optMethods = this._certInfo.optAuthMethods;
 
     if ( !Tw.FormatHelper.isEmpty(this._optMethods) && this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 ) {
       this._optionCert = true;
     }
-    var prodId = '';
-    var prodProcTypeCd = '';
-    if(this._prodAuthKey.indexOf(':') !== -1) {
-      prodId = this._prodAuthKey.split(':')[0];
-      prodProcTypeCd = this._prodAuthKey.split(':')[1];
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0069, {}, {}, prodId, prodProcTypeCd)
-      .done($.proxy(this._successGetPublicCert, this));
+    this._openOpCert();
   },
   _openRefundCert: function () {
     this._popupService.open({
       hbs: 'CO_CE_02_01_refund',
       layer: true
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
-  },
-
-  _successProductCert: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.FormatHelper.isEmpty(resp.result.prodAuthMethods) ) {
-        this._callback({
-          code: Tw.API_CODE.CERT_FAIL
-        }, this._deferred, this._command);
-      } else {
-        // TODO: set cert method
-        this._opMethods = '';
-        this._optMethods = '';
-        this._openOpCert();
-      }
-    } else {
-      this._callback(resp, this._deferred, this._command);
-    }
   },
 
   _openSelectPopup: function (isWelcome) {

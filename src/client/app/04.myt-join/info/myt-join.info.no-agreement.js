@@ -44,12 +44,12 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     var sdate = this._periodDate(edate, -3, 'years');
 
     return {
-      startYear : this._dateForamt2(sdate, 'YYYY'),
-      startMonth : this._dateForamt2(sdate, 'MM'),
-      startDay : this._dateForamt2(sdate, 'DD'),
-      endYear : this._dateForamt2(edate, 'YYYY'),
-      endMonth : this._dateForamt2(edate, 'MM'),
-      endDay : this._dateForamt2(edate, 'DD')
+      startYear : this._dateForamtConvert(sdate, 'YYYY'),
+      startMonth : this._dateForamtConvert(sdate, 'MM'),
+      startDay : this._dateForamtConvert(sdate, 'DD'),
+      endYear : this._dateForamtConvert(edate, 'YYYY'),
+      endMonth : this._dateForamtConvert(edate, 'MM'),
+      endDay : this._dateForamtConvert(edate, 'DD')
     };
   },
 
@@ -70,10 +70,10 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   },
 
   _dateForamt : function (date) {
-    return this._dateForamt2(date, 'YYYY.MM.DD');
+    return Tw.DateHelper.getShortDate(date);
   },
 
-  _dateForamt2 : function (date, format) {
+  _dateForamtConvert : function (date, format) {
     if (!Tw.DateHelper.isValid(date)) {
       return '';
     }
@@ -84,10 +84,6 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     var format = 'YYYYMMDD';
 
     return Tw.DateHelper.getShortDateWithFormatAddByUnit(date,amount,unit,format,format);
-  },
-
-  _parseDate : function (date) {
-    return Tw.DateHelper.getShortDateWithFormat(date, 'MM.DD','MMDD');
   },
 
   _parseData : function (resp) {
@@ -148,9 +144,6 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this._moreViewSvc.init({
       list : _.sortBy(_list, 'op_dt').reverse(),
       callBack : $.proxy(this._renderList,this),
-      listOption : {
-        groupDateKey : 'op_dt'
-      },
       isOnMoreView : true
     });
   },
@@ -158,38 +151,40 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   _renderList : function (res) {
     var source = $('#tmplList').html();
     var template = Handlebars.compile(source);
-    var output = template({ data: res });
+    var output = template({ list: res.list });
     this.$list.append(output);
   },
 
   _registerHelper : function() {
-    Handlebars.registerHelper('numComma', Tw.FormatHelper.addComma);
-    Handlebars.registerHelper('formatDate', this._parseDate);
-    Handlebars.registerHelper('formatDateFull', this._dateForamt);
+    Handlebars.registerHelper('formatDate', this._dateForamt);
     Handlebars.registerHelper('removeKorean', this._removeKorean);
   },
 
   _changeCondition: function (event) {
     var $target = $(event.currentTarget);
-
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TPL.JOIN_INFO_NO_AGREEMENT.title,
-      data: Tw.POPUP_TPL.JOIN_INFO_NO_AGREEMENT.data
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    var options = {
+      hbs:'actionsheet01',
+      layer:true,
+      data:Tw.POPUP_TPL.JOIN_INFO_NO_AGREEMENT,
+      btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
+    };
+    this._popupService.open(options, $.proxy(this._selectPopupCallback, this, $target));
   },
 
-  _selectPopupCallback: function ($target, $layer) {
-    $layer.one('click', '.condition', $.proxy(this._setSelectedValue, this, $target));
-    $layer.find('#' + this.$btnCondition.attr('id')).addClass('checked');
+  _selectPopupCallback: function ($searchType, $layer) {
+    // 아이템 클릭이벤트 및 checked 설정
+    $layer.find('[name="r1"]')
+      .one('click', $.proxy(this._setSelectedValue, this, $searchType))
+      .eq(this.$btnCondition.attr('id')).prop('checked',true);
+
+    // 닫기 버튼 클릭
+    $layer.one('click', '#fe-back', this._popupService.close);
   },
 
-  _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    var _id = $selectedValue.attr('id');
-    $target.attr('id', _id);
-    $target.text($selectedValue.text());
+  _setSelectedValue: function ($searchType, event) {
+    var $target = $(event.currentTarget);
+    $searchType.attr('id', $target.attr('id'));
+    $searchType.text($target.val());
 
     // 선택한 유형으로 리스트업
     this._search();

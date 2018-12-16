@@ -120,7 +120,7 @@ Tw.CustomerPraise.prototype = {
     };
     $input.attr({ placeholder: replaceAttribute, title: replaceAttribute });
     var $span = this.$divRole.contents().filter(function() {
-      return this.nodeType == 3;
+      return this.nodeType === 3;
     })[1];
     $span.nodeValue = $span.nodeValue.replace(originalContent, replace);
     this.$divRole.removeClass('none');
@@ -180,8 +180,7 @@ Tw.CustomerPraise.prototype = {
     });
 
     if (emptyInputs || this.$reasons.val().length === 0 || (this._selectedType === 1 && this._selectedArea === undefined)) {
-      this.$submitBtn.attr('disabled');
-      return;
+      return this.$submitBtn.attr('disabled');
     } else {
       this.$submitBtn.removeAttr('disabled');
     }
@@ -221,9 +220,22 @@ Tw.CustomerPraise.prototype = {
       this._popupService.open({
         hbs: 'complete_c_type',
         layer: true,
-        title: Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_COMPLETE
-      });
+        title: Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_COMPLETE,
+        btnText: Tw.BUTTON_LABEL.CONFIRM,
+        itemOne: {
+          text: Tw.BUTTON_LABEL.HOME,
+          url: '/main/home'
+        }
+      }, $.proxy(this._bindResultPop, this));
     }
+  },
+
+  _bindResultPop: function($popupContainer) {
+    $popupContainer.find('.fe-btn_close').on('click', $.proxy(this._closePop, this));
+  },
+
+  _closePop: function() {
+    this._popupService.close();
   },
 
   _clearForm: function() {
@@ -242,7 +254,8 @@ Tw.CustomerPraise.prototype = {
 
   _handleClickCancel: function() {
     var ALERT = Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL;
-    this._popupService.openConfirm(ALERT.MSG, ALERT.MSG, $.proxy(this._handleConfirmCancel, this));
+    this._popupService.openConfirmButton(null, ALERT.TITLE,
+      $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _handleConfirmCancel: function() {

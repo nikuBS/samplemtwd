@@ -47,17 +47,19 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     // 전화번호 체크
     if ( this._isPhoneNum($input.val()) ) {
       $('.inputbox').removeClass('error');
-
+      $('#btnSearch button').removeAttr('disabled');
     } else {
       if( !$('.inputbox').hasClass('error') ){
         $('.inputbox').addClass('error');
       }
+      $('#btnSearch button').attr('disabled', true);
     }
   },
 
   _onclickInputDel: function(/*event*/){
     //$('#inputReqPhone').val('');
     $('.inputbox').removeClass('error');
+    $('#btnSearch button').attr('disabled', true);
   },
 
   _isPhoneNum: function(val){

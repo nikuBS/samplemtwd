@@ -77,19 +77,20 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <div class="cont-box nogaps fe-prev-wrapper" style="display: none">
+            <% if(preBill) { %>
+            <div class="cont-box nogaps fe-prev-wrapper"  >
                 <ul class="full-link-list">
                     <li>
-                        <button id="fe-bt-prev">
+                        <a href="/myt-fare/bill/hotbill/prev" id="fe-bt-prev">
                                 <span class="inner">
                                     <span class="tit">전월요금 보기</span>
                                     <span class="text type2" id="fe-pre-amount"></span>
                                 </span>
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </div>
+            <% } %>
 
             <% if( lines.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>

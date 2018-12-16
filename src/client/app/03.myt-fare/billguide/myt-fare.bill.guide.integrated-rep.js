@@ -158,6 +158,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function () { // 소액결재 최초화면 바로가기
       this._history.goLoad('/myt-fare/bill/small');
     }, this));
+
+    this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
@@ -176,6 +178,11 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
   _donationBtnEvt: function () {
     this._history.goLoad('/myt-fare/billguide/donation');
+  },
+  _goChildBillInfo: function(event) {
+    var childLine = $(event.currentTarget).data('svc-mgmt-num');
+    var dt = this.resData.reqQuery.date || '';
+    this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
   },
   _hbDateRadioEvt: function (e) {
     Tw.Logger.info('[날짜 클릭]');
@@ -251,7 +258,13 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({ command: targetApi, params: { selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum, detailYn:'Y' }});
+      commands.push({
+        command: targetApi,
+        params: {
+          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          detailYn:'Y',
+          invDt: this.resData.reqQuery.date
+        }});
     }
 
     Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
@@ -294,7 +307,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     * 실 데이터
     * */
     return this._apiService.request(Tw.API_CMD.BFF_05_0036, {
-      detailYn: 'Y'
+      detailYn: 'Y',
+      invDt: this.resData.reqQuery.date
     }).done($.proxy(this._getBillsDetailInfoInit, this));
 
     // Tw.Logger.info('클라이언트 목데이터');
@@ -326,6 +340,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       paidAmtDetailInfo = $.extend(true, {}, paidAmtDetailInfo);
       paidAmtDetailInfo = _.map(paidAmtDetailInfo, function (item) {
         item.svcInfoNm = thisMain._phoneStrToDash(item.svcInfoNm);
+        item.svcInfoNm = thisMain._getShortStr(item.svcInfoNm);
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         if ( item.svcNm === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_0 ) {
           item.svcNm = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
@@ -413,7 +428,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     } else if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
       textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
     } else {
-      textVal = selectSvcType.svcType + '(' + selectSvcType.dtlAddr + ')';
+      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.dtlAddr) + ')';
     }
 
     this.$searchNmSvcType.html(templt({svcType: textVal}));
@@ -509,6 +524,12 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._history.setHistory();
     this._history.goHash(hash);
     // window.location.hash = hash;
+  },
+  _getShortStr: function(str){
+    if( str && str.length > 18 ){
+      return str.substr(0, 18);
+    }
+    return str;
   }
 
 };

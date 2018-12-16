@@ -55,18 +55,29 @@ Tw.ApiService.prototype = {
       delete resp.loginType;
     }
 
+    var requestInfo = {
+      command: command,
+      params: params,
+      headers: headers,
+      pathVariables: pathVariables
+    };
+    var authUrl = command.method + '|' + command.path;
     if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 || resp.code === Tw.API_CODE.BFF_0010 ) {
       Tw.Logger.info('[API Cert]', command);
-      this._cert = new Tw.CertificationSelect();
+      if ( resp.code === Tw.API_CODE.BFF_0010 ) {
+        resp.result.authClCd = Tw.AUTH_CERTIFICATION_KIND.R;
+      }
+      var cert = new Tw.CertificationSelect();
       setTimeout($.proxy(function () {
-        var requestInfo = {
-          command: command,
-          params: params,
-          headers: headers,
-          pathVariables: pathVariables
-        };
-        var authUrl = command.method + '|' + command.path;
-        this._cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
+        Tw.CommonHelper.allOffLoading();
+        cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
+      }, this), 0);
+      return deferred.promise();
+    } else if ( resp.code === Tw.API_CODE.BFF_0020 ) {
+      var certRepresentative = new Tw.CertificationRepresentative();
+      setTimeout($.proxy(function () {
+        Tw.CommonHelper.allOffLoading();
+        certRepresentative.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
     } else {
@@ -75,7 +86,7 @@ Tw.ApiService.prototype = {
   },
   _completeCert: function (resp, deferred, requestInfo) {
     if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
-      if(resp.authKind === Tw.AUTH_CERTIFICATION_KIND.O) {
+      if ( resp.authKind === Tw.AUTH_CERTIFICATION_KIND.O ) {
         this._historyService.reload();
       } else {
         var arrParams = [];
@@ -143,7 +154,7 @@ Tw.ApiService.prototype = {
   _successSession: function (callback, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.sendNativeSession(resp.result.serverSession, resp.result.loginType);
-      if(!Tw.FormatHelper.isEmpty(callback)) {
+      if ( !Tw.FormatHelper.isEmpty(callback) ) {
         callback();
       }
     }

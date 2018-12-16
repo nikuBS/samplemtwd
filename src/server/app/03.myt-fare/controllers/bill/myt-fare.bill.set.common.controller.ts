@@ -127,6 +127,7 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     this.convertCd(data);
     const curBillType = data.curBillType;
     let convertBillType = curBillType;
+    const lineType = this.getLinetype();
     const billArr = new Array();
 
     // Bell Letter 포함 안내서 는 'H' 로 통합
@@ -139,7 +140,7 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     switch (curBillType) {
       // 'T world 확인' 은 함께받는 요금안내서가 없고 "문자" 수신여부인데.. SB가 이렇게 나와서 일단 여기다 작업한다. 나중에 바뀔듯..
       case 'P' :
-        if (data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
+        if ('M' === lineType && data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
           this.pushBillInfo(billArr, 'YES');
         } else {
           this.pushBillInfo(billArr, 'NO');

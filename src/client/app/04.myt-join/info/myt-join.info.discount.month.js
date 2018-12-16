@@ -146,11 +146,8 @@ Tw.MyTJoinInfoDiscountMonth.prototype = {
 
   _getFormattedData: function (agrmts) {
     _.each(agrmts, $.proxy(function (agrmt) {
-      agrmt.showYear = moment(agrmt.invoDt).year();
-      agrmt.showYearTitle = this.lastShowYear && this.lastShowYear !== agrmt.showYear;
-      agrmt.showInvoDt = Tw.DateHelper.getShortDateWithFormat(agrmt.invoDt, 'MM.DD', 'YYYYMMDD');
+      agrmt.showInvoDt = Tw.DateHelper.getShortDate(agrmt.invoDt);
       agrmt.showPenEstDcAmt = Tw.FormatHelper.addComma(agrmt.penEstDcAmt);
-      this.lastShowYear = agrmt.showYear;
     }, this));
     return agrmts;
   }

@@ -33,8 +33,8 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad(url);
     }
   },
-  goLogin: function () {
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
+  goLogin: function (target) {
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this));
   },
   goLogout: function () {
     this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
@@ -70,7 +70,7 @@ Tw.TidLandingComponent.prototype = {
     this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeChangePw' });
   },
   _onNativeLogin: function (resp) {
-    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
         .done($.proxy(this._successLogin, this));
     }
@@ -86,7 +86,7 @@ Tw.TidLandingComponent.prototype = {
       }
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      this._historyService.goLoad('/common/member/login/customer-pwd');
+      this._historyService.goLoad('/common/member/login/cust-pwd');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
       this._historyService.goLoad('/common/member/login/reactive');

@@ -6,6 +6,7 @@
 
 Tw.CertificationFinance = function () {
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
   this._certSkFull = new Tw.CertificationSkFull();

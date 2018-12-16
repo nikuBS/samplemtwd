@@ -230,7 +230,7 @@ skt_landing.action = {
           co = obj.co,
           size = obj.size,
           tit_id = skt_landing.action.ran_id_create(),
-          loading_box = $('<div class="loading" role="region" aria-labelledby="'+tit_id+'"></div>'),
+          loading_box = $('<div class="loading tw-loading" role="region" aria-labelledby="'+tit_id+'"></div>'),
           loading_ico = $('<div class="loading_ico"></div>'),
           loading_txt = $('<em id="'+tit_id+'">로딩중입니다.</em>'),
           svg_id = '',
@@ -278,6 +278,9 @@ skt_landing.action = {
       //  skt_landing.action.auto_scroll();
       //}
       // $(ta).find($('.loading')).empty().remove();
+    },
+    allOff : function(){
+      $('.tw-loading').empty().remove();
     },
     ani: function(){
       var actors = {},

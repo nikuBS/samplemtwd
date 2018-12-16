@@ -126,7 +126,7 @@
                                 <a href="/myt-join/myplancombine/infodiscount" class="bt-detail-top">
                                     <div class="title-box">
                                         <span class="sub-tit02">요금 할인</span>
-                                        <span class="tit"><%= bill.item %> <% if(bill.total > 1) { %> 외 <%= bill.total %>건 <% }%></span>
+                                        <span class="tit"><%= bill.item %> <% if(bill.total > 1) { %> 외 <%= bill.total-1 %>건 <% }%></span>
                                     </div>
                                 </a>
                             </div>
@@ -138,7 +138,7 @@
                                 <a href="/myt-join/myplancombine" class="bt-detail-top">
                                     <div class="title-box">
                                         <span class="sub-tit02">요금 할인</span>
-                                        <span class="tit">복지고객할인 <% if(welfare.total > 1) { %> 외 <%= welfare.total %>건 <% }%></span>
+                                        <span class="tit">복지고객할인 <% if(welfare.total > 1) { %> 외 <%= welfare.total-1 %>건 <% }%></span>
                                     </div>
                                 </a>
                             </div>
@@ -150,7 +150,7 @@
                                 <a href="/myt-join/myplancombine" class="bt-detail-top">
                                     <div class="title-box">
                                         <span class="sub-tit02">결합 할인</span>
-                                        <span class="tit">온가족플랜 <% if(bond.total > 1) { %> 외 <%= bond.total %>건 <% }%></span>
+                                        <span class="tit">온가족플랜 <% if(bond.total > 1) { %> 외 <%= bond.total-1 %>건 <% }%></span>
                                     </div>
                                 </a>
                             </div>
@@ -173,8 +173,9 @@
                             <div class="li-elem">
                                 <a href="/myt-data/recharge/coupon" class="bt-detail-top">
                                     <div class="title-box">
-                                        <span class="sub-tit02">장기가입 요금 할인</span>
-                                        <span class="tit"><%= loyalty %></span>
+                                        <span class="sub-tit02">장기가입 혜택</span>
+                                        <span class="tit">장기가입 요금 할인</span>
+                                        <span class="sub-tit"><%= loyalty %> 할인</span>
                                     </div>
                                 </a>
                             </div>

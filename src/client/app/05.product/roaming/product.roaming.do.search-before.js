@@ -51,8 +51,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _desciptionInit: function () {
       if(this._svcInfo !== null){
           this._svcInfo.totalSvcCnt = Number(this._svcInfo.totalSvcCnt);
+          this._svcAttrCd = this._svcInfo.svcAttrCd.charAt(0);
           if(this._svcInfo.totalSvcCnt > 1 ){
-              if(this._svcInfo.svcGr !== 'A'){
+              if(this._svcAttrCd !== 'M'){
                   this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
               } else {
@@ -65,8 +66,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
                   }
               }
           }else if(this._svcInfo.totalSvcCnt === 1){
-              this._svcInfo.svcGr = 'A';
-              if(this._svcInfo.svcGr !== 'A'){
+              if(this._svcAttrCd !== 'M'){
                   this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
               } else {
@@ -227,7 +227,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       list[codeType].option = 'hbs-mfact-cd checked';
       this._popupService.close();
       this.$container.find('.fe-roaming-mfactCd').text(this.cdName);
-
       this._onSearchModel(this.cdValue);
   },
   _onSearchModel: function (val) {
@@ -238,19 +237,30 @@ Tw.ProductRoamingSearchBefore.prototype = {
   },
   _handleSuccessSearchModelResult : function (resp) {
     var _result = resp.result;
-
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-        this.listData = _.map(_result, function (item, idx) {
-            return {
-                value: _result[idx].eqpMdlNm,
-                option: 'hbs-model-name',
-                attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
-            };
-        });
+        if(_result.length > 0){
+            this.listData = _.map(_result, function (item, idx) {
+                return {
+                    value: _result[idx].eqpMdlNm,
+                    option: 'hbs-model-name',
+                    attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
+                };
+            });
+        } else {
+            var ALERT = Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A71;
+            this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closeAlertPopup, this));
+        }
     } else {
         this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
         Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _closeAlertPopup: function () {
+      this.cdValue = '';
+      for (var i in Tw.ROAMING_MFACTCD_LIST.list){
+          Tw.ROAMING_MFACTCD_LIST.list[i].option = 'hbs-mfact-cd';
+      }
+      this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
   },
   _selectModelCallback: function ($layer) {
     $layer.on('click', '.hbs-model-name', $.proxy(this._onPhoneSelect, this, $layer));

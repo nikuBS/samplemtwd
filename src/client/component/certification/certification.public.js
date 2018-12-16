@@ -7,11 +7,15 @@
 Tw.CertificationPublic = function () {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._authUrl = null;
   this._command = null;
   this._callback = null;
   this._authKind = null;
+
+  this.$termsConfirm = null;
+  this._termsConfirm = false;
 };
 
 
@@ -21,7 +25,35 @@ Tw.CertificationPublic.prototype = {
     this._command = command;
     this._callback = callback;
     this._authKind = authKind;
-    this._requestAppMessage(authUrl);
+    this._openTerms();
+  },
+  _openTerms: function () {
+    this._popupService.open({
+      hbs: 'CO_CE_02_04_01_01',
+      layer: true
+    }, $.proxy(this._onOpenTerms, this), $.proxy(this._onCloseTerms, this));
+  },
+  _onOpenTerms: function ($popupContainer) {
+    this.$termsConfirm = $popupContainer.find('#fe-bt-confirm');
+    this.$termsConfirm.on('click', $.proxy(this._onClickTermsConfirm, this));
+    $popupContainer.on('click', '#fe-check-terms', $.proxy(this._onCheckTerms, this));
+  },
+  _onCloseTerms: function () {
+    if ( this._termsConfirm ) {
+      this._requestAppMessage(this._authUrl);
+    }
+  },
+  _onCheckTerms: function ($event) {
+    var $target = $($event.currentTarget);
+    if ( $target.prop('checked') ) {
+      this.$termsConfirm.attr('disabled', false);
+    } else {
+      this.$termsConfirm.attr('disabled', true);
+    }
+  },
+  _onClickTermsConfirm: function () {
+    this._termsConfirm = true;
+    this._popupService.close();
   },
   _requestAppMessage: function (authUrl) {
     this._apiService.request(Tw.API_CMD.BFF_01_0035, {

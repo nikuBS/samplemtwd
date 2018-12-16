@@ -108,7 +108,7 @@ class ProductCommonCallplanPreview extends TwViewController {
       summary: [prodRedisInfo.summary,
         ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo, basDataTxt.txt,
           prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit),
-        { smryHtmlCtt: EnvHelper.setCdnUrl(prodRedisInfo.summary.smryHtmlCtt) }].reduce((a, b) => {
+        { smryHtmlCtt: EnvHelper.replaceCdnUrl(prodRedisInfo.summary.smryHtmlCtt) }].reduce((a, b) => {
         return Object.assign(a, b);
       }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
@@ -173,7 +173,7 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     contentsInfo.forEach((item) => {
       if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
-        contentsResult[item.vslLedStylCd] = EnvHelper.setCdnUrl(item.ledItmDesc);
+        contentsResult[item.vslLedStylCd] = EnvHelper.replaceCdnUrl(item.ledItmDesc);
         return true;
       }
 
@@ -182,13 +182,13 @@ class ProductCommonCallplanPreview extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
-        contentsResult.PLM_FIRST = EnvHelper.setCdnUrl(item.ledItmDesc);
+        contentsResult.PLM_FIRST = EnvHelper.replaceCdnUrl(item.ledItmDesc);
         return true;
       }
 
       contentsResult.LIST.push(Object.assign(item, {
-        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prCont' : 'plm'),
-        ledItmDesc: EnvHelper.setCdnUrl(item.ledItmDesc)
+        vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prVisual' : 'plm'),
+        ledItmDesc: EnvHelper.replaceCdnUrl(item.ledItmDesc)
       }));
     });
 
@@ -207,7 +207,7 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     bannerInfo.forEach((item) => {
       bannerResult[item.bnnrLocCd] = Object.assign(item, {
-        bnnrDtlHtmlCtt: EnvHelper.setCdnUrl(item.bnnrDtlHtmlCtt)
+        bnnrDtlHtmlCtt: EnvHelper.replaceCdnUrl(item.bnnrDtlHtmlCtt)
       });
     });
 

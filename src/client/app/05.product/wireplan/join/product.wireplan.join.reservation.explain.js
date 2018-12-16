@@ -19,7 +19,7 @@ Tw.ProductWireplanJoinReservationExplain = function(familyList, callback) {
   this._familyTemplate = Handlebars.compile($('#fe-tmpl-reserv-family').html());
 
   this._limitFileByteSize = 2097152;
-  this._acceptExt = ['jpg', 'jpeg', 'png', 'tif', 'bmp'];
+  this._acceptExt = ['jpg', 'jpeg', 'png', 'gif'];
 
   this._popupService.open({
     hbs: 'BS_05_01_01_01',

@@ -12,19 +12,20 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
 
-  this._init();
+  this._convConfirmOptions();
+  this._bindEvent();
 };
 
 Tw.ProductMobileplanAddTerminate.prototype = {
-  _init: function() {
-    this._convConfirmOptions();
-    this._bindEvent();
-  },
 
   _bindEvent: function() {
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+  },
+
+  _getJoinConfirmContext: function() {
+    $.get(Tw.Environment.cdn + '/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
   },
 
   _setConfirmBodyIntoContainer: function(context) {
@@ -68,13 +69,13 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   },
 
   _prodConfirmOk: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -107,9 +108,8 @@ Tw.ProductMobileplanAddTerminate.prototype = {
           prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
           typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
           isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo
-            ? this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON
-            : ''
+          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
+            this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
         }
       },
       $.proxy(this._openResPopupEvent, this),
@@ -135,13 +135,13 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
     if (respResult.prodTmsgTypCd === 'H') {
       popupOptions = $.extend(popupOptions, {
-        editor_html: respResult.prodTmsgHtmlCtt
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
       });
     }
 
     if (respResult.prodTmsgTypCd === 'I') {
       popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : respResult.rgstImgUrl,
+        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : Tw.Environment.cdn + respResult.rgstImgUrl,
         img_src: respResult.imgFilePathNm
       });
     }

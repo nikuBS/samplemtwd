@@ -121,10 +121,10 @@
                     </a>
                 </div>
                 <div class="submain-findyourplan-wrap">
-                    <button type="button" class="submain-findyourplan">
+                    <a type="button" class="submain-findyourplan" href="/product/roaming/info/guide?reqItem=lost">
                         <h3 class="title">분실 관련 안내 보러가기</h3>
                         <p class="text">긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -153,7 +153,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingPlanAdd($('.wrap'), { code: 'F01600' });
+    new Tw.ProductRoamingPlanAdd($('.wrap'), <%- JSON.stringify(params) %>, <%- JSON.stringify(roamingAddData) %>, { code: 'F01600' });
   });
 </script>
 <% include ../../components/roaming/product.roaming.planadd.component.html %>

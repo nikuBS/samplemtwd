@@ -54,6 +54,7 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
+                <% if( inquiryInfo.supInqId === '' ) { %>
                 <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 <div class="bt-fixed-area">
                     <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
@@ -80,6 +81,7 @@
                     <% } %>
                 </div>
                 <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <% } %>
             </div>
         </div>
     </div>

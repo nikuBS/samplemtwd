@@ -40,8 +40,8 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
   },
   _cancelAutoPrepay: function () {
-    this._popupService.openModalTypeA(Tw.AUTO_PAY_CANCEL.TITLE, Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.BTN_NAME, null,
-      $.proxy(this._cancel, this));
+    this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,
+      $.proxy(this._cancel, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME);
   },
   _cancel: function () {
     var $api = this._getCancelApiName();

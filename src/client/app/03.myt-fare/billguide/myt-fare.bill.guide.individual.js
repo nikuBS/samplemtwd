@@ -125,6 +125,8 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
       this._history.goLoad('/myt-fare/bill/small');
     }, this));
+
+    this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
@@ -144,7 +146,11 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _donationBtnEvt: function () {
     this._history.goLoad('/myt-fare/billguide/donation');
   },
-
+  _goChildBillInfo: function(event) {
+    var childLine = $(event.currentTarget).data('svc-mgmt-num');
+    var dt = this.resData.reqQuery.date || '';
+    this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
+  },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_select_a_type';
@@ -209,7 +215,13 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
-      commands.push({ command: targetApi, params: { selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum, detailYn:'Y' }});
+      commands.push({
+        command: targetApi,
+        params: {
+          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          detailYn:'Y',
+          invDt: this.resData.reqQuery.date
+        }});
     }
 
     Tw.Logger.info('------- 자녀 사용량 조회 -----------------');

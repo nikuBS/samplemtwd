@@ -1127,6 +1127,21 @@ body.bg-gray {
         line-height: 3.1875rem; }
       .popup-page .header-wrap .page-header .header-ti.align-l h1 {
         text-align: left; }
+    .popup-page .header-wrap .page-header .header-mask {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      margin-top: -0.75rem; }
+      .popup-page .header-wrap .page-header .header-mask .btn-mask {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: url(/img/svg/icon_48px_lock_n.svg) no-repeat 0 0;
+        background-size: 100% 100%; }
+        .popup-page .header-wrap .page-header .header-mask .btn-mask.seleted {
+          background: url(/img/svg/icon_48px_lock_s.svg) no-repeat 0 0; }
+        .popup-page .header-wrap .page-header .header-mask .btn-mask.disabled, .popup-page .header-wrap .page-header .header-mask .btn-mask:disabled {
+          background: url(/img/svg/icon_48px_lock_d.svg) no-repeat 0 0; }
   .popup-page .gnb-wrap .page-gnb {
     position: fixed;
     bottom: 0;

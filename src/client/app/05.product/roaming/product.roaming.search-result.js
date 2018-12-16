@@ -138,6 +138,14 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));
         this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));
         this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
+        this.$container.on('click', '.fe-rm-asiapass', $.proxy(this._goAsiaPassPlan, this));
+        this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));
+    },
+    _goAsiaPassPlan: function () {
+        this._history.goLoad('/product/callplan/NA00005900');
+    },
+    _goEuropePassPlan: function () {
+        this._history.goLoad('/product/callplan/NA00006046');
     },
     _onClickSelectBtn: function () {
         if(this.modelValue !== '') {
@@ -268,17 +276,29 @@ Tw.ProductRoamingSearchResult.prototype = {
         var _result = resp.result;
 
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
-            this.listData = _.map(_result, function (item, idx) {
-                return {
-                    value: _result[idx].eqpMdlNm,
-                    option: 'hbs-model-name',
-                    attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
-                };
-            });
+            if(_result.length > 0){
+                this.listData = _.map(_result, function (item, idx) {
+                    return {
+                        value: _result[idx].eqpMdlNm,
+                        option: 'hbs-model-name',
+                        attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
+                    };
+                });
+            } else {
+                var ALERT = Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A71;
+                this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closeAlertPopup, this));
+            }
         } else {
             this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
             Tw.Error(resp.code, resp.msg).pop();
         }
+    },
+    _closeAlertPopup: function () {
+        this.cdValue = '';
+        for (var i in Tw.ROAMING_MFACTCD_LIST.list){
+            Tw.ROAMING_MFACTCD_LIST.list[i].option = 'hbs-mfact-cd';
+        }
+        this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
     },
     _handleFailModelSearch: function () {
 

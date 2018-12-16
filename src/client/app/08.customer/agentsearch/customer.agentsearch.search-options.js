@@ -23,7 +23,7 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     $.extend(true, this._newOptions, this._currentOptions);
 
     if (this._currentOptions.storeType !== 0) {
-      this.$container.find('input[type=radio][value=' + this._currentOptions.storeType + ']')
+      this.$container.find('input[type="radio"][value=' + this._currentOptions.storeType + ']')
         .click();
     }
 
@@ -31,13 +31,14 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
       if (key === 'storeType') {
         continue;
       }
-      this.$container.find('input[type=checkbox][value=' + key + ']').click();
+      this.$container.find('input[type="checkbox"][value=' + key + ']').click();
     }
   },
   _bindEvents: function () {
     this.$container.on('change', 'input[type="radio"]', $.proxy(this._onStoreTypeChanged, this));
-    this.$container.on('change', 'input[type=checkbox]', $.proxy(this._onCategoryChanged, this));
+    this.$container.on('click', 'input[type="checkbox"]', $.proxy(this._onCategoryChanged, this));
     this.$container.on('click', '.bt-red1 button', $.proxy(this._onApply, this));
+    this.$container.on('click', '#fe-bt-close', $.proxy(this._onClose, this));
   },
   _onStoreTypeChanged: function (e) {
     this._newOptions.storeType = e.currentTarget.value;
@@ -55,5 +56,17 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     } else {
       this._applyCallback(this._newOptions);
     }
+  },
+  _onClose: function () {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+      }, this),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this)
+    );
   }
 };

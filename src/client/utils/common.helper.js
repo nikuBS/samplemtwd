@@ -51,6 +51,10 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  var removeLocalStorage = function(key) {
+    return localStorage.removeItem(key);
+  };
+
   var fileUpload = function (dest, files) {
     var formData = new FormData();
     if (!Tw.FormatHelper.isEmpty(dest)) {
@@ -64,7 +68,7 @@ Tw.CommonHelper = (function () {
     return Tw.Api.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData);
   };
 
-  var showDataCharge = function (confirmCallback, cancelCallback) {
+  var showDataCharge = function (confirmCallback, closeCallback) {
     Tw.Popup.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
       Tw.POPUP_TITLE.EXTERNAL_LINK,
@@ -72,7 +76,7 @@ Tw.CommonHelper = (function () {
         Tw.Popup.close();
         confirmCallback();
       },
-      cancelCallback
+      closeCallback
     );
   };
 
@@ -107,6 +111,12 @@ Tw.CommonHelper = (function () {
     skt_landing.action.loading.off({ ta: target });
   };
 
+  var allOffLoading = function () {
+    if($('.tw-loading').length > 0) {
+      skt_landing.action.loading.allOff();
+    }
+  };
+
   var resetHeight = function ($element) {
     $element.slick.animateHeight();
   };
@@ -130,6 +140,10 @@ Tw.CommonHelper = (function () {
     });
   };
 
+  var replaceCdnUrl = function(context) {
+    return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -137,13 +151,16 @@ Tw.CommonHelper = (function () {
     toast: toast,
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
+    removeLocalStorage: removeLocalStorage,
     showDataCharge: showDataCharge,
     share: share,
     openFreeSms: openFreeSms,
     startLoading: startLoading,
     endLoading: endLoading,
+    allOffLoading: allOffLoading,
     resetHeight: resetHeight,
     openTermLayer: openTermLayer,
-    fileUpload: fileUpload
+    fileUpload: fileUpload,
+    replaceCdnUrl: replaceCdnUrl
   };
 })();

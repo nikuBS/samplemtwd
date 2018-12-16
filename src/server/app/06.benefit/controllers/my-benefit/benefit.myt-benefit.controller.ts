@@ -91,7 +91,7 @@ class BenefitMyBenefit extends TwViewController {
         if ( parseInt(combination.result.etcCnt, 10) > 0 ) {
           options['bond'] = {
             name: combination.result.prodNm,
-            total: parseInt(combination.result.etcCnt, 10)
+            total: parseInt(combination.result.etcCnt, 10) + (combination.result.prodNm.trim() !== '' ? 1 : 0)
           };
           options['count'] += options['bond'].total;
         }
@@ -99,17 +99,16 @@ class BenefitMyBenefit extends TwViewController {
         // 장기가입 쿠폰
         if ( loyalty.result.benfList.length > 0 ) {
           options['coupons'] = loyalty.result.benfList.length;
-          options['count'] += loyalty.result.benfList.length;
-        }
-        // 장기가입 요금
-        if ( loyalty.result.discount ) {
-          const discount = loyalty.result.discount;
-          if ( discount.dcItmTypNm ) {
-            options['loyalty'] = `${discount.dcItmTypNm} ${discount.dcAmt}${discount.dcUnit}`;
-            options['count'] += 1;
-          }
+          options['count'] += 1;
         }
 
+        // 장기가입 요금
+        if ( loyalty.result.dcList && loyalty.result.dcList.length > 0) {
+          // 장기요금할인 복수개 가능여부 확인 필요
+          const dc =  loyalty.result.dcList[0];
+          options['loyalty'] = `${dc.dcItmTypNm} ${dc.dcAmt}${dc.dcUnit}`;
+          options['count'] += 1;
+        }
         options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), svcInfo.svcScrbDt, 'days');
         options['days'] = FormatHelper.addComma(options['days'].toString());
 

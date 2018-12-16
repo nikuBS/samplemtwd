@@ -80,10 +80,13 @@
 												<div class="cont-box nogaps-hoz bb0">
 
 													<div class="list-input-type1">
-														<ul class="input-middle">
+														<ul class="input-middle01">
                                                             <% for (let i = 0; i < options.length; i++) { %>
 															<li>
-																<span class="form"><input type="radio" name="sradio1" id="sradio1" class="formradio-small" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>"><label for="sradio1">라디오박스</label></span>
+																<span class="form">
+																	<input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
+																	<label for="sradio<%= i + 1 %>">라디오박스</label>
+																</span>
 																<div class="cont">
                                                                     <span class="stit"><%= options[i].copnDtlClNm %></span>
                                                                     <% if (options[i].qttText !== '0') { %>

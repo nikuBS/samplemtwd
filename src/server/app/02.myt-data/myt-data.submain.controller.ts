@@ -16,7 +16,7 @@ import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
 import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
-import { REDIS_BANNER_ADMIN, REDIS_CODE } from '../../types/redis.type';
+import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
@@ -204,7 +204,7 @@ class MytDataSubmainController extends TwViewController {
         data.pattern = pattern;
       }
       // 배너 정보
-      if ( banner.code === REDIS_CODE.CODE_SUCCESS ) {
+      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner.result);
         }
@@ -363,6 +363,7 @@ class MytDataSubmainController extends TwViewController {
       const nOthers: any = Object.assign([], MOBILE);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
+          item.nickNm = item.eqpMdlNm || item.nickNm;
           list.push(item);
         }
       });

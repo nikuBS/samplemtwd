@@ -149,6 +149,12 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _closeDirectOrder: function () {
-    $('.fe-wrap_direct_order').remove();
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        $('.fe-wrap_direct_order').remove();
+      }, this));
   }
 };

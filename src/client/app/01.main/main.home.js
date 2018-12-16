@@ -16,6 +16,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._smartCardOrder = JSON.parse(smartCard);
 
   this.$elBarcode = null;
+  this.$tabStore = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
@@ -24,12 +25,18 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._openEmrNotice(emrNotice);
   this._setBanner(menuId);
+  this._cachedDefaultElement();
 
-  if(isLogin === 'true') {
+  if ( isLogin === 'true' ) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
+    this._getQuickMenu();
     this._initScroll();
+  } else {
+    setTimeout($.proxy(function () {
+      this.$tabStore.trigger('click');
+    }, this), 0);
   }
 };
 
@@ -42,6 +49,9 @@ Tw.MainHome.prototype = {
     GFT0005: 'GFT0005',   // 제공자가 미성년자이면 선물하기 불가
     GFT0013: 'GFT0013'    // 기
   },
+  _cachedDefaultElement: function () {
+    this.$tabStore = this.$container.find('.icon-home-tab-store');
+  },
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
@@ -53,7 +63,6 @@ Tw.MainHome.prototype = {
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
-    this.$container.on('click', '#fe-bt-quick-edit', $.proxy(this._onClickQuickEdit, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
   },
   _onClickLine: function ($event) {
@@ -86,18 +95,6 @@ Tw.MainHome.prototype = {
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       extendBarcode.JsBarcode(cardNum);
     }
-  },
-  _onClickQuickEdit: function () {
-    this._popupService.open({
-      hbs: 'HO_01_01_01',
-      layer: true
-    }, $.proxy(this._onOpenQuickEdit, this), $.proxy(this._onCloseQuickEdit, this));
-  },
-  _onOpenQuickEdit: function ($popupContainer) {
-
-  },
-  _onCloseQuickEdit: function () {
-
   },
   _openEmrNotice: function (notice) {
     if ( notice === 'true' ) {
@@ -544,5 +541,43 @@ Tw.MainHome.prototype = {
   },
   _successDrawBanner: function () {
     this._resetHeight();
+  },
+  _getQuickMenu: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
+      .done($.proxy(this._successQuickMenu, this));
+  },
+  _successQuickMenu: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._drawQuickMenu(resp.result);
+    }
+  },
+  _drawQuickMenu: function (quickMenu) {
+    var list = this._parseQuickMenu(quickMenu);
+    var $quickMenuEl = this.$container.find('#fe-tmpl-quick');
+    if ( list.length > 0 ) {
+      var $quickTemp = $('#fe-home-quick');
+      var tplQuick = Handlebars.compile($quickTemp.html());
+      $quickMenuEl.html(tplQuick({ list: list }));
+    } else {
+      var $quickEmptyTemp = $('#fe-home-quick-empty');
+      var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
+      $quickMenuEl.html(tplQuickEmpty());
+    }
+    $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this));
+  },
+  _parseQuickMenu: function (quickMenu) {
+    return [];
+  },
+  _onClickQuickEdit: function () {
+    this._popupService.open({
+      hbs: 'HO_01_01_01',
+      layer: true
+    }, $.proxy(this._onOpenQuickEdit, this), $.proxy(this._onCloseQuickEdit, this));
+  },
+  _onOpenQuickEdit: function ($popupContainer) {
+
+  },
+  _onCloseQuickEdit: function () {
+
   }
 };

@@ -20,7 +20,7 @@ export default class ProductAppsDetail extends TwViewController {
   };
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    const appId = req.params.appId;
+    const appId = req.query.appId;
 
     Observable.combineLatest(this.getAppDetail(appId), this.getProductInfo(appId), this.getRecommendedApps(appId)).subscribe(
       ([app, prodInfo, apps]) => {
@@ -42,7 +42,7 @@ export default class ProductAppsDetail extends TwViewController {
   }
 
   private getAppDetail = appId => {
-    return this.apiService.request(API_CMD.BFF_10_0097, {}, {}, appId).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0097, { prodExpsTypCd: 'P' }, {}, appId).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }

@@ -25,6 +25,7 @@ Tw.MainMenuRefund.prototype = {
     this.$btnSubmitRefund = this.$container.find('#fe-submit-refund');
     this.$divRefund = this.$container.find('#fe-div-refund');
     this.$divDonation = this.$container.find('#fe-div-donation');
+    this.$accountError = this.$container.find('.fe-account-error');
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-btn-detail', $.proxy(this._onDetail, this));
@@ -137,6 +138,7 @@ Tw.MainMenuRefund.prototype = {
     }
   },
   _onSubmitRefund: function () {
+    this.$accountError.addClass('none');
     var param = {
       opTyp: '1',
       rfndBankCd: this.$bankInput.data('code'),
@@ -153,13 +155,17 @@ Tw.MainMenuRefund.prototype = {
     };
 
     this._apiService.request(Tw.API_CMD.BFF_01_0043, param)
-      .done(function (res) {
+      .done($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
-          this._historyService.reload();
+          if (res.result === '0') {
+            this._historyService.reload();
+          } else if (res.result.indexOf('ZNGME') !== -1) {
+            this.$accountError.removeClass('none');
+          }
         } else {
           Tw.Error(res.code, res.msg).pop();
         }
-      })
+      }, this))
       .fail(function (err) {
         Tw.Error(err.code, err.msg).pop();
       });

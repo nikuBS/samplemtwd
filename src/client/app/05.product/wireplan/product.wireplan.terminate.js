@@ -12,17 +12,14 @@ Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) 
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
-  this._btnData = JSON.parse(unescape(btnData));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._btnData = JSON.parse(window.unescape(btnData));
 
-  this._init();
+  this._convConfirmOptions();
+  this._bindEvent();
 };
 
 Tw.ProductWireplanTerminate.prototype = {
-  _init: function() {
-    this._convConfirmOptions();
-    this._bindEvent();
-  },
 
   _bindEvent: function() {
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
@@ -73,7 +70,7 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _prodConfirmOk: function(callbackParams) {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService
       .request(
@@ -94,7 +91,7 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _procTerminateRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -154,13 +151,13 @@ Tw.ProductWireplanTerminate.prototype = {
 
     if (respResult.prodTmsgTypCd === 'H') {
       popupOptions = $.extend(popupOptions, {
-        editor_html: respResult.prodTmsgHtmlCtt
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
       });
     }
 
     if (respResult.prodTmsgTypCd === 'I') {
       popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : respResult.rgstImgUrl,
+        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : Tw.Environment.cdn + respResult.rgstImgUrl,
         img_src: respResult.imgFilePathNm
       });
     }

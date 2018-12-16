@@ -67,7 +67,7 @@ export const API_CMD = {
   BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0050: { path: '/v1/auth/anonymous/exsms/result', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_01_0051: { path: '/core-auth/v1/refund/skt-auth-sms/send', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_01_0052: { path: '/core-auth/v1/refund/skt-auth-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0052: { path: '/v1/refund/skt-auth-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0053: { path: '/v1/captcha/image', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, responseType: 'arraybuffer' },
   BFF_01_0054: { path: '/v1/captcha/audio', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true , responseType: 'arraybuffer' },
   BFF_01_0055: { path: '/v1/captcha/answer/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
@@ -478,6 +478,7 @@ export const API_CMD = {
   BFF_08_0060: { path: '/core-modification/v1/email-inquiry-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0061: { path: '/core-modification/v1/email-inquiry-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0062: { path: '/core-modification/v1/email-inquiry', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0066: { path: '/core-modification/v1/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -692,10 +693,16 @@ export const API_CODE = {
   BFF_0014: 'BFF0014', // 고객비밀번호 재설정 필요
   BFF_0015: 'BFF0015', // 비밀번호 인증 필요 (업무인증에 옵션으로 추가되는 인증)
 
+  REDIS_SUCCESS: '00',
+  REDIS_EMPTY: '01',
+  REDIS_ERROR: '02',
+
+  NODE_1001: '1001',    // login 필요
+
   CODE_200: '200',
   CODE_400: '400',
   CODE_404: '404',
-  CODE_500: '500'
+  CODE_500: '500',
 };
 
 export const API_SVC_PWD_ERROR = {

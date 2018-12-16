@@ -1,7 +1,10 @@
-<% if ( relateTags && relateTags.length > 0 ) { %>
+<% if ( relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ||
+similarProductInfo && similarProductInfo.prodCnt > 0 && similarProductInfo.list.length > 0 ) {
+const tagsClass = relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ? 'nogaps-btm widget' : '';
+%>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
-<div class="cont-box nogaps-btm widget">
+<div class="cont-box <%= tagsClass %>">
     <h3 class="suggest-tag-title">연관태그</h3>
     <% if ( similarProductInfo && similarProductInfo.prodCnt > 0 && similarProductInfo.list.length > 0 ) { %>
     <div class="suggest-tag-titlebox">
@@ -20,20 +23,20 @@
         </a>
     </div>
     <% } %>
+    <% if ( relateTags && relateTags.length > 0 && (!isCombine && !isDiscount)) { %>
     <div class="widget-box toggle02">
         <div class="suggest-tag-list openlist-wrap">
-            <% if ( !isCombine && !isDiscount ) { %>
             <ul>
                 <% for (var i in relateTags) { %>
-                    <% if (basicInfo.prodTypListPath) { %>
-                    <li><a href="/<%= basicInfo.prodTypListPath %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
-                    <% } else { %>
-                    <li><button type="button" class="link">#<%= relateTags[i].tagNm %></button></li>
-                    <% } %>
+                <% if (basicInfo.prodTypListPath) { %>
+                <li><a href="/<%= basicInfo.prodTypListPath %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+                <% } else { %>
+                <li><button type="button" class="link">#<%= relateTags[i].tagNm %></button></li>
+                <% } %>
                 <% } %>
             </ul>
-            <% } %>
         </div>
     </div>
+    <% } %>
 </div>
 <% } %>

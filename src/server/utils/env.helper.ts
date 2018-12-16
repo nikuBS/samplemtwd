@@ -6,7 +6,7 @@ class EnvHelper {
     return environment[String(process.env.NODE_ENV)][key];
   }
 
-  static setCdnUrl(context) {
+  static replaceCdnUrl(context) {
     if (FormatHelper.isEmpty(context)) {
       return null;
     }

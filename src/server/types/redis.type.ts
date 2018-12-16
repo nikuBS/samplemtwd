@@ -21,12 +21,7 @@ export const REDIS_BANNER_TOS_META = 'BannerTosInfo:';
 export const REDIS_HOME_NOTI = 'WelcomeMsg:WelcomeMsgList';
 export const REDIS_HOME_NOTICE = 'HomeNotice:';
 export const REDIS_HOME_HELP = 'HomeCicntsList';
-
-export enum REDIS_CODE {
-  CODE_SUCCESS = '00',
-  CODE_EMPTY = '01',
-  CODE_ERROR = '02'
-}
+export const REDIS_MENU_URL = 'MenuSubUrl:';
 
 export enum CHANNEL_CODE {
   PC = 'O',

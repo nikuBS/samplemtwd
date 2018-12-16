@@ -192,7 +192,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 결합 상품
   _onMovedComProduct: function () {
-    this._historyService.goLoad('/myt-join/myplancombine');
+    this._historyService.goLoad('/myt-join/combinations');
   },
   // 약정 할인
   _onMovedInstallement: function () {
@@ -204,7 +204,8 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function () {
-    if( this.data.myPausedState.state || this.data.myLongPausedState.state ) {
+    if( (this.data.myPausedState && this.data.myPausedState.state) ||
+      (this.data.myLongPausedState && this.data.myLongPausedState.state) ) {
       // 일시정지 중이거나 장기일시 중이거나 하는 경우 신청현황
       this._historyService.goLoad('submain/suspend/status');
     }
@@ -278,12 +279,12 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
-    this._historyService.reload();
-    if ( Tw.BrowserHelper.isApp() ) {
-      setTimeout($.proxy(function () {
+    setTimeout($.proxy(function () {
+      this._historyService.reload();
+      if ( Tw.BrowserHelper.isApp() ) {
         this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }, this), 500);
-    }
+      }
+    }, this), 500);
   },
 
   // 다른 회선 더보기

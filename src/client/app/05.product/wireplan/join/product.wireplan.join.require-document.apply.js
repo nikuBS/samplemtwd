@@ -16,7 +16,7 @@ Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl) {
 
   this._fileList = [];
   this._limitFileByteSize = 2097152;
-  this._acceptExt = ['jpg', 'jpeg', 'png', 'tif', 'bmp'];
+  this._acceptExt = ['jpg', 'jpeg', 'png', 'gif'];
 
   this._fileTemplate = Handlebars.compile($('#fe-templ-reserv-file').html());
 };

@@ -12,9 +12,6 @@ Tw.BenefitMyBenefitRainbowPointCommon = function (rootEl) {
 };
 
 Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
-  _URL: {
-    MAIN: '/benefit/my'
-  },
   _LINE_SELECT_ACTIONSHEET_HBS: 'actionsheet_select_a_type',
 
   _cachedElement: function () {
@@ -68,14 +65,14 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
 
   _submitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess(this._URL.MAIN, this._URL.MAIN, null,
-        Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.COMPLETE_MSG);
+      this._historyService.replaceURL(this._URL.COMPLETE);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
   },
 
   _reqFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(err.msg, err.code);
   },
 
@@ -131,6 +128,9 @@ Tw.BenefitMyBenefitRainbowPointAdjustment = function () {
   this._init();
 };
 Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyBenefitRainbowPointCommon.prototype, {
+  _URL: {
+    COMPLETE: '/benefit/my/rainbowpoint/adjustment/complete'
+  },
   _PREVIEW_POPUP_HBS: 'BS_01_01_03_01',
   _linesToGiveActionsheet: null,
   _linesToReceiveActionsheet: null,

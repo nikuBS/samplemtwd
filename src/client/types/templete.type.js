@@ -243,19 +243,16 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  JOIN_INFO_NO_AGREEMENT: {
-    title: '포인트 사용 유형',
-    data: [
-      {
-        'list': [
-          { 'option': 'condition', 'attr': 'id="0"', value: '전체' },
-          { 'option': 'condition', 'attr': 'id="1"', value: '포인트 사용' },
-          { 'option': 'condition', 'attr': 'id="2"', value: '포인트 적립' },
-          { 'option': 'condition', 'attr': 'id="3"', value: '포인트 소멸' }
-        ]
-      }
-    ]
-  },
+  JOIN_INFO_NO_AGREEMENT: [
+    {
+      'list': [
+        {'label-attr':'id="0"','radio-attr':'id="0" name="r1" value="전체"','txt':'전체'},
+        {'label-attr':'id="1"','radio-attr':'id="1" name="r1" value="포인트 사용"','txt':'포인트 사용'},
+        {'label-attr':'id="2"','radio-attr':'id="2" name="r1" value="포인트 적립"','txt':'포인트 적립'},
+        {'label-attr':'id="3"','radio-attr':'id="3" name="r1" value="포인트 소멸"','txt':'포인트 소멸'}
+      ]
+    }
+  ],
   JOIN_INFO_MGMT_PERIOD: {
     title: '기간선택',
     data: [
@@ -332,7 +329,8 @@ Tw.POPUP_TPL = {
     '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe4.html' },
     '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html' },
     '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html' },
-    '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' }
+    '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' },
+    '09': { title: '개인정보 처리방침', url: 'http://privacy.sktelecom.com/view.do?ctg=policy&name=policy'}
   },
   ROAMING_RETURN_PLACE: {
     title: '반납 장소 선택',
@@ -414,11 +412,11 @@ Tw.POPUP_TPL = {
   BENEFIT_JOIN_ADVICE_PRODUCT: [
     {
       'list': [
-        { 'option': 'condition', 'attr': 'id="cellphone"', value: '휴대폰' },
-        { 'option': 'condition', 'attr': 'id="internet"', value: '인터넷' },
-        { 'option': 'condition', 'attr': 'id="phone"', value: '전화' },
-        { 'option': 'condition', 'attr': 'id="tv"', value: 'TV' },
-        { 'option': 'condition', 'attr': 'id="combine"', value: '결합상품' }
+        {'label-attr':'id="cellphone"','radio-attr':'id="cellphone" name="r1" value="휴대폰"','txt':'휴대폰'},
+        {'label-attr':'id="internet"' ,'radio-attr':'id="internet" name="r1" value="인터넷"','txt':'인터넷'},
+        {'label-attr':'id="phone"'    ,'radio-attr':'id="phone" name="r1" value="전화"','txt':'전화'},
+        {'label-attr':'id="tv"'       ,'radio-attr':'id="tv" name="r1" value="TV"','txt':'TV'},
+        {'label-attr':'id="combine"'  ,'radio-attr':'id="combine" name="r1" value="결합상품"','txt':'결합상품'}
       ]
     }
   ]

@@ -103,7 +103,7 @@ Tw.CustomerAgentsearchRegion.prototype = {
         this.$btDropdown.val(e.currentTarget.value);
         this._onLargeAreaChanged(e.currentTarget.value);
       }, this));
-    }, this));
+    }, this), null, 'region');
   },
   _onLargeAreaChanged: function (largeCode, middleCode) {
     this.$areaList.empty();

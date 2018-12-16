@@ -35,6 +35,16 @@ Tw.CustomerEmailService.prototype = {
   _request: function () {
     var serviceCategory = this.$service_depth1.data('service-depth1');
 
+    if ( !this._isValidServiceEmail() ) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM
+      );
+
+      return false;
+    }
+
     switch ( serviceCategory ) {
       case 'CELL':
         this._requestCell();
@@ -161,5 +171,13 @@ Tw.CustomerEmailService.prototype = {
     } else {
       $('.fe-service_register').prop('disabled', true);
     }
+
+    //  Tw.CUSTOMER_EMAIL
+  },
+
+  _isValidServiceEmail: function () {
+    var sEmail = $('.fe-service_email').val();
+
+    return Tw.ValidationHelper.isEmail(sEmail);
   }
 };

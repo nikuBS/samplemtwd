@@ -1,0 +1,245 @@
+<%#
+* FileName: myt-fare.bill.guide.dhile.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.12.13
+* MF_09_01
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<script id="fe-entryTplUseBill" type="text/x-handlebars-template">
+
+    <!-- .cont-box -->
+    <div class="cont-box nogaps-btm">
+        <div class="statement-cont type2">
+            <div class="single-list">
+                <span class="title">
+                    <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                    <span class="in-tx type2">휴대폰</span>
+                </span>
+            </div>
+
+            <div class="statement-detail">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style">
+                                <ul class="acco-list">
+
+                                    {{!-- 주석 : billItmLclNm --}}
+                                    {{# each resData.useBill as |largeItem largeIndex|}}
+
+                                    <li class="acco-box noborder">
+
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false">
+                                                <div class="in-title">
+                                                    <span class="tit">{{largeItem.id}}</span>
+                                                    <span class="tx-cont {{#if_dc_red largeItem.id }}{{/if_dc_red}}">{{largeItem.totPrice}} 원</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <div class="acco-cont">
+
+                                            <div class="in-cont">
+                                                <div class="basic-list">
+                                                    <ul>
+
+                                                        {{!-- 주석 billItmSclNm --}}
+                                                        {{# each largeItem.children as |midItem midIndex|}}
+
+                                                        <li>
+                                                            <div class="inner-top">
+                                                                <span class="title">
+
+                                                                    {{!-- 주석 콘텐츠이용료 자세히보기 --}}
+                                                                    {{#if_contents midItem.id }}
+                                                                    {{/if_contents}}
+
+                                                                    {{!-- 주석 타사 --}}
+                                                                    {{#if_third_party midItem.id '콘텐츠이용료'}}
+                                                                    {{/if_third_party}}
+                                                                    {{#if_third_party midItem.id '소액결제'}}
+                                                                    {{/if_third_party}}
+                                                                </span>
+                                                                <span class="tx-cont">{{midItem.totPrice}} 원</span>
+                                                            </div>
+                                                            <div class="inner-row">
+                                                                <ul>
+
+                                                                    {{!-- 주석 --}}
+                                                                    {{# each midItem.children as |smaItem smaIndex|}}
+                                                                    <li>
+                                                                        <span class="title">{{smaItem.billItmNm}}</span>
+                                                                        <span class="tx-cont">{{smaItem.invAmt}} 원</span>
+                                                                    </li>
+                                                                    {{/each}}
+
+                                                                </ul>
+                                                            </div>
+
+                                                        </li>
+                                                        {{/each}}
+
+                                                    </ul>
+
+                                                    <div class="noti-words">
+                                                        <span class="inner-words" id="aria-footnote-05">
+                                                            <i class="icon-fnote ml6"><span class="blind">각주 참고</span></i>부가가치세 제외 대상 표시
+                                                        </span>
+                                                        <span class="inner-words" id="aria-footnote-06">
+                                                            <i class="icon-acompany"><span class="blind">타사</span></i>당사에서 청구 대행하는 타사 요금
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+        </div>
+    </div>
+    <!--// .cont-box -->
+
+</script>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+
+    <%- include('../../../../common/views/components/header.component.html', { title: '자녀 이용요금' }); %>
+
+    <div id="contents" class="container-wrap">
+        <div class="container">
+
+            <div class="user-greeting">
+                <i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>
+                <% if(commDataInfo.discount != 0 ){ %>
+                <p class="msg">이번 달에는 요금할인을 <%=commDataInfo.discount %>원 받으셨어요.<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>
+                <% } else { %>
+                <p class="msg"><%= svcInfo.mbrNm %>님,<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>
+                <% } %>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="calling-plan">
+                    <a href="/product/callplan/<%= commDataInfo.intBillLineList[0].prodId %>">
+                    <button class="wrap-link">
+                            <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
+                            <span class="stit"><%= commDataInfo.intBillLineList[0].prodNm %></span>
+
+                    </button>
+                    </a>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="user-month-bill">
+                    <div class="this-month-bill type3">
+                        <p class="stit"><%=commDataInfo.selClaimDt %>
+                            <span class="bar"></span><%=commDataInfo.intBillLineList[0].label %>
+                        </p>
+                        <% if( billpayInfo.useAmtTot != 0 ){ %>
+                        <p class="price"><%=commDataInfo.useAmtTot %></p>
+                        <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
+                        <% } %>
+                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건 변경</button></div>
+                    </div>
+                    <% if( billpayInfo.useAmtTot == 0 ){ %>
+                    <div class="result-none type2">
+                        이번 달에 사용하신 이용요금이 없습니다.
+                    </div>
+                    <% } %>
+
+                    <div class="detail-bill">
+                        <ul data-target="hbPaidAmtSvcCdListArea">
+                        </ul>
+                    </div>
+                </div>
+                <% if( billpayInfo.coClCd === 'B' ){ %>
+                <p class="txt-desc2 tx-normal mt22">SK브로드밴드를 통해 가입하신 서비스일 경우 청구요금에 포함되지 않습니다. 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주세요.</p>
+                <% } %>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div data-target="hbDetailListArea">
+
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div id="divUnpaidBill" style="display: none;">
+                <div class="cont-box nogaps">
+                    <ul class="full-link-list" >
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">미납요금</span>
+                                    <span class="text type2" id="spanUnpaidTot"></span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+            </div>
+            <!--// .cont-box -->
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list">
+                    <li>이용요금 <button id="MF_02_01_tip_01" type="button" class="tip-view">TIP</button></li>
+                    <li>로밍 이용요금 안내 <button id="MF_02_01_tip_02" type="button" class="tip-view">TIP</button></li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <!-- TBD
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <img src="<%= CDN %>/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
+             -->
+
+        </div>
+    </div>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
+
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillGuideChild( $('#fe-wrap'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      commDataInfo : <%-JSON.stringify(commDataInfo) %>,
+      intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
+      showConditionInfo : <%-JSON.stringify(showConditionInfo) %>,
+      unpaidBillsInfo : <%-JSON.stringify(unpaidBillsInfo) %>
+  } );
+  });
+</script>
+<% include ../../components/end.component.html %>

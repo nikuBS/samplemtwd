@@ -240,7 +240,7 @@ Tw.ProductCommonConfirm.prototype = {
       hbs: 'FT_01_03_L01',
       data: {
         title: $parent.find('.mtext').text(),
-        html: $parent.find('.fe-agree_full_html').text()
+        html: $parent.find('.fe-agree_full_html').html()
       }
     }, $.proxy(this._bindAgreePop, this, $parent), null, 'agree_pop');
   },

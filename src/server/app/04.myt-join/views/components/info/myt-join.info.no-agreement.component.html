@@ -4,19 +4,12 @@
 * Date: 2018.10.08
 -->
 <script id="tmplList" type="text/x-handlebars-template">
-    {{#if data.hasYear}}
-    <div class="ti-caption-gray">
-        <h3 class="tit year">{{data.year}}</h3>
-    </div>
-    {{/if}}
-
     <div class="cont-box nogaps">
         <div class="history-list">
             <ul>
-            {{#each data.list}}
+                {{#each list}}
                 <li>
-                    <span class="tx-date">{{formatDate date}}</span>
-                    {{#each subList}}
+                    <span class="tx-date">{{formatDate op_dt}}</span>
                     <div class="no-link">
                         <div class="li-elem">
                             <div class="title-box">
@@ -31,9 +24,8 @@
                             <div class="price"><span class="tx-price">{{removeKorean chg_pt}}</span><span class="unit">점</span></div>
                         </div>
                     </div>
-                    {{/each}}
                 </li>
-            {{/each}}
+                {{/each}}
             </ul>
         </div>
     </div>

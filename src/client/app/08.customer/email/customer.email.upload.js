@@ -10,7 +10,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
   this._limitFileByteSize = 2097152;
-  this._acceptExt = ['jpg', 'jpeg', 'png', 'tif', 'bmp'];
+  this._acceptExt = ['jpg', 'jpeg', 'png', 'gif'];
 
   this._cachedElement();
   this._bindEvent();
@@ -41,12 +41,12 @@ Tw.CustomerEmailUpload.prototype = {
   _selectFile: function (e) {
     var fileInfo = $(e.currentTarget).prop('files').item(0);
 
-    if ( fileInfo.size > this._limitFileByteSize ) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+    if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
+      return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
     }
 
-    if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
+    if ( fileInfo.size > this._limitFileByteSize ) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
     }
 
     if ( fileInfo ) {

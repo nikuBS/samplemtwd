@@ -16,19 +16,15 @@ Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReq
   this._prodId = prodId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 
-  this._init();
+  this._convConfirmOptions();
+  this._bindEvent();
 };
 
 Tw.ProductMobileplanJoin.prototype = {
-
-  _init: function() {
-    this._convConfirmOptions();
-    this._reqOverpay();
-  },
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
@@ -68,11 +64,11 @@ Tw.ProductMobileplanJoin.prototype = {
     }
 
     this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
-    this._bindEvent();
+    this._getJoinConfirmContext();
   },
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on('env', $.proxy(this._reqOverpay, this));
   },
 
   _getJoinConfirmContext: function() {
@@ -113,21 +109,21 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      noticeList: this._confirmOptions.joinNoticeList,
+      noticeList: $.merge(this._confirmOptions.termNoticeList, this._confirmOptions.joinNoticeList),
       isComparePlan: this._isComparePlan,
       isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

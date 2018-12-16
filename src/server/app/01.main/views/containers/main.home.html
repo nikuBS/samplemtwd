@@ -63,7 +63,7 @@
                             <div class="main-error-box">
                                 <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                 <strong class="ti">회선 등록이 필요합니다.</strong>
-                                <p class="tx">아직 등록되지 않은 회선이 12개 있습니다.<br>원활한 서비스 이용을 위해서<br>적어도 1개의 회선은 등록하셔야 합니다.</p>
+                                <p class="tx">아직 등록되지 않은 회선이 <%= svcInfo.totalSvcCnt %>개 있습니다.<br>원활한 서비스 이용을 위해서<br>적어도 1개의 회선은 등록하셔야 합니다.</p>
                                 <div class="btn-area">
                                     <a href="/common/member/line" type="button" class="btn-round1 btn-style1">회선 등록하기</a>
                                 </div>
@@ -248,8 +248,9 @@
                             <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
                             <% if(homeData.billData) { %>
+                            <% if(homeData.billData.isBroadband) { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <em class="line"><button class="bt fe-bt-line"><%= svcInfo.addr %></button></em>
                                 <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
 
                                 <div class="main-breakdown-box">
@@ -257,10 +258,9 @@
                                     <p class="tx">전화 106 또는 <button class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
                                 </div>
                             </div>
-                            <% if(homeData.billData.isBroadband) { %>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
+                                <em class="line"><button class="bt fe-bt-line"><%= svcInfo.addr %></button></em>
                                 <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
 
                                 <div class="main-breakdown-box">
@@ -312,19 +312,23 @@
                             <!-- // 비로그인 -->
                             <% } %>
 
+                            <% if(svcType.login) { %>
+                            <div id="fe-tmpl-quick">
+                            </div>
+                            <% } else { %>
                             <!-- MY 바로가기 -->
                             <ul class="quick-menu-list">
-                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
-                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
-                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
-                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
-                                <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
-                                <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
-                                <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
-                                <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                <li><a class="bt"><i class="icon-charge-80"></i>나의 요금</a></li>
+                                <li><a class="bt"><i class="icon-tmembership-80"></i>T멤버십</a></li>
+                                <li><a class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</a></li>
+                                <li><a class="bt"><i class="icon-immediate-80"></i>즉시 납부</a></li>
+                                <li><a class="bt"><i class="icon-charge-80"></i>나의 요금</a></li>
+                                <li><a class="bt"><i class="icon-tmembership-80"></i>T멤버십</a></li>
+                                <li><a class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</a></li>
+                                <li><a class="bt"><i class="icon-immediate-80"></i>즉시 납부</a></li>
                             </ul>
-                            <div class="btn-area"><button id="fe-bt-quick-edit" class="bt-link-tx underline">바로가기 편집</button></div>
                             <!-- //MY 바로가기 -->
+                            <% } %>
                         </div>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
@@ -743,9 +747,9 @@
                         <!-- 할인혜택 -->
                         <div class="section-box nogaps">
                             <div class="main-charge-box discount main-banner-img">
-                                <button>
+                                <a href="/benefit/submain/detail/dis-pgm?prod_id=NA00004430">
                                     <img src="<%= CDN %>/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
-                                </button>
+                                </a>
                                 <!-- <div class="stit"><button class="bt">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></button></div>
                                 <div class="main-box-cont">
                                     <strong class="ti">선택약정할인</strong>
@@ -766,19 +770,19 @@
                                         <div class="slider-box">
                                             <ul class="slider">
                                                 <li>
-                                                    <button>
+                                                    <a href="/product/callplan/NA00005900">
                                                         <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </button>
+                                                    </a>
                                                 </li>
                                                 <li>
-                                                    <button>
+                                                    <a href="/product/callplan/NA00005900">
                                                         <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </button>
+                                                    </a>
                                                 </li>
                                                 <li>
-                                                    <button>
+                                                    <a href="/product/callplan/NA00005900">
                                                         <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </button>
+                                                    </a>
                                                 </li>
                                             </ul>
                                             <!-- <ul class="slider">
@@ -917,7 +921,8 @@
 <% include ../components/smart-card/gift.component.html %>
 <% include ../components/smart-card/micro-pay.component.html %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
-<%- include('../components/home/home-welcome.component.html', { svcInfo: svcInfo }); %>
+<%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
+<% include ../components/home/home.quick-menu.component.html %>
 <% } %>
 <script>
   $(document).ready(function () {

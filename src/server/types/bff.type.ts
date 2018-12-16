@@ -454,8 +454,8 @@ export const PREPAID_PAYMENT_TYPE = {
 };
 
 export const PRODUCT_TYP_CD_LIST = {
-  AB: 'product/mobileplan',
-  C: 'product/mobileplan-add',
+  AB: 'product/mobileplan/list',
+  C: 'product/mobileplan-add/list',
   D_I: 'product/wireplan/internet',
   D_P: 'product/wireplan/phone',
   D_T: 'product/wireplan/tv',
@@ -477,6 +477,17 @@ export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
   TW20000014: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
   TW20000018: 'http://www.thonorsclub.com/',
   TW20000019: 'http://skt.datacoupon.co.kr'
+};
+
+export const PRODUCT_CALLPLAN_ADDITIONS_REDIRECT = {
+  NA00003557: 'NA00004197',
+  NA00003558: 'NA00004197',
+  NA00004048: 'NA00004198',
+  NA00004049: 'NA00004198',
+  NA00004046: 'NA00004188',
+  NA00003556: 'NA00004188',
+  NA00004047: 'NA00004196',
+  NA00003958: 'NA00004196'
 };
 
 export const PRODUCT_REPLACED_RULE = {

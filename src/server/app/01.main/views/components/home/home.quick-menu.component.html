@@ -1,0 +1,26 @@
+<%#
+* FileName: home.quick-menu.component.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.12.14
+%>
+<script id="fe-home-quick" type="text/x-handlebars-template">
+    <ul class="quick-menu-list">
+        {{#each list}}
+        <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+        {{/each}}
+    </ul>
+    <div class="btn-area">
+        <button class="bt-link-tx underline fe-bt-quick-edit">바로가기 편집</button>
+    </div>
+</script>
+
+<script id="fe-home-quick-empty" type="text/x-handlebars-template">
+    <ul class="quick-menu-list">
+        <li class="add-type">
+            <button class="add-bt fe-bt-quick-edit">
+                <i class="icon-add-56"><span class="blind">추가</span></i>
+                자주 찾는 메뉴를 MY 바로가기에 추가해 보세요.
+            </button>
+        </li>
+    </ul>
+</script>

@@ -14,7 +14,7 @@ Tw.ProductMobileplanJoinShareLine = function(rootEl, prodId, displayId, confirmO
   this._displayId = displayId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
-  this._confirmOptions = JSON.parse(unescape(confirmOptions));
+  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 
@@ -166,7 +166,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
       isComparePlan: this._isComparePlan,
-      noticeList: this._confirmOptions.joinNoticeList,
+      noticeList: $.merge(this._confirmOptions.termNoticeList, this._confirmOptions.joinNoticeList),
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
@@ -178,7 +178,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
   },
 
   _prodConfirmOk: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
@@ -187,7 +187,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
   },
 
   _procJoinRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

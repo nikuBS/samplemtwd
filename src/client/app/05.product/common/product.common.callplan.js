@@ -8,7 +8,10 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
+
   this._popupService = new Tw.PopupService();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
@@ -28,6 +31,11 @@ Tw.ProductCommonCallplan.prototype = {
     this._contentsDetailList = [];
     this._setContentsDetailList();
     this._setSettingBtnList();
+    this._showReadyOn();
+
+    if (this._historyService.isBack()) {
+      this._historyService.reload();
+    }
   },
 
   _cachedElement: function() {
@@ -35,6 +43,8 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting = this.$container.find('.fe-btn_setting');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
+    this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
+    this.$comparePlans = this.$container.find('.fe-compare_plans');
 
     this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
@@ -45,10 +55,21 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
-    this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this));
-    this.$container.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this));
+    this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
+    this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
+    this.$comparePlans.on('click', $.proxy(this._openComparePlans, this));
+
+    this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+  },
+
+  _showReadyOn: function() {
+    this.$btnReadyOn.show();
+  },
+
+  _openComparePlans: function(e) {
+    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'), 'status=1,toolbar=1');
   },
 
   _confirmExternalUrl: function(e) {
@@ -147,21 +168,63 @@ Tw.ProductCommonCallplan.prototype = {
       return;
     }
 
-    var url = $(e.currentTarget).data('url'),
-      preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
+    var url = $(e.currentTarget).data('url');
+    if (url.indexOf('BPCP:') !== -1) {
+      return this._getBpcp(url);
+    }
+
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url));
+  },
+
+  _detectBpcp: function(e) {
+    var url = $(e.currentTarget).attr('href');
+    if (url.indexOf('BPCP:') === -1) {
+      return true;
+    }
+
+    this._getBpcp(url);
+    e.preventDefault();
+    e.stopPropagation();
+  },
+
+  _getBpcp: function(url) {
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: url.replace('BPCP:', '') })
+      .done($.proxy(this._resBpcp, this));
+  },
+
+  _resBpcp: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
+  },
+
+  _getSvcInfoRes: function(joinTermCd, url, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return this._tidLanding.goLogin(location.href + (Tw.FormatHelper.isEmpty(location.search) ? '' : location.search));
+    }
+
+    var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
     if (Tw.FormatHelper.isEmpty(preCheckApi)) {
       return this._procAdvanceCheck(url, { code: '00' });
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
       .done($.proxy(this._procAdvanceCheck, this, url));
   },
 
-  _openContentsDetailPop: function(e) {
+  _openContentsDetailPop: function(key, e) {
     var $item = $(e.currentTarget),
-      contentsIndex = $item.data('contents_idx');
+      contentsIndex = $item.data(key);
 
     if (Tw.FormatHelper.isEmpty(this._contentsDetailList[contentsIndex])) {
       return;
@@ -208,7 +271,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _procAdvanceCheck: function(url, resp) {
-    Tw.CommonHelper.endLoading('.container');
+    // Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();

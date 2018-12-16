@@ -12,7 +12,7 @@
         {{!-- 주석 : 자녀사용요금 --}}
         {{# each resData as |rootItem rootIndex|}}
         <li>
-            <button>
+            <button data-target="childBillInfo" data-svc-mgmt-num="{{rootItem.svcMgmtNum}}">
                 <span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>
                 <span class="cont">
                 <span class="info-title">{{rootItem.eqpMdlNm}}<i class="icon-children ml6"><span class="blind">자녀</span></i></span>
@@ -161,12 +161,12 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
+                    <a href="/product/callplan/<%= svcInfo.prodId %>">
                     <button class="wrap-link">
-                        <a href="/product/callplan/<%= svcInfo.prodId %>">
-                            <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
-                            <span class="stit"><%= svcInfo.prodNm %></span>
-                        </a>
+                        <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
+                        <span class="stit"><%= svcInfo.prodNm %></span>
                     </button>
+                    </a>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -177,17 +177,16 @@
                 <div class="user-month-bill">
                     <div class="this-month-bill type3">
                         <p class="stit"><%=commDataInfo.selClaimDt %>
-                            <span data-target="searchNmSvcType">
-                                <i class="icon-whole"><span class="blind"><%=commDataInfo.intBillLineList[0].svcType %></span></i>
-                            </span>
                         </p>
-                        <% if( billpayInfo.useAmtTot != 0 ){ %>
-                        <p class="price"><%=commDataInfo.useAmtTot %></p>
+                        <% if( billpayInfo.useAmtTot != 0 ||
+                                (billpayInfo.paidAmtDetailInfo && billpayInfo.paidAmtDetailInfo.length > 0) ) { %>
+                        <p class="price"><%=commDataInfo.useAmtTot %>원</p>
                         <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                         <% } %>
                         <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건 변경</button></div>
                     </div>
-                    <% if( billpayInfo.useAmtTot == 0 ){ %>
+                    <% if( billpayInfo.useAmtTot == 0 &&
+                            (!billpayInfo.paidAmtDetailInfo || billpayInfo.paidAmtDetailInfo.length <= 0) ) { %>
                     <div class="result-none type2">
                         이번 달에 사용하신 이용요금이 없습니다.
                     </div>

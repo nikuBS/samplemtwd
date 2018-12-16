@@ -296,7 +296,7 @@ Tw.FormatHelper = (function () {
       str += '-';
 
       if ( phoneNumber.length === 10 ) {
-        centerIdx = 5;
+        centerIdx = 6;
       } else {
         centerIdx = 7;
       }

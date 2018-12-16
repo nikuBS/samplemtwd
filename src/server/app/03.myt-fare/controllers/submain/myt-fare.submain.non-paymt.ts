@@ -11,11 +11,20 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { AutoPaySd_01, AutoPaySd_02, AutoPaySd_03, PaySuspension, PossibleDay } from '../../../../mock/server/myt.fare.nonpaymt.mock';
 
 class MyTFarePaymentOver extends TwViewController {
+  private _childMgmtNum: string = '';
+
   constructor() {
     super();
+  }
+
+  set childMgmtNum(value) {
+    this._childMgmtNum = value;
+  }
+
+  get childMgmtNum() {
+    return this._childMgmtNum;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
@@ -23,47 +32,85 @@ class MyTFarePaymentOver extends TwViewController {
       svcInfo: svcInfo,
       pageInfo: pageInfo
     };
-    Observable.combineLatest(
-      this._getNonPayment(),
-      this._getPaymentPday(),
-      this._getPaymentClaimDate(),
-      this._getSuspension(),
-      this._createMockPossibleDay(),
-      this._createMockAutopaySd_01(),
-      this._createMockAutopaySd_02(),
-      this._createMockAutopaySd_03(),
-      this._createMockSuspension()
-    ).subscribe(([nonpayment, possibleDay, claimDate, suspension, pd1, cm1, cm2, cm3, sp1]) => {
-      if ( nonpayment ) {
-        data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
-        data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
-      }
-      if ( possibleDay ) {
-        data.possibleDay = possibleDay;
-        data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
-      } /*else {
-        // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
-        data.possibleDay = pd1.result;
-        data.suspStaDt = DateHelper.getShortKoreanMonth(pd1.result.suspStaDt);
-      }*/
-      if ( claimDate ) {
-        data.claimDate = claimDate;
-      } /*else {
-        // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
-        data.claimDate = cm2.result;
-        data.claimDate2 = cm1.result;
-        data.claimDate3 = cm3.result;
-      }*/
+    if ( req.query && req.query.child ) {
+      this.childMgmtNum = req.query.child;
+    }
 
-      if ( suspension ) {
-        data.suspension = suspension;
-      } /*else {
-        // FIXME:납부 이용정지해제 관련 테스트계정확인 후 mock data 삭제
-        data.suspension = sp1.result;
-      }*/
-      res.render('submain/myt-fare.submain.non-paymt.html', { data });
+    if ( FormatHelper.isEmpty(this.childMgmtNum) ) {
+      Observable.combineLatest(
+        this._getNonPayment(),
+        this._getPaymentPday(),
+        this._getPaymentClaimDate(),
+        this._getSuspension()
+      ).subscribe(([nonpayment, possibleDay, claimDate, suspension]) => {
+        if ( nonpayment ) {
+          data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
+          data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
+        }
+        if ( possibleDay ) {
+          data.possibleDay = possibleDay;
+          data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
+        }
+        if ( claimDate ) {
+          data.claimDate = claimDate;
+        }
+        if ( suspension ) {
+          data.suspension = suspension;
+        }
+        res.render('submain/myt-fare.submain.non-paymt.html', { data });
+      });
+
+    } else {
+      Observable.combineLatest(
+        this._getChildNonPayment()
+      ).subscribe(([childPayment]) => {
+        if (childPayment) {
+          const convChildInfo = this._convChildInfo(childPayment);
+          data.unPaidAmtList = convChildInfo.list;
+          data.unPaidTotSum = FormatHelper.addComma(convChildInfo.totSum);
+        }
+        res.render('submain/myt-fare.submain.non-paymt.html', { data });
+      });
+
+    }
+  }
+
+  _convChildInfo(child) {
+    const items = child.unPayAmtList;
+    const result: any = [];
+    let paidTotSum = 0;
+    items.filter((item) => {
+      result.push({
+        unPaidInvDt: item.invDt,
+        unPaidAmt: item.comBat
+      });
+      paidTotSum += parseInt(item.comBat, 10);
+    });
+    return {
+      list: result,
+      totSum: paidTotSum.toString()
+    };
+  }
+
+
+  // 자녀미납요금내역
+  _getChildNonPayment() {
+    return this.apiService.request(API_CMD.BFF_05_0047, {
+      childSvcMgmtNum: this.childMgmtNum
+    }).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        if ( resp.result.unPayAmtList && resp.result.unPayAmtList.length === 0 ) {
+          // no data
+          return null;
+        }
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
     });
   }
+
 
   // 미납요금내역
   _getNonPayment() {
@@ -126,41 +173,6 @@ class MyTFarePaymentOver extends TwViewController {
         // error
         return null;
       }
-    });
-  }
-
-  _createMockPossibleDay(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(PossibleDay);
-      obs.complete();
-    });
-  }
-
-  _createMockAutopaySd_01(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(AutoPaySd_01);
-      obs.complete();
-    });
-  }
-
-  _createMockAutopaySd_02(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(AutoPaySd_02);
-      obs.complete();
-    });
-  }
-
-  _createMockAutopaySd_03(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(AutoPaySd_03);
-      obs.complete();
-    });
-  }
-
-  _createMockSuspension(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(PaySuspension);
-      obs.complete();
     });
   }
 }

@@ -29,6 +29,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this._dayAmountList = [];
     this._onceAmountList = [];
 
+    this.$prepayAmount = this.$container.find('.fe-prepay-amount');
     this.$setPasswordBtn = this.$container.find('.fe-set-password');
   },
   _setButtonVisibility: function () {
@@ -81,13 +82,23 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _changeLimit: function () {
     new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
   },
+  _isPrepayAble: function () {
+    if (this.$prepayAmount.text() === '0') {
+      return false;
+    }
+    return true;
+  },
   _prepay: function () {
-    if (Tw.BrowserHelper.isApp()) {
-      this._popupService.open({
-        'hbs': 'MF_06_03'
-      }, $.proxy(this._goPrepay, this), null, 'pay');
+    if (this._isPrepayAble()) {
+      if (Tw.BrowserHelper.isApp()) {
+        this._popupService.open({
+          'hbs': 'MF_06_03'
+        }, $.proxy(this._goPrepay, this), null, 'pay');
+      } else {
+        this._goAppInfo();
+      }
     } else {
-      this._goAppInfo();
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE);
     }
   },
   _goPrepay: function ($layer) {

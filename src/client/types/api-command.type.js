@@ -47,7 +47,7 @@ Tw.API_CMD = {
   BFF_01_0046: { path: '/core-modification/v1/uscan/file-upload', method: Tw.API_METHOD.POST },
   BFF_01_0049: { path: '/core-auth/v1/anonymous/exsms/apply', method: Tw.API_METHOD.POST },
   BFF_01_0051: { path: '/core-auth/v1/refund/skt-auth-sms/send', method: Tw.API_METHOD.POST },
-  BFF_01_0052: { path: '/core-auth/v1/refund/skt-auth-sms/confirm', method: Tw.API_METHOD.POST },
+  BFF_01_0052: { path: '/v1/refund/skt-auth-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_01_0053: { path: '/v1/captcha/image', method: Tw.API_METHOD.GET },
   BFF_01_0054: { path: '/v1/captcha/audio', method: Tw.API_METHOD.GET },
   BFF_01_0055: { path: '/v1/captcha/answer/:args0', method: Tw.API_METHOD.PUT },
@@ -495,7 +495,8 @@ Tw.NODE_CMD = {
   GET_HOME_WELCOME: { path: '/home/welcome', method: Tw.API_METHOD.GET },
   GET_HOME_NOTICE: { path: '/home/notice', method: Tw.API_METHOD.GET },
   GET_HOME_HELP: { path: '/home/help', method: Tw.API_METHOD.GET },
-  GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET }
+  GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET },
+  GET_QUICK_MENU: { path: '/home/quick-menu', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {
@@ -538,6 +539,7 @@ Tw.API_CODE = {
   BFF_0013: 'BFF0013', // 고객비밀번호 인증 필요
   BFF_0014: 'BFF0014', // 고객비밀번호 재설정 필요
   BFF_0015: 'BFF0015', // 비밀번호 인증 필요 (업무인증에 옵션으로 추가되는 인증)
+  BFF_0020: 'BFF0020', // 법정대리인 인증필요
 
   CERT_FAIL: 'TWM0001',
 

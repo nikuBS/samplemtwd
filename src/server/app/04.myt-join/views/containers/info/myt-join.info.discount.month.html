@@ -27,11 +27,6 @@
                 <div class="history-list">
                     <script id="fe-discount-month-item" type="text/x-handlebars-template">
                         <li>
-                            {{#if showYearTitle }}
-                            <div class="data-select-wrap" style="background: #f5f5f5;">
-                                <span class="data-tit">{{ showYear }}</span>
-                            </div>
-                            {{/if }}
                             <div style="position: relative;">
                                 <span class="tx-date">{{ showInvoDt }}</span>
                                 <span class="tx-count">{{ invCnt }}회차</span>
@@ -51,11 +46,6 @@
                     <ul class="fe-discount-month-list">
                         <% for(var i = 0, length = data.agrmts.length; i < length; i++ ) { %>
                         <li>
-                            <% if (data.agrmts[i-1] && data.agrmts[i-1].showYear !== data.agrmts[i].showYear) { %>
-                            <div class="data-select-wrap" style="background: #f5f5f5;">
-                                <span class="data-tit"><%= data.agrmts[i].showYear %></span>
-                            </div>
-                            <% } %>
                             <div style="position: relative;">
                                 <span class="tx-date"><%= data.agrmts[i].showInvoDt %></span>
                                 <span class="tx-count"><%= data.agrmts[i].invCnt %>회차</span>

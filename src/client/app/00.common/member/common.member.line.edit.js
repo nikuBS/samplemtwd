@@ -13,6 +13,7 @@ Tw.CommonMemberLineEdit = function (rootEl, category) {
   this._historyService = new Tw.HistoryService();
 
   this._marketingSvc = '';
+  this._goBizRegister = false;
 
   this._init();
   this._bindEvent();
@@ -21,10 +22,14 @@ Tw.CommonMemberLineEdit = function (rootEl, category) {
 Tw.CommonMemberLineEdit.prototype = {
   _init: function () {
     skt_landing.dev.sortableInit({
-      axis: 'y'
+      axis: 'y',
+      update: $.proxy(this._onUpdateDnd, this)
     });
   },
   _bindEvent: function () {
+    this.$usedTxt = this.$container.find('#fe-txt-used');
+    this.$unusedTxt = this.$container.find('#fe-txt-unused');
+
     this.$container.on('click', '#fe-bt-guide', $.proxy(this._openGuidePopup, this));
     this.$container.on('click', '#fe-bt-complete', $.proxy(this._completeEdit, this));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickRemove, this));
@@ -34,7 +39,35 @@ Tw.CommonMemberLineEdit.prototype = {
     this._popupService.open({
       hbs: 'CO_01_05_02_04_01',
       layer: true
-    }, null, null, 'guide');
+    }, $.proxy(this._onOpenEditGuide, this), $.proxy(this._onCloseEditGuide, this), 'guide');
+  },
+  _onOpenEditGuide: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-biz-register', $.proxy(this._onClickBizRegister, this));
+    $popupContainer.on('click', '#fe-bt-biz-signup', $.proxy(this._onClickBizSignup, this));
+  },
+  _onCloseEditGuide: function () {
+    if ( this._goBizRegister ) {
+      this._historyService.goLoad('/common/member/line/biz-register');
+    }
+  },
+  _onUpdateDnd: function () {
+
+  },
+  _onClickBizRegister: function () {
+    this._goBizRegister = true;
+    this._popupService.close();
+  },
+  _onClickBizSignup: function () {
+    this._popupService.open({
+      hbs: 'CO_01_05_02_02',
+      layer: true
+    }, $.proxy(this._onOpenBizSignup, this));
+  },
+  _onOpenBizSignup: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-go-url', $.proxy(this._goUrl, this));
+  },
+  _goUrl: function () {
+    Tw.CommonHelper.openUrlExternal('http://www.biztworld.co.kr');
   },
   _completeEdit: function () {
     var list = this.$container.find('.fe-item-active');
@@ -49,6 +82,8 @@ Tw.CommonMemberLineEdit.prototype = {
     $target.addClass('fe-bt-remove');
     $target.removeClass('fe-bt-add');
     $target.parents('.fe-item').addClass('fe-item-active');
+    $target.parents('.fe-item').removeClass('fe-item-inactive');
+    this._resetCount();
 
   },
   _onClickRemove: function ($event) {
@@ -56,7 +91,13 @@ Tw.CommonMemberLineEdit.prototype = {
     $target.addClass('fe-bt-add');
     $target.removeClass('fe-bt-remove');
     $target.parents('.fe-item').removeClass('fe-item-active');
+    $target.parents('.fe-item').addClass('fe-item-inactive');
+    this._resetCount();
     this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
+  },
+  _resetCount: function () {
+    this.$usedTxt.text(this.$container.find('.fe-item-active').length);
+    this.$unusedTxt.text(this.$container.find('.fe-item-inactive').length);
   },
   _openRegisterPopup: function (svcNumList) {
     this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L04, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onConfirmRegisterPopup, this, svcNumList));

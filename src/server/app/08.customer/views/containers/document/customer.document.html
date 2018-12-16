@@ -13,10 +13,9 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html',
-    { title: '구비서류', svcInfo: svcInfo, option:{ line: false } }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '구비서류' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -31,8 +30,13 @@
                         <div class="tab-area type1 required-doc"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
+                                    <% if (isEtc) { %>
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a>휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a>인터넷/전화/TV</a></li>
+                                    <% } else { %>
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>인터넷/전화/TV</a></li>
+                                    <% } %>
                                 </ul>
                             </div>
                             <div class="tab-contents">

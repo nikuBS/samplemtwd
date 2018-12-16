@@ -50,12 +50,15 @@
             <% } %>
         </div>
 
-        <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
+        <% if ( svcInfo.svcAttrCd === 'M1' ) { %>
         <!-- .cont-box -->
         <div class="cont-box nogaps">
             <ul class="btn-link-list">
+                <li class="last-line"><a href="/benefit/my">나의 혜택 보기</a></li>
+                <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
                 <% for (var i in feePlan.feePlanProd.btnList) { %>
-                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
+                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.prodId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
+                <% } %>
                 <% } %>
             </ul>
         </div>
@@ -91,8 +94,8 @@
                     <% for (var i in feePlan.optionAndDiscountProgramList) { %>
                     <li>
                         <div class="txt-area">
-                            <span class="tit">선택약정할인제도</span>
-                            <span class="join-date">가입일 2018.8.15.</span>
+                            <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
+                            <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
                             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
                             <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>" class="bt-link-tx underline">
                                 <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>

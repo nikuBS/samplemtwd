@@ -8,9 +8,8 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import { MYT_INFO_DISCOUNT_MONTH } from '../../../../types/string.type';
-import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 
 const VIEW = {
@@ -175,8 +174,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
     }
 
     agrmts.map((agrmt) => {
-      agrmt.showYear = moment(agrmt.invoDt).year();
-      agrmt.showInvoDt = DateHelper.getShortDateWithFormat(agrmt.invoDt, 'MM.DD', 'YYYYMMDD');
+      agrmt.showInvoDt = DateHelper.getShortDate(agrmt.invoDt);
       agrmt.showPenEstDcAmt = FormatHelper.addComma(agrmt.penEstDcAmt);
     });
 

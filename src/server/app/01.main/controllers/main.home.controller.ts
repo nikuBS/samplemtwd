@@ -28,11 +28,11 @@ import {
   REDIS_HOME_NOTI,
   REDIS_QUICK_DEFAULT,
   REDIS_SMART_CARD,
-  REDIS_CODE,
   REDIS_HOME_NOTICE,
   REDIS_HOME_HELP,
   CHANNEL_CODE,
-  REDIS_SMART_CARD_DEFAULT
+  REDIS_SMART_CARD_DEFAULT,
+  REDIS_MENU_URL
 } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
@@ -156,7 +156,7 @@ class MainHome extends TwViewController {
   private getNoti(): Observable<any> {
     return this.redisService.getData(REDIS_HOME_NOTI)
       .map((resp) => {
-        // if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        // if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         //
         // }
         return resp.result;
@@ -166,7 +166,7 @@ class MainHome extends TwViewController {
   private getHomeNotice(noticeCode): Observable<any> {
     return this.redisService.getData(REDIS_HOME_NOTICE + noticeCode)
       .map((resp) => {
-        // if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        // if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         //   return resp.result;
         // }
         return resp.result;
@@ -177,7 +177,7 @@ class MainHome extends TwViewController {
     let result = null;
     return this.redisService.getData(REDIS_HOME_HELP)
       .map((resp) => {
-        if ( resp.code === REDIS_CODE.CODE_SUCCESS ) {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           result = this.parseHelpData(resp.result.cicntsList);
         }
         return result;
