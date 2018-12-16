@@ -44,6 +44,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
     this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
+    this.$comparePlans = this.$container.find('.fe-compare_plans');
 
     this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
@@ -56,6 +57,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
+    this.$comparePlans.on('click', $.proxy(this._openComparePlans, this));
 
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
@@ -64,6 +66,10 @@ Tw.ProductCommonCallplan.prototype = {
 
   _showReadyOn: function() {
     this.$btnReadyOn.show();
+  },
+
+  _openComparePlans: function(e) {
+    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'), 'status=1,toolbar=1');
   },
 
   _confirmExternalUrl: function(e) {

@@ -48,7 +48,10 @@ Tw.BUTTON_LABEL = {
   JOIN: '가입하기',
   TERMINATE: '해지하기',
   NEXT: '다음',
-  RETRY: '다시 받기'
+  RETRY: '다시 받기',
+  HOME: '홈으로',
+  YES: '예',
+  NO: '아니오'
 };
 
 Tw.SMS_VALIDATION = {
@@ -651,8 +654,7 @@ Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬 글이<br /> 등록되었습니다.',
   ALERT_PRAISE_CANCEL: {
-    TITLE: '작성을 취소하시겠습니까?',
-    MSG: '취소하시면 작성하신 정보가 모두 초기화됩니다.'
+    TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
   },
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
   ALERT_RESEARCHES_A02: '설문에 참여해주셔서 감사합니다.'
@@ -815,8 +817,8 @@ Tw.MYT_DATA_FAMILY_SUCCESS_SHARE = {
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
   TITLE: '매월 자동으로 데이터를 공유 하시겠습니까?',
-  CONTENTS: '다음달부터 자동 공유되며, 이번 달 안으로 변경이 가능합니다.',
-  BTN_NAME: '변경하기'
+  CONTENTS: '다음달부터 자동 공유되며, 이번 달 안에 변경할 수 있습니다.',
+  BTN_NAME: '공유하기'
 };
 
 Tw.MYT_DATA_FAMILY_SUCCESS_SHARE_MONTHLY = {

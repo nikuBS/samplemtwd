@@ -71,9 +71,9 @@
                                         <p class="txt"><%= comb.prodBasBenfCtt %></p>
                                         <p class="date">신청일  <%= comb.scrbDt %></p>
                                         <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
-                                        <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합가족 보기</a>
+                                        <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합가족 보기</a>
                                         <% } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { %>
-                                        <a class="bt-link-tx underline" href="myplancombine/<%= comb.prodId %>">결합상품 보기</a>
+                                        <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합상품 보기</a>
                                         <% } %>
                                         <% if (comb.prodLinkYn === "Y") { %>
                                         <a class="bt-link-tx underline" href="/product/callplan/<%= comb.prodId %>">상품정보 보기</a>

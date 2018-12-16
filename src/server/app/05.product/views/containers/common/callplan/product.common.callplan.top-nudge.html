@@ -74,7 +74,7 @@ if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="plansaving-wrap">
-    <a href="/product/mobileplan/compare-plans" class="link">
+    <a href="javascript:void(0)" data-href="/product/mobileplan/compare-plans?prodId=<%= prodId %>" class="link fe-compare_plans">
         <p class="text02"><%= mobilePlanCompareInfo.titleNm %></p>
     </a>
 </div>
