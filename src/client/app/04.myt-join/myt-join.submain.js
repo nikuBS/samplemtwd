@@ -133,9 +133,6 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   _initialize: function () {
-    setTimeout(function () {
-      window.scrollTo(0, 0);
-    }, 500);
   },
 
   _onChangeNickName: function () {
@@ -282,12 +279,12 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
-    this._historyService.reload();
-    if ( Tw.BrowserHelper.isApp() ) {
-      setTimeout($.proxy(function () {
+    setTimeout($.proxy(function () {
+      this._historyService.reload();
+      if ( Tw.BrowserHelper.isApp() ) {
         this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }, this), 500);
-    }
+      }
+    }, this), 500);
   },
 
   // 다른 회선 더보기

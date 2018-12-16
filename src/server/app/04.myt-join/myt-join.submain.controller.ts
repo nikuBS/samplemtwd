@@ -46,6 +46,10 @@ class MyTJoinSubmainController extends TwViewController {
       if ( req.path.indexOf('w') === -1 ) {
         res.redirect('/myt-join/submain_w');
       }
+    } else {
+      if ( req.path.indexOf('w') > -1 ) {
+        res.redirect('/myt-join/submain');
+      }
     }
     const data: any = {
       svcInfo: svcInfo,
