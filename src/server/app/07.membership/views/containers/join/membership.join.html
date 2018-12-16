@@ -136,6 +136,20 @@
                                         <button class="agree-view" data-type="BE_04_02_L03"><span class="blind">자세히 보기</span></button>
                                     </li>
                                     <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-id="L_05" data-type="policy">
+                                            <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" value="" title="개인정보 처리방침(필수)"
+                                                   aria-labelledby="aria-comp-checkbox7"/>
+                                            <!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox7">
+                                                <p class="layout-text">
+                                                    <span class="mtext">개인정보 처리방침(필수)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button class="agree-view" data-type="BE_04_02_L09"><span class="blind">자세히 보기</span></button>
+                                    </li>
+                                    <li>
                                         <div class="checkbox type01" role="checkbox" aria-checked="false" data-role="TL" data-type="bsi">
                                             <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input type="checkbox" name="checkbox" value=""
@@ -299,10 +313,7 @@
         </div>
     </div>
     <!-- // .container-wrap -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo:
-        data.pageInfo }); %>
-    </footer>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 </body>
