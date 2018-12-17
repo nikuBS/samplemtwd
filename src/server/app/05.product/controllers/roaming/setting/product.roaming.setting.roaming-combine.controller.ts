@@ -37,8 +37,6 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
             this.apiService.request(API_CMD.BFF_10_0141, {}, {}),
         ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
-            console.log('prodBffInfo test');
-            console.log(JSON.stringify(prodBffInfo));
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {

@@ -28,7 +28,6 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
       this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
-      this.$container.on('click','.prev-step',$.proxy(this._goBack, this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';

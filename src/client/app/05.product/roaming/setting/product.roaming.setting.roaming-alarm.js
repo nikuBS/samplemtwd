@@ -13,12 +13,12 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInf
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
-  this._changeList();
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
+  this._changeList();
 };
 
 Tw.ProductRoamingSettingRoamingAlarm.prototype = {
@@ -34,6 +34,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
+      this.$alarmTemplate = this.$container.find('#alarm_template');
   },
     _go_back : function(){
       this._history.goBack();
@@ -121,19 +122,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
 
   _makeTemplate : function (phoneNum,idx) {
-      var template = '<li class="list-box">';
-          //template+='<div class="list-ico"><span class="ico type5">이</span></div>';
-          template+='<div class="list-ico"><span class="ico type-img"></span></div>';
-          template+='<p class="list-text">';
-          //template+='<span class="mtext">이*름</span>';
-          template+='<span class="mtext gray">타사회선</span>';
-          template+='<span class="stext gray">'+phoneNum.serviceNumber1+'-'+phoneNum.serviceNumber2.substring(0,2)+'**-'+phoneNum.serviceNumber3.substring(0,2)+'**'+'</span>';
-          template+='</p>';
-          template+='<div class="list-btn">';
-          template+='<div class="bt-alone"><button data-idx="'+idx+'" class="bt-line-gray1">삭제</button></div>';
-          template+='</div>';
-          template+='</li>';
-       this.$container.find('.comp-box').append(template);
+      console.log(JSON.stringify(phoneNum));
+      var templateData = { phoneData : { phoneNum : phoneNum, idx : idx } };
+      var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
+      this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
   _removeOnList : function ($args) {
 

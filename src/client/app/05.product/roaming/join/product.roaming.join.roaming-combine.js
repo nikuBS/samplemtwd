@@ -33,7 +33,6 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
-      this.$container.on('click','.prev-step',$.proxy(this._goBack, this));
 
   },
 
