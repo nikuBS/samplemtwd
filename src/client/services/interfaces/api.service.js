@@ -62,7 +62,7 @@ Tw.ApiService.prototype = {
       pathVariables: pathVariables
     };
     var authUrl = command.method + '|' + command.path;
-    if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 || resp.code === Tw.API_CODE.BFF_0010 ) {
+    if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 ) {
       Tw.Logger.info('[API Cert]', command);
       if ( resp.code === Tw.API_CODE.BFF_0010 ) {
         resp.result.authClCd = Tw.AUTH_CERTIFICATION_KIND.R;
