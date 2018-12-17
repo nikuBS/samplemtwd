@@ -1,0 +1,363 @@
+<%#
+* FileName: common.search.result.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.11
+%>
+
+<% include ../../components/start.component.html %>
+<!-- body -->
+<body data-gr-c-s-loaded="true">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap rescan"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
+        <div class="h-belt"><!-- border-bottom : 1px -->
+            <div class="h-global-search">
+                <!-- height : 51px -->
+                <div class="h-result">
+                    <div class="h-back">
+                        <button type="button"><i class="icon-historyback-40"><span class="blind">historyback</span></i></button>
+                    </div>
+                    <div class="h-keyword">
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input type="text" value="휴대폰분실">
+                                    <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                    </div>
+                    <div class="h-cancel">
+                        <button>취소</button>
+                    </div>
+                </div>
+                <!-- // height : 51px -->
+                <!-- height : 45px -->
+                <div class="h-rescan">
+                    <span class="custom-form"><input type="checkbox" id="oka" name="r1"><span class="c-type1"></span></span><label class="label" for="oka">결과 내 재 검색</label>
+                </div>
+                <!-- // height : 45px -->
+            </div>
+        </div>
+
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="connection-wrap">
+                    <span class="title">연관</span>
+                    <div class="connec-txt">
+                        <button>분실폰찾기 플러스</button>
+                        <button>분실파손 A 고급</button>
+                        <button>친구찾기</button>
+                        <button>분실</button>
+                        <button>휴대폰 분실했을 땐 이렇게 하세요</button>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="plan-compact-wrap noborder">
+                <div class="tit-caption-type">
+                    <h2 class="tit">요금제</h2>
+                    <span class="num">3</span>
+                    <p class="sub-text">이용요금(부가세 포함)</p>
+                </div>
+            </div>
+
+            <div class="cont-box bgnone gaps-style01">
+                <ul class="extraservice-list">
+                    <li class="category-type">
+                        <button class="link">
+                            <div class="products-titleinfo">
+                                <p class="title">뉴 T끼리 <span class="highlight-text">맞춤형</span>(100분+6GB)</p>
+                                <p class="info">월<span class="money">43,175</span>원</p>
+                            </div>
+                            <div class="taglist-wrap">
+                                <p class="tag-text">#LTE</p>
+                                <p class="tag-text">#5~8GB</p>
+                                <p class="tag-text">#실버</p>
+                                <!--
+                                #데이터 한줄 유형입니다. 말줄임 (..) <span class="highlight-text">처리일때난</span> span태그로 감싸지 않고 텍스트만 뿌려주시면 됩니다.
+                                -->
+                            </div>
+                            <ul class="products-detailinfo02">
+                                <li class="category-type type01">
+                                    <p class="gb"><span>20</span>GB</p>
+                                </li>
+                                <li class="category-type type02">
+                                    <p class="type">
+                                        집,이동전화 무제한
+                                    </p>
+                                </li>
+                                <li class="category-type type03">
+                                    <p class="basic">
+                                        기본제공
+                                    </p>
+                                </li>
+                            </ul>
+                        </button>
+                    </li>
+                    <li class="category-type">
+                        <a href="" class="link">
+                            <div class="products-titleinfo">
+                                <p class="title">T시그니처 <span class="highlight-text">Master</span></p>
+                                <p class="info">월<span class="money">110,000</span>원</p>
+                            </div>
+                            <div class="taglist-wrap">
+                                <p class="tag-text">#LTE</p>
+                                <p class="tag-text">#데이터</p>
+                            </div>
+                            <ul class="products-detailinfo02">
+                                <li class="category-type type01">
+                                    <p class="gb"><span>20</span>GB</p>
+                                </li>
+                                <li class="category-type type02">
+                                    <p class="type">
+                                        집,이동전화 무제한
+                                    </p>
+                                </li>
+                                <li class="category-type type03">
+                                    <p class="basic">
+                                        기본제공
+                                    </p>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-type">
+                        <div class="products-titleinfo">
+                            <p class="title">band <span class="highlight-text">데이터</span> 2.2G</p>
+                            <p class="info">월<span class="money">46,200</span>원</p>
+                        </div>
+                        <div class="taglist-wrap">
+                            <p class="tag-text">#LTE</p>
+                            <p class="tag-text">#데이터</p>
+                        </div>
+                        <ul class="products-detailinfo02">
+                            <li class="category-type type01">
+                                <p class="gb"><span>20</span>GB</p>
+                            </li>
+                            <li class="category-type type02">
+                                <p class="type">
+                                    집,이동전화 무제한
+                                </p>
+                            </li>
+                            <li class="category-type type03">
+                                <p class="basic">
+                                    기본제공
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="paging-area">
+                <button role="button" class="prev"><span class="blind">이전 페이지로 이동</span></button>
+                <button role="button" class="active" title="현재페이지">1</button>
+                <button role="button">2</button>
+                <button role="button">3</button>
+                <button role="button">4</button>
+                <button role="button">5</button>
+                <button role="button" class="next"><span class="blind">다음 페이지로 이동</span></button><!-- 비활성화시 disabled 클래스 추가 -->
+            </div>
+
+            <div class="banner-area">
+                <a><img src="/img/dummy/dummy-banner02.jpg" alt="내게 맞는 요금제 찾기 내 사용패턴, 할인 정보 등에 딱 맞는 요금제를 추천해드려요!"></a>
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+
+</body>
+<% include ../../components/javascript.component.html %>
+
+<% include ../../components/end.component.html %>
