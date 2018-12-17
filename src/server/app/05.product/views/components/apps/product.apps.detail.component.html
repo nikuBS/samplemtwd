@@ -1,7 +1,7 @@
 <script id="fe-tmpl-app" type="text/x-handlebars-template">
     <div class="t-apps">
         <div class="t-apps-ico">
-            <img src="{{appIconImgUrl}}" alt="{{prodNm}}" class="ico">
+            {{#if appIconImgUrl}}<img src="{{appIconImgUrl}}" alt="{{prodNm}}" class="ico">{{/if}}
             <span class="name">{{prodNm}}</span>
         </div>
         <div class="txt mb20">{{{sktProdBenfCtt}}}</div>

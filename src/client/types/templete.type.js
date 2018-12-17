@@ -723,9 +723,9 @@ Tw.MYT_PREPAID_ALARM = {
 };
 
 Tw.PRODUCT_APPS_ORDER = [
-  { value: '최신순', attr: 'data-prop="storRgstDtm"' },
-  { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
-  { value: '가나다순', attr: 'data-prop="prodNm"' }
+  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"' },
+  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"' },
+  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"' }
 ];
 
 Tw.SUSPEND_RELATION = {
