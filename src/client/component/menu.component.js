@@ -78,10 +78,8 @@ Tw.MenuComponent.prototype = {
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
-    $('.fe-bt-login').on('click', $.proxy(this._onClickLogin, this));
-    $('.fe-bt-logout').on('click', $.proxy(this._onClickLogout, this));
-
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
+    this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
   },
   _onClickLogin: function () {
     this._tidLanding.goLogin(location.href);
