@@ -193,18 +193,22 @@ export default class MyTDataHistory extends TwViewController {
         return resp;
       }
 
-      return resp.result.map(item => {
-        const key = item.copnUseDt;
-        return {
-          key,
-          type: RechargeTypes.REFILL,
-          typeName: TypeNames.REFILL_USAGE,
-          date: DateHelper.getShortDate(key),
-          badge: 'recharge',
-          right: item.copnDtlClNm,
-          bottom: [item.opOrgNm || ETC_CENTER]
-        };
-      });
+      return resp.result
+        .filter(item => {
+          return DateHelper.getDifference(item.copnUseDt, this.fromDt) >= 0;
+        })
+        .map(item => {
+          const key = item.copnUseDt;
+          return {
+            key,
+            type: RechargeTypes.REFILL,
+            typeName: TypeNames.REFILL_USAGE,
+            date: DateHelper.getShortDate(key),
+            badge: 'recharge',
+            right: item.copnDtlClNm,
+            bottom: [item.opOrgNm || ETC_CENTER]
+          };
+        });
     });
   }
 
@@ -215,17 +219,21 @@ export default class MyTDataHistory extends TwViewController {
         return resp;
       }
 
-      return resp.result.map(item => {
-        const key = item.copnOpDt;
-        return {
-          key,
-          type: RechargeTypes.REFILL,
-          typeName: TypeNames.REFILL_GIFT,
-          date: DateHelper.getShortDate(key),
-          badge: item.type === '1' ? 'send' : 'recieve',
-          bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
-        };
-      });
+      return resp.result
+        .filter(item => {
+          return DateHelper.getDifference(item.copnOpDt, this.fromDt) >= 0;
+        })
+        .map(item => {
+          const key = item.copnOpDt;
+          return {
+            key,
+            type: RechargeTypes.REFILL,
+            typeName: TypeNames.REFILL_GIFT,
+            date: DateHelper.getShortDate(key),
+            badge: item.type === '1' ? 'send' : 'recieve',
+            bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
+          };
+        });
     });
   }
 
