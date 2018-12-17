@@ -32,7 +32,7 @@ export default class MyTDataHistory extends TwViewController {
       this.getLimitCharges(),
       this.getTingCharges(),
       this.getTingGifts(),
-      this.getRefillUsages(svcInfo),
+      this.getRefillUsages(),
       this.getRefillGifts()
     ).subscribe(histories => {
       const errorIdx = histories.findIndex(history => {
@@ -179,7 +179,7 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
-  private getRefillUsages = svcInfo => {
+  private getRefillUsages = () => {
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map(resp => {
       // const resp = REFILL_USAGES;
 
@@ -227,7 +227,7 @@ export default class MyTDataHistory extends TwViewController {
     return Array.prototype.concat.apply([], histories).sort((a, b) => {
       if (a.key > b.key) {
         return -1;
-      } else if (a.key > b.key) {
+      } else if (a.key < b.key) {
         return 1;
       }
       return 0;
