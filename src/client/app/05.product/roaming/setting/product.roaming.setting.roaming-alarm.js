@@ -122,7 +122,6 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
 
   _makeTemplate : function (phoneNum,idx) {
-      console.log(JSON.stringify(phoneNum));
       var templateData = { phoneData : { phoneNum : phoneNum, idx : idx } };
       var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
       this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
