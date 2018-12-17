@@ -96,8 +96,7 @@ Tw.MyTFareInfoHistory.prototype = {
     // 환불 처리 내역
     this.$moveRefundListTrigger.on('click', $.proxy(this._moveRefundList, this));
     // 과납내역 환불받기 
-    this.$addRefundAccountTrigger.on('click', $.proxy(this._openAddRefundAccount, this));
-    // - TIP버튼의 클릭이동에 대한 정의 추가 필요
+    this.$addRefundAccountTrigger.on('click', $.proxy(this._moveRefundAccount, this));
   },
 
   _afterList: function() {
@@ -247,85 +246,6 @@ Tw.MyTFareInfoHistory.prototype = {
   },
   // 더 보기 end
 
-  // 과납내역 환불받기
-  _openAddRefundAccount: function () {
-    this._popupService.open(
-        {
-          hbs: 'MF_08_02',
-          overPayList:this.data.listData.overPaymentList,
-          totalOverAmt:this.data.refundTotalAmount
-        },
-        $.proxy(this._openAddRefundAccountCallback, this), $.proxy(this._closeAddRefundAccountCallback, this),
-        Tw.MYT_PAYMENT_HISTORY_HASH.OVERPAY_REFUND,
-        'refundAccount'
-    );
-  },
-
-  _openAddRefundAccountCallback: function ($container) {
-    this.refundAPI_option = {
-      //rfndBankNum // 계좌번호
-      //svcMgmtNum: this.paramData.svcMgmtNum,
-      //rfndBankCd // 은행코드
-    };
-    this.$refundRequestBtn = $($container).find('.bt-fixed-area button');
-    this.$bankList = $($container).find('.bt-dropdown.big');
-
-    this.$bankList.on('click', $.proxy(this._selectBank, this));
-    $container.on('click', '.bt-fixed-area button', $.proxy(this._refundRequestSend, this));
-    $container.on('keyup', '#fe-bank-account', $.proxy(this._accountInputHandler, this));
-    $($container).find('#fe-bank-account').siblings('button.cancel').eq(0).on('click', $.proxy(this._accountInputHandler, this));
-  },
-
-  _closeAddRefundAccountCallback: function() {
-    
-    this._historyService.reload();
-  },
-
-  _selectBank: function (event) {
-    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
-  },
-
-  _checkIsAbled: function () {
-    this.isBankNameSeted = true;
-    this.refundAPI_option.rfndBankCd = this.$bankList.attr('id');
-    this._refundAccountInfoUpdateCheck();
-  },
-
-  _refundRequestSend: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0088, this.refundAPI_option)
-        .done($.proxy(this._successRegisterAccount, this)).fail($.proxy(this._apiError, this));
-  },
-
-  _successRegisterAccount: function(res) {
-    if(res.code === '00') {
-      this._popupService.openAlert(Tw.POPUP_CONTENTS.REFUND_ACCOUNT_SUCCESS, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._refreshOverPay, this));
-    } else {
-      if(res.code === 'ZNGME0000') res.msg = Tw.ALERT_MSG_MYT_FARE.ALERT_2_A32;
-      this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, null);
-    }
-  },
-
-  // 환불 계좌 신청 완료 후 갱신
-  _refreshOverPay: function() {
-    this._popupService.close();
-    this._historyService.reload();
-  },
-
-
-  _accountInputHandler: function (e) {
-    this.isBankAccountNumberSeted = ($(e.currentTarget).val().length > 0);
-    this.refundAPI_option.rfndBankNum = $(e.currentTarget).val();
-    this._refundAccountInfoUpdateCheck();
-  },
-
-  _refundAccountInfoUpdateCheck: function () {
-    if (this.isBankNameSeted && this.isBankAccountNumberSeted) {
-      this.$refundRequestBtn.attr('disabled', false);
-    } else {
-      this.$refundRequestBtn.attr('disabled', true);
-    }
-  },
-  // 과납내역 환불받기 end
 
   // 자동납부 통합인출 해지
   _openAutoPaymentLayer: function () {
@@ -398,6 +318,11 @@ Tw.MyTFareInfoHistory.prototype = {
   // 과납 환불 처리 내역으로 이동
   _moveRefundList: function () {
     this._historyService.goLoad(this.data.refundURL);
+  },
+
+  // 과납내역 환불 받기 페이지로 이동
+  _moveRefundAccount: function () {
+    this._historyService.goLoad(this.data.refundAccountURL);
   },
 
   _apiError: function (err) {
