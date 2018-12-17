@@ -1017,7 +1017,7 @@ Tw.CUSTOMER_PRAISE_SUBJECT_TYPE = {
 };
 
 Tw.CUSTOMER_PRAISE_TITLE = {
-  T01: '{area} 지역 {office}의 {subject}을 칭찬합니다!',
+  T01: '{area} 지역 {office}지점의 {subject}을 칭찬합니다!',
   T02: '{office}의 {subject}을 칭찬합니다!'
 };
 
@@ -1351,12 +1351,12 @@ Tw.MENU_STRING = {
 };
 
 Tw.SELECTED_DATE_STRING = {
-  TODAY : '오늘',
-  TOMORROW : '내일'
+  TODAY: '오늘',
+  TOMORROW: '내일'
 };
 
 Tw.ROAMING_COMBINE_LINE_STRING = {
-  COMBINE_LINE : '자회선 설정하기 >'
+  COMBINE_LINE: '자회선 설정하기 >'
 };
 
 Tw.TMAP_STRING = {
