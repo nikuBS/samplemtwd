@@ -30,7 +30,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$userPhoneInfo = this.$container.find('#fe-search-phone');
 
     this._phoneInfo = {
-        eqpMdlNm : ''
+        eqpMdlNm : '',
+        eqpMdlCd : ''
     };
 
     this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
@@ -114,6 +115,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _onClickSelectBtn: function () {
     if(this.modelValue !== '') {
         this._phoneInfo.eqpMdlNm = this.modelValue;
+        this._phoneInfo.eqpMdlCd = this.modelCode;
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
         this._desciptionInit();
@@ -138,6 +140,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _onChangeModel: function () {
     this._phoneInfo.eqpMdlNm = '';
     this.modelValue = '';
+    this.modelCode = '';
     this.cdName = '';
     this.$userPhoneInfo.empty();
     this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
@@ -274,6 +277,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
     this.modelValue = target.attr('data-model-nm');
+    this.modelCode = target.attr('data-model-code');
 
     // this._phoneInfo.eqpMdlNm = this.modelValue;
     this.$container.find('.fe-roaming-model').text(this.modelValue);
