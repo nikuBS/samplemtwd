@@ -51,6 +51,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
   },
   _onSelectStore: function ($layer) {
     $layer.on('click', 'li', $.proxy(this._setStoreUrl, this));
+    $layer.on('click', '.fe-close', $.proxy(this._onlyClose, this));
   },
   _setStoreUrl: function (event) {
     var $target = $(event.currentTarget);
@@ -60,6 +61,9 @@ Tw.CommonShareAppInstallInfo.prototype = {
     this._isLink = true;
 
     this._popupService.close();
+  },
+  _onlyClose: function () {
+    this._isLink = false;
   },
   _goStore: function (isLink) {
     if (isLink || this._isLink) {
