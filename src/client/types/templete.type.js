@@ -463,12 +463,12 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  { value: '전체', attr: 'data-type="5"' },
-  { value: 'T끼리 데이터 선물', attr: 'data-type="0"' },
-  { value: '데이터 한도 충전', attr: 'data-type="1"' },
-  { value: '팅/쿠키즈/안심요금', attr: 'data-type="2"' },
-  { value: '팅 요금 선물', attr: 'data-type="3"' },
-  { value: '데이터 음성 리필', attr: 'data-type="4"' }
+  { txt: '전체', 'radio-attr': 'data-type="5"' },
+  { txt: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"' },
+  { txt: '데이터 한도 충전', 'radio-attr': 'data-type="1"' },
+  { txt: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"' },
+  { txt: '팅 요금 선물', 'radio-attr': 'data-type="3"' },
+  { txt: '데이터 음성 리필', 'radio-attr': 'data-type="4"' }
 ];
 
 Tw.PRODUCT_PLANS_ORDER = [
@@ -762,7 +762,7 @@ Tw.SUSPEND_RELATION = {
   ]
 };
 
-Tw.PREPAID_HISTORIES = [{ value: '음성 충전', attr: 'data-type="voice"' }, { value: '데이터 충전', attr: 'data-type="data"' }];
+Tw.PREPAID_HISTORIES = [{ txt: '음성 충전', 'radio-attr': 'data-type="voice"' }, { txt: '데이터 충전', 'radio-attr': 'data-type="data"' }];
 
 Tw.PREPAID_BADGES = {
   1: { name: '1회', icon: 'auto' },
