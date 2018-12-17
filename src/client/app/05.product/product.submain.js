@@ -13,7 +13,7 @@ Tw.ProductSubmain = function(rootEl, menuId) {
 
 Tw.ProductSubmain.prototype = {
   _getBanners: function(menuId) {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId });
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId }).done($.proxy(this._handleLoadBanners, this));
     // $.ajax('http://localhost:3000/mock/product.banners.json').done($.proxy(this._handleLoadBanners, this));
   },
 
