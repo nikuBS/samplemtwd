@@ -292,11 +292,31 @@ class ProductCommonCallplanPreview extends TwViewController {
       titleNm = PRODUCT_SIMILAR_PRODUCT.ADDITIONS;
     }
 
+    let prodIdsLength: any = 0;
+    if (prodTypCd === 'G') {
+      let prodIds: any = [];
+
+      similarProductInfo.similarsList.forEach((item) => {
+        prodIds = prodIds.concat(FormatHelper.isEmpty(item.prodIds) ? [] : item.prodIds.split(','));
+      });
+
+      prodIds.reduce((a, b) => {
+        if (a.indexOf(b) < 0 ) {
+          a.push(b);
+        }
+
+        return a;
+      }, []);
+
+      prodIdsLength = prodIds.length;
+    }
+
     return Object.assign(similarProductInfo, {
       titleNm: titleNm,
-      prodFltIds: FormatHelper.isEmpty(similarProductInfo.list) ? '' : similarProductInfo.list.map((item) => {
+      prodFltIds: FormatHelper.isEmpty(similarProductInfo.similarsList) ? '' : similarProductInfo.similarsList.map((item) => {
         return item.prodFltId;
       }).join(','),
+      prodCnt: prodTypCd === 'G' ? prodIdsLength : similarProductInfo.prodCnt,
       list: similarProductInfo.similarsList
     });
   }
