@@ -2,6 +2,8 @@ import TwRouter from '../../common/route/tw.router';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
 import CustomerGuideSiteUse from './controllers/useguide/customer.useguide.site.controller';
+import CustomerSvcInfoSite from './controllers/svc-info/customer.svc-info.site.controller';
+import CustomerSvcInfoSiteDetail from './controllers/svc-info/customer.svc-info.site.detail.controller';
 import CustomerGuideServiceUse from './controllers/useguide/customer.useguide.service.controller';
 import CustomerPraise from './controllers/praise/customer.praise.controller';
 import CustomerDamageInfo from './controllers/damage-info/customer.damage-info.controller';
@@ -45,8 +47,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/svc-info/service', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerGuideServiceUse });
     this.controllers.push({ url: '/svc-info/mcustomer', controller: CustomerGuideServiceUse });
-    this.controllers.push({ url: '/svc-info/site', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerGuideSiteUse });
+    this.controllers.push({ url: '/svc-info/site', controller: CustomerSvcInfoSite });
+    this.controllers.push({ url: '/svc-info/site/detail(:page)', controller: CustomerSvcInfoSiteDetail });
     this.controllers.push({ url: '/svc-info/voice(/:page)?', controller: CustomerVoice });
     this.controllers.push({ url: '/svc-info/notice', controller: CustomerSvcInfoNotice });
     this.controllers.push({ url: '/damage-info', controller: CustomerDamageInfo });

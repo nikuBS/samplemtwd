@@ -356,6 +356,16 @@ export const COMBINATION_PRODUCT = {
   NH00000133: 'family-plan' // NEW 온가족플랜
 };
 
+export const CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL = {
+  '3324': 1,
+  '3326': 2,
+  '3327': 3,
+  '213': 4,
+  '3328': 5,
+  '3329': 6,
+  '3330': 7,
+};
+
 export enum PRODUCT_RESERVATION_REJECT {
   R000 = '구비서류 제출기한을 초과하였습니다.\n(제출기한 : nextDistbDt)',
   R001 = '개명(개칭) 확인이 가능한 서류를 제출해주세요.',
