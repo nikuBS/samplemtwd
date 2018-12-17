@@ -69,7 +69,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _openComparePlans: function(e) {
-    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'), 'status=1,toolbar=1');
+    Tw.CommonHelper.openUrlInApp($(e.currentTarget).data('href'), 'status=1,toolbar=1');
   },
 
   _confirmExternalUrl: function(e) {
