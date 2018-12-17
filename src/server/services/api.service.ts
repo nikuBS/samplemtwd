@@ -246,7 +246,7 @@ class ApiService {
 
   public requestLoginLoadTest(userId: string): Observable<any> {
     let result = null;
-    return this.request(API_CMD.BFF_03_0000_TEST, { id: userId })
+    return this.request(API_CMD.BFF_03_0000_TEST, { mbrChlId: userId })
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
