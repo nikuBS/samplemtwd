@@ -266,8 +266,8 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openConfirmAlert: function() {
-    this._popupService.openModalTypeA(this._confirmAlert.TITLE, this._confirmAlert.MSG,
-      this._confirmAlert.BUTTON, $.proxy(this._bindConfirmAlert, this), null, $.proxy(this._onCloseConfirmAlert, this));
+    this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
+      Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this), null, $.proxy(this._onCloseConfirmAlert, this));
   },
 
   _bindConfirmAlert: function($popupContainer) {
