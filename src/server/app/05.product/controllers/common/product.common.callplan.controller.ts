@@ -144,10 +144,11 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * @param prodStCd
    * @param prodRedisInfo
    * @private
    */
-  private _convertRedisInfo (prodRedisInfo): any {
+  private _convertRedisInfo (prodStCd, prodRedisInfo): any {
     if (FormatHelper.isEmpty(prodRedisInfo)) {
       return {};
     }
@@ -164,7 +165,7 @@ class ProductCommonCallplan extends TwViewController {
         return Object.assign(a, b);
       }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
-      contents: this._convertContents(prodRedisInfo.contents),
+      contents: this._convertContents(prodStCd, prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
     });
   }
@@ -212,29 +213,39 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * @param prodStCd
    * @param contentsInfo
    * @private
    */
-  private _convertContents (contentsInfo): any {
-    const contentsResult: any = {
+  private _convertContents (prodStCd, contentsInfo): any {
+    const isOpen = prodStCd === 'E1000',
+      contentsResult: any = {
       LIST: [],
       LA: null,
       R: null,
-      PLM_FIRST: null
+      FIRST: null
     };
 
     contentsInfo.forEach((item) => {
-      if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
+      if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {
+        return true;
+      }
+
+      if (item.vslLedStylCd === 'LA' || item.vslLedStylCd === 'R') {
         contentsResult[item.vslLedStylCd] = EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc));
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm)) {
+      if (FormatHelper.isEmpty(contentsResult.FIRST)) {
+        contentsResult.FIRST = {
+          vslClass: item.vslYn && item.vslYn === 'Y' ? 'prVisual' : 'plm',
+          ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
+        };
+
         return true;
       }
 
-      if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
-        contentsResult.PLM_FIRST = EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc));
+      if (FormatHelper.isEmpty(item.titleNm)) {
         return true;
       }
 
@@ -487,7 +498,7 @@ class ProductCommonCallplan extends TwViewController {
             prodId: prodId,
             basFeeSubText: basFeeSubText,
             basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
-            prodRedisInfo: this._convertRedisInfo(prodRedisInfo.result), // 상품 정보 by Redis
+            prodRedisInfo: this._convertRedisInfo(basicInfo.result.prodStCd, prodRedisInfo.result), // 상품 정보 by Redis
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
             recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
