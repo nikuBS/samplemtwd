@@ -103,7 +103,10 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(key),
           badge: item.type === '1' ? 'send' : 'recieve',
           right: amount.data + amount.unit,
-          bottom: item.giftType === 'GC' ? [ChargeTypeNames.FIXED, item.svcNum] : [item.svcNum]
+          bottom:
+            item.giftType === 'GC' ? 
+              [ChargeTypeNames.FIXED, FormatHelper.conTelFormatWithDash(item.svcNum)] : 
+              [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
@@ -173,7 +176,10 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(key),
           badge: item.opTypCd === '1' ? 'send' : 'recieve',
           right: FormatHelper.addComma(item.amt) + UNIT.WON,
-          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.svcNum, ChargeTypeNames.CANCEL] : [item.svcNum]
+          bottom:
+            item.opTypCd === '2' || item.opTypCd === '4' ? 
+              [FormatHelper.conTelFormatWithDash(item.svcNum), ChargeTypeNames.CANCEL] : 
+              [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
@@ -217,7 +223,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.REFILL_GIFT,
           date: DateHelper.getShortDate(key),
           badge: item.type === '1' ? 'send' : 'recieve',
-          bottom: [item.svcNum]
+          bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
