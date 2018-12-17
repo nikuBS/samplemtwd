@@ -72,8 +72,10 @@ const environment = {
     CDN: 'https://mcdn.tworld.co.kr',
     CDN_MANIFEST: 'http://61.250.20.69',
     REDIS: {
-      host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
-      port: 6379,
+      // host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
+      // port: 6379,
+      host: '61.250.19.37',
+      port: 32300,
       db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
