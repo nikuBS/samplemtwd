@@ -82,10 +82,10 @@ Tw.ProductWireServiceArea.prototype = {
   _openProductType: function() {
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type',
-        layer: true,
+        hbs: 'actionsheet01', // hbs의 파일명
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: Tw.PRODUCT_JOIN_TYPE }],
-        title: ''
+        layer: true
       },
       $.proxy(this._handleOpenProductType, this),
       $.proxy(this._closeProductType, this)
@@ -93,11 +93,13 @@ Tw.ProductWireServiceArea.prototype = {
   },
 
   _handleOpenProductType: function($layer) {
-    $layer.on('click', 'li > button', $.proxy(this._goToReservation, this));
+    $layer.on('click', 'li.type1', $.proxy(this._goToReservation, this));
   },
 
   _goToReservation: function(e) {
-    this._typeCode = e.currentTarget.getAttribute('data-type-code');
+    this._typeCode = $(e.currentTarget)
+      .find('input')
+      .data('type-code');
     this._popupService.close();
   },
 

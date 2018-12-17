@@ -742,11 +742,11 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PRODUCT_JOIN_TYPE = [
-  { value: '휴대폰', attr: 'data-type-code="cellphone"' },
-  { value: '인터넷', attr: 'data-type-code="internet"' },
-  { value: '전화', attr: 'data-type-code="phone"' },
-  { value: 'TV', attr: 'data-type-code="tv"' },
-  { value: '결합상품', attr: 'data-type-code="combine"' }
+  { txt: '휴대폰', 'radio-attr': 'data-type-code="cellphone"' },
+  { txt: '인터넷', 'radio-attr': 'data-type-code="internet"' },
+  { txt: '전화', 'radio-attr': 'data-type-code="phone"' },
+  { txt: 'TV', 'radio-attr': 'data-type-code="tv"' },
+  { txt: '결합상품', 'radio-attr': 'data-type-code="combine"' }
 ];
 
 Tw.SUSPEND_RELATION = {
