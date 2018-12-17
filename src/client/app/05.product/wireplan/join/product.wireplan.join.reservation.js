@@ -94,7 +94,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.find('input[type=checkbox]').trigger('click');
     }
 
-    this.$btnApply.trigger('click');
+    this._reqSvcMgmtNum(true);
     Tw.CommonHelper.removeLocalStorage('productJoinReservation');
   },
 
