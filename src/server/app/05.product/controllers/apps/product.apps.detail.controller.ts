@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { APP_DETAIL, APP_DETAIL2 } from '../../../../mock/server/product.apps.mock';
 import { REDIS_PRODUCT_INFO } from '../../../../types/redis.type';
+import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductAppsDetail extends TwViewController {
   private BANNER_POSITION = {
@@ -51,7 +52,9 @@ export default class ProductAppsDetail extends TwViewController {
       return {
         ...resp.result,
         images: (resp.result.scrshotList || []).reduce((arr, img) => {
-          arr.push(img.scrshotImgUrl);
+          if (img.scrshotImgUrl && img.scrshotImgUrl !== '') {
+            arr.push(ProductHelper.getImageUrlWithCdn(img.scrshotImgUrl));
+          }
 
           return arr;
         }, images)
@@ -81,7 +84,10 @@ export default class ProductAppsDetail extends TwViewController {
           const position = this.BANNER_POSITION[banner.bnnrLocCD];
 
           if (position) {
-            banners[position] = banner;
+            banners[position] = {
+              ...banner,
+              bnnrImgUrl: ProductHelper.getImageUrlWithCdn(banner.bnnrImgUrl)
+            };
           }
 
           return banners;

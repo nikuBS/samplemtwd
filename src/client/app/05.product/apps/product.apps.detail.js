@@ -93,6 +93,10 @@ Tw.ProductAppsDetail.prototype = {
       app.isInstalled = false;
     }
 
+    if (app.appIconImgUrl && app.appIconImgUrl.indexOf('http') < 0) {
+      app.appIconImgUrl = Tw.Environment.cdn + app.appIconImgUrl;
+    }
+
     this._renderAppArea(app);
   },
 
