@@ -9,7 +9,7 @@ Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReq
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
@@ -109,21 +109,21 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      noticeList: $.merge(this._confirmOptions.termNoticeList, this._confirmOptions.joinNoticeList),
+      noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
       isComparePlan: this._isComparePlan,
       isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
-    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
     }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {
-    // Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

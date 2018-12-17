@@ -7,7 +7,7 @@
 Tw.ProductCommonCallplanRedirect = function(redirectUrl) {
   this._redirectUrl = redirectUrl;
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
 
   this._openConfirm();
 };
