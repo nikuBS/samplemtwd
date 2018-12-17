@@ -1,6 +1,7 @@
 import { DATA_UNIT, PRODUCT_CTG_NM } from '../types/string.type';
 import { PRODUCT_REPLACED_RULE, UNIT } from '../types/bff.type';
 import FormatHelper from './format.helper';
+import EnvHelper from './env.helper';
 
 class ProductHelper {
   static convStipulation(stipulation: any): any {
@@ -98,7 +99,7 @@ class ProductHelper {
     const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
     let replacedResult: any = null;
 
-    PRODUCT_REPLACED_RULE.VCALL.forEach((ruleInfo) => {
+    PRODUCT_REPLACED_RULE.VCALL.forEach(ruleInfo => {
       if (ruleInfo.TARGET.indexOf(basOfrVcallTmsCtt) !== -1) {
         replacedResult = {
           isNaN: true,
@@ -123,7 +124,7 @@ class ProductHelper {
     const isNaNbasOfrCharCntCtt = isNaN(Number(basOfrCharCntCtt));
     let replacedResult: any = null;
 
-    PRODUCT_REPLACED_RULE.CHAR.forEach((ruleInfo) => {
+    PRODUCT_REPLACED_RULE.CHAR.forEach(ruleInfo => {
       if (ruleInfo.TARGET.indexOf(basOfrCharCntCtt) !== -1) {
         replacedResult = {
           isNaN: true,
@@ -261,6 +262,15 @@ class ProductHelper {
         basFeeInfo: isNumberBasFeeInfo ? FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
       })
     });
+  }
+
+  static getImageUrlWithCdn(url: string): string {
+    const CDN = EnvHelper.getEnvironment('CDN');
+    if (url.includes('http')) {
+      return url;
+    } else {
+      return CDN + url;
+    }
   }
 }
 

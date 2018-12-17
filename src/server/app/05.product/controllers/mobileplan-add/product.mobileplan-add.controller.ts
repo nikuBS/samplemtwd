@@ -11,6 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
+import EnvHelper from '../../../../utils/env.helper';
 
 export default class ProductAddition extends TwViewController {
   private ADDITION_CODE = 'F01200';
@@ -76,7 +77,8 @@ export default class ProductAddition extends TwViewController {
         prodList: (resp.result.prodList || []).map(addition => {
           return {
             ...addition,
-            basFeeInfo: ProductHelper.convProductBasfeeInfo(addition.basFeeInfo)
+            basFeeInfo: ProductHelper.convProductBasfeeInfo(addition.basFeeInfo),
+            prodIconImgUrl: addition.prodIconImgUrl && ProductHelper.getImageUrlWithCdn(addition.prodIconImgUrl)
           };
         })
       };
@@ -101,7 +103,8 @@ export default class ProductAddition extends TwViewController {
         prodList: (resp.result.prodList || []).map(addition => {
           return {
             ...addition,
-            basFeeInfo: ProductHelper.convProductBasfeeInfo(addition.basFeeInfo)
+            basFeeInfo: ProductHelper.convProductBasfeeInfo(addition.basFeeInfo),
+            prodIconImgUrl: addition.prodIconImgUrl && ProductHelper.getImageUrlWithCdn(addition.prodIconImgUrl)
           };
         })
       };
