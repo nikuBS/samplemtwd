@@ -20,6 +20,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
+  this._targetDataLink = '';
 
   this._lineComponent = new Tw.LineComponent();
 
@@ -49,6 +50,11 @@ Tw.MainHome.prototype = {
     GFT0005: 'GFT0005',   // 제공자가 미성년자이면 선물하기 불가
     GFT0013: 'GFT0013'    // 기
   },
+  DATA_LINK: {
+    RECHARGE: 'recharge',
+    GIFT: 'gift',
+    FAMILY: 'family'
+  },
   _cachedDefaultElement: function () {
     this.$tabStore = this.$container.find('.icon-home-tab-store');
   },
@@ -64,6 +70,7 @@ Tw.MainHome.prototype = {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
+    this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
   },
   _onClickLine: function ($event) {
     var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
@@ -95,6 +102,47 @@ Tw.MainHome.prototype = {
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       extendBarcode.JsBarcode(cardNum);
     }
+  },
+  _openDataLink: function () {
+    this._popupService.open({
+      hbs: 'actionsheet03',
+      layer: true,
+      data: Tw.HOME_DATA_LINK
+    }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
+  },
+  _onOpenDataLink: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-recharge-link', $.proxy(this._onClickRechargeLink, this));
+    $popupContainer.on('click', '#fe-bt-gift-link', $.proxy(this._onClickGiftLink, this));
+    $popupContainer.on('click', '#fe-bt-family-link', $.proxy(this._onClickFamilyLink, this));
+  },
+  _onCloseDataLink: function () {
+    switch ( this._targetDataLink ) {
+      case this.DATA_LINK.RECHARGE:
+        new Tw.ImmediatelyRechargeLayer(this.$container);
+        break;
+      case this.DATA_LINK.GIFT:
+        this._historyService.goLoad('/myt-data/giftdata');
+        break;
+      case this.DATA_LINK.FAMILY:
+        this._historyService.goLoad('/myt-data/familydata');
+        break;
+      default:
+        break;
+    }
+    this._targetDataLink = '';
+
+  },
+  _onClickRechargeLink: function () {
+    this._targetDataLink = this.DATA_LINK.RECHARGE;
+    this._popupService.close();
+  },
+  _onClickGiftLink: function () {
+    this._targetDataLink = this.DATA_LINK.GIFT;
+    this._popupService.close();
+  },
+  _onClickFamilyLink: function () {
+    this._targetDataLink = this.DATA_LINK.FAMILY;
+    this._popupService.close();
   },
   _openEmrNotice: function (notice) {
     if ( notice === 'true' ) {
