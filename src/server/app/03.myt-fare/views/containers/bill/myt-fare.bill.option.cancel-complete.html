@@ -1,0 +1,72 @@
+<%#
+* FileName: myt-fare.bill.option.cancel-complete.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.12.17
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <div class="container">
+                    <div class="complete-wrap">
+                        <div class="title-box">
+                            <i class="icon-complete-120"><span class="blind">complete</span></i>
+                            <p class="tx-tit">
+                                <span class="tx-highlight pt10">해지 완료</span>
+                            </p>
+                        </div>
+                        <% if (isSms) { %>
+                        <div class="tx-contents">
+                            <p class="code-txt">문자 알림서비스(무료) 신청하시고,<br />매월 문자로 입금안내 서비스 받으세요.</p>
+                            <ul class="bt-slice item-one">
+                                <li><a href="/myt-fare/bill/option/sms?num=<%= num %>" type="button" class="btn-round2 btn-style3">문자 알림서비스 신청하기</a></li>
+                            </ul>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li><button type="button" class="btn-floating btn-style2 fe-confirm">확인</button></li>
+                </ul>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+      $('.fe-confirm', '.wrap').on('click', function () {
+        window.location.replace('/myt-fare/bill/option');
+      })
+    });
+</script>
+<% include ../../components/end.component.html %>
