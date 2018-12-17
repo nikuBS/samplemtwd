@@ -600,12 +600,20 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    var convFileList = fileList.map(function(item) {
-      return {
-        fileSize: item.size,
-        fileName: item.name,
-        filePath: '/' + item.path
-      };
+    var convFileList0 = [],
+      convFileList1 = [];
+
+    fileList.forEach(function(itemList) {
+      convFileList0.push({
+        fileSize: itemList[0].size,
+        fileName: itemList[0].name,
+        filePath: '/' + itemList[0].path
+      });
+      convFileList1.push({
+        fileSize: itemList[1].size,
+        fileName: itemList[1].name,
+        filePath: '/' + itemList[1].path
+      });
     });
 
     var apiList = [
@@ -614,7 +622,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
         params: {
           recvFaxNum: 'skt404@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
-          scanFiles: convFileList
+          scanFiles: convFileList0
         }
       },
       {
@@ -622,7 +630,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
         params: {
           recvFaxNum: 'skt219@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
-          scanFiles: convFileList
+          scanFiles: convFileList1
         }
       },
       {
