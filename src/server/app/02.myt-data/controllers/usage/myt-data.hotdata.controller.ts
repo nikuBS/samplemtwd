@@ -124,7 +124,7 @@ class MyTDataHotdata extends TwViewController {
 
       // 기본제공데이터
       defaultData = gnrlData.find((_data) => {
-        return _data.prodId === svcInfo.prodId;
+        return _data.prodId === svcInfo.prodId && FormatHelper.isEmpty(_data.rgstDtm);
       }) || {};
 
       // 기본제공데이터를 제외한 데이터 배열 취합
