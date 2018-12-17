@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import BFF_10_0089_mock from '../../../../mock/server/product.BFF_10_0089.mock';
+import EnvHelper from '../../../../utils/env.helper';
 
 export default class ProductRoaming extends TwViewController {
   constructor() {
@@ -120,7 +121,16 @@ export default class ProductRoaming extends TwViewController {
         };
       }
 
-      return resp.result;
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
+      return resp.result.map(alpa => {
+          return {
+            ...alpa,
+            actvnAreaHtmlCtt: alpa.actvnAreaHtmlCtt.replace(/src=([\"\'])/gi, 'src=$1' + EnvHelper.getEnvironment('CDN'))
+          };
+      });
     });
   }
 
