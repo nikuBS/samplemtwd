@@ -144,8 +144,8 @@ body.bg-gray {
   height: 100%;
   padding-top: 3.5rem;
   background: #edeef0;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
+  -webkit-transform: translateX(-110%);
+          transform: translateX(-110%);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   z-index: 190; }

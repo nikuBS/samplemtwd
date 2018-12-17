@@ -938,7 +938,7 @@ button.bt-link-tx, a.bt-link-tx {
 
 .link-long {
   position: relative;
-  border-bottom: 1px solid #f7dede; }
+  border-bottom: 1px solid #e1e1e1; }
   .link-long.last {
     border-bottom: 0; }
   .link-long a, .link-long button {
