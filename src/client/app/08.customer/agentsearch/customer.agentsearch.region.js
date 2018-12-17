@@ -125,6 +125,7 @@ Tw.CustomerAgentsearchRegion.prototype = {
       return memo + Tw.REGION_LIST_ITEM.getItem(item.districtName, item.middleCd);
     }, ''));
 
+    $('.widget-box.tube').data('event', null);
     skt_landing.widgets.widget_init();
     if (Tw.FormatHelper.isEmpty(middleCode)) {
       this.$areaList.find('li:first').click();
