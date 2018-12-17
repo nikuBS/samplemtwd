@@ -471,10 +471,10 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   { txt: '데이터 음성 리필', 'radio-attr': 'data-type="4"' }
 ];
 
-Tw.PRODUCT_PLANS_ORDER = [
-  { value: '추천순' },
-  { value: '높은 가격순' },
-  { value: '낮은 가격순' }
+Tw.PRODUCT_LIST_ORDER = [
+  { txt: '추천순', 'radio-attr': 'data-order="recommand"' },
+  { txt: '높은 가격순', 'radio-attr': 'data-order="highprice"' },
+  { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"' }
 ];
 
 Tw.TERMS_ACTION = {
