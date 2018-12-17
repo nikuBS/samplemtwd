@@ -16,7 +16,7 @@ Tw.CustomerEmailCategory = function (rootEl) {
 };
 
 Tw.CustomerEmailCategory.prototype = {
-  service: { depth1: '', depth2: '' },
+  service: { depth1: 'CELL', depth2: '' },
   quality: { depth1: '' },
 
   _init: function () {
