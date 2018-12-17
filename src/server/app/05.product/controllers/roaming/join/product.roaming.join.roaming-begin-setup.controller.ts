@@ -19,7 +19,7 @@ class ProductRoamingJoinRoamingBeginSetup extends TwViewController {
     }
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-        const prodId = req.query.prodId || null;
+        const prodId = req.query.prod_id || null;
 
 
 
@@ -38,7 +38,9 @@ class ProductRoamingJoinRoamingBeginSetup extends TwViewController {
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
-                    title: PRODUCT_TYPE_NM.JOIN
+                    title: PRODUCT_TYPE_NM.JOIN,
+                    code: prodApiInfo.code,
+                    msg: prodApiInfo.msg,
                 });
             }
 

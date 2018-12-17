@@ -23,6 +23,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
+      this.$container.on('click','.prev-step',$.proxy(this._goBack, this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY-MM-DD';
@@ -59,7 +60,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
         }
-        actionSheetData[0].list[0].value+= ' (오늘)';
+        actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
         this._openSelectDatePop(actionSheetData,'');
     },
 

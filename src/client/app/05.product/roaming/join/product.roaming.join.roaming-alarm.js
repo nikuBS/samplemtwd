@@ -33,6 +33,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
+      this.$container.on('click','.prev-step',$.proxy(this._goBack, this));
   },
   _clearInput : function(){
       this.$inputElement.val('');

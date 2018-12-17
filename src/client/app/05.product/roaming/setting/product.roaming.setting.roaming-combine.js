@@ -32,6 +32,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
       this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
+      this.$container.on('click','.prev-step',$.proxy(this._goBack,this));
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
@@ -67,18 +68,18 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
   },
   _requestOrder : function(requestType,phoneNum){
 
-      var reqestValue = {
+      var requestValue = {
           svcOpClCd : '',
           startDtm : this._prodBffInfo.startdtm,
           endDtm : this._prodBffInfo.enddtm,
           childSvcNum : '',
           delChildSvcMgmtNum : ''
       };
-      reqestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
+      requestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
       if(requestType === 'remove'){
-          reqestValue.delChildSvcMgmtNum = phoneNum;
+          requestValue.delChildSvcMgmtNum = phoneNum;
       }else{
-          reqestValue.childSvcNum = phoneNum;
+          requestValue.childSvcNum = phoneNum;
       }
 
 
@@ -168,6 +169,9 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
           }
       }
       return tempArr;
+  },
+  _goBack : function(){
+      this._historyService.goLoad('/product/callplan/'+this._prodId);
   }
 
 

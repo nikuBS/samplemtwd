@@ -83,7 +83,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
         }
-        actionSheetData[0].list[0].value+= ' (오늘)';
+        actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
         this._openSelectDatePop(actionSheetData,'');
     },
     _btnTimeEvent : function($this){
