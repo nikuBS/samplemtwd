@@ -72,13 +72,14 @@ Tw.MyTDataHistory.prototype = {
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {
             list: _.map(Tw.MYT_DATA_CHARGE_TYPE_LIST, function(item) {
-              if (item.attr.indexOf(type) >= 0) {
-                return Object.assign({ option: 'checked' }, item);
+              if (item['radio-attr'].indexOf(type) >= 0) {
+                return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
               }
               return item;
             })
@@ -90,14 +91,14 @@ Tw.MyTDataHistory.prototype = {
   },
 
   _handleOpenType: function($layer) {
-    $layer.on('click', 'li > button', $.proxy(this._handleSelectType, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
     var $target = $(e.currentTarget);
-    var selectedIdx = Number($target.data('type'));
+    var selectedIdx = Number($target.find('input').data('type'));
 
-    this.$container.find('.bt-select').text($target.find('span').text());
+    this.$container.find('.bt-select').text($target.find('span.txt').text());
 
     this._handleLoadFilteredData(selectedIdx);
     this._popupService.close();
