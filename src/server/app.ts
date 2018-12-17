@@ -1,5 +1,5 @@
 // for APM
-//const WhatapAgent = require('whatap').NodeAgent;
+const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
 import * as path from 'path';
