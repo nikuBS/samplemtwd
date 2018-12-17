@@ -348,8 +348,8 @@ Tw.MyTFareSubMain.prototype = {
 
   // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
-    // 매월 1일은 비노출
-    if ( this.data.isNotFirstDate ) {
+    // 매월 1일은 비노출, 휴대폰, T-PocketFi 인 경우에만 노출
+    if ( this.data.isRealTime && this.data.isNotFirstDate ) {
       this.loadingView(true, 'button[data-id=realtime-pay]');
       this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
     }
