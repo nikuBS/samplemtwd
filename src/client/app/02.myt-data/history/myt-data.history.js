@@ -60,9 +60,10 @@ Tw.MyTDataHistory.prototype = {
     this._displayCount[type] += items.length;
     var leftCount = this._histories[type].length - this._displayCount[type];
 
-    if (leftCount > 0) {
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + leftCount + ')'));
-    } else {
+    var hasNone = this.$moreBtn.addClass('none');
+    if (leftCount > 0 && hasNone) {
+      this.$moreBtn.removeClass('none');
+    } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
   },
