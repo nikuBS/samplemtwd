@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.bill.auto.register.controller.ts
+ * FileName: myt-fare.bill.option.register.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
  */
@@ -11,7 +11,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-class MyTFareBillAutoRegister extends TwViewController {
+class MyTFareBillOptionRegister extends TwViewController {
   constructor() {
     super();
   }
@@ -22,7 +22,7 @@ class MyTFareBillAutoRegister extends TwViewController {
         this.getPaymentOption()
       ).subscribe(([paymentOption]) => {
         if (paymentOption.code === API_CODE.CODE_00) {
-          res.render('bill/myt-fare.bill.auto.register.html', {
+          res.render('bill/myt-fare.bill.option.register.html', {
             svcInfo: svcInfo,
             pageInfo: pageInfo,
             paymentOption: this.parseData(paymentOption.result)
@@ -72,4 +72,4 @@ class MyTFareBillAutoRegister extends TwViewController {
   }
 }
 
-export default MyTFareBillAutoRegister;
+export default MyTFareBillOptionRegister;

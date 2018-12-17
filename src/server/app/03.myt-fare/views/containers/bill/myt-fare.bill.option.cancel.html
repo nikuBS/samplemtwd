@@ -1,0 +1,110 @@
+<%#
+* FileName: myt-fare.bill.option.cancel.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.12.17
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div id="myt-fare-bill-option-cancel" class="wrap" data-menuId="M000263">
+        <div class="popup-page tw-popup fixed-bottom h60">
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>자동납부 해지</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <div class="form-data-tit-wrap ml16">
+                            <strong class="tit">해지 시, 납부방법</strong>
+                            <p class="txt-desc2">자동납부 해지를 위해 아래 납부 방법을<br>필수로 선택해 주세요.</p>
+                        </div>
+                        <div class="list-comp-input">
+                            <div class="widget">
+                                <div class="widget-box radio">
+                                    <ul class="select-list fe-select-payment-option" role="group">
+                                        <li id="03" class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="radio" name="radio" value="" title="지로 납부" aria-labelledby="aria-comp-radio1" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext ellipsis">지로 납부</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li id="04" class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="radio" name="radio" value="" title="입금전용계좌 납부" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext ellipsis">입금전용계좌 납부</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-acnt-num="<%= paymentOption.acntNum %>"
+                             data-payer-num-cl-cd="<%= paymentOption.payerNumClCd %>"
+                             data-bank-card-co-cd="<%= paymentOption.bankCardCoCd %>"
+                             data-bank-prt-yn="<%= paymentOption.bankPrtYn %>"
+                             data-ser-num="<%= paymentOption.serNum %>"
+                             data-auth-req-ser-num="<%= paymentOption.authReqSerNum %>"
+                             data-rltm-ser-num="<%= paymentOption.rltmSerNum %>"
+                             data-pay-mthd-cd="<%= paymentOption.payMthdCd %>"
+                             class="ti-caption-gray fe-info">
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <ul class="noti-list">
+                            <li>자동납부 신청/변경/해지 시 <button id="MF_05_01_01_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>은행 자동납부 해지 안내 <button id="MF_05_01_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>매월 5일 이후 해지 시 <button id="MF_05_01_02_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>이용시간 안내 <button id="MF_05_01_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>추가문의 안내 <button id="MF_05_01_tip_04" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button class="fe-go-cancel">해지하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step fe-common-back">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillOptionCancel($('#myt-fare-bill-option-cancel'));
+  });
+</script>
+<% include ../../components/end.component.html %>

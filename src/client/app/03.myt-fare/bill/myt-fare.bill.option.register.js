@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.bill.auto.register.js
+ * FileName: myt-fare.bill.option.register.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
  */
 
-Tw.MyTFareBillAutoRegister = function (rootEl) {
+Tw.MyTFareBillOptionRegister = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.MyTFareBillAutoRegister = function (rootEl) {
   this._init();
 };
 
-Tw.MyTFareBillAutoRegister.prototype = {
+Tw.MyTFareBillOptionRegister.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();

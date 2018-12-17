@@ -32,7 +32,6 @@ import MyTFareBillCashbag from './controllers/bill/myt-fare.bill.cashbag.control
 import MyTFareBillTPoint from './controllers/bill/myt-fare.bill.tpoint.controller';
 import MyTFareBillRainbow from './controllers/bill/myt-fare.bill.rainbow.controller';
 import MyTFareBillOption from './controllers/bill/myt-fare.bill.option.controller';
-import MyTFareBillAutoRegister from './controllers/bill/myt-fare.bill.auto.register.controller';
 import MyTFareBillSmall from './controllers/billsmall/myt-fare.bill.small.controller';
 import MyTFareBillSmallAuto from './controllers/billsmall/myt-fare.bill.small.auto.controller';
 import MyTFareBillSmallAutoInfo from './controllers/billsmall/myt-fare.bill.small.auto.info.controller';
@@ -44,6 +43,10 @@ import MyTFareBillContentsAutoChange from './controllers/billcontents/myt-fare.b
 import MyTFareBillPayComplete from './controllers/bill/myt-fare.bill.pay-complete.controller';
 import MyTFareBillPointComplete from './controllers/bill/myt-fare.bill.point-complete.controller';
 import MyTFareBillGuideChild from './controllers/billguide/myt-fare.bill.guide.child.controllers';
+import MyTFareBillOptionCancel from './controllers/bill/myt-fare.bill.option.cancel.controller';
+import MyTFareBillOptionCancelComplete from './controllers/bill/myt-fare.bill.option.cancel-complete.controller';
+import MyTFareBillOptionSms from './controllers/bill/myt-fare.bill.option.sms.controller';
+import MyTFareBillOptionRegister from './controllers/bill/myt-fare.bill.option.register.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -60,7 +63,10 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/tpoint', controller: MyTFareBillTPoint });
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
     this.controllers.push({ url: '/bill/option', controller: MyTFareBillOption });
-    this.controllers.push({ url: '/bill/option/register', controller: MyTFareBillAutoRegister });
+    this.controllers.push({ url: '/bill/option/register', controller: MyTFareBillOptionRegister });
+    this.controllers.push({ url: '/bill/option/cancel', controller: MyTFareBillOptionCancel });
+    this.controllers.push({ url: '/bill/option/sms', controller: MyTFareBillOptionSms });
+    this.controllers.push({ url: '/bill/option/cancel-complete', controller: MyTFareBillOptionCancelComplete });
     this.controllers.push({ url: '/bill/pay-complete', controller: MyTFareBillPayComplete });
     this.controllers.push({ url: '/bill/point-complete', controller: MyTFareBillPointComplete });
 
