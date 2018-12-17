@@ -60,8 +60,8 @@ class MainHome extends TwViewController {
     // this.redisService.getString(REDIS_SMART_CARD_DEFAULT)
     //   .subscribe((resp) => {
     //     console.log('default', resp);
-    //   });a
-
+    //   });
+    console.log('svcTye', svcType);
     if ( svcType.login ) {
       svcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {

@@ -33,7 +33,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
-    this._getQuickMenu();
+    // this._getQuickMenu();
     this._initScroll();
   } else {
     setTimeout($.proxy(function () {
@@ -564,7 +564,7 @@ Tw.MainHome.prototype = {
   },
   _drawWelcomeMsg: function (list) {
     var $welcomeEl = this.$container.find('#fe-tmpl-noti');
-    if ( list.length > 0 ) {
+    if ( $welcomeEl.length > 0 && list.length > 0 ) {
       var $welcomeTemp = $('#fe-home-welcome');
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
       $welcomeEl.html(tplWelcome({ msg: list[0] }));
@@ -614,7 +614,7 @@ Tw.MainHome.prototype = {
   _drawQuickMenu: function (quickMenu) {
     var list = this._parseQuickMenu(quickMenu);
     var $quickMenuEl = this.$container.find('#fe-tmpl-quick');
-    if ( list.length > 0 ) {
+    if ( $quickMenuEl.length > 0 && list.length > 0 ) {
       var $quickTemp = $('#fe-home-quick');
       var tplQuick = Handlebars.compile($quickTemp.html());
       $quickMenuEl.html(tplQuick({ list: list }));
