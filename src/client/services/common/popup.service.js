@@ -266,6 +266,25 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
+  openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
+    var option = {
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub-c',
+      cont_align: 'tc',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: closeBtName || Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback, hashName);
+    this._open(option);
+  },
   openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
