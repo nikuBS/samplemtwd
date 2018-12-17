@@ -12,10 +12,6 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
-    console.log(svcInfo);
-    console.log(typeof (svcInfo));
-    console.log(JSON.stringify(svcInfo));
-
   this._prodId = prodId;
 };
 
@@ -23,7 +19,6 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
-      this.$container.on('click','.prev-step',$.proxy(this._goBack, this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY-MM-DD';
