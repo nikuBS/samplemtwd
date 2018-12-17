@@ -289,10 +289,24 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
     } else if ( res.code === 'WI0007' ) {
       // 선택하신 서비스는 SK브로드밴드를 통해 가입하신 서비스이므로 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주시기 바랍니다.
-      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT.ERROR_ALERT, null,
-        $.proxy(function(){
-          this._goLoad('/myt-join/submain/wire/history');
-      }, this));
+
+      this._popupService.openOneBtTypeB(
+        Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
+        Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+        [{
+          style_class: 'link',
+          txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
+        }],
+        'type1',
+        $.proxy(function ($layer) {
+          $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+        }, this)
+      );
+
+      // this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT.ERROR_ALERT, null, null,
+      //   $.proxy(function(){
+      //     this._goLoad('/myt-join/submain/wire/history');
+      // }, this));
     }
 
   },
