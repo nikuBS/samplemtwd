@@ -20,10 +20,18 @@ Tw.ProductRoamingGuide.prototype = {
         var reqItem = qs.reqItem;
 
         if(reqItem === 'lost'){
-            this.$container.find('.fe-lost-guide').addClass('on');
-            this.$container.find('.fe-rm-lost').attr('aria-pressed', 'true');
+            this._roamingGuideAnchor();
         }
     },
+    _roamingGuideAnchor: function () {
+        this.$container.find('.fe-lost-guide').addClass('on');
+        this.$container.find('.fe-rm-lost').attr('aria-pressed', 'true');
+        var _top = $('.widget-box.accordion').eq(1).offset().top;
+        $('html, body').stop().animate({
+            scrollTop:_top - 70},
+            1, function(){});
+    },
+
     _getQueryStringObject: function () {
         var a = window.location.search.substr(1).split('&');
         if (a === '') return {};
