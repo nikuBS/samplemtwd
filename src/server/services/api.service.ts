@@ -94,6 +94,11 @@ class ApiService {
           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
           'Content-Length': JSON.stringify(params).length
         });
+      case API_SERVER.TEST:
+        return Object.assign(header, {
+           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
+           'Content-Length': JSON.stringify(params).length
+        });
       default:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8'

@@ -30,6 +30,7 @@ Tw.Init.prototype = {
     // new Tw.LineComponent();
     new Tw.MaskingComponent();
     new Tw.ShareComponent();
+    new Tw.SearchComponent();
   },
 
   _logVersion: function (resp) {
