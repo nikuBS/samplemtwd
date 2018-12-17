@@ -784,21 +784,27 @@ Tw.ANDROID_STORE = [
 
 Tw.ROAMING_MANAGE_TYPE = {
   list:[
-      { value: 'LTE 자동로밍', attr: 'data-manage-type="L"', 'option': '', type: 'L' },
-      { value: '3G 자동로밍', attr: 'data-manage-type="W"', 'option': '', type: 'W' },
-      { value: '2G 자동로밍', attr: 'data-manage-type="C"', 'option': '', type: 'C' },
-      { value: 'GSM 자동로밍', attr: 'data-manage-type="G"', 'option': '', type: 'G' },
-      { value: '임대로밍', attr: 'data-manage-type=""', 'option': '', type: '' }
+      { txt: 'LTE 자동로밍', 'radio-attr': 'id="ra0" name="r2" data-manage-type="L"', 'label-attr': 'id="ra0"', type: 'L' },
+      { txt: '3G 자동로밍', 'radio-attr': 'id="ra1" name="r2" data-manage-type="W"', 'label-attr': 'id="ra1"', type: 'W' },
+      { txt: '2G 자동로밍', 'radio-attr': 'id="ra2" name="r2" data-manage-type="C"', 'label-attr': 'id="ra2"', type: 'C' },
+      { txt: 'GSM 자동로밍', 'radio-attr': 'id="ra3" name="r2" data-manage-type="G"', 'label-attr': 'id="ra3"', type: 'G' },
+      { txt: '임대로밍', 'radio-attr': 'id="ra4" name="r2" data-manage-type=""', 'label-attr': 'id="ra4"', type: '' }
   ]
 };
 
 Tw.ROAMING_MFACTCD_LIST = {
     list: [
-        { value: '전체', attr: 'data-mfact-code="ALL" data-mfact-name="전체"', 'option': 'hbs-mfact-cd' },
-        { value: '삼성', attr: 'data-mfact-code="SS" data-mfact-name="삼성"', 'option': 'hbs-mfact-cd' },
-        { value: 'LG', attr: 'data-mfact-code="LG" data-mfact-name="LG"', 'option': 'hbs-mfact-cd' },
-        { value: '팬택', attr: 'data-mfact-code="PT" data-mfact-name="팬택"', 'option': 'hbs-mfact-cd' },
-        { value: '애플', attr: 'data-mfact-code="CG" data-mfact-name="애플"', 'option': 'hbs-mfact-cd' },
-        { value: '기타', attr: 'data-mfact-code="ETC" data-mfact-name="기타"', 'option': 'hbs-mfact-cd' }
+        { txt: '전체', 'radio-attr': 'id="ra0" name="r2" data-mfact-code="ALL" data-mfact-name="전체"', 'label-attr': 'id="ra0"' },
+        { txt: '삼성', 'radio-attr': 'id="ra1" name="r2" data-mfact-code="SS" data-mfact-name="삼성"', 'label-attr': 'id="ra1"' },
+        { txt: 'LG', 'radio-attr': 'id="ra2" name="r2" data-mfact-code="LG" data-mfact-name="LG"', 'label-attr': 'id="ra2"' },
+        { txt: '팬택', 'radio-attr': 'id="ra3" name="r2" data-mfact-code="PT" data-mfact-name="팬택"', 'label-attr': 'id="ra3"' },
+        { txt: '애플', 'radio-attr': 'id="ra4" name="r2" data-mfact-code="CG" data-mfact-name="애플"', 'label-attr': 'id="ra4"' },
+        { txt: '기타', 'radio-attr': 'id="ra5" name="r2" data-mfact-code="ETC" data-mfact-name="기타"', 'label-attr': 'id="ra5"' }
     ]
 };
+
+Tw.PRODUCT_ROAMING_ORDER = [
+  { txt: '추천순', 'radio-attr': 'id="ra0" name="r2" data-oder-name="recommand"', 'label-attr': 'id="ra0"' },
+  { txt: '높은 가격순', 'radio-attr': 'id="ra1" name="r2" data-oder-name="highprice"', 'label-attr': 'id="ra1"' },
+  { txt: '낮은 가격순', 'radio-attr': 'id="ra2" name="r2" data-oder-name="lowprice"', 'label-attr': 'id="ra2"' }
+];

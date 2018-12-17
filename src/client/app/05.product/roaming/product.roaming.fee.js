@@ -267,16 +267,13 @@ Tw.ProductRoamingFee.prototype = {
       this.$roamingPlanItemCnt.text(resp.result.productCount);
   },
   _openRoamingOrderPopup: function () {
-      var list = Tw.PRODUCT_PLANS_ORDER.slice(),
-      searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
-      list[searchType] = { value: list[searchType].value, option: 'checked' };
-
+      this.orderList = Tw.PRODUCT_ROAMING_ORDER;
       this._popupService.open(
           {
-              hbs: 'actionsheet_select_a_type', // hbs의 파일명
+              hbs: 'actionsheet01', // hbs의 파일명
               layer: true,
-              title: Tw.POPUP_TITLE.SELECT_ORDER,
-              data: [{ list: list }]
+              btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
+              data: [{ list: this.orderList }]
           },
           $.proxy(this._handleOpenOrderPopup, this),
           undefined,
@@ -284,7 +281,12 @@ Tw.ProductRoamingFee.prototype = {
       );
   },
   _handleOpenOrderPopup: function ($layer) {
-    $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectRoamingOrder, this));
+    var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
+
+    $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
+    $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
+    $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRoamingOrder, this));
   },
   _handleResetTag: function ($layer, $target) {
       this._popupService.close();
@@ -321,6 +323,7 @@ Tw.ProductRoamingFee.prototype = {
   _handleSelectRoamingOrder: function (e) {
       var $target = $(e.currentTarget);
       var $list = $target.parent();
+      this.orderTypeIdx = $list.find('li').index($target);
       var orderType = this._getRoamingOrderType($list.find('li').index($target));
 
       if (this._params.searchOrder === orderType) {
@@ -330,7 +333,7 @@ Tw.ProductRoamingFee.prototype = {
       this._params.searchOrder = orderType;
       delete this._params.searchLastProdId;
       delete this._leftCount;
-      this.$container.find('.fe-roaming-order').text($target.find('span').text());
+      this.$container.find('.fe-roaming-order').text(this.orderList[this.orderTypeIdx].txt);
       this.$roamingPlanlist.empty();
 
       this._handleMoreRoamingPlan();
