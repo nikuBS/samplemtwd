@@ -292,7 +292,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
       this._popupService.openOneBtTypeB(
         Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-        Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+        Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT.ERROR_ALERT,
         [{
           style_class: 'link',
           txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
