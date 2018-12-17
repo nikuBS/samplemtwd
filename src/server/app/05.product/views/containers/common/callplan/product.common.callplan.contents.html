@@ -1,22 +1,22 @@
-<% if ( prodRedisInfo.contents.LA || prodRedisInfo.contents.R ) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
+<% if ( basicInfo.prodStCd === 'E1000' && ( prodRedisInfo.contents.LA || prodRedisInfo.contents.R )) { %>
+    <hr class="cont-sp type1" aria-hidden="true"/>
 
-<div class="cont-box nogaps noborder">
-    <div class="prVisual fe-contents">
-    <% if ( prodRedisInfo.contents.LA ) { %>
-    <%- prodRedisInfo.contents.LA %>
-    <% } %>
-    <% if ( prodRedisInfo.contents.R ) { %>
-    <%- prodRedisInfo.contents.R %>
-    <% } %>
+    <div class="cont-box nogaps noborder">
+        <div class="prVisual fe-contents">
+        <% if ( prodRedisInfo.contents.LA ) { %>
+        <%- prodRedisInfo.contents.LA %>
+        <% } %>
+        <% if ( prodRedisInfo.contents.R ) { %>
+        <%- prodRedisInfo.contents.R %>
+        <% } %>
+        </div>
     </div>
-</div>
 <% } %>
-<% if ( prodRedisInfo.contents.PLM_FIRST ) { %>
+<% if ( prodRedisInfo.contents.FIRST ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box">
-    <div class="plm fe-contents"><%- prodRedisInfo.contents.PLM_FIRST %></div>
+    <div class="<%= prodRedisInfo.contents.FIRST.vslClass %> fe-contents"><%- prodRedisInfo.contents.FIRST.ledItmDesc %></div>
 </div>
 <% } %>
 
@@ -32,8 +32,8 @@
                 <button class="fe-btn_contents_detail" data-contents_idx="<%= i %>">
                     <%= prodRedisInfo.contents.LIST[i].titleNm %>
                     <span class="tx-sub">
-                        <span class="ico"><span class="blind">보기</span></span>
-                    </span>
+                            <span class="ico"><span class="blind">보기</span></span>
+                        </span>
                 </button>
             </div>
             <div class="none fe-contents_detail_item" aria-hidden="true"

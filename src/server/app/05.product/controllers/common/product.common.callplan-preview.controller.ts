@@ -40,7 +40,7 @@ class ProductCommonCallplanPreview extends TwViewController {
         relateTags: this._convertRelateTags(prodInfo.prodTagList),
         similar: this._convertSimilarProduct(prodInfo.baseInfo.prodTypCd, prodInfo.similar)
       },
-      this._convertRedisInfo({
+      this._convertRedisInfo('E1000', {
         summary: prodInfo.summary,
         contents: prodInfo.contentsList,
         banner: prodInfo.bannerList
@@ -92,10 +92,11 @@ class ProductCommonCallplanPreview extends TwViewController {
   }
 
   /**
+   * @param prodStCd
    * @param prodRedisInfo
    * @private
    */
-  private _convertRedisInfo (prodRedisInfo): any {
+  private _convertRedisInfo (prodStCd, prodRedisInfo): any {
     if (FormatHelper.isEmpty(prodRedisInfo)) {
       return {};
     }
@@ -112,7 +113,7 @@ class ProductCommonCallplanPreview extends TwViewController {
         return Object.assign(a, b);
       }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
-      contents: this._convertContents(prodRedisInfo.contents),
+      contents: this._convertContents(prodStCd, prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
     });
   }
@@ -160,20 +161,35 @@ class ProductCommonCallplanPreview extends TwViewController {
   }
 
   /**
+   * @param prodStCd
    * @param contentsInfo
    * @private
    */
-  private _convertContents (contentsInfo): any {
-    const contentsResult: any = {
-      LIST: [],
-      LA: null,
-      R: null,
-      PLM_FIRST: null
-    };
+  private _convertContents (prodStCd, contentsInfo): any {
+    const isOpen = prodStCd === 'E1000',
+      contentsResult: any = {
+        LIST: [],
+        LA: null,
+        R: null,
+        FIRST: null
+      };
 
     contentsInfo.forEach((item) => {
-      if (item.vslLedStylCd === 'R' || item.vslLedStylCd === 'LA') {
-        contentsResult[item.vslLedStylCd] = EnvHelper.replaceCdnUrl(item.ledItmDesc);
+      if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {
+        return true;
+      }
+
+      if (item.vslLedStylCd === 'LA' || item.vslLedStylCd === 'R') {
+        contentsResult[item.vslLedStylCd] = EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc));
+        return true;
+      }
+
+      if (FormatHelper.isEmpty(contentsResult.FIRST)) {
+        contentsResult.FIRST = {
+          vslClass: item.vslYn && item.vslYn === 'Y' ? 'prVisual' : 'plm',
+          ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
+        };
+
         return true;
       }
 
@@ -181,14 +197,9 @@ class ProductCommonCallplanPreview extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(contentsResult.PLM_FIRST)) {
-        contentsResult.PLM_FIRST = EnvHelper.replaceCdnUrl(item.ledItmDesc);
-        return true;
-      }
-
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prVisual' : 'plm'),
-        ledItmDesc: EnvHelper.replaceCdnUrl(item.ledItmDesc)
+        ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
       }));
     });
 
@@ -304,6 +315,18 @@ class ProductCommonCallplanPreview extends TwViewController {
       isCombine: prodTypCd === 'F',
       isDiscount: prodTypCd === 'G'
     };
+  }
+
+  /**
+   * @param context
+   * @private
+   */
+  private _removePcImgs (context: any): any {
+    if (FormatHelper.isEmpty(context)) {
+      return null;
+    }
+
+    return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, '');
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
