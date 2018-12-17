@@ -816,7 +816,7 @@ Tw.MYT_DATA_FAMILY_SUCCESS_SHARE = {
 };
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
-  TITLE: '매월 자동으로 데이터를 공유하시겠습니까?',
+  TITLE: '매달 자동으로 데이터를 공유하시겠습니까?',
   CONTENTS: '다음 달부터 자동공유되며, 이번 달 안에 변경할 수 있습니다.',
   BTN_NAME: '공유하기'
 };
