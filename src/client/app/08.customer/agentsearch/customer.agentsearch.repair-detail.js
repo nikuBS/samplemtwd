@@ -57,7 +57,7 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
     var lonlat = new Tmap.LonLat(this._location.longitude, this._location.latitude)
       .transform('EPSG:4326', 'EPSG:3857');
-    var icon = new Tmap.Icon(Tw.TMAP.PIN, size, offset);
+    var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.PIN, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
     markerLayer.addMarker(marker);
   }
