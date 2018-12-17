@@ -19,7 +19,7 @@ class ProductRoamingSettingRoamingBeginSetup extends TwViewController {
     }
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-        const prodId = req.query.prodId || null;
+        const prodId = req.query.prod_id || null;
 
         if (FormatHelper.isEmpty(prodId)) {
             return this.error.render(res, {
@@ -36,7 +36,9 @@ class ProductRoamingSettingRoamingBeginSetup extends TwViewController {
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
-                    title: PRODUCT_TYPE_NM.SETTING
+                    title: PRODUCT_TYPE_NM.SETTING,
+                    code: prodBffInfo.code,
+                    msg: prodBffInfo.msg,
                 });
             }
 
@@ -48,37 +50,6 @@ class ProductRoamingSettingRoamingBeginSetup extends TwViewController {
                 prodId : prodId
             });
         });
-
-        // res.render('roaming/setting/product.roaming.setting.roaming-begin-setup.html', {
-        //     svcInfo : svcInfo,
-        //     prodRedisInfo : { prodNm: 'T로밍 데이터 1만원',
-        //         prodIconImgUrl: null,
-        //         prodSmryDesc: '전세계 150개국 이상에서 3G/LTE 데이터로밍을 실속있게 이용가능한 한도 요금제',
-        //         prodBasBenfCtt: null,
-        //         sktProdBenfCtt: null,
-        //         basOfrGbDataQtyCtt: '-',
-        //         basOfrMbDataQtyCtt: null,
-        //         basOfrVcallTmsCtt: '-',
-        //         basOfrCharCntCtt: null,
-        //         smryHtmlCtt: null,
-        //         basFeeInfo: '11000',
-        //         freeYn: 'N' },
-        //     prodBffInfo : {
-        //         "svcStartDt" : "20181210"
-        //         ,"svcEndDt" : "20181225"
-        //         ,"svcStartTm" : "12"
-        //         ,"svcEndTm" : "12"
-        //         ,"startEndTerm" : "15"
-        //         ,"prodNm" : "T로밍 요금제"
-        //         ,"prodFee" : ""
-        //         ,"romSetClCd" : "DTDN"
-        //         ,"isAdult" : "true"
-        //         ,"chkCurProdStat" : "false"
-        //         ,"settingYn" : true
-        //
-        //     },
-        //     prodId : 'test'
-        // });
 
     }
 }

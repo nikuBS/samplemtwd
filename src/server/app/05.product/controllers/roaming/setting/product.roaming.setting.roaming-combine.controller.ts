@@ -11,6 +11,7 @@ import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
+import StringHelper from '../../../../../utils/string.helper';
 
 
 class ProductRoamingSettingRoamingCombine extends TwViewController {
@@ -21,7 +22,7 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
 
 
 
-        const prodId = req.query.prodId || null;
+        const prodId = req.query.prod_id || null;
 
 
         if (FormatHelper.isEmpty(prodId)) {
@@ -36,10 +37,13 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
             this.apiService.request(API_CMD.BFF_10_0141, {}, {}),
         ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
+
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
-                    title: PRODUCT_TYPE_NM.JOIN
+                    title: PRODUCT_TYPE_NM.SETTING,
+                    code: prodBffInfo.code,
+                    msg: prodBffInfo.msg,
                 });
             }
 
@@ -47,7 +51,8 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.summary,
                 prodApiInfo : prodBffInfo.result,
-                prodId : prodId
+                prodId : prodId,
+                phoneNum : StringHelper.phoneStringToDash(svcInfo.showSvc)
             });
         });
 

@@ -12,10 +12,6 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
-    console.log(svcInfo);
-    console.log(typeof (svcInfo));
-    console.log(JSON.stringify(svcInfo));
-
   this._prodId = prodId;
 };
 
@@ -59,7 +55,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
         }
-        actionSheetData[0].list[0].value+= ' (오늘)';
+        actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
         this._openSelectDatePop(actionSheetData,'');
     },
 

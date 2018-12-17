@@ -62,7 +62,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
         }
-        actionSheetData[0].list[0].value+= ' (오늘)';
+        actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
         this._openSelectDatePop(actionSheetData,'');
     },
     _btnTimeEvent : function($this){
@@ -190,7 +190,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
                     isBasFeeInfo : data.prodFee,
                     typeNm : data.svcType,
                     settingType : (data.svcType+' '+data.processNm),
-                    btnNmList : ['나의 가입정보 확인']
+                    btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
                 };
                 this._popupService.open({
                         hbs: 'complete_product_roaming',

@@ -1349,3 +1349,12 @@ Tw.MENU_STRING = {
     return this.TOTAL + count + this.DESC;
   }
 };
+
+Tw.SELECTED_DATE_STRING = {
+  TODAY : '오늘',
+  TOMORROW : '내일'
+};
+
+Tw.ROAMING_COMBINE_LINE_STRING = {
+  COMBINE_LINE : '자회선 설정하기 >'
+};
