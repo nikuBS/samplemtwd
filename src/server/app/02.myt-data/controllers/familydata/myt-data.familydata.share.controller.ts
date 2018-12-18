@@ -54,10 +54,7 @@ export default class MyTDataFamilyShare extends TwViewController {
   private getMonthlyInfo() {
     return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+        return resp;
       }
       return resp.result;
     });
