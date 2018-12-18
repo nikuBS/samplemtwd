@@ -10,8 +10,11 @@
     </div>
     <!--// #header -->
     <!-- .container-wrap -->
+    {{#if data.list}}
     <div class="container-wrap pb0">
         <div class="container">
+            {{#each data.list}}
+            {{#if showImage}}
             <div class="cont-box bgnone noborder">
                 <div class="t-logo-alarm">
                     <i class="icon-bi-skt-80"><span class="blind">skt bi</span></i>T월드
@@ -19,44 +22,64 @@
                 <div class="shadow-box mt8">
                     <div class="alarm_list">
                         <div class="banner-box">
-                            <img src="/img/dummy/TA1_01_case.jpg" alt="">
+                            <img src="{{../cdn}}{{imgLinkUrl}}/{{imgFileNm}}" alt="">
                         </div>
                         <div class="con-box">
                             <p class="con0">
-                                <span>09월 02일 일요일</span>
-                                <span>오후 01시 30분</span>
+                                <span>{{showDate}}</span>
+                                <span>{{showTime}}</span>
                             </p>
-                            <p class="con1"><strong>T World AD</strong><br>가족을 위한 끝판왕 요금제 T 플랜 요금제<br>가족과 DATA를 맘껏 나눠써보세요!</p>
+                            <p class="con1"><strong>{{pushTitle}}</strong><br>{{pushContents}}</p>
                         </div>
-                        <button class="detail-view">바로가기<i class="detail-view-ic"></i></button>
+                        <button data-link="{{landingUrl}}" class="detail-view fe-bt-link">바로가기<i class="detail-view-ic"></i></button>
                     </div>
                 </div>
             </div>
+            {{else}}
             <div class="cont-box bgnone noborder">
                 <div class="t-logo-alarm">
                     <i class="icon-bi-skt-80"><span class="blind">skt bi</span></i>T월드
                 </div>
                 <div class="shadow-box mt8">
                     <div class="alarm_list">
-                        <div class="banner-box">
-                            <img src="/img/dummy/TA1_01_case.jpg" alt="">
-                        </div>
                         <div class="con-box">
                             <p class="con0">
-                                <span>09월 02일 일요일</span>
-                                <span>오후 01시 30분</span>
+                                <span>{{showDate}}</span>
+                                <span>{{showTime}}</span>
                             </p>
-                            <p class="con1"><strong>T World AD</strong><br>가족을 위한 끝판왕 요금제 T 플랜 요금제<br>가족과 DATA를 맘껏 나눠써보세요!</p>
+                            <p class="con1"><strong>{{pushTitle}}</strong><br>{{pushContents}}</p>
                         </div>
-                        <button class="detail-view">바로가기<i class="detail-view-ic"></i></button>
+                        <button data-link="{{landingUrl}}" class="detail-view fe-bt-link">바로가기<i class="detail-view-ic"></i></button>
                     </div>
                 </div>
             </div>
+            {{/if}}
+            {{/each}}
+            {{#if data.showMore}}
             <div class="extraservice-more">
-                <a class="btn">더보기</a>
+                <button id="fe-bt-more" class="btn">더보기</button>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{else}}
+    <div class="container-wrap">
+        <div class="container">
+            <div class="complete-wrap">
+                <div class="title-box">
+                    <i class="icon-warning-120"><span class="blind">warning</span></i>
+                    <p class="tx-tit"><span class="tx-highlight">아직 도착한 T알림이 없습니다.</span></p>
+                </div>
+                <div class="tx-contents">
+                    <p class="basic-txt">혹시 T알림 설정을 꺼두셨나요?</p>
+                    <ul class="bt-slice item-one">
+                        <li><button type="button" class="btn-round2 btn-style3">T알림 설정 바로가기</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+    {{/if}}
     <!--// .container-wrap -->
     <!-- .popup-closeBtn -->
     <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>

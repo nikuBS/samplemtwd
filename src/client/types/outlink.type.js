@@ -9,7 +9,7 @@ Tw.OUTLINK = {
   DIRECT_SUPPORT: 'http://shop.tworld.co.kr/handler/Dantong-SKT?UPDATE_YN=N&_ga=2.226795357.1794270396.1498012356-98061374.1498012356',
   DIRECT_HOME: 'http://shop.tworld.co.kr/handler/ShopTworldMain-Start',
   DIRECT_ACCESSORY: 'http://shop.tworld.co.kr/handler/AccessoryMall-MainAcc',
-  DIRECT_PHONE: '',
-  DIRECT_TABLET: '',
-  DIRECT_NUGU: ''
+  DIRECT_PHONE: 'http://shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001',
+  DIRECT_TABLET: 'http://shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002',
+  DIRECT_NUGU: 'http://shop.tworld.co.kr/handler/AccessoryMall-StartAcc?categoryId=10010003'
 };
