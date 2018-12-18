@@ -95,99 +95,115 @@
                 </div>
                 <!--// .cont-box -->
             {{/if}}
-            {{#if isAutoJoinTermList}}
-                <hr class="cont-sp type1" aria-hidden="true"/>
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
-                    <div class="info-list">
-                        <ul>
-                            {{#if autoJoinList}}
-                                <li>
-                                    <div class="tit-area">
-                                        <span class="tit">자동 가입</span>
-                                        <span class="sub-tit">서비스 및 혜택</span>
-                                    </div>
-                                    <div class="cont-area">
-                                        {{#autoJoinList}}
-                                            <dl>
-                                                <dt>{{svcProdNm}}</dt>
-                                                {{#each svcProdList}}
-                                                    <dd>{{{this}}}</dd>
-                                                {{/each}}
-                                            </dl>
-                                        {{/autoJoinList}}
-                                        {{#if isMobilePlan}}
-                                            <dl>
-                                                <dt>혜택</dt>
-                                                {{#if autoJoinBenefitList}}
-                                                    <dd>
-                                                        <ul>
-                                                            {{{autoJoinBenefitList}}}
-                                                        </ul>
-                                                    </dd>
-                                                {{else}}
-                                                    <dd class="list-none">
-                                                        <ul>
-                                                            <li>자동가입 혜택이 없습니다.</li>
-                                                        </ul>
-                                                    </dd>
-                                                {{/if}}
-                                            </dl>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-top">
+                <div class="info-list">
+                    <ul>
+                        <li>
+                            <div class="tit-area">
+                                <span class="tit">자동 가입</span>
+                                <span class="sub-tit">서비스 및 혜택</span>
+                            </div>
+                            <div class="cont-area">
+                                {{#if autoJoinList}}
+                                    {{#autoJoinList}}
+                                        <dl>
+                                            <dt>{{svcProdNm}}</dt>
+                                            {{#each svcProdList}}
+                                                <dd>{{{this}}}</dd>
+                                            {{/each}}
+                                        </dl>
+                                    {{/autoJoinList}}
+                                {{else}}
+                                    <dl>
+                                        <dt>부가서비스</dt>
+                                        <dd class="list-none">
+                                            <ul>
+                                                <li>자동 가입 서비스가 없습니다.</li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                {{/if}}
+                                {{#if isMobilePlan}}
+                                    <dl>
+                                        <dt>혜택</dt>
+                                        {{#if autoJoinBenefitList}}
+                                            <dd>
+                                                <ul>
+                                                    {{{autoJoinBenefitList}}}
+                                                </ul>
+                                            </dd>
+                                        {{else}}
+                                            <dd class="list-none">
+                                                <ul>
+                                                    <li>자동 가입 혜택이 없습니다.</li>
+                                                </ul>
+                                            </dd>
                                         {{/if}}
-                                    </div>
-                                </li>
-                            {{/if}}
-                            {{#if autoTermList}}
-                                <li>
-                                    <div class="tit-area">
-                                        <span class="tit">자동 해지</span>
-                                        <span class="sub-tit">서비스 및 혜택</span>
-                                    </div>
-                                    <div class="cont-area">
-                                        {{#autoTermList}}
-                                            <dl>
-                                                <dt>{{svcProdNm}}</dt>
-                                                {{#each svcProdList}}
-                                                    <dd>{{{this}}}</dd>
-                                                {{/each}}
-                                            </dl>
-                                        {{/autoTermList}}
-                                        {{#if isMobilePlan}}
-                                            <dl>
-                                                <dt>혜택</dt>
-                                                {{#if autoTermBenefitList}}
-                                                    <dd>
-                                                        <ul>
-                                                            {{{autoTermBenefitList}}}
-                                                        </ul>
-                                                    </dd>
-                                                {{else}}
-                                                    <dd class="list-none">
-                                                        <ul>
-                                                            <li>자동해지 혜택이 없습니다.</li>
-                                                        </ul>
-                                                    </dd>
-                                                {{/if}}
-                                            </dl>
+                                    </dl>
+                                {{/if}}
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tit-area">
+                                <span class="tit">자동 해지</span>
+                                <span class="sub-tit">서비스 및 혜택</span>
+                            </div>
+                            <div class="cont-area">
+                                {{#if autoTermList}}
+                                    {{#autoTermList}}
+                                        <dl>
+                                            <dt>{{svcProdNm}}</dt>
+                                            {{#each svcProdList}}
+                                                <dd>{{{this}}}</dd>
+                                            {{/each}}
+                                        </dl>
+                                    {{/autoTermList}}
+                                {{else}}
+                                    <dl>
+                                        <dt>부가서비스</dt>
+                                        <dd class="list-none">
+                                            <ul>
+                                                <li>자동 해지 서비스가 없습니다.</li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                {{/if}}
+                                {{#if isMobilePlan}}
+                                    <dl>
+                                        <dt>혜택</dt>
+                                        {{#if autoTermBenefitList}}
+                                            <dd>
+                                                <ul>
+                                                    {{{autoTermBenefitList}}}
+                                                </ul>
+                                            </dd>
+                                        {{else}}
+                                            <dd class="list-none">
+                                                <ul>
+                                                    <li>자동 해지 혜택이 없습니다.</li>
+                                                </ul>
+                                            </dd>
                                         {{/if}}
-                                    </div>
-                                </li>
-                            {{/if}}
-                        </ul>
-                    </div>
-                    {{#if downgrade.guidMsgCtt}}
-                        <div class="cont-noti pt20">
-                            {{#if downgrade.isHtml}}
-                                <span class="type2">{{downgrade.guidMsgCtt}}</span>
-                            {{else}}
-                                {{{downgrade.guidMsgCtt}}}
-                            {{/if}}
-                        </div>
-                    {{/if}}
+                                    </dl>
+                                {{/if}}
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <!--// .cont-box -->
-            {{/if}}
+                {{#if downgrade.guidMsgCtt}}
+                    <div class="cont-noti pt20">
+                        {{#if downgrade.isHtml}}
+                            <span class="type2">{{downgrade.guidMsgCtt}}</span>
+                        {{else}}
+                            {{{downgrade.guidMsgCtt}}}
+                        {{/if}}
+                    </div>
+                {{/if}}
+            </div>
+            <!--// .cont-box -->
 
             {{#if isMobilePlan}}
                 <div class="ti-caption-gray">
@@ -340,7 +356,7 @@
                                                                 <ul class="bullet-type">
                                                                     <li>고객님의 약정잔여기간(약정기간-사용기간)을 고려하여, 보조금 차액 정산 부과액 또는 환급액이 결정됩니다.</li>
                                                                     {{#if installmentAgreement.isPremTerm}}
-                                                                    <li>{{{installmentAgreement.premTermMsg}}}</li>
+                                                                        <li>{{{installmentAgreement.premTermMsg}}}</li>
                                                                     {{/if}}
                                                                 </ul>
                                                             </div>
