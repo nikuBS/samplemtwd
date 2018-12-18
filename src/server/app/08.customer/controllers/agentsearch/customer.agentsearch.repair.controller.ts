@@ -22,7 +22,8 @@ interface Centre {
 
 class CustomerAgentsearchRepair extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any): void {
     this.getRepairShopList(res, svcInfo).subscribe(
       (result: Array<Centre>) => {
         if (!!result) {
@@ -34,7 +35,8 @@ class CustomerAgentsearchRepair extends TwViewController {
               result.filter((item) => item.orderDistrict === '4'),  // 경상
               result.filter((item) => item.orderDistrict === '5'),  // 전라/충청
               result.filter((item) => item.orderDistrict === '6')   // 제주
-            ]
+            ],
+            svcInfo, pageInfo
           });
         }
       },

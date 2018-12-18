@@ -10,6 +10,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { BRANCH_SEARCH_OPTIONS } from '../../../../types/string.type';
+import { NextFunction } from 'connect';
 
 enum SearchType {
   NAME = 'name',
@@ -21,9 +22,10 @@ class CustomerAgentsearch extends TwViewController {
 
   private queryParams: any;
 
-  render(req: Request, res: Response, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
+         allSvc: any, childInfo: any, pageInfo: any) {
     if (FormatHelper.isEmpty(req.query)) {
-      res.render('agentsearch/customer.agentsearch.html', { isSearch: false });
+      res.render('agentsearch/customer.agentsearch.html', { isSearch: false, svcInfo, pageInfo });
     } else {
       const type = req.query.type;  // 'name', 'addr', 'tube'
       const storeType = req.query.storeType;  // 0: 전체, 1: 지점, 2: 대리점
@@ -39,7 +41,9 @@ class CustomerAgentsearch extends TwViewController {
             keyword,
             optionsText: this.makeOptionsText(storeType, optionsString),
             result,
-            params: this.queryParams
+            params: this.queryParams,
+            svcInfo,
+            pageInfo
           });
         },
         (err) => {
