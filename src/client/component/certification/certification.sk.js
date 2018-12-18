@@ -104,7 +104,7 @@ Tw.CertificationSk.prototype = {
         svcNum: this._svcInfo.svcNum,
         enableKeyin: this._enableKeyin
       }
-    }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this));
+    }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
   },
   _onOpenSmsOnly: function ($popupContainer) {
     this.$checkKeyin = $popupContainer.find('#fe-check-keyin');
@@ -235,13 +235,13 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.seqNo = resp.result.seqNo;
+      this._seqNo = resp.result.seqNo;
       this.$validCert.removeClass('none');
       this.$btReCert.parent().addClass('none');
       this.$btCert.parent().addClass('none');
       this.$btCertAdd.parent().removeClass('none');
     } else {
-
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _onClickCert: function () {
@@ -258,6 +258,8 @@ Tw.CertificationSk.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btReCert.parent().removeClass('none');
       this.$btCertAdd.parent().addClass('none');
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _onClickConfirm: function () {
