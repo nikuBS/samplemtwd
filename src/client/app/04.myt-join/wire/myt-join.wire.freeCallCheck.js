@@ -33,8 +33,24 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   _bindEvent: function () {
     this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
     this.$container.on('click', '[data-target="lookupBtn"]', $.proxy(this._lookupBtnEvt, this));
+
+    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
   },
   //--------------------------------------------------------------------------[EVENT]
+  _closeCheck: function(){
+
+    if($('[data-target="inputPhone"]').val()) {
+
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._history.goLoad('/myt-join/submain_w');
+        }, this));
+    } else {
+      this._history.goBack();
+    }
+  },
 
   _lookupBtnEvt: function(event) {
     Tw.Logger.info('[_lookupBtnEvt]', this.$inputPhone.val(), event );
