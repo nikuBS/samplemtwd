@@ -50,8 +50,14 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
         // Tw.CommonHelper.endLoading('.container');
         $('#divLoading').hide();
 
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+        if( !resp || (resp.code !== Tw.API_CODE.CODE_00 && resp.code !== 'ZINVE8888')){
           Tw.Error(resp.code, resp.msg).pop();
+          return;
+        }
+
+        if( resp.code === 'ZINVE8888'){
+          $('.info-list-type1').hide();
+          $('#divEmpty').show();
           return;
         }
 
