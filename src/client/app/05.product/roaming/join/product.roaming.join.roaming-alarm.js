@@ -33,6 +33,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
+      this.$alarmTemplate = this.$container.find('#alarm_template');
   },
   _clearInput : function(){
       this.$inputElement.val('');
@@ -108,19 +109,16 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
 
-  _makeTemplate : function (phoneNum,idx) {
-      var template = '<li class="list-box">';
-          //template+='<div class="list-ico"><span class="ico type5">이</span></div>';
-          template+='<p class="list-text">';
-          //template+='<span class="mtext">이*름</span>';
-          template+='<span class="stext gray">'+phoneNum.serviceNumber1+'-'+phoneNum.serviceNumber2+'-'+phoneNum.serviceNumber3+'</span>';
-          template+='</p>';
-          template+='<div class="list-btn">';
-          template+='<div class="bt-alone"><button data-idx="'+idx+'" class="bt-line-gray1">삭제</button></div>';
-          template+='</div>';
-          template+='</li>';
-       this.$container.find('.comp-box').append(template);
-  },
+    _makeTemplate : function (phoneNum,idx) {
+        var maskedPhoneNum = {
+            serviceNumber1 : phoneNum.serviceNumber1,
+            serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
+            serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
+        };
+        var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
+        var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
+        this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
+    },
   _removeOnList : function ($args) {
 
       var selectedIndex = parseInt($($args).attr('data-idx'),10);
