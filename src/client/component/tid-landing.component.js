@@ -36,6 +36,15 @@ Tw.TidLandingComponent.prototype = {
   goLogin: function (target) {
     this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this));
   },
+  goSLogin: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      if(Tw.BrowserHelper.isAndroid()) {
+        this._getMdn();
+      } else {
+        this._historyService.goLoad('/common/member/slogin/ios');
+      }
+    }
+  },
   goLogout: function () {
     this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
   },
@@ -108,5 +117,13 @@ Tw.TidLandingComponent.prototype = {
   },
   _successSetSession: function () {
     this._historyService.reload();
-  }
+  },
+  _getMdn: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_MDN, {}, $.proxy(this._onMdn, this));
+  },
+  _onMdn: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._historyService.goLoad('/common/member/slogin/aos?mdn=' + resp.params.mdn);
+    }
+  },
 };
