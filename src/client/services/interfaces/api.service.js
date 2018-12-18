@@ -49,9 +49,8 @@ Tw.ApiService.prototype = {
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
 
-    if ( !Tw.FormatHelper.isEmpty(resp.serverSession) ) {
-      this.sendNativeSession(resp.serverSession, resp.loginType);
-      delete resp.serverSession;
+    if ( !Tw.FormatHelper.isEmpty(resp.loginType) ) {
+      this.sendNativeSession(resp.loginType);
       delete resp.loginType;
     }
 
@@ -108,15 +107,26 @@ Tw.ApiService.prototype = {
 
   _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
-    var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
+    var path = command.path;
+
+    // var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
     return {
       method: command.method,
-      url: prefix + command.path,
+      url: prefix + this._makePath(path, pathVariables),
       timeout: 10000,
       dataType: 'json',
       headers: this._makeHeaders(command, headers),
-      data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
+      data: command.method === Tw.API_METHOD.GET ? params : JSON.stringify(params)
     };
+  },
+
+  _makePath: function (path, pathVariables) {
+    if ( pathVariables.length > 0 ) {
+      _.map(pathVariables, $.proxy(function (argument, index) {
+        path = path.replace(':args' + index, argument);
+      }, this));
+    }
+    return path;
   },
 
   _makeHeaders: function (command, headers) {
@@ -146,24 +156,14 @@ Tw.ApiService.prototype = {
     return [];
   },
 
-  setSession: function (callback) {
-    this.request(Tw.NODE_CMD.GET_SERVER_SESSION, {})
-      .done($.proxy(this._successSession, this, callback));
-  },
-
-  _successSession: function (callback, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.sendNativeSession(resp.result.serverSession, resp.result.loginType);
-      if ( !Tw.FormatHelper.isEmpty(callback) ) {
-        callback();
-      }
-    }
-  },
-  sendNativeSession: function (serverSession, loginType) {
+  sendNativeSession: function (loginType, callback) {
     this._nativeService.send(Tw.NTV_CMD.SESSION, {
-      serverSession: serverSession,
+      serverSession: Tw.CommonHelper.getCookie('TWM'),
       expired: 60 * 60 * 1000,
       loginType: loginType
     });
+    if ( !Tw.FormatHelper.isEmpty(callback) ) {
+      callback();
+    }
   }
 };

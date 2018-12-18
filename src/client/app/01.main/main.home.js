@@ -84,8 +84,8 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
   },
   _bindEventLogin: function () {
-    this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
-    this.$container.on('click', '.fe-bt-slogin', $.proxy(this._onClickSLogin, this));
+    this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
+    this.$container.on('click', '.fe-bt-home-slogin', $.proxy(this._onClickSLogin, this));
   },
   _onClickLogin: function () {
     this._tidLanding.goLogin();

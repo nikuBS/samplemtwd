@@ -46,9 +46,9 @@ export const SVC_CDNAME = {
 };
 
 export const SVC_CATEGORY = {
-  M: '모바일',
-  S: '인터넷/집전화/IPTV',
-  O: '보안솔루션'
+  m: '모바일',
+  s: '인터넷/집전화/IPTV',
+  o: '보안솔루션'
 };
 
 export enum LINE_NAME {

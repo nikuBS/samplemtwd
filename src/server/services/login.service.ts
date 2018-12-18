@@ -15,6 +15,7 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
+    console.log(req.cookies);
     this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
     this.request = req;
     this.response = res;
@@ -200,7 +201,6 @@ class LoginService {
       if ( url.indexOf('bypass') !== -1 ) {
         this.getReferer();
       } else {
-        // console.log('path', url);
         return this.request.baseUrl + this.request.path;
       }
     }
@@ -209,11 +209,17 @@ class LoginService {
 
   public getReferer(req?: any): string {
     const request = req || this.request;
-    let path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
-    if ( path.indexOf('?') !== -1 ) {
-      path = path.split('?')[0];
+    const referer = request.headers.referer;
+    if ( !FormatHelper.isEmpty(referer) ) {
+      let path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
+      if ( path.indexOf('?') !== -1 ) {
+        path = path.split('?')[0];
+      }
+      return path;
+    } else {
+      return '';
     }
-    return path;
+
   }
 
   public getDns(): string {
