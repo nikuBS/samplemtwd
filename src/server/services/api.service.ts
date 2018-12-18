@@ -242,7 +242,7 @@ class ApiService {
                   userId: resp.result.userId,
                   xtUserId: resp.result.xtUserId,
                   totalSvcCnt: resp.result.totalSvcCnt,
-                  expsSvcCnt: resp.result.expsSvcCnt,
+                  expsSvcCnt: resp.result.expsSvcCnt
                 });
               }
               // delete resp.result.userId;

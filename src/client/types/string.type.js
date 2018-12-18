@@ -806,13 +806,12 @@ Tw.MYT_DATA_FAMILY_TOAST = {
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
   TITLE: '데이터를 공유 하시겠습니까?',
-  CONTENTS: '공유된 데이터는 취소하실 수 없습니다.',
+  CONTENTS: '데이터를 공유하고 나면 취소하실 수 없습니다.',
   BTN_NAME: '공유하기'
 };
 
 Tw.MYT_DATA_FAMILY_SUCCESS_SHARE = {
-  TITLE: '데이터 공유',
-  CONTENTS: '매월 자동으로 공유됩니다.'
+  TITLE: '데이터 공유'
 };
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
@@ -821,18 +820,24 @@ Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
   BTN_NAME: '공유하기'
 };
 
+Tw.MYT_DATA_FAMILY_CONFIRM_EDIT_MONTHLY = {
+  TITLE: '설정하시겠습니까?',
+  CONTENTS: '다음 달부터 자동공유되며, 이번 달 안에 변경할 수 있습니다.',
+  BTN_NAME: '설정하기'
+};
+
 Tw.MYT_DATA_FAMILY_SUCCESS_SHARE_MONTHLY = {
-  TITLE: '매월 자동 공유 설정',
+  TITLE: '매달 자동공유 설정',
   CONTENTS: '{year}년 {month}월부터 적용'
 };
 
 Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
   TITLE: '자동공유를 해제 하시겠습니까?',
-  CONTENTS: '다음달부터 자동 공유가 해제되며, 이번 달 안에 변경할 수 있습니다.',
+  CONTENTS: '다음 달부터 자동공유가 해제되며, 이번 달 안에 변경할 수 있습니다.',
   BTN_NAME: '해제하기'
 };
 
-Tw.MYT_DATA_FAMILY_SUCCESS_DELETE_MONTHLY = '매월 자동 공유 해제';
+Tw.MYT_DATA_FAMILY_SUCCESS_DELETE_MONTHLY = '매달 자동공유 해제';
 
 Tw.MYT_DATA_CANCEL_MONTHLY = {
   ALERT_NOT_SK: 'SK텔레콤 사용자에게만 데이터 선물을 하실 수 있습니다.',

@@ -211,7 +211,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     var index = e.currentTarget.getAttribute('data-origin-idx'),
       history = this._histories[this._currentType][index];
 
-    var detail = Object.assign(history, {
+    var detail = $.extend(history, {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
       chargeType: Tw.PREPAID_RECHARGE_TYPE[history.chargeTp],
       date: Tw.DateHelper.getShortDate(history.chargeDt),

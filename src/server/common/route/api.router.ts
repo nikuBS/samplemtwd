@@ -173,6 +173,7 @@ class ApiRouter {
             resp.result.userInfo.expsSvcCnt = svcInfo.expsSvcCnt;
             resp.result.userInfo.nickName = svcInfo.nickNm;
             resp.result.userInfo.loginType = svcInfo.loginType;
+            resp.result.userInfo.tid = svcInfo.userId;
           }
           res.json(resp);
         } else {

@@ -75,7 +75,7 @@ Tw.CertificationSelect.prototype = {
       case Tw.AUTH_CERTIFICATION_KIND.A:  // 마스킹
         this._openMaskingCert();
         break;
-      case Tw.AUTH_CERTIFICATION_KIND.P:  // 업무
+      case Tw.AUTH_CERTIFICATION_KIND.P:  // 업무c
       case Tw.AUTH_CERTIFICATION_KIND.O:  // 업무 & 마스킹
         this._openBusinessCert();
         break;

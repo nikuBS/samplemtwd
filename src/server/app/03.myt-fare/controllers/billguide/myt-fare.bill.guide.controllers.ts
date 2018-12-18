@@ -96,7 +96,7 @@ class MyTFareBillGuide extends TwViewController {
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
     this.logger.info(this, '[ childInfo ] : ', childInfo);
-    allSvc = allSvc || { 'S': [], 'O': [], 'M': [] };
+    allSvc = allSvc || { 's': [], 'o': [], 'm': [] };
 
     // ---------------------------------------------------------------------------------[화면 구분]
     /*

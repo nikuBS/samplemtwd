@@ -195,7 +195,11 @@ Tw.ProductRoamingSearchResult.prototype = {
             return;
         }
         var _result = resp.result;
-        console.log('rate result _result : ' + JSON.stringify(_result));
+        Tw.Logger.info('rate result _result : ' + JSON.stringify(_result));
+
+        if(this.reqParams.showDailyPrice === 'Y'){
+            this.reqParams.manageType = '';
+        }
         var typeIndex = null;
         for(var idx in this.manageType) {
             if(this.manageType[idx].type === this.reqParams.manageType) {
@@ -376,6 +380,12 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._popupService.close();
         }else {
             this.reqParams.manageType = rmType;
+            if(this.reqParams.manageType === ''){
+                this.reqParams.manageType = 'G';
+                this.reqParams.showDailyPrice = 'Y';
+            }else {
+                this.reqParams.showDailyPrice = 'N';
+            }
             this._popupService.close();
             this._getCountryRoamingRate(this.reqParams);
         }

@@ -24,6 +24,7 @@ Tw.MenuComponent = function () {
     this._svcMgmtNum = undefined;
     this._isMultiLine = false;
     this._svcAttr = undefined;
+    this._tid = undefined;
 
     this._isOpened = false;
     this._isMenuSet = false;
@@ -32,7 +33,6 @@ Tw.MenuComponent = function () {
     this._bindEvents();
 
     if (location.hash === '#menu') {
-      console.log('hakjoon menu');
       setTimeout($.proxy(function () {
         this.$gnbBtn.click();
       }, this), 100);
@@ -100,6 +100,7 @@ Tw.MenuComponent.prototype = {
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttr;
               this._isLogin = res.result.isLogin;
+              this._tid = res.result.userInfo.tid;
             }
             this._modifyMenu(
               res.result.isLogin,
@@ -120,7 +121,8 @@ Tw.MenuComponent.prototype = {
     if (!this._tNotifyComp) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
-    this._tNotifyComp.open();
+    debugger;
+    this._tNotifyComp.open(this._tid);
   },
   _onUserInfo: function () {
     if (this._isMultiLine) {
@@ -154,7 +156,7 @@ Tw.MenuComponent.prototype = {
   },
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
-    this._historyService.replaceURL(url);
+    this._historyService.goLoad(url);
   },
   _onFreeSMS: function () {
     Tw.CommonHelper.openFreeSms();
@@ -165,10 +167,10 @@ Tw.MenuComponent.prototype = {
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, '', null, null, $.proxy(function () {
-        this._historyService.replaceURL(e.currentTarget.value);
+        this._historyService.goLoad(e.currentTarget.value);
       }, this));
     } else {
-      this._historyService.replaceURL(e.currentTarget.value);
+      this._historyService.goLoad(e.currentTarget.value);
     }
   },
 

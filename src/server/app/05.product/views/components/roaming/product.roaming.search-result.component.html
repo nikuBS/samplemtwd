@@ -11,7 +11,7 @@
             <h3 class="tit">휴대폰 선택<button class="tip-view" page-id="M000458" id="RM_03_01_01_01_tip_02">TIP</button></h3>
             <span class="type1 fe-header-msg"></span>
         </div>
-        <div class="phone-name">
+        <div class="phone-name" data-model-code="{{items.eqpMdlCd}}">
             <strong>{{items.eqpMdlNm}}</strong>
         </div>
         <ul class="bt-slice pt20">
@@ -144,7 +144,7 @@
 <script id="fe-roaming-notice" type="text/x-handlebars-template">
     {{#if items.voiceShown}}
     <li class="acco-box">
-        <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info01.png" alt="음성통화 수신요금 안내" /></span>음성통화 수신요금 안내<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
+        <div class="acco-tit"><span class="icon type1"></span>음성통화 수신요금 안내<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
         <div class="acco-cont">
             <ul class="round-dot-list">
                 <li>
@@ -163,7 +163,7 @@
     </li>
     {{/if}}
     <li class="acco-box">
-        <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info02.png" alt="문자 메시지 요금 안내" /></span>문자 메시지 요금 안내<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
+        <div class="acco-tit"><span class="icon type2"></span>문자 메시지 요금 안내<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
         <div class="acco-cont">
             <ul class="round-dot-list">
                 <li>
@@ -173,22 +173,22 @@
         </div>
     </li>
     {{#if items.ableShown}}
-    <li class="acco-box">
-        <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info03.png" alt="이것만은 꼭 확인하세요" /></span>이것만은 꼭 확인하세요<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
-        <div class="acco-cont">
-            <ul class="round-dot-list">
-                <li>
-                    해당 국가의 경우 2G 자동 로밍 서비스 방식이 지원되지만,
-                    지역에 따라 로밍 가능 여부가 달라질 수 있습니다.
-                    <!--<p><a class="bt-link-tx underline fe-able-area" href="http://tworld.co.kr/poc/roaming/html/popup/cm8GsmUsa.html" target="_blank">서비스 이용가능 지역 자세히 보기</a></p>-->
-                </li>
-            </ul>
-        </div>
-    </li>
+    <!--<li class="acco-box">-->
+        <!--<div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info03.png" alt="이것만은 꼭 확인하세요" /></span>이것만은 꼭 확인하세요<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>-->
+        <!--<div class="acco-cont">-->
+            <!--<ul class="round-dot-list">-->
+                <!--<li>-->
+                    <!--해당 국가의 경우 2G 자동 로밍 서비스 방식이 지원되지만,-->
+                    <!--지역에 따라 로밍 가능 여부가 달라질 수 있습니다.-->
+                    <!--&lt;!&ndash;<p><a class="bt-link-tx underline fe-able-area" href="http://tworld.co.kr/poc/roaming/html/popup/cm8GsmUsa.html" target="_blank">서비스 이용가능 지역 자세히 보기</a></p>&ndash;&gt;-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</li>-->
     {{/if}}
     {{#if items.attentionShown}}
     <li class="acco-box">
-        <div class="acco-tit"><span class="icon"><img src="<%= CDN %>/img/product/ico-info04.png" alt="로밍 시 국가별 주의 사항" /></span>로밍 시 국가별 주의 사항<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
+        <div class="acco-tit"><span class="icon type3"></span>로밍 시 국가별 주의 사항<button role="button" class="fe-noti-btn" aria-pressed="false"></button></div>
         <div class="acco-cont">
             <ul class="round-dot-list">{{{items.svcAttention}}}</ul>
         </div>

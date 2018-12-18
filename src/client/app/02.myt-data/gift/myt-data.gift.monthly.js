@@ -49,6 +49,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _onKeyUpAutoGiftNumber: function () {
+    this._validateInputNumber();
     this._checkValidateSendingButton();
     this.$input_auto_gift.val(this._convertDashNumber(this.$input_auto_gift.val()));
   },
@@ -97,7 +98,7 @@ Tw.MyTDataGiftMonthly.prototype = {
       this._subscribeAutoGift();
     } else {
       if ( res.code === 'ZNGME0008' ) {
-        Tw.Error(res.code, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
+        Tw.Error(Tw.POPUP_TITLE.NOTIFY, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
       } else {
         Tw.Error(res.code, res.msg).pop();
       }
@@ -158,5 +159,23 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
 
     return true;
+  },
+
+  _validateInputNumber: function () {
+    var sPhoneNumber = this.$input_auto_gift.val() ? this.$input_auto_gift.val().replace(/-/g, '') : '';
+
+    if ( sPhoneNumber.length < 10 ) {
+      this.$container.find('.fe-error-phone01').removeClass('blind');
+    } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+      this.$container.find('.fe-error-phone02').removeClass('blind');
+    }
+
+    if ( sPhoneNumber.length === 0 || Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+      this._removeErrorComment();
+    }
+  },
+
+  _removeErrorComment: function () {
+    this.$container.find('[class*="fe-error"]').addClass('blind');
   }
 };

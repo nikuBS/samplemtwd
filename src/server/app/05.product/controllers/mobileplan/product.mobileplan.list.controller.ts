@@ -55,7 +55,8 @@ export default class ProductPlans extends TwViewController {
             ...plan,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
             basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt) ? null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt),
-            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt) ? null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt),
+            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt) ? 
+              null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt)
           };
         })

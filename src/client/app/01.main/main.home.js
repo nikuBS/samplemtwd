@@ -12,6 +12,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._nativeSrevice = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._lineRegisterLayer = new Tw.LineRegisterComponent();
+  this._tidLanding = new Tw.TidLandingComponent();
 
   this._smartCardOrder = JSON.parse(smartCard);
 
@@ -28,6 +29,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._setBanner(menuId);
   this._cachedDefaultElement();
   this._bindEventStore();
+  this._bindEventLogin();
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
@@ -74,14 +76,24 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
   },
   _bindEventStore: function () {
-    this.$container.on('click', '#fe-bt-direct-support', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
-    this.$container.on('click', '#fe-bt-direct-home', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
-    this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
-    this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
-    this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
-    this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
+    this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
+    this.$container.on('click', '#fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
+    this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
+    this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
+    this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
+    this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
   },
-  onClickExternalLink: function (url) {
+  _bindEventLogin: function () {
+    this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
+    this.$container.on('click', '.fe-bt-home-slogin', $.proxy(this._onClickSLogin, this));
+  },
+  _onClickLogin: function () {
+    this._tidLanding.goLogin();
+  },
+  _onClickSLogin: function () {
+    this._tidLanding.goSLogin();
+  },
+  _onClickExternalLink: function (url) {
     Tw.CommonHelper.openUrlExternal(url);
   },
   _onClickLine: function ($event) {

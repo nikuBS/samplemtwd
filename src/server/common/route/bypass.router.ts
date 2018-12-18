@@ -54,33 +54,39 @@ class BypassRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-    // const headers = {
-    //   cookie: req.headers.cookie,
-    //   'user-agent': req.headers['user-agent']
-    // };
-    const headers = req.headers;
-    const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
-    const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
 
+    // const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
+    // const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
+    const pathVar = this.getPathVariable(req.params);
+    const headers = req.headers;
 
-    this.apiService.request(cmd, parameter, headers, ...(pathVariables))
+    this.apiService.request(cmd, params, headers, ...pathVar)
       .subscribe((data) => {
         // TODO: This is unpretty. Need to revise for NON JSON Object response
-        if (data instanceof Buffer) {
+        if ( data instanceof Buffer ) {
           return res.end(data);
         }
 
         const svcInfo = this.loginService.getSvcInfo();
         if ( !FormatHelper.isEmpty(svcInfo) ) {
-          data.serverSession = this.loginService.getServerSession();
+          // data.serverSession = this.loginService.getServerSession();
           data.loginType = svcInfo.loginType;
         } else {
-          data.serverSession = '';
+          data.loginType = '';
         }
         return res.json(data);
       });
+  }
+
+  private getPathVariable(params) {
+    if ( !FormatHelper.isEmpty(params) ) {
+      return Object.keys(params).map((key) => {
+        return params[key];
+      });
+    }
+    return [];
   }
 }
 

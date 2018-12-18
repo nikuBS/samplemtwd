@@ -121,7 +121,7 @@ Tw.HistoryService.prototype = {
     this._hashList = [];
   },
   resetHistory: function (historyLength) {
-    this.go(historyLength);
+    history.go(historyLength);
     this.reload();
   },
   getHistoryLength: function () {

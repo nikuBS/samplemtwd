@@ -15,10 +15,12 @@ Tw.ProductRoamingFiReservation3step.prototype = {
 
   _cachedElement: function() {
     this.$btnGoInquire = this.$container.find('#fe-go-inquire');
+    this.$btnOk = this.$container.find('#fe-ok');
   },
 
   _bindEvent: function() {
     this.$btnGoInquire.on('click', $.proxy(this._goRoamingFiInquire, this));
+    this.$btnOk.on('click', $.proxy(this._goRoamingFiInquire, this));
   },
 
   _goRoamingFiInquire: function() {

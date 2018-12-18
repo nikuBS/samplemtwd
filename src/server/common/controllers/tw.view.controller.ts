@@ -129,8 +129,8 @@ abstract class TwViewController {
     if ( this._loginService.isNewSession() ) {
       this.renderPage(req, res, next, path);
     } else {
-      const loginYn = req.cookies[COOKIE_KEY.TWM_LOGIN];
-      if ( !FormatHelper.isEmpty(loginYn) && loginYn === 'Y' ) {
+      const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+      if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y') {
         this._logger.info(this, '[Session expired]');
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
         res.redirect('/common/member/logout/expire');

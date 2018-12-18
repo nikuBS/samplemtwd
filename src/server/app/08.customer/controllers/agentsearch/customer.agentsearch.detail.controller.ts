@@ -46,7 +46,7 @@ class CustomerAgentsearchDetail extends TwViewController {
     this.getBranchDetailInfo(res, svcInfo, branchCode).subscribe(
       (detail) => {
         if (!FormatHelper.isEmpty(detail)) {
-          res.render('agentsearch/customer.agentsearch.detail.html', { detail });
+          res.render('agentsearch/customer.agentsearch.detail.html', { detail, svcInfo, pageInfo });
         }
       },
       (err) => {
