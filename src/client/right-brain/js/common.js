@@ -502,6 +502,7 @@ skt_landing.action = {
       .on('afterChange', function(slick, currentSlide){
           var homeIndex = $('.home-slider .home-slider-belt').slick('getSlick').currentSlide;
           $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
+          $('.home-slider .home-slider-belt')[0].slick.animateHeight();
       })
     })
     $(window).bind('scroll', function(){

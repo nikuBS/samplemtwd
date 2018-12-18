@@ -4011,7 +4011,7 @@
     padding: 0.9375rem 1rem; }
 
 .contents-empty {
-  padding: 2.5rem 0;
+  padding: 5rem 0;
   text-align: center; }
   .contents-empty .ico.type1 {
     margin: auto;
@@ -4028,11 +4028,8 @@
     background: url(/img/ico/ico-loading.png) no-repeat;
     background-size: 2.75rem auto; }
   .contents-empty .desc {
-    padding-top: 1.25rem;
-    font-size: 0.9375rem;
-    color: #666; }
+    font-size: 1rem; }
   .contents-empty .desc-s {
-    padding-top: 0.9375rem;
     font-size: 0.75rem;
     color: #666; }
 
@@ -5815,11 +5812,14 @@
     width: 2rem;
     height: 2rem; }
     .ico-type-list li .ico.typ1 {
-      background: url(/img/ico/ico-guide.png) no-repeat 0 0;
-      background-size: 2rem auto; }
+      background: url(/img/ico/ico-guide.png) no-repeat;
+      background-size: 2rem; }
     .ico-type-list li .ico.typ2 {
-      background: url(/img/ico/ico-guide.png) no-repeat 0 -2rem;
-      background-size: 2rem auto; }
+      background: url(/img/ico/ico-guide1.png) no-repeat;
+      background-size: 2rem; }
+    .ico-type-list li .ico.typ3 {
+      background: url(/img/ico/ico-guide2.png) no-repeat;
+      background-size: 2rem; }
   .ico-type-list li dl dt {
     font-weight: 700; }
   .ico-type-list li .bullet-type li .dash-type li {
@@ -5843,6 +5843,15 @@
       vertical-align: middle; }
       .service-guide-list ul li .ico.typ1 {
         background: url(/img/ico/ico-service-guide.png) 0 0;
+        background-size: 3rem auto; }
+      .service-guide-list ul li .ico.typ2 {
+        background: url(/img/ico/ico-service-guide1.png) 0 0;
+        background-size: 3rem auto; }
+      .service-guide-list ul li .ico.typ3 {
+        background: url(/img/ico/ico-service-guide2.png) 0 0;
+        background-size: 3rem auto; }
+      .service-guide-list ul li .ico.typ4 {
+        background: url(/img/ico/ico-service-guide3.png) 0 0;
         background-size: 3rem auto; }
     .service-guide-list ul li:first-of-type {
       padding-top: 0; }
@@ -6106,8 +6115,10 @@
 
 .membership-benefit .list-tit {
   padding-bottom: 0.625rem;
-  font-size: 0.875rem;
-  color: #666; }
+  font-size: 0.8125rem; }
+
+.membership-benefit.top-line {
+  border: 1px solid #f2f2f2; }
 
 /* 김연주 */
 .data-result {
@@ -15906,7 +15917,7 @@ a.bt-link-tx.underline.small {
           display: inline-block;
           margin-left: 0.9375rem;
           color: #959595;
-          font-size: 1rem; }
+          font-size: 1.125rem; }
           .header-wrap .h-belt .h-default .h-home-tit .directshop:before {
             content: '';
             display: block;
@@ -18020,108 +18031,120 @@ a.bt-link-tx.underline.small {
     font-size: 0.8125rem;
     color: #666; }
 
+.deletebtn-box .bt-alone {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -0.875rem; }
+
+.deletebtn-box .comp-list-layout {
+  padding-right: 3.75rem !important; }
+
 /* 김정훈 */
-.operation-guide-box .slick-prev {
-  display: none !important; }
-
-.operation-guide-box .slick-next {
-  display: none !important; }
-
-.operation-guide-box .slick-dots {
-  left: 1.5625rem;
-  bottom: 1.875rem;
-  width: auto;
-  height: 0.5rem;
-  text-align: left; }
-  .operation-guide-box .slick-dots li {
+.operation-guide-box {
+  background: #289cde; }
+  .operation-guide-box .slick-prev {
+    display: none !important; }
+  .operation-guide-box .slick-next {
+    display: none !important; }
+  .operation-guide-box .slick-dots {
+    right: 1rem;
+    top: 1.5625rem;
     width: auto;
-    height: auto;
-    margin: 0 0.4375rem 0 0;
-    vertical-align: middle; }
-    .operation-guide-box .slick-dots li span {
-      display: block;
-      width: 0.3125rem;
-      height: 0.3125rem;
-      border-radius: 100%;
-      background: #e1e1e1;
-      font-size: 0;
-      line-height: 0;
-      cursor: pointer; }
-    .operation-guide-box .slick-dots li.slick-active span {
-      margin: -0.0625rem 0 0 0;
-      width: 0.5rem;
-      height: 0.5rem;
-      background: #000; }
+    height: 0.5rem;
+    text-align: left; }
+    .operation-guide-box .slick-dots li {
+      width: auto;
+      height: auto;
+      margin: 0 0 0 0.5rem;
+      vertical-align: top; }
+      .operation-guide-box .slick-dots li span {
+        display: block;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        border-radius: 100%;
+        border: 1px solid #fff;
+        font-size: 0;
+        line-height: 0;
+        cursor: pointer; }
+      .operation-guide-box .slick-dots li.slick-active span {
+        width: 0.4375rem;
+        height: 0.4375rem;
+        margin-top: -0.0625rem;
+        background: #fff; }
 
 .operation-guide-banner {
   position: relative;
-  height: 23.25rem;
-  padding: 2.1875rem 1rem;
-  background: #3b98e6;
+  height: 20rem;
+  padding: 2.5rem 1rem 0 1rem;
+  background: #289cde;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
+  .operation-guide-banner .banner-more {
+    position: relative;
+    display: inline-block;
+    padding: 0 0.6875rem 0 0;
+    color: #fff;
+    font-size: 0.875rem; }
+    .operation-guide-banner .banner-more:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 0.375rem;
+      height: 0.625rem;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      background: url(/img/customer/bg_cs_01_01_04_01.png) no-repeat;
+      background-size: 100%; }
   .operation-guide-banner .banner-tit {
     position: relative;
     display: block;
+    padding-top: 0.3125rem;
     color: #fff;
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 2.25rem;
+    font-size: 2.125rem;
+    font-weight: 700;
+    line-height: 2.5rem;
     z-index: 1; }
     .operation-guide-banner .banner-tit .tit-point {
       font-weight: 700; }
   .operation-guide-banner ul {
     position: relative;
-    margin-top: 2.125rem;
+    margin-top: 1.375rem;
     z-index: 1; }
     .operation-guide-banner ul li .banner-bt {
       position: relative;
       display: inline-block;
-      padding: 0 1rem 0 2.125rem;
-      height: 2.375rem;
-      line-height: 2.375rem;
+      padding: 0 0.6875rem 0 0;
+      height: 1.5625rem;
+      line-height: 1.5625rem;
       color: #fff;
       font-size: 0.9375rem; }
-      .operation-guide-banner ul li .banner-bt:before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        background-size: 100%;
-        background-repeat: no-repeat; }
-      .operation-guide-banner ul li .banner-bt.ico-type01:before {
-        width: 1rem;
-        height: 1.3125rem;
-        margin-top: -0.625rem;
-        background-image: url(/img/customer/bg_cs_01_01_01.png); }
-      .operation-guide-banner ul li .banner-bt.ico-type02:before {
-        width: 1.3125rem;
-        height: 1.3125rem;
-        margin-top: -0.6875rem;
-        background-image: url(/img/customer/bg_cs_01_01_02.png); }
-      .operation-guide-banner ul li .banner-bt.ico-type03:before {
-        width: 1.0625rem;
-        height: 1.0625rem;
-        margin-top: -0.5625rem;
-        background-image: url(/img/customer/bg_cs_01_01_03.png); }
       .operation-guide-banner ul li .banner-bt:after {
         content: '';
         position: absolute;
         top: 50%;
         right: 0;
-        width: 0.4375rem;
-        height: 0.8125rem;
-        margin-top: -0.375rem;
-        background: url(/img/customer/bg_cs_01_01_04.png) no-repeat;
+        width: 0.375rem;
+        height: 0.625rem;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+        background: url(/img/customer/bg_cs_01_01_04_01.png) no-repeat;
         background-size: 100%; }
   .operation-guide-banner .ico {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
-    width: 8.75rem;
-    height: 11.875rem;
-    background: url(/img/customer/bg_cs_01_01_05.png) no-repeat;
+    width: 10rem;
+    height: 9.375rem;
+    background-repeat: no-repeat;
     background-size: 100%; }
+    .operation-guide-banner .ico.type01, .operation-guide-banner .shop-info .shop-txt .ico.type02, .shop-info .shop-txt .operation-guide-banner .ico.type02, .operation-guide-banner .shop-info .shop-txt .ico.type03, .shop-info .shop-txt .operation-guide-banner .ico.type03 {
+      background-image: url(/img/customer/bg_operation01.png); }
+    .operation-guide-banner .ico.type02 {
+      background-image: url(/img/customer/bg_operation02.png); }
+    .operation-guide-banner .ico.type03 {
+      background-image: url(/img/customer/bg_operation03.png); }
 
 .main-faq-menu ul {
   display: -webkit-box;
@@ -18142,14 +18165,14 @@ a.bt-link-tx.underline.small {
     flex-direction: column;
     margin-top: 1.875rem; }
     .main-faq-menu ul li .menu-bt {
-      color: #666;
-      font-size: 0.75rem;
+      color: #000;
+      font-size: 0.875rem;
       text-align: center; }
       .main-faq-menu ul li .menu-bt .ico {
         display: block;
         width: 44px;
         height: 44px;
-        margin: 0 auto 0.3125rem auto;
+        margin: 0 auto;
         background-repeat: no-repeat;
         background-size: 100%; }
       .main-faq-menu ul li .menu-bt.ico-type01 .ico {
@@ -18171,11 +18194,13 @@ a.bt-link-tx.underline.small {
       .main-faq-menu ul li .menu-bt.ico-type09 .ico {
         background-image: url(/img/customer/bg_cs_01_01_14.png); }
       .main-faq-menu ul li .menu-bt.ico-type10 .ico {
-        background-image: url(/img/customer/bg_cs_01_01_15.png); }
+        background-image: url(/img/customer/bg_cs_01_01_15_01.png); }
       .main-faq-menu ul li .menu-bt.ico-type11 .ico {
-        background-image: url(/img/customer/bg_cs_01_01_15.png); }
+        background-image: url(/img/customer/bg_cs_01_01_15_02.png); }
       .main-faq-menu ul li .menu-bt.ico-type12 .ico {
-        background-image: url(/img/customer/bg_cs_01_01_15.png); }
+        background-image: url(/img/customer/bg_cs_01_01_15_03.png); }
+      .main-faq-menu ul li .menu-bt.ico-type13 .ico {
+        background-image: url(/img/customer/bg_cs_01_01_14_01.png); }
 
 .survey-box {
   padding: 1.25rem 0 1rem 1rem; }
@@ -19264,9 +19289,61 @@ a.bt-link-tx.underline.small {
       float: left;
       width: 3.75rem;
       height: 3.75rem;
-      margin-right: 1rem;
-      background: url(/img/benefit/bg-benefit01.png) no-repeat;
-      background-size: 3.75rem auto; }
+      margin-right: 1rem; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.bakery {
+        background: url(/img/benefit/bg-benefit01.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.store {
+        background: url(/img/benefit/bg-benefit02.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.mobile {
+        background: url(/img/benefit/bg-benefit03.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.finance {
+        background: url(/img/benefit/bg-benefit04.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.cinema {
+        background: url(/img/benefit/bg-benefit05.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.shopping {
+        background: url(/img/benefit/bg-benefit06.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.beauty {
+        background: url(/img/benefit/bg-benefit07.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.pizza {
+        background: url(/img/benefit/bg-benefit08.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.traffic {
+        background: url(/img/benefit/bg-benefit09.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.sports {
+        background: url(/img/benefit/bg-benefit10.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.coffee {
+        background: url(/img/benefit/bg-benefit11.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.show {
+        background: url(/img/benefit/bg-benefit12.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.jeju {
+        background: url(/img/benefit/bg-benefit13.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.restaurant {
+        background: url(/img/benefit/bg-benefit14.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.travel {
+        background: url(/img/benefit/bg-benefit15.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.fnb {
+        background: url(/img/benefit/bg-benefit16.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.education {
+        background: url(/img/benefit/bg-benefit17.png) no-repeat;
+        background-size: 3.75rem auto; }
+      .benefit-banner-box .benefit-banner .section-tit .ico.theme {
+        background: url(/img/benefit/bg-benefit18.png) no-repeat;
+        background-size: 3.75rem auto; }
     .benefit-banner-box .benefit-banner .section-tit .tit {
       display: block;
       margin-top: 0.375rem;
@@ -19320,44 +19397,24 @@ a.bt-link-tx.underline.small {
   letter-spacing: 0; }
 
 .rating-box-wraq .rating-list {
-  display: table;
-  width: 100%;
   margin-top: 1.875rem;
-  table-layout: fixed; }
+  overflow: hidden;
+  text-align: center; }
   .rating-box-wraq .rating-list li {
-    overflow: hidden;
-    display: table-cell;
+    width: 5.25rem;
     height: 3.25rem; }
-    .rating-box-wraq .rating-list li .card {
-      position: relative;
-      width: 4.375rem;
-      height: 2.8125rem;
-      margin: 0 auto;
-      padding-right: 0.8125rem;
-      background: url(/img/benefit/bg-card01.png) no-repeat;
-      background-size: 70px 45px; }
-    .rating-box-wraq .rating-list li .ico {
-      position: absolute;
-      right: 0;
-      bottom: -0.4375rem;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 100%;
-      color: #fff;
-      font-size: 0.625rem;
-      font-weight: 700;
-      text-align: center;
-      line-height: 2rem; }
-    .rating-box-wraq .rating-list li.vip .card {
-      margin: 0; }
-    .rating-box-wraq .rating-list li.vip .ico {
-      background: #e22f26; }
-    .rating-box-wraq .rating-list li.gold .ico {
-      background: #b56611; }
-    .rating-box-wraq .rating-list li.silver .card {
-      float: right; }
-    .rating-box-wraq .rating-list li.silver .ico {
-      background: #a3a3a3; }
+    .rating-box-wraq .rating-list li.vip {
+      float: left;
+      background: url(/img/benefit/level-vip.png) no-repeat;
+      background-size: 5.25rem auto; }
+    .rating-box-wraq .rating-list li.gold {
+      display: inline-block;
+      background: url(/img/benefit/level-gold.png) no-repeat;
+      background-size: 5.25rem auto; }
+    .rating-box-wraq .rating-list li.silver {
+      float: right;
+      background: url(/img/benefit/level-silver.png) no-repeat;
+      background-size: 5.25rem auto; }
 
 .rating-box-wraq p {
   margin-top: 0.75rem;
@@ -19458,7 +19515,8 @@ a.bt-link-tx.underline.small {
   .benefit-popularity-wrap h3.link-long {
     margin: 0 1rem;
     padding: 0;
-    border: none; }
+    border: none;
+    font-size: 1rem; }
     .benefit-popularity-wrap h3.link-long.brand {
       padding: 1.25rem 0; }
     .benefit-popularity-wrap h3.link-long button, .benefit-popularity-wrap h3.link-long a {
@@ -19474,7 +19532,7 @@ a.bt-link-tx.underline.small {
 .bt-gps {
   display: inline-block;
   padding-right: 1.5rem;
-  background: url(/img/benefit/ico-quick-gps.png) no-repeat;
+  background: url(/img/common/icon/icon_32px_position.svg) no-repeat;
   background-position: right center;
   background-size: 16px 16px;
   color: inherit;
@@ -19571,8 +19629,8 @@ a.bt-link-tx.underline.small {
     width: 2rem;
     height: 2rem; }
     .coalition-brand-list .map-view .map {
-      width: 2rem;
-      height: 2rem;
+      width: 1.125rem;
+      height: 1.375rem;
       font-size: 0;
       line-height: 0;
       text-indent: -9999px;
@@ -19628,27 +19686,28 @@ a.bt-link-tx.underline.small {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
-      .coalition-brand-list .brand-inner .section .ico-s {
-        display: inline-block;
-        width: 1rem;
-        height: 1rem;
-        font-size: 0;
-        line-height: 0;
-        vertical-align: middle; }
-        .coalition-brand-list .brand-inner .section .ico-s.all-tag {
-          background: url(/img/benefit/ico-level-all.png) no-repeat;
-          background-size: 1rem; }
-        .coalition-brand-list .brand-inner .section .ico-s.vip-tag {
-          background: url(/img/benefit/ico-level-vip.png) no-repeat;
-          background-size: 1rem; }
-        .coalition-brand-list .brand-inner .section .ico-s.gold-tag {
-          background: url(/img/benefit/ico-level-gold.png) no-repeat;
-          background-size: 1rem; }
-        .coalition-brand-list .brand-inner .section .ico-s.silver-tag {
-          background: url(/img/benefit/ico-level-silver.png) no-repeat;
-          background-size: 1rem; }
   .coalition-brand-list.type-like .brand-inner {
     margin-right: 5rem; }
+
+.brand-inner .section .ico-s {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  font-size: 0;
+  line-height: 0;
+  vertical-align: text-bottom; }
+  .brand-inner .section .ico-s.all-tag {
+    background: url(/img/benefit/ico-level-all.png) no-repeat;
+    background-size: 1rem; }
+  .brand-inner .section .ico-s.vip-tag {
+    background: url(/img/benefit/ico-level-vip.png) no-repeat;
+    background-size: 1rem; }
+  .brand-inner .section .ico-s.gold-tag {
+    background: url(/img/benefit/ico-level-gold.png) no-repeat;
+    background-size: 1rem; }
+  .brand-inner .section .ico-s.silver-tag {
+    background: url(/img/benefit/ico-level-silver.png) no-repeat;
+    background-size: 1rem; }
 
 .bt-like {
   display: inline-block;
@@ -20000,67 +20059,67 @@ a.bt-link-tx.underline.small {
   padding: 1.25rem 0 1.25rem 0; }
   .popularity-brand h3 {
     padding: 0 1rem; }
-    .popularity-brand h3:before {
+    .popularity-brand h3 i {
       content: '';
       display: inline-block;
       width: 2.5rem;
       height: 2.5rem;
       margin-right: 0.625rem;
       vertical-align: middle; }
-    .popularity-brand h3.ico-brand-bakery:before {
-      background: url(/img/benefit/ico-brand-bakery.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-store:before {
-      background: url(/img/benefit/ico-brand-store.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-cinema:before {
-      background: url(/img/benefit/ico-brand-cinema.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-pizza:before {
-      background: url(/img/benefit/ico-brand-pizza.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-coffee:before {
-      background: url(/img/benefit/ico-brand-coffee.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-restaurant:before {
-      background: url(/img/benefit/ico-brand-restaurant.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-fb:before {
-      background: url(/img/benefit/ico-brand-fb.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-theme:before {
-      background: url(/img/benefit/ico-brand-theme.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-mobile:before {
-      background: url(/img/benefit/ico-brand-mobile.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-shopping:before {
-      background: url(/img/benefit/ico-brand-shopping.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-traffic:before {
-      background: url(/img/benefit/ico-brand-traffic.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-show:before {
-      background: url(/img/benefit/ico-brand-show.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-travel:before {
-      background: url(/img/benefit/ico-brand-travel.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-education:before {
-      background: url(/img/benefit/ico-brand-education.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-finance:before {
-      background: url(/img/benefit/ico-brand-finance.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-beauty:before {
-      background: url(/img/benefit/ico-brand-beauty.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-sports:before {
-      background: url(/img/benefit/ico-brand-sports.png) no-repeat center;
-      background-size: 100%; }
-    .popularity-brand h3.ico-brand-jeju:before {
-      background: url(/img/benefit/ico-brand-jeju.png) no-repeat center;
-      background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-bakery {
+        background: url(/img/benefit/ico-brand-bakery.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-store {
+        background: url(/img/benefit/ico-brand-store.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-cinema {
+        background: url(/img/benefit/ico-brand-cinema.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-pizza {
+        background: url(/img/benefit/ico-brand-pizza.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-coffee {
+        background: url(/img/benefit/ico-brand-coffee.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-restaurant {
+        background: url(/img/benefit/ico-brand-restaurant.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-fb {
+        background: url(/img/benefit/ico-brand-fb.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-theme {
+        background: url(/img/benefit/ico-brand-theme.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-mobile {
+        background: url(/img/benefit/ico-brand-mobile.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-shopping {
+        background: url(/img/benefit/ico-brand-shopping.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-traffic {
+        background: url(/img/benefit/ico-brand-traffic.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-show {
+        background: url(/img/benefit/ico-brand-show.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-travel {
+        background: url(/img/benefit/ico-brand-travel.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-education {
+        background: url(/img/benefit/ico-brand-education.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-finance {
+        background: url(/img/benefit/ico-brand-finance.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-beauty {
+        background: url(/img/benefit/ico-brand-beauty.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-sports {
+        background: url(/img/benefit/ico-brand-sports.png) no-repeat center;
+        background-size: 100%; }
+      .popularity-brand h3 i.ico-brand-jeju {
+        background: url(/img/benefit/ico-brand-jeju.png) no-repeat center;
+        background-size: 100%; }
   .popularity-brand .slider-box .slick-prev, .popularity-brand .slider-box .slick-next {
     display: none !important; }
   .popularity-brand .slider-box .slick-slide {
@@ -21775,8 +21834,7 @@ a.bt-link-tx.underline.small {
     padding-top: 1.25rem; }
 
 .membership-cancel-wrap .identify-txt {
-  padding: 1.1875rem 0 0.875rem;
-  font-size: 1.125rem; }
+  font-size: 1rem; }
 
 .board-type01 em.tit {
   display: block;
@@ -22859,6 +22917,80 @@ a.bt-link-tx.underline.small {
   background: url(/img/product/icon-tfi-guide03.png) no-repeat;
   background-size: 100%; }
 
+.event-type01 .ti-caption-gray {
+  background: #edeef0; }
+  .event-type01 .ti-caption-gray .bt-select {
+    float: right; }
+
+.event-type01 .bt-more {
+  background: none;
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 0; }
+
+.event-type01 .cont-box {
+  padding-bottom: 0;
+  padding-top: 0; }
+
+.event-type01 .card-visual-list li:last-child {
+  margin-bottom: 0; }
+
+.event-type01 .card-visual-list li:first-child {
+  margin-top: 0; }
+
+.event-type01 .extra-info {
+  background: #fff;
+  border-radius: 0 0 0.3125rem 0.3125rem;
+  border: 1px solid #f2f2f2;
+  border-top: 0; }
+  .event-type01 .extra-info .dday {
+    position: absolute;
+    right: 1.25rem;
+    color: #f76252;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-left: 0; }
+  .event-type01 .extra-info .entry {
+    position: relative;
+    right: 0;
+    margin-left: 1.0625rem;
+    color: #178bce;
+    font-size: 0.75rem;
+    font-weight: 400; }
+    .event-type01 .extra-info .entry:before {
+      position: absolute;
+      left: -0.5rem;
+      top: 0.25rem;
+      content: '';
+      display: inline-block;
+      width: 0.0625rem;
+      height: 0.5625rem;
+      background: #e5e5e5; }
+
+.event-type01.list .bt-more {
+  background: #fff; }
+
+.event-type01.list .event-article-list li:last-child {
+  border-bottom: 1px solid #e1e1e1; }
+
+.event-type01.list .event-article-list li .btn:after {
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); }
+
+.event-type01.list .event-article-list li .btn {
+  padding: 1.125rem 1.25rem 1.125rem 0; }
+  .event-type01.list .event-article-list li .btn .tit {
+    font-size: 1rem; }
+  .event-type01.list .event-article-list li .btn .date {
+    padding: 0.125rem 0 0 0;
+    color: #959595;
+    font-size: 0.875rem; }
+  .event-type01.list .event-article-list li .btn .entry {
+    font-size: 0.75rem; }
+  .event-type01.list .event-article-list li .btn .prize {
+    padding: 0.25rem 0 0 0;
+    color: #959595; }
+
 /* 최은현 */
 .cont-box.rt-bt-type {
   position: relative;
@@ -23683,6 +23815,30 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .recommendedrate-list.no-icon-type > li .product-infolink {
   padding-left: 0; }
+
+.user-level {
+  position: relative; }
+  .user-level .ico {
+    display: block;
+    width: 2.75rem;
+    height: 2.75rem;
+    position: absolute;
+    left: 0;
+    top: 0; }
+    .user-level .ico.vip {
+      background: url(/img/benefit/level-vip-m.png);
+      background-size: 2.75rem; }
+  .user-level .info-inner {
+    padding-left: 3.4375rem; }
+    .user-level .info-inner .title {
+      display: block;
+      font-size: 0.875rem; }
+    .user-level .info-inner .card-num {
+      display: block;
+      padding-top: 0.25rem;
+      font-size: 1rem;
+      font-weight: 700;
+      /*newfont*/ }
 
 /* 김연주 */
 /* 공통 시작 */
@@ -24771,6 +24927,108 @@ input[type="radio"].formradio-small:checked:disabled + label {
   [class^=ico-ch-].ico-ch-post {
     background: url(/img/ico/ico-ch-post.png) no-repeat;
     background-size: 1.5rem; }
+
+.box-card-apl {
+  padding-top: 0.5rem;
+  background: url(/img/benefit/bg-box-card-apl.png) no-repeat right 0.4375rem;
+  background-size: 6.5rem;
+  font-size: 1rem; }
+  .box-card-apl .btn-wrap {
+    padding: 1.3125rem 0 0.3125rem;
+    text-align: center; }
+  .box-card-apl .btn-round2.btn-style1 {
+    padding: 0 3.375rem; }
+  .box-card-apl .point {
+    color: #f76252;
+    font-weight: 700; }
+
+.coalition-brand-box.type2 li .brand-inner {
+  text-align: center; }
+  .coalition-brand-box.type2 li .brand-inner span {
+    width: 3.75rem;
+    height: 3.75rem;
+    margin: 0 auto;
+    border-radius: 50%; }
+
+.solid-link {
+  position: relative;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 3.5rem;
+  text-align: left; }
+  .solid-link .ico {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0.4375rem;
+    height: 0.6875rem;
+    content: '';
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    background: url(/img/benefit/ico-card-wrap.png) no-repeat right center;
+    background-size: 0.4375rem; }
+
+.benefit-popularity-wrap .solid-link {
+  padding: 0 1rem; }
+  .benefit-popularity-wrap .solid-link .ico {
+    right: 1rem; }
+
+.main-quick-menu.member-quick-menu.type2 ul li button, .main-quick-menu.member-quick-menu.type2 ul li a {
+  font-size: 0.875rem; }
+  .main-quick-menu.member-quick-menu.type2 ul li button.brand .ico, .main-quick-menu.member-quick-menu.type2 ul li a.brand .ico {
+    background: url(/img/common/icon/icon_80px_partnership.svg) no-repeat right center;
+    background-size: 2.5rem; }
+  .main-quick-menu.member-quick-menu.type2 ul li button.movie .ico, .main-quick-menu.member-quick-menu.type2 ul li a.movie .ico {
+    background: url(/img/common/icon/icon_80px_culture.svg) no-repeat right center;
+    background-size: 2.5rem; }
+  .main-quick-menu.member-quick-menu.type2 ul li button.t-day .ico, .main-quick-menu.member-quick-menu.type2 ul li a.t-day .ico {
+    background: url(/img/common/icon/icon_80px_tday.svg) no-repeat right center;
+    background-size: 2.5rem; }
+  .main-quick-menu.member-quick-menu.type2 ul li button.data-plus .ico, .main-quick-menu.member-quick-menu.type2 ul li a.data-plus .ico {
+    background: url(/img/common/icon/icon_80px_chocolate.svg) no-repeat right center;
+    background-size: 2.5rem; }
+
+.benefit-popularity-wrap .tit-wrap {
+  position: relative;
+  padding: 1.1875rem 1rem 1.1875rem;
+  line-height: 1; }
+  .benefit-popularity-wrap .tit-wrap .tit-type7 {
+    padding: 0; }
+  .benefit-popularity-wrap .tit-wrap .bt-gps {
+    position: absolute;
+    right: 1rem;
+    top: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1; }
+
+.coalition-brand-list.type2 .brand-inner .logo {
+  overflow: hidden;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  border: 1px solid #f2f2f2; }
+  .coalition-brand-list.type2 .brand-inner .logo img {
+    width: 3.75rem;
+    height: 3.75rem; }
+
+.box-app-down {
+  width: 100%;
+  padding: 1.3125rem 1rem 1.3125rem;
+  font-size: 0.875rem;
+  color: #fff;
+  line-height: 1.1875rem;
+  background: url(/img/benefit/bg-app-down.png) no-repeat 93% bottom #f76252;
+  background-size: 4.6875rem;
+  text-align: left; }
+
+.device_ios .benefit-popularity-wrap .tit-wrap {
+  padding: 1.3125rem 1rem 1.1875rem; }
+
+.device_android .benefit-popularity-wrap .tit-wrap {
+  padding: 1.1875rem 1rem 1.25rem; }
+
+.device_android .solid-link {
+  line-height: 3.375rem; }
 
 /* 김태균 */
 .headingbox-wrap {
@@ -25944,13 +26202,53 @@ body.apphome {
   z-index: 2;
   padding: 1.5625rem 0 0 0;
   text-align: center; }
+  .main-chart-box .coach-mark {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    padding: 0.5rem 2.6875rem 0.5rem 0.625rem;
+    border: 1px solid #333;
+    background: #fff;
+    font-size: 0.8125rem;
+    border-radius: 0.3125rem;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    -webkit-box-shadow: 0 0.3125rem 0.9375rem #888;
+            box-shadow: 0 0.3125rem 0.9375rem #888;
+    white-space: nowrap;
+    z-index: 1; }
+    .main-chart-box .coach-mark:after {
+      content: '';
+      position: absolute;
+      right: 50%;
+      top: -0.4375rem;
+      width: 0.75rem;
+      height: 0.4375rem;
+      background: url(/img/main/bg_coach_mark.png) no-repeat;
+      background-size: 100%; }
+    .main-chart-box .coach-mark .point {
+      color: #178bce;
+      font-weight: 700; }
+    .main-chart-box .coach-mark .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1.9375rem;
+      height: 100%;
+      background: url(/img/main/btn_coach_mark.png) no-repeat center;
+      background-size: 9px 9px; }
   .main-chart-box > .line {
+    position: relative;
     display: block; }
     .main-chart-box > .line .bt {
       color: #666666;
       font-size: 0.75rem;
       text-decoration: underline;
       letter-spacing: 0; }
+    .main-chart-box > .line .coach-mark {
+      top: 1.5625rem; }
+      .main-chart-box > .line .coach-mark:after {
+        right: 27%; }
   .main-chart-box > .ti {
     display: block;
     margin-top: 0.3125rem; }
@@ -26021,6 +26319,10 @@ body.apphome {
         background: url(/img/main/ico_add.png) no-repeat;
         background-size: 100%;
         vertical-align: 1px; }
+    .main-chart-box .donutchart .coach-mark {
+      top: 10rem; }
+      .main-chart-box .donutchart .coach-mark:after {
+        right: 35%; }
   .main-chart-box .legend {
     display: block;
     margin: 0.9375rem -1rem 0;
@@ -26143,6 +26445,16 @@ body.apphome {
         margin-left: 0.5rem; }
   .main-error-box.welcome {
     padding: 4.375rem 0 6.25rem 0; }
+
+@media all and (max-width: 320px) {
+  .device_android .main-error-box .btn-area {
+    display: block; }
+    .device_android .main-error-box .btn-area .btn-round1 {
+      display: inline-block;
+      width: 45%;
+      max-width: 8.75rem; }
+      .device_android .main-error-box .btn-area .btn-round1 + .btn-round1 {
+        margin-left: 3%; } }
 
 .dialog-box {
   position: relative;
@@ -26676,6 +26988,101 @@ body.apphome {
         margin-top: 0.1875rem; }
     .type-qa .acco-list .acco-cont .link {
       color: #4a9fe4; }
+
+.box-main-type {
+  position: relative; }
+  .box-main-type .main-faq-menu {
+    margin-top: 0.625rem;
+    padding-bottom: 1.25rem; }
+    .box-main-type .main-faq-menu ul {
+      margin: 0; }
+      .box-main-type .main-faq-menu ul li {
+        margin: 0; }
+        .box-main-type .main-faq-menu ul li .menu-bt {
+          padding: 0.75rem 0; }
+  .box-main-type .list-comp-title {
+    font-size: 1rem; }
+  .box-main-type .more {
+    position: absolute;
+    right: 1rem;
+    top: 1.25rem;
+    color: #959595;
+    font-size: 0.875rem; }
+  .box-main-type .service-bt-list {
+    overflow: hidden;
+    margin-top: -0.1875rem;
+    padding: 0 0.5rem 1.25rem 0.5rem; }
+    .box-main-type .service-bt-list li {
+      float: left;
+      margin: 0.5rem 0 0 0.5rem; }
+    .box-main-type .service-bt-list .btn-round2 {
+      font-size: 0.8125rem; }
+  .box-main-type .link-long-list li .link-long {
+    border-bottom: 1px solid #f2f2f2; }
+    .box-main-type .link-long-list li .link-long button, .box-main-type .link-long-list li .link-long a {
+      font-size: 1rem; }
+      .box-main-type .link-long-list li .link-long button .ico, .box-main-type .link-long-list li .link-long a .ico {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 0.4375rem;
+        height: 0.6875rem;
+        background-image: url(/img/customer/ico-notice-list.png);
+        background-size: 0.4375rem 0.6875rem;
+        background-position: 0 0;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%); }
+  .box-main-type .inputbox {
+    overflow: hidden; }
+    .box-main-type .inputbox .input {
+      float: left;
+      width: calc(100% - 67px); }
+      .box-main-type .inputbox .input input[type=text] {
+        height: 2.625rem;
+        padding: 0 1rem; }
+    .box-main-type .inputbox .btn-round2 {
+      float: right;
+      width: 3.4375rem;
+      margin-top: 5px;
+      padding: 0; }
+
+.survey-box2 {
+  background: #755cb0; }
+  .survey-box2 .slick-prev {
+    display: none !important; }
+  .survey-box2 .slick-next {
+    display: none !important; }
+  .survey-box2 .slick-dots {
+    right: 1rem;
+    top: 1.5625rem;
+    width: auto;
+    height: 0.5rem;
+    text-align: left; }
+    .survey-box2 .slick-dots li {
+      width: auto;
+      height: auto;
+      margin: 0 0 0 0.5rem;
+      vertical-align: top; }
+      .survey-box2 .slick-dots li span {
+        display: block;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        border-radius: 100%;
+        border: 1px solid #fff;
+        font-size: 0;
+        line-height: 0;
+        cursor: pointer; }
+      .survey-box2 .slick-dots li.slick-active span {
+        width: 0.4375rem;
+        height: 0.4375rem;
+        margin-top: -0.0625rem;
+        background: #fff; }
+  .survey-box2 .slider-box button, .survey-box2 .slider-box a {
+    display: block;
+    width: 100%; }
+    .survey-box2 .slider-box button img, .survey-box2 .slider-box a img {
+      width: 100%;
+      vertical-align: top; }
 
 /* 권은별 */
 /* 공통(회원) */
@@ -28589,7 +28996,8 @@ body.apphome {
   display: block;
   width: 100%; }
   .main-banner-img button img, .main-banner-img a img {
-    width: 100%; }
+    width: 100%;
+    vertical-align: top; }
 
 .main-banner-img.bul .slick-dots {
   top: 1.5rem !important; }
