@@ -69,33 +69,33 @@ Tw.ProductRoamingInfoCenter.prototype = {
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[3].data;
     }
 
-    for(var x in data[0].list){
-      data[0].list[x].option = 'hbs-card-type';
-      if(data[0].list[x].value === $(selected).text()){
-        data[0].list[x].option = 'checked';
-      }
-    }
+    var currentCenter = $(selected).text();
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        data: data
+        data: data,
+        btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this)
+      $.proxy(this._onActionSheetOpened, this, currentCenter)
     );
 
   },
 
-  _onActionSheetOpened: function ($layer) {
-    $layer.on('click', '.hbs-card-type', $.proxy(this._onSelectCenter, this));
+  _onActionSheetOpened: function (currentCenter, $layer) {
+    $('li.type1').each(function(){
+      if($(this).find('label').text().trim() === currentCenter){
+        $(this).find('input[type=radio]').prop('checked', true);
+      }
+    })
+    $layer.find('[name="r2"]').on('click', $.proxy(this._onSelectCenter, this));
+
+    // 닫기 버튼 클릭
+    $layer.one('click', '#fe-back', this._popupService.close);
   },
 
-  _onSelectCenter: function (selected) {
-    if($('.hbs-card-type').hasClass('checked')){
-      $('.hbs-card-type').removeClass('checked');
-    }
-    $(selected.target).parents('li').find('button').addClass('checked');
-    var centerId = Number($(selected.target).parents('li').find('button').attr('id'));
+  _onSelectCenter: function (e) {
+    var centerId = Number($(e.target).parents('label').attr('id'));
 
     for(var k=1; k<=14; k++){
       if(k === centerId){

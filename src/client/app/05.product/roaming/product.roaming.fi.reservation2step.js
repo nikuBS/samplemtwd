@@ -142,53 +142,51 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
   _openLocationPop : function(e){
     var selected = e.target;
-    var title = '';
     var data = [];
 
     if(selected.id === 'flab04'){
       //수령 장소 선택
-      title = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE.title;
-      data = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE.data;
+      data = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE;
     }else{
       //반납 장소 선택
-      title = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.title;
-      data = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.data;
+      data = Tw.POPUP_TPL.ROAMING_RETURN_PLACE;
     }
 
-    for(var x in data[0].list){
-      data[0].list[x].option = 'hbs-card-type';
-      if(data[0].list[x].value === $(selected).text()){
-        data[0].list[x].option = 'checked';
-      }
-    }
+    var currentCenter = $(selected).text();
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: title,
-        data: data
+        data: data,
+        btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this, selected)
+      $.proxy(this._onActionSheetOpened, this, selected, currentCenter)
     );
+
   },
 
-  _onActionSheetOpened: function (selected, $root) {
-    $root.on('click', '.hbs-card-type', $.proxy(this._onActionSelected, this, selected));
+  _onActionSheetOpened: function (selected, currentCenter, $layer) {
+    $('li.type1').each(function(){
+      if($(this).find('label').attr('value') === currentCenter){
+        $(this).find('input[type=radio]').prop('checked', true);
+      }
+    })
+    $layer.find('[name="r2"]').on('click', $.proxy(this._onActionSelected, this, selected));
+
+    // 닫기 버튼 클릭
+    $layer.one('click', '#fe-back', this._popupService.close);
   },
 
   _onActionSelected: function (selected, e) {
-    if($('.hbs-card-type').hasClass('checked')){
-      $('.hbs-card-type').removeClass('checked');
-    }
-    $(e.target).parents('li').find('button').addClass('checked');
+
     if(selected.id === 'flab04'){
-      $(selected).text($(e.target).parents('li').find('.info-value').text()); //센터명 출력
-      $(selected).attr('data-center',$(e.target).parents('button').attr('data-center')); //부스코드를 data-code값에 넣기
-      $(selected).attr('data-booth',$(e.target).parents('button').attr('data-booth'));
-      this.selectIdx = Number($(e.target).parents('button').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
+      $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
+      $(selected).attr('data-center',$(e.target).parents('label').attr('data-center')); //부스코드를 data-code값에 넣기
+      $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
+      this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
     }else{
-      $(selected).text($(e.target).parents('li').find('.info-value').text());
-      $(selected).attr('data-center',$(e.target).parents('button').attr('data-center'));
+      $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
+      $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
     }
 
     this._popupService.close();

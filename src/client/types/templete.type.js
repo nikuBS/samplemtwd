@@ -332,22 +332,19 @@ Tw.POPUP_TPL = {
     '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' },
     '09': { title: '개인정보 처리방침', url: 'http://privacy.sktelecom.com/view.do?ctg=policy&name=policy'}
   },
-  ROAMING_RETURN_PLACE: {
-    title: '반납 장소 선택',
-    data: [
-      {
-        'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="00" data-center="A100110000"', value: '인천공항 1터미널 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="01" data-center="1430456896"', value: '인천공항 2터미널 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="02" data-center="A100140000"', value: '김포공항 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="03" data-center="A900100000"', value: '제주공항 국제선 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="04" data-center="A200130000"', value: '김해공항 3층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="05" data-center="C399900000"', value: '대구공항 2층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="14" data-center="1430452300"', value: '대구 SKT 황금점 매장' }
-        ]
-      }
-    ]
-  },
+  ROAMING_RETURN_PLACE: [
+    {
+      'list': [
+        { 'radio-attr': 'id="00" name="r2"', 'label-attr':'id="00" data-center="A100110000" value="인천공항 1터미널 1층 로밍 센터"', txt: '인천공항 1터미널 1층 로밍 센터' },
+        { 'radio-attr': 'id="01" name="r2"', 'label-attr':'id="01" data-center="1430456896" value="인천공항 2터미널 1층 로밍 센터"', txt: '인천공항 2터미널 1층 로밍 센터' },
+        { 'radio-attr': 'id="02" name="r2"', 'label-attr':'id="02" data-center="A100140000" value="김포공항 1층 로밍 센터"', txt: '김포공항 1층 로밍 센터' },
+        { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" value="제주공항 국제선 1층 로밍 센터"', txt: '제주공항 국제선 1층 로밍 센터' },
+        { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" value="김해공항 3층 로밍 센터"', txt: '김해공항 3층 로밍 센터' },
+        { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" value="대구공항 2층 로밍 센터"', txt: '대구공항 2층 로밍 센터' },
+        { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
+      ]
+    }
+  ],
   TEVENT_LIST: [
     {
       'list': [
@@ -357,54 +354,50 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  ROAMING_RECEIVE_PLACE: {
-    title: '수령 장소 선택',
-    data: [
-      {
-        'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="06" data-center="A100110000" data-booth="1000004045"', value: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
-          { 'option': 'hbs-card-type', 'attr': 'id="07" data-center="A100110000" data-booth="1000004047"', value: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
-          { 'option': 'hbs-card-type', 'attr': 'id="08" data-center="1430456896" data-booth="1430456957"', value: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
-          { 'option': 'hbs-card-type', 'attr': 'id="09" data-center="A100140000" data-booth="1000004055"', value: '김포공항 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="10" data-center="A900100000" data-booth="1000004057"', value: '제주공항 국제선 1층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="11" data-center="A200130000" data-booth="1000012532"', value: '김해공항 3층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="12" data-center="C399900000" data-booth="1430455436"', value: '대구공항 2층 로밍 센터' },
-          { 'option': 'hbs-card-type', 'attr': 'id="13" data-center="1430452300" data-booth="1430452300"', value: '대구 SKT 황금점 매장' }
-        ]
-      }
-    ]
-  },
+  ROAMING_RECEIVE_PLACE: [
+    {
+      'list': [
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="06" data-center="A100110000" data-booth="1000004045" value="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"', txt: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="07" data-center="A100110000" data-booth="1000004047" value="인천공항 1터미널 3층 로밍 센터(G-H 카운터)"', txt: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="08" data-center="1430456896" data-booth="1430456957" value="인천공항 2터미널 3층 로밍 센터(D-E 카운터)"', txt: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="09" data-center="A100140000" data-booth="1000004055" value="김포공항 1층 로밍 센터"', txt: '김포공항 1층 로밍 센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" value="제주공항 국제선 1층 로밍 센터"', txt: '제주공항 국제선 1층 로밍 센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" value="김해공항 3층 로밍 센터"', txt: '김해공항 3층 로밍 센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" value="대구공항 2층 로밍 센터"', txt: '대구공항 2층 로밍 센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
+      ]
+    }
+  ],
   ROAMING_INFO_CENTER: [
     {
-      title: '',
       data: [{
         'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="1"', value: '인천공항 1터미널 3층' },
-          { 'option': 'hbs-card-type', 'attr': 'id="2"', value: '인천공항 1터미널 1층' }
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="1"', txt: '인천공항 1터미널 3층' },
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="2"', txt: '인천공항 1터미널 1층' }
         ]
       }]
     },
     {
       data: [{
         'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="3"', value: '인천공항 2터미널 3층' },
-          { 'option': 'hbs-card-type', 'attr': 'id="4"', value: '인천공항 2터미널 1층' }
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="3"', txt: '인천공항 2터미널 3층' },
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="4"', txt: '인천공항 2터미널 1층' }
         ]
       }]
     },
     {
       data: [{
         'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="7"', value: '김해공항 3층 국제선 청사' },
-          { 'option': 'hbs-card-type', 'attr': 'id="8"', value: '김해공항 1층 국제선 청사' }
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="7"', txt: '김해공항 3층 국제선 청사' },
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="8"', txt: '김해공항 1층 국제선 청사' }
         ]
       }]
     },
     {
       data: [{
         'list': [
-          { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '국제1 여객터미널' },
-          { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '국제2 여객터미널' }
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="10"', txt: '국제1 여객터미널' },
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="11"', txt: '국제2 여객터미널' }
         ]
       }]
     }
