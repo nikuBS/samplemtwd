@@ -89,15 +89,22 @@ Tw.ProductList.prototype = {
   },
 
   _openOrderPopup: function() {
-    var list = Tw.PRODUCT_PLANS_ORDER.slice(),
-      searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
-    list[searchType] = { value: list[searchType].value, option: 'checked' };
+    var searchType = this._params.searchOrder || this.DEFAULT_ORDER;
+    var list = _.map(Tw.PRODUCT_LIST_ORDER, function(item) {
+      if (item['radio-attr'].indexOf(searchType) >= 0) {
+        return $.extend({}, item, {
+          'radio-attr': item['radio-attr'] + ' checked'
+        });
+      }
+
+      return item;
+    });
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type', // hbs의 파일명
+        hbs: 'actionsheet01', // hbs의 파일명
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
-        title: Tw.POPUP_TITLE.SELECT_ORDER,
         data: [{ list: list }]
       },
       $.proxy(this._handleOpenOrderPopup, this),
@@ -107,13 +114,12 @@ Tw.ProductList.prototype = {
   },
 
   _handleOpenOrderPopup: function($layer) {
-    $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectOrder, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectOrder, this));
   },
 
   _handleSelectOrder: function(e) {
     var $target = $(e.currentTarget);
-    var $list = $target.parent();
-    var orderType = this._getOrderType($list.find('li').index($target));
+    var orderType = $target.find('input').data('order');
 
     if (this._params.searchOrder === orderType) {
       return;
@@ -122,22 +128,11 @@ Tw.ProductList.prototype = {
     this._params.searchOrder = orderType;
     delete this._params.searchLastProdId;
     delete this._leftCount;
-    this.$container.find('.fe-select-order').text($target.find('span').text());
+    this.$container.find('.fe-select-order').text($target.find('.txt').text());
     this.$list.empty();
 
     this._handleLoadMore();
     this._popupService.close();
-  },
-
-  _getOrderType: function(idx) {
-    var keys = Object.keys(this.ORDER),
-      i = 0;
-
-    for (; i < keys.length; i++) {
-      if (this.ORDER[keys[i]] === idx) {
-        return keys[i];
-      }
-    }
   },
 
   _handleClickChangeFilters: function() {

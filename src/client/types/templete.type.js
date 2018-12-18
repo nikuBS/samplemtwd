@@ -471,10 +471,10 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   { txt: '데이터 음성 리필', 'radio-attr': 'data-type="4"' }
 ];
 
-Tw.PRODUCT_PLANS_ORDER = [
-  { value: '추천순' },
-  { value: '높은 가격순' },
-  { value: '낮은 가격순' }
+Tw.PRODUCT_LIST_ORDER = [
+  { txt: '추천순', 'radio-attr': 'data-order="recommand"' },
+  { txt: '높은 가격순', 'radio-attr': 'data-order="highprice"' },
+  { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"' }
 ];
 
 Tw.TERMS_ACTION = {
@@ -520,20 +520,20 @@ Tw.CUSTOMER_HELPLINE_AREAS = [
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
-  { value: '지점', code: 'T40' },
-  { value: '대리점', code: 'T10' },
-  { value: '이용안내', code: 'T30' },
-  { value: '통화품질 기준 매니저', code: 'T50' },
-  { value: 'AS센터', code: 'T20' },
-  { value: '행복기사(SK브로드밴드)', code: 'T60' }
+  { txt: '지점', 'radio-attr': 'data-index="0" data-code="T40"' },
+  { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"' },
+  { txt: '이용안내', 'radio-attr': 'data-index="2" data-code="T30"' },
+  { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"' },
+  { txt: 'AS센터', 'radio-attr': 'data-index="4" data-code="T20"' },
+  { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"' }
 ];
 
 Tw.CUSTOMER_PRAISE_AREAS = [
-  { value: '서울/인천/경기', code: 'A10' },
-  { value: '강원/충청/대전', code: 'A20' },
-  { value: '전북/전남/광주/제주', code: 'A30' },
-  { value: '부산/경남', code: 'A40' },
-  { value: '대구/경북', code: 'A50' }
+  { txt: '서울/인천/경기', 'radio-attr': 'data-code="A10"' },
+  { txt: '강원/충청/대전', 'radio-attr': 'data-code="A20"' },
+  { txt: '전북/전남/광주/제주', 'radio-attr': 'data-code="A30"' },
+  { txt: '부산/경남', 'radio-attr': 'data-code="A40"' },
+  { txt: '대구/경북', 'radio-attr': 'data-code="A50"' }
 ];
 
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
@@ -742,11 +742,11 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PRODUCT_JOIN_TYPE = [
-  { value: '휴대폰', attr: 'data-type-code="cellphone"' },
-  { value: '인터넷', attr: 'data-type-code="internet"' },
-  { value: '전화', attr: 'data-type-code="phone"' },
-  { value: 'TV', attr: 'data-type-code="tv"' },
-  { value: '결합상품', attr: 'data-type-code="combine"' }
+  { txt: '휴대폰', 'radio-attr': 'data-type-code="cellphone"' },
+  { txt: '인터넷', 'radio-attr': 'data-type-code="internet"' },
+  { txt: '전화', 'radio-attr': 'data-type-code="phone"' },
+  { txt: 'TV', 'radio-attr': 'data-type-code="tv"' },
+  { txt: '결합상품', 'radio-attr': 'data-type-code="combine"' }
 ];
 
 Tw.SUSPEND_RELATION = {

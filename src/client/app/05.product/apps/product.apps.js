@@ -123,8 +123,7 @@ Tw.ProductApps.prototype = {
         hbs: 'actionsheet01', // hbs의 파일명
         btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }],
-        layer: true,
-        title: Tw.POPUP_TITLE.SELECT_ORDER
+        layer: true
       },
       $.proxy(this._handleOpenOrderPopup, this)
     );

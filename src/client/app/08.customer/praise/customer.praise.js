@@ -18,6 +18,14 @@ Tw.CustomerPraise = function(rootEl) {
 Tw.CustomerPraise.prototype = {
   REPLACE_CONTENTS: '|' + Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.COMPANY + '|' + Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE,
   MAX_REASON_BYTES: 12000,
+  TYPES: {
+    OFFICE: 'T40',
+    STORE: 'T10',
+    CUSTOMER_CENTER: 'T30',
+    QUALITY_MANAGER: 'T50',
+    AS_CENTER: 'T20',
+    HAPPY_MANAGER: 'T60'
+  },
 
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._setAvailableSubmit, this));
@@ -40,37 +48,42 @@ Tw.CustomerPraise.prototype = {
   },
 
   _openSelectTypePopup: function() {
-    var data = Tw.CUSTOMER_PRAISE_SUBJECT_TYPES.slice();
-    if (this._selectedType >= 0) {
-      data[this._selectedType] = { value: data[this._selectedType].value, option: 'checked' };
-    }
+    var selectedType = this._selectedType,
+      list = this._selectedType
+        ? _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item, index) {
+            if (selectedType === index) {
+              return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
+            }
+            return item;
+          })
+        : Tw.CUSTOMER_PRAISE_SUBJECT_TYPES;
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: Tw.POPUP_TITLE.SELECT_SUBJECT_TYPE,
-        data: [{ list: data }]
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        data: [{ list: list }]
       },
       $.proxy(this._handleOpenSelectType, this)
     );
   },
 
   _handleOpenSelectType: function($layer) {
-    $layer.on('click', 'li', $.proxy(this._handleSelectType, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
-    var $target = $(e.currentTarget);
-    var $list = $target.parent();
-    var selectedIdx = $list.find('li').index($target);
-    var selectedValue = Tw.CUSTOMER_PRAISE_SUBJECT_TYPES[selectedIdx].value;
+    var $target = $(e.currentTarget),
+      $input = $target.find('input'),
+      selectedValue = $target.find('.txt').text(),
+      code = $input.data('code');
 
-    if (this._selectedType === selectedIdx) {
+    if (this._selectedType === code) {
       return this._popupService.close();
     }
 
-    this._selectedType = selectedIdx;
+    this._selectedType = code;
 
     this.$container.find('.fe-subject').removeClass('none');
 
@@ -82,20 +95,20 @@ Tw.CustomerPraise.prototype = {
       this.$area.addClass('none');
     }
 
-    switch (selectedIdx) {
-      case 1: {
+    switch (code) {
+      case this.TYPES.STORE: {
         this._setInputField(selectedValue);
         this.$area.removeClass('none');
         break;
       }
-      case 0:
-      case 2:
-      case 4: {
+      case this.TYPES.OFFICE:
+      case this.TYPES.CUSTOMER_CENTER:
+      case this.TYPES.AS_CENTER: {
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE);
         break;
       }
-      case 3:
-      case 5: {
+      case this.TYPES.QUALITY_MANAGER:
+      case this.TYPES.HAPPY_MANAGER: {
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.COMPANY);
 
         var currentContents = this.$pRole.text();
@@ -127,34 +140,44 @@ Tw.CustomerPraise.prototype = {
   },
 
   _openSelectAreaPopup: function() {
-    var data = Tw.CUSTOMER_PRAISE_AREAS.slice();
+    var selected = this._selectedArea,
+      list = selected
+        ? _.map(Tw.CUSTOMER_PRAISE_AREAS, function(item) {
+            if (item['radio-attr'].indexOf(selected) >= 0) {
+              return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
+            }
 
-    if (this._selectedArea >= 0) {
-      data[this._selectedArea] = { value: data[this._selectedArea].value, option: 'checked' };
-    }
+            return item;
+          })
+        : Tw.CUSTOMER_PRAISE_AREAS;
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
-        title: Tw.POPUP_TITLE.SET_AREA,
-        data: [{ list: data }]
+        data: [{ list: list }]
       },
       $.proxy(this._handleOpenSelectArea, this)
     );
   },
 
   _handleOpenSelectArea: function($layer) {
-    $layer.on('click', 'li', $.proxy(this._handleSelectArea, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectArea, this));
   },
 
   _handleSelectArea: function(e) {
-    var $target = $(e.currentTarget);
-    var $list = $target.parent();
-    var selectedIdx = $list.find('li').index($target);
+    var $target = $(e.currentTarget),
+      $input = $target.find('input');
+    var code = $input.data('code');
 
-    this._selectedArea = selectedIdx;
-    this.$area.find('button').text(Tw.CUSTOMER_PRAISE_AREAS[selectedIdx].value);
+    if (this._selectedArea === code) {
+      this._popupService.close();
+      return;
+    }
+
+    this._selectedArea = code;
+    this.$area.find('button').text($target.find('.txt').text());
     this._setAvailableSubmit();
     this._popupService.close();
   },
@@ -179,7 +202,7 @@ Tw.CustomerPraise.prototype = {
       return eInput.value.length === 0;
     });
 
-    if (emptyInputs || this.$reasons.val().length === 0 || (this._selectedType === 1 && this._selectedArea === undefined)) {
+    if (emptyInputs || this.$reasons.val().length === 0 || (this._selectedType === this.TYPES.STORE && this._selectedArea === undefined)) {
       return this.$submitBtn.attr('disabled');
     } else {
       this.$submitBtn.removeAttr('disabled');
@@ -196,14 +219,14 @@ Tw.CustomerPraise.prototype = {
       inputGubun: '01',
       tWldChnlClCd: 'M',
       custRgstCtt: this.$reasons.val(), // 고객 등록 내용
-      twldRcObjItmCd: Tw.CUSTOMER_PRAISE_SUBJECT_TYPES[this._selectedType].code, // 추천항목 대상 코드
+      twldRcObjItmCd: this._selectedType, // 추천항목 대상 코드
       rcmndEmpDutypNm: values.office, // 추천지 근무 명
       rcmndEmpNm: values.subject // 추천 직원명
     };
 
-    if (this._selectedType === 1) {
-      values.area = Tw.CUSTOMER_PRAISE_AREAS[this._selectedArea].value;
-      params.twldRcObjAreaItmCd = Tw.CUSTOMER_PRAISE_AREAS[this._selectedArea].code;
+    if (this._selectedType === this.TYPES.STORE) {
+      values.area = this.$area.find('button').text();
+      params.twldRcObjAreaItmCd = this._selectedArea;
       params.titleNm = Tw.FormatHelper.getTemplateString(Tw.CUSTOMER_PRAISE_TITLE.T01, values);
     } else {
       params.titleNm = Tw.FormatHelper.getTemplateString(Tw.CUSTOMER_PRAISE_TITLE.T02, values);
@@ -217,25 +240,24 @@ Tw.CustomerPraise.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       this._clearForm();
-      this._popupService.open({
-        hbs: 'complete_c_type',
-        layer: true,
-        title: Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_COMPLETE,
-        btnText: Tw.BUTTON_LABEL.CONFIRM,
-        itemOne: {
-          text: Tw.BUTTON_LABEL.HOME,
-          url: '/main/home'
-        }
-      }, $.proxy(this._bindResultPop, this));
+      this._popupService.open(
+        {
+          hbs: 'complete_c_type',
+          layer: true,
+          title: Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_COMPLETE,
+          btnText: Tw.BUTTON_LABEL.CONFIRM,
+          itemOne: {
+            text: Tw.BUTTON_LABEL.HOME,
+            url: '/main/home'
+          }
+        },
+        $.proxy(this._openCompletePopup, this)
+      );
     }
   },
 
-  _bindResultPop: function($popupContainer) {
-    $popupContainer.find('.fe-btn_close').on('click', $.proxy(this._closePop, this));
-  },
-
-  _closePop: function() {
-    this._popupService.close();
+  _openCompletePopup: function($layer) {
+    $layer.find('.fe-btn_close').on('click', this._popupService.close);
   },
 
   _clearForm: function() {
@@ -254,8 +276,7 @@ Tw.CustomerPraise.prototype = {
 
   _handleClickCancel: function() {
     var ALERT = Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL;
-    this._popupService.openConfirmButton(null, ALERT.TITLE,
-      $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    this._popupService.openConfirmButton(null, ALERT.TITLE, $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _handleConfirmCancel: function() {
