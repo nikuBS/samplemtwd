@@ -5,17 +5,15 @@
  */
 
 Tw.SearchComponent = function () {
-  this._apiService = Tw.Api;
-
   this._init();
-  this._popupService = Tw.Popup;
   $('.icon-gnb-search').on('click',$.proxy(this._showSearch,this));
 };
 
 Tw.SearchComponent.prototype = {
     _init : function () {
-        console.log('SearchComponent init called');
-        $(window).on('hashchange', $.proxy(this._checkAndClose, this));
+        this._apiService = Tw.Api;
+        this._popupService = Tw.Popup;
+        this._historyService = new Tw.HistoryService();
     },
     _showSearch : function () {
         this._getKeywordData();
@@ -27,13 +25,6 @@ Tw.SearchComponent.prototype = {
                 famousKeywordData : this._famousKeywordData
     }
         },$.proxy(this._bindInputEvt,this),null, 'search');
-    },
-    _checkAndClose : function () {
-        if (window.location.hash.indexOf('search_P') === -1) {
-            this._popupService.close();
-        }else{
-            this._showSearch();
-        }
     },
     _getRecommendKeyword : function (apiService) {
         return new Promise(function (resolve,reject) {
@@ -92,5 +83,4 @@ Tw.SearchComponent.prototype = {
         console.log(data);
         this.$popupLayerContainer.find('#autocomplete_list').append('<li>'+data.hkeyword+'</li>');
     }
-
 };
