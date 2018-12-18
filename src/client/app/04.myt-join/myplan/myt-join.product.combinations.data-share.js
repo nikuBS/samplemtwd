@@ -47,7 +47,7 @@ Tw.MyTJoinProductCombinationsDataShare.prototype = {
       },
       $.proxy(this._handleOpenSharePopup, this),
       null,
-      'process'
+      'share'
     );
   },
 
