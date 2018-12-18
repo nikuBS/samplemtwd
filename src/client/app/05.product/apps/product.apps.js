@@ -71,6 +71,10 @@ Tw.ProductApps.prototype = {
     } else {
       this._apps = _.map(apps, function(app) {
         app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
+        if (app.iconImg && app.iconImg.indexOf('http') < 0) {
+          app.iconImg = Tw.Environment.cdn + app.iconImg;
+        }
+
         return app;
       });
 
@@ -108,15 +112,16 @@ Tw.ProductApps.prototype = {
   _openOrderPopup: function() {
     var _order = this._order,
       list = _.map(Tw.PRODUCT_APPS_ORDER, function(order) {
-        if (order.attr.indexOf(_order) > 0) {
-          return Object.assign({ option: 'checked' }, order);
+        if (order['radio-attr'].indexOf(_order) > 0) {
+          return $.extend({}, order, { 'radio-attr': order['radio-attr'] + ' checked' });
         }
         return order;
       });
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type', // hbs의 파일명
+        hbs: 'actionsheet01', // hbs의 파일명
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }],
         layer: true,
         title: Tw.POPUP_TITLE.SELECT_ORDER
@@ -126,11 +131,13 @@ Tw.ProductApps.prototype = {
   },
 
   _handleOpenOrderPopup: function($layer) {
-    $layer.on('click', 'li > button', $.proxy(this._handleSelectOrder, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectOrder, this));
   },
 
   _handleSelectOrder: function(e) {
-    var nOrder = e.currentTarget.getAttribute('data-prop');
+    var nOrder = $(e.currentTarget)
+      .find('input')
+      .data('prop');
 
     if (this._order === nOrder) {
       this._popupService.close();
@@ -139,7 +146,7 @@ Tw.ProductApps.prototype = {
 
     this.$orderBtn.text(
       $(e.currentTarget)
-        .find('.info-value')
+        .find('.txt')
         .text()
     );
 

@@ -62,12 +62,10 @@ Tw.ProductList.prototype = {
     this._params.searchLastProdId = items[items.length - 1].prodId;
     this._leftCount = (this._leftCount || resp.result.productCount) - items.length;
 
-    if (this._leftCount > 0) {
-      if (this.$moreBtn.hasClass('none')) {
-        this.$moreBtn.removeClass('none');
-      }
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount + ')'));
-    } else {
+    var hasNone = this.$moreBtn.hasClass('none');
+    if (this._leftCount > 0 && hasNone) {
+      this.$moreBtn.removeClass('none');
+    } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
 

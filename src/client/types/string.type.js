@@ -1064,12 +1064,12 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
     {
       id: 'S1',
       type: ['인터넷'],
-      child: ['표준요금제 광랜', '표준요금제 스피드', '스마트요금제 광랜', '스마트요금제 스피드', '오피스']
+      child: [['표준요금제 광랜', '표준요금제 스피드', '스마트요금제 광랜', '스마트요금제 스피드', '오피스']]
     },
     {
       id: 'S2',
       type: ['IPTV'],
-      child: []
+      child: [[]]
     },
     {
       id: 'S3',
@@ -1357,4 +1357,8 @@ Tw.SELECTED_DATE_STRING = {
 
 Tw.ROAMING_COMBINE_LINE_STRING = {
   COMBINE_LINE : '자회선 설정하기 >'
+};
+
+Tw.TMAP_STRING = {
+  POI_SEARCH_POSTFIX: '청'
 };

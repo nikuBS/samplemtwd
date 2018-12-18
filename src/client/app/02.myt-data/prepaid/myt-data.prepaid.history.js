@@ -98,16 +98,8 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$selectBtn.text(Tw.PREPAID_TYPES[type.toUpperCase()]);
     this.$totalCount.text(this.$totalCount.data(type));
 
-    if (this._leftCount[type] > 0) {
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount[type] + ')'));
-      if (this.$moreBtn.hasClass('none')) {
-        this.$moreBtn.removeClass('none');
-      }
-    } else if (!this.$moreBtn.hasClass('none')) {
-      this.$moreBtn.addClass('none');
-    }
-
     this._currentType = type;
+    this._setMoreButton();
     this._popupService.close();
   },
 
@@ -180,9 +172,15 @@ Tw.MyTDataPrepaidHistory.prototype = {
       this.$list.append(contents);
     }
 
-    if (this._leftCount[type] > 0) {
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount[type] + ')'));
-    } else {
+    this._setMoreButton();
+  },
+
+  _setMoreButton: function() {
+    var hasNone = this.$moreBtn.addClass('none'),
+      type = this._currentType;
+    if (this._leftCount[type] > 0 && hasNone) {
+      this.$moreBtn.removeClass('none');
+    } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
   },

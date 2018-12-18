@@ -16,8 +16,8 @@ Tw.CustomerAgentsearchRegion = function (rootEl, currentGu, regions, callback) {
   this._currentGu = currentGu;
 
   this._cacheElements();
-  this._init();
   this._bindEvents();
+  this._init();
 };
 
 Tw.CustomerAgentsearchRegion.prototype = {
@@ -84,24 +84,29 @@ Tw.CustomerAgentsearchRegion.prototype = {
     var regionList = _.map(_.filter(this._regions, function (region) {
       return region.areaDepth === 'L';
     }), function (region) {
-      var ret = { value: region.districtName, attr: 'value="' + region.largeCd + '"' };
+      var ret = {
+        txt: region.districtName,
+        'label-attr': 'id=' + region.largeCd,
+        'radio-attr': 'id="' + region.largeCd + '" value="' + region.districtName + '" name="r2"'
+      };
       if (region.largeCd === currentLargeCd) {
-        ret.option = 'checked';
+        ret['radio-attr'] = ret['radio-attr'] + ' checked';
       }
       return ret;
     });
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.BRANCH.SELECT_REGION,
-      data: [{ list: regionList }]
+      data: [{ list: regionList }],
+      btnfloating : { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function (root) {
-      root.on('click', 'button', $.proxy(function (e) {
+      root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
-        this.$btDropdown.text($(e.currentTarget).find('.info-value').text());
-        this.$btDropdown.val(e.currentTarget.value);
-        this._onLargeAreaChanged(e.currentTarget.value);
+        var selected = root.find('input[type=radio]:checked');
+        this.$btDropdown.text(selected.val());
+        this.$btDropdown.val(selected.attr('id'));
+        this._onLargeAreaChanged(selected.attr('id'));
       }, this));
     }, this), null, 'region');
   },
@@ -120,7 +125,8 @@ Tw.CustomerAgentsearchRegion.prototype = {
       return memo + Tw.REGION_LIST_ITEM.getItem(item.districtName, item.middleCd);
     }, ''));
 
-    skt_landing.widgets.widget_init('.container-wrap');
+    $('.widget-box.tube').data('event', null);
+    skt_landing.widgets.widget_init();
     if (Tw.FormatHelper.isEmpty(middleCode)) {
       this.$areaList.find('li:first').click();
     } else {

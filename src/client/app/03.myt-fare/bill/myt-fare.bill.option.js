@@ -39,20 +39,15 @@ Tw.MyTFareBillOption.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-auto', $.proxy(this._goAutoPayment, this));
-    this.$container.on('click', '.fe-cancel', $.proxy(this._openCancelAutoPayment, this));
+    this.$container.on('click', '.fe-cancel', $.proxy(this._cancelAutoPayment, this));
     this.$container.on('click', '.fe-change-date', $.proxy(this._changePaymentDate, this));
     this.$container.on('click', '.fe-change-address', $.proxy(this._changeAddress, this));
   },
   _goAutoPayment: function () {
     this._historyService.goLoad('/myt-fare/bill/option/register');
   },
-  _openCancelAutoPayment: function () {
-    this._popupService.open({
-      'hbs':'MF_05_01_02'
-    }, $.proxy(this._cancelAutoPayment, this), null, 'cancel');
-  },
-  _cancelAutoPayment: function ($layer) {
-    new Tw.MyTFareBillAutoCancel(this.$container, $layer);
+  _cancelAutoPayment: function () {
+    this._historyService.goLoad('/myt-fare/bill/option/cancel');
   },
   _changePaymentDate: function () {
     this._popupService.open({

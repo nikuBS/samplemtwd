@@ -23,10 +23,12 @@ Tw.CustomerAgentsearchNear = function (rootEl) {
   this._currentBranchType = 0;
   this._currentGu = undefined;
 
-  this._showDataChargeIfNeeded($.proxy(function () {
-    this._init();
-    this._cacheElements();
-    this._bindEvents();
+  $(window).on('env', $.proxy(function () {
+      this._showDataChargeIfNeeded($.proxy(function () {
+      this._init();
+      this._cacheElements();
+      this._bindEvents();
+    }, this));
   }, this));
 };
 
@@ -198,7 +200,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
     var lonlat = new Tmap.LonLat(location.longitude, location.latitude)
       .transform('EPSG:4326', 'EPSG:3857');
-    var icon = new Tmap.Icon(Tw.TMAP.COMPASS, size, offset);
+    var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.COMPASS, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
     this._currentMarker.addMarker(marker);
 
@@ -257,7 +259,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     for (var i = 0; i < shops.length; i++) {
       var lonlat = new Tmap.LonLat(shops[i].geoX, shops[i].geoY)
         .transform('EPSG:4326', 'EPSG:3857');
-      var icon = new Tmap.Icon(Tw.TMAP.PIN, size, offset);
+      var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.PIN, size, offset);
       var label = new Tmap.Label(shops[i].locCode);
       var marker = new Tmap.Markers(lonlat, icon, label);
       if (shops[i].storeType === '1') {

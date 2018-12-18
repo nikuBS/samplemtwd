@@ -62,8 +62,12 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
     }
 
+    var dFiles = [];
+    dFiles.push(fileInfo);
+    dFiles.push(fileInfo);
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, this.$explainFile.get(0).files)
+    Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, dFiles)
       .done($.proxy(this._successUploadFile, this));
   },
 
@@ -89,7 +93,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
     }
 
-    this._fileList.push(resp.result[0]);
+    this._fileList.push(resp.result);
     this.$fileList.append(this._fileTemplate(resp.result[0]));
     this.$fileWrap.show();
 
@@ -119,12 +123,20 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
   },
 
   _procApply: function() {
-    var convFileList = this._fileList.map(function(item) {
-      return {
-        fileSize: item.size,
-        fileName: item.name,
-        filePath: 'uploads/'
-      };
+    var convFileList0 = [],
+      convFileList1 = [];
+
+    this._fileList.forEach(function(itemList) {
+      convFileList0.push({
+        fileSize: itemList[0].size,
+        fileName: itemList[0].name,
+        filePath: '/' + itemList[0].path
+      });
+      convFileList1.push({
+        fileSize: itemList[1].size,
+        fileName: itemList[1].name,
+        filePath: '/' + itemList[1].path
+      });
     });
 
     var apiList = [
@@ -133,7 +145,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
         params: {
           recvFaxNum: 'skt404@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
-          scanFiles: convFileList
+          scanFiles: convFileList0
         }
       },
       {
@@ -141,7 +153,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
         params: {
           recvFaxNum: 'skt219@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
-          scanFiles: convFileList
+          scanFiles: convFileList1
         }
       }
     ];

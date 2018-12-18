@@ -45,13 +45,24 @@ Tw.MyTDataGift.prototype = {
   },
 
   _onSuccessRecently: function (res) {
+    var tempAddr = [];
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var contactList = res.result.slice(0, 3);
-      contactList = contactList.map(function (item) {
+      var contactList = res.result;
+
+      var list = contactList.filter(function (item) {
+        if ( tempAddr.includes(item.svcNum) ) {
+          return false;
+        }
+        tempAddr.push(item.svcNum);
+        return true;
+      });
+
+      var filteredList = list.splice(0, 3).map(function (item) {
         return $.extend(item, { svcNum: Tw.FormatHelper.conTelFormatWithDash(item.svcNum) });
       });
 
-      this.$recent_tel.html(this.tpl_recently_gift({ contactList: contactList }));
+      this.$recent_tel.html(this.tpl_recently_gift({ contactList: filteredList }));
       this.$recent_tel.show();
     } else {
       Tw.Error(res.code, res.msg).pop();

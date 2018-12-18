@@ -250,7 +250,8 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    Tw.CommonHelper.openUrlInApp('/product/mobileplan/compare-plans?prodId=' + this._data.preinfo.toProdInfo.prodId, 'status=1,toolbar=1');
+    Tw.CommonHelper.openUrlInApp(location.origin + '/product/mobileplan/compare-plans?prodId=' +
+      this._data.preinfo.toProdInfo.prodId, 'status=1,toolbar=1');
   },
 
   _setAgreeAndclosePop: function($wrap) {
@@ -267,26 +268,11 @@ Tw.ProductCommonConfirm.prototype = {
 
   _openConfirmAlert: function() {
     this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
-      Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this), null, $.proxy(this._onCloseConfirmAlert, this));
-  },
-
-  _bindConfirmAlert: function($popupContainer) {
-    $popupContainer.find('.tw-popup-confirm>button').on('click', $.proxy(this._setConfirmAlertApply, this));
+      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), null, 'join_confirm');
   },
 
   _setConfirmAlertApply: function() {
-    this._isDoCallback = true;
-
-    if (this._isPopup) {
-      this._popupService.close();
-    }
-  },
-
-  _onCloseConfirmAlert: function() {
-    if (!this._isDoCallback) {
-      return;
-    }
-
+    this._popupService.close();
     this._doCallback();
   },
 

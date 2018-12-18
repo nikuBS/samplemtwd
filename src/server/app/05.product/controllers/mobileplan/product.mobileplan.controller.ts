@@ -12,9 +12,6 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
-import { REDIS_BANNER_ADMIN } from '../../../../types/redis.type';
-import BrowserHelper from '../../../../utils/browser.helper';
-import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 // import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 
 export default class Product extends TwViewController {
@@ -74,6 +71,8 @@ export default class Product extends TwViewController {
         grpProdList: resp.result.grpProdList.map(group => {
           return {
             ...group,
+            prodGrpFlagImgUrl: group.prodGrpFlagImgUrl && ProductHelper.getImageUrlWithCdn(group.prodGrpFlagImgUrl),
+            prodGrpIconImgUrl: group.prodGrpIconImgUrl && ProductHelper.getImageUrlWithCdn(group.prodGrpIconImgUrl),
             prodList: group.prodList.map(plan => {
               return {
                 ...plan,

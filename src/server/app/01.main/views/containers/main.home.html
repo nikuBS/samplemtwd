@@ -70,7 +70,7 @@
                             </div>
                             <!-- // 미등록 -->
                             <% } else { %>
-                            <% if (svcType.svcCategory === 'M') { %>
+                            <% if (svcType.svcCategory === 'm') { %>
                             <% if (homeData.usageData) { %>
                             <% if (homeData.usageData.code === '00') { %>
                             <!-- 모바일 회선_잔여 데이터 -->
@@ -136,10 +136,10 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                    <button class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></button>
+                                    <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
                                     <% } %>
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></button>
+                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -176,7 +176,7 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></button>
+                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
@@ -245,7 +245,7 @@
                             <% } %>
                             <% } %>
                             <% } %>
-                            <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
+                            <% if (svcType.login && svcType.svcCategory === 's' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
                             <% if(homeData.billData) { %>
                             <% if(homeData.billData.isBroadband) { %>

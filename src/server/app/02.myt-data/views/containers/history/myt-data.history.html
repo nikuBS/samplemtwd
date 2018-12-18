@@ -29,7 +29,7 @@
                 <div class="cont-box nogaps">
                     <div class="ti-caption-blue">
                         <div class="num">총 <em><%= list.length %></em>건</div>
-                        <button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true"><%= TYPE_NAMES[filterIdx] %></button>
+                        <button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true" <%= list.length === 0 ? 'disabled' : '' %>><%= TYPE_NAMES[filterIdx] %></button>
                     </div>
 
                     <div class="cont-box pt0 pb0">
@@ -66,7 +66,7 @@
                         <p class="desc">충전/선물 내역이 없습니다.</p>
                     </div>
                     <% const leftCount = list.length - DEFALUT_LIST_COUNT; %>
-                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기 (<%= leftCount %>)</button></div>
+                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더보기</button></div>
                 </div>
                 <!--// .cont-box -->
 
