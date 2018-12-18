@@ -397,7 +397,7 @@ $.fn.chart2 = function(o){
       if(typeof d.data_arry[i].v == 'number'){
         max = (max > d.data_arry[i].v) ? max : d.data_arry[i].v;
         text_pattern.push(d.data_arry[i].v + d.unit)
-      }else if(d.data_arry[i].v == '사용안함'){
+      }else if(d.data_arry[i].v == 0){
         text_pattern.push(d.data_arry[i].v);
       }else if(d.data_arry[i].v == '무제한'){
         text_pattern.push(d.data_arry[i].v);
@@ -406,7 +406,7 @@ $.fn.chart2 = function(o){
     }
     for(var i=0; i < d.data_arry.length; i++){
       if(d.unlimited){
-        if(d.data_arry[i].v == '사용안함'){
+        if(d.data_arry[i].v == 0){
           style_pattern.push(50);
           class_pattern[0] = 'gray';
           class_pattern[1] = '';
@@ -417,7 +417,7 @@ $.fn.chart2 = function(o){
           style_pattern.push((((d.data_arry[i].v/max) * 100) / 4) + 50);
         }
       }else{
-        if(d.data_arry[i].v == '사용안함'){
+        if(d.data_arry[i].v == 0){
           style_pattern.push(50);
           class_pattern[0] = 'gray';
           class_pattern[1] = '';
