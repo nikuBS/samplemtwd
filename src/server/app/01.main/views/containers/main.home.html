@@ -76,14 +76,14 @@
                             <!-- 모바일 회선_잔여 데이터 -->
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
-                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+                                <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box donutchart">
                                         <!-- .donut-chart -->
-                                        <button class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
+                                        <a href="/myt-data/submain" class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
                                                 <% if(homeData.usageData.shareTotal !== 0) { %>
                                                 <!-- loop 공유데이터 -->
@@ -120,7 +120,7 @@
                                                 <strong class="ti">남은 데이터</strong>
                                                 <em class="data"><%= homeData.usageData.data.showMyRemained %></em>
                                             </span>
-                                        </button>
+                                        </a>
                                         <!-- // .donut-chart -->
                                         <button id="fe-bt-data-link" class="data-add">데이터</button>
                                     </div>
