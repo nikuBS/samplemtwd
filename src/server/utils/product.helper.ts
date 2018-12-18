@@ -1,5 +1,5 @@
 import { DATA_UNIT, PRODUCT_CTG_NM } from '../types/string.type';
-import { PRODUCT_REPLACED_RULE, UNIT } from '../types/bff.type';
+import {PRODUCT_REPLACED_RULE, UNIT, VOICE_UNIT} from '../types/bff.type';
 import FormatHelper from './format.helper';
 import EnvHelper from './env.helper';
 
@@ -63,7 +63,8 @@ class ProductHelper {
     basOfrDataQtyCtt?: any,
     basOfrVcallTmsCtt?: any,
     basOfrCharCntCtt?: any,
-    basDataUnit = DATA_UNIT.MB
+    basDataUnit = DATA_UNIT.MB,
+    isVcallFormat = true
   ): any {
     const isValid = value => {
       return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
@@ -72,7 +73,7 @@ class ProductHelper {
     return {
       basFeeInfo: isValid(basFeeInfo) ? ProductHelper.convProductBasfeeInfo(basFeeInfo) : null,
       basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? ProductHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, basDataUnit) : null,
-      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? ProductHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
+      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? ProductHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt, isVcallFormat) : null,
       basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? ProductHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
     };
   }
@@ -95,7 +96,7 @@ class ProductHelper {
     };
   }
 
-  static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt): any {
+  static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt, isVcallFormat): any {
     const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
     let replacedResult: any = null;
 
@@ -116,7 +117,8 @@ class ProductHelper {
 
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
-      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : FormatHelper.convVoiceMinFormatWithUnit(basOfrVcallTmsCtt)
+      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : (isVcallFormat ?
+        FormatHelper.convVoiceMinFormatWithUnit(basOfrVcallTmsCtt) : basOfrVcallTmsCtt + VOICE_UNIT.MIN)
     };
   }
 
