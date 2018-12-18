@@ -316,6 +316,7 @@
   $(document).ready(function () {
     new Tw.MyTDataUsage($('#myt-data-hotdata'), {
       svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
+      dataSharing : '<%= balanceAddOns && balanceAddOns.dataSharing %>',
       tdataSharing : '<%= balanceAddOns && balanceAddOns.tdataSharing %>',
       troamingSharing : '<%= balanceAddOns && balanceAddOns.troamingSharing %>',
       dataTopUp : '<%= usageData && usageData.dataTopUp %>',
