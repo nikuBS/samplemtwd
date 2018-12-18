@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회' }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -64,14 +64,14 @@
                         <% if (roamingTypeData.dataRoamingYn  === 'Y') {%>
                         <li>
                             <div class="link-long">
-                                <button><span class="icon"><img src="<%= CDN %>/img/product/ico-roaming-info01.png" alt="데이터 로밍" /></span>데이터 로밍<span class="ico"></span></button>
+                                <button><span class="icon type1"></span>데이터 로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
                         <% if (roamingTypeData.voiceRoamingYn  === 'Y') {%>
                         <li>
                             <div class="link-long">
-                                <button><span class="icon"><img src="<%= CDN %>/img/product/ico-roaming-info02.png" alt="음성 로밍" /></span>음성 로밍<span class="ico"></span></button>
+                                <button><span class="icon type2"></span>음성 로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
@@ -127,7 +127,7 @@
                                         <div class="box-wrap">
                                             <div class="bg1"> <!-- 보라색 -->
                                                 <a class="txt-tit">T로밍 아시아패스</a>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge01.png" alt="T로밍 아시아패스" /></span>
+                                                <span class="ico type1"></span>
                                                 <span class="txt-type1">아시아 주요 27개국에서 5일간 LTE/3G 데이터 안심하고 이용!</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">25,000원/5일</strong>
@@ -138,7 +138,7 @@
                                         <div class="box-wrap">
                                             <div class="bg2"> <!-- 녹색 -->
                                                 <a class="txt-tit">T로밍 유럽패스 3GB</a>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-recommend-charge02.png" alt="T로밍 유럽패스 3GB" /></span>
+                                                <span class="ico type2"></span>
                                                 <span class="txt-type1">유럽 51개국에서 LTE/3G 데이터를 저렴하게 이용!</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">39,000원/30일</strong>
