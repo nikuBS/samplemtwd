@@ -118,7 +118,7 @@ class ProductHelper {
     return {
       isNaN: isNaNbasOfrVcallTmsCtt,
       value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : (isVcallFormat ?
-        FormatHelper.convVoiceMinFormatWithUnit(basOfrVcallTmsCtt) : basOfrVcallTmsCtt + VOICE_UNIT.MIN)
+        FormatHelper.convVoiceMinFormatWithUnit(basOfrVcallTmsCtt) : FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN)
     };
   }
 
