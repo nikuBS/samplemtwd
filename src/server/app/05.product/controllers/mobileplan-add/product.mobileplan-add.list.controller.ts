@@ -72,15 +72,15 @@ export default class ProductAdditions extends TwViewController {
           return {
             ...addition,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(addition.basFeeAmt),
-            basOfrDataQtyCtt: this.isEmptyAmount(addition.basOfrDataQtyCtt)
-              ? null
-              : ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt),
-            basOfrVcallTmsCtt: this.isEmptyAmount(addition.basOfrVcallTmsCtt)
-              ? null
-              : ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt),
-            basOfrCharCntCtt: this.isEmptyAmount(addition.basOfrCharCntCtt)
-              ? null
-              : ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt)
+            basOfrDataQtyCtt: this.isEmptyAmount(addition.basOfrDataQtyCtt) ? 
+              null : 
+              ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt),
+            basOfrVcallTmsCtt: this.isEmptyAmount(addition.basOfrVcallTmsCtt) ? 
+              null : 
+              ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt, false),
+            basOfrCharCntCtt: this.isEmptyAmount(addition.basOfrCharCntCtt) ? 
+              null : 
+              ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt)
           };
         })
       };
