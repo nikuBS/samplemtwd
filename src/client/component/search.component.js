@@ -6,10 +6,9 @@
 
 Tw.SearchComponent = function () {
   this._apiService = Tw.Api;
-  this._getKeywordData();
+
   this._init();
   this._popupService = Tw.Popup;
-  this.$popupLayerContainer;
   $('.icon-gnb-search').on('click',$.proxy(this._showSearch,this));
 };
 
@@ -19,6 +18,7 @@ Tw.SearchComponent.prototype = {
         $(window).on('hashchange', $.proxy(this._checkAndClose, this));
     },
     _showSearch : function () {
+        this._getKeywordData();
         this._popupService.open({
             hbs: 'test_search',
             layer: true,
@@ -58,7 +58,6 @@ Tw.SearchComponent.prototype = {
     },
     _getFamousKeyword : function (apiService) {
         return new Promise(function (resolve,reject) {
-                console.log('_getFamousKeyword ');
                 var requestParam = { 'range' : 'D' };
                 var testRequestReturn = apiService.requestAjax(Tw.AJAX_CMD.TEST_GET_FAMOUS_KEYWORD, requestParam);
                 console.log(testRequestReturn);
@@ -83,9 +82,7 @@ Tw.SearchComponent.prototype = {
         var requestParam = { query : args.currentTarget.value };
         this._apiService.requestAjax(Tw.AJAX_CMD.TEST_AUTO_COMPLETE,requestParam)
             .done($.proxy(function (res) {
-                console.log(res);
-                console.log(res.result);
-                console.log(res.result.length);
+
                 if(res.responsestatus===0&&res.result.length>0){
                     _.each(res.result[0].items,$.proxy(this._showAutoCompleteKeyword,this));
                 }
