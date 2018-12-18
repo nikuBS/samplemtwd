@@ -146,7 +146,7 @@
   // client 작업 중
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
-    new Tw.BenefitDisPgmSelContract({
+    new Tw.BenefitSelectContract({
       $element: $('[data-id=sel-ct-container]'),
       data: JSON.parse(data)
     });

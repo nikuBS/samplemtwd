@@ -5,7 +5,7 @@
  *
  */
 
-Tw.BenefitDisPgmSelContract = function (params) {
+Tw.BenefitSelectContract = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.BenefitDisPgmSelContract = function (params) {
   this._initialize();
 };
 
-Tw.BenefitDisPgmSelContract.prototype = {
+Tw.BenefitSelectContract.prototype = {
 
   _render: function () {
     this.$radioGroup = this.$container.find('[data-id=radio-group]');
