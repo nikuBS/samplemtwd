@@ -13,7 +13,7 @@ const environment = {
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    //TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    // TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     TEST_SERVER: 'http://61.250.22.114:8080',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
     DOMAIN_G: 'm-dev.tworld.co.kr:3000',

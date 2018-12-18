@@ -64,7 +64,20 @@ abstract class TwViewController {
 
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.existId(tokenId, userId) ) {
-        this.login(req, res, next, path, tokenId, userId);
+        if ( this.checkLogin(req.session) ) {
+          if ( !FormatHelper.isEmpty(userId) ) {
+            const svcInfo = this._loginService.getSvcInfo();
+            if ( svcInfo.userId === userId ) {
+              this.sessionLogin(req, res, next, path);
+            } else {
+              this.login(req, res, next, path, tokenId, userId);
+            }
+          } else {
+            this.sessionLogin(req, res, next, path);
+          }
+        } else {
+          this.login(req, res, next, path, tokenId, userId);
+        }
       } else {
         if ( this.checkLogin(req.session) ) {
           this.sessionLogin(req, res, next, path);
@@ -108,7 +121,7 @@ abstract class TwViewController {
   }
 
   private sessionLogin(req, res, next, path) {
-    this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
+    this._logger.info(this, '[Session Login]');
     this.renderPage(req, res, next, path);
   }
 
@@ -163,7 +176,6 @@ abstract class TwViewController {
             // }
           }
         } else {
-          console.log('not login');
           if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
