@@ -116,7 +116,7 @@ Tw.BannerService.prototype = {
           temp.bnnrFilePathNm = CDN + banner.bnnrFilePathNm;
         }
 
-        nBanners[banner.bnnrLocCd].push(Object.assign(banner, temp));
+        nBanners[banner.bnnrLocCd].push($.extend(banner, temp));
 
         return nBanners;
       }, {})
