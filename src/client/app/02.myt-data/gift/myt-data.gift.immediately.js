@@ -37,7 +37,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
-    this.$inputImmediatelyGift.on('keyup input blur change', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
   },
 
   _getRemainDataInfo: function () {
@@ -90,7 +90,9 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _onKeyUpImmediatelyGiftNumber: function () {
+    this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
+    this._validateInputNumber();
     this.$inputImmediatelyGift.val(this._convertDashNumber(this.$inputImmediatelyGift.val()));
   },
 
@@ -100,7 +102,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this.$inputImmediatelyGift.val(sNumber);
     this.$inputImmediatelyGift.data('opdtm', opdtm);
-    this.$recent_tel.hide();
+    this._hideRecentNumberLayer();
   },
 
   _getReceiveUserInfo: function () {
@@ -125,7 +127,7 @@ Tw.MyTDataGiftImmediately.prototype = {
       this._requestSendingData();
     } else {
       if ( res.code === 'ZNGME0008' ) {
-        Tw.Error(res.code, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
+        Tw.Error(Tw.POPUP_TITLE.NOTIFY, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
       } else {
         Tw.Error(res.code, res.msg).pop();
       }
@@ -196,5 +198,27 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
 
     return true;
+  },
+
+  _validateInputNumber: function () {
+    var sPhoneNumber = this.$inputImmediatelyGift.val() ? this.$inputImmediatelyGift.val().replace(/-/g, '') : '';
+
+    if ( sPhoneNumber.length < 10 ) {
+      this.$container.find('.fe-error-phone01').removeClass('blind');
+    } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+      this.$container.find('.fe-error-phone02').removeClass('blind');
+    }
+
+    if ( sPhoneNumber.length === 0 || Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+      this._removeErrorComment();
+    }
+  },
+
+  _removeErrorComment: function () {
+    this.$container.find('[class*="fe-error"]').addClass('blind');
+  },
+
+  _hideRecentNumberLayer: function () {
+    $('.recently-tel').hide();
   }
 };
