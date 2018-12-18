@@ -1,8 +1,7 @@
 /**
- * 상품 가입 - 모바일 부가서비스
- * FileName: product.mobileplan-add.join.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.01
+ * FileName: benefit.dis-pgm.input.js
+ * Author: Kim In Hwan (skt.P132150@partner.sk.com)
+ * Date: 2018.12.18
  */
 
 Tw.BenefitDisPgmInput = function (rootEl, prodId, confirmOptions, selType) {
