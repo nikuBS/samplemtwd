@@ -3,15 +3,16 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
 import ApiService from '../../services/api.service';
 import FormatHelper from '../../utils/format.helper';
+import LoginService from '../../services/login.service';
 
 
 class NativeExRouter {
   public router: Router;
-  private apiService;
+  private apiService: ApiService = new ApiService();
+  private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
-    this.apiService = new ApiService();
 
     Object.keys(API_CMD).map((key) => {
       const cmd = API_CMD[key];
@@ -51,16 +52,14 @@ class NativeExRouter {
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
+    this.apiService.setCurrentReq(req, res);
+    this.loginService.setCurrentReq(req, res);
+
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-    // const headers = {
-    //   cookie: req.headers.cookie,
-    //   'user-agent': req.headers['user-agent']
-    // };
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
-    this.apiService.nativeRequest(cmd, params, headers, ...pathVar)
+    this.apiService.request(cmd, params, headers, ...pathVar)
       .subscribe((data) => {
-        delete data.serverSession;
         return res.json(data);
       });
   }

@@ -14,7 +14,7 @@ export enum API_SERVER {
 
 export const API_CMD = {
 
-  //test search
+  // test search
   TEST_SEARCH : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true},
   TEST_RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true},
   // SPRINT #3

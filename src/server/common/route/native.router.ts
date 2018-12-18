@@ -8,13 +8,11 @@ import LoginService from '../../services/login.service';
 
 class NativeRouter {
   public router: Router;
-  private apiService;
+  private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
-    this.apiService = new ApiService();
-
 
     Object.keys(API_CMD).map((key) => {
       const cmd = API_CMD[key];
@@ -54,16 +52,13 @@ class NativeRouter {
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
-    const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-    // const headers = {
-    //   cookie: req.headers.cookie,
-    //   'user-agent': req.headers['user-agent']
-    // };
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
+
+    const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
-    this.apiService.nativeRequest(cmd, params, headers, ...pathVar)
+    this.apiService.request(cmd, params, headers, ...pathVar)
       .subscribe((data) => {
         return res.json(data);
       });

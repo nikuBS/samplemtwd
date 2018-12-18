@@ -15,7 +15,6 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
-    console.log(req.cookies);
     this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
     this.request = req;
     this.response = res;
