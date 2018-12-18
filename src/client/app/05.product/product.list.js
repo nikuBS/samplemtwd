@@ -167,7 +167,7 @@ Tw.ProductList.prototype = {
             currentFilters && currentFilters.length > 0
               ? _.map(filter.subFilters, function(subFilter) {
                   if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
-                    return Object.assign({ checked: true }, subFilter);
+                    return $.extend({ checked: true }, subFilter);
                   }
                   return subFilter;
                 })
@@ -179,7 +179,7 @@ Tw.ProductList.prototype = {
     var tags = currentTag
       ? _.map(this._filters.tags, function(tag) {
           if (currentTag === tag.tagId) {
-            return Object.assign({ checked: true }, tag);
+            return $.extend({ checked: true }, tag);
           }
           return tag;
         })

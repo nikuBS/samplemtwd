@@ -5,7 +5,7 @@
  *
  */
 
-Tw.BenefitDisPgmTplus = function (params) {
+Tw.BenefitTPlusSales = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.BenefitDisPgmTplus = function (params) {
   this._bindEvent();
 };
 
-Tw.BenefitDisPgmTplus.prototype = {
+Tw.BenefitTPlusSales.prototype = {
 
   _initialize: function() {
     this.joinInfoTerm = $.extend(this.data.joinInfoTerm, {

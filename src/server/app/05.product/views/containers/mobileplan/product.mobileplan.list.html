@@ -18,7 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '모바일 요금제' }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '모바일 요금제', svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -123,7 +123,7 @@
                     <% const leftCount = plans.productCount - products.length; %>
                     <div class="extraservice-more">
                         <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
-                            더보기
+                            더 보기
                         </button>
                     </div>
                 </div>
@@ -131,6 +131,7 @@
                 <!-- //이런 요금제는 어떠세요? -->
 
                 <!-- //부가서비스 목록 -->
+                <% if ( false ) { // @TODO 해당 페이지 다음 차수 개발, 진입 안되도록 히든 처리 %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="findyourplan-wrap">
                     <a class="link" href="/product/mobileplan/find">
@@ -140,6 +141,7 @@
                         </dl>
                     </a>
                 </div>
+                <% } %>
                 
                 <!-- 다른 페이지를 찾고 계신가요? -->
                 <div class="cont-box noborder bgnone">

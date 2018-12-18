@@ -42,34 +42,24 @@ class ProductMobileplanJoin extends TwViewController {
         title: PRODUCT_TYPE_NM.JOIN
       };
 
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
-      .subscribe((basicInfo) => {
-      if (basicInfo.code !== API_CODE.CODE_00) {
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0009, {}),
+      this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
+    ).subscribe(([joinTermInfo, overPayReqInfo, mobilePlanCompareInfo]) => {
+      if (joinTermInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: basicInfo.code,
-          msg: basicInfo.msg
+          code: joinTermInfo.code,
+          msg: joinTermInfo.msg
         }));
       }
 
-      Observable.combineLatest(
-        this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId),
-        this.apiService.request(API_CMD.BFF_10_0009, {}),
-        this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
-      ).subscribe(([joinTermInfo, overPayReqInfo, mobilePlanCompareInfo]) => {
-        if (joinTermInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: joinTermInfo.code,
-            msg: joinTermInfo.msg
-          }));
-        }
-
-        res.render('mobileplan/join/product.mobileplan.join.html', Object.assign(renderCommonInfo, {
-          joinTermInfo: ProductHelper.convPlansJoinTermInfo(joinTermInfo.result),
-          mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
-          isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
-          prodId: prodId
-        }));
-      });
+      res.render('mobileplan/join/product.mobileplan.join.html', Object.assign(renderCommonInfo, {
+        joinTermInfo: ProductHelper.convPlansJoinTermInfo(joinTermInfo.result),
+        mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
+        isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
+        prodId: prodId
+      }));
     });
   }
 }

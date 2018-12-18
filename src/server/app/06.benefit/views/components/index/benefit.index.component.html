@@ -15,7 +15,9 @@
             </em>
             <p>{{benefitDesc}}</p>
             {{#ifCond ../category '===' 'F01422'}}
+                {{#isNotEmpty benefitPrice}}
                 <span class="total">{{benefitText}} <strong>{{numComma benefitPrice}}</strong>원 </span>
+                {{/isNotEmpty}}
             {{/ifCond}}
             <div>
                 {{#each tagList}}

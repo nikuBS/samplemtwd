@@ -61,7 +61,6 @@ class MainHome extends TwViewController {
     //   .subscribe((resp) => {
     //     console.log('default', resp);
     //   });
-    console.log('svcTye', svcType);
     if ( svcType.login ) {
       svcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {

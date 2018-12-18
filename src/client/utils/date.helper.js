@@ -269,7 +269,11 @@ Tw.DateHelper = (function () {
    * @param {string} : 10월 9일 화요일
    */
   var getKoreanDateWithDay = function (date) {
-    return moment(this.convDateFormat(date)).format('MMM Do dddd');
+    return moment(this.convDateFormat(date)).locale('ko').format('MMM Do dddd');
+  };
+
+  var getKoreanTime = function (date) {
+    return moment(this.convDateFormat(date)).locale('ko').format('a hh시 mm분');
   };
 
   var getDayOfWeek = function (date) {
@@ -351,6 +355,7 @@ Tw.DateHelper = (function () {
     getShortKoreanAfterMonth: getShortKoreanAfterMonth,
     getShortKoreanMonth: getShortKoreanMonth,
     getKoreanDateWithDay: getKoreanDateWithDay,
+    getKoreanTime: getKoreanTime,
     isValid: isValid,
     getStartOfMonSubtractDate: getStartOfMonSubtractDate,
     getEndOfMonSubtractDate: getEndOfMonSubtractDate,

@@ -304,9 +304,9 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   // allSvc 정보에서 해당 상품의 id와 이름을 찾아서 리턴한다.
   _getProdInfo: function(svcMgmtNum) {
-    var svcS = this.resData.allSvc.S || [];
-    var svcM = this.resData.allSvc.M || [];
-    var svcO = this.resData.allSvc.O || [];
+    var svcS = this.resData.allSvc.s || [];
+    var svcM = this.resData.allSvc.m || [];
+    var svcO = this.resData.allSvc.o || [];
     for(var i = 0; i < svcS.length; i++){
       if(svcMgmtNum === svcS[i].svcMgmtNum){
         return {id: svcS[i].prodId, nm: svcS[i].prodNm};

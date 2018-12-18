@@ -149,12 +149,10 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _closeDirectOrder: function () {
-    this._popupService.openConfirm(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy($.proxy(function () {
         this._popupService.close();
         $('.fe-wrap_direct_order').remove();
-      }, this));
+      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   }
 };

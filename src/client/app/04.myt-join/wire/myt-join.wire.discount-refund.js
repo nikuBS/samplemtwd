@@ -42,18 +42,18 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _requestData: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    $('#divLoading').show();
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
       .done($.proxy(function (resp) {
+        // Tw.CommonHelper.endLoading('.container');
+        $('#divLoading').hide();
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
           Tw.Error(resp.code, resp.msg).pop();
-          Tw.CommonHelper.endLoading('.container');
           return;
         }
-
-        Tw.CommonHelper.endLoading('.container');
 
         var data = resp.result;
 
@@ -64,11 +64,11 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
             html += this._listTmpl( list[i] );
           }
           $('.info-list-type1').show();
-          $('.contents-empty').hide();
+          $('#divEmpty').hide();
           $('#refund-list').html(html);
         }else{
           $('.info-list-type1').hide();
-          $('.contents-empty').show();
+          $('#divEmpty').show();
           return;
         }
         if( data.chargeInfo ) {
@@ -76,7 +76,8 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
         }
       }, this))
       .fail(function (err) {
-        Tw.CommonHelper.endLoading('.container');
+        // Tw.CommonHelper.endLoading('.container');
+        $('#divLoading').hide();
         Tw.Error(err.status, err.statusText);
       });
 
