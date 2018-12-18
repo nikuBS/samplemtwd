@@ -61,33 +61,7 @@ Tw.BenefitTPlusSales.prototype = {
     }
     else {
       // page 이동
-      new Tw.ProductCommonConfirm(true, this.$container, $.extend(this.joinInfoTerm, {
-        joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-        typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
-        isAutoJoinTermList: true,
-        confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2
-      }), $.proxy(this._joinCompleteConfirm, this));
+      this._historyService.goLoad('/benefit/submain/detail/dis-pgm/input?prod_id=' + this.data.prodId);
     }
-  },
-
-  _joinCompleteConfirm: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0082, {}, this.data.prodId)
-      .done($.proxy(this._onSuccessTplusJoin, this))
-      .fail($.proxy(this._onErrorTplusJoin, this));
-  },
-
-  _onSuccessTplusJoin: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan/' + this.data.prodId,
-        Tw.BENEFIT.DISCOUNT_PGM.TPLUS.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.TPLUS.FINISH.TITLE,
-        Tw.BENEFIT.DISCOUNT_PGM.TPLUS.FINISH.CONTENT);
-    }
-    else {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-  },
-
-  _onErrorTplusJoin: function (resp) {
-    Tw.Error(resp.code, resp.msg).pop();
   }
 };

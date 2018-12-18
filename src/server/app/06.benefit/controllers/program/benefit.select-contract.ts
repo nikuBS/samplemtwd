@@ -1,5 +1,5 @@
 /*
- * FileName: product.dis-pgm.join.ts
+ * FileName: benefit.select-contract.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.22
  *
@@ -61,7 +61,7 @@ class BenefitSelectContract extends TwViewController {
           title: PRODUCT_TYPE_NM.JOIN
         });
       }
-      res.render('program/benefit.dis-pgm.sel-contract.html', { data });
+      res.render('program/benefit.select-contract.html', { data });
     });
 
   }
