@@ -284,9 +284,9 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   convertOtherLines(target, items): any {
-    const MOBILE = (items && items['M']) || [];
-    const OTHER = (items && items['O']) || [];
-    const SPC = (items && items['S']) || [];
+    const MOBILE = (items && items['m']) || [];
+    const OTHER = (items && items['o']) || [];
+    const SPC = (items && items['s']) || [];
     const list: any = [];
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       let nOthers: any = [];
