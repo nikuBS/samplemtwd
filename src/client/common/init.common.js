@@ -5,10 +5,9 @@ Tw.Init = function () {
 
   this._initService();
   this._initComponent();
-  // this._getDeviceInfo();
   this._getEnvironment();
-  this._apiService.setSession();
   this._setXtvid();
+  // this._setNodeCookie();
 };
 
 Tw.Init.prototype = {
@@ -27,10 +26,14 @@ Tw.Init.prototype = {
 
   _initComponent: function () {
     new Tw.MenuComponent();
-    // new Tw.LineComponent();
     new Tw.MaskingComponent();
     new Tw.ShareComponent();
     new Tw.SearchComponent();
+  },
+
+  _getEnvironment: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
+      .done($.proxy(this._logVersion, this));
   },
 
   _logVersion: function (resp) {
@@ -49,46 +52,19 @@ Tw.Init.prototype = {
     }
   },
 
-  _getEnvironment: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
-      .done($.proxy(this._logVersion, this));
-  },
-
-  _getDeviceInfo: function () {
-    Tw.DeviceInfo = new Tw.DeviceService();
-    this._nativeService.send(Tw.NTV_CMD.GET_DEVICE, {}, $.proxy(this._setDeviceInfo, this));
-  },
-
-  _setDeviceInfo: function (resp) {
-    Tw.Logger.info('[Device Info]', resp);
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-
-      Tw.DeviceInfo.setDeviceInfo(resp.params);
-
-      this._apiService.request(Tw.NODE_CMD.SET_DEVICE, resp.params)
-        .done($.proxy(this._successSetDevice, this));
+  _setXtvid: function () {
+    var cookie = Tw.CommonHelper.getCookie('XTVID');
+    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
+      this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: cookie });
     }
   },
-  _successSetDevice: function (resp) {
-    console.log(resp);
-  },
-
-  _setXtvid: function() {
-    if (Tw.FormatHelper.isEmpty(document.cookie) || !Tw.BrowserHelper.isApp()) {
-      return;
-    }
-
-    var XTVID = null;
-    _.each(document.cookie.split(';'), function(cookieItem) {
-      var cookieItemToken = cookieItem.split('=');
-      if (cookieItemToken[0] === 'XTVID') {
-        XTVID = cookieItemToken[1];
-        return false;
-      }
-    });
-
-    if (!Tw.FormatHelper.isEmpty(XTVID)) {
-      this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: XTVID });
+  _setNodeCookie: function () {
+    var cookie = Tw.CommonHelper.getCookie('TWM');
+    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
+      this._nativeService.send(Tw.NTV_CMD.SESSION, {
+        serverSession: cookie,
+        expired: 60 * 60 * 1000
+      });
     }
   }
 

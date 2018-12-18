@@ -51,6 +51,23 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  var getCookie = function (key) {
+    if(Tw.FormatHelper.isEmpty(document.cookie)) {
+      return null;
+    }
+    var value = null;
+    _.each(document.cookie.split(';'), function(cookieItem) {
+      var cookieItemToken = cookieItem.split('=');
+      if (cookieItemToken[0].trim() === key) {
+        value = cookieItemToken[1];
+        return false;
+      }
+    });
+
+    return value;
+
+  };
+
   var removeLocalStorage = function(key) {
     return localStorage.removeItem(key);
   };
@@ -151,6 +168,7 @@ Tw.CommonHelper = (function () {
     toast: toast,
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
+    getCookie: getCookie,
     removeLocalStorage: removeLocalStorage,
     showDataCharge: showDataCharge,
     share: share,

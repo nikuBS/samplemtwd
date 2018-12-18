@@ -27,7 +27,7 @@ const environment = {
     BFF_SERVER: 'http://bff-spring',
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-g',
-    CDN: 'https://mcdn-dev.tworld.co.kr',
+    CDN: 'https://cdnm-dev.tworld.co.kr',
     CDN_MANIFEST: 'http://61.250.20.69',
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
@@ -49,8 +49,8 @@ const environment = {
     BFF_SERVER: 'http://bff-spring',
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-g',
-    CDN: 'https://mcdn-stg.tworld.co.kr',
-    CDN_MANIFEST: 'http://61.250.20.69',
+    CDN: 'https://cdnm-stg.tworld.co.kr',
+    CDN_MANIFEST: 'http://203.236.19.151',
     REDIS: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
@@ -70,8 +70,8 @@ const environment = {
   production: {
     BFF_SERVER: 'http://bff-spring',
     BFF_SERVER_G: 'http://bff-spring-g',
-    CDN: 'https://mcdn.tworld.co.kr',
-    CDN_MANIFEST: 'http://61.250.20.69',
+    CDN: 'https://cdnm.tworld.co.kr',
+    CDN_MANIFEST: 'http://203.236.19.151',
     REDIS: {
       // host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
       // port: 6379,
