@@ -4,10 +4,11 @@
  * Date: 2018.10.04
  */
 
-Tw.MyTDataFamilyShareMonthly = function(rootEl) {
+Tw.MyTDataFamilyShareMonthly = function(rootEl, hasShare) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._hasShare = hasShare;
 
   new Tw.MyTDataFamilyShare(rootEl);
 
@@ -31,7 +32,7 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
   },
 
   _confirmSubmit: function() {
-    var POPUP = Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY;
+    var POPUP = this._hasShare ? Tw.MYT_DATA_FAMILY_CONFIRM_EDIT_MONTHLY : Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY;
     this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._handleSubmit, this));
   },
 
