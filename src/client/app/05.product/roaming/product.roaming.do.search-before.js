@@ -30,7 +30,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$userPhoneInfo = this.$container.find('#fe-search-phone');
 
     this._phoneInfo = {
-        eqpMdlNm : ''
+        eqpMdlNm : '',
+        eqpMdlCd : ''
     };
 
     this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
@@ -101,7 +102,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
           }];
           data[0].list = this.listData;
           this._popupService.open({
-                  hbs: 'actionsheet_select_a_type',
+                  hbs: 'actionsheet01',
+                  btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
                   layer: true,
                   data: data
               },
@@ -113,6 +115,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _onClickSelectBtn: function () {
     if(this.modelValue !== '') {
         this._phoneInfo.eqpMdlNm = this.modelValue;
+        this._phoneInfo.eqpMdlCd = this.modelCode;
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
         this._desciptionInit();
@@ -137,9 +140,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _onChangeModel: function () {
     this._phoneInfo.eqpMdlNm = '';
     this.modelValue = '';
+    this.modelCode = '';
+    this.cdName = '';
     this.$userPhoneInfo.empty();
     this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
-
     this._desciptionInit();
   },
   _handleSuccessSearchResult : function (resp) {
@@ -156,9 +160,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
           if (_result.length > 1) {
               var listData = _.map(_result, function (item, idx) {
                   return {
-                      value: _result[idx].countryNm,
-                      option: 'hbs-country-name',
-                      attr: 'data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"'
+                      txt: _result[idx].countryNm,
+                      attr: 'data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"',
+                      'label-attr':'id="ra' + [idx] + '"',
+                      'radio-attr': 'id="ra' + [idx] + '" name="r2" data-value="' + _result[idx].countryCode + '|' + _result[idx].countryNm + '"'
                   };
               });
 
@@ -168,13 +173,13 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
               data[0].list = listData;
               this._popupService.open({
-                      hbs: 'actionsheet_select_a_type',
+                      hbs: 'actionsheet01',
                       layer: true,
                       title: Tw.POPUP_TITLE.SELECT_COUNTRY,
+                      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
                       data: data
                   },
-                  $.proxy(this._selectPopupCallback, this),
-                  $.proxy(this._closeActionPopup, this)
+                  $.proxy(this._selectPopupCallback, this)
               );
 
           } else {
@@ -196,35 +201,31 @@ Tw.ProductRoamingSearchBefore.prototype = {
       } else {
           Tw.Error(resp.code, resp.msg).pop();
       }
-
   },
   _handleFailSearch : function (err) {
       Tw.Error(err.code, err.msg).pop();
   },
   _onHpSearch : function () {
     this._popupService.open({
-              hbs: 'actionsheet_select_a_type',
+              hbs: 'actionsheet01',
               layer: true,
+              btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
               data: [{ list: Tw.ROAMING_MFACTCD_LIST.list }]
           },
-          $.proxy(this._selectMfactCdCallback, this),
-          $.proxy(this._closeActionPopup, this)
+          $.proxy(this._selectMfactCdCallback, this)
       );
   },
   _selectMfactCdCallback: function ($layer) {
-      $layer.on('click', '.hbs-mfact-cd', $.proxy(this._getModelInfo, this, $layer));
+      $layer.find('[data-mfact-name="' + this.cdName + '"]').attr('checked', 'checked');
+      $layer.find('[name="r2"]').on('click', $.proxy(this._getModelInfo, this, $layer));
+      $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _getModelInfo: function ($layer, e) {
       // $layer.find('button').removeClass('checked');
       var target = $(e.currentTarget);
       this.cdValue = target.attr('data-mfact-code');
       this.cdName = target.attr('data-mfact-name');
-      for (var i in Tw.ROAMING_MFACTCD_LIST.list){
-          Tw.ROAMING_MFACTCD_LIST.list[i].option = 'hbs-mfact-cd';
-      }
-      var list = Tw.ROAMING_MFACTCD_LIST.list.slice();
-      var codeType = this.MFACT_CODE[this.cdValue];
-      list[codeType].option = 'hbs-mfact-cd checked';
       this._popupService.close();
       this.$container.find('.fe-roaming-mfactCd').text(this.cdName);
       this._onSearchModel(this.cdValue);
@@ -239,9 +240,14 @@ Tw.ProductRoamingSearchBefore.prototype = {
     var _result = resp.result;
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
         if(_result.length > 0){
+            this.$container.find('.fe-roaming-model').text(Tw.ROAMING_DESC.MODEL_DESC);
+            this.modelValue = '';
             this.listData = _.map(_result, function (item, idx) {
                 return {
-                    value: _result[idx].eqpMdlNm,
+                    txt: _result[idx].eqpMdlNm,
+                    'label-attr':'id="ra' + [idx] + '"',
+                    'radio-attr': 'id="ra' + [idx] + '" name="r2" data-model-code="' + _result[idx].mfrModlCd + '"' +
+                        ' data-model-nm="' + _result[idx].eqpMdlNm + '"',
                     option: 'hbs-model-name',
                     attr: 'data-model-code="' + _result[idx].eqpMdlNm + '"'
                 };
@@ -263,21 +269,17 @@ Tw.ProductRoamingSearchBefore.prototype = {
       this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
   },
   _selectModelCallback: function ($layer) {
-    $layer.on('click', '.hbs-model-name', $.proxy(this._onPhoneSelect, this, $layer));
+      $layer.find('[data-model-nm="' + this.modelValue + '"]').attr('checked', 'checked');
+      $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
+      $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
-    this.modelValue = target.attr('data-model-code');
+    this.modelValue = target.attr('data-model-nm');
+    this.modelCode = target.attr('data-model-code');
 
     // this._phoneInfo.eqpMdlNm = this.modelValue;
-    for(var i in this.listData){
-        if(this.listData[i].value === this.modelValue){
-            this.listData[i].option = 'hbs-model-name checked';
-        }else {
-            this.listData[i].option = 'hbs-model-name';
-        }
-    }
-
     this.$container.find('.fe-roaming-model').text(this.modelValue);
     this._popupService.close();
 
@@ -286,7 +288,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
   },
   _selectPopupCallback : function ($layer) {
-    $layer.on('click', '.hbs-country-name', $.proxy(this._goLoadSearchResult, this, $layer));
+    $layer.find('[name="r2"]').on('click', $.proxy(this._goLoadSearchResult, this, $layer));
+    $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _closeActionPopup : function () {
   },

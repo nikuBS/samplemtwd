@@ -62,13 +62,14 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {
             list: _.map(Tw.PREPAID_HISTORIES, function(item) {
-              if (item.attr.lastIndexOf(type) > 0) {
-                return Object.assign({ option: 'checked' }, item);
+              if (item['radio-attr'].lastIndexOf(type) > 0) {
+                return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
               }
               return item;
             })
@@ -80,11 +81,13 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _handleOpenChangeHistories: function($layer) {
-    $layer.on('click', 'li > button', $.proxy(this._handleSelectType, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
-    var type = e.currentTarget.getAttribute('data-type');
+    var type = $(e.currentTarget)
+      .find('input')
+      .data('type');
 
     if (type === this._currentType) {
       return;
@@ -95,16 +98,8 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$selectBtn.text(Tw.PREPAID_TYPES[type.toUpperCase()]);
     this.$totalCount.text(this.$totalCount.data(type));
 
-    if (this._leftCount[type] > 0) {
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount[type] + ')'));
-      if (this.$moreBtn.hasClass('none')) {
-        this.$moreBtn.removeClass('none');
-      }
-    } else if (!this.$moreBtn.hasClass('none')) {
-      this.$moreBtn.addClass('none');
-    }
-
     this._currentType = type;
+    this._setMoreButton();
     this._popupService.close();
   },
 
@@ -177,9 +172,15 @@ Tw.MyTDataPrepaidHistory.prototype = {
       this.$list.append(contents);
     }
 
-    if (this._leftCount[type] > 0) {
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount[type] + ')'));
-    } else {
+    this._setMoreButton();
+  },
+
+  _setMoreButton: function() {
+    var hasNone = this.$moreBtn.addClass('none'),
+      type = this._currentType;
+    if (this._leftCount[type] > 0 && hasNone) {
+      this.$moreBtn.removeClass('none');
+    } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
   },

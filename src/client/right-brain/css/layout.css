@@ -144,8 +144,8 @@ body.bg-gray {
   height: 100%;
   padding-top: 3.5rem;
   background: #edeef0;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
+  -webkit-transform: translateX(-110%);
+          transform: translateX(-110%);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   z-index: 190; }
@@ -276,6 +276,8 @@ body.bg-gray {
         padding-left: 2.5rem;
         background: #fff url(/img/common/btn-search.png) no-repeat 0.625rem 0.5625rem;
         background-size: 1.25rem 1.25rem; }
+      #common-menu .section-cont .section-search + .section-gnb {
+        margin: 0; }
     #common-menu .section-cont .section-gnb {
       margin-top: 0.625rem;
       border-bottom: 1px solid #e5e5e5;
@@ -990,7 +992,9 @@ body.bg-gray {
   z-index: 200;
   -webkit-transform: translate(0, 0);
           transform: translate(0, 0);
-  /* android : link bug */ }
+  /* android : link bug */
+  overflow-x: hidden;
+  /* galaxy s2 bug fixed : overflow-x, overflow-y not support */ }
   .popup-page .header-wrap {
     position: fixed;
     border-bottom: 1px solid #e5e5e5; }
@@ -1091,8 +1095,7 @@ body.bg-gray {
       background: #fff; }
   .popup-page .container-wrap {
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: auto;
     padding-bottom: 1.875rem;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }

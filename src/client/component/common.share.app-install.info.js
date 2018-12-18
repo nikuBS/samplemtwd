@@ -64,7 +64,6 @@ Tw.CommonShareAppInstallInfo.prototype = {
   },
   _onlyClose: function () {
     this._isLink = false;
-    this._popupService.close();
   },
   _goStore: function (isLink) {
     if (isLink || this._isLink) {

@@ -63,11 +63,24 @@ abstract class TwViewController {
     this._loginService.setCurrentReq(req, res);
 
     this.setChannel(req, res).subscribe((resp) => {
-      if ( this.checkLogin(req.session) ) {
-        this.sessionLogin(req, res, next, path);
-      } else {
-        if ( this.existId(tokenId, userId) ) {
+      if ( this.existId(tokenId, userId) ) {
+        if ( this.checkLogin(req.session) ) {
+          if ( !FormatHelper.isEmpty(userId) ) {
+            const svcInfo = this._loginService.getSvcInfo();
+            if ( svcInfo.userId === userId ) {
+              this.sessionLogin(req, res, next, path);
+            } else {
+              this.login(req, res, next, path, tokenId, userId);
+            }
+          } else {
+            this.sessionLogin(req, res, next, path);
+          }
+        } else {
           this.login(req, res, next, path, tokenId, userId);
+        }
+      } else {
+        if ( this.checkLogin(req.session) ) {
+          this.sessionLogin(req, res, next, path);
         } else {
           this.sessionCheck(req, res, next, path);
         }
@@ -91,7 +104,7 @@ abstract class TwViewController {
         this.failLogin(req, res, next, error.code);
       });
     } else {
-      if ( /\/test/i.test(req.baseUrl) && /\/home/i.test(req.path) ) {
+      if ( /\/test/i.test(req.baseUrl) && /\/login/i.test(req.path) ) {
         this.apiService.requestLoginLoadTest(userId).subscribe((resp) => {
           this.renderPage(req, res, next, path); // noticeTpyCd
         }, (error) => {
@@ -108,7 +121,7 @@ abstract class TwViewController {
   }
 
   private sessionLogin(req, res, next, path) {
-    this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
+    this._logger.info(this, '[Session Login]');
     this.renderPage(req, res, next, path);
   }
 
@@ -155,15 +168,14 @@ abstract class TwViewController {
             this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             // 현재 로그인 방법으론 이용할 수 없음
             // if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-              // res.redirect('/common/member/slogin/fail');
+            // res.redirect('/common/member/slogin/fail');
             // } else {
-              // TODO: ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-              // res.redirect('/common/member/slogin/fail');
-              // this.errorAuth(req, res, next, svcInfo);
+            // TODO: ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+            // res.redirect('/common/member/slogin/fail');
+            // this.errorAuth(req, res, next, svcInfo);
             // }
           }
         } else {
-          console.log('not login');
           if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);

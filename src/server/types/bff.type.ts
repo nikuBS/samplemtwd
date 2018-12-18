@@ -52,9 +52,9 @@ export const SVC_CATEGORY = {
 };
 
 export enum LINE_NAME {
-  MOBILE = 'M',
-  INTERNET_PHONE_IPTV = 'S',
-  SECURITY = 'O'
+  MOBILE = 'm',
+  INTERNET_PHONE_IPTV = 's',
+  SECURITY = 'o'
 }
 
 export const SVC_CDGROUP = {

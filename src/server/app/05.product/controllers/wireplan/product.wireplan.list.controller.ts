@@ -11,6 +11,7 @@ import { of } from 'rxjs/observable/of';
 import { PRODUCT_WIRE_CATEGORIES } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductWires extends TwViewController {
   private WIRE_CODE = 'F01300';
@@ -32,10 +33,10 @@ export default class ProductWires extends TwViewController {
       this.getMyWireInfo(svcInfo),
       this.getList({ ...params, searchFltIds: this.CATEGORIES[page] + ',' + this.PLAN_CODE }),
       this.getList({ ...params, searchFltIds: this.CATEGORIES[page] + ',' + this.ADDITION_CODE })
-    ).subscribe(([myWire, plan, addition]) => {
+    ).subscribe(([myWire, plan, additions]) => {
       const error = {
-        code: (myWire && myWire.code) || plan.code || addition.code,
-        msg: (myWire && myWire.msg) || plan.msg || addition.msg
+        code: (myWire && myWire.code) || plan.code || additions.code,
+        msg: (myWire && myWire.msg) || plan.msg || additions.msg
       };
 
       if (error.code) {
@@ -45,7 +46,7 @@ export default class ProductWires extends TwViewController {
         });
       }
 
-      res.render('wireplan/product.wireplan.list.html', { svcInfo, pageInfo, myWire, page: PRODUCT_WIRE_CATEGORIES[page], plan, addition });
+      res.render('wireplan/product.wireplan.list.html', { svcInfo, pageInfo, myWire, page: PRODUCT_WIRE_CATEGORIES[page], plan, additions });
     });
   }
 
@@ -73,7 +74,8 @@ export default class ProductWires extends TwViewController {
         products: (resp.result.products || []).map(product => {
           return {
             ...product,
-            basFeeAmt: FormatHelper.getFeeContents(product.basFeeAmt)
+            basFeeAmt: FormatHelper.getFeeContents(product.basFeeAmt),
+            rgstImg: product.rgstImg && ProductHelper.getImageUrlWithCdn(product.rgstImg)
           };
         })
       };

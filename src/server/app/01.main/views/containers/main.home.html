@@ -70,7 +70,7 @@
                             </div>
                             <!-- // 미등록 -->
                             <% } else { %>
-                            <% if (svcType.svcCategory === 'M') { %>
+                            <% if (svcType.svcCategory === 'm') { %>
                             <% if (homeData.usageData) { %>
                             <% if (homeData.usageData.code === '00') { %>
                             <!-- 모바일 회선_잔여 데이터 -->
@@ -122,7 +122,7 @@
                                             </span>
                                         </button>
                                         <!-- // .donut-chart -->
-                                        <button class="data-add">데이터</button>
+                                        <button id="fe-bt-data-link" class="data-add">데이터</button>
                                     </div>
                                 </div>
                                 <!-- // .widget -->
@@ -136,10 +136,10 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                    <button class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></button>
+                                    <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
                                     <% } %>
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></button>
+                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -176,7 +176,7 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <button class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></button>
+                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
@@ -245,7 +245,7 @@
                             <% } %>
                             <% } %>
                             <% } %>
-                            <% if (svcType.login && svcType.svcCategory === 'S' ) { %>
+                            <% if (svcType.login && svcType.svcCategory === 's' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
                             <% if(homeData.billData) { %>
                             <% if(homeData.billData.isBroadband) { %>
@@ -614,10 +614,10 @@
                                 <li><a href="/product/mobileplan-add" class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가상품</a></li>
                                 <li><a href="/product/wireplan" class="bt"><i class="icon-internet-80"></i>인터넷 ·<br>전화 · IPTV</a></li>
                                 <li><a href="/product/roaming" class="bt"><i class="icon-roaming-80"></i>T로밍</a></li>
-                                <li><button class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                <li><button class="bt"><i class="icon-watch-80"></i>태블릿 · 워치</button></li>
-                                <li><button class="bt"><i class="icon-nugu-80"></i>NUGU</button></li>
-                                <li><button class="bt"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                <li><button id="fe-bt-direct-phone" class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                <li><button id="fe-bt-direct-tablet" class="bt"><i class="icon-watch-80"></i>태블릿 · 워치</button></li>
+                                <li><button id="fe-bt-direct-nugu" class="bt"><i class="icon-nugu-80"></i>NUGU</button></li>
+                                <li><button id="fe-bt-direct-accessory" class="bt"><i class="icon-accessory-80"></i>액세서리</button></li>
                             </ul>
                             <!-- //MY 바로가기 -->
                         </div>
@@ -625,7 +625,7 @@
                         <!-- 다이렉트샵 -->
                         <div class="section-box">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><button class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <div class="stit c-point"><button id="fe-bt-direct-home" class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
                                 <strong class="ti">할인된 가격으로<br>인기 스마트폰 구매</strong>
                                 <span class="tx">SK텔레콤 고객을 위한 공시 지원금에 추가 지원금 할인</span>
                                 <ul class="info">
@@ -654,7 +654,7 @@
 
                         <!-- 공시지원금 변동 알림 -->
                         <div class="section-box nogaps">
-                            <button class="main-alarm-box">
+                            <button id="fe-bt-direct-support" class="main-alarm-box">
                                 <i class="icon-alarm-red"><span class="blind">alarm</span></i>
                                 공시지원금 변동 알림을 받아 보세요
                             </button>

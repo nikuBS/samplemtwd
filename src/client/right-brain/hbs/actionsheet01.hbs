@@ -47,6 +47,7 @@
                                                         {{#if icon}}<span class="simbol {{icon}}"></span>{{/if}}
                                                         {{#if txt}}<span class="txt">{{txt}}</span>{{/if}}
                                                         {{#if add}}<span class="add">{{add}}</span>{{/if}}
+                                                        {{#if pin}}<span class="pin"><span class="blind">기준회선</span></span>{{/if}}
                                                     </span>
                                                     <span class="table-cell right">
                                                         {{#if spot}}<span class="spot">{{spot}}</span>{{/if}}
@@ -72,7 +73,7 @@
                         {{/if}}
                         {{#if btnfloating}}
                         {{#btnfloating}}
-                            <button {{{attr}}} class="btn-floating btn-style3">{{{txt}}}</button>
+                            <button {{{attr}}} class="btn-floating btn-style3 {{{class}}}">{{{txt}}}</button>
                         {{/btnfloating}}
                         {{/if}}
                     </div>

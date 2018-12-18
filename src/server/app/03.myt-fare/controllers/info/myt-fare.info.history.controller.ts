@@ -171,6 +171,7 @@ class MyTFareInfoHistory extends TwViewController {
         // personalBizNum: this.paymentData.personalBizNum,
         listData: this.mergeData(data.listData),
         refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
+        refundAccountURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-account`,
         current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType,
         noticeInfo: this.getNoticeInfo()
       }

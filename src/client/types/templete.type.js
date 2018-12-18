@@ -463,18 +463,18 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  { value: '전체', attr: 'data-type="5"' },
-  { value: 'T끼리 데이터 선물', attr: 'data-type="0"' },
-  { value: '데이터 한도 충전', attr: 'data-type="1"' },
-  { value: '팅/쿠키즈/안심요금', attr: 'data-type="2"' },
-  { value: '팅 요금 선물', attr: 'data-type="3"' },
-  { value: '데이터 음성 리필', attr: 'data-type="4"' }
+  { txt: '전체', 'radio-attr': 'data-type="5"' },
+  { txt: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"' },
+  { txt: '데이터 한도 충전', 'radio-attr': 'data-type="1"' },
+  { txt: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"' },
+  { txt: '팅 요금 선물', 'radio-attr': 'data-type="3"' },
+  { txt: '데이터 음성 리필', 'radio-attr': 'data-type="4"' }
 ];
 
-Tw.PRODUCT_PLANS_ORDER = [
-  { value: '추천순' },
-  { value: '높은 가격순' },
-  { value: '낮은 가격순' }
+Tw.PRODUCT_LIST_ORDER = [
+  { txt: '추천순', 'radio-attr': 'data-order="recommand"' },
+  { txt: '높은 가격순', 'radio-attr': 'data-order="highprice"' },
+  { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"' }
 ];
 
 Tw.TERMS_ACTION = {
@@ -520,20 +520,20 @@ Tw.CUSTOMER_HELPLINE_AREAS = [
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
-  { value: '지점', code: 'T40' },
-  { value: '대리점', code: 'T10' },
-  { value: '이용안내', code: 'T30' },
-  { value: '통화품질 기준 매니저', code: 'T50' },
-  { value: 'AS센터', code: 'T20' },
-  { value: '행복기사(SK브로드밴드)', code: 'T60' }
+  { txt: '지점', 'radio-attr': 'data-index="0" data-code="T40"' },
+  { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"' },
+  { txt: '이용안내', 'radio-attr': 'data-index="2" data-code="T30"' },
+  { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"' },
+  { txt: 'AS센터', 'radio-attr': 'data-index="4" data-code="T20"' },
+  { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"' }
 ];
 
 Tw.CUSTOMER_PRAISE_AREAS = [
-  { value: '서울/인천/경기', code: 'A10' },
-  { value: '강원/충청/대전', code: 'A20' },
-  { value: '전북/전남/광주/제주', code: 'A30' },
-  { value: '부산/경남', code: 'A40' },
-  { value: '대구/경북', code: 'A50' }
+  { txt: '서울/인천/경기', 'radio-attr': 'data-code="A10"' },
+  { txt: '강원/충청/대전', 'radio-attr': 'data-code="A20"' },
+  { txt: '전북/전남/광주/제주', 'radio-attr': 'data-code="A30"' },
+  { txt: '부산/경남', 'radio-attr': 'data-code="A40"' },
+  { txt: '대구/경북', 'radio-attr': 'data-code="A50"' }
 ];
 
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
@@ -723,9 +723,9 @@ Tw.MYT_PREPAID_ALARM = {
 };
 
 Tw.PRODUCT_APPS_ORDER = [
-  { value: '최신순', attr: 'data-prop="storRgstDtm"' },
-  { value: '추천순', attr: 'data-prop="idxExpsSeq"' },
-  { value: '가나다순', attr: 'data-prop="prodNm"' }
+  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"' },
+  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"' },
+  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"' }
 ];
 
 Tw.SUSPEND_RELATION = {
@@ -742,11 +742,11 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PRODUCT_JOIN_TYPE = [
-  { value: '휴대폰', attr: 'data-type-code="cellphone"' },
-  { value: '인터넷', attr: 'data-type-code="internet"' },
-  { value: '전화', attr: 'data-type-code="phone"' },
-  { value: 'TV', attr: 'data-type-code="tv"' },
-  { value: '결합상품', attr: 'data-type-code="combine"' }
+  { txt: '휴대폰', 'radio-attr': 'data-type-code="cellphone"' },
+  { txt: '인터넷', 'radio-attr': 'data-type-code="internet"' },
+  { txt: '전화', 'radio-attr': 'data-type-code="phone"' },
+  { txt: 'TV', 'radio-attr': 'data-type-code="tv"' },
+  { txt: '결합상품', 'radio-attr': 'data-type-code="combine"' }
 ];
 
 Tw.SUSPEND_RELATION = {
@@ -762,7 +762,7 @@ Tw.SUSPEND_RELATION = {
   ]
 };
 
-Tw.PREPAID_HISTORIES = [{ value: '음성 충전', attr: 'data-type="voice"' }, { value: '데이터 충전', attr: 'data-type="data"' }];
+Tw.PREPAID_HISTORIES = [{ txt: '음성 충전', 'radio-attr': 'data-type="voice"' }, { txt: '데이터 충전', 'radio-attr': 'data-type="data"' }];
 
 Tw.PREPAID_BADGES = {
   1: { name: '1회', icon: 'auto' },
@@ -782,23 +782,42 @@ Tw.ANDROID_STORE = [
   }
 ];
 
+Tw.HOME_DATA_LINK = [
+  {
+    'list': [
+      {'attr':'type="button" id="fe-bt-recharge-link"','simbol':'ico1','value':'데이터 충전'},
+      {'attr':'type="button" id="fe-bt-gift-link"','simbol':'ico2','value':'데이터 선물'},
+      {'attr':'type="button" id="fe-bt-family-link"','simbol':'ico3','value':'T가족모아'}
+    ],
+    'btn-floating': [
+      {'attr':'type="button"', 'txt':'닫기'}
+    ]
+  }
+];
+
 Tw.ROAMING_MANAGE_TYPE = {
   list:[
-      { value: 'LTE 자동로밍', attr: 'data-manage-type="L"', 'option': '', type: 'L' },
-      { value: '3G 자동로밍', attr: 'data-manage-type="W"', 'option': '', type: 'W' },
-      { value: '2G 자동로밍', attr: 'data-manage-type="C"', 'option': '', type: 'C' },
-      { value: 'GSM 자동로밍', attr: 'data-manage-type="G"', 'option': '', type: 'G' },
-      { value: '임대로밍', attr: 'data-manage-type=""', 'option': '', type: '' }
+      { txt: 'LTE 자동로밍', 'radio-attr': 'id="ra0" name="r2" data-manage-type="L"', 'label-attr': 'id="ra0"', type: 'L' },
+      { txt: '3G 자동로밍', 'radio-attr': 'id="ra1" name="r2" data-manage-type="W"', 'label-attr': 'id="ra1"', type: 'W' },
+      { txt: '2G 자동로밍', 'radio-attr': 'id="ra2" name="r2" data-manage-type="C"', 'label-attr': 'id="ra2"', type: 'C' },
+      { txt: 'GSM 자동로밍', 'radio-attr': 'id="ra3" name="r2" data-manage-type="G"', 'label-attr': 'id="ra3"', type: 'G' },
+      { txt: '임대로밍', 'radio-attr': 'id="ra4" name="r2" data-manage-type=""', 'label-attr': 'id="ra4"', type: '' }
   ]
 };
 
 Tw.ROAMING_MFACTCD_LIST = {
     list: [
-        { value: '전체', attr: 'data-mfact-code="ALL" data-mfact-name="전체"', 'option': 'hbs-mfact-cd' },
-        { value: '삼성', attr: 'data-mfact-code="SS" data-mfact-name="삼성"', 'option': 'hbs-mfact-cd' },
-        { value: 'LG', attr: 'data-mfact-code="LG" data-mfact-name="LG"', 'option': 'hbs-mfact-cd' },
-        { value: '팬택', attr: 'data-mfact-code="PT" data-mfact-name="팬택"', 'option': 'hbs-mfact-cd' },
-        { value: '애플', attr: 'data-mfact-code="CG" data-mfact-name="애플"', 'option': 'hbs-mfact-cd' },
-        { value: '기타', attr: 'data-mfact-code="ETC" data-mfact-name="기타"', 'option': 'hbs-mfact-cd' }
+        { txt: '전체', 'radio-attr': 'id="ra0" name="r2" data-mfact-code="ALL" data-mfact-name="전체"', 'label-attr': 'id="ra0"' },
+        { txt: '삼성', 'radio-attr': 'id="ra1" name="r2" data-mfact-code="SS" data-mfact-name="삼성"', 'label-attr': 'id="ra1"' },
+        { txt: 'LG', 'radio-attr': 'id="ra2" name="r2" data-mfact-code="LG" data-mfact-name="LG"', 'label-attr': 'id="ra2"' },
+        { txt: '팬택', 'radio-attr': 'id="ra3" name="r2" data-mfact-code="PT" data-mfact-name="팬택"', 'label-attr': 'id="ra3"' },
+        { txt: '애플', 'radio-attr': 'id="ra4" name="r2" data-mfact-code="CG" data-mfact-name="애플"', 'label-attr': 'id="ra4"' },
+        { txt: '기타', 'radio-attr': 'id="ra5" name="r2" data-mfact-code="ETC" data-mfact-name="기타"', 'label-attr': 'id="ra5"' }
     ]
 };
+
+Tw.PRODUCT_ROAMING_ORDER = [
+  { txt: '추천순', 'radio-attr': 'id="ra0" name="r2" data-oder-name="recommand"', 'label-attr': 'id="ra0"' },
+  { txt: '높은 가격순', 'radio-attr': 'id="ra1" name="r2" data-oder-name="highprice"', 'label-attr': 'id="ra1"' },
+  { txt: '낮은 가격순', 'radio-attr': 'id="ra2" name="r2" data-oder-name="lowprice"', 'label-attr': 'id="ra2"' }
+];

@@ -13,7 +13,8 @@ const environment = {
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    // TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    TEST_SERVER: 'http://61.250.22.114:8080',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
     DOMAIN_G: 'm-dev.tworld.co.kr:3000',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
@@ -72,8 +73,10 @@ const environment = {
     CDN: 'https://mcdn.tworld.co.kr',
     CDN_MANIFEST: 'http://61.250.20.69',
     REDIS: {
-      host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
-      port: 6379,
+      // host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
+      // port: 6379,
+      host: '61.250.19.37',
+      port: 32300,
       db: 0
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',

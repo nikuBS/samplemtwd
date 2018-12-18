@@ -32,7 +32,7 @@ export default class MyTDataHistory extends TwViewController {
       this.getLimitCharges(),
       this.getTingCharges(),
       this.getTingGifts(),
-      this.getRefillUsages(svcInfo),
+      this.getRefillUsages(),
       this.getRefillGifts()
     ).subscribe(histories => {
       const errorIdx = histories.findIndex(history => {
@@ -103,7 +103,10 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(key),
           badge: item.type === '1' ? 'send' : 'recieve',
           right: amount.data + amount.unit,
-          bottom: item.giftType === 'GC' ? [ChargeTypeNames.FIXED, item.svcNum] : [item.svcNum]
+          bottom:
+            item.giftType === 'GC' ? 
+              [ChargeTypeNames.FIXED, FormatHelper.conTelFormatWithDash(item.svcNum)] : 
+              [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
@@ -173,13 +176,16 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(key),
           badge: item.opTypCd === '1' ? 'send' : 'recieve',
           right: FormatHelper.addComma(item.amt) + UNIT.WON,
-          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.svcNum, ChargeTypeNames.CANCEL] : [item.svcNum]
+          bottom:
+            item.opTypCd === '2' || item.opTypCd === '4' ? 
+              [FormatHelper.conTelFormatWithDash(item.svcNum), ChargeTypeNames.CANCEL] : 
+              [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
   }
 
-  private getRefillUsages = svcInfo => {
+  private getRefillUsages = () => {
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map(resp => {
       // const resp = REFILL_USAGES;
 
@@ -187,18 +193,22 @@ export default class MyTDataHistory extends TwViewController {
         return resp;
       }
 
-      return resp.result.map(item => {
-        const key = item.copnUseDt;
-        return {
-          key,
-          type: RechargeTypes.REFILL,
-          typeName: TypeNames.REFILL_USAGE,
-          date: DateHelper.getShortDate(key),
-          badge: 'recharge',
-          right: item.copnDtlClNm,
-          bottom: [item.opOrgNm || ETC_CENTER]
-        };
-      });
+      return resp.result
+        .filter(item => {
+          return DateHelper.getDifference(item.copnUseDt, this.fromDt) >= 0;
+        })
+        .map(item => {
+          const key = item.copnUseDt;
+          return {
+            key,
+            type: RechargeTypes.REFILL,
+            typeName: TypeNames.REFILL_USAGE,
+            date: DateHelper.getShortDate(key),
+            badge: 'recharge',
+            right: item.copnDtlClNm,
+            bottom: [item.opOrgNm || ETC_CENTER]
+          };
+        });
     });
   }
 
@@ -209,17 +219,21 @@ export default class MyTDataHistory extends TwViewController {
         return resp;
       }
 
-      return resp.result.map(item => {
-        const key = item.copnOpDt;
-        return {
-          key,
-          type: RechargeTypes.REFILL,
-          typeName: TypeNames.REFILL_GIFT,
-          date: DateHelper.getShortDate(key),
-          badge: item.type === '1' ? 'send' : 'recieve',
-          bottom: [item.svcNum]
-        };
-      });
+      return resp.result
+        .filter(item => {
+          return DateHelper.getDifference(item.copnOpDt, this.fromDt) >= 0;
+        })
+        .map(item => {
+          const key = item.copnOpDt;
+          return {
+            key,
+            type: RechargeTypes.REFILL,
+            typeName: TypeNames.REFILL_GIFT,
+            date: DateHelper.getShortDate(key),
+            badge: item.type === '1' ? 'send' : 'recieve',
+            bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
+          };
+        });
     });
   }
 
@@ -227,7 +241,7 @@ export default class MyTDataHistory extends TwViewController {
     return Array.prototype.concat.apply([], histories).sort((a, b) => {
       if (a.key > b.key) {
         return -1;
-      } else if (a.key > b.key) {
+      } else if (a.key < b.key) {
         return 1;
       }
       return 0;

@@ -51,7 +51,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
     }
 
-    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0014, {
       beforeTDiyGrCd: this._currentBenefitProdId,
       afterTDiyGrCd: $checked.val()
@@ -59,7 +59,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   },
 
   _procSetupOkRes: function(resp) {
-    // Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

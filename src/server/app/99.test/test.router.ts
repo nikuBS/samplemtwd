@@ -7,6 +7,9 @@ import TestCustomerSvcInfoNoticeTworld from './controllers/test.customer.svc-inf
 import TestCustomerSvcInfoNoticeTworldNohyst from './controllers/test.customer.svc-info.notice.tworld.nohyst.controller';
 import TestMyTDataInfo from './controllers/test.myt-data.datainfo.controller';
 import TestMainMenuController from './controllers/test.main.menu.controller';
+import TestLoginController from './controllers/test.login.controller';
+import TestLogoutController from './controllers/test.logout.controller';
+import TestCertSmsController from './controllers/test.cert-sms.controller';
 
 class TestRouter extends TwRouter {
   constructor() {
@@ -19,6 +22,9 @@ class TestRouter extends TwRouter {
     this.controllers.push({ url: '/customer/svc-info/notice/tworld/nohyst', controller: TestCustomerSvcInfoNoticeTworldNohyst });
     this.controllers.push({ url: '/myt-data/datainfo', controller: TestMyTDataInfo });
     this.controllers.push({ url: '/main/menu', controller: TestMainMenuController });
+    this.controllers.push({ url: '/login', controller: TestLoginController });
+    this.controllers.push({ url: '/logout', controller: TestLogoutController });
+    this.controllers.push({ url: '/cert-sms', controller: TestCertSmsController });
   }
 }
 

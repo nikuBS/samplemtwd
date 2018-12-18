@@ -20,18 +20,20 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
+  this._targetDataLink = '';
 
   this._lineComponent = new Tw.LineComponent();
 
   this._openEmrNotice(emrNotice);
   this._setBanner(menuId);
   this._cachedDefaultElement();
+  this._bindEventStore();
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
-    this._getQuickMenu();
+    // this._getQuickMenu();
     this._initScroll();
   } else {
     setTimeout($.proxy(function () {
@@ -49,6 +51,11 @@ Tw.MainHome.prototype = {
     GFT0005: 'GFT0005',   // 제공자가 미성년자이면 선물하기 불가
     GFT0013: 'GFT0013'    // 기
   },
+  DATA_LINK: {
+    RECHARGE: 'recharge',
+    GIFT: 'gift',
+    FAMILY: 'family'
+  },
   _cachedDefaultElement: function () {
     this.$tabStore = this.$container.find('.icon-home-tab-store');
   },
@@ -64,6 +71,18 @@ Tw.MainHome.prototype = {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
+    this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
+  },
+  _bindEventStore: function () {
+    this.$container.on('click', '#fe-bt-direct-support', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
+    this.$container.on('click', '#fe-bt-direct-home', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
+    this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
+    this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
+    this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
+    this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this.onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
+  },
+  onClickExternalLink: function (url) {
+    Tw.CommonHelper.openUrlExternal(url);
   },
   _onClickLine: function ($event) {
     var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
@@ -95,6 +114,47 @@ Tw.MainHome.prototype = {
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       extendBarcode.JsBarcode(cardNum);
     }
+  },
+  _openDataLink: function () {
+    this._popupService.open({
+      hbs: 'actionsheet03',
+      layer: true,
+      data: Tw.HOME_DATA_LINK
+    }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
+  },
+  _onOpenDataLink: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-recharge-link', $.proxy(this._onClickRechargeLink, this));
+    $popupContainer.on('click', '#fe-bt-gift-link', $.proxy(this._onClickGiftLink, this));
+    $popupContainer.on('click', '#fe-bt-family-link', $.proxy(this._onClickFamilyLink, this));
+  },
+  _onCloseDataLink: function () {
+    switch ( this._targetDataLink ) {
+      case this.DATA_LINK.RECHARGE:
+        new Tw.ImmediatelyRechargeLayer(this.$container);
+        break;
+      case this.DATA_LINK.GIFT:
+        this._historyService.goLoad('/myt-data/giftdata');
+        break;
+      case this.DATA_LINK.FAMILY:
+        this._historyService.goLoad('/myt-data/familydata');
+        break;
+      default:
+        break;
+    }
+    this._targetDataLink = '';
+
+  },
+  _onClickRechargeLink: function () {
+    this._targetDataLink = this.DATA_LINK.RECHARGE;
+    this._popupService.close();
+  },
+  _onClickGiftLink: function () {
+    this._targetDataLink = this.DATA_LINK.GIFT;
+    this._popupService.close();
+  },
+  _onClickFamilyLink: function () {
+    this._targetDataLink = this.DATA_LINK.FAMILY;
+    this._popupService.close();
   },
   _openEmrNotice: function (notice) {
     if ( notice === 'true' ) {
@@ -504,7 +564,7 @@ Tw.MainHome.prototype = {
   },
   _drawWelcomeMsg: function (list) {
     var $welcomeEl = this.$container.find('#fe-tmpl-noti');
-    if ( list.length > 0 ) {
+    if ( $welcomeEl.length > 0 && list.length > 0 ) {
       var $welcomeTemp = $('#fe-home-welcome');
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
       $welcomeEl.html(tplWelcome({ msg: list[0] }));
@@ -554,7 +614,7 @@ Tw.MainHome.prototype = {
   _drawQuickMenu: function (quickMenu) {
     var list = this._parseQuickMenu(quickMenu);
     var $quickMenuEl = this.$container.find('#fe-tmpl-quick');
-    if ( list.length > 0 ) {
+    if ( $quickMenuEl.length > 0 && list.length > 0 ) {
       var $quickTemp = $('#fe-home-quick');
       var tplQuick = Handlebars.compile($quickTemp.html());
       $quickMenuEl.html(tplQuick({ list: list }));

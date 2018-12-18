@@ -19,7 +19,7 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
         super();
     }
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-        const prodId = req.query.prodId || null;
+        const prodId = req.query.prod_id || null;
         let expireDate = '';
 
         if (FormatHelper.isEmpty(prodId)) {
@@ -37,7 +37,9 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
-                    title: PRODUCT_TYPE_NM.SETTING
+                    title: PRODUCT_TYPE_NM.SETTING,
+                    code: prodBffInfo.code,
+                    msg: prodBffInfo.msg,
                 });
             }
 

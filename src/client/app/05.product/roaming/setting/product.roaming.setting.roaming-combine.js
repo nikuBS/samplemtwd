@@ -67,18 +67,18 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
   },
   _requestOrder : function(requestType,phoneNum){
 
-      var reqestValue = {
+      var requestValue = {
           svcOpClCd : '',
           startDtm : this._prodBffInfo.startdtm,
           endDtm : this._prodBffInfo.enddtm,
           childSvcNum : '',
           delChildSvcMgmtNum : ''
       };
-      reqestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
+      requestValue.svcOpClCd = requestType === 'CHK'?requestType:'CHG';
       if(requestType === 'remove'){
-          reqestValue.delChildSvcMgmtNum = phoneNum;
+          requestValue.delChildSvcMgmtNum = phoneNum;
       }else{
-          reqestValue.childSvcNum = phoneNum;
+          requestValue.childSvcNum = phoneNum;
       }
 
 
@@ -168,6 +168,9 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
           }
       }
       return tempArr;
+  },
+  _goBack : function(){
+      this._historyService.goLoad('/product/callplan/'+this._prodId);
   }
 
 

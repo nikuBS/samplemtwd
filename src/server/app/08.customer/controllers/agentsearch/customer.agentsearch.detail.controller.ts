@@ -92,6 +92,10 @@ class CustomerAgentsearchDetail extends TwViewController {
       purified.custRateAvg += '.0';
     }
 
+    if (purified.agnYn === 'Y') {
+      purified.custRateCnt = '0';
+    }
+
     return purified;
   }
 }

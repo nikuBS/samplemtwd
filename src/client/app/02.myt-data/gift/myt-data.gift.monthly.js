@@ -96,7 +96,11 @@ Tw.MyTDataGiftMonthly.prototype = {
       this.paramData = $.extend({}, this.paramData, res.result);
       this._subscribeAutoGift();
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      if ( res.code === 'ZNGME0008' ) {
+        Tw.Error(res.code, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
+      } else {
+        Tw.Error(res.code, res.msg).pop();
+      }
     }
   },
 

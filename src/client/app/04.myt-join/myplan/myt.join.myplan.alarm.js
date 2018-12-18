@@ -35,15 +35,15 @@ Tw.MyTJoinMyplanAlarm.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A39.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A39.TITLE, null, $.proxy(this._reload, this));
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A39.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A39.TITLE, null, $.proxy(this._goMyplan, this));
   },
 
   _goTerminate: function() {
     this._historyService.replaceURL('/myt-join/myplan/alarmterminate');
   },
 
-  _reload: function() {
-    this._historyService.reload();
+  _goMyplan: function() {
+    this._historyService.goBack();
   }
 
 };

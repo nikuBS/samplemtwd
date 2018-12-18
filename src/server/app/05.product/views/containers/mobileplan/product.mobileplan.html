@@ -76,8 +76,8 @@
                             <% const group = groups[i]; %>
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info">
-                                    <h4 class="title"><%= group.prodGrpNm %> <img src="<%= group.prodGrpFlagImgUrl %>"></h4>
-                                    <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><img src="<%= group.prodGrpIconImgUrl %>" alt=""></div><% } %>
+                                    <h4 class="title"><%= group.prodGrpNm %><% if (group.prodGrpFlagImgUrl) { %><img src="<%= group.prodGrpFlagImgUrl %>"><% } %></h4>
+                                    <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><% if (group.prodGrpIconImgUrl) { %><img src="<%= group.prodGrpIconImgUrl %>" alt=""><% } %></div><% } %>
                                     <p class="text"><%= group.prodGrpDesc %></p>
                                 </button>
 
@@ -177,7 +177,7 @@
                 if (recommendedPlans && recommendedPlans.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 
-                <div class="contㅡ-box nogaps-btm bgnone">
+                <div class="cont-box nogaps-btm bgnone">
                     <div class="headingbox-wrap">
                         <h3 class="title">이런 요금제는 어떠세요?</h3>
                     </div>

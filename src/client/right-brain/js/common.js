@@ -550,10 +550,12 @@ skt_landing.action = {
     $('.icon-gnb-menu').bind('click', function(){
       $('#common-menu').addClass('on');
       skt_landing.action.fix_scroll();
+      return false;
     })
     $('#common-menu .c-close').bind('click', function(){
       $('#common-menu').removeClass('on');
       skt_landing.action.auto_scroll();
+      return false;
     })
     $('.section-cont').scroll(function(){
       if ($(this).scrollTop() > 0) {

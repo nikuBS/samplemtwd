@@ -21,6 +21,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
+
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';
@@ -63,7 +64,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
         }
-        actionSheetData[0].list[0].value+= ' (오늘)';
+        actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
         this._openSelectDatePop(actionSheetData,'');
     },
     _btnTimeEvent : function($this){
@@ -168,7 +169,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
             btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         if($containerData._prodId==='NA00005690'||$containerData._prodId==='NA00005693'){
-            completePopupData.btnNmList.unshift('');
+            completePopupData.btnNmList.unshift(Tw.ROAMING_COMBINE_LINE_STRING.COMBINE_LINE);
         }
         apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
         done($.proxy(function (res) {

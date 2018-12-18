@@ -9,7 +9,7 @@ import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
-import { LOGIN_TYPE } from '../types/bff.type';
+import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
 
 class ApiService {
   static instance;
@@ -66,7 +66,7 @@ class ApiService {
       data: params
     };
 
-    if (!!command.responseType) {
+    if ( !!command.responseType ) {
       option = Object.assign(option, { responseType: command.responseType });
     }
 
@@ -93,6 +93,11 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
           'Content-Length': JSON.stringify(params).length
+        });
+      case API_SERVER.TEST:
+        return Object.assign(header, {
+           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
+           'Content-Length': JSON.stringify(params).length
         });
       default:
         return Object.assign(header, {
@@ -210,25 +215,49 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd, loginType: type });
+          return this.loginService.setSvcInfo({
+            mbrNm: resp.result.mbrNm,
+            noticeType: resp.result.noticeTypCd,
+            loginType: type
+          });
         } else {
           throw resp;
-        }
-      })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setAllSvcInfo(resp.result);
+          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          let currentSvcInfo = null;
+          category.map((line) => {
+            const curLine = resp.result[LINE_NAME[line]];
+            if ( !FormatHelper.isEmpty(curLine) ) {
+              curLine.map((target) => {
+                if ( target.expsSeq === '1' ) {
+                  currentSvcInfo = target;
+                }
+              });
+              if ( !FormatHelper.isEmpty(currentSvcInfo) ) {
+                Object.assign(currentSvcInfo, {
+                  userId: resp.result.userId,
+                  xtUserId: resp.result.xtUserId,
+                  totalSvcCnt: resp.result.totalSvcCnt,
+                  expsSvcCnt: resp.result.expsSvcCnt,
+                });
+              }
+              // delete resp.result.userId;
+              // delete resp.result.xtUserId;
+              // delete resp.result.totalSvcCnt;
+              // delete resp.result.expsSvcCnt;
+            }
+          });
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setAllSvcInfo(resp.result));
         } else {
-          return this.loginService.setAllSvcInfo(null);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(null),
+            this.loginService.setAllSvcInfo(null));
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
@@ -246,7 +275,7 @@ class ApiService {
 
   public requestLoginLoadTest(userId: string): Observable<any> {
     let result = null;
-    return this.request(API_CMD.BFF_03_0000_TEST, { id: userId })
+    return this.request(API_CMD.BFF_03_0000_TEST, { mbrChlId: userId })
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;

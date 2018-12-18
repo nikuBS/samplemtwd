@@ -238,8 +238,12 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
     }
 
+    var dFiles = [];
+    dFiles.push(fileInfo);
+    dFiles.push(fileInfo);
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, this.$explainFile.get(0).files)
+    Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, dFiles)
       .done($.proxy(this._successUploadFile, this));
   },
 
@@ -249,7 +253,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
     }
 
-    this._fileList.push(resp.result[0]);
+    this._fileList.push(resp.result);
     this.$fileList.append(this._fileTemplate(resp.result[0]));
     this.$fileWrap.show();
 

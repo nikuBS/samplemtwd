@@ -60,9 +60,10 @@ Tw.MyTDataHistory.prototype = {
     this._displayCount[type] += items.length;
     var leftCount = this._histories[type].length - this._displayCount[type];
 
-    if (leftCount > 0) {
-      this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + leftCount + ')'));
-    } else {
+    var hasNone = this.$moreBtn.addClass('none');
+    if (leftCount > 0 && hasNone) {
+      this.$moreBtn.removeClass('none');
+    } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
   },
@@ -72,13 +73,14 @@ Tw.MyTDataHistory.prototype = {
 
     this._popupService.open(
       {
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {
             list: _.map(Tw.MYT_DATA_CHARGE_TYPE_LIST, function(item) {
-              if (item.attr.indexOf(type) >= 0) {
-                return Object.assign({ option: 'checked' }, item);
+              if (item['radio-attr'].indexOf(type) >= 0) {
+                return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
               }
               return item;
             })
@@ -90,14 +92,14 @@ Tw.MyTDataHistory.prototype = {
   },
 
   _handleOpenType: function($layer) {
-    $layer.on('click', 'li > button', $.proxy(this._handleSelectType, this));
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
     var $target = $(e.currentTarget);
-    var selectedIdx = Number($target.data('type'));
+    var selectedIdx = Number($target.find('input').data('type'));
 
-    this.$container.find('.bt-select').text($target.find('span').text());
+    this.$container.find('.bt-select').text($target.find('span.txt').text());
 
     this._handleLoadFilteredData(selectedIdx);
     this._popupService.close();

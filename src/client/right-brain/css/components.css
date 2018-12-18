@@ -1600,6 +1600,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     width: 100%;
+    overflow-x: hidden;
     padding: 0 5.625rem 0 3.875rem; }
     .list-comp-input .select-list > li .comp-list-layout.type2 {
       padding-right: 1.25rem; }
@@ -1822,6 +1823,11 @@
         .list-comp-thumnail .comp-box .list-box .list-text .stext.gray {
           color: #666;
           letter-spacing: -0.0625rem; }
+      .list-comp-thumnail .comp-box .list-box .list-text.disabled .mtext .btn-bf {
+        color: #dcdcdc; }
+        .list-comp-thumnail .comp-box .list-box .list-text.disabled .mtext .btn-bf:before {
+          background: url(/img/ico/bt-best-friend-disabled.png) no-repeat;
+          background-size: auto 0.875rem; }
     .list-comp-thumnail .comp-box .list-box .list-btn {
       display: table-cell;
       width: 3.75rem;
@@ -1853,7 +1859,7 @@
       font-size: 0.875rem;
       color: #000; }
   .list-comp-history .comp-box .list-box .list-con {
-    padding: 0 0 0 3.5rem; }
+    padding: 0 0 0 4.3125rem; }
     .list-comp-history .comp-box .list-box .list-con li {
       display: table;
       table-layout: fixed;
@@ -3478,6 +3484,62 @@
   background: url(/img/svg/icon_32px_filter_s.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-me {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_01.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-f-delegate {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_02.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-parents {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_03.svg) no-repeat 0 0;
+  background-size: 1.4375rem; }
+
+.icon-children {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_04.svg) no-repeat 0 0;
+  background-size: 1.4375rem; }
+
+.icon-partner {
+  display: inline-block;
+  width: 2rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_05.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-brother {
+  display: inline-block;
+  width: 2.625rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_06.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-grandparents {
+  display: inline-block;
+  width: 2.875rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_07.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-grandchildren {
+  display: inline-block;
+  width: 2rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_family_08.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-my-80 {
   display: inline-block;
   width: 2.5rem;
@@ -3583,13 +3645,6 @@
   background: url(/img/ico/ico-acompany.png) no-repeat 0 0;
   background-size: 1.4375rem; }
 
-.icon-children {
-  display: inline-block;
-  width: 1.4375rem;
-  height: 1rem;
-  background: url(/img/ico/ico-children.png) no-repeat 0 0;
-  background-size: 1.4375rem; }
-
 .icon-alarm-red {
   display: inline-block;
   width: 1.5rem;
@@ -3623,13 +3678,6 @@
   width: 1rem;
   height: 1rem;
   background: url(/img/ico/ico_actionsheet_link.png) no-repeat 0 0;
-  background-size: 100% 100%; }
-
-.icon-f-delegate {
-  display: inline-block;
-  width: 2.5rem;
-  height: 1rem;
-  background: url(/img/ico/icon-f-delegate.png) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-gift-80 {
@@ -3784,8 +3832,10 @@
             box-sizing: border-box; }
     .list-comp-input.production-benefit-wrap .select-list > li.type01-big:before {
       position: absolute;
-      top: 2.5rem;
+      top: 50%;
       right: 1rem;
+      -webkit-transform: translate(0, -50%);
+      transform: translate(0, -50%);
       left: auto; }
     .list-comp-input.production-benefit-wrap .select-list > li:last-child {
       border-bottom: none; }
@@ -3793,37 +3843,31 @@
       border-radius: 0.25rem;
       border: 1px solid #47a6eb; }
     .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout {
-      padding: 0 5.625rem 0 6.875rem; }
+      padding: 0;
+      min-height: 7.0625rem; }
       .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout:before {
         content: none; }
       .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .layout-text {
-        padding: 1.625rem 0; }
+        padding: 1.625rem 3.4375rem 1.625rem 5.625rem; }
       .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .ico {
         position: absolute;
         display: inline-block;
         top: 1.875rem;
-        background: url(/img/ico/ico-product-illustration.png) no-repeat;
-        background-size: 62.5rem; }
+        left: 0.9375rem;
+        width: 3.75rem;
+        height: 3.75rem; }
         .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .ico.ico-travel {
-          left: 1rem;
-          width: 6.25rem;
-          height: 6.25rem;
-          background-position: -4.5625rem -17.1875rem; }
+          background: url(/img/ico/ico-travel.png);
+          background-size: 3.75rem; }
         .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .ico.ico-movie {
-          left: 1rem;
-          width: 3.125rem;
-          height: 3.125rem;
-          background-position: -17.1875rem -17.1875rem; }
+          background: url(/img/ico/ico-movie.png);
+          background-size: 3.75rem; }
         .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .ico.ico-watch {
-          left: 1.875rem;
-          width: 3.125rem;
-          height: 3.125rem;
-          background-position: -30.375rem -17.1875rem; }
+          background: url(/img/ico/ico-watch.png);
+          background-size: 3.75rem; }
         .list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .ico.ico-club {
-          left: 1.75rem;
-          width: 3.125rem;
-          height: 3.125rem;
-          background-position: -42.625rem -17.1875rem; }
+          background: url(/img/ico/ico-club.png);
+          background-size: 3.75rem; }
 
 .myt-note-wrap {
   padding: 1.0625rem 1rem 0; }
@@ -3885,9 +3929,8 @@
     left: 0;
     width: 2rem;
     height: 2rem;
-    background: url(/img/ico/ico-product-100.png) no-repeat;
-    background-size: 3.125rem;
-    background-position: -0.5625rem -3.6875rem; }
+    background: url(/img/ico/ico-none-user.png);
+    background-size: 2rem; }
 
 .list-comp-thumnail .comp-box .list-box .list-text .mtext.gray {
   color: #9e9e9e; }
@@ -4175,7 +4218,8 @@
     font-size: 0.9375rem;
     text-align: right; }
     .basic-list ul li .tx-cont .data-info {
-      display: block; }
+      display: block;
+      text-align: right; }
     .basic-list ul li .tx-cont .price {
       display: block;
       color: #666; }
@@ -4550,7 +4594,7 @@
     left: 1rem;
     font-size: 0.875rem; }
   .history-list ul li .li-elem {
-    padding: 1.25rem 1rem 1.25rem 5rem;
+    padding: 1.25rem 1rem 1.25rem 5.3125rem;
     display: table;
     width: 100%;
     box-sizing: border-box;
@@ -4560,7 +4604,7 @@
     .history-list ul li .li-elem .title-box {
       display: table-cell;
       vertical-align: top;
-      width: 55%; }
+      width: 62%; }
       .history-list ul li .li-elem .title-box .tit {
         display: block;
         font-size: 1.125rem; }
@@ -4644,7 +4688,7 @@
       vertical-align: top;
       display: table-cell;
       text-align: right;
-      width: 45%; }
+      width: 38%; }
       .history-list ul li .li-elem .price .tx-price {
         font-family: "TgothicBlack", Roboto, sans-serif;
         font-size: 1.125rem; }
@@ -4763,7 +4807,7 @@
     display: block;
     width: 100%;
     text-align: left;
-    padding-left: 5rem;
+    padding-left: 5.625rem;
     position: relative;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -4878,8 +4922,16 @@
   .user-info .ico {
     width: 2rem;
     height: 2rem;
-    background: url(/img/ico/ico-product-100.png) no-repeat -0.5625rem -0.5625rem;
-    background-size: 3.125rem auto;
+    background: url(/img/ico/ico-con-user.png) no-repeat;
+    background-size: 2rem;
+    position: absolute;
+    left: 0;
+    top: 0; }
+  .user-info .ico-type1 {
+    width: 2rem;
+    height: 2rem;
+    background: url(/img/ico/ico-net.png) no-repeat;
+    background-size: 2rem;
     position: absolute;
     left: 0;
     top: 0; }
@@ -7218,6 +7270,17 @@
     content: '';
     background: url(/img/ico/ico-nodata-left.png);
     background-size: 2rem; }
+  .msg-nodata-left .ico-nodata-left2 {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 2rem;
+    height: 2rem;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    content: '';
+    background: url(/img/ico/ico-nodata-left2.png);
+    background-size: 2rem; }
 
 .list-comp-input .badge.badge-fam-members2 {
   vertical-align: baseline; }
@@ -8059,6 +8122,9 @@ a.bt-link-tx.underline.small {
       font-size: 1.125rem;
       font-family: "TgothicBlack", Roboto, sans-serif;
       font-weight: 700; }
+      .loaming-tel-info li .tel-num .sub {
+        font-family: "TgothicMedium", Roboto, sans-serif;
+        color: #666666; }
     .loaming-tel-info li:after {
       position: absolute;
       right: 0;
@@ -11853,8 +11919,8 @@ a.bt-link-tx.underline.small {
     width: 4.6875rem;
     height: 4.6875rem;
     margin-top: -2.375rem;
-    background: url(/img/ico/ico-group-150.png) no-repeat 0 -23.4375rem;
-    background-size: 9.375rem; }
+    background: url(/img/ico/ico-iimg.png) no-repeat;
+    background-size: 4.6875rem; }
 
 .top-info-box0 {
   position: relative;
@@ -12409,7 +12475,6 @@ a.bt-link-tx.underline.small {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    vertical-align: top;
     text-align: left;
     line-height: normal; }
     .productinfoscroll-box .product-info .title {
@@ -12938,6 +13003,30 @@ a.bt-link-tx.underline.small {
     color: #666;
     font-size: 0.8125rem;
     line-height: 1.125rem; }
+  .goodphonview-wrap.bg-t01:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0.875rem;
+    width: 5.5rem;
+    height: 3.5rem;
+    margin: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    background: url(/img/customer/bg_cs_06_01.png) no-repeat;
+    background-size: 100%; }
+  .goodphonview-wrap.bg-t02:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0.875rem;
+    width: 5.5rem;
+    height: 3.5rem;
+    margin: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    background: url(/img/customer/bg_cs_06_02.png) no-repeat;
+    background-size: 100%; }
 
 /** 공통 스와이프 페이징 디자인변경 :: 체크확인 **/
 .slide-pagingtype .slider-box .slick-dots {
@@ -13411,8 +13500,9 @@ a.bt-link-tx.underline.small {
         left: 0;
         width: 2rem;
         height: 2rem;
-        background: url(/img/customer/bg_siteinformationuse.png) no-repeat 0 0;
-        background-size: 2rem 2rem; }
+        background-image: url(/img/customer/bg_siteinformationuse.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat; }
       .site-informationuse-list .amount .link:before {
         content: "";
         position: absolute;
@@ -13431,6 +13521,12 @@ a.bt-link-tx.underline.small {
         margin-top: 0.4375rem;
         color: #666;
         font-size: 0.8125rem; }
+    .site-informationuse-list .amount.ico-etc .link:after {
+      background-image: url(/img/ico/ico-etc.png); }
+    .site-informationuse-list .amount.ico-myt .link:after {
+      background-image: url(/img/ico/ico-myt.png); }
+    .site-informationuse-list .amount.ico-member .link:after {
+      background-image: url(/img/ico/ico-member.png); }
 
 /* 이용안내 - 서비스 안내 - 
 사이트 이용방법 [sprint8/CS_06_02.html]  :::  컨텐츠
@@ -14028,7 +14124,7 @@ a.bt-link-tx.underline.small {
     height: 15rem;
     margin-left: 0.625rem;
     border-radius: 0.625rem;
-    background: #9e85ec; }
+    background: #57637f; }
     .combinedbenefits-list .category-type.ctype01 {
       background: #63c862; }
     .combinedbenefits-list .category-type:first-child {
@@ -15035,7 +15131,7 @@ a.bt-link-tx.underline.small {
 .cont-actionsheet .ac-list {
   padding: 0 0 1.0625rem; }
   .cont-actionsheet .ac-list.ac3 {
-    padding: 0 1rem 1.375rem;
+    padding: 0 1rem 1.375rem !important;
     overflow: hidden; }
   .cont-actionsheet .ac-list .type1 {
     padding: 0.625rem 0.75rem 0.625rem 1rem; }
@@ -16413,8 +16509,9 @@ a.bt-link-tx.underline.small {
     .add-prod > li > div > button, .add-prod > li > div > a {
       display: block;
       text-align: left;
-      font-size: 0.75rem;
-      color: #7b7b7b; }
+      font-size: 0.6875rem;
+      color: #7b7b7b;
+      line-height: 0.8125rem; }
     .add-prod > li:last-child {
       margin-right: 0; }
   .add-prod .ico {
@@ -16423,7 +16520,8 @@ a.bt-link-tx.underline.small {
     width: 4.5rem;
     height: 4.5rem;
     background: url(/img/product/bg_products.png) no-repeat 14px 14px;
-    background-size: 6.25rem; }
+    background-size: 6.25rem;
+    margin-bottom: 0.3125rem; }
     .add-prod .ico.type1 {
       background-position: -0.875rem -0.875rem; }
     .add-prod .ico.type2 {
@@ -16599,7 +16697,13 @@ a.bt-link-tx.underline.small {
     vertical-align: top;
     margin-bottom: 0.9375rem; }
     .acco-style.required-doc .widget-box.radio .skin01 .type05:before {
-      margin: 0 auto; }
+      width: 3.25rem;
+      height: 3.25rem;
+      margin: 0 auto 0.375rem;
+      border: 2px solid #ebf5fe; }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.checked:before {
+      background-color: #fff;
+      border-color: #3b98e6; }
     .acco-style.required-doc .widget-box.radio .skin01 .type05:after {
       content: '';
       position: absolute;
@@ -16608,27 +16712,27 @@ a.bt-link-tx.underline.small {
               transform: translate(-50%, 0);
       top: 0;
       display: block;
-      width: 3.625rem;
-      height: 3.625rem;
+      width: 3.5rem;
+      height: 3.5rem;
       background-size: 100% 100%; }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico01:after {
-      background-image: url(/img/customer/bg-filter01-116.png); }
+      background-image: url(/img/customer/bg-filter01-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico02:after {
-      background-image: url(/img/customer/bg-filter02-116.png); }
+      background-image: url(/img/customer/bg-filter02-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico03:after {
-      background-image: url(/img/customer/bg-filter03-116.png); }
+      background-image: url(/img/customer/bg-filter03-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico04:after {
-      background-image: url(/img/customer/bg-filter04-116.png); }
+      background-image: url(/img/customer/bg-filter04-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico05:after {
-      background-image: url(/img/customer/bg-filter05-116.png); }
+      background-image: url(/img/customer/bg-filter05-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico06:after {
-      background-image: url(/img/customer/bg-filter06-116.png); }
+      background-image: url(/img/customer/bg-filter06-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico07:after {
-      background-image: url(/img/customer/bg-filter07-116.png); }
+      background-image: url(/img/customer/bg-filter07-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico08:after {
-      background-image: url(/img/customer/bg-filter08-116.png); }
+      background-image: url(/img/customer/bg-filter08-112.png); }
     .acco-style.required-doc .widget-box.radio .skin01 .type05.ico09:after {
-      background-image: url(/img/customer/bg-filter09-116.png); }
+      background-image: url(/img/customer/bg-filter09-112.png); }
 
 .acco-style.required-doc .widget-box.radio .skin02 > li {
   display: block;
@@ -16650,7 +16754,7 @@ a.bt-link-tx.underline.small {
       font-weight: 700; }
   .customer-guide .ico {
     position: absolute;
-    right: 0.625rem;
+    right: 0.875rem;
     top: 0.25rem;
     display: block;
     width: 4rem;
@@ -17035,9 +17139,9 @@ a.bt-link-tx.underline.small {
     display: inline-block;
     width: 1.125rem;
     height: 1.125rem;
-    vertical-align: top;
+    margin-top: -0.125rem;
+    vertical-align: middle;
     position: relative;
-    top: 4px;
     background: url(/img/customer/bg-blank-36.png) no-repeat 0 0;
     background-size: 1.125rem 1.125rem; }
 
@@ -17390,7 +17494,7 @@ a.bt-link-tx.underline.small {
       color: #000; }
   .customer-as .ico {
     position: absolute;
-    right: 0.625rem;
+    right: 0.875rem;
     top: 50%;
     -webkit-transform: translate(0, -50%);
             transform: translate(0, -50%);
@@ -17442,14 +17546,14 @@ a.bt-link-tx.underline.small {
         font-size: 0.75rem; }
     .search-point .bn-search .inner .ico {
       position: absolute;
-      right: 0.625rem;
+      right: 0.875rem;
       top: 50%;
       -webkit-transform: translate(0, -50%);
               transform: translate(0, -50%);
       display: block;
-      width: 4rem;
-      height: 3.75rem;
-      background: url(/img/customer/bg_cs_01_01_16.png) no-repeat 0 0;
+      width: 5.25rem;
+      height: 4.4375rem;
+      background: url(/img/customer/bg_cs_02_01.png) no-repeat 0 0;
       background-size: 100% 100%; }
 
 .search-point .hours-of-business .tit {
@@ -18357,7 +18461,8 @@ a.bt-link-tx.underline.small {
         width: 2rem;
         height: 2rem;
         background: url(/img/customer/bg-service01.png) no-repeat;
-        background-size: 100%; }
+        background-size: 100% 100%;
+        background-repeat: no-repeat; }
       .service-list li .list-inner .list-tit {
         display: block;
         font-weight: 400; }
@@ -18377,6 +18482,48 @@ a.bt-link-tx.underline.small {
         background-size: 100%;
         font-size: 0;
         line-height: 0; }
+      .service-list li .list-inner.ico-t01:before {
+        background-image: url(/img/customer/ico-guide01.png); }
+      .service-list li .list-inner.ico-t02:before {
+        background-image: url(/img/customer/ico-guide02.png); }
+      .service-list li .list-inner.ico-t03:before {
+        background-image: url(/img/customer/ico-guide03.png); }
+      .service-list li .list-inner.ico-t04:before {
+        background-image: url(/img/customer/ico-guide04.png); }
+      .service-list li .list-inner.ico-t05:before {
+        background-image: url(/img/customer/ico-guide05.png); }
+      .service-list li .list-inner.ico-t06:before {
+        background-image: url(/img/customer/ico-guide06.png); }
+      .service-list li .list-inner.ico-t07:before {
+        background-image: url(/img/customer/ico-guide07.png); }
+      .service-list li .list-inner.ico-t08:before {
+        background-image: url(/img/customer/ico-guide08.png); }
+      .service-list li .list-inner.ico-t09:before {
+        background-image: url(/img/customer/ico-guide09.png); }
+      .service-list li .list-inner.ico-t10:before {
+        background-image: url(/img/customer/ico-guide10.png); }
+      .service-list li .list-inner.ico-t11:before {
+        background-image: url(/img/customer/ico-guide11.png); }
+      .service-list li .list-inner.ico-t12:before {
+        background-image: url(/img/customer/ico-guide12.png); }
+      .service-list li .list-inner.ico-t13:before {
+        background-image: url(/img/customer/ico-guide13.png); }
+      .service-list li .list-inner.ico-t14:before {
+        background-image: url(/img/customer/ico-guide14.png); }
+      .service-list li .list-inner.ico-t15:before {
+        background-image: url(/img/customer/ico-guide15.png); }
+      .service-list li .list-inner.ico-t16:before {
+        background-image: url(/img/customer/ico-guide16.png); }
+      .service-list li .list-inner.ico-t17:before {
+        background-image: url(/img/customer/ico-guide17.png); }
+      .service-list li .list-inner.ico-t18:before {
+        background-image: url(/img/customer/ico-guide18.png); }
+      .service-list li .list-inner.ico-t19:before {
+        background-image: url(/img/customer/ico-guide19.png); }
+      .service-list li .list-inner.ico-t20:before {
+        background-image: url(/img/customer/ico-guide20.png); }
+      .service-list li .list-inner.ico-t21:before {
+        background-image: url(/img/customer/ico-guide21.png); }
   .service-list.icon-none .list-inner {
     padding-left: 0; }
     .service-list.icon-none .list-inner:before {
@@ -18407,6 +18554,26 @@ a.bt-link-tx.underline.small {
   .addition-service .horizontal-list {
     margin-top: 0;
     padding: 0 1rem; }
+    .addition-service .horizontal-list.add-prod .ico {
+      background-size: 100% 100%;
+      background-position: 0 0;
+      background-repeat: no-repeat; }
+      .addition-service .horizontal-list.add-prod .ico.type1 {
+        background-image: url(/img/customer/ico-service01.png); }
+      .addition-service .horizontal-list.add-prod .ico.type2 {
+        background-image: url(/img/customer/ico-service02.png); }
+      .addition-service .horizontal-list.add-prod .ico.type3 {
+        background-image: url(/img/customer/ico-service03.png); }
+      .addition-service .horizontal-list.add-prod .ico.type4 {
+        background-image: url(/img/customer/ico-service04.png); }
+      .addition-service .horizontal-list.add-prod .ico.type5 {
+        background-image: url(/img/customer/ico-service05.png); }
+      .addition-service .horizontal-list.add-prod .ico.type6 {
+        background-image: url(/img/customer/ico-service06.png); }
+      .addition-service .horizontal-list.add-prod .ico.type7 {
+        background-image: url(/img/customer/ico-service07.png); }
+      .addition-service .horizontal-list.add-prod .ico.type8 {
+        background-image: url(/img/customer/ico-service08.png); }
 
 .site-more {
   padding: 0.9375rem 1rem; }
@@ -18414,7 +18581,7 @@ a.bt-link-tx.underline.small {
     display: block;
     position: relative;
     width: 100%;
-    padding: 1.5625rem 0.9375rem;
+    padding: 1.5625rem 6.5625rem 1.5625rem 0.9375rem;
     background: #fff;
     border-radius: 0.3125rem;
     text-align: left;
@@ -18425,11 +18592,12 @@ a.bt-link-tx.underline.small {
     .site-more .more-inner:after {
       content: '';
       position: absolute;
-      right: 0.9375rem;
+      right: 0.875rem;
       top: 50%;
       width: 5.4375rem;
       height: 3.875rem;
-      margin-top: -1.9375rem;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
       background: url(/img/customer/bg-site-more.png) no-repeat;
       background-size: 100%; }
     .site-more .more-inner strong {
@@ -18479,7 +18647,14 @@ a.bt-link-tx.underline.small {
         width: 1.5rem;
         height: 1.5rem;
         background: url(/img/customer/bg-guide-ico.png) no-repeat;
-        background-size: 100%; }
+        background-size: 100% 100%;
+        background-repeat: no-repeat; }
+      .guide-list li .list-inner.ico-video:before {
+        background-image: url(/img/customer/ico-video.png); }
+      .guide-list li .list-inner.ico-webtoon:before {
+        background-image: url(/img/customer/ico-webtoon.png); }
+      .guide-list li .list-inner.ico-new:before {
+        background-image: url(/img/customer/ico-new.png); }
 
 .howto-list-wrap {
   border-bottom: 1px solid #e1e1e1;
@@ -18695,17 +18870,16 @@ a.bt-link-tx.underline.small {
       .email-consult-list > li.re-inquiry .list-inner .date-state {
         line-height: 1; }
       .email-consult-list > li.re-inquiry .list-inner .again {
+        overflow: hidden;
         position: absolute;
-        top: 0.125rem;
+        top: 0;
         left: 0;
-        width: 2.25rem;
-        height: 0.9375rem;
-        background: #666;
-        border-radius: 0.125rem;
-        color: #fff;
-        font-weight: 700;
-        font-size: 0.625rem;
-        text-align: center; }
+        width: 2rem;
+        height: 1rem;
+        color: transparent;
+        background: url("/img/common/badge/badge_status_05.svg") no-repeat;
+        background-size: 100% 100%;
+        text-indent: -9999px; }
   .email-consult-list > li:first-child .list-inner {
     border-top: none; }
 
@@ -18786,6 +18960,8 @@ a.bt-link-tx.underline.small {
   .card-box.type-red {
     background-image: url(/img/benefit/card-type-red.png);
     color: #fff; }
+    .card-box.type-red button.card-inner-btn, .card-box.type-red a.card-inner-btn {
+      color: #fff; }
   .card-box.type-yellow {
     background-image: url(/img/benefit/card-type-yellow.png);
     color: #000; }
@@ -18793,6 +18969,7 @@ a.bt-link-tx.underline.small {
     background-image: url(/img/benefit/card-type-skyblue.png);
     color: #000; }
   .card-box .card-inner {
+    display: block;
     position: relative;
     height: 100%;
     padding: 1.5625rem 1.875rem 0 1.875rem;
@@ -18865,7 +19042,6 @@ a.bt-link-tx.underline.small {
       position: absolute;
       top: 7.5rem;
       left: 1.875rem;
-      width: 100%;
       white-space: nowrap; }
       .card-box .card-inner .name-num .num {
         font-size: 1.125rem;
@@ -18908,6 +19084,11 @@ a.bt-link-tx.underline.small {
       width: 100%;
       height: 100%;
       vertical-align: top; }
+  .card-box button.card-inner-btn, .card-box a.card-inner-btn {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: left; }
 
 .card-intro {
   overflow: hidden; }
@@ -19449,13 +19630,23 @@ a.bt-link-tx.underline.small {
       white-space: nowrap; }
       .coalition-brand-list .brand-inner .section .ico-s {
         display: inline-block;
-        width: 0.9375rem;
-        height: 0.9375rem;
-        background: url(/img/benefit/ico-coalition-brand.png) no-repeat;
-        background-size: 15px 15px;
+        width: 1rem;
+        height: 1rem;
         font-size: 0;
         line-height: 0;
         vertical-align: middle; }
+        .coalition-brand-list .brand-inner .section .ico-s.all-tag {
+          background: url(/img/benefit/ico-level-all.png) no-repeat;
+          background-size: 1rem; }
+        .coalition-brand-list .brand-inner .section .ico-s.vip-tag {
+          background: url(/img/benefit/ico-level-vip.png) no-repeat;
+          background-size: 1rem; }
+        .coalition-brand-list .brand-inner .section .ico-s.gold-tag {
+          background: url(/img/benefit/ico-level-gold.png) no-repeat;
+          background-size: 1rem; }
+        .coalition-brand-list .brand-inner .section .ico-s.silver-tag {
+          background: url(/img/benefit/ico-level-silver.png) no-repeat;
+          background-size: 1rem; }
   .coalition-brand-list.type-like .brand-inner {
     margin-right: 5rem; }
 
@@ -19733,12 +19924,20 @@ a.bt-link-tx.underline.small {
     font-size: 0.6875rem;
     line-height: 0.8125rem;
     vertical-align: top; }
+    .category-box-wrap .select-list li.radiobox.type05:before {
+      border: 2px solid #ebf5fe; }
+    .category-box-wrap .select-list li.radiobox.type05.checked:before {
+      border: 2px solid #3b98e6; }
     .category-box-wrap .select-list li:before {
+      width: 3.5rem;
+      height: 3.5rem;
       margin-bottom: 0.4375rem;
       background-repeat: no-repeat;
-      background-size: 100%;
+      background-size: 3.5rem;
+      box-sizing: border-box;
       -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
+      -moz-box-sizing: border-box;
+      background-position: -0.125rem -0.125rem; }
     .category-box-wrap .select-list li:first-child {
       margin: 0; }
     .category-box-wrap .select-list li.ico-type01:before {
@@ -19751,6 +19950,34 @@ a.bt-link-tx.underline.small {
       background-image: url(/img/benefit/ico-category04.png); }
     .category-box-wrap .select-list li.ico-type05:before {
       background-image: url(/img/benefit/ico-category05.png); }
+    .category-box-wrap .select-list li.ico-type06:before {
+      background-image: url(/img/benefit/ico-category06.png); }
+    .category-box-wrap .select-list li.ico-type07:before {
+      background-image: url(/img/benefit/ico-category07.png); }
+    .category-box-wrap .select-list li.ico-type08:before {
+      background-image: url(/img/benefit/ico-category08.png); }
+    .category-box-wrap .select-list li.ico-type09:before {
+      background-image: url(/img/benefit/ico-category09.png); }
+    .category-box-wrap .select-list li.ico-type10:before {
+      background-image: url(/img/benefit/ico-category10.png); }
+    .category-box-wrap .select-list li.ico-type11:before {
+      background-image: url(/img/benefit/ico-category11.png); }
+    .category-box-wrap .select-list li.ico-type12:before {
+      background-image: url(/img/benefit/ico-category12.png); }
+    .category-box-wrap .select-list li.ico-type13:before {
+      background-image: url(/img/benefit/ico-category13.png); }
+    .category-box-wrap .select-list li.ico-type14:before {
+      background-image: url(/img/benefit/ico-category14.png); }
+    .category-box-wrap .select-list li.ico-type15:before {
+      background-image: url(/img/benefit/ico-category15.png); }
+    .category-box-wrap .select-list li.ico-type16:before {
+      background-image: url(/img/benefit/ico-category16.png); }
+    .category-box-wrap .select-list li.ico-type17:before {
+      background-image: url(/img/benefit/ico-category17.png); }
+    .category-box-wrap .select-list li.ico-type18:before {
+      background-image: url(/img/benefit/ico-category18.png); }
+    .category-box-wrap .select-list li.ico-type19:before {
+      background-image: url(/img/benefit/ico-category19.png); }
 
 .category-box-wrap .cont-layer .select-list li {
   width: 20%;
@@ -19779,9 +20006,61 @@ a.bt-link-tx.underline.small {
       width: 2.5rem;
       height: 2.5rem;
       margin-right: 0.625rem;
-      background: url(/img/benefit/ico-brand-coalition.png) no-repeat center;
-      background-size: 100%;
       vertical-align: middle; }
+    .popularity-brand h3.ico-brand-bakery:before {
+      background: url(/img/benefit/ico-brand-bakery.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-store:before {
+      background: url(/img/benefit/ico-brand-store.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-cinema:before {
+      background: url(/img/benefit/ico-brand-cinema.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-pizza:before {
+      background: url(/img/benefit/ico-brand-pizza.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-coffee:before {
+      background: url(/img/benefit/ico-brand-coffee.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-restaurant:before {
+      background: url(/img/benefit/ico-brand-restaurant.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-fb:before {
+      background: url(/img/benefit/ico-brand-fb.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-theme:before {
+      background: url(/img/benefit/ico-brand-theme.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-mobile:before {
+      background: url(/img/benefit/ico-brand-mobile.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-shopping:before {
+      background: url(/img/benefit/ico-brand-shopping.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-traffic:before {
+      background: url(/img/benefit/ico-brand-traffic.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-show:before {
+      background: url(/img/benefit/ico-brand-show.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-travel:before {
+      background: url(/img/benefit/ico-brand-travel.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-education:before {
+      background: url(/img/benefit/ico-brand-education.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-finance:before {
+      background: url(/img/benefit/ico-brand-finance.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-beauty:before {
+      background: url(/img/benefit/ico-brand-beauty.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-sports:before {
+      background: url(/img/benefit/ico-brand-sports.png) no-repeat center;
+      background-size: 100%; }
+    .popularity-brand h3.ico-brand-jeju:before {
+      background: url(/img/benefit/ico-brand-jeju.png) no-repeat center;
+      background-size: 100%; }
   .popularity-brand .slider-box .slick-prev, .popularity-brand .slider-box .slick-next {
     display: none !important; }
   .popularity-brand .slider-box .slick-slide {
@@ -20097,7 +20376,9 @@ a.bt-link-tx.underline.small {
     height: 2rem;
     margin: -1rem 0 0 -1rem;
     background: url(/img/ico/ico-after.png) no-repeat;
-    background-size: 100%; }
+    background-size: 100%;
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg); }
 
 .example-box img {
   width: 100%;
@@ -20596,18 +20877,15 @@ a.bt-link-tx.underline.small {
   font-weight: 700; }
 
 .acco-notice .acco-tit.new .acco-notice-tit:after {
-  content: 'N';
+  content: '';
   display: inline-block;
   margin-left: 0.5rem;
-  padding: 0.1875rem 0.25rem 0.1875rem 0.1875rem;
-  height: auto;
-  line-height: 1;
-  border-radius: 0.1875rem;
-  letter-spacing: -0.0625rem;
-  font-size: 0.625rem;
-  background: #3b98e6;
-  color: #fff;
-  font-weight: 700; }
+  margin-top: -0.1875rem;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/common/badge/badge_status_01.svg) no-repeat;
+  background-size: 100% 100%;
+  vertical-align: middle; }
 
 .acco-notice .acco-cont .notice-txt {
   color: #000;
@@ -21850,15 +22128,21 @@ a.bt-link-tx.underline.small {
     display: inline-block;
     width: 2rem;
     height: 2rem;
-    margin-right: 14px; }
-    .roaming-info-wrap .link-long .icon img {
-      width: 100%;
-      height: 100%;
-      vertical-align: middle; }
-  .roaming-info-wrap .link-long button {
-    padding: 1.4375rem 0;
+    margin: 10px 14px 0 0;
+    position: absolute;
+    left: 0;
+    top: 0.5rem; }
+    .roaming-info-wrap .link-long .icon.type1 {
+      background: url(/img/product/ico-roaming-info01.png) no-repeat 0 0;
+      background-size: 100%; }
+    .roaming-info-wrap .link-long .icon.type2 {
+      background: url(/img/product/ico-roaming-info02.png);
+      background-size: 100%; }
+  .roaming-info-wrap .link-long button, .roaming-info-wrap .link-long a {
+    display: block;
+    padding: 1.4375rem 0 1.4375rem 2.9375rem;
     font-size: 1.125rem; }
-    .roaming-info-wrap .link-long button .ico {
+    .roaming-info-wrap .link-long button .ico, .roaming-info-wrap .link-long a .ico {
       top: 1.625rem;
       background-image: url(/img/product/ico-arw01.png);
       background-size: 0.4375rem auto;
@@ -21880,11 +22164,22 @@ a.bt-link-tx.underline.small {
   display: inline-block;
   width: 1.25rem;
   height: 1.25rem;
-  margin-right: 0.5625rem; }
-  .confirm-noti.charge-info .icon img {
-    width: 100%;
-    height: 100%;
-    vertical-align: middle; }
+  margin-right: 0.5625rem;
+  position: absolute;
+  left: 0;
+  top: 1.0625rem; }
+  .confirm-noti.charge-info .icon.type1 {
+    background-image: url(/img/product/ico-info01.png);
+    background-size: 100%; }
+  .confirm-noti.charge-info .icon.type2 {
+    background-image: url(/img/product/ico-info02.png);
+    background-size: 100%; }
+  .confirm-noti.charge-info .icon.type3 {
+    background-image: url(/img/product/ico-info04.png);
+    background-size: 100%; }
+
+.confirm-noti.charge-info .acco-tit {
+  padding-left: 1.75rem !important; }
 
 .confirm-noti.charge-info .acco-box.on .acco-cont {
   padding: 1.875rem 1.875rem 1.875rem 0 !important; }
@@ -21931,6 +22226,14 @@ a.bt-link-tx.underline.small {
   .recommend-charge .box-wrap .ico img {
     width: 100%;
     height: auto; }
+  .recommend-charge .box-wrap .ico.type1 {
+    height: 3.8125rem;
+    background-image: url(/img/product/ico-recommend-charge01-1.png);
+    background-size: 100% auto; }
+  .recommend-charge .box-wrap .ico.type2 {
+    height: 3.8125rem;
+    background-image: url(/img/product/ico-recommend-charge01-2.png);
+    background-size: 100% auto; }
 
 .recommend-charge .box-wrap .txt-type1 {
   padding: 0.375rem 0 0.375rem 0;
@@ -22238,6 +22541,323 @@ a.bt-link-tx.underline.small {
   height: 3.75rem;
   background: url(/img/ico/icon-result-nolist.png) no-repeat;
   background-size: 3.75rem 3.75rem; }
+
+.result-nolist .ico {
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/ico/icon-result-nolist.png) no-repeat;
+  background-size: 3.75rem 3.75rem; }
+
+.list-comp-input.type01 h3.tit, .shop-info .shop-txt .list-comp-input.type02 h3.tit, .shop-info .shop-txt .list-comp-input.type03 h3.tit {
+  padding: 0.75rem 0;
+  font-size: 0.75rem !important; }
+
+.list-comp-input.type01 .select-list > li.type01-big:before, .shop-info .shop-txt .list-comp-input.type02 .select-list > li.type01-big:before, .shop-info .shop-txt .list-comp-input.type03 .select-list > li.type01-big:before {
+  position: absolute;
+  top: 1.75rem;
+  right: 0 !important;
+  left: inherit; }
+
+.list-comp-input.type01 .select-list .comp-list-layout, .shop-info .shop-txt .list-comp-input.type02 .select-list .comp-list-layout, .shop-info .shop-txt .list-comp-input.type03 .select-list .comp-list-layout {
+  padding: 0 3.125rem 0 0; }
+  .list-comp-input.type01 .select-list .comp-list-layout:before, .shop-info .shop-txt .list-comp-input.type02 .select-list .comp-list-layout:before, .shop-info .shop-txt .list-comp-input.type03 .select-list .comp-list-layout:before {
+    left: 0; }
+  .list-comp-input.type01 .select-list .comp-list-layout .stext, .shop-info .shop-txt .list-comp-input.type02 .select-list .comp-list-layout .stext, .shop-info .shop-txt .list-comp-input.type03 .select-list .comp-list-layout .stext {
+    color: #959595 !important;
+    font-size: 0.875rem !important; }
+  .list-comp-input.type01 .select-list .comp-list-layout .mtext, .shop-info .shop-txt .list-comp-input.type02 .select-list .comp-list-layout .mtext, .shop-info .shop-txt .list-comp-input.type03 .select-list .comp-list-layout .mtext {
+    font-size: 1rem !important; }
+  .list-comp-input.type01 .select-list .comp-list-layout .layout-text, .shop-info .shop-txt .list-comp-input.type02 .select-list .comp-list-layout .layout-text, .shop-info .shop-txt .list-comp-input.type03 .select-list .comp-list-layout .layout-text {
+    padding: 1rem 0; }
+    .list-comp-input.type01 .select-list .comp-list-layout .layout-text .stext, .shop-info .shop-txt .list-comp-input.type02 .select-list .comp-list-layout .layout-text .stext, .shop-info .shop-txt .list-comp-input.type03 .select-list .comp-list-layout .layout-text .stext {
+      margin: 0.125rem 0 0 !important; }
+
+.list-comp-input.type02 .layout-text {
+  padding: 1rem 0 0 !important; }
+
+.list-comp-input.type02 .layout-text2 {
+  padding: 0.25rem 0 1rem;
+  color: #8d8d8d; }
+  .list-comp-input.type02 .layout-text2 dt {
+    position: relative;
+    float: left;
+    width: 3.5rem;
+    font-size: 0.8125rem; }
+    .list-comp-input.type02 .layout-text2 dt:after {
+      content: '';
+      display: inline-block;
+      width: 0.0625rem;
+      height: 0.5625rem;
+      background: #e1e1e1;
+      position: absolute;
+      right: 0;
+      top: 0.375rem; }
+  .list-comp-input.type02 .layout-text2 dd {
+    padding: 0 0 0 4.1875rem;
+    font-size: 0.8125rem; }
+
+.list-comp-input.type03 .comp-list-layout {
+  min-height: auto !important; }
+
+.list-comp-input.type03 .layout-text {
+  padding: 1.25rem 4.0625rem 1.25rem 0 !important; }
+
+.user-info .ico.type01, .user-info .shop-info .shop-txt .ico.type02, .shop-info .shop-txt .user-info .ico.type02, .user-info .shop-info .shop-txt .ico.type03, .shop-info .shop-txt .user-info .ico.type03 {
+  background: url(/img/ico/ico-product-type1.png) no-repeat;
+  background-size: 100%; }
+
+.link-long.line-type1 {
+  border-bottom: 1px solid #e1e1e1; }
+
+.charge-guide-wrap .stxt {
+  padding-top: 1.5625rem;
+  color: #8d8d8d;
+  font-size: 0.8125rem; }
+
+.acco-list.pdt-sel .stxt {
+  display: block;
+  color: #8d8d8d;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0 0 0; }
+
+.acco-list.pdt-sel .acco-tit {
+  font-size: 1.125rem !important; }
+
+.acco-list.pdt-sel .acco-cont {
+  background: none !important; }
+
+.acco-list.pdt-sel .acco-box.on > .acco-tit + .acco-cont {
+  padding: 0 !important; }
+
+.acco-list.pdt-sel .acco-box:after {
+  left: 0 !important; }
+
+.acco-list.pdt-sel .change-detail-cont {
+  padding: 1.875rem 1.875rem 1.875rem 0.125rem !important;
+  border-top: 1px solid #e1e1e1; }
+  .acco-list.pdt-sel .change-detail-cont h4 {
+    padding: 0 0 1.5rem 0;
+    font-size: 0.875rem;
+    font-weight: 700; }
+  .acco-list.pdt-sel .change-detail-cont .list li {
+    width: 100%;
+    padding: 1rem 0 0 0;
+    overflow: hidden; }
+    .acco-list.pdt-sel .change-detail-cont .list li:first-child {
+      padding: 0 0 0 0; }
+  .acco-list.pdt-sel .change-detail-cont .stit {
+    float: left;
+    color: #8d8d8d;
+    font-size: 0.875rem; }
+  .acco-list.pdt-sel .change-detail-cont .txt {
+    float: right;
+    font-size: 0.9375rem; }
+  .acco-list.pdt-sel .change-detail-cont .bt-slice {
+    margin: 1.875rem 0 0 0 !important; }
+
+.list-comp-input-agree.type01 .select-list > li, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li {
+  border-top: 1px solid #e1e1e1; }
+  .list-comp-input-agree.type01 .select-list > li:first-child, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li:first-child, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li:first-child {
+    border-top: 0; }
+  .list-comp-input-agree.type01 .select-list > li .checkbox.type01:before, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .checkbox.type01:before, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .checkbox.type01:before, .list-comp-input-agree.type01 .select-list > li .shop-info .shop-txt .checkbox.type02:before, .shop-info .shop-txt .list-comp-input-agree.type01 .select-list > li .checkbox.type02:before, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .checkbox.type02:before, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .checkbox.type02:before, .list-comp-input-agree.type01 .select-list > li .shop-info .shop-txt .checkbox.type03:before, .shop-info .shop-txt .list-comp-input-agree.type01 .select-list > li .checkbox.type03:before, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .checkbox.type03:before, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .checkbox.type03:before {
+    right: 0;
+    left: inherit; }
+  .list-comp-input-agree.type01 .select-list > li .comp-list-layout, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .comp-list-layout, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .comp-list-layout {
+    padding: 0 2.5rem 0 0; }
+    .list-comp-input-agree.type01 .select-list > li .comp-list-layout:after, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .comp-list-layout:after, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .comp-list-layout:after {
+      display: none; }
+    .list-comp-input-agree.type01 .select-list > li .comp-list-layout .layout-text, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .comp-list-layout .layout-text, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .comp-list-layout .layout-text {
+      padding: 0.9375rem 0 1.25rem 0; }
+  .list-comp-input-agree.type01 .select-list > li .mtext, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .mtext, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .mtext {
+    margin: 0;
+    width: 100%;
+    display: table; }
+    .list-comp-input-agree.type01 .select-list > li .mtext .num, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .mtext .num, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .mtext .num {
+      display: table-cell;
+      width: 1.25rem; }
+    .list-comp-input-agree.type01 .select-list > li .mtext .stit, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .mtext .stit, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .mtext .stit {
+      margin: 0;
+      display: table-cell; }
+  .list-comp-input-agree.type01 .select-list > li .ntext, .shop-info .shop-txt .list-comp-input-agree.type02 .select-list > li .ntext, .shop-info .shop-txt .list-comp-input-agree.type03 .select-list > li .ntext {
+    margin: 0 0 0 1.375rem; }
+
+.link-long-list li:nth-of-type(1) .ico-thum {
+  background: url(/img/ico/ico-longlist-type1.png) no-repeat;
+  background-size: 100%; }
+
+.link-long-list li:nth-of-type(2) .ico-thum {
+  background: url(/img/ico/ico-longlist-type1.png) no-repeat;
+  background-size: 100%; }
+
+.link-long-list li:nth-of-type(3) .ico-thum {
+  background: url(/img/ico/ico-longlist-type2.png) no-repeat;
+  background-size: 100%; }
+
+.link-long-list li:nth-of-type(4) .ico-thum {
+  background: url(/img/ico/ico-longlist-type3.png) no-repeat;
+  background-size: 100%; }
+
+.link-long-list li:nth-of-type(5) .ico-thum {
+  background: url(/img/ico/ico-longlist-type3.png) no-repeat;
+  background-size: 100%; }
+
+.roaming-card-coupon .benefit-list li:nth-of-type(1):before {
+  height: 1.25rem;
+  background: url(/img/product/ico-card-01.png) no-repeat;
+  background-size: 100%; }
+
+.roaming-card-coupon .benefit-list li:nth-of-type(2):before {
+  height: 1.25rem;
+  background: url(/img/product/ico-card-02.png) no-repeat;
+  background-size: 100%; }
+
+.way-cont-box li:nth-of-type(1) :after {
+  background: url(/img/product/ico-order01.png) no-repeat;
+  background-size: 100%; }
+
+.way-cont-box li:nth-of-type(2) :after {
+  background: url(/img/product/ico-order02.png) no-repeat;
+  background-size: 100%; }
+
+.place-list li .ico.type01, .place-list li .shop-info .shop-txt .ico.type02, .shop-info .shop-txt .place-list li .ico.type02, .place-list li .shop-info .shop-txt .ico.type03, .shop-info .shop-txt .place-list li .ico.type03 {
+  background: url(/img/ico/ico-loaming-01.png);
+  background-size: 100%; }
+
+.place-list li .ico.type02 {
+  background: url(/img/ico/ico-loaming-02.png);
+  background-size: 100%; }
+
+.place-list li .ico.type03 {
+  background: url(/img/ico/ico-loaming-03.png);
+  background-size: 100%; }
+
+.place-list li .ico.type04 {
+  background: url(/img/ico/ico-loaming-04.png);
+  background-size: 100%; }
+
+.place-list li .ico.type05 {
+  background: url(/img/ico/ico-loaming-05.png);
+  background-size: 100%; }
+
+.place-list li .ico.type06 {
+  background: url(/img/ico/ico-loaming-06.png);
+  background-size: 100%; }
+
+.loaming-slide .horizontal-list li:nth-of-type(1) .ico {
+  background: url(/img/product/ico-loam-slide01.png);
+  background-size: 100%; }
+
+.loaming-slide .horizontal-list li:nth-of-type(2) .ico {
+  background: url(/img/product/ico-loam-slide02.png);
+  background-size: 100%; }
+
+.loaming-slide .horizontal-list li:nth-of-type(3) .ico {
+  background: url(/img/product/ico-loam-slide03.png);
+  background-size: 100%; }
+
+.loaming-slide.type01 li, .shop-info .shop-txt .loaming-slide.type02 li, .shop-info .shop-txt .loaming-slide.type03 li {
+  background: #e6f2fe; }
+
+.int-call-wrap .ico.type01, .int-call-wrap .shop-info .shop-txt .ico.type02, .shop-info .shop-txt .int-call-wrap .ico.type02, .int-call-wrap .shop-info .shop-txt .ico.type03, .shop-info .shop-txt .int-call-wrap .ico.type03 {
+  background: url(/img/product/ico-nation01.png);
+  background-size: 100%; }
+
+.int-call-wrap .ico.type02 {
+  background: url(/img/product/ico-nation02.png);
+  background-size: 100%; }
+
+.popup .popup-info .popup-header .ico.type01, .popup .popup-info .popup-header .shop-info .shop-txt .ico.type02, .shop-info .shop-txt .popup .popup-info .popup-header .ico.type02, .popup .popup-info .popup-header .shop-info .shop-txt .ico.type03, .shop-info .shop-txt .popup .popup-info .popup-header .ico.type03 {
+  background: url(/img/ico/ico-popup-type01.png) no-repeat 0 0;
+  background-size: 100%; }
+
+.popup .popup-info .popup-header .ico.type02 {
+  background: url(/img/ico/ico-popup-type02.png) no-repeat 0 0;
+  background-size: 100%; }
+
+.goods-service-list li .ico.type1 {
+  background: url(/img/product/bg-goods-service01.png) no-repeat;
+  background-size: 100%; }
+
+.goods-service-list li .ico.type2 {
+  background: url(/img/product/bg-goods-service02.png) no-repeat;
+  background-size: 100%; }
+
+.goods-service-list li .ico.type3 {
+  background: url(/img/product/bg-goods-service03.png) no-repeat;
+  background-size: 100%; }
+
+.submain-findyourplan-wrap.type1:after {
+  display: none; }
+
+.ico-certifi-card.type01, .shop-info .shop-txt .ico-certifi-card.type02, .shop-info .shop-txt .ico-certifi-card.type03 {
+  background: url(/img/ico/ico-certifi01.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type02 {
+  background: url(/img/ico/ico-certifi02.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type03 {
+  background: url(/img/ico/ico-certifi03.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type04 {
+  background: url(/img/ico/ico-certifi04.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type05 {
+  background: url(/img/ico/ico-certifi05.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type06 {
+  background: url(/img/ico/ico-certifi06.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type07 {
+  background: url(/img/ico/ico-certifi07.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type01, .shop-info .shop-txt .ico-certifi-list.type02, .shop-info .shop-txt .ico-certifi-list.type03 {
+  background: url(/img/ico/ico-certifi05.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type02 {
+  background: url(/img/ico/ico-certifi06.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type03 {
+  background: url(/img/ico/ico-certifi07.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type04 {
+  background: url(/img/ico/ico-certifi03.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type05 {
+  background: url(/img/ico/ico-certifi01.png) no-repeat;
+  background-size: 100%; }
+
+.box-certifi-register.type01 .register-area .ico, .shop-info .shop-txt .box-certifi-register.type02 .register-area .ico, .shop-info .shop-txt .box-certifi-register.type03 .register-area .ico {
+  width: 5.625rem;
+  height: 5.625rem; }
+  .box-certifi-register.type01 .register-area .ico.fingerprint, .shop-info .shop-txt .box-certifi-register.type02 .register-area .ico.fingerprint, .shop-info .shop-txt .box-certifi-register.type03 .register-area .ico.fingerprint {
+    background: url(/img/ico/ico-fingerprint.png) no-repeat !important;
+    background-size: 100% !important; }
+  .box-certifi-register.type01 .register-area .ico.faceid, .shop-info .shop-txt .box-certifi-register.type02 .register-area .ico.faceid, .shop-info .shop-txt .box-certifi-register.type03 .register-area .ico.faceid {
+    background: url(/img/ico/ico-faceid.png) no-repeat !important;
+    background-size: 100% !important; }
+
+.prod-guide-list li:nth-of-type(1):before {
+  background: url(/img/product/icon-tfi-guide01.png) no-repeat;
+  background-size: 100%; }
+
+.prod-guide-list li:nth-of-type(2):before {
+  background: url(/img/product/icon-tfi-guide02.png) no-repeat;
+  background-size: 100%; }
+
+.prod-guide-list li:nth-of-type(3):before {
+  background: url(/img/product/icon-tfi-guide03.png) no-repeat;
+  background-size: 100%; }
 
 /* 최은현 */
 .cont-box.rt-bt-type {
@@ -23061,8 +23681,17 @@ input[type="radio"].formradio-small:checked:disabled + label {
 .device_android .simple-form .btn-tip {
   margin-top: -0.1875rem; }
 
+.recommendedrate-list.no-icon-type > li .product-infolink {
+  padding-left: 0; }
+
 /* 김연주 */
 /* 공통 시작 */
+.ml5 {
+  margin-left: 0.3125rem !important; }
+
+.ml9 {
+  margin-left: 0.5625rem !important; }
+
 .cont-box .tit-type6 {
   font-size: 1rem;
   line-height: 1.125rem;
@@ -24120,6 +24749,29 @@ input[type="radio"].formradio-small:checked:disabled + label {
   display: flex;
   width: 100%; }
 
+[class^=ico-ch-] {
+  display: inline-block;
+  content: '';
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.9375rem;
+  vertical-align: middle; }
+  [class^=ico-ch-].ico-ch-tw {
+    background: url(/img/ico/ico-ch-tw.png) no-repeat;
+    background-size: 1.5rem; }
+  [class^=ico-ch-].ico-ch-letter {
+    background: url(/img/ico/ico-ch-letter.png) no-repeat;
+    background-size: 1.5rem; }
+  [class^=ico-ch-].ico-ch-msg {
+    background: url(/img/ico/ico-ch-msg.png) no-repeat;
+    background-size: 1.5rem; }
+  [class^=ico-ch-].ico-ch-email {
+    background: url(/img/ico/ico-ch-email.png) no-repeat;
+    background-size: 1.5rem; }
+  [class^=ico-ch-].ico-ch-post {
+    background: url(/img/ico/ico-ch-post.png) no-repeat;
+    background-size: 1.5rem; }
+
 /* 김태균 */
 .headingbox-wrap {
   display: -webkit-box;
@@ -24525,7 +25177,8 @@ input[type="radio"].formradio-small:checked:disabled + label {
     margin: 1.25rem 0; }
 
 .section-swiper-box {
-  position: relative; }
+  position: relative;
+  z-index: 2; }
   .section-swiper-box .slick-prev,
   .section-swiper-box .slick-next {
     display: none !important; }
@@ -25102,6 +25755,9 @@ input[type="radio"].formradio-small:checked:disabled + label {
     font-size: 0.8125rem;
     font-weight: 300;
     line-height: 1.1875rem; }
+    .member-non-box .tx .bt {
+      color: #178bce;
+      text-decoration: underline; }
   .member-non-box .btn-area {
     margin-top: 1.25rem; }
     .member-non-box .btn-area .btn-round1 {
@@ -25284,6 +25940,8 @@ body.apphome {
     z-index: 3; }
 
 .main-chart-box {
+  position: relative;
+  z-index: 2;
   padding: 1.5625rem 0 0 0;
   text-align: center; }
   .main-chart-box > .line {
@@ -25703,39 +26361,6 @@ body.apphome {
   .charge-product.type-list .bt-cont-box .tx {
     -webkit-line-clamp: 3; }
 
-.section-menu-box .menu-depth1 .depth1-type1 > .bt:before {
-  background-image: url(/img/svg/icon_48px_history.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type2 > .bt:before {
-  background-image: url(/img/svg/icon_48px_charge.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type3 > .bt:before {
-  background-image: url(/img/svg/icon_48px_my.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type4 > .bt:before {
-  background-image: url(/img/common/ico-menu04.png); }
-
-.section-menu-box .menu-depth1 .depth1-type5 > .bt:before {
-  background-image: url(/img/svg/icon_48px_discount.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type6 > .bt:before {
-  background-image: url(/img/svg/icon_48px_event.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type7 > .bt:before {
-  background-image: url(/img/common/ico-menu07.png); }
-
-.section-menu-box .menu-depth1 .depth1-type8 > .bt:before {
-  background-image: url(/img/svg/icon_48px_vas.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type9 > .bt:before {
-  background-image: url(/img/svg/icon_48px_internet.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type10 > .bt:before {
-  background-image: url(/img/svg/icon_48px_roaming.svg); }
-
-.section-menu-box .menu-depth1 .depth1-type11 > .bt:before {
-  background-image: url(/img/common/ico-guide.png); }
-
 .section-menu-box .menu-depth1 > li {
   margin-top: 0.5625rem;
   background: #fff;
@@ -25748,23 +26373,25 @@ body.apphome {
     position: relative;
     display: block;
     width: 100%;
-    padding: 0.875rem 3.125rem 0.9375rem 3.125rem;
+    min-height: 3.1875rem;
+    padding: 0.9375rem 3.125rem 0.6875rem 1rem;
     color: inherit;
     font-size: 16px;
     text-align: left;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
-    .section-menu-box .menu-depth1 > li > .bt:before {
-      content: '';
-      position: absolute;
-      left: 1rem;
-      top: 50%;
+    .section-menu-box .menu-depth1 > li > .bt .ico {
+      display: inline-block;
       width: 1.5rem;
       height: 1.5rem;
-      margin-top: -0.8125rem;
-      background-size: 100% auto;
-      background-repeat: no-repeat;
-      background-position: left center; }
+      padding-right: 0.375rem;
+      vertical-align: middle;
+      font-size: 0;
+      line-height: 0; }
+      .section-menu-box .menu-depth1 > li > .bt .ico img {
+        width: 100%;
+        height: 100%;
+        margin-top: -0.125rem; }
     .section-menu-box .menu-depth1 > li > .bt .custom-form {
       position: absolute;
       right: 1rem;
@@ -25776,7 +26403,7 @@ body.apphome {
       position: relative;
       display: block;
       width: 100%;
-      padding: 0.875rem 3.125rem 0.9375rem 3.125rem;
+      padding: 0.875rem 3.125rem 0.9375rem 3.25rem;
       color: #666666;
       font-size: 0.9375rem;
       text-align: left;
@@ -25790,7 +26417,7 @@ body.apphome {
     .section-menu-box .menu-depth1 > li .depth2 .ti {
       display: block;
       margin-top: 0.625rem;
-      padding: 0.625rem 3.125rem;
+      padding: 0.625rem 3.25rem;
       color: #959595;
       font-size: 0.75rem;
       font-weight: 400; }
@@ -26017,6 +26644,38 @@ body.apphome {
 .search-banner-box img {
   width: 100%;
   vertical-align: top; }
+
+.type-qa .acco-list {
+  padding: 0; }
+  .type-qa .acco-list .acco-box:after {
+    left: 1rem !important;
+    right: 1rem !important; }
+  .type-qa .acco-list .acco-tit button {
+    padding: 1rem 2.5rem 1rem 1rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important; }
+  .type-qa .acco-list .acco-cont {
+    position: relative;
+    background: none !important;
+    font-size: 0.8125rem;
+    line-height: 1.1875rem; }
+    .type-qa .acco-list .acco-cont:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      right: 1rem;
+      border-top: 1px solid #e1e1e1; }
+    .type-qa .acco-list .acco-cont .txt-d {
+      margin-top: 0.625rem;
+      padding-left: 0.5rem;
+      text-indent: -0.5rem;
+      font-size: 0.75rem;
+      line-height: 1rem; }
+      .type-qa .acco-list .acco-cont .txt-d + .txt-d {
+        margin-top: 0.1875rem; }
+    .type-qa .acco-list .acco-cont .link {
+      color: #4a9fe4; }
 
 /* 권은별 */
 /* 공통(회원) */

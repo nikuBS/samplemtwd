@@ -35,7 +35,6 @@ Tw.BenefitMyBenefit.prototype = {
       layer: true,
       btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
       data: [{
-        'title': Tw.BENEFIT.PAYMENT.TITLE,
         'list': [
           {
             'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/cashbag"',

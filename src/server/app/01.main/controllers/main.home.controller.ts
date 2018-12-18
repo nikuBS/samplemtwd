@@ -61,7 +61,7 @@ class MainHome extends TwViewController {
     //   .subscribe((resp) => {
     //     console.log('default', resp);
     //   });
-
+    console.log('svcTye', svcType);
     if ( svcType.login ) {
       svcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
@@ -356,8 +356,8 @@ class MainHome extends TwViewController {
         data.showMyRemained = SKIP_NAME.UNLIMIT;
       }
       if ( TPLAN_SHARE_LIST.indexOf(target.skipId) !== -1 ) {
-        data.shareTotal += +data.total;
-        data.shareRemained += data.remained;
+        data.shareTotal += +target.total;
+        data.shareRemained += +target.remained;
       }
     });
     data.showShareRemained = this.convFormat(data.shareRemained, UNIT_E.DATA);

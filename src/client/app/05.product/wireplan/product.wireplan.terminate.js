@@ -8,7 +8,7 @@ Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) 
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
@@ -70,7 +70,7 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _prodConfirmOk: function(callbackParams) {
-    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService
       .request(
@@ -91,7 +91,7 @@ Tw.ProductWireplanTerminate.prototype = {
   },
 
   _procTerminateRes: function(resp) {
-    // Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

@@ -10,7 +10,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._tidLanding = new Tw.TidLandingComponent();
   this._apiService = Tw.Api;
 
@@ -69,7 +69,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _openComparePlans: function(e) {
-    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'), 'status=1,toolbar=1');
+    Tw.CommonHelper.openUrlInApp($(e.currentTarget).data('href'), 'status=1,toolbar=1');
   },
 
   _confirmExternalUrl: function(e) {
@@ -217,7 +217,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._procAdvanceCheck(url, { code: '00' });
     }
 
-    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
       .done($.proxy(this._procAdvanceCheck, this, url));
   },
@@ -271,7 +271,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _procAdvanceCheck: function(url, resp) {
-    // Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();

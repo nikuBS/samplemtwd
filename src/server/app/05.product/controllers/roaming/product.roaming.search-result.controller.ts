@@ -38,7 +38,12 @@ class ProductRoamingSearchResult extends TwViewController {
               params.command = 'withCountry';
           }
       } else {
-          params.command = 'onlyCountry';
+          if ( !searchInfo.eqpMdlNm ) {
+              params.command = 'onlyCountry';
+          } else {
+              params.command = 'withCountry';
+          }
+
       }
 
       Observable.combineLatest(
