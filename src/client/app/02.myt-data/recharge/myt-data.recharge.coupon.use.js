@@ -154,6 +154,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       return;
     }
 
+    Tw.CommonHelper.setLocalStorage('recharge', 'done');
     switch (type) {
       case 'data':
         this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=data');
