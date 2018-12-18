@@ -96,7 +96,7 @@ class ProductHelper {
     };
   }
 
-  static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt, isVcallFormat): any {
+  static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt, isVcallFormat = true): any {
     const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
     let replacedResult: any = null;
 
