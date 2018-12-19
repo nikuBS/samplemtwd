@@ -121,7 +121,7 @@ Tw.TidLandingComponent.prototype = {
     //
     // }
     this._apiService.sendNativeSession('');
-    // this._historyService.goLoad('/common/member/logout/complete');
+    this._historyService.goLoad('/common/member/logout/complete');
   },
   _successSetSession: function () {
     this._historyService.reload();
