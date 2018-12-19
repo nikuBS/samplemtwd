@@ -958,6 +958,12 @@ Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
   BUILDING: ['단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물']
 };
 
+Tw.MYT_JOIN_WIRE_CANCEL_SERVICE = {
+  NO_PHONE: '휴대폰 또는 일반전화를 등록해 주세요.',
+  INVALID_PHONE: '전화번호를 올바르게 입력해 주세요.',
+  NO_DC_REFUND: '할인반환내역이 없습니다.'
+};
+
 Tw.MYT_JOIN_SUSPEND = {
   CONFIRM: {
     TITLE: '일시정지를 신청하시겠습니까?',

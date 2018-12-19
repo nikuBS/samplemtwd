@@ -79,10 +79,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.phoneLi.on('click', 'input[type=checkbox]', $.proxy(this.phoneLiEvt, this));
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
     this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
+    this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
-    this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
-
-    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
+    this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
@@ -203,8 +202,17 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   // 연락처 입력
   input_hpEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
-    this.dataModel.phoenNmStr = tempNum;
 
+    if(Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val()) ||
+       Tw.ValidationHelper.isTelephone($('[data-target="input_hp"]').val())){  //
+      this.dataModel.phoenNmStr = tempNum;
+      $('#spanHpValid').text('');
+    } else {
+      this.dataModel.phoenNmStr = '';
+      if(this.hpAndTelType.find('input:radio[name=radio1]:checked').val() === 'hp'){
+        $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+      }
+    }
     this._formValidateionChk();
     Tw.Logger.info('[dataModel]', this.dataModel);
   },
@@ -276,8 +284,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.uncheckPhoneLi();
     this.dataModel.memberPhoneBol = false;
 
-
+    $('#spanHpValid').text('');
     Tw.Logger.info('[연락 가능한 연락처 타입]', this.dataModel);
+    this._formValidateionChk();
   },
 
   //--------------------------------------------------------------------------[SVC]
@@ -337,8 +346,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   _memberPhoneSet: function() {
     // Tw.Logger.info('[회원정보 등록된 연락처 셋팅]');
     if(!this.resData.allSvc) return;
-    var hpList = this.resData.allSvc.M;
-    var telList = this.resData.allSvc.S;
+    var hpList = this.resData.allSvc.m;
+    var telList = this.resData.allSvc.s;
 
     if ( !Tw.FormatHelper.isEmpty(hpList) ) {
       _.map(hpList, $.proxy( function(item){
@@ -422,10 +431,30 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
         }
 
         if( key === 'phoenNmStr' ) { // 연락 가능한 연락처
-          if ( Tw.FormatHelper.isEmpty(item) ) {
+
+          if(!$('[data-target="input_hp"]').val()){
             Tw.Logger.info('[값을 입력하세요.]', key);
+            $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_PHONE);
             throw new Error('break');
           }
+
+          var nType = $('[data-target="hpAndTelType"] input:radio[name=radio1]:checked').val();
+
+          if(nType === 'hp'){
+            if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){
+              $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+              Tw.Logger.info('[값을 입력하세요.]', key);
+              throw new Error('break');
+            }
+          } else if(nType === 'tel'){
+            if(!Tw.ValidationHelper.isTelephone($('[data-target="input_hp"]').val())){
+              $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.INVALID_PHONE);
+              Tw.Logger.info('[값을 입력하세요.]', key);
+              throw new Error('break');
+            }
+          }
+
+          $('#spanHpValid').text('');
         }
 
       });
@@ -490,27 +519,39 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       };
       this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
 
+    } else if ( res.code === 'ZINVE8888' ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
+      this.dataModel.dcRefdSearch = true;
     }
   },
 
   _setWireCancel: function (param) {
     Tw.Logger.info('[해지신청 진행]', param);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    return this._apiService.request(Tw.API_CMD.BFF_05_0174, param).done($.proxy(this._setWireCancelInit, this));
+    return this._apiService.request(Tw.API_CMD.BFF_05_0174, param)
+      .done($.proxy(this._setWireCancelInit, this))
+      .fail(function (err) {
+        Tw.CommonHelper.endLoading('.container');
+        Tw.Error(err.status, err.statusText).pop();
+      });
   },
   _setWireCancelInit: function (res) {
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과] _setWireCancelInit', res);
 
       this.cancelFeeInfo = res.result;
 
-      this._popupService.afterRequestSuccess('/myt-join/submain_w', '/myt-join/submain_w', null,
-        Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE, null);
+      // this._popupService.afterRequestSuccess('/myt-join/submain_w', '/myt-join/submain_w', null,
+      //   Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE, null);
 
-      // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
-      //   $.proxy(function(){
-      //     this._goLoad('/myt-join/submain/wire/history');
-      //   }, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
+        $.proxy(function(){
+          this._goLoad('/myt-join/submain/wire/history');
+        }, this));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 

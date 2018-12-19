@@ -33,7 +33,11 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
 Tw.MyTJoinWireModifyProduct.prototype = {
   _init: function () {
     if(this.resData.resDataInfo.coClCd === 'B'){
-      this._openSkbdErrorAlert();
+      if( !Tw.Environment.cdn ) {
+        $(window).on('env', $.proxy(this._openSkbdErrorAlert, this));
+      } else {
+        this._openSkbdErrorAlert();
+      }
       return;
     }
     this._bindEvent();
@@ -56,6 +60,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('keyup', '[data-target="input_phone"]', $.proxy(this.input_phoneEvt, this));
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
+    this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
     this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
   },
@@ -163,7 +168,14 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
   input_hpEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
-    this.productFormData.cntcPrefrMblPhonNum = tempNum;
+
+    if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){  //
+      this.productFormData.cntcPrefrMblPhonNum = '';
+      $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+    } else {
+      this.productFormData.cntcPrefrMblPhonNum = tempNum;
+      $('#spanHpValid').text('');
+    }
     this._formValidateionChk();
     Tw.Logger.info('[productFormData]', this.productFormData);
   },
@@ -288,10 +300,15 @@ Tw.MyTJoinWireModifyProduct.prototype = {
         Tw.Logger.info('[ productFormData > _.map > '+ key +']', item, Tw.FormatHelper.isEmpty(item));
 
         if ( key !== 'cntcPrefrPhonNum' ) { //일반전화가 아닐때
-          if ( Tw.FormatHelper.isEmpty(item) ) {
-            Tw.Logger.info('[값을 입력하세요.]', key);
-            throw new Error('break');
-
+          if ( key === 'cntcPrefrMblPhonNum' ) { // 휴대폰
+            if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){  //
+              throw new Error('break');
+            }
+          } else {
+            if ( Tw.FormatHelper.isEmpty(item) ) {
+              Tw.Logger.info('[값을 입력하세요.]', key);
+              throw new Error('break');
+            }
           }
         }
 
@@ -315,9 +332,16 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
   //--------------------------------------------------------------------------[API]
   _chgProductInfo: function (param) {
-    return this._apiService.request(Tw.API_CMD.BFF_05_0165, param).done($.proxy(this._chgProductInfoInit, this));
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    return this._apiService.request(Tw.API_CMD.BFF_05_0165, param)
+      .done($.proxy(this._chgProductInfoInit, this))
+      .fail(function (err) {
+        Tw.CommonHelper.endLoading('.container');
+        Tw.Error(err.status, err.statusText).pop();
+      });
   },
   _chgProductInfoInit: function (res) {
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과] _chgProductInfoInit', res);
       // 성공시 2_A36 alert 노출
@@ -347,6 +371,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       //   $.proxy(function(){
       //     this._goLoad('/myt-join/submain/wire/history');
       // }, this));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
 
   },
