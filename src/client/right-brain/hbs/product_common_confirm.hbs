@@ -108,14 +108,14 @@
                             </div>
                             <div class="cont-area">
                                 {{#if autoJoinList}}
-                                    {{#autoJoinList}}
-                                        <dl>
-                                            <dt>{{svcProdNm}}</dt>
-                                            {{#each svcProdList}}
-                                                <dd>{{{this}}}</dd>
-                                            {{/each}}
-                                        </dl>
-                                    {{/autoJoinList}}
+                                {{#autoJoinList}}
+                                    <dl>
+                                        <dt>{{svcProdNm}}</dt>
+                                        {{#each svcProdList}}
+                                            <dd>{{{this}}}</dd>
+                                        {{/each}}
+                                    </dl>
+                                {{/autoJoinList}}
                                 {{else}}
                                     <dl>
                                         <dt>부가서비스</dt>
@@ -153,14 +153,14 @@
                             </div>
                             <div class="cont-area">
                                 {{#if autoTermList}}
-                                    {{#autoTermList}}
-                                        <dl>
-                                            <dt>{{svcProdNm}}</dt>
-                                            {{#each svcProdList}}
-                                                <dd>{{{this}}}</dd>
-                                            {{/each}}
-                                        </dl>
-                                    {{/autoTermList}}
+                                {{#autoTermList}}
+                                    <dl>
+                                        <dt>{{svcProdNm}}</dt>
+                                        {{#each svcProdList}}
+                                            <dd>{{{this}}}</dd>
+                                        {{/each}}
+                                    </dl>
+                                {{/autoTermList}}
                                 {{else}}
                                     <dl>
                                         <dt>부가서비스</dt>

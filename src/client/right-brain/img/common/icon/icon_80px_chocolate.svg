@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 60 60 60 60 0 0 0"></polygon>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-11" transform="translate(10.000000, 10.000000)">
+            <path d="M42.0693,38.7236 L42.0693,31.9566 C42.0693,29.5556 44.0623,27.5896 46.5003,27.5896 C48.9373,27.5896 50.9303,29.5556 50.9303,31.9566 L50.9303,38.7236" id="Stroke-1" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
+            <polygon id="Stroke-3" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="34.5 10.5 34.5 34.5 10.5 34.5 10.5 58.5 58.5 58.5 58.5 10.5"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Clip-6"></g>
+            <polygon id="Stroke-5" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="1.5 25.5 25.5 25.5 25.5 1.5 1.5 1.5"></polygon>
+            <polyline id="Stroke-7" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="13.5 7.5 7.5 7.5 7.5 13.5"></polyline>
+            <polygon id="Stroke-8" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="34.5 58.5 58.5 58.5 58.5 34.5 34.5 34.5"></polygon>
+            <polyline id="Stroke-9" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="46.5 16.5 40.5 16.5 40.5 22.5"></polyline>
+            <polyline id="Stroke-10" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="22.5 40.5 16.5 40.5 16.5 46.5"></polyline>
+        </g>
+    </g>
+</svg>
