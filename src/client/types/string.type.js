@@ -1364,6 +1364,11 @@ Tw.ROAMING_COMBINE_LINE_STRING = {
   COMBINE_LINE: '자회선 설정하기 >'
 };
 
+Tw.SETTING_LOCATION = {
+  AGREE: '위치정보 이용에 동의하셨습니다.',
+  DISAGREE: '위치정보 이용동의를 취소하셨습니다.'
+}
+
 Tw.TMAP_STRING = {
   POI_SEARCH_POSTFIX: '청'
 };
