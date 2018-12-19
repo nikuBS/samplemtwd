@@ -23,7 +23,7 @@ Tw.CustomerAgentsearchNear = function (rootEl) {
   this._currentBranchType = 0;
   this._currentGu = undefined;
 
-  $(window).on('env', $.proxy(function () {
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
       this._showDataChargeIfNeeded($.proxy(function () {
       this._init();
       this._cacheElements();

@@ -14,3 +14,5 @@ Tw.UPLOAD_TYPE = {
   RESERVATION: 'reservation',
   SUSPEND: 'suspend'
 };
+
+Tw.INIT_COMPLETE = 'env';

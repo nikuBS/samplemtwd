@@ -68,7 +68,7 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._reqOverpay, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._reqOverpay, this));
   },
 
   _getJoinConfirmContext: function() {

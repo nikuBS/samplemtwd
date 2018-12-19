@@ -41,7 +41,7 @@ Tw.Init.prototype = {
       var result = resp.result;
       Tw.Environment = result;
       Tw.Logger.info('[Version]', result.version);
-      $(window).trigger('env');
+      $(window).trigger(Tw.INIT_COMPLETE);
 
       // if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
       //   /* jshint undef: false */

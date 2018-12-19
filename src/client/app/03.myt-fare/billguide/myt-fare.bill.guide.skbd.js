@@ -11,7 +11,7 @@ Tw.MyTFareBillGuideSKBD = function (rootEl) {
   // 서버에서 화면 로딩후 바로 popup하니 cdn이 로딩되지 않아
   // xtractor_script.js에서 popup.hbs가 404오류가나는 현상으로
   // 아래 코드로 변경
-  $(window).on('env', $.proxy(this._openSkbdPopup, this));
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdPopup, this));
 
 };
 
