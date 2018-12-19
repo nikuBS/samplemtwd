@@ -114,7 +114,7 @@ Tw.CommonMemberLineEdit.prototype = {
       Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._checkRepSvc(resp.result);
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _checkRepSvc: function (result) {
@@ -153,7 +153,7 @@ Tw.CommonMemberLineEdit.prototype = {
         this._closeMarketingOfferPopup();
       }
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _closeMarketingOfferPopup: function () {
