@@ -51,7 +51,7 @@ class BenefitTPlusSales extends TwViewController {
           title: PRODUCT_TYPE_NM.JOIN
         });
       }
-      res.render('program/benefit.dis-pgm.t-plus.html', { data });
+      res.render('program/benefit.t-plus-sales.html', { data });
     });
   }
 

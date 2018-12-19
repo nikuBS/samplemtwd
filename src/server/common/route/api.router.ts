@@ -40,6 +40,7 @@ class ApiRouter {
   }
 
   private setApi() {
+    this.router.get('/sessions', this.checkSession.bind(this));
     this.router.get('/health', this.checkHealth.bind(this));
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.get('/domain', this.getDomain.bind(this));
@@ -73,6 +74,12 @@ class ApiRouter {
     this.router.get('/home/quick-menu', this.getQuickMenu.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
+  }
+
+  private checkSession(req: Request, res: Response, next: NextFunction) {
+    res.json({
+      code: API_CODE.CODE_00
+    });
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {

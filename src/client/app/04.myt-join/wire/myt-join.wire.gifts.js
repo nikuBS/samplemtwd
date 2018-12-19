@@ -82,6 +82,8 @@ Tw.MyTJoinWireGifts.prototype = {
       'type1',
       $.proxy(function ($layer) {
         $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+      }, this), $.proxy(function () {
+        this._historyService.goBack();
       }, this)
     );
   },

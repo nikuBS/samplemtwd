@@ -16,6 +16,9 @@ Tw.BiometricsRegister = function (target) {
 };
 
 Tw.BiometricsRegister.prototype = {
+  ERROR_CODE: {
+    CANCEL: 258
+  },
   open: function (callback) {
     this._callback = callback;
     this._popupService.open({
@@ -38,6 +41,8 @@ Tw.BiometricsRegister.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._complete = true;
       this._popupService.closeAll();
+    } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
+      Tw.Logger.log('[FIDO] Cancel');
     } else {
       Tw.Error(resp.resultCode, 'error').pop();
     }

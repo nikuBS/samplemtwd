@@ -79,7 +79,7 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <ul class="link-list">
+                    <ul class="link-list {{{setInfo}}}">
                         <li>
                             <dl>
                                 <dt>설정 정보</dt>
@@ -87,7 +87,7 @@
                                     {{#settingSummaryTexts}}
                                         <span class="{{spanClass}}">{{text}}</span>
                                     {{/settingSummaryTexts}}
-                                    <button class="fe-btn_close_confirm">정보입력 팝업 열기</button>
+                                    <button class="fe-btn_close_confirm {{{setInfo}}}">정보입력 팝업 열기</button>
                                 </dd>
                             </dl>
                         </li>
@@ -108,14 +108,14 @@
                             </div>
                             <div class="cont-area">
                                 {{#if autoJoinList}}
-                                    {{#autoJoinList}}
-                                        <dl>
-                                            <dt>{{svcProdNm}}</dt>
-                                            {{#each svcProdList}}
-                                                <dd>{{{this}}}</dd>
-                                            {{/each}}
-                                        </dl>
-                                    {{/autoJoinList}}
+                                {{#autoJoinList}}
+                                    <dl>
+                                        <dt>{{svcProdNm}}</dt>
+                                        {{#each svcProdList}}
+                                            <dd>{{{this}}}</dd>
+                                        {{/each}}
+                                    </dl>
+                                {{/autoJoinList}}
                                 {{else}}
                                     <dl>
                                         <dt>부가서비스</dt>
@@ -153,14 +153,14 @@
                             </div>
                             <div class="cont-area">
                                 {{#if autoTermList}}
-                                    {{#autoTermList}}
-                                        <dl>
-                                            <dt>{{svcProdNm}}</dt>
-                                            {{#each svcProdList}}
-                                                <dd>{{{this}}}</dd>
-                                            {{/each}}
-                                        </dl>
-                                    {{/autoTermList}}
+                                {{#autoTermList}}
+                                    <dl>
+                                        <dt>{{svcProdNm}}</dt>
+                                        {{#each svcProdList}}
+                                            <dd>{{{this}}}</dd>
+                                        {{/each}}
+                                    </dl>
+                                {{/autoTermList}}
                                 {{else}}
                                     <dl>
                                         <dt>부가서비스</dt>
@@ -186,6 +186,16 @@
                                                     <li>자동 해지 혜택이 없습니다.</li>
                                                 </ul>
                                             </dd>
+                                        {{/if}}
+                                    </dl>
+                                {{/if}}
+                                {{#if isSelectedProgram}}
+                                    <dl>
+                                        <dt>부가서비스</dt>
+                                        {{#if isContractPlan}}
+                                            <dd>무약정플랜</dd>
+                                        {{else}}
+                                            <dd class="tx-black3">자동해지 부가서비스가 없습니다.</dd>
                                         {{/if}}
                                     </dl>
                                 {{/if}}
@@ -356,7 +366,7 @@
                                                                 <ul class="bullet-type">
                                                                     <li>고객님의 약정잔여기간(약정기간-사용기간)을 고려하여, 보조금 차액 정산 부과액 또는 환급액이 결정됩니다.</li>
                                                                     {{#if installmentAgreement.isPremTerm}}
-                                                                        <li>{{{installmentAgreement.premTermMsg}}}</li>
+                                                                    <li>{{{installmentAgreement.premTermMsg}}}</li>
                                                                     {{/if}}
                                                                 </ul>
                                                             </div>

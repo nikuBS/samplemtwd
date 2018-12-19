@@ -38,9 +38,12 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 
 Tw.MyTJoinWireModifyAddress.prototype = {
   _init: function () {
+    if(this.resData.resDataInfo.coClCd === 'B'){
+      this._openSkbdErrorAlert();
+      return;
+    }
     this._cachedElement();
     this._bindEvent();
-
   },
   _cachedElement: function () {
 
@@ -75,8 +78,50 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     this.$container.on('click', '#btnPostSearch', $.proxy(this._addr_search_clickEvt, this));
     this.$container.on('change', '.fe-main-address', $.proxy(this._formValidateionChk, this));
     this.$container.on('change', '.fe-detail-address', $.proxy(this._formValidateionChk, this));
+
+    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
+
   },
+
+  _openSkbdErrorAlert: function () {
+    Tw.Popup.openOneBtTypeB(
+      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
+      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+      [{
+        style_class: 'link',
+        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
+      }],
+      'type1',
+      $.proxy(function ($layer) {
+        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+      }, this), $.proxy(function () {
+        this._history.goBack();
+      }, this)
+    );
+  },
+
   //--------------------------------------------------------------------------[EVENT]
+  _closeCheck: function(){
+
+    if(this.addressFormData.bldTypNm ||
+      this.addressFormData.basAddr ||
+      this.addressFormData.mvDt ||
+      this.addressFormData.stopPrefrDt ||
+      this.addressFormData.setPrefrDt ||
+      $('[data-target="input_hp"]').val() ||
+      $('[data-target="input_phone"]').val()) {
+
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._history.goLoad('/myt-join/submain_w');
+        }, this));
+    } else {
+      this._history.goBack();
+    }
+  },
+
   $submitApplyEvt: function(event) {
     Tw.Logger.info('[신청하기]', event);
 

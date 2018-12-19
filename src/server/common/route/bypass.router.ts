@@ -53,12 +53,12 @@ class BypassRouter {
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
-    const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-
-    // const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
-    // const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
+
+    const params = cmd.method === API_METHOD.GET ? req.query : req.body;
+    // const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
+    // const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
 

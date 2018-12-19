@@ -55,49 +55,11 @@ Tw.BenefitSelectContract.prototype = {
     }
   },
 
-  _onRefundBtnClicked: function() {
+  _onRefundBtnClicked: function () {
     this._popupService.openAlert('TBD_Tip');
   },
 
   _onOkBtnClicked: function () {
-    new Tw.ProductCommonConfirm(true, this.$container, $.extend(this.joinInfoTerm, {
-      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
-      isSelectedProgram: true,
-      isContractPlan: this.data.isContractPlan,
-      isAutoJoinTermList: true,
-      setInfo: 'set-info',
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
-      settingSummaryTexts: [
-        {
-          spanClass: 'term',
-          text: this.data.monthCode[this.selType] + Tw.DATE_UNIT.MONTH
-        },
-        {
-          spanClass: 'date',
-          text: this.data.monthDetail[this.selType]
-        }]
-    }), $.proxy(this._joinCompleteConfirm, this));
-  },
-
-  _joinCompleteConfirm: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0063, { svcAgrmtPrdCd: this.selType })
-      .done($.proxy(this._onSuccessSeldisSet, this))
-      .fail($.proxy(this._onErrorSeldisSet, this));
-  },
-
-  _onSuccessSeldisSet: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/product/callplan/' + this.data.prodId,
-        Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE, Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.TITLE,
-        Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.CONTENT);
-    }
-    else {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-  },
-
-  _onErrorSeldisSet: function (resp) {
-    Tw.Error(resp.code, resp.msg).pop();
+    this._historyService.goLoad('/benefit/submain/detail/dis-pgm/input?prod_id=' + this.data.prodId + '&sel_type=' + this.selType);
   }
 };

@@ -40,56 +40,50 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
-                <!-- .list-comp-input -->
-                <div class="list-comp-input-agree">
-                    <div class="widget">
-                        <div class="widget-box check">
-                            <ul class="select-list" role="group">
-                                <li>
-                                    <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input id="fe-check-all" type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD, TBD, TBD, TBD, TBD, TBD, TBD에 모두 동의합니다.</span>
-                                            </p>
+                <div class="agree-chk-wrap agree-chk-type">
+                    <!-- .list-comp-input -->
+                    <div class="list-comp-input-agree">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list" role="group">
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                                <div class="layout-text">
+                                                    <span class="ntext">개인정보 수집 및 이용동의</span>
+                                                    <table class="data-a mt16">
+                                                        <caption>개인정보 수집 및 이용동의</caption>
+                                                        <colgroup>
+                                                            <col style="width:75px;">
+                                                            <col>
+                                                        </colgroup>
+                                                        <tbody>
+                                                        <tr>
+                                                            <th scope="row">목적</th>
+                                                            <td>생체정보를 통한 본인식별/인증</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">항목</th>
+                                                            <td>단말기 정보(모델명,OS,Device ID 등),앱 버전</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">보유기간</th>
+                                                            <td>서비스 이용(제공) 기간(단,법령에 특별한 규정이 있을 경우 관련 법령 준수)</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p class="stext mt16">회원님은 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며, 거부하시더라도 T world 회원 서비스의 이용에 제한되지 않습니다.</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값2" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD(필수)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값3" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD(필수)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값4" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox4" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD(필수)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <!--// .list-comp-input -->
                 </div>
-                <!--// .list-comp-input -->
             </div>
             <!--// .cont-box -->
             <div class="bt-fixed-area">

@@ -115,9 +115,12 @@ Tw.CertificationSk.prototype = {
     this.$btReCert = $popupContainer.find('#fe-bt-recert');
     this.$btCertAdd = $popupContainer.find('#fe-bt-cert-add');
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
-    this.$validCert = $popupContainer.find('#aria-sms-exp-desc2');
-    this.$errorCert = $popupContainer.find('#aria-sms-exp-desc1');
-    this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc3');
+    this.$errorCertTime = $popupContainer.find('#aria-sms-exp-desc1');
+    this.$errorCertCnt = $popupContainer.find('#aria-sms-exp-desc2');
+    this.$validCert = $popupContainer.find('#aria-sms-exp-desc3');
+    this.$validAddCert = $popupContainer.find('#aria-sms-exp-desc4');
+    this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc5');
+    this.$errorConfirmTime = $popupContainer.find('#aria-sms-exp-desc6');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
 
@@ -208,8 +211,6 @@ Tw.CertificationSk.prototype = {
   _requestCert: function () {
     this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
       .done($.proxy(this._successGetUrlMeta, this));
-
-
   },
   _successGetUrlMeta: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -219,28 +220,37 @@ Tw.CertificationSk.prototype = {
     }
     this._sendCert();
   },
-  _sendCert: function () {
+  _sendCert: function (reCert) {
     if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
       this._apiService.request(Tw.API_CMD.BFF_01_0014, {
         jobCode: this._jobCode,
         receiverNum: this._onKeyin ? this.$inputMdn.val() : '',
         mdn: this._securityMdn
-      }).done($.proxy(this._onSuccessCert, this));
+      }).done($.proxy(this._onSuccessCert, this, reCert));
     } else if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE ) {
       this._apiService.request(Tw.API_CMD.BFF_01_0057, {
         jobCode: this._jobCode,
         mdn: this._securityMdn
-      }).done($.proxy(this._onSuccessCert, this));
+      }).done($.proxy(this._onSuccessCert, this, reCert));
 
     }
   },
-  _onSuccessCert: function (resp) {
+  _onSuccessCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._seqNo = resp.result.seqNo;
+      this._clearCertError();
       this.$validCert.removeClass('none');
-      this.$btReCert.parent().addClass('none');
-      this.$btCert.parent().addClass('none');
-      this.$btCertAdd.parent().removeClass('none');
+      if ( !reCert ) {
+        this.$btReCert.parent().addClass('none');
+        this.$btCert.parent().addClass('none');
+        this.$btCertAdd.parent().removeClass('none');
+      }
+    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
+      this._clearCertError();
+      this.$errorCertTime.removeClass('none');
+    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2006 ) {
+      this._clearCertError();
+      this.$errorCertCnt.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -249,7 +259,7 @@ Tw.CertificationSk.prototype = {
     this._requestCert();
   },
   _onClickReCert: function () {
-    this._requestCert();
+    this._sendCert(true);
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
@@ -259,6 +269,8 @@ Tw.CertificationSk.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btReCert.parent().removeClass('none');
       this.$btCertAdd.parent().addClass('none');
+      this._clearCertError();
+      this.$validAddCert.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -275,10 +287,29 @@ Tw.CertificationSk.prototype = {
     }).done($.proxy(this._successConfirm, this));
   },
   _successConfirm: function (resp) {
-    // if ( resp.code === Tw.API_CODE.CODE_00 ) {
-    //
-    // }
-    this._callbackParam = resp;
-    this._popupService.close();
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._callbackParam = resp;
+      this._popupService.close();
+    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2007 ) {
+      this._clearConfirmError();
+      this.$errorConfirm.removeClass('none');
+    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2008 ) {
+      this._clearConfirmError();
+      this.$errorConfirmTime.removeClass('none');
+    } else {
+      this._callbackParam = resp;
+      this._popupService.close();
+    }
+
+  },
+  _clearCertError: function () {
+    this.$validCert.addClass('none');
+    this.$validAddCert.addClass('none');
+    this.$errorCertTime.addClass('none');
+    this.$errorCertCnt.addClass('none');
+  },
+  _clearConfirmError: function () {
+    this.$errorConfirm.addClass('none');
+    this.$errorConfirmTime.addClass('none');
   }
 };
