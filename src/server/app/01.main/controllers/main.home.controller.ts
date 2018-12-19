@@ -365,14 +365,18 @@ class MainHome extends TwViewController {
       data.myRemained = 0;
       list.map((target) => {
         if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 ) {
-          console.log(target.skipId, target.total, target.remained);
           data.myTotal += +target.total;
           data.myRemained += +target.remained;
         }
       });
+
+      data.addRemained = data.myRemained + data.shareRemained;
+      data.addTotal = data.myTotal + data.shareTotal;
+      data.showAddRemained = this.convFormat(data.addRemained, UNIT_E.DATA);
+
       data.showMyRemained = this.convFormat(data.myRemained, UNIT_E.DATA);
-      data.myRemainedRatio = data.myRemained / (data.shareTotal + data.myTotal) * 100;
-      data.shareRemainedRatio = (data.myRemained + data.shareRemained) / (data.shareTotal + data.myTotal) * 100;
+      data.myRemainedRatio = data.myRemained / data.addTotal * 100;
+      data.shareRemainedRatio = data.addRemained / data.addTotal * 100;
     }
   }
 
