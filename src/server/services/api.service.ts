@@ -10,6 +10,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
+import { SvcInfoModel } from '../models/svc-info.model';
 
 class ApiService {
   static instance;
@@ -388,24 +389,49 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.request(API_CMD.BFF_01_0005, {});
+          const svcInfo = this.loginService.getSvcInfo();
+          const newSvc = new SvcInfoModel({
+            mbrNm: svcInfo.mbrNm,
+            noticeType: svcInfo.noticeType,
+            loginType: svcInfo.loginType
+          });
+          return this.loginService.setSvcInfo(newSvc);
+          // return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp;
-        }
-      })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setAllSvcInfo(resp.result);
+          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
+          category.map((line) => {
+            const curLine = resp.result[LINE_NAME[line]];
+            if ( !FormatHelper.isEmpty(curLine) ) {
+              curLine.map((target) => {
+                if ( target.expsSeq === '1' ) {
+                  Object.assign(currentSvcInfo, target);
+                }
+              });
+              // delete resp.result.userId;
+              // delete resp.result.xtUserId;
+              // delete resp.result.totalSvcCnt;
+              // delete resp.result.expsSvcCnt;
+            }
+          });
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setAllSvcInfo(resp.result));
         } else {
-          return this.loginService.setAllSvcInfo(null);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(null),
+            this.loginService.setAllSvcInfo(null));
         }
       }).map(() => {
         return { code: API_CODE.CODE_00, result: result };

@@ -62,7 +62,7 @@ class MainHome extends TwViewController {
     //     console.log('default', resp);
     //   });
     if ( svcType.login ) {
-      svcInfo = this.parseSvcInfo(svcType, svcInfo);
+      // const showSvcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
         if ( svcType.mobilePhone ) {
           // 모바일 - 휴대폰 회선
@@ -299,9 +299,10 @@ class MainHome extends TwViewController {
   }
 
   private parseSvcInfo(svcType, svcInfo): any {
-    svcInfo.showName = FormatHelper.isEmpty(svcInfo.nickNm) ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm;
-    svcInfo.showSvc = svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ? svcInfo.addr : svcInfo.svcNum;
-    return svcInfo;
+    return {
+      showName: FormatHelper.isEmpty(svcInfo.nickNm) ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm,
+      showSvc: svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ? svcInfo.addr : svcInfo.svcNum
+    };
   }
 
   // 사용량 조회
