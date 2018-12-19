@@ -98,8 +98,8 @@ class ApiService {
         });
       case API_SERVER.TEST:
         return Object.assign(header, {
-           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
-           'Content-Length': JSON.stringify(params).length
+          'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
+          'Content-Length': JSON.stringify(params).length
         });
       default:
         return Object.assign(header, {
@@ -234,23 +234,20 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          let currentSvcInfo = null;
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
           category.map((line) => {
             const curLine = resp.result[LINE_NAME[line]];
             if ( !FormatHelper.isEmpty(curLine) ) {
               curLine.map((target) => {
                 if ( target.expsSeq === '1' ) {
-                  currentSvcInfo = target;
+                  Object.assign(currentSvcInfo, target);
                 }
               });
-              if ( !FormatHelper.isEmpty(currentSvcInfo) ) {
-                Object.assign(currentSvcInfo, {
-                  userId: resp.result.userId,
-                  xtUserId: resp.result.xtUserId,
-                  totalSvcCnt: resp.result.totalSvcCnt,
-                  expsSvcCnt: resp.result.expsSvcCnt
-                });
-              }
               // delete resp.result.userId;
               // delete resp.result.xtUserId;
               // delete resp.result.totalSvcCnt;
@@ -298,23 +295,20 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          let currentSvcInfo = null;
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
           category.map((line) => {
             const curLine = resp.result[LINE_NAME[line]];
             if ( !FormatHelper.isEmpty(curLine) ) {
               curLine.map((target) => {
                 if ( target.expsSeq === '1' ) {
-                  currentSvcInfo = target;
+                  Object.assign(currentSvcInfo, target);
                 }
               });
-              if ( !FormatHelper.isEmpty(currentSvcInfo) ) {
-                Object.assign(currentSvcInfo, {
-                  userId: resp.result.userId,
-                  xtUserId: resp.result.xtUserId,
-                  totalSvcCnt: resp.result.totalSvcCnt,
-                  expsSvcCnt: resp.result.expsSvcCnt
-                });
-              }
               // delete resp.result.userId;
               // delete resp.result.xtUserId;
               // delete resp.result.totalSvcCnt;
