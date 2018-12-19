@@ -33,7 +33,8 @@ class CustomerFaqDoLikeThis extends TwViewController {
   }
 
   private getContent(res: Response, svcInfo: any, id: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_08_0053, { mtwdBltn1CntsId: id} ).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_08_0053, { mtwdBltn1CntsId: id }).map((resp) => {
+    // return this.apiService.request(API_CMD.BFF_08_0064, {}, null, [id]).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result.cntsCtt;
       }
