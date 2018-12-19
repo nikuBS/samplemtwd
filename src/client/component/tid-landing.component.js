@@ -112,9 +112,16 @@ Tw.TidLandingComponent.prototype = {
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
     // if(resp.code === NTV_CODE.CODE_00) {
-    this._apiService.sendNativeSession('');
-    this._historyService.goLoad('/common/member/logout/complete');
+    this._apiService.request(Tw.NODE_CMD.CHECK_SESSION, {})
+      .done($.proxy(this._successCheckSession, this));
     // }
+  },
+  _successCheckSession: function(resp) {
+    // if(resp.code === Tw.API_CMD.CODE) {
+    //
+    // }
+    this._apiService.sendNativeSession('');
+    // this._historyService.goLoad('/common/member/logout/complete');
   },
   _successSetSession: function () {
     this._historyService.reload();
