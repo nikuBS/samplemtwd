@@ -180,7 +180,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
         var $item = $items.eq(index);
         var id = $item.attr('data-id');
         if ( !this._checkOkCashbag ) {
-          if ( id === 'L_01' || id === 'L_02' ) {
+          if ( id === 'L_01' || id === 'L_02'  || id === 'L_05') {
             array.push($items.eq(index));
           }
         }
@@ -191,7 +191,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }, this));
     // 필수 항목 모두 체크되야 가입하기 버튼 활성화
     if ( this._checkOkCashbag ) {
-      if ( array.length === 4 ) {
+      if ( array.length === 5 ) {
         this.$joinBtn.removeAttr('disabled');
       }
       else {
@@ -199,7 +199,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       }
     }
     else {
-      if ( array.length === 2 ) {
+      if ( array.length === 3 ) {
         this.$joinBtn.removeAttr('disabled');
       }
       else {
