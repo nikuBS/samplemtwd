@@ -22,7 +22,8 @@ interface Option {
 }
 
 interface Product {
-  basOfrDataQtyCtt: string;
+  basOfrGbDataQtyCtt: string;
+  basOfrMbDataQtyCtt: string;
   basOfrVcallTmsCtt: string;
   basOfrCharCntCtt: string;
   basFeeInfo: string;
@@ -111,7 +112,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         }
       }
       if (option.dataVoiceClCd === 'D') {
-        const converted = FormatHelper.convDataFormat(productInfo.basOfrDataQtyCtt, DATA_UNIT.GB);
+        const converted = FormatHelper.convDataFormat(productInfo.basOfrGbDataQtyCtt, DATA_UNIT.GB);
         option.qttText = converted.data + ' ' + converted.unit;
       } else {
         let calculated = parseInt(productInfo.basOfrVcallTmsCtt, 10) * 0.2;

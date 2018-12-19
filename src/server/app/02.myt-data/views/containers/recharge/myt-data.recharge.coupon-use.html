@@ -82,7 +82,7 @@
 													<div class="list-input-type1">
 														<ul class="input-middle01">
                                                             <% for (let i = 0; i < options.length; i++) { %>
-															<li>
+															<li <%= options[i].isTplan ? 'class=type01' : '' %>>
 																<span class="form">
 																	<input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
 																	<label for="sradio<%= i + 1 %>">라디오박스</label>
@@ -91,7 +91,10 @@
                                                                     <span class="stit"><%= options[i].copnDtlClNm %></span>
                                                                     <% if (options[i].qttText !== '0') { %>
                                                                     <p class="stxt1"><%= options[i].qttText %></p>
-                                                                    <% } %>
+																	<% } %>
+																	<% if (options[i].isTplan) { %>
+																	<span class="stext02">T플랜 라지·패밀리·Data인피니티요금제의 경우에는 별도의 기준을 적용합니다.</span>
+																	<% } %>
 																</div>
                                                             </li>
                                                             <% } %>
