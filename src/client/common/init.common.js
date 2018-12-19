@@ -41,13 +41,15 @@ Tw.Init.prototype = {
       var result = resp.result;
       Tw.Environment = result;
       Tw.Logger.info('[Version]', result.version);
-      Tw.Popup = new Tw.PopupService();
       $(window).trigger('env');
 
-      if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
-        /* jshint undef: false */
-        alert(result.version);
-        /* jshint undef: false */
+      // if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
+      //   /* jshint undef: false */
+      //   alert(result.version);
+      //   /* jshint undef: false */
+      // }
+      if ( result.environment !== 'local' && /\/home/.test(location.href) ) {
+        Tw.Popup.toast(result.version);
       }
     }
   },
