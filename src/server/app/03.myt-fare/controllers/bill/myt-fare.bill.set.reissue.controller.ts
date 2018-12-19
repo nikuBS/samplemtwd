@@ -94,6 +94,8 @@ class MyTFareBillSetReissue extends TwViewController {
 
     const reasons = response.result.reissueReasons.map((v) => {
       v.idx = idx[v.commCdVal];
+      // 06:청구서 부달 은 "요금안내서 부달" 로 변경
+      v.commCdValNm = v.commCdVal === '06' ? MYT_FARE_BILL_REISSUE.REASON['06'] : v.commCdValNm;
       return v;
     });
 
