@@ -285,26 +285,49 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
+          return this.loginService.setSvcInfo({
+            mbrNm: resp.result.mbrNm,
+            noticeType: resp.result.noticeTypCd,
+            loginType: LOGIN_TYPE.TID
+          });
         } else {
           throw resp;
-        }
-      })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          resp.result.loginType = LOGIN_TYPE.TID;
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setAllSvcInfo(resp.result);
+          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          let currentSvcInfo = null;
+          category.map((line) => {
+            const curLine = resp.result[LINE_NAME[line]];
+            if ( !FormatHelper.isEmpty(curLine) ) {
+              curLine.map((target) => {
+                if ( target.expsSeq === '1' ) {
+                  currentSvcInfo = target;
+                }
+              });
+              if ( !FormatHelper.isEmpty(currentSvcInfo) ) {
+                Object.assign(currentSvcInfo, {
+                  userId: resp.result.userId,
+                  xtUserId: resp.result.xtUserId,
+                  totalSvcCnt: resp.result.totalSvcCnt,
+                  expsSvcCnt: resp.result.expsSvcCnt
+                });
+              }
+              // delete resp.result.userId;
+              // delete resp.result.xtUserId;
+              // delete resp.result.totalSvcCnt;
+              // delete resp.result.expsSvcCnt;
+            }
+          });
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setAllSvcInfo(resp.result));
         } else {
-          return this.loginService.setAllSvcInfo(null);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(null),
+            this.loginService.setAllSvcInfo(null));
         }
       })
       .map((resp) => {
