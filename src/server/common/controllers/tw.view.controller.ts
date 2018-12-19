@@ -147,26 +147,26 @@ abstract class TwViewController {
             const svcGr = svcInfo.svcGr;
             if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
               if ( urlAuth.indexOf('N') !== -1 ) {
+                // 준회원 접근 가능한 화면
                 this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               } else {
+                // 등록된 회선 없음 + 준회원 접근 안되는 화면
                 this.errorNoRegister(req, res, next);
               }
             } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // TODO: 접근권한 없음
+              // 접근권한 없음
               this.errorAuth(req, res, next);
             }
           } else {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             // 현재 로그인 방법으론 이용할 수 없음
-            // if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-            // res.redirect('/common/member/slogin/fail');
-            // } else {
-            // TODO: ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-            // res.redirect('/common/member/slogin/fail');
-            // this.errorAuth(req, res, next, svcInfo);
-            // }
+            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+              res.redirect('/common/member/slogin/fail');
+            } else {
+              // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+              this.errorAuth(req, res, next);
+            }
           }
         } else {
           if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
@@ -177,29 +177,14 @@ abstract class TwViewController {
               res.redirect('/common/member/login?target=' + path);
             }
           } else {
-            // TODO: admin 정보 입력 오류
+            // TODO: admin 정보 입력 오류 (accessType이 비어있음)
             this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
         }
       } else {
-        // TODO: 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
+        // 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
       }
-
-      // if ( svcInfo.totalSvcCnt === '0' ) {
-      //   this.errorEmptyLine(req, res, next, svcInfo);
-      // } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
-      //   this.errorNoRegister(req, res, next, svcInfo);
-      // } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-      //   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-      // } else {
-      //   const loginType = svcInfo.loginType;
-      //   if ( loginType === LOGIN_TYPE.EASY ) {
-      //     res.redirect('/common/member/slogin/fail');
-      //   } else {
-      //     this.errorAuth(req, res, next, svcInfo);
-      //   }
-      // }
     });
   }
 
