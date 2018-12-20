@@ -43,6 +43,8 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-service_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
+    this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
+    this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
   },
 
   _onClickBtnAddr: function (e) {
@@ -114,6 +116,11 @@ Tw.CustomerEmail.prototype = {
         this._popupService.close();
         this._history.goBack();
       }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+
+  _openTermLayer: function (sCode) {
+    // this._popupService.close();
+    Tw.CommonHelper.openTermLayer(sCode);
   }
 };
 
