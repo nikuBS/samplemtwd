@@ -139,7 +139,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      if (res.code === Tw.API_CODE.NOT_FAMILY) {
+      if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
         this._popupService.open({
           ico: 'type1',
           title: Tw.POPUP_TITLE.NOT_FAMILY,
@@ -162,7 +162,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         return;
       }
 
-      if (res.code === Tw.API_CODE.RECEIVER_LIMIT) {
+      if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
         this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
         return;
       }
