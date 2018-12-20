@@ -219,7 +219,7 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   direct: '즉시납부',
   auto: '자동납부',
-  autoAll: '자동납부 통합 인출',
+  autoAll: '자동 납부 통합 인출',
   microPrepay: '소액 선결제',
   contentPrepay: '콘텐츠 선결제',
   pointReserve: '포인트 납부 예약',
