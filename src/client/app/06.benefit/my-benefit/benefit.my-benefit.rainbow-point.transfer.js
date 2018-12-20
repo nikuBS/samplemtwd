@@ -12,6 +12,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer = function () {
 };
 Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBenefitRainbowPointCommon.prototype, {
   _URL: {
+    ROOT: '/benefit/my',
     COMPLETE: '/benefit/my/rainbowpoint/transfer/complete'
   },
   _PREVIEW_POPUP_HBS: 'BS_01_01_04_01',
