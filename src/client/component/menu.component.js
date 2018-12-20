@@ -156,7 +156,11 @@ Tw.MenuComponent.prototype = {
   },
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
-    this._historyService.goLoad(url);
+    if (url.indexOf('http') !== -1) {
+      Tw.CommonHelper.openUrlExternal(url);
+    } else {
+      this._historyService.goLoad(url);
+    }
   },
   _onFreeSMS: function () {
     Tw.CommonHelper.openFreeSms();
