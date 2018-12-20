@@ -39,8 +39,8 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 Tw.MyTJoinWireModifyAddress.prototype = {
   _init: function () {
     if(this.resData.resDataInfo.coClCd === 'B'){
-      if( !Tw.Environment.cdn ) {
-        $(window).on('env', $.proxy(this._openSkbdErrorAlert, this));
+      if( !Tw.Environment.init ) {
+        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdErrorAlert, this));
       } else {
         this._openSkbdErrorAlert();
       }
