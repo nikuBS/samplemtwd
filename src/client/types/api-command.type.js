@@ -469,7 +469,6 @@ Tw.API_CMD = {
 };
 
 Tw.NODE_CMD = {
-  CHECK_SESSION: { path: '/sessions', method: Tw.API_METHOD.GET },
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   GET_DOMAIN: { path: '/domain', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },

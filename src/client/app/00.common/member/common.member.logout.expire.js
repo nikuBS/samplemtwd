@@ -14,10 +14,6 @@ Tw.CommonMemberLogoutExpire = function (rootEl) {
 
 Tw.CommonMemberLogoutExpire.prototype = {
   _init: function () {
-    this._apiService.request(Tw.NODE_CMD.CHECK_SESSION, {})
-      .done($.proxy(this._successCheckSession, this));
-  },
-  _successCheckSession: function () {
     this._apiService.sendNativeSession('');
   }
 };
