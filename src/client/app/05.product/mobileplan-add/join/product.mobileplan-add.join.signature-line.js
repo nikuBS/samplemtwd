@@ -62,6 +62,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
 
     this.$inputNumber.val(res.params.phoneNumber);
     this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
