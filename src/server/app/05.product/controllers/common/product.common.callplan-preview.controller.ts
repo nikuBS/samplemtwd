@@ -293,7 +293,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     }
 
     let prodIdsLength: any = 0;
-    if (prodTypCd === 'G') {
+    if (prodTypCd === 'G' && similarProductInfo.similarsList) {
       let prodIds: any = [];
 
       similarProductInfo.similarsList.forEach((item) => {
