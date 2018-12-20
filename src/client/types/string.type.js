@@ -1194,6 +1194,12 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
   }
 };
 
+Tw.PRODUCT_CONFIRM_GO_TO_DOCUMENT = {
+  TITLE: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
+  GO_DOCUMENT_BTN: '제출하기',
+  GO_RESERVATION_BTN: '신규신청'
+};
+
 Tw.MEMBERSHIP_GRADE = {
   V: 'VIP',
   G: 'Gold',
@@ -1378,7 +1384,7 @@ Tw.ROAMING_COMBINE_LINE_STRING = {
 Tw.SETTING_LOCATION = {
   AGREE: '위치정보 이용에 동의하셨습니다.',
   DISAGREE: '위치정보 이용동의를 취소하셨습니다.'
-}
+};
 
 Tw.TMAP_STRING = {
   POI_SEARCH_POSTFIX: '청'
