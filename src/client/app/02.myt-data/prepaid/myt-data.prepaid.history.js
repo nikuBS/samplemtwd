@@ -178,8 +178,10 @@ Tw.MyTDataPrepaidHistory.prototype = {
   _setMoreButton: function() {
     var hasNone = this.$moreBtn.addClass('none'),
       type = this._currentType;
-    if (this._leftCount[type] > 0 && hasNone) {
-      this.$moreBtn.removeClass('none');
+    if (this._leftCount[type] > 0) {
+      if (hasNone) {
+        this.$moreBtn.removeClass('none');
+      }
     } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }

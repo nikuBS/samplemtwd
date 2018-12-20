@@ -63,8 +63,10 @@ Tw.ProductList.prototype = {
     this._leftCount = (this._leftCount || resp.result.productCount) - items.length;
 
     var hasNone = this.$moreBtn.hasClass('none');
-    if (this._leftCount > 0 && hasNone) {
-      this.$moreBtn.removeClass('none');
+    if (this._leftCount > 0) {
+      if (hasNone) {
+        this.$moreBtn.removeClass('none');
+      }
     } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
