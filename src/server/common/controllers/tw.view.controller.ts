@@ -170,6 +170,7 @@ abstract class TwViewController {
             } else {
               // 접근권한 없음
               this.errorAuth(req, res, next);
+              // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             }
           } else {
             // 현재 로그인 방법으론 이용할 수 없음
