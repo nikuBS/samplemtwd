@@ -9,7 +9,6 @@ import LoginService from '../../services/login.service';
 class NativeRouter {
   public router: Router;
   private apiService: ApiService = new ApiService();
-  private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
@@ -53,7 +52,6 @@ class NativeRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
 
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const pathVar = this.getPathVariable(req.params);

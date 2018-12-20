@@ -15,13 +15,13 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
+    this.request = req;
+    this.response = res;
     this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], this.getSessionId(req), req.baseUrl + req.path);
     // console.log('[[[[[[cookie]]]]]]]', req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
     // console.log(req.session);
     // console.log(req.cookies);
     // console.log('[[[[[Session Id]]]]]', this.getSessionId(req));
-    this.request = req;
-    this.response = res;
   }
 
   public sessionGenerate(req): Observable<any> {
@@ -52,11 +52,12 @@ class LoginService {
   }
 
 
-  public getSvcInfo(): any {
-    this.logger.debug(this, '[getSvcInfo]', this.request.session);
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.svcInfo) ) {
-      this.logger.debug(this, '[getSvcInfo]', this.request.session.svcInfo);
-      return this.request.session.svcInfo;
+  public getSvcInfo(req?): any {
+    const request = req || this.request;
+    this.logger.debug(this, '[getSvcInfo]', request.session);
+    if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.svcInfo) ) {
+      this.logger.debug(this, '[getSvcInfo]', request.session.svcInfo);
+      return request.session.svcInfo;
     }
     return null;
   }
@@ -77,10 +78,11 @@ class LoginService {
     });
   }
 
-  public getAllSvcInfo(): any {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.allSvcInfo) ) {
-      this.logger.debug(this, '[getAllSvcInfo]', this.request.session.allSvcInfo);
-      return this.request.session.allSvcInfo;
+  public getAllSvcInfo(req?): any {
+    const request = req || this.request;
+    if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.allSvcInfo) ) {
+      this.logger.debug(this, '[getAllSvcInfo]', request.session.allSvcInfo);
+      return request.session.allSvcInfo;
     }
     return null;
   }
@@ -96,10 +98,11 @@ class LoginService {
     });
   }
 
-  public getChildInfo(): any {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.childInfo) ) {
-      this.logger.debug(this, '[getChildInfo]', this.request.session.childInfo);
-      return this.request.session.childInfo;
+  public getChildInfo(req?): any {
+    const request = req || this.request;
+    if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.childInfo) ) {
+      this.logger.debug(this, '[getChildInfo]', request.session.childInfo);
+      return request.session.childInfo;
     }
     return null;
   }
