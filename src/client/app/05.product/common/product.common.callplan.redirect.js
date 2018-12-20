@@ -9,7 +9,7 @@ Tw.ProductCommonCallplanRedirect = function(redirectUrl) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
 
-  this._openConfirm();
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openConfirm, this));
 };
 
 Tw.ProductCommonCallplanRedirect.prototype = {
