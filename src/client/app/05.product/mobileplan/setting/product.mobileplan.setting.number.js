@@ -63,6 +63,10 @@ Tw.ProductMobileplanSettingNumber.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    if (this.$lineList.find('li').length > 5) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A35.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A35.TITLE);
+    }
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0074, {
       opClCd: '1',
@@ -117,7 +121,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 9 && this.$lineList.find('li').length < 6) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
