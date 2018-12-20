@@ -67,7 +67,7 @@
                         <div class="form-box">
                             <div class="inputbox bt-add bg-white">
                                     <span class="input">
-                                        <input class="fe-main-address" type="text" title="기본주소" value="" placeholder="기본주소">
+                                        <input class="fe-main-address" type="text" title="기본주소" value="" placeholder="">
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 <span class="bt-box">
@@ -109,9 +109,10 @@
                                     <span class="input">
                                         <input data-target="input_hp" type="tel" name="" title="휴대폰 번호 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                        <button class="cancel" id="btn_hp_del"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
+                            <span class="error-txt" id="spanHpValid"></span>
                         </div>
 
                         <h3 class="form-title">일반전화 (선택항목)</h3>
@@ -152,7 +153,7 @@
         </div>
         <!-- // .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="prev-step">취소</button>
+        <button class="prev-step" id="page-prev-step">취소</button>
         <!--// .popup-closeBtn -->
     </div>
     <!-- // .popup hbs -->
