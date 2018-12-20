@@ -34,7 +34,7 @@ const environment = {
       port: 6379,
       db: 0
     },
-    TEMP_CDNㅇ: 'http://tstore.rbipt.com/skt',
+    TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-dev.tworld.co.kr',

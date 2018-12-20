@@ -633,6 +633,24 @@ export const API_CMD = {
   BFF_10_0116: { path: '/core-product/v1/ledger/:args0/previews', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0139: { path: '/core-product/v1/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0151: {
+    path: '/core-product/v1/mobiles/fee-plans/:args0/joins/term-prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0164: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/joins', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0165: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0166: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/cancels', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0167: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/adds', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0168: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
