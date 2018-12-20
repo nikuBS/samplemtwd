@@ -122,12 +122,7 @@ class MyTFareInfoBillTax extends TwViewController {
   
   private mergeList = (taxlist): TaxList[] => {
     return [].concat.apply([], taxlist).reverse().map((tax, i) => {
-<<<<<<< HEAD
       return Object.assign(tax, {listId: i});
-=======
-      tax = Object.assign(tax, {listId: i});
-      return tax;
->>>>>>> [이기림/Client개발팀] 사이트이용안내 > M고객센터
     });
   }
 

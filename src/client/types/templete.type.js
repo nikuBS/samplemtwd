@@ -819,7 +819,6 @@ Tw.PRODUCT_ROAMING_ORDER = [
   { txt: '낮은 가격순', 'radio-attr': 'id="ra2" name="r2" data-oder-name="lowprice"', 'label-attr': 'id="ra2"' }
 ];
 
-<<<<<<< HEAD
 Tw.PHONE_NUMS = [
   {
     list: [
@@ -850,7 +849,6 @@ Tw.PHONE_NUMS = [
     ]
   }
 ];
-=======
 
 Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE = {
   title: "가려진 정보",
@@ -861,4 +859,3 @@ Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE = {
     ]
   }]
 }
->>>>>>> [이기림/Client개발팀] 고객센터 > 이용안내

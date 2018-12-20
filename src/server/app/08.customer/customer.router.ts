@@ -5,6 +5,8 @@ import CustomerGuideSiteUse from './controllers/useguide/customer.useguide.site.
 import CustomerSvcInfoSite from './controllers/svc-info/customer.svc-info.site.controller';
 import CustomerSvcInfoMcenter from './controllers/svc-info/customer.svc-info.site.mcenter.controller';
 import CustomerSvcInfoSiteDetail from './controllers/svc-info/customer.svc-info.site.detail.controller';
+import CustomerSvcInfoService from './controllers/svc-info/customer.svc-info.service.controller';
+import CustomerSvcInfoServiceDetail from './controllers/svc-info/customer.svc-info.service.detail.controller';
 import CustomerGuideServiceUse from './controllers/useguide/customer.useguide.service.controller';
 import CustomerPraise from './controllers/praise/customer.praise.controller';
 import CustomerDamageInfo from './controllers/damage-info/customer.damage-info.controller';
@@ -45,8 +47,8 @@ class CustomerRouter extends TwRouter {
 
     // new IA
     this.controllers.push({ url: '/emailconsult(/:page)?', controller: CustomerEmail });
-    this.controllers.push({ url: '/svc-info/service', controller: CustomerGuideServiceUse });
-    this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerGuideServiceUse });
+    this.controllers.push({ url: '/svc-info/service', controller: CustomerSvcInfoService });
+    this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerSvcInfoServiceDetail });
     this.controllers.push({ url: '/svc-info/site/mcenter', controller: CustomerSvcInfoMcenter });
     this.controllers.push({ url: '/svc-info/site', controller: CustomerSvcInfoSite });
     this.controllers.push({ url: '/svc-info/site/detail(:page)', controller: CustomerSvcInfoSiteDetail });
