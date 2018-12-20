@@ -57,22 +57,25 @@ Tw.BannerService.prototype = {
 
     var link = banner.imgLinkUrl;
 
-    switch (banner.imgLinkTrgtClCd) {
-      case Tw.BANNER_LINK_TYPE.CHANNEL_APP:
-      case Tw.BANNER_LINK_TYPE.CHANNEL_WEB: {
-        window.location.href = link;
-        break;
-      }
-      case Tw.BANNER_LINK_TYPE.OTHER_APP:
-      case Tw.BANNER_LINK_TYPE.OTHER_WEB: {
-        if (banner.isBill) {
-          Tw.CommonHelper.showDataCharge(function() {
-            Tw.CommonHelper.openUrlExternal(link);
-          });
-        } else {
-          Tw.CommonHelper.openUrlExternal(link);
+    if (link) {
+      switch (banner.imgLinkTrgtClCd) {
+        case Tw.BANNER_LINK_TYPE.CHANNEL_APP:
+        case Tw.BANNER_LINK_TYPE.CHANNEL_WEB: {
+          window.location.href = link;
+          break;
         }
-        break;
+        case Tw.BANNER_LINK_TYPE.OTHER_APP:
+        case Tw.BANNER_LINK_TYPE.OTHER_WEB: 
+        default: {
+          if (banner.isBill) {
+            Tw.CommonHelper.showDataCharge(function() {
+              Tw.CommonHelper.openUrlExternal(link);
+            });
+          } else {
+            Tw.CommonHelper.openUrlExternal(link);
+          }
+          break;
+        }
       }
     }
   },
