@@ -37,7 +37,7 @@ Tw.ProductList.prototype = {
 
   bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
-    this.$container.on('click', '.fe-select-order', $.proxy(this._openOrderPopup, this));
+    this.$orderBtn.on('click', $.proxy(this._openOrderPopup, this));
     this.$container.on('click', '.fe-select-filter', $.proxy(this._handleClickChangeFilters, this));
   },
 
@@ -45,6 +45,7 @@ Tw.ProductList.prototype = {
     this.$total = this.$container.find('.number-text');
     this.$moreBtn = this.$container.find('.extraservice-more > button');
     this.$list = this.$container.find('ul.extraservice-list');
+    this.$orderBtn = this.$container.find('.fe-select-order');
   },
 
   _handleLoadMore: function() {
@@ -63,8 +64,10 @@ Tw.ProductList.prototype = {
     this._leftCount = (this._leftCount || resp.result.productCount) - items.length;
 
     var hasNone = this.$moreBtn.hasClass('none');
-    if (this._leftCount > 0 && hasNone) {
-      this.$moreBtn.removeClass('none');
+    if (this._leftCount > 0) {
+      if (hasNone) {
+        this.$moreBtn.removeClass('none');
+      }
     } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
@@ -128,7 +131,7 @@ Tw.ProductList.prototype = {
     this._params.searchOrder = orderType;
     delete this._params.searchLastProdId;
     delete this._leftCount;
-    this.$container.find('.fe-select-order').text($target.find('.txt').text());
+    this.$orderBtn.text($target.find('.txt').text());
     this.$list.empty();
 
     this._handleLoadMore();
@@ -274,6 +277,8 @@ Tw.ProductList.prototype = {
       if (this.$total.length > 0) {
         this.$total.text(resp.result.productCount);
       }
+
+      this.$orderBtn.text(Tw.PRODUCT_LIST_ORDER[this.ORDER['recommand']].txt);
 
       if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
         var filters = resp.result.searchOption.searchFltIds,
