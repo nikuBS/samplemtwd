@@ -1,5 +1,5 @@
 <!-- #header -->
-<div id="header" class="header-wrap">
+<div id="header" class="header-wrap <%= home ? home : ''%>">
     <div class="h-belt">
         <div class="h-default">
             <div class="h-menu">
@@ -11,44 +11,47 @@
             <div class="h-serarch">
                 <button class="icon-gnb-search"><span class="blind">검색</span></button>
             </div>
-
-            <!-- #common-menu -->
-            <div id="common-menu" class="user-type">
-                <!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
-                <div class="section-userinfo">
-                    <!-- 로그인 전 -->
-                    <button class="login fe-bt-login fe-when-logout none">로그인해주세요</button>
-                    <!-- //로그인 전 -->
-                    <!-- 로그인 후 -->
-                    <!-- case1 -->
-                    <span class="userinfo fe-when-login-type0 none">
-                        <button class="ti-tx">
-                            <strong class="ti" id="fe-nick-name"></strong>
-                            <em class="tx underline" id="fe-svc-number"></em>
-                            <!-- <em class="tx underline">010-4034-1396</em> -->
-                        </button>
-                        <button class="bt fe-bt-free-sms">무료문자</button>
-                    </span>
-                    <!-- //case1 -->
-                    <!-- case2 -->
-                    <span class="userinfo fe-when-login-type2 none">
-                        <strong class="ti">반갑습니다</strong>
-                        <em class="tx"><span id="fe-user-name"></span> 님</em>
-                    </span>
-                    <!-- //case2 -->
-                    <!-- case3 -->
-                    <span class="userinfo fe-when-login-type1 none">
-                        <strong class="ti">반갑습니다</strong>
-                        <button class="tx underline">회선등록</button>
-                        <button class="bt fe-bt-free-sms">무료문자</button>
-                    </span>
-                    <!-- //case3 -->
-                    <!-- //로그인 후 -->
-                    <button class="c-notify on fe-when-login fe-t-noti none"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
-                    <button class="c-option fe-when-app-or-login fe-menu-link none" value='/main/menu/settings'><span class="blind">설정</span></button>
-                </div>
-                <div class="section-cont" id="fe-menu-area">
-                    <!-- 검색영역 오픈시 제외
+        </div>
+    </div>
+</div>
+<!--// #header -->
+<!-- #common-menu -->
+<div id="common-menu" class="user-type">
+    <!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
+    <div class="section-userinfo">
+        <!-- 로그인 전 -->
+        <button class="login fe-bt-login fe-when-logout none">로그인해주세요</button>
+        <!-- //로그인 전 -->
+        <!-- 로그인 후 -->
+        <!-- case1 -->
+        <span class="userinfo fe-when-login-type0 none">
+            <button class="ti-tx">
+                <strong class="ti" id="fe-nick-name"></strong>
+                <em class="tx underline" id="fe-svc-number"></em>
+                <!-- <em class="tx underline">010-4034-1396</em> -->
+            </button>
+            <button class="bt fe-bt-free-sms">무료문자</button>
+        </span>
+        <!-- //case1 -->
+        <!-- case2 -->
+        <span class="userinfo fe-when-login-type2 none">
+            <strong class="ti">반갑습니다</strong>
+            <em class="tx"><span id="fe-user-name"></span> 님</em>
+        </span>
+        <!-- //case2 -->
+        <!-- case3 -->
+        <span class="userinfo fe-when-login-type1 none">
+            <strong class="ti">반갑습니다</strong>
+            <button class="tx underline">회선등록</button>
+            <button class="bt fe-bt-free-sms">무료문자</button>
+        </span>
+        <!-- //case3 -->
+        <!-- //로그인 후 -->
+        <button class="c-notify on fe-when-login fe-t-noti none"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
+        <button class="c-option fe-when-app-or-login fe-menu-link none" value='/main/menu/settings'><span class="blind">설정</span></button>
+    </div>
+    <div class="section-cont" id="fe-menu-area">
+        <!-- 검색영역 오픈시 제외
                 <div class="section-search">
                     <span class="inputbox">
                         <span class="input">
@@ -58,52 +61,48 @@
                     </span>
                 </div>
                 -->
-                    <!-- gnb -->
+        <!-- gnb -->
 
-                    <!-- footer -->
-                    <div class="footer">
-                        <ul class="f-menu">
-                            <li><button class="bt fe-menu-link" value="/main/menu/settings/terms">이용약관</button></li>
-                            <li><button class="bt fe-outlink" value="https://privacy.sktelecom.com/view.do?ctg=policy&name=policy"><strong>개인정보 처리방침</strong></button></li>
-                            <li><a class="bt fe-when-web none" href="http://piuh.sktelecom.com" target=_blank><strong>개인정보 이용내역</strong></a></li>
-                            <!-- li><button class="bt"><strong>인증서 불러오기</strong></button></li -->
-                            <!-- 모바일 web -->
-                            <li><button class="bt" id="fe-refund" value="/main/menu/refund">미환급금 조회</button></li>
-                            <li><button class="bt fe-menu-link" value="/customer/damage-info">이용자 피해예방센터</button></li>
-                        </ul>
-                        <p class="f-info">
-                            휴대폰 고객센터 : 국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료)<br>
-                            국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)<br>
-                            인터넷 · 집전화 고객센터 : <a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)<br>
-                            초콜릿 고객센터 : <a href="tel:1599-3377">1599-3377</a>(유료)<br>
-                        </p>
-                        <strong class="f-ltd">SK telecom., LTD</strong>
-                        <div class="f-bt">
-                            <!-- 로그인 전 -->
-                            <button class="f-member fe-when-logout fe-menu-link none" value="/common/member/signup-guide">회원가입</button>
-                            <button class="f-login fe-bt-login fe-when-logout none">로그인</button>
-                            <button class="f-login2 fe-when-logout-and-app none" id="fe-btn-simple-login">간편 로그인</button>
-                            <!-- //로그인 전 -->
-                            <!-- 로그인 후 -->
-                            <button class="f-member fe-when-login fe-menu-link none" value="/common/member/manage">회원정보</button>
-                            <button class="f-logout fe-when-login none fe-bt-logout">로그아웃</button>
-                            <!-- //로그인 후 -->
-                        </div>
-                    </div>
-                    <!-- //footer -->
-                </div>
-
-                <button class="c-close" id="fe-close"><span class="blind">닫기</span></button>
+        <!-- footer -->
+        <div class="footer">
+            <ul class="f-menu">
+                <li><button class="bt fe-menu-link" value="/main/menu/settings/terms">이용약관</button></li>
+                <li><button class="bt fe-outlink" value="https://privacy.sktelecom.com/view.do?ctg=policy&name=policy"><strong>개인정보
+                            처리방침</strong></button></li>
+                <li><a class="bt fe-when-web none" href="http://piuh.sktelecom.com" target=_blank><strong>개인정보 이용내역</strong></a></li>
+                <!-- li><button class="bt"><strong>인증서 불러오기</strong></button></li -->
+                <!-- 모바일 web -->
+                <li><button class="bt" id="fe-refund" value="/main/menu/refund">미환급금 조회</button></li>
+                <li><button class="bt fe-menu-link" value="/customer/damage-info">이용자 피해예방센터</button></li>
+            </ul>
+            <p class="f-info">
+                휴대폰 고객센터 : 국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료)<br>
+                국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)<br>
+                인터넷 · 집전화 고객센터 : <a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)<br>
+                초콜릿 고객센터 : <a href="tel:1599-3377">1599-3377</a>(유료)<br>
+            </p>
+            <strong class="f-ltd">SK telecom., LTD</strong>
+            <div class="f-bt">
+                <!-- 로그인 전 -->
+                <button class="f-member fe-when-logout fe-menu-link none" value="/common/member/signup-guide">회원가입</button>
+                <button class="f-login fe-bt-login fe-when-logout none">로그인</button>
+                <button class="f-login2 fe-when-logout-and-app none" id="fe-btn-simple-login">간편 로그인</button>
+                <!-- //로그인 전 -->
+                <!-- 로그인 후 -->
+                <button class="f-member fe-when-login fe-menu-link none" value="/common/member/manage">회원정보</button>
+                <button class="f-logout fe-when-login none fe-bt-logout">로그아웃</button>
+                <!-- //로그인 후 -->
             </div>
-            <!-- // #common-menu -->
-
         </div>
+        <!-- //footer -->
     </div>
+
+    <button class="c-close" id="fe-close"><span class="blind">닫기</span></button>
 </div>
-<!--// #header -->
+<!-- // #common-menu -->
 
 <script id="fe-tpl-menu" type="text/x-handlebars-template">
-{{#each list}}
+    {{#each list}}
 <div class="section-gnb">
     {{#each this}}
     {{#if showThis}}
