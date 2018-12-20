@@ -30,7 +30,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     Observable.combineLatest(
       this.getUsableCouponList(res, svcInfo), this.getAvailability(res, svcInfo)).subscribe(
         ([coupons, available]) => {
-          if (!FormatHelper.isEmpty(coupons) && !FormatHelper.isEmpty(available)) {
+          if (coupons !== null && !FormatHelper.isEmpty(available)) {
             res.render('recharge/myt-data.recharge.coupon.html', {
               svcInfo,
               pageInfo,

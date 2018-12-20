@@ -105,7 +105,7 @@ Tw.CustomerAgentsearch.prototype = {
           default:
             break;
         }
-      this._onSearchRequested({ currentTarget: { id: id } });
+      // this._onSearchRequested({ currentTarget: { id: id } });
     } else {
       Tw.Logger.info('[Replace History]');
       location.replace(e.currentTarget.href);

@@ -13,7 +13,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <%- include('../../../../common/views/components/header.component.html', { title: '리필쿠폰', svcInfo: svcInfo }); %>
         <!--// #header -->
@@ -38,6 +38,14 @@
                     </div>
                 </div>
                 <% } %>
+
+                <% if (available !== 'NONE' && list.length === 0) { %>
+                <div class="cont-box nogaps-hoz">
+                    <div class="result-none">
+                        사용할 수 있는 쿠폰이 없습니다.
+                    </div>
+                </div>
+                <% } else { %>
                 <div class="cont-box bgnone pb0">
                     <ul class="coupon-list-wrap">
                         <% for (let i = 0; i < (list.length > 20 ? 20 : list.length); i++) { %>
@@ -65,6 +73,7 @@
                     <% } %>
                 </div>
                 <!--// .cont-box -->
+                <% } %>
 
                 <div class="cont-box noborder bgnone">
                     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>

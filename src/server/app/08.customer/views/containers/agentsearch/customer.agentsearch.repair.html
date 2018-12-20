@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <%- include('../../../../common/views/components/header.component.html', { title: 'AS센터 찾기', svcInfo: svcInfo }) %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -103,12 +103,17 @@
                 </div>
                 <!--// .cont-box -->
                 <!-- .customer-as -->
-                <a href="/customer/document">
-                    <div class="customer-as">
-                        <span class="ico"></span>
-                        <span class="txt"><strong>필요한 서류는 챙기셨나요?</strong>서비스 가입/변경/신청 시 필요한 구비서류를 미리 준비하시고 방문하시면 더욱 빠른 서비스를 받으실 수 있습니다.</span>
-                    </div>
-                </a>
+                <div class="customer-as">
+                    <span class="ico"></span>
+                    <span class="txt"><strong>필요한 서류는 챙기셨나요?</strong>서비스 가입∙변경 신청 할 경우, 필요한 서류를 미리 준비해서 방문하시면 더욱 빠른 서비스를 받으실 수 있습니다.</span>
+                    <div class="link"><a class="bt-link-tx underline" href="/customer/document">필요서류 안내</a></div>
+                </div>
+                <!-- <a href="/customer/document"> -->
+                    <!-- <div class="customer-as"> -->
+                        <!-- <span class="ico"></span> -->
+                        <!-- <span class="txt"><strong>필요한 서류는 챙기셨나요?</strong>서비스 가입/변경/신청 시 필요한 구비서류를 미리 준비하시고 방문하시면 더욱 빠른 서비스를 받으실 수 있습니다.</span> -->
+                    <!-- </div> -->
+                <!-- </a> -->
                 <!-- // .customer-as -->
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
@@ -153,7 +158,7 @@
                                                         <ul class="list-item">
                                                             <li>
                                                                 품목별 소비자 분쟁해결 기준(공정거래위원회 고시)에 따라 제품에 대한 유상수리를 판단합니다.
-                                                                <div class="out-link"><a class="bt-link-tx underline" href="">라인 링크 버튼</a></div>
+                                                                <div class="out-link"><button class="bt-link-tx underline" id="fe-view">유상수리 판단기준보기</button></div>
                                                             </li>
                                                             <li>다양한 결제방식으로 수리비 결제 가능합니다.</li>
                                                         </ul>
@@ -205,6 +210,13 @@
                     <!-- // .link-long-list -->
                 </div>
                 <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <ul class="noti-list">
+                            <li>A/S 신청 안내 <button id="CS_03_01_tip_01" type="button" class="tip-view" title="A/S 신청 안내 정보보기" aria-haspopup="true">TIP</button></li>
+                        </ul>
+                    </div>
             </div>
         </div>
         <!--// #contents -->
@@ -215,4 +227,9 @@
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.CustomerAgentsearchRepair($('.wrap'));
+    });
+</script>
 <% include ../../components/end.component.html %>

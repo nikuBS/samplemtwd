@@ -13,7 +13,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="M000218">
         <!-- #header -->
         <div id="header" class="header-wrap">
         </div>
@@ -69,7 +69,10 @@
 										<ul role="tablist">
 											<li role="tab" aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1"><a href="#refill" class="fe-replace-history">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
 											<% if (!isGift) { %>
-											<li role="tab" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2"><a href="#gift" class="fe-replace-history">가족에게 선물하기</a></li>
+											<li role="tab" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
+												<a href="#gift" class="fe-replace-history">가족에게 선물하기</a>
+												<button class="btn-tip" id="DC_05_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+										    </li>
 											<% } %>
 										</ul>
 									</div>

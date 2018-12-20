@@ -21,6 +21,7 @@ Tw.MainMenuRefundChangeAccount.prototype = {
   _cacheElements: function () {
     this.$bankInput = this.$container.find('#formInput01');
     this.$accountInput = this.$container.find('#formInput02');
+    this.$accountError = this.$container.find('.fe-account-error')
     this.$submitBtn = this.$container.find('#fe-submit');
   },
   _bindEvents: function () {
@@ -102,8 +103,12 @@ Tw.MainMenuRefundChangeAccount.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0043, param)
       .done($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
-          this._popupService.close();
-          this._callback();
+          if (res.result === '0') {
+            this._popupService.close();
+            this._callback();
+          } else if (res.result.indexOf('ZNGME') !== -1) {
+            this.$accountError.removeClass('none');
+          }
           return;
         }
 
