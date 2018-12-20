@@ -93,56 +93,41 @@ Tw.CustomerAgentsearch.prototype = {
   },
   _onTabChanged: function (e) {
     if (this._isSearched && this._prevTab !== $(e.currentTarget).attr('href')) {
-      var tabId = this.$container.find('li[role="tab"][aria-selected="true"]').attr('id');
-      var id = 'fe-btn-search-name';
-        switch (tabId) {
-          case 'tab2':
-            id = 'fe-btn-search-addr';
-            break;
-          case 'tab3':
-            id = 'fe-btn-search-tube';
-            break;
-          default:
-            break;
-        }
-      // this._onSearchRequested({ currentTarget: { id: id } });
-    } else {
-      Tw.Logger.info('[Replace History]');
-      location.replace(e.currentTarget.href);
+      this.$inputName.val('');
+      this.$inputAddr.val('');
+      this.$inputTube.val('');
+      this.$divResult.addClass('none');
+      this._prevTab = window.location.hash;
+      this._isSearched = false;
     }
+    location.replace(e.currentTarget.href);
   },
   _onInput: function (e) {
     var text = e.currentTarget.value;
-    var needToEnable = Tw.FormatHelper.isEmpty(text) ? false : true;
-    if (needToEnable) {
-      this.$btnSearchName.removeAttr('disabled');
-      this.$btnSearchAddr.removeAttr('disabled');
-      this.$btnSearchTube.removeAttr('disabled');
-    } else {
-      this.$btnSearchName.attr('disabled', 'disabled');
-      this.$btnSearchAddr.attr('disabled', 'disabled');
-      this.$btnSearchTube.attr('disabled', 'disabled');
-    }
+    var enable = Tw.FormatHelper.isEmpty(text) ? false : true;
 
     var targetId = e.currentTarget.id;
     switch (targetId) {
       case 'fe-input-name':
-        this.$inputAddr.val(text);
-        this.$inputAddr.trigger('change');
-        this.$inputTube.val(text);
-        this.$inputTube.trigger('change');
+        if (enable) {
+          this.$btnSearchName.removeAttr('disabled');
+        } else {
+          this.$btnSearchName.attr('disabled', 'disabled');
+        }
         break;
       case 'fe-input-addr':
-        this.$inputName.val(text);
-        this.$inputName.trigger('change');
-        this.$inputTube.val(text);
-        this.$inputTube.trigger('change');
+        if (enable) {
+          this.$btnSearchAddr.removeAttr('disabled');
+        } else {
+          this.$btnSearchAddr.attr('disabled', 'disabled');
+        }
         break;
       case 'fe-input-tube':
-        this.$inputAddr.val(text);
-        this.$inputAddr.trigger('change');
-        this.$inputName.val(text);
-        this.$inputName.trigger('change');
+        if (enable) {
+          this.$btnSearchTube.removeAttr('disabled');
+        } else {
+          this.$btnSearchTube.attr('disabled', 'disabled');
+        }
         break;
       default:
         break;
@@ -244,7 +229,7 @@ Tw.CustomerAgentsearch.prototype = {
     }
     url += hash;
 
-    this._historyService.goLoad(url);
+    this._historyService.replaceURL(url);
   },
   _onMoreRequested: function () {
     this._lastQueryParams.currentPage = this._page;
