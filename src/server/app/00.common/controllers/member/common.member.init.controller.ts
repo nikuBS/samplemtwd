@@ -1,23 +1,23 @@
 /**
- * FileName: common.member.logout.expire.controller.ts
+ * FileName: common.member.init.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.03
+ * Date: 2018.12.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class CommonMemberLogoutExpire extends TwViewController {
+class CommonMemberInit extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.loginService.sessionGenerate(req).subscribe(() => {
-      this.logger.info('[Logout Expire]', this.loginService.getSessionId(req));
-      res.render('member/common.member.logout.expire.html', { svcInfo });
+      this.logger.info('[Session Init]', this.loginService.getSessionId(req));
+      res.render('member/common.member.init.html', { svcInfo });
     });
   }
 }
 
-export default CommonMemberLogoutExpire;
+export default CommonMemberInit;

@@ -54,6 +54,7 @@ import CommonSearchResult from './controllers/search/common.search.controller';
 import CommonSearchMore from './controllers/search/common.search.more.controller';
 import CommonSearch from './controllers/search/common.search.controller';
 import CommonSearchInResult from './controllers/search/common.search.in_result.controller';
+import CommonMemberInit from './controllers/member/common.member.init.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -70,6 +71,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push( {url: '/cert/result', controller: CommonCertResult, post: true});
 
     // member - login
+    this.controllers.push({ url: '/member/init', controller: CommonMemberInit });
     this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
