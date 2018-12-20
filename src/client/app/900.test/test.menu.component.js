@@ -32,6 +32,8 @@ Tw.TestMenuComponent = function () {
     this._init();
     this._bindEvents();
 
+    this._onGnbBtnClicked();
+
     if (location.hash === '#menu') {
       setTimeout($.proxy(function () {
         this.$gnbBtn.click();
