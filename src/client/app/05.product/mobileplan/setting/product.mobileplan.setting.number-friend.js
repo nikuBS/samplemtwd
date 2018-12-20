@@ -87,8 +87,12 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   _delNum: function(e) {
     var $elem = $(e.currentTarget).parents('li');
 
-    if ($elem.data('number') === this._frBestAsgnNum) { // @todo 절친 해지 안되도록 alert
-      return;
+    if ($elem.data('number') === this._frBestAsgnNum) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A45.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A45.TITLE);
+    }
+
+    if ($elem.parent().find('li').length < 2) {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
     }
 
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
