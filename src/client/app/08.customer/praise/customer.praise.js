@@ -281,6 +281,6 @@ Tw.CustomerPraise.prototype = {
 
   _handleConfirmCancel: function() {
     this._clearForm();
-    this._popupService.close();
+    window.history.go(-2);
   }
 };

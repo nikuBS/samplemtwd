@@ -17,17 +17,26 @@ Tw.TestMenuComponent = function () {
     this.$closeBtn = undefined;
     this.$menuArea = undefined;
     this.$userName = undefined;
-    this.$deviceName = undefined;
+    this.$nickName = undefined;
     this.$svcNumber = undefined;
 
     this._isLogin = false;
+    this._svcMgmtNum = undefined;
+    this._isMultiLine = false;
+    this._svcAttr = undefined;
+    this._tid = undefined;
 
     this._isOpened = false;
     this._isMenuSet = false;
 
     this._init();
     this._bindEvents();
-    this._onGnbBtnClicked();
+
+    if (location.hash === '#menu') {
+      setTimeout($.proxy(function () {
+        this.$gnbBtn.click();
+      }, this), 100);
+    }
   }, this));
 };
 
@@ -55,7 +64,7 @@ Tw.TestMenuComponent.prototype = {
     this.$closeBtn = this.$container.find('#fe-close');
     this.$menuArea = this.$container.find('#fe-menu-area');
     this.$userName = this.$container.find('#fe-user-name');
-    this.$deviceName = this.$container.find('#fe-device-name');
+    this.$nickName = this.$container.find('#fe-nick-name');
     this.$svcNumber = this.$container.find('#fe-svc-number');
   },
   _bindEvents: function () {
@@ -64,14 +73,16 @@ Tw.TestMenuComponent.prototype = {
     this.$container.on('click', '#fe-btn-simple-login', $.proxy(this._onSimpleLogin, this));
     this.$container.on('click', '.fe-menu-link', $.proxy(this._onMenuLink, this));
     this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
+    this.$container.on('click', '.fe-t-noti', $.proxy(this._onTNoti, this));
+    this.$container.on('click', '.userinfo', $.proxy(this._onUserInfo, this));
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
-    $('.fe-bt-login').on('click', $.proxy(this._onClickLogin, this));
-    $('.fe-bt-logout').on('click', $.proxy(this._onClickLogout, this));
+    this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
+    this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
   },
   _onClickLogin: function () {
-    this._tidLanding.goLogin();
+    this._tidLanding.goLogin(location.href);
   },
   _onClickLogout: function () {
     this._tidLanding.goLogout();
@@ -84,6 +95,13 @@ Tw.TestMenuComponent.prototype = {
         .then($.proxy(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
             this._isLogin = res.result.isLogin;
+            if (this._isLogin) {
+              this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
+              this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
+              this._svcAttr = res.result.userInfo.svcAttr;
+              this._isLogin = res.result.isLogin;
+              this._tid = res.result.userInfo.tid;
+            }
             this._modifyMenu(
               res.result.isLogin,
               res.result.userInfo,
@@ -97,6 +115,21 @@ Tw.TestMenuComponent.prototype = {
         .fail(function (err) {
           Tw.Error(err.code, err.msg).pop();
         });
+    }
+  },
+  _onTNoti: function () {
+    if (!this._tNotifyComp) {
+      this._tNotifyComp = new Tw.TNotifyComponent();
+    }
+    debugger;
+    this._tNotifyComp.open(this._tid);
+  },
+  _onUserInfo: function () {
+    if (this._isMultiLine) {
+      if (!this._lineComponent) {
+        this._lineComponent = new Tw.LineComponent();
+      }
+      this._lineComponent.onClickLine(this._svcMgmtNum);
     }
   },
   _onClose: function () {
@@ -127,6 +160,7 @@ Tw.TestMenuComponent.prototype = {
   },
   _onFreeSMS: function () {
     Tw.CommonHelper.openFreeSms();
+    return false;
   },
   _onRefund: function (e) {
     if (!this._isLogin) { // If it's not logged in
@@ -156,7 +190,11 @@ Tw.TestMenuComponent.prototype = {
       switch (memberType) {
         case 0:
           this.$container.find('.fe-when-login-type0').removeClass('none');
-          this.$deviceName.text(userInfo.deviceName);
+          var nick = userInfo.nickName;
+          if (Tw.FormatHelper.isEmpty(nick)) {
+            nick = Tw.SVC_ATTR[userInfo.svcAttr];
+          }
+          this.$nickName.text(nick);
           this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
           break;
         case 1:
@@ -176,6 +214,7 @@ Tw.TestMenuComponent.prototype = {
     // When web
     if (!Tw.BrowserHelper.isApp()) {
       this.$container.find('.fe-when-web').removeClass('none');
+      this.$container.find('.fe-bt-free-sms').addClass('none');
     }
 
     // When logout and app
@@ -202,20 +241,38 @@ Tw.TestMenuComponent.prototype = {
               .then($.proxy(function (res) {
                 if (res.code === Tw.API_CODE.CODE_00) {
                   var info = res.result;
+                  if (info.coClCd === Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND) {
+                    $(elem).remove();
+                    return;
+                  }
                   var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
-                  var discount = info.deduckTotInvAmt ? parseInt(info.deduckTotInvAmt, 10) : 0;
                   $(elem).text(
-                    Tw.FormatHelper.convNumFormat(total + discount) + Tw.CURRENCY_UNIT.WON);
+                    Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                } else {
+                  $(elem).remove();
                 }
-              }, this));
+              }, this))
+              .fail(function () {
+                $(elem).remove();
+              });
             break;
           case 'data':
             this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
-              .then(function (res) {
+              .then($.proxy(function (res) {
                 if (res.code === Tw.API_CODE.CODE_00) {
-                  $(elem).text('NeedToParse');
+                  var text = this._parseUsage(res.result);
+                  if (!text) {
+                    $(elem).remove();
+                    return;
+                  }
+                  $(elem).text(text);
+                } else {
+                  $(elem).remove();
                 }
-              });
+              }, this))
+              .fail(function () {
+                $(elem).remove();
+              })
             break;
           case 'membership':
             this._apiService.request(Tw.API_CMD.BFF_04_0001, {})
@@ -228,7 +285,12 @@ Tw.TestMenuComponent.prototype = {
                     O: 'default'
                   };
                   $(elem).text(group[res.result.mbrGrCd]);
+                } else {
+                  $(elem).remove();
                 }
+              })
+              .fail(function () {
+                $(elem).remove();
               });
             break;
           default:
@@ -290,7 +352,8 @@ Tw.TestMenuComponent.prototype = {
 
         if (!!item.urlAuthClCd) {
           if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
-            item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+            // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+            item.loginNeed = true;
             // item.children = [];
             // item.hasChildren = false;
           } else if (loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1) {
@@ -333,6 +396,37 @@ Tw.TestMenuComponent.prototype = {
     category[0] = subCategory;
 
     return category;
+  },
+
+  _parseUsage: function (info) {
+    if (info.gnrlData.length === 0) {
+      return undefined;
+    }
+
+    var ret = '';
+
+    var dataRemained = _.reduce(info.gnrlData, function (memo, item) {
+      if (memo < 0) { // Unlimit
+        return memo;
+      }
+
+      if (Tw.UNLIMIT_CODE.indexOf(item.unlimit) !== -1) {
+        memo = -1;
+        return memo;
+      }
+
+      memo += +item.remained;
+      return memo;
+    }, 0);
+
+    if (dataRemained < 0) {
+      ret = Tw.COMMON_STRING.UNLIMIT;
+    } else {
+      var dataObj = Tw.FormatHelper.convDataFormat(dataRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
+      ret = dataObj.data + dataObj.unit;
+    }
+
+    return ret;
   },
 
   isOpened: function () {

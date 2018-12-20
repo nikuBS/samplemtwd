@@ -88,7 +88,7 @@ Tw.MyTDataUsage.prototype = {
       }
     });
     // 데이터 함께쓰기
-    if ( this._options.tdataSharing === 'Y' ) {
+    if ( this._options.dataSharing === 'Y' ) {
       reqList.push({
         command: Tw.API_CMD.BFF_05_0004,
         params: {}

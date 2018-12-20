@@ -32,6 +32,10 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
 
 Tw.MyTJoinWireModifyProduct.prototype = {
   _init: function () {
+    if(this.resData.resDataInfo.coClCd === 'B'){
+      this._openSkbdErrorAlert();
+      return;
+    }
     this._bindEvent();
     this._cachedElement();
     this._productBillSelectFun();
@@ -52,8 +56,44 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('keyup', '[data-target="input_phone"]', $.proxy(this.input_phoneEvt, this));
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
+
+    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
+  },
+
+  _openSkbdErrorAlert: function () {
+    Tw.Popup.openOneBtTypeB(
+      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
+      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+      [{
+        style_class: 'link',
+        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
+      }],
+      'type1',
+      $.proxy(function ($layer) {
+        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+      }, this), $.proxy(function () {
+        this._history.goBack();
+      }, this)
+    );
   },
   //--------------------------------------------------------------------------[EVENT]
+  _closeCheck: function(){
+
+    if(this.productFormData.prodMediaNm ||
+      this.productFormData.prodNm ||
+      $('[data-target="input_hp"]').val() ||
+      $('[data-target="input_phone"]').val()) {
+
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._history.goLoad('/myt-join/submain_w');
+        }, this));
+    } else {
+      this._history.goBack();
+    }
+  },
   $select_productEvt: function(event) {
     Tw.Logger.info('[상품 선택]', event);
     var $target = $(event.currentTarget);

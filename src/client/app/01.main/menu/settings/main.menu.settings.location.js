@@ -32,6 +32,10 @@ Tw.MainMenuSettingsLocation.prototype = {
       .done($.proxy(function (res) {
         if (res.code !== Tw.API_CODE.CODE_00) {
           this._onTermFail(res);
+        } else {
+          var msg = data.twdLocUseAgreeYn === 'Y' ?
+            Tw.SETTING_LOCATION.AGREE : Tw.SETTING_LOCATION.DISAGREE;
+          Tw.CommonHelper.toast(msg);
         }
       }, this))
       .fail($.proxy(this._onTermFail, this));

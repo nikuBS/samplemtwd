@@ -120,13 +120,13 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     familyAddData.fam[this._familyType] = true;
 
     this._familyList.push(familyAddData);
-    this._toggleBtn(this.$btnFamilyAdd, this._familyList.length < 5);
+    this._toggleBtn(this.$btnFamilyAdd, false);
     this._clearFamilyAddWrap();
 
     this.$familyList.append(this._familyTemplate(familyAddData));
     this.$familyWrap.show();
 
-    this.$familyWrap.find('.checkbox').off();
+    this.$familyWrap.find('.check').off();
     skt_landing.widgets.widget_init('.fe-family_wrap');
   },
 

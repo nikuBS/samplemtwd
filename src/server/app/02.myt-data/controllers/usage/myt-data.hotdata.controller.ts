@@ -46,7 +46,9 @@ class MyTDataHotdata extends TwViewController {
         const option = {
           svcInfo,
           pageInfo,
-          ppsInfo: null
+          usageData: {},
+          balanceAddOns: {},
+          ppsInfo: {}
         };
 
         switch ( svcInfo.svcAttrCd ) {

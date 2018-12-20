@@ -262,8 +262,12 @@ Tw.ProductCommonConfirm.prototype = {
     this._closePop();
   },
 
-  _closePop: function() {
+  _closePop: function(event) {
+    var $target = $(event.currentTarget);
     this._popupService.close();
+    if($target.hasClass('set-info')) {
+      this._historyService.goBack();
+    }
   },
 
   _openConfirmAlert: function() {

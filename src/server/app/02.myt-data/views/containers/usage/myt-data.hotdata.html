@@ -15,7 +15,7 @@
 </div>
 <div id="myt-data-hotdata" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 잔여량' }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 잔여량', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -316,6 +316,7 @@
   $(document).ready(function () {
     new Tw.MyTDataUsage($('#myt-data-hotdata'), {
       svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
+      dataSharing : '<%= balanceAddOns && balanceAddOns.dataSharing %>',
       tdataSharing : '<%= balanceAddOns && balanceAddOns.tdataSharing %>',
       troamingSharing : '<%= balanceAddOns && balanceAddOns.troamingSharing %>',
       dataTopUp : '<%= usageData && usageData.dataTopUp %>',

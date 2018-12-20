@@ -79,7 +79,7 @@
         <% } %>
         <% } %>
     </div>
-    <% if ( (prodRedisInfo.summaryCase === '1' || prodRedisInfo.summaryCase === '2')
+    <% if ( basicInfo.prodTypCd && (prodRedisInfo.summaryCase === '1' || prodRedisInfo.summaryCase === '2')
     && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt ||
     prodRedisInfo.summary.basOfrCharCntCtt) ) { %>
     <ul class="productdetails-utill">

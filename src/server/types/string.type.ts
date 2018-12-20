@@ -185,7 +185,10 @@ export enum PRODUCT_REQUIRE_DOCUMENT_TYPE_NM {
 }
 
 export const MYT_FARE_BILL_REISSUE = {
-  TITLE: '요금안내서 재발행'
+  TITLE: '요금안내서 재발행',
+  REASON: {
+    '06': '요금안내서부달'
+  }
 };
 
 export const MYT_FARE_BILL_REISSUE_TYPE = {

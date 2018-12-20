@@ -82,8 +82,25 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
 
+    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
   },
   //--------------------------------------------------------------------------[EVENT]
+  _closeCheck: function(){
+
+    if(this.dataModel.productList > 0 ||
+      this.dataModel.TerminationDtStr ||
+      $('[data-target="input_hp"]').val()) {
+
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._history.goLoad('/myt-join/submain_w');
+        }, this));
+    } else {
+      this._history.goBack();
+    }
+  },
   /*
   * 할인반환금 조회
    */
