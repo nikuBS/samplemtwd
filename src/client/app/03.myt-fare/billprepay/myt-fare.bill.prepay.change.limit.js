@@ -48,7 +48,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
         this._changeLimit(res.result);
       }
     } else {
-      this._fail();
+      this._fail(res);
     }
   },
   _getLimitFail: function () {
