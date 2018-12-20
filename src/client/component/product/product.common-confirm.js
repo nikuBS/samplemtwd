@@ -131,8 +131,8 @@ Tw.ProductCommonConfirm.prototype = {
   _joinCancel: function() {
     var alert = this._data.isTerm ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A74 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
 
-    this._popupService.openModalTypeA(alert.TITLE, alert.MSG, alert.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindJoinCancelPopupEvent, this), null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
   },
 
   _bindJoinCancelPopupEvent: function($popupContainer) {
