@@ -24,7 +24,8 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._getInitPeriod();
-    this._getTfiResponse();
+    $('#fe-listbox').hide();
+    $('#fe-after-tip').hide();
   },
 
   _cachedElement: function() {
@@ -37,6 +38,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$more = this.$container.find('.bt-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
     this.$btnPopupClose = this.$container.find('.popup-closeBtn');
+    this.$certBtn = this.$container.find('#fe-cert');
   },
 
   _bindEvent: function() {
@@ -47,6 +49,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
+    this.$certBtn.on('click', $.proxy(this._getTfiResponse, this));
   },
 
   _getInitPeriod: function() {
@@ -112,26 +115,14 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   },
 
   _parseList: function(res) {
-    var receiveList = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE.data[0].list;
-    var returnList = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.data[0].list;
-
-    for(var rec in receiveList){
-      var receiveLen = receiveList[rec].attr.indexOf('data-booth') + 12;
-      var receiveKey = receiveList[rec].attr.substr(receiveLen,10);
-      this._receiveObj[receiveKey] = receiveList[rec].value;
-      this._impbranchObj[receiveKey] = receiveList[rec].attr.substr(receiveList[rec].attr.indexOf('data-center') + 13, 10);
-    }
-    for(var ret in returnList){
-      var returnLen = returnList[ret].attr.indexOf('data-center') + 13;
-      var returnKey = returnList[ret].attr.substr(returnLen,10);
-      this._returnObj[returnKey] = returnList[ret].value;
-    }
+    this._receiveObj = Tw.ROAMING_RECEIVE_CODE;
+    this._returnObj = Tw.ROAMING_RETURN_CODE;
 
     for( var x in res){
       res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
       res[x].rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id];
-      res[x].impbranch = this._impbranchObj[res[x].rental_booth_org_id];
-      res[x].rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id];
+      res[x].impbranch = this._receiveObj[res[x].rental_booth_org_id].code;
+      res[x].rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
       res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
       if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){
         res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
@@ -144,6 +135,8 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   },
   
   _renderListOne: function(res){
+    this._popupService.close();
+
     var list = res.romlist;
 
     for(var x in list){
@@ -160,6 +153,11 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
     this.$totalCnt.text(total);
     this.$list.empty();
     this.$more.hide();
+
+    $('#fe-listbox').show();
+    $('#fe-certbox').hide();
+    $('#fe-before-tip').hide();
+    $('#fe-after-tip').show();
 
     if ( list.length > 0 ){
       this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
@@ -285,7 +283,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
       res.result.rominfo.rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
       res.result.rominfo.rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id];
-      res.result.rominfo.rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id];
+      res.result.rominfo.rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
       res.result.rominfo.changeCountry = changeCountry;
       res.result.minDate = moment().add(2, 'days').format('YYYY-MM-DD');
       res.result.maxDate = this._dateHelper.getEndOfMonSubtractDate(undefined,-6,'YYYY-MM-DD');
@@ -316,52 +314,52 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
 
   _openLocationPop : function(e){
     var selected = e.target;
-    var title = '';
     var data = [];
 
     if(selected.id === 'flab04'){
       //수령 장소 선택
-      title = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE.title;
-      data = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE.data;
+      data = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE;
     }else{
       //반납 장소 선택
-      title = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.title;
-      data = Tw.POPUP_TPL.ROAMING_RETURN_PLACE.data;
+      data = Tw.POPUP_TPL.ROAMING_RETURN_PLACE;
     }
 
-    for(var x in data[0].list){
-      data[0].list[x].option = 'hbs-card-type';
-      if(data[0].list[x].value === $(selected).text()){
-        data[0].list[x].option = 'checked';
-      }
-    }
+    var currentCenter = $(selected).text();
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: title,
-        data: data
+        data: data,
+        btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this, selected)
+      $.proxy(this._onActionSheetOpened, this, selected, currentCenter)
     );
+
   },
 
-  _onActionSheetOpened : function (selected, $root){
-    $root.on('click', '.hbs-card-type', $.proxy(this._onActionSelected, this, selected));
+  _onActionSheetOpened: function (selected, currentCenter, $layer) {
+    $('li.type1').each(function(){
+      if($(this).find('label').attr('value') === currentCenter){
+        $(this).find('input[type=radio]').prop('checked', true);
+      }
+    })
+    $layer.find('[name="r2"]').on('click', $.proxy(this._onActionSelected, this, selected));
+    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
+
+    // 닫기 버튼 클릭
+    $layer.one('click', '#fe-back', this._popupService.close);
   },
 
-  _onActionSelected : function (selected, e){
-    if($('.hbs-card-type').hasClass('checked')){
-      $('.hbs-card-type').removeClass('checked');
-    }
-    $(e.target).parents('li').find('button').addClass('checked');
+  _onActionSelected: function (selected, e) {
+
     if(selected.id === 'flab04'){
-      $(selected).text($(e.target).parents('li').find('.info-value').text()); //센터명 출력
-      $(selected).attr('data-center',$(e.target).parents('button').attr('data-center')); //부스코드를 data-code값에 넣기
-      $(selected).attr('data-booth',$(e.target).parents('button').attr('data-booth'));
+      $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
+      $(selected).attr('data-center',$(e.target).parents('label').attr('data-center')); //부스코드를 data-code값에 넣기
+      $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
+      this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
     }else{
-      $(selected).text($(e.target).parents('li').find('.info-value').text());
-      $(selected).attr('data-center',$(e.target).parents('button').attr('data-center'));
+      $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
+      $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
     }
 
     this._popupService.close();
@@ -431,7 +429,7 @@ Tw.ProductRoamingFiInquireAuth.prototype = {
   _handleSuccessEditReservation: function(res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
-        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._getTfiResponse, this));
     }
   },
 
