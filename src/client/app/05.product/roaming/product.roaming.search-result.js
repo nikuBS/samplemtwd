@@ -393,6 +393,7 @@ Tw.ProductRoamingSearchResult.prototype = {
     _selectPopupCallback:function ($layer) {
         $layer.find('[name="r2"]').on('click', $.proxy(this._goLoadSearchResult, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+        $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
     },
     _goLoadSearchResult: function ($layer, e) {
         var target = $(e.currentTarget);
