@@ -15,9 +15,26 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
-    this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
+    this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], this.getSessionId(req), req.baseUrl + req.path);
+    // console.log('[[[[[[cookie]]]]]]]', req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
+    // console.log(req.session);
+    // console.log(req.cookies);
+    // console.log('[[[[[Session Id]]]]]', this.getSessionId(req));
     this.request = req;
     this.response = res;
+  }
+
+  public sessionGenerate(req): Observable<any> {
+    return Observable.create((observer) => {
+      req.session.regenerate(() => {
+        observer.next();
+        observer.complete();
+      });
+    });
+  }
+
+  public getSessionId(req) {
+    return req.session.id;
   }
 
   public isLogin(session): boolean {
@@ -112,6 +129,7 @@ class LoginService {
         this.request.session.serverSession = serverSession;
         this.request.session.save(() => {
           this.logger.debug(this, '[setServerSession]', this.request.session);
+          console.log(this.request.session);
           observer.next(this.request.session.serverSession);
           observer.complete();
         });

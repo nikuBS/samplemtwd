@@ -69,9 +69,6 @@
                         </div>
                         <p class="msg-validation fe-error-msg" id="aria-pass-fail" style="display:none;">비밀번호 입력 오류 총 <span></span>회</p>
                         <p class="msg-guide" id="aria-pass-num">* 5회 실패 시 직접 SK텔레콤 지점을 방문하여 비밀번호를 재 등록하셔야 합니다.</p>
-                        <% if (query.url) { %>
-                        <p class="fe-url none"><%= query.url %></p>
-                        <% } %>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -83,7 +80,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerPwdComponent($('#common-login-customer-pwd'), '<%= query.target %>');
+    new Tw.CustomerPwdComponent($('#common-login-customer-pwd'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>
