@@ -127,7 +127,7 @@ Tw.MyTDataGiftImmediately.prototype = {
       this._requestSendingData();
     } else {
       if ( res.code === 'ZNGME0008' ) {
-        Tw.Error(Tw.POPUP_TITLE.NOTIFY, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
+        this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
       } else {
         Tw.Error(res.code, res.msg).pop();
       }
