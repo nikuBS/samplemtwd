@@ -41,6 +41,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$selectBtn = this.$container.find('.bt-select');
     this.$totalCount = this.$container.find('.num > em');
     this.$list = this.$container.find('ul.comp-box');
+    this.$empty = this.$container.find('.contents-empty');
   },
 
   _openChangeHistories: function(e) {
@@ -72,17 +73,33 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   _handleSelectType: function(e) {
     var type = $(e.currentTarget)
-      .find('input')
-      .data('type');
+        .find('input')
+        .data('type'),
+      count = this.$totalCount.data(type);
 
     if (type === this._currentType) {
       return;
     }
 
-    this.$container.find('li[data-type="' + this._currentType + '"]').addClass('none');
-    this.$container.find('li[data-type="' + type + '"]').removeClass('none');
+    var isEmpty = !this.$empty.hasClass('none');
+    if (!isEmpty) {
+      this.$container.find('li[data-type="' + this._currentType + '"]').addClass('none');
+    }
+
+    if (count === 0) {
+      if (!isEmpty) {
+        this.$empty.removeClass('none');
+      }
+    } else {
+      if (isEmpty) {
+        this.$empty.addClass('none');
+      }
+
+      this.$container.find('li[data-type="' + type + '"]').removeClass('none');
+    }
+
     this.$selectBtn.text(Tw.PREPAID_TYPES[type.toUpperCase()]);
-    this.$totalCount.text(this.$totalCount.data(type));
+    this.$totalCount.text(count);
 
     this._currentType = type;
     this._setMoreButton();
@@ -191,7 +208,6 @@ Tw.MyTDataPrepaidHistory.prototype = {
   _handleShowDetail: function(e) {
     var index = e.currentTarget.getAttribute('data-origin-idx'),
       history = this._histories[this._currentType][index];
-    console.log(history);
 
     var detail = $.extend(history, {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
