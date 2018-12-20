@@ -140,8 +140,12 @@ class MyTJoinSubmainController extends TwViewController {
       data.myLongPausedState = mylps; // 장기일시정지
 
       // 개통일자
-      if ( data.myHistory && data.myHistory.length > 0 ) {
-        data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+      if ( data.myHistory ) {
+        if (data.myHistory.length > 0) {
+          data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+        } else {
+          data.hsDate = null;
+        }
       }
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
@@ -401,11 +405,7 @@ class MyTJoinSubmainController extends TwViewController {
   _getMyHistory() {
     return this.apiService.request(API_CMD.BFF_05_0061, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result && resp.result.length > 0 ) {
-          return resp.result;
-        } else {
-          return null;
-        }
+        return resp.result;
       } else {
         // error
         return null;
