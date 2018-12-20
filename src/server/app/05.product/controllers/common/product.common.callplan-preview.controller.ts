@@ -238,11 +238,10 @@ class ProductCommonCallplanPreview extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
    * @param list
    * @private
    */
-  private _convertSeriesAndRecommendInfo (prodTypCd, list): any {
+  private _convertSeriesAndRecommendInfo (list): any {
     if (FormatHelper.isEmpty(list)) {
       return null;
     }
@@ -252,7 +251,8 @@ class ProductCommonCallplanPreview extends TwViewController {
         item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
         isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
-      return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
+      return [item, convResult, this._getIsCategory(item.prodTypCd),
+        this._getDisplayFlickSlideCondition(item.prodTypCd, isSeeContents, convResult)]
         .reduce((a, b) => {
           return Object.assign(a, b);
         });
@@ -389,10 +389,13 @@ class ProductCommonCallplanPreview extends TwViewController {
             banner: convertedProdInfo.banner
           }, // 상품 정보 by Redis
           relateTags: convertedProdInfo.relateTags, // 연관 태그
-          series: FormatHelper.isEmpty(prodInfo.result.seriesProdList) ? null :
-            this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.seriesProdList), // 시리즈 상품
+          series: FormatHelper.isEmpty(prodInfo.result.series) ? null :
+            {
+              prodGrpNm : FormatHelper.isEmpty(prodInfo.result.series.prodGrpNm) ? null : prodInfo.result.series.prodGrpNm,
+              list: this._convertSeriesAndRecommendInfo(prodInfo.result.series.seriesProdList)
+            }, // 시리즈 상품
           recommends: FormatHelper.isEmpty(prodInfo.result.recommendProdList) ? null :
-            this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.recommendProdList),  // 함께하면 유용한 상품
+            this._convertSeriesAndRecommendInfo(prodInfo.result.recommendProdList),  // 함께하면 유용한 상품
           recommendApps: FormatHelper.isEmpty(convertedProdInfo.recommendAppList) ? null : { recommendAppList: convertedProdInfo.recommendAppList },
           mobilePlanCompareInfo: null, // 요금제 비교하기
           similarProductInfo: convertedProdInfo.similar,  // 모바일 요금제 유사한 상품
