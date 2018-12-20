@@ -161,6 +161,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         }, this));
         return;
       }
+
+      if (res.code === Tw.API_CODE.RECEIVER_LIMIT) {
+        this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
+        return;
+      }
       Tw.Error(res.code, res.msg).pop();
       return;
     }
