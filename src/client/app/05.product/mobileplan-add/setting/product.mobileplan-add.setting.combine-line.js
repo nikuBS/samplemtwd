@@ -52,6 +52,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
   },
 
   _addNum: function() {
