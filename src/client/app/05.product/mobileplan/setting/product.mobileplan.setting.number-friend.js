@@ -126,8 +126,8 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _toggleFriend: function(e) {
-    if ($(e.currentTarget).hasClass('on')) {  // @todo 절친 해제 기능은 없음 alert
-      return;
+    if ($(e.currentTarget).hasClass('on')) {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44);
     }
 
     var $elem = $(e.currentTarget).parents('li'),
