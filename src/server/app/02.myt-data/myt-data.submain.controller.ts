@@ -350,10 +350,24 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if (codeA > codeB) {
+      comparison = 1;
+    } else if (codeA < codeB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
     const MOBILE = (items && items['m']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
     if ( MOBILE.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE);
       nOthers.filter((item) => {
