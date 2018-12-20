@@ -92,7 +92,7 @@ class CustomerAgentsearchDetail extends TwViewController {
       purified.custRateAvg += '.0';
     }
 
-    if (purified.agnYn === 'Y') {
+    if (purified.agnYn === 'Y' || purified.star.includes('NaN')) {
       purified.custRateCnt = '0';
     }
 
