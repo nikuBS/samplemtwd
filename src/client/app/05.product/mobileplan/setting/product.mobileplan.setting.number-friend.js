@@ -155,7 +155,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0 && this.$lineList.find('li').length < 4) {
+    if (this.$inputNumber.val().length > 9 && this.$lineList.find('li').length < 4) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

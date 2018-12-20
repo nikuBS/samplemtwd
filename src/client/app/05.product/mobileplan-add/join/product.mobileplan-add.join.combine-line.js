@@ -116,7 +116,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
