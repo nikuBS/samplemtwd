@@ -157,7 +157,7 @@ class ApiRouter {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
 
     const svcInfo = this.loginService.getSvcInfo(req);
-    this.logger.info('[get menu]', req.cookies, this.loginService.getSessionId(req), svcInfo);
+    this.logger.info(this, '[get menu]', req.cookies, this.loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_MENU + code)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
