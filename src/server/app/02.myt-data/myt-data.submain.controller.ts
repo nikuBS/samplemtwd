@@ -50,7 +50,6 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice(),
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
     ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
       if ( !svcInfo.svcMgmtNum || remnant.info ) {
@@ -199,12 +198,8 @@ class MytDataSubmainController extends TwViewController {
       if ( breakdownList.length > 0 ) {
         data.breakdownList = this.sortBreakdownItems(breakdownList);
       }
-      // 최근 데이터/음성/문자 사용량
-      if ( pattern ) {
-        data.pattern = pattern;
-      }
       // 배너 정보
-      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
+      if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner.result);
         }
@@ -547,31 +542,6 @@ class MytDataSubmainController extends TwViewController {
         // error
         return null;
       }
-    });
-  }
-
-  // 최근 사용패턴 사용량
-  _getUsagePatternSevice() {
-    const curDate = new Date().getDate();
-    return this.apiService.request(API_CMD.BFF_05_0091, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        // 1 ~ 4 일 (집계중으로표시하지 않음)
-        if ( curDate < 5 ) {
-          return null;
-        } else {
-          return resp.result;
-        }
-      } else {
-        // error
-        return null;
-      }
-    });
-  }
-
-  _getBannerMock(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(BANNER_MOCK);
-      obs.complete();
     });
   }
 }
