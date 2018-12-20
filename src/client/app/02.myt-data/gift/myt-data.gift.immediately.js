@@ -161,15 +161,16 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onSuccessSendingData: function (res) {
     this._popupService.close();
 
-    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+    // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     // TODO: Implemented API TEST
-    // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-    //   .done($.proxy(this._onRequestSuccessGiftData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
+      .done($.proxy(this._onRequestSuccessGiftData, this));
   },
 
   _onRequestSuccessGiftData: function (res) {
+    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+      // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
