@@ -24,22 +24,8 @@ Tw.MyTDataPrepaidHistory.prototype = {
       voice: 1
     };
 
-    this._displayedYear = {
-      data:
-        this.$container
-          .find('.year-tx[data-type="data"]')
-          .last()
-          .text() || new Date().getFullYear().toString(),
-      voice:
-        this.$container
-          .find('.year-tx[data-type="voice"]')
-          .last()
-          .text() || new Date().getFullYear().toString()
-    };
-
     this._itemsTmpl = Handlebars.compile($('#fe-tmpl-charge-items').html());
     this._dayTmpl = Handlebars.compile($('#fe-tmpl-charge-day').html());
-    this._yearTmpl = Handlebars.compile($('#fe-tmpl-charge-year').html());
     Handlebars.registerPartial('chargeItems', $('#fe-tmpl-charge-items').html());
   },
 
@@ -140,7 +126,6 @@ Tw.MyTDataPrepaidHistory.prototype = {
       idx = keys.length - 1,
       key = keys[idx],
       contents = '',
-      itemYear = '',
       typeName = Tw.PREPAID_TYPES[type.toUpperCase()],
       $exist = this.$container.find('.list-box[data-type="' + type + '"][data-key="' + key + '"]');
 
@@ -151,12 +136,6 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     for (; idx >= 0; idx--) {
       key = keys[idx];
-
-      itemYear = keys[idx].substring(0, 4);
-      if (this._displayedYear[type] !== itemYear) {
-        contents += this._yearTmpl({ year: itemYear, type: type });
-        this._displayedYear[type] = itemYear;
-      }
 
       contents += this._dayTmpl({
         items: histories[key],
@@ -195,7 +174,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     }
 
     history.idx = histories.idx + idx;
-    history.date = Tw.DateHelper.getShortDateNoYear(key);
+    history.date = Tw.DateHelper.getShortFirstDate(key);
     if (Tw.PREPAID_BADGES[history.chargeTp]) {
       history.badge = Tw.PREPAID_BADGES[history.chargeTp];
     }
@@ -212,12 +191,16 @@ Tw.MyTDataPrepaidHistory.prototype = {
   _handleShowDetail: function(e) {
     var index = e.currentTarget.getAttribute('data-origin-idx'),
       history = this._histories[this._currentType][index];
+    console.log(history);
 
     var detail = $.extend(history, {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
       chargeType: Tw.PREPAID_RECHARGE_TYPE[history.chargeTp],
       date: Tw.DateHelper.getShortDate(history.chargeDt),
-      payment: history.cardNm ? Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
+      payment:
+        history.cardNm && history.wayCd !== '99' ? 
+          Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : 
+          Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 
     this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });
