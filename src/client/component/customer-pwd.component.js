@@ -56,7 +56,6 @@ Tw.CustomerPwdComponent.prototype = {
     this.$pwdWrap = this.$container.find('.fe-pw-wrap');
     this.$firstPwd = this.$container.find('.fe-first-pwd');
     this.$errMsg = this.$container.find('.fe-error-msg');
-    // this.$url = this.$container.find('.fe-url');
     this.$pwd = this.$container.find('input');
   },
   _init: function () {
@@ -186,10 +185,6 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      // var url = this.$url.text();
-      // if (Tw.FormatHelper.isEmpty(url)) {
-      //   url = '/main/home';
-      // }
       this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
     }
   },
