@@ -7,6 +7,8 @@ import MembershipInfoGrade from './controllers/info/membership.info.grade.contro
 import MembershipBenefitBrand from './controllers/benefit/membership.benefit.brand.controller';
 import MembershipBenefitBrandBenefit from './controllers/benefit/membership.benefit.brand-benefit.controller';
 import MembershipBenefitPlus from './controllers/benefit/membership.benefit.plus.controller';
+import MembershipSubmain from './controllers/membership.submain.controller';
+import MembershipMy from './controllers/my/membership.my.controller';
 
 class MembershipRouter extends TwRouter {
   constructor() {
@@ -19,6 +21,8 @@ class MembershipRouter extends TwRouter {
     this.controllers.push({ url: '/benefit/plus', controller: MembershipBenefitPlus });
     this.controllers.push({ url: '/benefit/movieculture', controller: MembershipBenefitMovieculture });
     this.controllers.push({ url: '/membership_info/mbrs_0001', controller: MembershipInfoGrade });
+    this.controllers.push({ url: '/submain', controller: MembershipSubmain });
+    this.controllers.push({ url: '/my', controller: MembershipMy });
   }
 }
 

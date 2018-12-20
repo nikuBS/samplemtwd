@@ -1,0 +1,19 @@
+<%#
+* FileName: membership.my.component.html
+* Author: 김승규 (ksk4788@pineone.com)
+* Date: 2018.12.19
+%>
+<script id="tmplList" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <div class="lineinfo-user">
+            <span class="info-title">{{joinName}}</span>
+            <span class="info-sub">{{happenDate}}</span>
+        </div>
+        <div class="lineinfo-data">
+            <span class="info-title"><span class="num">{{showUserDcAmt}}<span>원</span></span></span>
+            <!-- <span class="info-sub">두툼포인트 120P</span> -->
+        </div>
+    </li>
+    {{/each}}
+</script>
