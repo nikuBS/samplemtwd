@@ -60,6 +60,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       false,
       this.$container,
       {
+        isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
         noticeList: this._confirmOptions.prodNoticeList,
         isWidgetInit: true

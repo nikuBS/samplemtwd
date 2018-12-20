@@ -129,8 +129,9 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _joinCancel: function() {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
+    var alert = this._data.isTerm ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A74 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+
+    this._popupService.openModalTypeA(alert.TITLE, alert.MSG, alert.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
       null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
   },
 
