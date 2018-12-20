@@ -11,6 +11,10 @@ Tw.MytJoinWireSetPause = function (rootEl, options) {
   this._options = options;
   this._historyService = new Tw.HistoryService();
 
+  if ( this._options.isBroadbandJoined === 'Y' ) {
+    this._openErrorAlert();
+    return;
+  }
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -34,6 +38,23 @@ Tw.MytJoinWireSetPause.prototype = {
   _startDate: null, // 정지 시작일
   _endDate: null, // 정지 종료일
   _isDirty: false,
+
+  _openErrorAlert: function () {
+    Tw.Popup.openOneBtTypeB(
+      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
+      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+      [{
+        style_class: 'link',
+        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
+      }],
+      'type1',
+      $.proxy(function ($layer) {
+        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+      }, this), $.proxy(function () {
+        this._historyService.goBack();
+      }, this)
+    );
+  },
 
   _cachedElement: function () {
     this._$inputEndDate = this.$container.find('.fe-input-end-date');
