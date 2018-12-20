@@ -147,6 +147,10 @@ Tw.ProductCommonConfirm.prototype = {
       return;
     }
 
+    if (!this._isPopup) {
+      return this._historyService.goBack();
+    }
+
     this._historyService.go(-2);
   },
 
