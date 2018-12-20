@@ -45,6 +45,7 @@
 <hr class="cont-sp type1" aria-hidden="true">
 <% } %>
 
+<% if ( autoList && autoList.length < 2 ) { %>
 <div class="cont-box b-line1">
     <div class="ti-caption-type01">
         <h2 class="tit">자동 선물 받는 분 번호
@@ -70,8 +71,9 @@
     </div>
     <p class="fs13 mt10"><a class="bt-link-tx underline fe-available_product">선물 받을 수 있는 요금제 확인</a></p>
 </div>
-
 <hr class="cont-sp type1" aria-hidden="true">
+<% } %>
+
 <% if ( autoList && autoList.length >= 2 ) { %>
 <div class="cont-box">
     <p class="fs16">결합가족 2회선을 이미 신청하셨습니다.<br>대상자를 변경하시려면 <strong>해지 후 신청</strong>해주세요.</p>
