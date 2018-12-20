@@ -204,14 +204,15 @@ class MytDataSubmainController extends TwViewController {
           if ( family.code === API_CODE.CODE_00 ) {
             data.family.limitation = parseInt(family.result.limitation, 10);
             // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제이면서 미성년인 경우
+            if ( !data.family.isProdId || family.result.adultYn === 'N' ) {
+              data.family.noshare = true;
+            }
           } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
             // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
             data.family.impossible = true;
-          } else if ( family.code === API_T_FAMILY_ERROR.BLN0011 ) {
-            data.family.isProdId = false;
-          }
-          if ( !data.family.isProdId || family.result.adultYn === 'N' ) {
-            data.family.noshare = true;
+          } else {
+            // 가입불가능한 요금제인 경우
+            data.family = null;
           }
           res.render('myt-data.submain.html', { data });
         });
