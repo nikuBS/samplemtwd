@@ -31,7 +31,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.on('change', 'input[type=radio]', $.proxy(this._onOptionSelected, this));
     this.$numberInput.on('keyup', $.proxy(this._onNumberChanged, this));
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
-    this.$container.on('click', '.fe-btn-contacts', $.proxy(this._onClickContacts, this));
+    this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
   _init: function () {
