@@ -139,12 +139,24 @@ abstract class TwViewController {
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
+      const loginType = urlMeta.auth.accessTypes;
+
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        if ( loginType === '' ) {
+          // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
+          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          return;
+        }
         if ( isLogin ) {
           urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
-          if ( urlMeta.auth.accessTypes.indexOf(svcInfo.loginType) !== -1 ) {
+          if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
             const urlAuth = urlMeta.auth.grades;
             const svcGr = svcInfo.svcGr;
+            // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
+            if ( urlAuth === '' ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              return;
+            }
             if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
               if ( urlAuth.indexOf('N') !== -1 ) {
                 // 준회원 접근 가능한 화면
@@ -169,16 +181,11 @@ abstract class TwViewController {
             }
           }
         } else {
-          if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
-            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-            } else {
-              // login page
-              res.redirect('/common/member/login?target=' + path);
-            }
-          } else {
-            // TODO: admin 정보 입력 오류 (accessType이 비어있음)
+          if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
             this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          } else {
+            // login page
+            res.redirect('/common/member/login?target=' + path);
           }
         }
       } else {
