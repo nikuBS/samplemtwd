@@ -52,6 +52,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
@@ -85,7 +87,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.TITLE);
     }
 
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
   },
 
@@ -113,7 +115,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

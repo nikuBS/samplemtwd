@@ -51,6 +51,8 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
@@ -59,6 +61,10 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     if (!Tw.ValidationHelper.isCellPhone(number)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+    }
+
+    if (this.$lineList.find('li').length > 5) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A35.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A35.TITLE);
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -80,7 +86,11 @@ Tw.ProductMobileplanSettingNumber.prototype = {
 
   _delNum: function(e) {
     var $elem = $(e.currentTarget).parents('li');
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
+    if ($elem.parent().find('li').length < 2) {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+    }
+
+    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
       $.proxy(this._delNumReq, this, $elem.data('number'), $elem.data('audit_dtm')));
   },
@@ -111,7 +121,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0 && this.$lineList.find('li').length < 6) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

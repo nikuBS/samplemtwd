@@ -311,12 +311,11 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
    * @param apiInfo
    * @param isSeries
    * @private
    */
-  private _convertSeriesAndRecommendInfo (prodTypCd, apiInfo, isSeries): any {
+  private _convertSeriesAndRecommendInfo (apiInfo, isSeries): any {
     if (FormatHelper.isEmpty(apiInfo)) {
       return null;
     }
@@ -327,7 +326,8 @@ class ProductCommonCallplan extends TwViewController {
         item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
         isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
-      return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
+      return [item, convResult, this._getIsCategory(item.prodTypCd),
+        this._getDisplayFlickSlideCondition(item.prodTypCd, isSeeContents, convResult)]
         .reduce((a, b) => {
           return Object.assign(a, b);
         });
@@ -372,7 +372,7 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     let prodIdsLength: any = 0;
-    if (prodTypCd === 'G') {
+    if (prodTypCd === 'G' && similarProductInfo.result.list) {
       let prodIds: any = [];
 
       similarProductInfo.result.list.forEach((item) => {
@@ -520,8 +520,11 @@ class ProductCommonCallplan extends TwViewController {
             basicInfo: this._convertBasicInfo(basicInfo.result),  // 상품 정보 by Api
             prodRedisInfo: this._convertRedisInfo(basicInfo.result.prodStCd, prodRedisInfo.result), // 상품 정보 by Redis
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
-            series: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, seriesInfo.result, true), // 시리즈 상품
-            recommends: this._convertSeriesAndRecommendInfo(basicInfo.result.prodTypCd, recommendsInfo.result, false),  // 함께하면 유용한 상품
+            series: {
+              prodGrpNm : FormatHelper.isEmpty(seriesInfo.result.prodGrpNm) ? null : seriesInfo.result.prodGrpNm,
+              list: this._convertSeriesAndRecommendInfo(seriesInfo.result, true)
+            }, // 시리즈 상품
+            recommends: this._convertSeriesAndRecommendInfo(recommendsInfo.result, false),  // 함께하면 유용한 상품
             recommendApps: recommendsAppInfo.result,  // 함께하면 더욱 스마트한 앱 서비스
             mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품

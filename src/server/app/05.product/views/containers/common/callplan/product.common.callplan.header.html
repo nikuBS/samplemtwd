@@ -53,7 +53,7 @@
         </div>
         <% } else { %>
         <% if ( basicInfo.prodScrbYn === 'Y' && (
-            ( isMobileplan || isWireplan ) && svcInfo && svcInfo.prodId !== prodId ||
+            ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || isMobileplan && !svcInfo) ||
             ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
         ) { %>
         <div class="btn">
@@ -79,9 +79,7 @@
         <% } %>
         <% } %>
     </div>
-    <% if ( basicInfo.prodTypCd && (prodRedisInfo.summaryCase === '1' || prodRedisInfo.summaryCase === '2')
-    && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt ||
-    prodRedisInfo.summary.basOfrCharCntCtt) ) { %>
+    <% if ( isMobileplan && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt || prodRedisInfo.summary.basOfrCharCntCtt) ) { %>
     <ul class="productdetails-utill">
         <% if ( prodRedisInfo.summary.basOfrDataQtyCtt ) { %>
         <li>- 데이터 <strong class="str">
