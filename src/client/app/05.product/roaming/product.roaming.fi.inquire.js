@@ -1,9 +1,9 @@
 /**
- * FileName: product.roaming.fi.inquire-auth.js
- * Author: 김승규 (skt.P130715@partner.sk.com)
+ * FileName: product.roaming.fi.inquire.js
+ * Author: 김승규 (ksk4788@pineone.com)
  * Date: 2018.11.27
  */
-Tw.ProductRoamingFiInquireAuth = function (rootEl, countryCode) {
+Tw.ProductRoamingFiInquire = function (rootEl, countryCode) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -18,7 +18,7 @@ Tw.ProductRoamingFiInquireAuth = function (rootEl, countryCode) {
   this._init();
 };
 
-Tw.ProductRoamingFiInquireAuth.prototype = {
+Tw.ProductRoamingFiInquire.prototype = {
 
   _init: function() {
     this._cachedElement();

@@ -1,5 +1,5 @@
 <%#
-* FileName: product.roaming.reservation2step.html
+* FileName: product.roaming.reservation.html
 * Author: Seungkyu Kim (ksk4788@pineone.com)
 * Date: 2018.11.13
 * ID: RM_14_02_02
@@ -36,18 +36,9 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box step">
-                            <h3 class="step-ti"><em>STEP 02</em>정보입력</h3>
-                            <ul class="step-list">
-                                <li>1<span class="blind">step 01</span></li>
-                                <li class="on">2<span class="blind">step 02</span></li>
-                            </ul>
-                        </div>
-                    </div>
                     <!-- //.widget -->
 
-                    <div class="charge-guide-wrap top-line">
+                    <div class="charge-guide-wrap">
                         <div class="charge-cont">
                             <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
                             <span class="tit-tgothic"><%= svcInfo.svcNum %></span>
@@ -438,7 +429,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFiReservation2step($('.wrap'));
+    new Tw.ProductRoamingFiReservation($('.wrap'));
   });
 </script>
 

@@ -1,17 +1,17 @@
 /**
- * FileName: product.roaming.fi.reservation3step.js
+ * FileName: product.roaming.fi.reservation-complete.js
  * Author: SeungKyu Kim (ksk4788@pineone.com)
  * Date: 2018.11.16
  */
 
-Tw.ProductRoamingFiReservation3step = function(rootEl) {
+Tw.ProductRoamingFiReservationComplete = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._cachedElement();
   this._bindEvent();
 };
 
-Tw.ProductRoamingFiReservation3step.prototype = {
+Tw.ProductRoamingFiReservationComplete.prototype = {
 
   _cachedElement: function() {
     this.$btnGoInquire = this.$container.find('#fe-go-inquire');

@@ -1,10 +1,10 @@
 /**
- * FileName: product.roaming.fi.reservation2step.js
+ * FileName: product.roaming.fi.reservation.js
  * Author: SeungKyu Kim (ksk4788@pineone.com)
  * Date: 2018.11.13
  */
 
-Tw.ProductRoamingFiReservation2step = function(rootEl) {
+Tw.ProductRoamingFiReservation = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
@@ -13,7 +13,7 @@ Tw.ProductRoamingFiReservation2step = function(rootEl) {
   this._bindEvent();
 };
 
-Tw.ProductRoamingFiReservation2step.prototype = {
+Tw.ProductRoamingFiReservation.prototype = {
   countryArr : [],
 
   _cachedElement: function() {
@@ -107,7 +107,7 @@ Tw.ProductRoamingFiReservation2step.prototype = {
 
   _handleSuccessFiReservation: function(res){
     if(res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.replaceURL('/product/roaming/fi/reservation3step?selectIdx=' + this.selectIdx);
+      this._historyService.replaceURL('/product/roaming/fi/reservation-complete?selectIdx=' + this.selectIdx);
     }
   },
 

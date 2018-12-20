@@ -1,5 +1,5 @@
 /**
- * FileName: product.roaming.fi.reservation2step.controller.ts
+ * FileName: product.roaming.fi.reservation.controller.ts
  * Author: Seungkyu Kim (ksk4788@pineone.com)
  * Date: 2018.11.16
 */
@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ROAMING_RECEIVE_CENTER } from '../../../../types/string.type';
 // import { Observable } from 'rxjs/Observable';
 
-export default class ProductRoamingReservation3step extends TwViewController {
+export default class ProductRoamingReservationComplete extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const selectIdx = req.query.selectIdx;
@@ -51,6 +51,6 @@ export default class ProductRoamingReservation3step extends TwViewController {
       centerImg
     };
 
-    res.render('roaming/product.roaming.fi.reservation3step.html', { svcInfo : svcInfo , data : data });
+    res.render('roaming/product.roaming.fi.reservation-complete.html', { svcInfo : svcInfo , data : data });
   }
 }
