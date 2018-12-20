@@ -176,8 +176,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     var auditDtm = $(event.target).closest('li').data('auditdtm');
 
     this._popupService.openModalTypeA(
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.TITLE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
       $.proxy(function(){
         this._popupService.close();

@@ -243,6 +243,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
+                    <% if ( roamDonaCallBtnYn.callgiftYn === 'Y' ) { %>
                     <li>
                         <button data-target="callGiftBtn">
                                 <span class="inner">
@@ -250,6 +251,8 @@
                                 </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.roamingYn === 'Y' ) { %>
                     <li>
                         <button data-target="roamingBtn">
                                 <span class="inner">
@@ -257,6 +260,8 @@
                                 </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.donationYn === 'Y' ) { %>
                     <li>
                         <button data-target="donationBtn">
                                 <span class="inner">
@@ -264,6 +269,7 @@
                                 </span>
                         </button>
                     </li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->
