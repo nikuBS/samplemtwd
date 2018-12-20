@@ -109,7 +109,18 @@ Tw.MainHome.prototype = {
   _onClickBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
     var mbrGr = this.$barcodeGr.data('mbrgr');
-    var usedAmount = Tw.FormatHelper.addComma(this.$elBarcode.data('usedamount'));
+    this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
+      .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+  },
+  _successMembership: function (mbrGr, cardNum, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var usedAmt = resp.result.mbrUsedAmt;
+      this._openBarcodePopup(mbrGr, cardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _openBarcodePopup: function (mbrGr, cardNum, usedAmount) {
     this._popupService.open({
       hbs: 'HO_01_01_02',
       layer: true,
@@ -120,6 +131,7 @@ Tw.MainHome.prototype = {
         usedAmount: usedAmount
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
+
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');

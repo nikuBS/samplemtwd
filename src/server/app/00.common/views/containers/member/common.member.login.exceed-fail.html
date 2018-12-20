@@ -17,7 +17,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="commonLoginExceedFail" class="wrap">
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -41,7 +41,7 @@
                 </p>
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <a class="fe-replace-history" href="/main/home">홈으로</button>
+                        <a class="fe-replace-history" href="/main/home">홈으로</a>
                     </li>
                 </ul>
             </div>
@@ -54,7 +54,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-
+    new Tw.CommonMemberLoginExceedFail($('#commonLoginExceedFail'));
   });
 </script>
 <% include ../../components/end.component.html %>

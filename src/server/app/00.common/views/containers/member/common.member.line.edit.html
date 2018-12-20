@@ -44,7 +44,7 @@
                                     <li class="ui-state-default fe-item fe-item-active" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %><!--<span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span>--></p>
-                                            <% if(category !== 'S') { %>
+                                            <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
                                             <% } else { %>
                                             <span class="ph"><%= line.addr %></span>
@@ -69,7 +69,7 @@
                                     <li class="ui-state-default fe-item fe-item-inactive" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %></p>
-                                            <% if(category !== 'S') { %>
+                                            <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
                                             <% } else { %>
                                             <span class="ph"><%= line.addr %></span>

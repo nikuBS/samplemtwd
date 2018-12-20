@@ -1,4 +1,7 @@
-Tw.Environment = { cdn: '' };
+Tw.Environment = {
+  init: false,
+  cdn: ''
+};
 Tw.Init = function () {
   this._apiService = null;
   this._nativeService = null;
@@ -40,14 +43,17 @@ Tw.Init.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
       Tw.Environment = result;
-      Tw.Logger.info('[Version]', result.version);
-      Tw.Popup = new Tw.PopupService();
-      $(window).trigger('env');
+      Tw.Environment.init = true;
+      Tw.Logger.info('[Version]', Tw.Environment.version);
+      $(window).trigger(Tw.INIT_COMPLETE);
 
-      if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
-        /* jshint undef: false */
-        alert(result.version);
-        /* jshint undef: false */
+      // if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
+      //   /* jshint undef: false */
+      //   alert(result.version);
+      //   /* jshint undef: false */
+      // }
+      if ( Tw.Environment.environment !== 'local' && /\/home/.test(location.href) ) {
+        Tw.Popup.toast( Tw.Environment.version);
       }
     }
   },

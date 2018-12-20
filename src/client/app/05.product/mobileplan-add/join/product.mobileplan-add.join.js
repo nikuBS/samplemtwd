@@ -26,7 +26,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
   },
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function() {

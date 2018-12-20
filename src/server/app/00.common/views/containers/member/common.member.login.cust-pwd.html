@@ -83,7 +83,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerPwdComponent($('#common-login-customer-pwd'));
+    new Tw.CustomerPwdComponent($('#common-login-customer-pwd'), '<%= query.target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

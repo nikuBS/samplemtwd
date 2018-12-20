@@ -63,24 +63,11 @@ abstract class TwViewController {
     this._loginService.setCurrentReq(req, res);
 
     this.setChannel(req, res).subscribe((resp) => {
-      if ( this.existId(tokenId, userId) ) {
-        if ( this.checkLogin(req.session) ) {
-          if ( !FormatHelper.isEmpty(userId) ) {
-            const svcInfo = this._loginService.getSvcInfo();
-            if ( svcInfo.userId === userId ) {
-              this.sessionLogin(req, res, next, path);
-            } else {
-              this.login(req, res, next, path, tokenId, userId);
-            }
-          } else {
-            this.sessionLogin(req, res, next, path);
-          }
-        } else {
-          this.login(req, res, next, path, tokenId, userId);
-        }
+      if ( this.checkLogin(req.session) ) {
+        this.sessionLogin(req, res, next, path);
       } else {
-        if ( this.checkLogin(req.session) ) {
-          this.sessionLogin(req, res, next, path);
+        if ( this.existId(tokenId, userId) ) {
+          this.login(req, res, next, path, tokenId, userId);
         } else {
           this.sessionCheck(req, res, next, path);
         }
@@ -130,7 +117,7 @@ abstract class TwViewController {
       this.renderPage(req, res, next, path);
     } else {
       const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
-      if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y') {
+      if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
         this._logger.info(this, '[Session expired]');
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
         res.redirect('/common/member/logout/expire');
@@ -158,22 +145,28 @@ abstract class TwViewController {
           if ( urlMeta.auth.accessTypes.indexOf(svcInfo.loginType) !== -1 ) {
             const urlAuth = urlMeta.auth.grades;
             const svcGr = svcInfo.svcGr;
-            if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+              if ( urlAuth.indexOf('N') !== -1 ) {
+                // 준회원 접근 가능한 화면
+                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              } else {
+                // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                this.errorNoRegister(req, res, next);
+              }
+            } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // TODO: 접근권한 없음
-              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              // 접근권한 없음
+              this.errorAuth(req, res, next);
             }
           } else {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             // 현재 로그인 방법으론 이용할 수 없음
-            // if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-            // res.redirect('/common/member/slogin/fail');
-            // } else {
-            // TODO: ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-            // res.redirect('/common/member/slogin/fail');
-            // this.errorAuth(req, res, next, svcInfo);
-            // }
+            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+              res.redirect('/common/member/slogin/fail');
+            } else {
+              // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+              this.errorAuth(req, res, next);
+            }
           }
         } else {
           if ( !FormatHelper.isEmpty(urlMeta.auth.accessTypes) ) {
@@ -181,51 +174,26 @@ abstract class TwViewController {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
               // login page
-              // TODO: APP 고려해야함 (뒤로가기도 이슈있음)
               res.redirect('/common/member/login?target=' + path);
             }
           } else {
-            // TODO: admin 정보 입력 오류
+            // TODO: admin 정보 입력 오류 (accessType이 비어있음)
             this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           }
         }
       } else {
-        // TODO: 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
+        // 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
       }
-
-      // if ( svcInfo.totalSvcCnt === '0' ) {
-      //   this.errorEmptyLine(req, res, next, svcInfo);
-      // } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
-      //   this.errorNoRegister(req, res, next, svcInfo);
-      // } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-      //   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-      // } else {
-      //   const loginType = svcInfo.loginType;
-      //   if ( loginType === LOGIN_TYPE.EASY ) {
-      //     res.redirect('/common/member/slogin/fail');
-      //   } else {
-      //     this.errorAuth(req, res, next, svcInfo);
-      //   }
-      // }
     });
   }
 
-  private errorAuth(req, res, next, svcInfo) {
-    const data = {
-      showSvc: svcInfo.svcAttrCd.indexOf(LINE_NAME.INTERNET_PHONE_IPTV) === -1 ? svcInfo.svcNum : svcInfo.addr,
-      showAttr: SVC_ATTR_NAME[svcInfo.svcAttrCd]
-    };
-
-    res.render('error.no-auth.html', { svcInfo, data });
+  private errorAuth(req, res, next) {
+    res.render('error.no-auth.html');
   }
 
-  private errorNoRegister(req, res, next, svcInfo) {
-    res.render('error.no-register.html', { svcInfo });
-  }
-
-  private errorEmptyLine(req, res, next, svcInfo) {
-    res.render('error.empty-line.html', { svcInfo });
+  private errorNoRegister(req, res, next) {
+    res.render('error.no-register.html');
   }
 
   private renderPage(req, res, next, path) {

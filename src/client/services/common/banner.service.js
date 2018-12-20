@@ -4,7 +4,7 @@ Tw.BannerService = function(rootEl, banners, callback) {
     return;
   }
 
-  // $(window).on('env', $.proxy(this._init, this, this._getProperBanners(banners)));
+  // $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, this._getProperBanners(banners)));
   this._init(banners, callback);
   this._bindEvent();
 };

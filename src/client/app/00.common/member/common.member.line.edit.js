@@ -114,7 +114,7 @@ Tw.CommonMemberLineEdit.prototype = {
       Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._checkRepSvc(resp.result);
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _checkRepSvc: function (result) {
@@ -144,16 +144,16 @@ Tw.CommonMemberLineEdit.prototype = {
       this.agr201Yn = resp.result.agr201Yn;
       this.agr203Yn = resp.result.agr203Yn;
 
-      if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
+      if ( this.agr201Yn !== 'Y' || this.agr203Yn !== 'Y' ) {
         setTimeout($.proxy(function () {
           this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
-            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn, $.proxy(this._onCloseMarketingOfferPopup, this));
+            showName, svcNum, this.agr201Yn, this.agr203Yn, $.proxy(this._onCloseMarketingOfferPopup, this));
         }, this), 0);
       } else {
         this._closeMarketingOfferPopup();
       }
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _closeMarketingOfferPopup: function () {
