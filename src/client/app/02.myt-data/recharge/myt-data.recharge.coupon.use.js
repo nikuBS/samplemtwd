@@ -91,6 +91,17 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         );
         break;
       case 'gift':
+        var $errorSpan = this.$container.find('.fe-number-error');
+        $errorSpan.addClass('none');
+
+        var number = this.$numberInput.val().trim();
+        if (number.length < 10) {
+          $errorSpan.removeClass('none');
+          // $errorSpan.children().addClass('none');
+          // $errorSpan.find('#fe-2-v18').removeClass('none');
+          return;
+        }
+
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONTENTS_GIFT,
