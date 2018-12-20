@@ -158,17 +158,11 @@ skt_landing.widgets = {
           itemsW += radioItems.eq(i).outerWidth(true);
         }
         radioSlide.find('.select-list').css('width',itemsW + 1);
-        /*
-        if(itemsW <= skt_landing.util.win_info.get_winW()){
-          radioSlide.find('.select-list').css('width','100%');
-        }else if(itemsW > skt_landing.util.win_info.get_winW()){
-          radioSlide.find('.select-list').css('width',itemsW);
-        }
-        */
       }
 
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
+      
       $(this).on('change', function () {
         if ($(this).prop('disabled')) return;
         var nameGroup = $('[name=' + $(this).attr('name') + ']').not(this);
@@ -573,9 +567,8 @@ skt_landing.widgets = {
         var items = tabList.find('li');
         var itemsW = parseInt(items.closest('ul').css('padding-left'))*2;
         for(var i=0,leng=items.length; i<leng; ++i){
-          itemsW += items.eq(i).outerWidth(true);
+          itemsW += Math.ceil(items.eq(i).outerWidth(true));
         }
-        // items.closest('ul').css('width',itemsW);
         if(skt_landing.util.win_info.get_winW() > itemsW){
           items.closest('ul').css('width','100%');
         }else{
@@ -647,7 +640,7 @@ skt_landing.widgets = {
           items = belt.find('> li'),
           itemsW = 0;
       for(var i=0; items.length > i; ++i){
-        itemsW += items.eq(i).outerWidth(true);
+        itemsW += Math.ceil(items.eq(i).outerWidth(true));
       }
       belt.css('width', itemsW + 1);
       /*
