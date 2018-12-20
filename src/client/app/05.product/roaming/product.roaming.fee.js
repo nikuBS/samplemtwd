@@ -125,8 +125,8 @@ Tw.ProductRoamingFee.prototype = {
   },
   _openRoamingTagPopup: function($layer, e) {
       if ($layer.find('input[checked="checked"]').length > 0) {
-          this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.TITLE,
-              $.proxy(this._handleSelectRomaingTag, this, e.currentTarget));
+          this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.TITLE,
+              $.proxy(this._handleSelectRomaingTag, this, e.currentTarget), null, Tw.BUTTON_LABEL.CLOSE);
       } else {
           this._handleSelectRomaingTag(e.currentTarget);
       }
@@ -155,7 +155,7 @@ Tw.ProductRoamingFee.prototype = {
 
       if(this.selectPlanTag){
           var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
-          this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag, this, $layer, this.$filterBtn));
+          this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag, this, $layer, this.$filterBtn), null, Tw.BUTTON_LABEL.CLOSE);
       } else {
           if(this.selectFilter!=='F01526'){
               if(this.$filterBtn.hasClass('checked')){

@@ -213,7 +213,7 @@ Tw.ProductList.prototype = {
     if (this._hasSelectedTag) {
       $target.removeClass('checked').attr('aria-checked', false);
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
-      this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetSelectedTag, this, $layer, $target));
+      this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetSelectedTag, this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE);
     }
   },
 
@@ -241,7 +241,13 @@ Tw.ProductList.prototype = {
   _openSelectTagPopup: function($layer, e) {
     if ($layer.find('li[aria-checked="true"]').length > 0) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
-      this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
+      this._popupService.openConfirmButton(
+        ALERT.MSG,
+        ALERT.TITLE,
+        $.proxy(this._handleSelectTag, this, e.currentTarget),
+        null,
+        Tw.BUTTON_LABEL.CLOSE
+      );
     } else {
       this._handleSelectTag(e.currentTarget);
     }
