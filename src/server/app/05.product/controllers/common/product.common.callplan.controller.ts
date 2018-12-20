@@ -445,7 +445,7 @@ class ProductCommonCallplan extends TwViewController {
       return null;
     }
 
-    return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, '');
+    return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, 'data:,');
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -467,7 +467,7 @@ class ProductCommonCallplan extends TwViewController {
       });
     }
 
-    if (this._additionsRedirectProdList.indexOf(prodId) !== -1) {
+    if (this._additionsRedirectProdList.indexOf(prodId) !== -1 && !FormatHelper.isEmpty(PRODUCT_CALLPLAN_ADDITIONS_REDIRECT[prodId])) {
       return res.redirect('/product/callplan/' + PRODUCT_CALLPLAN_ADDITIONS_REDIRECT[prodId]);
     }
 
