@@ -1050,8 +1050,7 @@ body.bg-gray {
         padding: 3.25rem 0 0;
         height: 100%;
         overflow: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch; }
+        overflow-y: auto; }
         .popup-page.layer .container-wrap .container .cont-sp.type1 {
           height: 0.375rem; }
         .popup-page.layer .container-wrap .container .link-long-ti {
