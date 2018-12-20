@@ -53,7 +53,7 @@
         </div>
         <% } else { %>
         <% if ( basicInfo.prodScrbYn === 'Y' && (
-            ( isMobileplan || isWireplan ) && svcInfo && svcInfo.prodId !== prodId ||
+            ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || isMobileplan && !svcInfo) ||
             ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
         ) { %>
         <div class="btn">
