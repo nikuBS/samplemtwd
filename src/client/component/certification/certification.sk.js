@@ -79,9 +79,16 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      _.map(resp.result, $.proxy(function (info) {
-        if ( info.repSvc === 'Y' ) {
-          this._svcInfo = info;
+      var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+      _.map(category, $.proxy(function (line) {
+        var curLine = resp.result[Tw.LINE_NAME[line]];
+        if ( !Tw.FormatHelper.isEmpty(curLine) ) {
+          _.map(curLine, $.proxy(function (target) {
+            if ( target.repSvcYn === 'Y' ) {
+              this._svcInfo = target;
+              return;
+            }
+          }, this));
         }
       }, this));
 
