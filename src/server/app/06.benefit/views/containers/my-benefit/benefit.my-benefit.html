@@ -34,9 +34,18 @@
                     <div class="myinfo-cont">
                         <div class="title-m">고객님은 SK텔레콤과 함께 하신지<br /><span class="tx-bold tx-red"><%= days %></span>일째 입니다.</div>
                     </div>
+                    <% if( locals.membership ){ %>
                     <div class="ico-wrap">
-                        <a href="/membership/submain"><span class="ico-ill-type3"></span></a>
+                        <% if( membership === 'S' ){ %>
+                        <span class="ico-ill-type3 silver"><span class="blind">silver</span></span>
+                        <% } else if( membership === 'G') { %>
+                        <span class="ico-ill-type3 gold"><span class="blind">gold</span></span>
+                         <% } else if( membership === 'V') { %>
+                        <span class="ico-ill-type3 vip"><span class="blind">vip</span></span>
+                        <% } %>
                     </div>
+                    <div class="membership-link"><a href="/membership/submain" class="bt-link-tx underline">나의 맴버쉽</a></div>
+                   <% } %>
                 </div>
             </div>
             <!--// .cont-box -->
