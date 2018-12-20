@@ -39,7 +39,11 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 Tw.MyTJoinWireModifyAddress.prototype = {
   _init: function () {
     if(this.resData.resDataInfo.coClCd === 'B'){
-      this._openSkbdErrorAlert();
+      if( !Tw.Environment.cdn ) {
+        $(window).on('env', $.proxy(this._openSkbdErrorAlert, this));
+      } else {
+        this._openSkbdErrorAlert();
+      }
       return;
     }
     this._cachedElement();
@@ -78,8 +82,9 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     this.$container.on('click', '#btnPostSearch', $.proxy(this._addr_search_clickEvt, this));
     this.$container.on('change', '.fe-main-address', $.proxy(this._formValidateionChk, this));
     this.$container.on('change', '.fe-detail-address', $.proxy(this._formValidateionChk, this));
+    this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
-    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
+    this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
 
   },
 
@@ -141,7 +146,14 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   input_hpEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
-    this.addressFormData.cntcPrefrMblPhonNum = tempNum;
+
+    if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){  //
+      this.addressFormData.cntcPrefrMblPhonNum = '';
+      $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+    } else {
+      this.addressFormData.cntcPrefrMblPhonNum = tempNum;
+      $('#spanHpValid').text('');
+    }
     this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
@@ -308,11 +320,17 @@ Tw.MyTJoinWireModifyAddress.prototype = {
         Tw.Logger.info('[ addressFormData > _.map > '+ key +']', item, Tw.FormatHelper.isEmpty(item));
 
         if ( key !== 'cntcPrefrPhonNum' ) { //일반전화가 아닐때
-          if ( Tw.FormatHelper.isEmpty(item) ) {
-            Tw.Logger.info('[값을 입력하세요.]', key);
-            throw new Error('break');
-
+          if ( key === 'cntcPrefrMblPhonNum' ) { // 휴대폰
+            if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){  //
+              throw new Error('break');
+            }
+          } else {
+            if ( Tw.FormatHelper.isEmpty(item) ) {
+              Tw.Logger.info('[값을 입력하세요.]', key);
+              throw new Error('break');
+            }
           }
+
         }
 
         if( key === 'basAddr' && item !== $('.fe-main-address', this.$container).val()){
@@ -342,8 +360,14 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   //--------------------------------------------------------------------------[API]
   _chgWireAddrInfo: function (param) {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    return this._apiService.request(Tw.API_CMD.BFF_05_0163, param).done($.proxy(this._chgWireAddrInfoInit, this));
+    return this._apiService.request(Tw.API_CMD.BFF_05_0163, param)
+      .done($.proxy(this._chgWireAddrInfoInit, this))
+      .fail(function (err) {
+        Tw.CommonHelper.endLoading('.container');
+        Tw.Error(err.status, err.statusText).pop();
+      });
 
     // var thisMain = this;
     // $.ajax('http://localhost:3000/mock/wire.BFF_05_0160.json')
@@ -357,6 +381,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   },
   _chgWireAddrInfoInit: function (res) {
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과] _chgWireAddrInfoInit', res);
       // 성공시 2_A35 alert 노출
@@ -365,6 +390,8 @@ Tw.MyTJoinWireModifyAddress.prototype = {
         $.proxy(function(){
         this._goLoad('/myt-join/submain/wire/history');
       }, this));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   },
   //--------------------------------------------------------------------------[COM]
