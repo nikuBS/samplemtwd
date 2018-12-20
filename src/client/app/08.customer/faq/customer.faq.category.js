@@ -52,52 +52,57 @@ Tw.CustomerFaqCategory.prototype = {
     }
     var list = _.map(data, $.proxy(function (item) {
       var ret = {
-        value: item.ifaqGrpNm,
-        attr: 'value="' + item.ifaqGrpCd + '" title="' + item.ifaqGrpNm + '"',
-        option: 'fe-category'
+        txt: item.ifaqGrpNm,
+        'label-attr': 'id="' + item.ifaqGrpCd + '"',
+        'radio-attr': 'id="' + item.ifaqGrpCd + '" name="r2" value="' + item.ifaqGrpCd
+          + '" title="' + item.ifaqGrpNm + '"'
       };
       if (depth === 1 && this._depth1code === item.ifaqGrpCd) {
-        ret.option += ' checked';
+        ret['radio-attr'] += ' checked';
       } else if (depth === 2 && this._depth2code === item.ifaqGrpCd) {
-        ret.option += ' checked';
+        ret['radio-attr'] += ' checked';
       }
       return ret;
     }, this));
 
     if (this._type === 1 || depth === 2) {
       var all = {
-        value: Tw.BRANCH_SEARCH_OPTIONS['0'],
-        attr: 'value=999 title=' + Tw.COMMON_STRING.ALL,
-        option: 'fe-category'
+        txt: Tw.COMMON_STRING.ALL,
+        'label-attr': 'id=999',
+        'radio-attr': 'id="999" name="r2" value="999" title="' + Tw.COMMON_STRING.ALL + '"'
       };
       if (depth === 1 && this._depth1code === this._ALL) {
-        all.option += ' checked';
+        all['radio-attr'] += ' checked';
       }
       if (depth === 2 && this._depth2code === this._ALL) {
-        all.option += ' checked';
+        all['radio-attr'] += ' checked';
       }
 
       list.splice(0, 0, all);
     }
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      hbs: 'actionsheet01',
       layer: true,
       title: this._title,
       data: [{
         list: list
-      }]
+      }],
+      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
-      $root.on('click', '.fe-category', $.proxy(this._onCategoryChanged, this, depth));
+      $root.on('click', '.btn-floating', $.proxy(function () {
+        var $checked = $root.find('input[type=radio]:checked');
+        this._onCategoryChanged(depth, $checked.attr('title'), $checked.val());
+      }, this));
     }, this));
   },
-  _onCategoryChanged: function (depth, e) {
+  _onCategoryChanged: function (depth, title, value) {
     this._popupService.close();
     switch (depth) {
       case 1:
-        if (e.currentTarget.value !== this._depth1code) {
-          this._depth1code = e.currentTarget.value;
-          this.$btnDepth1.text(e.currentTarget.title);
+        if (value !== this._depth1code) {
+          this._depth1code = value;
+          this.$btnDepth1.text(title);
           this._depth2code = this._ALL;
           this.$btnDepth2.text(Tw.COMMON_STRING.ALL);
           this._currentPage = -1;
@@ -105,9 +110,9 @@ Tw.CustomerFaqCategory.prototype = {
         }
         break;
       case 2:
-      if (e.currentTarget.value !== this._depth2code) {
-        this._depth2code = e.currentTarget.value;
-        this.$btnDepth2.text(e.currentTarget.title);
+      if (value !== this._depth2code) {
+        this._depth2code = value;
+        this.$btnDepth2.text(title);
         this._currentPage = -1;
         this._loadList();
       }
