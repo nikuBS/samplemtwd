@@ -70,7 +70,12 @@ export default class ProductAppsDetail extends TwViewController {
         return resp;
       }
 
-      return resp.result.recommendAppList || [];
+      return (resp.result.recommendAppList || []).map(app => {
+        return {
+          ...app,
+          prodIconImgUrl: app.prodIconImgUrl && ProductHelper.getImageUrlWithCdn(app.prodIconImgUrl)
+        };
+      });
     });
   }
 
@@ -88,7 +93,7 @@ export default class ProductAppsDetail extends TwViewController {
           if (position) {
             banners[position] = {
               ...banner,
-              bnnrImgUrl: ProductHelper.getImageUrlWithCdn(banner.bnnrImgUrl)
+              bnnrImgUrl: banner.bnnrImgUrl && ProductHelper.getImageUrlWithCdn(banner.bnnrImgUrl)
             };
           }
 
