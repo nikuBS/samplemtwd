@@ -15,7 +15,6 @@ import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/stri
 import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
-import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -50,7 +49,6 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice(),
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
     ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
       if ( !svcInfo.svcMgmtNum || remnant.info ) {
@@ -199,12 +197,8 @@ class MytDataSubmainController extends TwViewController {
       if ( breakdownList.length > 0 ) {
         data.breakdownList = this.sortBreakdownItems(breakdownList);
       }
-      // 최근 데이터/음성/문자 사용량
-      if ( pattern ) {
-        data.pattern = pattern;
-      }
       // 배너 정보
-      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
+      if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner.result);
         }
@@ -355,10 +349,24 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if (codeA > codeB) {
+      comparison = 1;
+    } else if (codeA < codeB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
     const MOBILE = (items && items['m']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
     if ( MOBILE.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE);
       nOthers.filter((item) => {
@@ -547,31 +555,6 @@ class MytDataSubmainController extends TwViewController {
         // error
         return null;
       }
-    });
-  }
-
-  // 최근 사용패턴 사용량
-  _getUsagePatternSevice() {
-    const curDate = new Date().getDate();
-    return this.apiService.request(API_CMD.BFF_05_0091, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        // 1 ~ 4 일 (집계중으로표시하지 않음)
-        if ( curDate < 5 ) {
-          return null;
-        } else {
-          return resp.result;
-        }
-      } else {
-        // error
-        return null;
-      }
-    });
-  }
-
-  _getBannerMock(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(BANNER_MOCK);
-      obs.complete();
     });
   }
 }

@@ -41,9 +41,9 @@ Tw.MyTDataSubMain.prototype = {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
       this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     }
-    if ( this.data.pattern ) {
-      this.$patternChart = this.$container.find('[data-id=pattern_chart]');
-    }
+    // if ( this.data.pattern ) {
+    this.$patternChart = this.$container.find('[data-id=pattern_chart]');
+    // }
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     // }
@@ -92,9 +92,28 @@ Tw.MyTDataSubMain.prototype = {
 
   _initialize: function () {
     this._svcMgmtNumList = [];
-    if ( this.data.pattern ) {
-      setTimeout($.proxy(this._initPatternChart, this), 300);
+    this._initScroll();
+    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
+  },
+
+  _initScroll: function () {
+    this._checkScroll();
+    $(window).scroll($.proxy(function () {
+      this._checkScroll();
+    }, this));
+  },
+
+  _checkScroll: function () {
+    if ( !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
+      this._requestPattern();
     }
+  },
+
+  _elementScrolled: function (element) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+    var elemTop = element.offset().top;
+    return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
   },
 
   __getPatternMonth: function (value) {
@@ -189,13 +208,22 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   // chart create
+  _requestPattern: function () {
+    this._isRequestPattern = true;
+    this._apiService.request(Tw.API_CMD.BFF_05_0091, {})
+      .done($.proxy(this._successPattern, this))
+      .fail($.proxy(this._errorRequestPattern, this));
+  },
+
   _initPatternChart: function () {
-    if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
+    if ( (this.data.pattern.data && this.data.pattern.data.length > 0) ||
+      (this.data.pattern.voice && this.data.pattern.voice.length > 0) ) {
       var unit       = '',
           data,
           chart_data = [],
           idx;
       if ( this.data.pattern.data.length > 0 ) {
+        this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
         unit = Tw.CHART_UNIT.GB;
         data = this.data.pattern.data;
         if ( data.length > 0 ) {
@@ -208,6 +236,7 @@ Tw.MyTDataSubMain.prototype = {
         }
       }
       else if ( this.data.pattern.voice.length > 0 ) {
+        this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
         unit = Tw.CHART_UNIT.TIME;
         data = this.data.pattern.voice;
         for ( idx = 0; idx < data.length; idx++ ) {
@@ -226,7 +255,6 @@ Tw.MyTDataSubMain.prototype = {
         data_arry: chart_data //데이터 obj
       });
     }
-    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
   },
 
   _initOtherLinesInfo: function () {
@@ -452,6 +480,30 @@ Tw.MyTDataSubMain.prototype = {
     var $target = $(event.currentTarget);
     var href = $target.attr('data-href');
     Tw.CommonHelper.openUrlExternal(href);
+  },
+
+  _successPattern: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var curDate = new Date().getDate();
+      // 1 ~ 4 일 (집계중으로표시하지 않음)
+      if ( curDate > 4 ) {
+        this.data.pattern = resp.result;
+        setTimeout($.proxy(this._initPatternChart, this), 300);
+      }
+      else {
+        this.$patternChart.hide();
+        this.$container.find('[data-id=pattern_empty]').hide();
+      }
+    }
+    else {
+      this._isRequestPattern = false;
+    }
+  },
+
+  _errorRequestPattern: function(resp) {
+    this.$patternChart.hide();
+    this.$container.find('[data-id=pattern_empty]').hide();
+    this._errorRequest(resp);
   },
 
   _errorRequest: function (resp) {

@@ -140,6 +140,7 @@ Tw.API_CMD = {
   BFF_05_0086: { path: '/core-bill/v1/micro-pay/password-create', method: Tw.API_METHOD.POST },
   BFF_05_0087: { path: '/core-bill/v1/micro-pay/password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
+  BFF_05_0091: {path: '/core-bill/v1/recent-usage-pattern', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/v1/micro-pay/cphist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0094: { path: '/core-modification/v1/combination-discounts', method: Tw.API_METHOD.GET },
   BFF_05_0096: { path: '/core-product/v1/benefit-suggestions', method: Tw.API_METHOD.GET },

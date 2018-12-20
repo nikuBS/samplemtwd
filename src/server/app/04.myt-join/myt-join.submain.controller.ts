@@ -288,14 +288,43 @@ class MyTJoinSubmainController extends TwViewController {
     return result;
   }
 
+  recompare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA < codeB ) {
+      comparison = 1;
+    } else if ( codeA > codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA > codeB ) {
+      comparison = 1;
+    } else if ( codeA < codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
-    const OTHER = (items && items['o']) || [];
     const SPC = (items && items['s']) || [];
+    const OTHER = (items && items['o']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
+    SPC.sort(this.recompare);
+    OTHER.sort(this.recompare);
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       let nOthers: any = [];
-      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
+      nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           let clsNm = 'cellphone';

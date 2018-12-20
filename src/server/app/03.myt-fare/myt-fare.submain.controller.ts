@@ -13,7 +13,6 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 
@@ -283,14 +282,43 @@ class MyTFareSubmainController extends TwViewController {
     return result;
   }
 
+  recompare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA < codeB ) {
+      comparison = 1;
+    } else if ( codeA > codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA > codeB ) {
+      comparison = 1;
+    } else if ( codeA < codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
-    const OTHER = (items && items['o']) || [];
     const SPC = (items && items['s']) || [];
+    const OTHER = (items && items['o']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
+    SPC.sort(this.recompare);
+    OTHER.sort(this.recompare);
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       let nOthers: any = [];
-      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
+      nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           item.nickNm = item.eqpMdlNm || item.nickNm;
@@ -424,13 +452,6 @@ class MyTFareSubmainController extends TwViewController {
       } else {
         return null;
       }
-    });
-  }
-
-  _getBannerMock(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(BANNER_MOCK);
-      obs.complete();
     });
   }
 }

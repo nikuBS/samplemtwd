@@ -247,6 +247,11 @@ Tw.MYT_DATA_TOTAL_SHARING_DATA = {
   JOIN_T_FAMILY_SHARING: 'T가족모아 가입하기'
 };
 
+Tw.MYT_DATA_PATTERN_TITLE = {
+  DATA: '최근 데이터 사용량',
+  VOICE: '최근 음성 사용량'
+};
+
 Tw.MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 M월'
