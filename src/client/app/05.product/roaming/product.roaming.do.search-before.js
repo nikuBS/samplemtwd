@@ -68,7 +68,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
               }
           }else if(this._svcInfo.totalSvcCnt === 1){
               if(this._svcAttrCd !== 'M'){
-                  this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
+                  this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LOGIN_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
               } else {
                   if(this._phoneInfo.eqpMdlNm !== ''){
@@ -80,6 +80,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
                       this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
                   }
               }
+          } else {
+              this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+              this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
           }
       }else {
           this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
