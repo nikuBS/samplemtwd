@@ -42,7 +42,7 @@
                     <div class="list-comp-history">
                         <ul class="comp-box">
                             <% Object.keys(voice.histories).reverse().map(date => { %>
-                                <li class="list-box <%= visibleVoice ? '': 'none' %>" data-type="voice" data-key="<%= date %>">
+                                <li class="list-box fe-prepaid-voice <%= visibleVoice ? '': 'none' %>" data-key="<%= date %>">
                                     <p class="list-date">
                                         <span class="date-tx"><%= voice.histories[date][0].date %></span>
                                     </p>
@@ -70,7 +70,7 @@
                                 </li>
                             <% }); %>
                             <%  Object.keys(data.histories).reverse().map(date => { %>
-                                <li class="list-box <%= visibleVoice ? 'none' : ''%>" data-type="data" data-key="<%= date %>">
+                                <li class="list-box fe-prepaid-data <%= visibleVoice ? 'none' : ''%>" data-key="<%= date %>">
                                     <p class="list-date">
                                         <span class="date-tx"><%= data.histories[date][0].date %></span>
                                     </p>
