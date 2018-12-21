@@ -107,7 +107,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
           ]
         }
       ],
-      btnfloating : {'attr': 'type="button"', 'class': 'fe-btn_close', 'txt': Tw.BUTTON_LABEL.CLOSE}
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category');
   },
 
@@ -121,15 +121,10 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
-    $layer.on('click', '.fe-btn_close', $.proxy(this._closePop, this));
   },
 
   _applyCategory: function(e) {
     this._category = $(e.currentTarget).data('category');
-    this._popupService.close();
-  },
-
-  _closePop: function() {
     this._popupService.close();
   },
 
