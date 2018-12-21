@@ -30,9 +30,9 @@
                     <ul>
                         {{#each services}}
                         <li>
-                            <img src="/img/product/icon-service-pdt01.png" alt="{{0}} {{#if 1}}- {{1}}{{/if}}" />
-                            <strong>{{0}}</strong>
-                            {{#if 1}}<span>{{1}}</span>{{/if}}
+                            <img src="{{../cdn}}/img/product/icon-service-pdt0{{icon}}.png" alt="{{name.[0]}} {{#if name.[1]}}- {{name.[1]}}{{/if}}" />
+                            <strong>{{name.[0]}}</strong>
+                            {{#if name.[1]}}<span>{{name.[1]}}</span>{{/if}}
                         </li>
                         {{/each}}
                     </ul>
@@ -50,7 +50,7 @@
                         <a href="/product/wireplan/service-area">다른주소 조회</a>
                     </li>
                     <li class="bt-blue1">
-                        <a href="/product/wireplan/join/reservation?type_cd=cellphone">가입상담 예약</a>
+                        <a href="/product/wireplan/join/reservation">가입상담 예약</a>
                     </li>
                 </ul>
             </div>
