@@ -140,8 +140,12 @@ class MyTJoinSubmainController extends TwViewController {
       data.myLongPausedState = mylps; // 장기일시정지
 
       // 개통일자
-      if ( data.myHistory && data.myHistory.length > 0 ) {
-        data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+      if ( data.myHistory ) {
+        if (data.myHistory.length > 0) {
+          data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+        } else {
+          data.hsDate = null;
+        }
       }
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
@@ -195,18 +199,21 @@ class MyTJoinSubmainController extends TwViewController {
       }
 
       if ( numSvc ) {
-        data.numberSvc = numSvc;
-        if ( data.numberSvc.code === API_CODE.CODE_00 ) {
+        if ( numSvc.code === API_CODE.CODE_00 ) {
+          data.numberSvc = numSvc;
           data.isNotChangeNumber = true;
-          if ( data.numberSvc.extnsPsblYn === 'Y' ) {
+          if ( data.numberSvc.result.extnsPsblYn === 'Y' ) {
             data.numberChanged = true;
           } else {
             const curDate = new Date();
-            const endDate = DateHelper.convDateFormat(data.numberSvc.notiEndDt);
+            const endDate = DateHelper.convDateFormat(data.numberSvc.result.notiEndDt);
             const betweenDay = this.daysBetween(curDate, endDate);
-            if ( betweenDay > 28 ) {
+            if ( betweenDay < 28 ) {
+              // 신청 중에는 연장 및 해지
+              data.numberChanged = true;
+            } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
-              data.isNotChangeNumber = false;
+              data.numberChanged = false;
             }
           }
         }
@@ -274,7 +281,7 @@ class MyTJoinSubmainController extends TwViewController {
     const date2_ms = date2.getTime();
 
     // Calculate the difference in milliseconds
-    const difference_ms = Math.abs(date1_ms - date2_ms);
+    const difference_ms = (date1_ms - date2_ms);
     // Convert back to days and return
     return Math.round(difference_ms / ONE_DAY);
   }
@@ -401,11 +408,7 @@ class MyTJoinSubmainController extends TwViewController {
   _getMyHistory() {
     return this.apiService.request(API_CMD.BFF_05_0061, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result && resp.result.length > 0 ) {
-          return resp.result;
-        } else {
-          return null;
-        }
+        return resp.result;
       } else {
         // error
         return null;
