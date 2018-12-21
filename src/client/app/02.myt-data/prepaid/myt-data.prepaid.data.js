@@ -25,10 +25,13 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
     this.$rechargeBtn = this.$container.find('.fe-check-recharge');
     this.$emailAddress = this.$container.find('.fe-email-address');
+    this.$isValid = false;
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
+    this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
@@ -82,9 +85,11 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _getCardCode: function () {
     if (this.$cardNumber.val() !== '') {
-      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
+      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
+        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
+          .done($.proxy(this._getSuccess, this))
+          .fail($.proxy(this._getFail, this));
+      }
     }
   },
   _getSuccess: function (res) {
@@ -93,6 +98,8 @@ Tw.MyTDataPrepaidData.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$isValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -102,7 +109,16 @@ Tw.MyTDataPrepaidData.prototype = {
     }
   },
   _getFail: function () {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.focus();
+    this.$isValid = false;
+  },
+  _checkCardExpiration: function () {
+    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
   },
   _checkPay: function () {
     if (this._isValid()) {
@@ -117,16 +133,10 @@ Tw.MyTDataPrepaidData.prototype = {
     }
   },
   _isValid: function () {
-    var isValid = this._validation.checkIsSelected(this.$dataSelector, Tw.ALERT_MSG_MYT_DATA.V56) &&
-      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkEmpty(this.$cardNumber.attr('data-code'), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkLength(this.$cardPw.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
-
-    return isValid;
+    if (this.$isValid) {
+      return this._validation.showAndHideErrorMsg(this.$dataSelector, this._validation.checkIsSelected(this.$dataSelector));
+    }
+    return false;
   },
   _openCheckPay: function ($layer) {
     this._setLayerData($layer);

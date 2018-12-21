@@ -34,12 +34,17 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
+
+    this.$isValid = false;
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
+    this.$container.on('blur', '.fe-point', $.proxy(this._checkPoint, this));
+    this.$container.on('blur', '.fe-point-card', $.proxy(this._checkCardNumber, this));
+    this.$container.on('blur', '.fe-point-pw', $.proxy(this._checkPassword, this));
     this.$container.on('change', '.fe-agree', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
@@ -73,6 +78,32 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
+  },
+  _checkPoint: function () {
+    var isValid = false;
+    var $message = this.$point.siblings('.fe-error-msg');
+    $message.empty();
+
+    if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$standardPoint.attr('id'), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+    } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
+    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
+  },
+  _checkCardNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16));
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
   },
   _cancel: function () {
     this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
@@ -125,20 +156,6 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   _goCashbagSite: function () {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
   },
-  _isValidForOne: function () {
-    return (this._validation.checkIsAvailablePoint(this.$point.val(),
-      parseInt(this.$standardPoint.attr('id'), 10),
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkIsMore(this.$point.val(), 1000, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT) &&
-      this._validation.checkMoreLength(this.$pointCardNumber.val(), 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26));
-  },
-  _isValidForAuto: function () {
-    return (this._validation.checkIsAvailablePoint(this.$pointSelector.attr('id'),
-      parseInt(this.$standardPoint.attr('id'), 10),
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkMoreLength(this.$pointCardNumber.val(), 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26));
-  },
   _openAgreePop: function (event) {
     event.stopPropagation();
     this._popupService.open({
@@ -163,7 +180,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _onePay: function () {
-    if (this._isValidForOne()) {
+    if (this.$isValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
         .done($.proxy(this._paySuccess, this, ''))
@@ -171,7 +188,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _autoPay: function () {
-    if (this._isValidForAuto()) {
+    if (this.$isValid) {
       var reqData = this._makeRequestDataForAuto();
       var type = 'auto';
       if (this.$autoInfo.is(':visible')) {

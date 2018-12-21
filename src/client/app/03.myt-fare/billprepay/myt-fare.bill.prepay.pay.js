@@ -35,12 +35,16 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
+    this.$isValid = false;
 
     this._isPaySuccess = false;
     this._isClose = false;
   },
   _bindEvent: function () {
+    this.$container.on('blur', '.fe-prepay-amount', $.proxy(this._checkAmount, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
+    this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
@@ -74,7 +78,6 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_CARD_TYPE,
       data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
@@ -89,27 +92,35 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this._popupService.close();
   },
   _checkPay: function () {
-    if (this._isValid()) {
+    if (this.$isValid) {
       this._goCheck();
     }
   },
-  _isValid: function () {
+  _checkAmount: function () {
+    var isValid = false;
+    var $message = this.$prepayAmount.siblings('.fe-error-msg');
+    $message.empty();
+
     var _prepayAmount = this.$prepayAmount.val();
-    return (
-      this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
-      this._validation.checkIsMore(_prepayAmount, 9999, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
-      this._validation.checkMultiple(_prepayAmount, 10000, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
-      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6));
+    if (!this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10);
+    } else if (!this._validation.checkIsMore(_prepayAmount, 9999)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND);
+    } else if (!this._validation.checkMultiple(_prepayAmount, 10000)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$prepayAmount, isValid);
   },
   _getCardCode: function () {
     if (this.$cardNumber.val() !== '') {
-      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
+      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
+        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
+          .done($.proxy(this._getSuccess, this))
+          .fail($.proxy(this._getFail, this));
+      }
     }
   },
   _getSuccess: function (res) {
@@ -118,6 +129,8 @@ Tw.MyTFareBillPrepayPay.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$isValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -127,7 +140,16 @@ Tw.MyTFareBillPrepayPay.prototype = {
     }
   },
   _getFail: function () {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.focus();
+    this.$isValid = false;
+  },
+  _checkCardExpiration: function () {
+    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
   },
   _goCheck: function () {
     this._popupService.open({

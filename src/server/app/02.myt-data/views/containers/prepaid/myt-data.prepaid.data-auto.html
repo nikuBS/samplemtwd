@@ -83,6 +83,9 @@
                                     <button id="<%= autoInfo.id %>" class="bt-dropdown big fe-select-data" data-code="<%= ppsInfo.dataYn %>" title="충전 데이터 선택" aria-haspopup="true">
                                         <%= autoInfo.txt %><span class="ico"></span>
                                     </button>
+                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                        충전할 데이터를 선택해 주세요.
+                                    </span>
                                 </span>
                             </li>
                             <li>
@@ -99,12 +102,15 @@
                                                placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1" class="fe-card-number required-input-field" />
                                         <% } %>
                                         <button class="cancel"><span class="blind">삭제</span></button>
+                                        <span class="error-txt fe-error-msg" style="display:none;">
+                                            카드번호가 올바르지 않습니다.
+                                        </span>
                                     </span>
                                 </span>
                             </li>
                             <li>
                                 <label class="tit" for="formInput03">유효기간</label>
-                                <div class="input-wrap-half">
+                                <div class="input-wrap-half fe-exp-wrap">
                                     <span class="inputbox">
                                         <span class="input">
                                             <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
@@ -120,6 +126,9 @@
                                         </span>
                                     </span>
                                 </div>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    유효기간이 올바르지 않습니다.
+                                </span>
                             </li>
                         </ul>
                     </div>

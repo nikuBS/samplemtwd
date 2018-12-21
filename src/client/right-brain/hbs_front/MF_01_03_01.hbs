@@ -19,9 +19,12 @@
                         <p class="form-label" id="aria-exp-label1">카드번호</p>
                         <span class="inputbox">
                             <span class="input">
-                              <input class="fe-point-card-number" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
-                                     placeholder="숫자만 입력" title="input" value="" aria-labelledby="aria-exp-label1">
-                              <button class="cancel"><span class="blind">삭제</span></button>
+                                <input class="fe-point-card-number" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
+                                       placeholder="숫자만 입력" title="input" value="" aria-labelledby="aria-exp-label1">
+                                <button class="cancel"><span class="blind">삭제</span></button>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    카드번호가 올바르지 않습니다.
+                                </span>
                             </span>
                         </span>
                     </div>

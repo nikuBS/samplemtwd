@@ -50,7 +50,7 @@ class MyTFareBillContents extends TwViewController {
         } else {
           return Observable.timer(0)
             .switchMap(() => {
-              return this.getRemainLimit('Done', '2');
+              return this.getRemainLimit('Retry', '2');
             });
         }
       })

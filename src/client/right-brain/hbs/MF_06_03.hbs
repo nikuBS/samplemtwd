@@ -24,9 +24,12 @@
                         <label class="tit" for="flab01">선결제 금액</label>
                         <span class="inputbox">
                             <span class="input">
-                              <input id="flab01" class="fe-prepay-amount required-input-field" type="number" maxlength="8"
-                                     inputmode="numeric" min="0" pattern="[0-9]*" placeholder="1만원 단위 (숫자만 입력)" />
-                              <button class="cancel"><span class="blind">삭제</span></button>
+                                <input id="flab01" class="fe-prepay-amount required-input-field" type="number" maxlength="8"
+                                       inputmode="numeric" min="0" pattern="[0-9]*" placeholder="1만원 단위 (숫자만 입력)" />
+                                <button class="cancel"><span class="blind">삭제</span></button>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    선결제 가능 최대금액을 초과하였습니다.
+                                </span>
                             </span>
                         </span>
                     </li>
@@ -57,12 +60,15 @@
                               <input id="flab04" class="fe-card-number required-input-field" type="number" maxlength="16"
                                      inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
                               <button class="cancel"><span class="blind">삭제</span></button>
+                              <span class="error-txt fe-error-msg" style="display:none;">
+                                  카드번호가 올바르지 않습니다.
+                              </span>
                             </span>
                         </span>
                     </li>
                     <li>
                         <label class="tit" for="flab05">유효기간</label>
-                        <div class="input-wrap-half">
+                        <div class="input-wrap-half fe-exp-wrap">
                             <span class="inputbox">
                                 <span class="input">
                                     <input id="flab05" class="fe-card-y required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
@@ -78,14 +84,20 @@
                                 </span>
                             </span>
                         </div>
+                        <span class="error-txt fe-error-msg" style="display:none;">
+                            유효기간이 올바르지 않습니다.
+                        </span>
                     </li>
                     <li>
                         <label class="tit" for="flab06">비밀번호</label>
                         <span class="inputbox">
                             <span class="input">
-                              <input id="flab06" type="number" class="fe-card-pw required-input-field" inputmode="numeric" min="0" pattern="[0-9]*"
-                                     placeholder="앞 2자리" maxlength="2" style="-webkit-text-security: disc;" />
-                              <button class="cancel"><span class="blind">삭제</span></button>
+                                <input id="flab06" type="number" class="fe-card-pw required-input-field" inputmode="numeric" min="0" pattern="[0-9]*"
+                                       placeholder="앞 2자리" maxlength="2" style="-webkit-text-security: disc;" />
+                                <button class="cancel"><span class="blind">삭제</span></button>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    비밀번호가 올바르지 않습니다.
+                                </span>
                             </span>
                         </span>
                     </li>
