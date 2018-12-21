@@ -119,7 +119,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
    * @private
    */
   _requestServices: function(svcCmd, param, svcType){
-    console.log(this, svcCmd, param, svcType);
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // 연장/해지 call api
