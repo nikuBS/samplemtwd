@@ -44,7 +44,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       return this._onFail(resp);
     }
 
-    this._historyService.goLoad(href + 'prod_id=' + Tw.UrlHelper.getQueryParams().prodId);
+    this._historyService.goLoad(href + '?prod_id=' + Tw.UrlHelper.getQueryParams().prodId);
   },
 
   // 차트 생성
