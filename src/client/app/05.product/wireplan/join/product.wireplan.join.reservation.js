@@ -171,33 +171,36 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _openTypeCdPop: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.PRODUCT_RESERVATION.title,
-      data: [{
-        'list': [
-          { value: Tw.PRODUCT_RESERVATION.cellphone,
-            option: this._typeCd === 'cellphone' ? 'checked' : '',
-            attr: 'data-type_cd="cellphone"' },
-          { value: Tw.PRODUCT_RESERVATION.internet,
-            option: this._typeCd === 'internet' ? 'checked' : '',
-            attr: 'data-type_cd="internet"' },
-          { value: Tw.PRODUCT_RESERVATION.phone,
-            option: this._typeCd === 'phone' ? 'checked' : '',
-            attr: 'data-type_cd="phone"' },
-          { value: Tw.PRODUCT_RESERVATION.tv,
-            option: this._typeCd === 'tv' ? 'checked' : '',
-            attr: 'data-type_cd="tv"' },
-          { value: Tw.PRODUCT_RESERVATION.combine,
-            option: this._typeCd === 'combine' ? 'checked' : '',
-            attr: 'data-type_cd="combine"' }
-        ]
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'title': Tw.PRODUCT_RESERVATION.title,
+          'list':[
+            { 'label-attr': 'id="ra1"', 'txt': Tw.PRODUCT_RESERVATION.cellphone,
+              'radio-attr':'id="ra1" data-type_cd="cellphone" ' + (this._typeCd === 'cellphone' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2"', 'txt': Tw.PRODUCT_RESERVATION.internet,
+              'radio-attr':'id="ra2" data-type_cd="internet" ' + (this._typeCd === 'internet' ? 'checked' : '') },
+            { 'label-attr': 'id="ra3"', 'txt': Tw.PRODUCT_RESERVATION.phone,
+              'radio-attr':'id="ra3" data-type_cd="phone" ' + (this._typeCd === 'phone' ? 'checked' : '') },
+            { 'label-attr': 'id="ra4"', 'txt': Tw.PRODUCT_RESERVATION.tv,
+              'radio-attr':'id="ra4" data-type_cd="tv" ' + (this._typeCd === 'tv' ? 'checked' : '') },
+            { 'label-attr': 'id="ra5"', 'txt': Tw.PRODUCT_RESERVATION.combine,
+              'radio-attr':'id="ra5" data-type_cd="combine" ' + (this._typeCd === 'combine' ? 'checked' : '') }
+          ]
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'fe-btn_close', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._typeCdPopupBindEvent, this), $.proxy(this._typeCdPopupClose, this), 'type_cd_select');
   },
 
   _typeCdPopupBindEvent: function($popupContainer) {
     $popupContainer.on('click', '[data-type_cd]', $.proxy(this._setTypeCd, this));
+    $popupContainer.on('click', '.fe-btn_close', $.proxy(this._closePop, this));
+  },
+
+  _closePop: function() {
+    this._popupService.close();
   },
 
   _setTypeCd: function(e) {
