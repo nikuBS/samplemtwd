@@ -26,7 +26,8 @@ class LoginService {
 
   public sessionGenerate(req): Observable<any> {
     return Observable.create((observer) => {
-      req.session.regenerate(() => {
+      req.session.regenerate((error) => {
+        this.logger.info(this, '[Session Generate]', error);
         observer.next();
         observer.complete();
       });
@@ -186,8 +187,8 @@ class LoginService {
 
   public logoutSession(): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.destroy(() => {
-        this.logger.debug(this, '[logoutSession]', this.request.session);
+      this.request.session.destroy((error) => {
+        this.logger.debug(this, '[logoutSession]', this.request.session, error);
         this.response.clearCookie(COOKIE_KEY.TWM);
         this.response.clearCookie(COOKIE_KEY.TWM_LOGIN);
         observer.next();

@@ -23,8 +23,8 @@ Tw.TidLandingComponent.prototype = {
     this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
-    this.$container.on('click', '.fe-bt-login', $.proxy(this.goLogin, this) );
-    this.$container.on('click', '.fe-bt-logout', $.proxy(this.goLogout, this) );
+    this.$container.on('click', '.fe-bt-login', $.proxy(this.goLogin, this));
+    this.$container.on('click', '.fe-bt-logout', $.proxy(this.goLogout, this));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -38,7 +38,7 @@ Tw.TidLandingComponent.prototype = {
   },
   goSLogin: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      if(Tw.BrowserHelper.isAndroid()) {
+      if ( Tw.BrowserHelper.isAndroid() ) {
         this._getMdn();
       } else {
         this._historyService.goLoad('/common/member/slogin/ios');
@@ -110,9 +110,9 @@ Tw.TidLandingComponent.prototype = {
       .done($.proxy(this._successLogout, this));
   },
   _successLogout: function (resp) {
-    Tw.Logger.info('[Logout Resp]', resp);
+    Tw.Logger.info('[Logout Resp]', resp, Tw.CommonHelper.getCookie('TWM'));
     this._historyService.goLoad('/common/member/logout/complete');
-    // if(resp.code === NTV_CODE.CODE_00) {
+    // if ( resp.code === NTV_CODE.CODE_00 ) {
     // }
   },
   _successSetSession: function () {
@@ -125,5 +125,5 @@ Tw.TidLandingComponent.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._historyService.goLoad('/common/member/slogin/aos?mdn=' + resp.params.mdn);
     }
-  },
+  }
 };
