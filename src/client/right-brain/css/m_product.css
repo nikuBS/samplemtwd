@@ -162,9 +162,11 @@
 
 /* button */
 .idpt-benefit .benefit-btn { text-align:right; margin-top:2.5rem; }
+.idpt-benefit .benefit-btn.align-center { text-align:center; }
 .idpt-benefit .benefit-btn a { font-size: 0.8125rem; color:#178bce; }
 .idpt-benefit .benefit-btn .btn-more { text-decoration: underline; }
 .idpt-benefit .benefit-btn .btn-gray { color:#666; }
+.idpt-benefit .benefit-btn .btn-round { display:inline-block; height:2.25rem; line-height:2.25rem; padding:0 1.4375rem; text-align: center; border-radius:1.125rem; font-size: 0.875rem; color:#000; font-weight: 500; margin:0 auto; border:1px solid #e5e5e5; }
 .idpt-benefit .benefit-btn .btn-red-round { display:block; width:13.75rem; height:2.5rem; line-height:2.5rem; text-align: center; border-radius:1.25rem; background-color:#f76252; font-size: 1rem; color:#fff; font-weight: 500; margin:0 auto; }
 .idpt-benefit .benefit-btn .btn-red-round.w-full { width:100%; }
 .idpt-benefit.another-benefit .benefit-btn { text-align:left; }
@@ -175,7 +177,7 @@
 .idpt-benefit .btn-choice { position: absolute; right:0; display:block; height:2rem; line-height:2rem; padding:0 0.9375rem; font-size: 0.875rem; color:#000; -webkit-box-sizing: border-box; box-sizing: border-box; text-align: center; font-weight: 600; border:1px solid #e5e5e5; border-radius:1rem; }
 
 /* image */
-.idpt-benefit .benefit-img { text-align:center; max-width:20rem; margin:3rem auto 2.5rem; }
+.idpt-benefit .benefit-img { text-align:center; max-width:20rem; margin:3rem auto 1.25rem; }
 .idpt-benefit .benefit-img img { width:100%; }
 .idpt-benefit .benefit-img.no-margin { margin-bottom:0; }
 .idpt-benefit .benefit-img.no-margin-top { margin-top:0; }
@@ -278,8 +280,10 @@
 .idpt-bg-list > li div.link-type > a { position:absolute; top:0; bottom:0; left:0; right:0; text-indent:-9999px; }
 .idpt-bg-list > li div > p.idpt-bg-list-title { font-size: 1rem; color:#000; font-weight: 600; }
 .idpt-bg-list > li div > p.idpt-bg-list-txt { font-size: 0.8125rem; color:#666; }
+.idpt-bg-list > li div > p.idpt-bg-list-txt > span { font-size: 0.75rem; color:#999; }
 .idpt-bg-list > li div > .idpt-bg-list-title + .idpt-bg-list-txt { margin-top:0.5rem; }
 .idpt-bg-list > li div > .idpt-bg-list-txt + .idpt-bg-list-txt { margin-top:1rem; }
+.idpt-bg-list > li div > .idpt-bg-list-txt + .idpt-bg-list-title { margin-top:0.5rem; }
 .idpt-bg-list.no-bg > li { min-height:auto; }
 .idpt-bg-list.no-bg > li dl { padding-left:0; }
 .idpt-bg-list.no-bg > li dl > dt { font-size: 0.8125rem; }
@@ -307,6 +311,7 @@
 .idpt-circle-list .txt-area .benefit-btn { margin-top:0.5rem; text-align: left; }
 .idpt-circle-list.blue > li .num { color:#3583e3; border-color:#3583e3; }
 .idpt-circle-list.blue > li .arrow { background-image:url('/img/product/bg-down-arrow-blue_m.png')}
+.idpt-circle-list.blue > li .circle-list-title > span { color:#3583e3; }
 .idpt-circle-list > li:last-child .txt-area { padding-bottom:0.35rem; }
 .idpt-circle-list.brown > li .num { color:#cd684d; border-color:#cd684d; }
 .idpt-circle-list.brown > li .arrow { background-image:url('/img/product/bg-down-arrow-brown_m.png')}
@@ -327,11 +332,22 @@
 .idpt-coupon-list.t-coupon > li > p > span { font-weight: 600; }
 .idpt-coupon-list.t-coupon > li > p.capacity { font-size: 0.625rem; color:#666; margin-top:0.3125rem; }
 .idpt-coupon-list.t-coupon > li > p.price { font-size: 0.8125rem; color:#000; text-align: right; margin-top:0.3125rem; }
+.idpt-coupon-list.jeju > li > p.capacity { font-size: 1.125rem; margin-top:0.375rem; }
+.idpt-coupon-list.jeju > li > p.price { margin-top:0.125rem; }
+
+.idpt-oksusu-voucher { margin-top:3rem; }
+.idpt-oksusu-voucher > li { position:relative; width:15rem; height:8.125rem; padding:1.125rem 1.4375rem; -webkit-box-sizing: border-box; box-sizing: border-box; margin:0 auto 0.75rem; border:1px solid #e5e5e5; border-radius:0.5rem; background-color:#fff; }
+.idpt-oksusu-voucher > li:last-child { margin-bottom:0; }
+.idpt-oksusu-voucher > li .voucher-title { font-size: 0.9375rem; color:#666; }
+.idpt-oksusu-voucher > li .voucher-title > span { font-size: 1.25rem; font-weight: 700; color:#b16d1c; }
+.idpt-oksusu-voucher > li .voucher-txt { font-size: 0.625rem; color:#666; margin-top:0.375rem; }
+.idpt-oksusu-voucher > li .voucher-price { position:absolute; bottom:1.125rem; right:1.4375rem; font-size: 0.75rem; color:#000; font-weight: 500; text-align: right; }
+.idpt-oksusu-voucher > li .voucher-price > span { font-size: 0.9375rem; }
 
 
 /* 또 다른 혜택, 부가혜택 */
 .idpt-benefit.another-benefit { padding:1.875rem 1.25rem; position:relative; }
-.idpt-benefit.another-benefit > img { position:absolute; top:50%; right:1.25rem; width:7.25rem; height:7.25rem; -webkit-transform:translateY(-50%); transform:translateY(-50%); }
+.idpt-benefit.another-benefit > img { position:absolute; top:50%; right:1rem; width:7.25rem; height:7.25rem; -webkit-transform:translateY(-50%); transform:translateY(-50%); }
 .idpt-benefit.another-benefit > dl > dt { font-size:1rem; color:#000; font-weight: 600; margin-bottom:1rem; }
 .idpt-benefit.another-benefit > dl > dd { font-size:0.8125rem; color:#666; }
 .idpt-benefit.another-benefit > dl > dd > span { font-size: 0.75rem; color:#999; }
@@ -491,13 +507,14 @@
 
 .idpt-benefit .tbl-wrap { margin-top:3rem; }
 .idpt-benefit .tbl-wrap .tbl-caption { font-size: 0.75rem; color:#959595; margin-bottom:1rem; }
+.idpt-benefit .tbl-wrap .tbl-caption.big { font-size: 0.8125rem; color:#666; }
 .idpt-tbl-discount { border:1px solid #cfcfcf; }
 .idpt-tbl-discount thead { background-color:#f5f5f5; }
-.idpt-tbl-discount thead th { text-align:left; padding:0.75rem 0 0.75rem 0.6875rem; font-size: 0.75rem; color:#959595; border-left:1px solid #cfcfcf; }
+.idpt-tbl-discount thead th { text-align:left; padding:0.75rem 0.5rem 0.75rem 0.5rem; font-size: 0.75rem; color:#959595; border-left:1px solid #cfcfcf; }
 .idpt-tbl-discount thead th:first-child { border-left:0; }
 .idpt-tbl-discount tbody tr { border-top:1px solid #cfcfcf; }
 .idpt-tbl-discount tbody th,
-.idpt-tbl-discount tbody td { padding:0.8125rem 0.625rem 0.8125rem 0.6875rem; text-align: left; font-size: 0.75rem; color:#000; }
+.idpt-tbl-discount tbody td { padding:0.8125rem 0.5rem 0.8125rem 0.5rem; text-align: left; font-size: 0.75rem; color:#000; }
 .idpt-tbl-discount tbody td { border-left:1px solid #cfcfcf; }
 .idpt-tbl-discount tbody td.center { text-align:center; }
 .idpt-tbl-discount tbody tr.apply { background-color:#bd5dbe; }
@@ -507,6 +524,10 @@
 .idpt-tbl-discount.perfect-pro tbody td { font-size: 0.6875rem; }
 .idpt-tbl-discount.perfect-pro thead .apply,
 .idpt-tbl-discount.perfect-pro tbody .apply { background-color:#4e67b5; color:#fff; }
+.idpt-tbl-discount thead tr th.apply,
+.idpt-tbl-discount tbody tr td.apply { font-weight: 600; color:#4e67b5; }
+.idpt-tbl-discount.darknavy thead tr th.apply,
+.idpt-tbl-discount.darknavy tbody tr td.apply { font-weight: 600; color:#57637f; }
 
 .idpt-tbl-basic { border:1px solid #cfcfcf; }
 .idpt-tbl-basic tbody tr { border-top:1px solid #cfcfcf; }
@@ -565,12 +586,14 @@
 .idpt-title-bg-box > li > div > img { position:absolute; top:0; left:0; width:4rem; height:4rem; }
 .idpt-title-bg-box > li > div > div .sub-title { font-size: 1rem; color:#000; font-weight: 600; }
 .idpt-title-bg-box > li > div > div .sub-txt { font-size: 0.8125rem; color:#666; margin-top:0.625rem; }
+.idpt-title-bg-box > li > div > div .sub-txt > span { display:block; font-size: 0.75rem; color:#666; margin-top:0.75rem; }
+.idpt-title-bg-box > li > div > div .sub-txt > span.navy { display:inline; font-size: 0.8125rem; color:#4e67b5; }
 .idpt-title-bg-box > li > div > div .sub-title + .sub-txt { margin-top:0.625rem; }
 .idpt-title-bg-box > li > div > div .sub-txt + .sub-txt { margin-top:0.8125rem; }
 
 /* 이용요금 안내 */
 .idpt-charge-info { margin-top:3rem; text-align:center; }
-.idpt-charge-info .charge-txt { font-size: 1rem; color:#666; }
+.idpt-charge-info .charge-txt { font-size: 0.8125rem; color:#666; }
 .idpt-charge-info .charge-txt.black { color:#000; }
 .idpt-charge-info .charge { margin-top:0.5rem; text-align: center; }
 .idpt-charge-info .charge > p { font-size: 1rem; color:#57637f; font-weight: 600; }
@@ -598,6 +621,7 @@
 .idpt-benefit.benefit-gray .idpt-charge-wrap { border-color:#e5e5e5; }
 .idpt-benefit.benefit-sky .idpt-charge-wrap { border-color:#dbe3ee; }
 .idpt-charge-wrap .charge-box { padding:2.375rem 0.5625rem 2.25rem; background:url('/img/product/bg-charge-box_m.png') center top no-repeat; background-size: 16.1875rem 0.5rem; background-color:#f8f8f8; }
+.idpt-benefit.benefit-gray .idpt-charge-wrap .charge-box { background-image:url('/img/product/bg-charge-box-white_m.png'); background-color:#fff; }
 .idpt-charge-wrap .charge-box-title { font-size: 1rem; color:#000; font-weight: 600; text-align: center; }
 .idpt-charge-wrap .charge-box-txt { font-size: 0.8125rem; color:#666; font-weight: 400; text-align: center; margin-top:0.5rem; }
 .idpt-charge-wrap .charge-box > div { position: relative; }
@@ -669,3 +693,27 @@
 .idpt-tab-wrap .tab-contents { display:none; padding:0 1rem; }
 .idpt-tab-wrap .tab-contents.show { display:block; }
 .idpt-tab-wrap .tab-contents .idpt-country-list { margin-top:1.875rem; }
+
+/* popup */
+.idpt-popup { display:none; position:fixed; top:0; left:0; width:100%; height:100vh; z-index:1000; }
+.idpt-popup-wrap { width:100%; height:100%; background-color:#fff; }
+.idpt-popup-header { position:relative; height:2.75rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom:1px solid #eeeeee; }
+.idpt-popup-header > p.popup-title { font-size: 0.8125rem; color:#000; font-weight: 500; line-height: 2.75rem; text-align:center; }
+.idpt-popup-header .idpt-popup-close { position: absolute; display: block; top:1rem; right:1rem; width:0.8125rem; height:0.8125rem; text-indent: -9999px; background:url('/img/product/btn-popup-close_m.png') center center no-repeat; background-size:100%; }
+.idpt-popup-cont-wrap { height:calc(100% - 3.75rem); overflow-y: auto; }
+.idpt-popup-cont { padding:1.375rem 1rem; }
+.idpt-popup-cont p.popup-txt { font-size: 0.875rem; color:#000; }
+.idpt-popup-cont .tbl-wrap { margin-top:1.4375rem; }
+.idpt-popup-cont .benefit-img { margin-top:1.5625rem; }
+
+.idpt-popup-cont.roaming { display:none; padding:1.6875rem 0 1rem; }
+.idpt-popup-cont.roaming.show { display:block; }
+.idpt-popup-cont.roaming p.popup-cont-title { font-size: 0.875rem; color:#000; font-weight: 700; padding:0 1rem; }
+.idpt-popup-cont.roaming .benefit-img { margin-top:0.625rem; }
+.idpt-popup-cont.roaming .tbl-wrap { margin-top:1.875rem; padding:0 1rem 0.5rem 1rem; overflow-x: auto; white-space: nowrap; }
+.idpt-popup-cont.roaming .idpt-tbl-discount { width:56.0625rem; border-top:0; white-space: normal; }
+.idpt-popup-cont.roaming .idpt-tbl-discount thead th { border-top:1px solid #cfcfcf; }
+
+/* 밤지킴이 데이터 */
+.idpt-benefit.night-keeper > img { position:absolute; top:3.9375rem; left:50%; width:20rem; -webkit-transform:translateX(-50%); transform:translateX(-50%); }
+.idpt-benefit.night-keeper .benefit-btn { margin-top:12.75rem; }
