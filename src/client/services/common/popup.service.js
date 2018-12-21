@@ -62,6 +62,7 @@ Tw.PopupService.prototype = {
     }, this), 0);
   },
   _bindEvent: function ($container) {
+    $('.popup-blind').on('click', $.proxy(this.close, this));
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));

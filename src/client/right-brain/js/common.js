@@ -341,9 +341,11 @@ skt_landing.action = {
           createdTarget.addClass('dropdown');
           createdTarget.find('.popup-contents').css('max-height',$(window).height()*0.65);
         }
+        /*
         createdTarget.find('.popup-blind').on('click',function(e){
           e.stopPropagation();
         });
+        */
         _this.scroll_chk();
         skt_landing.action.header_shadow_popup();
         if(createdTarget.hasClass('popup-page')){

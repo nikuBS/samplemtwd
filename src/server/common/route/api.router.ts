@@ -26,6 +26,7 @@ import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
+import { COOKIE_KEY } from '../../types/common.type';
 
 class ApiRouter {
   public router: Router;
@@ -157,7 +158,7 @@ class ApiRouter {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
 
     const svcInfo = this.loginService.getSvcInfo(req);
-    this.logger.info(this, '[get menu]', req.cookies, this.loginService.getSessionId(req), svcInfo);
+    this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_MENU + code)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
@@ -366,7 +367,7 @@ class ApiRouter {
   // }
 
   private getSvcInfo(req: Request, res: Response, next: NextFunction) {
-    this.logger.info(this, '[get svcInfo]');
+    this.logger.info(this, '[get svcInfo]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req));
     // this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
     res.json({

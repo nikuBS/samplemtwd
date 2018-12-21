@@ -39,7 +39,7 @@ class RedisService {
       store: new this.RedisStore(this.redisOption),
       cookie: { maxAge: 60 * 60 * 1000, httpOnly: false }, // 1hours
       secret: 'sktechx',
-      saveUninitialized: false, // don't create session until something stored,
+      saveUninitialized: true, // don't create session until something stored,
       resave: false, // don't save session if unmodified
       rolling: true,
     });
