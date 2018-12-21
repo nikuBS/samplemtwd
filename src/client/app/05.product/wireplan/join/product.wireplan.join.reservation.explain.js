@@ -244,7 +244,8 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, dFiles)
-      .done($.proxy(this._successUploadFile, this));
+      .done($.proxy(this._successUploadFile, this))
+      .fail($.proxy(this._failUploadFile, this));
   },
 
   _successUploadFile: function(resp) {
@@ -259,6 +260,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this._clearExplainFile();
     this._procEnableApplyBtn();
+  },
+
+  _failUploadFile: function() {
+    Tw.CommonHelper.endLoading('.container');
+    this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
   },
 
   _clearExplainFile: function() {
