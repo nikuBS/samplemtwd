@@ -85,6 +85,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     } else {
       $(e.currentTarget).parent().find('.comp-list-layout input,button').attr('disabled', 'disabled');
     }
+    this._checkSuspendable(true);
   },
 
   /**
