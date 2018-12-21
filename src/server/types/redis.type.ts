@@ -3,6 +3,7 @@ export const REDIS_MASKING_METHOD = 'MaskAuthMethods';
 export const REDIS_APP_VERSION = 'AppVersion:appLoad';
 
 export const REDIS_PRODUCT_INFO = 'ProductLedger:';
+export const REDIS_PRODUCT_CONTETNS = 'ProductLedgerContents:';
 export const REDIS_PRODUCT_FILTER = 'ProductFilter:';
 export const REDIS_PRODUCT_COMPARISON = 'ProductComparison:';
 

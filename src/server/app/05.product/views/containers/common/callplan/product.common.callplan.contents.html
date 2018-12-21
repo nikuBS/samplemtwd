@@ -1,49 +1,51 @@
-<% if ( basicInfo.prodStCd === 'E1000' && ( prodRedisInfo.contents.LA || prodRedisInfo.contents.R )) { %>
-    <hr class="cont-sp type1" aria-hidden="true"/>
+<% if ( contents ) { %>
+<% if ( basicInfo.prodStCd === 'E1000' && ( contents.LA || contents.R )) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
 
-    <div class="cont-box nogaps noborder">
-        <div class="prVisual fe-contents">
-        <% if ( prodRedisInfo.contents.LA ) { %>
-        <%- prodRedisInfo.contents.LA %>
+<div class="cont-box nogaps noborder">
+    <div class="prVisual fe-contents">
+        <% if ( contents.LA ) { %>
+        <%- contents.LA %>
         <% } %>
-        <% if ( prodRedisInfo.contents.R ) { %>
-        <%- prodRedisInfo.contents.R %>
+        <% if ( contents.R ) { %>
+        <%- contents.R %>
         <% } %>
-        </div>
     </div>
+</div>
 <% } %>
-<% if ( prodRedisInfo.contents.FIRST ) { %>
+<% if ( contents.FIRST ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box">
-    <div class="<%= prodRedisInfo.contents.FIRST.vslClass %> fe-contents"><%- prodRedisInfo.contents.FIRST.ledItmDesc %></div>
+    <div class="<%= contents.FIRST.vslClass %> fe-contents"><%- contents.FIRST.ledItmDesc %></div>
 </div>
 <% } %>
 
-<% if ( prodRedisInfo.contents.LIST && prodRedisInfo.contents.LIST.length > 0 ) { %>
+<% if ( contents.LIST && contents.LIST.length > 0 ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- 팝업 띄우는 링크 -->
 <div class="cont-box nogaps noborder">
     <ul class="link-long-list">
-        <% for (var i in prodRedisInfo.contents.LIST) { %>
+        <% for (var i in contents.LIST) { %>
         <li>
             <div class="link-long">
                 <button class="fe-btn_contents_detail" data-contents_idx="<%= i %>">
-                    <%= prodRedisInfo.contents.LIST[i].titleNm %>
+                    <%= contents.LIST[i].titleNm %>
                     <span class="tx-sub">
                             <span class="ico"><span class="blind">보기</span></span>
                         </span>
                 </button>
             </div>
             <div class="none fe-contents_detail_item" aria-hidden="true"
-                 data-title="<%= prodRedisInfo.contents.LIST[i].titleNm %>"
-                 data-class="<%= prodRedisInfo.contents.LIST[i].vslClass %>">
-                <%- prodRedisInfo.contents.LIST[i].ledItmDesc %>
+                 data-title="<%= contents.LIST[i].titleNm %>"
+                 data-class="<%= contents.LIST[i].vslClass %>">
+                <%- contents.LIST[i].ledItmDesc %>
             </div>
         </li>
         <% } %>
     </ul>
 </div>
 <!-- //팝업 띄우는 링크 -->
+<% } %>
 <% } %>

@@ -138,17 +138,29 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getPreCheckApiReqInfo: function(joinTermCd) {
+    var api = null;
+
     if (['AB', 'C', 'H_P', 'H_A', 'G'].indexOf(this._prodTypCd) !== -1) {
+      api = {
+        '01': Tw.API_CMD.BFF_10_0007,
+        '03': Tw.API_CMD.BFF_10_0151
+      };
+
       return {
-        API_CMD: Tw.API_CMD.BFF_10_0007,
-        PARAMS: { joinTermCd: joinTermCd }
+        API_CMD: api[joinTermCd],
+        PARAMS: {}
       };
     }
 
     if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
+      api = {
+        '01': Tw.API_CMD.BFF_10_0164,
+        '03': Tw.API_CMD.BFF_10_0168
+      };
+
       return {
-        API_CMD: Tw.API_CMD.BFF_10_0101,
-        PARAMS: { joinTermCd: joinTermCd }
+        API_CMD: api[joinTermCd],
+        PARAMS: {}
       };
     }
 
@@ -214,12 +226,12 @@ Tw.ProductCommonCallplan.prototype = {
     var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
     if (Tw.FormatHelper.isEmpty(preCheckApi)) {
-      return this._procAdvanceCheck(url, { code: '00' });
+      return this._procAdvanceCheck(url, null, { code: '00' });
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
-      .done($.proxy(this._procAdvanceCheck, this, url));
+      .done($.proxy(this._procAdvanceCheck, this, url, joinTermCd));
   },
 
   _openContentsDetailPop: function(key, e) {
@@ -270,15 +282,19 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
-  _procAdvanceCheck: function(url, resp) {
+  _procAdvanceCheck: function(url, joinTermCd, resp) {
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();
     }
 
-    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N') {
+    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N' && joinTermCd === '01') {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_PRODUCT).pop();
+    }
+
+    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'Y' && joinTermCd === '03') {
+      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_TERM_PRODUCT).pop();
     }
 
     this._historyService.goLoad(url + '?prod_id=' + this._prodId);

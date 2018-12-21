@@ -379,7 +379,7 @@ Tw.API_CMD = {
   BFF_09_0005: { path: '/core-membership/v1/event/win-detail/:args0', method: Tw.API_METHOD.GET },
 
   // PRODUCT
-  BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/join-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0010: { path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/v1/products/fee-plans/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0013: { path: '/core-product/v1/mobiles/fee-plans/:args0/tplan-sets', method: Tw.API_METHOD.GET },
@@ -422,6 +422,12 @@ Tw.API_CMD = {
   BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
   BFF_10_0101: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
+  BFF_10_0151: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/term-prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0164: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/joins', method: Tw.API_METHOD.GET },
+  BFF_10_0165: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/sets', method: Tw.API_METHOD.GET },
+  BFF_10_0166: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/cancels', method: Tw.API_METHOD.GET },
+  BFF_10_0167: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/adds', method: Tw.API_METHOD.GET },
+  BFF_10_0168: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/terms', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },

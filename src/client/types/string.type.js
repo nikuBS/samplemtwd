@@ -620,6 +620,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
+  ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.'
 };
