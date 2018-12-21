@@ -19,8 +19,11 @@
                         <label class="tit" for="flab01">휴대폰번호</label>
                         <span class="inputbox">
                             <span class="input">
-                                <input id="flab01" type="text" value="" class="fe-phone" maxlength="14" />
+                                <input id="flab01" type="text" value="" class="fe-phone required-input-field" maxlength="14" />
                                 <button class="cancel"><span class="blind">삭제</span></button>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    휴대폰번호 자릿수를 확인해주세요. (10~11자리)
+                                </span>
                             </span>
                         </span>
                     </li>
@@ -37,7 +40,7 @@
                         </span>
                         <span class="inputbox mt10">
                             <span class="input">
-                                <input type="text" class="fe-main-address" title="상세 주소" id="flab02" value="" readonly />
+                                <input type="text" class="fe-main-address required-input-field" title="상세 주소" id="flab02" value="" readonly />
                                 <button class="cancel"><span class="blind">삭제</span></button>
                             </span>
                         </span>
