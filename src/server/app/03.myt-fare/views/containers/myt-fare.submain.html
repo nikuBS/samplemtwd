@@ -28,6 +28,7 @@
             </div>
             <!-- 청구요금 -->
             <%- include('../components/submain/myt-fare.submain.claim-pay.html', data) %>
+            <% if (!data.isPPS) { %>
             <!-- 상세항목 -->
             <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
             <!-- 소액결제 콘텐츠이용 -->
@@ -49,6 +50,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
+            <% } %>
             <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
