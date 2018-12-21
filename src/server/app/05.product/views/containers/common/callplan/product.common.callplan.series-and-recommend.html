@@ -33,7 +33,7 @@
                                                     <li>
                                                         <a href="/product/callplan/<%= series.list[i].prodId %>" class="product-info">
                                                             <h5 class="title"><%= series.list[i].prodNm %></h5>
-                                                            <% if (!recommends[i].isDiscount && !recommends[i].isCombine) { %>
+                                                            <% if (!series.list[i].isDiscount && !series.list[i].isCombine) { %>
                                                             <p class="info">
                                                                 <% if ( series.list[i].basFeeInfo.isNaN ) { %>
                                                                 <span class="money"><%= series.list[i].basFeeInfo.value %></span>
@@ -52,16 +52,16 @@
                                                             </div>
                                                             <% } %>
                                                             <% if ( series.list[i].basOfrVcallTmsCtt && series.list[i].isDisplayVcall ) { %>
-                                                            <div class="type">
+                                                            <div class="money-type">
                                                                 <% if (series.list[i].basOfrVcallTmsCtt.isNaN) { %>
                                                                 <span class="str"><%= series.list[i].basOfrVcallTmsCtt.value %></span>
                                                                 <% } else { %>
-                                                                <span class="str"><%= series.list[i].basOfrVcallTmsCtt.value.data %></span>분
+                                                                <span class="str"><%= series.list[i].basOfrVcallTmsCtt.value %></span>
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
                                                             <% if ( series.list[i].basOfrCharCntCtt && series.list[i].isDisplayChar ) { %>
-                                                            <div class="type">
+                                                            <div class="sms">
                                                                 <% if (series.list[i].basOfrCharCntCtt.isNaN) { %>
                                                                 <span class="str"><%= series.list[i].basOfrCharCntCtt.value %></span>
                                                                 <% } else { %>
@@ -69,12 +69,12 @@
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
-                                                            <% if ( series.list[i].prodBasBenfCtt && ( recommends[i].isMobileplan || recommends[i].isMobileplanAdd || recommends[i].isDiscount )) { %>
+                                                            <% if ( series.list[i].prodBasBenfCtt && ( series.list[i].isMobileplan || series.list[i].isMobileplanAdd || series.list[i].isDiscount )) { %>
                                                             <div class="text-type">
                                                                 <div class="str"><%= series.list[i].prodBasBenfCtt %></div>
                                                             </div>
                                                             <% } %>
-                                                            <% if ( series.list[i].prodSmryDesc && recommends[i].isDiscount ) { %>
+                                                            <% if ( series.list[i].prodSmryDesc && series.list[i].isDiscount ) { %>
                                                             <div class="text-type02">
                                                                 <%= series.list[i].prodSmryDesc %>
                                                             </div>
@@ -123,16 +123,16 @@
                                                             </div>
                                                             <% } %>
                                                             <% if ( recommends[i].basOfrVcallTmsCtt && recommends[i].isDisplayVcall ) { %>
-                                                            <div class="type">
+                                                            <div class="money-type">
                                                                 <% if (recommends[i].basOfrVcallTmsCtt.isNaN) { %>
                                                                 <span class="str"><%= recommends[i].basOfrVcallTmsCtt.value %></span>
                                                                 <% } else { %>
-                                                                <span class="str"><%= recommends[i].basOfrVcallTmsCtt.value.data %></span>분
+                                                                <span class="str"><%= recommends[i].basOfrVcallTmsCtt.value %></span>
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
                                                             <% if ( recommends[i].basOfrCharCntCtt && recommends[i].isDisplayChar ) { %>
-                                                            <div class="type">
+                                                            <div class="sms">
                                                                 <% if (recommends[i].basOfrCharCntCtt.isNaN) { %>
                                                                 <span class="str"><%= recommends[i].basOfrCharCntCtt.value %></span>
                                                                 <% } else { %>
