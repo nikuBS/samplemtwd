@@ -1,18 +1,9 @@
 <div class="popup tw-popup">
     <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti align-l">
-                    <h1>{{title}}</h1>
-                </div>
-            </div>
-        </div>
-        <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
-            <div class="container">
+            <div>
                 {{#each data}}
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
@@ -33,6 +24,7 @@
                             </li>
                             {{/each}}
                         </ul>
+                        <button type="button" class="btn-floating btn-style3 tw-popup-closeBtn">닫기</button>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -40,9 +32,6 @@
             </div>
         </div>
         <!--// .container-wrap -->
-        <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
-        <!--// .popup-closeBtn -->
     </div>
     <div class="popup-blind"></div>
 </div>

@@ -36,6 +36,7 @@ Tw.MyTFareBillCard.prototype = {
     this.$refundBox = this.$container.find('.fe-refund-box');
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
+    this.$isValid = false;
 
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
@@ -45,6 +46,8 @@ Tw.MyTFareBillCard.prototype = {
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
+    this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
@@ -138,7 +141,7 @@ Tw.MyTFareBillCard.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
   },
   _checkPay: function () {
-    if (this._isValid()) {
+    if (this.$isValid) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
           'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
@@ -152,9 +155,11 @@ Tw.MyTFareBillCard.prototype = {
   },
   _getCardCode: function () {
     if (this.$cardNumber.val() !== '') {
-      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
+      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
+        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
+          .done($.proxy(this._getSuccess, this))
+          .fail($.proxy(this._getFail, this));
+      }
     }
   },
   _getSuccess: function (res) {
@@ -163,6 +168,8 @@ Tw.MyTFareBillCard.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$isValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -172,7 +179,16 @@ Tw.MyTFareBillCard.prototype = {
     }
   },
   _getFail: function () {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.focus();
+    this.$isValid = false;
+  },
+  _checkCardExpiration: function () {
+    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
   },
   _openCheckPay: function ($layer) {
     this._setData($layer);
@@ -212,23 +228,6 @@ Tw.MyTFareBillCard.prototype = {
     if (this._isPaySuccess) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
-  },
-  _isValid: function () {
-    var isValid = this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkEmpty(this.$cardNumber.attr('data-code'), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkLength(this.$cardPw.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
-
-    if (isValid) {
-      if (this.$refundInputBox.hasClass('checked')) {
-        isValid = this._validation.checkIsSelected(this.$refundBank, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3) &&
-          this._validation.checkEmpty(this.$refundNumber.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V2);
-      }
-    }
-    return isValid;
   },
   _pay: function () {
     var reqData = this._makeRequestData();

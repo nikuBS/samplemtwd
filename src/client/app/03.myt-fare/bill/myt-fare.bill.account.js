@@ -127,17 +127,15 @@ Tw.MyTFareBillAccount.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
   },
   _checkPay: function () {
-    if (this._isValid()) {
-      this._popupService.open({
-          'hbs': 'MF_01_01_01',
-          'title': Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT,
-          'unit': Tw.CURRENCY_UNIT.WON
-        },
-        $.proxy(this._openCheckPay, this),
-        $.proxy(this._afterPaySuccess, this),
-        'check-pay'
-      );
-    }
+    this._popupService.open({
+        'hbs': 'MF_01_01_01',
+        'title': Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT,
+        'unit': Tw.CURRENCY_UNIT.WON
+      },
+      $.proxy(this._openCheckPay, this),
+      $.proxy(this._afterPaySuccess, this),
+      'check-pay'
+    );
   },
   _openCheckPay: function ($layer) {
     this._setData($layer);
@@ -189,18 +187,6 @@ Tw.MyTFareBillAccount.prototype = {
     if (this._isPaySuccess) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
-  },
-  _isValid: function () {
-    var isValid = true;
-    if (this.$accountInputBox.hasClass('checked')) {
-      isValid = this._validation.checkIsSelected(this.$selectBank, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3) &&
-        this._validation.checkEmpty(this.$accountNumber.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V2);
-    }
-    if (this.$refundInputBox.hasClass('checked')) {
-      isValid = this._validation.checkIsSelected(this.$refundBank, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V3) &&
-        this._validation.checkEmpty(this.$refundNumber.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V2);
-    }
-    return isValid;
   },
   _pay: function () {
     var reqData = this._makeRequestData();
