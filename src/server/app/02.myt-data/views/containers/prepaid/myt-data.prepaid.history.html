@@ -41,13 +41,7 @@
                     </div>
                     <div class="list-comp-history">
                         <ul class="comp-box">
-                            <% let displayedYear = (new Date()).getFullYear().toString();
-                            Object.keys(voice.histories).reverse().map(date => { 
-                                const itemYear = date.substring(0, 4); %>
-                                <% if (itemYear !== displayedYear) { %>
-                                    <li class="year-tx <%= visibleVoice ? '': 'none' %>" data-year="<%= itemYear %>" data-type="voice"><%= itemYear %></li>
-                                <% displayedYear = itemYear; 
-                                } %>
+                            <% Object.keys(voice.histories).reverse().map(date => { %>
                                 <li class="list-box <%= visibleVoice ? '': 'none' %>" data-type="voice" data-key="<%= date %>">
                                     <p class="list-date">
                                         <span class="date-tx"><%= voice.histories[date][0].date %></span>
@@ -75,13 +69,7 @@
                                     </ul>
                                 </li>
                             <% }); %>
-                            <% displayedYear = (new Date()).getFullYear().toString();
-                                Object.keys(data.histories).reverse().map(date => { 
-                                const itemYear = date.substring(0, 4); %>
-                                <% if (itemYear !== displayedYear) { %>
-                                    <li class="year-tx <%= visibleVoice ? 'none': '' %>" data-year="<%= itemYear %>" data-type="data"><%= itemYear %></li>
-                                <% displayedYear = itemYear; 
-                                } %>
+                            <%  Object.keys(data.histories).reverse().map(date => { %>
                                 <li class="list-box <%= visibleVoice ? 'none' : ''%>" data-type="data" data-key="<%= date %>">
                                     <p class="list-date">
                                         <span class="date-tx"><%= data.histories[date][0].date %></span>
@@ -114,6 +102,10 @@
                     </div>
                     <div class="bt-more <%= totalCount - 20 > 0 ? '' : 'none'%>">
                         <button>더 보기</button>
+                    </div>
+                    <div class="contents-empty <%= totalCount === 0 ? '' : 'none'%>">
+                        <span class="ico type1"></span>
+                        <p class="desc">선불폰 충전 내역이 없습니다.</p>
                     </div>
                 </div>
                 <!--// .cont-box -->
