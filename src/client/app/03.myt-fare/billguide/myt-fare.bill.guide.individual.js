@@ -205,15 +205,14 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0036;
+    var targetApi = Tw.API_CMD.BFF_05_0047;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
       commands.push({
         command: targetApi,
         params: {
-          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
-          detailYn:'Y',
+          childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
         }});
     }
@@ -224,7 +223,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
         var childLineInfo = thisMain.resData.childLineInfo;
         Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
         _.each(arguments, function (element, index) {
-          if ( element.result && (element.result.selSvcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
+          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
           }
         });

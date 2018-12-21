@@ -95,11 +95,31 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
       param = {
         notiType : this.$radioAlarmType.checkedVal()  // 선택 알림유형
       };
+      this._requestServices(svcCmd, param, svcType);
 
     }else if(svcType === this._SVC_TYPE.CAN){   // 해지
       svcCmd = Tw.API_CMD.BFF_05_0183;
+
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A3.MSG,
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A3.TITLE,
+        $.proxy(function(){
+          this._popupService.close();
+          this._requestServices(svcCmd, param, svcType);
+        }, this)
+      );
     }
 
+  },
+
+  /**
+   * service request
+   * @param svcCmd
+   * @param param
+   * @private
+   */
+  _requestServices: function(svcCmd, param, svcType){
+    console.log(this, svcCmd, param, svcType);
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // 연장/해지 call api
@@ -158,6 +178,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
         Tw.Error(err.status, err.statusText).pop();
       });
   },
+
 
   /**
    * 완료페이지로 가기

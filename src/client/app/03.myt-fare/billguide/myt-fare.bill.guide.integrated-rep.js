@@ -254,15 +254,14 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0036;
+    var targetApi = Tw.API_CMD.BFF_05_0047;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
       commands.push({
         command: targetApi,
         params: {
-          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
-          detailYn:'Y',
+          childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
         }});
     }
@@ -271,9 +270,9 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
-
+        Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
         _.each(arguments, function (element, index) {
-          if ( element.result && (element.result.selSvcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
+          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
           }
         });
@@ -303,6 +302,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   //청구요금 상세조회 : BFF_05_0036 청구요금 조회
   _getBillsDetailInfo: function () {
+    Tw.Logger.info('====== 전체회선 조회 ===============');
     /*
     * 실 데이터
     * */
@@ -377,6 +377,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   // BFF_05_0047 사용요금 조회(본인)
   _getUseBillsInfo: function () {
+    Tw.Logger.info('====== 특정회선 조회 ===============');
     return this._apiService.request(Tw.API_CMD.BFF_05_0047, {
       sSvcMgmtNum: this.resData.reqQuery.line,
       invDt: this.resData.reqQuery.date
