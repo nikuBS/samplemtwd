@@ -4,7 +4,7 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerAgentsearchRegion = function (rootEl, currentGu, regions, callback) {
+Tw.CustomerAgentsearchRegion = function (rootEl, currentDo, currentGu, regions, callback) {
   this.$container = rootEl;
 
   this._popupService = Tw.Popup;
@@ -13,6 +13,7 @@ Tw.CustomerAgentsearchRegion = function (rootEl, currentGu, regions, callback) {
   this._completeCallback = callback;
 
   this._regions = regions;
+  this._currentDo = currentDo;
   this._currentGu = currentGu;
 
   this._cacheElements();
@@ -54,23 +55,33 @@ Tw.CustomerAgentsearchRegion.prototype = {
     var districtName = '';
     var largeCd = '';
     var middleCd = '';
-    if (!Tw.FormatHelper.isEmpty(this._currentGu)) {
-      var matchedMiddle = _.filter(this._regions, $.proxy(function (item) {
-        return this._currentGu === item.districtName;
+    if (!Tw.FormatHelper.isEmpty(this._currentGu) && !Tw.FormatHelper.isEmpty(this._currentDo)) {
+      var matched = _.filter(this._regions, $.proxy(function (item) {
+        if (item.areaDepth === 'L') {
+          if (this._currentDo === item.districtName ||
+              this._currentDo.indexOf(item.districtName) !== -1 ||
+              (this._currentDo[0] + this._currentDo[2]).indexOf(item.districtName) !== -1) {
+            return true;
+          }
+        }
+        return false;
       }, this));
-      var matched = _.filter(this._regions, function (item) {
-        return item.areaDepth === 'L' && item.largeCd === matchedMiddle[0].largeCd;
-      });
 
       if (!Tw.FormatHelper.isEmpty(matched)) {
-        districtName = matched[0].districtName;
         largeCd = matched[0].largeCd;
-        middleCd = matchedMiddle[0].middleCd;
-      } else {
-        districtName = this._regions[0].districtName;
-        largeCd = this._regions[0].largeCd;
+        districtName = matched[0].districtName;
+
+        var matchedMiddle = _.filter(this._regions, $.proxy(function (item) {
+          return matched[0].largeCd === item.largeCd && item.districtName === this._currentGu;
+        }, this));
+
+        if (!Tw.FormatHelper.isEmpty(matchedMiddle)) {
+          middleCd = matchedMiddle[0].middleCd;
+        }
       }
-    } else {
+    }
+
+    if (largeCd === '') {
       districtName = this._regions[0].districtName;
       largeCd = this._regions[0].largeCd;
     }

@@ -21,6 +21,7 @@ Tw.CustomerAgentsearchNear = function (rootEl) {
   this._nearShops = undefined;
 
   this._currentBranchType = 0;
+  this._currentDo = undefined;
   this._currentGu = undefined;
 
   $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
@@ -216,6 +217,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       reqLat: location.latitude,
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
+      this._currentDo = res.searchRegionsInfo[0].regionInfo.properties.doName.split(' ')[0].trim();
       this._currentGu = res.searchRegionsInfo[0].regionInfo.properties.guName.split(' ')[0].trim();
 
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
@@ -234,11 +236,15 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0008, {
       currLocX: location.longitude, currLocY: location.latitude
     }).done($.proxy(function (res) {
-      this._nearShops = res.result.regionInfoList;
-      this._onNearShops();
+      if (res.code === Tw.API_CODE.CODE_00) {
+        this._nearShops = res.result.regionInfoList;
+        this._onNearShops();
+      } else {
+        Tw.Error(res.coee, res.msg).pop();
+      }
     }, this))
     .fail($.proxy(function (err) {
-      this._popupService.openAlert(err.code + ' ' + err.msg);
+      Tw.Error(err.code, err.msg).pop();
     }, this));
   },
   _onNearShops: function () {  // Add near shops' markers
@@ -310,7 +316,7 @@ Tw.CustomerAgentsearchNear.prototype = {
   },
   _onRegionChangeClicked: function () {
     this._popupService.open({ hbs: 'CS_02_03_L01'}, $.proxy(function (container) {
-      new Tw.CustomerAgentsearchRegion(container, this._currentGu, this._regions,
+      new Tw.CustomerAgentsearchRegion(container, this._currentDo, this._currentGu, this._regions,
         $.proxy(this._onRegionChanged, this));
     }, this));
   },
