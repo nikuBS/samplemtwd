@@ -97,7 +97,7 @@ Tw.ProductCommonConfirm.prototype = {
       'contents': $btn.parent().find('.fe-tip_view_html').html(),
       'bt_b': [{
         style_class:'pos-left fe-btn_close',
-        txt: Tw.BUTTON_LABEL.CLOSE
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     }, $.proxy(this._bindTipView, this));
   },
