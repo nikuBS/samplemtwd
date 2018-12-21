@@ -83,7 +83,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     var isEmpty = !this.$empty.hasClass('none');
     if (!isEmpty) {
-      this.$container.find('li[data-type="' + this._currentType + '"]').addClass('none');
+      this.$list.find('li.fe-prepaid-' + this._currentType).addClass('none');
     }
 
     if (count === 0) {
@@ -95,7 +95,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
         this.$empty.addClass('none');
       }
 
-      this.$container.find('li[data-type="' + type + '"]').removeClass('none');
+      this.$list.find('li.fe-prepaid-' + type).removeClass('none');
     }
 
     this.$selectBtn.text(Tw.PREPAID_TYPES[type.toUpperCase()]);
@@ -144,7 +144,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       key = keys[idx],
       contents = '',
       typeName = Tw.PREPAID_TYPES[type.toUpperCase()],
-      $exist = this.$container.find('.list-box[data-type="' + type + '"][data-key="' + key + '"]');
+      $exist = this.$list.find('.list-box.fe-prepaid-' + type).filter('[data-key="' + key + '"]');
 
     if ($exist.length > 0) {
       $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName, pageNum: this._pageCount[type] }));
