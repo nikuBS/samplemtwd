@@ -10,7 +10,6 @@ Tw.CommonPostcodeDetail = function ($container, $addressObject, $callback) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._validation = Tw.ValidationHelper;
   this._inputHelper = Tw.InputHelper;
 
   this._init($addressObject);
