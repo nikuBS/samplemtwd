@@ -41,8 +41,14 @@ Tw.ProductWireServiceArea.prototype = {
         return !!service;
       })
       .map(function(service) {
-        var matches = service.match(/(.+)[\(|\s]([^\)]+)\)?$/);
-        return (matches && matches.slice(1)) || [service];
+        var matches = service.match(/(.+)[\(|\s]([^\)]+)\)?$/),
+          items = (matches && matches.slice(1)) || [service],
+          icon = Tw.SERVICE_AREA_TYPE[items[0]];
+
+        return {
+          name: items,
+          icon: icon
+        };
       })
       .value();
 
