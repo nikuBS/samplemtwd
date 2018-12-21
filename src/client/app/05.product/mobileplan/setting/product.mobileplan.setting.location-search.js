@@ -79,6 +79,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     if(!list || list.length === 0){
       $('#divSearchResult').hide();
       $('#divNoSearchResult').show();
+      $('.ti-caption-gray em', this.$container).text('0');
       return;
     } else {
       $('#divSearchResult').show();
