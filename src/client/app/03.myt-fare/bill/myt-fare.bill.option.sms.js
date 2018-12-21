@@ -40,7 +40,7 @@ Tw.MyTFareBillOptionSms.prototype = {
         var obj = {
           'option': 'bank-name',
           'attr': 'id="' + bankList[i].bankCd + '"',
-          'value': bankList[i].bankNm
+          'value': bankList[i].sBankNm + ' ' + bankList[i].sVirtualBankNum
         };
         listObj.list.push(obj);
       }
