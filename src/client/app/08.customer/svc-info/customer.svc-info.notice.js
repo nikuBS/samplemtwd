@@ -91,17 +91,23 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _openCategorySelectPopup: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.NOTICE.TITLE,
-      data: [{
-        'list': [
-          { value: 'T world', option: (this._category === 'tworld') ? 'checked' : '', attr: 'data-category="tworld"' },
-          { value: Tw.NOTICE.DIRECTSHOP, option: (this._category === 'directshop') ? 'checked' : '', attr: 'data-category="directshop"' },
-          { value: Tw.NOTICE.MEMBERSHIP, option: (this._category === 'membership') ? 'checked' : '', attr: 'data-category="membership"' },
-          { value: Tw.NOTICE.ROAMING, option: (this._category === 'roaming') ? 'checked' : '', attr: 'data-category="roaming"' }
-        ]
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list':[
+            { 'label-attr': 'id="ra1"', 'txt': 'T world',
+              'radio-attr':'id="ra1" data-category="tworld" ' + (this._category === 'tworld' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2"', 'txt': Tw.NOTICE.DIRECTSHOP,
+              'radio-attr':'id="ra2" data-category="directshop" ' + (this._category === 'directshop' ? 'checked' : '') },
+            { 'label-attr': 'id="ra3"', 'txt': Tw.NOTICE.MEMBERSHIP,
+              'radio-attr':'id="ra3" data-category="membership" ' + (this._category === 'membership' ? 'checked' : '') },
+            { 'label-attr': 'id="ra4"', 'txt': Tw.NOTICE.ROAMING,
+              'radio-attr':'id="ra4" data-category="roaming" ' + (this._category === 'roaming' ? 'checked' : '') }
+          ]
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'fe-btn_close', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category');
   },
 
@@ -115,10 +121,15 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
+    $layer.on('click', '.fe-btn_close', $.proxy(this._closePop, this));
   },
 
   _applyCategory: function(e) {
     this._category = $(e.currentTarget).data('category');
+    this._popupService.close();
+  },
+
+  _closePop: function() {
     this._popupService.close();
   },
 
