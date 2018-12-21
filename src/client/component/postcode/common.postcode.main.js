@@ -66,10 +66,9 @@ Tw.CommonPostcodeMain.prototype = {
     this._getList();
   },
   _getList: function () {
-    var $searchValue = $.trim(this.$searchField.val());
-    if (this._isValid($searchValue)) {
+    if (this._isValid()) {
       var $apiName = this._getApiName();
-      var $reqData = this._makeRequestData($searchValue);
+      var $reqData = this._makeRequestData($.trim(this.$searchField.val()));
 
       this._apiService.request($apiName, $reqData)
         .done($.proxy(this._success, this))
@@ -80,8 +79,8 @@ Tw.CommonPostcodeMain.prototype = {
     this._page++;
     this._getList();
   },
-  _isValid: function ($searchValue) {
-    return this._validation.checkMoreLength($searchValue, 2, Tw.ALERT_MSG_COMMON.ALERT_MORE_TWO);
+  _isValid: function () {
+    return this._validation.showAndHideErrorMsg(this.$searchField, this._validation.checkMoreLength(this.$searchField, 2));
   },
   _getApiName: function () {
     var $api = Tw.API_CMD.BFF_01_0008;
