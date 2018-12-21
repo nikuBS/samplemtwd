@@ -98,7 +98,7 @@ Tw.API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/:args0', method: Tw.API_METHOD.DELETE },
-  BFF_05_0013: { path: '/core-recharge/v1/pps-card', method: Tw.API_METHOD.GET },
+  BFF_05_0013: { path: '/core-bill/v1/pps-card', method: Tw.API_METHOD.GET },
   BFF_05_0014: { path: '/core-balance/v1/pps-histories', method: Tw.API_METHOD.GET },
   BFF_05_0020: { path: '/core-bill/v1/bill-pay/recent-bills', method: Tw.API_METHOD.GET },
   BFF_05_0021: { path: '/core-bill/v1/bill-pay/recent-usages', method: Tw.API_METHOD.GET },
