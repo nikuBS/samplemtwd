@@ -4449,6 +4449,9 @@
   padding-top: 1.25rem;
   margin-top: 1.25rem; }
 
+.btm-line {
+  border-bottom: 1px solid #e5e5e5; }
+
 .required-mark {
   display: inline-block;
   margin-left: 0.3125rem;
@@ -22991,6 +22994,10 @@ a.bt-link-tx.underline.small {
   padding-bottom: 0;
   padding-top: 0; }
 
+.event-type01 .card-visual-list li {
+  -webkit-box-shadow: 0 0.0625rem 0.3125rem 0 #e1e1e1;
+          box-shadow: 0 0.0625rem 0.3125rem 0 #e1e1e1; }
+
 .event-type01 .card-visual-list li:last-child {
   margin-bottom: 0; }
 
@@ -23569,13 +23576,13 @@ input[type="radio"].formradio-small:checked:disabled + label {
     background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat center right;
     background-size: 1rem; }
   .input-list.agree-type > ul > li .custom-form {
-    top: 0.9375rem; }
+    top: 0.875rem; }
   .input-list.agree-type > ul > li:before {
     display: none; }
   .input-list.agree-type > ul > li.all-agree {
     padding: 1.0625rem 0; }
     .input-list.agree-type > ul > li.all-agree .custom-form {
-      top: 1.0625rem; }
+      top: 1rem; }
     .input-list.agree-type > ul > li.all-agree:after {
       content: '';
       width: calc(100% - 36px);
@@ -23733,22 +23740,21 @@ input[type="radio"].formradio-small:checked:disabled + label {
       padding: 0 1.625rem 0 0;
       min-height: 1.5rem; }
       .in-agree-wrap .agree-type > ul > li .custom-form {
-        top: 50%;
-        -webkit-transform: translate(0, -50%);
-        transform: translate(0, -50%); }
+        top: 0; }
       .in-agree-wrap .agree-type > ul > li .more-vw {
         top: 50%;
         -webkit-transform: translate(0, -50%);
         transform: translate(0, -50%); }
+      .in-agree-wrap .agree-type > ul > li .tx-tit {
+        padding-top: 0.1875rem; }
       .in-agree-wrap .agree-type > ul > li.all-agree {
         margin-top: 0;
         padding-top: 0; }
         .in-agree-wrap .agree-type > ul > li.all-agree .tx-tit {
-          font-size: 0.9375rem; }
+          font-size: 0.9375rem;
+          padding-top: 0.125rem; }
         .in-agree-wrap .agree-type > ul > li.all-agree .custom-form {
-          top: 0;
-          -webkit-transform: inherit;
-                  transform: inherit; }
+          top: 0; }
         .in-agree-wrap .agree-type > ul > li.all-agree:after {
           width: 100%;
           background: #eeeeee; }
@@ -23808,10 +23814,12 @@ input[type="radio"].formradio-small:checked:disabled + label {
       padding-top: 1.375rem; }
       .complete-wrap .tx-contents .bt-slice.item-one > li {
         text-align: center; }
-        .complete-wrap .tx-contents .bt-slice.item-one > li button {
+        .complete-wrap .tx-contents .bt-slice.item-one > li a, .complete-wrap .tx-contents .bt-slice.item-one > li button {
+          display: inline-block;
           width: auto;
           min-width: 10rem;
-          padding: 0 1.5rem; }
+          padding: 0 1.5rem;
+          line-height: 2.5rem; }
 
 .chart-type .chart-wrap > ul {
   padding-top: 0; }
@@ -24041,6 +24049,50 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .exp-single {
   font-size: 0.875rem; }
+
+.event-list ul li {
+  border-radius: 0.3125rem;
+  overflow: hidden;
+  margin-top: 1rem; }
+  .event-list ul li button.event-datail, .event-list ul li a.event-datail {
+    display: block;
+    overflow: hidden; }
+    .event-list ul li button.event-datail img, .event-list ul li a.event-datail img {
+      width: 100%;
+      vertical-align: top; }
+  .event-list ul li .event-info {
+    background: #fff;
+    overflow: hidden;
+    padding: 1.125rem 1.25rem; }
+    .event-list ul li .event-info .info-date {
+      float: left;
+      font-size: 0.875rem;
+      color: #666666;
+      line-height: 1; }
+    .event-list ul li .event-info .info-type {
+      float: left;
+      font-size: 0.75rem;
+      color: #178bce;
+      position: relative;
+      padding: 0.0625rem 0 0 0.5625rem;
+      margin-left: 0.5rem;
+      line-height: 1; }
+      .event-list ul li .event-info .info-type:before {
+        content: '';
+        width: 0.0625rem;
+        height: 0.5625rem;
+        position: absolute;
+        left: 0;
+        top: 0.0625rem;
+        background: #e5e5e5; }
+    .event-list ul li .event-info .info-day {
+      float: right;
+      font-weight: 700;
+      color: #f76252;
+      font-size: 0.875rem;
+      line-height: 1; }
+  .event-list ul li:first-of-type {
+    margin-top: 0; }
 
 /* 김연주 */
 /* 공통 시작 */
@@ -25678,6 +25730,22 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .highlight-text {
   color: #178bce; }
+
+.popularsearchword-list .category-type {
+  display: table;
+  width: 100%;
+  height: 3.375rem; }
+  .popularsearchword-list .category-type .number {
+    display: inline-block;
+    color: #999999;
+    font-weight: 700;
+    vertical-align: middle; }
+  .popularsearchword-list .category-type .text {
+    display: inline-block;
+    padding-left: 0.625rem;
+    color: #000;
+    font-size: 1rem;
+    vertical-align: middle; }
 
 /* 김재성 */
 /* 김정훈 */
@@ -27808,8 +27876,11 @@ body.apphome {
     .sch-full-area .rec-list .full-link-list li button:after, .sch-full-area .rec-list .full-link-list li a:after {
       display: none; }
 
+.search-inlist {
+  margin: 0 -1rem; }
+
 .searchlist-title {
-  padding: 1.125rem 1rem 0.8125rem 1rem;
+  padding: 1.125rem 0 0.8125rem 0;
   color: #959595;
   font-size: 0.75rem; }
 
@@ -28916,6 +28987,29 @@ body.apphome {
       .tab-area.new01 .tab-linker ul li[aria-selected="true"] a {
         color: #ef4b49 !important; }
 
+.tab-area.new02 .tab-linker ul {
+  width: 100%;
+  background: none; }
+  .tab-area.new02 .tab-linker ul:after {
+    border-bottom: 1px solid #e5e5e5; }
+  .tab-area.new02 .tab-linker ul li {
+    margin: 0;
+    text-align: left;
+    height: 2.5rem; }
+    .tab-area.new02 .tab-linker ul li:first-child a {
+      margin-left: 0; }
+    .tab-area.new02 .tab-linker ul li a {
+      font-size: 0.8125rem;
+      color: #959595;
+      font-weight: 400 !important;
+      height: 2.5rem;
+      line-height: 2.375rem;
+      margin-left: 1.25rem; }
+    .tab-area.new02 .tab-linker ul li[aria-selected="true"] {
+      border-bottom: 1px solid #000; }
+      .tab-area.new02 .tab-linker ul li[aria-selected="true"] a {
+        color: #000 !important; }
+
 .list-comp-input .select-list .stext01 {
   display: block;
   font-size: 0.875rem;
@@ -29580,3 +29674,218 @@ body.apphome {
 .prepaid-card-info .round-dot-list li {
   color: #000000;
   font-size: 0.8125rem; }
+
+.pdt-detail-wrap .productdetails-bg {
+  background: #57637f;
+  height: 18rem; }
+
+.pdt-detail-wrap .productdetails-ledgercase {
+  position: relative; }
+  .pdt-detail-wrap .productdetails-ledgercase .price-text {
+    position: absolute;
+    left: 0;
+    top: -0.5625rem; }
+  .pdt-detail-wrap .productdetails-ledgercase .btn {
+    position: absolute;
+    right: 0;
+    top: -1.375rem; }
+    .pdt-detail-wrap .productdetails-ledgercase .btn .bt-white1 {
+      color: #57637f;
+      font-size: 1rem; }
+
+.pdt-detail-wrap .productdetails-wrap .productdetails-box {
+  width: 9.5625rem;
+  height: 3.75rem;
+  margin-top: 1.25rem;
+  background: url(/img/product/img_MC_01_01_1.png) no-repeat;
+  background-size: 9.5625rem 3.75rem;
+  font-size: 0;
+  line-height: 0;
+  text-indent: -9999px; }
+
+.pdt-detail-wrap .title {
+  font-size: 2.125rem !important; }
+
+.pdt-detail-wrap .productdetails-text02 {
+  font-size: 0.9375rem !important; }
+
+.pdt-detail-wrap .link-long a, .pdt-detail-wrap .link-long button {
+  font-size: 1rem; }
+
+.pdt-detail-wrap .banner-img-wrap button, .pdt-detail-wrap banner-img-wrap a {
+  width: 100%; }
+  .pdt-detail-wrap .banner-img-wrap button img, .pdt-detail-wrap banner-img-wrap a img {
+    width: 100%; }
+
+.pdt-detail-wrap .useful-goods {
+  margin-top: 0; }
+  .pdt-detail-wrap .useful-goods li {
+    width: 9.375rem; }
+    .pdt-detail-wrap .useful-goods li button {
+      background: #fff;
+      height: 6.25rem;
+      color: #000;
+      padding: 0 0 0 0.9375rem;
+      border: 1px solid #e1e2e4;
+      border-radius: 0.3125rem;
+      -webkit-box-shadow: 0.0625rem 0.0625rem 0.0625rem 0 #e1e2e4;
+              box-shadow: 0.0625rem 0.0625rem 0.0625rem 0 #e1e2e4; }
+      .pdt-detail-wrap .useful-goods li button .located.top {
+        top: 0.6875rem; }
+        .pdt-detail-wrap .useful-goods li button .located.top .txt-tit {
+          font-size: 0.875rem;
+          font-weight: 400;
+          padding: 0; }
+        .pdt-detail-wrap .useful-goods li button .located.top .txt-type1 {
+          font-weight: 700;
+          font-size: 1rem;
+          color: #f76252;
+          padding: 0.0625rem 0 0.9375rem 0; }
+        .pdt-detail-wrap .useful-goods li button .located.top .txt-type2 {
+          font-weight: 700;
+          font-size: 0.8125rem;
+          color: #178bce;
+          padding: 0 0 0 1.25rem;
+          background: url(/img/ico/icon-gb.png) no-repeat left center;
+          background-size: 0.875rem 0.875rem; }
+    .pdt-detail-wrap .useful-goods li span {
+      display: block; }
+
+.pdt-detail-wrap .relation-tag {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.3125rem;
+  background: #e6f2fb; }
+  .pdt-detail-wrap .relation-tag .link {
+    width: 100%;
+    text-align: left;
+    padding: 0.8125rem 0 1.0625rem 1rem; }
+    .pdt-detail-wrap .relation-tag .link:after {
+      content: '';
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      -webkit-transform: translateY(-50%);
+      display: inline-block;
+      width: 0.4375rem;
+      height: 0.6875rem;
+      background: url(/img/common/ico-login.png) no-repeat left center;
+      background-size: 0.4375rem 0.6875rem; }
+    .pdt-detail-wrap .relation-tag .link strong {
+      display: block;
+      padding: 0 0 0.3125rem 0;
+      font-size: 0.875rem; }
+      .pdt-detail-wrap .relation-tag .link strong span {
+        color: #f76252; }
+    .pdt-detail-wrap .relation-tag .link .tag {
+      display: inline-block;
+      color: #178bce;
+      font-size: 0.75rem; }
+
+.pdt-detail-wrap .smart-app {
+  margin-top: 0; }
+  .pdt-detail-wrap .smart-app .ico {
+    width: 3rem;
+    height: 3rem; }
+    .pdt-detail-wrap .smart-app .ico.type1 {
+      background: url(/img/ico/ico-app-01.png) no-repeat;
+      background-size: 3rem; }
+    .pdt-detail-wrap .smart-app .ico.type2 {
+      background: url(/img/ico/ico-app-02.png) no-repeat;
+      background-size: 3rem; }
+    .pdt-detail-wrap .smart-app .ico.type3 {
+      background: url(/img/ico/ico-app-03.png) no-repeat;
+      background-size: 3rem; }
+    .pdt-detail-wrap .smart-app .ico.type4 {
+      background: url(/img/ico/ico-app-04.png) no-repeat;
+      background-size: 3rem; }
+
+.joinconsulting-wrap.type01 .text:after, .shop-info .shop-txt .joinconsulting-wrap.type02 .text:after, .shop-info .shop-txt .joinconsulting-wrap.type03 .text:after {
+  width: 1.25rem;
+  height: 1.1875rem;
+  background: url(/img/product/bg_joinconsulting01.png) no-repeat;
+  background-size: 1.25rem 1.1875rem; }
+
+.category-info-guide li {
+  padding: 0 1rem 0 1rem;
+  border-top: 1px solid #f2f2f2; }
+  .category-info-guide li:first-child {
+    border-top: 0; }
+  .category-info-guide li .link {
+    display: block;
+    padding: 1.125rem 0 1.375rem;
+    width: 100%;
+    text-align: left;
+    position: relative; }
+    .category-info-guide li .link:after {
+      content: '';
+      display: inline-block;
+      width: 3.75rem;
+      position: absolute;
+      right: 0.625rem;
+      top: 50%;
+      transform: translateY(-50%);
+      -webkit-transform: translateY(-50%); }
+    .category-info-guide li .link.icon1:after {
+      height: 4.4375rem;
+      background: url(/img/product/icon-category-guide01.png) no-repeat;
+      background-size: 3.75rem auto; }
+    .category-info-guide li .link.icon2:after {
+      height: 3.25rem;
+      background: url(/img/product/icon-category-guide02.png) no-repeat;
+      background-size: 3.75rem auto; }
+    .category-info-guide li .link.icon3:after {
+      height: 4.125rem;
+      background: url(/img/product/icon-category-guide03.png) no-repeat;
+      background-size: 3.75rem auto; }
+  .category-info-guide li .stit {
+    display: inline-block;
+    position: relative;
+    font-size: 0.875rem;
+    color: #178bce;
+    padding: 0 0 0.75rem; }
+    .category-info-guide li .stit:after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      right: -0.75rem;
+      top: 0.3125rem;
+      width: 0.75rem;
+      height: 0.6875rem;
+      background: url(/img/ico/icon-link01.png) no-repeat right top;
+      background-size: 0.4375rem 0.6875rem; }
+  .category-info-guide li .text-type1 {
+    display: block;
+    font-size: 1.125rem;
+    padding: 0 0 0.3125rem; }
+  .category-info-guide li .text-type2 {
+    display: block;
+    font-size: 0.8125rem;
+    color: #959595; }
+
+.section-box.type01, .shop-info .shop-txt .section-box.type02, .shop-info .shop-txt .section-box.type03 {
+  margin-bottom: 1.5625rem; }
+  .section-box.type01 .main-charge-box, .shop-info .shop-txt .section-box.type02 .main-charge-box, .shop-info .shop-txt .section-box.type03 .main-charge-box {
+    background: none !important; }
+
+.combine-benefit-wrap {
+  padding: 0 1rem; }
+  .combine-benefit-wrap .stit {
+    font-size: 1rem;
+    padding: 1.5625rem 0 0 0; }
+  .combine-benefit-wrap .stit-txt {
+    padding: 0.125rem 0 0 0;
+    font-size: 0.75rem;
+    color: #666666; }
+
+.plan-compact-info.type01, .shop-info .shop-txt .plan-compact-info.type02, .shop-info .shop-txt .plan-compact-info.type03 {
+  margin: 0; }
+  .plan-compact-info.type01 .sub .text-type1, .shop-info .shop-txt .plan-compact-info.type02 .sub .text-type1, .shop-info .shop-txt .plan-compact-info.type03 .sub .text-type1 {
+    font-size: 0.75rem;
+    color: #666666; }
+  .plan-compact-info.type01 + .plan-compact-info.type01, .shop-info .shop-txt .plan-compact-info.type02 + .plan-compact-info.type01, .shop-info .shop-txt .plan-compact-info.type03 + .plan-compact-info.type01, .shop-info .shop-txt .plan-compact-info.type01 + .plan-compact-info.type02, .shop-info .shop-txt .plan-compact-info.type02 + .plan-compact-info.type02, .shop-info .shop-txt .plan-compact-info.type03 + .plan-compact-info.type02, .shop-info .shop-txt .plan-compact-info.type01 + .plan-compact-info.type03, .shop-info .shop-txt .plan-compact-info.type02 + .plan-compact-info.type03, .shop-info .shop-txt .plan-compact-info.type03 + .plan-compact-info.type03 {
+    margin-top: 0.625rem; }
+  .plan-compact-info.type01 .sv-spec.txt, .shop-info .shop-txt .plan-compact-info.type02 .sv-spec.txt, .shop-info .shop-txt .plan-compact-info.type03 .sv-spec.txt {
+    font-size: 0.8125rem;
+    padding-left: 0; }
