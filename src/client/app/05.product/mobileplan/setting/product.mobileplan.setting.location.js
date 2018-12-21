@@ -196,6 +196,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * 지역찾기 팝업
    */
   _openLocSearchPopup: function(){
+    $('#loc-search-input').trigger('blur');
     var keyword = $('#loc-search-input').val();
     this._popupService.open(
       { hbs: 'MP_02_02_03_09' },
