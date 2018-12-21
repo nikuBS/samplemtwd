@@ -89,20 +89,17 @@ Tw.MyTFareBillPrepayMain.prototype = {
     return true;
   },
   _prepay: function () {
-    // if (this._isPrepayAble()) {
-    //   if (Tw.BrowserHelper.isApp()) {
-    //     this._popupService.open({
-    //       'hbs': 'MF_06_03'
-    //     }, $.proxy(this._goPrepay, this), null, 'pay');
-    //   } else {
-    //     this._goAppInfo();
-    //   }
-    // } else {
-    //   this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE);
-    // }
-    this._popupService.open({
-      'hbs': 'MF_06_03'
-    }, $.proxy(this._goPrepay, this), null, 'pay');
+    if (this._isPrepayAble()) {
+      if (Tw.BrowserHelper.isApp()) {
+        this._popupService.open({
+          'hbs': 'MF_06_03'
+        }, $.proxy(this._goPrepay, this), null, 'pay');
+      } else {
+        this._goAppInfo();
+      }
+    } else {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE);
+    }
   },
   _goPrepay: function ($layer) {
     new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
