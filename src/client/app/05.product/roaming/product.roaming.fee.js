@@ -285,7 +285,6 @@ Tw.ProductRoamingFee.prototype = {
 
     $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
     $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRoamingOrder, this));
   },
   _handleResetTag: function ($layer, $target) {

@@ -222,7 +222,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       $layer.find('[data-mfact-name="' + this.cdName + '"]').attr('checked', 'checked');
       $layer.find('[name="r2"]').on('click', $.proxy(this._getModelInfo, this, $layer));
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _getModelInfo: function ($layer, e) {
       // $layer.find('button').removeClass('checked');
@@ -275,7 +274,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       $layer.find('[data-model-nm="' + this.modelValue + '"]').attr('checked', 'checked');
       $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
@@ -293,7 +291,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _selectPopupCallback : function ($layer) {
     $layer.find('[name="r2"]').on('click', $.proxy(this._goLoadSearchResult, this, $layer));
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _closeActionPopup : function () {
   },
