@@ -344,7 +344,6 @@ Tw.ProductRoamingFiInquire.prototype = {
       }
     })
     $layer.find('[name="r2"]').on('click', $.proxy(this._onActionSelected, this, selected));
-    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
 
     // 닫기 버튼 클릭
     $layer.one('click', '#fe-back', this._popupService.close);

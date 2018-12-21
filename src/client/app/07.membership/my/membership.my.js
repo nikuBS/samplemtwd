@@ -31,6 +31,7 @@ Tw.MembershipMy.prototype = {
     this.$list = this.$container.find('#fe-list');
     this.$more = this.$container.find('.bt-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
+    this.$empty = this.$container.find('#fe-empty');
   },
 
   _bindEvent: function() {
@@ -42,19 +43,21 @@ Tw.MembershipMy.prototype = {
   },
 
   _initPeriod: function() {
-    var getPeriod = '2018.1.~' + this._dateHelper.getCurrentDateTime('YYYY.M.');
+    var currentYear = this._dateHelper.getCurrentYear();
+    var getPeriod = currentYear +'.1.~' + this._dateHelper.getCurrentDateTime('YYYY.M.');
     var initEDate = this._dateHelper.getCurrentDateTime('YYYY.M');
 
     this.$strPeriod.text(getPeriod);
-    this.$inputSdate.text('2018.1');
+    this.$inputSdate.text(currentYear + '.1');
     this.$inputEdate.text(initEDate);
   },
 
   _getUseHistory: function() {
+    var currentYear = this._dateHelper.getCurrentYear();
     var startDate = this._dateHelper.getShortDateWithFormat(this.$inputSdate.text(), 'YYYYMM' , 'YYYY.M');
     var endDate = this._dateHelper.getShortDateWithFormat(this.$inputEdate.text(), 'YYYYMM' , 'YYYY.M');
 
-    startDate = this.$inputSdate.val() === undefined ? '201801' : startDate;
+    startDate = this.$inputSdate.val() === undefined ? currentYear +'01' : startDate;
     endDate = this.$inputEdate.val() === undefined ? this._dateHelper.getCurrentDateTime('YYYYMM') : endDate;
 
     var params = {
@@ -74,9 +77,8 @@ Tw.MembershipMy.prototype = {
       res = res.result;
       if(res.length < 1){
         this.$more.hide();
-        $('#fe-empty').show();
+        this.$empty.show();
       }else{
-        $('#fe-empty').hide();
         this._renderListOne(params,res);
       }
     }
@@ -92,6 +94,7 @@ Tw.MembershipMy.prototype = {
 
     this.$list.empty();
     this.$more.hide();
+    this.$empty.hide();
 
     if ( list.length > 0 ){
       this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
@@ -144,11 +147,11 @@ Tw.MembershipMy.prototype = {
     var currentYear = this._dateHelper.getCurrentYear();
     var data = [{'list':[]}];
 
-    for(var i=1; i<=endMonth; i++){
+    for(var i=0; i<endMonth; i++){
       data[0].list[i] = {
         'radio-attr': 'name="r2"',
-        'label-attr': 'value="'+ currentYear + '.' +i +'"',
-        txt: currentYear + Tw.DATE_UNIT.YEAR + ' ' + i + Tw.DATE_UNIT.MONTH_S
+        'label-attr': 'value="'+ currentYear + '.' + (endMonth - i) +'"',
+        txt: currentYear + Tw.DATE_UNIT.YEAR + ' ' + (endMonth - i) + Tw.DATE_UNIT.MONTH_S
       };
     }
 
