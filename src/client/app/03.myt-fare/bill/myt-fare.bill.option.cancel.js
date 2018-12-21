@@ -17,14 +17,10 @@ Tw.MyTFareBillOptionCancel = function (rootEl) {
   this._isComplete = false;
   this._isClose = false;
 
-  this._init();
   this._bindEvent();
 };
 
 Tw.MyTFareBillOptionCancel.prototype = {
-  _init: function () {
-    this._commonHelper.setLocalStorage('deposit-bankList', null);
-  },
   _bindEvent: function () {
     this.$container.on('click', '.fe-go-cancel', $.proxy(this._cancel, this));
   },
@@ -54,8 +50,7 @@ Tw.MyTFareBillOptionCancel.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       var completeUrl = '/myt-fare/bill/option/cancel-complete';
 
-      if (!(Tw.FormatHelper.isEmpty(res.result.depositBankList))) {
-        Tw.CommonHelper.setLocalStorage('deposit-bankList', JSON.stringify(res.result.depositBankList));
+      if (this.$container.find('.fe-select-payment-option').find('.checked').attr('id') === '04') {
         completeUrl += '?isSms=Y&num=' + this.$infoBox.attr('data-acnt-num');
       }
       this._historyService.replaceURL(completeUrl);

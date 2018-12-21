@@ -13,13 +13,23 @@ Tw.MyTFareBillOptionSms = function (rootEl) {
   this._commonHelper = Tw.CommonHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._setBankList();
-  this._bindEvent();
+  this._getBankList();
 };
 
 Tw.MyTFareBillOptionSms.prototype = {
-  _setBankList: function () {
-    var bankList = JSON.parse(this._commonHelper.getLocalStorage('deposit-bankList'));
+  _getBankList: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0026, {})
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._fail, this));
+  },
+  _getSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._setBankList(res.result.virtualBankList);
+    } else {
+      this._fail(res);
+    }
+  },
+  _setBankList: function (bankList) {
     if (!Tw.FormatHelper.isEmpty(bankList)) {
       var list = [];
       var listObj = {
@@ -37,6 +47,7 @@ Tw.MyTFareBillOptionSms.prototype = {
       list.push(listObj);
       this.$bankList = list;
     }
+    this._bindEvent();
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-bank', $.proxy(this._selectBankList, this));
@@ -47,7 +58,6 @@ Tw.MyTFareBillOptionSms.prototype = {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_BANK,
       data: this.$bankList
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
