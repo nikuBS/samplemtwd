@@ -173,7 +173,7 @@ Tw.MyTFareSubMain.prototype = {
   _initPatternChart: function (data) {
     this.$billChart.chart2({
       target: '.chart4', //클래스명 String
-      type: Tw.CHART_TYPE.BAR_4, //bar
+      type: (this.data.type === 'UF')? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
       average: true, // 평균
       legend: Tw.FARE_CHART_LEGEND, // 범례
       link: true,
@@ -236,14 +236,14 @@ Tw.MyTFareSubMain.prototype = {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
           var amtStr = item.invAmt.replace(',', '');
-          var absDeduckStr = item.deduckInvAmt.replace(',', '');
+          // var absDeduckStr = item.deduckInvAmt.replace(',', '');
           // --------------------
           var amt = parseInt(amtStr, 10);
-          var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
+          // var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
           chart_data.push({
             't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
-            'v': amt, // 사용금액
-            'v2': absDeduck // 할인금액
+            'v': amt // 사용금액
+            // 'v2': absDeduck // 할인금액
           });
           this._feeChartInfo.push(date);
         }
