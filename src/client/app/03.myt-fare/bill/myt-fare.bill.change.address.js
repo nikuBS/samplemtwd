@@ -6,10 +6,12 @@
 
 Tw.MyTFareBillChangeAddress = function (rootEl) {
   this.$container = rootEl;
+  this.$isValid = true;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._commonHelper = Tw.CommonHelper;
+  this._validation = Tw.ValidationHelper;
 
   this._init();
 };
@@ -41,8 +43,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$layer.find('.fe-detail-address').val(this.$container.find('.fe-addr2').text());
   },
   _bindEvent: function () {
+    this.$layer.on('keyup', '.required-input-field', $.proxy(this._setChangeBtnAble, this));
     this.$layer.on('keyup', '.fe-phone', $.proxy(this._checkNumber, this));
     this.$layer.on('keypress', '.fe-phone', $.proxy(this._setMaxValue, this));
+    this.$layer.on('blur', '.fe-phone', $.proxy(this._checkPhoneNumber, this));
+    this.$layer.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$layer.on('click', '.fe-post', $.proxy(this._getPostcode, this));
     this.$layer.on('click', '.fe-change', $.proxy(this._changeAddress, this));
   },
@@ -56,6 +61,10 @@ Tw.MyTFareBillChangeAddress.prototype = {
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
     return $target.val().length < $target.attr('maxLength');
+  },
+  _checkPhoneNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 12));
   },
   _addHipen: function (target) {
     var target_val = target.value.replace(/\D[^\.]/g, '');
@@ -71,16 +80,19 @@ Tw.MyTFareBillChangeAddress.prototype = {
     new Tw.CommonPostcodeMain(this.$layer);
   },
   _setChangeBtnAble: function () {
-    if (!Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-phone').val()))) {
+    if (!Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-phone').val())) &&
+      !Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-detail-address').val()))) {
       this.$layer.find('.fe-change').removeAttr('disabled');
     } else {
       this.$layer.find('.fe-change').attr('disabled', 'disabled');
     }
   },
   _changeAddress: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0147, this._makeRequestData())
-      .done($.proxy(this._changeSuccess, this))
-      .fail($.proxy(this._changeFail, this));
+    if (this.$isValid) {
+      this._apiService.request(Tw.API_CMD.BFF_05_0147, this._makeRequestData())
+        .done($.proxy(this._changeSuccess, this))
+        .fail($.proxy(this._changeFail, this));
+    }
   },
   _makeRequestData: function () {
     this._changeData = {
