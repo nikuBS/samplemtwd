@@ -30,13 +30,18 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     // 지역할인 tab
     $('.discount-location').on('click', '.bt-line-gray1', $.proxy(this._removeLocation, this));
     $('#btnSearchPop').click($.proxy(this._openLocSearchPopup, this));
+    $('#loc-search-input').click($.proxy(this._openLocSearchPopup, this));
 
     // 지정번호 tab
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
     $('.comp-box').on('click', '.bt-line-gray1', $.proxy(this._removeNumber, this));
-    $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
+    $('#num-input').on('input', $.proxy(this._oninputTelNumber, this));
+    $('#num-input').on('focus', $.proxy(this._onfocusNumInput, this));
+    $('#num-input').on('blur', $.proxy(this._onblurNumInput, this));
     $('#num-inputbox .cancel').on('click', $.proxy(this._onclickInputDel, this));
+
+    $('#fe-prev-step').click($.proxy(this._onclickBtnClose, this));
   },
 
   /**
@@ -62,40 +67,71 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     this._tmpltLocSchItem = Handlebars.compile($('#loc-search-list-tmplt-item').html())
   },
 
+  _onclickBtnClose: function(){
+    this._historyService.goLoad('/myt-join/myplan');
+  },
+
+  _onfocusNumInput: function(event){
+    $(event.target).val($(event.target).val().replace(/-/g, ''));
+  },
+
+  _onblurNumInput: function(event){
+    $(event.target).val(Tw.FormatHelper.getDashedCellPhoneNumber($(event.target).val()));
+  },
+
   /**
-   * input password 키 입력시
+   * input 키 입력시
    * @param event
    * @private
    */
-  _onKeyUp: function (event) {
-
-    // 숫자 외 다른 문자를 입력한 경우
-    var $input = $(event.target);
-    var value = $input.val();
-    var reg = /[^0-9-]/g;
-
-    if( reg.test(value) ){
-      event.stopPropagation();
-      event.preventDefault();
-      $input.val(value.replace(reg, ''));
-    }
-
-    this._resetPhoneNum($input);
-
-    // 전화번호 체크
-    if ( this._isPhoneNum($input.val()) ) {
-      $('#num-inputbox').removeClass('error');
-
-    } else {
-      if( !$('#num-inputbox').hasClass('error') ){
-        $('#num-inputbox').addClass('error');
-      }
-    }
+  _oninputTelNumber: function () {
+    this._checkAddNumberBtn();
   },
 
+  // /**
+  //  * input 키 입력시
+  //  * @param event
+  //  * @private
+  //  */
+  // _onKeyUp: function (event) {
+  //
+  //   // 숫자 외 다른 문자를 입력한 경우
+  //   var $input = $(event.target);
+  //   var value = $input.val();
+  //   var reg = /[^0-9-]/g;
+  //
+  //   if( reg.test(value) ){
+  //     event.stopPropagation();
+  //     event.preventDefault();
+  //     $input.val(value.replace(reg, ''));
+  //   }
+  //
+  //   this._resetPhoneNum($input);
+  //
+  //   // 전화번호 체크
+  //   if ( this._isPhoneNum($input.val()) ) {
+  //     $('#num-inputbox').removeClass('error');
+  //
+  //   } else {
+  //     if( !$('#num-inputbox').hasClass('error') ){
+  //       $('#num-inputbox').addClass('error');
+  //     }
+  //   }
+  // },
+
   _onclickInputDel: function(/*event*/){
+    $('#btnNumAdd').prop('disabled', true);
     //$('#inputReqPhone').val('');
     $('#num-inputbox').removeClass('error');
+  },
+
+  /**
+   * 지정번호 추가버튼 disabled
+   * @private
+   */
+  _checkAddNumberBtn: function(){
+    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 10);
+    $('#btnNumAdd').prop('disabled', disabled);
   },
 
   _isPhoneNum: function(val){
@@ -104,17 +140,36 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   _resetPhoneNum: function($input){
-    var value = $input.val();
-    if(value.length === 3 && value.indexOf('-') === -1){
-      $input.val(value + '-');
-    }
-    if(value.length === 8 && value.lastIndexOf('-') === 3){
-      $input.val(value + '-');
-    }
-    if(value.length >= 9){
-      value = value.replace(/-/g, '');
-      value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
-      $('input').val(value);
+    // var value = $input.val();
+    // if(value.length === 3 && value.indexOf('-') === -1){
+    //   $input.val(value + '-');
+    // }
+    // if(value.length === 8 && value.lastIndexOf('-') === 3){
+    //   $input.val(value + '-');
+    // }
+    // if(value.length >= 9){
+    //   value = value.replace(/-/g, '');
+    //   value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+    //   $('input').val(value);
+    // }
+
+    var _$this = $input;
+    var data = _$this.val().replace(/-/g, '');
+    var returnVal;
+
+    //숫자,대시를 제외한 값이 들어 같을 경우
+    if ( Tw.ValidationHelper.regExpTest(/[^\d-]/g, data) ) {
+      returnVal = data.replace(/[^\d-]/g, ''); // 숫자가 아닌 문자 제거
+      Tw.Logger.info('[returnVal 1]', returnVal);
+      _$this.val(returnVal);
+      return returnVal;
+
+    } else {
+      var rexTypeA = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
+      returnVal = data.replace(rexTypeA, '$1-$2-$3');
+      Tw.Logger.info('[returnVal 2]', returnVal);
+      _$this.val(returnVal);
+      return returnVal;
     }
 
   },
@@ -175,10 +230,10 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     var dcAreaNm = $(event.target).closest('li').data('dcareanm');
     var auditDtm = $(event.target).closest('li').data('auditdtm');
 
-    this._popupService.openModalTypeA(
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.TITLE,
+
+    this._popupService.openConfirmButton(
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.TITLE,
       $.proxy(function(){
         this._popupService.close();
         this._settingTargetLocation(
@@ -187,7 +242,25 @@ Tw.ProductMobileplanSettingLocation.prototype = {
           function(){
             $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
           });
-      }, this));
+      }, this),
+      null,
+      Tw.BUTTON_LABEL.CLOSE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON
+    );
+
+    // this._popupService.openModalTypeA(
+    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.TITLE,
+    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.MSG,
+    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
+    //   $.proxy(function(){
+    //     this._popupService.close();
+    //     this._settingTargetLocation(
+    //       '3',
+    //       {num: dcAreaNum, name: dcAreaNm, auditDtm: auditDtm},
+    //       function(){
+    //         $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
+    //       });
+    //   }, this));
   },
 
   /**
@@ -274,6 +347,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _addNumber: function(){
+
     // 3개 이상인 경우
     //3_A8
     if($('.comp-box li').length >= 3){
@@ -281,6 +355,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       return;
     }
     var num = $('#num-input').val();
+    //if (!Tw.ValidationHelper.isCellPhone(num) && !Tw.ValidationHelper.isTelephone(num)) {
+    if (!Tw.ValidationHelper.isCellPhone(num) ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      return;
+    }
+
     this._settingTargetNumber('1', {svcnum:num}, $.proxy(this._reloadNumList, this));
   },
 
@@ -289,19 +369,39 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _removeNumber: function(event){
+
+    if ($('.comp-box li').length === 1) {
+      this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      return;
+    }
+
     var svcnum = $(event.target).closest('li').data('svcnum');
     var auditdtm = $(event.target).closest('li').data('auditdtm');
 
-    this._popupService.openModalTypeA(
+    this._popupService.openConfirmButton(
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
       $.proxy(function(){
         this._popupService.close();
         this._settingTargetNumber('2', {svcnum:svcnum, auditdtm:auditdtm}, function(){
           $('.comp-box li').filter('[data-svcnum='+svcnum+']').remove();
         });
-      }, this));
+      }, this),
+      null,
+      Tw.BUTTON_LABEL.CLOSE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON
+    );
+
+    // this._popupService.openModalTypeA(
+    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
+    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
+    //   $.proxy(function(){
+    //     this._popupService.close();
+    //     this._settingTargetNumber('2', {svcnum:svcnum, auditdtm:auditdtm}, function(){
+    //       $('.comp-box li').filter('[data-svcnum='+svcnum+']').remove();
+    //     });
+    //   }, this));
 
   },
 
@@ -344,6 +444,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
           Tw.Error(resp.code, resp.msg).pop();
           return ;
         }
+
+        if(opClCd === '1'){
+          $('#num-input').val('');
+          $('#btnNumAdd').prop('disabled', true);
+        }
+
         callback();
 
       }, this))
@@ -374,6 +480,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       var params = resp.params;
       var phoneNum = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       $('#num-input').val(phoneNum);
+      this._checkAddNumberBtn();
+      $('#num-inputbox .cancel').show();
     }
   },
 
