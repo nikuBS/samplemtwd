@@ -32,6 +32,16 @@ class ProductMobileplanSettingLocation extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
+    let showNumberSetting = false;
+
+    // 할인지역, 지정번호 변경
+    // - 010캠퍼스요금제(NA00002585)
+    // 할인지역 변경
+    // - TTL지역할인요금제(NA00000008, NA00002563)
+    if (['NA00002585'].indexOf(prodId) !== -1) {
+      showNumberSetting = true;
+    }
+
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0043, {}),
       this.apiService.request(API_CMD.BFF_10_0073, {}))
@@ -77,7 +87,7 @@ class ProductMobileplanSettingLocation extends TwViewController {
           resp['result']['snumSetInfoList'] = resp2['result']['snumSetInfoList'];
           resp['result']['svcNum'] = StringHelper.phoneStringToDash(svcInfo.svcNum);
 
-          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result };
+          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result, showNumberSetting: showNumberSetting };
           res.render('mobileplan/setting/product.mobileplan.setting.location.html', option);
 
         } else {

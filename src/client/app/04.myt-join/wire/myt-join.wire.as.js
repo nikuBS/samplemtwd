@@ -82,7 +82,7 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDateNoYear);
+    Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDate);
   },
 
   /**
@@ -103,7 +103,7 @@ Tw.MyTJoinWireAS.prototype = {
       if( this._lastYear !== list[i].troubleDt.substr(0,4) ){
         // 연도 출력
         this._lastYear = list[i].troubleDt.substr(0,4);
-        $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
+        // $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
         $contBoxes.append(this._listContBox);
         $lastBox = $('.cont-box ul', $contBoxes).last();
       }
