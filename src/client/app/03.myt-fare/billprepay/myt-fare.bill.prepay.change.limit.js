@@ -111,7 +111,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
-    $layer.on('click', '.fe-change', $.proxy(this._change, this));
+    $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
@@ -142,13 +142,23 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
 
     this._popupService.close();
   },
+  _openChangeConfirm: function () {
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
+      $.proxy(this._onChange, this), $.proxy(this._change, this), Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON);
+  },
+  _onChange: function () {
+    this.$isChange = true;
+    this._popupService.close();
+  },
   _change: function () {
-    var apiName = this._changeLimitApiName();
-    var reqData = this._makeRequestData();
+    if (this.$isChange) {
+      var apiName = this._changeLimitApiName();
+      var reqData = this._makeRequestData();
 
-    this._apiService.request(apiName, reqData)
-      .done($.proxy(this._changeLimitSuccess, this))
-      .fail($.proxy(this._fail, this));
+      this._apiService.request(apiName, reqData)
+        .done($.proxy(this._changeLimitSuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _changeLimitApiName: function () {
     var apiName = '';
