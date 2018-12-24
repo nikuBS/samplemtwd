@@ -127,10 +127,14 @@
                                 </div>
                                 <!-- // .widget -->
 
-                                <% if(homeData.usageData.data.shareTotal !== 0) { %>
+                                <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
                                 <div class="legend">
                                     <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
-                                    <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <% if(homeData.usageData.data.isTplanUse) { %>
+                                    <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>
+                                    <% } else { %>
+                                    <span class="category1"><span>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <% } %>
                                 </div>
                                 <% } %>
 
