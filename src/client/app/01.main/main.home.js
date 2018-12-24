@@ -76,6 +76,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
+    this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
@@ -149,6 +150,9 @@ Tw.MainHome.prototype = {
   },
   _onClickGoBroadband: function () {
     Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.BROADBAND);
+  },
+  _onClickGoBillGuide: function () {
+    this._historyService.goLoad('/myt-fare/billguide/guide')
   },
   _openDataLink: function () {
     this._popupService.open({

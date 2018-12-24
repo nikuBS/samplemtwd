@@ -267,7 +267,7 @@
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button></em>
                                 <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
-                                <div class="main-breakdown-box">
+                                <div id="fe-bt-link-billguide" class="main-breakdown-box">
                                     <% if (homeData.billData.type1) { %>
                                     <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
                                     <% } else if (homeData.billData.type2) { %>
