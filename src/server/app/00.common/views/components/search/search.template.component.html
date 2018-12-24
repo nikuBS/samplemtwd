@@ -1,0 +1,211 @@
+<%#
+* FileName: common.search.result.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.11
+%>
+
+<script type="text/x-handlebars-template" id="shortcut_template">
+    <li>
+        <a href="{{listData.MENU_URL}}">
+            <span class="main-category">{{{listData.MENU_NM}}}</span>
+            <span class="sub-category">my T &gt; {{{listData.DEPTH_PATH}}}</span>
+        </a>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="rate_template">
+    <li class="category-type">
+        <button class="link">
+            <div class="products-titleinfo">
+                <p class="title">{{{listData.PROD_NM}}}</p>
+                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+            </div>
+            <div class="taglist-wrap">
+                {{#each listData.METATAG}}
+                    {{#ifCond this '!==' ''}}
+                    <p class="tag-text">#{{{this}}}</p>
+                    {{/ifCond}}
+                {{/each}}
+            </div>
+
+            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="banner_template">
+    <div class="search-banner">
+        <a href=""><img src="/img/dummy/banner-search2.jpg" alt="내게 맞는 요금제 찾기"></a>
+    </div>
+</script>
+
+
+<script type="text/x-handlebars-template" id="service_template">
+    <li class="category-type">
+        <button class="link">
+            <div class="products-titleinfo">
+                <p class="title">{{{listData.PROD_NM}}}</p>
+                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+            </div>
+            <div class="taglist-wrap">
+                {{#each listData.METATAG}}
+                {{#ifCond this '!==' ''}}
+                <p class="tag-text">#{{{this}}}</p>
+                {{/ifCond}}
+                {{/each}}
+            </div>
+
+            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
+        </button>
+    </li>
+</script>
+
+
+<script type="text/x-handlebars-template" id="tv_template">
+    <li class="category-type">
+        <a href="" class="link">
+            <div class="products-titleinfo">
+                <p class="title">{{{listData.PROD_NM}}}</p>
+                <p class="info">월<span class="money">{{{listData.BAS_FEE_INFO}}}</span>원</p>
+            </div>
+            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
+        </a>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="roaming_template">
+    <li class="category-type">
+        <button class="link">
+            <div class="products-titleinfo">
+                <p class="title">{{{listData.PROD_NM}}}</p>
+                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+            </div>
+            <div class="taglist-wrap">
+                {{#each listData.METATAG}}
+                {{#ifCond this '!==' ''}}
+                <p class="tag-text">#{{{this}}}</p>
+                {{/ifCond}}
+                {{/each}}
+            </div>
+            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="app_template">
+    <li>
+        <button>
+            <span class="app-img"><img src="{{listData.IMG}}" alt=""></span>
+            <span class="txt">{{{listData.PROD_NM}}}</span>
+        </button>
+    </li>
+</script>
+
+<script id="direct_template" type="text/x-handlebars-template">
+    <li>
+        <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+        <div class="cont">
+            <div class="tit">{{{listData.PRODUCT_NM}}}</div>
+            <div class="price">{{listData.PRODUCT_PRICE}}원~/월</div>
+
+            <span class="price2">{{listData.SALE_PRICE}}원</span>
+
+        </div>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="membership_template">
+    <li>
+        <button class="link" title="T멤버십 상세보기">
+            <div class="img"><img src="{{{listData.TITLE_IMG_URL}}}" alt="{{listData.CATE_NAME}}"></div>
+            <div class="cont">
+                <div class="tit">{{{listData.BRAND_NM}}}</div>
+                <div class="txt1">{{{listData.CATE_NAME}}}</div>
+            </div>
+        </button>
+    </li>
+</script>
+
+<script id="event_template" type="text/x-handlebars-template">
+    <li>
+        <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-1.jpg" alt="키자니아 X T 멤버십 키자니아 서울 &amp; 부산최대 40% 할인"></button>
+        <div class="extra-info">
+            <div class="tit">{{{listData.PR_NM}}}</div>
+            <div class="txt1">기간 {{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</div>
+        </div>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="sale_template">
+    <li>
+        <button class="b-cont">
+            <strong class="ti">{{{listData.PROD_NM}}} <i class="icon-whole3"><span class="blind">전체</span></i></strong>
+            <span class="tx">{{{listData.PROD_SMRY_DESC}}}</span>
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="as_template">
+    <li>
+        <div class="b-cont">
+            <button class="bt-t">
+                <strong class="ti">{{{listData.STORE_NAME}}}</strong>
+                <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
+                <span class="tel">{{{listData.TEL}}}</span>
+            </button>
+            <a href="tel:{{listData.TEL}}" class="bt-tel">전화걸기</a>
+        </div>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="question_template">
+    <li>
+        <button class="b-cont">
+            <strong class="ti">{{{listData.INQ_CTT}}}</strong>
+            <span class="tx">{{{listData.CATEGORY}}}</span>
+        </button>
+    </li>
+</script>
+
+<script id="notice_template" type="text/x-handlebars-template">
+    <li>
+        <button class="b-cont">
+            {{{listData.NTC_TIT_NM}}}
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="prevent_template">
+    <li>
+        <button class="b-cont">
+            {{{listData.ICNTS_TIT_NM}}}
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="manner_template">
+    <li>
+        <button class="b-cont">
+            {{{listData.ICNTS_TIT_NM}}}
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="serviceInfo_template">
+    <li>
+        <button class="b-cont">
+            <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
+            <span class="tx">{{{listData.ICNTS_TIT_NM}}}</span>
+        </button>
+    </li>
+</script>
+
+<script id="siteInfo_template" type="text/x-handlebars-template">
+    <li>
+        <button class="b-cont">
+            <span class="img-box"><img class="lte" src="/img/dummy/dmy_product.png" alt="샘플이미지"></span>
+            <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
+            <span class="tx">{{{listData.ICTG_PATH}}}</span>
+        </button>
+    </li>
+</script>

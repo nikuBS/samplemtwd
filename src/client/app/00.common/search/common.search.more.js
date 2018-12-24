@@ -11,6 +11,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,category) {
     this._historyService = new Tw.HistoryService();
     this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
     this._init(this._searchInfo,category);
+    this._accessKeyword = searchInfo.query;
 };
 
 Tw.CommonSearchMore.prototype = {
@@ -20,7 +21,8 @@ Tw.CommonSearchMore.prototype = {
             return;
         }
         this._listData =this._arrangeData(searchInfo.search[0][category].data);
-        this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
+        //this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
+        this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'));
         this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
     },
     _arrangeData : function (data) {
@@ -69,9 +71,10 @@ Tw.CommonSearchMore.prototype = {
         return returnStr;
     },
     _inputChangeEvent : function (args) {
+        var inResult = this.$container.find('#oka').is(':checked');
         if(args.keyCode===13){
-            var requestUrl = '/common/search?keyword='+args.currentTarget.value;
-            this._historyService.goLoad(requestUrl);
+            var requestUrl = inResult?'/common/search/in_result?pkeyword='+this._accessKeyword+'&ckeyword=':'/common/search?keyword=';
+            this._historyService.goLoad(requestUrl+args.currentTarget.value);
         }
     }
 };

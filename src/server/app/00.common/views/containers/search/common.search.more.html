@@ -5,6 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
+
 <!-- body -->
 <body data-gr-c-s-loaded="true">
 <!-- #skip_navigation -->
@@ -73,14 +74,7 @@
                 </div>
                 <div class="keyword-search-list">
                     <ul id="shortcut_list">
-                        <script type="text/x-handlebars-template" id="shortcut_template">
-                            <li>
-                                <a href="{{listData.MENU_URL}}">
-                                    <span class="main-category">{{{listData.MENU_NM}}}</span>
-                                    <span class="sub-category">my T &gt; {{{listData.DEPTH_PATH}}}</span>
-                                </a>
-                            </li>
-                        </script>
+
                     </ul>
                 </div>
             </div>
@@ -98,25 +92,7 @@
 
             <div class="cont-box bgnone gaps-style01">
                 <ul class="extraservice-list" id="rate_list">
-                    <script id="rate_template" type="text/x-handlebars-template">
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">{{{listData.PROD_NM}}}</p>
-                                    <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    {{#each listData.METATAG}}
-                                    {{#ifCond this '!==' ''}}
-                                    <p class="tag-text">#{{{this}}}</p>
-                                    {{/ifCond}}
-                                    {{/each}}
-                                </div>
 
-                                <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                            </button>
-                        </li>
-                    </script>
                 </ul>
             </div>
             <% } %>
@@ -133,25 +109,7 @@
 
             <div class="cont-box bgnone gaps-style01">
                 <ul class="extraservice-list" id="roaming_list">
-                    <script id="roaming_template" type="text/x-handlebars-template">
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">{{{listData.PROD_NM}}}</p>
-                                    <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    {{#each listData.METATAG}}
-                                    {{#ifCond this '!==' ''}}
-                                    <p class="tag-text">#{{{this}}}</p>
-                                    {{/ifCond}}
-                                    {{/each}}
-                                </div>
 
-                                <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                            </button>
-                        </li>
-                    </script>
                 </ul>
             </div>
             <% } %>
@@ -168,25 +126,7 @@
 
             <div class="cont-box bgnone gaps-style01">
                 <ul class="extraservice-list" id="service_list">
-                    <script id="service_template" type="text/x-handlebars-template">
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">{{{listData.PROD_NM}}}</p>
-                                    <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    {{#each listData.METATAG}}
-                                    {{#ifCond this '!==' ''}}
-                                    <p class="tag-text">#{{{this}}}</p>
-                                    {{/ifCond}}
-                                    {{/each}}
-                                </div>
 
-                                <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                            </button>
-                        </li>
-                    </script>
                 </ul>
             </div>
             <% } %>
@@ -495,6 +435,7 @@
 
 </body>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/search/search.template.component.html %>
 <script>
     $(document).ready(function () {
         new Tw.CommonSearchMore($('.wrap'),'<%- JSON.stringify(searchInfo) %>','<%- category%>');
