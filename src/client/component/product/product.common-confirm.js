@@ -97,7 +97,7 @@ Tw.ProductCommonConfirm.prototype = {
       'contents': $btn.parent().find('.fe-tip_view_html').html(),
       'bt_b': [{
         style_class:'pos-left fe-btn_close',
-        txt: Tw.BUTTON_LABEL.CLOSE
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     }, $.proxy(this._bindTipView, this));
   },
@@ -129,9 +129,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _joinCancel: function() {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
+    var alert = this._data.isTerm ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A74 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindJoinCancelPopupEvent, this), null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
   },
 
   _bindJoinCancelPopupEvent: function($popupContainer) {
@@ -145,6 +146,10 @@ Tw.ProductCommonConfirm.prototype = {
   _bindJoinCancelPopupCloseEvent: function() {
     if (!this._cancelFlag) {
       return;
+    }
+
+    if (!this._isPopup) {
+      return this._historyService.goBack();
     }
 
     this._historyService.go(-2);
@@ -263,9 +268,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _closePop: function(event) {
-    var $target = $(event.currentTarget);
+    var $target = event ? $(event.currentTarget) : null;
+
     this._popupService.close();
-    if($target.hasClass('set-info')) {
+    if($target && $target.hasClass('set-info')) {
       this._historyService.goBack();
     }
   },

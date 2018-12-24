@@ -34,11 +34,16 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$cardY = this.$cardWrap.find('.fe-card-y');
     this.$cardM = this.$cardWrap.find('.fe-card-m');
     this.$paymentDate = this.$cardWrap.find('.fe-payment-date');
+    this.$isValid = false;
   },
   _bindEvent: function () {
     this.$radioBox.on('change', $.proxy(this._changeRadioBox, this));
+    this.$container.on('blur', '.fe-phone-number', $.proxy(this._checkPhoneNumber, this));
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
     this.$container.on('click', '.fe-select-bank', $.proxy(this._selectBank, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-payment-date', $.proxy(this._changePaymentDate, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._submit, this));
@@ -50,6 +55,43 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$selectedWrap.show();
     this.$selectedWrap.siblings('.fe-wrap').hide();
   },
+  _checkPhoneNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 10));
+  },
+  _getCardCode: function () {
+    if (this.$cardNumber.val() !== '') {
+      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
+        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
+          .done($.proxy(this._getSuccess, this))
+          .fail($.proxy(this._getFail, this));
+      }
+    }
+  },
+  _getSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      var cardCode = res.result.prchsCardCd;
+      var cardName = res.result.prchsCardName;
+
+      this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$isValid = true;
+
+      if (Tw.FormatHelper.isEmpty(cardCode)) {
+        this._getFail();
+      }
+    } else {
+      this._getFail();
+    }
+  },
+  _getFail: function () {
+    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.focus();
+    this.$isValid = false;
+  },
+  _checkCardExpiration: function () {
+    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
+  },
   _selectBank: function (event) {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   },
@@ -59,6 +101,10 @@ Tw.MyTFareBillOptionRegister.prototype = {
     } else {
       this.$container.find('.fe-submit').attr('disabled', 'disabled');
     }
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
   },
   _getIsAbledForWrap: function () {
     var isAbled = false;
@@ -101,9 +147,10 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this._popupService.close();
   },
   _submit: function () {
-    if (this._isValid()) {
+    if (this.$isValid) {
       var reqData = this._makeRequestData();
       var apiName = this._getApiName();
+
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
@@ -118,26 +165,6 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
-  _isValid: function () {
-    var isValid = false;
-    if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
-      isValid = this._isValidForBank();
-    } else {
-      isValid = this._isValidForCard();
-    }
-    return isValid;
-  },
-  _isValidForBank: function () {
-    return this._validation.checkMoreLength(this.$accountPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
-  },
-  _isValidForCard: function () {
-    return (this._validation.checkMoreLength(this.$cardPhoneNumber.val(), 10, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18) &&
-      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6));
   },
   _makeRequestData: function () {
     var reqData = {};

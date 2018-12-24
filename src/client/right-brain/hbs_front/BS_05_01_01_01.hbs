@@ -23,7 +23,7 @@
                                 <ul class="select-list fe-family_list" role="group">
                                     {{#list}}
                                         <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false">
+                                            <div class="checkbox type01 deletebtn-box" role="checkbox" aria-checked="false">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="family_checkbox{{@index}}" value=""
                                                        title="결합가족 목록{{@index}}"
@@ -47,10 +47,10 @@
                                                             {{#if fam.me}}<i class="badge badge-me2"><span class="blind">본인</span></i>{{/if}}
                                                         </span>
                                                         <span class="ntext">{{number}}</span>
-                                                        <button type="button" class="fe-btn_family_del">삭제</button>
                                                         <!-- dummy button -->
                                                     </div>
                                                 </div>
+                                                <div class="bt-alone"><button class="bt-line-gray1 fe-btn_family_del">삭제</button></div>
                                             </div>
                                         </li>
                                     {{/list}}

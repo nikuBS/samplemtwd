@@ -65,7 +65,8 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
 
   _submitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL(this._URL.COMPLETE);
+      this._historyService.replacePathName(this._URL.ROOT);
+      this._historyService.goLoad(this._URL.COMPLETE);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
@@ -129,6 +130,7 @@ Tw.BenefitMyBenefitRainbowPointAdjustment = function () {
 };
 Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyBenefitRainbowPointCommon.prototype, {
   _URL: {
+    ROOT: '/benefit/my',
     COMPLETE: '/benefit/my/rainbowpoint/adjustment/complete'
   },
   _PREVIEW_POPUP_HBS: 'BS_01_01_03_01',

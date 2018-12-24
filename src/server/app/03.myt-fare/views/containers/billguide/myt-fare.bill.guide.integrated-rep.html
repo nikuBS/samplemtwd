@@ -253,7 +253,7 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
 
 <div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
 
-    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }); %>
+    <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); %>
 
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -355,6 +355,7 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
+                    <% if ( roamDonaCallBtnYn.callgiftYn === 'Y' ) { %>
                     <li>
                         <button data-target="callGiftBtn">
                                 <span class="inner">
@@ -362,6 +363,8 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
                                 </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.roamingYn === 'Y' ) { %>
                     <li>
                         <button data-target="roamingBtn">
                                 <span class="inner">
@@ -369,6 +372,8 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
                                 </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.donationYn === 'Y' ) { %>
                     <li>
                         <button data-target="donationBtn">
                                 <span class="inner">
@@ -376,6 +381,7 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
                                 </span>
                         </button>
                     </li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->

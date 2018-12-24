@@ -28,7 +28,7 @@ Tw.ProductRoamingFiGuide.prototype = {
   },
 
   _goReservation: function() {
-    this._historyService.replaceURL('/product/roaming/fi/reservation1step');
+    this._historyService.replaceURL('/product/roaming/fi/reservation');
   },
 
   _goInquire: function() {

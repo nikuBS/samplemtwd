@@ -113,7 +113,9 @@ Tw.POPUP_CONTENTS = {
   NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.',
   DONATION: '미환급금을 기부하시겠습니까?',
   BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
-  BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?'
+  BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
+  COUPON_RECEIVER_LIMIT:
+    ' 선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. <br />리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.'
 };
 
 Tw.CHART_TYPE = {
@@ -243,6 +245,11 @@ Tw.MYT_DATA_TOTAL_SHARING_DATA = {
   USED_DATA_PREFIX: '총 ',
   USED_DATA_SUFFIX: ' 사용',
   JOIN_T_FAMILY_SHARING: 'T가족모아 가입하기'
+};
+
+Tw.MYT_DATA_PATTERN_TITLE = {
+  DATA: '최근 데이터 사용량',
+  VOICE: '최근 음성 사용량'
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
@@ -590,8 +597,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
-  ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다', MSG: '' },
-  ALERT_3_A17: { TITLE: '알림', MSG: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.' },
+  ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
+  ALERT_3_A17: { TITLE: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.', MSG: '' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
   ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
   ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
@@ -606,9 +613,15 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A35: { TITLE: '지정번호 6회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
   ALERT_3_A37: { TITLE: '이미 사용하고 있는 상품입니다.', MSG: '' },
+  ALERT_3_A38: { TITLE: '지정번호 4회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A40: { TITLE: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?', MSG: '' },
+  ALERT_3_A44: { TITLE: '다른 회선으로 절친 등록 시 현재 회선의 절친은 자동 해지 됩니다.' },
+  ALERT_3_A45: { TITLE: '절친으로 등록된 회선은 해지 불가합니다.', MSG: '다른 회선으로 절친 등록 후 해당 회선 해지 하실 수 있습니다.' },
   ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
+  ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
+  ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
+  ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.'
 };
 
@@ -958,6 +971,12 @@ Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
   BUILDING: ['단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물']
 };
 
+Tw.MYT_JOIN_WIRE_CANCEL_SERVICE = {
+  NO_PHONE: '휴대폰 또는 일반전화를 등록해 주세요.',
+  INVALID_PHONE: '전화번호를 올바르게 입력해 주세요.',
+  NO_DC_REFUND: '할인반환내역이 없습니다.'
+};
+
 Tw.MYT_JOIN_SUSPEND = {
   CONFIRM: {
     TITLE: '일시정지를 신청하시겠습니까?',
@@ -980,6 +999,7 @@ Tw.MYT_JOIN_SUSPEND = {
   SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />일시정지 기간 : {DURATION}',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
+  GO_TO_STATUS: '일시정지 신청현황',
   TYPE: {
     ALL: '걸기/받기 모두 정지',
     CALL: '걸기만 정지'
@@ -1183,6 +1203,12 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
   }
 };
 
+Tw.PRODUCT_CONFIRM_GO_TO_DOCUMENT = {
+  TITLE: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
+  GO_DOCUMENT_BTN: '제출하기',
+  GO_RESERVATION_BTN: '신규신청'
+};
+
 Tw.MEMBERSHIP_GRADE = {
   V: 'VIP',
   G: 'Gold',
@@ -1311,8 +1337,8 @@ Tw.ROAMING_DESC = {
   MODEL_DESC: '모델명을 선택하세요.',
   HEADER_NOTI_MSG: '출국 국가 검색 후 휴대폰 모델을 선택하시면 <br>' + '해당 국가에서 이용 가능한 로밍 서비스 방식과<br>요금을 확인하실 수 있습니다.',
   HEADER_LOGIN_MSG:
-    '가입된 무선 회선 정보가 확인되지 않습니다. 휴대폰을 선택하신 후 상단에서 국가명으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.' +
-    ' 국가명으로만 검색하셔도 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다. 찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
+    '가입된 무선 회선 정보가 확인되지 않습니다. <br>휴대폰을 선택하신 후 상단에서 국가명으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.<br>' +
+    ' 국가명으로만 검색하셔도 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다. <br>찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
   HEADER_LINE_MSG:
     '기본 회선을 무선 회선으로 변경하시면 가입된 휴대폰 정보로 출국 국가별 이용 가능한 로밍 서비스 방식과 요금을 확인하실 수 있습니다.' +
     ' 찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
@@ -1367,8 +1393,38 @@ Tw.ROAMING_COMBINE_LINE_STRING = {
 Tw.SETTING_LOCATION = {
   AGREE: '위치정보 이용에 동의하셨습니다.',
   DISAGREE: '위치정보 이용동의를 취소하셨습니다.'
-}
+};
 
 Tw.TMAP_STRING = {
   POI_SEARCH_POSTFIX: '청'
+};
+
+Tw.ROAMING_RETURN_CODE = {
+  '1430452300': '대구 SKT 황금점 매장',
+  '1430456896': '인천공항 2터미널 1층 로밍 센터',
+  A100110000: '인천공항 1터미널 1층 로밍 센터',
+  A100140000: '김포공항 1층 로밍 센터',
+  A900100000: '제주공항 국제선 1층 로밍 센터',
+  A200130000: '김해공항 3층 로밍 센터',
+  C399900000: '대구공항 2층 로밍 센터'
+};
+
+Tw.ROAMING_RECEIVE_CODE = {
+  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
+  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
+  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍 센터' },
+  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍 센터' },
+  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍 센터' },
+  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장' },
+  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍 센터' },
+  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' }
+};
+
+Tw.SERVICE_AREA_TYPE = {
+  기가광랜: 1,
+  인터넷: 2,
+  디지털전화: 5,
+  일반전화: 5,
+  인터넷전화: 6,
+  Btv: 7
 };

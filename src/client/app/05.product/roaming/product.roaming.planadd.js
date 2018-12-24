@@ -123,8 +123,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
   },
   _openRoamingAddTagPopup: function($layer, e) {
       if ($layer.find('input[checked="checked"]').length > 0) {
-          this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.TITLE,
-              $.proxy(this._handleSelectRomaingAddTag, this, e.currentTarget));
+          this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.TITLE,
+              $.proxy(this._handleSelectRomaingAddTag, this, e.currentTarget), null, Tw.BUTTON_LABEL.CLOSE);
       } else {
           this._handleSelectRomaingAddTag(e.currentTarget);
       }
@@ -217,7 +217,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
       var $target = $(e.currentTarget);
       if(this.selectTag){
           var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
-          this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag, this, $layer, $target));
+          this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag, this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE);
       } else {
           this.$filterBtn = $(e.currentTarget);
           this.$selectBtn =  $(e.currentTarget).find('input');
@@ -266,7 +266,6 @@ Tw.ProductRoamingPlanAdd.prototype = {
       var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
       $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
       $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRmAddOrder, this));
   },
     _handleSelectRmAddOrder: function (e) {

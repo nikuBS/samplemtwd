@@ -41,7 +41,7 @@ class RedisService {
       secret: 'sktechx',
       saveUninitialized: true, // don't create session until something stored,
       resave: false, // don't save session if unmodified
-      rolling: true
+      rolling: true,
     });
     return this.middleWare;
   }

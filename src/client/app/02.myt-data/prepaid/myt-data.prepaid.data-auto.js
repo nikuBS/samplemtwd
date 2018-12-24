@@ -26,11 +26,13 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$rechargeBtn = this.$container.find('.fe-recharge');
+    this.$isValid = false;
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
     this.$cancelBtn.on('click', $.proxy(this._cancel, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
@@ -96,9 +98,11 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
   },
   _getCardCode: function () {
     if (this.$cardNumber.val() !== '') {
-      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
+      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
+        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
+          .done($.proxy(this._getSuccess, this))
+          .fail($.proxy(this._getFail, this));
+      }
     }
   },
   _getSuccess: function (res) {
@@ -107,6 +111,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$isValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -116,29 +122,18 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     }
   },
   _getFail: function () {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.focus();
+    this.$isValid = false;
+  },
+  _checkCardExpiration: function () {
+    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
   },
   _isValid: function () {
-    var isValid = this._validation.checkIsSelected(this.$dataSelector, Tw.ALERT_MSG_MYT_DATA.V56) &&
-      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkEmpty(this.$cardNumber.attr('data-code'), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6);
-
-    return isValid;
-  },
-  _recharge: function () {
-    var reqData = this._makeRequestData();
-    if (this.$isAuto) {
-      if ($.trim(this.$cardNumber.val()) === this.$hiddenNumber.val()) {
-        reqData.maskedYn = 'Y';
-      }
+    if (this.$isValid) {
+      return this._validation.showAndHideErrorMsg(this.$dataSelector, this._validation.checkIsSelected(this.$dataSelector));
     }
-    this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
-      .done($.proxy(this._rechargeSuccess, this))
-      .fail($.proxy(this._fail, this));
+    return false;
   },
   _makeRequestData: function () {
     return {
@@ -148,6 +143,19 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       expireMM: $.trim(this.$cardM.val()),
       expireYY: $.trim(this.$cardY.val()).substr(2,2)
     };
+  },
+  _recharge: function () {
+    if (this._isValid()) {
+      var reqData = this._makeRequestData();
+      if (this.$isAuto) {
+        if ($.trim(this.$cardNumber.val()) === this.$hiddenNumber.val()) {
+          reqData.maskedYn = 'Y';
+        }
+      }
+      this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
+        .done($.proxy(this._rechargeSuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _rechargeSuccess: function (res) {
     var type = 'auto';

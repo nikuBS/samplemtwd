@@ -21,7 +21,7 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
 Tw.ProductMobileplanAddTerminate.prototype = {
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function() {
@@ -60,6 +60,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       false,
       this.$container,
       {
+        isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
         noticeList: this._confirmOptions.prodNoticeList,
         isWidgetInit: true

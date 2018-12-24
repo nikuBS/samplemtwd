@@ -61,8 +61,10 @@ Tw.MyTDataHistory.prototype = {
     var leftCount = this._histories[type].length - this._displayCount[type];
 
     var hasNone = this.$moreBtn.addClass('none');
-    if (leftCount > 0 && hasNone) {
-      this.$moreBtn.removeClass('none');
+    if (leftCount > 0) {
+      if (hasNone) {
+        this.$moreBtn.removeClass('none');
+      }
     } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }

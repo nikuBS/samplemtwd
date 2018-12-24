@@ -29,6 +29,12 @@ Tw.LineMarketingComponent.prototype = {
   },
 
   _openMarketingOfferPopup: function (showName, svcNum, agr201Yn, agr203Yn) {
+    console.log({
+      showName: showName,
+      svcNum: svcNum,
+      agr201Yn: agr201Yn === 'Y',
+      agr203Yn: agr203Yn === 'Y'
+    });
     this._popupService.open({
       hbs: 'CO_01_05_02_06',
       layer: true,

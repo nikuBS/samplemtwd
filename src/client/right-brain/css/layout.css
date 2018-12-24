@@ -601,7 +601,7 @@ body.bg-gray {
     .header-wrap .header .prev-step {
       display: block;
       overflow: hidden;
-      position: absolute;
+      position: fixed;
       background: url(/img/ico/ico-group.png) no-repeat 0 0;
       background-size: 3.125rem;
       width: 1.5625rem;
@@ -894,9 +894,17 @@ body.bg-gray {
     padding: 0.5rem 1rem; }
   .cont-box.gaps-style04 {
     padding: 0.625rem 1rem 1.75rem; }
+  .cont-box.gaps-style05 {
+    padding: 0.3125rem 1rem 0.625rem; }
+  .cont-box.gaps-style06 {
+    padding: 0.3125rem 1rem 0rem; }
+  .cont-box.gaps-style07 {
+    padding: 0.3125rem 1rem 1.75rem; }
   .cont-box.bgtype {
     margin-bottom: -0.0625rem;
     background: #f5f5f5; }
+  .cont-box.x-hidden {
+    overflow-x: hidden; }
   .cont-box.square {
     padding: 1.625rem; }
   .cont-box.inborder {
@@ -990,9 +998,6 @@ body.bg-gray {
   /*rem(59px 0 54px)*/
   background: #fff;
   z-index: 200;
-  -webkit-transform: translate(0, 0);
-          transform: translate(0, 0);
-  /* android : link bug */
   overflow-x: hidden;
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */ }
   .popup-page .header-wrap {
@@ -1050,8 +1055,7 @@ body.bg-gray {
         padding: 3.25rem 0 0;
         height: 100%;
         overflow: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch; }
+        overflow-y: auto; }
         .popup-page.layer .container-wrap .container .cont-sp.type1 {
           height: 0.375rem; }
         .popup-page.layer .container-wrap .container .link-long-ti {
@@ -1236,22 +1240,22 @@ body.bg-gray {
     .popup-page.coupon-type .popup-closeBtn {
       top: auto;
       bottom: 1.25rem; }
-  .popup-page.fixed-bottom {
+  .popup-page.fixed-bottom .container {
     padding-bottom: 3.5rem; }
-    .popup-page.fixed-bottom.h30 {
-      padding-bottom: 1.875rem; }
-    .popup-page.fixed-bottom.h60 {
-      padding-bottom: 3.5rem; }
-    .popup-page.fixed-bottom.h90 {
-      padding-bottom: 5.625rem; }
-    .popup-page.fixed-bottom.h120 {
-      padding-bottom: 7.5rem; }
-    .popup-page.fixed-bottom.h150 {
-      padding-bottom: 9.375rem; }
-    .popup-page.fixed-bottom.h180 {
-      padding-bottom: 11.25rem; }
-    .popup-page.fixed-bottom.h210 {
-      padding-bottom: 13.125rem; }
+  .popup-page.fixed-bottom.h30 .container {
+    padding-bottom: 1.875rem; }
+  .popup-page.fixed-bottom.h60 .container {
+    padding-bottom: 3.5rem; }
+  .popup-page.fixed-bottom.h90 .container {
+    padding-bottom: 5.625rem; }
+  .popup-page.fixed-bottom.h120 .container {
+    padding-bottom: 7.5rem; }
+  .popup-page.fixed-bottom.h150 .container {
+    padding-bottom: 9.375rem; }
+  .popup-page.fixed-bottom.h180 .container {
+    padding-bottom: 11.25rem; }
+  .popup-page.fixed-bottom.h210 .container {
+    padding-bottom: 13.125rem; }
   .popup-page.focusin {
     /* common.js */
     padding-bottom: 0 !important; }
@@ -1272,7 +1276,11 @@ body.bg-gray {
       .popup-page.focusin .setting-share:before {
         display: none; }
 
-/* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다 11.28 김재성 */
+/* android 하위 단말에서 fixed버그때문에 이부분으로 대체합니다. ios는 상하 텐션효과때문에 fixed유지  */
+.device_android .popup-page {
+  position: absolute; }
+
+/* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다  */
 /* 페이지 사이즈 100% */
 .fixed-wrap {
   position: fixed;
@@ -2758,4 +2766,39 @@ body.bg-gray {
   .bg-productdetail.scroll .h-belt .icon-gnb-menu {
     background-image: url(/img/svg/icon_48px_titlebar_menu.svg); }
   .bg-productdetail.scroll .h-belt .icon-gnb-search {
+    background-image: url(/img/svg/icon_48px_titlebar_search.svg); }
+
+.bg-tapp #contents .container {
+  padding-top: 0 !important; }
+
+.bg-tapp .productdetails-bg {
+  padding: 3.75rem 1.25rem 0;
+  background: #676767;
+  background-repeat: no-repeat;
+  background-size: cover; }
+  .bg-tapp .productdetails-bg.t-logo {
+    background: #676767; }
+
+.bg-tapp h1 {
+  font-size: 0;
+  line-heighT: 0;
+  text-indent: -999px; }
+
+.bg-tapp .header-wrap {
+  min-height: 0;
+  height: 0; }
+  .bg-tapp .header-wrap .h-belt {
+    border-color: transparent;
+    background: transparent; }
+    .bg-tapp .header-wrap .h-belt .icon-gnb-menu {
+      background-image: url(/img/svg/icon_48px_titlebar_menu_white.svg); }
+    .bg-tapp .header-wrap .h-belt .icon-gnb-search {
+      background-image: url(/img/svg/icon_48px_titlebar_search_white.svg); }
+
+.bg-tapp.scroll .h-belt {
+  border-color: #e5e5e5;
+  background: #fff; }
+  .bg-tapp.scroll .h-belt .icon-gnb-menu {
+    background-image: url(/img/svg/icon_48px_titlebar_menu.svg); }
+  .bg-tapp.scroll .h-belt .icon-gnb-search {
     background-image: url(/img/svg/icon_48px_titlebar_search.svg); }

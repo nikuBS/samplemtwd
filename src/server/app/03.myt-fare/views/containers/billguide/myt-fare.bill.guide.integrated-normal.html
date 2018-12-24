@@ -143,7 +143,7 @@
 
 <div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
 
-    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }); %>
+    <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); %>
 
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -221,27 +221,33 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
+                    <% if ( roamDonaCallBtnYn.callgiftYn === 'Y' ) { %>
                     <li>
                         <button data-target="callGiftBtn">
-                            <span class="inner">
-                                <span class="tit">콜기프트 사용요금</span>
-                            </span>
+                                <span class="inner">
+                                    <span class="tit">콜기프트 사용요금</span>
+                                </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.roamingYn === 'Y' ) { %>
                     <li>
                         <button data-target="roamingBtn">
-                            <span class="inner">
-                                <span class="tit">로밍 사용요금</span>
-                            </span>
+                                <span class="inner">
+                                    <span class="tit">로밍 사용요금</span>
+                                </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.donationYn === 'Y' ) { %>
                     <li>
                         <button data-target="donationBtn">
-                            <span class="inner">
-                                <span class="tit">기부금/후원금</span>
-                            </span>
+                                <span class="inner">
+                                    <span class="tit">기부금/후원금</span>
+                                </span>
                         </button>
                     </li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->

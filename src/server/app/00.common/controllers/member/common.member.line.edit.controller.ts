@@ -36,7 +36,7 @@ class CommonMemberLineEdit extends TwViewController {
   }
 
   private parseLineList(lineList): any {
-    const curLine = lineList[this.category] || lineList[this.category.toUpperCase()];
+    const curLine = lineList[this.category];
     if ( !FormatHelper.isEmpty(curLine) ) {
       return this.convLineData(curLine);
     }

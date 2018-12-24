@@ -45,7 +45,7 @@ body {
 
 .wrap {
   width: 100%;
-  overflow-x: hidden; }
+  /*overflow-x:hidden;*/ }
 
 /*display*/
 .none {
@@ -177,10 +177,10 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       padding: 0 0.625rem;
       height: 2.375rem;
       border-radius: 0.25rem;
-      background: #f5f5f5;
+      background: #f2f2f2;
       font-size: 0.9375rem;
       color: #000;
-      font-weight: 700;
+      font-weight: 300;
       width: 100%;
       line-height: 2.375rem; }
       .inputbox .input input[type=text]::-webkit-input-placeholder,
@@ -214,9 +214,9 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       .inputbox .input input[type=password]:disabled,
       .inputbox .input input[type=number]:disabled,
       .inputbox .input input[type=tel]:disabled {
-        background-color: #e5e8ee;
-        border-color: #e5e8ee;
-        font-weight: 300; }
+        background-color: #dcdcdc;
+        font-weight: 300;
+        color: #c1c1c1; }
         .inputbox .input input[type=text]:disabled::-webkit-input-placeholder,
         .inputbox .input input[type=file]:disabled::-webkit-input-placeholder,
         .inputbox .input input[type=password]:disabled::-webkit-input-placeholder,

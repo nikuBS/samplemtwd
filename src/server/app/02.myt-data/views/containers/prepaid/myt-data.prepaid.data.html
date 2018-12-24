@@ -76,6 +76,9 @@
                                 <button data-code="<%= ppsInfo.dataYn %>" class="bt-dropdown big fe-select-data" title="충전 데이터 선택" aria-haspopup="true">
                                     데이터 선택<span class="ico"></span>
                                 </button>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    충전할 데이터를 선택해 주세요.
+                                </span>
                             </span>
                         </li>
                         <li>
@@ -85,12 +88,15 @@
                                     <input id="formInput02" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
                                            placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1" class="fe-card-number required-input-field" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                        카드번호가 올바르지 않습니다.
+                                    </span>
                                 </span>
                             </span>
                         </li>
                         <li>
                             <label class="tit" for="formInput03">유효기간</label>
-                            <div class="input-wrap-half">
+                            <div class="input-wrap-half fe-exp-wrap">
                                 <span class="inputbox">
                                     <span class="input">
                                         <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
@@ -106,6 +112,9 @@
                                     </span>
                                 </span>
                             </div>
+                            <span class="error-txt fe-error-msg" style="display:none;">
+                                유효기간이 올바르지 않습니다.
+                            </span>
                         </li>
                         <li>
                             <label class="tit" for="formInput04">카드 비밀번호</label>
@@ -114,6 +123,9 @@
                                     <input id="formInput04" type="number" style="-webkit-text-security: disc;" class="fe-card-pw required-input-field"  inputmode="numeric" min="0" pattern="[0-9]*"
                                            placeholder="앞 2자리" title="카드 비밀번호 입력란" value="" aria-labelledby="aria-exp-label4" maxlength="2" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                        비밀번호가 올바르지 않습니다.
+                                    </span>
                                 </span>
                             </span>
                         </li>

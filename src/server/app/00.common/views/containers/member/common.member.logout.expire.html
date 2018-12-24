@@ -17,7 +17,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="commonLogoutExpire" class="wrap">
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -47,7 +47,7 @@
                 </div>
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <a href="/common/tid/login">로그인 하기</a>
+                        <button class="fe-bt-login">로그인 하기</button>
                     </li>
                 </ul>
             </div>
@@ -60,7 +60,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-
+    new Tw.CommonMemberLogoutExpire();
+    new Tw.TidLandingComponent($('#commonLogoutExpire'));
   });
 </script>
 <% include ../../components/end.component.html %>

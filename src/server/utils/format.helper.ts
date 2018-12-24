@@ -286,6 +286,14 @@ class FormatHelper {
     const regNumber = /^[0-9]*$/;
     return regNumber.test(number);
   }
+
+  static addCardDash(value: string): string {
+    if ( FormatHelper.isEmpty(value) ) {
+      return '';
+    }
+    const regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
+    return value.replace(regexp, '-');
+  }
 }
 
 export default FormatHelper;

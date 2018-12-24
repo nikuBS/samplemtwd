@@ -87,7 +87,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
     histories[key].push({
       ...history,
       idx,
-      date: DateHelper.getShortDateNoYear(key),
+      date: DateHelper.getShortFirstDate(key),
       amt: FormatHelper.addComma(history.amt),
       isCanceled: history.payCd === '5' || history.payCd === '9',
       cardNm: history.cardNm || PREPAID_PAYMENT_TYPE[history.wayCd]

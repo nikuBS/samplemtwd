@@ -206,6 +206,8 @@ Tw.MainMenuRefund.prototype = {
     var target = _.filter(this._data.submittedArr, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     })[0];
+
+    var needRefresh = false;
     this._popupService.open({
       hbs: 'MN_01_04_01_01_01',
       data: {
@@ -214,8 +216,13 @@ Tw.MainMenuRefund.prototype = {
       }
     }, $.proxy(function (root) {
       new Tw.MainMenuRefundChangeAccount(root, this._bankList, target, $.proxy(function () {
-        this._historyService.reload();
+        needRefresh = true;
       }, this));
-    }, this), null, 'change');
+    }, this),
+    $.proxy(function () {
+      if (needRefresh) {
+        this._historyService.reload();
+      }
+    }, this), 'change');
   }
 };

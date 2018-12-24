@@ -61,6 +61,8 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
@@ -114,7 +116,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

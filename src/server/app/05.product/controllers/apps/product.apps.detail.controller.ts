@@ -48,9 +48,11 @@ export default class ProductAppsDetail extends TwViewController {
         return resp;
       }
 
-      const images: Array<string> = [];
+      const images: Array<string> = [],
+        icon = resp.result.appIconImgUrl;
       return {
         ...resp.result,
+        appIconImgUrl: icon && icon !== '' ? ProductHelper.getImageUrlWithCdn(icon) : '',
         images: (resp.result.scrshotList || []).reduce((arr, img) => {
           if (img.scrshotImgUrl && img.scrshotImgUrl !== '') {
             arr.push(ProductHelper.getImageUrlWithCdn(img.scrshotImgUrl));
@@ -68,7 +70,12 @@ export default class ProductAppsDetail extends TwViewController {
         return resp;
       }
 
-      return resp.result.recommendAppList || [];
+      return (resp.result.recommendAppList || []).map(app => {
+        return {
+          ...app,
+          prodIconImgUrl: app.prodIconImgUrl && ProductHelper.getImageUrlWithCdn(app.prodIconImgUrl)
+        };
+      });
     });
   }
 
@@ -86,7 +93,7 @@ export default class ProductAppsDetail extends TwViewController {
           if (position) {
             banners[position] = {
               ...banner,
-              bnnrImgUrl: ProductHelper.getImageUrlWithCdn(banner.bnnrImgUrl)
+              bnnrImgUrl: banner.bnnrImgUrl && ProductHelper.getImageUrlWithCdn(banner.bnnrImgUrl)
             };
           }
 

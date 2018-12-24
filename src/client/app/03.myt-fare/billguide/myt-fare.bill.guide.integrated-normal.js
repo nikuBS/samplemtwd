@@ -139,49 +139,42 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
-    var hbsName = 'actionsheet_select_a_type';
-    var data = [{
-      list: null
-    }];
+    var hbsName = 'actionsheet01';
     var hashName = 'conditionChange';
-
+    var reqDate = this.resData.reqQuery.date;
     // 데이터 초기화
     var invDtArr = this.resData.billpayInfo.invDtArr; // data-value
     var conditionChangeDtList = this.resData.commDataInfo.conditionChangeDtList; // value
     var listData = _.map(invDtArr, function (item, idx) {
+      var radioAttr = 'id="ra'+idx+'" name="r1" data-value="' + invDtArr[idx] + '"';
+      if(reqDate === invDtArr[idx]){
+        radioAttr += ' checked';
+      }
       return {
-        value: conditionChangeDtList[idx],
-        option: '',
-        attr: 'data-value="' + invDtArr[idx] + '", data-target="selectBtn"'
+        'label-attr': 'id="ra'+idx+'"',
+        'radio-attr': radioAttr,
+        'txt': conditionChangeDtList[idx]
       };
     });
-    data[0].list = listData;
 
     this._popupService.open({
         hbs: hbsName,
         layer: true,
-        data: data,
-        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0
+        data: [{ list: listData }],
+        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0,
+        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
       },
       $.proxy(this._conditionChangeEvtInit, this, $target),
       $.proxy(this._conditionChangeEvtClose, this, $target),
       hashName);
   },
   _conditionChangeEvtInit: function ($target, $layer) {
-    $layer.on('click', '[data-target="selectBtn"]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
     Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
-
-    this.paramDate = this.resData.reqQuery.date || '';
-
-    if ( this.paramDate ) {
-      var $selectBtnTg = $layer.find('[data-value="' + this.paramDate + '"]');
-      $selectBtnTg.addClass('checked');
-    }
-
   },
-  _setSelectedValue: function ($target, event) {
+  _setSelectedValue: function (event) {
     var $tg = $(event.currentTarget);
-    this.paramDate = $tg.attr('data-value');
+    this.paramDate = $tg.find('input[type=radio]').attr('data-value');
     Tw.Logger.info('[선택 : ]', this.paramDate);
     this._conditionChangeEvtClose();
   },
@@ -190,6 +183,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var param = {
       date: this.paramDate
     };
+
     this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },

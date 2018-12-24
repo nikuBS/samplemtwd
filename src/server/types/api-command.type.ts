@@ -111,7 +111,7 @@ export const API_CMD = {
   BFF_03_0027: { path: '/core-auth/v1/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   // MainHome T-Notify
-  BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_04_0001: { path: '/core-membership/v1/card/homeinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0002: { path: '/core-product/v1/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_04_0003: { path: '//core-modification/v1/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_04_0004: { path: '/core-auth/v1/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -128,7 +128,7 @@ export const API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/:args0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0013: { path: '/core-recharge/v1/pps-card', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0013: { path: '/core-bill/v1/pps-card', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0014: { path: '/core-balance/v1/pps-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0020: { path: '/core-bill/v1/bill-pay/recent-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0021: { path: '/core-bill/v1/bill-pay/recent-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -500,7 +500,10 @@ export const API_CMD = {
   BFF_10_0004: { path: '/core-product/v1/ledger/:args0/contents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0005: { path: '/core-product/v1/ledger/:args0/series', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0006: { path: '/core-product/v1/ledger/:args0/recommend-prods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0007: {
+    path: '/core-product/v1/mobiles/fee-plans/:args0/joins/join-prechecks',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
   BFF_10_0008: { path: '/v1/products/fee-plans/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0009: {
     path: '/core-product/v1/mobiles/fee-plans/joins/request-over-chargings',
@@ -633,6 +636,24 @@ export const API_CMD = {
   BFF_10_0116: { path: '/core-product/v1/ledger/:args0/previews', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0139: { path: '/core-product/v1/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0151: {
+    path: '/core-product/v1/mobiles/fee-plans/:args0/joins/term-prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0164: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/joins', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0165: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0166: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/cancels', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0167: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/adds', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0168: {
+    path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -660,10 +681,12 @@ export const API_CMD = {
   BFF_11_0013: { path: '/core-membership/v1/card/cancel-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0014: { path: '/core-membership/v1/card/cancel', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_11_0015: { path: '/core-membership/v1/card/create-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0017: { path: '/core-membership/v1/tmembership/brand-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0021: { path: '/core-membership/v1/tmembership/area1-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0022: { path: '/core-membership/v1/tmembership/area2-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0023: { path: '/core-membership/v1/tmembership/mrcht-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0024: { path: '/core-membership/v1/tmembership/mrcht-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0025: { path: '/core-membership/v1/tmembership/near-brand', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

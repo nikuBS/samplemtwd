@@ -98,7 +98,7 @@ Tw.API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/:args0', method: Tw.API_METHOD.DELETE },
-  BFF_05_0013: { path: '/core-recharge/v1/pps-card', method: Tw.API_METHOD.GET },
+  BFF_05_0013: { path: '/core-bill/v1/pps-card', method: Tw.API_METHOD.GET },
   BFF_05_0014: { path: '/core-balance/v1/pps-histories', method: Tw.API_METHOD.GET },
   BFF_05_0020: { path: '/core-bill/v1/bill-pay/recent-bills', method: Tw.API_METHOD.GET },
   BFF_05_0021: { path: '/core-bill/v1/bill-pay/recent-usages', method: Tw.API_METHOD.GET },
@@ -140,6 +140,7 @@ Tw.API_CMD = {
   BFF_05_0086: { path: '/core-bill/v1/micro-pay/password-create', method: Tw.API_METHOD.POST },
   BFF_05_0087: { path: '/core-bill/v1/micro-pay/password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
+  BFF_05_0091: {path: '/core-bill/v1/recent-usage-pattern', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/v1/micro-pay/cphist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0094: { path: '/core-modification/v1/combination-discounts', method: Tw.API_METHOD.GET },
   BFF_05_0096: { path: '/core-product/v1/benefit-suggestions', method: Tw.API_METHOD.GET },
@@ -378,7 +379,7 @@ Tw.API_CMD = {
   BFF_09_0005: { path: '/core-membership/v1/event/win-detail/:args0', method: Tw.API_METHOD.GET },
 
   // PRODUCT
-  BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/join-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0010: { path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/v1/products/fee-plans/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0013: { path: '/core-product/v1/mobiles/fee-plans/:args0/tplan-sets', method: Tw.API_METHOD.GET },
@@ -415,11 +416,18 @@ Tw.API_CMD = {
   BFF_10_0076: { path: '/core-product/v1/wire/joins/counsel', method: Tw.API_METHOD.POST },
   BFF_10_0078: { path: '/core-product/v1/combinations/necessary-documents/inspects', method: Tw.API_METHOD.GET },
   BFF_10_0082: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: Tw.API_METHOD.POST },
+  BFF_10_0083: { path: '/core-product/v1/mobiles/additions-sets/:args0/tplusdis-sets', method: Tw.API_METHOD.DELETE },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: Tw.API_METHOD.GET },
   BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0100: { path: '/core-product/v1/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
   BFF_10_0101: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0119: { path: '/core-product/v1/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
+  BFF_10_0151: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/term-prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0164: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/joins', method: Tw.API_METHOD.GET },
+  BFF_10_0165: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/sets', method: Tw.API_METHOD.GET },
+  BFF_10_0166: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/cancels', method: Tw.API_METHOD.GET },
+  BFF_10_0167: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/adds', method: Tw.API_METHOD.GET },
+  BFF_10_0168: { path: '/core-product/v1/wire/additions/:args0/joins/ledger-prechecks/terms', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
@@ -467,7 +475,6 @@ Tw.API_CMD = {
 };
 
 Tw.NODE_CMD = {
-  CHECK_SESSION: { path: '/sessions', method: Tw.API_METHOD.GET },
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   GET_DOMAIN: { path: '/domain', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
@@ -562,7 +569,8 @@ Tw.API_CODE = {
   CODE_200: '200',
   CODE_400: '400',
 
-  NOT_FAMILY: 'ZORDE4011' // 쿠폰 선물 가능한 가족그룹 아님
+  NOT_FAMILY: 'ZORDE4011', // 쿠폰 선물 가능한 가족그룹 아님
+  RECEIVER_LIMIT: 'ZNGME0000' // 쿠폰 받는 사람 횟수 초과
 };
 
 Tw.API_SVC_PWD_ERROR = {

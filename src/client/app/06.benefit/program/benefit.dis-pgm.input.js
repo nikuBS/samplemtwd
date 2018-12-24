@@ -38,7 +38,7 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _bindEvent: function () {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function () {
@@ -81,6 +81,7 @@ Tw.BenefitDisPgmInput.prototype = {
         isContractPlan: this._confirmOptions.isContractPlan,
         isAutoJoinTermList: true,
         setInfo: 'set-info',
+        isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
         settingSummaryTexts: [
           {

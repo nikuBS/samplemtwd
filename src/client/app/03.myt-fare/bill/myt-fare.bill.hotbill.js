@@ -21,6 +21,7 @@ Tw.MyTFareHotBill.prototype = {
     this._idxLastItem = 0;
     this._cachedElement();
     this._bindEvent();
+    this._getSvcInfo();
     this._sendBillRequest(this.childSvcMgmtNum);
     if ( this._lines.length > 0 ) {
       this._renderLines();
@@ -46,6 +47,22 @@ Tw.MyTFareHotBill.prototype = {
   _bindEvent: function () {
     // this.$lineButton.on('click', $.proxy(this._onClickLine, this));
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
+  },
+
+  _getSvcInfo: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(this._successSvcInfo, this))
+      .fail($.proxy(this._failSvcInfo, this));
+  },
+
+  _successSvcInfo: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._svcInfo = resp.result;
+    }
+  },
+
+  _failSvcInfo: function (resp) {
+    Tw.Error(res.code, res.msg).pop();
   },
 
   _getBillResponse: function (childSvcMgmtNum, resp) {
@@ -180,7 +197,6 @@ Tw.MyTFareHotBill.prototype = {
   _confirmSwitchLine: function (target) {
     var defaultLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum) + ' ' + this._svcInfo.nickNm;
     var selectLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum) + ' ' + target.nickNm;
-    this.changeLineMgmtNum = target.svcMgmtNum;
     this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
       defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
       Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null);

@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금' }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금', svcInfo: data.svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">
@@ -28,6 +28,7 @@
             </div>
             <!-- 청구요금 -->
             <%- include('../components/submain/myt-fare.submain.claim-pay.html', data) %>
+            <% if (!data.isPPS) { %>
             <!-- 상세항목 -->
             <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
             <!-- 소액결제 콘텐츠이용 -->
@@ -49,6 +50,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
+            <% } %>
             <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -123,7 +125,7 @@
                         </button>
                     </li>
                     <li>
-                        <button data-href="">
+                        <button data-href="/benefit/submain?filters=F01421">
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 요금할인
                         </button>
                     </li>

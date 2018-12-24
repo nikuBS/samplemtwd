@@ -144,7 +144,7 @@
 
 <div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
 
-    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서' }); %>
+    <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); %>
 
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -243,6 +243,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
+                    <% if ( roamDonaCallBtnYn.callgiftYn === 'Y' ) { %>
                     <li>
                         <button data-target="callGiftBtn">
                                 <span class="inner">
@@ -250,6 +251,8 @@
                                 </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.roamingYn === 'Y' ) { %>
                     <li>
                         <button data-target="roamingBtn">
                                 <span class="inner">
@@ -257,6 +260,8 @@
                                 </span>
                         </button>
                     </li>
+                    <% } %>
+                    <% if ( roamDonaCallBtnYn.donationYn === 'Y' ) { %>
                     <li>
                         <button data-target="donationBtn">
                                 <span class="inner">
@@ -264,6 +269,7 @@
                                 </span>
                         </button>
                     </li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->

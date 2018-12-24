@@ -584,3 +584,9 @@ export enum LOGIN_TYPE {
   TID = 'T',
   EASY = 'S'
 }
+
+export const MEMBERSHIP_TYPE = {
+  '0': '리더스클럽',
+  '3': '티플',
+  '4': '커플'
+};

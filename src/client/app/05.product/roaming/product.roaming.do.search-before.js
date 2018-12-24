@@ -68,7 +68,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
               }
           }else if(this._svcInfo.totalSvcCnt === 1){
               if(this._svcAttrCd !== 'M'){
-                  this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
+                  this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LOGIN_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
               } else {
                   if(this._phoneInfo.eqpMdlNm !== ''){
@@ -80,6 +80,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
                       this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
                   }
               }
+          } else {
+              this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+              this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
           }
       }else {
           this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
@@ -219,7 +222,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       $layer.find('[data-mfact-name="' + this.cdName + '"]').attr('checked', 'checked');
       $layer.find('[name="r2"]').on('click', $.proxy(this._getModelInfo, this, $layer));
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _getModelInfo: function ($layer, e) {
       // $layer.find('button').removeClass('checked');
@@ -272,7 +274,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
       $layer.find('[data-model-nm="' + this.modelValue + '"]').attr('checked', 'checked');
       $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-      $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
@@ -290,7 +291,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _selectPopupCallback : function ($layer) {
     $layer.find('[name="r2"]').on('click', $.proxy(this._goLoadSearchResult, this, $layer));
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
   _closeActionPopup : function () {
   },

@@ -13,6 +13,7 @@ Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallb
   // 지역 item 템플릿
   this._tmpltLocItem = tmplt;
 
+  this._listAll = [];
   this._bindEvent();
   this.init(keyword);
 };
@@ -24,10 +25,11 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
    * @private
    */
   init: function(keyword) {
-    if( keyword ){
-      $('input[type=text]', this.$container).val(keyword);
-      this._search();
-    }
+    // if( keyword ){
+    //   $('input[type=text]', this.$container).val(keyword);
+    //   this._search();
+    // }
+    this._search();
   },
 
   /**
@@ -35,19 +37,36 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
    * @private
    */
   _bindEvent: function() {
-    this.$container.on('click', 'button.search', $.proxy(this._search, this));
+    this.$container.on('click', 'button.search', $.proxy(this._listFilter, this));
     this.$container.on('click', '.bt-red1 button', $.proxy(this._addLocation, this));
     this.$container.on('click', '.select-list .radiobox', $.proxy(this._onchangeUiCondition, this));
+    this.$container.on('click', '.inputbox .cancel', $.proxy(this._listFilter, this));
   },
 
+  _listFilter: function(){
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    var list = [];
+    var keyword = $('.inputbox input[type=text]', this.$container).val();
+    if(!keyword || keyword === ''){
+      this._appendLocationLi(this._listAll);
+      return;
+    }
+    for(var i = 0; i < this._listAll.length; i++){
+      if(this._listAll[i].areaNm.indexOf(keyword) != -1){
+        list.push(this._listAll[i]);
+      }
+    }
+    this._appendLocationLi(list);
+    // Tw.CommonHelper.endLoading('.container');
+  },
 
   _search: function(){
-    this.$selectList.html('');
+    // this.$selectList.html('');
     var keyword = $('.inputbox input[type=text]', this.$container).val();
 
-    if(!keyword || keyword.length === 0){
-      return ;
-    }
+    // if(!keyword || keyword.length === 0){
+    //   return ;
+    // }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -59,6 +78,8 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
           Tw.Error(resp.code, resp.msg).pop();
           return ;
         }
+
+        this._listAll = resp.result.zoneInfoList;
         this._appendLocationLi(resp.result.zoneInfoList);
 
       }, this))
@@ -79,6 +100,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     if(!list || list.length === 0){
       $('#divSearchResult').hide();
       $('#divNoSearchResult').show();
+      $('.ti-caption-gray em', this.$container).text('0');
       return;
     } else {
       $('#divSearchResult').show();

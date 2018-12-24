@@ -68,7 +68,7 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._reqOverpay, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._reqOverpay, this));
   },
 
   _getJoinConfirmContext: function() {
@@ -85,6 +85,7 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
+      isComparePlan: this._isComparePlan,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
       isMobilePlan: true,
@@ -110,7 +111,6 @@ Tw.ProductMobileplanJoin.prototype = {
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
-      isComparePlan: this._isComparePlan,
       isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },

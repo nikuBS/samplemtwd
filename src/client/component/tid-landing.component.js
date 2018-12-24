@@ -23,8 +23,8 @@ Tw.TidLandingComponent.prototype = {
     this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
-    // this.$container.on('click', '.fe-bt-login', $.proxy(this.goLogin, this) );
-    // this.$container.on('click', '.fe-bt-logout', $.proxy(this.goLogout, this) );
+    this.$container.on('click', '.fe-bt-login', $.proxy(this.goLogin, this));
+    this.$container.on('click', '.fe-bt-logout', $.proxy(this.goLogout, this));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -34,11 +34,11 @@ Tw.TidLandingComponent.prototype = {
     }
   },
   goLogin: function (target) {
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this));
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this, target));
   },
   goSLogin: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      if(Tw.BrowserHelper.isAndroid()) {
+      if ( Tw.BrowserHelper.isAndroid() ) {
         this._getMdn();
       } else {
         this._historyService.goLoad('/common/member/slogin/ios');
@@ -78,13 +78,13 @@ Tw.TidLandingComponent.prototype = {
   _onNativeChangePw: function () {
     this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeChangePw' });
   },
-  _onNativeLogin: function (resp) {
+  _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this));
+        .done($.proxy(this._successLogin, this, target));
     }
   },
-  _successLogin: function (resp) {
+  _successLogin: function (target, resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
@@ -95,10 +95,10 @@ Tw.TidLandingComponent.prototype = {
       }
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      this._historyService.goLoad('/common/member/login/cust-pwd');
+      this._historyService.goLoad('/common/member/login/cust-pwd?target=' + target);
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
-      this._historyService.goLoad('/common/member/login/reactive');
+      this._historyService.goLoad('/common/member/login/reactive?target=' + target);
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
       this._historyService.goLoad('/common/member/login/exceed-fail');
     } else {
@@ -110,18 +110,10 @@ Tw.TidLandingComponent.prototype = {
       .done($.proxy(this._successLogout, this));
   },
   _successLogout: function (resp) {
-    Tw.Logger.info('[Logout Resp]', resp);
-    // if(resp.code === NTV_CODE.CODE_00) {
-    this._apiService.request(Tw.NODE_CMD.CHECK_SESSION, {})
-      .done($.proxy(this._successCheckSession, this));
-    // }
-  },
-  _successCheckSession: function(resp) {
-    // if(resp.code === Tw.API_CMD.CODE) {
-    //
-    // }
-    this._apiService.sendNativeSession('');
+    Tw.Logger.info('[Logout Resp]', resp, Tw.CommonHelper.getCookie('TWM'));
     this._historyService.goLoad('/common/member/logout/complete');
+    // if ( resp.code === NTV_CODE.CODE_00 ) {
+    // }
   },
   _successSetSession: function () {
     this._historyService.reload();
@@ -133,5 +125,5 @@ Tw.TidLandingComponent.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._historyService.goLoad('/common/member/slogin/aos?mdn=' + resp.params.mdn);
     }
-  },
+  }
 };

@@ -166,7 +166,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     var momentTemp = '';
 
     // 순차적으로 0, +1, +2 를 더한다.
-    for ( var i=0, len=2; i<=len; i++ ) {
+    for ( var i=1, len=3; i<=len; i++ ) {
       momentTemp = momentStart.add(i, 'months');
       var diffNum = momentMax.diff(momentTemp, 'months');
 
@@ -180,11 +180,21 @@ Tw.MyTFareBillGuidePps.prototype = {
       if ( diffNum >= 0 ) {
         Tw.Logger.info('[ start 는 max]');
 
+        var radioAttr = 'id="ra'+i+'" name="r1" data-value="' + momentTemp.format('YYYYMM') + '"';
+        // if(reqDate === invDtArr[idx]){
+        //   radioAttr += ' checked';
+        // }
         pushData = {
-          value: momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE),
-          option: '',
-          attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
+          'label-attr': 'id="ra'+i+'"',
+          'radio-attr': radioAttr,
+          'txt': momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE)
         };
+
+        // pushData = {
+        //   value: momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE),
+        //   option: '',
+        //   attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
+        // };
         this.selDateObj.selectEndList.push(pushData);
       }
     }
@@ -198,7 +208,7 @@ Tw.MyTFareBillGuidePps.prototype = {
   },
   _selectDatePopEvt: function (event, state, listData) {
     var $target = $(event.currentTarget);
-    var hbsName = 'actionsheet_select_a_type';
+    var hbsName = 'actionsheet01';
     var data = [{
       list: null
     }];
@@ -211,7 +221,8 @@ Tw.MyTFareBillGuidePps.prototype = {
         hbs: hbsName,
         layer: true,
         data: data,
-        title: titleStr
+        title: titleStr,
+        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._selectDatePopEvtInit, this, $target, state),
       $.proxy(this._selectDatePopEvtClose, this, $target),
@@ -219,37 +230,27 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   },
   _selectDatePopEvtInit: function ($target, state, $layer) {
-    Tw.Logger.info('[_selectDatePopEvtInit > $target]', $target);
-    var selectVal = $target.attr('data-value').slice(0, 6);
-    /*
-    * 1. 이벤트 설정
-    * 2. 현재 선택된 날짜 체크
-     */
-    $layer.on('click', '[data-target="selectBtn"]', $.proxy(this._setSelectedValue, this, $target, state));
-    var $selectBtnTg = $layer.find('[data-value="' + selectVal + '"]');
-    $selectBtnTg.addClass('checked');
+    Tw.Logger.info('[_selectDatePopEvtInit > $layer]', $layer);
 
+    // 현재 선택된 날짜 체크
+    var selectVal = $target.attr('data-value');
+    var $selectBtnTg = $layer.find('[data-value="' + selectVal + '"]');
+
+    $selectBtnTg.prop('checked', true);
+
+    // 이벤트 설정
+    $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this, $target, state));
   },
   _setSelectedValue: function ($target, state, event) {
 
     var $tg = $(event.currentTarget);
-    var $parentTg = $tg.closest('.chk-link-list');
-    var selectDateVal = '';
-
-    /*
-    * 1. 모든 checked 클래스 제거
-    * 2. 선택한 버튼에 checked 추가
-    * 3. 선택한 값을 input > value 에 적용
-     */
-    $parentTg.find('button').removeClass('checked');
-    $tg.addClass('checked');
-
-    selectDateVal = $tg.attr('data-value');
-    // console.info('selectDateVal', selectDateVal);
+    var selectDateVal = $tg.find('input[type=radio]').attr('data-value');
+    Tw.Logger.info('[선택 : ]', selectDateVal);
 
     var momentObj = moment(selectDateVal, 'YYYYMM');
 
     var dataVal;
+
     if ( state === 'start' ) {
       dataVal = momentObj.startOf('month').format('YYYYMM');
       this.selDateObj.startDt = dataVal;
@@ -262,11 +263,11 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     Tw.Logger.info(this.selDateObj);
 
-
+    this._popupService.close();
   },
   _selectDatePopEvtClose: function () {
     Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
-    this._popupService.close();
+    //this._popupService.close();
   },
 
   _searchBtnEvt: function () {
@@ -368,17 +369,16 @@ Tw.MyTFareBillGuidePps.prototype = {
     * 선택 데이터 리스트
      */
     this.selDateObj.selectList = [];
-    this.selDateObj.selectEndList = [];
+    // this.selDateObj.selectEndList = [];
+
     for ( var i = 1, len = this.selDateObj.startRangeNum; i <= len; i++ ) {
-      var val = moment().subtract(i, 'months').format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE);
+
       var defaultVal = moment().subtract(i, 'months').format('YYYYMM');
-
       var pushData = {
-        value: val,
-        option: '',
-        attr: 'data-value="' + defaultVal + '", data-target="selectBtn"'
+        'label-attr': 'id="ra1'+i+'"',
+        'radio-attr': 'id="ra1'+i+'" name="r1" data-value="' + defaultVal + '"',
+        'txt': moment().subtract(i, 'months').format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE)
       };
-
       this.selDateObj.selectList.push(pushData);
       // this.selDateObj.selectEndList.push(pushData);
     }

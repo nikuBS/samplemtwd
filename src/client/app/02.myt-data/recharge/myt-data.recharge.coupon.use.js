@@ -31,7 +31,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.on('change', 'input[type=radio]', $.proxy(this._onOptionSelected, this));
     this.$numberInput.on('keyup', $.proxy(this._onNumberChanged, this));
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
-    this.$container.on('click', '.fe-btn-contacts', $.proxy(this._onClickContacts, this));
+    this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
   _init: function () {
@@ -91,6 +91,17 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         );
         break;
       case 'gift':
+        var $errorSpan = this.$container.find('.fe-number-error');
+        $errorSpan.addClass('none');
+
+        var number = this.$numberInput.val().trim();
+        if (number.length < 10) {
+          $errorSpan.removeClass('none');
+          // $errorSpan.children().addClass('none');
+          // $errorSpan.find('#fe-2-v18').removeClass('none');
+          return;
+        }
+
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONTENTS_GIFT,
@@ -128,7 +139,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      if (res.code === Tw.API_CODE.NOT_FAMILY) {
+      if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
         this._popupService.open({
           ico: 'type1',
           title: Tw.POPUP_TITLE.NOT_FAMILY,
@@ -148,6 +159,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
           }, this));
           // TODO: 더 알아보기 link 설정, SB에 추후 추가 예정으로.....
         }, this));
+        return;
+      }
+
+      if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
+        this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
         return;
       }
       Tw.Error(res.code, res.msg).pop();

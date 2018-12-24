@@ -33,7 +33,7 @@ class MyTJoinWireSetPause extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const wirePauseInfo = this.getWirePauseInfo(wirePauseInfoResp);
@@ -49,11 +49,12 @@ class MyTJoinWireSetPause extends TwViewController {
         pageInfo: pageInfo || {},
         wirePauseInfo: wirePauseInfo || {},
         startDate: startDate || {},
+        isBroadbandJoined: 'N'
       };
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -85,7 +86,16 @@ class MyTJoinWireSetPause extends TwViewController {
     return wirePauseInfo;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
+    if (err.code === 'MOD0031') { // SK브로드밴드 가입자
+      return res.render(this._VIEW.DEFAULT, {
+        svcInfo,
+        pageInfo,
+        wirePauseInfo: {},
+        startDate: {},
+        isBroadbandJoined: 'Y'
+      });
+    }
     return this.error.render(res, {
       title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
       code: err.code,

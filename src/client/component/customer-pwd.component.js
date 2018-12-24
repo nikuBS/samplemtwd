@@ -4,13 +4,14 @@
  * Date: 2018.12.04
  */
 
-Tw.CustomerPwdComponent = function (rootEl) {
+Tw.CustomerPwdComponent = function (rootEl, target) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
   this._isCloseCallbackNeeded = false;
   this._pwdSuccess = false;
+  this._target = target || '/main/home';
 
   // error when login
   this._loginErrorCode = {
@@ -28,7 +29,7 @@ Tw.CustomerPwdComponent = function (rootEl) {
     BLOCKED: 'ICAS3215'        // 고객보호비밀번호 입력 오류 5회 (잠김예정)
   };
 
-  if (Tw.FormatHelper.isEmpty(rootEl)) {
+  if ( Tw.FormatHelper.isEmpty(rootEl) ) {
     this._isPopup = true;
     return;
   }
@@ -55,7 +56,6 @@ Tw.CustomerPwdComponent.prototype = {
     this.$pwdWrap = this.$container.find('.fe-pw-wrap');
     this.$firstPwd = this.$container.find('.fe-first-pwd');
     this.$errMsg = this.$container.find('.fe-error-msg');
-    this.$url = this.$container.find('.fe-url');
     this.$pwd = this.$container.find('input');
   },
   _init: function () {
@@ -86,7 +86,7 @@ Tw.CustomerPwdComponent.prototype = {
     $target.parent().removeClass('active').addClass('entered');
   },
   _moveFocus: function ($target) {
-    if ($target.hasClass('fe-last')) {
+    if ( $target.hasClass('fe-last') ) {
       this._requestLogin();
     } else {
       var $nextTarget = $target.parent().next();
@@ -100,7 +100,7 @@ Tw.CustomerPwdComponent.prototype = {
   _requestLogin: function () {
     var api = this._isPopup ? Tw.NODE_CMD.CHANGE_SESSION : Tw.NODE_CMD.LOGIN_SVC_PASSWORD;
     var data = { svcPwd: this._getPwd() };
-    if (this._isPopup) {
+    if ( this._isPopup ) {
       data.svcMgmtNum = this._serviceNumber;
     }
     this._apiService.request(api, data)
@@ -115,12 +115,12 @@ Tw.CustomerPwdComponent.prototype = {
     return pwd;
   },
   _onLoginReuestDone: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._onSuccess();
     } else {
       var errCount = 0;
       var unexpectedError = false;
-      switch (res.code) {
+      switch ( res.code ) {
         case this._lineChangeErrorCode.ERROR_1:
           errCount = 1;
           break;
@@ -144,12 +144,12 @@ Tw.CustomerPwdComponent.prototype = {
           break;
       }
 
-      if (errCount >= 1) {
+      if ( errCount >= 1 ) {
         this.$errMsg.find('span').text(this._changeCount(this.$errMsg.text(), errCount));
         this.$errMsg.show();
       }
 
-      if (unexpectedError) {
+      if ( unexpectedError ) {
         this._onError(res);
       }
       this._initField();
@@ -166,38 +166,37 @@ Tw.CustomerPwdComponent.prototype = {
     this._firstFocus();
   },
   _onPwdPopupClosed: function () {
-    if (!this._isCloseCallbackNeeded) {
+    if ( !this._isCloseCallbackNeeded ) {
       return;
     }
-    if (this._pwdSuccess) {
-      if (this._isPopup) {
+    if ( this._pwdSuccess ) {
+      if ( this._isPopup ) {
         this._callback();
       }
     } else {
-      if (this._isPopup) {
+      if ( this._isPopup ) {
         this._goFailPage();
       }
     }
   },
   _onSuccess: function () {
     this._pwdSuccess = true;
-    if (this._isPopup) {
+    if ( this._isPopup ) {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      var url = this.$url.text();
-      if (Tw.FormatHelper.isEmpty(url)) {
-        url = '/main/home';
-      }
-      this._historyService.replaceURL(url);
+      this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
     }
   },
   _onError: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
+  _successSetSession: function () {
+    this._historyService.replaceURL(this._target);
+  },
   _showFail: function () {
     this._pwdSuccess = false;
-    if (this._isPopup) {
+    if ( this._isPopup ) {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {

@@ -83,7 +83,7 @@ Tw.TooltipService.prototype = {
       'contents': $result.ttipCtt,
       'bt_b': [{
         style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: '닫기'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     },
       $.proxy(this._onOpen, this),

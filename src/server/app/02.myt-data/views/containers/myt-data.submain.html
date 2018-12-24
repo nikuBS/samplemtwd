@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터&middot;통화' }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터&middot;통화', svcInfo: data.svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">
@@ -135,9 +135,7 @@
             </div>
             <% } %>
             <!-- 사용량 -->
-            <% if (data.pattern) { %>
-                <%- include('../components/submain/myt-data.submain.usage-pattern.html', data) %>
-            <% } %>
+            <%- include('../components/submain/myt-data.submain.usage-pattern.html', data) %>
             <!-- .cont-box -->
             <% if(data.isBenefit) { %>
             <hr class="cont-sp type1" aria-hidden="true" />

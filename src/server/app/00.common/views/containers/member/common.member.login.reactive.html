@@ -56,7 +56,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonLoginDormancy($('#common-login-dormancy'));
+    new Tw.CommonLoginDormancy($('#common-login-dormancy'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

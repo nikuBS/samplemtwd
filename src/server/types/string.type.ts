@@ -21,14 +21,14 @@ export const UNLIMIT_NAME = {
 
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)
 export const MYT_FARE_BILL_TYPE = {
-  P: 'T world 확인',
+  P: 'T월드 확인',
   H: 'Bill Letter', // 무선 case
   J: 'Bill Letter', // 유선 case
   B: '문자',
   '2': '이메일',
   '1': '기타(우편)',
   X: '선택안함',
-  NO: '받지않음',
+  NO: '받지 않음',
   YES: '받음'
 };
 

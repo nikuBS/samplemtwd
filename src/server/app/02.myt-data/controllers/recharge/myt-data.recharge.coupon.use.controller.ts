@@ -115,9 +115,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         const converted = FormatHelper.convDataFormat(productInfo.basOfrGbDataQtyCtt, DATA_UNIT.GB);
         option.qttText = converted.data + ' ' + converted.unit;
       } else {
-        let calculated = parseInt(productInfo.basOfrVcallTmsCtt, 10) * 0.2;
-        calculated = Math.round(calculated);
-        option.qttText = calculated + ' ' + TIME_UNIT.MINUTE;
+        option.qttText = '0'; // Do not show voice amount that expected
       }
       return option;
     });
