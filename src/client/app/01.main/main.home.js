@@ -70,7 +70,8 @@ Tw.MainHome.prototype = {
     this._makeBarcode();
   },
   _bindEvent: function () {
-    this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '#fe-membership-extend', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
@@ -111,6 +112,8 @@ Tw.MainHome.prototype = {
     var mbrGr = this.$barcodeGr.data('mbrgr');
     this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
       .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+  },
+  _onClickBarcodeGo: function () {
   },
   _successMembership: function (mbrGr, cardNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
