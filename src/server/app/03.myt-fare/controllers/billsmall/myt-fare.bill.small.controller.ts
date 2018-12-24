@@ -54,7 +54,7 @@ class MyTFareBillSmall extends TwViewController {
         } else {
           return Observable.timer(3000)
             .switchMap(() => {
-              return this.getRemainLimit('Retry', '2');
+              return this.getRemainLimit('Done', '2');
             });
         }
       })
