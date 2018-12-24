@@ -539,6 +539,7 @@ Tw.ALERT_MSG_MYT_FARE = {
 
 Tw.ALERT_MSG_MYT_JOIN = {
   A1: '전화번호를 정확히 입력해주십시오.',
+  ALERT_2_A3: { TITLE: '번호변경 안내 서비스를 해지하시겠습니까?', MSG: '해지 시, 재신청이 불가능합니다.', BUTTON: '종료하기' },
   ALERT_2_A11: { TITLE: '알림', MSG: '기존과 동일한 혜택입니다. 다시 선택해 주세요.' },
   ALERT_2_A12: { TITLE: '알림', MSG: '변경되었습니다.' },
   ALERT_2_A13: { TITLE: '알림', MSG: '기존과 동일한 혜택입니다. 다시 입력해 주세요.' },

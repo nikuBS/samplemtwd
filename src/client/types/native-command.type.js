@@ -5,6 +5,7 @@ Tw.NTV_CMD = {
   GET_LOCATION: 'currentLocation',
   OPEN_URL: 'openUrl',
   CLOSE_INAPP: 'closeInApp',
+  SIGN_UP: 'signUp',
   LOGIN: 'login',
   LOGOUT: 'logout',
   FIND_ID: 'findId',

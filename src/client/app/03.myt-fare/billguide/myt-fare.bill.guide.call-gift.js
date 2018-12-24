@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuideCallGift = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -36,18 +36,18 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _monthBtnEvt: function (e) {
-    // Tw.Logger.info('[버튼 클릭]', e);
+    // // Tw.Logger.info('[버튼 클릭]', e);
     var $target = $(e.currentTarget);
     this.selectMonthVal = $target.attr('data-value');
 
-    // Tw.Logger.info('[선택 값]', this.selectMonthVal);
+    // // Tw.Logger.info('[선택 값]', this.selectMonthVal);
 
     var param = {
       startDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt
     };
 
-    // Tw.Logger.info('[버튼 클릭 > param]', param);
+    // // Tw.Logger.info('[버튼 클릭 > param]', param);
     this._getCallGiftInfo(param);
   },
   // _popupCloseBtEvt: function () {
@@ -69,7 +69,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
       this.$dateSelect.hide();
 
       if ( resObj.totalSec === 0 ) {
-        // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
+        // // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
         this.$dataResult.hide();
         this.$noData.show();
       } else {

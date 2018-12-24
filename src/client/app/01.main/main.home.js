@@ -70,10 +70,13 @@ Tw.MainHome.prototype = {
     this._makeBarcode();
   },
   _bindEvent: function () {
-    this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '#fe-membership-extend', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
+    this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
+    this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
@@ -86,12 +89,16 @@ Tw.MainHome.prototype = {
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-home-slogin', $.proxy(this._onClickSLogin, this));
+    this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSignup, this));
   },
   _onClickLogin: function () {
     this._tidLanding.goLogin();
   },
   _onClickSLogin: function () {
     this._tidLanding.goSLogin();
+  },
+  _onClickSignup: function () {
+    this._tidLanding.goSignup();
   },
   _onClickExternalLink: function (url) {
     Tw.CommonHelper.openUrlExternal(url);
@@ -111,6 +118,8 @@ Tw.MainHome.prototype = {
     var mbrGr = this.$barcodeGr.data('mbrgr');
     this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
       .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+  },
+  _onClickBarcodeGo: function () {
   },
   _successMembership: function (mbrGr, cardNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -138,6 +147,12 @@ Tw.MainHome.prototype = {
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       extendBarcode.JsBarcode(cardNum);
     }
+  },
+  _onClickGoBroadband: function () {
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.BROADBAND);
+  },
+  _onClickGoBillGuide: function () {
+    this._historyService.goLoad('/myt-fare/billguide/guide')
   },
   _openDataLink: function () {
     this._popupService.open({

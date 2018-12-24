@@ -445,37 +445,39 @@ class MyTFareBillGuide extends TwViewController {
       startDt: DateHelper.getStartOfMonDate( String(this._billpayInfo.invDt), 'YYYYMMDD'),
       endDt: DateHelper.getEndOfMonDate( String(this._billpayInfo.invDt), 'YYYYMMDD')
     };
+    data.roamDonaCallBtnYn = {
+      roamingYn: 'N', donationYn: 'N', callgiftYn: 'N'
+    };
 
-    const pRoam = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0044, params), 'roaming');
-    const pDona = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0038, params), 'donation');
-    const pCall = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0045, params), 'callgift');
 
-    Promise.all([pRoam, pDona, pCall]).then(
-      function(resp) {
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0044, params),
+      this.apiService.request(API_CMD.BFF_05_0038, params),
+      this.apiService.request(API_CMD.BFF_05_0045, params)
+    ).subscribe((resp) => {
+      thisMain.logger.info(thisMain, resp);
 
-        const roamDonaCallBtnYn = {
-          roamingYn: 'N', donationYn: 'N', callgiftYn: 'N'
-        };
+      if ( resp[0].code === API_CODE.CODE_00 &&
+        resp[0].result.roamingList && resp[0].result.roamingList.length > 0 ) {
+        data.roamDonaCallBtnYn.roamingYn = 'Y';
+      }
 
-        if ( resp[0].code === API_CODE.CODE_00 &&
-          resp[0].result.roamingList && resp[0].result.roamingList.length > 0 ) {
-          roamDonaCallBtnYn.roamingYn = 'Y';
-        }
-        if ( resp[1].code === API_CODE.CODE_00 &&
-          resp[1].result.donationList && resp[1].result.donationList.length > 0 ) {
-          roamDonaCallBtnYn.donationYn = 'Y';
-        }
-        if ( resp[2].code === API_CODE.CODE_00 &&
-          resp[2].result.callData && Number(resp[2].result.callData) ) {
-          roamDonaCallBtnYn.callgiftYn = 'Y';
-        }
-        data.roamDonaCallBtnYn = roamDonaCallBtnYn;
+      if ( resp[1].code === API_CODE.CODE_00 &&
+        resp[1].result.donationList && resp[1].result.donationList.length > 0 ) {
+        data.roamDonaCallBtnYn.donationYn = 'Y';
+      }
 
-        thisMain.logger.info(thisMain, '[ HTML ] : ', view);
-        thisMain.renderView(res, view, data);
-      }, function(err) {
-        res.render(view, data);
-      });
+      if ( resp[2].code === API_CODE.CODE_00 &&
+        resp[2].result.callData && Number(resp[2].result.callData) ) {
+        data.roamDonaCallBtnYn.callgiftYn = 'Y';
+      }
+      thisMain.logger.info('===================== 로밍 YN : ' + data.roamDonaCallBtnYn.roamingYn);
+      thisMain.logger.info('===================== 기부금 YN : ' + data.roamDonaCallBtnYn.donationYn);
+      thisMain.logger.info('===================== 콜기프트 YN : ' + data.roamDonaCallBtnYn.callgiftYn);
+      thisMain.logger.info(thisMain, '[ HTML ] : ', view);
+      thisMain.renderView(res, view, data);
+    });
+
   }
 
   // -------------------------------------------------------------[SVC]

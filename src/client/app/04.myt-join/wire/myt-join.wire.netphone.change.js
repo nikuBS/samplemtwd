@@ -60,6 +60,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     //$('#inputReqPhone').val('');
     $('.inputbox').removeClass('error');
     $('#btnSearch button').attr('disabled', true);
+    $('#span-not-phonenum').hide();
   },
 
   _isPhoneNum: function(val){
@@ -69,16 +70,21 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
 
   _resetPhoneNum: function($input){
     var value = $input.val();
-    if(value.length === 3 && value.indexOf('-') === -1){
-      $input.val(value + '-');
-    }
-    if(value.length === 8 && value.lastIndexOf('-') === 3){
-      $input.val(value + '-');
-    }
+    $('#span-not-phonenum').hide();
+    // if(value.length >= 4 && value.indexOf('-') === -1){
+    //   $input.val(value + '-');
+    // }
+    // if(value.length === 8 && value.lastIndexOf('-') === 3){
+    //   $input.val(value + '-');
+    // }
     if(value.length >= 9){
       value = value.replace(/-/g, '');
       value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
       $('input').val(value);
+
+      if( !Tw.ValidationHelper.isTelephone(value) ){
+        $('#span-not-phonenum').show();
+      }
     }
 
   },
@@ -98,6 +104,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
       return;
     }
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0164, {phoneNum: phNum})

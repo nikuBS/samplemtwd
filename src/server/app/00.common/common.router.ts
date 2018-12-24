@@ -118,7 +118,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
     this.controllers.push({ url: '/share/app-install/info', controller: CommonShareAppInstallInfo });
 
-    //search
+    // search
     this.controllers.push({ url: '/search', controller: CommonSearch});
     this.controllers.push({ url: '/search_main', controller: CommonSearchMain});
     this.controllers.push({ url: '/search/more', controller: CommonSearchMore });

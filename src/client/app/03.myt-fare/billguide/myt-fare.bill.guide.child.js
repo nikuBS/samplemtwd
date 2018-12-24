@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuideChild = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -33,13 +33,13 @@ Tw.MyTFareBillGuideChild.prototype = {
 
   },
   _onHashChange: function (hash) {
-    Tw.Logger.info('[hash]', hash);
+    // Tw.Logger.info('[hash]', hash);
 
     if ( !hash.raw ) { return; }
 
     switch ( hash.raw ) {
       case 'conditionChange_P' :
-        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        // Tw.Logger.info('[hash > conditionChange_P]', hash);
         this.$conditionChangeBtn.trigger('click');
         break;
       default :
@@ -76,7 +76,7 @@ Tw.MyTFareBillGuideChild.prototype = {
     });
 
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
-      // Tw.Logger.info('[테스트 if_contents]', searchName);
+      // // Tw.Logger.info('[테스트 if_contents]', searchName);
       if ( strVal.indexOf(searchName) > -1) {
         return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
       }
@@ -152,16 +152,16 @@ Tw.MyTFareBillGuideChild.prototype = {
   },
   _conditionChangeEvtInit: function ($target, $layer) {
     $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
-    Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
+    // Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
   },
   _setSelectedValue: function (event) {
     var $tg = $(event.currentTarget);
     this.paramDate = $tg.find('input[type=radio]').attr('data-value');
-    Tw.Logger.info('[선택 : ]', this.paramDate);
+    // Tw.Logger.info('[선택 : ]', this.paramDate);
     this._conditionChangeEvtClose();
   },
   _conditionChangeEvtClose: function () {
-    Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
+    // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     var param = {
       date: this.paramDate,
       line: this.resData.reqQuery.line
@@ -188,7 +188,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         return item;
       });
-      Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
+      // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
       var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
       var priceKey = 'invAmt';
@@ -200,7 +200,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
       });
 
-      Tw.Logger.info('[ rootNodes ] : ', rootNodes);
+      // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
 
       //위젯 아코디언 초기화
@@ -227,7 +227,7 @@ Tw.MyTFareBillGuideChild.prototype = {
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });
-    Tw.Logger.info('[ selectSvcType ] : ', selectSvcType);
+    // Tw.Logger.info('[ selectSvcType ] : ', selectSvcType);
     return selectSvcType;
 
   },

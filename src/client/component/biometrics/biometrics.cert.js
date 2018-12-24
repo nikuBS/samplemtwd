@@ -40,6 +40,10 @@ Tw.BiometricsCert.prototype = {
     $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
     $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
     $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickPublic, this));
+    $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
+  },
+  _onClickCancel: function () {
+    this._popupService.closeAll();
   },
   _getSvcInfo: function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})

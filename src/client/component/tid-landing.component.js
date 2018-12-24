@@ -25,6 +25,7 @@ Tw.TidLandingComponent.prototype = {
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
     this.$container.on('click', '.fe-bt-login', $.proxy(this.goLogin, this));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this.goLogout, this));
+    this.$container.on('click', '.fe-bt-signup', $.proxy(this.goSignup, this));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -44,6 +45,9 @@ Tw.TidLandingComponent.prototype = {
         this._historyService.goLoad('/common/member/slogin/ios');
       }
     }
+  },
+  goSignup: function () {
+    this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
   },
   goLogout: function () {
     this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
@@ -82,6 +86,12 @@ Tw.TidLandingComponent.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
         .done($.proxy(this._successLogin, this, target));
+    }
+  },
+  _onNativeSignup: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
+        .done($.proxy(this._successLogin, this));
     }
   },
   _successLogin: function (target, resp) {
