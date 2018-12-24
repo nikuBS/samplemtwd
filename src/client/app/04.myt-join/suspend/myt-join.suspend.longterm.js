@@ -48,7 +48,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this._changeSuspendType('military');
   },
 
-  _requestSvcInfo: function(){
+  _requestSvcInfo: function () {
     Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(function (resp) {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -250,7 +250,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       from = Tw.DateHelper.getCurrentShortDate();
       $period = this.$container.find('.fe-abroad.fe-date');
       to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'days') ;
+      diff = Tw.DateHelper.getDiffByUnit(from, to, 'days');
       if ( diff < 0 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
         return;
@@ -285,15 +285,15 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var duration = Tw.DateHelper.getFullKoreanDate(this._suspendOptions.fromDt) + ' - ' +
         Tw.DateHelper.getFullKoreanDate(this._suspendOptions.toDt);
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC.replace('{DURATION}', duration)
-        .replace('{SVC_INFO}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.APPLY, desc);
-
+        .replace('{SVC_INFO}', Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum));
+      this._popupService.afterRequestSuccess('/myt-join/submain/suspend/status', '/myt-join/submain', Tw.MYT_JOIN_SUSPEND.GO_TO_STATUS,
+        Tw.MYT_JOIN_SUSPEND.APPLY, desc);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _onClickBtnAddr: function(e){
+  _onClickBtnAddr: function (e) {
     e.stopPropagation();
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
