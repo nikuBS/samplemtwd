@@ -23,7 +23,14 @@ class CommonSearch extends TwViewController {
 
       const query =  encodeURI(req.query.keyword) || '';
       const collection = 'all';
-      const requestObj = { query , collection };
+      let requestObj, researchCd, researchQuery;
+      if (FormatHelper.isEmpty(req.query.in_keyword)) {
+          requestObj = { query , collection };
+      } else {
+          researchCd = 1;
+          researchQuery = encodeURI(req.query.in_keyword) || null;
+          requestObj = { query , collection , researchQuery , researchCd};
+      }
 
       function showResult(searchResult: any, relatedKeyword: any): void {
 
@@ -31,7 +38,8 @@ class CommonSearch extends TwViewController {
               svcInfo : svcInfo,
               searchInfo : searchResult.result,
               keyword : searchResult.result.query,
-              relatedKeyword : relatedKeyword
+              relatedKeyword : relatedKeyword,
+              inKeyword : searchResult.result.researchQuery
           });
       }
 

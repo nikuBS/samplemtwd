@@ -28,7 +28,7 @@
                     <div class="h-keyword">
                             <span class="inputbox">
                                 <span class="input">
-                                    <input id="keyword" type="text" value="<%= keyword %>">
+                                    <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
                                     <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -40,7 +40,14 @@
                 <!-- // height : 51px -->
                 <!-- height : 45px -->
                 <div class="h-rescan">
-                    <span class="custom-form"><input type="checkbox" id="oka" name="r1"><span class="c-type1"></span></span><label class="label" for="oka">결과 내 재 검색</label>
+                    <span class="custom-form">
+                            <% if(keyword===inKeyword){ %>
+                                <input type="checkbox"  id="oka" name="r1">
+                            <% }else{ %>
+                                <input type="checkbox" checked="checked" id="oka" name="r1">
+                            <% } %>
+                            <span class="c-type1"></span>
+                        </span><label class="label" for="oka">결과 내 재 검색</label>
                 </div>
                 <!-- // height : 45px -->
             </div>

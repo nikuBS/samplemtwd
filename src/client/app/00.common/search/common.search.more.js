@@ -5,13 +5,13 @@
  */
 
 Tw.CommonSearchMore = function (rootEl,searchInfo,category) {
-
     this.$container = rootEl;
     //this._category = category;
     this._historyService = new Tw.HistoryService();
     this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
     this._init(this._searchInfo,category);
-    this._accessKeyword = searchInfo.query;
+    this._accessKeyword = this._searchInfo.query;
+    this._category = category;
 };
 
 Tw.CommonSearchMore.prototype = {
@@ -24,6 +24,7 @@ Tw.CommonSearchMore.prototype = {
         //this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
         this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'));
         this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
+        this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
     },
     _arrangeData : function (data) {
         if(!data){
@@ -33,8 +34,8 @@ Tw.CommonSearchMore.prototype = {
         for(var i=0;i<data.length;i++){
             for (var key in data[i]) {
                 if(typeof (data[i][key])==='string'){
-                    data[i][key] = data[i][key].replace('<!HE>', '</span>');
-                    data[i][key] = data[i][key].replace('<!HS>', '<span class="highlight-text">');
+                    data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
+                    data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
                 }
                 if(key==='DEPTH_PATH'){
                     data[i][key] = data[i][key].replace(/\|/g,'/');
@@ -73,7 +74,7 @@ Tw.CommonSearchMore.prototype = {
     _inputChangeEvent : function (args) {
         var inResult = this.$container.find('#oka').is(':checked');
         if(args.keyCode===13){
-            var requestUrl = inResult?'/common/search/in_result?pkeyword='+this._accessKeyword+'&ckeyword=':'/common/search?keyword=';
+            var requestUrl = inResult?'/common/search/more?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
             this._historyService.goLoad(requestUrl+args.currentTarget.value);
         }
     }

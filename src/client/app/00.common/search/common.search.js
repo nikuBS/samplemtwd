@@ -14,6 +14,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo) {
     this._accessKeyword = this._searchInfo.query;
     this._init(this._searchInfo);
     this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
+    this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
 };
 
 Tw.CommonSearch.prototype = {
@@ -36,7 +37,7 @@ Tw.CommonSearch.prototype = {
         }
 
         if(totalContentsCnt<=0){
-            //TODO 결과없음 화면 출력
+
         }else{
             var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
             console.log('recentlyKeywordData test');
@@ -53,7 +54,7 @@ Tw.CommonSearch.prototype = {
                     recentlyKeywordData.logOutUser = [];
                 }
                 console.log(recentlyKeywordData.logOutUser);
-                //TODO 시간추가
+
                 recentlyKeywordData.logOutUser.push({ keyword : this._accessKeyword, searchTime : moment().format('YYYYMMDD')});
                 console.log(recentlyKeywordData);
             }else{
@@ -63,7 +64,7 @@ Tw.CommonSearch.prototype = {
                     recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
                 }
                 console.log(recentlyKeywordData[this._svcInfo.svcMgmtNum]);
-                //TODO 시간추가
+
                 //TODO keyword user encoding
                 recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : this._accessKeyword, searchTime : moment().format('YYYYMMDD')});
                 console.log(recentlyKeywordData);
@@ -79,8 +80,8 @@ Tw.CommonSearch.prototype = {
         for(var i=0;i<data.length;i++){
             for (var key in data[i]) {
                 if(typeof (data[i][key])==='string'){
-                    data[i][key] = data[i][key].replace('<!HE>', '</span>');
-                    data[i][key] = data[i][key].replace('<!HS>', '<span class="highlight-text">');
+                    data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
+                    data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
                 }
                 if(key==='DEPTH_PATH'){
                     data[i][key] = data[i][key].replace(/\|/g,'/');
@@ -120,9 +121,10 @@ Tw.CommonSearch.prototype = {
         return returnStr;
     },
     _inputChangeEvent : function (args) {
+        console.log('_inputChangeEvent called args : '+args);
         var inResult = this.$container.find('#oka').is(':checked');
         if(args.keyCode===13){
-            var requestUrl = inResult?'/common/search/in_result?pkeyword='+this._accessKeyword+'&ckeyword=':'/common/search?keyword=';
+            var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
             this._historyService.goLoad(requestUrl+args.currentTarget.value);
         }
     },

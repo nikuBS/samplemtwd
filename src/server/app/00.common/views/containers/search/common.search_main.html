@@ -7,39 +7,116 @@
 <% include ../../components/start.component.html %>
 <!-- body -->
 <body data-gr-c-s-loaded="true">
+
 <!-- #skip_navigation -->
-<div class="wrap">
-<div class="popup-page tw-popup nobg" id="search_popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-    <!-- #header -->
-
-    <!--// #header -->
-    <form action="/common/search" method="get" >
-        <input id="search_input" type="text" name="keyword" value="<%= recommendKeyword.keywordNm %>" aria-labelledby="aria-citation-phone" style="border: 1px solid #424242">
-        <input type="submit" value="검색">
-    </form>
-
-    <!-- .popup-closeBtn -->
-    <button class="popup-closeBtn prev-step tw-popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
-    <!--// .popup-closeBtn -->
-    <h3>최근검색어</h3>
+<div id="skipNav" class="skip_navi">
     <ul>
-        <li>test1</li>
-        <li>test2</li>
-        <li>test3</li>
-        <li>test4</li>
-        <li>test5</li>
-    </ul>
-    <h3>자동완성</h3>
-    <ul id="autocomplete_list">
-
-    </ul>
-    <h3>인기검색어</h3>
-    <ul>
-        <% for(var i=0;i<popularKeyword.Data.Query.length;i++){ %>
-        <li><%= popularKeyword.Data.Query[i].content %></li>
-        <% } %>
+        <li><a href="#contents">본문 바로가기</a></li>
     </ul>
 </div>
+<!--// #skip_navigation -->
+<div class="wrap">
+<div class="searchbox-header">
+    <div class="sch-form">
+            <span class="inputbox">
+                <span class="input">
+                    <form action="/common/search" method="get">
+                        <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordNm %>" title="검색" value="">
+                    </form>
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </span>
+            </span>
+        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+        <div class="searchbox-close"><button class="close-area">취소</button></div>
+    </div>
+</div>
+<!-- 자동완성 폼 -->
+<div class="searchbox-layer01" id="auto_complete_layer">
+    <div class="cont-box nogaps-hoz">
+        <div class="rec-list">
+            <ul class="popularsearchword-list search-keyword" id="auto_complete_list">
+                <script type="text/x-handlebars-template" id="auto_complete_template">
+                <li>
+                    <a href="" class="category-type">
+                        <p class="text">{{{listData}}}</p>
+                    </a>
+                </li>
+                </script>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--  최근검색어 -->
+
+<div class="searchbox-layer02" id="recently_keyword_layer">
+    <div class="lately-searchtext">
+        <p class="text">최근검색어</p>
+        <div class="btn">
+            <button type="button" class="bt-link-tx underline" id="clear_recently_list">전체삭제</button>
+        </div>
+    </div>
+    <div class="latelylist-wrap">
+        <ul class="list" id="recently_keyword_list">
+            <script type="text/x-handlebars-template" id="recently_keyword_template">
+            <li>
+                <a href="" class="searchword-text">데이터</a>
+                <div class="date">
+                    <span class="str">18.12.6.</span>
+                    <a href="#none" class="del">삭제</a>
+                </div>
+            </li>
+            </script>
+        </ul>
+    </div>
+    <div class="lately-searchclose">
+
+        <a class="close"><span class="str">닫기</span></a>
+    </div>
+</div>
+
+<div class="cont-layer-blind02" style="display:none;" id="blind_layer"></div>
+
+<div class="search-content">
+    <div class="cont-box nogaps-hoz">
+        <div class="rec-list">
+            <h3 class="searchlist-title">인기 검색어</h3>
+            <ul class="popularsearchword-list linklist-type">
+                <% for(var i=0;i<popularKeyword.Data.Query.length;i++){ %>
+                <li>
+                    <a href="" class="category-type">
+                        <strong class="number"><%= i+1 %></strong>
+                        <span class="text"><%= popularKeyword.Data.Query[i].content %></span>
+                    </a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <hr class="cont-sp type1" aria-hidden="true">
+    <!--
+    <div class="banner-area">
+        <a><img src="/img/dummy/dummy-banner02.jpg" alt="내게 맞는 요금제 찾기 내 사용패턴, 할인 정보 등에 딱 맞는 요금제를 추천해드려요!"></a>
+    </div>
+    -->
+    <div class="cont-box nogaps">
+        <ul class="plantype-list">
+            <li class="category-type">
+                <a href="" class="link">
+                    모바일 요금제
+                </a>
+            </li>
+            <li class="category-type">
+                <button type="button" class="link">
+                    부가서비스 요금제
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
 
 </div>
 </body>

@@ -27,7 +27,7 @@
                     <div class="h-keyword">
                             <span class="inputbox">
                                 <span class="input">
-                                    <input id="keyword" type="text" value="<%= keyword %>">
+                                    <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
                                     <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -39,7 +39,16 @@
                 <!-- // height : 51px -->
                 <!-- height : 45px -->
                 <div class="h-rescan">
-                    <span class="custom-form"><input type="checkbox" id="oka" name="r1"><span class="c-type1"></span></span><label class="label" for="oka">결과 내 재 검색</label>
+                    <!-- <span class="custom-form"><input type="checkbox" id="oka" name="r1"><span class="c-type1"></span></span><label class="label" for="oka">결과 내 재 검색</label>-->
+                        <span class="custom-form">
+                            <% if(keyword===inKeyword){ %>
+                                <input type="checkbox"  id="oka" name="r1">
+                            <% }else{ %>
+                                <input type="checkbox" checked="checked" id="oka" name="r1">
+                            <% } %>
+                            <span class="c-type1"></span>
+                        </span><label class="label" for="oka">결과 내 재 검색</label>
+
                 </div>
                 <!-- // height : 45px -->
             </div>
@@ -136,7 +145,7 @@
                     <h2 class="tit">바로가기</h2>
                     <span class="num"><%= searchInfo.search[2].shortcut.count %></span>
                     <% if(searchInfo.search[2].shortcut.count>=10){ %>
-                    <a href="/common/search/more?category=shortcut&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=shortcut&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <div class="keyword-search-list">
@@ -154,7 +163,7 @@
                     <span class="num"><%= searchInfo.search[3].rate.count %></span>
                     <p class="sub-text">이용요금(부가세 포함)</p>
                     <% if(searchInfo.search[3].rate.count>=10){%>
-                    <a  href="/common/search/more?category=rate&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a  href="/common/search/more?category=rate&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
             </div>
@@ -176,7 +185,7 @@
                     <span class="num"><%= searchInfo.search[4].service.count %></span>
                     <p class="sub-text">이용요금(부가세 포함)</p>
                     <% if(searchInfo.search[4].service.count>=10){ %>
-                    <a  href="/common/search/more?category=service&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a  href="/common/search/more?category=service&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
             </div>
@@ -193,7 +202,7 @@
                     <span class="num"><%= searchInfo.search[5].tv.count %></span>
                     <p class="sub-text">이용요금(부가세 포함)</p>
                     <% if(searchInfo.search[5].tv.count>=10){ %>
-                    <a  href="/common/search/more?category=tv&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a  href="/common/search/more?category=tv&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
             </div>
@@ -210,7 +219,7 @@
                     <span class="num"><%= searchInfo.search[6].roaming.count %></span>
                     <p class="sub-text">이용요금(부가세 포함)</p>
                     <% if(searchInfo.search[6].roaming.count>=10){ %>
-                    <a href="/common/search/more?category=roaming&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=roaming&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
             </div>
@@ -246,7 +255,7 @@
                     <h2 class="tit">다이렉트샵</h2>
                     <span class="num"><%= searchInfo.search[8].direct.count %></span>
                     <% if(searchInfo.search[8].direct.count>=10){ %>
-                    <a href="/common/search/more?category=direct&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=direct&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <div class="direct-shop-wrap">
@@ -269,7 +278,7 @@
                     <h2 class="tit">T멤버십</h2>
                     <span class="num"><%= searchInfo.search[9].membership.count %></span>
                     <% if(searchInfo.search[9].membership.count>=10){ %>
-                    <a href="/common/search/more?category=membership&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=membership&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <div class="t-membership-wrap">
@@ -286,7 +295,7 @@
                     <h2 class="tit">진행 중인 이벤트</h2>
                     <span class="num"><%= searchInfo.search[10].event.count %></span>
                     <% if(searchInfo.search[10].event.count>=10){ %>
-                    <a href="/common/search/more?category=event&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=event&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <div class="card-visual-list">
@@ -304,7 +313,7 @@
                     <h2 class="tit">혜택 · 할인</h2>
                     <span class="num"><%= searchInfo.search[11].sale.count %></span>
                     <% if(searchInfo.search[11].sale.count>=10){ %>
-                    <a href="/common/search/more?category=sale&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=sale&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="sale_list">
@@ -325,7 +334,7 @@
                     <h2 class="tit">지점 · 대리점, A/S센터</h2>
                     <span class="num"><%= searchInfo.search[12].as.count %></span>
                     <% if(searchInfo.search[12].as.count>=10){ %>
-                    <a href="/common/search/more?category=as&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=as&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="as_list">
@@ -344,7 +353,7 @@
                     <h2 class="tit">자주하는 질문</h2>
                     <span class="num"><%= searchInfo.search[15].question.count %></span>
                     <%if(searchInfo.search[15].question.count){ %>
-                    <a href="/common/search/more?category=question&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=question&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="question_list">
@@ -361,7 +370,7 @@
                     <h2 class="tit">공지사항</h2>
                     <span class="num"><%= searchInfo.search[13].notice.count %></span>
                     <% if(searchInfo.search[13].notice.count>=10){  %>
-                    <a href="/common/search/more?category=notice&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=notice&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="notice_list">
@@ -379,7 +388,7 @@
                     <h2 class="tit">이용자 피해예방 주의보</h2>
                     <span class="num"><%= searchInfo.search[14].prevent.count %></span>
                     <% if(searchInfo.search[14].prevent.count>=10){ %>
-                    <a href="/common/search/more?category=prevent&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=prevent&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="prevent_list">
@@ -397,7 +406,7 @@
                     <h2 class="tit">이럴 땐 이렇게 하세요</h2>
                     <span class="num"><%= searchInfo.search[16].manner.count %></span>
                     <% if(searchInfo.search[16].manner.count>=10){ %>
-                    <a href="/common/search/more?category=manner&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=manner&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="manner_list">
@@ -415,7 +424,7 @@
                     <h2 class="tit">서비스 이용안내</h2>
                     <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>
                     <% if(searchInfo.search[17].serviceInfo.count>=10){ %>
-                    <a href="/common/search/more?category=serviceInfo&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=serviceInfo&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="service-guide-s" id="serviceInfo_list">
@@ -432,7 +441,7 @@
                     <h2 class="tit">사이트 이용안내</h2>
                     <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>
                     <% if(searchInfo.search[18].siteInfo.count>=10){ %>
-                    <a href="/common/search/more?category=siteInfo&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <a href="/common/search/more?category=siteInfo&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="btn-txt">더보기</a>
                     <% } %>
                 </div>
                 <ul class="site-guide-s" id="siteInfo_list">
