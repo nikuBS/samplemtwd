@@ -6,7 +6,7 @@
 
 Tw.MyTFareBillGuideIntegratedRep = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -50,7 +50,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   },
   _onHashChange: function (hash) {
-    Tw.Logger.info('[hash]', hash);
+    // Tw.Logger.info('[hash]', hash);
 
     if ( !hash.raw ) {
       return;
@@ -58,7 +58,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     switch ( hash.raw ) {
       case 'conditionChange_P' :
-        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        // Tw.Logger.info('[hash > conditionChange_P]', hash);
         this.$conditionChangeBtn.trigger('click');
         break;
       default :
@@ -163,11 +163,11 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
-    Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
+    // Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
     this.myTFarePayment = new Tw.MyTFareBill(this.$container);
   },
   _payListBtnEvt: function () {
-    Tw.Logger.info('[납부내역조회]');
+    // Tw.Logger.info('[납부내역조회]');
     this._history.goLoad('/myt-fare/info/history');
   },
   _callGiftBtnEvt: function () {
@@ -185,22 +185,22 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
   },
   _hbDateRadioEvt: function (e) {
-    Tw.Logger.info('[날짜 클릭]');
+    // Tw.Logger.info('[날짜 클릭]');
     this.paramDate = $(e.currentTarget).find('input').attr('value');
-    Tw.Logger.info('[날짜 클릭 완료]', this.paramDate);
+    // Tw.Logger.info('[날짜 클릭 완료]', this.paramDate);
   },
   _hbLineRadioBtn: function (e) {
-    Tw.Logger.info('[회선 클릭]');
+    // Tw.Logger.info('[회선 클릭]');
     this.paramLine = $(e.currentTarget).find('input').attr('value');
-    Tw.Logger.info('[회선 클릭 완료]', this.paramLine);
+    // Tw.Logger.info('[회선 클릭 완료]', this.paramLine);
   },
   _hbPopChangeBtn: function () {
     var param = {
       date: this.paramDate,
       line: this.paramLine
     };
-    // Tw.Logger.info('[param]', param);
-    // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
+    // // Tw.Logger.info('[param]', param);
+    // // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
     this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
   },
 
@@ -213,7 +213,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     }];
     var hashName = 'conditionChange';
 
-    Tw.Logger.info('[팝업 오픈 전 : MF_02_01_01]', data);
+    // Tw.Logger.info('[팝업 오픈 전 : MF_02_01_01]', data);
 
     this._popupService.open({
         hbs: hbsName,
@@ -227,7 +227,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _conditionChangeEvtInit: function () {
     this._cachedElement();
 
-    Tw.Logger.info('[팝업 오픈 : MF_02_01_01]');
+    // Tw.Logger.info('[팝업 오픈 : MF_02_01_01]');
 
     var selDateVal = this.resData.reqQuery.date;
     var selLineVal = this.resData.reqQuery.line;
@@ -235,19 +235,19 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     if ( selDateVal ) {
       var selDateValObj = this.$dateBtnArea.find('input[value="' + selDateVal + '"]');
       selDateValObj.trigger('click');
-      // Tw.Logger.info('[dateBtnArea]', $('[data-target="dateBtnArea"]'));
-      // Tw.Logger.info('[obj]', obj);
+      // // Tw.Logger.info('[dateBtnArea]', $('[data-target="dateBtnArea"]'));
+      // // Tw.Logger.info('[obj]', obj);
     }
 
     if ( selLineVal ) {
       var selLineValObj = this.$lineSelectArea.find('input[value="' + selLineVal + '"]');
       selLineValObj.trigger('click');
-      // Tw.Logger.info('[obj]', selLineValObj);
+      // // Tw.Logger.info('[obj]', selLineValObj);
     }
 
   },
   _conditionChangeEvtClose: function () {
-    Tw.Logger.info('[팝업 닫기 : MF_02_01_01]');
+    // Tw.Logger.info('[팝업 닫기 : MF_02_01_01]');
   },
 
   //--------------------------------------------------------------------------[API]
@@ -266,11 +266,11 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         }});
     }
 
-    Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
+    // Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
-        Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
+        // Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
         _.each(arguments, function (element, index) {
           if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
@@ -293,7 +293,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       }
     }
 
-    Tw.Logger.info('childListData', childListData);
+    // Tw.Logger.info('childListData', childListData);
 
     this._svcHbDetailList(childListData, this.$hbChildListArea, this.$entryTplChild);
 
@@ -302,7 +302,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   //청구요금 상세조회 : BFF_05_0036 청구요금 조회
   _getBillsDetailInfo: function () {
-    Tw.Logger.info('====== 전체회선 조회 ===============');
+    // Tw.Logger.info('====== 전체회선 조회 ===============');
     /*
     * 실 데이터
     * */
@@ -311,18 +311,18 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       invDt: this.resData.reqQuery.date
     }).done($.proxy(this._getBillsDetailInfoInit, this));
 
-    // Tw.Logger.info('클라이언트 목데이터');
+    // // Tw.Logger.info('클라이언트 목데이터');
     // $.ajax('http://localhost:3000/mock/bill.guide.BFF_05_00036_detail.json')
     //   .done($.proxy(this._getBillsDetailInfoInit, this))
     //   .fail(function(err) {
-    //     Tw.Logger.info(err);
+    //     // Tw.Logger.info(err);
     //   });
 
   },
   _getBillsDetailInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // Tw.Logger.info('[BFF_05_0036 상세내역]', res.result.paidAmtDetailInfo);
+      // // Tw.Logger.info('[BFF_05_0036 상세내역]', res.result.paidAmtDetailInfo);
 
       var paidAmtDetailInfo = res.result.paidAmtDetailInfo;
 
@@ -347,7 +347,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         }
         return item;
       });
-      // Tw.Logger.info('[paidAmtDetailInfo]', paidAmtDetailInfo);
+      // // Tw.Logger.info('[paidAmtDetailInfo]', paidAmtDetailInfo);
       var resData = paidAmtDetailInfo;
       var groupKeyArr = ['svcMgmtNum', 'billItmLclNm', 'billItmSclNm'];
       var priceKey = 'invAmt';
@@ -365,7 +365,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         });
       });
 
-      Tw.Logger.info('[ rootNodes ] : ', rootNodes);
+      // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplBill);
 
       //위젯 아코디언 초기화
@@ -377,7 +377,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   // BFF_05_0047 사용요금 조회(본인)
   _getUseBillsInfo: function () {
-    Tw.Logger.info('====== 특정회선 조회 ===============');
+    // Tw.Logger.info('====== 특정회선 조회 ===============');
     return this._apiService.request(Tw.API_CMD.BFF_05_0047, {
       sSvcMgmtNum: this.resData.reqQuery.line,
       invDt: this.resData.reqQuery.date
@@ -392,7 +392,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         return item;
       });
-      // Tw.Logger.info('[paidAmtDetailInfo]', paidAmtDetailInfo);
+      // // Tw.Logger.info('[paidAmtDetailInfo]', paidAmtDetailInfo);
       var resData = useAmtDetailInfo;
       var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
       var priceKey = 'invAmt';
@@ -404,7 +404,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
       });
 
-      Tw.Logger.info('[ rootNodes ] : ', rootNodes);
+      // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
 
       //위젯 아코디언 초기화
@@ -420,7 +420,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });
-    // Tw.Logger.info('[ _searchNmSvcTypeFun ]', selectSvcType);
+    // // Tw.Logger.info('[ _searchNmSvcTypeFun ]', selectSvcType);
     var textVal = selectSvcType.svcType;
     var templt = this.$searchNmSvcTypeTplOth;
 

@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuideIntegratedNormal = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -38,13 +38,13 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
   },
   _onHashChange: function (hash) {
-    Tw.Logger.info('[hash]', hash);
+    // Tw.Logger.info('[hash]', hash);
 
     if ( !hash.raw ) { return; }
 
     switch ( hash.raw ) {
       case 'conditionChange_P' :
-        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        // Tw.Logger.info('[hash > conditionChange_P]', hash);
         this.$conditionChangeBtn.trigger('click');
         break;
       default :
@@ -170,16 +170,16 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   _conditionChangeEvtInit: function ($target, $layer) {
     $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
-    Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
+    // Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
   },
   _setSelectedValue: function (event) {
     var $tg = $(event.currentTarget);
     this.paramDate = $tg.find('input[type=radio]').attr('data-value');
-    Tw.Logger.info('[선택 : ]', this.paramDate);
+    // Tw.Logger.info('[선택 : ]', this.paramDate);
     this._conditionChangeEvtClose();
   },
   _conditionChangeEvtClose: function () {
-    Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
+    // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     var param = {
       date: this.paramDate
     };
@@ -203,11 +203,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         }});
     }
 
-    Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
+    // Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
-        Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
+        // Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
         _.each(arguments, function (element, index) {
           if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
@@ -230,7 +230,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       }
     }
 
-    Tw.Logger.info('childListData', childListData);
+    // Tw.Logger.info('childListData', childListData);
 
     this._svcHbDetailList(childListData, this.$hbChildListArea, this.$entryTplChild);
 
@@ -253,7 +253,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         return item;
       });
-      Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
+      // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
       var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
       var priceKey = 'invAmt';
@@ -265,7 +265,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
       });
 
-      Tw.Logger.info('[ rootNodes ] : ', rootNodes);
+      // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
 
       //위젯 아코디언 초기화
