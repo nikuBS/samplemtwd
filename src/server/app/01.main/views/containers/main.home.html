@@ -576,7 +576,7 @@
                                         <ul class="slider">
                                             <% redisData.mainNotice.map((notice) => { %>
                                             <li>
-                                                <a href="/customer/svc-info/notice">
+                                                <a href="/customer/svc-info/notice?ntcId=<%= notice.ntcId %>">
                                                     <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
                                                     <span class="ico"></span>
                                                 </a>
@@ -891,7 +891,7 @@
                                         <ul class="slider">
                                             <% redisData.mainNotice.map((notice) => { %>
                                             <li>
-                                                <a href="/customer/svc-info/notice">
+                                                <a href="/customer/svc-info/notice?ntcId=<%= notice.ntcId %>">
                                                     <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
                                                     <span class="ico"></span>
                                                 </a>
