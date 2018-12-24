@@ -155,7 +155,7 @@ Tw.MyTJoinWireHistory.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDateNoYear);
+    Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDate);
   },
 
   /**
@@ -176,7 +176,7 @@ Tw.MyTJoinWireHistory.prototype = {
       if( this._lastYear !== list[i].dt.substr(0,4) ){
         // 연도 출력
         this._lastYear = list[i].dt.substr(0,4);
-        $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
+        // $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
         $contBoxes.append(this._listContBox);
         $lastBox = $('.history-list:last ul:eq(0)', $contBoxes);
       }
