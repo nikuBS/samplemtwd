@@ -75,6 +75,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
+    this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
@@ -141,6 +142,9 @@ Tw.MainHome.prototype = {
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       extendBarcode.JsBarcode(cardNum);
     }
+  },
+  _onClickGoBroadband: function () {
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.BROADBAND);
   },
   _openDataLink: function () {
     this._popupService.open({
