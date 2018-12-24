@@ -126,19 +126,20 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     var $amount = $target.attr('id');
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_AMOUNT,
-      data: this._getAmountList($list, $amount)
+      data: this._getAmountList($list, $amount),
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.amount', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },
@@ -152,9 +153,9 @@ Tw.MyTFareBillPrepayAuto.prototype = {
 
       for (var i = strdAmt; i >= 1; i--) {
         var obj = {
-          'option': 'amount',
-          'attr': 'id="' + i * firstAmt + '"',
-          'value': i + Tw.CURRENCY_UNIT.TEN_THOUSAND
+          'label-attr': 'id="' + i * firstAmt + '"',
+          'radio-attr': 'id="' + i * firstAmt + '" name="r2"',
+          'txt': i + Tw.CURRENCY_UNIT.TEN_THOUSAND
         };
         listObj.list.push(obj);
       }

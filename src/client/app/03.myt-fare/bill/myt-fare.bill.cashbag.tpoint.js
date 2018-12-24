@@ -124,17 +124,12 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     var $target = $(event.currentTarget);
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: this._getTitle(),
-      data: this._getData()
+      data: this._getData(),
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
-  },
-  _getTitle: function () {
-    if (this.$pointType === 'CPT') {
-      return Tw.POPUP_TITLE.SELECT_POINT;
-    }
-    return Tw.POPUP_TITLE.SELECT_TPOINT;
   },
   _getData: function () {
     if (this.$pointType === 'CPT') {
@@ -143,12 +138,12 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return Tw.POPUP_TPL.FARE_PAYMENT_TPOINT;
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($.trim($selectedValue.text()));
+    $target.text($.trim($selectedValue.parents('label').text()));
 
     this._checkIsAbled();
     this._popupService.close();

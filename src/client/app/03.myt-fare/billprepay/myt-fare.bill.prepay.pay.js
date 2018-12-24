@@ -76,18 +76,20 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST
+      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.hbs-card-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.currentTarget);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },

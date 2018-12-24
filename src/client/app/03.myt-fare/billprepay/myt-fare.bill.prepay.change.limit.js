@@ -125,28 +125,20 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     var $amount = $target.attr('id');
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_AMOUNT,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_LIMIT
+      data: Tw.POPUP_TPL.FARE_PAYMENT_LIMIT,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
   _selectPopupCallback: function ($target, $amount, $layer) {
-    // this._setLayerData($layer, $amount); 보류
-    $layer.on('click', '.limit', $.proxy(this._setSelectedValue, this, $target));
-  },
-  _setLayerData: function ($layer, $amount) {
-    $layer.find('.limit').each(function () {
-      var $this = $(this);
-      if ($this.attr('origin-value') > $amount) {
-        $this.hide();
-      }
-    });
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },

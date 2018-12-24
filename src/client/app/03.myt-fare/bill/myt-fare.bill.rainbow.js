@@ -84,19 +84,20 @@ Tw.MyTFareBillRainbow.prototype = {
     var $target = $(event.currentTarget);
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_FARE,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_RAINBOW
+      data: Tw.POPUP_TPL.FARE_PAYMENT_RAINBOW,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($.trim($selectedValue.text()));
+    $target.text($.trim($selectedValue.parents('label').text()));
 
     this._checkIsAbled();
     this._popupService.close();
