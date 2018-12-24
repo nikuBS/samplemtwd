@@ -88,12 +88,16 @@ Tw.MainHome.prototype = {
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-home-slogin', $.proxy(this._onClickSLogin, this));
+    this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSignup, this));
   },
   _onClickLogin: function () {
     this._tidLanding.goLogin();
   },
   _onClickSLogin: function () {
     this._tidLanding.goSLogin();
+  },
+  _onClickSignup: function () {
+    this._tidLanding.goSignup();
   },
   _onClickExternalLink: function (url) {
     Tw.CommonHelper.openUrlExternal(url);
