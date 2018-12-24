@@ -127,10 +127,14 @@
                                 </div>
                                 <!-- // .widget -->
 
-                                <% if(homeData.usageData.data.shareTotal !== 0) { %>
+                                <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
                                 <div class="legend">
                                     <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
-                                    <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <% if(homeData.usageData.data.isTplanUse) { %>
+                                    <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>
+                                    <% } else { %>
+                                    <span class="category1"><span>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <% } %>
                                 </div>
                                 <% } %>
 
@@ -250,20 +254,20 @@
                             <% if(homeData.billData) { %>
                             <% if(homeData.billData.isBroadband) { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line"><%= svcInfo.addr %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button></em>
                                 <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
 
                                 <div class="main-breakdown-box">
                                     <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
-                                    <p class="tx">전화 106 또는 <button class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
+                                    <p class="tx">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
                                 </div>
                             </div>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line"><%= svcInfo.addr %></button></em>
-                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button></em>
+                                <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
-                                <div class="main-breakdown-box">
+                                <div id="fe-bt-link-billguide" class="main-breakdown-box">
                                     <% if (homeData.billData.type1) { %>
                                     <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
                                     <% } else if (homeData.billData.type2) { %>
@@ -307,7 +311,7 @@
                                     <button type="button" class="btn-round1 btn-style4 fe-bt-home-slogin">간편 로그인하기</button>
                                     <button type="button" class="btn-round1 btn-style1 fe-bt-home-login">로그인하기</button>
                                 </div>
-                                <p class="desc2">아직 T월드 회원이 아니시라면 <button class="bt">회원가입</button> 후 이용해 주세요</p>
+                                <p class="desc2">아직 T월드 회원이 아니시라면 <button class="bt fe-bt-signup">회원가입</button> 후 이용해 주세요</p>
                             </div>
                             <!-- // 비로그인 -->
                             <% } %>
@@ -333,7 +337,7 @@
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (homeData.membershipData) { %>
-                        <div class="main-membershop-box">
+                        <div id="fe-membership-extend" class="main-membershop-box">
                             <strong class="ti">membershop</strong>
                             <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
                             <% if (homeData.membershipData.mbrStCd === 'SP') { %>
@@ -347,7 +351,7 @@
                         </div>
                         <% } else { %>
                         <!-- 미발급 / 이용정지-->
-                        <div class="main-membershop-box">
+                        <div id="fe-membership-go" class="main-membershop-box">
                             <button class="ti-tx">
                                 <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
                                 <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
@@ -572,7 +576,7 @@
                                         <ul class="slider">
                                             <% redisData.mainNotice.map((notice) => { %>
                                             <li>
-                                                <a href="/customer/svc-info/notice">
+                                                <a href="/customer/svc-info/notice?ntcId=<%= notice.ntcId %>">
                                                     <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
                                                     <span class="ico"></span>
                                                 </a>
@@ -887,7 +891,7 @@
                                         <ul class="slider">
                                             <% redisData.mainNotice.map((notice) => { %>
                                             <li>
-                                                <a href="/customer/svc-info/notice">
+                                                <a href="/customer/svc-info/notice?ntcId=<%= notice.ntcId %>">
                                                     <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
                                                     <span class="ico"></span>
                                                 </a>

@@ -11,5 +11,6 @@ Tw.OUTLINK = {
   DIRECT_ACCESSORY: 'http://shop.tworld.co.kr/handler/AccessoryMall-MainAcc',
   DIRECT_PHONE: 'http://shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001',
   DIRECT_TABLET: 'http://shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002',
-  DIRECT_NUGU: 'http://shop.tworld.co.kr/handler/AccessoryMall-StartAcc?categoryId=10010003'
+  DIRECT_NUGU: 'http://shop.tworld.co.kr/handler/AccessoryMall-StartAcc?categoryId=10010003',
+  BROADBAND: 'http://www.skbroadband.com/Main.do'
 };

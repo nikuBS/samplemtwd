@@ -32,7 +32,11 @@ Tw.BiometricsRegister.prototype = {
   _onOpenBioRegister: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-register-finger', $.proxy(this._onClickRegister, this));
     $popupContainer.on('click', '#fe-bt-register-face', $.proxy(this._onClickRegister, this));
+    $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, {}, $.proxy(this._onFidoRegister, this));
+  },
+  _onClickCancel: function () {
+    this._popupService.closeAll();
   },
   _onClickRegister: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, {}, $.proxy(this._onFidoRegister, this));
