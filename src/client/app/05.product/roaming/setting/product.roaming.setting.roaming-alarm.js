@@ -122,7 +122,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
 
   _makeTemplate : function (phoneNum,idx) {
-      var templateData = { phoneData : { phoneNum : phoneNum, idx : idx } };
+      var maskedPhoneNum = {
+          serviceNumber1 : phoneNum.serviceNumber1,
+          serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
+          serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
+      };
+      var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
       var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
       this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },

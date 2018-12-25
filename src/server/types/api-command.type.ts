@@ -15,8 +15,11 @@ export enum API_SERVER {
 export const API_CMD = {
 
   // test search
-  TEST_SEARCH : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true},
-  TEST_RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true},
+  TEST_SEARCH : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  TEST_RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  TEST_GET_POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  BFF_12_0010: { path: '/core-modification/v1/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
   // SPRINT #3
   BFF_03_0003_C: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0004_C: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },

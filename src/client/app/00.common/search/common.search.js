@@ -4,67 +4,84 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo) {
-
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo) {
+    console.log('svcInfo test');
+    console.log(svcInfo);
     this.$container = rootEl;
     this._historyService = new Tw.HistoryService();
+    this._svcInfo = JSON.parse(svcInfo);
     this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
+    this._accessKeyword = this._searchInfo.query;
     this._init(this._searchInfo);
     this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
+    this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
 };
 
 Tw.CommonSearch.prototype = {
     _init : function (searchInfo) {
-       this._immediateData =this._arrangeData(searchInfo.search[0].immediate.data);
-       this._smartData = this._arrangeData(searchInfo.search[1].smart.data);
-       this._shortcutData = this._arrangeData(searchInfo.search[2].shortcut.data);
-       this._rateData = this._arrangeData(searchInfo.search[3].rate.data);
-       this._serviceData = this._arrangeData(searchInfo.search[4].service.data);
-       this._tvData = this._arrangeData(searchInfo.search[5].tv.data);
-       this._roamingData = this._arrangeData(searchInfo.search[6].roaming.data);
-       this._appData = this._arrangeData(searchInfo.search[7].app.data);
-       this._directData = this._arrangeData(searchInfo.search[8].direct.data);
-       this._membershipData = this._arrangeData(searchInfo.search[9].membership.data);
-       this._eventData = this._arrangeData(searchInfo.search[10].event.data);
-       this._saleData = this._arrangeData(searchInfo.search[11].sale.data);
-       this._asData  = this._arrangeData(searchInfo.search[12].as.data);
-       this._noticeData = this._arrangeData(searchInfo.search[13].notice.data);
-       this._preventData = this._arrangeData(searchInfo.search[14].prevent.data);
-       this._questionData = this._arrangeData(searchInfo.search[15].question.data);
-       this._mannerData = this._arrangeData(searchInfo.search[16].manner.data);
-       this._serviceInfoData = this._arrangeData(searchInfo.search[17].serviceInfo.data);
-       this._siteInfoData = this._arrangeData(searchInfo.search[18].siteInfo.data);
-       this._bannerData = this._arrangeData(searchInfo.search[19].banner.data);
+        var totalContentsCnt = 0;
+        for(var i=0;i<searchInfo.search.length;i++){
+          var keyName =  Object.keys(searchInfo.search[i])[0];
+          var contentsCnt = Number(searchInfo.search[i][keyName].count);
+            totalContentsCnt+=contentsCnt;
+          if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
+              if(contentsCnt<=0){
+                  this.$container.find('.'+keyName).hide();
+              }
+              if(keyName==='banner'){
+                  this._showBanner(this._arrangeData(searchInfo.search[i][keyName].data));
+              }
+              continue;
+          }
+          this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data),keyName);
+        }
 
-        this._showShortcutList(this._shortcutData,this.$container.find('#shortcut_template'),this.$container.find('#shortcut_list'));
-        this._showShortcutList(this._rateData,this.$container.find('#rate_template'),this.$container.find('#rate_list'));
-        this._showShortcutList(this._serviceData,this.$container.find('#service_template'),this.$container.find('#service_list'));
-        this._showShortcutList(this._tvData,this.$container.find('#tv_template'),this.$container.find('#tv_list'));
-        this._showShortcutList(this._roamingData,this.$container.find('#roaming_template'),this.$container.find('#roaming_list'));
-        this._showShortcutList(this._appData,this.$container.find('#app_template'),this.$container.find('#app_list'));
-        this._showShortcutList(this._directData,this.$container.find('#direct_template'),this.$container.find('#direct_list'));
-        this._showShortcutList(this._saleData,this.$container.find('#sale_template'),this.$container.find('#sale_list'));
-        this._showShortcutList(this._asData,this.$container.find('#as_template'),this.$container.find('#as_list'));
-        this._showShortcutList(this._preventData,this.$container.find('#prevent_template'),this.$container.find('#prevent_list'));
-        this._showShortcutList(this._questionData,this.$container.find('#question_template'),this.$container.find('#question_list'));
-        this._showShortcutList(this._mannerData,this.$container.find('#manner_template'),this.$container.find('#manner_list'));
-        this._showShortcutList(this._serviceInfoData,this.$container.find('#serviceInfo_template'),this.$container.find('#serviceInfo_list'));
-        this._showShortcutList(this._siteInfoData,this.$container.find('#siteInfo_template'),this.$container.find('#siteInfo_list'));
-        this._showShortcutList(this._membershipData,this.$container.find('#membership_template'),this.$container.find('#membership_list'));
-        this._showShortcutList(this._eventData,this.$container.find('#event_template'),this.$container.find('#event_list'));
-        this._showShortcutList(this._noticeData,this.$container.find('#notice_template'),this.$container.find('#notice_list'));
+        if(totalContentsCnt<=0){
 
+        }else{
+            var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+            console.log('recentlyKeywordData test');
+            console.log(typeof(recentlyKeywordData));
+            console.log(JSON.stringify(recentlyKeywordData));
+
+            if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
+                Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
+                recentlyKeywordData = {};
+            }
+            if(Tw.FormatHelper.isEmpty(this._svcInfo)){
+                console.log('logOutUser');
+                if(Tw.FormatHelper.isEmpty(recentlyKeywordData.logOutUser)){
+                    recentlyKeywordData.logOutUser = [];
+                }
+                console.log(recentlyKeywordData.logOutUser);
+
+                recentlyKeywordData.logOutUser.push({ keyword : this._accessKeyword, searchTime : moment().format('YYYYMMDD')});
+                console.log(recentlyKeywordData);
+            }else{
+                console.log('loginUser : '+this._svcInfo.svcMgmtNum);
+                if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._svcInfo.svcMgmtNum])){
+                    console.log('make this users data');
+                    recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
+                }
+                console.log(recentlyKeywordData[this._svcInfo.svcMgmtNum]);
+
+                //TODO keyword user encoding
+                recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : this._accessKeyword, searchTime : moment().format('YYYYMMDD')});
+                console.log(recentlyKeywordData);
+            }
+            Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+        }
     },
+
     _arrangeData : function (data) {
         if(!data){
-
             return [];
         }
         for(var i=0;i<data.length;i++){
             for (var key in data[i]) {
                 if(typeof (data[i][key])==='string'){
-                    data[i][key] = data[i][key].replace('<!HE>', '</span>');
-                    data[i][key] = data[i][key].replace('<!HS>', '<span class="highlight-text">');
+                    data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
+                    data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
                 }
                 if(key==='DEPTH_PATH'){
                     data[i][key] = data[i][key].replace(/\|/g,'/');
@@ -85,14 +102,17 @@ Tw.CommonSearch.prototype = {
         }
         return data;
     },
-    _showShortcutList : function (data,template,parent) {
-        var shortcutTemplate = template.html();
+    _showShortcutList : function (data,dataKey) {
+        //var $template = this.$container.find('#'+dataKey+'_template');
+        var $template = $('#'+dataKey+'_template');
+        var $list = this.$container.find('#'+dataKey+'_list');
+        var shortcutTemplate = $template.html();
         var templateData = Handlebars.compile(shortcutTemplate);
         if(data.length<=0){
-            parent.hide();
+            $list.hide();
         }
          _.each(data,function (listData) {
-             parent.append(templateData({listData : listData}));
+             $list.append(templateData({listData : listData}));
          });
     },
     _decodeEscapeChar : function (targetString) {
@@ -101,10 +121,14 @@ Tw.CommonSearch.prototype = {
         return returnStr;
     },
     _inputChangeEvent : function (args) {
-
+        console.log('_inputChangeEvent called args : '+args);
+        var inResult = this.$container.find('#oka').is(':checked');
         if(args.keyCode===13){
-            var requestUrl = '/common/search?keyword='+args.currentTarget.value;
-            this._historyService.goLoad(requestUrl);
+            var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+            this._historyService.goLoad(requestUrl+args.currentTarget.value);
         }
+    },
+    _showBanner : function (data) {
+        //TODO check banner data.
     }
 };

@@ -368,8 +368,6 @@ Tw.API_CMD = {
   BFF_08_0061: { path: '/core-modification/v1/email-inquiry-detail', method: Tw.API_METHOD.GET },
   BFF_08_0062: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.DELETE },
 
-  //TEST_SEARCH
-  BFF_08_0066: { path: '/core-modification/v1/search/keyword', method: Tw.API_METHOD.GET },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
@@ -534,15 +532,10 @@ Tw.AJAX_CMD = {
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
   },
-  TEST_GET_FAMOUS_KEYWORD : {
-    path : '/search/tworld/popword',
-    method : Tw.API_METHOD.GET,
-    url : 'http://61.250.22.114:8080'
-  },
   TEST_AUTO_COMPLETE : {
       path : '/search/tworld/autocomplete',
       method : Tw.API_METHOD.GET,
-      url : 'http://61.250.22.114:8080',
+      url : 'http://61.250.22.114:8180',
       contentType: 'application/x-www-form-urlencoded'
   }
 };

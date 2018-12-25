@@ -21,7 +21,14 @@ class CommonSearchMore extends TwViewController {
         const query =  encodeURI(req.query.keyword) || '';
         const collection = req.query.category || null;
         const pageNum = req.query.page || 1;
-        const requestObj = { query , collection , pageNum };
+        let requestObj, researchCd, researchQuery;
+        if (FormatHelper.isEmpty(req.query.in_keyword)) {
+            requestObj = { query , collection , pageNum};
+        } else {
+            researchCd = 1;
+            researchQuery = encodeURI(req.query.in_keyword) || '';
+            requestObj = { query , collection , researchQuery , researchCd , pageNum};
+        }
 
         if (FormatHelper.isEmpty(collection)) {
             return this.error.render(res, {
@@ -48,7 +55,8 @@ class CommonSearchMore extends TwViewController {
                 keyword : searchResult.result.query,
                 pageNum : pageNum,
                 relatedKeyword : relatedKeyword,
-                category : decodeURI(collection)
+                category : decodeURI(collection),
+                inKeyword : searchResult.result.researchQuery
             });
         });
 
