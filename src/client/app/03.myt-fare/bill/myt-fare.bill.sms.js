@@ -29,18 +29,19 @@ Tw.MyTFareBillSms.prototype = {
   _selectAccountList: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_ACCOUNT,
-      data: this._getAccountList()
+      data: this._getAccountList(),
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.account', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    $target.text($selectedValue.text());
+    var $selectedValue = $(event.target);
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },
@@ -52,9 +53,9 @@ Tw.MyTFareBillSms.prototype = {
     this.$accountList.find('li').each(function () {
       var $this = $(this);
       var obj = {
-        'option': 'account',
-        'attr': 'id="' + $this.attr('id') + '"',
-        'value': $this.text()
+        'label-attr': 'id="' + $this.attr('id') + '"',
+        'radio-attr': 'id="' + $this.attr('id') + '" name="r2"',
+        'txt': $this.text()
       };
       listObj.list.push(obj);
     });

@@ -51,19 +51,20 @@ Tw.MyTFareBillOption.prototype = {
   },
   _changePaymentDate: function () {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE
+      data: Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectDatePopupCallback, this));
   },
   _selectDatePopupCallback: function ($layer) {
-    $layer.on('click', '.date', $.proxy(this._setSelectedDate, this));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedDate, this));
   },
   _setSelectedDate: function (event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     var code = $selectedValue.attr('id');
-    var date = $selectedValue.text().replace(Tw.PERIOD_UNIT.DAYS, '');
+    var date = $selectedValue.parents('label').text().replace(Tw.PERIOD_UNIT.DAYS, '');
 
     this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyClCd: code })
       .done($.proxy(this._changeSuccess, this, date))

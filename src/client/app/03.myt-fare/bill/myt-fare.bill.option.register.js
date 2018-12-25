@@ -118,31 +118,21 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _changePaymentDate: function (event) {
     var $target = $(event.currentTarget);
-    var title = this._getTitle();
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: title,
       data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_DATE
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
-  _getTitle: function () {
-    var title = '';
-    if (this.$infoWrap.attr('id') === 'new') {
-      title = Tw.POPUP_TITLE.SELECT_PAYMENT_DATE;
-    } else {
-      title = Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE;
-    }
-    return title;
-  },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.date', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },

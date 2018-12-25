@@ -121,22 +121,23 @@ Tw.MyTFareBillPoint.prototype = {
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_POINT,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST
+      data: Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr({
       'id': $selectedValue.attr('id'),
       'data-code': $selectedValue.attr('data-code')
     });
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },

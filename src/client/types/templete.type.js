@@ -143,103 +143,103 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_CARD_TYPE_LIST: [
     {
       'list': [
-        { 'option': 'hbs-card-type', 'attr': 'id="00"', value: '일시불' },
-        { 'option': 'hbs-card-type', 'attr': 'id="01"', value: '1개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="02"', value: '2개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="03"', value: '3개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="04"', value: '4개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="05"', value: '5개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="06"', value: '6개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="07"', value: '7개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="08"', value: '8개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="09"', value: '9개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '10개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '11개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="12"', value: '12개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="24"', value: '24개월 할부' }
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2"', txt: '일시불' },
+        { 'label-attr': 'id="01"', 'radio-attr': 'id="01" name="r2"', txt: '1개월 할부' },
+        { 'label-attr': 'id="02"', 'radio-attr': 'id="02" name="r2"', txt: '2개월 할부' },
+        { 'label-attr': 'id="03"', 'radio-attr': 'id="03" name="r2"', txt: '3개월 할부' },
+        { 'label-attr': 'id="04"', 'radio-attr': 'id="04" name="r2"', txt: '4개월 할부' },
+        { 'label-attr': 'id="05"', 'radio-attr': 'id="05" name="r2"', txt: '5개월 할부' },
+        { 'label-attr': 'id="06"', 'radio-attr': 'id="06" name="r2"', txt: '6개월 할부' },
+        { 'label-attr': 'id="07"', 'radio-attr': 'id="07" name="r2"', txt: '7개월 할부' },
+        { 'label-attr': 'id="08"', 'radio-attr': 'id="08" name="r2"', txt: '8개월 할부' },
+        { 'label-attr': 'id="09"', 'radio-attr': 'id="09" name="r2"', txt: '9개월 할부' },
+        { 'label-attr': 'id="10"', 'radio-attr': 'id="10" name="r2"', txt: '10개월 할부' },
+        { 'label-attr': 'id="11"', 'radio-attr': 'id="11" name="r2"', txt: '11개월 할부' },
+        { 'label-attr': 'id="12"', 'radio-attr': 'id="12" name="r2"', txt: '12개월 할부' },
+        { 'label-attr': 'id="24"', 'radio-attr': 'id="24" name="r2"', txt: '24개월 할부' }
       ]
     }
   ],
   FARE_PAYMENT_POINT_LIST: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="10" data-code="CPT"', value: 'OK캐쉬백' },
-        { 'option': 'point-type', 'attr': 'id="11" data-code="TPT"', value: 'T포인트' }
+        { 'label-attr': 'id="10"', 'radio-attr': 'id="10" name="r2" data-code="CPT"', txt: 'OK캐쉬백' },
+        { 'label-attr': 'id="11"', 'radio-attr': 'id="11" name="r2" data-code="TPT"', txt: 'T포인트' }
       ]
     }
   ],
   FARE_PAYMENT_POINT: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="500"', value: '500P' },
-        { 'option': 'point-type', 'attr': 'id="1000"', value: '1,000P' },
-        { 'option': 'point-type', 'attr': 'id="1500"', value: '1,500P' },
-        { 'option': 'point-type', 'attr': 'id="2000"', value: '2,000P' },
-        { 'option': 'point-type', 'attr': 'id="2500"', value: '2,500P' },
-        { 'option': 'point-type', 'attr': 'id="3000"', value: '3,000P' },
-        { 'option': 'point-type', 'attr': 'id="3500"', value: '3,500P' },
-        { 'option': 'point-type', 'attr': 'id="4000"', value: '4,000P' },
-        { 'option': 'point-type', 'attr': 'id="4500"', value: '4,500P' },
-        { 'option': 'point-type', 'attr': 'id="5000"', value: '5,000P' },
-        { 'option': 'point-type', 'attr': 'id="5500"', value: '5,500P' },
-        { 'option': 'point-type', 'attr': 'id="6000"', value: '6,000P' },
-        { 'option': 'point-type', 'attr': 'id="6500"', value: '6,500P' },
-        { 'option': 'point-type', 'attr': 'id="7000"', value: '7,000P' },
-        { 'option': 'point-type', 'attr': 'id="7500"', value: '7,500P' },
-        { 'option': 'point-type', 'attr': 'id="8000"', value: '8,000P' },
-        { 'option': 'point-type', 'attr': 'id="8500"', value: '8,500P' },
-        { 'option': 'point-type', 'attr': 'id="9000"', value: '9,000P' },
-        { 'option': 'point-type', 'attr': 'id="9500"', value: '9,500P' },
-        { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' }
+        { 'label-attr': 'id="500"', 'radio-attr': 'name="r2" id="500"', txt: '500P' },
+        { 'label-attr': 'id="1000"', 'radio-attr': 'name="r2" id="1000"', txt: '1,000P' },
+        { 'label-attr': 'id="1500"', 'radio-attr': 'name="r2" id="1500"', txt: '1,500P' },
+        { 'label-attr': 'id="2000"', 'radio-attr': 'name="r2" id="2000"', txt: '2,000P' },
+        { 'label-attr': 'id="2500"', 'radio-attr': 'name="r2" id="2500"', txt: '2,500P' },
+        { 'label-attr': 'id="3000"', 'radio-attr': 'name="r2" id="3000"', txt: '3,000P' },
+        { 'label-attr': 'id="3500"', 'radio-attr': 'name="r2" id="3500"', txt: '3,500P' },
+        { 'label-attr': 'id="4000"', 'radio-attr': 'name="r2" id="4000"', txt: '4,000P' },
+        { 'label-attr': 'id="4500"', 'radio-attr': 'name="r2" id="4500"', txt: '4,500P' },
+        { 'label-attr': 'id="5000"', 'radio-attr': 'name="r2" id="5000"', txt: '5,000P' },
+        { 'label-attr': 'id="5500"', 'radio-attr': 'name="r2" id="5500"', txt: '5,500P' },
+        { 'label-attr': 'id="6000"', 'radio-attr': 'name="r2" id="6000"', txt: '6,000P' },
+        { 'label-attr': 'id="6500"', 'radio-attr': 'name="r2" id="6500"', txt: '6,500P' },
+        { 'label-attr': 'id="7000"', 'radio-attr': 'name="r2" id="7000"', txt: '7,000P' },
+        { 'label-attr': 'id="7500"', 'radio-attr': 'name="r2" id="7500"', txt: '7,500P' },
+        { 'label-attr': 'id="8000"', 'radio-attr': 'name="r2" id="8000"', txt: '8,000P' },
+        { 'label-attr': 'id="8500"', 'radio-attr': 'name="r2" id="8500"', txt: '8,500P' },
+        { 'label-attr': 'id="9000"', 'radio-attr': 'name="r2" id="9000"', txt: '9,000P' },
+        { 'label-attr': 'id="9500"', 'radio-attr': 'name="r2" id="9500"', txt: '9,500P' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '10,000P' }
       ]
     }
   ],
   FARE_PAYMENT_TPOINT: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' },
-        { 'option': 'point-type', 'attr': 'id="20000"', value: '20,000P' },
-        { 'option': 'point-type', 'attr': 'id="50000"', value: '50,000P' },
-        { 'option': 'point-type', 'attr': 'id="100000"', value: '100,000P' }
+        { 'label-attr': 'id="10000"', 'radio-attr': 'id="10000" name="r2"', txt: '10,000P' },
+        { 'label-attr': 'id="20000"', 'radio-attr': 'id="20000" name="r2"', txt: '20,000P' },
+        { 'label-attr': 'id="50000"', 'radio-attr': 'id="50000" name="r2"', txt: '50,000P' },
+        { 'label-attr': 'id="100000"', 'radio-attr': 'id="100000" name="r2"', txt: '100,000P' }
       ]
     }
   ],
   FARE_PAYMENT_RAINBOW: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="CCBBAE0"', value: '국내 음성 통화료' },
-        { 'option': 'point-type', 'attr': 'id="CCRPDDC"', value: '국내 데이터 통화료' },
-        { 'option': 'point-type', 'attr': 'id="CCBCOE0"', value: '부가서비스(컬러링)' },
-        { 'option': 'point-type', 'attr': 'id="CCPCRBE"', value: '부가서비스(퍼펙트콜)' },
-        { 'option': 'point-type', 'attr': 'id="CCPLRBE"', value: '부가서비스(퍼펙트콜 라이트)' },
-        { 'option': 'point-type', 'attr': 'id="CCRPGDC"', value: '기본료 및 월정액' },
-        { 'option': 'point-type', 'attr': 'id="CCRMRBE"', value: '로밍사용요금' }
+        { 'label-attr': 'id="CCBBAE0"', 'radio-attr': 'id="CCBBAE0" name="r2"', txt: '국내 음성 통화료' },
+        { 'label-attr': 'id="CCRPDDC"', 'radio-attr': 'id="CCRPDDC" name="r2"', txt: '국내 데이터 통화료' },
+        { 'label-attr': 'id="CCBCOE0"', 'radio-attr': 'id="CCBCOE0" name="r2"', txt: '부가서비스(컬러링)' },
+        { 'label-attr': 'id="CCPCRBE"', 'radio-attr': 'id="CCPCRBE" name="r2"', txt: '부가서비스(퍼펙트콜)' },
+        { 'label-attr': 'id="CCPLRBE"', 'radio-attr': 'id="CCPLRBE" name="r2"', txt: '부가서비스(퍼펙트콜 라이트)' },
+        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료 및 월정액' },
+        { 'label-attr': 'id="CCRMRBE"', 'radio-attr': 'id="CCRMRBE" name="r2"', txt: '로밍사용요금' }
       ]
     }
   ],
   FARE_PAYMENT_MICRO_HISTORY_LIST: [
     {
       'list': [
-        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/bill/small/history"', value: '소액결제 이용내역' },
-        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/bill/small/block"', value: '자동결제 차단내역' }
+        { 'label-attr': 'data-link="/myt-fare/bill/small/history"', 'radio-attr': 'data-link="/myt-fare/bill/small/history"', txt: '소액결제 이용내역' },
+        { 'label-attr': 'data-link="/myt-fare/bill/small/block"', 'radio-attr': 'data-link="/myt-fare/bill/small/block"', txt: '자동결제 차단내역' }
       ]
     }
   ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
-        { 'option': 'date', 'attr': 'id="0"', value: '15일' },
-        { 'option': 'date', 'attr': 'id="3"', value: '21일' },
-        { 'option': 'date', 'attr': 'id="1"', value: '23일' }
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2"', txt: '15일' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2"', txt: '21일' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2"', txt: '23일' }
       ]
     }
   ],
   FARE_PAYMENT_CARD_DATE: [
     {
       'list': [
-        { 'option': 'date', 'attr': 'id="1"', value: '11일' },
-        { 'option': 'date', 'attr': 'id="2"', value: '18일' },
-        { 'option': 'date', 'attr': 'id="3"', value: '26일' }
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2"', txt: '11일' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2"', txt: '18일' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2"', txt: '26일' }
       ]
     }
   ],
@@ -277,15 +277,15 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_LIMIT: [
     {
       'list': [
-        { 'option': 'limit', 'attr': 'id="500000"', value: '50만원' },
-        { 'option': 'limit', 'attr': 'id="300000"', value: '30만원' },
-        { 'option': 'limit', 'attr': 'id="200000"', value: '20만원' },
-        { 'option': 'limit', 'attr': 'id="150000"', value: '15만원' },
-        { 'option': 'limit', 'attr': 'id="120000"', value: '12만원' },
-        { 'option': 'limit', 'attr': 'id="60000"', value: '6만원' },
-        { 'option': 'limit', 'attr': 'id="50000"', value: '5만원' },
-        { 'option': 'limit', 'attr': 'id="30000"', value: '3만원' },
-        { 'option': 'limit', 'attr': 'id="10000"', value: '1만원' }
+        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
+        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
+        { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
+        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만원' },
+        { 'label-attr': 'id="120000"', 'radio-attr': 'name="r2" id="120000"', txt: '12만원' },
+        { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
+        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만원' },
+        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
       ]
     }
   ],
@@ -348,9 +348,9 @@ Tw.POPUP_TPL = {
   TEVENT_LIST: [
     {
       'list': [
-        { 'option': 'event-type', 'attr': 'id="ing"', value: '진행중 이벤트' },
-        { 'option': 'event-type', 'attr': 'id="last"', value: '지난 이벤트' },
-        { 'option': 'event-type', 'attr': 'id="win"', value: '당첨자 발표' }
+        { 'label-attr': 'id="ing"', 'radio-attr': 'id="ing" name="r2"', txt: '진행중 이벤트' },
+        { 'label-attr': 'id="last"', 'radio-attr': 'id="last" name="r2"', txt: '지난 이벤트' },
+        { 'label-attr': 'id="win"', 'radio-attr': 'id="win"', txt: '당첨자 발표' }
       ]
     }
   ],

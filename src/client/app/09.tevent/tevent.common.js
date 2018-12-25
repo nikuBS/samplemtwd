@@ -37,17 +37,18 @@ Tw.TeventCommon.prototype = {
   },
   _openEventPop: function () {
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',// hbs의 파일명
+        url: '/hbs/',
+        hbs: 'actionsheet01',
         layer: true,
-        title: Tw.POPUP_TITLE.EVENT,
-        data: Tw.POPUP_TPL.TEVENT_LIST
+        data: Tw.POPUP_TPL.TEVENT_LIST,
+        btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._onOpenPopup, this),
       $.proxy(this._goLoad, this),
       'select');
   },
   _onOpenPopup: function ($layer) {
-    $layer.on('click', '.event-type', $.proxy(this._setUrl, this));
+    $layer.on('change', '.ac-list', $.proxy(this._setUrl, this));
   },
   _goLoad: function () {
     if (this._isClicked) {
@@ -55,7 +56,7 @@ Tw.TeventCommon.prototype = {
     }
   },
   _setUrl: function (event) {
-    this._uri = $(event.currentTarget).attr('id');
+    this._uri = $(event.target).attr('id');
     this._isClicked = true;
 
     this._popupService.close();

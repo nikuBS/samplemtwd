@@ -29,13 +29,13 @@ Tw.MyTFareBillBankList.prototype = {
     }
   },
   _onOpenList: function ($layer) {
-    $layer.on('click', '.hbs-bank-name', $.proxy(this._getSelectedBank, this));
+    $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this));
   },
   _getSelectedBank: function (event) {
     var $selectedBank = this.$currentTarget;
-    var $target = $(event.currentTarget);
+    var $target = $(event.target);
     $selectedBank.attr('id', $target.attr('id'));
-    $selectedBank.text($target.text());
+    $selectedBank.text($target.parents('label').text());
 
     this._popupService.close();
 
@@ -67,9 +67,9 @@ Tw.MyTFareBillBankList.prototype = {
     var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
-        option: 'hbs-bank-name',
-        attr: 'id=' + bankList[i].bankCardCoCd,
-        value: bankList[i].bankCardCoNm
+        'label-attr': 'id=' + bankList[i].bankCardCoCd,
+        'radio-attr': 'id=' + bankList[i].bankCardCoCd + ' name="r2"',
+        'txt': bankList[i].bankCardCoNm
       };
       formatList.push(bankObj);
     }
@@ -80,10 +80,11 @@ Tw.MyTFareBillBankList.prototype = {
   },
   _openBank: function () {
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.SELECT_BANK,
-      data:this.$bankList
+      url: '/hbs/',
+      hbs: 'actionsheet01',
+      layer: true,
+      data: this.$bankList,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._onOpenList, this));
   }
 };

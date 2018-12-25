@@ -57,27 +57,30 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _microHistory: function () {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.HISTORY,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_MICRO_HISTORY_LIST
+      data: Tw.POPUP_TPL.FARE_PAYMENT_MICRO_HISTORY_LIST,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._selectPopupCallback, this),
       $.proxy(this._goLoad, this)
     );
   },
   _selectPopupCallback: function ($layer) {
-    $layer.on('click', '.go-history', $.proxy(this._setEvent, this));
+    $layer.on('change', '.ac-list', $.proxy(this._setEvent, this));
   },
   _setEvent: function (event) {
-    this.$microHistoryUri = $(event.currentTarget).attr('data-link');
+    this.$microHistoryUri = $(event.target).attr('data-link');
     this._popupService.close();
   },
   _contentsHistory: function () {
     this._historyService.goLoad('/myt-fare/bill/contents/history');
   },
   _goLoad: function () {
-    this._historyService.goLoad(this.$microHistoryUri);
+    if (!Tw.FormatHelper.isEmpty(this.$microHistoryUri)) {
+      this._historyService.goLoad(this.$microHistoryUri);
+    }
   },
   _changeLimit: function () {
     new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
