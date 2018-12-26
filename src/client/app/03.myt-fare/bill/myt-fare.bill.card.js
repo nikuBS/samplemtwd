@@ -233,6 +233,7 @@ Tw.MyTFareBillCard.prototype = {
     this._setData($layer);
     this._paymentCommon.getListData($layer);
 
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
     $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _setData: function ($layer) {
@@ -266,6 +267,19 @@ Tw.MyTFareBillCard.prototype = {
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
+    }
+  },
+  _checkClose: function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
     }
   },
   _pay: function () {
