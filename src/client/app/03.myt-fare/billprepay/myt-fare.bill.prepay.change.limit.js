@@ -143,8 +143,8 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     this._popupService.close();
   },
   _openChangeConfirm: function () {
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
-      $.proxy(this._onChange, this), $.proxy(this._change, this), Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON);
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
+      $.proxy(this._onChange, this), $.proxy(this._change, this), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON);
   },
   _onChange: function () {
     this.$isChange = true;
