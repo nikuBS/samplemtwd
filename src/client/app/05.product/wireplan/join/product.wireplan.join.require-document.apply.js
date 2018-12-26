@@ -54,7 +54,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
     }
 
-    if (this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1) {
+    if (this._acceptExt.indexOf(fileInfo.name.split('.').pop().toLowerCase()) === -1) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
     }
 
