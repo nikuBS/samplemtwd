@@ -75,6 +75,7 @@ Tw.MyTJoinSuspend.prototype = {
     }
   },
 
+
   _onClose: function () {
     if ( (this._temp && this._temp.hasChanged()) || (this._long && this._long.hasChanged()) ) {
       this._popupService.openConfirm(
