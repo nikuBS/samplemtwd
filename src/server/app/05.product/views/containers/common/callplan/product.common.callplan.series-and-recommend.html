@@ -1,4 +1,4 @@
-<% if ( series && series.list.length > 0 || recommends && recommends.length > 0 ) { %>
+<script src="../../../../controllers/common/product.common.callplan-preview.controller.ts"></script><% if ( series && series.list.length > 0 || recommends && recommends.length > 0 ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box nogaps">
@@ -69,7 +69,7 @@
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
-                                                            <% if ( series.list[i].prodBasBenfCtt && ( series.list[i].isMobileplan || series.list[i].isMobileplanAdd || series.list[i].isDiscount )) { %>
+                                                            <% if ( series.list[i].prodBasBenfCtt && ( series.list[i].isMobileplan || series.list[i].isMobileplanAdd || series.list[i].isCombine || recommends[i].isRoaming )) { %>
                                                             <div class="text-type">
                                                                 <div class="str"><%= series.list[i].prodBasBenfCtt %></div>
                                                             </div>
@@ -140,7 +140,7 @@
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
-                                                            <% if ( recommends[i].prodBasBenfCtt && ( recommends[i].isMobileplan || recommends[i].isMobileplanAdd || recommends[i].isDiscount )) { %>
+                                                            <% if ( recommends[i].prodBasBenfCtt && ( recommends[i].isMobileplan || recommends[i].isMobileplanAdd || recommends[i].isCombine || recommends[i].isRoaming )) { %>
                                                             <div class="text-type">
                                                                 <div class="str"><%= recommends[i].prodBasBenfCtt %></div>
                                                             </div>
