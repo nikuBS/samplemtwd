@@ -89,7 +89,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
