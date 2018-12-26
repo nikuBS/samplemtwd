@@ -69,12 +69,19 @@ Tw.MyTDataGiftMonthly.prototype = {
   _unSubscribeAutoGift: function (e) {
     var elTarget = $(e.currentTarget);
     var serNum = elTarget.data('sernum');
+    var svcNum = elTarget.closest('li').find('.txt1.fs14').text();
 
-    this._popupService.openConfirm(
-      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT,
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT + svcNum + Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_END,
       null,
-      $.proxy(this._requestUnsubscribeAutoGift, this, serNum)
+      $.proxy(this._requestUnsubscribeAutoGift, this, serNum),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this),
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.TERMINATE
     );
+
   },
 
   _requestUnsubscribeAutoGift: function (serNum) {
@@ -126,7 +133,14 @@ Tw.MyTDataGiftMonthly.prototype = {
 
   _onSuccessUnsubscribeAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.reload();
+      this._popupService.openAlert(
+        Tw.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE,
+        null,
+        null,
+        $.proxy(function () {
+          this._popupService.close();
+          this._historyService.reload();
+        }, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

@@ -408,7 +408,9 @@ Tw.ALERT_MSG_HOME = {
 Tw.ALERT_MSG_MYT_DATA = {
   GIFT_DATA_TARGET: '님에게',
   GIFT_DATA_QUESTION: '를 선물하시겠습니까?',
-  UNSUBSCRIBE_MONTHLY_GIFT: '선택하신 자동 선물 내역을 삭제하시겠습니까?',
+  UNSUBSCRIBE_MONTHLY_GIFT: '자동선물 신청된 가족은 ',
+  UNSUBSCRIBE_MONTHLY_GIFT_END: ' 입니다.',
+  UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE: '자동선물 해지 완료되었습니다.',
   RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_C:
