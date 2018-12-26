@@ -31,6 +31,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingAuto.on('click', $.proxy(this._getReceiveUserInfo, this));

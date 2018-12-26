@@ -63,7 +63,7 @@
                 <div class="complete-wrap">
                     <div class="title-box">
                         <i class="icon-complete-120"><span class="blind">complete</span></i>
-                        <p class="tx-tit"><%-params.custNm%> (<%-convertTelNumber(params.befrSvcNum)%>) 님께<br>
+                        <p class="tx-tit"><%-params.custNm%> (<%-convertMaskTelNumber(params.befrSvcNum)%>) 님께<br>
                             <span class="tx-highlight pt10"><em><%-convertTDataSet(params.dataQty).data%><%-convertTDataSet(params.dataQty).unit%></em> 자동 선물 신청 완료</span></p>
                     </div>
                     <div class="tx-contents">
