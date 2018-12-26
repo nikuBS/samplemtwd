@@ -122,7 +122,8 @@
                                                             </label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<button id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point" title="납부할 포인트" aria-haspopup="true">
+																	<button id="<%= autoInfo.amtId %>" data-origin-id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point"
+                                                                            title="납부할 포인트" aria-haspopup="true">
                                                                         <%= autoInfo.amtText %><span class="ico"></span>
                                                                     </button>
 																</span>
@@ -219,7 +220,7 @@
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

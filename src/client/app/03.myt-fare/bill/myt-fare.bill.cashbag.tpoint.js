@@ -52,6 +52,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-agree-box', $.proxy(this._openAgreePop, this));
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');
@@ -247,5 +248,34 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       return 2;
     }
     return 1;
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      return !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val()) ||
+        !Tw.FormatHelper.isEmpty(this.$pointPw.val());
+    } else {
+      if (this.$autoInfo.is(':visible')) {
+        return (this.$pointSelector.attr('id') !== this.$pointSelector.attr('data-origin-id'));
+      } else {
+        return !Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id')) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val());
+      }
+    }
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   }
 };

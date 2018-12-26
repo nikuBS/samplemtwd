@@ -104,7 +104,7 @@
                                                             <label class="tit">요금 정보 선택</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<button id="<%= autoInfo.autoFareCode %>" class="bt-dropdown big fe-select-fare"
+																	<button id="<%= autoInfo.autoFareCode %>" data-origin-id="<%= autoInfo.autoFareCode %>" class="bt-dropdown big fe-select-fare"
                                                                             title="요금 정보 선택" aria-haspopup="true">
                                                                         <%= autoInfo.autoFareText %><span class="ico"></span>
                                                                     </button>
@@ -162,7 +162,7 @@
             </div>
             <!--// #contents -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">
