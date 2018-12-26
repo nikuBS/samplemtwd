@@ -92,7 +92,11 @@
                         <button>정보 수정</button>
                     </li>
                     <li class="bt-white2">
-                        <button>재발급 신청</button>
+                        <% if(myInfoData.cardReqCd === '1'){ %>
+                            <button id="fe-reissue-cancel">재발급 취소</button>
+                        <% }else{ %>
+                            <button id="fe-reissue">재발급 신청</button>
+                        <% } %>
                     </li>
                     <!-- <li class="bt-white2">
                         <button>재발급 취소</button>

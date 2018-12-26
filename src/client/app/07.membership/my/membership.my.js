@@ -23,6 +23,8 @@ Tw.MembershipMy.prototype = {
   },
 
   _cachedElement: function() {
+    this.$btnReissue = this.$container.find('#fe-reissue');
+    this.$btnReissueCancel = this.$container.find('#fe-reissue-cancel');
     this.$btnPopupClose = this.$container.find('.popup-closeBtn');
     this.$strPeriod = this.$container.find('#fe-period');
     this.$inputSdate = this.$container.find('#fe-sdate');
@@ -35,6 +37,8 @@ Tw.MembershipMy.prototype = {
   },
 
   _bindEvent: function() {
+    this.$btnReissue.on('click', $.proxy(this._requestReissueInfo, this, 'reissue'));
+    this.$btnReissueCancel.on('click', $.proxy(this._requestReissueInfo, this, 'cancel'));
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$inputSdate.on('click', $.proxy(this._openDateActionSheet, this));
     this.$inputEdate.on('click', $.proxy(this._openDateActionSheet, this));
@@ -182,6 +186,77 @@ Tw.MembershipMy.prototype = {
   _onActionSelected: function(currentSheet, e) {
       var dateTxt = $(e.target).parents('label').attr('value');
       $('#'+currentSheet).text(dateTxt);
+  },
+
+  _requestReissueInfo: function(state) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_11_0003, {})
+      .done($.proxy(this._successReissueInfo, this, state))
+      .fail($.proxy(this._onFail, this));
+  },
+
+  _parseReissueData: function(res) {
+    res.showGrade = Tw.MEMBERSHIP_GRADE[res.mbrGrCd];
+    res.showType = Tw.MEMBERSHIP_TYPE[res.mbrTypCd];
+
+    return res;
+  },
+
+  _successReissueInfo: function(state, res) {
+    if(res.code === Tw.API_CODE.CODE_00) {
+      var data = this._parseReissueData(res.result);
+      var hbs = '';
+      if(state === 'cancel'){
+        hbs = 'BE_02_02';
+      }else{
+        hbs = 'BE_02_01';
+      }
+      this._popupService.open({
+          hbs: hbs,
+          layer: true,
+          data: data
+        },
+        $.proxy(this._onReissueOpened, this)
+      );
+    }
+  },
+
+  _onReissueOpened: function($root){
+    $root.on('click', '#fe-reissue-req', $.proxy(this._openReissueAlert, this));
+    $root.on('click', '#fe-cancel-req', $.proxy(this._openCancelAlert, this));
+  },
+
+  _openReissueAlert: function(){
+    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51;
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON);
+  },
+
+  _handleReissueAlert: function(){
+    var mbrChgRsnCd = '';
+    $('.radiobox').each(function(){
+      if($(this).hasClass('checked')){
+        mbrChgRsnCd = $(this).find('input').attr('data-code');
+      }
+    });
+
+    this._apiService
+      .request(Tw.API_CMD.BFF_11_0004, { mbrChgRsnCd : mbrChgRsnCd })
+      .done($.proxy(this._renderTemplate, this))
+      .fail($.proxy(this._onFail, this));
+  },
+
+  _openCancelAlert: function(){
+    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A52;
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleCancelAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A52.BUTTON);
+  },
+
+  _handleCancelAlert: function(){
+    var mbrCardNum1 = $('#fe-cancel-req').attr('data-card');
+
+    this._apiService
+      .request(Tw.API_CMD.BFF_11_0005, { mbrCardNum1 : mbrCardNum1 })
+      .done($.proxy(this._renderTemplate, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _goRoamingGuide: function() {
