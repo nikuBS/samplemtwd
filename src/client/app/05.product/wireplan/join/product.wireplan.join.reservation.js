@@ -4,7 +4,7 @@
  * Date: 2018.10.30
  */
 
-Tw.ProductWireplanJoinReservation = function(rootEl) {
+Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this.$container = rootEl;
 
   this._popupService = Tw.Popup;
@@ -15,10 +15,10 @@ Tw.ProductWireplanJoinReservation = function(rootEl) {
 
   this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000084'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
+  this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
   this._logged = false;
   this._isLoadCombineList = false;
   this._currentCombineProductList = [];
-
 
   this._cachedElement();
   this._bindEvent();
@@ -453,6 +453,12 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._procExplainFilePop();
     }
 
+    // 가입 여부 체크
+    if (this._typeCd !== 'combine' && !Tw.FormatHelper.isEmpty(this._isProduct) && this._isProduct[this._typeCd] ||
+      this._typeCd === 'combine' && this._currentCombineProductList.indexOf(this._prodId) !== -1) {
+      return this._procConfirmAdditional();
+    }
+
     this._procApply();
   },
 
@@ -474,6 +480,24 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this._currentCombineProductList = resp.result.combinationMemberList.map(function (item) {
       return item.prodId;
     });
+  },
+
+  _procConfirmAdditional: function() {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A40.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A40.TITLE,
+      $.proxy(this._setConfirmAdditional, this), $.proxy(this._onCloseConfirmAdditional, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM);
+  },
+
+  _setConfirmAdditional: function() {
+    this._isConfirmAdditional = true;
+    this._popupService.close();
+  },
+
+  _onCloseConfirmAdditional: function() {
+    if (!this._isConfirmAdditional) {
+      return;
+    }
+
+    this._procApply();
   },
 
   _procExistsCheckPersonalCombine: function() {

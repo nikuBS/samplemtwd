@@ -217,7 +217,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductWireplanJoinReservation($('.wrap'));
+    new Tw.ProductWireplanJoinReservation($('.wrap'), '<%- JSON.stringify(isProduct) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

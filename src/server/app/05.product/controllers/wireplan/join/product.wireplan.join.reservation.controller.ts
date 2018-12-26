@@ -15,6 +15,33 @@ class ProductWireplanJoinReservation extends TwViewController {
     super();
   }
 
+  /**
+   * @param allSvc
+   * @private
+   */
+  private _convertIsProductInfo (allSvc: any): any {
+    const svcAttrCdM = FormatHelper.isEmpty(allSvc.m) ? [] : allSvc.m,
+      svcAttrCdS = FormatHelper.isEmpty(allSvc.s) ? [] : allSvc.s,
+      svcAttrList = this._getSvcAttrList([...svcAttrCdM, ...svcAttrCdS]);
+
+    return {
+      cellphone: svcAttrList.indexOf('M1') !== -1,
+      internet: svcAttrList.indexOf('S1') !== -1,
+      tv: svcAttrList.indexOf('S2') !== -1,
+      phone: svcAttrList.indexOf('S3') !== -1
+    };
+  }
+
+  /**
+   * @param svcList
+   * @private
+   */
+  private _getSvcAttrList (svcList: any): any {
+    return svcList.map((item) => {
+      return item.svcAttrCd;
+    });
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const typeCd = req.query.type_cd || 'internet',
       prodId = req.query.prod_id || null;
@@ -33,7 +60,10 @@ class ProductWireplanJoinReservation extends TwViewController {
           PRODUCT_RESERVATION_COMBINE_NM.ETC : PRODUCT_RESERVATION_COMBINE_NM[prodId];
     }
 
+    const isProductInfo: any = FormatHelper.isEmpty(allSvc) ? {} : this._convertIsProductInfo(allSvc);
+
     res.render('wireplan/join/product.wireplan.join.reservation.html', {
+      isProduct: isProductInfo,
       typeCd: typeCd,
       typeName: PRODUCT_RESERVATION_TYPE_NM[typeCd],
       svcInfo: svcInfo,
