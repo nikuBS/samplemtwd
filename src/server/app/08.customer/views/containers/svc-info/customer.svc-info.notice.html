@@ -14,7 +14,7 @@
     </ul>
   </div>
   <!--// #skip_navigation -->
-  <div class="wrap" data-category="<%= category %>" data-menuId="<%= pageInfo.menuId %>">
+  <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../common/views/components/header.component.html', { title: '공지사항', svcInfo: svcInfo }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -92,7 +92,7 @@
 <% include ../../components/customer.notice.item.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerSvcInfoNotice($('.wrap'));
+    new Tw.CustomerSvcInfoNotice($('.wrap'), '<%= category %>', '<%= ntcId %>');
   });
 </script>
 <% include ../../components/end.component.html %>

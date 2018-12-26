@@ -4,13 +4,15 @@
  * Date: 2018.10.23
  */
 
-Tw.CustomerSvcInfoNotice = function(rootEl) {
+Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService();
+  this._historyService = new Tw.HistoryService();
+
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
-  this._category = this.$container.data('category');
+  this._category = category;
+  this._ntcId = ntcId;
   this._setContentsList = [];
   this._page = 1;
 
@@ -48,24 +50,22 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _init: function() {
-    var hashNtcId = location.hash.replace('#', '');
-    if (Tw.FormatHelper.isEmpty(hashNtcId)) {
+    if (Tw.FormatHelper.isEmpty(this._ntcId)) {
       return;
     }
 
-    var item = this.$list.find('[data-ntc_id="' + hashNtcId  + '"]');
+    var item = this.$list.find('[data-ntc_id="' + this._ntcId  + '"]');
     if (item.length > 0) {
       setTimeout(function() {
-        item.trigger('click');
+        item.find('button').trigger('click');
       }, 0);
     }
-
-    this._history.pathname += this._history.search;
-    this._history.replace();
   },
 
   _setContentsReq: function(e) {
     var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
+    this._historyService.replacePathName(window.location.pathname + '?ntcId=' + ntcId);
+
     if (this._category !== 'tworld' || this._setContentsList.indexOf(ntcId) !== -1) {
       return;
     }
@@ -116,7 +116,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
       return;
     }
 
-    this._history.goLoad('/customer/svc-info/notice?category=' + this._category);
+    this._historyService.goLoad('/customer/svc-info/notice?category=' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {
