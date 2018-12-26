@@ -111,8 +111,8 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
-      autoJoinBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      autoTermBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
+      autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
+      autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },
