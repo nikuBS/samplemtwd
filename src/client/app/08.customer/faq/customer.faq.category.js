@@ -91,7 +91,10 @@ Tw.CustomerFaqCategory.prototype = {
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
       $root.on('click', '.btn-floating', $.proxy(function () {
-        var $checked = $root.find('input[type=radio]:checked');
+        this._popupService.close();
+      }, this));
+      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
+        var $checked = $(e.currentTarget);
         this._onCategoryChanged(depth, $checked.attr('title'), $checked.val());
       }, this));
     }, this));
