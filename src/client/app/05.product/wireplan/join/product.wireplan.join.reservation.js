@@ -6,14 +6,19 @@
 
 Tw.ProductWireplanJoinReservation = function(rootEl) {
   this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
+
   this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000084'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._logged = false;
+  this._isLoadCombineList = false;
+  this._currentCombineProductList = [];
+
 
   this._cachedElement();
   this._bindEvent();
@@ -40,6 +45,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
   _initCombineProduct: function() {
     this.$combineWrap.show();
     this._getIsExistsCombineReservation();
+    this._getCurrentCombineList();
 
     if (Tw.FormatHelper.isEmpty(this._prodId)) {
       return;
@@ -213,6 +219,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineWrap.show();
       this.$nonCombineTip.hide();
       this._getIsExistsCombineReservation();
+      this._getCurrentCombineList();
     }
 
     this.$btnSelectTypeCd.text(Tw.PRODUCT_RESERVATION[this._typeCd]);
@@ -435,9 +442,9 @@ Tw.ProductWireplanJoinReservation.prototype = {
     // 결합상품, 상품 선택 없이 상담 예약
     if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(this._prodId)) {
       this._isNotSelectCombine = true;
-      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
+      return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE,
-        $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this));
+        $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
 
     // 결합상품, 상품 선택 및 추가정보 체크하여 입력 팝업 호출
@@ -449,21 +456,28 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this._procApply();
   },
 
-  _procExistsCheckPersonalCombine: function() {
-    this._apiService.request(Tw.API_CMD.BFF_05_0133, {})
-      .done($.proxy(this._procExistsCheckPersonalCombineRes, this));
-  },
-
-  _procExistsCheckPersonalCombineRes: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+  _getCurrentCombineList: function() {
+    if (this._isLoadCombineList) {
+      return;
     }
 
-    var currentCombineProductList = resp.result.combinationMemberList ? resp.result.combinationMemberList.map(function(item) {
-      return item.prodId;
-    }) : [];
+    this._apiService.request(Tw.API_CMD.BFF_05_0133, {})
+      .done($.proxy(this._getCurrentCombineListRes, this));
+  },
 
-    if (currentCombineProductList.indexOf('NH00000103') !== -1) {
+  _getCurrentCombineListRes: function(resp) {
+    this._isLoadCombineList = true;
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result.combinationMemberList)) {
+      return;
+    }
+
+    this._currentCombineProductList = resp.result.combinationMemberList.map(function (item) {
+      return item.prodId;
+    });
+  },
+
+  _procExistsCheckPersonalCombine: function() {
+    if (this._currentCombineProductList.indexOf('NH00000103') !== -1 || this._currentCombineProductList.indexOf('TW00000009') !== -1) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.TITLE);
     }
 
@@ -693,8 +707,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this._popupService.open({
       hbs: 'complete_subtexts',
       text: Tw.PRODUCT_RESERVATION.success.text,
+      typeCdName: Tw.PRODUCT_RESERVATION[this._typeCd],
       subtexts: [
-        Tw.PRODUCT_RESERVATION.success.subtext_product + this.$btnSelectTypeCd.text(),
         Tw.PRODUCT_RESERVATION.success.subtext_applyer + this.$reservName.val() + ' / ' + this.$reservNumber.val(),
         Tw.PRODUCT_RESERVATION.success.subtext_info
       ]
