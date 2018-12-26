@@ -62,7 +62,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _failSvcInfo: function (resp) {
-    Tw.Error(res.code, res.msg).pop();
+    Tw.Error(resp.code, resp.msg).pop();
   },
 
   _getBillResponse: function (childSvcMgmtNum, resp) {

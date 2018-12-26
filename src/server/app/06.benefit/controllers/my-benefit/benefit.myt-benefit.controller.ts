@@ -93,10 +93,10 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 결합할인
-        if ( parseInt(combination.result.etcCnt, 10) > 0 ) {
+      if ( combination.result.prodNm.trim() !== '' ) {
           options['bond'] = {
             name: combination.result.prodNm,
-            total: parseInt(combination.result.etcCnt, 10) + (combination.result.prodNm.trim() !== '' ? 1 : 0)
+            total: parseInt(combination.result.etcCnt, 10) + 1
           };
           options['count'] += options['bond'].total;
         }
