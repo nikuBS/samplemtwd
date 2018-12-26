@@ -138,6 +138,8 @@ class MyTDataHotdata extends TwViewController {
       if (!FormatHelper.isEmpty(defaultData.skipId)) {
         dataArr.unshift(defaultData);
         usageData.hasDefaultData = true;
+      } else {
+        usageData.hasDefaultData = false;
       }
     }
 
