@@ -102,12 +102,21 @@ Tw.MyTDataRechargeCouponUse.prototype = {
           return;
         }
 
+        var confirmed = false;
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONTENTS_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONFIRM_GIFT,
           null,
-          $.proxy(this._gift, this)
+          $.proxy(function () {
+            confirmed = true;
+            this._popupService.close();
+          }, this),
+          $.proxy(function () {
+            if (confirmed) {
+              this._gift();
+            }
+          }, this)
         );
         break;
       default:
@@ -133,6 +142,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       copnIsueNum: this._couponNo,
       befrSvcNum: this.$numberInput.val()
     };
+
     this._apiService.request(Tw.API_CMD.BFF_06_0008, reqData)
       .done($.proxy(this._success, this, 'gift'))
       .fail($.proxy(this._fail, this));
@@ -141,24 +151,19 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     if (res.code !== Tw.API_CODE.CODE_00) {
       if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
         this._popupService.open({
-          ico: 'type1',
           title: Tw.POPUP_TITLE.NOT_FAMILY,
+          title_type: 'sub',
+          cont_align: 'tl',
           contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
-          link_list: [{
-            style_class: 'fe-link-more-detail',
-            txt: Tw.POPUP_CONTENTS.MORE_DETAIL
+          infocopy: [{
+            info_contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY_INFO,
+            bt_class: 'none'
           }],
           bt: [{
-            style_class: 'bt-blue1 fe-btn-close',
+            style_class: 'tw-popup-closeBtn',
             txt: Tw.BUTTON_LABEL.CLOSE
           }]
-        },
-        $.proxy(function ($container) {
-          $container.on('click', '.fe-btn-close', $.proxy(function () {
-            this._popupService.close();
-          }, this));
-          // TODO: 더 알아보기 link 설정, SB에 추후 추가 예정으로.....
-        }, this));
+        });
         return;
       }
 

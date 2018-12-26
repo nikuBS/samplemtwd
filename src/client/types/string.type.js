@@ -107,6 +107,7 @@ Tw.POPUP_TITLE = {
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
   REFILL_COUPON_FAMILY: 'SK텔레콤 결합상품으로 묶으시면 리필쿠폰을 선물하실 수 있습니다.',
+  REFILL_COUPON_FAMILY_INFO: 'T끼리 온가족할인 / T가족결합(착한고객) / TB끼리 온가족무료 / TB끼리 온가족 프리 / 온가족 행복플랜 가입고객만 이용 가능. ※ 단, T가족결합(착한가족)은 기존 고객만 가능',
   CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
