@@ -56,7 +56,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorNameMismatch = $popupContainer.find('#aria-phone-tx2');
     this.$errorBirth = $popupContainer.find('#aria-birth-tx1');
     this.$errorBirthLen = $popupContainer.find('#aria-birth-tx2');
-    this.$errorGender = $popupContainer.find('#aria-gender-tx');
+    this.$errorGender = $popupContainer.find('#aria-gender-tx5');
 
     this.$validSendCert = $popupContainer.find('#aria-cert-num2');
     this.$validAddCert = $popupContainer.find('#aria-cert-num1');
@@ -209,7 +209,7 @@ Tw.CertificationSkFull.prototype = {
     }
     if ( this.$inputGender.filter(':checked').length === 0 ) {
       result = false;
-      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender, 'aria-gender-tx1');
+      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender, 'aria-gender-tx5');
     }
     return result;
   },
