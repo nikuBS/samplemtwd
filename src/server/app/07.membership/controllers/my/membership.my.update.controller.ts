@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.controller.ts
+ * FileName: membership.my.update.controller.ts
  * Author: Seungkyu Kim (ksk4788@pineone.com)
- * Date: 2018.12.18
+ * Date: 2018.12.21
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -16,15 +16,16 @@ export default class MembershipMy extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
-    this.apiService.request(API_CMD.BFF_11_0002, {}).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_11_0007, {}).subscribe((resp) => {
       let myInfoData = {};
+
       if ( resp.code === API_CODE.CODE_00 ) {
         myInfoData = this.parseMyInfoData(resp.result);
       } else {
         myInfoData = resp;
       }
 
-      res.render('my/membership.my.html', {
+      res.render('my/membership.my.update.html', {
         myInfoData: myInfoData,
         svcInfo: svcInfo
       });
@@ -32,9 +33,11 @@ export default class MembershipMy extends TwViewController {
   }
 
   private parseMyInfoData(myInfoData): any {
-    myInfoData.showPayAmtScor = FormatHelper.addComma((+myInfoData.payAmtScor).toString());
-    myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd].toUpperCase();
-    myInfoData.mbrTypStr = MEMBERSHIP_TYPE[myInfoData.mbrTypCd];
+    myInfoData.checkHomeClass = myInfoData.addrCd === '03' ? 'checekd' : '' ;
+    myInfoData.checkOfficeClass = myInfoData.addrCd === '03' ? '' : 'checked' ;
+    myInfoData.checkHomeBool = myInfoData.addrCd === '03' ? 'true' : 'false' ;
+    myInfoData.checkOfficeBool = myInfoData.addrCd === '03' ? 'false' : 'true' ;
+
     return myInfoData;
   }
 }

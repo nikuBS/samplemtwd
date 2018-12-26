@@ -814,3 +814,34 @@ Tw.PRODUCT_ROAMING_ORDER = [
   { txt: '높은 가격순', 'radio-attr': 'id="ra1" name="r2" data-oder-name="highprice"', 'label-attr': 'id="ra1"' },
   { txt: '낮은 가격순', 'radio-attr': 'id="ra2" name="r2" data-oder-name="lowprice"', 'label-attr': 'id="ra2"' }
 ];
+
+Tw.PHONE_NUMS = [
+  {
+    list: [
+      { option: 'hbs-card', value: '010', attr: 'data-phone="010" data-type="ph"' },
+      { option: 'hbs-card', value: '011', attr: 'data-phone="011" data-type="ph"' },
+      { option: 'hbs-card', value: '016', attr: 'data-phone="016" data-type="ph"' },
+      { option: 'hbs-card', value: '017', attr: 'data-phone="017" data-type="ph"' },
+      { option: 'hbs-card', value: '018', attr: 'data-phone="018" data-type="ph"' },
+      { option: 'hbs-card', value: '019', attr: 'data-phone="019" data-type="ph"' },
+      { option: 'hbs-card', value: '02',  attr: 'data-tel="02" data-type="area"'  },
+      { option: 'hbs-card', value: '031', attr: 'data-tel="031" data-type="area"' },
+      { option: 'hbs-card', value: '032', attr: 'data-tel="032" data-type="area"' },
+      { option: 'hbs-card', value: '033', attr: 'data-tel="033" data-type="area"' },
+      { option: 'hbs-card', value: '041', attr: 'data-tel="041" data-type="area"' },
+      { option: 'hbs-card', value: '042', attr: 'data-tel="042" data-type="area"' },
+      { option: 'hbs-card', value: '043', attr: 'data-tel="043" data-type="area"' },
+      { option: 'hbs-card', value: '044', attr: 'data-tel="044" data-type="area"' },
+      { option: 'hbs-card', value: '051', attr: 'data-tel="051" data-type="area"' },
+      { option: 'hbs-card', value: '052', attr: 'data-tel="052" data-type="area"' },
+      { option: 'hbs-card', value: '053', attr: 'data-tel="053" data-type="area"' },
+      { option: 'hbs-card', value: '054', attr: 'data-tel="054" data-type="area"' },
+      { option: 'hbs-card', value: '055', attr: 'data-tel="055" data-type="area"' },
+      { option: 'hbs-card', value: '061', attr: 'data-tel="061" data-type="area"' },
+      { option: 'hbs-card', value: '062', attr: 'data-tel="062" data-type="area"' },
+      { option: 'hbs-card', value: '063', attr: 'data-tel="063" data-type="area"' },
+      { option: 'hbs-card', value: '064', attr: 'data-tel="064" data-type="area"' },
+      { option: 'hbs-card', value: '070', attr: 'data-tel="070" data-type="area"' }
+    ]
+  }
+];
