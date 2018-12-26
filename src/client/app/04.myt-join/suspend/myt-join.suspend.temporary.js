@@ -211,5 +211,6 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       !_.isEmpty(this.$inputEmail.val()) ||
       this._defaultDate !== this.$dateTo.val();
     return changed;
+
   }
 };

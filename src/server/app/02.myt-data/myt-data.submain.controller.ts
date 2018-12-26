@@ -65,18 +65,26 @@ class MytDataSubmainController extends TwViewController {
 
       if ( remnant ) {
         data.remnantData = this.parseRemnantData(remnant);
-        if ( data.remnantData.gdata ) {
-          data.isDataInfo = true;
-        }
-        if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
-          // 가입
-          data.family = data.remnantData.tmoa[0];
-          data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
-          // T가족모아 가입가능한 요금제
-          data.family.isProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
-        } else {
-          // 미가입
-          data.family.impossible = true;
+        if ( data.remnantData.gdata && data.remnantData.gdata.length > 0) {
+          data.isDataShow = true;
+          if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
+            // 가입
+            data.family = data.remnantData.tmoa[0];
+            data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
+            // T가족모아 가입가능한 요금제
+            data.family.isProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
+          } else {
+            // 미가입
+            data.family = {
+              impossible: true
+            };
+          }
+        } else if ( data.remnantData.sdata && data.remnantData.sdata.length > 0) {
+          data.isSpDataShow = true;
+        } else if ( data.remnantData.voice && data.remnantData.voice.length > 0) {
+          data.isVoiceShow = true;
+        } else if ( data.remnantData.sms && data.remnantData.sms.length > 0) {
+          data.isSmsShow = true;
         }
       }
 
@@ -198,7 +206,9 @@ class MytDataSubmainController extends TwViewController {
         }
       }
 
-      if ( !data.family.impossible ) {
+      if ( data.family && data.family.impossible ) {
+        res.render('myt-data.submain.html', { data });
+      } else {
         // 가입이 가능한 경우에만
         this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
           if ( family.code === API_CODE.CODE_00 ) {
@@ -216,8 +226,6 @@ class MytDataSubmainController extends TwViewController {
           }
           res.render('myt-data.submain.html', { data });
         });
-      } else {
-        res.render('myt-data.submain.html', { data });
       }
     });
   }
