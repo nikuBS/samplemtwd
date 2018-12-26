@@ -15,8 +15,8 @@ export enum SKIP_NAME {
 
 export const UNLIMIT_NAME = {
   '1': '무제한',
-  'B': '기본제공',
-  'M': '무제한'
+  B: '기본제공',
+  M: '무제한'
 };
 
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)
@@ -124,8 +124,8 @@ export enum MYT_DATA_CHARGE_TYPE_NAMES {
   LIMIT_CHARGE = '데이터 한도 요금',
   TING_CHARGE = '팅 쿠키즈 안심요금',
   TING_GIFT = '팅 요금 선물',
-  REFILL_USAGE = '리필 쿠폰 사용',
-  REFILL_GIFT = '리필 쿠폰 선물',
+  REFILL_USAGE = '리필쿠폰 사용',
+  REFILL_GIFT = '리필쿠폰 선물',
   ALL = '전체'
 }
 
@@ -548,7 +548,7 @@ export const PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
   USAGE_TXT: '사용량',
   MONTH_TXT: '{0}개월',
   RECENT_AVG_TXT: '최근 {0} 평균',
-  RECENT_MAX_TXT: '최근 {0} 최대',
+  RECENT_MAX_TXT: '최근 {0} 최대'
 };
 
 export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
