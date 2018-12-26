@@ -28,7 +28,8 @@ Tw.ProductCommonCallplanRedirect.prototype = {
       return this._historyService.goBack();
     }
 
-    this._historyService.replaceURL(this._redirectUrl);
+    Tw.CommonHelper.openUrlExternal(this._redirectUrl);
+    this._historyService.goBack();
   }
 
 };
