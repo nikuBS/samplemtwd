@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
+import { MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
 
 interface Coupon {
   copnIsueNum: string;
@@ -98,6 +99,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
       item.usePsblStaDt = DateHelper.getShortDateNoDot(item.usePsblStaDt);
       item.usePsblEndDt = DateHelper.getShortDateNoDot(item.usePsblEndDt);
       item.isGift = item.copnOperStCd === 'A20';  // A20: 선물, A10: 장기가입, A14: 10년주기
+      item.copnNm = MYT_DATA_RECHARGE_COUPON[item.copnOperStCd];
       return item;
     });
   }
