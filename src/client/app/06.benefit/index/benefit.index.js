@@ -77,7 +77,7 @@ Tw.BenefitIndex.prototype = {
     };
 
     // Giga 선택시
-    if ($this.val() === 'G0') {
+    if ($this.val() === 'G1') {
       if (_cnt < 5) {
         fnAddBtnDisabled(false);
       } else {
@@ -112,7 +112,7 @@ Tw.BenefitIndex.prototype = {
     // 증가 클릭
     else {
       // 광랜 4회선, Giga : 5회선
-      var _maxCnt = this.$internetType.filter(':checked').val() === 'G0' ? 5 : 4;
+      var _maxCnt = this.$internetType.filter(':checked').val() === 'G1' ? 5 : 4;
       $lineCnt.text(_cnt++ > _maxCnt ? _maxCnt : _cnt);
       if (_cnt >= _maxCnt) {
         $this.prop('disabled', true).addClass('active');
@@ -146,6 +146,9 @@ Tw.BenefitIndex.prototype = {
     });
     Handlebars.registerHelper('isNotEmpty', function (val, options) {
       return !Tw.FormatHelper.isEmpty(val) ? options.fn(this) : options.inverse(this);
+    });
+    Handlebars.registerHelper('cdn', function(val){
+      return Tw.Environment.cdn + val;
     });
   },
 
@@ -201,7 +204,10 @@ Tw.BenefitIndex.prototype = {
 
     // 혜택.할인 건수 시작
     if ((resp = arguments[6]).code === Tw.API_CODE.CODE_00) {
+      // 요금할인
       data.benefitDiscount += resp.result.priceAgrmtList.length;
+      // 요금할인- 복지고객
+      data.benefitDiscount += (resp.result.wlfCustDcList && resp.result.wlfCustDcList.length > 0) ? resp.result.wlfCustDcList.length : 0;
     }
     // 결합할인
     if ((resp = arguments[7]).code === Tw.API_CODE.CODE_00) {
@@ -213,11 +219,9 @@ Tw.BenefitIndex.prototype = {
     // 장기가입 혜택 건수
     if ((resp = arguments[8]).code === Tw.API_CODE.CODE_00) {
       // 장기가입 쿠폰
-      data.benefitDiscount += resp.result.benfList.length;
+      data.benefitDiscount += (resp.result.benfList && resp.result.benfList.length > 0) ? 1 : 0;
       // 장기가입 요금
-      if (resp.result.discount) {
-        data.benefitDiscount += 1;
-      }
+      data.benefitDiscount += (resp.result.dcList && resp.result.dcList.length > 0) ? resp.result.dcList.length : 0;
     }
     // 혜택.할인 건수 끝
 
@@ -315,7 +319,7 @@ Tw.BenefitIndex.prototype = {
     }
 
     this.$list.empty();
-    var cnt = category === '' ? 10 : 50;
+    var cnt = category === '' ? Tw.DEFAULT_LIST_COUNT : 50;
     // 더보기 설정
     this._moreViewSvc.init({
       list: resp.result.list,

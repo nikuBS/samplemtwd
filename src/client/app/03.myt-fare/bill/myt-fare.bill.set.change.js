@@ -1,4 +1,4 @@
-/**
+1/**
  * FileName: myt-fare.bill.set.change.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018. 9. 21
@@ -192,7 +192,7 @@ Tw.MyTFareBillSetChange.prototype = {
     }
 
     // 휴대폰 번호 전체 표시 여부
-    if ((mergeType !== 'HX' || mergeType !== 'HB')) {
+    if (!(mergeType === 'HX' || mergeType === 'HB')) {
       if (mergeType === 'BX') {
         if (lineType === 'S') {
           if (isDisplay) {
@@ -239,6 +239,7 @@ Tw.MyTFareBillSetChange.prototype = {
           if (this._data.kidsYn === 'Y') {
             if (isDisplay) {
               this._toggleElement(this._options.eq(3), true);
+              this._changeCcurNotiYn(this._options.eq(3).find('[name="ccurNotiYn"]'));
             } else {
               this._checkedSlideCheckbox('ccurNotiYn', _data.ccurNotiYn); // 법정대리인 함께 수령
             }
@@ -301,11 +302,14 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
+  _changeCcurNotiYn: function(context) {
+    var _isChecked = context.is(':checked');
+    this._toggleElement(context.data('toggleId'), _isChecked);
+  },
+
   // 법정대리인 함께 수령 스위칭
   _onChangeCcurNotiYn: function (e) {
-    var _$this = $(e.currentTarget);
-    var _isChecked = _$this.is(':checked');
-    this._toggleElement(_$this.data('toggleId'), _isChecked);
+    this._changeCcurNotiYn($(e.currentTarget));
   },
 
   // 안내서 변경 및 정보변경 모달창
