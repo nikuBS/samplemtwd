@@ -87,7 +87,8 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const renderCommonInfo = {
+    const ntcId = req.query.ntcId || null,
+      renderCommonInfo = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       title: CUSTOMER_NOTICE_CATEGORY.TWORLD
@@ -105,6 +106,7 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
         }
 
         res.render('svc-info/customer.svc-info.notice.html', Object.assign(renderCommonInfo, {
+          ntcId: ntcId,
           category: this._category,
           categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
           data: this._convertData(data.result)
