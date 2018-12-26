@@ -515,7 +515,7 @@ Tw.CUSTOMER_HELPLINE_AREAS = [
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
   { txt: '지점', 'radio-attr': 'data-index="0" data-code="T40"' },
   { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"' },
-  { txt: '이용안내', 'radio-attr': 'data-index="2" data-code="T30"' },
+  { txt: '고객센터', 'radio-attr': 'data-index="2" data-code="T30"' },
   { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"' },
   { txt: 'AS센터', 'radio-attr': 'data-index="4" data-code="T20"' },
   { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"' }
