@@ -85,16 +85,14 @@ Tw.MyTFareBill.prototype = {
     var $rainbowSelector = this.$layer.find('.fe-rainbow-point');
     var cashbagText = $.trim($cashbagSelector.text());
     var tpointText = $.trim($tpointSelector.text());
-    var rainbowText = $.trim($rainbowSelector.text());
 
     if (this._isPointTarget) {
       $cashbagSelector.find('.spot').text(Tw.FormatHelper.addComma(this._okCashbag) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
       $tpointSelector.find('.spot').text(Tw.FormatHelper.addComma(this._tPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
-      $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
     } else {
       $cashbagSelector.text(cashbagText + Tw.MYT_FARE_PAYMENT_NAME.POINT + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE);
       $tpointSelector.text(tpointText + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE);
-      $rainbowSelector.text(rainbowText + ' ' + Tw.MYT_FARE_PAYMENT_NAME.INQUIRE);
+      $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
     }
   },
   _bindEvent: function () {
@@ -111,17 +109,6 @@ Tw.MyTFareBill.prototype = {
   _setEvent: function (uri) {
     this.$uri = uri;
     this._popupService.close();
-  },
-  _getPointErrorMessage: function ($target) {
-    var messageName = '';
-    if ($target.hasClass('fe-ok-cashbag')) {
-      messageName = 'ALERT_2_A74';
-    } else if ($target.hasClass('fe-t-point')) {
-      messageName = 'ALERT_2_A75';
-    } else {
-      messageName = 'ALERT_2_A76';
-    }
-    return messageName;
   },
   _goLoad: function () {
     if (this.$uri !== null) {
