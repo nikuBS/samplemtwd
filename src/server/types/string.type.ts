@@ -142,6 +142,12 @@ export enum MYT_DATA_RECHARGE_MSG {
   CHANGE = '변경하기'
 }
 
+export enum MYT_DATA_RECHARGE_COUPON {
+  A10 = '장기가입 리필쿠폰',
+  A14 = '10년주기 리필쿠폰',
+  A20 = '선물받은 리필쿠폰'
+}
+
 export enum PRODUCT_INFINITY_BENEFIT {
   NA00006114 = 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
   NA00006115 = '무료영화예매 2회 / 1개월',

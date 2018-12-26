@@ -10,7 +10,9 @@ Tw.CustomerAgentsearchDetail = function (mapEl, coord) {
 
   this._dataChargeConfirmed = false;
 
-  this._showDataChargePopupIfNeeded(mapEl, coord);
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function() {
+    this._showDataChargePopupIfNeeded(mapEl, coord);
+  }, this))
 };
 
 Tw.CustomerAgentsearchDetail.prototype = {
