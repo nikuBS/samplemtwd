@@ -12595,7 +12595,7 @@ a.bt-link-tx.underline.small {
   .productinfoscroll-box .product-info {
     display: block;
     width: 9.375rem;
-    height: 6.25rem;
+    height: 7.1875rem;
     margin-left: 0.4375rem;
     padding: 0.75rem 0.75rem 0.625rem;
     border-radius: 0.3125rem;
@@ -12607,6 +12607,7 @@ a.bt-link-tx.underline.small {
     text-align: left;
     line-height: normal; }
     .productinfoscroll-box .product-info .title {
+      word-break: break-all;
       color: #000;
       font-size: 0.875rem;
       font-weight: 700; }
@@ -23446,9 +23447,7 @@ a.bt-link-tx.underline.small {
       background-size: 100%;
       position: absolute;
       right: -0.3125rem;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-              transform: translateY(-50%); }
+      top: 1.0625rem; }
     .calling-plan .wrap-link .badge {
       display: inline-block;
       margin: 0 0.3125rem 0 0;
@@ -23459,8 +23458,22 @@ a.bt-link-tx.underline.small {
       vertical-align: middle;
       line-height: 1.2;
       color: #000000; }
+    .calling-plan .wrap-link .view-tx {
+      position: absolute;
+      right: 0.8125rem;
+      top: 1rem;
+      font-size: 1.0625rem;
+      line-height: 1.2; }
+
+.device_ios .calling-plan .wrap-link:after {
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%); }
 
 .device_ios .calling-plan .wrap-link .stit {
+  padding-top: 0.0625rem; }
+
+.device_ios .calling-plan .wrap-link .view-tx {
   padding-top: 0.0625rem; }
 
 input[type="checkbox"].formcheck-big {
@@ -24312,6 +24325,48 @@ input[type="radio"].formradio-small:checked:disabled + label {
 .btn-more.no-border {
   border-top: none; }
 
+.benefit-link li {
+  padding-left: 33px;
+  position: relative; }
+  .benefit-link li .unit {
+    display: block;
+    color: #959595;
+    height: 3.25rem;
+    line-height: 3.25rem;
+    font-size: 0.875rem;
+    letter-spacing: -0.025em; }
+    .benefit-link li .unit.on {
+      color: #ef4b49;
+      font-weight: 700; }
+  .benefit-link li:before {
+    content: '';
+    width: 0.0625rem;
+    height: 1rem;
+    background: #f2f2f2;
+    position: absolute;
+    left: 1rem;
+    top: 1.1875rem; }
+  .benefit-link li:first-of-type {
+    padding-left: 0; }
+    .benefit-link li:first-of-type:before {
+      display: none; }
+
+.device_ios .benefit-link li:before {
+  top: 1.0625rem; }
+
+.discountbenefit-list .category-type .link .img-field {
+  border-radius: 0.3125rem;
+  overflow: hidden; }
+
+.discountbenefit-list .category-type .link .state-tx {
+  position: absolute;
+  right: 0.625rem;
+  top: 0.625rem;
+  width: 2.625rem;
+  height: 1.125rem;
+  background: url(/img/svg/badge_status_04_01.svg);
+  background-size: 2.625rem auto; }
+
 /* 김연주 */
 /* 공통 시작 */
 .pd0 {
@@ -24349,15 +24404,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
   height: 1rem;
   margin: -0.125rem 0 0 0.25rem;
   vertical-align: middle; }
-
-.device_android .btn-tip {
-  margin-top: 0; }
-
-.device_android .pg-chk-list .btn-tip {
-  margin-top: -0.1875rem; }
-
-.device_android .tit-wrap .btn-tip {
-  margin-top: 0.1875rem; }
 
 .cont-box .pg-chk-tit {
   margin-top: 0.3125rem;
@@ -24415,10 +24461,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
     border-left: 1px solid #f2f2f2; }
     .btn-link-list.col3 li:first-child {
       border-left: 0; }
-
-.device_android .btn-link-list li button,
-.device_android .btn-link-list li a {
-  padding: 1.1875rem 0 1.25rem; }
 
 .tit-wrap .btn-tip {
   margin-top: 0.0625rem;
@@ -24516,9 +24558,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
   /*font-weight:$fw-normal;*/
   line-height: 1rem; }
 
-.device_android .btn-edit {
-  margin-top: -0.0625rem !important; }
-
 .full-link-list li {
   border-bottom: 1px solid #f2f2f2; }
   .full-link-list li:last-child {
@@ -24530,7 +24569,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     width: 100%;
-    padding: 1.0625rem 1.8125rem 0.9375rem 1rem;
+    padding: 1.1875rem 1.8125rem 1.0625rem 1rem;
     text-align: left;
     font-size: 0;
     line-height: 1;
@@ -24575,10 +24614,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
       background-size: 100%; }
   .full-link-list li .no-link:after {
     display: none; }
-
-.device_android .full-link-list li button,
-.device_android .full-link-list li a {
-  padding: 0.9375rem 1.8125rem 1rem 1rem; }
 
 .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots {
   top: 1.25rem;
@@ -24681,14 +24716,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
         .my-line-info li button .cont .badge, .my-line-info li a .cont .badge {
           vertical-align: middle;
           margin-top: -0.25rem; }
-
-.device_android .my-line-info li button,
-.device_android .my-line-info li a {
-  padding: 0.9375rem 0.875rem 1rem 3.5rem; }
-
-.device_android .my-line-info .icon-children {
-  margin-top: 0.125rem;
-  vertical-align: top; }
 
 .separate-link-list {
   margin-top: 1.1875rem; }
@@ -25096,9 +25123,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
       background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 23% 50%;
       background-size: 100%; }
 
-.device_android .inquire-link-list li {
-  padding: 1.0625rem 0.875rem 1.125rem 0; }
-
 .sort-area {
   overflow: hidden;
   padding: 0.75rem 1rem;
@@ -25311,9 +25335,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .statement-cont.type2 .icon-internet-48 {
   width: 1.375rem; }
-
-.device_android .statement-cont.type2 .statement-detail .accordion .acco-list .acco-box .acco-tit button {
-  padding: 1.1875rem 1.25rem 1.25rem 0; }
 
 .bill-quick-info {
   margin: -0.3125rem 0;
@@ -25653,6 +25674,10 @@ input[type="radio"].formradio-small:checked:disabled + label {
   font-size: 0.75rem;
   color: #959595; }
 
+.subtit-info2 {
+  font-size: 0.75rem;
+  color: #666666; }
+
 .form-wrap .form-address .inputbox .input input {
   line-height: 2.625rem; }
 
@@ -25703,9 +25728,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
     line-height: 1.5rem; }
   .radio-set .custom-form:not(:first-child) {
     margin-left: 0.625rem; }
-
-.device_android .radio-set .lab {
-  line-height: 1.375rem; }
 
 .agreement-list li {
   position: relative;
@@ -25832,12 +25854,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
     font-size: 0.875rem;
     color: #959595; }
 
-.device_ios .issue-details li {
-  padding: 1.125rem 0 1rem; }
-
-.device_android .issue-details li {
-  padding: 1rem 0 1.0625rem; }
-
 .ico-md-deliv {
   width: 3.75rem;
   height: 3.75rem;
@@ -25880,6 +25896,139 @@ input[type="radio"].formradio-small:checked:disabled + label {
   margin: -0.0625rem 0.625rem 0 0;
   vertical-align: top; }
 
+.line-control-wrap {
+  position: relative;
+  display: inline-block;
+  height: 2.125rem;
+  padding: 0 3.4375rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 1.875rem;
+  line-height: 2.125rem; }
+  .line-control-wrap.all-disabled {
+    border-color: #f2f2f2; }
+    .line-control-wrap.all-disabled .txt {
+      color: #dcdcdc; }
+  .line-control-wrap .txt {
+    font-size: 0.875rem;
+    line-height: 2.125rem;
+    color: #666666;
+    font-weight: 700; }
+  .line-control-wrap .minus {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.625rem;
+    height: 2.125rem;
+    content: '';
+    white-space: nowrap;
+    text-indent: 100%; }
+    .line-control-wrap .minus:before {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0.8125rem;
+      height: 0.125rem;
+      content: '';
+      background: #666666;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+    .line-control-wrap .minus.disabled:before, .line-control-wrap .minus[disabled=disabled]:before {
+      background: #dcdcdc; }
+  .line-control-wrap .plus {
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2.625rem;
+    height: 2.125rem;
+    content: '';
+    white-space: nowrap;
+    text-indent: 100%; }
+    .line-control-wrap .plus:before {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0.8125rem;
+      height: 0.125rem;
+      content: '';
+      background: #666666;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+    .line-control-wrap .plus:after {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0.125rem;
+      height: 0.8125rem;
+      content: '';
+      background: #666666;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+    .line-control-wrap .plus.disabled:before, .line-control-wrap .plus.disabled:after, .line-control-wrap .plus[disabled=disabled]:before, .line-control-wrap .plus[disabled=disabled]:after {
+      background: #dcdcdc; }
+
+.discount-look-ahead .board-type .dis-tit {
+  padding: 1.3125rem 0 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 700; }
+
+.discount-look-ahead .board-type .inner-wrap {
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid #f2f2f2; }
+  .discount-look-ahead .board-type .inner-wrap.noborder {
+    border: 0; }
+
+.board-type-btn-wrap .btn {
+  display: block;
+  text-align: center;
+  line-height: 3.1875rem;
+  width: 100%;
+  height: 3.1875rem;
+  color: #000000;
+  font-size: 0.9375rem; }
+  .board-type-btn-wrap .btn[disabled=disabled], .board-type-btn-wrap .btn.disabled {
+    color: #dcdcdc; }
+
+.cont-box.bgtype1 {
+  background: #f7f9fa; }
+
+.total-discount-info .td-txt {
+  overflow: hidden;
+  padding: 0 1rem; }
+  .total-discount-info .td-txt .tit {
+    float: left;
+    font-size: 0.9375rem;
+    line-height: 3.25rem; }
+  .total-discount-info .td-txt .value {
+    float: right;
+    font-size: 0.9375rem;
+    line-height: 3.25rem;
+    color: #f76252;
+    font-weight: 700; }
+
+.total-discount-info .condition {
+  padding: 0.875rem 1rem 1.125rem; }
+  .total-discount-info .condition .tit {
+    font-size: 0.8125rem; }
+  .total-discount-info .condition .bul-text-list {
+    padding: 0; }
+    .total-discount-info .condition .bul-text-list li:first-child {
+      margin-top: 0.3125rem; }
+
+.total-discount-info .btn-reset-wrap .btn {
+  display: block;
+  width: 100%;
+  height: 3.1875rem;
+  text-align: center;
+  line-height: 3.1875rem;
+  color: #000000;
+  font-size: 0.9375rem;
+  background: #fff; }
+
+.device_ios .issue-details li {
+  padding: 1.125rem 0 1rem; }
+
 .device_ios .contract-info-wrap.mbs-reissue ul.contract-info > li .tit {
   padding: 1.125rem 0 1rem; }
 
@@ -25900,6 +26049,52 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .device_ios .solid-link .ico {
   top: 48%; }
+
+.device_ios .radiobox.btn-type02 .radio-txt.ff-tb {
+  line-height: 2.25rem !important; }
+
+.device_ios .line-control-wrap .txt {
+  line-height: 2.25rem; }
+
+.device_android .full-link-list li button,
+.device_android .full-link-list li a {
+  padding: 1.0625rem 1.8125rem 1.125rem 1rem; }
+
+.device_android .btn-edit {
+  margin-top: -0.0625rem !important; }
+
+.device_android .btn-link-list li button,
+.device_android .btn-link-list li a {
+  padding: 1.1875rem 0 1.25rem; }
+
+.device_android .btn-tip {
+  margin-top: 0; }
+
+.device_android .pg-chk-list .btn-tip {
+  margin-top: -0.1875rem; }
+
+.device_android .tit-wrap .btn-tip {
+  margin-top: 0.1875rem; }
+
+.device_android .issue-details li {
+  padding: 1rem 0 1.0625rem; }
+
+.device_android .my-line-info li button,
+.device_android .my-line-info li a {
+  padding: 0.9375rem 0.875rem 1rem 3.5rem; }
+
+.device_android .my-line-info .icon-children {
+  margin-top: 0.125rem;
+  vertical-align: top; }
+
+.device_android .inquire-link-list li {
+  padding: 1.0625rem 0.875rem 1.125rem 0; }
+
+.device_android .statement-cont.type2 .statement-detail .accordion .acco-list .acco-box .acco-tit button {
+  padding: 1.1875rem 1.25rem 1.25rem 0; }
+
+.device_android .radio-set .lab {
+  line-height: 1.375rem; }
 
 .device_android .benefit-popularity-wrap .tit-wrap {
   padding: 1.1875rem 1rem 1.25rem; }
@@ -26711,18 +26906,20 @@ input[type="radio"].formradio-small:checked:disabled + label {
     height: 100%; }
     .discountbenefit-list .category-type .link .img-field img {
       width: 100%;
-      height: 100%; }
+      height: 100%;
+      vertical-align: top; }
     .discountbenefit-list .category-type .link .text-field {
       position: absolute;
-      top: 1.9375rem;
+      top: 1.875rem;
       left: 1.25rem;
       text-align: left; }
       .discountbenefit-list .category-type .link .text-field .title {
         color: #ffffff;
         font-size: 1.25rem;
-        font-weight: 700; }
+        font-weight: 700;
+        line-height: 1.5625rem; }
       .discountbenefit-list .category-type .link .text-field .text {
-        margin-top: 0.75rem;
+        margin-top: 0.5rem;
         color: #ffffff;
         font-size: 0.8125rem;
         line-height: 1.125rem; }

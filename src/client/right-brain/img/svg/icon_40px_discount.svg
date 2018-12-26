@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>icon_40px_discount</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mdpi/##Icon/40/Discount</title>
     <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="##Icon/40/Discount">
-            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="40.32" height="40.32"></rect>
-            <g id="Group-15" transform="translate(1.008000, 5.376000)" stroke="#666666" stroke-width="2">
-                <path d="M36.632,23.7206294 L36.632,5.29803142 C34.570015,5.00758328 32.8907621,3.49496683 32.3793206,1.504 L5.92467944,1.504 C5.41323794,3.49496683 3.73398504,5.00758328 1.672,5.29803142 L1.672,23.7206294 C3.92792183,24.0378403 5.71394369,25.8153902 6.03396724,28.064 L32.2700328,28.064 C32.5900563,25.8153902 34.3760782,24.0378403 36.632,23.7206294 Z" id="Combined-Shape"></path>
-                <path d="M23.2482353,10.3517647 L14.8191472,18.7808528" id="Line-14" stroke-linecap="square"></path>
-                <circle id="Oval-18" cx="13.44" cy="11.76" r="2.52"></circle>
-                <circle id="Oval-18-Copy" cx="24.36" cy="17.64" r="2.52"></circle>
-            </g>
+    <g id="##Icon/40/Discount" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="40.32" height="40.32"></rect>
+        <g id="Group-19" transform="translate(4.000000, 5.000000)" stroke="#666666">
+            <path d="M3,13 L3,29.941 C3,30.526 3.447,31 4,31 L28,31 C28.553,31 29,30.526 29,29.941 L29,13" id="Stroke-3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M30,12 L2,12 C0.896,12 0,11.104 0,10 L0,6 C0,4.896 0.896,4 2,4 L30,4 C31.104,4 32,4.896 32,6 L32,10 C32,11.104 31.104,12 30,12 Z" id="Stroke-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polyline id="Stroke-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="19.5 0.5 16 3.5 12.5 0.5"></polyline>
+            <path d="M10,4.5 L10,11.5" id="Stroke-9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M21,4.5 L21,11.5" id="Stroke-11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12,20 C13.104,20 14,19.104 14,18 C14,16.896 13.104,16 12,16 C10.896,16 10,16.896 10,18 C10,19.104 10.896,20 12,20 Z" id="Stroke-13" stroke-width="2"></path>
+            <path d="M20,26 C21.104,26 22,25.104 22,24 C22,22.896 21.104,22 20,22 C18.896,22 18,22.896 18,24 C18,25.104 18.896,26 20,26 Z" id="Stroke-15" stroke-width="2"></path>
+            <path d="M11,25 L21,17" id="Stroke-17" stroke-width="2"></path>
         </g>
     </g>
 </svg>
