@@ -36,13 +36,13 @@
 <% if (pageId === 'data-share') { %>
 <script>
     $(document).ready(function() {
-        new Tw.MyTJoinProductCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>, '<%= pageInfo.menuId %>');
+        new Tw.MyTJoinCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>, '<%= pageInfo.menuId %>');
     });
 </script>
 <% } else if (pageId === 'tb-free') { %>
 <script>
     $(document).ready(function() {
-        new Tw.MyTJoinProductCombinationsTBFree($('.wrap'), <%- JSON.stringify(svcInfo) %>);
+        new Tw.MyTJoinCombinationsTBFree($('.wrap'), <%- JSON.stringify(svcInfo) %>);
     });
 </script>
 <% } %>

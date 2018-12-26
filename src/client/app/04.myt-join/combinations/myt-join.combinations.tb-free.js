@@ -4,7 +4,7 @@
  * Date: 2018.11.01
  */
 
-Tw.MyTJoinProductCombinationsTBFree = function(rootEl, svcInfo) {
+Tw.MyTJoinCombinationsTBFree = function(rootEl, svcInfo) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._member = svcInfo;
@@ -13,7 +13,7 @@ Tw.MyTJoinProductCombinationsTBFree = function(rootEl, svcInfo) {
   this.bindEvent();
 };
 
-Tw.MyTJoinProductCombinationsTBFree.prototype = {
+Tw.MyTJoinCombinationsTBFree.prototype = {
   bindEvent: function() {
     this.$container.on('click', '.fe-benefit', $.proxy(this._openChangeBenefitPopup, this));
   },

@@ -4,7 +4,7 @@
  * Date: 2018.10.30
  */
 
-Tw.MyTJoinProductCombinationsDataShare = function(rootEl, combination, pageId) {
+Tw.MyTJoinCombinationsDataShare = function(rootEl, combination, pageId) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -18,7 +18,7 @@ Tw.MyTJoinProductCombinationsDataShare = function(rootEl, combination, pageId) {
   this.init();
 };
 
-Tw.MyTJoinProductCombinationsDataShare.prototype = {
+Tw.MyTJoinCombinationsDataShare.prototype = {
   init: function() {
     this._remainAmount = Number(this._groupInfo.grpRemainPt);
   },
@@ -71,7 +71,6 @@ Tw.MyTJoinProductCombinationsDataShare.prototype = {
     var subject = this._members[this._subjectIdx];
     var groupInfo = this._groupInfo;
 
-    // TODO: SMS 인증
     this._apiService
       .request(Tw.API_CMD.BFF_05_0138, {
         ofrrSvcMgmtNum: groupInfo.svcMgmtNum,
