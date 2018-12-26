@@ -5,9 +5,10 @@
  * Page ID: MP_02_02_03_08
  * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역,지정번호입력변경
  */
-Tw.ProductMobileplanSettingLocation = function(rootEl, options) {
+Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSetting) {
   this.$container = rootEl;
   this._options = options;
+  this.showNumberSetting = showNumberSetting;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
   this._nativeService = Tw.Native;
@@ -29,8 +30,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   _bindEvent: function() {
     // 지역할인 tab
     $('.discount-location').on('click', '.bt-line-gray1', $.proxy(this._removeLocation, this));
-    $('#btnSearchPop').click($.proxy(this._openLocSearchPopup, this));
-    $('#loc-search-input').click($.proxy(this._openLocSearchPopup, this));
+    $('#btnSearchPop').click($.proxy(this._onclickLocSchPopup, this));
+    $('#loc-search-input').click($.proxy(this._onclickLocSchPopup, this));
 
     // 지정번호 tab
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
@@ -192,10 +193,45 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
 
+  _onclickLocSchPopup: function(){
+
+    // 2개 이상인 경우
+    //3_A78
+    if($('.discount-location li').length >= 2){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A78.TITLE);
+      return;
+    }
+
+    if(this.showNumberSetting){
+      this._openLocSearchPopup();
+
+    }else {
+      // 지역할인요금제 및 TTL지역할인+요금제 인 경우
+      // 3_A77 : "지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?"
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A77.TITLE,
+        null,
+        $.proxy(function(){
+          this._popupService.close();
+          setTimeout($.proxy(function(){
+            this._openLocSearchPopup();
+          }, this), 500);
+          // this._popupService.close();
+          // this._openLocSearchPopup();
+        }, this),
+        // $.proxy(this._openLocSearchPopup, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES
+      );
+    }
+  },
+
   /**
    * 지역찾기 팝업
    */
   _openLocSearchPopup: function(){
+
     $('#loc-search-input').trigger('blur');
     var keyword = $('#loc-search-input').val();
     this._popupService.open(
@@ -219,7 +255,15 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _addLocation: function(dcArea) {
-    this._settingTargetLocation('1', dcArea, $.proxy(this._reloadLocList, this));
+
+    if(this.showNumberSetting){
+      // TTL캠퍼스10요금제인 경우 갱신
+      dcArea.oldNum = $('.discount-location li').data('dcareanum');
+      dcArea.auditDtm = $('.discount-location li').data('auditdtm');
+      this._settingTargetLocation('2', dcArea, $.proxy(this._reloadLocList, this));
+    } else {
+      this._settingTargetLocation('1', dcArea, $.proxy(this._reloadLocList, this));
+    }
   },
 
   /**
@@ -227,6 +271,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _removeLocation: function(event){
+    if ($('.discount-location li').length === 1) {
+      this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_LOCATION_MIN);
+      return;
+    }
+
     var dcAreaNum = $(event.target).closest('li').data('dcareanum');
     var dcAreaNm = $(event.target).closest('li').data('dcareanm');
     var auditDtm = $(event.target).closest('li').data('auditdtm');
@@ -270,11 +319,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _settingTargetLocation: function(chgCd, dcArea, callback){
     var params = {
-      opClCd: chgCd,            // 변경코드 1:등록, 2:변경, 3:삭제
-      frDcAreaNum: null,        // 현재 할인지역코드
-      toDcAreaNum: dcArea.num,  // 변경할 할인지역코드
-      toDcAreaNm: dcArea.name,  // 변경할 할인지역명
-      auditDtm: dcArea.auditDtm // 최종변경일시 (조회때 받은값)
+      opClCd: chgCd,             // 변경코드 1:등록, 2:변경, 3:삭제
+      frDcAreaNum: dcArea.oldNum,// 현재 할인지역코드
+      toDcAreaNum: dcArea.num,   // 변경할 할인지역코드
+      toDcAreaNm: dcArea.name,   // 변경할 할인지역명
+      auditDtm: dcArea.auditDtm  // 최종변경일시 (조회때 받은값)
     };
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
