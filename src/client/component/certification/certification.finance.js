@@ -9,9 +9,6 @@ Tw.CertificationFinance = function () {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
-  this._certSkFull = new Tw.CertificationSkFull();
-  this._certPublic = new Tw.CertificationPublic();
-
   this._svcInfo = null;
   this._authUrl = null;
   this._callback = null;
@@ -68,17 +65,21 @@ Tw.CertificationFinance.prototype = {
     }
   },
   _onClickSkSms: function () {
+    this._certSkFull = new Tw.CertificationSkFull();
     this._certSkFull.open(this._authUrl, this._authKind, $.proxy(this._completeIdentification, this));
   },
   _onClickKtSms: function () {
+    this._certNice = new Tw.CertificationNice();
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, '',
       $.proxy(this._completeIdentification, this));
   },
   _onClickLgSms: function () {
+    this._certNice = new Tw.CertificationNice();
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, '',
       $.proxy(this._completeIdentification, this));
   },
   _onClickIpin: function () {
+    this._certNice = new Tw.CertificationNice();
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, null, '', $.proxy(this._completeIdentification, this));
   },
   _onClickBio: function () {
@@ -88,6 +89,7 @@ Tw.CertificationFinance.prototype = {
     this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onCheckFido, this));
   },
   _onCheckFido: function (resp) {
+    this._certBio = new Tw.CertificationBio();
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this), true, this._fidoTarget);
     } else {
