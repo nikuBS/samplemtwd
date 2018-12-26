@@ -61,7 +61,8 @@ Tw.SMS_VALIDATION = {
   NOT_MATCH_CODE: '인증번호가 일치하지 않습니다',
   EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.',
   ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
-  SUCCESS: '인증이 완료 되었습니다.'
+  SUCCESS: '인증이 완료 되었습니다.',
+  EMPTY_CERT: '인증번호를 입력해 주세요.'
 };
 
 Tw.POPUP_TITLE = {
