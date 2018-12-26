@@ -341,7 +341,7 @@ Tw.MyTDataSubMain.prototype = {
       new Tw.PPSRechargeLayer(this.$container);
     }
     else {
-      new Tw.ImmediatelyRechargeLayer(this.$container);
+      new Tw.ImmediatelyRechargeLayer(this.$container, this.data.svcInfo.prodId);
     }
   },
 
