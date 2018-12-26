@@ -124,10 +124,15 @@ Tw.MyTDataUsage.prototype = {
     this.$container.on('click', '#list-band-data-share .fe-btn-request', $.proxy(this._requestBandDetail, this));
 
 
-    // 내폰끼리 결합 상세 조회
+    // 통합공유 데이터 상세
     this.$container.on('click', '.fe-btn-share', $.proxy(function () {
       this._historyService.goLoad('/myt-data/hotdata/total-sharing');
     }, this));
+
+
+    // 데이터 함께쓰기 상세 조회
+    this.$container.on('click', '#fe-data-share .fe-btn-used-data', $.proxy(this._onClickBtnDataShareDetail, this));
+
 
   },
 
@@ -157,18 +162,18 @@ Tw.MyTDataUsage.prototype = {
         var $button = $(event.currentTarget);
         var $used = $button.closest('li').find('.fe-use');
         var dailyUsed = this._getDailyUsed(resp.result, $button.data('prodid'));
-        if (Tw.FormatHelper.isEmpty(dailyUsed)) {
+        if ( Tw.FormatHelper.isEmpty(dailyUsed) ) {
           this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.DAILY_USED_USAGE_ERROR);
           return;
         }
-        if (dailyUsed) {
+        if ( dailyUsed ) {
           $button.hide();
           dailyUsed.showUsed = this._convFormat(dailyUsed.used, dailyUsed.unit);
           $used.find('strong').text(dailyUsed.showUsed.data + dailyUsed.showUsed.unit);
           $used.show();
         }
       }, this))
-      .fail(function() {
+      .fail(function () {
         Tw.CommonHelper.endLoading('.container');
       });
   },
@@ -216,6 +221,9 @@ Tw.MyTDataUsage.prototype = {
     if ( 'Y' === this._options.bandDataSharing ) {
       reqList.push({ command: Tw.API_CMD.BFF_05_0078, params: {} }); // 내 폰끼리 결합
     }
+    if ( 'Y' === this._options.dataSharing && !JSON.parse(this._options.hasDefaultData) ) { // 기본제공 데이터 없음 && 데이터 함께쓰기 이용중
+      reqList.push({ command: Tw.API_CMD.BFF_05_0004, params: {} });
+    }
 
     if ( reqList.length <= 0 ) {
       return;
@@ -252,6 +260,9 @@ Tw.MyTDataUsage.prototype = {
               break;
             case Tw.API_CMD.BFF_05_0078.path :
               this._resultHandlerBandDataShare(resp.result);
+              break;
+            case Tw.API_CMD.BFF_05_0004.path :
+              this._resultHandlerDataShare(resp.result);
               break;
             default :
               break;
@@ -416,6 +427,35 @@ Tw.MyTDataUsage.prototype = {
 
   },
 
+
+  /**
+   * 데이터 함께쓰기 사용량 목록 result handler
+   * @param result
+   * @private
+   */
+  _resultHandlerDataShare: function (result) {
+    var _$dataChildTmpl = this.$container.find('#fe-child-tmpl');
+    var $dataShareContainer = this.$container.find('#fe-data-share');
+    var $children = $dataShareContainer.find('.fe-children');
+    var children = result.childList || [];
+    var source = _$dataChildTmpl.html();
+    var template = Handlebars.compile(source);
+
+    if (result.data) {
+      var usedData = Tw.FormatHelper.convDataFormat(result.data.used, Tw.DATA_UNIT.KB);
+      $dataShareContainer.find('.fe-data-share-header .num em').text(usedData.data);
+      $dataShareContainer.find('.fe-data-share-header .num span').text(usedData.unit);
+    }
+
+    $children.empty();
+    _.each(children, $.proxy(function (child) {
+      child.auditDtm = Tw.DateHelper.getShortDate(child.auditDtm);
+      child.svcNum = Tw.FormatHelper.getDashedCellPhoneNumber(child.svcNum);
+      var $child = template(child);
+      $children.append($child);
+    }, this));
+  },
+
   /**
    * 내폰끼리 결합 사용량 상세 조회
    * @private
@@ -444,6 +484,46 @@ Tw.MyTDataUsage.prototype = {
       .fail($.proxy(this._requestFail, this));
 
   },
+
+  /**
+   * 데이터 함께쓰기 사용량 상세 조회
+   * @private
+   */
+  _onClickBtnDataShareDetail: function(event) {
+    event.preventDefault();
+    var targetSelector = $(event.target);
+    var svcMgmtNum = targetSelector.data('svcmgmtnum');
+    this._apiService.request(Tw.API_CMD.BFF_05_0009, { cSvcMgmtNum: svcMgmtNum })
+      .done($.proxy(this._reqDataShareDetailDone, this, targetSelector))
+      .fail($.proxy(this._reqDataShareDetailFail, this));
+  },
+
+  /**
+   * 데이터 함께쓰기 사용량 상세 조회 성공
+   * @private
+   */
+  _reqDataShareDetailDone: function (targetSelector, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var used = Tw.FormatHelper.convDataFormat(resp.result.used, Tw.DATA_UNIT.KB);
+      var $feUsedDataResult = targetSelector.parent().find('.fe-used-data-result');
+      $feUsedDataResult.find('.fe-data').text(used.data);
+      $feUsedDataResult.find('.fe-unit').text(used.unit);
+      targetSelector.hide();
+      $feUsedDataResult.show();
+    } else {
+      this._popupService.openAlert(resp.msg, resp.code);
+    }
+  },
+
+
+  /**
+   * 데이터 함께쓰기 사용량 상세 조회 실패
+   * @private
+   */
+  _reqDataShareDetailFail: function (resp) {
+    this._popupService.openAlert(resp.msg, resp.code);
+  },
+
 
   /**
    * 핸들바 helper 등록
