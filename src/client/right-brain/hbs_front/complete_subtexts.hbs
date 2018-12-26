@@ -1,24 +1,32 @@
-<div class="popup-page nobg tw-popup fixed-btn">
-  <!-- .container-wrap -->
-  <div class="container-wrap">
-    <h2 class="blind">내용</h2>
-    <div class="container">
-      <h1 class="complete-title">
-        <img src="/img/dummy/dmy-complete.jpg" alt=""/>
-        <span><strong>{{text}} 완료</strong></span>
-      </h1>
-      {{#if subtexts}}
-        <p class="complete-tx0">
-        {{#each subtexts}}
-          {{{this}}}<br>
-        {{/each}}
-        </p>
-      {{/if}}
-      <ul class="bt-slice full">
-        <li class="bt-red1">
-          <button class="fe-btn_success_close">닫기</button>
-        </li>
-      </ul>
+<div class="popup-page tw-popup pt0 fixed-bottom">
+    <div class="container-wrap">
+        <div class="container">
+            <div class="complete-wrap">
+                <div class="title-box">
+                    <i class="icon-complete-120"><span class="blind">complete</span></i>
+                    <p class="tx-tit">
+                        {{#if typeCdName}}
+                            {{typeCdName}}<br>
+                        {{/if}}
+                        <span class="tx-highlight pt10">{{text}} 완료</span>
+                    </p>
+                </div>
+                <div class="tx-contents">
+                    {{#if subtexts}}
+                        <p class="basic-txt">
+                            {{#each subtexts}}
+                                {{{this}}}<br>
+                            {{/each}}
+                        </p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="bt-fixed-area">
+        <ul class="bt-slice full">
+            <li><button type="button" class="btn-floating btn-style2 fe-btn_success_close">확인</button></li>
+        </ul>
+    </div>
 </div>
