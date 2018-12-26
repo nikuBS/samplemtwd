@@ -45,7 +45,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
       var $submitBtn = $layer.find('.bt-red1 button');
       $input.on('click', $.proxy(this._removeDash, this, $input));
       $input.on('focusout', $.proxy(this._handleFocusoutInput, this, $input, $error));
-      $input.on('keydown', $.proxy(this._handleTypeInput, this, $input, $error, $submitBtn));
+      $input.on('keyup', $.proxy(this._handleTypeInput, this, $input, $error, $submitBtn));
     }
   },
 
@@ -113,8 +113,9 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
 
   _validPhoneNumber: function(value, $error) {
     var number = value.replace(/-/g, '');
+    var validLenth = number.indexOf('010') === 0 ? 11 : 10;
 
-    if (number.length < 10 || number.length > 11) {
+    if (number.length !== validLenth) {
       this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V18);
       return false;
     } else if (!Tw.ValidationHelper.isCellPhone(number)) {
@@ -148,14 +149,12 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
     $input.attr('type', 'number');
   },
 
-  _handleTypeInput: function($input, $error, $submitBtn, e) {
-    var value = $input.val();
-    var validLenth = value.indexOf('010') === 0 ? 10 : 9;
+  _handleTypeInput: function($input, $error, $submitBtn) {
+    var value = $input.val(),
+      validLenth = value.indexOf('010') === 0 ? 11 : 10;
 
-    if (e.keyCode === 8 && value.length === validLenth + 1) {
-      $submitBtn.attr('disabled', true);
-    } else if (value.length >= validLenth) {
-      if (this._validPhoneNumber(value + e.key, $error)) {
+    if (value.length === validLenth) {
+      if (this._validPhoneNumber(value, $error)) {
         $submitBtn.removeAttr('disabled');
       }
     } else {
