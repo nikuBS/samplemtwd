@@ -128,6 +128,7 @@ Tw.CertificationSkFull.prototype = {
   },
   _successRequestCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
       this.certSeq = resp.result.seqNo;
       this.$btCert.addClass('none');
       this.$btCertAdd.removeClass('none');
