@@ -123,7 +123,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this._dataSplice(this.detailListObj[0].listData, this.detailListObj[0].startCount);
     this._svcHbDetailList(this.detailListObj, this.$detailList, this.$entryTplList);
 
-    this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
+    // this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
 
     if ( this.detailListObj[0].curLen <= 0 ) {
       this.$addBtnArea.hide();
@@ -139,7 +139,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this._dataSplice(this.detailListObj[0].listData, this.detailListObj[0].addCount);
     this._svcHbDetailList(this.detailListObj, this.$detailList, this.$entryTplList);
 
-    this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
+    // this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
 
     // Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj[0].curLen);
     if ( this.detailListObj[0].curLen <= 0 ) {
@@ -301,7 +301,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.A60, Tw.POPUP_TITLE.NOTIFY, null,
         $.proxy(function () {
 
-      }, this));
+        }, this));
 
 
     }
