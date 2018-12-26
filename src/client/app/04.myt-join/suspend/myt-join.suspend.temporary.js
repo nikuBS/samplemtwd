@@ -141,7 +141,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _requestSuspend: function () {
     this._popupService.close();
-    Tw.CommonHelper.startLoading('body', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     var params = {
       fromDt: this.$dateFrom.val().replace(/-/g, ''),
       toDt: this.$dateTo.val().replace(/-/g, ''),
@@ -164,16 +164,17 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _requestReset: function () {
     this._popupService.close();
-    Tw.CommonHelper.startLoading('body', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0152, {})
       .done($.proxy(this._onSuccessRequestReset, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequestSuspend: function (params, res) {
-    Tw.CommonHelper.endLoading('body');
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt) + ' - ' + Tw.DateHelper.getFullKoreanDate(params.toDt);
+      var duration =  Tw.DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.MM.DD.') + ' - ' +
+        Tw.DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.MM.DD.');
       var type = params.icallPhbYn === 'Y' ?
         Tw.MYT_JOIN_SUSPEND.TYPE.ALL : Tw.MYT_JOIN_SUSPEND.TYPE.CALL;
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
@@ -187,16 +188,17 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   },
 
   _onSuccessRequestReset: function (res) {
-    Tw.CommonHelper.endLoading('body');
+    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET);
+      this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain',
+        null, Tw.MYT_JOIN_SUSPEND.RESET);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
   _onError: function (res) {
-    Tw.CommonHelper.endLoading('body');
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(res.status, res.statusText).pop();
   },
 
