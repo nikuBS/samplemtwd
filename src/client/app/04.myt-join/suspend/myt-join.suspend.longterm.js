@@ -24,6 +24,9 @@ Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
 
   this._cachedElement();
   this._requestSvcInfo();
+
+  this._defaultMilitaryToDate = this.$container.find('.fe-military [data-role="fe-to-dt"]').val();
+  this._defaulAbroadFromeDate = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val();
 };
 
 Tw.MyTJoinSuspendLongTerm.prototype = {
@@ -256,6 +259,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         return;
       }
       option.svcChgRsnCd = '22';
+      option.fromDt = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val().replace(/-/g, '');
     }
     option.icallPhbYn = this.$optionSuspendAll.attr('checked') ? 'Y' : 'N';
 
@@ -304,5 +308,17 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       this.$inputTel.val(formatted);
     }
+  },
+
+  hasChanged: function () {
+    var changed = !_.isEmpty(this._files) ||
+      this.$optionType.filter('[checked]').val() !== 'military' ||
+      !_.isEmpty(this.$inputEmail.val()) ||
+      !_.isEmpty(this.$btRelation.val()) ||
+      !_.isEmpty(this.$inputTel.val()) ||
+      this._defaultMilitaryToDate !== this.$container.find('.fe-military [data-role="fe-to-dt"]').val() ||
+      this._defaulAbroadFromeDate !== this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val();
+    return changed;
+
   }
 };

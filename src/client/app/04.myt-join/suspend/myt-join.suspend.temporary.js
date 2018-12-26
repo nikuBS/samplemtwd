@@ -13,6 +13,7 @@ Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
   this._cachedElement();
   this._bindEvent();
   this._params = params;
+  this._defaultDate = this.$dateTo.val();
 };
 
 Tw.MyTJoinSuspendTemporary.prototype = {
@@ -108,7 +109,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   _onClickBtnSuspend: function () {
     // validation check
     // 일시정지 종료일 안내 타입별 입력값 확인
-    if ( this.$radioResetNotification.find('[data-noti="true"]').attr('checked') ) {
+    if ( this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ) {
       if ( this.$checkEmailNoti.attr('checked') && !Tw.ValidationHelper.isEmail(this.$inputEmail.val()) ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_EMAIL);
         return;
@@ -147,7 +148,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       icallPhbYn: this.$optionSuspendAll.attr('checked') ? 'Y' : 'N',
       autoCnvtPrefrYn: this.$optionReceiveCall.attr('checked') ? 'Y' : 'N'
     };
-    if ( this.$radioResetNotification.find('[data-noti="true"]').attr('checked') ) {
+    if ( this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ) {
       if ( this.$checkEmailNoti.attr('checked') ) {
         params.emailAddr = this.$inputEmail.val();
       }
@@ -187,9 +188,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
   _onSuccessRequestReset: function (res) {
     Tw.CommonHelper.endLoading('body');
-    if(res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET);
-    }else{
+    } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
@@ -197,5 +198,18 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   _onError: function (res) {
     Tw.CommonHelper.endLoading('body');
     Tw.Error(res.status, res.statusText).pop();
+  },
+
+  hasChanged: function () {
+    var changed =
+      !this.$optionSuspendAll.attr('checked') ||
+      !this.$optionReceiveCall.attr('checked') ||
+      !this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ||
+      !this.$checkEmailNoti.attr('checked') ||
+      !this.$checkSMSnoti.attr('checked') ||
+      !_.isEmpty(this.$inputTel.val()) ||
+      !_.isEmpty(this.$inputEmail.val()) ||
+      this._defaultDate !== this.$dateTo.val();
+    return changed;
   }
 };
