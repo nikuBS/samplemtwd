@@ -19,7 +19,7 @@ Tw.MyTFareBillContentsMonthly.prototype = {
     var renderedHTML;
     
     renderedHTML = this.$template.$monthContent(
-      Object.assign(this.data,{
+      $.extend(this.data, {
         useTipID: 'MF_07_01_02', // 팁 아이디
         useTipLink: 'MF_07_01_02_tip_01' // 팁
       })
