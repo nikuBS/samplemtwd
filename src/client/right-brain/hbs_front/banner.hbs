@@ -1,13 +1,11 @@
 {{#each banners}}
     <li>
         {{#if isHTML}}
-            <button>
+            <button style="width:100%">
                 {{{bnnrHtmlCtt}}}
             </button>
         {{else}}
-            <button class="fe-banner" data-idx="{{idx}}" data-location="{{../location}}">
-                <img src="{{bnnrFilePathNm}}" alt="{{bnnrImgAltCtt}}">
-            </button>
+            <img class="fe-banner" style="width:100%" data-idx="{{idx}}" data-location="{{../location}}" src="{{bnnrFilePathNm}}" alt="{{bnnrImgAltCtt}}">
         {{/if}}
     </li>
 {{/each}}
