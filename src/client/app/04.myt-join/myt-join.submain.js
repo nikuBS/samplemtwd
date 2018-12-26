@@ -28,27 +28,8 @@ Tw.MyTJoinSubMain.prototype = {
       // 결합상품 버튼
       this.$comProd = this.$container.find('[data-id=com-prod]');
     }
-    // 무선
-    if ( this.data.type === 0 ) {
-      if ( this.data.isInstallement ) {
-        this.$installement = this.$container.find('[data-id=installement]');
-      }
-      if ( this.data.isContractPlan ) {
-        this.$contractPlan = this.$container.find('[data-id=contract-plan]');
-      }
-      if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
-        this.$pauseC = this.$container.find('[data-id=pause_c]');
-      }
-      if ( this.data.isOldNumber ) {
-        this.$oldNum = this.$container.find('[data-id=old_number]');
-      }
-
-      if ( this.data.isNotChangeNumber ) {
-        this.$chgNumSvc = this.$container.find('[data-id=change_number]');
-      }
-    }
     // 유선
-    else if ( this.data.type === 2 ) {
+    if ( this.data.type === 2 ) {
       this.$wireInq = this.$container.find('[data-id=wire-inq]');
       if ( this.data.isWireFree ) {
         this.$bTargetInq = this.$container.find('[data-id=B-target-inq]');
@@ -61,6 +42,26 @@ Tw.MyTJoinSubMain.prototype = {
       this.$wirePause = this.$container.find('[data-id=wire-pause]');
       this.$untillInfo = this.$container.find('[data-id=until-info]');
       this.$workNotify = this.$container.find('[data-id=work-notify]');
+    }
+    else {
+      if ( this.data.isInstallement ) {
+        this.$installement = this.$container.find('[data-id=installement]');
+      }
+      if ( this.data.isContractPlan ) {
+        this.$contractPlan = this.$container.find('[data-id=contract-plan]');
+      }
+      // 무선
+      if ( this.data.type === 0 ) {
+        if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
+          this.$pauseC = this.$container.find('[data-id=pause_c]');
+        }
+        if ( this.data.isOldNumber ) {
+          this.$oldNum = this.$container.find('[data-id=old_number]');
+        }
+        if ( this.data.isNotChangeNumber ) {
+          this.$chgNumSvc = this.$container.find('[data-id=change_number]');
+        }
+      }
     }
 
     if ( this.data.type !== 1 ) {
@@ -87,26 +88,8 @@ Tw.MyTJoinSubMain.prototype = {
       // 결합상품 버튼
       this.$comProd.on('click', $.proxy(this._onMovedComProduct, this));
     }
-    // 무선
-    if ( this.data.type === 0 ) {
-      if ( this.data.isInstallement ) {
-        this.$installement.on('click', $.proxy(this._onMovedInstallement, this));
-      }
-      if ( this.data.isContractPlan ) {
-        this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
-      }
-      if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
-        this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
-      }
-      if ( this.data.isOldNumber ) {
-        this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
-      }
-      if ( this.data.isNotChangeNumber ) {
-        this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
-      }
-    }
     // 유선
-    else if ( this.data.type === 2 ) {
+    if ( this.data.type === 2 ) {
       this.$wireInq.on('click', $.proxy(this._onMovedWireInquire, this));
       if ( this.data.isWireFree ) {
         this.$bTargetInq.on('click', $.proxy(this._onMovedBInquire, this));
@@ -119,6 +102,26 @@ Tw.MyTJoinSubMain.prototype = {
       this.$wirePause.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$untillInfo.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$workNotify.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+    }
+    else {
+      if ( this.data.isInstallement ) {
+        this.$installement.on('click', $.proxy(this._onMovedInstallement, this));
+      }
+      if ( this.data.isContractPlan ) {
+        this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
+      }
+      // 무선
+      if ( this.data.type === 0 ) {
+        if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
+          this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
+        }
+        if ( this.data.isOldNumber ) {
+          this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
+        }
+        if ( this.data.isNotChangeNumber ) {
+          this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
+        }
+      }
     }
 
     if ( this.data.type !== 1 ) {
@@ -206,7 +209,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function () {
-    if( (this.data.myPausedState && this.data.myPausedState.state) ||
+    if ( (this.data.myPausedState && this.data.myPausedState.state) ||
       (this.data.myLongPausedState && this.data.myLongPausedState.state) ) {
       // 일시정지 중이거나 장기일시 중이거나 하는 경우 신청현황
       this._historyService.goLoad('submain/suspend/status');
@@ -303,7 +306,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   // 공인인증센터
-  _onOpenCertifyPopup: function() {
+  _onOpenCertifyPopup: function () {
     Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
   }
 };
