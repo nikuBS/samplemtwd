@@ -29,8 +29,8 @@ Tw.BenefitTPlusSales.prototype = {
   },
 
   _render: function () {
-    this.$longDiscount = this.$container.find('[data-id=plus-example]');
-    this.$plusExample = this.$container.find('[data-id=long-discount]');
+    this.$plusExample = this.$container.find('[data-id=plus-example]');
+    this.$longDiscount = this.$container.find('[data-id=long-discount]');
     this.$okBtn = this.$container.find('[data-id=btn-ok]');
   },
 
@@ -42,14 +42,14 @@ Tw.BenefitTPlusSales.prototype = {
 
   _onLongDiscountClicked: function () {
     this._popupService.open({
-      hbs: 'BS_03_02_01_02',
+      hbs: 'BS_03_02_01_03',
       layer: true
     }, null, null, 'long_discount');
   },
 
   _onPlusExampleClicked: function () {
     this._popupService.open({
-      hbs: 'BS_03_02_01_03',
+      hbs: 'BS_03_02_01_02',
       layer: true,
       info: this.data.svcInfo
     }, null, null, 'tplus-example');
