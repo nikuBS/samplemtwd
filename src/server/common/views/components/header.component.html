@@ -2,7 +2,7 @@
 <div id="header" class="header-wrap">
     <div class="h-belt">
         <div class="h-default">
-            <div class="h-menu">
+            <div class="h-menu fe-bt-menu">
                 <a href="#menu" id="fe-bt-gnb" type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></a>
             </div>
             <div class="h-tit">
@@ -47,7 +47,7 @@
         </span>
         <!-- //case3 -->
         <!-- //로그인 후 -->
-        <button class="c-notify on fe-when-login fe-t-noti none"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
+        <button class="c-notify fe-when-login fe-t-noti none" data-tid="<%= typeof svcInfo === 'undefined' || svcInfo === null ? '' : svcInfo.userId %>"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
         <button class="c-option fe-when-app-or-login fe-menu-link none" value='/main/menu/settings'><span class="blind">설정</span></button>
     </div>
     <div class="section-cont" id="fe-menu-area">

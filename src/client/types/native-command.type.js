@@ -35,7 +35,10 @@ Tw.NTV_CMD = {
   IS_INSTALLED: 'isAppInstall',
   FREE_SMS: 'freeSMS',
   SET_XTVID: 'setXtvId',
-  OPEN_APP: 'openApp'
+  OPEN_APP: 'openApp',
+  SAVE: 'save',
+  LOAD: 'load',
+  IS_APP_CREATED: 'isAppCreated'
 };
 
 Tw.NTV_CODE = {
