@@ -40,14 +40,13 @@
                 <% } %>
 
                 <% if (app && app.images && app.images.length > 0) { %>
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box nogaps">
-                    <div class="slide-show">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box nogaps">
                         <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider" id="fe-images">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list screen-img-box" id="fe-images">
                                         <% app.images.map(image => { %>
                                         <li>
                                             <div class="item"><img src="<%= image %>" alt="" class="thum" /></div>
@@ -57,9 +56,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!--// .widget -->
+                        <!-- .widget -->
                     </div>
-                </div>
                 <% } %>
 
                 <% const contents = prodInfo && prodInfo.contents;
@@ -91,7 +89,7 @@
                                         <li>
                                             <div>
                                                 <a href="/product/apps/app?appId=<%= app.prodId %>">
-                                                    <img src="<%= app.prodIconImgUrl %>" alt="<%= app.prodNm %>" class="ico">
+                                                    <img src="<%= app.prodIconImgUrl %>" alt="<%= app.prodNm %>">
                                                     <span><%= app.prodNm %></span>
                                                 </a>
                                             </div>
