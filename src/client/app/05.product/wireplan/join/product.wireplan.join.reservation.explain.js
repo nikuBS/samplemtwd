@@ -78,6 +78,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
       data: [{
         'list': [
+          { value: Tw.FAMILY_TYPE.ME, option: (this._familyType === 'me') ? 'checked' : '', attr: 'data-family_type="me"' },
           { value: Tw.FAMILY_TYPE.SPOUSE, option: (this._familyType === 'spouse') ? 'checked' : '', attr: 'data-family_type="spouse"' },
           { value: Tw.FAMILY_TYPE.CHILDREN, option: (this._familyType === 'children') ? 'checked' : '', attr: 'data-family_type="children"' },
           { value: Tw.FAMILY_TYPE.PARENTS, option: (this._familyType === 'parents') ? 'checked' : '', attr: 'data-family_type="parents"' },
@@ -85,8 +86,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
           { value: Tw.FAMILY_TYPE.GRANDPARENTS, option: (this._familyType === 'grandparents') ? 'checked' : '',
             attr: 'data-family_type="grandparents"' },
           { value: Tw.FAMILY_TYPE.GRANDCHILDREN, option: (this._familyType === 'grandchildren') ? 'checked' : '',
-            attr: 'data-family_type="grandchildren"' },
-          { value: Tw.FAMILY_TYPE.ME, option: (this._familyType === 'me') ? 'checked' : '', attr: 'data-family_type="me"' }
+            attr: 'data-family_type="grandchildren"' }
         ]
       }]
     }, $.proxy(this._bindFamilyTypePop, this), null, 'select_family_type');
