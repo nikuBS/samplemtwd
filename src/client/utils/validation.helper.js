@@ -89,19 +89,18 @@ Tw.ValidationHelper = (function () {
     return findNumber.length >= length;
   }
 
-  /** 아래 check 및 alert 띄우는 validation은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
-   *  by Jayoon KONG (jayoon.kong@sk.com)
+  /** 아래 validation check function은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
+   *  by Jayoon Kong (jayoon.kong@sk.com)
    */
-  /* input 값을 입력하지 않았을 경우 alert 띄우는 function */
-  function checkEmpty(value, message) {
+  /* input 값을 입력하지 않았을 경우 */
+  function checkEmpty(value) {
     if (Tw.FormatHelper.isEmpty(value)) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
   }
 
-  /* input 값의 길이가 맞지 않는 경우 alert 띄우는 function */
+  /* input 값의 길이가 맞지 않는 경우 */
   function checkLength(value, length, message) {
     if ($.trim(value).length !== length) {
       Tw.Popup.openAlert(message);
@@ -110,7 +109,7 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
-  /* input 값의 길이가 기준값보다 적은 경우 alert 띄우는 function */
+  /* input 값의 길이가 기준값보다 적은 경우 */
   function checkMoreLength($target, length) {
     if ($.trim($target.val()).length < length) {
       return false;
@@ -118,7 +117,7 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
-  /* input 값이 param보다 적은 경우 alert 띄우는 function */
+  /* input 값이 param보다 적은 경우 */
   function checkIsMore(value, minVal) {
     if (parseInt($.trim(value), 10) < minVal) {
       return false;
@@ -171,17 +170,20 @@ Tw.ValidationHelper = (function () {
   }
 
   /* 카드 유효기간 체크하는 function */
-  function checkYear($targetY, $targetM) {
-    if (parseInt($.trim($targetY.val()), 10) < new Date().getFullYear() ||
-      (parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() && parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1)) {
+  function checkYear($targetY) {
+    var value = $targetY.val();
+    if (value.length < 4 || value < new Date().getFullYear()) {
       return false;
     }
     return true;
   }
 
-  function checkMonth($targetM) {
+  function checkMonth($targetM, $targetY) {
+    var value = $targetM.val();
     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    if (!months.includes($.trim($targetM.val()))) {
+
+    if (months.indexOf(value) === -1 || value.length < 2 ||
+      (parseInt($targetY.val(), 10) === new Date().getFullYear() && value < new Date().getMonth() + 1)) {
       return false;
     }
     return true;
@@ -190,6 +192,7 @@ Tw.ValidationHelper = (function () {
   function checkExpiration($targetY, $targetM) {
     var $focusTarget = null;
     var isValid = false;
+    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
 
     if (parseInt($.trim($targetY.val()), 10) < new Date().getFullYear()) {
       $focusTarget = $targetY;
@@ -205,7 +208,7 @@ Tw.ValidationHelper = (function () {
     if (isValid) {
       $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
     } else {
-      $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').show();
+      $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
       $focusTarget.focus();
     }
     return isValid;
@@ -262,12 +265,16 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
-  function showAndHideErrorMsg($target, isValid) {
+  function showAndHideErrorMsg($target, isValid, message) {
+    var $message = $target.siblings('.fe-error-msg');
     if (isValid) {
-      $target.siblings('.fe-error-msg').hide();
+      $message.hide();
       return true;
     } else {
-      $target.siblings('.fe-error-msg').show();
+      $message.show();
+      if (message) {
+        $message.text(message);
+      }
       $target.focus();
     }
     return false;

@@ -27,6 +27,7 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$fareSelector = this.$selectedTab.find('.fe-select-fare');
     this.$point = this.$selectedTab.find('.fe-point');
     this.$payBtn = this.$container.find('.fe-' + $targetId + '-pay');
+    this.$isValid = false;
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
@@ -35,6 +36,7 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
+    this.$container.on('blur', '.fe-point', $.proxy(this._checkPoint, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-fare', $.proxy(this._selectFare, this));
     this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
@@ -102,18 +104,35 @@ Tw.MyTFareBillRainbow.prototype = {
     this._checkIsAbled();
     this._popupService.close();
   },
-  _isValidForOne: function () {
-    return (this._validation.checkIsAvailablePoint(this.$point.val(),
-      parseInt(this.$standardPoint.attr('id'), 10),
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkIsMore(this.$point.val(), 1, Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT));
+  _checkPoint: function () {
+    var isValid = false;
+    var $message = this.$point.siblings('.fe-error-msg');
+    $message.empty();
+
+    if (!this._validation.checkEmpty(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
+    } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$standardPoint.attr('id'), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+    } else if (!this._validation.checkIsMore(this.$point.val(), 1)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE);
+    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
   _isValidForAuto: function () {
-    return this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000, Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
+    var isValid = this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000);
+    if (!isValid) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
+    }
+    return isValid;
   },
   _onePay: function () {
-    if (this._isValidForOne()) {
+    if (this.$isValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
         .done($.proxy(this._paySuccess, this, ''))

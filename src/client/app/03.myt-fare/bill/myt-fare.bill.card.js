@@ -22,7 +22,7 @@ Tw.MyTFareBillCard.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
-    this._checkIsAuto();
+    // this._checkIsAuto();
     this._checkIsPopup();
   },
   _initVariables: function () {
@@ -37,6 +37,7 @@ Tw.MyTFareBillCard.prototype = {
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
     this.$isValid = false;
+    this.$isCardValid = false;
 
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
@@ -45,9 +46,11 @@ Tw.MyTFareBillCard.prototype = {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
-    this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
+    this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
     this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
     this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
+    this.$container.on('blur', '.fe-refund-account-number', $.proxy(this._checkAccountNumber, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
@@ -80,6 +83,7 @@ Tw.MyTFareBillCard.prototype = {
       $target.siblings().removeClass('checked');
       this.$refundBank.attr('disabled', 'disabled');
       this.$refundNumber.attr('disabled', 'disabled');
+      this.$refundNumber.siblings('.fe-error-msg').hide();
     }
   },
   _showAndHideAccount: function (event) {
@@ -142,7 +146,7 @@ Tw.MyTFareBillCard.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
   },
   _checkPay: function () {
-    if (this.$isValid) {
+    if (this.$isValid && this.$isCardValid) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
           'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
@@ -154,14 +158,24 @@ Tw.MyTFareBillCard.prototype = {
       );
     }
   },
-  _getCardCode: function () {
-    if (this.$cardNumber.val() !== '') {
-      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
-        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
-          .done($.proxy(this._getSuccess, this))
-          .fail($.proxy(this._getFail, this));
-      }
+  _checkCardNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg(this.$cardNumber,
+        this._validation.checkMoreLength(this.$cardNumber, 15),
+        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+
+    if (this.$isValid) {
+      this._getCardCode();
     }
+  },
+  _isEmpty: function ($target, message) {
+    return this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), message);
+  },
+  _getCardCode: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -170,7 +184,7 @@ Tw.MyTFareBillCard.prototype = {
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
       this.$cardNumber.siblings('.fe-error-msg').hide();
-      this.$isValid = true;
+      this.$isCardValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -180,16 +194,40 @@ Tw.MyTFareBillCard.prototype = {
     }
   },
   _getFail: function () {
-    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.siblings('.fe-error-msg').text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4).show();
     this.$cardNumber.focus();
-    this.$isValid = false;
+    this.$isCardValid = false;
   },
-  _checkCardExpiration: function () {
-    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
+  _checkCardExpiration: function (event) {
+    var $target = $(event.currentTarget);
+    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5;
+
+    this.$isValid = this._validation.checkEmpty($target.val());
+
+    if (this.$isValid) {
+      if ($target.hasClass('fe-card-y')) {
+        this.$isValid = this._validation.checkYear(this.$cardY);
+      } else {
+        this.$isValid = this._validation.checkMonth(this.$cardM, this.$cardY);
+      }
+      message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
+    }
+
+    if (this.$isValid) {
+      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
+    } else {
+      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
+      $target.focus();
+    }
   },
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
+    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
+  },
+  _checkAccountNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
   },
   _openCheckPay: function ($layer) {
     this._setData($layer);
