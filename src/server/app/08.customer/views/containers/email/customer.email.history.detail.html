@@ -81,9 +81,15 @@
                             </ul>
                         <% } %>
                     <% } else { %>
-
-                    <!-- // direct or chocolate history-->
-
+                        <% if ( inquiryInfo.answYn == 'Y' && inquiryInfo.inqClCd === 'D' ) { %>
+                            <ul class="bt-slice full">
+                                <li class="bt-red1">
+                                    <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                            data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                                    </button>
+                                </li>
+                            </ul>
+                        <% } %>
                     <% } %>
                 </div>
                 <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
