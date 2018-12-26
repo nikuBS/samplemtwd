@@ -278,7 +278,7 @@ Tw.ProductCommonConfirm.prototype = {
 
   _openConfirmAlert: function() {
     this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
-      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), null, 'join_confirm');
+      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), null, 'join_confirm_alert');
   },
 
   _setConfirmAlertApply: function() {

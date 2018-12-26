@@ -212,9 +212,9 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.toProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.toProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
+        basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
+          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 

@@ -234,9 +234,9 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
+        basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
+          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 
