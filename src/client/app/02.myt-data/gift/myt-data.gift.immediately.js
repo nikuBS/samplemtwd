@@ -205,8 +205,10 @@ Tw.MyTDataGiftImmediately.prototype = {
     var sPhoneNumber = this.$inputImmediatelyGift.val() ? this.$inputImmediatelyGift.val().replace(/-/g, '') : '';
 
     if ( sPhoneNumber.length < 10 ) {
+      this._removeErrorComment();
       this.$container.find('.fe-error-phone01').removeClass('blind');
     } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+      this._removeErrorComment();
       this.$container.find('.fe-error-phone02').removeClass('blind');
     }
 
