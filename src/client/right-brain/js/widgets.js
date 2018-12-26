@@ -274,6 +274,10 @@ skt_landing.widgets = {
         arrows: true,
         infinite: false,
         speed : 300,
+        // useTransform : false,
+        // mobileFirst : true,
+        // useCSS : false,
+        // useTransform : false,
         centerMode: false,
         focusOnSelect: false,
         touchMove : true,
@@ -292,7 +296,7 @@ skt_landing.widgets = {
       });
       _this.on('beforeChange', function (e) {
         setTimeout(function () {
-          $slides.eq(slideIndex).triggerHandler('click');
+          $slides.eq($slick.slickCurrentSlide()).triggerHandler('click');
         }, 0);
       });
       if($('.home-slider').length > 0){

@@ -5,12 +5,12 @@
             <span class="ico {{ico}}"></span>
             {{/if}}
             {{#if title}}
-            <h5 class="popup-title {{title_type}}" id="alertHeading">{{{title}}}</h5>
+            <h5 class="popup-title {{title_type}}" id="alertHeading">{{{breaklines title}}}</h5>
             {{/if}}
         </div>
         <div class="popup-contents {{notice_has}}" id="alertText">
             <div class="inner-contents">
-                <p class="{{cont_align}}">{{{contents}}}</p>
+                <p class="{{cont_align}}">{{{breaklines contents}}}</p>
             </div>
             {{#if link_list}}
             <ul class="link-list">

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mdpi/##Icon/32/Timer Copy 3</title>
+    <desc>Created with Sketch.</desc>
+    <g id="##Icon/32/Timer-Copy-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="32" height="32"></rect>
+        <g id="Group-6" transform="translate(5.000000, 3.000000)" stroke="#666666" stroke-linecap="round" stroke-width="2">
+            <polyline id="Stroke-3" stroke-linejoin="round" points="7 14.7222 11.855 19.5002 21 10.5002"></polyline>
+            <path d="M21.5,20.3525 L21.5,23.2005 C21.5,24.1945 20.716,24.9995 19.75,24.9995 L2.25,24.9995 C1.284,24.9995 0.5,24.1945 0.5,23.2005 L0.5,2.7995 C0.5,1.8055 1.284,0.9995 2.25,0.9995 L19.75,0.9995 C20.716,0.9995 21.5,1.8055 21.5,2.7995 L21.5,5.7545" id="Stroke-4"></path>
+        </g>
+    </g>
+</svg>
