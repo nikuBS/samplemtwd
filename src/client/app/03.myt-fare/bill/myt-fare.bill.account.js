@@ -45,6 +45,7 @@ Tw.MyTFareBillAccount.prototype = {
     this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
+    this.$container.on('blur', '.required-input-field', $.proxy(this._checkAccountNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -84,6 +85,7 @@ Tw.MyTFareBillAccount.prototype = {
       $target.siblings().removeClass('checked');
       $bankTarget.attr('disabled', 'disabled');
       $numberTarget.attr('disabled', 'disabled');
+      $numberTarget.siblings('.fe-error-msg').hide();
     }
   },
   _showAndHideAccount: function (event) {
@@ -125,6 +127,10 @@ Tw.MyTFareBillAccount.prototype = {
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
+  },
+  _checkAccountNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
   },
   _checkPay: function () {
     this._popupService.open({

@@ -36,13 +36,15 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
     this.$isValid = false;
+    this.$isCardValid = false;
 
     this._isPaySuccess = false;
     this._isClose = false;
   },
   _bindEvent: function () {
     this.$container.on('blur', '.fe-prepay-amount', $.proxy(this._checkAmount, this));
-    this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
+    this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
     this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
     this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
@@ -94,7 +96,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this._popupService.close();
   },
   _checkPay: function () {
-    if (this.$isValid) {
+    if (this.$isValid && this.$isCardValid) {
       this._goCheck();
     }
   },
@@ -116,14 +118,24 @@ Tw.MyTFareBillPrepayPay.prototype = {
 
     this.$isValid = this._validation.showAndHideErrorMsg(this.$prepayAmount, isValid);
   },
-  _getCardCode: function () {
-    if (this.$cardNumber.val() !== '') {
-      if (this._validation.showAndHideErrorMsg(this.$cardNumber, this._validation.checkMoreLength(this.$cardNumber, 15))) {
-        this._apiService.request(Tw.API_CMD.BFF_07_0024, {cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)})
-          .done($.proxy(this._getSuccess, this))
-          .fail($.proxy(this._getFail, this));
-      }
+  _checkCardNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg(this.$cardNumber,
+        this._validation.checkMoreLength(this.$cardNumber, 15),
+        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+
+    if (this.$isValid) {
+      this._getCardCode();
     }
+  },
+  _isEmpty: function ($target, message) {
+    return this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), message);
+  },
+  _getCardCode: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -132,7 +144,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
       this.$cardNumber.siblings('.fe-error-msg').hide();
-      this.$isValid = true;
+      this.$isCardValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -144,14 +156,34 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _getFail: function () {
     this.$cardNumber.siblings('.fe-error-msg').show();
     this.$cardNumber.focus();
-    this.$isValid = false;
+    this.$isCardValid = false;
   },
-  _checkCardExpiration: function () {
-    this.$isValid = this._validation.checkExpiration(this.$cardY, this.$cardM);
+  _checkCardExpiration: function (event) {
+    var $target = $(event.currentTarget);
+    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5;
+
+    this.$isValid = this._validation.checkEmpty($target.val());
+
+    if (this.$isValid) {
+      if ($target.hasClass('fe-card-y')) {
+        this.$isValid = this._validation.checkYear(this.$cardY);
+      } else {
+        this.$isValid = this._validation.checkMonth(this.$cardM, this.$cardY);
+      }
+      message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
+    }
+
+    if (this.$isValid) {
+      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
+    } else {
+      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
+      $target.focus();
+    }
   },
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
+    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _goCheck: function () {
     this._popupService.open({

@@ -84,11 +84,13 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     var $message = this.$point.siblings('.fe-error-msg');
     $message.empty();
 
-    if (!this._validation.checkIsAvailablePoint(this.$point.val(),
-        parseInt(this.$standardPoint.attr('id'), 10))) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+    if (!this._validation.checkEmpty(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
     } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
+    } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$standardPoint.attr('id'), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
     } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
     } else {
@@ -99,11 +101,13 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _checkCardNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16));
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26);
   },
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _cancel: function () {
     this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
