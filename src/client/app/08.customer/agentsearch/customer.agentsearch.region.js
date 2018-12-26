@@ -114,10 +114,12 @@ Tw.CustomerAgentsearchRegion.prototype = {
     }, $.proxy(function (root) {
       root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
-        var selected = root.find('input[type=radio]:checked');
-        this.$btDropdown.text(selected.val());
-        this.$btDropdown.val(selected.attr('id'));
-        this._onLargeAreaChanged(selected.attr('id'));
+      }, this));
+      root.on('click', 'input[type=radio]', $.proxy(function (e) {
+        this._popupService.close();
+        this.$btDropdown.text($(e.currentTarget).val());
+        this.$btDropdown.val($(e.currentTarget).attr('id'));
+        this._onLargeAreaChanged($(e.currentTarget).attr('id'));
       }, this));
     }, this), null, 'region');
   },
