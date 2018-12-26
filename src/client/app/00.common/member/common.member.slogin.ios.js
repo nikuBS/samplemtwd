@@ -138,6 +138,7 @@ Tw.CommonMemberSloginIos.prototype = {
   },
   _successRequestCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
       this.certSeq = resp.result.seqNo;
       this.$btLogin.attr('disabled', false);
       this.$btCert.addClass('none');
@@ -254,7 +255,7 @@ Tw.CommonMemberSloginIos.prototype = {
   },
   _checkLoginValidation: function (inputCert) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L61);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT);
       return false;
     }
     return true;
