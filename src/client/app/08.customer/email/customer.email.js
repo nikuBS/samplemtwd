@@ -39,6 +39,8 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
+    this.$container.on('keyup', '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-service_sms', $.proxy(this._openSMSAlert, this));
@@ -62,6 +64,31 @@ Tw.CustomerEmail.prototype = {
   _onKeyUpPhoneNumber: function (e) {
     var $elPhone = $(e.currentTarget);
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
+    var $elErrorPhone = $elPhone.closest('.inputbox').find('.fe-error-phone');
+    if ( this._isValidPhone($elPhone.val()) ) {
+      $elErrorPhone.addClass('blind');
+    } else {
+      $elErrorPhone.removeClass('blind');
+    }
+  },
+
+  _onKeyUpEmail: function (e) {
+    var $elEmail = $(e.currentTarget);
+    var $elErrorEmail = $elEmail.closest('.inputbox').find('.fe-error-email');
+    if ( this.isValidEmail($elEmail.val()) ) {
+      $elErrorEmail.addClass('blind');
+    } else {
+      $elErrorEmail.removeClass('blind');
+    }
+  },
+
+  _isValidPhone: function (sPhoneNumber) {
+    return Tw.ValidationHelper.isTelephone(sPhoneNumber) || Tw.ValidationHelper.isCellPhone(sPhoneNumber);
+
+  },
+
+  isValidEmail: function (sEmail) {
+    return Tw.ValidationHelper.isEmail(sEmail);
   },
 
   _onChangeContent: function (e) {

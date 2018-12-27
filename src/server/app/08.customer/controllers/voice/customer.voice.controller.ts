@@ -6,20 +6,22 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerVoice extends TwViewController {
   constructor() {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, pageInfo?: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any): void {
     const page = req.params.page;
     const responseData = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      convertTelFormat: this.convertTelFormat,
+      allSvc: allSvc
     };
 
     switch ( page ) {
@@ -44,6 +46,8 @@ class CustomerVoice extends TwViewController {
         res.render('voice/customer.voice.html', responseData);
     }
   }
+
+  public convertTelFormat = (sPhoneNumber) => FormatHelper.conTelFormatWithDash(sPhoneNumber);
 }
 
 export default CustomerVoice;

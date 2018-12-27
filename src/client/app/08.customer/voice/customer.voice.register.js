@@ -4,11 +4,12 @@
  * Date: 2018.10.25
  */
 
-Tw.CustomerVoiceRegister = function (rootEl) {
+Tw.CustomerVoiceRegister = function (rootEl, allSvc) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
+  this._allSvc = allSvc;
 
   this._cachedElement();
   this._bindEvent();
@@ -17,8 +18,8 @@ Tw.CustomerVoiceRegister = function (rootEl) {
 
 Tw.CustomerVoiceRegister.prototype = {
   _init: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._onSuccessLineInfo, this));
+    // this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+    //   .done($.proxy(this._onSuccessLineInfo, this));
   },
 
   _cachedElement: function () {
@@ -32,17 +33,16 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$check_voice_term.on('click', $.proxy(this._onClickAgreeTerm, this));
     this.$btn_select_phone.on('click', $.proxy(this._onShowSelectPhoneNumber, this));
     this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
-    this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
-  _onSuccessLineInfo: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.userLineList = res.result.M;
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
+  // _onSuccessLineInfo: function (res) {
+  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
+  //     this.userLineList = res.result.M;
+  //   } else {
+  //     Tw.Error(res.code, res.msg).pop();
+  //   }
+  // },
 
   _onClickAgreeTerm: function () {
     if ( this.$check_voice_term.prop('checked') ) {
@@ -55,7 +55,7 @@ Tw.CustomerVoiceRegister.prototype = {
   _onShowSelectPhoneNumber: function () {
     var fnSelectLine = function (item) {
       return {
-        value: item.svcNum,
+        value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
         option: this.$btn_select_phone.data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
         attr: 'data-service-number=' + item.svcMgmtNum
       };
@@ -65,7 +65,7 @@ Tw.CustomerVoiceRegister.prototype = {
         hbs: 'actionsheet_select_a_type',
         layer: true,
         title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
-        data: [{ list: this.userLineList.map($.proxy(fnSelectLine, this)) }]
+        data: [{ list: this._allSvc.m.map($.proxy(fnSelectLine, this)) }]
       },
       null,
       null
@@ -75,6 +75,7 @@ Tw.CustomerVoiceRegister.prototype = {
   _onChoiceNumber: function (e) {
     this._popupService.close();
     this.$btn_select_phone.data('svcmgmtnum', $(e.currentTarget).data('service-number').toString());
+
     this.$btn_select_phone.text($(e.currentTarget).text().trim());
   },
 
