@@ -219,7 +219,7 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   direct: '즉시납부',
   auto: '자동납부',
-  autoAll: '자동납부 통합 인출',
+  autoAll: '자동 납부 통합 인출',
   microPrepay: '소액 선결제',
   contentPrepay: '콘텐츠 선결제',
   pointReserve: '포인트 납부 예약',
@@ -303,7 +303,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
 };
 
 export const MYT_PAYMENT_DETAIL_TITLE = {
-  DI: '납부 상세 내역',
+  DI: '납부 상세내역',
   TPOINT: 'T포인트 납부 상세내역',
   OCB: 'OK캐쉬백 납부 상세 내역',
   BANK: '계좌이체 납부 상세 내역',

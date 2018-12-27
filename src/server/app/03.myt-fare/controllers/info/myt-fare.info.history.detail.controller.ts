@@ -141,6 +141,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   private getDirectPaymentData(renderObj: RenderObj) {
     const { res, svcInfo, opDt, payOpTm } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0091, {opDt, payOpTm}).subscribe((resp) => {
+
       
       if (resp.code !== API_CODE.CODE_00) {
         return this._renderError(resp.code, resp.msg, res, svcInfo);
