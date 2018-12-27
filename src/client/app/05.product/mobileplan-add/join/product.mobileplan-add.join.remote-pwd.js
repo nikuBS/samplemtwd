@@ -35,8 +35,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _bindEvent: function() {
     this.$container.on('input', 'input', $.proxy(this._checkNumber, this));
     this.$container.on('blur', 'input', $.proxy(this._setMasking, this, 1));
-    // this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
-    this.$btnSetupOk.on('click', $.proxy(this._isValid, this));
+    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
 
   _checkNumber: function (event) {
@@ -77,8 +76,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _isValid: function () {
-    var inputVal = this.$inputPassword.siblings().val('input');
-    var confirmVal = this.$confirmPassword.siblings().val('input');
+    var inputVal = this.$inputPassword.next().val();
+    var confirmVal = this.$confirmPassword.next().val();
 
     return (
       (this._validation.checkLength(inputVal, 4, Tw.ALERT_MSG_PASSWORD.A16)) &&
@@ -112,7 +111,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
         typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
         settingSummaryTexts: [{
           spanClass: 'val',
-          text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
+          text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId]
         }]
       }), $.proxy(this._prodConfirmOk, this));
     }
