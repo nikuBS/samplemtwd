@@ -300,6 +300,7 @@ Tw.MyTFareBillSetChange.prototype = {
       var _inputName = $(e.currentTarget).data('el');
       $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).val(Tw.StringHelper.phoneStringToDash(params.phoneNumber));
     }
+    this._onDisableSubmitButton();
   },
 
   _changeCcurNotiYn: function(context) {
@@ -392,7 +393,8 @@ Tw.MyTFareBillSetChange.prototype = {
 
           switch (_validType) {
             case 'addr' :
-              if (!(_result = _valid.checkEmpty(_value, Tw.ALERT_MSG_MYT_FARE.V43))) {
+              if (!(_result = _valid.checkEmpty(_value))) {
+                Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V43);
                 return false;
               }
               break;
@@ -405,10 +407,16 @@ Tw.MyTFareBillSetChange.prototype = {
             case 'hp' :
               var _hpValue = _value.replace(/[^0-9]/g, '');
               if ('ccurNotiSvcNum' === _this.attr('name')) {
-                _result = _valid.checkEmpty(_hpValue, Tw.ALERT_MSG_MYT_FARE.V41);
+                _result = _valid.checkEmpty(_hpValue);
+                if (!_result){
+                  Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V41);
+                  return false;
+                }
               }
               // 입력값 전체 자릿수가 10자리 미만일 경우
-              if (!(_result = _valid.checkMoreLength(_hpValue, 10, Tw.ALERT_MSG_MYT_FARE.V18))) {
+              if (_hpValue.length < 10) {
+                Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V18);
+                _result = false;
                 return false;
               }
               else if (!(_result = _valid.isCellPhone(_hpValue))) {
