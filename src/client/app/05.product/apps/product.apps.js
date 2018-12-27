@@ -96,6 +96,7 @@ Tw.ProductApps.prototype = {
     this._apps = _.map(apps, function(app) {
       app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
       app.isInstalled = list[app.prodNm] || false;
+      app.iconImg = Tw.Environment.cdn + app.iconImg;
 
       return app;
     });
