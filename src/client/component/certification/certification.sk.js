@@ -283,9 +283,9 @@ Tw.CertificationSk.prototype = {
   },
   _successCertAdd: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
       this.$btReCert.parent().removeClass('none');
       this.$btCertAdd.parent().addClass('none');
-      this._clearCertError();
       this.$validAddCert.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();

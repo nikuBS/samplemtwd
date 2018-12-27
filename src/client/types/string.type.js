@@ -48,7 +48,6 @@ Tw.BUTTON_LABEL = {
   JOIN: '가입하기',
   TERMINATE: '해지하기',
   NEXT: '다음',
-  RETRY: '다시 받기',
   HOME: '홈으로',
   YES: '예',
   NO: '아니오'

@@ -44,6 +44,7 @@ Tw.CertificationSkFull.prototype = {
     this.$inputMdn = $popupContainer.find('#fe-input-mdn');
     this.$inputCert = $popupContainer.find('#fe-input-cert');
     this.$btCert = $popupContainer.find('#fe-bt-cert');
+    this.$btReCert = $popupContainer.find('#fe-bt-recert');
     this.$btCertAdd = $popupContainer.find('#fe-bt-cert-add');
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
 
@@ -59,7 +60,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorBirthLen = $popupContainer.find('#aria-birth-tx2');
     this.$errorGender = $popupContainer.find('#aria-gender-tx5');
 
-    this.$validSendCert = $popupContainer.find('#aria-cert-num2');
+    this.$validCert = $popupContainer.find('#aria-cert-num2');
     this.$validAddCert = $popupContainer.find('#aria-cert-num1');
     this.$errorCertTime = $popupContainer.find('#aria-cert-num3');
     this.$errorCertCount = $popupContainer.find('#aria-cert-num4');
@@ -67,6 +68,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorLoginTime = $popupContainer.find('#aria-phone-err2');
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
+    this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
     this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
@@ -112,6 +114,9 @@ Tw.CertificationSkFull.prototype = {
   _onClickCert: function () {
     this._requestCert();
   },
+  _onClickReCert: function () {
+    this._sendCert(true);
+  },
   _requestCert: function () {
     this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
       .done($.proxy(this._successGetUrlMeta, this));
@@ -125,7 +130,7 @@ Tw.CertificationSkFull.prototype = {
     }
     this._sendCert();
   },
-  _sendCert: function () {
+  _sendCert: function (reCert) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -136,20 +141,23 @@ Tw.CertificationSkFull.prototype = {
         sex: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
       this._apiService.request(Tw.API_CMD.BFF_01_0028, params)
-        .done($.proxy(this._successRequestCert, this));
+        .done($.proxy(this._successRequestCert, this, reCert));
     }
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
       .done($.proxy(this._successRequestCertAdd, this));
   },
-  _successRequestCert: function (resp) {
+  _successRequestCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.certSeq = resp.result.seqNo;
-      this.$btCert.addClass('none');
-      this.$btCertAdd.removeClass('none');
-      this.$validSendCert.removeClass('none');
+      this.$validCert.removeClass('none');
+      if ( !reCert ) {
+        this.$btReCert.addClass('none');
+        this.$btCert.addClass('none');
+        this.$btCertAdd.removeClass('none');
+      }
     } else {
       this._checkCertError(resp.code);
     }
@@ -158,8 +166,7 @@ Tw.CertificationSkFull.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.$btCertAdd.addClass('none');
-      this.$btCert.text(Tw.BUTTON_LABEL.RETRY);
-      this.$btCert.removeClass('none');
+      this.$btReCert.removeClass('none');
       this.$validAddCert.removeClass('none');
     } else {
       this._checkCertError(resp.code, resp.msg);
@@ -182,7 +189,7 @@ Tw.CertificationSkFull.prototype = {
   _onClickConfirm: function () {
     var inputCert = this.$inputCert.val();
     var params = {
-      jobCode: 'NFM_TWD_MBIMASK_AUTH',
+      jobCode: this._jobCode,
       authNum: inputCert,
       authUrl: this._authUrl,
       receiverNum: this.mdn,
@@ -249,7 +256,7 @@ Tw.CertificationSkFull.prototype = {
     this._clearError(this.$inputboxGender, this.$inputGender, this.$errorGender);
   },
   _clearCertError: function () {
-    this.$validSendCert.addClass('none');
+    this.$validCert.addClass('none');
     this.$validAddCert.addClass('none');
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
