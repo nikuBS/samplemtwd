@@ -55,6 +55,12 @@ Tw.CustomerEmailUpload.prototype = {
     }
 
     this.uploadFiles = this.uploadFiles.concat(fileInfo);
+
+    if ( this.uploadFiles.length !== 0 ) {
+      this._activeUploadButton();
+    } else {
+      this._disableUploadButton();
+    }
   },
 
   _uploadFile: function () {
@@ -91,6 +97,14 @@ Tw.CustomerEmailUpload.prototype = {
 
   _removeFile: function (e) {
     $(e.currentTarget).closest('li').remove();
+  },
+
+  _activeUploadButton: function () {
+    $('.fe-upload_email_files').prop('disabled', false);
+  },
+
+  _disableUploadButton: function () {
+    $('.fe-upload_email_files').prop('disabled', true);
   }
 };
 
