@@ -84,6 +84,7 @@ Tw.ApiService.prototype = {
     }
   },
   _completeCert: function (resp, deferred, requestInfo) {
+    Tw.Logger.info('[Complete Cert]', resp);
     if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.authKind === Tw.AUTH_CERTIFICATION_KIND.O ) {
         this._historyService.reload();
@@ -102,6 +103,7 @@ Tw.ApiService.prototype = {
     }
   },
   _successRequestAfterCert: function (deferred, resp) {
+    Tw.Logger.info('[API Resp Cert]', resp);
     deferred.resolve(resp);
   },
 

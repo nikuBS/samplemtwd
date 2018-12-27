@@ -43,12 +43,15 @@ Tw.CertificationBio.prototype = {
     }, $.proxy(this._onFidoAuth, this));
   },
   _onFidoAuth: function (resp) {
-    this._callback(resp);
-    // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-    //   this._callback(resp);
-    // } else {
-    //
-    // }
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._callback({
+        code: Tw.API_CODE.CODE_00
+      });
+    } else {
+      this._callback({
+        code: Tw.API_CODE.CERT_FAIL
+      });
+    }
   },
   _onFidoRegister: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
