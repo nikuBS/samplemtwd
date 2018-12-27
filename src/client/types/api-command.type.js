@@ -508,7 +508,8 @@ Tw.NODE_CMD = {
   GET_HOME_HELP: { path: '/home/help', method: Tw.API_METHOD.GET },
   GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET },
   GET_QUICK_MENU: { path: '/home/quick-menu', method: Tw.API_METHOD.GET },
-  GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET }
+  GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
+  GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {
