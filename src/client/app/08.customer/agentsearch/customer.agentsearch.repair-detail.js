@@ -13,7 +13,9 @@ Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
 
   this._dataChargeConfirmed = false;
 
-  this._showDataChargePopupIfNeeded();
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
+    this._showDataChargePopupIfNeeded();
+  }, this));
 };
 
 Tw.CustomerAgentsearchRepairDetail.prototype = {
