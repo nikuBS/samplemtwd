@@ -40,6 +40,7 @@ Tw.API_CMD = {
   BFF_01_0035: { path: '/v1/cert/app', method: Tw.API_METHOD.POST },
   BFF_01_0036: { paht: '/v1/cert/info', method: Tw.API_METHOD.POST },
   BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: Tw.API_METHOD.POST },
+  BFF_01_0039: { path: '/v1/bpcp', method: Tw.API_METHOD.GET },
   BFF_01_0038: { path: '/deregistrationrequestfromfc', method: Tw.API_METHOD.POST },
   BFF_01_0043: { path: '/core-bill/v1/refund/refund-account-insert', method: Tw.API_METHOD.POST },
   BFF_01_0044: { path: '/core-bill/v1/refund/donation-insert', method: Tw.API_METHOD.POST },
