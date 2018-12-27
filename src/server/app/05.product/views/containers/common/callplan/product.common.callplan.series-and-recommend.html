@@ -69,7 +69,7 @@
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
-                                                            <% if ( series.list[i].prodBasBenfCtt && ( series.list[i].isMobileplan || series.list[i].isMobileplanAdd || series.list[i].isDiscount )) { %>
+                                                            <% if ( series.list[i].prodBasBenfCtt && ( series.list[i].isMobileplan || series.list[i].isMobileplanAdd || series.list[i].isCombine || recommends[i].isRoaming )) { %>
                                                             <div class="text-type">
                                                                 <div class="str"><%= series.list[i].prodBasBenfCtt %></div>
                                                             </div>
@@ -140,7 +140,7 @@
                                                                 <% } %>
                                                             </div>
                                                             <% } %>
-                                                            <% if ( recommends[i].prodBasBenfCtt && ( recommends[i].isMobileplan || recommends[i].isMobileplanAdd || recommends[i].isDiscount )) { %>
+                                                            <% if ( recommends[i].prodBasBenfCtt && ( recommends[i].isMobileplan || recommends[i].isMobileplanAdd || recommends[i].isCombine || recommends[i].isRoaming )) { %>
                                                             <div class="text-type">
                                                                 <div class="str"><%= recommends[i].prodBasBenfCtt %></div>
                                                             </div>

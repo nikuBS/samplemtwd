@@ -318,8 +318,12 @@ class ProductCommonCallplanPreview extends TwViewController {
     }
 
     return list.map((item) => {
-      const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
-        item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
+      const basDataGbTxt = FormatHelper.getValidVars(item.basOfrGbDataQtyCtt),
+        basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt),
+        basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
+
+      const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, basDataTxt.txt,
+        item.basOfrVcallTmsCtt, item.basOfrCharCntCtt, basDataTxt.unit, false),
         isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
       return [item, convResult, this._getIsCategory(item.prodTypCd),
