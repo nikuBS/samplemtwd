@@ -1469,3 +1469,17 @@ Tw.MEMBERSHIP_TYPE = {
   '3': '티플',
   '4': '커플'
 };
+
+Tw.ROAMING_ERROR = {
+  TITLE: '서비스 장애 관련 공지',
+  BUTTON: [{
+    style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+    txt: '확인'
+  }]
+};
+
+Tw.ROAMING_DOWNLOAD_URL = {
+  SMART_GUIDE : 'https://cdnm.tworld.co.kr/adminupload/common/15490/93452/237955092.pdf',
+  PHONE_GUIDE : 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
+  RENTAL_GUIDE : 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
+};

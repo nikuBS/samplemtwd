@@ -51,6 +51,20 @@ Tw.ProductRoamingGuide.prototype = {
       this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goDataRoaming, this));
       this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));
       this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
+      this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart'));
+      this.$container.on('click', '#fe-rm-phone-guide', $.proxy(this._goDownLoadGuide, this, 'phone'));
+      this.$container.on('click', '#fe-rm-rental-guide', $.proxy(this._goDownLoadGuide, this, 'rental'));
+  },
+  _goDownLoadGuide: function (type) {
+    if(type === 'smart') {
+      Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_GUIDE,'');
+    } else if(type === 'phone'){
+      Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.PHONE_GUIDE,'');
+    } else {
+      Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.RENTAL_GUIDE,'');
+    }
+
+
   },
   _goLteGuide : function() {
     this._history.goLoad('/product/roaming/info/lte');
