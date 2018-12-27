@@ -74,10 +74,14 @@ Tw.MyTDataTingBlock.prototype = {
 
   _onSuccessTingBlock: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt-data');
+      this._popupService.openAlert(Tw.MYT_DATA_TING.SUCCESS_BLOCK, null, null, $.proxy(this._goToMytMain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _goToMytMain: function () {
+    this._historyService.replaceURL('/myt-data/submain');
   },
 
   _openTingBlock: function () {
