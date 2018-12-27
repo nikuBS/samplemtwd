@@ -109,6 +109,14 @@ Tw.CustomerFaqCategory.prototype = {
           this._depth2code = this._ALL;
           this.$btnDepth2.text(Tw.COMMON_STRING.ALL);
           this._currentPage = -1;
+          var depth2list = _.filter(this._depth2obj, $.proxy(function (item) {
+            return item.supIfaqGrpCd === this._depth1code;
+          }, this));
+          if (depth2list.length) {
+            this.$btnDepth2.removeClass('none');
+          } else {
+            this.$btnDepth2.addClass('none');
+          }
           this._loadList();
         }
         break;
