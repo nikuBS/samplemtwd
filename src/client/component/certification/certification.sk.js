@@ -55,7 +55,6 @@ Tw.CertificationSk.prototype = {
     this._getAllSvcInfo(opMethods, optMethods, isWelcome, methodCnt);
   },
   _checkSmsType: function (opMethods) {
-    // S인 경우 회선이 mobile 아니면 svcGr(A/Y/T/D/E/P) 보고 R로 전환 (R이 있는 경우에만)
     if ( opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 ) {
       this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE;
     } else {
@@ -130,6 +129,7 @@ Tw.CertificationSk.prototype = {
     this.$errorConfirmTime = $popupContainer.find('#aria-sms-exp-desc6');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
+    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     this.$checkKeyin.on('change', $.proxy(this._onChangeKeyin, this));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));

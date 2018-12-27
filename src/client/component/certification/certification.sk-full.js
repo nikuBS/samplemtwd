@@ -75,6 +75,8 @@ Tw.CertificationSkFull.prototype = {
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
+
+    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
   },
   _onCloseSmsFull: function () {
 

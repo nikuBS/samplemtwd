@@ -64,6 +64,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$inputMdn = this.$container.find('#fe-input-mdn');
     this.$inputCert = this.$container.find('#fe-input-cert');
     this.$btCert = this.$container.find('#fe-bt-cert');
+    this.$btReCert = this.$container.find('#fe-bt-recert');
     this.$btCertAdd = this.$container.find('#fe-bt-cert-add');
     this.$btLogin = this.$container.find('#fe-bt-login');
 
@@ -84,12 +85,15 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$errorLoginTime = this.$container.find('#aria-phone-err2');
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
+    this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
     this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
+
+    this.$container.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -106,9 +110,13 @@ Tw.CommonMemberSloginIos.prototype = {
     }
   },
   _onInputCert: function () {
+    console.log('input cert');
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
+      this.$btLogin.attr('disabled', false);
+    } else {
+      this.$btLogin.attr('disabled', true);
     }
   },
   _onClickGender: function ($event) {
@@ -121,6 +129,12 @@ Tw.CommonMemberSloginIos.prototype = {
     $currentTarget.attr('aria-checked', true);
   },
   _onClickCert: function () {
+    this._sendCert();
+  },
+  _onClickReCert: function () {
+    this._sendCert(true);
+  },
+  _sendCert: function(reCert) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -129,21 +143,23 @@ Tw.CommonMemberSloginIos.prototype = {
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
       this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, this.mdn)
-        .done($.proxy(this._successRequestCert, this));
+        .done($.proxy(this._successRequestCert, this, reCert));
     }
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
       .done($.proxy(this._successRequestCertAdd, this));
   },
-  _successRequestCert: function (resp) {
+  _successRequestCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.certSeq = resp.result.seqNo;
-      this.$btLogin.attr('disabled', false);
-      this.$btCert.addClass('none');
-      this.$btCertAdd.removeClass('none');
       this.$validSendCert.removeClass('none');
+      if ( !reCert ) {
+        this.$btReCert.addClass('none');
+        this.$btCert.addClass('none');
+        this.$btCertAdd.removeClass('none');
+      }
     } else {
       this._checkCertError(resp.code);
     }
@@ -152,8 +168,7 @@ Tw.CommonMemberSloginIos.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.$btCertAdd.addClass('none');
-      this.$btCert.text(Tw.BUTTON_LABEL.RETRY);
-      this.$btCert.removeClass('none');
+      this.$btReCert.removeClass('none');
       this.$validAddCert.removeClass('none');
     } else {
       this._checkCertError(resp.code, resp.msg);

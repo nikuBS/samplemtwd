@@ -86,6 +86,7 @@
                                     </span>
                                     <span class="bt-box2">
                                         <button id="fe-bt-cert" type="button" class="btn-round2 btn-style3" disabled>인증번호 받기</button>
+                                        <button id="fe-bt-recert" type="button" class="btn-round2 btn-style3 none">다시 받기</button>
                                         <button id="fe-bt-cert-add" type="button" class="btn-round2 btn-style3 none">시간 연장하기</button>
                                     </span>
                                     <span class="tx-box pb12"><!-- 오류 또는 정상 전송완료 메세지 추가 시, 정상 작동되지 않을때는 .none 추가 -->
@@ -98,7 +99,7 @@
                                 <span class="inputbox mt10">
                                     <span class="input">
                                         <input id="fe-input-cert" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="인증번호 숫자 6자리" title="인증번호 숫자 6자리 입력">
-                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                        <button id="fe-bt-cert-delete" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                     </span>
                                     <span id="aria-phone-err1" class="error-txt none">인증번호가 일치하지 않습니다.</span><!-- 인증번호 일치하지 않는 경우 -->
                                     <span id="aria-phone-err2" class="error-txt none">인증번호 입력 시간이 초과했습니다.</span><!-- 입력시간 초과 -->
