@@ -34,6 +34,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
       this.$alarmTemplate = this.$container.find('#alarm_template');
+      this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
   },
   _clearInput : function(){
       this.$inputElement.val('');

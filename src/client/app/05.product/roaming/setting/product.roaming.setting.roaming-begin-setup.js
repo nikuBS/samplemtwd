@@ -30,6 +30,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
       this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
+      this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';
@@ -58,10 +59,10 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
         ];
         return returnActionSheetData;
     },
-    _btnDateEvent : function($this){
-        var nowValue = $($this.currentTarget).text().trim();
+    _btnDateEvent : function(eventObj){
+        var nowValue = $(eventObj.currentTarget).text().trim();
         var dateArr = this._getDateArrFromToDay(30);
-        var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$($this.currentTarget).attr('id')+'"',nowValue);
+        var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
         var actionSheetData = this._makeActionSheetDate(convertedArr);
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
@@ -73,14 +74,15 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
 
     _bindActionSheetElementEvt : function($layer){
         $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
-        $layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
+        //$layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
     },
-    _actionSheetElementEvt : function($this){
-        $($this.delegateTarget).find('button').removeClass('checked');
-        $($this.currentTarget).addClass('checked');
+    _actionSheetElementEvt : function(eventObj){
+        $(eventObj.delegateTarget).find('button').removeClass('checked');
+        $(eventObj.currentTarget).addClass('checked');
+        this._actionSheetCloseEvt(eventObj);
     },
-    _actionSheetCloseEvt : function($layer){
-        var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
+    _actionSheetCloseEvt : function(eventObj){
+        var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
         var dateValue = $selectedTarget.text().trim().substr(0,12);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
@@ -89,6 +91,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
         changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
+        this._popupService.close();
     },
     _validateDateValue : function(){
         var startDate = this.$container.find('#start_date').attr('data-number');

@@ -5,6 +5,7 @@
  */
 
 Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData) {
+    console.log(closeCallBack);
   this.$rootContainer = rootEl;
   this._popupData = data;
   this._page = false;
@@ -19,7 +20,6 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
       this._prodRedisInfo = rootData;
       this._page = true;
       this._bindPopupElementEvt(this.$rootContainer);
-      //this._stipulationInit(this._prodBffInfo);
       return;
   }
   this._doJoinCallBack = doJoinCallBack;
@@ -33,7 +33,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
             hbs: 'RM_11_01_01_02',
             layer: true,
             data : data
-        },$.proxy(this._init,this),closeCallBack,hash);
+        },$.proxy(this._init,this),null,hash);
     },
     _init : function($poppContainer){
 
@@ -63,18 +63,23 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         this._$popupContainer.find('.term').text(setingInfo);
 
     },
-    _bindPopupElementEvt : function ($popupContainer) {
+    _bindPopupElementEvt : function (popupObj) {
+        var $popupLayer = $(popupObj);
         this._$allAgreeElement = this._$popupContainer.find('.all.checkbox>input');
         this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
 
-        $($popupContainer).on('click','#do_join',$.proxy(this._doJoin,this));
-        if(this._popupData.showStipulation===false){
+        $popupLayer.on('click','#do_join',$.proxy(this._doJoin,this));
+        if(this._popupData.showStipulation===false||_.size(this._popupData.stipulationInfo)===0){
             this._$popupContainer.find('#do_join').removeAttr('disabled');
         }else{
-            $($popupContainer).on('click','.all.checkbox>input',$.proxy(this._allAgree,this));
-            $($popupContainer).on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
+            $popupLayer.on('click','.all.checkbox>input',$.proxy(this._allAgree,this));
+            $popupLayer.on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
         }
-        $($popupContainer).on('click','.prev-step',$.proxy(this._doCancel,this));
+        if(this._page){
+            $popupLayer.on('click','.prev-step',$.proxy(this._goBack,this));
+        }else{
+            $popupLayer.on('click','.prev-step',$.proxy(this._doCancel,this));
+        }
     },
     _doCancel : function(){
         this._popupService.close();
@@ -157,13 +162,13 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         }, this));
 
     },
-    _bindCompletePopupEvt : function ($args) {
-        $($args).on('click','.btn-round2',this._goMyInfo);
-        $($args).on('click','.btn-floating',this._goBack);
+    _bindCompletePopupEvt : function (popupObj) {
+        $(popupObj).on('click','.btn-round2',this._goMyInfo);
+        $(popupObj).on('click','.btn-floating',this._goBack);
     },
     _goBack : function(){
         this._popupService.close();
-        this._historyService.goBack();
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
     },
     _goMyInfo : function () {
         this._historyService.goLoad('/product/roaming/my-use');

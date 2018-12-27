@@ -11,6 +11,7 @@ import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
+import StringHelper from '../../../../../utils/string.helper';
 
 
 class ProductRoamingJoinConfirmInfo extends TwViewController {
@@ -32,29 +33,24 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
             this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, prodId)
-        ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
-
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
+        ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
+            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
                     title: PRODUCT_TYPE_NM.JOIN,
-                    code: prodApiInfo.code,
-                    msg: prodApiInfo.msg,
+                    code: prodBffInfo.code,
+                    msg: prodBffInfo.msg,
                 });
             }
 
             res.render('roaming/join/product.roaming.join.confirm-info.html', {
                 svcInfo : svcInfo,
-                prodRedisInfo : prodRedisInfo.summary,
-                prodApiInfo : prodApiInfo.result,
-                prodId : prodId
+                prodRedisInfo : prodRedisInfo.result.summary,
+                prodBffInfo : prodBffInfo.result,
+                prodId : prodId,
+                maskingNum : StringHelper.phoneStringToDash(svcInfo.svcNum)
             });
         });
-
-
-
-
-
 
     }
 }
