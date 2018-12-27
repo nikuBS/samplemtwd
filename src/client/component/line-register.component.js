@@ -84,6 +84,8 @@ Tw.LineRegisterComponent.prototype = {
         bt_more: this._listLength > Tw.DEFAULT_LIST_COUNT,
         data: data
       }, $.proxy(this._onOpenRegisterLine, this), $.proxy(this._onCloseRegisterLine, this), 'line-register');
+    } else {
+      Tw.Logger.info('[LineRegister] Empty');
     }
   },
   _onOpenRegisterLine: function ($layer) {

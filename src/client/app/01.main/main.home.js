@@ -225,6 +225,8 @@ Tw.MainHome.prototype = {
         'contents': notice.ntcCtt,
         'bt_b': this._makeBtnList(notice)
       }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
+    } else {
+      this._openLineResisterPopup();
     }
   },
   _checkShowEmrNotice: function (notice, today) {

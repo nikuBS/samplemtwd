@@ -74,7 +74,7 @@ class MainHome extends TwViewController {
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: svcInfo.noticeType });
           });
         } else {
           // 모바일 - 휴대폰 외 회선
@@ -83,7 +83,7 @@ class MainHome extends TwViewController {
             this.getRedisData(noticeCode)
           ).subscribe(([usageData, redisData]) => {
             homeData.usageData = usageData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: svcInfo.noticeType });
           });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
@@ -93,13 +93,13 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode)
         ).subscribe(([billData, redisData]) => {
           homeData.billData = billData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: svcInfo.noticeType });
         });
       }
     } else {
       // 비로그인
       this.getRedisData(noticeCode).subscribe((redisData) => {
-        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo });
+        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: '' });
       });
     }
   }
