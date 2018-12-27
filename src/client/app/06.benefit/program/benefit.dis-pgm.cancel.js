@@ -159,8 +159,8 @@ Tw.BenefitDisPgmCancel.prototype = {
 
     if (respResult.prodTmsgTypCd === 'I') {
       popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : Tw.Environment.cdn + respResult.rgstImgUrl,
-        img_src: respResult.imgFilePathNm
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
       });
     }
 
