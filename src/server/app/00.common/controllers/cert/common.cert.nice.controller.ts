@@ -31,7 +31,7 @@ class CommonCertNice extends TwViewController {
         res.render('cert/common.cert.nice.html', { data: resp.result });
       }
     });
-  }
+  }c
 }
 
 export default CommonCertNice;

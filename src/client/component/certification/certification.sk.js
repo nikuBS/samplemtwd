@@ -216,10 +216,10 @@ Tw.CertificationSk.prototype = {
     }
   },
   _requestCert: function () {
-    if(this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ) {
+    if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ) {
       this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_PRDASTA_AUTH' : 'NFM_MWB_PRDASTA_AUTH';
       this._sendCert();
-    } else if(this._authKind === Tw.AUTH_CERTIFICATION_KIND.A) {
+    } else if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.A ) {
       this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNMASK_AUTH' : 'NFM_MWB_CMNMASK_AUTH';
       this._sendCert();
     } else {
@@ -232,6 +232,9 @@ Tw.CertificationSk.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.auth && resp.result.auth.jobCode ) {
         this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
+        if ( Tw.FormatHelper.isEmpty(this._jobCode) ) {
+          this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
+        }
       }
     }
     this._sendCert();
