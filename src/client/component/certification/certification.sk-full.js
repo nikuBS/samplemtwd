@@ -11,6 +11,7 @@ Tw.CertificationSkFull = function () {
 
   this.mdn = '';
   this.certSeq = '';
+  this._jobCode = null;
 };
 
 Tw.CertificationSkFull.prototype = {
@@ -74,7 +75,7 @@ Tw.CertificationSkFull.prototype = {
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
   },
   _onCloseSmsFull: function () {
-    
+
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -109,10 +110,26 @@ Tw.CertificationSkFull.prototype = {
     $currentTarget.attr('aria-checked', true);
   },
   _onClickCert: function () {
+    this._requestCert();
+  },
+  _requestCert: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
+      .done($.proxy(this._successGetUrlMeta, this));
+  },
+  _successGetUrlMeta: function (resp) {
+    this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result.auth && resp.result.auth.jobCode ) {
+        this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
+      }
+    }
+    this._sendCert();
+  },
+  _sendCert: function () {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
-        jobCode: 'NFM_TWD_MBIMASK_AUTH',
+        jobCode: this._jobCode,
         receiverNum: this.mdn,
         name: this.$inputName.val(),
         birthDate: this.$inputBirth.val(),
@@ -164,16 +181,16 @@ Tw.CertificationSkFull.prototype = {
 
   _onClickConfirm: function () {
     var inputCert = this.$inputCert.val();
-      var params = {
-        jobCode: 'NFM_TWD_MBIMASK_AUTH',
-        authNum: inputCert,
-        authUrl: this._authUrl,
-        receiverNum: this.mdn,
-        authKind: this._authKind,
-        prodAuthKey: '',
-        method: Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN
-      };
-      this._requestConfirm(params);
+    var params = {
+      jobCode: 'NFM_TWD_MBIMASK_AUTH',
+      authNum: inputCert,
+      authUrl: this._authUrl,
+      receiverNum: this.mdn,
+      authKind: this._authKind,
+      prodAuthKey: '',
+      method: Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN
+    };
+    this._requestConfirm(params);
   },
   _requestConfirm: function (params) {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, params)

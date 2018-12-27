@@ -23,7 +23,7 @@ Tw.CertificationSk = function () {
   this._securityMdn = '';
   this._seqNo = '';
   this._onKeyin = false;
-  this._jobCode = 'NFM_TWD_MBIMASK_AUTH';
+  this._jobCode = null;
 };
 
 
@@ -216,13 +216,22 @@ Tw.CertificationSk.prototype = {
     }
   },
   _requestCert: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
-      .done($.proxy(this._successGetUrlMeta, this));
+    if(this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ) {
+      this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_PRDASTA_AUTH' : 'NFM_MWB_PRDASTA_AUTH';
+      this._sendCert();
+    } else if(this._authKind === Tw.AUTH_CERTIFICATION_KIND.A) {
+      this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNMASK_AUTH' : 'NFM_MWB_CMNMASK_AUTH';
+      this._sendCert();
+    } else {
+      this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
+        .done($.proxy(this._successGetUrlMeta, this));
+    }
   },
   _successGetUrlMeta: function (resp) {
+    this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.auth && resp.result.auth.jobCode ) {
-        // this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
+        this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
       }
     }
     this._sendCert();
