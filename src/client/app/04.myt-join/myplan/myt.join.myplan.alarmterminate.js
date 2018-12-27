@@ -22,7 +22,7 @@ Tw.MyTJoinMyplanAlarmterminate.prototype = {
 
   _bindEvent: function() {
     this.$btnTerminate.on('click', $.proxy(this._alarmTerminate, this));
-    this.$btnBack.on('click', $.proxy(this._resultPopupClose, this));
+    this.$btnBack.on('click', $.proxy(this._replaceAlarm, this));
   },
 
   _alarmTerminate: function() {
@@ -36,10 +36,14 @@ Tw.MyTJoinMyplanAlarmterminate.prototype = {
     }
 
     this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A40.MSG,
-      Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A40.TITLE, null, $.proxy(this._resultPopupClose, this));
+      Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A40.TITLE, null, $.proxy(this._replaceMyplan, this));
   },
 
-  _resultPopupClose: function() {
+  _replaceAlarm: function() {
+    this._historyService.replaceURL('/myt-join/myplan/alarm');
+  },
+
+  _replaceMyplan: function() {
     this._historyService.replaceURL('/myt-join/myplan');
   }
 
