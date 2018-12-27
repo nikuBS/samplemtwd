@@ -23,6 +23,10 @@ Tw.HandlebarHelper = (function () {
   });
 
   Handlebars.registerHelper('breaklines', function(text) {
+    if (Tw.FormatHelper.isEmpty(text)) {
+      return null;
+    }
+
     text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
     return new Handlebars.SafeString(text);
   });
