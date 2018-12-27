@@ -109,8 +109,8 @@ export const API_CMD = {
   BFF_03_0022: { path: '/core-auth/v1/tworld-term-agreements', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0023: { path: '/core-auth/v1/t-noti-term-agreements', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0024: { path: '/core-auth/v1/t-noti-term-agreements', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0025: { path: '/core-auth/v1/requestRegistFcmUserInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_03_0026: { path: '/core-auth/v1/requestRegistFcmClickInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_03_0025: { path: '/core-auth/v1/add-fcm-user-info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
+  // BFF_03_0026: { path: '/core-auth/v1/requestRegistFcmClickInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0027: { path: '/core-auth/v1/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   // MainHome T-Notify

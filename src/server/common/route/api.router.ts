@@ -13,7 +13,7 @@ import {
   REDIS_MENU,
   REDIS_URL_META,
   REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI, REDIS_QUICK_MENU, REDIS_QUICK_DEFAULT
+  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI, REDIS_QUICK_MENU, REDIS_QUICK_DEFAULT, REDIS_PRODUCT_COMPARISON
 } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
@@ -72,6 +72,7 @@ class ApiRouter {
     this.router.get('/home/help', this.getHomeHelp.bind(this));
     this.router.get('/tooltip', this.getTooltip.bind(this));
     this.router.get('/home/quick-menu', this.getQuickMenu.bind(this));
+    this.router.get('/product/comparison', this.getProductComparison.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
@@ -249,6 +250,15 @@ class ApiRouter {
       })
       .subscribe((resp) => {
         return res.json(resp);
+      });
+  }
+
+  private getProductComparison(req: Request, res: Response, next: NextFunction) {
+    const beforeId = req.query.beforeId;
+    const afterId = req.query.afterId;
+    this.redisService.getData(REDIS_PRODUCT_COMPARISON + beforeId + '/' + afterId)
+      .subscribe((resp) => {
+        res.json(resp);
       });
   }
 
