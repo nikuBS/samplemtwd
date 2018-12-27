@@ -69,12 +69,20 @@
                     </div>
                     <%}%>
 
+                    <!--안내서가 "이메일"을 포함하는 경우만 보임-->
+                    <%if('2' === data.billInfo[1].cd){%>
+                    <dl class="info-tx1">
+                        <dt>이메일 주소</dt>
+                        <dd><%=data.invEmailAddr%></dd>
+                    </dl>
+                    <%}%>
+
                     <!--T world 확인은 [설정한 옵션] 없음-->
                     <%
                         if ( data.options.length > 0 ) {
                         let options = {
                             '1':'Bill Letter 보안강화',
-                            '2':'휴대폰 번호 전체 표시',
+                            '2':'휴대폰번호 전체 표시',
                             '3':'콘텐츠 이용 상세내역 표시',
                             '4':'법정대리인 함께 수령'
                         };

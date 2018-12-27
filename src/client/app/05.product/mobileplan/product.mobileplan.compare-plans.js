@@ -22,6 +22,22 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
+    this.$container.on('click', '#fe-close', $.proxy(this._close, this));
+  },
+
+  // 팝업 클로즈
+  _close: function () {
+    // app 일때
+    if (Tw.BrowserHelper.isApp()) {
+      history.back();
+      Tw.Native.send(Tw.NTV_CMD.CLOSE_INAPP, {});
+    } else {
+      if (window.opener) {
+        window.close();
+      } else {
+        history.back();
+      }
+    }
   },
 
   // 가입하기 페이지 이동

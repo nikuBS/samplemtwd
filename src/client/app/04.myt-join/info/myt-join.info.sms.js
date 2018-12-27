@@ -12,45 +12,54 @@ Tw.MyTJoinInfoSms = function (rootEl) {
 };
 
 Tw.MyTJoinInfoSms.prototype = {
-  _init : function() {
+  _init: function () {
     this._initVariables();
     this._bindEvent();
   },
   _initVariables: function () {
     this.$btnSubmit = this.$container.find('#fe-btn-submit');
     this.$tel = this.$container.find('#fe-hp-tel');
+    this.$telErrorTxt = this.$container.find('#fe-tel-error-txt');
   },
   _bindEvent: function () {
     this.$container.on('keyup focus change', '[data-require]', $.proxy(this._onDisableStatus, this));
     this.$btnSubmit.on('click', $.proxy(this._reqSms, this));
   },
 
-  _onDisableStatus : function () {
+  _onDisableStatus: function (e) {
     var isOk = false;
+    var $super = this;
     this.$container.find('[data-require]').each(function () {
       var $this = $(this);
-      if ( $this.attr('type') === 'tel' ) {
-        var _tel = $this.val().replace(/[^0-9]/g,'');
+      if ($this.attr('type') === 'tel') {
+        var _tel = $this.val().replace(/[^0-9]/g, '');
         isOk = Tw.ValidationHelper.isCellPhone(_tel); // 핸드폰 번호 체크
-        if (!isOk) return false;
+        if (e.type === 'change') {
+          if (!isOk) {
+            $super.$telErrorTxt.removeClass('none');
+          } else {
+            $super.$telErrorTxt.addClass('none');
+          }
+        }
       }
-      if ( isOk && $this.attr('type') === 'checkbox' ) {
+      if (isOk && $this.attr('type') === 'checkbox') {
         isOk = $this.is(':checked'); // 개인정보 동의 여부
-        if (!isOk) return false;
       }
+
+      if (!isOk) return false;
     });
 
     // 이상없을 시 서브밋 버튼 활성화
-    this.$btnSubmit.prop('disabled',!isOk);
+    this.$btnSubmit.prop('disabled', !isOk);
   },
 
   // 무약정 플랜 포인트 내역 조회
-  _reqSms : function () {
+  _reqSms: function () {
     var _tels = this.$tel.val().split('-');
     var param = {
-      tel_num1 : _tels[0],
-      tel_num2 : _tels[1],
-      tel_num3 : _tels[2]
+      tel_num1: _tels[0],
+      tel_num2: _tels[1],
+      tel_num3: _tels[2]
     };
     this._apiService
       .request(Tw.API_CMD.BFF_05_0062, param)
@@ -59,14 +68,14 @@ Tw.MyTJoinInfoSms.prototype = {
   },
 
   // Mockup
-  _mockReqSms : function () {
+  _mockReqSms: function () {
     $.ajax('/mock/myt.join.sms.json')
       .done($.proxy(this._onSuccess, this))
       .fail($.proxy(this._onFail, this));
   },
 
-  _onSuccess : function (resp) {
-    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+  _onSuccess: function (resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
       return;
     }
@@ -76,13 +85,13 @@ Tw.MyTJoinInfoSms.prototype = {
       null, null, $.proxy(this._onClose, this));
   },
 
-  _onClose : function () {
+  _onClose: function () {
     this._historyService.goBack();
   },
 
   // API Fail
   _onFail: function (err) {
-    Tw.Error(err.code,err.msg).pop();
+    Tw.Error(err.code, err.msg).pop();
   }
 
 };
