@@ -299,7 +299,7 @@ Tw.MyTFareBillCard.prototype = {
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       cdexpy: $.trim(this.$cardY.val()).substr(2,2),
       cdexpm: $.trim(this.$cardM.val()),
-      instmm: this.$cardTypeSelector.attr('id').toString(),
+      instmm: this.$cardTypeSelector.attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };
     return reqData;
