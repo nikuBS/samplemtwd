@@ -121,7 +121,6 @@ Tw.MenuComponent.prototype = {
     if (!this._tNotifyComp) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
-    debugger;
     this._tNotifyComp.open(this._tid);
   },
   _onUserInfo: function () {
