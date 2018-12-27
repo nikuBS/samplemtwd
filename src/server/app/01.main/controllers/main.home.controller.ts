@@ -328,6 +328,7 @@ class MainHome extends TwViewController {
       data: { isShow: false },
       voice: { isShow: false },
       sms: { isShow: false },
+      showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
     };
 
     if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
