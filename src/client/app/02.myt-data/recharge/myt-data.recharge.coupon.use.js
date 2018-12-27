@@ -171,7 +171,17 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
         return;
       }
-      Tw.Error(res.code, res.msg).pop();
+
+      if (res.code === 'RCG3003') {
+        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A211);
+        return;
+      }
+
+      if (res.code === 'RCG3006') {
+        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A212);
+        return;
+      }
+      this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A213)
       return;
     }
 
