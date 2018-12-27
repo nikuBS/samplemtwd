@@ -54,15 +54,15 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _getIsJoined(prodTypCd: any, prodId: any): Observable<any> {
-    if (['C', 'E', 'F', 'G', 'H'].indexOf(prodTypCd) === -1) {
+    if (['C', 'E_I', 'E_P', 'E_T', 'F', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) === -1) {
       return Observable.of({});
     }
 
-    if (['C', 'G', 'H'].indexOf(prodTypCd) !== -1) {
+    if (['C', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
       return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, prodId);
     }
 
-    if (prodTypCd === 'E') {
+    if (['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1) {
       return this.apiService.request(API_CMD.BFF_10_0109, {}, {}, prodId);
     }
 
@@ -90,7 +90,7 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _getCombineRequireDocumentStatus(prodTypCd: any, prodId: any): Observable<any> {
-    if (['D', 'F'].indexOf(prodTypCd) === -1) {
+    if (['D_I', 'D_P', 'D_T', 'F'].indexOf(prodTypCd) === -1) {
       return Observable.of({});
     }
 
@@ -398,11 +398,11 @@ class ProductCommonCallplan extends TwViewController {
       return false;
     }
 
-    if (['C', 'G', 'H'].indexOf(prodTypCd) !== -1) {
+    if (['C', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
       return isJoinedInfo.result.isAdditionUse === 'Y';
     }
 
-    if (prodTypCd === 'E') {
+    if (['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1) {
       return isJoinedInfo.result.wiredSuplSvcScrbYn === 'Y';
     }
 

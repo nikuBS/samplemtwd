@@ -4,7 +4,7 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, isPreview) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -16,8 +16,10 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, isPreview) {
 
   this._prodId = prodId;
   this._prodTypCd = prodTypCd;
+  this._settingBtnList = settingBtnList;
   this._isPreview = isPreview === 'Y';
 
+  this._convertSettingBtnList();
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -30,7 +32,6 @@ Tw.ProductCommonCallplan.prototype = {
   _init: function() {
     this._contentsDetailList = [];
     this._setContentsDetailList();
-    this._setSettingBtnList();
     this._showReadyOn();
 
     if (this._historyService.isBack()) {
@@ -66,6 +67,20 @@ Tw.ProductCommonCallplan.prototype = {
 
   _showReadyOn: function() {
     this.$btnReadyOn.show();
+  },
+
+  _convertSettingBtnList: function() {
+    if (Tw.FormatHelper.isEmpty(this._settingBtnList)) {
+      return;
+    }
+
+    this._settingBtnList = JSON.parse(this._settingBtnList).map(function(item) {
+      return {
+        'button-attr': 'data-url="' + item.linkUrl + '"',
+        'txt': item.linkNm
+      };
+    });
+
   },
 
   _openComparePlans: function(e) {
@@ -106,18 +121,6 @@ Tw.ProductCommonCallplan.prototype = {
     } else {
       this._historyService.goLoad(this._settingBtnList[0].url);
     }
-  },
-
-  _setSettingBtnList: function() {
-    _.each(this.$settingBtnList.find('li'), $.proxy(this._pushSettingBtn, this));
-  },
-
-  _pushSettingBtn: function(btn) {
-    var $btn = $(btn);
-    this._settingBtnList.push({
-      value: $btn.text(),
-      attr: 'data-url="' + $btn.data('url') + '"'
-    });
   },
 
   _setContentsDetailList: function() {
@@ -256,12 +259,12 @@ Tw.ProductCommonCallplan.prototype = {
 
   _openSettingPop: function() {
     this._popupService.open({
-      hbs: 'actionsheet_link_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT,
-      data: [{
-        'list': this._settingBtnList
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        { 'list': this._settingBtnList }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._bindSettingBtnListEvent, this), $.proxy(this._goSetting, this), 'setting_pop');
   },
 
