@@ -6,11 +6,13 @@
 
 Tw.CertificationBio = function () {
   this._nativeService = Tw.Native;
+  this._popupService = Tw.Popup;
 
   this._callback = null;
   this._authUrl = null;
   this._authKind = null;
   this._prodAuthKey = null;
+  this._register = false;
 };
 
 
@@ -31,9 +33,23 @@ Tw.CertificationBio.prototype = {
     if ( isRegister ) {
       this._fidoAuth();
     } else {
-      // 등록
-      this._biometricsTerm.open($.proxy(this._onFidoRegister, this));
+      this._openRegisterPopup();
     }
+  },
+  _openRegisterPopup: function () {
+    this._popupService.openConfirm(Tw.POPUP_CONTENTS.BIO_REGISTER, null, $.proxy(this._onConfirmRegister, this), $.proxy(this._onCloseRegister, this));
+  },
+  _onConfirmRegister: function () {
+    this._register = true;
+    this._popupService.close();
+  },
+  _onCloseRegister: function () {
+    if ( this._register ) {
+      this._goBioRegister();
+    }
+  },
+  _goBioRegister: function () {
+    this._biometricsTerm.open($.proxy(this._onFidoRegister, this));
   },
   _fidoAuth: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_AUTH, {
