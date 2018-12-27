@@ -213,7 +213,7 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
         this._certPublic = new Tw.CertificationPublic();
-        this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this));
+        this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._certBio = new Tw.CertificationBio();
@@ -221,7 +221,7 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
         this._certFinance = new Tw.CertificationFinance();
-        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, $.proxy(this._completeCert, this));
+        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, this._command, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND:
         (new Tw.CertificationSkSmsRefund()).openSmsPopup($.proxy(this._completeCert, this));
