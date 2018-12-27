@@ -76,8 +76,8 @@ Tw.API_CMD = {
   BFF_03_0022: { path: '/core-auth/v1/tworld-term-agreements', method: Tw.API_METHOD.PUT },
   BFF_03_0023: { path: '/core-auth/v1/t-noti-term-agreements', method: Tw.API_METHOD.GET },
   BFF_03_0024: { path: '/core-auth/v1/t-noti-term-agreements', method: Tw.API_METHOD.PUT },
-  BFF_03_0025: { path: '/core-auth/v1/requestRegistFcmUserInfo', method: Tw.API_METHOD.POST },
-  BFF_03_0026: { path: '/core-auth/v1/requestRegistFcmClickInfo', method: Tw.API_METHOD.POST },
+  BFF_03_0025: { path: '/core-auth/v1/add-fcm-user-info', method: Tw.API_METHOD.POST },
+  // BFF_03_0026: { path: '/core-auth/v1/requestRegistFcmClickInfo', method: Tw.API_METHOD.POST },
   BFF_03_0027: { path: '/core-auth/v1/users/otp', method: Tw.API_METHOD.PUT },
   BFF_03_0028: { path: '/core-auth/v1/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
 
