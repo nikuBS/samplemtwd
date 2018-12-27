@@ -62,7 +62,7 @@ export const API_CMD = {
   BFF_01_0036: { path: '/v1/cert/info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0038: { path: '/deregistrationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_01_0039: { path: '/v1/bpcp', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0039: { path: '/v1/bpcp', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0040: { path: '/core-auth/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0042: { path: '/v1/cancel-refund', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0043: { path: '/core-bill/v1/refund/refund-account-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
