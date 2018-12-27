@@ -1174,11 +1174,12 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 Tw.UPLOAD_FILE = {
   UPLOAD_FILE: '파일 추가하기',
   WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
-  WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
+  WARNING_A01: '첨부파일 용량은 2MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif, pdf)파일을 첨부할 수 있습니다.',
   BUTTON_ADD: '파일찾기',
-  BUTTON_DELETE: '파일삭제'
+  BUTTON_DELETE: '파일삭제',
+  CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해주세요.',
 };
 
 Tw.PRODUCT_RESERVATION = {
