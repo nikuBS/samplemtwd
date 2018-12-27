@@ -1,26 +1,25 @@
 /**
- * FileName: product.roaming.setting.roaming-alarm.js
+ * FileName: product.roaming.setting.roaming-combine.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
  * Date: 2018.12.05
- * ID : RM_11_01_02_01
+ * ID : RM_11_01_02_07
  */
 
 Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
+  this._historyService = new Tw.HistoryService(rootEl);
   this._bindElementEvt();
   this._nativeService = Tw.Native;
-  this._addedList = this._sortingSettingData(prodBffInfo.togetherMemList);
+  this._prodRedisInfo = JSON.parse(prodRedisInfo);
+  this._prodBffInfo = JSON.parse(prodBffInfo);
+  this._combineListTemplate = Handlebars.compile(this.$container.find('#combine_list_template').html());
+  this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);
   this._changeList();
-  this._prodRedisInfo = prodRedisInfo;
-  this._prodBffInfo = prodBffInfo;
-  this._svcInfo = svcInfo;
+  this._svcInfo = JSON.parse(svcInfo);
   this._prodId = prodId;
   this._apiService = Tw.Api;
-
 };
 
 Tw.ProductRoamingSettingRoamingCombine.prototype = {
@@ -32,6 +31,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
       this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
+      this.$container.on('click','.prev-step',$.proxy(this._goBack,this));
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
@@ -81,9 +81,14 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
           requestValue.childSvcNum = phoneNum;
       }
 
+      var headerData = {
+          svcNum : this._svcInfo.svcNum,
+          svcMgmtNum : this._svcInfo.svcMgmtNum
+      };
 
 
-      this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
+
+      this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, headerData,this._prodId).
       done($.proxy(function (res) {
           if(res.code===Tw.API_CODE.CODE_00){
               return true;
@@ -134,17 +139,12 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     }
   },
   _makeTemplate : function (name,phoneNum,idx) {
-      var template = '<li class="list-box">';
-          template+='<div class="list-ico"><span class="ico type5">이</span></div>';
-          template+='<p class="list-text">';
-          template+='<span class="mtext">'+name+'</span>';
-          template+='<span class="stext gray">'+phoneNum+'</span>';
-          template+='</p>';
-          template+='<div class="list-btn">';
-          template+='<div class="bt-alone"><button class="bt-line-gray1" id="list'+idx+'" data-idx="'+idx+'">삭제</button></div>';
-          template+='</div>';
-          template+='</li>';
-       this.$container.find('.comp-box').append(template);
+      var listData  = {
+          name : name,
+          phoneNum : phoneNum,
+          idx : idx
+      };
+       this.$container.find('.comp-box').append(this._combineListTemplate({listData : listData}));
   },
   _removeOnList : function ($args) {
       var selectedIdx = $args.currentTarget.attributes['data-idx'].nodeValue;

@@ -614,6 +614,7 @@ export const API_CMD = {
   BFF_10_0089: { path: '/core-product/v1/roaming/submain/alpaList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0090: { path: '/core-product/v1//roaming/submain/bannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0091: { path: '/core-product/v1/roaming/fee-plans/:args0/rom-use-periods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0092: { path: '/core-product/v1/roaming/services/t-roam-tog/:args0/members', method: API_METHOD.POST , bypass: true },
   BFF_10_0093: { path: '/core-product/v1/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0098: { path: '/core-product/v1/wire/additions/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0099: { path: '/core-product/v1/wire/additions/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -667,7 +668,7 @@ export const API_CMD = {
   BFF_10_0061: { path: '/core-product/v1/roaming/ManageType-srch', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0097: { path: '/core-product/v1/ledger/:args0/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0121: { path: '/core-product/v1/services/roaming/add-count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0141: { path: '/core-product/v1/roaming/services/t-roam-tog/members', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0141: { path: '/core-product/v1/services/t-roam-tog/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
