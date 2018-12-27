@@ -38,7 +38,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeItems = this.$container.find('[data-role=CL]');
     this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
     this.$cashbagList = this.$container.find('[data-id=cashbag_list]');
-    this.$agreeViewBtn = this.$container.find('button.agree-view');
+    this.$agreeViewBtn = this.$container.find('button.more-vw');
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
@@ -280,17 +280,22 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onItemsAgreeView: function (event) {
-    this._agreeViewTarget = $(event.currentTarget).siblings('[role="checkbox"]');
+    this._agreeViewTarget = $(event.currentTarget).siblings('.custom-form').find('input');
     var type = $(event.currentTarget).attr('data-type');
-    new Tw.MembershipClauseLayerPopup({
-      $element: this.$container,
-      callback: $.proxy(this._agreeViewCallback, this)
-    }).open(type);
+    if ( type === 'BE_04_02_L09' ) {
+      Tw.CommonHelper.openUrlExternal(Tw.POPUP_TPL.MEMBERSHIP_CLAUSE_ITEM['09'].url);
+    }
+    else {
+      new Tw.MembershipClauseLayerPopup({
+        $element: this.$container,
+        callback: $.proxy(this._agreeViewCallback, this)
+      }).open(type);
+    }
   },
 
   _agreeViewCallback: function () {
-    if ( !this._agreeViewTarget.find('input').prop('checked') ) {
-      this._agreeViewTarget.find('input').trigger('click');
+    if ( !this._agreeViewTarget.prop('checked') ) {
+      this._agreeViewTarget.prop('checked', true);
       this._agreeViewTarget = null;
     }
   }
