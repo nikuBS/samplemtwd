@@ -1,4 +1,4 @@
-1/**
+/**
  * FileName: myt-fare.bill.set.change.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018. 9. 21
