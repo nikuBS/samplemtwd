@@ -10,11 +10,6 @@ Tw.MytJoinWireSetPause = function (rootEl, options) {
   this._popupService = Tw.Popup;
   this._options = options;
   this._historyService = new Tw.HistoryService();
-
-  if ( this._options.isBroadbandJoined === 'Y' ) {
-    this._openErrorAlert();
-    return;
-  }
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -63,6 +58,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _bindEvent: function () {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkBroadbancJoined, this));
     this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
     this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
@@ -72,6 +68,12 @@ Tw.MytJoinWireSetPause.prototype = {
   _init: function () {
     this._setStartDate();
     this._setEndDateRange();
+  },
+
+  _checkBroadbancJoined: function() {
+    if ( this._options.isBroadbandJoined === 'Y' ) {
+      this._openErrorAlert();
+    }
   },
 
   _setStartDate: function () {
