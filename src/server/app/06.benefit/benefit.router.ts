@@ -21,6 +21,7 @@ class BenefitRouter extends TwRouter {
     super();
     // new IA
     this.controllers.push({ url: '/submain', controller: BenefitIndex });
+    this.controllers.push({ url: '/submain(/discount|/combinations|/long-term|/participation)?', controller: BenefitIndex });
     this.controllers.push({ url: '/submain/detail/select-contract', controller: BenefitSelectContract });
     this.controllers.push({ url: '/submain/detail/dis-pgm/input', controller: BenefitDisPgmInput });
     this.controllers.push({ url: '/submain/detail/dis-pgm/cancel', controller: BenefitDisPgmCancel });
