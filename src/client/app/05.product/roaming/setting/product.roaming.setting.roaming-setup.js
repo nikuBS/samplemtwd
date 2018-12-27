@@ -15,6 +15,8 @@ Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodRedisInfo,prodBffInf
   this._prodId = prodId;
   this._init();
   this._apiService = Tw.Api;
+  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._tooltipInit(prodId);
 };
 
 Tw.ProductRoamingSettingRoamingSetup.prototype = {
@@ -223,6 +225,35 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     },
     _goBack : function () {
         this._historyService.goBack();
+    },
+    _tooltipInit : function (prodId) {
+
+        switch (prodId) {
+            case 'NA00004088':
+            case 'NA00004299':
+            case 'NA00004326':
+            case 'NA00005047':
+            case 'NA00005502':
+                this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_01');
+                break;
+            case 'NA00004941':
+            case 'NA00004942':
+                this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_02');
+                this.$container.find('.cont-box.nogaps-btm').css('display','block');
+                break;
+            case 'NA00005137':
+            case 'NA00005138':
+                this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_03');
+                break;
+            case 'NA00005632':
+            case 'NA00005634':
+            case 'NA00005635':
+                this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_04');
+                break;
+            case 'NA00005821':
+                this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_05');
+                break;
+        }
     }
 
 

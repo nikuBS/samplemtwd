@@ -13,6 +13,8 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._tooltipInit(prodId);
 };
 
 Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
@@ -182,6 +184,19 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
 
+    },
+    _tooltipInit : function (prodId) {
+        switch (prodId) {
+            case 'NA00003015':
+                this.$container.find('.cont-box.nogaps-btm').css('display','block');
+                this.$serviceTipElement.attr('id','RM_11_01_02_03_tip_01_01');
+                break;
+            case 'NA00004229':
+            case 'NA00004230':
+            case 'NA00004231':
+                this.$serviceTipElement.attr('id','RM_11_01_02_03_tip_01_02');
+                break;
+        }
     }
 
 

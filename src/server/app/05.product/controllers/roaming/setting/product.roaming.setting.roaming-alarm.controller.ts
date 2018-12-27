@@ -51,7 +51,7 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
                 prodRedisInfo : prodRedisInfo.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                phoneNum : StringHelper.phoneStringToDash(svcInfo.showSvc)
+                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum)
             });
         });
 
