@@ -25,13 +25,14 @@ Tw.MembershipMy.prototype = {
   _cachedElement: function() {
     this.$btnReissue = this.$container.find('#fe-reissue');
     this.$btnReissueCancel = this.$container.find('#fe-reissue-cancel');
+    this.$btnCardChange = this.$container.find('#fe-card-change');
     this.$btnPopupClose = this.$container.find('.popup-closeBtn');
     this.$strPeriod = this.$container.find('#fe-period');
     this.$inputSdate = this.$container.find('#fe-sdate');
     this.$inputEdate = this.$container.find('#fe-edate');
     this.$inquire = this.$container.find('#fe-inquire');
     this.$list = this.$container.find('#fe-list');
-    this.$more = this.$container.find('.bt-more');
+    this.$more = this.$container.find('.btn-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
     this.$empty = this.$container.find('#fe-empty');
   },
@@ -39,6 +40,7 @@ Tw.MembershipMy.prototype = {
   _bindEvent: function() {
     this.$btnReissue.on('click', $.proxy(this._requestReissueInfo, this, 'reissue'));
     this.$btnReissueCancel.on('click', $.proxy(this._requestReissueInfo, this, 'cancel'));
+    this.$btnCardChange.on('click', $.proxy(this._cardChangeAlert, this));
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$inputSdate.on('click', $.proxy(this._openDateActionSheet, this));
     this.$inputEdate.on('click', $.proxy(this._openDateActionSheet, this));
@@ -88,7 +90,7 @@ Tw.MembershipMy.prototype = {
     }
   },
 
-  _renderListOne: function(params, res){
+  _renderListOne: function(params, res) {
     var list = res;
     var sDate = this._dateHelper.getShortDateWithFormat(params.startDate, 'YYYY.M.' , 'YYYYMM');
     var eDate = this._dateHelper.getShortDateWithFormat(params.endDate, 'YYYY.M.' , 'YYYYMM');
@@ -128,7 +130,7 @@ Tw.MembershipMy.prototype = {
     this._moreButton();
   },
 
-  _moreButton: function(){
+  _moreButton: function() {
     var nextList = _.first(this._totoalList);
 
     if ( nextList ) {
@@ -221,21 +223,21 @@ Tw.MembershipMy.prototype = {
     }
   },
 
-  _onReissueOpened: function($root){
+  _onReissueOpened: function($root) {
     $root.on('click', '#fe-reissue-req', $.proxy(this._openReissueAlert, this));
     $root.on('click', '#fe-cancel-req', $.proxy(this._openCancelAlert, this));
   },
 
-  _openReissueAlert: function(){
+  _openReissueAlert: function() {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON);
   },
 
-  _handleReissueAlert: function(){
+  _handleReissueAlert: function() {
     var mbrChgRsnCd = '';
-    $('.radiobox').each(function(){
-      if($(this).hasClass('checked')){
-        mbrChgRsnCd = $(this).find('input').attr('data-code');
+    $('input[type=radio]').each(function(){
+      if($(this).attr('checked') === 'checked'){
+        mbrChgRsnCd = $(this).attr('data-code');
       }
     });
 
@@ -245,16 +247,28 @@ Tw.MembershipMy.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
-  _openCancelAlert: function(){
+  _openCancelAlert: function() {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A52;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleCancelAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A52.BUTTON);
   },
 
-  _handleCancelAlert: function(){
+  _handleCancelAlert: function() {
     var mbrCardNum1 = $('#fe-cancel-req').attr('data-card');
 
     this._apiService
       .request(Tw.API_CMD.BFF_11_0005, { mbrCardNum1 : mbrCardNum1 })
+      .done($.proxy(this._renderTemplate, this))
+      .fail($.proxy(this._onFail, this));
+  },
+
+  _cardChangeAlert: function() {
+    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58;
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON);
+  },
+
+  _handleChangeAlert: function() {
+    this._apiService
+      .request(Tw.API_CMD.BFF_11_0006, {})
       .done($.proxy(this._renderTemplate, this))
       .fail($.proxy(this._onFail, this));
   },

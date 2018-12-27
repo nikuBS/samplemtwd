@@ -32,123 +32,88 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <div class="ti-caption-gray">
-                        <span class="tit">개인정보 수정</span>
-                    </div>
-                    <div class="membership-info-modify">
-                        <div class="board-type01">
-                            <em class="tit">카드수령 정보(필수)</em>
-                            <div class="cont">
-                                <div class="widget">
-                                    <div class="widget-box radio">
-                                        <ul class="select-list" role="radiogroup">
-                                            <li class="radiobox type01 <%= myInfoData.checkHomeClass %>" role="radio" aria-checked="<%= myInfoData.checkHomeBool %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio5" value="" title="자택" aria-describedby="aria-gender-tx" checked="<%= myInfoData.checkHomeClass %>"><!-- 체크상태일 경우 checked="checked" -->
-                                                자택
-                                            </li>
-                                            <li class="radiobox type01 <%= myInfoData.checkOfficeClass %>" role="radio" aria-checked="<%= myInfoData.checkOfficeBool %>"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio5" value="" title="직장" aria-describedby="aria-gender-tx" checked="<%= myInfoData.checkOfficeClass %>"<!-- 체크상태일 경우 checked="false" -->
-                                                직장
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <em class="tit">주소</em>
-                            <div class="cont">
-									<span class="inputbox bt-add">
-									<span class="input">
-										<input type="text" title="우편번호" value="<%= myInfoData.zip %>" readonly="" />
-										<button class="cancel"><span class="blind">삭제</span></button>
-									</span>
-									<span class="bt-box">
-										<button type="button" id="fe-search-zip">우편번호 검색</button>
-									</span>
-									</span>
-                                <span class="inputbox mt10">
-										<span class="input">
-											<input id="fe-basAddr" type="text" title="상세 주소" value="<%= myInfoData.basAddr %>" aria-labelledby="aria-citation-phone" readonly="" />
-											<button class="cancel"><span class="blind">삭제</span></button>
-										</span>
-									</span>
-                                <span class="inputbox mt10">
-										<span class="input">
-											<input id="fe-detAddr" type="text" value="<%= myInfoData.dtlAddr %>" title="상세 주소" aria-labelledby="aria-citation-phone" />
-											<button class="cancel"><span class="blind">삭제</span></button>
-										</span>
-									</span>
-                            </div>
-                            <em class="tit">전화번호</em>
-                            <div class="cont">
-                                <div class="inputbox phone-wrap"><!-- 영역 크기에 따라 width 조절 -->
-                                    <span class="select" style="width:28%">
-											<button id="fe-ph-first" class="bt-dropdown big" title="휴대폰 앞자리 선택" aria-haspopup="true"><%= myInfoData.cntcNum1 %><span class="ico"></span></button>
-										</span>
-                                    <span class="hyp"></span>
-                                    <span class="input">
-											<input id="fe-ph-second" type="number" maxlength="4" value="<%= myInfoData.cntcNum2 %>" title="휴대폰 중간자리 입력" onInput="return Tw.InputHelper.inputNumberOnly(this);">
-											<button class="cancel"><span class="blind">삭제</span></button>
-										</span>
-                                    <span class="hyp"></span>
-                                    <span class="input">
-											<input id="fe-ph-third" type="number" maxlength="4" value="<%= myInfoData.cntcNum3 %>" title="휴대폰 끝자리 입력" onInput="return Tw.InputHelper.inputNumberOnly(this);">
-											<button class="cancel"><span class="blind">삭제</span></button>
-										</span>
-                                </div>
-                            </div>
+                <div class="cont-box">
+                    <h3 class="tit-type7">개인정보 수정</h3>
+                    <p class="subtit-info mt2">카드수령 정보(필수)</p>
+                    <div class="form-wrap">
+                        <div id="fe-radio" class="radio-set mt32">
+                            <span class="custom-form"><input type="radio" id="radio1" name="r1" data-type="03" <%= myInfoData.checkHomeChecked %>><span class="r-type1"></span></span>
+                            <label for="radio1" class="lab">자택</label>
+                            <span class="custom-form"><input type="radio" id="radio2" name="r1" data-type="04" <%= myInfoData.checkOfficeChecked %>><span class="r-type1"></span></span>
+                            <label for="radio2" class="lab">직장</label>
                         </div>
+                        <h4 class="tit-type7 mt16">주소</h4>
+                        <div class="form-address mt10">
+                            <div class="btn-area">
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input type="text" title="우편번호" value="<%= myInfoData.zip %>" readonly="readonly" />
+                                    </span>
+                                    <span class="btn-box">
+                                        <button id="fe-search-zip" type="button" class="btn-round2 btn-style3">우편번호 검색</button>
+                                    </span>
+                                </span>
+                            </div>
+                            <span class="inputbox mt8">
+                                <span class="input">
+                                    <input id="fe-basAddr" type="text" title="상세 주소" value="<%= myInfoData.basAddr %>" readonly="readonly" />
+                                </span>
+                            </span>
+                            <span class="inputbox mt8">
+                                <span class="input">
+                                    <input id="fe-detAddr" type="text" value="<%= myInfoData.dtlAddr %>" title="상세 주소" />
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                        </div>
+                        <h4 class="tit-type7 mt16">전화번호</h4>
+                        <div class="form-phone mt10 mb5">
+                            <span class="select">
+                                <button id="fe-ph-first" class="bt-dropdown big" title="전화번호 앞자리 선택" aria-haspopup="true"><%= myInfoData.cntcNum1 %><span class="ico"></span></button>
+                            </span>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="fe-ph-second" type="number" maxlength="4" title="전화번호 중간자리 입력" value="<%= myInfoData.cntcNum2 %>" onInput="return Tw.InputHelper.inputNumberOnly(this);">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="fe-ph-third" type="number" maxlength="4" title="전화번호 끝자리 입력" value="<%= myInfoData.cntcNum3 %>" onInput="return Tw.InputHelper.inputNumberOnly(this);">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                        </div>
+                        <p class="error-txt">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</p>
+                        <p class="error-txt">전화번호 앞자리 항목은 2~4글자로 입력하셔야 합니다.</p>
+                        <p class="error-txt">전화번호 뒷자리 항목은 4글자로 입력하셔야 합니다.</p>
                     </div>
                 </div>
                 <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
-                <div class="cont-box membership-info-modify01">
-                    <div class="ti-caption-gray">
-                        <span class="tit">T멤버십 이용&middot;약관 동의</span>
-                    </div>
-                    <div class="agree-chk-wrap agree-chk-type">
-                        <div class="list-comp-input-agree">
-                            <div class="widget">
-                                <div class="widget-box check">
-                                    <ul class="select-list" role="group">
-                                        <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="T멤버십 이용내역 안내 서비스 가입 (선택)" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox2">
-                                                    <p class="layout-text">
-                                                        <span class="mtext">T멤버십 이용내역 안내 서비스 가입 (선택)</span>
-                                                        <span class="stext-ellipsis">SK 텔레콤 T멤버십 이용내역을 문자메세지(SMS/MMS)로 안내해드리는 무료 서비스입니다.</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="광고성 정보 수신 동의 (선택)" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox3">
-                                                    <p class="layout-text">
-                                                        <span class="mtext">광고성 정보 수신 동의 (선택)</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="고객님께 혜택을 드리기 위한 개인정보 수집&middot;이용 동의(선택)" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox4">
-                                                    <p class="layout-text">
-                                                        <span class="mtext">고객님께 혜택을 드리기 위한<br />개인정보 수집&middot;이용 동의(선택)</span>
-                                                        <span class="stext-ellipsis"><strong>2018년 10월 4일</strong> T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tit-type7">T멤버십 이용&middot;약관 동의</h3>
+                    <div class="agreement-list">
+                        <ul>
+                            <li>
+                                <span class="custom-form"><input type="checkbox" id="oka1" name="r1"><span class="c-type1"></span></span>
+                                <label for="oka1" class="rad-lab">T멤버십 이용내역 안내 서비스 가입 (선택)</label>
+                                <p class="agr-sub-txt">SK 텔레콤 T멤버십 이용내역을 문자메세지(SMS/MMS)로 안내해드리는 무료 서비스입니다.</p>
+                            </li>
+                            <li>
+                                <span class="custom-form"><input type="checkbox" id="oka2" name="r1"><span class="c-type1"></span></span>
+                                <label for="oka2" class="rad-lab">광고성 정보 수신 동의 (선택)</label>
+                            </li>
+                            <li>
+                                <span class="custom-form pos2"><input type="checkbox" id="oka3" name="r1"><span class="c-type1"></span></span>
+                                <label for="oka3" class="rad-lab">고객님께 혜택을 드리기 위한 개인정보<br />수집&middot;이용 동의(선택)</label>
+                                <p class="agr-sub-txt">2018년 10월 4일 T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -156,76 +121,13 @@
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <!-- .cont-box -->
-                <div class="cont-box membership-info-modify01">
-                    <div class="cont-box pb0">
-                        <p class="con-txt1"><strong>T멤버십과 함께</strong> <br/>OK캐쉬백을 적립&middot;사용해 보세요</p>
-                        <p class="con-txt3 pt6">OK캐쉬백 기능을 추가하시면, OK캐쉬백을 적립·사용하실 수 있습니다. OK캐쉬백 기능을 추가하시겠습니까?</p>
+                <div class="cont-box">
+                    <p class="con-txt4">T멤버십과 함께 OK캐쉬백을 적립&middot;사용해 보세요</p>
+                    <p class="con-txt5 mt10">OK캐쉬백 기능을 추가하시면, OK캐쉬백을 적립·사용하실 수 있습니다. OK캐쉬백 기능을 추가하시겠습니까?</p>
+                    <div class="simple-form type2 mt30 mb5">
+                        <span class="custom-form"><input type="checkbox" id="chk8" name="checkbox2"><span class="c-type1"></span></span>
+                        <label for="chk8">OK캐쉬백 기능 추가하기</label>
                     </div>
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box accordion">
-                            <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                <div class="acco-style btn-hold">
-                                    <ul class="acco-list">
-                                        <!-- .on: 열기 -->
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><div class="checkbox type01"><input type="checkbox" name="checkbox" value="" title="OK캐쉬백 기능 추가하기" checked/>OK캐쉬백 기능 추가하기</div> <button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont type01">
-                                                <div class="agree-chk-wrap agree-chk-type">
-                                                    <div class="list-comp-input-agree">
-                                                        <div class="widget">
-                                                            <div class="widget-box check">
-                                                                <ul class="select-list" role="group">
-                                                                    <li>
-                                                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                                            <input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
-                                                                                <p class="layout-text all-chk">
-                                                                                    <span class="mtext">모두동의</span>
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                                            <input type="checkbox" name="checkbox" value="" title="OK캐쉬백 카드 서비스 이용약관 확인 (필수)" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                                                                            <div class="comp-list-layout" id="aria-comp-checkbox2">
-                                                                                <p class="layout-text">
-                                                                                    <span class="mtext">OK캐쉬백 카드 서비스 이용약관 확인 (필수)</span>
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                                            <input type="checkbox" name="checkbox" value="" title="OK캐쉬백 암호화된 동일인 식별정보 제공 동의 (필수)" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" -->
-                                                                            <div class="comp-list-layout" id="aria-comp-checkbox3">
-                                                                                <p class="layout-text">
-                                                                                    <span class="mtext">OK캐쉬백 암호화된 동일인<br />식별정보 제공 동의 (필수)</span>
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="agreement-info-txt">
-                                                                            필수 동의사항에 동의하셔야, OK캐쉬백 포인트가 적립됩니다.<br/>
-                                                                            단, 포인트가 적립될  때에는 OK캐쉬백 수수료 정책에 따라 <strong>서비스 이용수수료로 차감</strong>된 후 최종 적립됩니다.
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// .widget -->
                 </div>
                 <!--// .cont-box -->
 
@@ -250,7 +152,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipMyUpdate($('.wrap'));
+    new Tw.MembershipMyUpdate($('.wrap'), '<%- myInfoData.addrCd %>');
   });
 </script>
 

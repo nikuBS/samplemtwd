@@ -33,10 +33,8 @@ export default class MembershipMy extends TwViewController {
   }
 
   private parseMyInfoData(myInfoData): any {
-    myInfoData.checkHomeClass = myInfoData.addrCd === '03' ? 'checekd' : '' ;
-    myInfoData.checkOfficeClass = myInfoData.addrCd === '03' ? '' : 'checked' ;
-    myInfoData.checkHomeBool = myInfoData.addrCd === '03' ? 'true' : 'false' ;
-    myInfoData.checkOfficeBool = myInfoData.addrCd === '03' ? 'false' : 'true' ;
+    myInfoData.checkHomeChecked = myInfoData.addrCd === '03' ? 'checked' : '' ;
+    myInfoData.checkOfficeChecked = myInfoData.addrCd === '04' ? 'checked' : '' ;
 
     return myInfoData;
   }

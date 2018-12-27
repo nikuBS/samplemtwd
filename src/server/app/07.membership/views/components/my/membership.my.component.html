@@ -6,14 +6,13 @@
 <script id="tmplList" type="text/x-handlebars-template">
     {{#each list}}
     <li>
-        <div class="lineinfo-user">
-            <span class="info-title">{{joinName}}</span>
-            <span class="info-sub">{{happenDate}}</span>
+        <div class="txt">
+            <strong class="tit">{{joinName}}</strong>
+            <div class="sub-info">
+                <span class="item date">{{happenDate}}</span>
+            </div>
         </div>
-        <div class="lineinfo-data">
-            <span class="info-title"><span class="num">{{showUserDcAmt}}<span>원</span></span></span>
-            <!-- <span class="info-sub">두툼포인트 120P</span> -->
-        </div>
+        <span class="val vt">{{showUserDcAmt}}원</span>
     </li>
     {{/each}}
 </script>
