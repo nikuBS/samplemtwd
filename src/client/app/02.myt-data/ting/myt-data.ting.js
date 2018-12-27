@@ -26,12 +26,14 @@ Tw.MyTDataTing.prototype = {
     this.$input_ting_receiver = $('.fe-input_ting_receiver');
     this.$btn_native_contact_list = $('.fe-btn_native_contact');
     this.$wrap_amount_select_list = $('.fe-ting_amount_select_list');
+    this.$error_text = $('.fe-error-text');
   },
 
   _bindEvent: function () {
     this.$btn_send_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
+    this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
   },
 
   _getRemainDataInfo: function () {
@@ -82,6 +84,8 @@ Tw.MyTDataTing.prototype = {
   _onKeyUpTingGiftNumber: function () {
     this._checkValidateSendingButton();
     this.$input_ting_receiver.val(this._convertDashNumber(this.$input_ting_receiver.val()));
+
+    this._validatePhoneNumber();
   },
 
   _getReceiveUserInfo: function () {
@@ -122,22 +126,28 @@ Tw.MyTDataTing.prototype = {
   },
 
   _checkValidateSendingButton: function () {
-    if ( this.$input_ting_receiver.val().match(/\d+/g) ) {
+    if ( this._validatePhoneNumber() ) {
       this.$btn_send_gift.attr('disabled', false);
     } else {
       this.$btn_send_gift.attr('disabled', true);
     }
   },
 
-  _validatePhoneNumber: function (sPhone) {
-    if ( sPhone.length < 10 ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
-      return false;
-    }
+  _validatePhoneNumber: function () {
+    var sPhone = this.$input_ting_receiver.val().match(/\d+/g) ? this.$input_ting_receiver.val().match(/\d+/g).join('') : '';
 
-    if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+    if ( sPhone.length < 10 ) {
+      // Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+      this.$error_text.addClass('blind');
+      $(this.$error_text.get(0)).removeClass('blind');
       return false;
+    } else if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
+      // Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+      this.$error_text.addClass('blind');
+      $(this.$error_text.get(1)).removeClass('blind');
+      return false;
+    } else {
+      this.$error_text.addClass('blind');
     }
 
     return true;
