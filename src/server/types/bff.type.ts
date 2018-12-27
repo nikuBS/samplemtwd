@@ -314,9 +314,9 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
   '11': 'T포인트',
   '40': '페이톡 계좌이체',
   '41': '계좌이체',
-  Y: '결제완료',
-  N: '결제취소',
-  A: '결제완료'
+  Y: '납부 완료',
+  N: '납부 취소',
+  A: '납부 완료'
 };
 
 export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING = {

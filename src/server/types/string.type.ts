@@ -303,7 +303,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
 };
 
 export const MYT_PAYMENT_DETAIL_TITLE = {
-  DI: '납부 상세 내역',
+  DI: '납부 상세내역',
   TPOINT: 'T포인트 납부 상세내역',
   OCB: 'OK캐쉬백 납부 상세 내역',
   BANK: '계좌이체 납부 상세 내역',
