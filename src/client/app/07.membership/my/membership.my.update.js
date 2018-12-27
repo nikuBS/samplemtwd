@@ -4,11 +4,12 @@
  * Date: 2018.12.21
  */
 
-Tw.MembershipMyUpdate = function(rootEl) {
+Tw.MembershipMyUpdate = function(rootEl, addrCd) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._addrCd = addrCd;
   this._cachedElement();
   this._bindEvent();
 };
@@ -18,6 +19,7 @@ Tw.MembershipMyUpdate.prototype = {
   _cachedElement: function() {
     this.$searchZip = this.$container.find('#fe-search-zip');
     this.$firstPhone = this.$container.find('#fe-ph-first');
+    this.$receiptRadio = this.$container.find('#fe-radio');
     //this.$container.on('change keyup paste', '#fe-phone2', $.proxy(this._validationCheck, this));
     //this.$container.on('change keyup paste', '#fe-phone3', $.proxy(this._validationCheck, this));
     this.$container.on('blur', '#fe-ph-second', $.proxy(this._validationCheck, this));
@@ -27,6 +29,7 @@ Tw.MembershipMyUpdate.prototype = {
   _bindEvent: function() {
     this.$searchZip.on('click', $.proxy(this._searchZip, this)); // 우편번호 검색
     this.$firstPhone.on('click', $.proxy(this._openPhoneActionSheet, this));
+    this.$receiptRadio.on('click', $.proxy(this._selectReceipt, this));
   },
 
   _searchZip: function () {
@@ -75,6 +78,7 @@ Tw.MembershipMyUpdate.prototype = {
     if($('.hbs-card').hasClass('checked')){
       $('.hbs-card').removeClass('checked');
     }
+
     $(e.target).parents('li').find('button').addClass('checked');
 
     $(selected).val($(e.target).parents('li').find('.info-value').text());
@@ -91,6 +95,18 @@ Tw.MembershipMyUpdate.prototype = {
 
     if(this.$firstPhone.data('type') === 'area'){
       //벨리데이션 추가
+    }
+  },
+
+  _selectReceipt: function(e) {
+    var id = e.target.id;
+
+    if(id === 'radio1'){
+      this._addrCd = '03';
+    }else if(id === 'radio2'){
+      this._addrCd = '04';
+    }else{
+      return;
     }
   }
 
