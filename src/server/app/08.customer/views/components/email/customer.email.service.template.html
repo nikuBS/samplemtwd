@@ -13,7 +13,7 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="{{{placeHolder}}}" maxlength="12000"
                                   aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
@@ -251,6 +251,11 @@
                                                 <p class="desc">주문하신 내역이 없습니다.</p>
                                             </div>
                                             {{/each}}
+                                            {{#if isMoreListShop}}
+                                            <div class="bt-more">
+                                                <button class="fe-direct-more">더 보기</button>
+                                            </div>
+                                            {{/if}}
                                         </li>
                                         <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                             {{#each listUsed}}
@@ -275,13 +280,16 @@
                                                                                 </dl>
                                                                             </div>
                                                                             <div class="imgbox">
-                                                                                <img src="/img/dummy/img_products.png">
+                                                                                <img src="<%= CDN %>/img/dummy/img_products.png">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                    </div>
+                                                    <div class="bt-more blind">
+                                                        <button>더 보기</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -291,6 +299,11 @@
                                                 <p class="desc">주문하신 내역이 없습니다.</p>
                                             </div>
                                             {{/each}}
+                                            {{#if isMoreListUsed}}
+                                            <div class="bt-more">
+                                                <button class="fe-direct-more">더 보기</button>
+                                            </div>
+                                            {{/if}}
                                         </li>
                                     </ul>
                                 </div>

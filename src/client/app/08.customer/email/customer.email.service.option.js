@@ -30,6 +30,7 @@ Tw.CustomerEmailServiceOption.prototype = {
     this.$container.on('click', '.fe-select-order', $.proxy(this._setOrderNumber, this));
     this.$container.on('click', '.fe-wrap_direct_order .popup-closeBtn', $.proxy(this._closeDirectOrder, this));
     this.$container.on('click', '.fe-wrap_direct_order input[type="checkbox"]', $.proxy(this._disabledCheckbox, this));
+    this.$container.on('click', '.fe-direct-more', $.proxy(this._onShowMoreList, this));
   },
 
   _disabledCheckbox: function (e) {
@@ -71,11 +72,46 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _onSuccessOrderInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.$container.append(this.tpl_service_direct_order(res.result));
+      var htOrderInfo = this._convertOrderInfo(res.result);
+      this.$container.append(this.tpl_service_direct_order(htOrderInfo));
+      this._hideListItem();
       skt_landing.widgets.widget_init('.fe-wrap_direct_order');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _convertOrderInfo: function (list) {
+    var htOrderList = $.extend({}, list, { isMoreListShop: false, isMoreListUsed: false });
+
+    if ( list.listShop.length > 20 ) {
+      htOrderList.isMoreListShop = true;
+
+    }
+
+    if ( list.listUsed.length > 20 ) {
+      htOrderList.isMoreListUsed = true;
+    }
+
+    return htOrderList;
+  },
+
+  _onShowMoreList: function (e) {
+    var elTarget = e.currentTarget;
+    var elTabPanel = $(elTarget).closest('[role=tabpanel]');
+
+    if ( elTabPanel.find('.list-comp-input').not(':visible').size() !== 0 ) {
+      elTabPanel.find('.list-comp-input').not(':visible').slice(0, 20).show();
+    }
+
+    if ( elTabPanel.find('.list-comp-input').not(':visible').size() === 0 ) {
+      elTarget.remove();
+    }
+  },
+
+  _hideListItem: function () {
+    $('#tab1-tab .list-comp-input').slice(20).hide();
+    $('#tab2-tab .list-comp-input').slice(20).hide();
   },
 
   _onSuccessDirectBrand: function ($elButton, res) {

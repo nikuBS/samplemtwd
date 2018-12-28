@@ -45,7 +45,8 @@ Tw.CustomerEmailTemplate.prototype = {
   _changeServiceTemplate: function (e, serviceCategory) {
     switch ( serviceCategory.depth1 ) {
       case 'CELL':
-        this.$wrap_tpl_service.html(this.tpl_service_cell());
+        var templatePlaceholder = this._setTemplatePlaceholder(serviceCategory);
+        this.$wrap_tpl_service.html(this.tpl_service_cell({ placeHolder: templatePlaceholder }));
         break;
       case 'INTERNET':
         this.$wrap_tpl_service.html(this.tpl_service_internet());
@@ -80,5 +81,12 @@ Tw.CustomerEmailTemplate.prototype = {
     }
 
     skt_landing.widgets.widget_init();
+  },
+
+  _setTemplatePlaceholder: function (serviceCategory) {
+    if ( serviceCategory.depth2 === '5000275' ) {
+      debugger;
+      return Tw.CUSTOMER_EMAIL.MEMBERSHIP_PLACEHOLDER;
+    }
   }
 };
