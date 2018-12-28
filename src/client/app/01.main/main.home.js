@@ -85,6 +85,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
     this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
     this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
+    this.$container.on('click', '.fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
