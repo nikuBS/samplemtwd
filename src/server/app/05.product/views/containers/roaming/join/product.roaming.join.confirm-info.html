@@ -38,7 +38,7 @@
                         <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
                         <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
                         <div class="in-info oneline">
-                            <span class="number"><span class="blind">회선번호</span><%= svcInfo.showSvc %></span>
+                            <span class="number"><span class="blind">회선번호</span><%= maskingNum %></span>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,13 @@
 									<span class="elem">가입할 요금제 (부가서비스)</span>
 								</span>
                             <span class="tit-tx"><%= prodRedisInfo.prodNm %></span>
-                            <span class="sub-disc03"><span class="tx-bold vbl">월 <%= prodRedisInfo.basFeeInfo%>원</span> 부가세포함</span>
+                            <span class="sub-disc03">
+                                <% if(prodRedisInfo.basFeeInfo!=='무료'){ %>
+                                    <span class="tx-bold vbl">월 <%= prodRedisInfo.basFeeInfo%>원</span> 부가세포함
+                                <% }else{ %>
+                                    <span class="tx-bold vbl"><%= prodRedisInfo.basFeeInfo%></span>
+                                <% } %>
+                            </span>
                             <div class="cont-noti pt36">
                                 <span class="type3"><%= prodRedisInfo.prodSmryDesc %></span>
                             </div>
@@ -240,14 +246,14 @@
 
 
                 <hr class="cont-sp type1" aria-hidden="true">
-                <% if(prodBffInfo.preinfo.joinNoticeList.length<=0){ %>
+                <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
                     <ul class="noti-list">
                         <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
                         <li>
-                            <%= prodBffInfo.preinfo.joinNoticeList[i].prodNm %>
+                            <%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>
                             <button type="button" class="tip-view" title="정보보기" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
                         </li>
                         <% } %>

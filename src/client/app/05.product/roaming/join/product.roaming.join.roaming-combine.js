@@ -9,8 +9,7 @@ Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
+  this._historyService = new Tw.HistoryService(rootEl);
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = [];
@@ -33,7 +32,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
       this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
-
+      this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
   },
 
     _clearInput : function(){
@@ -62,7 +61,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
       if(this._requestOrder('CHK',reuqestPhoneNum)){
           if(this._requestOrder('add',reuqestPhoneNum)){
               console.log('go to setting/roaming-combine');
-              this._history.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
+              this._historyService.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
           }
       }
       this._clearInput();
@@ -108,6 +107,9 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
         this.$addBtn.attr('disabled','disabled');
     }
 
+  },
+  _goBack : function(){
+        this._historyService.goBack();
   }
 
 
