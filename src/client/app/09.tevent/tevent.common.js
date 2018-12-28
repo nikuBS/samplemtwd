@@ -48,6 +48,7 @@ Tw.TeventCommon.prototype = {
       'select');
   },
   _onOpenPopup: function ($layer) {
+    $layer.find('input#' + this._uri).attr('checked', 'checked');
     $layer.on('change', '.ac-list', $.proxy(this._setUrl, this));
   },
   _goLoad: function () {
@@ -128,7 +129,7 @@ Tw.TeventCommon.prototype = {
 
       var $typeNode = $liNode.find('.fe-event-type');
       if ($content[i].prTypCd === 'E') {
-        $typeNode.find('.fe-type').text(Tw.EVENT_TYPE[$content[i].prTypCd]);
+        $typeNode.text(Tw.EVENT_TYPE[$content[i].prTypCd]);
         $typeNode.show();
       } else {
         $typeNode.hide();
