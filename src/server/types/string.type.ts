@@ -130,6 +130,11 @@ export enum MYT_DATA_CHARGE_TYPE_NAMES {
   ALL = '전체'
 }
 
+export enum MYT_DATA_REFILL_TYPES {
+  DATA = '데이터리필',
+  VOICE = '음성리필'
+}
+
 export enum MYT_DATA_CHARGE_TYPES {
   GIFT = '선물',
   CHARGE = '충전',
