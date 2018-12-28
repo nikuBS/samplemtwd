@@ -9,15 +9,16 @@ export enum API_SERVER {
   BFF = 'BFF_SERVER',
   TID = 'TID_SERVER',
   CDN = 'CDN_MANIFEST',
+  SEARCH = 'SEARCH_SERVER',
   TEST = 'TEST_SERVER'
 }
 
 export const API_CMD = {
 
   // test search
-  TEST_SEARCH : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
-  TEST_RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
-  TEST_GET_POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  TEST_SEARCH : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  TEST_RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  TEST_GET_POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   BFF_12_0010: { path: '/core-modification/v1/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SPRINT #3

@@ -133,7 +133,7 @@ Tw.LineComponent.prototype = {
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
         option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',
         showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
-        add: Tw.LINE_NAME[category] === 'S' ? line.addr : line.svcNum,
+        add: Tw.LINE_NAME[category] === 's' ? line.svcAttrCd !== 'S3' ? line.addr : line.svcNum : line.svcNum,
         svcMgmtNum: line.svcMgmtNum,
         icon: 'ico7'
       });

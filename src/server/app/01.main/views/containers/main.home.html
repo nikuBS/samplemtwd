@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="mainHome" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '<div class="h-logo"><a href="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></a></div>', svcInfo: svcInfo }) %>
     <!--// #header -->
@@ -75,7 +75,7 @@
                             <% if (homeData.usageData.code === '00') { %>
                             <!-- 모바일 회선_잔여 데이터 -->
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
@@ -699,16 +699,16 @@
 
                         <!-- 인터넷 · 집전화 · IPTV -->
                         <div class="section-box nogaps">
-                            <div class="main-charge-box combination main-banner-img">
-                                <a href="/product/callplan/TW20000013">
-                                    <img src="<%= CDN %>/img/main/img-main-banner03.png" alt="인터넷 · 전화 · IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" />
-                                </a>
-                                <!-- <div class="stit"><button class="bt">인터넷 · 전화 · IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></button></div>
-                                <div class="main-box-cont bg-type">
+                            <!-- <div class="main-banner-img">
+                                <button><img src="/img/main/img-main-banner08.png" alt="인터넷 · 전화 · IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
+                            </div> -->
+                            <div class="main-charge-box combination">
+                                <div class="stit"><a href="/product/wireplan" class="bt">인터넷 · 전화 · IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
+                                <div class="main-box-cont">
                                     <strong class="ti">온가족 플랜</strong>
                                     <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인</span>
-                                    <button class="bt">자세히 보기</button>
-                                </div> -->
+                                    <a href="/product/callplan/TW20000013" class="bt">자세히 보기</a>
+                                </div>
                             </div>
                         </div>
                         <!-- //인터넷 · 집전화 · IPTV -->
@@ -750,68 +750,83 @@
 
                         <!-- 할인혜택 -->
                         <div class="section-box nogaps">
-                            <div class="main-charge-box discount main-banner-img">
-                                <a href="/product/callplan/NA00004430">
-                                    <img src="<%= CDN %>/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
-                                </a>
-                                <!-- <div class="stit"><button class="bt">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></button></div>
+                            <div class="main-charge-box discount">
+                                <!-- <button>
+                                    <img src="/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
+                                </button> -->
+                                <div class="stit"><a href="/benefit/submain" class="bt">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
                                 <div class="main-box-cont">
                                     <strong class="ti">선택약정할인</strong>
                                     <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
-                                    <button class="bt">자세히 보기</button>
-                                </div> -->
+                                    <a href="/product/callplan/NA00004430" class="bt">자세히 보기</a>
+                                </div>
                             </div>
                         </div>
                         <!-- //할인혜택 -->
 
                         <!-- T로밍 -->
                         <div class="section-box nogaps">
-                            <div class="main-charge-box roaming section-swiper-box main-banner-img bul">
-                                <!-- <div class="stit c-point"><button class="bt">T로밍 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div> -->
+                            <div class="main-charge-box roaming section-swiper-box">
+                                <div class="stit c-point"><a href="/product/roaming" class="bt">T로밍 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box slider1">
                                         <div class="slider-box">
-                                            <ul class="slider">
-                                                <li>
-                                                    <a href="/product/callplan/NA00005900">
-                                                        <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/product/callplan/NA00005900">
-                                                        <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/product/callplan/NA00005900">
-                                                        <img src="<%= CDN %>/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </a>
-                                                </li>
-                                            </ul>
                                             <!-- <ul class="slider">
                                                 <li>
-                                                    <div class="main-box-cont">
-                                                        <strong class="ti">아시아 여행을 계획하셨나요?</strong>
-                                                        <span class="tx">아시아 주요 27개국에서 유용한 상품</span>
-                                                        <button class="bt">로밍상품 보기</button>
-                                                    </div>
+                                                    <button>
+                                                        <img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
+                                                    </button>
                                                 </li>
                                                 <li>
-                                                    <div class="main-box-cont">
-                                                        <strong class="ti">아시아 여행을 계획하셨나요?</strong>
-                                                        <span class="tx">아시아 주요 27개국에서 유용한 상품</span>
-                                                        <button class="bt">로밍상품 보기</button>
-                                                    </div>
+                                                    <button>
+                                                        <img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
+                                                    </button>
                                                 </li>
                                                 <li>
-                                                    <div class="main-box-cont">
-                                                        <strong class="ti">아시아 여행을 계획하셨나요?</strong>
-                                                        <span class="tx">아시아 주요 27개국에서 유용한 상품</span>
-                                                        <button class="bt">로밍상품 보기</button>
-                                                    </div>
+                                                    <button>
+                                                        <img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
+                                                    </button>
                                                 </li>
                                             </ul> -->
+                                            <ul class="slider">
+                                                <li>
+                                                    <div class="main-box-cont bg-type01">
+                                                        <strong class="ti">아시아 여행을<br>계획하셨나요?</strong>
+                                                        <a href="/product/callplan/NA00005900" class="bt">로밍상품 보기</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont bg-type02">
+                                                        <strong class="ti">중국 · 일본으로<br>떠나시나요?</strong>
+                                                        <a href="/product/callplan/NA00005699" class="bt">로밍상품 보기</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont bg-type03">
+                                                        <strong class="ti">미주 여행을<br>계획하셨나요?</strong>
+                                                        <a href="/product/callplan/NA00006038" class="bt">로밍상품 보기</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont bg-type04">
+                                                        <strong class="ti">유럽 여행을<br>계획하셨나요?</strong>
+                                                        <a href="/product/callplan/NA00006046" class="bt">로밍상품 보기</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont bg-type05">
+                                                        <strong class="ti">짧게<br>여행 가시나요?</strong>
+                                                        <a href="/product/callplan/NA00003196" class="bt">로밍상품 보기</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="main-box-cont bg-type06">
+                                                        <strong class="ti">길게<br>여행 가시나요?</strong>
+                                                        <a href="/product/callplan/NA00005300" class="bt">로밍상품 보기</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -822,13 +837,13 @@
 
                         <!-- 프로모션 배너 -->
                         <div class="accessories-box main-banner-img">
-                            <button class="bt"><img src="<%= CDN %>/img/main/img_accessories.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
+                            <button class="bt fe-bt-direct-nugu"><img src="<%= CDN %>/img/main/img_accessories.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
                         </div>
                         <!-- //프로모션 배너 -->
 
                         <!-- 프로모션 배너 -->
                         <div class="accessories-box main-banner-img">
-                            <button class="bt"><img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
+                            <button class="bt fe-bt-direct-nugu"><img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
                         </div>
                         <!-- //프로모션 배너 -->
 

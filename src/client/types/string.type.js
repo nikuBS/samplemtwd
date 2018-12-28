@@ -48,7 +48,6 @@ Tw.BUTTON_LABEL = {
   JOIN: '가입하기',
   TERMINATE: '해지하기',
   NEXT: '다음',
-  RETRY: '다시 받기',
   HOME: '홈으로',
   YES: '예',
   NO: '아니오'
@@ -117,7 +116,8 @@ Tw.POPUP_CONTENTS = {
   BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
   BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
   COUPON_RECEIVER_LIMIT:
-    '선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. <br />리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.'
+    ' 선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. <br />리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.',
+  BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {

@@ -13,6 +13,8 @@ Tw.CertificationFinance = function () {
   this._authUrl = null;
   this._callback = null;
   this._authKind = null;
+  this._prodAuthKey = null;
+  this._command = null;
   this._isCompleteIden = false;
   this._isCheckTerm = true;
   this._fidoTarget = '';
@@ -26,11 +28,13 @@ Tw.CertificationFinance.prototype = {
     '0': Tw.FIDO_TYPE.FINGER,
     '1': Tw.FIDO_TYPE.FACE
   },
-  open: function (svcInfo, authUrl, authKind, callback) {
+  open: function (svcInfo, authUrl, authKind, prodAuthKey, command, callback) {
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._callback = callback;
     this._authKind = authKind;
+    this._prodAuthKey = prodAuthKey;
+    this._command = command;
 
     this._fidoType();
   },
@@ -132,7 +136,8 @@ Tw.CertificationFinance.prototype = {
   },
   _onClosePublicPopup: function () {
     if ( this._isCheckTerm ) {
-      this._certPublic.open(this._svcInfo, this._authUrl, this._authKind, this._command, this._callback);
+      this._certPublic = new Tw.CertificationPublic();
+      this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, this._callback);
     }
   },
   _onChangePrivacy: function () {

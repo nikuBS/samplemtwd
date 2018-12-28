@@ -85,6 +85,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
     this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
     this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
+    this.$container.on('click', '.fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
@@ -225,6 +226,8 @@ Tw.MainHome.prototype = {
         'contents': notice.ntcCtt,
         'bt_b': this._makeBtnList(notice)
       }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
+    } else {
+      this._openLineResisterPopup();
     }
   },
   _checkShowEmrNotice: function (notice, today) {

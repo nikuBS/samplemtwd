@@ -11,8 +11,8 @@ const environment = {
       port: 32300,
       db: 0
     },
-    TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
+    SEARCH_SERVER: 'http://61.250.22.114:8080',
     // TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     TEST_SERVER: 'http://61.250.22.114:8080',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
@@ -34,8 +34,8 @@ const environment = {
       port: 6379,
       db: 0
     },
-    TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
+    SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-dev.tworld.co.kr',
     DOMAIN_G: 'devgm.tworld.co.kr',
@@ -56,8 +56,8 @@ const environment = {
       port: 6379,
       db: 0
     },
-    TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
+    SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-stg.tworld.co.kr',
     DOMAIN_G: 'icp-stggm.tworld.co.kr',
@@ -79,8 +79,8 @@ const environment = {
       port: 32300,
       db: 0
     },
-    TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
+    SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
     DOMAIN_G: 'beta.g.m.tworld.co.kr',

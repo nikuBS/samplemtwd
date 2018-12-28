@@ -98,7 +98,7 @@ Tw.AUTH_CERTIFICATION_KIND = {
   A: 'A', // 마스킹
   O: 'O', // 업무 & 마스킹
   R: 'R', // 상품
-  F: 'F' // 미환급금
+  F: 'F'  // 미환급금
 };
 
 Tw.NICE_TYPE = {
