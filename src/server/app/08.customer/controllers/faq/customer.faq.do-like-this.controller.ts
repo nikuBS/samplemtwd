@@ -36,7 +36,9 @@ class CustomerFaqDoLikeThis extends TwViewController {
     return this.apiService.request(API_CMD.BFF_08_0053, { mtwdBltn1CntsId: id }).map((resp) => {
     // return this.apiService.request(API_CMD.BFF_08_0064, {}, null, [id]).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
+        // this.apiService.request(API_CMD.BFF_08_0065, {}, null, [id]);
         return resp.result.cntsCtt;
+        // return resp.result.icntsCtt;
       }
 
       this.error.render(res, {
