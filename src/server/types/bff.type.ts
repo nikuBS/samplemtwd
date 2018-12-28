@@ -581,3 +581,5 @@ export const MEMBERSHIP_TYPE = {
   '3': '티플',
   '4': '커플'
 };
+
+export const REFILL_USAGE_DATA_CODES = ['AAA10', 'AAA30'];
