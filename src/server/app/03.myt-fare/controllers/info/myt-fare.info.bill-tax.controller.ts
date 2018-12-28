@@ -91,6 +91,7 @@ class MyTFareInfoBillTax extends TwViewController {
         return null;
       }
 
+
       resp.result.taxReprintList.map((o) => {
         o.ctzBizName = svcInfo.eqpMdlNm;
         // 발행시 구분자(selSearch) YYYYMM API 호출시 YYYYM 형태는 인지 못함 2018.12
@@ -121,8 +122,7 @@ class MyTFareInfoBillTax extends TwViewController {
   
   private mergeList = (taxlist): TaxList[] => {
     return [].concat.apply([], taxlist).reverse().map((tax, i) => {
-      tax.listId = i;
-      return tax;
+      return Object.assign(tax, {listId: i});
     });
   }
 
