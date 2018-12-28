@@ -1118,6 +1118,7 @@ Tw.CUSTOMER_EMAIL = {
   SMS_ALARM: 'SMS알림 설정 시 답변이 등록되면 입력하신 휴대전화번호로 SMS가 발송됩니다.',
   INVALID_EMAIL: '이메일 주소를 다시 확인해주세요.',
   INVALID_FILE: '첨부하실 수 없는 파일입니다. <br> 다시 확인해주세요.',
+  DEFAULT_PLACEHOLDER: '내용 입력',
   MEMBERSHIP_PLACEHOLDER: '멤버십 등급 산정 기준 등 \n' +
   '멤버십의 상세한 내용 확인을 위해서는 \n' +
   '‘청구서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
