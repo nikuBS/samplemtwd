@@ -46,7 +46,7 @@ Tw.MainMenuSettingsLocation.prototype = {
     this.$term.attr('checked', !checked);
   },
   _onLink: function () {
-    var code = 40;
+    var code = 62;
     Tw.CommonHelper.openTermLayer(code);
   }
 };
