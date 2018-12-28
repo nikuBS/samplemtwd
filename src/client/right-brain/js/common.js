@@ -460,8 +460,9 @@ skt_landing.action = {
     })
   },
   home_slider : function(){ // home 전체 슬라이더
+    var homeIndex = 0;
     $('.home-slider .home-slider-belt').each(function(){
-      $(this).slick({
+      t = $(this).slick({
           dots: false,
           infinite: false,
           speed: 300,
@@ -469,14 +470,17 @@ skt_landing.action = {
           adaptiveHeight: true,
           nextArrow:'.ico-home-tab-store',
           prevArrow:'.ico-home-tab-my',
-          touchMove : false,
-          touchThreshold : 2 /* 50% 이동해야지 넘어감 (1/touchThreshold) * the width */
+          touchMove : true,
+          touchThreshold : 4 /* 50% 이동해야지 넘어감 (1/touchThreshold) * the width */
+      })
+      .on('beforeChange', function(slick, currentSlide){
       })
       .on('afterChange', function(slick, currentSlide){
-          var homeIndex = $('.home-slider .home-slider-belt').slick('getSlick').currentSlide;
-          $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
-          $('.home-slider .home-slider-belt')[0].slick.animateHeight();
-
+          if(homeIndex !== $('.home-slider .home-slider-belt').slick('getSlick').currentSlide){
+            homeIndex = $('.home-slider .home-slider-belt').slick('getSlick').currentSlide;
+            $("html, body").stop().animate({scrollTop:0}, 1, function(){});
+            $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
+          }
       })
     })
     $(window).bind('scroll', function(){
@@ -568,7 +572,7 @@ skt_landing.dev = {
        $(this).closest('.ui-state-default').appendTo('#sortable-disabled');
        $(this).text('추가');
      }else{
-       $(this).closest('.ui-state-default').prependTo('#sortable-enabled');
+       $(this).closest('.ui-state-default').appendTo('#sortable-enabled');
        $(this).text('삭제');
      }
    });
@@ -584,4 +588,4 @@ skt_landing.dev = {
      }
    });
   }
-} 
+}

@@ -300,15 +300,56 @@ skt_landing.widgets = {
         }, 0);
       });
       if($('.home-slider').length > 0){
-        _this.on('swipe', function () {
-          $('.home-slider .home-slider-belt')[0].slick.setOption({
-            swipe: false
-          })
-        })
-        _this.on('afterChange', function () {
-          $('.home-slider .home-slider-belt')[0].slick.setOption({
-            swipe: true
-          })
+        _this.on({
+          'mousedown' : function(){
+            $('.home-slider .home-slider-belt')[0].slick.setOption({
+              swipe: false
+            })
+          },
+          'touchstart' : function(){
+            $('.home-slider .home-slider-belt')[0].slick.setOption({
+              swipe: false
+            })
+          },
+          'mouseup' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'edge' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'setPosition' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'beforeChange' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'afterChange' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'mousemove' : function(){
+          },
+          'swipe' : function(){
+          }
         })
       }
     });
@@ -646,7 +687,7 @@ skt_landing.widgets = {
       for(var i=0; items.length > i; ++i){
         itemsW += Math.ceil(items.eq(i).outerWidth(true));
       }
-      belt.css('width', itemsW + 1);
+      belt.css('width', itemsW + 3);
       /*
       if(itemsW <= slide.width()){
         belt.css('width','100%');
