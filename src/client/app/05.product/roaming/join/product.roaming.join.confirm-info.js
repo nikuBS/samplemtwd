@@ -5,7 +5,6 @@
  */
 
 Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData) {
-    console.log(closeCallBack);
   this.$rootContainer = rootEl;
   this._popupData = data;
   this._page = false;
