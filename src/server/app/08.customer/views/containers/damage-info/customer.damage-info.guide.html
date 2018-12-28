@@ -31,11 +31,19 @@
                     <% for (var i in list) { %>
                     <li class="<%= list[i].itemClass %>">
                         <div class="link-long">
+                            <% if (category === 'latest' && !list[i].IS_EXTERNAL) { %>
+                            <a href="<%= list[i].LINK %>"><%= list[i].TEXT %>
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                            <% } else { %>
                             <a class="fe-link-external" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
                             </a>
+                            <% } %>
                         </div>
                     </li>
                     <% } %>

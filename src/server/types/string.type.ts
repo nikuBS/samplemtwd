@@ -574,7 +574,9 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page013: '명의도용 피해예방법',
   page014: '결합상품 피해예방법',
   page015: '소액결제 피해예방법',
-  page016: '해외 로밍 피해예방법'
+  page016: '해외 로밍 피해예방법',
+  page017: 'SNS 개인정보 보호 꿀팁! (2단계 인증설정)',
+  page018: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)'
 };
 
 export const ROAMING_RECEIVE_CENTER = {
