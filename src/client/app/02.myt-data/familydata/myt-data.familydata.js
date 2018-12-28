@@ -4,11 +4,12 @@
  * Date: 2018.10.01
  */
 
-Tw.MyTDataFamily = function(rootEl) {
+Tw.MyTDataFamily = function(rootEl, maxLimitation) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._maxLimitation = maxLimitation;
 
   this._bindEvent();
 };
@@ -68,10 +69,14 @@ Tw.MyTDataFamily.prototype = {
     var limitation = this._limitation;
 
     if (limitation === false) {
+      this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, mgmtNum).done($.proxy(this._successChangeLimitation, this));
     } else if (originLimit == limitation) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
+    } else if (this._maxLimitation < Number(limitation)) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6);
     } else {
+      this._popupService.close();
       this._apiService
         .request(Tw.API_CMD.BFF_06_0050, {
           mbrSvcMgmtNum: mgmtNum,

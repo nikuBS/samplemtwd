@@ -6,10 +6,10 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
 
 class MyTDataFamily extends TwViewController {
   constructor() {
@@ -17,19 +17,24 @@ class MyTDataFamily extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    this.getRemainDataInfo(svcInfo).subscribe(familyInfo => {
-      if (familyInfo.msg) {
+    Observable.combineLatest(this.getFamilyData(svcInfo), this.getShareData()).subscribe(([familyInfo, shareData]) => {
+      const error = {
+        code: familyInfo.code || shareData.code,
+        msg: familyInfo.msg || shareData.msg
+      };
+
+      if (error.code) {
         return this.error.render(res, {
-          ...familyInfo,
+          ...error,
           svcInfo
         });
       }
 
-      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo });
+      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo, shareData });
     });
   }
 
-  private getRemainDataInfo(svcInfo) {
+  private getFamilyData(svcInfo) {
     return this.apiService.request(API_CMD.BFF_06_0044, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -81,6 +86,15 @@ class MyTDataFamily extends TwViewController {
           };
         })
       };
+    });
+  }
+
+  private getShareData = () => {
+    return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+      return resp.result;
     });
   }
 }
