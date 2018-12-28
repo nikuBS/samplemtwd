@@ -108,7 +108,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0164, {phoneNum: phNum})
-      .done(function (resp) {
+      .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
           Tw.CommonHelper.endLoading('.container');
@@ -151,7 +151,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
             }
           });
         }
-      })
+      }, this))
       .fail(function (err) {
         Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText);
