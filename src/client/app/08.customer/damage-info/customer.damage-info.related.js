@@ -29,7 +29,7 @@ Tw.CustomerDamageInfoRelated.prototype = {
       return this._openExternalUrl($(e.currentTarget).attr('href'));
     }
 
-    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
   _openExternalUrl: function(href) {
