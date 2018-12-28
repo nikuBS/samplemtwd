@@ -135,14 +135,14 @@
                                                             <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
-                                                                           <% if (autoInfo.isAuto) { %>
-                                                                                value="<%= cashbag.cardNumber %>"
-                                                                                type="text" readOnly
-                                                                            <% } else { %>
-                                                                                inputmode="numeric" min="0" pattern="[0-9]*" type="number"
-                                                                            <% } %>
+                                                                    <% if (autoInfo.isAuto) { %>
+                                                                    <input id="<%= cashbag.ocbCcno %>" class="fe-point-card"
+                                                                           value="<%= cashbag.cardNumber %>" type="text" readOnly />
+                                                                    <% } else { %>
+                                                                    <input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
+                                                                           inputmode="numeric" min="0" pattern="[0-9]*" type="number"
                                                                            maxlength="16" placeholder="숫자만 입력" />
+                                                                    <% } %>
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                                     <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 																</span>
