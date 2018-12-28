@@ -3,25 +3,30 @@
 * Author: 김인환 (skt.p132150@partner.sk.com)
 * Date: 2018.10.25
 %>
-
-
-<hr class="cont-sp type1" aria-hidden="true">
-
-<!-- .cont-box -->
-<div class="cont-box">
-    <h3>명의자</h3>
-    <div class="mt10">
-        <button data-id="cop-list" class="bt-dropdown big" title="명의자 선택" aria-haspopup="true" data-type="090">
-            <span class="ico"></span>
-            직원
-        </button>
-    </div>
-    <h3 class="mt20">메일 주소</h3>
-    <span class="inputbox mt10">
-        <span class="input">
-            <input type="text" value="" data-id="email-addr"
-                   title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"/>
-            <button class="cancel"><span class="blind">삭제</span></button>
+<li>
+    <span class="title">명의자</span>
+    <span class="tx-cont">
+        <span class="form-wrap">
+            <span class="inputbox">
+                <span class="select">
+                    <button data-id="cop-list" class="bt-dropdown big" title="명의자 선택" aria-haspopup="true" data-type="090">
+                        직원<span class="ico"></span>
+                    </button>
+                </span>
+            </span>
         </span>
     </span>
-</div>
+</li>
+<li>
+    <span class="title">메일 주소</span>
+    <span class="tx-cont">
+        <span class="form-wrap">
+            <span class="inputbox">
+                <span class="input">
+                    <input data-id="email-addr" type="text" placeholder="이메일 입력" title="이메일 입력"/>
+                    <button class="cancel"><span class="blind">삭제</span></button>
+                </span>
+            </span>
+        </span>
+    </span>
+</li>

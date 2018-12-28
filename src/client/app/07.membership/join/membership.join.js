@@ -37,8 +37,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeCheckBox = this.$container.find('[data-id=all-agree-c]');
     this.$cAgreeItems = this.$container.find('[data-role=CL]');
     this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
-    this.$cashbagAccodianBtn = this.$container.find('[data-id=cashbag_list]');
-    this.$agreeViewBtn = this.$container.find('button.agree-view');
+    this.$cashbagList = this.$container.find('[data-id=cashbag_list]');
+    this.$agreeViewBtn = this.$container.find('button.more-vw');
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
@@ -56,8 +56,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$joinBtn.on('click', $.proxy(this._onClickJoinBtn, this));
     this.$tAgreeCheckBox.on('click', $.proxy(this._onClickTAgreeCheckbox, this));
     this.$cAgreeCheckBox.on('click', $.proxy(this._onClickCAgreeCheckbox, this));
-    this.$tAgreeItems.on('mousedown', $.proxy(this._onClickTAgreeItems, this));
-    this.$cAgreeItems.on('mousedown', $.proxy(this._onClickCAgreeItems, this));
+    this.$tAgreeItems.on('click', $.proxy(this._onClickTAgreeItems, this));
+    this.$cAgreeItems.on('click', $.proxy(this._onClickCAgreeItems, this));
     this.$agreeViewBtn.on('click', $.proxy(this._onItemsAgreeView, this));
     this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
     if ( this.data.type === 'corporate' ) {
@@ -107,85 +107,61 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickTAgreeCheckbox: function (event) {
-    var checked = ($(event.target).parents('[role=checkbox]').attr('aria-checked') === 'true');
+    var checked = $(event.currentTarget).find('input').prop('checked');
     this._tAllCheck = checked;
     for ( var i = 0; i < this.$tAgreeItems.length; i++ ) {
       var item = this.$tAgreeItems.eq(i);
       var $input = item.find('input');
-      if ( checked ) {
-        item.addClass('checked');
-        $input.attr('checked', 'checked');
-      }
-      else {
-        item.removeClass('checked');
-        $input.removeAttr('checked');
-      }
-      item.attr('aria-checked', checked);
+      $input.prop('checked', checked);
     }
   },
 
   _onClickCAgreeCheckbox: function (event) {
-    var checked = ($(event.target).parents('[role=checkbox]').attr('aria-checked') === 'true');
+    var checked = $(event.currentTarget).find('input').prop('checked');
     this._cAllCheck = checked;
     for ( var i = 0; i < this.$cAgreeItems.length; i++ ) {
       var item = this.$cAgreeItems.eq(i);
       var $input = item.find('input');
-      if ( checked ) {
-        item.addClass('checked');
-        $input.attr('checked', 'checked');
-      }
-      else {
-        item.removeClass('checked');
-        $input.removeAttr('checked');
-      }
-      item.attr('aria-checked', checked);
+      $input.prop('checked', checked);
     }
   },
 
   _onClickTAgreeItems: function (event) {
-    var $target = $(event.target);
-    if ( $target.hasClass('.agree-view') ) {
-      this._onItemsAgreeView($target);
-    }
-    else {
-      if ( this._tAllCheck ) {
-        this.$tAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
-        this.$tAgreeCheckBox.find('input').removeAttr('checked');
-        this._tAllCheck = false;
-        this.$tAgreeItems.trigger('click');
-      }
+    var $target = $(event.currentTarget).find('input');
+    if ( this._tAllCheck && !$target.prop('checked') ) {
+      this.$tAgreeCheckBox.find('input').prop('checked', false);
+      this._tAllCheck = false;
     }
   },
 
   _onClickCAgreeItems: function (event) {
-    var $target = $(event.target);
-    if ( $target.hasClass('.agree-view') ) {
-      this._onItemsAgreeView($target);
-    }
-    else {
-      if ( this._cAllCheck ) {
-        this.$cAgreeCheckBox.removeClass('checked').attr('aria-checked', 'false');
-        this.$cAgreeCheckBox.find('input').removeAttr('checked');
-        this._cAllCheck = false;
-        this.$cAgreeItems.trigger('click');
-      }
+    var $target = $(event.currentTarget).find('input');
+    if ( this._cAllCheck && !$target.prop('checked') ) {
+      this.$cAgreeCheckBox.find('input').prop('checked', false);
+      this._cAllCheck = false;
     }
   },
 
   _onClickContainer: function () {
-    var $items = this.$container.find('[aria-checked=true]:not(.all)');
+    var $items = this.$container.find('.custom-form:not(.all)');
     var array = [];
     $items.each($.proxy(function (index) {
-      if ( $items.eq(index).attr('data-id') && $items.eq(index).attr('data-id').match(/L_/gi).length > 0 ) {
+      var isLid = $items.eq(index).attr('data-id') && $items.eq(index).attr('data-id').match(/L_/gi);
+      if ( isLid && isLid.length > 0 ) {
         var $item = $items.eq(index);
+        var $input = $item.find('input');
         var id = $item.attr('data-id');
         if ( !this._checkOkCashbag ) {
-          if ( id === 'L_01' || id === 'L_02'  || id === 'L_05') {
-            array.push($items.eq(index));
+          if ( id === 'L_01' || id === 'L_02' || id === 'L_05' ) {
+            if ( $input.prop('checked') ) {
+              array.push($items.eq(index));
+            }
           }
         }
         else {
-          array.push($items.eq(index));
+          if ( $input.prop('checked') ) {
+            array.push($items.eq(index));
+          }
         }
       }
     }, this));
@@ -209,18 +185,21 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickCashbagCheckbox: function (event) {
-    var $target = $(event.target);
+    var $target = $(event.currentTarget).find('input');
     var checked = $target.prop('checked');
-    if ( !checked ) {
+    if ( checked ) {
+      this.$cashbagList.removeClass('blind');
+      this._checkOkCashbag = true;
+    }
+    else {
+      if ( !this.$cashbagList.hasClass('blind') ) {
+        this.$cashbagList.addClass('blind');
+      }
       if ( this.$cAgreeCheckBox.find('input').prop('checked') ) {
         this.$cAgreeCheckBox.find('input').trigger('click');
       }
       this._checkOkCashbag = false;
     }
-    else {
-      this._checkOkCashbag = true;
-    }
-    this.$cashbagAccodianBtn.trigger('click');
   },
 
   _onClickJoinBtn: function () {
@@ -228,13 +207,13 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       Tw.ALERT_MSG_MEMBERSHIP.JOIN.OK_BTN, null, $.proxy(this._requestMembershipJoin, this), null);
   },
 
-  _requestMembershipJoin: function() {
+  _requestMembershipJoin: function () {
     this.loadingView(true);
-    var $items = this.$container.find('[aria-checked=true]');
+    var $items = this.$container.find('[checked=true]');
     var params = {
       mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
       svc_nominal_rel_cd: this.svcNominalRelCd, // 본인: 010, 직원: 090, 기타: 990
-      card_isue_typ_cd: this.data.isFeature ? '0' : '1', // 플라스틱 카드 0, 모바일 카드 1
+      card_isue_typ_cd: '1', // 플라스틱 카드 0, 모바일 카드 1
       skt_news_yn: 'N', // 광고성 정보 수신
       skt_tm_yn: 'N', // 고객 혜택 제공
       sms_agree_yn: 'N', // 멤버십 이용내역 안내
@@ -286,7 +265,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
-      setTimeout($.proxy(function() {
+      setTimeout($.proxy(function () {
         new Tw.TPayJoinLayerPopup(this.$container).open();
       }, this), 100);
     }
@@ -301,17 +280,22 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onItemsAgreeView: function (event) {
-    this._agreeViewTarget = $(event.target).siblings('[role="checkbox"]');
-    var type = $(event.target).attr('data-type');
-    new Tw.MembershipClauseLayerPopup({
-      $element: this.$container,
-      callback: $.proxy(this._agreeViewCallback, this)
-    }).open(type);
+    this._agreeViewTarget = $(event.currentTarget).siblings('.custom-form').find('input');
+    var type = $(event.currentTarget).attr('data-type');
+    if ( type === 'BE_04_02_L09' ) {
+      Tw.CommonHelper.openUrlExternal(Tw.POPUP_TPL.MEMBERSHIP_CLAUSE_ITEM['09'].url);
+    }
+    else {
+      new Tw.MembershipClauseLayerPopup({
+        $element: this.$container,
+        callback: $.proxy(this._agreeViewCallback, this)
+      }).open(type);
+    }
   },
 
   _agreeViewCallback: function () {
-    if ( !this._agreeViewTarget.find('input').prop('checked') ) {
-      this._agreeViewTarget.find('input').trigger('click');
+    if ( !this._agreeViewTarget.prop('checked') ) {
+      this._agreeViewTarget.prop('checked', true);
       this._agreeViewTarget = null;
     }
   }
