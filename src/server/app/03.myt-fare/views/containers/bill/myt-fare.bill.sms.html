@@ -52,7 +52,8 @@
                             </div>
                             <div class="info-form-box">
                                 <p class="form-label" id="aria-exp-label2">입금하실 계좌번호 <button id="MF_01_04_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></p>
-                                <button id="<%= virtualBankList[0].bankCd %>" class="bt-dropdown big fe-account-selector" title="은행 계좌번호" aria-haspopup="true">
+                                <button id="<%= virtualBankList[0].bankCd %>" data-origin-id="<%= virtualBankList[0].bankCd %>" class="bt-dropdown big fe-account-selector"
+                                        title="은행 계좌번호" aria-haspopup="true">
                                     <%= virtualBankList[0].sBankNm + ' ' + virtualBankList[0].sVirtualBankNum %><span class="ico"></span>
                                 </button>
                                 <ul class="fe-account-list none">
@@ -93,7 +94,7 @@
             </div>
             <!--// #contents -->
             <!-- .popup-cloeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

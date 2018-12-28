@@ -24,6 +24,7 @@ Tw.MyTFareBillSms.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-account-selector', $.proxy(this._selectAccountList, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _selectAccountList: function (event) {
@@ -41,6 +42,7 @@ Tw.MyTFareBillSms.prototype = {
   },
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
+    $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
@@ -62,6 +64,26 @@ Tw.MyTFareBillSms.prototype = {
     accountList.push(listObj);
 
     return accountList;
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    return this.$accountSelector.attr('id') !== this.$accountSelector.attr('data-origin-id');
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   },
   _pay: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: $.trim(this.$accountSelector.text()) })
