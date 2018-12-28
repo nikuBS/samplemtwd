@@ -24,7 +24,6 @@ import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/prod
 import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
-import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -101,7 +100,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/lookup/tplan', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
-    this.controllers.push({ url: '/mobileplan/compare-plans', controller: ProductMobileplanComparePlans });
 
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });

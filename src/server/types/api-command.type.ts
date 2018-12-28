@@ -498,7 +498,7 @@ export const API_CMD = {
   BFF_09_0005: { path: '/core-membership/v1/event/win-detail/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // PRODUCT
-  BFF_10_0001: { path: '/core-product/v1/ledger/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0001: { path: '/core-product/v1/ledger/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0002: { path: '/core-product/v1/ledger/:args0/summaries', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0003: { path: '/core-product/v1/ledger/:args0/tags', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0004: { path: '/core-product/v1/ledger/:args0/contents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
