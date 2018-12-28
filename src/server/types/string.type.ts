@@ -114,6 +114,7 @@ export enum CURRENCY_UNIT {
 }
 
 export enum TIME_UNIT {
+  MONTH = '개월',
   HOURS = '시간',
   MINUTE = '분',
   SECOND = '초'
@@ -243,7 +244,7 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
 
 export const MYT_JOIN_CONTRACT_TERMINAL = {
   FEE_TYPE_A: {
-    TIT_NM: '요금약정할인24 (730일)'
+    TIT_NM: '요금약정할인제도'
   },
   FEE_TYPE_B: {
     TIT_NM: '테블릿 약정할인 12'

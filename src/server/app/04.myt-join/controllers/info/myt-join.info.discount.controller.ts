@@ -12,7 +12,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
+import { MYT_FARE_BILL_GUIDE, TIME_UNIT } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 import contractTerminal_BFF_05_0063 from '../../../../mock/server/contractTerminal.BFF_05_0063.mock';
 
@@ -161,8 +161,9 @@ class MytJoinInfoDiscount extends TwViewController {
         switch ( priceList[i].prodId ) {
 
           case 'NA00003677': // 요금약정할인24 (730)
+            const month = DateHelper.getDiffByUnit(priceList[i].agrmtDcEndDt, priceList[i].agrmtDcStaDt, 'month') + 1;
             priceList[i].typeStr = 'fee_type_A';
-            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
+            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM + '(' + month + TIME_UNIT.MONTH + ')';
             priceList[i].svcAgrmtDcObj = {
               svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
               svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
@@ -359,8 +360,8 @@ class MytJoinInfoDiscount extends TwViewController {
 
     this.logger.info(this, '[ _proDate ]', startDt, endDt);
 
-    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
-    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.M.DD.');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.M.DD.');
 
     dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
     dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
@@ -380,8 +381,8 @@ class MytJoinInfoDiscount extends TwViewController {
     const endDt = end;
     const useDt = moment(startDt, 'YYYYMMDD').add(use, 'day').format('YYYYMMDD'); // 진행날짜
 
-    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
-    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.M.DD.');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.M.DD.');
 
     dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
     dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
@@ -400,8 +401,8 @@ class MytJoinInfoDiscount extends TwViewController {
     const endDt = end;
     const remnantDt = moment(endDt, 'YYYYMMDD').subtract(remnant, 'day').format('YYYYMMDD'); // 진행날짜
 
-    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
-    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.M.DD.');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.M.DD.');
 
     dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
     dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day'); // 진행 일수
@@ -420,8 +421,8 @@ class MytJoinInfoDiscount extends TwViewController {
     const startDt = start;
     const endDt = end;
 
-    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
-    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.M.DD.');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.M.DD.');
 
     dataObj.totMt = dataObj.allotMthCnt; // 전체 개월
     dataObj.curMt = dataObj.allotMthCnt - dataObj.invRmn; // 진행 개월
