@@ -23,10 +23,10 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="ti-caption-gray">
-                    <button class="bt-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">당첨자 발표</button>
+                <div class="sort-area">
+                    <button class="btn-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">당첨자 발표</button>
                 </div>
-                <div class="cont-box nogaps">
+                <div class="cont-box nogaps-hoz">
                     <div class="event-article-list">
                         <% if (content) { %>
                         <ul class="fe-content-list" data-page="<%= totalPages %>" data-cnt="<%= totalElements %>">
@@ -35,9 +35,9 @@
                                 <button class="btn" title="이벤트 자세히보기">
                                     <span class="tit fe-event-title"><%= content[i].prNm %></span>
                                     <span class="subtxt">
-                                        <span class="date fe-event-day"><%= content[i].startDate %> ~ <%= content[i].endDate %></span>
+                                        <span class="date fe-event-day">기간 <%= content[i].startDate %> ~ <%= content[i].endDate %></span>
                                         <% if (content[i].promotionType !== null) { %>
-                                        <span class="entry"><span class="blind">이벤트타입</span><%= content[i].promotionType %></span>
+                                        <span class="entry"><%= content[i].promotionType %></span>
                                         <% } %>
                                     </span>
                                     <span class="prize">당첨자 발표 <span class="fe-event-win-date"><%= content[i].winDate %></span></span>
