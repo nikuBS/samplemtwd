@@ -150,7 +150,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataFamily($('.container-wrap'));
+    new Tw.MyTDataFamily($('.container-wrap'), <%= shareData.shrblData %>);
   });
 </script>
 <% include ../../components/end.component.html %>
