@@ -7,6 +7,7 @@
 Tw.CustomerDamageInfoContents = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._bindEvent();
 };
 
@@ -16,6 +17,7 @@ Tw.CustomerDamageInfoContents.prototype = {
     this.$container.on('click', '.fe-idpt_pop', $.proxy(this._openPop, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-back', $.proxy(this._goBack, this));
 
     this._bindUIEvent(this.$container);
   },
@@ -64,6 +66,10 @@ Tw.CustomerDamageInfoContents.prototype = {
     });
   },
 
+  _goBack: function() {
+    this._historyService.goBack();
+  },
+
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -94,12 +100,7 @@ Tw.CustomerDamageInfoContents.prototype = {
   },
 
   _bindPop: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_popup_close', $.proxy(this._closePop, this));
     this._bindUIEvent($popupContainer);
-  },
-
-  _closePop: function() {
-    this._popupService.close();
   }
 
 };

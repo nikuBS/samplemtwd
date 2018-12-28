@@ -47,176 +47,229 @@ export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
 
 export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   {
+    TEXT: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)',
+    LINK: '/customer/damage-info/contents/page018',
+    IS_EXTERNAL: false
+  },
+  {
+    TEXT: 'SNS 개인정보 보호 꿀팁! (2단계 인증설정)',
+    LINK: '/customer/damage-info/contents/page017',
+    IS_EXTERNAL: false
+  },
+  {
     TEXT: '랜섬웨어 대응 가이드라인',
-    LINK: 'https://m.blog.naver.com/kisa118/221218861926'
+    LINK: 'https://m.blog.naver.com/kisa118/221218861926',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '꼭 지켜야 할 정보보호 실천수칙 10가지',
-    LINK: '/customer/damage-info/contents/page012'
+    LINK: '/customer/damage-info/contents/page012',
+    IS_EXTERNAL: false
   },
   {
     TEXT: '무심코 스쳐간 광고! "악성코드에 감염되셨습니다"',
-    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5894346&memberNo=3326308&navigationType=push'
+    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5894346&memberNo=3326308&navigationType=push',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '사이버보안을 위한 10가지 행동 수칙',
-    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5878746&memberNo=3326308&navigationType=push'
+    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5878746&memberNo=3326308&navigationType=push',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '데이터 인질극, 랜섬웨어 예방법',
-    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5544739&memberNo=3326308&navigationType=push'
+    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5544739&memberNo=3326308&navigationType=push',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '소프트웨어 업데이트, 이렇게 하세요!',
-    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5281268&memberNo=3326308&navigationType=push'
+    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5281268&memberNo=3326308&navigationType=push',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '맞춤형 개인정보 통합 클린서비스',
-    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5188513&memberNo=3326308&navigationType=push'
+    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5188513&memberNo=3326308&navigationType=push',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '내 스마트폰을 지키는 악성앱 치료서비스',
-    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5073390&memberNo=3326308&navigationType=push'
+    LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5073390&memberNo=3326308&navigationType=push',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '휴대폰 분실 전과 후, 어떻게 대처할까?',
-    LINK: 'http://blog.skbroadband.com/1969'
+    LINK: 'http://blog.skbroadband.com/1969',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '해외여행 체크리스트, 요금 폭탄 피하는 법과 로밍 TIP',
-    LINK: 'http://blog.skbroadband.com/1944'
+    LINK: 'http://blog.skbroadband.com/1944',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '내 컴퓨터가 스스로 움직인다? 원격제어 악성코드',
-    LINK: 'http://blog.skbroadband.com/1933'
+    LINK: 'http://blog.skbroadband.com/1933',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '타깃형 택배 스미싱 등장! 테러 동영상도 주의!',
-    LINK: 'http://blog.skbroadband.com/1895'
+    LINK: 'http://blog.skbroadband.com/1895',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '공용 와이파이 주의! 와이파이 악성코드 \'Skype Voice\'',
-    LINK: 'http://blog.skbroadband.com/1886'
+    LINK: 'http://blog.skbroadband.com/1886',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '맞춤형 백신, \'전용백신\' 제대로 알고 사용하기',
-    LINK: 'http://blog.skbroadband.com/1872'
+    LINK: 'http://blog.skbroadband.com/1872',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '인터넷 브라우저, 깨끗하고 안전하게 사용하기',
-    LINK: 'http://blog.skbroadband.com/1857'
+    LINK: 'http://blog.skbroadband.com/1857',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '사이버 응급실 \'모바일 응급 사이버 치료체계\'를 아시나요?',
-    LINK: 'http://blog.skbroadband.com/1848'
+    LINK: 'http://blog.skbroadband.com/1848',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '이것만은 꼭 알아두고 가세요! 최신 파싱 및 파밍 유형들',
-    LINK: 'http://blog.skbroadband.com/1841'
+    LINK: 'http://blog.skbroadband.com/1841',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '급여 명세서를 사칭한 악성코드 주의!',
-    LINK: 'http://blog.skbroadband.com/1835'
+    LINK: 'http://blog.skbroadband.com/1835',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '추석연휴, 스미싱·보이스피싱·승차권사기 보안수칙!',
-    LINK: 'http://blog.skbroadband.com/1833'
+    LINK: 'http://blog.skbroadband.com/1833',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '\'어도비 플래시 플레이어\' 사칭 스마트폰 랜섬웨어 주의하세요!',
-    LINK: 'http://blog.skbroadband.com/1829'
+    LINK: 'http://blog.skbroadband.com/1829',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '스미싱도 진짜 가짜가 있다? 가짜 메시지 \'혹스(Hoax)\'',
-    LINK: 'http://blog.skbroadband.com/1827'
+    LINK: 'http://blog.skbroadband.com/1827',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '메르스를 이용한 신종 스미싱·보이스피싱·악성코드 주의보 발령',
-    LINK: 'http://blog.skbroadband.com/1754'
+    LINK: 'http://blog.skbroadband.com/1754',
+    IS_EXTERNAL: true
   },
   {
     TEXT: 'QR코드 금융사기 \'큐싱(Qshing)\'주의보',
-    LINK: 'http://blog.skbroadband.com/1749'
+    LINK: 'http://blog.skbroadband.com/1749',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '스마트폰 분실 시 대처법',
-    LINK: 'http://blog.skbroadband.com/1729'
+    LINK: 'http://blog.skbroadband.com/1729',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '한국판 랜섬웨어 ‘크립토락커’를 아시나요?',
-    LINK: 'http://blog.skbroadband.com/1707'
+    LINK: 'http://blog.skbroadband.com/1707',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '오토런 바이러스로부터 내 컴퓨터 안전하게 보호하는 방법',
-    LINK: 'http://blog.skbroadband.com/1693'
+    LINK: 'http://blog.skbroadband.com/1693',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '명의도용 피해예방법',
-    LINK: '/customer/damage-info/contents/page013'
+    LINK: '/customer/damage-info/contents/page013',
+    IS_EXTERNAL: false
   },
   {
     TEXT: '소액결제 피해예방법',
-    LINK: '/customer/damage-info/contents/page014'
+    LINK: '/customer/damage-info/contents/page014',
+    IS_EXTERNAL: false
   },
   {
     TEXT: '결합상품 피해예방법',
-    LINK: '/customer/damage-info/contents/page015'
+    LINK: '/customer/damage-info/contents/page015',
+    IS_EXTERNAL: false
   },
   {
     TEXT: '해외 로밍 피해예방법',
-    LINK: '/customer/damage-info/contents/page016'
+    LINK: '/customer/damage-info/contents/page016',
+    IS_EXTERNAL: false
   },
   {
     TEXT: '무선 공유기 해킹 주의보!',
-    LINK: 'https://www.sktinsight.com/10867'
+    LINK: 'https://www.sktinsight.com/10867',
+    IS_EXTERNAL: true
   },
   {
     TEXT: 'PC타고 스마트폰까지 침투하는 악성코드 주의보',
-    LINK: 'http://blog.skbroadband.com/1612'
+    LINK: 'http://blog.skbroadband.com/1612',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '스미싱 피해예방 안내',
-    LINK: '/customer/damage-info/contents/page001'
+    LINK: '/customer/damage-info/contents/page001',
+    IS_EXTERNAL: false
   },
   {
     TEXT: '메모리 해킹 주의보',
-    LINK: 'http://blog.skbroadband.com/764'
+    LINK: 'http://blog.skbroadband.com/764',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '파밍 피해예방 방법',
-    LINK: 'http://blog.skbroadband.com/1215'
+    LINK: 'http://blog.skbroadband.com/1215',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '클라우드 보안법',
-    LINK: 'http://blog.skbroadband.com/1398'
+    LINK: 'http://blog.skbroadband.com/1398',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '스마트폰 보안 수칙',
-    LINK: 'http://blog.skbroadband.com/642'
+    LINK: 'http://blog.skbroadband.com/642',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '스팸 메시지 대응방법',
-    LINK: 'http://blog.skbroadband.com/950'
+    LINK: 'http://blog.skbroadband.com/950',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '안전한 무선인터넷 사용법',
-    LINK: 'http://blog.skbroadband.com/1368'
+    LINK: 'http://blog.skbroadband.com/1368',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '인터넷프라이버시 가이드',
-    LINK: 'http://blog.skbroadband.com/979'
+    LINK: 'http://blog.skbroadband.com/979',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '웹 보안 서비스 안내',
-    LINK: 'http://blog.skbroadband.com/805'
+    LINK: 'http://blog.skbroadband.com/805',
+    IS_EXTERNAL: true
   },
   {
     TEXT: 'PC보호 프로그램 안내',
-    LINK: 'http://blog.skbroadband.com/383'
+    LINK: 'http://blog.skbroadband.com/383',
+    IS_EXTERNAL: true
   },
   {
     TEXT: '유출된 개인정보로 인한 피해 최소화 방법',
-    LINK: 'http://blog.skbroadband.com/1729'
+    LINK: 'http://blog.skbroadband.com/1729',
+    IS_EXTERNAL: true
   }
 ];
 
