@@ -429,7 +429,7 @@ Tw.ALERT_MSG_MYT_DATA = {
   ALERT_2_A17: {
     TITLE: '데이터 조르기',
     MSG: 'SKT를 이용하는 고객에게 문자와 SNS로 데이터 조르기를 하실 수 있습니다.',
-    BUTTON: '조르기'
+    BUTTON: '조르기 요청'
   },
   ALERT_2_A18: {
     TITLE: '데이터 조르기',
