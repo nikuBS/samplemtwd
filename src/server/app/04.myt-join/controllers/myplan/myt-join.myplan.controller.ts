@@ -57,7 +57,7 @@ class MyTJoinMyplan extends TwViewController {
   private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
-        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.')
       });
     });
   }
@@ -79,7 +79,7 @@ class MyTJoinMyplan extends TwViewController {
     return Object.assign(wirePlan, {
       basFeeAmt: wirePlan.basFeeAmt > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
       isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
-      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.MM.DD'),
+      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.M.DD.'),
       dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits)
     });
   }
@@ -92,8 +92,8 @@ class MyTJoinMyplan extends TwViewController {
     return dcBenefits.map((item) => {
       return Object.assign(item, {
         penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
-        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
-        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD')
+        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
+        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.M.DD.')
             : MYT_FEEPLAN_BENEFIT.ENDLESS,
         dcVal: FormatHelper.addComma(item.dcVal.toString())
       });
@@ -124,7 +124,7 @@ class MyTJoinMyplan extends TwViewController {
 
     return Object.assign(wirelessPlan, {
       feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {
-        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.MM.DD'),
+        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.M.DD.'),
         basFeeInfo: spec.basFeeInfo,
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,

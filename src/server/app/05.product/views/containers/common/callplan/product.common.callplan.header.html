@@ -48,9 +48,17 @@
         </p>
         <% } %>
         <% if ( basicInfo.prodStCd !== 'E1000' ) { %>
+        <% if ( basicInfo.prodTermYn === 'Y' && (( isMobileplanAdd || isWireplanAdd || isCombine || isDiscount || isRoaming ) && isJoined) ) { %>
+        <div class="btn">
+            <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
+            <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
+            <% } %>
+        </div>
+        <% } else { %>
         <div class="limit">
             가입제한 상품
         </div>
+        <% } %>
         <% } else { %>
         <% if ( basicInfo.prodScrbYn === 'Y' && (
             ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || isMobileplan && !svcInfo) ||

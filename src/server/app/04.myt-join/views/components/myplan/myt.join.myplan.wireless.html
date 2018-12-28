@@ -3,7 +3,7 @@
 
         <div class="plan-compact-info">
             <div class="plan">
-                <span class="tit"><%= feePlan.feePlanProd.prodNm %></span>
+                <a href="/product/callplan/<%= feePlan.feePlanProd.prodId %>" class="tit"><%= feePlan.feePlanProd.prodNm %></a>
                 <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
                 <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
                 <% } %>

@@ -57,8 +57,10 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
-    this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$comparePlans.on('click', $.proxy(this._openComparePlans, this));
+
+    this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
+    this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
 
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
@@ -85,6 +87,14 @@ Tw.ProductCommonCallplan.prototype = {
 
   _openComparePlans: function(e) {
     Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).data('href'), 'status=1,toolbar=1');
+  },
+
+  _onBannerLink: function(e) {
+    if ($(e.currentTarget).attr('href').indexOf(location.hostname) !== -1) {
+      return true;
+    }
+
+    this._confirmExternalUrl(e);
   },
 
   _confirmExternalUrl: function(e) {
