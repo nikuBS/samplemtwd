@@ -48,7 +48,9 @@ export default class MembershipSubmain extends TwViewController {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        res.render('membership.submain.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), popBrandData });
+        const membershipData = null;
+
+        res.render('membership.submain.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData });
       });
     }
   }
@@ -68,7 +70,7 @@ export default class MembershipSubmain extends TwViewController {
           code: resp.code,
           msg: resp.msg
         };
-      }else{
+      } else {
         membershipData = this.parseMembershipData(resp.result);
       }
 

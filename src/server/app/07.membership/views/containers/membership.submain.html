@@ -70,6 +70,7 @@
             <!--// .cont-box -->
 
             <!-- .cont-box -->
+            <% if (isLogin) { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
                     <h3 class="link-long">
@@ -90,13 +91,38 @@
                                         <strong class="num"><%= membershipData.showCardNum %></strong>
                                         <span class="name"><em><%= membershipData.custNm %></em> 고객님</span>
                                     </span>
-                                    <span class="bar-code"><img src="/img/benefit/bar-code.png" alt="Bar Code"></span>
+                                    <% if (membershipData.mbrStCd === 'AC') { %>
+                                    <span class="bar-code"><img id="fe-barcode-img" data-cardNum="<%= membershipData.mbrCardNum %>" src="/img/benefit/bar-code.png" alt="Bar Code"></span>
+                                    <% } else if (membershipData.mbrStCd === 'SP') { %>
+                                    <span class="situation">이용정지</span>
+                                    <% } %>
                                 </span>
                         </button>
                     </div>
                     <p class="card-desc">T멤버십 모든 고객에게 ‘연간 할인한도’ 무한 제공</p>
                 </div>
             </div>
+            <% } else { %>
+            <div class="cont-box nogaps-top">
+                <div class="card-wrap">
+                    <h3 class="link-long">
+                        <button title="멤버십 카드 및 등급 안내 페이지로 이동">T멤버십 카드·등급 안내
+                            <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                        </button>
+                    </h3>
+                    <div class="card-box type-red">
+                        <div class="card-inner">
+                            <strong class="card-tit">T멤버십</strong>
+                            <span class="card-name">리더스클럽</span>
+                            <p class="card-txt">T멤버십 카드를 신청하시고 다양한 혜택을 받으세요</p>
+                            <a class="application">가입하기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -252,7 +278,8 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    //new Tw.MembershipSubmain($('.wrap'));
+      var membershipData = '<%- JSON.stringify(membershipData) %>';
+      new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData));
   });
 </script>
 
