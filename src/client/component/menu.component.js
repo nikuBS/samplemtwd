@@ -205,7 +205,7 @@ Tw.MenuComponent.prototype = {
           break;
         case 2:
           this.$container.find('.fe-when-login-type2').removeClass('none');
-          this.$userName.text(name);
+          this.$userName.text(userInfo.name);
           break;
         default:
           break;

@@ -151,6 +151,13 @@ Tw.CustomerFaqCategory.prototype = {
         code = this._depth1code;
         depth = 2;
       }
+
+      var depth2list = _.filter(this._depth2obj, $.proxy(function (item) {
+        return item.supIfaqGrpCd === this._depth1code;
+      }, this));
+      if (depth2list.length === 0) {
+        depth = 3;
+      }
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0052, {
