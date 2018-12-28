@@ -48,6 +48,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
     if ( diff < 0 ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
       return;
+    } else if ( diff > 30 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
+      return;
     }
 
     Tw.CommonHelper.startLoading('body', 'grey', true);
