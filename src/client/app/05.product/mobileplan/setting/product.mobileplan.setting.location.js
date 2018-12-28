@@ -187,6 +187,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     }
     var html = '';
     for(var i = 0; i < list.length; i++){
+      list[i].no = (i + 1);
       html += this._tmpltLocItem(list[i]);
     }
     $('.discount-location').append(html);
