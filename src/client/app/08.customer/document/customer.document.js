@@ -84,6 +84,8 @@ Tw.CustomerDocument.prototype = {
   _resetEachSelector: function (index, idx, target) {
     var $target = $(target);
     if ($target.data('index') > index) {
+      $target.addClass('off');
+      $target.find('button').addClass('none-event');
       $target.find('.select-list').empty();
       $target.find('.question').show();
       $target.find('.result-txt').empty().hide();
@@ -160,8 +162,8 @@ Tw.CustomerDocument.prototype = {
     this._setData($target, $target.next(), true);
   },
   _setTargetDisabled: function ($target) {
-    $target.addClass('disabled');
-    $target.find('.question').css('color', 'grey');
+    $target.addClass('off');
+    $target.find('button').addClass('none-event');
   },
   _setListData: function ($target, list) {
     for (var i = 0; i < list.length; i++) {
@@ -204,6 +206,7 @@ Tw.CustomerDocument.prototype = {
     $target.removeClass('on');
   },
   _openList: function ($target) {
-    $target.addClass('on');
+    $target.removeClass('off').addClass('on');
+    $target.find('button').removeClass('none-event');
   }
 };
