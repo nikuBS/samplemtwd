@@ -1984,6 +1984,13 @@
           line-height: 1.3125rem;
           color: #000;
           text-align: right; }
+          .list-comp-history .comp-box .list-box .list-con .list-info dl dd .line-clamp {
+            overflow: hidden;
+            max-height: 2.625rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis; }
 
 .list-comp-history .comp-box .year-tx {
   font-size: 0.875rem;
@@ -16977,6 +16984,12 @@ a.bt-link-tx.underline.small {
     font-weight: 700; }
 
 /* CS_12_01, CS_12_03 : 설문조사 */
+.poll-box .poll-sub-tit, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .poll-sub-tit {
+  font-size: 0.8125rem;
+  color: #000;
+  letter-spacing: -0.02em;
+  padding: 0.9375rem 0 0.3125rem; }
+
 .poll-box .bt-link-tx.underline, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .bt-link-tx.underline {
   font-size: 0.8125rem;
   display: block; }

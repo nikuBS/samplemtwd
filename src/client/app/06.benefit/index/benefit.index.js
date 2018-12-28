@@ -19,7 +19,7 @@ Tw.BenefitIndex.prototype = {
     this._bindEvent();
     this._registerHelper();
     this._reqMyBenefitDiscountInfo();
-    this._switchTab(Tw.UrlHelper.getQueryParams().filters || '');
+    this._loadTab();
   },
   _initVariables: function () {
     this.$benefitArea = this.$container.find('#fe-my-benefit-area');
@@ -150,6 +150,9 @@ Tw.BenefitIndex.prototype = {
     Handlebars.registerHelper('cdn', function(val){
       return Tw.Environment.cdn + val;
     });
+    Handlebars.registerHelper('isNaN', function(val, options){
+      return isNaN(val) ? options.fn(this) : options.inverse(this);
+    });
   },
 
   // 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
@@ -157,7 +160,6 @@ Tw.BenefitIndex.prototype = {
     if (!this._isLogin) {
       return;
     }
-    Tw.CommonHelper.startLoading('#fe-my-benefit-area','grey',true);
     this._apiService.requestArray([
       {command: Tw.API_CMD.BFF_11_0001},
       {command: Tw.API_CMD.BFF_07_0041},
@@ -169,11 +171,10 @@ Tw.BenefitIndex.prototype = {
       {command: Tw.API_CMD.BFF_05_0094},
       {command: Tw.API_CMD.BFF_05_0196}
     ]).done($.proxy(this._successMyBenefitDiscountInfo, this))
-      .fail($.proxy(this._onFail, this, '#fe-my-benefit-area'));
+      .fail($.proxy(this._onFail, this));
   },
 
   _successMyBenefitDiscountInfo: function () {
-    Tw.CommonHelper.endLoading('#fe-my-benefit-area');
     var data = {
       membership: '',
       point: 0,
@@ -238,9 +239,6 @@ Tw.BenefitIndex.prototype = {
 
   // 카테고리 '탭' 선택
   _switchTab: function (categoryId) {
-    if (categoryId !=='') {
-      this._history.replacePathName(window.location.pathname + '?filters=' + categoryId);
-    }
     // 모두 체크해제
     this.$categoryTab.find('input[name="radio1"]').prop('checked',false);
     this.$categoryTab.find('li.radiobox').removeClass('checked').attr('aria-checked',false);
@@ -264,19 +262,28 @@ Tw.BenefitIndex.prototype = {
     }
   },
 
+  _loadTab: function() {
+    var categoryId = {
+      'discount'      : 'F01421',
+      'combinations'  : 'F01422',
+      'long-term'     : 'F01423',
+      'participation' : 'F01424',
+      'submain'       : ''
+    };
+    this._switchTab(categoryId[Tw.UrlHelper.getLastPath()]);
+  },
+
   // "가입상담예약" 신청여부 API 조회
   _reqDocumentsInspects: function () {
-    Tw.CommonHelper.startLoading('.container','grey',true);
     this._apiService
       .request(Tw.API_CMD.BFF_10_0078)
       .done($.proxy(this._successDocumentsInspects, this))
-      .fail($.proxy(this._onFail, this, ''));
+      .fail($.proxy(this._onFail, this));
   },
 
   _successDocumentsInspects: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      this._onFail('', resp);
+      this._onFail(resp);
       return;
     }
     var resData = resp.result.necessaryDocumentInspectInfoList;
@@ -290,11 +297,10 @@ Tw.BenefitIndex.prototype = {
 
   // 상품 리스트 조회요청
   _reqProductList: function (category) {
-    Tw.CommonHelper.startLoading('#fe-list','grey',true);
     var mockup = function (category) {
       $.ajax('/mock/benefit.index.products.json')
         .done($.proxy(this._successProductList, this, category))
-        .fail($.proxy(this._onFail, this, '#fe-list'));
+        .fail($.proxy(this._onFail, this));
     };
 
     var real = function (category) {
@@ -302,19 +308,18 @@ Tw.BenefitIndex.prototype = {
         .request(Tw.API_CMD.BFF_10_0054, {
           idxCtgCd: 'F01400',
           benefitCtgCd: category,
-          searchListCount: 20
+          searchListCount: 50
         })
         .done($.proxy(this._successProductList, this, category))
-        .fail($.proxy(this._onFail, this, '#fe-list'));
+        .fail($.proxy(this._onFail, this));
     };
     real.call(this, category);
   },
 
   // 상품 리스트 성공시
   _successProductList: function (category, resp) {
-    Tw.CommonHelper.endLoading('#fe-list');
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      this._onFail('#fe-list', resp);
+      this._onFail(resp);
       return;
     }
 
@@ -343,11 +348,10 @@ Tw.BenefitIndex.prototype = {
 
   // 할인금액 보기 조회 요청
   _reqDiscountAmt: function () {
-    Tw.CommonHelper.startLoading('.container','grey',true);
     var mockup = function () {
       $.ajax('/mock/BFF_10_0039.json')
         .done($.proxy(this._successDiscountAmt, this))
-        .fail($.proxy(this._onFail, this, ''));
+        .fail($.proxy(this._onFail, this));
     };
 
     var real = function () {
@@ -358,16 +362,15 @@ Tw.BenefitIndex.prototype = {
           btvUseYn: this.$btvUseYn.filter(':checked').val()
         })
         .done($.proxy(this._successDiscountAmt, this))
-        .fail($.proxy(this._onFail, this, ''));
+        .fail($.proxy(this._onFail, this));
     };
     real.call(this);
   },
 
   // 할인금액 보기 조회 요청 성공시
   _successDiscountAmt: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      this._onFail('', resp);
+      this._onFail(resp);
       return;
     }
     var _data = resp.result;
@@ -383,8 +386,7 @@ Tw.BenefitIndex.prototype = {
   },
 
   // API Fail
-  _onFail: function (loadingTa, err) {
-    Tw.CommonHelper.endLoading(loadingTa || '.container');
+  _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }
 };

@@ -104,9 +104,7 @@ Tw.MyTFareBillSetReIssue.prototype = {
   _onApiSuccess: function (params) {
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
-      this._popupService.openOneBtTypeB(
-        Tw.MYT_FARE_BILL_SET.A44.TITLE,
-        Tw.MYT_FARE_BILL_SET.A44.CONTENTS);
+      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET.A44.CONTENTS, ' ');
     } else if ( params.code && params.code === Tw.API_CODE.CODE_00 ) {
       // 성공 - 발행 된 건이 없는 경우
       this._popupService.openAlert(Tw.MYT_FARE_BILL_SET.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY,
