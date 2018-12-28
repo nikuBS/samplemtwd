@@ -94,9 +94,13 @@ Tw.CustomerVoiceRegister.prototype = {
 
   _stepBack: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy($.proxy(function () {
+      $.proxy(function () {
         this._popupService.close();
-        this._history.goBack();
-      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+        setTimeout($.proxy(this._goBack, this), 500);
+      }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+
+  _goBack: function () {
+    this._history.goBack();
   }
 };

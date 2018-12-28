@@ -85,8 +85,9 @@ Tw.CustomerEmailTemplate.prototype = {
 
   _setTemplatePlaceholder: function (serviceCategory) {
     if ( serviceCategory.depth2 === '5000275' ) {
-      debugger;
       return Tw.CUSTOMER_EMAIL.MEMBERSHIP_PLACEHOLDER;
+    }else{
+      return Tw.CUSTOMER_EMAIL.DEFAULT_PLACEHOLDER;
     }
   }
 };
