@@ -35,8 +35,8 @@ Tw.CustomerEmail.prototype = {
     this.$btn_faq.on('click', $.proxy(this._openFaq, this));
     this.$close_faq.on('click', $.proxy(this._closeFaq, this));
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
-    this.$container.on('keyup', '.fe-text_title', $.proxy(this._onChangeContent, this));
-    this.$container.on('keyup', '.fe-text_content', $.proxy(this._onChangeContent, this));
+    this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeContent, this));
+    this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
@@ -75,7 +75,7 @@ Tw.CustomerEmail.prototype = {
   _onKeyUpEmail: function (e) {
     var $elEmail = $(e.currentTarget);
     var $elErrorEmail = $elEmail.closest('.inputbox').find('.fe-error-email');
-    if ( this.isValidEmail($elEmail.val()) ) {
+    if ( this._isValidEmail($elEmail.val()) ) {
       $elErrorEmail.addClass('blind');
     } else {
       $elErrorEmail.removeClass('blind');
@@ -87,7 +87,7 @@ Tw.CustomerEmail.prototype = {
 
   },
 
-  isValidEmail: function (sEmail) {
+  _isValidEmail: function (sEmail) {
     return Tw.ValidationHelper.isEmail(sEmail);
   },
 
@@ -98,7 +98,7 @@ Tw.CustomerEmail.prototype = {
       .closest('.inputbox')
       .find('.byte-current');
 
-    $elLength.text(len);
+    $elLength.text(Tw.FormatHelper.convNumFormat(len));
 
     this.$container.trigger('validateForm');
   },
