@@ -30,9 +30,6 @@ class MyTFareBillHotbill extends TwViewController {
     if ( !req.query.child && new Date().getDate() > 7 ) { // 전월요금 7일까지 보이기
       this._preBillAvailable = false;
     }
-    // debuging
-    this._preBillAvailable = true;
-
     // 2일부터 조회 가능
     if ( new Date().getDate() === 1 ) {
       res.render('bill/myt-fare.bill.hotbill.html', {
