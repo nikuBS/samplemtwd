@@ -75,6 +75,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
     this.$container.on('click', '.fe-t-noti', $.proxy(this._onTNoti, this));
     this.$container.on('click', '.userinfo', $.proxy(this._onUserInfo, this));
+    this.$container.on('click', '.fe-bt-regi-svc', $.proxy(this._onRegisterLine, this));
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
 
@@ -131,6 +132,10 @@ Tw.MenuComponent.prototype = {
       this._lineComponent.onClickLine(this._svcMgmtNum);
     }
   },
+  _onRegisterLine: function () {
+    (new Tw.LineRegisterComponent()).openRegisterLinePopup();
+    return false;
+  },
   _onClose: function () {
     this._isOpened = false;
     if (window.location.hash.indexOf('menu') !== -1) {
@@ -186,7 +191,7 @@ Tw.MenuComponent.prototype = {
 
     if (isLogin) {
       userInfo.totalSvcCnt = parseInt(userInfo.totalSvcCnt, 10);
-      userInfo.expsSvcCnt = parseInt(userInfo.totalSvcCnt, 10);
+      userInfo.expsSvcCnt = parseInt(userInfo.expsSvcCnt, 10);
 
       // 0: normal, 1: number unregistered, 2: no svc
       var memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
