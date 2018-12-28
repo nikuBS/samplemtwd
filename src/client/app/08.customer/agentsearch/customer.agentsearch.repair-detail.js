@@ -21,19 +21,19 @@ Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
 Tw.CustomerAgentsearchRepairDetail.prototype = {
   _showDataChargePopupIfNeeded: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(
-        Tw.POPUP_CONTENTS.NO_WIFI,
-        Tw.POPUP_TITLE.EXTERNAL_LINK,
+      var confirmed = false;
+      Tw.CommonHelper.showDataCharge(
         $.proxy(function () {
-          this._dataChargeConfirmed = true;
-          this._popupService.close();
-          this._cacheElements();
-          this._showMap();
+          confirmed = true;
         }, this),
         $.proxy(function () {
-          if (!this._dataChargeConfirmed) {
+          if (!confirmed) {
             this._historyService.goBack();
+            return;
           }
+
+          this._cacheElements();
+          this._showMap();
         }, this)
       );
     } else {
