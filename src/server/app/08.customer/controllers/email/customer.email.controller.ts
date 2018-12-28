@@ -24,7 +24,8 @@ class CustomerEmail extends TwViewController {
       pageInfo: pageInfo,
       isApp: BrowserHelper.isApp(req),
       svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum),
-      allSvc: allSvc
+      allSvc: allSvc,
+      convertTelFormat: this.convertTelFormat
     };
 
     switch ( page ) {
@@ -104,9 +105,8 @@ class CustomerEmail extends TwViewController {
     return this.apiService.request(API_CMD.BFF_08_0010, {});
   }
 
-  public convertDate(sDate) {
-    return DateHelper.getShortDate(sDate);
-  }
+  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
+  public convertTelFormat = (sPhoneNumber) => FormatHelper.conTelFormatWithDash(sPhoneNumber);
 }
 
 export default CustomerEmail;
