@@ -139,6 +139,15 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
         this.$container.on('click', '.fe-rm-asiapass', $.proxy(this._goAsiaPassPlan, this));
         this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));
+        this.$container.on('click', '.fe-rm-data', $.proxy(this._goRoamingList, this, 'data'));
+        this.$container.on('click', '.fe-rm-voice', $.proxy(this._goRoamingList, this, 'voice'));
+    },
+    _goRoamingList: function (type) {
+        if(type === 'data') {
+            this._history.goLoad('/product/roaming/fee?filters=F01531');
+        } else if (type === 'voice') {
+            this._history.goLoad('/product/roaming/fee?filters=F01532');
+        }
     },
     _goAsiaPassPlan: function () {
         this._history.goLoad('/product/callplan/NA00005900');
@@ -251,6 +260,20 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan/TW61000002');
         this.$container.find('.round-dot-list li > a').removeAttr('target');
 
+        if(_result.dablYn === 'Y') {
+            this._popupService.open({
+                'pop_name': 'type_tx_scroll',
+                'title': Tw.ROAMING_ERROR.TITLE,
+                'title_type': 'sub',
+                'cont_align': 'tl',
+                'contents': _result.dablCtt,
+                'bt_b': Tw.ROAMING_ERROR.BUTTON
+            }, null, $.proxy(this._onCloseRoamingNotice, this));
+        }
+
+    },
+    _onCloseRoamingNotice: function() {
+        this._popupService.close();
     },
     _closeRusNotiPopup: function ($layer) {
         $layer.on('click', '.bt-red1', $.proxy(this._selectOkBtn, this));
