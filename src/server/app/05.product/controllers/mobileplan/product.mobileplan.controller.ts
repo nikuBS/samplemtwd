@@ -12,7 +12,6 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
-// import { PROMOTION_BANNERS } from '../../../../mock/server/product.banners.mock';
 
 export default class Product extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -22,36 +21,22 @@ export default class Product extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      // this.getPromotionBanners(pageInfo.menuId),
-      this.getProductGroups(),
-      this.getRecommendedPlans(),
-      this.getMyFilters(!!svcInfo),
-      this.getRecommendedTags()
-    ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
-      // ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
-      const error = {
-        code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
-        msg: groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
-      };
+    Observable.combineLatest(this.getProductGroups(), this.getRecommendedPlans(), this.getMyFilters(!!svcInfo), this.getRecommendedTags()).subscribe(
+      ([groups, recommendedPlans, myFilters, recommendedTags]) => {
+        const error = {
+          code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
+          msg: groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
+        };
 
-      // const banners = this.getPromotionBanners(pageInfo.menuId, browserCode);
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
+        const productData = { groups, myFilters, recommendedPlans, recommendedTags };
+        res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
       }
-
-      const productData = { groups, myFilters, recommendedPlans, recommendedTags };
-      res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
-    });
+    );
   }
-
-  // private getPromotionBanners = id => {
-  //   // return this.redisService.getData(REDIS_BANNER_ADMIN + id).map(resp => {
-  //   return Observable.of(PROMOTION_BANNERS).map(resp => {
-  //     return resp.result && resp.result.banners;
-  //   });
-  // }
 
   private getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
@@ -77,7 +62,7 @@ export default class Product extends TwViewController {
               return {
                 ...plan,
                 basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-                displayInfo: this.getDisplayData(plan.basOfrDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
+                displayInfo: this.getDisplayData(plan.basOfrGbDataQtyCtt, plan.basOfrMbDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
               };
             })
           };
@@ -86,16 +71,24 @@ export default class Product extends TwViewController {
     });
   }
 
-  private getDisplayData = (data?: string, voice?: string, char?: string) => {
+  private getDisplayData = (gbData?: string, mbData?: string, voice?: string, char?: string) => {
     const info: { icon?: string; value?: string; unit?: string } = {};
 
-    if (data && data !== '-') {
-      const nData = Number(data);
+    if (gbData && gbData !== '-') {
+      const nData = Number(gbData);
       info.icon = 'type';
-      info.value = data;
+      info.value = gbData;
 
       if (!isNaN(nData)) {
-        info.unit = nData > 1000 ? DATA_UNIT.GB : DATA_UNIT.MB;
+        info.unit = DATA_UNIT.GB;
+      }
+    } else if (mbData && mbData !== '-') {
+      const nData = Number(mbData);
+      info.icon = 'type';
+      info.value = mbData;
+
+      if (!isNaN(nData)) {
+        info.unit = DATA_UNIT.MB;
       }
     } else if (voice && voice !== '-') {
       info.icon = 'money-type';
@@ -154,7 +147,7 @@ export default class Product extends TwViewController {
           return {
             ...plan,
             basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-            displayInfo: this.getDisplayData(plan.basOfrDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
+            displayInfo: this.getDisplayData(plan.basOfrGbDataQtyCtt, plan.basOfrMbDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
           };
         })
       };
