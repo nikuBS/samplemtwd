@@ -4,13 +4,14 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo,svcInfo) {
-    console.log('svcInfo test');
-    console.log(svcInfo);
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn) {
+    this._cdn = cdn;
     this.$container = rootEl;
     this._historyService = new Tw.HistoryService();
-    this._svcInfo = JSON.parse(svcInfo);
-    this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
+    //this._svcInfo = JSON.parse(svcInfo);
+    this._svcInfo = svcInfo;
+    //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
+    this._searchInfo = searchInfo;
     this._accessKeyword = this._searchInfo.query;
     this._init(this._searchInfo);
     this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
@@ -33,43 +34,7 @@ Tw.CommonSearch.prototype = {
               }
               continue;
           }
-          this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data),keyName);
-        }
-
-        if(totalContentsCnt<=0){
-
-        }else{
-            var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
-            console.log('recentlyKeywordData test');
-            console.log(typeof(recentlyKeywordData));
-            console.log(JSON.stringify(recentlyKeywordData));
-
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
-                Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
-                recentlyKeywordData = {};
-            }
-            if(Tw.FormatHelper.isEmpty(this._svcInfo)){
-                console.log('logOutUser');
-                if(Tw.FormatHelper.isEmpty(recentlyKeywordData.logOutUser)){
-                    recentlyKeywordData.logOutUser = [];
-                }
-                console.log(recentlyKeywordData.logOutUser);
-
-                recentlyKeywordData.logOutUser.push({ keyword : this._accessKeyword, searchTime : moment().format('YYYYMMDD')});
-                console.log(recentlyKeywordData);
-            }else{
-                console.log('loginUser : '+this._svcInfo.svcMgmtNum);
-                if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._svcInfo.svcMgmtNum])){
-                    console.log('make this users data');
-                    recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
-                }
-                console.log(recentlyKeywordData[this._svcInfo.svcMgmtNum]);
-
-                //TODO keyword user encoding
-                recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : this._accessKeyword, searchTime : moment().format('YYYYMMDD')});
-                console.log(recentlyKeywordData);
-            }
-            Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+          this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data),keyName,this._cdn);
         }
     },
 
@@ -102,7 +67,7 @@ Tw.CommonSearch.prototype = {
         }
         return data;
     },
-    _showShortcutList : function (data,dataKey) {
+    _showShortcutList : function (data,dataKey,cdn) {
         //var $template = this.$container.find('#'+dataKey+'_template');
         var $template = $('#'+dataKey+'_template');
         var $list = this.$container.find('#'+dataKey+'_list');
@@ -112,23 +77,53 @@ Tw.CommonSearch.prototype = {
             $list.hide();
         }
          _.each(data,function (listData) {
-             $list.append(templateData({listData : listData}));
+             $list.append(templateData({listData : listData , CDN : cdn}));
          });
     },
     _decodeEscapeChar : function (targetString) {
-        var returnStr = targetString.replace(/\\/gi,'/');
-        returnStr = returnStr.replace(/\n/g,'');
+        var returnStr = targetString.replace(/\\/gi,'/').replace(/\n/g,'');
         return returnStr;
     },
     _inputChangeEvent : function (args) {
-        console.log('_inputChangeEvent called args : '+args);
-        var inResult = this.$container.find('#oka').is(':checked');
+        var inResult = this.$container.find('#resultsearch').is(':checked');
         if(args.keyCode===13){
             var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+            this._addRecentlyKeyword(args.currentTarget.value);
             this._historyService.goLoad(requestUrl+args.currentTarget.value);
         }
     },
     _showBanner : function (data) {
         //TODO check banner data.
+    },
+    _addRecentlyKeyword : function (keyword) {
+        var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
+            //making recentlySearchKeyword
+            Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
+            recentlyKeywordData = {};
+        }
+        if(Tw.FormatHelper.isEmpty(this._svcInfo)){
+            //logout user's recentlySearchKeyword arr
+            if(Tw.FormatHelper.isEmpty(recentlyKeywordData.logOutUser)){
+                //making logout user's recentlySearchKeyword
+                recentlyKeywordData.logOutUser = [];
+            }
+            recentlyKeywordData.logOutUser.push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+            while (recentlyKeywordData.logOutUser.length>10){
+                recentlyKeywordData.logOutUser = recentlyKeywordData.logOutUser.shift();
+            }
+        }else{
+            //login user
+            if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._svcInfo.svcMgmtNum])){
+                //makin loginuser's recentlySearchKeyword based on svcMgmtNum
+                recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
+            }
+            recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+            while (recentlyKeywordData[this._svcInfo.svcMgmtNum].length>10){
+                recentlyKeywordData[this._svcInfo.svcMgmtNum].shift();
+            }
+        }
+        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     }
+
 };

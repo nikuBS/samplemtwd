@@ -33,7 +33,6 @@ class CommonSearch extends TwViewController {
       }
 
       function showResult(searchResult: any, relatedKeyword: any): void {
-
           res.render('search/common.search.html', {
               svcInfo : svcInfo,
               searchInfo : searchResult.result,
@@ -45,9 +44,10 @@ class CommonSearch extends TwViewController {
 
 
       Observable.combineLatest(
-          this.apiService.request(API_CMD.TEST_SEARCH, requestObj, {}),
-          this.apiService.request(API_CMD.TEST_RELATED_KEYWORD, requestObj, {})
+          this.apiService.request(API_CMD.SEARCH_APP, requestObj, {}),
+          this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
       ).subscribe(([ searchResult, relatedKeyword ]) => {
+
           if ((searchResult.code !== 0)) {
               return this.error.render(res, {
                   svcInfo: svcInfo,
@@ -58,7 +58,7 @@ class CommonSearch extends TwViewController {
               searchResult.result.search[0].immediate.data = [];
               showResult(searchResult, relatedKeyword);
           } else {
-              searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.showSvc);
+              searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
               switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
                   case 2:
                        this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
