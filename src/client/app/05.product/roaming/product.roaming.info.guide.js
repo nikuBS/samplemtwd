@@ -50,7 +50,7 @@ Tw.ProductRoamingGuide.prototype = {
       this.$container.on('click', '#fe-rm-info-slide2', $.proxy(this._goSecureTroaming, this));
       this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goDataRoaming, this));
       this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));
-      this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
+      // this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
       this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart'));
       this.$container.on('click', '#fe-rm-phone-guide', $.proxy(this._goDownLoadGuide, this, 'phone'));
       this.$container.on('click', '#fe-rm-rental-guide', $.proxy(this._goDownLoadGuide, this, 'rental'));
@@ -77,9 +77,9 @@ Tw.ProductRoamingGuide.prototype = {
   },
   _goLoadFaq : function () {
     this._history.goLoad('/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D');
-  },
-  _goLoadRoamingGuide: function () {
-      window.location.href = 'http://www.wiseuser.go.kr/jsp/commList.do?bcode=520&hcode=500&vcode=2019';
   }
+  // _goLoadRoamingGuide: function () {
+  //     window.location.href = 'http://www.wiseuser.go.kr/jsp/commList.do?bcode=520&hcode=500&vcode=2019';
+  // }
 
 };

@@ -37,6 +37,9 @@ Tw.ProductRoamingFee.prototype = {
           'searchCount':'',
           'ignoreProdId':''
       };
+      if(this._param.searchFltIds){
+          this._params.searchFltIds = this._param.searchFltIds;
+      }
 
       this._params.idxCtgCd = this.RM_CODE;
       if(this._param.searchTagId){
