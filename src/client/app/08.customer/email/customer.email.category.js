@@ -55,7 +55,7 @@ Tw.CustomerEmailCategory.prototype = {
     var fnSelectLine = function (item) {
       return {
         value: item.title,
-        option: false,
+        option: this.service.depth1 === item.category ? 'checked' : '',
         attr: 'data-service-depth1="' + item.category + '"'
       };
     };
@@ -80,7 +80,7 @@ Tw.CustomerEmailCategory.prototype = {
       var fnSelectLine = function (item) {
         return {
           value: item.ctgNm,
-          option: false,
+          option: this.service.depth2 === item.ofrCtgSeq ? 'checked' : '',
           attr: 'data-service-depth2="' + item.ofrCtgSeq + '"'
         };
       };
@@ -103,7 +103,7 @@ Tw.CustomerEmailCategory.prototype = {
     var fnSelectLine = function (item) {
       return {
         value: item.title,
-        option: true,
+        option: this.quality.depth1 === item.category ? 'checked' : '',
         attr: 'data-quality-depth1="' + item.category + '"'
       };
     };
