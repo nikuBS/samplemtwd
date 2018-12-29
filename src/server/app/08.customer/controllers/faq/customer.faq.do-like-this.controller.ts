@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import EnvHelper from '../../../../utils/env.helper';
 
 class CustomerFaqDoLikeThis extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
@@ -35,11 +36,15 @@ class CustomerFaqDoLikeThis extends TwViewController {
   private getContent(res: Response, svcInfo: any, id: string): Observable<any> {
     // return this.apiService.request(API_CMD.BFF_08_0053, { mtwdBltn1CntsId: id }).map((resp) => {
     return this.apiService.request(API_CMD.BFF_08_0064, {}, null, [id]).map((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
-        // this.apiService.request(API_CMD.BFF_08_0065, {}, null, [id]);
+      if (resp.code === API_CODE.CODE_00) {
+        this.apiService.request(API_CMD.BFF_08_0065, {}, null, [id]);
         // return resp.result.cntsCtt;
         // return resp.result.icntsCtt;
-        return `<div class="idpt-container">
+        return EnvHelper.replaceCdnUrl(resp.result.icntsCtt);
+
+
+        /*
+        return EnvHelper.replaceCdnUrl(`<div class="idpt-container">
 
         <!-- 타이틀 영역 -->
         <div class="idpt-cont-box howdo howdo-bg01">
@@ -59,7 +64,7 @@ class CustomerFaqDoLikeThis extends TwViewController {
     </p>
 
     <div class="idpt-img-box idpt-mt60">
-      <img src="img/how_do/howdo_cont01_1.jpg" alt="band 데이터 요금제 이미지">
+      <img src="<%= CDN %>/img/how_do/howdo_cont01_1.jpg" alt="band 데이터 요금제 이미지">
     </div>
     <p class="txt-gray align-center idpt-mt40">band데이터 퍼펙트, 퍼펙트S는 데이터 추가 사용요금 걱정 없이 데이터를 자유롭게 사용하실 수 있습니다.</p>
 
@@ -89,7 +94,7 @@ class CustomerFaqDoLikeThis extends TwViewController {
     </p>
 
     <div class="idpt-img-box idpt-mt60">
-      <img src="img/how_do/howdo_cont01_2.jpg" alt="LTE 안심옵션 요금제 이미지">
+      <img src="<%= CDN %>/img/how_do/howdo_cont01_2.jpg" alt="LTE 안심옵션 요금제 이미지">
     </div>
     <p class="txt-gray align-center idpt-mt40">기본데이터를 모두 사용한 후에는 데이터 속도가 조절되므로 대용량 서비스를 이용할 때 불편하실 수 있습니다.</p>
 
@@ -108,7 +113,8 @@ class CustomerFaqDoLikeThis extends TwViewController {
 
   </div>
 
-    </div>`;
+    </div>`);
+    */
       }
 
       this.error.render(res, {
