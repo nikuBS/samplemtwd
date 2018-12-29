@@ -183,8 +183,6 @@ Tw.MenuComponent.prototype = {
   },
 
   _modifyMenu: function (isLogin, userInfo, menu) {
-    console.log('hakjoon modified');
-    console.log(menu);
     var isApp = Tw.BrowserHelper.isApp();
 
     // When login or logout
@@ -313,8 +311,6 @@ Tw.MenuComponent.prototype = {
   },
 
   _tideUpMenuInfo: function (menuInfo, userInfo) {
-    console.log('hakjoon menu');
-    console.log(menuInfo);
     var sorted = _.chain(menuInfo)
       .filter(function (item) {
         if (item.menuId === 'M000344') {
@@ -390,7 +386,7 @@ Tw.MenuComponent.prototype = {
         }
         if (!!this.TOP_PADDING_MENU[item.menuId]) {
           memo.push([]);
-          if (item.menuId === this.TOP_PADDING_MENU.M000602) {
+          if (item.menuId === this.TOP_PADDING_MENU.M001778) {
             item.isLine = true;
           }
         }
