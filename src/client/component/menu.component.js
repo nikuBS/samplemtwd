@@ -42,7 +42,7 @@ Tw.MenuComponent = function () {
 
 Tw.MenuComponent.prototype = {
   TOP_PADDING_MENU: {
-    M000602: 'M000602',  // 이용안내
+    M001778: 'M001778',  // 이용안내
     M000537: 'M000537',  // T Apps
     M000812: 'M000812'   // Direct shop
   },
@@ -183,6 +183,8 @@ Tw.MenuComponent.prototype = {
   },
 
   _modifyMenu: function (isLogin, userInfo, menu) {
+    console.log('hakjoon modified');
+    console.log(menu);
     var isApp = Tw.BrowserHelper.isApp();
 
     // When login or logout
@@ -311,6 +313,8 @@ Tw.MenuComponent.prototype = {
   },
 
   _tideUpMenuInfo: function (menuInfo, userInfo) {
+    console.log('hakjoon menu');
+    console.log(menuInfo);
     var sorted = _.chain(menuInfo)
       .filter(function (item) {
         if (item.menuId === 'M000344') {
@@ -398,9 +402,12 @@ Tw.MenuComponent.prototype = {
 
     // This is totally shit! Unbelievable!
     var subCategory = category[0];
-    subCategory[1].children.push(subCategory[2].children[0]);
-    subCategory[1].children.push(subCategory[3].children[0]);
-    subCategory = subCategory.slice(0, 2).concat(subCategory.slice(4));
+    // subCategory[1].children.push(subCategory[2].children[0]);
+    // subCategory[1].children.push(subCategory[3].children[0]);
+    for (var i = 2; i < subCategory.length - 1; i += 1) {
+      subCategory[1].children.push(subCategory[i].children[0]);
+    }
+    subCategory = subCategory.slice(0, 2).concat(subCategory.slice(subCategory.length - 1));
     category[0] = subCategory;
 
     return category;
