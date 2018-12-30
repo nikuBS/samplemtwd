@@ -15,17 +15,18 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div class="wrap">
+
     <div class="popup-page tw-popup fixed-bottom">
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>이메일 상담</h1>
-                </div>
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>이메일 상담</h1>
             </div>
         </div>
-        <!--// #header -->
+    </div>
+    <!--// #header -->
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -68,6 +69,12 @@
                                                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
                                                         </div>
                                                     </div>
+                                                    <div class="fileplus-wrap">
+                                                        <p class="text">최대 5개 파일을 등록할 수 있습니다.</p>
+                                                        <div class="bt-alone"><button class="bt-bg-blue1 fe-upload-file-service">파일첨부하기</button></div>
+                                                    </div>
+                                                    <ul class="filename-list">
+                                                    </ul>
                                                 </div>
                                             </div>
                                             <%- include('../../components/email/customer.email.common.template.html', { type: 'service' });
@@ -142,6 +149,7 @@
         <!-- .popup-closeBtn -->
         <button class="popup-closeBtn fe-close_faq"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
+    </div>
     </div>
 </div>
 <% include ../../components/javascript.component.html %>
@@ -269,9 +277,9 @@
 <script>
   $(document).ready(function () {
     new Tw.CustomerEmail($('.wrap'));
-    new Tw.CustomerEmailService($('.wrap'));
+    new Tw.CustomerEmailService($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailServiceOption($('.wrap'));
-    new Tw.CustomerEmailQuality($('.wrap'));
+    new Tw.CustomerEmailQuality($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailCategory($('.wrap'));

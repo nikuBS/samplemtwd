@@ -143,72 +143,137 @@
                     <div class="file-wrap type1 ">
                         <div class="widget mt10">
                             <div class="widget-box file">
-                                    <span class="inputbox bt-add">
-                                        <span class="input">
-                                            <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
-                                        </span>
-                                        <span class="space"></span>
-                                        <span class="bt-box">
-                                            파일찾기
-                                            <input class="file" type="file" value="파일찾기">
-                                        </span>
+                                <span class="inputbox bt-add">
+                                    {{#if uploadFiles.[0]}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" value="{{uploadFiles.[0].name}}"
+                                               title="서류를 등록해주세요">
                                     </span>
+                                    {{else}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
+                                    </span>
+                                    {{/if}}
+                                    <span class="space"></span>
+                                    {{#if uploadFiles.[0]}}
+                                    <span class="bt-box fe-file-delete">
+                                        <button type="button">삭제하기</button>
+                                    </span>
+                                    {{else}}
+                                    <span class="bt-box fe-file-find">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기">
+                                    </span>
+                                    {{/if}}
+                                </span>
                             </div>
                         </div>
                         <div class="widget mt10">
                             <div class="widget-box file">
-                                    <span class="inputbox bt-add">
-                                        <span class="input">
-                                            <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
-                                        </span>
-                                        <span class="space"></span>
-                                        <span class="bt-box">
-                                            파일찾기
-                                            <input class="file" type="file" value="파일찾기">
-                                        </span>
+                         <span class="inputbox bt-add">
+                                    {{#if uploadFiles.[1]}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" value="{{uploadFiles.[1].name}}"
+                                               title="서류를 등록해주세요">
                                     </span>
+                                    {{else}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
+                                    </span>
+                                    {{/if}}
+                                    <span class="space"></span>
+                                    {{#if uploadFiles.[1]}}
+                                    <span class="bt-box fe-file-delete">
+                                        <button type="button">삭제하기</button>
+                                    </span>
+                                    {{else}}
+                                    <span class="bt-box fe-file-find">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기">
+                                    </span>
+                                    {{/if}}
+                                </span>
                             </div>
                         </div>
                         <div class="widget mt10">
                             <div class="widget-box file">
-                                    <span class="inputbox bt-add">
-                                        <span class="input">
-                                            <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
-                                        </span>
-                                        <span class="space"></span>
-                                        <span class="bt-box">
-                                            파일찾기
-                                            <input class="file" type="file" value="파일찾기">
-                                        </span>
+                         <span class="inputbox bt-add">
+                                    {{#if uploadFiles.[2]}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" value="{{uploadFiles.[2].name}}"
+                                               title="서류를 등록해주세요">
                                     </span>
+                                    {{else}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
+                                    </span>
+                                    {{/if}}
+                                    <span class="space"></span>
+                                    {{#if uploadFiles.[2]}}
+                                    <span class="bt-box fe-file-delete">
+                                        <button type="button">삭제하기</button>
+                                    </span>
+                                    {{else}}
+                                    <span class="bt-box fe-file-find">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기">
+                                    </span>
+                                    {{/if}}
+                                </span>
                             </div>
                         </div>
                         <div class="widget mt10">
                             <div class="widget-box file">
-                                    <span class="inputbox bt-add">
-                                        <span class="input">
-                                            <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
-                                        </span>
-                                        <span class="space"></span>
-                                        <span class="bt-box">
-                                            파일찾기
-                                            <input class="file" type="file" value="파일찾기">
-                                        </span>
+                         <span class="inputbox bt-add">
+                                    {{#if uploadFiles.[3]}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" value="{{uploadFiles.[3].name}}"
+                                               title="서류를 등록해주세요">
                                     </span>
+                                    {{else}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
+                                    </span>
+                                    {{/if}}
+                                    <span class="space"></span>
+                                    {{#if uploadFiles.[3]}}
+                                    <span class="bt-box fe-file-delete">
+                                        <button type="button">삭제하기</button>
+                                    </span>
+                                    {{else}}
+                                    <span class="bt-box fe-file-find">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기">
+                                    </span>
+                                    {{/if}}
+                                </span>
                             </div>
                         </div>
                         <div class="widget mt10">
                             <div class="widget-box file">
-                                    <span class="inputbox bt-add">
-                                        <span class="input">
-                                            <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
-                                        </span>
-                                        <span class="space"></span>
-                                        <span class="bt-box">
-                                            파일찾기
-                                            <input class="file" type="file" value="파일찾기">
-                                        </span>
+                         <span class="inputbox bt-add">
+                                    {{#if uploadFiles.[4]}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" value="{{uploadFiles.[4].name}}"
+                                               title="서류를 등록해주세요">
                                     </span>
+                                    {{else}}
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="서류를 등록해주세요" title="서류를 등록해주세요">
+                                    </span>
+                                    {{/if}}
+                                    <span class="space"></span>
+                                    {{#if uploadFiles.[4]}}
+                                    <span class="bt-box fe-file-delete">
+                                        <button type="button">삭제하기</button>
+                                    </span>
+                                    {{else}}
+                                    <span class="bt-box fe-file-find">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기">
+                                    </span>
+                                    {{/if}}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -240,9 +305,9 @@
     {{#each files}}
     <li data-hashFile="/{{path}}{{name}}">
         <p class="text">{{originalName}}</p>
-        <div class="bt-alone">
-            <button class="bt-line-gray1 fe-remove-file">삭제</button>
-        </div>
+        <!--<div class="bt-alone">-->
+        <!--<button class="bt-line-gray1 fe-remove-file">삭제</button>-->
+        <!--</div>-->
     </li>
     {{/each}}
 </script>

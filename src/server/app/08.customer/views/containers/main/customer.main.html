@@ -34,12 +34,7 @@
                             <% banners.result.map( banner => { %>
                             <li>
                                 <div class="operation-guide-banner">
-
-                                    <% if ( banner.mtwdBltn1CtgId ) { %>
-                                    <a href="/customer/faq/do-like-this?id=<%-banner.mtwdBltn1CtgId%>" class="more-view">더보기</a>
-                                    <% } else { %>
-                                    <a href="/customer/faq" class="more-view">더보기</a>
-                                    <% } %>
+                                    <a href="/customer/faq#how" class="more-view">더보기</a>
                                     <strong class="banner-tit">
                                         <%-banner.menuImgDesc%>
                                     </strong>
