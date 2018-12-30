@@ -30,4 +30,8 @@ Tw.HandlebarHelper = (function () {
     text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
     return new Handlebars.SafeString(text);
   });
+
+  Handlebars.registerHelper('json', function(context) {
+    return JSON.stringify(context);
+  });
 })();
