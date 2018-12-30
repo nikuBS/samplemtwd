@@ -19,7 +19,8 @@ Tw.CustomerEmailUpload = function (rootEl) {
 
 Tw.CustomerEmailUpload.prototype = {
   uploadFiles: [],
-  type: 'service',
+  serviceUploadFiles: [],
+  qualityUploadFiles: [],
 
   _init: function () {
   },
@@ -27,19 +28,22 @@ Tw.CustomerEmailUpload.prototype = {
   _cachedElement: function () {
     this.tpl_upload_file = Handlebars.compile($('#tpl_upload_file').html());
     this.tpl_upload_list = Handlebars.compile($('#tpl_upload_list').html());
+    this.wrap_service = $('#tab1-tab');
+    this.wrap_quality = $('#tab2-tab');
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.fe-remove-file', $.proxy(this._removeFile, this));
+    this.$container.on('click', '.fe-file-delete', $.proxy(this._removeFile, this));
     this.$container.on('click', '.fe-close-upload', $.proxy(this._hideUploadPopup, this));
     this.$container.on('click', '.fe-upload_email_files', $.proxy(this._uploadFile, this));
-    this.$container.on('click', '.fe-upload-file-service', $.proxy(this._showUploadPopup, this, 'service'));
-    this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._showUploadPopup, this, 'quality'));
+    this.$container.on('click', '.fe-upload-file-service', $.proxy(this._onClickServiceUpload, this));
+    this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._onClickQualityUpload, this));
     this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._selectFile, this));
   },
 
   _selectFile: function (e) {
-    var fileInfo = $(e.currentTarget).prop('files').item(0);
+    var $target = $(e.currentTarget);
+    var fileInfo = $target.prop('files').item(0);
 
     if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
       return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
@@ -56,11 +60,8 @@ Tw.CustomerEmailUpload.prototype = {
 
     this.uploadFiles = this.uploadFiles.concat(fileInfo);
 
-    if ( this.uploadFiles.length !== 0 ) {
-      this._activeUploadButton();
-    } else {
-      this._disableUploadButton();
-    }
+    this._showUploadPopup();
+    this._checkUploadButton();
   },
 
   _uploadFile: function () {
@@ -75,10 +76,21 @@ Tw.CustomerEmailUpload.prototype = {
       .done($.proxy(this._successUploadFile, this));
   },
 
-  _showUploadPopup: function (sType) {
-    this.type = sType;
-    this.uploadFiles = [];
-    this.$container.append(this.tpl_upload_file());
+  _showUploadPopup: function () {
+    this._hideUploadPopup();
+    this.$container.append(this.tpl_upload_file({ uploadFiles: this.uploadFiles }));
+
+    this._checkUploadButton();
+  },
+
+  _onClickServiceUpload: function () {
+    this.uploadFiles = this.serviceUploadFiles.slice(0);
+    this._showUploadPopup();
+  },
+
+  _onClickQualityUpload: function () {
+    this.uploadFiles = this.qualityUploadFiles.slice(0);
+    this._showUploadPopup();
   },
 
   _hideUploadPopup: function () {
@@ -88,15 +100,37 @@ Tw.CustomerEmailUpload.prototype = {
   _successUploadFile: function (res) {
     this._hideUploadPopup();
 
-    if ( this.type === 'service' ) {
-      $('#tab1-tab .filename-list').html(this.tpl_upload_list({ files: res.result }));
+    if ( this._getCurrentType() === 'service' ) {
+      this.serviceUploadFiles = this.uploadFiles.slice(0);
+      this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
     } else {
-      $('#tab2-tab .filename-list').html(this.tpl_upload_list({ files: res.result }));
+      this.qualityUploadFiles = this.uploadFiles.slice(0);
+      this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+    }
+  },
+
+  _checkUploadButton: function () {
+    if ( this.uploadFiles.length !== 0 ) {
+      this._activeUploadButton();
+    } else {
+      this._disableUploadButton();
     }
   },
 
   _removeFile: function (e) {
-    $(e.currentTarget).closest('li').remove();
+    var elWrapFile = $(e.currentTarget).closest('.inputbox');
+    var currentFileIndex = $('.file-wrap .inputbox').index(elWrapFile);
+
+    this.uploadFiles.splice(currentFileIndex, 1);
+    this._showUploadPopup();
+  },
+
+  _getCurrentType: function () {
+    if ( this.wrap_service.attr('aria-selected') === 'true' ) {
+      return 'service';
+    }
+
+    return 'quality';
   },
 
   _activeUploadButton: function () {
