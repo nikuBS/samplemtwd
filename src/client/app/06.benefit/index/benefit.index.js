@@ -10,6 +10,7 @@ Tw.BenefitIndex = function (rootEl, svcInfo) {
   this._moreViewSvc = new Tw.MoreViewComponent();
   this._history = new Tw.HistoryService();
   this._isLogin = !Tw.FormatHelper.isEmpty(svcInfo);
+  this._svcInfo = svcInfo;
   this._init();
 };
 
@@ -157,7 +158,8 @@ Tw.BenefitIndex.prototype = {
 
   // 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
   _reqMyBenefitDiscountInfo: function () {
-    if (!this._isLogin) {
+    // 미 로그인 또는 유선인 경우 건너뜀
+    if (!this._isLogin || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
       return;
     }
     this._apiService.requestArray([

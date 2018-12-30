@@ -379,6 +379,7 @@ Tw.API_CMD = {
   BFF_09_0005: { path: '/core-membership/v1/event/win-detail/:args0', method: Tw.API_METHOD.GET },
 
   // PRODUCT
+  BFF_10_0001: { path: '/core-product/v1/ledger/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/:args0/joins/join-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0010: { path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/v1/products/fee-plans/:args0/joins', method: Tw.API_METHOD.PUT },

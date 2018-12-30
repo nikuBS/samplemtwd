@@ -764,6 +764,14 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MV_02_02_04: '보호자'
 };
 
+Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
+  MY_DATA_TXT: '나의 데이터',
+  USAGE_TXT: '사용량',
+  MONTH_TXT: '{0}개월',
+  RECENT_AVG_TXT: '최근 {0} 평균',
+  RECENT_MAX_TXT: '최근 {0} 최대'
+};
+
 Tw.MYT_FARE_HISTORY_PAYMENT = {
   CANCEL_AUTO_WITHDRAWAL: '자동납부 통합인출 서비스가 해지되었습니다.'
 };
