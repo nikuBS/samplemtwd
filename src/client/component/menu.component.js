@@ -31,12 +31,7 @@ Tw.MenuComponent = function () {
 
     this._init();
     this._bindEvents();
-
-    if (location.hash === '#menu') {
-      setTimeout($.proxy(function () {
-        this.$gnbBtn.click();
-      }, this), 100);
-    }
+    this._componentReady();
   }, this));
 };
 
@@ -82,6 +77,67 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
   },
+  _componentReady: function () {
+    if (location.hash === '#menu') {
+      setTimeout($.proxy(function () {
+        this.$gnbBtn.click();
+      }, this), 100);
+    }
+
+    this._tid = this.$container.find('.fe-t-noti').data('tid').trim();
+    if (!Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid)) {
+      return;
+    }
+
+    // Check if there is unread T-Notifications
+    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, {}, $.proxy(function (res) {
+      // Only if an App is fresh executed
+      if (res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value) {
+        this._apiService.request(Tw.API_CMD.BFF_04_0004, { tid: this._tid })
+          .then($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00 && res.result.length) {
+              this._nativeService.send(Tw.NTV_CMD.SAVE, {
+                key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ,
+                value: res.result[0].seq
+              }, $.proxy(function (res) {
+                if (res.resultCode === Tw.NTV_CODE.CODE_00) {
+                  this._checkNewTNoti();
+                }
+              }));
+            }
+          }, this));
+      } else {
+        this._checkNewTNoti();
+      }
+    }, this));
+  },
+  _checkNewTNoti: function () {
+    var showNotiIfNeeded = function (latestSeq, self) {
+      self._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ },
+        $.proxy(function (res) {
+          if (res.resultCode === Tw.NTV_CODE.CODE_00) {
+            if (res.params.value !== latestSeq) {
+              // Show red dot!
+              self.$container.find('.fe-t-noti').addClass('on');
+              $('.fe-bt-menu').addClass('on');
+            }
+          } else if (res.resultCode === Tw.NTV_CODE.CODE_ERROR) {
+              self.$container.find('.fe-t-noti').addClass('on');
+              $('.fe-bt-menu').addClass('on');
+          }
+        }, self)
+      );
+    };
+
+    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ },
+      $.proxy(function (res) {
+        if (res.resultCode === Tw.NTV_CMD.CODE_00) {
+          showNotiIfNeeded(res.params.value, this);
+        }
+      }, this)
+    );
+  },
+
   _onClickLogin: function () {
     this._tidLanding.goLogin(location.href);
   },
