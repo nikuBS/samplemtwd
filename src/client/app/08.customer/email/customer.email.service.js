@@ -39,7 +39,13 @@ Tw.CustomerEmailService.prototype = {
       this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
         Tw.POPUP_TITLE.NOTIFY,
-        Tw.BUTTON_LABEL.CONFIRM
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-service_email').click();
+            $('.fe-service_email').focus();
+          }, 500);
+        }, this)
       );
 
       return false;
@@ -171,8 +177,6 @@ Tw.CustomerEmailService.prototype = {
     } else {
       $('.fe-service_register').prop('disabled', true);
     }
-
-    //  Tw.CUSTOMER_EMAIL
   },
 
   _isValidServiceEmail: function () {
