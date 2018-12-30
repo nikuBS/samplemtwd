@@ -59,12 +59,10 @@ Tw.BannerService.prototype = {
 
     if (link) {
       switch (banner.imgLinkTrgtClCd) {
-        case Tw.BANNER_LINK_TYPE.CHANNEL_APP:
-        case Tw.BANNER_LINK_TYPE.CHANNEL_WEB: {
+        case Tw.BANNER_LINK_TYPE.CHANNEL_APP: {
           window.location.href = link;
           break;
         }
-        case Tw.BANNER_LINK_TYPE.OTHER_APP:
         case Tw.BANNER_LINK_TYPE.OTHER_WEB: 
         default: {
           if (banner.isBill) {
