@@ -103,9 +103,21 @@ Tw.CustomerEmailUpload.prototype = {
     if ( this._getCurrentType() === 'service' ) {
       this.serviceUploadFiles = this.uploadFiles.slice(0);
       this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+
+      if ( this.uploadFiles.length >= 5 ) {
+        $('.fe-upload-file-service').prop('disabled', true);
+      } else {
+        $('.fe-upload-file-service').prop('disabled', false);
+      }
     } else {
       this.qualityUploadFiles = this.uploadFiles.slice(0);
       this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+
+      if ( this.uploadFiles.length >= 5 ) {
+        $('.fe-upload-file-quality').prop('disabled', true);
+      } else {
+        $('.fe-upload-file-quality').prop('disabled', false);
+      }
     }
   },
 
