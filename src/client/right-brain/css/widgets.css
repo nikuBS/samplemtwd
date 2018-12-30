@@ -803,10 +803,10 @@ li.checkbox.type01 {
     -webkit-transform: scale(100);
             transform: scale(100); }
 
-.device_android .radiobox {
+.device_android .checkbox {
   position: relative;
   overflow: hidden; }
-  .device_android .radiobox input[type=checkbox] {
+  .device_android .checkbox input[type=checkbox] {
     -webkit-transform: scale(100);
             transform: scale(100); }
 
