@@ -92,12 +92,8 @@ class ApiService {
             this.makeCookie() : this.makeNativeCookie(header.cookie)
           // 'cookie': this.makeCookie()
         });
+      case API_SERVER.SEARCH:
       case API_SERVER.TID:
-        return Object.assign(header, {
-          'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
-          'Content-Length': JSON.stringify(params).length
-        });
-      case API_SERVER.TEST:
         return Object.assign(header, {
           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
           'Content-Length': JSON.stringify(params).length

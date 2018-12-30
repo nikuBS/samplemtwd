@@ -68,6 +68,9 @@
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">월<span class="money">{{{listData.BAS_FEE_INFO}}}</span>원</p>
             </div>
+            {{#ifCond listData.PROD_BAS_BENF_CTT '!==' ''}}
+            <p class="products-detailitext">{{{listData.PROD_BAS_BENF_CTT}}}</p>
+            {{/ifCond}}
             <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
         </a>
     </li>
@@ -107,9 +110,9 @@
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
             <div class="price">{{listData.PRODUCT_PRICE}}원~/월</div>
-
+            {{#ifCond listData.SALE_PRICE '!==' ''}}
             <span class="price2">{{listData.SALE_PRICE}}원</span>
-
+            {{/ifCond}}
         </div>
     </li>
 </script>
@@ -128,20 +131,33 @@
 
 <script id="event_template" type="text/x-handlebars-template">
     <li>
-        <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-1.jpg" alt="키자니아 X T 멤버십 키자니아 서울 &amp; 부산최대 40% 할인"></button>
-        <div class="extra-info">
-            <div class="tit">{{{listData.PR_NM}}}</div>
-            <div class="txt1">기간 {{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</div>
+        <button class="event-datail" title="이벤트 상세페이지 보기"><img src="/img/dummy/img-event02.jpg" alt="{{{listData.PR_NM}}}"></button>
+        <div class="event-info">
+            <span class="info-date">{{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</span>
+            {{#ifCond listData.PR_TYP_CD '!==' 'N'}}
+            <span class="info-type">응모형</span>
+            {{/ifCond}}
+            <span class="info-day"></span>
         </div>
     </li>
 </script>
 
 <script type="text/x-handlebars-template" id="sale_template">
-    <li>
-        <button class="b-cont">
-            <strong class="ti">{{{listData.PROD_NM}}} <i class="icon-whole3"><span class="blind">전체</span></i></strong>
-            <span class="tx">{{{listData.PROD_SMRY_DESC}}}</span>
-        </button>
+    <li class="category-type">
+        <a href="" class="link">
+            <div class="text-field">
+                <h3 class="title">{{{listData.PROD_NM}}}</h3>
+                <p class="text">{{{listData.PROD_SMRY_DESC}}}</p>
+            </div>
+            <div class="tag-field">
+                {{#each listData.METATAG}}
+                {{#ifCond this '!==' ''}}
+                <span class="tag">#{{{this}}}</span>
+                {{/ifCond}}
+                {{/each}}
+            </div>
+            <div class="img-field"><img src="{{CDN}}/img/discount/img_discount16.png" alt=""></div>
+        </a>
     </li>
 </script>
 
@@ -151,9 +167,8 @@
             <button class="bt-t">
                 <strong class="ti">{{{listData.STORE_NAME}}}</strong>
                 <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
-                <span class="tel">{{{listData.TEL}}}</span>
+                <a href="tel:02-1234-5678" class="tel">{{{listData.TEL}}}</a>
             </button>
-            <a href="tel:{{listData.TEL}}" class="bt-tel">전화걸기</a>
         </div>
     </li>
 </script>

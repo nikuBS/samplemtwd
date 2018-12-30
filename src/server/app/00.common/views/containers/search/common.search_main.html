@@ -20,9 +20,9 @@
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <form action="/common/search" method="get">
-                        <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordNm %>" title="검색" value="">
-                    </form>
+                    <!--<form action="/common/search" method="get">-->
+                    <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordNm %>" title="검색" value="">
+                    <!--</form>-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
             </span>
@@ -60,9 +60,9 @@
         <ul class="list" id="recently_keyword_list">
             <script type="text/x-handlebars-template" id="recently_keyword_template">
             <li>
-                <a href="" class="searchword-text">데이터</a>
+                <a href="" class="searchword-text">{{data.keyword}}</a>
                 <div class="date">
-                    <span class="str">18.12.6.</span>
+                    <span class="str">{{data.searchTime}}</span>
                     <a href="#none" class="del">삭제</a>
                 </div>
             </li>
@@ -82,11 +82,11 @@
         <div class="rec-list">
             <h3 class="searchlist-title">인기 검색어</h3>
             <ul class="popularsearchword-list linklist-type">
-                <% for(var i=0;i<popularKeyword.Data.Query.length;i++){ %>
+                <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
                 <li>
                     <a href="" class="category-type">
                         <strong class="number"><%= i+1 %></strong>
-                        <span class="text"><%= popularKeyword.Data.Query[i].content %></span>
+                        <span class="text"><%= popularKeyword.result.Query[i].content %></span>
                     </a>
                 </li>
                 <% } %>
@@ -124,7 +124,7 @@
 <script>
     $(document).ready(function () {
 
-        new Tw.CommonSearchMain($('.wrap'));
+        new Tw.CommonSearchMain($('.wrap'),<%- JSON.stringify(svcInfo)%>);
 
     });
 </script>

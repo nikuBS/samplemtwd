@@ -39,8 +39,8 @@ class CommonSearchMore extends TwViewController {
 
 
         Observable.combineLatest(
-            this.apiService.request(API_CMD.TEST_SEARCH, requestObj, {}),
-            this.apiService.request(API_CMD.TEST_RELATED_KEYWORD, requestObj, {})
+            this.apiService.request(API_CMD.SEARCH_APP, requestObj, {}),
+            this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
         ).subscribe(([ searchResult, relatedKeyword ]) => {
             if ((searchResult.code !== 0)) {
                 return this.error.render(res, {

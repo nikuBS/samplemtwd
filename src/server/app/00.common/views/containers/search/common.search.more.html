@@ -1,5 +1,5 @@
 <%#
-* FileName: common.search.result.html
+* FileName: common.search.more.html
 * Author: Hyunkuk Lee (max5500@pineone.com)
 * Date: 2018.12.11
 %>
@@ -7,7 +7,7 @@
 <% include ../../components/start.component.html %>
 
 <!-- body -->
-<body data-gr-c-s-loaded="true">
+<body data-gr-c-s-loaded="true" class="">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -17,67 +17,56 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap rescan"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
+    <div id="header" class="header-wrap search-height"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
         <div class="h-belt"><!-- border-bottom : 1px -->
-            <div class="h-global-search">
-                <!-- height : 51px -->
-                <div class="h-result">
-                    <div class="h-back">
-                        <button type="button"><i class="icon-historyback-40"><span class="blind">historyback</span></i></button>
-                    </div>
-                    <div class="h-keyword">
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
-                                    <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                    </div>
-                    <div class="h-cancel">
-                        <button>취소</button>
-                    </div>
-                </div>
-                <!-- // height : 51px -->
-                <!-- height : 45px -->
-                <div class="h-rescan">
-                    <span class="custom-form">
-                            <% if(keyword===inKeyword){ %>
-                                <input type="checkbox"  id="oka" name="r1">
-                            <% }else{ %>
-                                <input type="checkbox" checked="checked" id="oka" name="r1">
-                            <% } %>
-                            <span class="c-type1"></span>
-                        </span><label class="label" for="oka">결과 내 재 검색</label>
-                </div>
-                <!-- // height : 45px -->
+            <div class="sch-form">
+                    <span class="inputbox">
+                        <span class="input">
+                            <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                <div class="searchbox-close"><button class="close-area">취소</button></div>
+            </div>
+            <div class="resultsearch-box">
+                <span class="custom-form">
+                    <% if(keyword===inKeyword){ %>
+                        <input type="checkbox" id="resultsearch" name="resultsearch">
+                    <% }else{ %>
+                        <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
+                    <% } %>
+                    <span class="c-type1"></span></span>
+                <label for="resultsearch">결과 내 재검색</label>
+                <!-- <label for="resultsearch" class="on">결과 내 재검색</label> -->
             </div>
         </div>
-
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
-            <hr class="cont-sp type1" aria-hidden="true">
+
             <!-- .cont-box -->
-            <% if(relatedKeyword.Data.Word){ %>
-            <div class="cont-box nogaps">
-                <div class="connection-wrap">
-                    <span class="title">연관</span>
-                    <div class="connec-txt">
-                        <% for(var i=0;i<relatedKeyword.Data.Word.length;i++){ %>
-                        <button><%= relatedKeyword.Data.Word[i] %></button>
-                        <% } %>
-                    </div>
-                </div>
+            <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
+            <div class="connection-searchword">
+                <dl class="searchword-list">
+                    <dt class="tit">연관</dt>
+                    <% for(var i=0;i<relatedKeyword.result.Word.length;i++){ %>
+                    <dd><a href="" class="link"><%= relatedKeyword.result.Word[i] %></a></dd>
+                    <% } %>
+                </dl>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
+
             <% if(category=='shortcut'&&searchInfo.search[0]&&searchInfo.search[0].shortcut){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb16">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">바로가기</h2>
-                    <span class="num"><%= searchInfo.totalcount %></span>
+                    <div class="numberbox"><span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <div class="keyword-search-list">
                     <ul id="shortcut_list">
@@ -88,33 +77,35 @@
             <% } %>
             <!--// .cont-box -->
             <% if(category=='rate'&&searchInfo.search[0]&&searchInfo.search[0].rate){ %>
-            <hr class="cont-sp type1" aria-hidden="true">
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
+            <div class="cont-box bgnone noborder nogaps-btm rate">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">요금제</h2>
-                    <span class="num"><%= searchInfo.totalcount %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
             </div>
 
-            <div class="cont-box bgnone gaps-style01">
+            <div class="cont-box bgnone  gaps-style05 rate">
                 <ul class="extraservice-list" id="rate_list">
 
                 </ul>
             </div>
+
             <% } %>
 
             <% if(category=='roaming'&&searchInfo.search[0]&&searchInfo.search[0].roaming){ %>
-            <hr class="cont-sp type1" aria-hidden="true">
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
-                    <h2 class="tit">로밍</h2>
-                    <span class="num"><%= searchInfo.totalcount %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
+            <!--<hr class="cont-sp type1" aria-hidden="true">-->
+            <div class="cont-box bgnone noborder nogaps-btm roaming">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">T로밍</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
             </div>
 
-            <div class="cont-box bgnone gaps-style01">
+            <div class="cont-box bgnone noborder gaps-style07 roaming">
                 <ul class="extraservice-list" id="roaming_list">
 
                 </ul>
@@ -123,83 +114,73 @@
 
             <% if(category=='service'&&searchInfo.search[0]&&searchInfo.search[0].service){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
+            <div class="cont-box bgnone noborder nogaps-btm service">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">부가서비스</h2>
-                    <span class="num"><%= searchInfo.totalcount %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
             </div>
 
-            <div class="cont-box bgnone gaps-style01">
+            <div class="cont-box bgnone noborder gaps-style06 service">
                 <ul class="extraservice-list" id="service_list">
 
                 </ul>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
             <% if(category=='tv'&&searchInfo.search[0]&&searchInfo.search[0].tv){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
-                    <h2 class="tit">인터넷 · 전화 · TV</h2>
-                    <span class="num"><%= searchInfo.totalcount %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
+            <div class="cont-box bgnone noborder nogaps-btm tv">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
             </div>
 
-            <div class="cont-box bgnone gaps-style01">
+            <div class="cont-box bgnone noborder gaps-style06 tv">
                 <ul class="extraservice-list" id="tv_list">
-                    <script id="tv_template" type="text/x-handlebars-template">
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">{{{listData.PROD_NM}}}</p>
-                                    <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    {{#each listData.METATAG}}
-                                    {{#ifCond this '!==' ''}}
-                                    <p class="tag-text">#{{{this}}}</p>
-                                    {{/ifCond}}
-                                    {{/each}}
-                                </div>
 
-                                <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                            </button>
-                        </li>
-                    </script>
                 </ul>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
             <% if(category=='direct'&&searchInfo.search[0]&&searchInfo.search[0].direct){ %>
-            <hr class="cont-sp type1" aria-hidden="true">
 
-            <!-- .cont-box -->
-            <div class="cont-box pb0">
-                <div class="tit-caption-type">
-                    <h2 class="tit">다이렉트샵</h2>
-                    <span class="num"><%= searchInfo.totalcount %></span>
+            <div class="cont-box bgnone noborder gaps-style03">
+                <div class="contheader-box">
+                    <div class="totalfilter-wrap"></div>
+                    <div class="filter-select">
+                        <a type="button" class="filterselect-btn">최신순</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cont-box pb0 direct">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">T월드 다이렉트</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <div class="direct-shop-wrap">
                     <ul id="direct_list">
-                        <script id="direct_template" type="text/x-handlebars-template">
-                            <li>
-                                <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+                        <!--<li>
+                            <a href="" class="link">
+                                <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰"></div>
                                 <div class="cont">
-                                    <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-                                    <div class="price">{{listData.PRODUCT_PRICE}}원~/월</div>
-
-                                    <span class="price2">{{listData.SALE_PRICE}}원</span>
-
+                                    <div class="tit">[타거스]<span class="highlight-text">링버클</span> 충전/싱크 라이트닝 USB 8핀 케이블 9cm</div>
+                                    <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
                                 </div>
-                            </li>
-                        </script>
+                            </a>
+                        </li> -->
                     </ul>
-                    <div class="btn-more">
-                        <button>다이렉트샵 전체보기</button>
-                    </div>
+
                 </div>
             </div>
             <% } %>
@@ -209,24 +190,16 @@
             <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
-            <div class="cont-box pb0">
-                <div class="tit-caption-type">
+            <div class="cont-box pb0 membership">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">T멤버십</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <div class="t-membership-wrap">
                     <ul id="membership_list">
-                        <script type="text/x-handlebars-template" id="membership_template">
-                            <li>
-                                <button class="link" title="T멤버십 상세보기">
-                                    <div class="img"><img src="{{{listData.TITLE_IMG_URL}}}" alt="{{listData.CATE_NAME}}"></div>
-                                    <div class="cont">
-                                        <div class="tit">{{{listData.BRAND_NM}}}</div>
-                                        <div class="txt1">{{{listData.CATE_NAME}}}</div>
-                                    </div>
-                                </button>
-                            </li>
-                        </script>
+
                     </ul>
                 </div>
             </div>
@@ -235,23 +208,16 @@
 
             <% if(category=='event'&&searchInfo.search[0]&&searchInfo.search[0].event){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-
-            <div class="cont-box nogaps-btm bgnone noborder">
-                <div class="tit-caption-type pb0">
+            <div class="cont-box nogaps-btm bgnone noborder event">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">진행 중인 이벤트</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
-                <div class="card-visual-list">
-                    <ul class="type1" id="event_list">
-                        <script id="event_template" type="text/x-handlebars-template">
-                            <li>
-                                <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-1.jpg" alt="키자니아 X T 멤버십 키자니아 서울 &amp; 부산최대 40% 할인"></button>
-                                <div class="extra-info">
-                                    <div class="tit">{{{listData.PR_NM}}}</div>
-                                    <div class="txt1">기간 {{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</div>
-                                </div>
-                            </li>
-                        </script>
+                <div class="event-list">
+                    <ul id="event_list">
+
                     </ul>
                 </div>
             </div>
@@ -259,180 +225,152 @@
 
             <% if(category=='sale'&&searchInfo.search[0]&&searchInfo.search[0].sale){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
-                    <h2 class="tit">혜택 · 할인</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+            <div class="cont-box nogaps-btm bgnone noborder sale">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">혜택·할인</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
-                <ul class="service-guide-s" id="sale_list">
-                    <script type="text/x-handlebars-template" id="sale_template">
-                        <li>
-                            <button class="b-cont">
-                                <strong class="ti">{{{listData.PROD_NM}}} <i class="icon-whole3"><span class="blind">전체</span></i></strong>
-                                <span class="tx">{{{listData.PROD_SMRY_DESC}}}</span>
-                            </button>
-                        </li>
-                    </script>
+                <ul class="discountbenefit-list" id="sale_list">
+
                 </ul>
-                <div class="search-banner-box">
-                    <button class="bt"><img src="/img/etc/search-banner.png" alt="시험 끝, 0틴 위크 드디어 시험 끝! 진정한 인싸가 될 시간! 무료 데이터 2GB와 인싸템 100% 받자"></button>
-                </div>
             </div>
             <% } %>
 
             <% if(category=='as'&&searchInfo.search[0]&&searchInfo.search[0].as){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- 지점 · 대리점, A/S센터 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box nogaps-btm as">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">지점 · 대리점, A/S센터</h2>
-                    <span class="num"><%= searchInfo.count %></span>
-                    <a href="/common/search/more?category=as&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="as_list">
-                    <script type="text/x-handlebars-template" id="as_template">
-                        <li>
-                            <div class="b-cont">
-                                <button class="bt-t">
-                                    <strong class="ti">{{{listData.STORE_NAME}}}</strong>
-                                    <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
-                                    <span class="tel">{{{listData.TEL}}}</span>
-                                </button>
-                                <a href="tel:{{listData.TEL}}" class="bt-tel">전화걸기</a>
-                            </div>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <!-- //지점 · 대리점, A/S센터 -->
             <% } %>
             <% if(category=='question'&&searchInfo.search[0]&&searchInfo.search[0].question){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
-                    <h2 class="tit">자주하는 질문</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+            <div class="cont-box nogaps-btm question">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">자주 하는 질문</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="question_list">
-                    <script type="text/x-handlebars-template" id="question_template">
-                        <li>
-                            <button class="b-cont">
-                                <strong class="ti">{{{listData.INQ_CTT}}}</strong>
-                                <span class="tx">{{{listData.CATEGORY}}}</span>
-                            </button>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <% } %>
             <% if(category=='notice'&&searchInfo.search[0]&&searchInfo.search[0].notice){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box nogaps-btm notice">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">공지사항</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="notice_list">
-                    <script id="notice_template" type="text/x-handlebars-template">
-                        <li>
-                            <button class="b-cont">
-                                {{{listData.NTC_TIT_NM}}}
-                            </button>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <% } %>
             <% if(category=='prevent'&&searchInfo.search[0]&&searchInfo.search[0].prevent){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box nogaps-btm prevent">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">이용자 피해예방 주의보</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="prevent_list">
-                    <script type="text/x-handlebars-template" id="prevent_template">
-                        <li>
-                            <button class="b-cont">
-                                {{{listData.ICNTS_TIT_NM}}}
-                            </button>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <% } %>
             <% if(category=='manner'&&searchInfo.search[0]&&searchInfo.search[0].manner){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box nogaps-btm manner">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">이럴 땐 이렇게 하세요</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="manner_list">
-                    <script type="text/x-handlebars-template" id="manner_template">
-                        <li>
-                            <button class="b-cont">
-                                {{{listData.ICNTS_TIT_NM}}}
-                            </button>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <% } %>
             <% if(category=='serviceInfo'&&searchInfo.search[0]&&searchInfo.search[0].serviceInfo){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box nogaps-btm serviceInfo">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">서비스 이용안내</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="serviceInfo_list">
-                    <script type="text/x-handlebars-template" id="serviceInfo_template">
-                        <li>
-                            <button class="b-cont">
-                                <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
-                                <span class="tx">{{{listData.ICNTS_TIT_NM}}}</span>
-                            </button>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <% } %>
             <% if(category=='siteInfo'&&searchInfo.search[0]&&searchInfo.search[0].siteInfo){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb20">
-                    <h2 class="tit">사이트 이용안내</h2>
-                    <span class="num"><%= searchInfo.count %></span>
+            <div class="cont-box nogaps-btm siteInfo">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">사이트 이용방법</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.totalcount %></span>건
+                    </div>
                 </div>
                 <ul class="site-guide-s" id="siteInfo_list">
-                    <script id="siteInfo_template" type="text/x-handlebars-template">
-                        <li>
-                            <button class="b-cont">
-                                <span class="img-box"><img class="lte" src="/img/dummy/dmy_product.png" alt="샘플이미지"></span>
-                                <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
-                                    <span class="tx">{{{listData.ICTG_PATH}}}</span>
-                            </button>
-                        </li>
-                    </script>
+
                 </ul>
             </div>
             <% } %>
-            <div class="paging-area">
-                <button role="button" class="prev"><span class="blind">이전 페이지로 이동</span></button>
-                <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
-                    <% if(i==pageNum){ %>
-                        <button role="button" class="active" title="현재페이지"><%= i %></button>
-                    <% } else { %>
-                        <a href="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= i %>"  role="button"><%= i %></a>
+            <div class="newpaging-wrap">
+                <div class="prev">
+                    <% if(pageNum==1){ %>
+                        <button type="button" disabled class="prev-btn" >이전</button>
+                    <% }else{ %>
+                        <button type="button" class="prev-btn page-change" value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= Number(pageNum)-1 %>">이전</button>
                     <% } %>
-                <% } %>
-                <button role="button" class="next"><span class="blind">다음 페이지로 이동</span></button><!-- 비활성화시 disabled 클래스 추가 -->
+                </div>
+                <div  class="numberbox">
+                        <div class="number">
+                            <% var totalPageNum = parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0) %>
+                            <strong class="str"><%= pageNum %></strong> / <%= totalPageNum %>
+                        </div>
+                    <select class="sispopup" style="color : transparent">
+                        <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
+                            <% if(i==pageNum){ %>
+                                <option style="color: #3c3c3c" selected value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= i %>"><%= i %></option>
+                            <% }else{ %>
+                                <option style="color: #3c3c3c" value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= i %>"><%= i %></option>
+                            <% } %>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="next">
+                    <% if(pageNum==totalPageNum){ %>
+                        <button type="button" disabled class="next-btn">다음</button>
+                    <% }else{ %>
+                        <button type="button" class="next-btn page-change" value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= Number(pageNum)+1 %>">다음</button>
+                    <% } %>
+                </div>
             </div>
 
-            <div class="banner-area">
-                <a><img src="/img/dummy/dummy-banner02.jpg" alt="내게 맞는 요금제 찾기 내 사용패턴, 할인 정보 등에 딱 맞는 요금제를 추천해드려요!"></a>
-            </div>
+
 
         </div>
     </div>
@@ -440,12 +378,12 @@
 </div>
 
 
-</body>
+<div></div></body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.template.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchMore($('.wrap'),'<%- JSON.stringify(searchInfo) %>','<%- category%>');
+        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- category %>','<%- CDN %>');
     });
 </script>
 <% include ../../components/end.component.html %>

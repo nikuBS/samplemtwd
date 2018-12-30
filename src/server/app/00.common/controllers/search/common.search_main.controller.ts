@@ -17,7 +17,7 @@ class CommonSearchMain extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
       Observable.combineLatest(
-          this.apiService.request(API_CMD.TEST_GET_POPULAR_KEYWORD, { range : 'D'}, {}),
+          this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),
           this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : 'X'}, {})
       ).subscribe(([ popularKeyword, recommendKeyword ]) => {
           // if (popularKeyword.code !== API_CODE.CODE_00) {

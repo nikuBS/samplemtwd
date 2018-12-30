@@ -537,10 +537,10 @@ Tw.AJAX_CMD = {
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
   },
-  TEST_AUTO_COMPLETE : {
+  SEARCH_AUTO_COMPLETE : {
       path : '/search/tworld/autocomplete',
       method : Tw.API_METHOD.GET,
-      url : 'http://61.250.22.114:8180',
+      url : 'http://61.250.22.114:8080',
       contentType: 'application/x-www-form-urlencoded'
   }
 };
