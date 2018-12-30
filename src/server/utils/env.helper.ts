@@ -11,7 +11,7 @@ class EnvHelper {
       return null;
     }
 
-    return context.replace(/{{cdn}}/gi, EnvHelper.getEnvironment('CDN'));
+    return context.replace(/{{cdn}}|<%.*?CDN.*?%>/gi, EnvHelper.getEnvironment('CDN'));
   }
 }
 

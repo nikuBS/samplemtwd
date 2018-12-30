@@ -123,9 +123,8 @@ Tw.MainMenuSettingsNotifications.prototype = {
     }, this));
     $root.on('click', '#fe-confirm', $.proxy(this._onTermsConfirmed, this, changedTerms));
     $root.on('click', '.fe-view', $.proxy(function (e) {
-      this._popupService.close();
-      var code = e.currentTarget.value;
-      Tw.CommonHelper.openTermLayer(code);
+      var url = e.currentTarget.value;
+      Tw.CommonHelper.openUrlInApp(url);
     }, this));
   },
   _onTermsConfirmed: function (terms) {

@@ -6,6 +6,8 @@
 
 <% include ../../components/start.component.html %>
 <body>
+    <link rel="stylesheet" type="text/css" href="<%= CDN %>/css/idpt-reset-mobile.css" media="all" /><!-- 고객센터 모바일 CSS -->
+    <link rel="stylesheet" type="text/css" href="<%= CDN %>/css/idpt-service-mobile.css" media="all" /><!-- 이용안내 모바일 CSS -->
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -36,7 +38,46 @@
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
+  $(document).ready(function(){
+    $('.idpt-tab').each(function(){
+        var tabBtn = $(this).find('li');
+        $(tabBtn).click(function(){
+            var i = $(this).index();
+            $('.idpt-tab > li').removeClass('on').eq(i).addClass('on');
+            $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
+        });
+    });
+
+    // tooltip
+    $('.info-tooltip').each(function(){
+        $('.btn-tooltip-open').on('click', function(){
+            var remStandard = $('body').css('font-size').replace('px','');
+            var btnLeft = $(this).offset().left - 28;
+            var btnRem = btnLeft/remStandard
+            $('.idpt-tooltip-layer').css('left', btnRem + 'rem');
+            $(this).next('div').show();
+        });
+    });
+    $('.btn-tooltip-close').on('click', function(){
+        $('.idpt-tooltip-layer').hide();
+    });
+
+    //accordian
+    $('.idpt-accordian > li > a').on('click', function(){
+        $('.idpt-accordian > li > a').removeClass('open');
+        $('.idpt-accordian-cont').slideUp();
+        if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
+            $(this).addClass('open');
+            $(this).parent().find('.idpt-accordian-cont').slideDown();
+        }
+    });
+
+    //toggle (FAQ)
+    $('.idpt-toggle-btn').each(function(){
+        $(this).click(function(){
+            $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+        })
+    });
   });
 </script>
 <% include ../../components/end.component.html %>
