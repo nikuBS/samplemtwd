@@ -153,10 +153,11 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       height: 100%;
       opacity: 0; }
   .inputbox .tx-box {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+    display: table;
     width: 100%; }
+    .inputbox .tx-box .error-txt {
+      display: table-cell;
+      padding: 0.375rem 0 0; }
     .inputbox .tx-box.type1 {
       width: auto;
       padding-left: 0.625rem;
@@ -174,6 +175,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     .inputbox .input input[type=password],
     .inputbox .input input[type=number],
     .inputbox .input input[type=tel] {
+      display: block;
       padding: 0 0.625rem;
       height: 2.375rem;
       border-radius: 0.25rem;
@@ -491,9 +493,9 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 
 @media (max-width: 360px) {
   .inputbox.bt-add .input {
-    -webkit-box-flex: 3;
-        -ms-flex: 3;
-            flex: 3; } }
+    -webkit-box-flex: 5;
+        -ms-flex: 5;
+            flex: 5; } }
 
 .validation-txt {
   display: block;
