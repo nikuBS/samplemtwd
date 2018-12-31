@@ -205,7 +205,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-        this._historyService.goLoad('/product/callplan/'+this._prodId);
+        this._historyService.goBack();
     },
     _goSetting : function(){
         this._historyService.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
@@ -224,7 +224,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
                         popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
                         userJoinInfo : userJoinInfo,
                         prodId : this._prodId,
-                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
+                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
                         processNm : Tw.PRODUCT_TYPE_NM.JOIN,
                         prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
                         svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
