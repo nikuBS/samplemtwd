@@ -300,9 +300,9 @@ Tw.ProductList.prototype = {
             DEFAILT_COUNT = 2;
           data.filters = _.map(filters.slice(0, DEFAILT_COUNT), function(filter, index) {
             if (index === 0) {
-              return filter.prodFltNm + ',';
+              return filter.prodFltNm;
             }
-            return filter.prodFltNm;
+            return ',' + filter.prodFltNm;
           });
 
           if (filters.length > DEFAILT_COUNT) {
@@ -328,8 +328,8 @@ Tw.ProductList.prototype = {
     var selectedTag = target.getAttribute('data-tag-id'),
       originParams = this._params;
 
+    this._popupService.close();
     if (this._params.searchTagId === selectedTag) {
-      this._popupService.close();
       return;
     }
 
