@@ -414,6 +414,7 @@ Tw.ALERT_MSG_HOME = {
 Tw.ALERT_MSG_MYT_DATA = {
   GIFT_DATA_TARGET: '님에게',
   GIFT_DATA_QUESTION: '를 선물하시겠습니까?',
+  UNSUBSCRIBE_MONTHLY_GIFT_TITLE: '자동 선물하기를 해지하시겠습니까?',
   UNSUBSCRIBE_MONTHLY_GIFT: '자동선물 신청된 가족은 ',
   UNSUBSCRIBE_MONTHLY_GIFT_END: ' 입니다.',
   UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE: '자동선물 해지 완료되었습니다.',
@@ -1501,7 +1502,7 @@ Tw.ROAMING_ERROR = {
 };
 
 Tw.ROAMING_DOWNLOAD_URL = {
-  SMART_GUIDE : 'https://cdnm.tworld.co.kr/adminupload/common/15490/93452/237955092.pdf',
-  PHONE_GUIDE : 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
-  RENTAL_GUIDE : 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
+  SMART_GUIDE: 'https://cdnm.tworld.co.kr/adminupload/common/15490/93452/237955092.pdf',
+  PHONE_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
+  RENTAL_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
 };
