@@ -64,7 +64,8 @@ Tw.CustomerEmail.prototype = {
   _onKeyUpPhoneNumber: function (e) {
     var $elPhone = $(e.currentTarget);
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
-    var $elErrorPhone = $elPhone.closest('.inputbox').find('.fe-error-phone');
+    var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone');
+
     if ( this._isValidPhone($elPhone.val()) ) {
       $elErrorPhone.addClass('blind');
     } else {
@@ -74,7 +75,8 @@ Tw.CustomerEmail.prototype = {
 
   _onKeyUpEmail: function (e) {
     var $elEmail = $(e.currentTarget);
-    var $elErrorEmail = $elEmail.closest('.inputbox').find('.fe-error-email');
+    var $elErrorEmail = $elEmail.closest('.inputbox').siblings('.fe-error-email');
+
     if ( this._isValidEmail($elEmail.val()) ) {
       $elErrorEmail.addClass('blind');
     } else {
