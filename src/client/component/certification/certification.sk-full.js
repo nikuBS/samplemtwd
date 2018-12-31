@@ -12,6 +12,10 @@ Tw.CertificationSkFull = function () {
   this.mdn = '';
   this.certSeq = '';
   this._jobCode = null;
+
+  this._addTimer = null;
+  this._addTime = null;
+  window.onRefresh = $.proxy(this._onRefreshCallback, this);
 };
 
 Tw.CertificationSkFull.prototype = {
@@ -64,6 +68,7 @@ Tw.CertificationSkFull.prototype = {
     this.$validAddCert = $popupContainer.find('#aria-cert-num1');
     this.$errorCertTime = $popupContainer.find('#aria-cert-num3');
     this.$errorCertCount = $popupContainer.find('#aria-cert-num4');
+    this.$errorCertAddTime = $popupContainer.find('#aria-cert-num5');
     this.$errorLoginCert = $popupContainer.find('#aria-phone-err1');
     this.$errorLoginTime = $popupContainer.find('#aria-phone-err2');
 
@@ -159,10 +164,16 @@ Tw.CertificationSkFull.prototype = {
         this.$btReCert.addClass('none');
         this.$btCert.addClass('none');
         this.$btCertAdd.removeClass('none');
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000);
+        this._addTime = new Date().getTime();
       }
     } else {
       this._checkCertError(resp.code);
     }
+  },
+  _expireAddTime: function () {
+    this.$btReCert.parent().removeClass('none');
+    this.$btCertAdd.parent().addClass('none');
   },
   _successRequestCertAdd: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -170,6 +181,11 @@ Tw.CertificationSkFull.prototype = {
       this.$btCertAdd.addClass('none');
       this.$btReCert.removeClass('none');
       this.$validAddCert.removeClass('none');
+    } else if ( resp.code === this.ERROR_CODE.ATH1221 ) {
+      this._clearCertError();
+      this.$btCertAdd.parent().addClass('none');
+      this.$btReCert.parent().removeClass('none');
+      this.$errorCertAddTime.removeClass('none');
     } else {
       this._checkCertError(resp.code, resp.msg);
     }
@@ -250,6 +266,16 @@ Tw.CertificationSkFull.prototype = {
     input.attr('aria-describedby', '');
     error.addClass('none');
   },
+  _onRefreshCallback: function () {
+    var interval = new Date().getTime() - this._addTime;
+
+    clearTimeout(this._addTimer);
+    if ( interval > 5 * 60 * 1000 ) {
+      this._expireAddTime();
+    } else {
+      this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+    }
+  },
   _clearAllError: function () {
     this._clearError(this.$inputboxName, this.$inputName, this.$errorName);
     this._clearError(this.$inputboxName, this.$inputName, this.$errorNameMismatch);
@@ -262,6 +288,7 @@ Tw.CertificationSkFull.prototype = {
     this.$validAddCert.addClass('none');
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
+    this.$errorCertAddTime.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorLoginCert.addClass('none');
