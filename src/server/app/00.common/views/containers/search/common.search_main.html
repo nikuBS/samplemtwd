@@ -53,7 +53,7 @@
     <div class="lately-searchtext">
         <p class="text">최근검색어</p>
         <div class="btn">
-            <button type="button" class="bt-link-tx underline" id="clear_recently_list">전체삭제</button>
+            <button type="button" class="bt-link-tx underline remove-recently-list" data-index="all" >전체삭제</button>
         </div>
     </div>
     <div class="latelylist-wrap">
@@ -63,7 +63,7 @@
                 <a href="" class="searchword-text">{{data.keyword}}</a>
                 <div class="date">
                     <span class="str">{{data.searchTime}}</span>
-                    <a href="#none" class="del">삭제</a>
+                    <button class="del remove-recently-list" data-index="{{index}}">삭제</button>
                 </div>
             </li>
             </script>
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<div class="cont-layer-blind02" style="display:none;" id="blind_layer"></div>
+<div class="cont-layer-blind02 close" style="display:none;" id="blind_layer"></div>
 
 <div class="search-content">
     <div class="cont-box nogaps-hoz">
@@ -84,7 +84,7 @@
             <ul class="popularsearchword-list linklist-type">
                 <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
                 <li>
-                    <a href="" class="category-type">
+                    <a href="/common/search?keyword=<%= popularKeyword.result.Query[i].content %>" class="category-type">
                         <strong class="number"><%= i+1 %></strong>
                         <span class="text"><%= popularKeyword.result.Query[i].content %></span>
                     </a>
