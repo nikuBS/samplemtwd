@@ -131,10 +131,12 @@ Tw.CommonMemberLineEdit.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
       var list = this.$container.find('.fe-item-active');
       var $target = list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
-
-      this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, this._marketingSvc)
-        .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')));
-
+      if ( $target.length > 0 ) {
+        this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, this._marketingSvc)
+          .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')));
+      } else {
+        this._closeMarketingOfferPopup();
+      }
     } else {
       this._closeMarketingOfferPopup();
     }
