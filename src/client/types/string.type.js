@@ -1125,6 +1125,7 @@ Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택',
   SMS_ALARM: 'SMS알림 설정 시 답변이 등록되면 입력하신 휴대전화번호로 SMS가 발송됩니다.',
+  INVALID_PHONE: '연락처 번호를 다시 확인해 주세요.',
   INVALID_EMAIL: '이메일 주소를 다시 확인해주세요.',
   INVALID_FILE: '첨부하실 수 없는 파일입니다. <br> 다시 확인해주세요.',
   DEFAULT_PLACEHOLDER: '내용 입력',
