@@ -26,9 +26,7 @@ Tw.REDIS_KEY = {
 
 Tw.BANNER_LINK_TYPE = {
   CHANNEL_APP: '1',
-  CHANNEL_WEB: '2',
-  OTHER_APP: '3',
-  OTHER_WEB: '4'
+  OTHER_WEB: '2'
 };
 
 Tw.NOTI_POPUP_TYPE = {
