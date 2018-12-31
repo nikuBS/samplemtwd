@@ -26,7 +26,8 @@ Tw.CommonMemberLineBizRegister.prototype = {
     ATH0020: 'ATH0020',     // 법인회선아님
     ATH0021: 'ATH0021',     // SWING 법인실사용자 등록 회선 (수동등록 불가)
     ATH0022: 'ATH0022',	    // 입력 정보 불일치 - 명의자 법인명 불일치
-    ATH0023: 'ATH0023'      // 입력 정보 불일치 - 명의자 법인명 불일치
+    ATH0023: 'ATH0023',     // 입력 정보 불일치 - 명의자 법인명 불일치
+    ICAS4027: 'ICAS4027'
   },
 
   _cachedElement: function () {
@@ -96,7 +97,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
   },
   _successRegisterBiz: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.gBack();
+      this._historyService.goBack();
+    } else if ( resp.code === this.ERROR_CODE.ICAS4027 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8);
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
