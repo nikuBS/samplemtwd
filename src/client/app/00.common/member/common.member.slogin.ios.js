@@ -39,6 +39,9 @@ Tw.CommonMemberSloginIos = function (rootEl) {
   this.$errorLoginCert = null;
   this.$errorLoginTime = null;
 
+  this._addTimer = null;
+  this._addTime = null;
+  window.onRefresh = $.proxy(this._onRefreshCallback, this);
   this._bindEvent();
 };
 
@@ -81,6 +84,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$validAddCert = this.$container.find('#aria-cert-num1');
     this.$errorCertTime = this.$container.find('#aria-cert-num3');
     this.$errorCertCount = this.$container.find('#aria-cert-num4');
+    this.$errorCertAddTime = this.$container.find('#aria-cert-num5');
     this.$errorLoginCert = this.$container.find('#aria-phone-err1');
     this.$errorLoginTime = this.$container.find('#aria-phone-err2');
 
@@ -110,7 +114,6 @@ Tw.CommonMemberSloginIos.prototype = {
     }
   },
   _onInputCert: function () {
-    console.log('input cert');
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
@@ -159,10 +162,16 @@ Tw.CommonMemberSloginIos.prototype = {
         this.$btReCert.addClass('none');
         this.$btCert.addClass('none');
         this.$btCertAdd.removeClass('none');
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000);
+        this._addTime = new Date().getTime();
       }
     } else {
       this._checkCertError(resp.code);
     }
+  },
+  _expireAddTime: function () {
+    this.$btReCert.parent().removeClass('none');
+    this.$btCertAdd.parent().addClass('none');
   },
   _successRequestCertAdd: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -170,6 +179,11 @@ Tw.CommonMemberSloginIos.prototype = {
       this.$btCertAdd.addClass('none');
       this.$btReCert.removeClass('none');
       this.$validAddCert.removeClass('none');
+    } else if ( resp.code === this.ERROR_CODE.ATH1221 ) {
+      this._clearCertError();
+      this.$btCertAdd.parent().addClass('none');
+      this.$btReCert.parent().removeClass('none');
+      this.$errorCertAddTime.removeClass('none');
     } else {
       this._checkCertError(resp.code, resp.msg);
     }
@@ -251,6 +265,16 @@ Tw.CommonMemberSloginIos.prototype = {
     input.attr('aria-describedby', '');
     error.addClass('none');
   },
+  _onRefreshCallback: function () {
+    var interval = new Date().getTime() - this._addTime;
+
+    clearTimeout(this._addTimer);
+    if ( interval > 5 * 60 * 1000 ) {
+      this._expireAddTime();
+    } else {
+      this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+    }
+  },
   _clearAllError: function () {
     this._clearError(this.$inputboxName, this.$inputName, this.$errorName);
     this._clearError(this.$inputboxName, this.$inputName, this.$errorNameMismatch);
@@ -263,6 +287,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$validAddCert.addClass('none');
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
+    this.$errorCertAddTime.addClass('none');
   },
   _clearLoginError: function () {
     this.$errorLoginCert.addClass('none');
