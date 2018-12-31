@@ -17,13 +17,6 @@ Tw.CustomerEmailServiceRetry = function (rootEl) {
 
 Tw.CustomerEmailServiceRetry.prototype = {
   _init: function () {
-    var htParams = Tw.UrlHelper.getQueryParams();
-    // this.serviceCategory = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
-    // this._apiService.request(Tw.API_CMD.BFF_08_0061, {
-    //   inqId: htParams.inqid,
-    //   inqClCd: htParams.inqclcd,
-    //   svcDvcClCd: 'M'
-    // }).done($.proxy(this._getInquiryDetail, this));
   },
 
   _cachedElement: function () {
@@ -34,25 +27,6 @@ Tw.CustomerEmailServiceRetry.prototype = {
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-service_register', $.proxy(this._retry_inquiry, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
-  },
-
-  _getInquiryDetail: function (res) {
-    //
-    // if ( res.code === Tw.API_CODE.CODE_00 ) {
-    //   var categoryDepth1 = _.find(this.serviceCategory, function (item) {
-    //     var categoryDepth2 = _.find(item.list, function (detail) {
-    //       return res.result.ofrCtgSeq.indexOf(detail.ofrCtgSeq) !== -1;
-    //     });
-    //     if ( categoryDepth2 ) {
-    //       $('.fe-category_depth2').text(categoryDepth2.title);
-    //     }
-    //     return categoryDepth2;
-    //   });
-    //
-    //   $('.fe-category_depth1').text(categoryDepth1.title);
-    // } else {
-    //   Tw.Error(res.code, res.msg).pop();
-    // }
   },
 
   _makeParams: function () {

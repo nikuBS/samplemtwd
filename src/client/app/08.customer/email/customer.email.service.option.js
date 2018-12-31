@@ -4,7 +4,8 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerEmailServiceOption = function (rootEl) {
+Tw.CustomerEmailServiceOption = function (rootEl, allSvc) {
+  this.allSvc = allSvc.allSvc;
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -24,6 +25,7 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
     this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
@@ -31,6 +33,47 @@ Tw.CustomerEmailServiceOption.prototype = {
     this.$container.on('click', '.fe-wrap_direct_order .popup-closeBtn', $.proxy(this._closeDirectOrder, this));
     this.$container.on('click', '.fe-wrap_direct_order input[type="checkbox"]', $.proxy(this._disabledCheckbox, this));
     this.$container.on('click', '.fe-direct-more', $.proxy(this._onShowMoreList, this));
+    this.$container.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
+  },
+
+  _selectLine: function (e) {
+    // var $el = $(e.currentTarget);
+    var category = this.$container.triggerHandler('getCategory');
+    var lineList = [];
+
+    if ( category.service.depth1 === 'CELL' ) {
+      lineList = this.allSvc.m;
+    }
+
+    if ( category.service.depth1 === 'INTERNET' ) {
+      lineList = this.allSvc.s;
+    }
+
+    var fnSelectLine = function (item) {
+      return {
+        value: item.svcNum,
+        option: $('.fe-select-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
+        attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+      };
+    };
+
+    this._popupService.open({
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
+        data: [{ list: lineList.map($.proxy(fnSelectLine, this)) }]
+      },
+      null,
+      null
+    );
+  },
+
+  _selectLineCallback: function (e) {
+    this._popupService.close();
+    var $el = $(e.currentTarget);
+
+    $('#tab1-tab .fe-select-line').data('svcmgmtnum', $el.data('svcmgmtnum').toString());
+    $('#tab1-tab .fe-select-line').text($el.text().trim());
   },
 
   _disabledCheckbox: function (e) {
@@ -86,7 +129,6 @@ Tw.CustomerEmailServiceOption.prototype = {
 
     if ( list.listShop.length > 20 ) {
       htOrderList.isMoreListShop = true;
-
     }
 
     if ( list.listUsed.length > 20 ) {

@@ -41,6 +41,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$container.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
     this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
     this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
+    this.$container.on('getCategory', $.proxy(this._getCurrentCategory, this));
   },
 
   _onLoadQuestionList: function (res) {
@@ -170,5 +171,14 @@ Tw.CustomerEmailCategory.prototype = {
     this.quality.depth1 = sDepth1Value;
 
     this.$container.trigger('changeQualityTemplate', this.quality);
+  },
+
+  _getCurrentCategory: function () {
+    var htCategory = {
+      service: this.service,
+      quality: this.quality
+    };
+
+    return htCategory;
   }
 };
