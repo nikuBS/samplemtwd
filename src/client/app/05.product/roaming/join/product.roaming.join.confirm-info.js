@@ -167,7 +167,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     },
     _goBack : function(){
         this._popupService.close();
-        this._historyService.goLoad('/product/callplan/'+this._prodId);
+        this._historyService.goBack();
     },
     _goMyInfo : function () {
         this._historyService.goLoad('/product/roaming/my-use');

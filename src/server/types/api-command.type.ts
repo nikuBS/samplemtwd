@@ -490,6 +490,7 @@ export const API_CMD = {
   BFF_08_0064: { path: '/core-modification/v1/guide/contents-detail/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0065: { path: '/core-modification/v1/guide/contents-view-count-up/:args0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0066: { path: '/core-modification/v1/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0069: { path: '/core-modification/v1/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

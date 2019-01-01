@@ -54,7 +54,29 @@ class CommonSearch extends TwViewController {
                   title: PRODUCT_TYPE_NM.JOIN
               });
           }
-          if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
+          if ( searchResult.result.totalcount === 0 ) {
+              Observable.combineLatest(
+                  this.apiService.request(API_CMD.BFF_08_0069, {srchId : '52'}, {}),
+                  this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
+              ).
+              subscribe(([surveyList, popularKeyword]) => {
+                  if (surveyList.code !== API_CODE.CODE_00) {
+                      return this.error.render(res, {
+                          svcInfo: svcInfo,
+                          code: surveyList.code,
+                          msg: surveyList.msg,
+                      });
+                  }
+                  res.render('search/common.search.not_found.html', {
+                      svcInfo : svcInfo,
+                      popularKeyword : popularKeyword.result,
+                      keyword : searchResult.result.query,
+                      relatedKeyword : relatedKeyword,
+                      inKeyword : searchResult.result.researchQuery,
+                      surveyList : surveyList.result
+                  });
+              });
+          } else if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
               searchResult.result.search[0].immediate.data = [];
               showResult(searchResult, relatedKeyword);
           } else {

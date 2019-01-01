@@ -170,7 +170,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       return tempArr;
   },
   _goBack : function(){
-      this._historyService.goLoad('/product/callplan/'+this._prodId);
+      this._historyService.goBack();
   }
 
 

@@ -20,11 +20,13 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn) {
 
 Tw.CommonSearch.prototype = {
     _init : function (searchInfo) {
-        var totalContentsCnt = 0;
+        if(searchInfo.totalcount===0){
+            return;
+        }
+        var keyName,contentsCnt;
         for(var i=0;i<searchInfo.search.length;i++){
-          var keyName =  Object.keys(searchInfo.search[i])[0];
-          var contentsCnt = Number(searchInfo.search[i][keyName].count);
-            totalContentsCnt+=contentsCnt;
+          keyName =  Object.keys(searchInfo.search[i])[0];
+          contentsCnt = Number(searchInfo.search[i][keyName].count);
           if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
               if(contentsCnt<=0){
                   this.$container.find('.'+keyName).hide();

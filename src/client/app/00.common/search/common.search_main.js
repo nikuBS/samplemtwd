@@ -12,20 +12,22 @@ Tw.CommonSearchMain = function (rootEl,svcInfo) {
 
 Tw.CommonSearchMain.prototype = {
     _init : function () {
+        this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
+        this._recentlyKeywordListData = this._getRecentlyKeywordList();
         this._historyService = new Tw.HistoryService();
         this._apiService = Tw.Api;
         this.$inputElement = this.$container.find('#search_input');
-        this._bindPopupElementEvt();
         this.$autoCompleteList = this.$container.find('#auto_complete_list');
         this.$autoCompletetTemplate = Handlebars.compile(this.$container.find('#auto_complete_template').html());
         this.$recentlyKeywordList = this.$container.find('#recently_keyword_list');
         this.$recentlyKeywordTemplate = Handlebars.compile(this.$container.find('#recently_keyword_template').html());
-        this._recentlryKeywordInit();
         this.$container.find('#recently_keyword_layer').hide();
+        this._recentlyKeywordInit();
+        this._bindPopupElementEvt();
     },
     _keyInputEvt : function (inputEvtObj) {
         if(inputEvtObj.keyCode===13){
-            this._addRecentlyKeyword(inputEvtObj.currentTarget.value);
+            this._addRecentlyKeywordList(inputEvtObj.currentTarget.value);
             this._historyService.goLoad('/common/search?keyword='+inputEvtObj.currentTarget.value);
             return;
         }
@@ -47,10 +49,10 @@ Tw.CommonSearchMain.prototype = {
     },
     _bindPopupElementEvt : function () {
         this.$container.find('.close-area').on('click',$.proxy(this._historyService.goBack,this));
-        this.$container.find('#clear_recently_list').on('click',$.proxy(this._removeRecentlyKeywrodList,this));
+        this.$container.find('.remove-recently-list').on('click',$.proxy(this._removeRecentlyKeywordList,this));
         this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
         this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
-        this.$container.on('click','#blind_layer',$.proxy(this._inputBlurEvt,this));
+        this.$container.on('click','.close',$.proxy(this._inputBlurEvt,this));
 
     },
     _convertAutoKeywordData : function (listStr) {
@@ -77,55 +79,50 @@ Tw.CommonSearchMain.prototype = {
             this.$container.find('#auto_complete_layer').show();
         }
     },
-    _removeRecentlyKeywrodList : function (index) {
-        //TODO
+    _removeRecentlyKeywordList : function (args) {
+        var removeIdx = $(args.currentTarget).attr('data-index');
+        if(removeIdx==='all'){
+            this._recentlyKeywordListData[this._nowUser] = [];
+        }else{
+            this._recentlyKeywordListData[this._nowUser].splice(removeIdx,1);
+        }
+        console.log(this._recentlyKeywordListData[this._nowUser]);
+        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
+        this._recentlyKeywordInit();
     },
-    _recentlryKeywordInit : function () {
+    _recentlyKeywordInit : function () {
         var $recentlyKeywordList = this.$recentlyKeywordList;
         var $recentlyKeywordTemplate = this.$recentlyKeywordTemplate;
-        var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
-        var nowUserData;
-        if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
-            return;
-        }
-        if(Tw.FormatHelper.isEmpty(this._svcInfo)){
-            nowUserData = recentlyKeywordData.logOutUser;
-        }else{
-            nowUserData = recentlyKeywordData[this._svcInfo.svcMgmtNum];
-        }
-        _.each(nowUserData,function (data) {
-            $recentlyKeywordList.append($recentlyKeywordTemplate({data : data}));
+        var saveBottomLineDate = moment().subtract(10, 'days');
+        $recentlyKeywordList.empty();
+        _.each(this._recentlyKeywordListData[this._nowUser],function (data, index) {
+            //recognize 10 days ago data from now
+            if(moment(data.searchTime, 'YY.M.D.') < saveBottomLineDate){
+                this._recentlyKeywordListData[this._nowUser].splice(index,1);
+            }
+            $recentlyKeywordList.append($recentlyKeywordTemplate({data : data, index : index}));
         });
+        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
     },
-    _addRecentlyKeyword : function (keyword) {
+    _addRecentlyKeywordList : function (keyword) {
+        this._recentlyKeywordListData[this._nowUser].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+        while (this._recentlyKeywordListData[this._nowUser].length>10){
+            this._recentlyKeywordListData[this._nowUser].shift();
+        }
+        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
+    },
+    _getRecentlyKeywordList : function () {
         var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
         if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
             //making recentlySearchKeyword
             Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
             recentlyKeywordData = {};
         }
-        if(Tw.FormatHelper.isEmpty(this._svcInfo)){
-            //logout user's recentlySearchKeyword arr
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData.logOutUser)){
-                //making logout user's recentlySearchKeyword
-                recentlyKeywordData.logOutUser = [];
-            }
-            recentlyKeywordData.logOutUser.push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
-            while (recentlyKeywordData.logOutUser.length>10){
-                recentlyKeywordData.logOutUser = recentlyKeywordData.logOutUser.shift();
-            }
-        }else{
-            //login user
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._svcInfo.svcMgmtNum])){
-                //makin loginuser's recentlySearchKeyword based on svcMgmtNum
-                recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
-            }
-            recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
-            while (recentlyKeywordData[this._svcInfo.svcMgmtNum].length>10){
-                recentlyKeywordData[this._svcInfo.svcMgmtNum].shift();
-            }
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._nowUser])){
+            //making now user's recentlySearchKeyword
+            recentlyKeywordData[this._nowUser] = [];
         }
-        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+        return recentlyKeywordData;
     }
 
 };
