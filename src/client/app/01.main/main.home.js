@@ -81,6 +81,7 @@ Tw.MainHome.prototype = {
   _bindEventStore: function () {
     this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
     this.$container.on('click', '#fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
+    this.$container.on('click', '.fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
     this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
     this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
     this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));

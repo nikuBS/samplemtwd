@@ -69,6 +69,10 @@ Tw.LineMarketingComponent.prototype = {
   _closeOpenMarketingOfferPopup: function () {
     if ( this._complete ) {
       this._openCompleteMarketingPopup();
+    } else {
+      if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
+        this._callback();
+      }
     }
   },
   _successAgreeMarketing: function (resp) {
