@@ -278,13 +278,14 @@
   $(document).ready(function () {
     new Tw.CustomerEmail($('.wrap'));
     new Tw.CustomerEmailService($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
-    new Tw.CustomerEmailServiceOption($('.wrap'));
+    new Tw.CustomerEmailServiceOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailQuality($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailCategory($('.wrap'));
     new Tw.CustomerEmailUpload($('.wrap'));
   });
+  var allSvc = JSON.parse('<%-JSON.stringify(allSvc)%>')
 </script>
 </body>
 <% include ../../components/end.component.html %>

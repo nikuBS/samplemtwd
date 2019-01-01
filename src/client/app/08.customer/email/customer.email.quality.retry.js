@@ -17,9 +17,6 @@ Tw.CustomerEmailQualityRetry = function (rootEl) {
 
 Tw.CustomerEmailQualityRetry.prototype = {
   _init: function () {
-    // var htParams = Tw.UrlHelper.getQueryParams();
-    // this.qualityCategory = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
-    // $('.fe-category_depth1');
   },
 
   _cachedElement: function () {

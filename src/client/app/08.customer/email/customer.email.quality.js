@@ -34,15 +34,38 @@ Tw.CustomerEmailQuality.prototype = {
   _request: function () {
     var qualityCategory = this.$quality_depth1.data('quality-depth1');
 
-    if ( !this._isValidServiceEmail() ) {
+    if ( !this._isValidQualityPhone() ) {
       this._popupService.openAlert(
-        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.CUSTOMER_EMAIL.INVALID_PHONE,
         Tw.POPUP_TITLE.NOTIFY,
-        Tw.BUTTON_LABEL.CONFIRM
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-quality_phone').click();
+            $('.fe-quality_phone').focus();
+          }, 500);
+        }, this)
       );
 
       return false;
     }
+
+    if ( !this._isValidQualityEmail() ) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-quality_email').click();
+            $('.fe-quality_email').focus();
+          }, 500);
+        }, this)
+      );
+
+      return false;
+    }
+
 
     switch ( qualityCategory ) {
       case 'cell':
@@ -144,7 +167,13 @@ Tw.CustomerEmailQuality.prototype = {
     }
   },
 
-  _isValidServiceEmail: function () {
+  _isValidQualityPhone: function () {
+    var sPhone = $('.fe-service_phone').val();
+
+    return Tw.ValidationHelper.isCellPhone(sPhone)|| Tw.ValidationHelper.isTelephone(sPhone);
+  },
+
+  _isValidQualityEmail: function () {
     var sEmail = $('.fe-quality_email').val();
 
     return Tw.ValidationHelper.isEmail(sEmail);

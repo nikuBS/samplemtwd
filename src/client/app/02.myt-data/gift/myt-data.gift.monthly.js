@@ -74,7 +74,7 @@ Tw.MyTDataGiftMonthly.prototype = {
 
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT + svcNum + Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_END,
-      null,
+      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_TITLE,
       $.proxy(this._requestUnsubscribeAutoGift, this, serNum),
       $.proxy(function () {
         this._popupService.close();
