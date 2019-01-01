@@ -166,8 +166,8 @@ Tw.MyTFareBillGuidePps.prototype = {
     var momentTemp = '';
 
     // 순차적으로 0, +1, +2 를 더한다.
-    for ( var i=1, len=3; i<=len; i++ ) {
-      momentTemp = momentStart.add(i, 'months');
+    for ( var i=1, len=2; i<=len; i++ ) {
+      momentTemp = momentStart.add(1, 'months');
       var diffNum = momentMax.diff(momentTemp, 'months');
 
       if (diffNum < 0) {break;}
