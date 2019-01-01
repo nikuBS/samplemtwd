@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../utils/format.helper';
 import { NODE_API_ERROR } from '../types/string.type';
 import { API_CODE } from '../types/api-command.type';
+import LoggerService from './logger.service';
 
 class RedisService {
   private static instance: RedisService;
@@ -15,6 +16,7 @@ class RedisService {
   private redisOption;
   private middleWare;
   private client;
+  private logger = new LoggerService();
 
   private constructor() {
     this.envRedis = EnvHelper.getEnvironment('REDIS');
@@ -51,6 +53,7 @@ class RedisService {
   }
 
   public getString(key): Observable<any> {
+    this.logger.info(this, '[Get String]', key);
     return Observable.create((observer) => {
       this.client.get(key, (err, reply) => {
         const resp = {
@@ -73,6 +76,7 @@ class RedisService {
   }
 
   public getData(key): Observable<any> {
+    this.logger.info(this, '[Get Data]', key);
     return Observable.create((observer) => {
       this.client.get(key, (err, reply) => {
         const resp = {
