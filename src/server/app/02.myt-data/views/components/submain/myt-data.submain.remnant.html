@@ -178,7 +178,7 @@
                         <span class="value type3">한도 소진</span>
                         <% } %>
                         <% } else { %>
-                        <span class="value type2"><strong><%= data.family.remained %></strong> 남음</span>
+                        <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
                         <% } %>
                         <% } %>
                     </li>
@@ -370,6 +370,7 @@
             <% } %>
         </ul>
         <% } %>
+        <% if (!data.emptyData) { %>
         <div class="user-month-bill mt16">
             <div class="detail-bill type1">
                 <ul>
@@ -385,6 +386,7 @@
                 </ul>
             </div>
         </div>
+        <% } %>
         <ul class="bt-slice item-two mt20">
             <li data-id="immCharge">
                 <button class="btn-round1 btn-style1">즉시 충전</button>
