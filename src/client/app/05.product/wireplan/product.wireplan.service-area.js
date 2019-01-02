@@ -17,7 +17,6 @@ Tw.ProductWireServiceArea = function(rootEl) {
 Tw.ProductWireServiceArea.prototype = {
   _bindEvent: function() {
     this.$submitBtn.on('click', $.proxy(this._handleSearchArea, this));
-    this.$container.on('click', '#fe-reservation', $.proxy(this._openProductType, this));
     this.$container.on('click', '#fe-post', $.proxy(this._openPostcode, this));
   },
 
@@ -83,35 +82,5 @@ Tw.ProductWireServiceArea.prototype = {
     $addr.find('#fe-detail-addr').text(result.detail);
 
     this.$submitBtn.removeAttr('disabled');
-  },
-
-  _openProductType: function() {
-    this._popupService.open(
-      {
-        hbs: 'actionsheet01', // hbs의 파일명
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
-        data: [{ list: Tw.PRODUCT_JOIN_TYPE }],
-        layer: true
-      },
-      $.proxy(this._handleOpenProductType, this),
-      $.proxy(this._closeProductType, this)
-    );
-  },
-
-  _handleOpenProductType: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._goToReservation, this));
-  },
-
-  _goToReservation: function(e) {
-    this._typeCode = $(e.currentTarget)
-      .find('input')
-      .data('type-code');
-    this._popupService.close();
-  },
-
-  _closeProductType: function() {
-    if (this._typeCode) {
-      this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=' + this._typeCode);
-    }
   }
 };
