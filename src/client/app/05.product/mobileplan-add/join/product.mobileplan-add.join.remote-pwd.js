@@ -64,6 +64,10 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
     var inputData = event.originalEvent.data;
 
+    if (!inputData && $target.val().length > 0 && $hiddenTarget.val().length < 4) {
+      inputData = $target.val()[$target.val().length - 1];
+    }
+
     if (inputData !== undefined && !isNaN(inputData)) {
       if (inputData === null) {
         $hiddenTarget.val($hiddenTarget.val().substring(length, 0));
@@ -108,7 +112,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     if (this._isValid()) {
       new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
         isMobilePlan: false,
-        noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
+        noticeList: this._confirmOptions.preinfo.joinNoticeList,
         joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
         typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
         settingSummaryTexts: [{
