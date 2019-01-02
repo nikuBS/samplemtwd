@@ -36,20 +36,11 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   _onClickBtnSubmit : function () {
-    var _modal = Tw.MYT_FARE_BILL_SET.A45;
-
-    this._popupService.openModalTypeA(
-      _modal.TITLE,
-      _modal.CONTENTS,
-      Tw.BUTTON_LABEL.APPLY, null, $.proxy(this._onOkPopupClicked, this), null);
+    this._requestReissue();
   },
 
   _isComplexBill: function () {
     return this._options.billIsueTyps && this._options.billIsueTyps.length > 0;
-  },
-
-  _onOkPopupClicked: function () {
-    this._requestReissue();
   },
 
   _getReqData: function () {

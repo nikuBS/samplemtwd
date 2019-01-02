@@ -1106,8 +1106,6 @@ body.bg-gray {
       background: #fff; }
   .popup-page .container-wrap {
     height: 100%;
-    overflow: auto;
-    padding-bottom: 1.875rem;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
     .popup-page .container-wrap.bg-type1 {
@@ -1177,7 +1175,7 @@ body.bg-gray {
     font-size: 0;
     line-height: 0; }
   .popup-page .prev-step {
-    position: absolute;
+    position: fixed;
     left: auto;
     right: 0.75rem;
     top: 0.875rem;
@@ -1248,21 +1246,21 @@ body.bg-gray {
       top: auto;
       bottom: 1.25rem; }
   .popup-page.fixed-bottom .container {
-    padding-bottom: 3.5rem; }
+    padding-bottom: 5.375rem; }
   .popup-page.fixed-bottom.h30 .container {
-    padding-bottom: 1.875rem; }
+    padding-bottom: 3.75rem; }
   .popup-page.fixed-bottom.h60 .container {
-    padding-bottom: 3.5rem; }
+    padding-bottom: 5.375rem; }
   .popup-page.fixed-bottom.h90 .container {
-    padding-bottom: 5.625rem; }
-  .popup-page.fixed-bottom.h120 .container {
     padding-bottom: 7.5rem; }
-  .popup-page.fixed-bottom.h150 .container {
+  .popup-page.fixed-bottom.h120 .container {
     padding-bottom: 9.375rem; }
-  .popup-page.fixed-bottom.h180 .container {
+  .popup-page.fixed-bottom.h150 .container {
     padding-bottom: 11.25rem; }
-  .popup-page.fixed-bottom.h210 .container {
+  .popup-page.fixed-bottom.h180 .container {
     padding-bottom: 13.125rem; }
+  .popup-page.fixed-bottom.h210 .container {
+    padding-bottom: 15rem; }
   .popup-page.focusin {
     /* common.js */
     padding-bottom: 0 !important; }

@@ -13584,8 +13584,6 @@ a.bt-link-tx.underline.small {
       height: 1.125rem;
       background: url(/img/product/bg_joinconsulting.png) no-repeat 0 0;
       background-size: 1.25rem 1.125rem; }
-  .joinconsulting-wrap .btn {
-    width: 3.125rem; }
 
 .recommendedratetaglist-wrap .tag-text {
   display: inline-block;
@@ -15259,7 +15257,7 @@ a.bt-link-tx.underline.small {
     padding: 0; }
 
 .cont-actionsheet .btn-floating {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   z-index: 2; }
@@ -15287,9 +15285,13 @@ a.bt-link-tx.underline.small {
     padding: 0 1rem 1.375rem !important;
     overflow: hidden; }
   .cont-actionsheet .ac-list .type1 {
+    display: block;
     padding: 0.625rem 0.75rem 0.625rem 1rem; }
-    .cont-actionsheet .ac-list .type1 > a .table-cell > span.link, .cont-actionsheet .ac-list .type1 button .table-cell > span.link {
-      display: inline-block; }
+    .cont-actionsheet .ac-list .type1 > a, .cont-actionsheet .ac-list .type1 button {
+      display: inline-block;
+      width: 100%; }
+      .cont-actionsheet .ac-list .type1 > a .table-cell > span.link, .cont-actionsheet .ac-list .type1 button .table-cell > span.link {
+        display: inline-block; }
     .cont-actionsheet .ac-list .type1 > label .table-cell.right {
       width: 3.125rem; }
     .cont-actionsheet .ac-list .type1 .table {
@@ -15528,7 +15530,7 @@ a.bt-link-tx.underline.small {
 .actionsheet.has-header .container-wrap .container {
   padding-top: 3.25rem !important; }
 
-.actionsheet.has-floating .container-wrap .container {
+.actionsheet.has-floating .container-wrap .container .cont-actionsheet {
   padding-bottom: 3.5rem !important; }
 
 /* .chart-wrap  */
@@ -18942,15 +18944,16 @@ a.bt-link-tx.underline.small {
       .howto-list-wrap .howto-list-box:nth-child(even) .list-bt {
         float: right; }
     .howto-list-wrap .howto-list-box:nth-child(1) {
-      padding-top: 1.5625rem;
-      padding-bottom: 11.5625rem;
+      padding-top: 3.125rem;
+      padding-bottom: 10rem;
       background-image: url(/img/customer/bg-howto-01.png); }
     .howto-list-wrap .howto-list-box:nth-child(2) {
-      padding-top: 1.5625rem;
-      padding-bottom: 13.75rem;
+      padding-top: 3.125rem;
+      padding-bottom: 11.875rem;
       background-image: url(/img/customer/bg-howto-02.png); }
     .howto-list-wrap .howto-list-box:nth-child(3) {
-      padding-bottom: 12.5rem;
+      padding-top: 3.125rem;
+      padding-bottom: 9.375rem;
       background-image: url(/img/customer/bg-howto-03.png); }
     .howto-list-wrap .howto-list-box:nth-child(4) {
       padding-top: 1.25rem;
@@ -24812,7 +24815,9 @@ input[type="radio"].formradio-small:checked:disabled + label {
     display: block;
     overflow: hidden; }
     .plan-compact-info .plan .tit {
+      color: #000000;
       font-size: 1rem;
+      color: #000;
       /*font-weight:$fw-medium;*/ }
       .plan-compact-info .plan .tit .point-txt {
         color: #178bce; }
@@ -26212,7 +26217,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
 
 .extraservice-list > .category-type {
   margin-top: 0.625rem;
-  padding: 1.1875rem 1rem 0 1rem;
   border-radius: 0.375rem;
   background: #fff;
   -webkit-box-shadow: 0px 3px 20px -2px rgba(0, 0, 0, 0.03);
@@ -26221,6 +26225,9 @@ input[type="radio"].formradio-small:checked:disabled + label {
     display: block;
     width: 100%;
     height: 100%;
+    padding: 1.1875rem 1rem 0 1rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     text-align: left; }
   .extraservice-list > .category-type:first-child {
     margin-top: 0; }
@@ -26723,25 +26730,25 @@ input[type="radio"].formradio-small:checked:disabled + label {
   font-size: 0.75rem;
   line-height: 1.1875rem; }
 
-.opinion-selectbox {
-  margin-top: 1.125rem; }
-  .opinion-selectbox li {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    height: 3.5rem;
-    border-top: 1px solid #f2f2f2;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center; }
-    .opinion-selectbox li:first-child {
-      border-top: none; }
-    .opinion-selectbox li .text {
-      color: #000000;
-      font-size: 1rem; }
+/*주미숙 수정*/
+.searchapplication-list li.opinion-selectbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-top: 1px solid #f2f2f2;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem 0;
+  background: none; }
+  .searchapplication-list li.opinion-selectbox:first-child {
+    border-top: none; }
+  .searchapplication-list li.opinion-selectbox .text {
+    color: #000000;
+    font-size: 1rem; }
 
 .search-didnot-generatehits {
   padding: 9.25rem 0 4.375rem;
@@ -28090,12 +28097,8 @@ body.apphome {
       font-size: inherit;
       text-decoration: underline; }
   .main-error-box .btn-area {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    display: block;
+    text-align: center;
     margin-top: 1.875rem; }
     .main-error-box .btn-area .btn-round1 {
       display: inline-block;
@@ -28111,7 +28114,7 @@ body.apphome {
     .device_android .main-error-box .btn-area .btn-round1 {
       display: inline-block;
       width: 45%;
-      max-width: 8.75rem; }
+      max-width: 8.4375rem; }
       .device_android .main-error-box .btn-area .btn-round1 + .btn-round1 {
         margin-left: 3%; } }
 
