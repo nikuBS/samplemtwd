@@ -131,7 +131,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
 
   _toggleFriend: function(e) {
     if ($(e.currentTarget).hasClass('on')) {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44);
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44.TITLE);
     }
 
     var $elem = $(e.currentTarget).parents('li'),
