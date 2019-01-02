@@ -29,7 +29,7 @@ class MyTFareInfoOverpayAccount extends TwViewController {
 
       resp.result.overPaymentRecord.map((o) => {
         o.sortDt = o.opDt;
-        o.dataDt = DateHelper.getShortDate(o.opDt);
+        o.dataDt = DateHelper.getShortMonthDate(o.opDt);
         o.dataAmt = FormatHelper.addComma(o.svcBamt);
       });
 
