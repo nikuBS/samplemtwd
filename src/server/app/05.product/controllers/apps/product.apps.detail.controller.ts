@@ -73,7 +73,7 @@ export default class ProductAppsDetail extends TwViewController {
       return (resp.result.recommendAppList || []).map(app => {
         return {
           ...app,
-          appIconImgUrl: app.prodIconImgUrl && ProductHelper.getImageUrlWithCdn(app.appIconImgUrl)
+          appIconImgUrl: app.appIconImgUrl && ProductHelper.getImageUrlWithCdn(app.appIconImgUrl)
         };
       });
     });
