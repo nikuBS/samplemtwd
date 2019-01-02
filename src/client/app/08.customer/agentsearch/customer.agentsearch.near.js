@@ -127,6 +127,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     }
   },
   _showPermission: function (location) {
+    var shouldGoBack = false;
     this._popupService.open({
       ico: 'type3',
       title: Tw.BRANCH.PERMISSION_TITLE,
@@ -154,6 +155,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       }, this));
 
       root.on('click', '.bt-white2', $.proxy(function () {
+        shouldGoBack = true;
         this._popupService.close();
       }, this));
 
@@ -178,7 +180,13 @@ Tw.CustomerAgentsearchNear.prototype = {
             Tw.Error(err.code, err.msg).pop();
           });
       }, this));
-    }, this));
+    }, this),
+    $.proxy(function () {
+      if (shouldGoBack) {
+        this._historyService.goBack();
+      }
+    }, this)
+    );
   },
   _onCurrentLocation: function (location) {
     var $tmapBox = this.$container.find('#fe-tmap-box');
