@@ -84,12 +84,12 @@ Tw.ProductCommonCallplan.prototype = {
     });
   },
 
-  _openComparePlans: function(e) {
+  _openComparePlans: function() {
     new Tw.ProductMobilePlanComparePlans().openCompare(this._prodId);
   },
 
   _onBannerLink: function(e) {
-    if ($(e.currentTarget).attr('href').indexOf(location.hostname) !== -1) {
+    if (Tw.FormatHelper.isEmpty($(e.currentTarget).attr('href').match(/http:\/\/|https:\/\//gi))) {
       return true;
     }
 
