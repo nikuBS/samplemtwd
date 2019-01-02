@@ -144,8 +144,13 @@ Tw.CustomerAgentsearchNear.prototype = {
       }]
     }, $.proxy(function (root) {
       root.on('click', '.fe-link-term', $.proxy(function () {
-        this._popupService.close();
+        // this._popupService.close();
         // this._historyService.goLoad(약관 전문)
+        Tw.CommonHelper.openUrlInApp(
+          'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
+          null,
+          Tw.COMMON_STRING.TERM
+        );
       }, this));
 
       root.on('click', '.bt-white2', $.proxy(function () {
