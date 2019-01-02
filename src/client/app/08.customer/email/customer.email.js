@@ -35,7 +35,7 @@ Tw.CustomerEmail.prototype = {
     this.$btn_faq.on('click', $.proxy(this._openFaq, this));
     this.$close_faq.on('click', $.proxy(this._closeFaq, this));
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
-    this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeContent, this));
+    this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
@@ -93,14 +93,30 @@ Tw.CustomerEmail.prototype = {
     return Tw.ValidationHelper.isEmail(sEmail);
   },
 
-  _onChangeContent: function (e) {
+  _onChangeTitle: function (e) {
+    var nMaxTitle = 20;
     var $elTarget = $(e.currentTarget);
-    var len = $elTarget.val().length;
+    var sMaxValue = !!$elTarget.val() ? $elTarget.val().slice(0, nMaxTitle) : $elTarget.val();
     var $elLength = $elTarget
       .closest('.inputbox')
       .find('.byte-current');
 
-    $elLength.text(Tw.FormatHelper.convNumFormat(len));
+    $elTarget.val(sMaxValue);
+    $elLength.text(Tw.FormatHelper.convNumFormat(sMaxValue.length));
+
+    this.$container.trigger('validateForm');
+  },
+
+  _onChangeContent: function (e) {
+    var nMaxContent = 12000;
+    var $elTarget = $(e.currentTarget);
+    var sMaxValue = !!$elTarget.val() ? $elTarget.val().slice(0, nMaxContent) : $elTarget.val();
+    var $elLength = $elTarget
+      .closest('.inputbox')
+      .find('.byte-current');
+
+    $elTarget.val(sMaxValue);
+    $elLength.text(Tw.FormatHelper.convNumFormat(sMaxValue.length));
 
     this.$container.trigger('validateForm');
   },

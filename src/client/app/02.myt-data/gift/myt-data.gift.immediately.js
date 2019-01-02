@@ -159,7 +159,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     );
   },
 
-  _onSuccessSendingData: function (res) {
+  _onSuccessSendingData: function () {
     this._popupService.close();
 
     // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
