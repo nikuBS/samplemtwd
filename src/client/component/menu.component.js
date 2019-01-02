@@ -259,8 +259,6 @@ Tw.MenuComponent.prototype = {
             nick = Tw.SVC_ATTR[userInfo.svcAttr];
           }
           this.$nickName.text(nick);
-          console.log('hakjoon~~~~~~~~~~~~~~~');
-          console.log(userInfo);
           if (userInfo.svcAttr.indexOf('M') === -1) {
             this.$svcNumber.text(userInfo.addr);
           } else {
