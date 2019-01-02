@@ -49,7 +49,7 @@ Tw.ProductWireplanJoin.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },

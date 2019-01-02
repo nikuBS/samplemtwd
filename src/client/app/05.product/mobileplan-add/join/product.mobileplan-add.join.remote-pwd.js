@@ -90,7 +90,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,

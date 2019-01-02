@@ -42,7 +42,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
       svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
       toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
