@@ -99,8 +99,8 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
     }
 
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
       $.proxy(this._delNumReq, this, $elem.data('number'), $elem.data('audit_dtm')));
   },
 
@@ -131,7 +131,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
 
   _toggleFriend: function(e) {
     if ($(e.currentTarget).hasClass('on')) {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44);
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44.TITLE);
     }
 
     var $elem = $(e.currentTarget).parents('li'),

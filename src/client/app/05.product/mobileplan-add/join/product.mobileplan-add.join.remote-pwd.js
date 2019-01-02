@@ -29,6 +29,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _cachedElement: function() {
     this.$inputPassword = this.$container.find('.fe-input-password');
     this.$confirmPassword = this.$container.find('.fe-confirm-password');
+    this.$inputRealPassword = this.$container.find('.fe-input-real-password');
+    this.$realConfirmPassword = this.$container.find('.fe-real-confirm-password');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
@@ -62,6 +64,10 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
     var inputData = event.originalEvent.data;
 
+    if (!inputData && $target.val().length > 0 && $hiddenTarget.val().length < 4) {
+      inputData = $target.val()[$target.val().length - 1];
+    }
+
     if (inputData !== undefined && !isNaN(inputData)) {
       if (inputData === null) {
         $hiddenTarget.val($hiddenTarget.val().substring(length, 0));
@@ -76,8 +82,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _isValid: function () {
-    var inputVal = this.$inputPassword.next().val();
-    var confirmVal = this.$confirmPassword.next().val();
+    var inputVal = this.$inputRealPassword.val();
+    var confirmVal = this.$realConfirmPassword.val();
 
     return (
       (this._validation.checkLength(inputVal, 4, Tw.ALERT_MSG_PASSWORD.A16)) &&
@@ -90,7 +96,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -106,7 +112,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     if (this._isValid()) {
       new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
         isMobilePlan: false,
-        noticeList: this._confirmOptions.prodNoticeList,
+        noticeList: this._confirmOptions.preinfo.joinNoticeList,
         joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
         typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
         settingSummaryTexts: [{

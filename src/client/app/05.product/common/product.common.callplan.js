@@ -47,7 +47,6 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
     this.$comparePlans = this.$container.find('.fe-compare_plans');
 
-    this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
     this.$contents = this.$container.find('.fe-contents');
   },
@@ -78,15 +77,15 @@ Tw.ProductCommonCallplan.prototype = {
 
     this._settingBtnList = JSON.parse(this._settingBtnList).map(function(item) {
       return {
+        'url': item.linkUrl,
         'button-attr': 'data-url="' + item.linkUrl + '"',
         'txt': item.linkNm
       };
     });
-
   },
 
   _openComparePlans: function(e) {
-    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).data('href'), 'status=1,toolbar=1');
+    new Tw.ProductMobilePlanComparePlans().openCompare(this._prodId);
   },
 
   _onBannerLink: function(e) {
@@ -129,7 +128,7 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
     } else {
-      this._historyService.goLoad(this._settingBtnList[0].url);
+      this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
     }
   },
 

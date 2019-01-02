@@ -42,7 +42,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
       svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
       toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
@@ -130,10 +130,6 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _procJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
-
-    if (resp.code === 'ZCOLE0001') {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A46.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A46.TITLE);
-    }
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

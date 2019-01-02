@@ -1213,7 +1213,6 @@ Tw.UPLOAD_FILE = {
 };
 
 Tw.PRODUCT_RESERVATION = {
-  title: '가입 상담 상품 선택',
   cellphone: '휴대폰',
   internet: '인터넷',
   phone: '전화',

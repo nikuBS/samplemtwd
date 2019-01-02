@@ -87,8 +87,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.TITLE);
     }
 
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
   },
 
   _delNumReq: function(grpId) {

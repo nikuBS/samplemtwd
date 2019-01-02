@@ -32,7 +32,7 @@ Tw.BenefitSelectContract.prototype = {
 
   _initialize: function () {
     this.joinInfoTerm = $.extend(this.data.joinInfoTerm, {
-      svcNumMask: this.data.joinInfoTerm.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this.data.joinInfoTerm.preinfo.svcNumMask),
       toProdName: this.data.joinInfoTerm.preinfo.reqProdInfo.prodNm,
       toProdDesc: this.data.joinInfoTerm.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.basFeeInfo,

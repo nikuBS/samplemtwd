@@ -181,7 +181,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -196,7 +196,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   _procConfirm: function() {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
-      noticeList: this._confirmOptions.prodNoticeList,
+      noticeList: this._confirmOptions.preinfo.joinNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
