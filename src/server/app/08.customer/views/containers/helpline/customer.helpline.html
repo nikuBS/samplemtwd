@@ -42,15 +42,15 @@
                                 <div class="cont-box">
                                     <div class="form-cell">
                                         <span id="aria-citation-counseltype" class="form-ti">상담유형</span>
-                                        <button class="bt-dropdown big fe-type" title="유형 선택" aria-haspopup="true">일반<span class="ico"></span></button>
+                                        <button id="fe-type" class="bt-dropdown big" title="유형 선택" aria-haspopup="true">일반<span class="ico"></span></button>
                                     </div>
                                     <div class="form-cell">
                                         <span id="aria-citation-place" class="form-ti">상담지역</span>
-                                        <button class="bt-dropdown big fe-area" title="지역 선택" aria-haspopup="true">수도권 (서울, 경기, 인천, 강원)<span class="ico"></span></button><!-- 선택된 값이 없는 상태이며 안내문구 노출될 경우 .placeholder 클래스 추가 -->
+                                        <button id="fe-area" class="bt-dropdown big" title="지역 선택" aria-haspopup="true">수도권 (서울, 경기, 인천, 강원)<span class="ico"></span></button><!-- 선택된 값이 없는 상태이며 안내문구 노출될 경우 .placeholder 클래스 추가 -->
                                     </div>
                                     <div class="form-cell">
                                         <span id="aria-citation-reservations" class="form-ti">
-                                            예약일시<button type="button" class="btn-tip" title="tip"></span><span>&#63;</span></button>
+                                            예약일시<button class="tip-view" id="CS_14_01_tip_01">tip</button>
                                         </span>
                                         <span class="inputbox bt-add2">
                                             <span class="input">
@@ -60,7 +60,7 @@
                                             </span>
                                             <span class="select">
                                                 <span class="small-tt">시간</span>
-                                                <button class="bt-dropdown big fe-time" title=" 시간 선택" aria-haspopup="true"><%= timeInfo.availHours[0] %>:00<span class="ico"></span></button>
+                                                <button id="fe-time" class="bt-dropdown big" title=" 시간 선택" aria-haspopup="true"><%= timeInfo.availHours[0] %>:00<span class="ico"></span></button>
                                             </span>
                                         </span>
                                     </div>
@@ -70,7 +70,7 @@
 
                                 <div class="cont-box">
                                     <div class="form-cell">
-                                        <span id="aria-citation-phone" class="form-ti small-tt">연락가능한 번호를 기재해주세요.</span>
+                                        <span id="aria-citation-phone" class="form-ti small-tt">연락 가능한 번호를 기재해 주세요.</span>
                                         <div class="widget">
                                             <div class="widget-box radio">
                                                 <ul class="select-list" role="radiogroup">
@@ -109,9 +109,11 @@
                                         <span id="aria-citation-retime" class="form-ti">전화상담 안내</span>
                                         <dl class="res-timetable">
                                             <dt>상담 예약시간</dt>
-                                            <dd>10:00 ~ 17:00</dd>
+                                            <dd>10:00~17:00</dd>
                                         </dl>
-                                        <span class="guide-txt">전화상담 예약서비스는 국내에서만 이용하실 수 있습니다.</span>
+                                        <div class="announcement-box mt18">
+                                            <p class="announcement-bullet type02">전화상담 예약서비스는 국내에서만 이용하실 수 있습니다.</p>
+                                        </div>
                                     </div>
                                 </div>
 

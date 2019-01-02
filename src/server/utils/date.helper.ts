@@ -118,6 +118,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018년 12월 31일
+   */
+  static getKoreanDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('LL');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 18년 12월 31일
    */
   static getShortKoreanDate(date: any): string {

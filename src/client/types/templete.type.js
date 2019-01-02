@@ -502,14 +502,18 @@ Tw.MYT_FARE_BILL_GUIDE_TPL = {
   }
 };
 
-Tw.HELPLINE_TYPES = [{ value: '일반' }, { value: '로밍' }, { value: '통화품질 상담' }];
+Tw.HELPLINE_TYPES = [
+  { txt: '일반', 'radio-attr': 'data-type-idx="0"' },
+  { txt: '로밍', 'radio-attr': 'data-type-idx="1"' },
+  { txt: '통화품질 상담', 'radio-attr': 'data-type-idx="2"' }
+];
 
 Tw.CUSTOMER_HELPLINE_AREAS = [
-  { value: '수도권 (서울, 경기, 인천, 강원)', attr: 'data-area-code="1"' },
-  { value: '중부 (충남, 충북, 대전)', attr: 'data-area-code="5"' },
-  { value: '서부 (전남, 전북, 광주, 제주)', attr: 'data-area-code="4"' },
-  { value: '대구 (경북, 대구)', attr: 'data-area-code="3"' },
-  { value: '부산 (경남, 울산, 부산)', attr: 'data-area-code="2"' }
+  { txt: '수도권 (서울, 경기, 인천, 강원)', 'radio-attr': 'data-area-code="1"' },
+  { txt: '중부 (충남, 충북, 대전)', 'radio-attr': 'data-area-code="5"' },
+  { txt: '서부 (전남, 전북, 광주, 제주)', 'radio-attr': 'data-area-code="4"' },
+  { txt: '대구 (경북, 대구)', 'radio-attr': 'data-area-code="3"' },
+  { txt: '부산 (경남, 울산, 부산)', 'radio-attr': 'data-area-code="2"' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
