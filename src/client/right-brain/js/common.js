@@ -569,7 +569,7 @@ skt_landing.dev = {
    });
    $target.parent().on('click', '.connectedSortable .bt-active button', function(){
      if($(this).closest('.connectedSortable').hasClass('enabled')){
-       $(this).closest('.ui-state-default').appendTo('#sortable-disabled');
+       $('#sortable-disabled').prepend($(this).closest('.ui-state-default'));
        $(this).text('추가');
      }else{
        $(this).closest('.ui-state-default').appendTo('#sortable-enabled');

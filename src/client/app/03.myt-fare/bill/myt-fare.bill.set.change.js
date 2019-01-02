@@ -481,7 +481,7 @@ Tw.MyTFareBillSetChange.prototype = {
   _onSubmit: function () {
     var _result = this._checkValidation();
     if (_result.result) {
-      this._openModal(_result.data);
+      this._reqBFF_05_0027(_result.data);
     }
   },
 

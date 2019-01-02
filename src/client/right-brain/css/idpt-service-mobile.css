@@ -486,7 +486,7 @@
 .idpt-container .idpt-tbl-type06 tbody td .blue {color:#2e8fcc !important}
 
 .idpt-container .accordian-cont-box .cont-box-arrow {width:100%; display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;
-background:url('../img/damage-info/common/btn-right-arrow.png') center 40% no-repeat; background-size:0.4375rem 0.6875rem;}
+    background:url('../img/damage-info/common/btn-right-arrow.png') center 40% no-repeat; background-size:0.4375rem 0.6875rem;}
 .idpt-container .accordian-cont-box .cont-box-arrow .cont-box-half {width:50%; float:left; display:inline-block; padding-bottom:0.6875rem; }
 .idpt-container .accordian-cont-box .cont-box-bottom {clear:both; float:none; display:block; width:100%; border-top:1px solid #e1e1e1; padding-top:0.6875rem; }
 
