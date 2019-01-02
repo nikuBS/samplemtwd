@@ -909,6 +909,7 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
 };
 
 Tw.MYT_DATA_TING = {
+  V31: '팅요금제 사용 고객이 아닙니다.',
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
   A81_CONTENT: '차단 시에는 팅요금 선물을 할 수 없습니다.',
   A81_BTN_CONFIRM: '차단하기',
