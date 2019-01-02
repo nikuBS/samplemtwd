@@ -7,7 +7,7 @@
 Tw.MyTJoinMyplanAlarmterminate = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._cachedElement();
   this._bindEvent();

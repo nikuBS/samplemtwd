@@ -10,7 +10,7 @@ Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSettin
   this._options = options;
   this.showNumberSetting = showNumberSetting;
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 

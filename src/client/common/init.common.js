@@ -17,8 +17,8 @@ Tw.Init.prototype = {
   _initService: function () {
     Tw.Ui = new Tw.UIService();
     Tw.Logger = new Tw.LoggerService();
-    Tw.Native = new Tw.NativeService();
     Tw.Popup = new Tw.PopupService();
+    Tw.Native = new Tw.NativeService();
     Tw.Api = new Tw.ApiService();
     Tw.Error = new Tw.ErrorService();
     Tw.Tooltip = new Tw.TooltipService();

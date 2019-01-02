@@ -1,5 +1,4 @@
 Tw.ApiService = function () {
-  this._popupService = new Tw.PopupService();
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
 };
