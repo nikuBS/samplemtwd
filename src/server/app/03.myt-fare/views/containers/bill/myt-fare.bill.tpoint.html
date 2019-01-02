@@ -41,8 +41,8 @@
                                     </span>
                                 </div>
                                 <ul class="round-dot-list type01 mb20">
-                                    <li>1회 납부는  최소 1,000점 이상 입력 가능합니다.</li>
-                                    <li>자동 납부는 500점 단위로 신청 가능합니다.</li>
+                                    <li>1회 납부는 최소 1,000점 이상 입력하실 수 있습니다.</li>
+                                    <li>자동 납부는 500점 단위로 신청하실 수 있습니다.</li>
                                 </ul>
                                 <% if (autoInfo.isAuto) { %>
                                 <ul class="bt-slice mb20 fe-auto-info">
@@ -84,11 +84,11 @@
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                                     <span class="error-txt fe-error-msg" style="display:none;"></span>
 																</span>
-																<p class="comm-indent-txt mt20">* T포인트는 1,000점 이상 10원 단위로 납부가 가능합니다.</p>
+																<p class="comm-indent-txt mt20">* T포인트는 1,000점 이상 10원 단위로 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
                                                         <li>
-                                                            <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
+                                                            <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
 																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number" maxlength="16"
@@ -117,9 +117,7 @@
                                                 <div class="cont-box">
                                                     <ul class="form-data-list">
                                                         <li>
-                                                            <label class="tit" for="formInput01">납부할 포인트
-                                                                <button id="MF_01_05_tip_04" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
-                                                            </label>
+                                                            <label class="tit" for="formInput01">납부할 포인트</label>
                                                             <span class="inputbox">
 																<span class="input">
 																	<button id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point" title="납부할 포인트" aria-haspopup="true">
@@ -128,11 +126,11 @@
                                                                     <span class="error-txt fe-error-msg" style="display:none;">요금 정보를 선택해 주세요.</span>
 																</span>
 																<p class="comm-indent-txt mt10">자동 납부 종료예정일<span class="pl10"><%= autoInfo.endDate %></span></p>
-																<p class="comm-indent-txt mt20">* 본인 명의로 이동전화를 등록한 회원에 한해 포인트로 이동전화 요금 납부가 가능합니다.</p>
+																<p class="comm-indent-txt mt20">* 본인 명의로 이동전화를 등록한 고객님에 한해 포인트로 이동전화요금을 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
                                                         <li>
-                                                            <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
+                                                            <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
 																	<input id="<%= tpoint.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
@@ -198,7 +196,7 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list">
-                            <li>포인트 요금 납부 이용안내 <button id="MF_01_06_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>포인트 요금납부 이용안내 <button id="MF_01_06_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                             <li>미납금액 <button id="MF_01_06_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         </ul>
                     </div>
