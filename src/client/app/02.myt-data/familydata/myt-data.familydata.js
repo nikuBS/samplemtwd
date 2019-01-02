@@ -68,11 +68,11 @@ Tw.MyTDataFamily.prototype = {
   _handleSubmitLimitation: function(mgmtNum, originLimit) {
     var limitation = this._limitation;
 
-    if (limitation === false) {
+    if (originLimit == limitation) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
+    } else if (limitation === false) {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, mgmtNum).done($.proxy(this._successChangeLimitation, this));
-    } else if (originLimit == limitation) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
     } else if (this._maxLimitation < Number(limitation)) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6);
     } else {
@@ -94,7 +94,7 @@ Tw.MyTDataFamily.prototype = {
     if (inputId === 'sradio2') {
       $btn.attr('disabled', value.length === 0);
     } else {
-      $btn.attr('disabled', !limitation);
+      $btn.attr('disabled', false);
       this._limitation = false;
     }
   },
