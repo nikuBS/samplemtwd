@@ -14,6 +14,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
   // 요금제 비교하기 팝업생성
   openCompare: function (prodId) {
+    this._prodId = prodId;
     var callAll = function (currentProdId, basicInfo) {
       this._apiService.requestArray([
         {command: Tw.API_CMD.BFF_05_0091, params: {}}, // 최근 사용량 조회
@@ -121,7 +122,6 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
   _afterComparePop: function (_data, $layer) {
     $layer.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
-    $layer.on('click', '#fe-close', $.proxy(this._close, this));
     this._initChart($layer, _data);
   },
 
@@ -168,21 +168,6 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     return joinUrlArr[0] || res;
   },
 
-  // 팝업 클로즈
-  _close: function () {
-    // app 일때
-    if (Tw.BrowserHelper.isApp()) {
-      history.back();
-      Tw.Native.send(Tw.NTV_CMD.CLOSE_INAPP, {});
-    } else {
-      if (window.opener) {
-        window.close();
-      } else {
-        history.back();
-      }
-    }
-  },
-
   // 가입하기 페이지 이동
   _goJoinUrl: function (e) {
     var joinUrl = $(e.currentTarget).data('joinUrl');
@@ -193,7 +178,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: '01'
-    }, null, [Tw.UrlHelper.getQueryParams().prodId])
+    }, null, [this._prodId])
       .done($.proxy(this._goJoinDone, this, joinUrl));
   },
 
@@ -203,7 +188,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       return this._onFail(resp);
     }
 
-    this._historyService.goLoad(href + '?prod_id=' + Tw.UrlHelper.getQueryParams().prodId);
+    this._historyService.goLoad(href + '?prod_id=' + this._prodId);
   },
 
   // 차트 생성

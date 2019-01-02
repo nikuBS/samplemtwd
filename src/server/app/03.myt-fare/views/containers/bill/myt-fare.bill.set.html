@@ -70,7 +70,7 @@
                     <%}%>
 
                     <!--안내서가 "이메일"을 포함하는 경우만 보임-->
-                    <%if('2' === data.billInfo[1].cd){%>
+                    <%if(data.billInfo[0].cd === '2' || '2' === data.billInfo[1].cd){%>
                     <dl class="info-tx1">
                         <dt>이메일 주소</dt>
                         <dd><%=data.invEmailAddr%></dd>

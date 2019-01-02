@@ -58,7 +58,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.find('#fe-no-addr-area').addClass('none');
     this._addrArea.addClass('none');
 
-    if (Tw.FormatHelper.isEmpty(data.zip)) {
+    if (Tw.FormatHelper.isEmpty(data.zip) || !this._isChangeInfo) {
       this.$container.find('#fe-no-addr-area').removeClass('none');
     } else {
       this._addrArea.removeClass('none').find('input[name="zip"]').val(data.zip);
