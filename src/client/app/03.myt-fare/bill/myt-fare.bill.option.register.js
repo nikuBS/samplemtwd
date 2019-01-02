@@ -36,6 +36,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$paymentDate = this.$cardWrap.find('.fe-payment-date');
     this.$isValid = false;
     this.$isCardValid = true;
+    this.$isSelectValid = true;
   },
   _bindEvent: function () {
     this.$radioBox.on('change', $.proxy(this._changeRadioBox, this));
@@ -182,7 +183,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this._popupService.close();
   },
   _submit: function () {
-    if (this.$isValid && this.$isCardValid) {
+    if (this.$isValid && this.$isCardValid && this.$isSelectValid) {
       var reqData = this._makeRequestData();
       var apiName = this._getApiName();
 

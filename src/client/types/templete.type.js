@@ -207,13 +207,13 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_RAINBOW: [
     {
       'list': [
-        { 'label-attr': 'id="CCBBAE0"', 'radio-attr': 'id="CCBBAE0" name="r2"', txt: '국내 음성 통화료' },
-        { 'label-attr': 'id="CCRPDDC"', 'radio-attr': 'id="CCRPDDC" name="r2"', txt: '국내 데이터 통화료' },
+        { 'label-attr': 'id="CCBBAE0"', 'radio-attr': 'id="CCBBAE0" name="r2"', txt: '국내 음성통화료' },
+        { 'label-attr': 'id="CCRPDDC"', 'radio-attr': 'id="CCRPDDC" name="r2"', txt: '국내 데이터 사용요금' },
         { 'label-attr': 'id="CCBCOE0"', 'radio-attr': 'id="CCBCOE0" name="r2"', txt: '부가서비스(컬러링)' },
-        { 'label-attr': 'id="CCPCRBE"', 'radio-attr': 'id="CCPCRBE" name="r2"', txt: '부가서비스(퍼펙트콜)' },
-        { 'label-attr': 'id="CCPLRBE"', 'radio-attr': 'id="CCPLRBE" name="r2"', txt: '부가서비스(퍼펙트콜 라이트)' },
-        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료 및 월정액' },
-        { 'label-attr': 'id="CCRMRBE"', 'radio-attr': 'id="CCRMRBE" name="r2"', txt: '로밍사용요금' }
+        { 'label-attr': 'id="CCPCRBE"', 'radio-attr': 'id="CCPCRBE" name="r2"', txt: '부가서비스(퍼팩트콜)' },
+        { 'label-attr': 'id="CCPLRBE"', 'radio-attr': 'id="CCPLRBE" name="r2"', txt: '부가서비스(퍼팩트콜라이트)' },
+        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료∙월정액' },
+        { 'label-attr': 'id="CCRMRBE"', 'radio-attr': 'id="CCRMRBE" name="r2"', txt: '로밍 이용요금' }
       ]
     }
   ],

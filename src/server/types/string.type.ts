@@ -331,14 +331,14 @@ export const MYT_FARE_PAYMENT_ERROR = {
 };
 
 export const MYT_FARE_POINT_MSG = {
-  CASHBAG: 'OK캐쉬백 포인트',
+  CASHBAG: 'OK캐쉬백포인트',
   TPOINT: 'T포인트',
   RAINBOW: '레인보우포인트',
   RESERVATION: '납부 예약 완료',
   AUTO: '자동납부 신청 완료',
   CHANGE: '자동납부 변경 완료',
   CANCEL: '자동납부 해지 완료',
-  REGISTER_POINT: '납부 신청 포인트',
+  REGISTER_POINT: '납부신청 포인트',
   RESERVATION_POINT: '납부 예약 포인트',
   RAINBOW_MSG: '1,000점 이상 보유 시 매월 자동 차감'
 };
