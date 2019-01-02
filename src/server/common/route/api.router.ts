@@ -177,6 +177,7 @@ class ApiRouter {
             resp.result.userInfo.nickName = svcInfo.nickNm;
             resp.result.userInfo.loginType = svcInfo.loginType;
             resp.result.userInfo.tid = svcInfo.userId;
+            resp.result.userInfo.addr = svcInfo.addr;
           }
           res.json(resp);
         } else {

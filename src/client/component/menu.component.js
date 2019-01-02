@@ -259,7 +259,13 @@ Tw.MenuComponent.prototype = {
             nick = Tw.SVC_ATTR[userInfo.svcAttr];
           }
           this.$nickName.text(nick);
-          this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
+          console.log('hakjoon~~~~~~~~~~~~~~~');
+          console.log(userInfo);
+          if (userInfo.svcAttr.indexOf('M') === -1) {
+            this.$svcNumber.text(userInfo.addr);
+          } else {
+            this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
+          }
           break;
         case 1:
           this.$container.find('.fe-when-login-type1').removeClass('none');
