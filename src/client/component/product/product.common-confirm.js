@@ -100,6 +100,9 @@ Tw.ProductCommonConfirm.prototype = {
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     }, $.proxy(this._bindTipView, this));
+
+    e.preventDefault();
+    e.stopPropagation();
   },
 
   _bindTipView: function($popupContainer) {

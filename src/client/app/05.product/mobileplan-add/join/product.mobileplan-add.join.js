@@ -56,14 +56,15 @@ Tw.ProductMobileplanAddJoin.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      noticeList: this._confirmOptions.preinfo.joinNoticeList,
+      isNoticeList: this._confirmOptions.preinfo.joinNoticeList && this._confirmOptions.preinfo.joinNoticeList.length > 0
     });
   },
 
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
-      isWidgetInit: true,
-      noticeList: this._confirmOptions.prodNoticeList
+      isWidgetInit: true
     }, $.proxy(this._prodConfirmOk, this));
   },
 

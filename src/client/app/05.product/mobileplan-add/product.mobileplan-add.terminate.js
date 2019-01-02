@@ -50,6 +50,8 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
+      noticeList: this._confirmOptions.preinfo.termNoticeList,
+      isNoticeList: this._confirmOptions.preinfo.termNoticeList && this._confirmOptions.preinfo.termNoticeList.length > 0,
       isAutoJoinTermList: this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0,
       isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree
     });
@@ -62,7 +64,6 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       {
         isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
-        noticeList: this._confirmOptions.prodNoticeList,
         isWidgetInit: true
       },
       $.proxy(this._prodConfirmOk, this)

@@ -50,6 +50,7 @@ Tw.ProductWireplanJoin.prototype = {
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
+      noticeList: this._confirmOptions.noticeList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },
@@ -57,7 +58,6 @@ Tw.ProductWireplanJoin.prototype = {
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
       isWireplan: true,
-      noticeList: this._confirmOptions.noticeList,
       isWidgetInit: true,
       isJoin: true
     }, $.proxy(this._prodConfirmOk, this));
