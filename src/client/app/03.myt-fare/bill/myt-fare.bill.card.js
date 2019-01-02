@@ -38,6 +38,7 @@ Tw.MyTFareBillCard.prototype = {
     this.$payBtn = this.$container.find('.fe-check-pay');
     this.$isValid = false;
     this.$isCardValid = false;
+    this.$isChanged = false;
 
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
@@ -57,6 +58,7 @@ Tw.MyTFareBillCard.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
   _checkIsAuto: function () {
@@ -84,7 +86,10 @@ Tw.MyTFareBillCard.prototype = {
       this.$refundBank.attr('disabled', 'disabled');
       this.$refundNumber.attr('disabled', 'disabled');
       this.$refundNumber.siblings('.fe-error-msg').hide();
+      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
     }
+
+    this.$isChanged = true;
   },
   _showAndHideAccount: function (event) {
     var $target = $(event.currentTarget);
@@ -114,10 +119,17 @@ Tw.MyTFareBillCard.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
+    this.$isChanged = true;
     this._popupService.close();
   },
   _selectBank: function (event) {
-    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
+    this._bankList.init(event, $.proxy(this._checkBank, this));
+  },
+  _checkBank: function ($target) {
+    if (!Tw.FormatHelper.isEmpty($target.attr('id'))) {
+      this.$isChanged = true;
+    }
+    this._checkIsAbled();
   },
   _checkIsAbled: function () {
     if (this._checkIsAbledWithInputVisibility() && this.$cardNumber.val() !== '' &&
@@ -228,6 +240,27 @@ Tw.MyTFareBillCard.prototype = {
   _checkAccountNumber: function (event) {
     var $target = $(event.currentTarget);
     this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
+  },
+  _onClose: function () {
+    if (!this.$isChanged) {
+      if (this.$cardNumber.val() !== '' || this.$cardY.val() !== '' ||
+      this.$cardM.val() !== '' || this.$cardPw.val() !== '') {
+        this.$isChanged = true;
+      }
+    }
+
+    if (this.$refundBank.attr('disabled') !== 'disabled') {
+      if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
+        this.$isChanged = true;
+      }
+    }
+
+    if (this.$isChanged) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
   },
   _openCheckPay: function ($layer) {
     this._setData($layer);

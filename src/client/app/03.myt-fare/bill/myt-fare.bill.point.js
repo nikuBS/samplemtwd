@@ -29,6 +29,7 @@ Tw.MyTFareBillPoint.prototype = {
     this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
     this.$pointBox = this.$container.find('.fe-point-box');
     this.$isValid = false;
+    this.$isChanged = false;
 
     this._pointCardNumber = null;
     this._isPaySuccess = false;
@@ -42,6 +43,7 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
   _checkIsPopup: function () {
@@ -96,6 +98,8 @@ Tw.MyTFareBillPoint.prototype = {
 
       this.$pointBox.show();
       this.$getPointBtn.hide();
+
+      this.$isChanged = true;
     } else {
       this._getFail(res);
     }
@@ -143,6 +147,14 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _goCashbagSite: function () {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
+  },
+  _onClose: function () {
+    if (this.$isChanged || this.$pointPw.val() !== '') {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
   },
   _checkPay: function () {
     if (this._isValid()) {

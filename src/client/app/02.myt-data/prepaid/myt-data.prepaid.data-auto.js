@@ -27,6 +27,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$rechargeBtn = this.$container.find('.fe-recharge');
     this.$isValid = false;
+    this.$isCardValid = true;
+    this.$isSelectValid = true;
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
@@ -61,24 +63,38 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     }
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        url: '/hbs/',
+        hbs: 'actionsheet01',
         layer: true,
-        data: popupName
+        data: popupName,
+        btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.data-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr({
       'id': $selectedValue.attr('id'),
       'data-value': $selectedValue.attr('data-value'),
       'data-amount': $selectedValue.attr('data-amount')
     });
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
+    this.$dataSelector.siblings('.fe-error-msg').hide();
+    this.$isSelectValid = true;
+
+    this._popupService.close();
+  },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id'))) {
+      this.$dataSelector.siblings('.fe-error-msg').show();
+      this.$dataSelector.focus();
+      this.$isSelectValid = false;
+    }
     this._popupService.close();
   },
   _checkIsAbled: function () {
@@ -160,7 +176,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     }
   },
   _isValid: function () {
-    if (this.$isValid && this.$isCardValid) {
+    if (this.$isValid && this.$isCardValid && this.$isSelectValid) {
       return this._validation.showAndHideErrorMsg(this.$dataSelector, this._validation.checkIsSelected(this.$dataSelector));
     }
     return false;
