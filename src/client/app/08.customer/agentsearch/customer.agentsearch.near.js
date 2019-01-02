@@ -182,7 +182,8 @@ Tw.CustomerAgentsearchNear.prototype = {
       this._map = new Tmap.Map({
         div: $tmapBox.attr('id'),
         width: '100%',
-        height: $tmapBox.width() + 'px'
+        height: $tmapBox.width() + 'px',
+        httpsMode: true
       });
     }
     this._map.setCenter(
