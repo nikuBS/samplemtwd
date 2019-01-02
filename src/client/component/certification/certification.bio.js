@@ -37,7 +37,9 @@ Tw.CertificationBio.prototype = {
     }
   },
   _openRegisterPopup: function () {
-    this._popupService.openConfirm(Tw.POPUP_CONTENTS.BIO_REGISTER, null, $.proxy(this._onConfirmRegister, this), $.proxy(this._onCloseRegister, this));
+    this._popupService.openConfirmButton(Tw.POPUP_CONTENTS.BIO_REGISTER, null,
+      $.proxy(this._onConfirmRegister, this), $.proxy(this._onCloseRegister, this),
+      Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
   _onConfirmRegister: function () {
     this._register = true;
