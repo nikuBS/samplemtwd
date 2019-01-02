@@ -103,13 +103,15 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
       this._subscribeAutoGift();
-    } else {
-      if ( res.code === 'ZNGME0008' ) {
-        this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
-      } else {
-        Tw.Error(res.code, res.msg).pop();
-      }
+      return false;
     }
+
+    if ( res.code === 'ZNGME0008' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
+      return false;
+    }
+
+    Tw.Error(res.code, res.msg).pop();
   },
 
   _subscribeAutoGift: function () {
@@ -127,9 +129,10 @@ Tw.MyTDataGiftMonthly.prototype = {
   _onSuccessAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
-    } else {
-      Tw.Error(res.code, res.msg).pop();
+      return false;
     }
+
+    Tw.Error(res.code, res.msg).pop();
   },
 
   _onSuccessUnsubscribeAutoGift: function (res) {
@@ -142,9 +145,11 @@ Tw.MyTDataGiftMonthly.prototype = {
           this._popupService.close();
           this._historyService.reload();
         }, this));
-    } else {
-      Tw.Error(res.code, res.msg).pop();
+
+      return true;
     }
+    
+    Tw.Error(res.code, res.msg).pop();
   },
 
   _convertDashNumber: function (sTelNumber) {

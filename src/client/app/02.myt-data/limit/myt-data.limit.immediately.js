@@ -28,10 +28,10 @@ Tw.MyTDataLimitImmediately.prototype = {
 
   _bindEvent: function () {
     this.$input_block_monthly.on('change', $.proxy(this._onToggleBlockMonthly, this));
-    this.$input_block_immediately.on('change', $.proxy(this._onToggleBlockImmediately, this));
-    this.$btn_immediately_recharge.on('click', $.proxy(this._requestLimitRechargeImmediately, this));
     this.$btn_monthly_recharge.on('click', $.proxy(this._requestLimitRechargeMonthly, this));
+    this.$input_block_immediately.on('change', $.proxy(this._onToggleBlockImmediately, this));
     this.$btn_cancel_monthly_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
+    this.$btn_immediately_recharge.on('click', $.proxy(this._requestLimitRechargeImmediately, this));
   },
 
   _onToggleBlockImmediately: function (e) {
