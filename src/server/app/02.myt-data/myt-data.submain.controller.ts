@@ -65,7 +65,7 @@ class MytDataSubmainController extends TwViewController {
 
       if ( remnant ) {
         data.remnantData = this.parseRemnantData(remnant);
-        if ( data.remnantData.gdata && data.remnantData.gdata.length > 0) {
+        if ( data.remnantData.gdata && data.remnantData.gdata.length > 0 ) {
           data.isDataShow = true;
           if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
             // 가입
@@ -79,12 +79,15 @@ class MytDataSubmainController extends TwViewController {
               impossible: true
             };
           }
-        } else if ( data.remnantData.sdata && data.remnantData.sdata.length > 0) {
+        } else if ( data.remnantData.sdata && data.remnantData.sdata.length > 0 ) {
           data.isSpDataShow = true;
-        } else if ( data.remnantData.voice && data.remnantData.voice.length > 0) {
+        } else if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
           data.isVoiceShow = true;
-        } else if ( data.remnantData.sms && data.remnantData.sms.length > 0) {
+        } else if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
           data.isSmsShow = true;
+        } else {
+          data.isDataShow = true;
+          data.emptyData = true;
         }
       }
 
@@ -212,10 +215,14 @@ class MytDataSubmainController extends TwViewController {
         // 가입이 가능한 경우에만
         this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
           if ( family.code === API_CODE.CODE_00 ) {
-            data.family.limitation = parseInt(family.result.limitation, 10);
-            // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제이면서 미성년인 경우
-            if ( !data.family.isProdId || family.result.adultYn === 'N' ) {
-              data.family.noshare = true;
+            if ( data.family ) {
+              data.family.limitation = parseInt(family.result.remained, 10);
+              // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제이면서 미성년인 경우
+              if ( !data.family.isProdId || family.result.adultYn === 'N' ) {
+                data.family.noshare = true;
+              }
+            } else {
+              data.family = family.result;
             }
           } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
             // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
