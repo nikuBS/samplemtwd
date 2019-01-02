@@ -2,7 +2,8 @@ Tw.COMMON_STRING = {
   ALL: '전체',
   AGREE: '동의',
   DISAGREE: '비동의',
-  UNLIMIT: '무제한'
+  UNLIMIT: '무제한',
+  TERM: '이용약관'
 };
 
 Tw.DATA_UNIT = {

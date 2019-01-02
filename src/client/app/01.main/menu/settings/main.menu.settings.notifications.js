@@ -124,7 +124,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
     $root.on('click', '#fe-confirm', $.proxy(this._onTermsConfirmed, this, changedTerms));
     $root.on('click', '.fe-view', $.proxy(function (e) {
       var url = e.currentTarget.value;
-      Tw.CommonHelper.openUrlInApp(url);
+      Tw.CommonHelper.openUrlInApp(url, null, Tw.COMMON_STRING.TERM);
     }, this));
   },
   _onTermsConfirmed: function (terms) {

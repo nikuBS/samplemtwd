@@ -47,6 +47,9 @@ Tw.MainMenuSettingsLocation.prototype = {
   },
   _onLink: function () {
     Tw.CommonHelper.openUrlInApp(
-      'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15');
+      'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
+      null,
+      Tw.COMMON_STRING.TERM
+   );
   }
 };
