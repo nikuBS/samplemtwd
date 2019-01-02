@@ -86,7 +86,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _openComparePlans: function(e) {
-    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).data('href'), 'status=1,toolbar=1');
+    new Tw.ProductMobilePlanComparePlans().openCompare(this._prodId);
   },
 
   _onBannerLink: function(e) {

@@ -255,8 +255,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    Tw.CommonHelper.openUrlInApp(location.origin + '/product/mobileplan/compare-plans?prodId=' +
-      this._data.preinfo.toProdInfo.prodId, 'status=1,toolbar=1');
+    new Tw.ProductMobilePlanComparePlans().openCompare(this._data.preinfo.toProdInfo.prodId);
   },
 
   _setAgreeAndclosePop: function($wrap) {
