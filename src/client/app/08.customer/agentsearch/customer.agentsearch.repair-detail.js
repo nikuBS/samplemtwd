@@ -48,7 +48,8 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
     var map = new Tmap.Map({
       div: this.$tmapBox.attr('id'),
       width: '100%',
-      height: this.$tmapBox.width() + 'px'
+      height: this.$tmapBox.width() + 'px',
+      httpsMode: true
     });
     map.setCenter(new Tmap.LonLat(this._location.longitude, this._location.latitude)
       .transform('EPSG:4326', 'EPSG:3857'), 15);

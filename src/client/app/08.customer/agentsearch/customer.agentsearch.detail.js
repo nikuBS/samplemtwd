@@ -40,7 +40,8 @@ Tw.CustomerAgentsearchDetail.prototype = {
     var map = new Tmap.Map({
       div: mapEl[0].id,
       width: '100%',
-      height: mapEl.width() + 'px'
+      height: mapEl.width() + 'px',
+      httpsMode: true
     });
 
     var shopLon = coord.lon + '';
@@ -54,7 +55,7 @@ Tw.CustomerAgentsearchDetail.prototype = {
     var lonlat = new Tmap.LonLat(shopLon, shopLat).transform('EPSG:4326', 'EPSG:3857');
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var icon = new Tmap.Icon('/img/ico/ico-tmap-pin.png',
+    var icon = new Tmap.Icon(Tw.Environment.cdn + '/img/ico/ico-tmap-pin.png',
       size, offset);
 
     var marker = new Tmap.Marker(lonlat, icon);
