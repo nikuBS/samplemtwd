@@ -216,7 +216,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
   },
   _getFail: function () {
-    this.$cardNumber.siblings('.fe-error-msg').show();
+    this.$cardNumber.siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
     this.$cardNumber.focus();
     this.$isCardValid = false;
   },
