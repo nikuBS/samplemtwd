@@ -40,6 +40,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
     if(this._svcInfo !== null){
         if(this._svcInfo.eqpMdlNm !== ''){
           this._phoneInfo.eqpMdlNm = this._svcInfo.eqpMdlNm;
+          this._phoneInfo.eqpMdlCd = this._svcInfo.eqpMdlCd;
           this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._svcInfo }));
         }else {
           this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
@@ -189,7 +190,11 @@ Tw.ProductRoamingSearchBefore.prototype = {
               var eqpMdlNm = '';
 
               if(this._svcInfo){
-                  eqpMdlNm = encodeURIComponent(this._svcInfo.eqpMdlNm);
+                  if(this._phoneInfo.eqpMdlNm !== null || this._phoneInfo.eqpMdlNm  !== ''){
+                      eqpMdlNm = encodeURIComponent(this._phoneInfo.eqpMdlNm);
+                  }else {
+                      eqpMdlNm = encodeURIComponent(this._svcInfo.eqpMdlNm);
+                  }
               }else {
                   if(this._phoneInfo.eqpMdlNm !== null || this._phoneInfo.eqpMdlNm  !== ''){
                       eqpMdlNm = encodeURIComponent(this._phoneInfo.eqpMdlNm);
@@ -197,7 +202,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
               }
               var countryCode = _result[0].countryCode;
               var countryNm = encodeURIComponent(_result[0].countryNm);
-              var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm;
+              var eqpMdlCd = this._phoneInfo.eqpMdlCd;
+              var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
 
               this._history.goLoad(resultUrl);
           }
@@ -302,14 +308,19 @@ Tw.ProductRoamingSearchBefore.prototype = {
       var countryNm = encodeURIComponent(valueArr[1]);
       var eqpMdlNm = '';
       if(this._svcInfo){
-          eqpMdlNm = encodeURIComponent(this._svcInfo.eqpMdlNm);
+          if(this._phoneInfo.eqpMdlNm !== null || this._phoneInfo.eqpMdlNm  !== ''){
+              eqpMdlNm = encodeURIComponent(this._phoneInfo.eqpMdlNm);
+          }else {
+              eqpMdlNm = encodeURIComponent(this._svcInfo.eqpMdlNm);
+          }
       }else {
           if(this._phoneInfo.eqpMdlNm !== null || this._phoneInfo.eqpMdlNm  !== ''){
               eqpMdlNm = encodeURIComponent(this._phoneInfo.eqpMdlNm);
           }
       }
 
-      var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm;
+      var eqpMdlCd = this._phoneInfo.eqpMdlCd;
+      var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
 
       this._history.goLoad(resultUrl);
   }

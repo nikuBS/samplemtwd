@@ -24,12 +24,13 @@ class ProductRoamingSearchResult extends TwViewController {
       const searchInfo = {
           countryCd: this.COUNTRY_CDDE,
           countryNm: decodeURIComponent(req.query.nm),
-          eqpMdlNm: decodeURIComponent(req.query.eqpNm)
+          eqpMdlNm: decodeURIComponent(req.query.eqpNm),
+          eqpMdlCd: decodeURIComponent(req.query.eqpCd)
       };
       const params = {
           countryCode: searchInfo.countryCd,
           command: '',
-          eqpMdlCd: ''
+          eqpMdlCd: searchInfo.eqpMdlCd
       };
       if ( svcInfo ) {
           if ( !svcInfo.eqpMdlNm ) {
@@ -43,7 +44,6 @@ class ProductRoamingSearchResult extends TwViewController {
           } else {
               params.command = 'withCountry';
           }
-
       }
 
       Observable.combineLatest(
