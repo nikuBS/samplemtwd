@@ -181,7 +181,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
       layer:true,
       data:[
         {
-          'title': Tw.PRODUCT_RESERVATION.title,
           'list':[
             { 'label-attr': 'id="ra1"', 'txt': Tw.PRODUCT_RESERVATION.cellphone,
               'radio-attr':'id="ra1" data-type_cd="cellphone" ' + (this._typeCd === 'cellphone' ? 'checked' : '') },
