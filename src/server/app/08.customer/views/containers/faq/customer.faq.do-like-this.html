@@ -48,6 +48,17 @@
         });
     });
 
+    // popup
+	$('.idpt-popup-open').click(function(){
+		var popId = $(this).attr('href');
+		$('.idpt-popup-wrap').removeClass('show');
+		$(popId).addClass('show');
+		$('.idpt-popup').show();
+	});
+	$('.idpt-popup-close').click(function(){
+		$('.idpt-popup').hide();
+	});
+
     // tooltip
     $('.info-tooltip').each(function(){
         $('.btn-tooltip-open').on('click', function(){
