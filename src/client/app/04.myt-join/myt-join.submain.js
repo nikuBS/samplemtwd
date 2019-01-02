@@ -262,6 +262,7 @@ Tw.MyTJoinSubMain.prototype = {
   _onClickedOtherLine: function (event) {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
+        type = $target.find('span.blind').text(),
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
         name    = $target.attr('data-name');
@@ -269,6 +270,7 @@ Tw.MyTJoinSubMain.prototype = {
       // 기준회선변경
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
       var selectLineInfo = number + ' ' + name;
+      this.changeLineType = type;
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
         defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
@@ -285,7 +287,12 @@ Tw.MyTJoinSubMain.prototype = {
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
     setTimeout($.proxy(function () {
-      this._historyService.reload();
+      if(this.changeLineType ===  'pc') {
+        this._historyService.replaceURL('/myt-join/submain_w');
+      }
+      else {
+        this._historyService.reload();
+      }
       if ( Tw.BrowserHelper.isApp() ) {
         this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
       }
