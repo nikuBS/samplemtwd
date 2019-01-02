@@ -51,7 +51,6 @@ class MyTDataGift extends TwViewController {
             params: ParamsHelper.getQueryParams(req.url)
           }, responseData);
 
-
           res.render('gift/myt-data.gift.complete.html', response);
         });
         break;
@@ -63,6 +62,7 @@ class MyTDataGift extends TwViewController {
             { autoList: autoList },
             responseData
           );
+
           res.render('gift/myt-data.gift.html', response);
         });
     }
@@ -107,9 +107,7 @@ class MyTDataGift extends TwViewController {
       });
   }
 
-  public convertTDataSet(sQty) {
-    return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
-  }
+  public convertTDataSet = (sQty) => FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
 
   public convertTelNumber = (sNumber) => FormatHelper.conTelFormatWithDash(sNumber.replace(/-/g, ''));
 
