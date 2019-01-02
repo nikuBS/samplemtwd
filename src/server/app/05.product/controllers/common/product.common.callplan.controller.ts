@@ -335,6 +335,7 @@ class ProductCommonCallplan extends TwViewController {
       if (FormatHelper.isEmpty(contentsResult.FIRST)) {
         contentsResult.FIRST = {
           vslClass: item.vslYn && item.vslYn === 'Y' ? 'prVisual' : 'plm',
+          paddingClass: item.vslYn && item.vslYn === 'Y' ? 'nogaps noborder' : '',
           ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
         };
 
