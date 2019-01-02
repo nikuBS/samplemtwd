@@ -28,7 +28,7 @@ class CustomerUseguideService extends TwViewController {
     FormatHelper.isEmpty(code)) {
       // 페이지가 존재하지 않으면
     }
-    this.apiService.request(API_CMD.BFF_08_0056, {seqNum: code}).subscribe(resp => {
+    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, code ).subscribe(resp => {
       if ( resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           code: resp.code,
@@ -51,7 +51,7 @@ class CustomerUseguideService extends TwViewController {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
         // 별도로 코드관리
-        contentHTML: this.modifyHTML(result['cntsCmmnt']),
+        contentHTML: this.modifyHTML(result['icntsCtt']),
         data: {
           // 코드를 제외한 데이터
           contents: this.exceptHTML(result),
@@ -72,15 +72,15 @@ class CustomerUseguideService extends TwViewController {
 
   // 전송된 데이터 준 html 따로 관리
   private exceptHTML = (obj: object): object => {
-    return Object.assign(obj, {cntsCmmnt: ''});
+    return Object.assign(obj, {icntsCtt: ''});
   }
 
   // 전송된 html 수정 변경
   private modifyHTML = (html: string): string => {
       // 대문자 엘리먼트 소문자로
-    html = html.replace(/<\/?[A-Z]+/gm, (s: string) => s.replace(/[A-Z]+/gi, (i: string) => i.toLowerCase()))
+      // html = html.replace(/<\/?[A-Z]+/gm, (s: string) => s.replace(/[A-Z]+/gi, (i: string) => i.toLowerCase()))
       // 주석제거
-      .replace(/<!--(.*?)-->/gmi, '')
+      html = html.replace(/<!--(.*?)-->/gmi, '')
       // 이미지경로 변경
       .replace(/\/mpoc\/img\/center/gi, EnvHelper.getEnvironment('CDN') + '/img/service');
     return html;

@@ -623,7 +623,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '휴대폰 가입',
             type: 'A1',
-            code: '3280'
+            code: 'C00014'
           },
           {
             dep_title: '기기 자급제도',
