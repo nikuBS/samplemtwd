@@ -51,20 +51,13 @@ if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
     <p class="text">이용중인 상품 입니다.</p>
     <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
     <div class="btn">
-        <div class="bt-alone">
-            <button class="fe-btn_setting bt-line-blue1">
-                <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
-                설정
-                <% } else { %>
-                <%= basicInfo.linkBtnList.setting[0].linkNm %>
-                <% } %>
-            </button>
-        </div>
-        <ul class="fe-setting_btn_list" style="display: none">
-            <% for (var i in basicInfo.linkBtnList.setting) { %>
-            <li data-url="<%= basicInfo.linkBtnList.setting[i].linkUrl %>"><%= basicInfo.linkBtnList.setting[i].linkNm %></li>
+        <button class="fe-btn_setting btn-round3 btn-style3">
+            <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
+            설정
+            <% } else { %>
+            <%= basicInfo.linkBtnList.setting[0].linkNm %>
             <% } %>
-        </ul>
+        </button>
     </div>
     <% } %>
 </div>

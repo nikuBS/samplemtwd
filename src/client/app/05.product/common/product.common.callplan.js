@@ -47,7 +47,6 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
     this.$comparePlans = this.$container.find('.fe-compare_plans');
 
-    this.$settingBtnList = this.$container.find('.fe-setting_btn_list');
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
     this.$contents = this.$container.find('.fe-contents');
   },
