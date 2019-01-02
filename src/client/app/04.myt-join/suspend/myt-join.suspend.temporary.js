@@ -129,8 +129,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       return;
     }
 
-    this._popupService.openModalTypeA(Tw.MYT_JOIN_SUSPEND.CONFIRM.TITLE, Tw.MYT_JOIN_SUSPEND.CONFIRM.MESSAGE,
-      Tw.MYT_JOIN_SUSPEND.CONFIRM.BTNAME, null, $.proxy(this._requestSuspend, this), null);
+    this._requestSuspend();
   },
 
   _onClickBtnReset: function () {
