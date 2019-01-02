@@ -78,11 +78,11 @@ Tw.ProductCommonCallplan.prototype = {
 
     this._settingBtnList = JSON.parse(this._settingBtnList).map(function(item) {
       return {
+        'url': item.linkUrl,
         'button-attr': 'data-url="' + item.linkUrl + '"',
         'txt': item.linkNm
       };
     });
-
   },
 
   _openComparePlans: function(e) {
@@ -129,7 +129,7 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
     } else {
-      this._historyService.goLoad(this._settingBtnList[0].url);
+      this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
     }
   },
 
