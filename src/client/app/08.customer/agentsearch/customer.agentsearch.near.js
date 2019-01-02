@@ -127,6 +127,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     }
   },
   _showPermission: function (location) {
+    var shouldGoBack = false;
     this._popupService.open({
       ico: 'type3',
       title: Tw.BRANCH.PERMISSION_TITLE,
@@ -144,11 +145,17 @@ Tw.CustomerAgentsearchNear.prototype = {
       }]
     }, $.proxy(function (root) {
       root.on('click', '.fe-link-term', $.proxy(function () {
-        this._popupService.close();
+        // this._popupService.close();
         // this._historyService.goLoad(약관 전문)
+        Tw.CommonHelper.openUrlInApp(
+          'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
+          null,
+          Tw.COMMON_STRING.TERM
+        );
       }, this));
 
       root.on('click', '.bt-white2', $.proxy(function () {
+        shouldGoBack = true;
         this._popupService.close();
       }, this));
 
@@ -173,7 +180,13 @@ Tw.CustomerAgentsearchNear.prototype = {
             Tw.Error(err.code, err.msg).pop();
           });
       }, this));
-    }, this));
+    }, this),
+    $.proxy(function () {
+      if (shouldGoBack) {
+        this._historyService.goBack();
+      }
+    }, this)
+    );
   },
   _onCurrentLocation: function (location) {
     var $tmapBox = this.$container.find('#fe-tmap-box');
