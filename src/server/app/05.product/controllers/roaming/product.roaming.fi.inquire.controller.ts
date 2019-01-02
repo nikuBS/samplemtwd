@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 import { API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 export default class ProductRoamingFiInquire extends TwViewController {
 
@@ -21,6 +22,7 @@ export default class ProductRoamingFiInquire extends TwViewController {
       } else {
         countryCode = resp;
       }
+      svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
       res.render('roaming/product.roaming.fi.inquire.html', {
         countryCode: countryCode,

@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import moment from 'moment';
+import FormatHelper from '../../../../utils/format.helper';
 // import { Observable } from 'rxjs/Observable';
 
 export default class ProductRoamingReservation extends TwViewController {
@@ -16,6 +17,8 @@ export default class ProductRoamingReservation extends TwViewController {
      const minDate = moment().add(2, 'days').format('YYYY-MM-DD');
      const maxDate = DateHelper.getEndOfMonSubtractDate(undefined, '-6', 'YYYY-MM-DD');
      const formatDate = { minDate, maxDate };
+
+     svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
      res.render('roaming/product.roaming.fi.reservation.html', { svcInfo : svcInfo , formatDate : formatDate });
   }
