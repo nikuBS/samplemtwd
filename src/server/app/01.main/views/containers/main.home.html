@@ -546,7 +546,12 @@
                                                 <li>
                                                     <ul class="help-list">
                                                         <% help.map((target) => { %>
-                                                        <li class="list-t01"><a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt"><%= target.mainExpsTitNm %></a></li>
+                                                        <li>
+                                                            <a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt">
+                                                                <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
+                                                                <%- target.mainExpsTitNm %>
+                                                            </a>
+                                                        </li>
                                                         <% }) %>
                                                     </ul>
                                                 </li>
@@ -876,7 +881,12 @@
                                                 <li>
                                                     <ul class="help-list">
                                                         <% help.map((target) => { %>
-                                                        <li class="list-t01"><a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt"><%= target.mainExpsTitNm %></a></li>
+                                                        <li>
+                                                            <a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt">
+                                                                <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
+                                                                <%- target.mainExpsTitNm %>
+                                                            </a>
+                                                        </li>
                                                         <% }) %>
                                                     </ul>
                                                 </li>
