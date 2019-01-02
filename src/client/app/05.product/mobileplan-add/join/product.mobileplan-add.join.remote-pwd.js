@@ -29,6 +29,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _cachedElement: function() {
     this.$inputPassword = this.$container.find('.fe-input-password');
     this.$confirmPassword = this.$container.find('.fe-confirm-password');
+    this.$inputRealPassword = this.$container.find('.fe-input-real-password');
+    this.$realConfirmPassword = this.$container.find('.fe-real-confirm-password');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
@@ -76,8 +78,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _isValid: function () {
-    var inputVal = this.$inputPassword.next().val();
-    var confirmVal = this.$confirmPassword.next().val();
+    var inputVal = this.$inputRealPassword.val();
+    var confirmVal = this.$realConfirmPassword.val();
 
     return (
       (this._validation.checkLength(inputVal, 4, Tw.ALERT_MSG_PASSWORD.A16)) &&
