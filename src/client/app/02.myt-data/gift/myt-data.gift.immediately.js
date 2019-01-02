@@ -23,12 +23,11 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _cachedElement: function () {
     this.$remainQty = $('.fe-remain_data');
-    this.$recent_tel = this.$container.find('.recently-tel');
+    this.$wrap_auto_select_list = $('.fe-auto_select_list');
     this.$btnNativeContactList = $('.fe-btn_native_contact');
     this.$btnRequestSendingData = $('.fe-request_sending_data');
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
-    this.$wrap_auto_select_list = $('.fe-auto_select_list');
   },
 
   _bindEvent: function () {
@@ -50,15 +49,19 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var mockDataQty = 900;
-      // var apiDataQty = res.result.dataRemQty;
-      // var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+      // MOCK DATA
+      var mockDataQty = '900';
       var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
-      // this.$remainQty.text(dataQty.data + dataQty.unit);
-      // this._setAmountUI(Number(apiDataQty));
       this.beforeDataQty = mockDataQty;
       this.$remainQty.text(mockData.data + mockData.unit);
       this._setAmountUI(Number(mockDataQty));
+
+      // API DATA
+      // var apiDataQty = res.result.dataRemQty;
+      // var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+      // this.beforeDataQty = apiDataQty;
+      // this.$remainQty.text(dataQty.data + dataQty.unit);
+      // this._setAmountUI(Number(apiDataQty));
     } else {
       this._setAmountUI(Number(0));
       Tw.Error(res.code, res.msg).pop();
@@ -84,8 +87,8 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      var params = response.params;
-      this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
+      var phoneNumber = response.params.phoneNumber;
+      this.$inputImmediatelyGift.val(Tw.StringHelper.phoneStringToDash(phoneNumber));
     }
   },
 
@@ -93,7 +96,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
     this._validateInputNumber();
-    this.$inputImmediatelyGift.val(this._convertDashNumber(this.$inputImmediatelyGift.val()));
+    this.$inputImmediatelyGift.val(Tw.StringHelper.phoneStringToDash(this.$inputImmediatelyGift.val()));
   },
 
   _onSelectRecentContact: function (e) {
@@ -113,10 +116,8 @@ Tw.MyTDataGiftImmediately.prototype = {
     var svcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
     var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
 
-    if ( isCellPhone ) {
-      if ( this._validatePhoneNumber(svcNum) ) {
-        this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
-      }
+    if ( isCellPhone && this._validatePhoneNumber(svcNum) ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm }).done($.proxy(this._onSuccessReceiveUserInfo, this));
     }
@@ -126,17 +127,11 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
       this._requestSendingData();
+    } else if ( res.code === 'ZNGME0008' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
     } else {
-      if ( res.code === 'ZNGME0008' ) {
-        this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
-      } else {
-        Tw.Error(res.code, res.msg).pop();
-      }
+      Tw.Error(res.code, res.msg).pop();
     }
-  },
-
-  _convertDashNumber: function (sTelNumber) {
-    return Tw.StringHelper.phoneStringToDash(sTelNumber);
   },
 
   _requestSendingData: function () {
@@ -162,16 +157,17 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onSuccessSendingData: function () {
     this._popupService.close();
 
-    // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
-    // TODO: Implemented API TEST
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-      .done($.proxy(this._onRequestSuccessGiftData, this));
+    // MOCK DATA
+    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+
+    // API DATA
+    // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
+    //   .done($.proxy(this._onRequestSuccessGiftData, this));
   },
 
   _onRequestSuccessGiftData: function (res) {
-    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+      this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
