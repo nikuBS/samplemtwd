@@ -54,7 +54,7 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 실시간요금버튼
-    if (this.data.isNotFirstDate) {
+    if ( this.data.isNotFirstDate ) {
       this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
     }
     if ( this.data.nonpayment ) {
@@ -123,7 +123,7 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 실시간요금버튼
-    if (this.data.isNotFirstDate) {
+    if ( this.data.isNotFirstDate ) {
       this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
     }
     if ( this.data.nonpayment ) {
@@ -173,7 +173,7 @@ Tw.MyTFareSubMain.prototype = {
   _initPatternChart: function (data) {
     this.$billChart.chart2({
       target: '.chart4', //클래스명 String
-      type: (this.data.type === 'UF')? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
+      type: (this.data.type === 'UF') ? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
       average: true, // 평균
       legend: Tw.FARE_CHART_LEGEND, // 범례
       link: true,
@@ -249,6 +249,12 @@ Tw.MyTFareSubMain.prototype = {
         }
         this._initPatternChart(chart_data);
       }
+      else {
+        this.$billChart.addClass('blind');
+      }
+    }
+    else {
+      this.$billChart.addClass('blind');
     }
     // 실시간요금
     setTimeout($.proxy(this._otherLineBills, this), 300);
@@ -298,7 +304,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < otherLineLength; idx++ ) {
         this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
         requestCommand.push({
-          command: this.data.type === 'UF'? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
+          command: this.data.type === 'UF' ? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
           // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
           headers: {
             'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
@@ -528,7 +534,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( attrCd.indexOf('S') > -1 ) {
       clsNm = 'pc';
     }
-    else if ( ['M3', 'M4'].indexOf(attrCd) > -1) {
+    else if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
       clsNm = 'tablet';
     }
     return clsNm;
