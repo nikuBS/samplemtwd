@@ -269,6 +269,9 @@
 .idpt-dash-list > li { position:relative; font-size: 0.75rem; color:#959595; padding-left:0.625rem; }
 .idpt-dash-list > li + li { margin-top:0.3125rem; }
 .idpt-dash-list > li::before { position: absolute; content:''; display:block; top:0.4125rem; left:0; width:0.3125rem; height:1px; background-color:#959595; }
+.idpt-dash-list.gray { margin-top:1.5rem; }
+.idpt-dash-list.gray > li { color:#666; }
+.idpt-dash-list.gray > li + li { margin-top:0.75rem; }
 
 .idpt-bg-list { margin-top:3rem; }
 .idpt-bg-list.with-title { margin-top:1.5rem; }
@@ -772,3 +775,59 @@
 .idpt-allfamily-whitebox > li .right p.discount { font-size: 1rem; color:#57637f; font-weight: 600; }
 .idpt-allfamily-whitebox > li .right p.discount > span { font-family:'TgothicMedium', Roboto, sans-serif; }
 .idpt-allfamily-whitebox > li .right p.discount-sub { font-size: 0.625rem; color:#959595; margin-top:0.625rem; }
+
+/* 제휴카드 할인 */
+.idpt-sub-title-wrap { position: relative; margin-top:2.1875rem; }
+.idpt-sub-title { font-size: 1rem; color:#000; font-weight: 500; }
+.idpt-benefit .idpt-sub-title-wrap .benefit-square { position:absolute; display:inline-block; top:0; right:0; text-align:center; border:1px solid rgba(87,99,127,0.5); font-size: 0.625rem; color:#57637f; padding:0.3125rem 0.5125rem; }
+.white-box > p { float:left; font-size: 0.75rem; color:#666; padding-left:1.125rem; }
+.white-box > p.dis-price { float:right; font-size: 1rem; color:#6d7583; text-align:right; padding-right:1.125rem; }
+.white-box > p.dis-price > span { font-family:'TgothicMedium', Roboto, sans-serif; }
+.alliance-card { margin-top:2.1875rem; padding-bottom:1rem; }
+.alliance-card-box { margin-top:1rem; }
+.alliance-card-box > img { float:left; width:8.625rem; height:5.4375rem; }
+.alliance-card-box .card-info { margin-left:10rem; }
+.alliance-card-box .card-info > p { font-size: 0.625rem; color:#666; }
+.alliance-card-box .card-info > p.price { font-size: 1rem; color:#ff4b4b; font-weight: 600; }
+.alliance-card-box .card-info > ul { margin-top:0.7125rem; }
+.alliance-card-box .card-info > ul > li { float:left; font-size: 0.625rem; color:#666; text-align:center; margin-right:0.5rem; margin-bottom:0.25rem; }
+.alliance-card-box .card-info > ul > li:last-child { margin-right:0; }
+.alliance-card-box .card-info > ul > li > img { display:block; width:1.5rem; margin:0 auto 0.25rem; }
+
+/* 복지고객할인 */
+.idpt-benefit.no-padding .benefit-desc,
+.idpt-benefit.no-padding .idpt-bg-list { padding-left:1rem; padding-right:1rem; }
+.benefit-img.welfare-house { max-width:100%; border-bottom:1px solid #aab3c9; }
+.benefit-img.welfare-house > img { width:22.5rem; margin:0 auto; vertical-align: bottom; }
+.idpt-benefit .benefit-txt-big.welfare { font-weight: 500; color:#57637f; margin-top:2.1875rem; }
+.idpt-benefit .white-box.welfare { background-color:#f5f7fa; margin-top:1.25rem; padding:1.25rem; }
+.idpt-benefit .white-box.welfare .welfare-dis { position:relative; }
+.idpt-benefit .white-box.welfare .welfare-dis p { font-size: 0.75rem; color:#666; font-weight: 300; }
+.idpt-benefit .white-box.welfare .welfare-dis p.dis-perc { position:absolute; top:50%; right:0; font-size: 0.8125rem; color:#57637f; font-weight: 500; transform:translateY(-50%); }
+.idpt-benefit .white-box.welfare.first-welfare .welfare-dis { width:10.9375rem; margin:0 auto; }
+.idpt-benefit .white-box.welfare .welfare-dis + .welfare-dis { margin-top:0.625rem; }
+.idpt-benefit .white-box.welfare > p.welfare-etc { float:none; position:relative; font-size: 0.625rem; color:#959595; font-weight: 300; margin-top:0.625rem; padding-left:0.625rem; }
+.idpt-benefit .white-box.welfare > p.welfare-etc::before { position:absolute; content:'※'; top:0; left:0; }
+.idpt-benefit .white-box.welfare .welfare-etc + .welfare-dis { margin-top:1.25rem; }
+.idpt-dash-list.gray.welfare { margin-top:3rem; }
+
+/* T가족모아데이터 */
+.benefit-img.family-moa { max-width:22.5rem; }
+.idpt-benefit .family-moa-title { font-size: 1rem; color:#4e67b5; font-weight: 600; text-align: center; margin-top:3rem; }
+.idpt-benefit .family-moa-title.with-num { margin-top:0.75rem; }
+.idpt-benefit img.family-moa-img { display:block; width:17.5rem; margin:0.75rem auto 0; }
+.idpt-benefit img.family-moa-num { display:block; width:7.5rem; margin:2.1875rem auto 0; }
+.idpt-faq { margin-top:3rem; }
+.idpt-faq-question { position:relative; padding:1.25rem 3.125rem; border-top:1px solid #e5e5e5; }
+.idpt-faq-question > p { font-size: 0.8125rem; color:#000; font-weight: 500; }
+.idpt-faq-question > img { position:absolute; top:1.4125rem; left:1rem; width:0.78125rem; height:0.78125rem; }
+.idpt-faq-question > img.faq-arrow { top:50%; left:auto; right:1.25rem; width:0.8125rem; height:0.46875rem; -webkit-transform:translateY(-50%); transform:translateY(-50%); }
+.idpt-faq-question.open > img.faq-arrow { -webkit-transform:translateY(-50%) rotate(180deg); transform:translateY(-50%) rotate(180deg); }
+.idpt-faq-answer { display:none; position:relative; padding:1.25rem 1.25rem 1.25rem 3.125rem; background-color:#fafafa; border-top:1px solid #f2f2f2; }
+.idpt-faq-answer > img { position:absolute; top:1.4125rem; left:1rem; width:0.71875rem; height:0.78125rem; }
+.idpt-faq-answer > p { font-size: 0.8125rem; color:#000; font-weight: 500; }
+.idpt-faq-answer table { margin-top:0.875rem; }
+.idpt-faq-answer .answer-title { font-size: 0.8125rem; color:#000; font-weight: 500; margin-top:1.5625rem; }
+.idpt-faq-answer .answer-txt { font-size: 0.75rem; color:#666; font-weight: 500; margin-top:1.5625rem; }
+.idpt-faq-answer .answer-txt.with-title { margin-top:0.625rem; }
+.idpt-faq-answer .answer-img { max-width:18.125rem; margin-top:0.5rem; }
