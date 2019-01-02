@@ -7,7 +7,7 @@
 Tw.ProductMobileplanLookupTplan = function(rootEl, prodId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._prodId = prodId;
   this._cachedElement();

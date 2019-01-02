@@ -18,7 +18,7 @@ Tw.PopupService.prototype = {
   },
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
-    // Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
+    Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
       var closeCallback = lastHash.closeCallback;
       this._prevHashList.pop();
@@ -57,8 +57,8 @@ Tw.PopupService.prototype = {
         hashName = '#' + hashName + '_P';
       }
 
-      // location.hash = 'popup' + this._prevHashList.length;
-      history.pushState(this._popupObj, 'popup', hashName);
+      location.hash = hashName;
+      // history.pushState(this._popupObj, 'popup', hashName);
     }, this), 0);
   },
   _bindEvent: function ($container) {
