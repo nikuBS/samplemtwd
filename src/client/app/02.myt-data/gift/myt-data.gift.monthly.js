@@ -82,7 +82,6 @@ Tw.MyTDataGiftMonthly.prototype = {
       Tw.BUTTON_LABEL.CANCEL,
       Tw.BUTTON_LABEL.TERMINATE
     );
-
   },
 
   _requestUnsubscribeAutoGift: function (serNum) {
@@ -120,6 +119,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     };
 
     this.paramData = $.extend({}, this.paramData, htParams);
+
     this._apiService.request(Tw.API_CMD.BFF_06_0004, htParams)
       .done($.proxy(this._onSuccessAutoGift, this));
   },
