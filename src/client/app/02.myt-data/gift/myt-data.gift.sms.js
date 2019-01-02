@@ -22,6 +22,16 @@ Tw.MyTDataGiftSms.prototype = {
     this._setReceiverInfo();
   },
 
+  _cachedElement: function () {
+    this.$btn_send_sms = this.$container.find('#fe-send_gift_sms');
+    this.$textarea_sms = this.$container.find('#fe-sms_textarea');
+  },
+
+  _bindEvent: function () {
+    this.$textarea_sms.on('keyup', $.proxy(this._onChangeTextArea, this));
+    this.$btn_send_sms.on('click', $.proxy(this._onClickSendSMS, this));
+  },
+
   _setReceiverInfo: function () {
     if ( this.paramData.custNm ) {
       $('.add-name').text(this.paramData.custNm);
@@ -31,16 +41,6 @@ Tw.MyTDataGiftSms.prototype = {
       this.paramData.befrSvcNum = this.paramData.befrSvcNum.replace(/-/g, '');
       $('.add-info').text(Tw.FormatHelper.getFormattedPhoneNumber(this.paramData.befrSvcNum));
     }
-  },
-
-  _cachedElement: function () {
-    this.$btn_send_sms = this.$container.find('#fe-send_gift_sms');
-    this.$textarea_sms = this.$container.find('#fe-sms_textarea');
-  },
-
-  _bindEvent: function () {
-    this.$textarea_sms.on('keyup', $.proxy(this._onChangeTextArea, this));
-    this.$btn_send_sms.on('click', $.proxy(this._onClickSendSMS, this));
   },
 
   _onChangeTextArea: function (e) {

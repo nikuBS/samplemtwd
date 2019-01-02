@@ -30,19 +30,23 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   _retryInquiry: function (e) {
     var inqclcd = $(e.currentTarget).data().inqclcd;
 
-    if ( inqclcd === 'Q' ) {
-      this._history.replaceURL('/customer/emailconsult/quality-retry?' + $.param($(e.currentTarget).data()));
-    }
-
+    // service inquiry
     if ( inqclcd === 'B' ) {
       this._history.replaceURL('/customer/emailconsult/service-retry?' + $.param($(e.currentTarget).data()));
+    }
+
+    // quality inquiry
+    if ( inqclcd === 'Q' ) {
+      this._history.replaceURL('/customer/emailconsult/quality-retry?' + $.param($(e.currentTarget).data()));
     }
   },
 
   _removeInquiry: function (e) {
+    var inqId = $(e.currentTarget).data('inqid');
+    var inqClCd = $(e.currentTarget).data('inqclcd');
     this._apiService.request(Tw.API_CMD.BFF_08_0062, {
-      inqId: $(e.currentTarget).data('inqid'),
-      inqClCd: $(e.currentTarget).data('inqclcd')
+      inqId: inqId,
+      inqClCd: inqClCd
     }).done($.proxy(this._onSuccessRemoveInquiry, this));
   },
 

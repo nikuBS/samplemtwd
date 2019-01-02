@@ -22,11 +22,11 @@ Tw.MyTDataGift.prototype = {
   },
 
   _cachedElement: function () {
-    this.wrap_tpl_available_product = $('.fe-layer_available_product');
-    this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
-    this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
-    this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$recent_tel = this.$container.find('.recently-tel');
+    this.$inputImmediatelyGift = this.$container.find('.fe-input_immediately_gift');
+    this.wrap_available_product = this.$container.find('.fe-layer_available_product');
+    this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
+    this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
   },
 
   _bindEvent: function () {
@@ -96,7 +96,7 @@ Tw.MyTDataGift.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var sortedList = Tw.FormatHelper.purifyPlansData(res.result);
 
-      this.wrap_tpl_available_product.html(
+      this.wrap_available_product.html(
         this.tpl_available_product({ sortedList: sortedList })
       );
 
@@ -107,10 +107,10 @@ Tw.MyTDataGift.prototype = {
   },
 
   _showAvailableProduct: function () {
-    this.wrap_tpl_available_product.show();
+    this.wrap_available_product.show();
   },
 
   _hideAvailableProduct: function () {
-    this.wrap_tpl_available_product.hide();
+    this.wrap_available_product.hide();
   }
 };
