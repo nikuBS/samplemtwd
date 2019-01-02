@@ -87,11 +87,7 @@ Tw.POPUP_TITLE = {
   SELECT_ORDER: '정렬 기준을 선택해주세요',
   CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
   CANCEL_HELPLINE: '예약을 취소하시겠습니까?',
-  SET_TIME: '시간설정',
-  SET_HELPLINE_TYPE: '상담유형 설정',
-  SET_AREA: '지역설정',
   ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
-  SELECT_SUBJECT_TYPE: '대상 설정',
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
@@ -705,7 +701,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
-  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?',
+  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬 글이<br /> 등록되었습니다.',
   ALERT_PRAISE_CANCEL: {
     TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
