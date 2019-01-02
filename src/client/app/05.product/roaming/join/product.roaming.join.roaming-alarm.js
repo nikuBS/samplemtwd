@@ -8,8 +8,7 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,s
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
+  this._historyService = new Tw.HistoryService();
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = [];
