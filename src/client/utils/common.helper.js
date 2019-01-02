@@ -1,13 +1,17 @@
 Tw.CommonHelper = (function () {
-  var openUrl = function (url, browserType, option) {
+  var openUrl = function (url, browserType, option, title) {
     if ( url.indexOf('http') === -1 ) {
       url = 'http://' + url;
     }
     if ( Tw.BrowserHelper.isApp() ) {
-      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
+      var param = {
         type: browserType,
         href: url
-      }, null);
+      };
+      if (!Tw.FormatHelper.isEmpty(title)) {
+        param.title = title;
+      }
+      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, param, null);
     } else {
       var windowPopup = window.open(url, '_blank', option);
       if ( Tw.FormatHelper.isEmpty(windowPopup) ) {
@@ -21,8 +25,8 @@ Tw.CommonHelper = (function () {
     openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
   };
 
-  var openUrlInApp = function (url, option) {
-    openUrl(url, Tw.NTV_BROWSER.INAPP, option);
+  var openUrlInApp = function (url, option, title) {
+    openUrl(url, Tw.NTV_BROWSER.INAPP, option, title);
   };
 
   var toast = function (message) {
