@@ -33,6 +33,18 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <hr class="cont-sp type1" aria-hidden="true">
+                <% if( myInfoData.cardIsueTypCd === '1' ){ %>
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <h3 class="tit-type7">개인정보 수정</h3>
+                    <p class="subtit-info mt2">카드수령 정보</p>
+                    <div class="mcard-complete">
+                        <i class="ico-mcard-complete"></i>
+                        <p class="txt">모바일 카드가 <strong>발급</strong>되었습니다.</p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <% }else if( myInfoData.cardIsueTypCd === '0'){ %>
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <h3 class="tit-type7">개인정보 수정</h3>
@@ -92,24 +104,25 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
+                <% } %>
                 <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tit-type7">T멤버십 이용&middot;약관 동의</h3>
                     <div class="agreement-list">
-                        <ul>
+                        <ul id="fe-agree-check">
                             <li>
-                                <span class="custom-form"><input type="checkbox" id="oka1" name="r1"><span class="c-type1"></span></span>
+                                <span class="custom-form"><input type="checkbox" id="oka1" name="r1" <%= myInfoData.smsAgreeChecked %>><span class="c-type1"></span></span>
                                 <label for="oka1" class="rad-lab">T멤버십 이용내역 안내 서비스 가입 (선택)</label>
                                 <p class="agr-sub-txt">SK 텔레콤 T멤버십 이용내역을 문자메세지(SMS/MMS)로 안내해드리는 무료 서비스입니다.</p>
                             </li>
                             <li>
-                                <span class="custom-form"><input type="checkbox" id="oka2" name="r1"><span class="c-type1"></span></span>
+                                <span class="custom-form"><input type="checkbox" id="oka2" name="r1" <%= myInfoData.sktNewsChecked %>><span class="c-type1"></span></span>
                                 <label for="oka2" class="rad-lab">광고성 정보 수신 동의 (선택)</label>
                             </li>
                             <li>
-                                <span class="custom-form pos2"><input type="checkbox" id="oka3" name="r1"><span class="c-type1"></span></span>
+                                <span class="custom-form pos2"><input type="checkbox" id="oka3" name="r1" <%= myInfoData.sktTmChecked %>><span class="c-type1"></span></span>
                                 <label for="oka3" class="rad-lab">고객님께 혜택을 드리기 위한 개인정보<br />수집&middot;이용 동의(선택)</label>
                                 <p class="agr-sub-txt">2018년 10월 4일 T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</p>
                             </li>
@@ -130,6 +143,31 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
+                <div class="toggle-aggrement" style="display:none;">
+                    <div class="inner-agreement-list">
+                        <ul>
+                            <li>
+                                <div class="inner">
+                                    <span class="custom-form"><input type="checkbox" id="chk1" name="r2"><span class="c-type1"></span></span>
+                                    <label for="chk1" class="rad-lab">모두 동의</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="inner">
+                                    <span class="custom-form"><input type="checkbox" id="chk2" name="r2"><span class="c-type1"></span></span>
+                                    <label for="chk2" class="rad-lab">OK캐쉬백 카드 서비스 이용약관 확인 (필수)</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="inner">
+                                    <span class="custom-form pos2"><input type="checkbox" id="chk3" name="r2"><span class="c-type1"></span></span>
+                                    <label for="chk3" class="rad-lab lh2">OK캐쉬백 암호화된 동일인 식별정보 제공<br />동의 (필수)</label>
+                                </div>
+                            </li>
+                        </ul>
+                        <p class="inner-agreement-msg">필수동의 사항에 동의하셔야 OK캐쉬백 포인트가 적립됩니다. 단, OK캐쉬백 수수료 정책에 따라 서비스 이용 수수료가 차감된 포인트가 최종 적립됩니다.</p>
+                    </div>
+                </div>
 
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">

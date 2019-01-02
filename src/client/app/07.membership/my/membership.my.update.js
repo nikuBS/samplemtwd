@@ -24,6 +24,10 @@ Tw.MembershipMyUpdate.prototype = {
     //this.$container.on('change keyup paste', '#fe-phone3', $.proxy(this._validationCheck, this));
     this.$container.on('blur', '#fe-ph-second', $.proxy(this._validationCheck, this));
     this.$container.on('blur', '#fe-ph-third', $.proxy(this._validationCheck, this));
+    //this.$container.on('click', '.fe-agree-check', $.proxy(this._agreeCheck, this));
+    this.$container.on('click', 'input[name=r1]', $.proxy(this._agreeCheck, this));
+    this.$container.on('click', '#chk8', $.proxy(this._agreeCheck, this))
+    this.$container.on('click', '#chk1', $.proxy(this._allCashbagCheck, this))
   },
 
   _bindEvent: function() {
@@ -108,6 +112,39 @@ Tw.MembershipMyUpdate.prototype = {
     }else{
       return;
     }
+  },
+
+  _agreeCheck: function(e) {
+    var selected = e.target;
+
+    if($(selected).attr('checked') === 'checked'){
+      $(selected).removeAttr('checked');
+
+      if(selected.name === 'checkbox2'){
+        $('.toggle-aggrement').hide();
+      }
+
+      if(selected.id === 'chk1'){
+        $('#chk2').prop('checked', false);
+        $('#chk3').prop('checked', false);
+      }
+    }else{
+      $(selected).attr('checked','');
+
+      if(selected.name === 'checkbox2'){
+        $('.toggle-aggrement').show();
+      }
+
+      if(selected.id === 'chk1'){
+        $('#chk2').prop('checked', true);
+        $('#chk3').prop('checked', true);
+      }
+    }
+  },
+
+  _allCashbagCheck: function() {
+    //캐시백 체크
   }
+
 
 };
