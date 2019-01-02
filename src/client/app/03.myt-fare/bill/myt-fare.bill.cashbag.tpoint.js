@@ -36,6 +36,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$payBtn.siblings().hide();
 
     this.$isValid = false;
+    this.$isSelectValid = true;
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
@@ -133,7 +134,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       hbs: 'actionsheet01',
       layer: true,
       data: this._getData(),
-      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
+      btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _getData: function () {
@@ -144,13 +145,25 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
+    this.$pointSelector.siblings('.fe-error-msg').hide();
+    this.$isSelectValid = true;
+
     this._checkIsAbled();
+    this._popupService.close();
+  },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id'))) {
+      this.$pointSelector.siblings('.fe-error-msg').show();
+      this.$pointSelector.focus();
+      this.$isSelectValid = false;
+    }
     this._popupService.close();
   },
   _goCashbagSite: function () {
@@ -180,7 +193,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _onePay: function () {
-    if (this.$isValid) {
+    if (this.$isValid && this.$isSelectValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
         .done($.proxy(this._paySuccess, this, ''))
@@ -188,7 +201,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _autoPay: function () {
-    if (this.$isValid) {
+    if (this.$isValid && this.$isSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       var type = 'auto';
       if (this.$autoInfo.is(':visible')) {

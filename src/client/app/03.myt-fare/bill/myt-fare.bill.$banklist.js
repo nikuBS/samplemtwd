@@ -8,7 +8,6 @@ Tw.MyTFareBillBankList = function (rootEl) {
   this.$bankList = [];
   this.$currentTarget = null;
   this.$container = rootEl;
-  this.$document = $(document);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -30,6 +29,7 @@ Tw.MyTFareBillBankList.prototype = {
   },
   _onOpenList: function ($layer) {
     $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
   _getSelectedBank: function (event) {
     var $selectedBank = this.$currentTarget;
@@ -37,12 +37,20 @@ Tw.MyTFareBillBankList.prototype = {
     $selectedBank.attr('id', $target.attr('id'));
     $selectedBank.text($target.parents('label').text());
 
+    this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
     this._popupService.close();
 
     if (this._callbackFunction !== undefined) {
       var callbackFunction = this._callbackFunction;
       callbackFunction();
     }
+  },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$currentTarget.attr('id'))) {
+      this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').show();
+      this.$currentTarget.focus();
+    }
+    this._popupService.close();
   },
   _isNotExistBankList: function () {
     return Tw.FormatHelper.isEmpty(this.$bankList);
@@ -84,7 +92,7 @@ Tw.MyTFareBillBankList.prototype = {
       hbs: 'actionsheet01',
       layer: true,
       data: this.$bankList,
-      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
+      btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._onOpenList, this));
   }
 };
