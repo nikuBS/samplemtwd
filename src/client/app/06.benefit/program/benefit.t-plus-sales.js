@@ -17,15 +17,6 @@ Tw.BenefitTPlusSales = function (params) {
 Tw.BenefitTPlusSales.prototype = {
 
   _initialize: function() {
-    this.joinInfoTerm = $.extend(this.data.joinInfoTerm, {
-      svcNumMask: this.data.joinInfoTerm.preinfo.svcNumMask,
-      toProdName: this.data.joinInfoTerm.preinfo.reqProdInfo.prodNm,
-      toProdDesc: this.data.joinInfoTerm.preinfo.reqProdInfo.prodSmryDesc,
-      toProdBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.basFeeInfo,
-      isNumberBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      isAutoJoinTermList: (this.data.joinInfoTerm.preinfo.autoJoinList.length > 0 || this.data.joinInfoTerm.preinfo.autoTermList.length > 0),
-      isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.stipulation.existsCount > 1)
-    });
   },
 
   _render: function () {
