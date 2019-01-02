@@ -358,6 +358,7 @@ class MainHome extends TwViewController {
       if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
         data.isUnlimit = true;
         data.showMyRemained = SKIP_NAME.UNLIMIT;
+        data.showAddRemained = SKIP_NAME.UNLIMIT;
       }
       if ( TPLAN_SHARE_LIST.indexOf(target.skipId) !== -1 ) {
         data.shareTotal += +target.total;
