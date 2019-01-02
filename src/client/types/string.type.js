@@ -1508,3 +1508,9 @@ Tw.ROAMING_DOWNLOAD_URL = {
   PHONE_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
   RENTAL_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
 };
+
+Tw.TOOLTIP_TITLE = {
+     ROAMING_PAY_GUIDE: '로밍 이용요금 안내',
+     ROAMING_USE_GUIDE: '로밍 사용안내',
+     SERVICE_START_GUIDE: '서비스개시일/시간안내'
+};
