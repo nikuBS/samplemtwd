@@ -149,39 +149,45 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
-        this._popupService.open({
-          title: Tw.POPUP_TITLE.NOT_FAMILY,
-          title_type: 'sub',
-          cont_align: 'tl',
-          contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
-          infocopy: [{
-            info_contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY_INFO,
-            bt_class: 'none'
-          }],
-          bt: [{
-            style_class: 'tw-popup-closeBtn',
-            txt: Tw.BUTTON_LABEL.CLOSE
-          }]
-        });
+      if (type === 'gift') {
+        if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
+          this._popupService.open({
+            title: Tw.POPUP_TITLE.NOT_FAMILY,
+            title_type: 'sub',
+            cont_align: 'tl',
+            contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
+            infocopy: [{
+              info_contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY_INFO,
+              bt_class: 'none'
+            }],
+            bt: [{
+              style_class: 'tw-popup-closeBtn',
+              txt: Tw.BUTTON_LABEL.CLOSE
+            }]
+          });
+          return;
+        }
+
+        if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
+          this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
+          return;
+        }
+
+        if (res.code === 'RCG3003') {
+          this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A211);
+          return;
+        }
+
+        if (res.code === 'RCG3006') {
+          this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A212);
+          return;
+        }
+
+        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A213);
         return;
       }
 
-      if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
-        this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
-        return;
-      }
-
-      if (res.code === 'RCG3003') {
-        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A211);
-        return;
-      }
-
-      if (res.code === 'RCG3006') {
-        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A212);
-        return;
-      }
-      this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A213)
+      Tw.Error(res.code, res.msg).pop();
       return;
     }
 
