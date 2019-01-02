@@ -103,7 +103,7 @@ class App {
   private setClientMap() {
     const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
 
-    this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
+    this.apiService.request(API_CMD.MANIFEST, {}, {}, [version]).subscribe((manifest) => {
       Object.keys(manifest).map((key) => {
         if ( key.indexOf('.') !== -1 ) {
           let appName = key.split('.')[0];

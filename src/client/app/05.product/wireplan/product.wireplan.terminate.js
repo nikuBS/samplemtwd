@@ -85,7 +85,7 @@ Tw.ProductWireplanTerminate.prototype = {
           termRsnCd: callbackParams.termRsnCd
         },
         {},
-        this._prodId
+        [this._prodId]
       )
       .done($.proxy(this._procTerminateRes, this));
   },
@@ -97,7 +97,7 @@ Tw.ProductWireplanTerminate.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {

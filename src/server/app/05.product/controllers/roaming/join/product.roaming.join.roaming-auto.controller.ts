@@ -32,8 +32,8 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, prodId),
-            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
+            this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId]),
+            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
         ).subscribe(([ prodRedisInfo, prodApiInfo, prodServiceTimeInfo ]) => {
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00) || (prodServiceTimeInfo.code !== API_CODE.CODE_00)) {

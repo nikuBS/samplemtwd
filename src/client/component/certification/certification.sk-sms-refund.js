@@ -134,7 +134,7 @@ Tw.CertificationSkSmsRefund.prototype = {
       return;
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0055, {}, {}, answer)
+    this._apiService.request(Tw.API_CMD.BFF_01_0055, {}, {}, [answer])
       .done($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
           callback();

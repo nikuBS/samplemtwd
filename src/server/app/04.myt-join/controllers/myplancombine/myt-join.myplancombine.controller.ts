@@ -70,7 +70,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
   }
 
   private getCombination = (id, svcInfo) => {
-    return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, id).map(resp => {
+    return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,

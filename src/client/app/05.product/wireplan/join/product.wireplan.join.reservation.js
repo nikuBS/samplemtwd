@@ -547,7 +547,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, this._prodId)
+    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, [this._prodId])
       .done($.proxy(this._procExpalinFilePopRes, this));
   },
 

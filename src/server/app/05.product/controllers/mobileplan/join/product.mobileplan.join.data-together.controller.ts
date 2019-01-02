@@ -56,8 +56,8 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId),
-      this.apiService.request(API_CMD.BFF_10_0008, {}, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0008, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0009, {}),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
     ).subscribe(([ basicInfo, joinTermInfo, overPayReqInfo, mobilePlanCompareInfo ]) => {

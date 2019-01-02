@@ -50,7 +50,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
       return;
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, this._prodId)
+    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this));
   },
 
@@ -59,7 +59,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId)
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId])
       .done($.proxy(this._isVasTerm, this));
   },
 

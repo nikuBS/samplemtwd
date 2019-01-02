@@ -88,7 +88,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
 
 
 
-      this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, headerData,this._prodId).
+      this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, headerData,[this._prodId]).
       done($.proxy(function (res) {
           if(res.code===Tw.API_CODE.CODE_00){
               return true;

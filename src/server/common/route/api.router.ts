@@ -53,7 +53,7 @@ class ApiRouter {
     this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0003
     this.router.post('/user/service-password-sessions', this.loginSvcPassword.bind(this));    // BFF_03_0009
     this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
-    this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
+    this.router.put('/core-auth/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
     this.router.post('/uploads', this.uploadFile.bind(this));

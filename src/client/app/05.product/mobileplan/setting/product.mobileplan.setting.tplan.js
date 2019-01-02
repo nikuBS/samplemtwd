@@ -55,7 +55,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0014, {
       beforeTDiyGrCd: this._currentBenefitProdId,
       afterTDiyGrCd: $checked.val()
-    }, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this));
+    }, {}, [$checked.val()]).done($.proxy(this._procSetupOkRes, this));
   },
 
   _procSetupOkRes: function(resp) {

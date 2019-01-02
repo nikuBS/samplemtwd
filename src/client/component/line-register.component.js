@@ -207,7 +207,7 @@ Tw.LineRegisterComponent.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
       var $target = this.$list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
 
-      this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, this._marketingSvc)
+      this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, [this._marketingSvc])
         .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')))
         .fail($.proxy(this._failGetMargetingOffer, this));
     }

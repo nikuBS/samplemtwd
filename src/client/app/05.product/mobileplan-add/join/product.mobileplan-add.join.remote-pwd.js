@@ -128,7 +128,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       password: $.trim(this.$inputPassword.siblings('input').val())
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {

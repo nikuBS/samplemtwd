@@ -189,7 +189,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
       optProdId: '',
       svcProdGrpId: ''
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {

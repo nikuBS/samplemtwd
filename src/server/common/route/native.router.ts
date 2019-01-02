@@ -56,7 +56,9 @@ class NativeRouter {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
-    this.apiService.request(cmd, params, headers, ...pathVar)
+    const version = req.params['version'];
+
+    this.apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
         return res.json(data);
       });
@@ -64,9 +66,9 @@ class NativeRouter {
 
   private getPathVariable(params) {
     if ( !FormatHelper.isEmpty(params) ) {
-      return Object.keys(params).map((key) => {
-        return params[key];
-      });
+      return Object.keys(params)
+        .filter((key) => key !== 'version')
+        .map((key) => params[key]);
     }
     return [];
   }

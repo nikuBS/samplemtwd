@@ -145,7 +145,7 @@ Tw.CommonMemberSloginIos.prototype = {
         birthDt: this.$inputBirth.val(),
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
-      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, this.mdn)
+      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, [this.mdn])
         .done($.proxy(this._successRequestCert, this, reCert));
     }
   },

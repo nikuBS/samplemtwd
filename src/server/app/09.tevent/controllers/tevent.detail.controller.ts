@@ -18,7 +18,7 @@ class TeventDetail extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const id = req.url.split('/')[2];
 
-    this.apiService.request(API_CMD.BFF_09_0002, {}, {}, id).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_09_0002, {}, {}, [id]).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('tevent.detail.html', {
           result: this.parseData(resp.result),

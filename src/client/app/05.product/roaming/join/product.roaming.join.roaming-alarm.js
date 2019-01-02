@@ -131,7 +131,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
    _doJoin : function(data,apiService,historyService,$containerData){
 
 
-        apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},data.prodId).
+        apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},[data.prodId]).
         done($.proxy(function (res) {
             if(res.code===Tw.API_CODE.CODE_00){
                 var completePopupData = {

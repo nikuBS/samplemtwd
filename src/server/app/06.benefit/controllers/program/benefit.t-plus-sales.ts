@@ -25,7 +25,7 @@ class BenefitTPlusSales extends TwViewController {
     };
     // NA00002079 (2년이상), NA00002082(3년이상), NA00002080(5년이상), NA00002081(10년이상), NA00002246(2년미만)
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0081, {}, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0081, {}, {}, [prodId]),
     ).subscribe(([tplusInfo]) => {
       if ( tplusInfo.code === API_CODE.CODE_00 ) {
         data.percent = tplusInfo.result.discountRate;

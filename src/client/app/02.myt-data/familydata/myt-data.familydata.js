@@ -72,7 +72,7 @@ Tw.MyTDataFamily.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
     } else if (limitation === false) {
       this._popupService.close();
-      this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, mgmtNum).done($.proxy(this._successChangeLimitation, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
     } else if (this._maxLimitation < Number(limitation)) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6);
     } else {

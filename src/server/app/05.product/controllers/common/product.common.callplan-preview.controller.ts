@@ -438,7 +438,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0116, {}, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0116, {}, {}, [prodId]),
       this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230')
     ).subscribe(([prodInfo, additionsProdFilterInfo]) => {
         if (prodInfo.code !== API_CODE.CODE_00) {

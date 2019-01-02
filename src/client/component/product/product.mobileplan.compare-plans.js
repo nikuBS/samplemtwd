@@ -31,7 +31,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
     // 상품원장 - 상품기본정보 조회. ( requestArray pathVariables 안되는거 같아서 이거 실행 후 나머지 실행한다. )
     var callBasicInfo = function (currentProdId) {
-      this._apiService.request(Tw.API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, prodId)
+      this._apiService.request(Tw.API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, [prodId])
         .done($.proxy(function (resp) {
           if (!this._apiError(resp)) {
             callAll.call(this, currentProdId, resp);
@@ -193,7 +193,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: '01'
-    }, null, Tw.UrlHelper.getQueryParams().prodId)
+    }, null, [Tw.UrlHelper.getQueryParams().prodId])
       .done($.proxy(this._goJoinDone, this, joinUrl));
   },
 
