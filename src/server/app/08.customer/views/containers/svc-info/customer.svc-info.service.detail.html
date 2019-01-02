@@ -3,7 +3,7 @@
 * Author: Lee Kirim (kirim@sk.com)
 * Date: 2018.12.20
 %>
-<% include ../../components/start.component.html %>
+<% include ../../components/start-idpt.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -20,7 +20,7 @@
     
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <div class="cont-box">
+        <!-- <div class="cont-box">
             <div class="info-form-box">
                 <p class="form-label" id="aria-exp-label2"><%=data.contents.sub_title %></p>
                 <% if(data.list.length) { %>
@@ -30,10 +30,9 @@
                 </button>
                 <% } %>
             </div>
-        </div>
-        <div class="cont-box">
+        </div> -->
+       
         <%- contentHTML %>
-        </div>
     </div>
 
     <!--// #contents -->

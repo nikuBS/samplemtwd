@@ -28,7 +28,7 @@ class CustomerUseguideService extends TwViewController {
     FormatHelper.isEmpty(code)) {
       // 페이지가 존재하지 않으면
     }
-    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, code ).subscribe(resp => {
+    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code] ).subscribe(resp => {
       if ( resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           code: resp.code,

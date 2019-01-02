@@ -11,15 +11,15 @@ Tw.CustomerSvcinfoServiceDetail = function (rootEl, data) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._hash = Tw.Hash;
 
+  this._init();
   this._cachedElement();
   this._bindEvent();
 
-  this._init();
 };
 
 Tw.CustomerSvcinfoServiceDetail.prototype = {
   _cachedElement: function () {
-    this.$selectBtn = this.$container.find('#fe-select-btn'); // type A
+    this.$selectBtn = this.$container.find('.btn-dropdown'); // type A
   },
   _init: function () {
     this.rootPathName = this._historyService.pathname;
@@ -27,6 +27,9 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
   _bindEvent: function () {
     this.$selectBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
+
+    // from idpt
+    this._bindUIEvent();
   },
 
   _typeActionSheetOpen: function (e) {
@@ -83,7 +86,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     // popup close
     this._popupService.close();
 
-    // 
+    // move 
     this._moveDetailPage(
       listIndex,
       subIndex,
@@ -95,5 +98,58 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     // TODO code 값이 url 일때를 고려
     var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
     this._historyService.goLoad(targetURL + '?listIndex='+ listIndex +'&subIndex='+ subIndex +'&code=' + code);
-  }
+  },
+
+  _bindUIEvent: function () {
+    $('.idpt-tab', this.$container).each(function(){
+      var tabBtn = $(this).find('li');
+      $(tabBtn).click(function(){
+        var i = $(this).index();
+        $('.idpt-tab > li', this.$container).removeClass('on').eq(i).addClass('on');
+        $('.idpt-tab-content', this.$container).removeClass('show').eq(i).addClass('show');
+      });
+    });
+  
+    // popup
+    $('.idpt-popup-open', this.$container).click(function(){
+      var popId = $(this).attr('href');
+      $('.idpt-popup-wrap', this.$container).removeClass('show');
+      $(popId).addClass('show');
+      $('.idpt-popup', this.$container).show();
+    });
+    $('.idpt-popup-close', this.$container).click(function(){
+      $('.idpt-popup', this.$container).hide();
+    });
+  
+    // tooltip
+    $('.info-tooltip', this.$container).each(function(){
+      $('.btn-tooltip-open', this.$container).on('click', function(){
+        var remStandard = $('body').css('font-size').replace('px','');
+        var btnLeft = $(this).offset().left - 28;
+        var btnRem = btnLeft/remStandard
+        $('.idpt-tooltip-layer', this.$container).css('left', btnRem + 'rem');
+        $(this).next('div').show();
+      });
+    });
+    $('.btn-tooltip-close', this.$container).on('click', function(){
+      $('.idpt-tooltip-layer', this.$container).hide();
+    });
+  
+    //accordian
+    $('.idpt-accordian > li > a', this.$container).on('click', function(){
+      $('.idpt-accordian > li > a', this.$container).removeClass('open');
+      $('.idpt-accordian-cont', this.$container).slideUp();
+      if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
+        $(this).addClass('open');
+        $(this).parent().find('.idpt-accordian-cont').slideDown();
+      }
+    });
+  
+    //toggle (FAQ)
+    $('.idpt-toggle-btn', this.$container).each(function(){
+      $(this).click(function(){
+        $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+      })
+    });
+  },
 };
