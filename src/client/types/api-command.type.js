@@ -450,7 +450,7 @@ Tw.API_CMD = {
   BFF_11_0006: { path: '/core-membership/v1/card/change', method: Tw.API_METHOD.PUT },
   BFF_11_0007: { path: '/core-membership/v1/card/check', method: Tw.API_METHOD.GET },
   BFF_11_0009: { path: '/core-membership/v1/card/used-list', method: Tw.API_METHOD.GET },
-  BFF_11_0010: { path: '/core-membership/v1/card/used-list', method: Tw.API_METHOD.GET },
+  BFF_11_0010: { path: '/core-membership/v1/card/hist', method: Tw.API_METHOD.GET },
   BFF_11_0011: { path: '/core-membership/v1/card/create', method: Tw.API_METHOD.POST },
   BFF_11_0012: { path: '/core-membership/v1/card/modify', method: Tw.API_METHOD.PUT },
   BFF_11_0013: { path: '/core-membership/v1/card/cancel-info', method: Tw.API_METHOD.GET },

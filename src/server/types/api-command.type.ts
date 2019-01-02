@@ -683,7 +683,7 @@ export const API_CMD = {
   BFF_11_0006: { path: '/core-membership/v1/card/change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_11_0007: { path: '/core-membership/v1/card/check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0009: { path: '/core-membership/v1/card/used-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_11_0010: { path: '/core-membership/v1/card/used-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0010: { path: '/core-membership/v1/card/hist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0011: { path: '/core-membership/v1/card/create', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_11_0012: { path: '/core-membership/v1/card/modify', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_11_0013: { path: '/core-membership/v1/card/cancel-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

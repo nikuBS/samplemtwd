@@ -35,6 +35,9 @@ export default class MembershipMy extends TwViewController {
   private parseMyInfoData(myInfoData): any {
     myInfoData.checkHomeChecked = myInfoData.addrCd === '03' ? 'checked' : '' ;
     myInfoData.checkOfficeChecked = myInfoData.addrCd === '04' ? 'checked' : '' ;
+    myInfoData.smsAgreeChecked = myInfoData.smsAgreeYn === 'Y' ? 'checked' : '' ;
+    myInfoData.sktNewsChecked = myInfoData.sktNewsYn === 'Y' ? 'checked' : '' ;
+    myInfoData.sktTmChecked = myInfoData.sktTmYn === 'Y' ? 'checked' : '' ;
 
     return myInfoData;
   }

@@ -10,6 +10,7 @@ import MembershipBenefitPlus from './controllers/benefit/membership.benefit.plus
 import MembershipSubmain from './controllers/membership.submain.controller';
 import MembershipMy from './controllers/my/membership.my.controller';
 import MembershipMyUpdate from './controllers/my/membership.my.update.controller';
+import MembershipMyHistory from './controllers/my/membership.my.history.controller';
 
 class MembershipRouter extends TwRouter {
   constructor() {
@@ -25,6 +26,7 @@ class MembershipRouter extends TwRouter {
     this.controllers.push({ url: '/submain', controller: MembershipSubmain });
     this.controllers.push({ url: '/my', controller: MembershipMy });
     this.controllers.push({ url: '/my/update', controller: MembershipMyUpdate });
+    this.controllers.push({ url: '/my/history', controller: MembershipMyHistory });
   }
 }
 
