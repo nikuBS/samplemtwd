@@ -61,8 +61,9 @@ class BypassRouter {
     // const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
+    const version = req.params['version'];
 
-    this.apiService.request(cmd, params, headers, ...pathVar)
+    this.apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
         // TODO: This is unpretty. Need to revise for NON JSON Object response
         if ( data instanceof Buffer ) {
@@ -82,9 +83,9 @@ class BypassRouter {
 
   private getPathVariable(params) {
     if ( !FormatHelper.isEmpty(params) ) {
-      return Object.keys(params).map((key) => {
-        return params[key];
-      });
+      return Object.keys(params)
+        .filter((key) => key !== 'version')
+        .map((key) => params[key]);
     }
     return [];
   }

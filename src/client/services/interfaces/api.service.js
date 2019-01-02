@@ -4,13 +4,14 @@ Tw.ApiService = function () {
 };
 
 Tw.ApiService.prototype = {
-  request: function (command, params, headers) {
-    var pathVariables = this._getPathVariables(arguments);
-    var htOptions = this._makeOptions(command, params, headers, pathVariables);
+  request: function (command, params, headers, pathParams, version) {
+    // var pathVariables = this._getPathVariables(arguments);
+    pathParams = pathParams || [];
+    var htOptions = this._makeOptions(command, params, headers, pathParams, version);
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions)
-      .then($.proxy(this._checkAuth, this, command, params, headers, pathVariables));
+      .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version));
   },
 
   requestArray: function (requests) {
@@ -44,7 +45,7 @@ Tw.ApiService.prototype = {
     });
   },
 
-  _checkAuth: function (command, params, headers, pathVariables, resp) {
+  _checkAuth: function (command, params, headers, pathParams, version, resp) {
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
 
@@ -57,7 +58,8 @@ Tw.ApiService.prototype = {
       command: command,
       params: params,
       headers: headers,
-      pathVariables: pathVariables
+      pathParams: pathParams,
+      version: version
     };
     var authUrl = command.method + '|' + command.path;
     if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 || resp.code === Tw.API_CODE.BFF_0010 ) {
@@ -88,13 +90,7 @@ Tw.ApiService.prototype = {
       if ( resp.authKind === Tw.AUTH_CERTIFICATION_KIND.O ) {
         this._historyService.reload();
       } else {
-        var arrParams = [];
-        arrParams.push(requestInfo.command);
-        arrParams.push(requestInfo.params);
-        arrParams.push(requestInfo.headers);
-        arrParams = arrParams.concat(requestInfo.pathVariables);
-
-        this.request.apply(this, arrParams)
+        this.request(requestInfo.command, requestInfo.params, requestInfo.headers, requestInfo.pathParams, requestInfo.version)
           .done($.proxy(this._successRequestAfterCert, this, deferred));
       }
     } else {
@@ -106,14 +102,14 @@ Tw.ApiService.prototype = {
     deferred.resolve(resp);
   },
 
-  _makeOptions: function (command, params, headers, pathVariables) {
+  _makeOptions: function (command, params, headers, pathVariables, version) {
     var prefix = this._setPrefix(command);
     var path = command.path;
 
     // var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
     return {
       method: command.method,
-      url: prefix + this._makePath(path, pathVariables),
+      url: prefix + this._makePath(path, pathVariables, version),
       timeout: 10000,
       dataType: 'json',
       headers: this._makeHeaders(command, headers),
@@ -121,12 +117,13 @@ Tw.ApiService.prototype = {
     };
   },
 
-  _makePath: function (path, pathVariables) {
+  _makePath: function (path, pathVariables, version) {
+    version = version || Tw.API_VERSION.V1;
     if ( pathVariables.length > 0 ) {
       _.map(pathVariables, $.proxy(function (argument, index) {
         path = path.replace(':args' + index, argument);
       }, this));
-    }
+    }path = path.replace(':version', version);
     return path;
   },
 

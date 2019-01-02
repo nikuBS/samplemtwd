@@ -125,7 +125,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       asgnNumList: [],
       optProdId: this.$container.find('.widget-box.radio input[type="radio"]:checked').val(),
       svcProdGrpId: ''
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {

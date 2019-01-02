@@ -36,8 +36,8 @@ class BenefitSelectContract extends TwViewController {
     };
     data.monthCode = { 'M0012': '12', 'M0024': '24' };
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId),
-      this.apiService.request(API_CMD.BFF_10_0062, {}, {}, prodId)
+      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0062, {}, {}, [prodId])
     ).subscribe(([joinTermInfo, seldisSets]) => {
       // 무선 선택약정 할인제도 상품 설정 조회
       if ( seldisSets.code === API_CODE.CODE_00 ) {

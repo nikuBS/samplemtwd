@@ -43,7 +43,7 @@ export default class ProductAppsDetail extends TwViewController {
   }
 
   private getAppDetail = appId => {
-    return this.apiService.request(API_CMD.BFF_10_0097, { prodExpsTypCd: 'P' }, {}, appId).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0097, { prodExpsTypCd: 'P' }, {}, [appId]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -65,7 +65,7 @@ export default class ProductAppsDetail extends TwViewController {
   }
 
   private getRecommendedApps = appId => {
-    return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, appId).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [appId]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }

@@ -22,7 +22,7 @@ class ProductRoamingLookup extends TwViewController {
       });
   }
 
-  this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
+  this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
   .subscribe(( prodBffInfo ) => {
     if (FormatHelper.isEmpty(prodBffInfo)) {
         return this.error.render(res, {

@@ -85,10 +85,10 @@ Tw.BenefitDisPgmCancel.prototype = {
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     if(this._isTPlus) {
-      this._apiService.request(Tw.API_CMD.BFF_10_0083, {}, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0083, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this));
     }
     else {
-      this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this));
     }
   },
 
@@ -99,7 +99,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {

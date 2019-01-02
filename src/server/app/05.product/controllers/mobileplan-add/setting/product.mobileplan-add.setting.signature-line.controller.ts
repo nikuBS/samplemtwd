@@ -54,7 +54,7 @@ class ProductMobileplanAddSettingSignatureLine extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0021, {}, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId])
       .subscribe((combineLineInfo) => {
         if (combineLineInfo.code !== API_CODE.CODE_00 || combineLineInfo.result.combinationLineList.length < 1) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

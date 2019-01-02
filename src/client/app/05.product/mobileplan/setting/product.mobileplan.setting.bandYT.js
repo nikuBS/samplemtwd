@@ -49,7 +49,7 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
 
   _onSetBandYT: function () {
     // TODO: 서버 오류로 추후 기능 테스트 필요!
-    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: this.info }, {}, this.data.prodId)
+    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: this.info }, {}, [this.data.prodId])
       .done($.proxy(this._onSuccessJoinAddition, this))
       .fail($.proxy(this._onFailJoinAddtion, this));
   },

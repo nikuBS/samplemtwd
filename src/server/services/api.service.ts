@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.type';
+import { API_CMD, API_CODE, API_METHOD, API_SERVER, API_VERSION } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
@@ -30,9 +30,10 @@ class ApiService {
     this.res = res;
   }
 
-  public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
+  public request(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
+    pathParams = pathParams || [];
     const apiUrl = this.getServerUri(command);
-    const options = this.getOption(command, apiUrl, params, header, args);
+    const options = this.getOption(command, apiUrl, params, header, pathParams, version);
     this.logger.info(this, '[API_REQ]', options);
 
     return Observable.create((observer) => {
@@ -59,9 +60,9 @@ class ApiService {
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
-  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {
+  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[], version): any {
     let option = {
-      url: apiUrl + this.makePath(command.path, command.method, params, args),
+      url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
       headers: this.makeHeader(command, header, params),
       data: params
@@ -115,12 +116,14 @@ class ApiService {
     return cookie + ';' + COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';';
   }
 
-  private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
+  private makePath(path: string, method: API_METHOD, params: any, args: any[], version): string {
+    version = version || API_VERSION.V1;
     if ( args.length > 0 ) {
       args.map((argument, index) => {
         path = path.replace(`:args${index}`, argument);
       });
     }
+    path = path.replace(':version', version);
     if ( !FormatHelper.isEmpty(params) ) {
       path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     }

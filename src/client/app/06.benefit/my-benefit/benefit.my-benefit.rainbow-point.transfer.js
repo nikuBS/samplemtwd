@@ -37,7 +37,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
 
   _cancelTransfer: function (serNum) {
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_05_0105, {}, {}, serNum)
+    this._apiService.request(Tw.API_CMD.BFF_05_0105, {}, {}, [serNum])
       .done($.proxy(this._cancelTransferDone, this))
       .fail($.proxy(this._reqFail, this));
   },

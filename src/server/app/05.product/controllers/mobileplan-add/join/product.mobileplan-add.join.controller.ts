@@ -27,7 +27,7 @@ class ProductMobileplanAddJoin extends TwViewController {
         title: PRODUCT_TYPE_NM.JOIN
       };
 
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
       .subscribe((basicInfo) => {
       if (basicInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -36,7 +36,7 @@ class ProductMobileplanAddJoin extends TwViewController {
         }));
       }
 
-      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
         .subscribe((joinTermInfo) => {
           if (joinTermInfo.code !== API_CODE.CODE_00) {
             return this.error.render(res, Object.assign(renderCommonInfo, {

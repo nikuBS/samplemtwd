@@ -71,7 +71,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       var requestValue = {
           'svcNumList' : [phoneObj]
       };
-      this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},this._prodId).
+      this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},[this._prodId]).
       done($.proxy(function (res) {
           if(res.code===Tw.API_CODE.CODE_00){
               this._addedList.push(phoneObj);
@@ -139,7 +139,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
           'svcNumList' : this._addedList[selectedIndex]
       };
 
-      this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},this._prodId).
+      this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
       done($.proxy(function (res) {
           if(res.code===Tw.API_CODE.CODE_00){
               this._addedList.splice(selectedIndex,1);

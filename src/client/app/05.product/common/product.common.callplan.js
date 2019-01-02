@@ -243,7 +243,7 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, this._prodId)
+    this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
       .done($.proxy(this._procAdvanceCheck, this, url, joinTermCd));
   },
 

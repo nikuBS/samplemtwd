@@ -56,14 +56,14 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     if (['C', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
-      return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, prodId);
+      return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [prodId]);
     }
 
     if (['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1) {
-      return this.apiService.request(API_CMD.BFF_10_0109, {}, {}, prodId);
+      return this.apiService.request(API_CMD.BFF_10_0109, {}, {}, [prodId]);
     }
 
-    return this.apiService.request(API_CMD.BFF_10_0119, {}, {}, prodId);
+    return this.apiService.request(API_CMD.BFF_10_0119, {}, {}, [prodId]);
   }
 
   /**
@@ -567,7 +567,7 @@ class ProductCommonCallplan extends TwViewController {
       });
     }
 
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
       .subscribe((basicInfo) => {
         if (basicInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -582,11 +582,11 @@ class ProductCommonCallplan extends TwViewController {
         }
 
         Observable.combineLatest(
-          this.apiService.request(API_CMD.BFF_10_0003, {}, {}, prodId),
-          this.apiService.request(API_CMD.BFF_10_0005, {}, {}, prodId),
-          this.apiService.request(API_CMD.BFF_10_0006, {}, {}, prodId),
-          this.apiService.request(API_CMD.BFF_10_0139, {}, {}, prodId),
-          this.apiService.request(API_CMD.BFF_10_0112, {}, {}, prodId),
+          this.apiService.request(API_CMD.BFF_10_0003, {}, {}, [prodId]),
+          this.apiService.request(API_CMD.BFF_10_0005, {}, {}, [prodId]),
+          this.apiService.request(API_CMD.BFF_10_0006, {}, {}, [prodId]),
+          this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [prodId]),
+          this.apiService.request(API_CMD.BFF_10_0112, {}, {}, [prodId]),
           this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
           this._getMyContentsData(basicInfo.result.grpProdScrnConsCd, prodId),
           this._getExtendContentsData(basicInfo.result.prodGrpYn, basicInfo.result.repProdId, basicInfo.result.prodGrpRepYn),

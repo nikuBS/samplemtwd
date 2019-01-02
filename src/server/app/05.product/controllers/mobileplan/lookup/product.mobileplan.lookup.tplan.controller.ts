@@ -112,7 +112,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
       reqParams.tDiyGrCd = tDiyGrCd;
     }
 
-    this.apiService.request(API_CMD.BFF_10_0015, reqParams, {}, 'NA00005959')
+    this.apiService.request(API_CMD.BFF_10_0015, reqParams, {}, ['NA00005959'])
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

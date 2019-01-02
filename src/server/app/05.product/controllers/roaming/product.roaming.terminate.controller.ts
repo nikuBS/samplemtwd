@@ -31,7 +31,7 @@ class ProductRoamingTerminate extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '03'}, {}, prodId)
+            this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '03'}, {}, [prodId])
         ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {

@@ -24,7 +24,7 @@ Tw.MyTDataUsageCancelTshare.prototype = {
   },
 
   _onClickBtnCancelTshare: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, this._options.cSvcMgmtNum)
+    this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, [this._options.cSvcMgmtNum])
       .done($.proxy(this._onDoneCancelTshare, this))
       .fail($.proxy(this._onFailCancelTshare, this));
   },

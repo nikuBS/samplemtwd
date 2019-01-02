@@ -28,7 +28,7 @@ class CustomerDamageInfoWarningView extends TwViewController {
       return res.redirect('/customer/damage-info/warning');
     }
 
-    this.apiService.request(API_CMD.BFF_08_0041, {}, {}, idx)
+    this.apiService.request(API_CMD.BFF_08_0041, {}, {}, [idx])
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
           return this.error.render(res, {

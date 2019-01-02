@@ -36,7 +36,7 @@ class ProductMobileplanAddLookupPayment extends TwViewController {
         title: PRODUCT_TYPE_NM.SETTING
       };
 
-    this.apiService.request(API_CMD.BFF_10_0021, {}, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId])
       .subscribe((paymentInfo) => {
         if (paymentInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, renderCommonInfo);

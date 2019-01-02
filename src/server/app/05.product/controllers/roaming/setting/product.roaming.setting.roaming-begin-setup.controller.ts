@@ -30,7 +30,7 @@ class ProductRoamingSettingRoamingBeginSetup extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
+            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
         ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {

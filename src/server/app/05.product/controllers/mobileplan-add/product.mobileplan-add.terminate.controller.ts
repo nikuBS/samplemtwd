@@ -31,7 +31,7 @@ class ProductMobileplanAddTerminate extends TwViewController {
       });
     }
 
-    this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, [prodId])
       .subscribe((joinTermInfo) => {
       if (joinTermInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {

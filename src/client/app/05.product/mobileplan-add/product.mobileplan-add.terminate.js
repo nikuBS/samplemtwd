@@ -72,7 +72,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
@@ -82,7 +82,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {
