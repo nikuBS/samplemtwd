@@ -9,7 +9,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { Observable } from 'rxjs/Observable';
 
 class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
@@ -74,9 +73,22 @@ class MyTJoinMyPlanAdd extends TwViewController {
   private convertAdditions = (addition: any) => {
     return {
       ...addition,
+      ...(addition.btnList && addition.btnList.length > 0 ? { btnList: addition.btnList.sort(this._sortButtons) } : {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
       scrbDt: DateHelper.getShortDateNoDot(addition.scrbDt)
     };
+  }
+
+  private _sortButtons = (a, b) => {
+    if (a.btnTypCd) {
+      if (a.btnTypCd === 'TE') {
+        return 1;
+      } else {
+        return -1;
+      }
+    } else {
+      return 0;
+    }
   }
 }
 
