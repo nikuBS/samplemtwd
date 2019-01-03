@@ -8,14 +8,10 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn) {
     this._cdn = cdn;
     this.$container = rootEl;
     this._historyService = new Tw.HistoryService();
-    //this._svcInfo = JSON.parse(svcInfo);
     this._svcInfo = svcInfo;
-    //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
     this._searchInfo = searchInfo;
     this._accessKeyword = this._searchInfo.query;
     this._init(this._searchInfo);
-    this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
-    this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
 };
 
 Tw.CommonSearch.prototype = {
@@ -38,6 +34,10 @@ Tw.CommonSearch.prototype = {
           }
           this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data),keyName,this._cdn);
         }
+        this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
+        this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     },
 
     _arrangeData : function (data) {
@@ -78,7 +78,10 @@ Tw.CommonSearch.prototype = {
         if(data.length<=0){
             $list.hide();
         }
-         _.each(data,function (listData) {
+         _.each(data,function (listData,index) {
+             if(index>=3){
+                 return;
+             }
              $list.append(templateData({listData : listData , CDN : cdn}));
          });
     },
@@ -99,33 +102,26 @@ Tw.CommonSearch.prototype = {
     },
     _addRecentlyKeyword : function (keyword) {
         var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+        var userId = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
         if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
             //making recentlySearchKeyword
-            Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
             recentlyKeywordData = {};
         }
-        if(Tw.FormatHelper.isEmpty(this._svcInfo)){
-            //logout user's recentlySearchKeyword arr
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData.logOutUser)){
-                //making logout user's recentlySearchKeyword
-                recentlyKeywordData.logOutUser = [];
-            }
-            recentlyKeywordData.logOutUser.push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
-            while (recentlyKeywordData.logOutUser.length>10){
-                recentlyKeywordData.logOutUser = recentlyKeywordData.logOutUser.shift();
-            }
-        }else{
-            //login user
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._svcInfo.svcMgmtNum])){
-                //makin loginuser's recentlySearchKeyword based on svcMgmtNum
-                recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
-            }
-            recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
-            while (recentlyKeywordData[this._svcInfo.svcMgmtNum].length>10){
-                recentlyKeywordData[this._svcInfo.svcMgmtNum].shift();
-            }
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData[userId])){
+            //makin nowUser's recentlySearchKeyword based on svcMgmtNum
+            recentlyKeywordData[userId] = [];
+        }
+        recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+        while (recentlyKeywordData[userId].length>10){
+            recentlyKeywordData[userId].shift();
         }
         Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    },
+    _searchRelatedKeyword : function (targetEvt) {
+        var keyword = $(targetEvt.currentTarget).data('param');
+        var goUrl = '/common/search?keyword='+keyword;
+        this._addRecentlyKeyword(keyword);
+        this._historyService.goLoad(goUrl);
     }
 
 };

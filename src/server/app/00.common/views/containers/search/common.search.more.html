@@ -53,7 +53,7 @@
                 <dl class="searchword-list">
                     <dt class="tit">연관</dt>
                     <% for(var i=0;i<relatedKeyword.result.Word.length;i++){ %>
-                    <dd><a href="" class="link"><%= relatedKeyword.result.Word[i] %></a></dd>
+                    <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
                     <% } %>
                 </dl>
             </div>
@@ -225,16 +225,18 @@
 
             <% if(category=='sale'&&searchInfo.search[0]&&searchInfo.search[0].sale){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm bgnone noborder sale">
+            <div class="cont-box nogaps-btm noborder sale">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">혜택·할인</h2>
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.totalcount %></span>건
                     </div>
                 </div>
-                <ul class="discountbenefit-list" id="sale_list">
+                <div class="benefit-productfilter-type line-none ml0 mr0 mb0">
+                    <ul id="sale_list">
 
-                </ul>
+                    </ul>
+                </div>
             </div>
             <% } %>
 

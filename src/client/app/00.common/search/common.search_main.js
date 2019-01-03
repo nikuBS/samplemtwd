@@ -12,9 +12,9 @@ Tw.CommonSearchMain = function (rootEl,svcInfo) {
 
 Tw.CommonSearchMain.prototype = {
     _init : function () {
+        this._historyService = new Tw.HistoryService();
         this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
         this._recentlyKeywordListData = this._getRecentlyKeywordList();
-        this._historyService = new Tw.HistoryService();
         this._apiService = Tw.Api;
         this.$inputElement = this.$container.find('#search_input');
         this.$autoCompleteList = this.$container.find('#auto_complete_list');
@@ -22,13 +22,14 @@ Tw.CommonSearchMain.prototype = {
         this.$recentlyKeywordList = this.$container.find('#recently_keyword_list');
         this.$recentlyKeywordTemplate = Handlebars.compile(this.$container.find('#recently_keyword_template').html());
         this.$container.find('#recently_keyword_layer').hide();
+        this.$container.find('.icon-gnb-search').on('click',$.proxy(this._searchByInputValue,this));
+        this.$container.find('.search-element').on('click',$.proxy(this._searchByElement,this));
         this._recentlyKeywordInit();
         this._bindPopupElementEvt();
     },
     _keyInputEvt : function (inputEvtObj) {
         if(inputEvtObj.keyCode===13){
-            this._addRecentlyKeywordList(inputEvtObj.currentTarget.value);
-            this._historyService.goLoad('/common/search?keyword='+inputEvtObj.currentTarget.value);
+            this._searchByInputValue();
             return;
         }
         this._selectShowLayer();
@@ -42,6 +43,7 @@ Tw.CommonSearchMain.prototype = {
                 if(res.code===0&&res.result.length>0){
                     _.each(res.result[0].items,$.proxy(this._showAutoCompleteKeyword,this));
                 }
+                this.$container.find('.search-element').on('click',$.proxy(this._searchByElement,this));
             },this));
     },
     _showAutoCompleteKeyword : function(data){
@@ -49,18 +51,20 @@ Tw.CommonSearchMain.prototype = {
     },
     _bindPopupElementEvt : function () {
         this.$container.find('.close-area').on('click',$.proxy(this._historyService.goBack,this));
-        this.$container.find('.remove-recently-list').on('click',$.proxy(this._removeRecentlyKeywordList,this));
         this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
         this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
         this.$container.on('click','.close',$.proxy(this._inputBlurEvt,this));
 
     },
     _convertAutoKeywordData : function (listStr) {
-        var returnStr =  listStr.substring(0,listStr.length-7);
-        returnStr = returnStr.replace('<font style=\'color:#CC33CC\'>','<span class="highlight-text">');
-        returnStr = returnStr.replace('<font style=\'font-size:13px\'>','');
-        returnStr = returnStr.replace('</font>','</span>');
-        return returnStr;
+        var returnObj = {};
+        returnObj.showStr =  listStr.substring(0,listStr.length-7);
+        //var linkStr;
+        returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC33CC\'>','<span class="highlight-text">');
+        returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:13px\'>','');
+        returnObj.showStr = returnObj.showStr.replace('</font>','</span>');
+        returnObj.linkStr = returnObj.showStr.replace('<span class="highlight-text">','').replace('</span>','');
+        return returnObj;
     },
     _inputFocusEvt : function () {
         this.$container.find('#blind_layer').css('display','block');
@@ -80,7 +84,7 @@ Tw.CommonSearchMain.prototype = {
         }
     },
     _removeRecentlyKeywordList : function (args) {
-        var removeIdx = $(args.currentTarget).attr('data-index');
+        var removeIdx = $(args.currentTarget).data('index');
         if(removeIdx==='all'){
             this._recentlyKeywordListData[this._nowUser] = [];
         }else{
@@ -103,8 +107,10 @@ Tw.CommonSearchMain.prototype = {
             $recentlyKeywordList.append($recentlyKeywordTemplate({data : data, index : index}));
         });
         Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
+        this.$container.find('.remove-recently-list').on('click',$.proxy(this._removeRecentlyKeywordList,this));
     },
     _addRecentlyKeywordList : function (keyword) {
+        console.log('_addRecentlyKeywordList called keyword : '+keyword);
         this._recentlyKeywordListData[this._nowUser].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
         while (this._recentlyKeywordListData[this._nowUser].length>10){
             this._recentlyKeywordListData[this._nowUser].shift();
@@ -123,6 +129,22 @@ Tw.CommonSearchMain.prototype = {
             recentlyKeywordData[this._nowUser] = [];
         }
         return recentlyKeywordData;
+    },
+    _searchByInputValue : function () {
+        var searchKeyword = this.$container.find('#search_keyword').val();
+        if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.length<=0){
+            searchKeyword = this.$container.find('#selected_keyword').val();
+        }
+        this._doSearch(searchKeyword);
+    },
+    _searchByElement : function(linkEvt){
+        var param = $(linkEvt.currentTarget).data('param');
+        this._doSearch(param);
+    },
+    _doSearch : function (searchKeyword) {
+        this._addRecentlyKeywordList(searchKeyword);
+        this._historyService.goLoad('/common/search?keyword='+searchKeyword);
     }
+
 
 };

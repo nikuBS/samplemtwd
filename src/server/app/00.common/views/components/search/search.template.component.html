@@ -18,7 +18,13 @@
         <button class="link">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
-                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+                <p class="info">
+                    {{#isNaN listData.BAS_FEE_INFO }}
+                    <span class="money">{{listData.BAS_FEE_INFO}}</span>
+                    {{else}}
+                    월<span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
+                    {{/isNaN}}
+                </p>
             </div>
             <div class="taglist-wrap">
                 {{#each listData.METATAG}}
@@ -45,7 +51,13 @@
         <button class="link">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
-                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+                <p class="info">
+                    {{#isNaN listData.BAS_FEE_INFO }}
+                        <span class="money">{{listData.BAS_FEE_INFO}}</span>
+                    {{else}}
+                        월<span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
+                    {{/isNaN}}
+                </p>
             </div>
             <div class="taglist-wrap">
                 {{#each listData.METATAG}}
@@ -66,7 +78,13 @@
         <a href="" class="link">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
-                <p class="info">월<span class="money">{{{listData.BAS_FEE_INFO}}}</span>원</p>
+                <p class="info">
+                    {{#isNaN listData.BAS_FEE_INFO }}
+                    <span class="money">{{listData.BAS_FEE_INFO}}</span>
+                    {{else}}
+                    월<span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
+                    {{/isNaN}}
+                </p>
             </div>
             {{#ifCond listData.PROD_BAS_BENF_CTT '!==' ''}}
             <p class="products-detailitext">{{{listData.PROD_BAS_BENF_CTT}}}</p>
@@ -81,7 +99,13 @@
         <button class="link">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
-                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+                <p class="info">
+                    {{#isNaN listData.BAS_FEE_INFO }}
+                    <span class="money">{{listData.BAS_FEE_INFO}}</span>
+                    {{else}}
+                    월<span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
+                    {{/isNaN}}
+                </p>
             </div>
             <div class="taglist-wrap">
                 {{#each listData.METATAG}}
@@ -109,9 +133,9 @@
         <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-            <div class="price">{{listData.PRODUCT_PRICE}}원~/월</div>
+            <div class="price">{{currencyComma listData.PRODUCT_PRICE}}원~/월</div>
             {{#ifCond listData.SALE_PRICE '!==' ''}}
-            <span class="price2">{{listData.SALE_PRICE}}원</span>
+            <span class="price2">{{currencyComma listData.SALE_PRICE}}원</span>
             {{/ifCond}}
         </div>
     </li>
@@ -143,21 +167,19 @@
 </script>
 
 <script type="text/x-handlebars-template" id="sale_template">
-    <li class="category-type">
-        <a href="" class="link">
-            <div class="text-field">
-                <h3 class="title">{{{listData.PROD_NM}}}</h3>
-                <p class="text">{{{listData.PROD_SMRY_DESC}}}</p>
-            </div>
-            <div class="tag-field">
+    <li>
+        <button class="list in-img" type="button">
+            <em>{{{listData.PROD_NM}}}</em>
+            <p>{{{listData.PROD_SMRY_DESC}}}</p>
+            <div>
                 {{#each listData.METATAG}}
                 {{#ifCond this '!==' ''}}
-                <span class="tag">#{{{this}}}</span>
+                <span>#{{{this}}}</span>
                 {{/ifCond}}
                 {{/each}}
             </div>
-            <div class="img-field"><img src="{{CDN}}/img/discount/img_discount16.png" alt=""></div>
-        </a>
+            <span class="img"><img src="{{CDN}}/img/benefit/img_benefit_all01.png" alt="무엇이든 될 수 있는 0"></span>
+        </button>
     </li>
 </script>
 

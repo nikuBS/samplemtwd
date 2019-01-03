@@ -34,4 +34,12 @@ Tw.HandlebarHelper = (function () {
   Handlebars.registerHelper('json', function(context) {
     return JSON.stringify(context);
   });
+
+  Handlebars.registerHelper('isNaN', function(target, options) {
+      return isNaN(target)? options.fn(this) : options.inverse(this);
+  });
+
+  Handlebars.registerHelper('currencyComma', function(str) {
+      return str.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  });
 })();
