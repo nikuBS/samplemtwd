@@ -19,7 +19,7 @@
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <input type="text" placeholder="" title="검색" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                    <input type="text" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
                     <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
                 </span>
             </span>
@@ -39,12 +39,12 @@
 
     <div class="cont-box nogaps-btm">
         <p class="opinion-text">찾는 답이 없다면 T world에 의견을 주세요.<br>고객님의 말씀을 귀담아 듣고 있습니다.</p>
-        <ul class="opinion-selectbox">
+        <ul class="searchapplication-list">
             <% for(var i=0;i<surveyList.invstQstnInqItm.length;i++){ %>
-            <li>
+            <li class="opinion-selectbox" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">
                 <p class="text"><%= surveyList.invstQstnInqItm[i].title %></p>
                 <div class="btn">
-                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].typCd %>">입력하기</button>
+                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">입력하기</button>
                 </div>
             </li>
             <% } %>

@@ -13,6 +13,7 @@ import {REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import MyTDataHotData from '../../../02.myt-data/controllers/usage/myt-data.hotdata.controller';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class CommonSearch extends TwViewController {
   constructor() {
@@ -44,7 +45,7 @@ class CommonSearch extends TwViewController {
 
 
       Observable.combineLatest(
-          this.apiService.request(API_CMD.SEARCH_APP, requestObj, {}),
+          this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
           this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
       ).subscribe(([ searchResult, relatedKeyword ]) => {
 
@@ -100,7 +101,8 @@ class CommonSearch extends TwViewController {
                            if (resultData.code !== API_CODE.CODE_00) {
                                searchResult.result.search[0].immediate.data = [];
                            } else {
-                               const nowPrice = Number(resultData.useAmtTot) + Number(resultData.deduckTotInvAmt);
+                               /*const nowPrice = Number(resultData.result.useAmtTot) + Number(resultData.result.deduckTotInvAmt);*/
+                               const nowPrice = Number(resultData.result.useAmtTot);
                                searchResult.result.search[0].immediate.data[0].subData = nowPrice;
                            }
                            showResult(searchResult, relatedKeyword);

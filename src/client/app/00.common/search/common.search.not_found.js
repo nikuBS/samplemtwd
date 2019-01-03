@@ -8,6 +8,7 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList) {
     //this._cdn = cdn;
     this.$container = rootEl;
     this._historyService = new Tw.HistoryService();
+    this._apiService = Tw.Api;
     this._svcInfo = svcInfo;
     this._surveyList = surveyList;
     this._popupService = Tw.Popup;
@@ -21,9 +22,14 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList) {
 Tw.CommonSearchNotFound.prototype = {
     _init : function () {
         this.$container.find('.request_keyword').on('click',$.proxy(this._showClaimPopup,this));
+        this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
+        this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
+        this.$container.find('.close-area').on('click',$.proxy(this._historyService.goBack,this));
     },
     _showClaimPopup : function(btnEvt){
-        if($(btnEvt.currentTarget).attr('data-type')==='B'){
+        //var $selectedClaim = $(btnEvt.currentTarget);
+        //$selectedClaim.parents('.opinion-selectbox').addClass('selected');
+        if($(btnEvt.currentTarget).data('type')===52){
             this._showRequestKeyword();
         }else{
             this._showSelectClaim();
@@ -45,7 +51,6 @@ Tw.CommonSearchNotFound.prototype = {
     },
     _bindEventForRequestKeyword : function(popupObj){
         //keyword request
-        console.log(popupObj);
         this.$requestKeywordPopup = $(popupObj);
         this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._requestKeyword,this));
         this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
@@ -66,11 +71,62 @@ Tw.CommonSearchNotFound.prototype = {
     _activateSelectClaimBtn : function(){
         this.$selectClaimPopup.find('.request_claim').removeAttr('disabled');
     },
-    _requestKeyword : function (args) {
-        console.log(args);
+    _requestKeyword : function () {
+        this._apiService.request(Tw.API_CMD.BFF_08_0070, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
+        done($.proxy(function (res) {
+            this._claimCallback(res.code,52);
+        }, this));
     },
-    _selectClaim : function (args) {
-        console.log(args);
+    _selectClaim : function () {
+        this._apiService.request(Tw.API_CMD.BFF_08_0071, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
+        done($.proxy(function (res) {
+            this._claimCallback(res.code,51);
+        }, this));
+    },
+    _claimCallback : function (code,srchId) {
+        if(code===Tw.API_CODE.CODE_00){
+            var $selectedEl = this.$container.find('.opinion-selectbox');
+            $selectedEl.each(function (idx) {
+                if($selectedEl.eq(idx).data('type')===srchId){
+                    $selectedEl.eq(idx).children('.btn').hide();
+                    $selectedEl.eq(idx).removeClass();
+                }
+            });
+            this._popupService.close();
+        }
+    },
+    _inputKeyupEvt : function (evt) {
+        if(evt.keyCode===13){
+            this.$container.find('.icon-gnb-search').trigger('click');
+        }
+    },
+    _doSearch : function () {
+        var searchKeyword = this.$container.find('#search_keyword').val();
+        if(searchKeyword.length<=0){
+            return;
+        }
+        this._addRecentlyKeyword(searchKeyword);
+        this._historyService.goLoad('/common/search?keyword='+searchKeyword);
+    },
+    _addRecentlyKeyword : function (keyword) {
+        var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+        var userId = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
+            //making recentlySearchKeyword
+            //Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
+            recentlyKeywordData = {};
+        }
+
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData[userId])){
+            //makin nowUser's recentlySearchKeyword based on svcMgmtNum
+            recentlyKeywordData[userId] = [];
+        }
+        recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+        while (recentlyKeywordData[userId].length>10){
+            recentlyKeywordData[userId].shift();
+        }
+
+        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     }
 
 

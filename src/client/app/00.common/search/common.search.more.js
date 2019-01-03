@@ -25,10 +25,14 @@ Tw.CommonSearchMore.prototype = {
         this._listData =this._arrangeData(searchInfo.search[0][category].data);
         //this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
         this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'));
-        this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
+        this.$inputElement =this.$container.find('#keyword');
+        this.$inputElement.on('keyup',$.proxy(this._inputChangeEvent,this));
         this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
         this.$container.on('change','.sispopup',$.proxy(this._pageChange,this));
         this.$container.on('click','.page-change',$.proxy(this._pageChange,this));
+        this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
+        this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     },
     _arrangeData : function (data) {
         if(!data){
@@ -76,11 +80,8 @@ Tw.CommonSearchMore.prototype = {
         return returnStr;
     },
     _inputChangeEvent : function (args) {
-        var inResult = this.$container.find('#resultsearch').is(':checked');
         if(args.keyCode===13){
-            var requestUrl = inResult?'/common/search/more?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-            this._addRecentlyKeyword(args.currentTarget.value);
-            this._historyService.goLoad(requestUrl+args.currentTarget.value);
+            this._doSearch();
         }
     },
     _pageChange : function (eventObj) {
@@ -88,32 +89,34 @@ Tw.CommonSearchMore.prototype = {
     },
     _addRecentlyKeyword : function (keyword) {
         var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+        var userId = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
         if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
             //making recentlySearchKeyword
-            Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
+            //Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
             recentlyKeywordData = {};
         }
-        if(Tw.FormatHelper.isEmpty(this._svcInfo)){
-            //logout user's recentlySearchKeyword arr
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData.logOutUser)){
-                //making logout user's recentlySearchKeyword
-                recentlyKeywordData.logOutUser = [];
-            }
-            recentlyKeywordData.logOutUser.push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
-            while (recentlyKeywordData.logOutUser.length>10){
-                recentlyKeywordData.logOutUser = recentlyKeywordData.logOutUser.shift();
-            }
-        }else{
-            //login user
-            if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._svcInfo.svcMgmtNum])){
-                //makin loginuser's recentlySearchKeyword based on svcMgmtNum
-                recentlyKeywordData[this._svcInfo.svcMgmtNum] = [];
-            }
-            recentlyKeywordData[this._svcInfo.svcMgmtNum].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
-            while (recentlyKeywordData[this._svcInfo.svcMgmtNum].length>10){
-                recentlyKeywordData[this._svcInfo.svcMgmtNum].shift();
-            }
+
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData[userId])){
+            //makin nowUser's recentlySearchKeyword based on svcMgmtNum
+            recentlyKeywordData[userId] = [];
         }
+        recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+        while (recentlyKeywordData[userId].length>10){
+            recentlyKeywordData[userId].shift();
+        }
+
         Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    },
+    _searchRelatedKeyword : function (targetEvt) {
+        var keyword = $(targetEvt.currentTarget).data('param');
+        var goUrl = '/common/search?keyword='+keyword;
+        this._addRecentlyKeyword(keyword);
+        this._historyService.goLoad(goUrl);
+    },
+    _doSearch : function () {
+        var inResult = this.$container.find('#resultsearch').is(':checked');
+        var requestUrl = inResult?'/common/search/more?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+        this._addRecentlyKeyword(this.$inputElement.val());
+        this._historyService.goLoad(requestUrl+this.$inputElement.val());
     }
 };
