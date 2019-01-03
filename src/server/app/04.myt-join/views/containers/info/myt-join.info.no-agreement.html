@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%=pageInfo.menuId%>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '무약정 플랜 포인트 내역', svcInfo:svcInfo }) %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '무약정 플랜 포인트 내역', svcInfo:svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -98,8 +98,8 @@
             <div class="bul-list">
                 <ul>
                     <li>적립된 포인트는 일괄적으로 사용됩니다.</li>
-                    <li>포인트 내역은 최근 3년까지 조회 가능합니다.</li>
-                    <li>상품은 해지 되더라고 기존 적립된 포인트는 유효 기간 중 사용 가능합니다.</li>
+                    <li>포인트 내역은 최근 3년까지 조회하실 수 있습니다.</li>
+                    <li>상품이 해지되더라도 이미 적립된 포인트는 유효 기간 중에 사용하실 수 있습니다.</li>
                 </ul>
             </div>
 
