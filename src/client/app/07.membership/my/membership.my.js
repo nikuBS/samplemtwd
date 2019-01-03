@@ -269,8 +269,12 @@ Tw.MembershipMy.prototype = {
   _handleChangeAlert: function() {
     this._apiService
       .request(Tw.API_CMD.BFF_11_0006, {})
-      .done($.proxy(this._renderTemplate, this))
+      .done($.proxy(this._successCardChange, this))
       .fail($.proxy(this._onFail, this));
+  },
+
+  _successCardChange: function() {
+    //카드 종류 변경 완료 페이지 이동
   },
 
   _goRoamingGuide: function() {

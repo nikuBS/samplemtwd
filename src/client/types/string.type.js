@@ -1487,9 +1487,9 @@ Tw.SERVICE_AREA_TYPE = {
 };
 
 Tw.MEMBERSHIP_TYPE = {
-  '0': '리더스클럽',
-  '3': '티플',
-  '4': '커플'
+  '0': 'Leaders Club',
+  '3': 'T`PLE',
+  '4': 'COUPLE'
 };
 
 Tw.ROAMING_ERROR = {

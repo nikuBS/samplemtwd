@@ -61,7 +61,7 @@
                             <div class="btn-area">
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input type="text" title="우편번호" value="<%= myInfoData.zip %>" readonly="readonly" />
+                                        <input id="fe-zip" type="text" title="우편번호" value="<%= myInfoData.zip %>" readonly="readonly" />
                                     </span>
                                     <span class="btn-box">
                                         <button id="fe-search-zip" type="button" class="btn-round2 btn-style3">우편번호 검색</button>
@@ -98,9 +98,7 @@
                                 </span>
                             </span>
                         </div>
-                        <p class="error-txt">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</p>
-                        <p class="error-txt">전화번호 앞자리 항목은 2~4글자로 입력하셔야 합니다.</p>
-                        <p class="error-txt">전화번호 뒷자리 항목은 4글자로 입력하셔야 합니다.</p>
+                        <p id="fe-validation" class="error-txt" style="display:none;">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</p>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -133,6 +131,18 @@
 
                 <hr class="cont-sp type1" aria-hidden="true" />
 
+                <% if( myInfoData.ctzNumAgreeYn === 'Y' || myInfoData.ocbAccumAgreeYn === 'Y'){ %>
+                <div class="cont-box">
+                    <h3 class="tit-type7">OK캐쉬백 이용·약관 동의</h3>
+                    <p class="subtit-info">OK캐쉬백 적립 및 이용에 동의하셨습니다.</p>
+                    <div class="bul-text-list">
+                        <ul>
+                            <li>OK캐쉬백 혜택을 원하지 않으시면 T멤버십 서비스 해지 후 다시 가입하셔야 합니다.</li>
+                            <li>포인트는 OK캐쉬백 수수료 정책에 따라 서비스 이용 수수료가 차감된 후 최종 적립됩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                <% } else{ %>
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <p class="con-txt4">T멤버십과 함께 OK캐쉬백을 적립&middot;사용해 보세요</p>
@@ -168,11 +178,12 @@
                         <p class="inner-agreement-msg">필수동의 사항에 동의하셔야 OK캐쉬백 포인트가 적립됩니다. 단, OK캐쉬백 수수료 정책에 따라 서비스 이용 수수료가 차감된 포인트가 최종 적립됩니다.</p>
                     </div>
                 </div>
+                <% } %>
 
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button>수정하기</button>
+                            <button id="fe-update">수정하기</button>
                         </li>
                     </ul>
                 </div>
@@ -190,7 +201,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipMyUpdate($('.wrap'), '<%- myInfoData.addrCd %>');
+    new Tw.MembershipMyUpdate($('.wrap'), '<%- JSON.stringify(myInfoData) %>');
   });
 </script>
 
