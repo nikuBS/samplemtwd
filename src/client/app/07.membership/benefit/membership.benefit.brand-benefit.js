@@ -4,7 +4,7 @@
  * Date: 2018.11.05
  */
 
-Tw.MembershipBenefitBrand = function (rootEl, options) {
+Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
 
   this.$container = rootEl;
   this._options = options;
@@ -31,7 +31,7 @@ Tw.MembershipBenefitBrand = function (rootEl, options) {
   this._reqeustPopBrandList();
 };
 
-Tw.MembershipBenefitBrand.prototype = {
+Tw.MembershipBenefitBrandBenefit.prototype = {
 
   /**
    * app location 파악
