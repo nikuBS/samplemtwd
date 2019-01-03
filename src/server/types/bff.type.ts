@@ -293,7 +293,8 @@ export const MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
   A0: '차단중',
   A1: '다음 달 차단예정',
   C0: '', // 해제상태
-  C1: '다음 달 해제예정'
+  C1: '다음 달 해제예정',
+  N: '' // 신청내역 없음
 };
 
 export const MYT_PAYMENT_HISTORY_REFUND_TYPE = {
