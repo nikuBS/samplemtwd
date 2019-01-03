@@ -1516,5 +1516,13 @@ Tw.MEMBERSHIP = {
   MOVIE_CULTURE_CINFIRM: {
     TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
     MESSAGE: '예매·조회는 T멤버십 앱에서 가능합니다.'
+  },
+  BENEFIT : {
+    DEFAULT_AREA: {
+      AREA1: '서울',
+      AREA2: '중구',
+      MAP_X: '37.5600420',
+      MAP_Y: '126.9858500'
+    }
   }
 };
