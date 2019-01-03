@@ -38,7 +38,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         ETC: 5
     },
     _roamingSearchInit: function () {
-        Tw.Logger.info('this._rateInfo : ' + JSON.stringify(this._rateInfo));
         this.$roamingRatelist = this.$container.find('.fe-rate-info');
         this.$roamingNoti = this.$container.find('#fe-rm-noti');
         this.$notiButton = this.$container.find('.fe-noti-btn');
