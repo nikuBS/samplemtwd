@@ -95,9 +95,9 @@
                         </li>
                         <% }); %>
                     </ul>
-                    <% const leftCount = additionData.additions.productCount - additions.length; %>
+                    <% const leftCount = additionData.additions.productCount - additions.length, last = additions[additions.length - 1]; %>
                     <div class="extraservice-more">
-                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">더 보기</button>
+                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">더 보기</button>
                     </div>
                 </div>
                 <% } %>
