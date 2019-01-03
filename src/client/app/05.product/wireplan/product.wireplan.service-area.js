@@ -8,7 +8,6 @@ Tw.ProductWireServiceArea = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -17,12 +16,31 @@ Tw.ProductWireServiceArea = function(rootEl) {
 Tw.ProductWireServiceArea.prototype = {
   _bindEvent: function() {
     this.$submitBtn.on('click', $.proxy(this._handleSearchArea, this));
-    this.$container.on('click', '#fe-reservation', $.proxy(this._openProductType, this));
     this.$container.on('click', '#fe-post', $.proxy(this._openPostcode, this));
   },
 
   _cachedElement: function() {
     this.$submitBtn = this.$container.find('#fe-submit');
+  },
+
+  _openPostcode: function() {
+    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
+  },
+
+  _handleChangeAddress: function(result) {
+    this._addr = {
+      bas_addr: result.main,
+      dtl_addr: result.detail,
+      addr_id: result.addrId
+    };
+
+    var $addr = this.$container.find('#fe-addr');
+    $addr.removeClass('none');
+    $addr.find('#fe-post').text('[' + result.zip + ']');
+    $addr.find('#fe-base-addr').text(result.main);
+    $addr.find('#fe-detail-addr').text(result.detail);
+
+    this.$submitBtn.removeAttr('disabled');
   },
 
   _handleSearchArea: function() {
@@ -59,59 +77,25 @@ Tw.ProductWireServiceArea.prototype = {
         address: resp.result.full_ADDRESS,
         services: services
       },
-      undefined,
-      undefined,
+      $.proxy(this._handleOpenResult, this),
+      $.proxy(this._handleCloseResult, this),
       'result'
     );
   },
 
-  _openPostcode: function() {
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
+  _handleOpenResult: function($layer) {
+    $layer.on('click', '#fe-search-zip', $.proxy(this._handleResearch, this));
   },
 
-  _handleChangeAddress: function(result) {
-    this._addr = {
-      bas_addr: result.main,
-      dtl_addr: result.detail,
-      addr_id: result.addrId
-    };
-
-    var $addr = this.$container.find('#fe-addr');
-    $addr.removeClass('none');
-    $addr.find('#fe-post').text('[' + result.zip + ']');
-    $addr.find('#fe-base-addr').text(result.main);
-    $addr.find('#fe-detail-addr').text(result.detail);
-
-    this.$submitBtn.removeAttr('disabled');
-  },
-
-  _openProductType: function() {
-    this._popupService.open(
-      {
-        hbs: 'actionsheet01', // hbs의 파일명
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
-        data: [{ list: Tw.PRODUCT_JOIN_TYPE }],
-        layer: true
-      },
-      $.proxy(this._handleOpenProductType, this),
-      $.proxy(this._closeProductType, this)
-    );
-  },
-
-  _handleOpenProductType: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._goToReservation, this));
-  },
-
-  _goToReservation: function(e) {
-    this._typeCode = $(e.currentTarget)
-      .find('input')
-      .data('type-code');
+  _handleResearch: function() {
+    this._ressearch = true;
     this._popupService.close();
   },
 
-  _closeProductType: function() {
-    if (this._typeCode) {
-      this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=' + this._typeCode);
+  _handleCloseResult: function() {
+    if (this._ressearch) {
+      delete this._ressearch;
+      this._openPostcode();
     }
   }
 };
