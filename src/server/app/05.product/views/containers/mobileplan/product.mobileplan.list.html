@@ -78,7 +78,7 @@
                     <ul class="extraservice-list">
                         <% products.map(plan => { %>
                             <li class="category-type">
-                                <a href="/product/callplan/<%= plan.prodId %>">
+                                <a href="/product/callplan/<%= plan.prodId %>" class="link">
                                     <div class="products-titleinfo">
                                         <p class="title"><%= plan.prodNm %></p>
                                         <% if (plan.basFeeAmt.isNaN) { %>
