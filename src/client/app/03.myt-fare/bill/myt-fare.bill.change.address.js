@@ -45,7 +45,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
   _bindEvent: function () {
     this.$layer.on('keyup', '.required-input-field', $.proxy(this._setChangeBtnAble, this));
     this.$layer.on('keyup', '.fe-phone', $.proxy(this._checkNumber, this));
-    this.$layer.on('keypress', '.fe-phone', $.proxy(this._setMaxValue, this));
+    this.$layer.on('input', '.fe-phone', $.proxy(this._setMaxValue, this));
     this.$layer.on('blur', '.fe-phone', $.proxy(this._checkPhoneNumber, this));
     this.$layer.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$layer.on('click', '.fe-post', $.proxy(this._getPostcode, this));
@@ -60,7 +60,12 @@ Tw.MyTFareBillChangeAddress.prototype = {
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
-    return $target.val().length < $target.attr('maxLength');
+    var maxLength = $target.attr('maxLength');
+    if ($target.attr('maxLength')) {
+      if ($target.val().length >= maxLength) {
+        $target.val($target.val().slice(0, maxLength));
+      }
+    }
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);

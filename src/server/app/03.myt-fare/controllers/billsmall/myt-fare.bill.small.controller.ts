@@ -103,7 +103,13 @@ class MyTFareBillSmall extends TwViewController {
       const passwordResult = passwordStatus.result;
       passwordStatus.text = MYT_FARE_MICRO_NAME[passwordResult.cpinStCd];
     } else {
-      passwordStatus.text = '';
+      if (passwordStatus.code === 'BIL0054') {
+        passwordStatus.text = MYT_FARE_MICRO_NAME['NC'];
+        passwordStatus.result = {};
+        passwordStatus.result.cpinStCd = 'NA00003909';
+      } else {
+        passwordStatus.text = '';
+      }
     }
     return passwordStatus;
   }
