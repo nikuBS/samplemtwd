@@ -23,6 +23,7 @@ import { MYT_PAYMENT_HISTORY_AUTO_TYPE, MYT_FARE_PAYMENT_CODE,
   MYT_FARE_PAYMENT_PROCESS_DATE,
   MYT_FARE_PAYMENT_PROCESS_ATM
 } from '../../../../types/bff.type';
+import { Observable } from 'rxjs/Observable';
 
 interface Query {
   current: string;
@@ -121,8 +122,8 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         this.checkCashBill(callback, renderObj);
       } else {
         this.isPersonalBiz = true;
-        this.billCnt = resp.result.taxReprintList.length;
-        callback.call(this, renderObj);
+        // 사업자회원일경우 세금계산서 갯수 계산 로직 우선 수행 19.1.3
+        this.getBizTaxCnt(callback, renderObj);
       }
     });
   }
@@ -315,6 +316,41 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       this.renderView(renderObj, resultData);
     });
   }
+
+  // 사업자 회원 세금계산서 갯수 계산 .. 19.1.3 반기옵션으로 
+  // 단순 조회시에는 1-6/7-12월로만 조회되는 이슈
+  private getBizTaxCnt = (callback, renderObj) => {
+    return Observable.combineLatest(
+      this.getBillTaxLists(DateHelper.getCurrentDate(), 6)
+    ).subscribe(taxlist => {      
+      this.billCnt = (taxlist || []).reduce((prev, cur) => {
+        return prev + (cur ? cur.length : 0);
+      }, 0);
+      callback.call(this, renderObj); // 이후 콜백
+    });
+  }
+
+  private getBillTaxLists = (date: Date, monthPeriod: number) => {
+    // monthPeriod 개월 전 구하기
+    date.setDate(1);
+    date.setMonth(date.getMonth() - monthPeriod);
+    const list: any[] = [];
+    for ( let i = 0; i < monthPeriod; i++) {
+      list.push(this.getBillTaxList(DateHelper.getCurrentShortDate(new Date(date)).substring(0, 6)));
+      date.setMonth(date.getMonth() + 1);
+    }
+    return list; 
+  }
+
+  private getBillTaxList = (date: string): Observable<any | null> => {
+    return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return [];
+      }
+      return resp.result.taxReprintList;
+    });
+  }
+  // 사업자 회원 세금계산서 갯수 계산 end
 
   // 렌더링
   private renderView(renderObj: RenderObj, content) {
