@@ -1,77 +1,62 @@
 Tw.TooltipService = function () {
-  this.$document = $(document);
-
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._tooltipList = [];
-  this._id = null;
   this._link = null;
 
   this._inapp = false;
   this._isExternal = false;
   this._isLink = false;
 
-  this._bindEvent();
+  this._init();
 };
 
 Tw.TooltipService.prototype = {
-  getTip: function (event) {
-    var $target = $(event.currentTarget);
-    var $pageId = this._getPageId($target);
-    this._id = $target.attr('id');
-
-    if (this._isExist($pageId)) {
-      this._getContents(this._tooltipList);
-    } else {
-      this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, { menuId: $pageId })
-        .done($.proxy(this._success, this))
-        .fail($.proxy(this._fail, this));
+  _init: function () {
+    var $menuId = $('.wrap').attr('data-menuId');
+    this._getTip($menuId);
+  },
+  popInit: function ($menuId) {
+    if (window.location.hash.indexOf('_P') !== -1) {
+      this._getTip($menuId);
     }
   },
-  _getPageId: function ($target) {
-    var $pageId = $target.attr('page-id');
-    if (Tw.FormatHelper.isEmpty($pageId)) {
-      $pageId = $target.parents('.wrap').attr('data-menuId');
+  _getTip: function ($menuId) {
+    if ($menuId) {
+      this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: $menuId})
+        .done($.proxy(this._success, this, $menuId))
+        .fail($.proxy(this._fail, this, $menuId));
     }
-    return $pageId;
   },
-  _isExist: function ($targetId) {
-    if (Tw.FormatHelper.isEmpty(this._tooltipList)) {
-      return false;
-    }
-
-    for (var key in this._tooltipList) {
-      if (this._tooltipList[key].menuId === $targetId) {
-        return true;
-      }
-    }
-    return false;
-  },
-  _bindEvent: function () {
-    this.$document.on('click', '.btn-tip', $.proxy(this.getTip, this));
-    this.$document.on('click', '.tip-view', $.proxy(this.getTip, this));
-  },
-  _success: function (res) {
+  _success: function ($menuId, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var $content = res.result.tooltip;
       if (!Tw.FormatHelper.isEmpty($content)) {
-        this._tooltipList = $content;
-        this._getContents($content, 'api');
+        this._getContents($content);
       }
     } else {
-      this._fail(res);
+      this._fail($menuId, res);
     }
   },
-  _fail: function (err) {
+  _fail: function ($menuId, err) {
+    $('button[page-id="' + $menuId + '"]').on('click', $.proxy(this._failAlert, this, err));
+  },
+  _failAlert: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
   _getContents: function ($content) {
     for (var i = 0; i < $content.length; i++) {
-      if ($content[i].mtwdTtipId === this._id) {
-        this._openTip($content[i]);
-      }
+      this._setTitle($content[i]);
     }
+  },
+  _setTitle: function ($result) {
+    var $target = $('#' + $result.mtwdTtipId);
+    var cloneTarget = $target.clone();
+    var parentTarget = $target.parent();
+    parentTarget.text($result.ttipTitNm);
+    parentTarget.append(cloneTarget);
+
+    cloneTarget.on('click', $.proxy(this._openTip, this, $result));
   },
   _openTip: function ($result) {
     this._popupService.open({
