@@ -200,9 +200,9 @@
                                                 <% } else { %>
                                                     <p class="info">월<span class="money"><%= plan.basFeeInfo.value %></span>원</p>
                                                 <% } %>
-                                                <% if (product.displayInfo) { %>
-                                                    <div class="<%= product.displayInfo.icon %>">
-                                                        <span class="str"><%= product.displayInfo.value %></span><%= product.displayInfo.unit %>
+                                                <% if (plan.displayInfo) { %>
+                                                    <div class="<%= plan.displayInfo.icon %>">
+                                                        <span class="str"><%= plan.displayInfo.value %></span><%= plan.displayInfo.unit || '' %>
                                                     </div>
                                                 <% } %>
                                             </a>
