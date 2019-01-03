@@ -43,6 +43,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
   _openExternalUrl : function (e) {
     e.preventDefault();
     var _url = $(e.currentTarget).attr('href');
+    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(_url);
   },
 
