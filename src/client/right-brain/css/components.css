@@ -12600,10 +12600,10 @@ a.bt-link-tx.underline.small {
     display: block;
     background: #edeef0; }
   .productinfoscroll-box .product-info {
+    position: relative;
     display: block;
     width: 9.375rem;
     height: 7.1875rem;
-    margin-left: 0.4375rem;
     padding: 0.75rem 0.75rem 0.625rem;
     border-radius: 0.3125rem;
     -webkit-box-shadow: 0px 3px 20px -2px rgba(0, 0, 0, 0.03);
@@ -12612,12 +12612,24 @@ a.bt-link-tx.underline.small {
             box-sizing: border-box;
     background: #fff;
     text-align: left;
-    line-height: normal; }
+    line-height: normal;
+    text-align: left; }
+    .productinfoscroll-box .product-info .product-info-btn {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem; }
     .productinfoscroll-box .product-info .title {
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       word-break: break-all;
       color: #000;
       font-size: 0.875rem;
-      font-weight: 700; }
+      font-weight: 700;
+      line-height: 1.4; }
     .productinfoscroll-box .product-info .info {
       margin-top: 0.0625rem;
       color: #f76252;
@@ -12628,7 +12640,8 @@ a.bt-link-tx.underline.small {
         font-size: 1rem;
         vertical-align: -0.0625rem; }
     .productinfoscroll-box .product-info .type {
-      margin-top: 0.9375rem;
+      position: absolute;
+      bottom: 0.625rem;
       padding-left: 1.25rem;
       background: url(/img/product/icon_32px_data.png) no-repeat 0 2px;
       background-size: 0.875rem 0.875rem;
