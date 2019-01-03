@@ -1,7 +1,6 @@
 Tw.TooltipService = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._hashService = Tw.Hash;
 
   this._link = null;
 
