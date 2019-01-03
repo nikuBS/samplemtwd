@@ -418,6 +418,14 @@ Tw.MenuComponent.prototype = {
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
         item.isLink = !!item.menuUrl && item.menuUrl !== '/';
 
+        // Edit: Kim inhwan
+        var menu_url = item.menuUrl;
+        if ( menu_url && menu_url.indexOf('/myt-join/submain') > -1 && menu_url.replace('/myt-join/submain', '').length === 0 ) {
+          if ( userInfo.svcAttr.indexOf('S') > -1 ) {
+            item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
+          }
+        }
+
         if (!!item.urlAuthClCd) {
           if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
             // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;

@@ -291,7 +291,7 @@ Tw.MyTJoinSubMain.prototype = {
         this._historyService.replaceURL('/myt-join/submain_w');
       }
       else {
-        this._historyService.reload();
+        this._historyService.replaceURL('/myt-join/submain');
       }
       if ( Tw.BrowserHelper.isApp() ) {
         this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
