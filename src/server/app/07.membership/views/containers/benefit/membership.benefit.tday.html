@@ -1,0 +1,39 @@
+<%#
+* FileName: membership.benefit.tday.html
+* Author: 김인환 (skt.P132150@partner.sk.com)
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: 'T Day', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container" style="position: absolute;left: 0;right: 0;bottom: 40px;top: 52px;">
+            <!-- cont-box -->
+                <iframe src="http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/monthly/MonthlyTmbrs.do?bannerpoc=2018_144"
+                        frameborder="0" style="width: 100%; height: 100%;"></iframe>
+
+            <!-- //cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { pageInfo: pageInfo }); %>
+</div>
+<script>
+  // $(document).ready(function () {
+  //   new Tw.MembershipBenefitMovieCulture('.wrap', {});
+  // });
+</script>
+<% include ../../components/end.component.html %>
