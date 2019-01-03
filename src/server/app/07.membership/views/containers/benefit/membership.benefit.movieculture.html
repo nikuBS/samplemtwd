@@ -14,9 +14,9 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '무비/컬처', svcInfo: svcInfo, option: { } }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '무비/컬처', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -27,15 +27,16 @@
                 <div class="membership-benefit-top">
                     <p>
                         T멤버십 VIP 회원을 위한<br/> 프리미엄 혜택!
-                        <strong>다양한 영화와 공연을<br/> 관람해보세요</strong>
+                        <strong>다양한 영화와 공연을<br/> 관람해 보세요</strong>
                     </p>
-                    <span class="img"><img src="<%= CDN %>/img/benefit/img_membership01.png" alt="T멤버십 VIP 회원을 위한 프리미엄 혜택!다양한 영화와 공연을 관람해보세요" /></span>
+                    <span class="img"><img src="<%= CDN %>/img/benefit/img_membership01.png"
+                                           alt="T멤버십 VIP 회원을 위한 프리미엄 혜택!다양한 영화와 공연을 관람해보세요"/></span>
                     <ul class="bt-slice item-two">
-                        <li class="bt-white2" id="btnMovTicket">
-                            <button>영화 예매하기</button>
+                        <li class="bt-white2">
+                            <button id="btnMovTicket">영화 예매조회</button>
                         </li>
-                        <li class="bt-white2" id="btnFindTicket">
-                            <button>예매 조회/취소</button>
+                        <li class="bt-white2">
+                            <button id="btnFindTicket">컬쳐 조회/취소</button>
                         </li>
                     </ul>
                 </div>
@@ -46,15 +47,15 @@
             <!-- cont-box -->
             <div class="cont-box">
                 <div class="membership-benefit">
-                    <strong class="stit-type">무비혜택</strong>
-                    <strong class="sstit-type">영화 무료/할인 혜택</strong>
+                    <strong class="stit-type">무비 혜택</strong>
+                    <strong class="sstit-type">영화 무료·할인 혜택</strong>
                     <ul class="round-dot-list">
-                        <li>영화 예매 <strong>연 최대 6회 무료</strong> (월 1회 1매 가능)</li>
-                        <li>6회 소진 후 <strong>천원 할인</strong> (메가박스 2천원 할인)</li>
-                        <li><strong>3D 영화 5,000원</strong> 관람(조조, 청소년, 4D, 특별관 제외)</li>
+                        <li>영화 관람 <strong>1년에 6회 무료</strong> (월 1회, 1장)</li>
+                        <li>6회 모두 사용 후에는 <strong>천 원 할인</strong> (메가박스 2천 원 할인)</li>
+                        <li><strong>3D 영화 5천 원</strong> 예매(조조, 청소년, 4D, 특별관 제외)</li>
                     </ul>
                     <div class="available-cinema">
-                        <strong class="sstit-type">이용가능 영화관</strong>
+                        <strong class="sstit-type">이용할 수 있는 영화관</strong>
                         <ul>
                             <li>
                                 <span><img src="<%= CDN %>/img/benefit/img_logo_cgv.gif" alt="CGV" /></span>
@@ -72,11 +73,12 @@
                     </div>
                     <strong class="sstit-type">상세 안내</strong>
                     <ul class="round-dot-list">
-                        <li>T멤버십 PC 홈페이지 또는 T멤버십 앱에서 예매가능합니다. <br/>(중복 할인, 특별관 및 특별 콘텐츠 제외)</li>
-                        <li>영화 할인 시 한도(연 6회 무료 소진 후) : 메가박스 2천원 <br/>일 최대 5매 가능, CGV/롯데시네마  1천원 일 1매 가능.</li>
-                        <li>예매 수수료 : VIP 무료 예매 시 무료, 그 외 일반 예매 시 1매당 500원 (예매 취소 수수료 무료)</li>
-                        <li>예매 가능 좌석은 T멤버십 VIP회원용 좌석으로 영화관 홈페이지와 다를 수 있습니다.</li>
-                        <li>일부 상영시간의 경우 영화관 요청에 따라 표기되지 않을 수 있습니다.</li>
+                        <li>T멤버십 웹사이트·앱에서 예매하셔야 혜택이 적용됩니다.<br/>(중복 할인, 특별관, 특별 콘텐츠 제외)</li>
+                        <li>무료 관람: 연 6회</li>
+                        <li>영화관람권 할인: 메가박스 2천 원 할인(하루 최대 5장),<br/>CGV·롯데시네마 천 원 할인(하루 1장)</li>
+                        <li>예매 수수료: VIP 예매는 무료, 그 외 일반 예매는 1장당 500원(예매 취소는 무료)</li>
+                        <li>예약 가능 좌석은 T멤버십 VIP회원용 좌석 기준이므로, 영화관 웹사이트에서 확인하는 것과 다를 수 있습니다.</li>
+                        <li>일부 영화는 영화관의 요청에 따라 상영시간이 표기되지 않을 수 있습니다.</li>
                     </ul>
                 </div>
             </div>
@@ -87,25 +89,25 @@
             <div class="cont-box">
                 <div class="membership-benefit">
                     <strong class="stit-type">컬처 혜택</strong>
-                    <strong class="sstit-type">공연 무료 초대권/할인 혜택</strong>
+                    <strong class="sstit-type">공연 무료 초대권·할인 혜택</strong>
                     <ul class="round-dot-list">
                         <li>S급 공연 <strong>최대 50% 할인</strong></li>
-                        <li><strong>무료 초대권</strong> (1인 2매)</li>
-                        <li>만원으로 공연 관람이 가능한 <strong>만원의 행복</strong></li>
+                        <li><strong>무료 초대권</strong> (1명당 2장)</li>
+                        <li>만 원으로 공연을 볼 수 있는 '<strong>만 원의 행복</strong>'</li>
                     </ul>
-                    <p class="t-desc">* 공연 예매는 PC를 통해서만 이용가능합니다.</p>
+                    <p class="t-desc">* 공연은 T멤버십 앱이나 PC로만 예매하실 수 있습니다.</p>
                 </div>
             </div>
             <!-- //cont-box -->
 
         </div>
-    </div>
+
     <!--// #contents -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-        <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
-    </footer>
+    </div>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo
+    }); %>
 </div>
+
 <script>
   $(document).ready(function () {
     new Tw.MembershipBenefitMovieCulture('.wrap', {});
