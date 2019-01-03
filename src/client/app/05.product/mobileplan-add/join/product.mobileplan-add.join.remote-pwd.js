@@ -62,13 +62,13 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     var $value = $target.val();
     var length = $value.length;
 
-    var inputData = event.originalEvent.data;
+    var inputData = null;
 
-    if (!inputData && $target.val().length > $hiddenTarget.val().length) {
+    if ($target.val().length > $hiddenTarget.val().length) {
       inputData = $target.val()[$target.val().length - 1];
     }
 
-    if (!inputData && $target.val().length < $hiddenTarget.val().length) {
+    if ($target.val().length < $hiddenTarget.val().length) {
       inputData = null;
     }
 

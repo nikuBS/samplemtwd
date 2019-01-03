@@ -57,8 +57,12 @@ Tw.CustomerSvcInfoNotice.prototype = {
     var item = this.$list.find('[data-ntc_id="' + this._ntcId  + '"]');
     if (item.length > 0) {
       setTimeout(function() {
-        item.find('button').trigger('click');
-      }, 0);
+        $.when(item.find('button').trigger('click'))
+          .then(function() {
+            console.log(item.offset().top - $("#header").height());
+            $(window).scrollTop(item.offset().top - $("#header").height());
+          });
+      }, 100);
     }
   },
 

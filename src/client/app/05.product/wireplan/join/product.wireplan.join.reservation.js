@@ -249,45 +249,38 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _openCombinePop: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_b_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT_RESERVATION_COMBINE_PRODUCT,
-      data: [{
-        'type': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL,
-        'list': [
-          {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
-            option: (this._prodId === 'NH00000103') ? 'checked' : '', attr: 'data-prod_id="NH00000103"'
-          }
-        ]
-      },
-      {
-        'type': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
-        'list': [
-          {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
-            option: (this._prodId === 'NA00002040') ? 'checked' : '', attr: 'data-prod_id="NA00002040"'
-          },
-          {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
-            option: (this._prodId === 'NH00000133') ? 'checked' : '', attr: 'data-prod_id="NH00000133"'
-          },
-          {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
-            explain: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
-            option: (this._prodId === 'NH00000084') ? 'checked' : '', attr: 'data-prod_id="NH00000084"'
-          },
-          {
-            value: Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
-            option: (this._isEtcProd || this._prodId === 'ETC') ? 'checked' : '',
-            attr: 'data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
-            Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') + '"'
-          }
-        ]
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL,
+          'list':[
+            { 'label-attr': 'id="ra1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.TITLE,
+              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
+              'radio-attr':'id="ra1" data-prod_id="NH00000103" ' + (this._prodId === 'NH00000103' ? 'checked' : '') }
+          ]
+        },
+        {
+          'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
+          'list': [
+            { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.TITLE,
+              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
+              'radio-attr':'id="ra2_0" data-prod_id="NA00002040" ' + (this._prodId === 'NA00002040' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
+              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
+              'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
+              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
+              'radio-attr':'id="ra2_2" data-prod_id="NH00000084" ' + (this._prodId === 'NH00000084' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_3"',
+              'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
+              'radio-attr':'id="ra2_3" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
+              Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') +
+                '" ' + ((this._isEtcProd || this._prodId === 'ETC') ? 'checked' : '') }
+          ]
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._bindCombinePop, this), $.proxy(this._setCombineResult, this), 'combine_select');
   },
 

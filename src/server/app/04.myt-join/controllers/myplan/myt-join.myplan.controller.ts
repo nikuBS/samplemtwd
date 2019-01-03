@@ -57,7 +57,8 @@ class MyTJoinMyplan extends TwViewController {
   private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
-        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.')
+        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.'),
+        btnList: this._convertBtnList(item.btnList)
       });
     });
   }
@@ -128,7 +129,8 @@ class MyTJoinMyplan extends TwViewController {
         basFeeInfo: spec.basFeeInfo,
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
-        basOfrCharCntCtt: spec.basOfrCharCntCtt
+        basOfrCharCntCtt: spec.basOfrCharCntCtt,
+        btnList: this._convertBtnList(wirelessPlan.feePlanProd.btnList)
       }),
       optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...disProdList, ...optProdList, ...comProdList])
     });
@@ -175,6 +177,36 @@ class MyTJoinMyplan extends TwViewController {
         title: FEE_PLAN_TIP_TXT[item]
       };
     });
+  }
+
+  /**
+   * @param btnList
+   * @private
+   */
+  private _convertBtnList(btnList: any): any {
+    if (FormatHelper.isEmpty(btnList)) {
+      return [];
+    }
+
+    const settingBtnList: any = [],
+      terminateBtnList: any = [],
+      unknownBtnList: any = [];
+
+    btnList.forEach((item) => {
+      if (item.btnTypCd === 'SE') {
+        settingBtnList.push(item);
+        return true;
+      }
+
+      if (item.btnTypCd === 'TE') {
+        terminateBtnList.push(item);
+        return true;
+      }
+
+      unknownBtnList.push(item);
+    });
+
+    return [...settingBtnList, ...terminateBtnList, ...unknownBtnList];
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
