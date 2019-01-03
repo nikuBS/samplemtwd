@@ -34,6 +34,7 @@ Tw.PopupService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
+    Tw.Tooltip.popInit($popups.attr('data-menuId'));
   },
   _onFailPopup: function(option) {
     if (Tw.BrowserHelper.isApp()) {
@@ -114,10 +115,11 @@ Tw.PopupService.prototype = {
   openAlert: function (contents, title, btName, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
-      title_type: 'sub-c',
+      title_type: 'sub',
+      cont_align: 'tl',
       contents: contents,
-      bt: [{
-        style_class: 'bt-blue1 tw-popup-closeBtn',
+      bt_b: [{
+        style_class: 'bt-red1 pos-right tw-popup-closeBtn',
         txt: btName || Tw.BUTTON_LABEL.CONFIRM
       }]
     };
