@@ -120,9 +120,9 @@
                         <% }); %>
                     </ul>
 
-                    <% const leftCount = plans.productCount - products.length; %>
+                    <% const leftCount = plans.productCount - products.length, last = products[products.length - 1]; %>
                     <div class="extraservice-more">
-                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">
                             더 보기
                         </button>
                     </div>
